@@ -92,6 +92,12 @@ For each milestone cycle we use the updated runtime flow:
 - Deploy: ship launch playbook artifacts and evidence automation wrapper
 - Monitor: execute launch rehearsal and confirm repeatability
 
+### M16: Session Workspace and Asset Upload
+- Discover: session workspace needs, file-upload gaps, and storage/security constraints
+- Apply: asset library model + upload/serving contracts + migration compatibility strategy
+- Deploy: authenticated map/token upload flows integrated into campaign and play runtime UX
+- Monitor: authz/isolation validation, upload stability, and session-play regression evidence
+
 ## Completion Targets
 
 - 200 concurrent accounts
@@ -99,3 +105,8 @@ For each milestone cycle we use the updated runtime flow:
 - recovery target under 5 minutes
 - low-latency token events under 150 ms
 - high backend test coverage on core modules
+
+## Strategic Program Extension
+
+- Fuer den skalierbaren Multi-Tenant- und Asset-Governance-Ausbau wurde ein separates 20-Meilenstein-DAD-M-Programm geplant:
+  - [milestone_program_multitenant_20.md](milestone_program_multitenant_20.md)
