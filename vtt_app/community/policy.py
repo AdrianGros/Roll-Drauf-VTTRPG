@@ -4,9 +4,11 @@ from vtt_app.models import Campaign, CampaignMember, User
 
 
 def is_admin(user: User) -> bool:
-    if not user or not user.role:
+    """Check if user is platform admin or owner (M17)."""
+    if not user:
         return False
-    return str(user.role.name).lower() == "admin"
+    # Use platform_role (M17) instead of legacy role_id
+    return user.platform_role in ['admin', 'owner']
 
 
 def is_active_member(campaign: Campaign, user_id: int) -> bool:

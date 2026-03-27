@@ -204,8 +204,47 @@ class ProductionConfig(Config):
     )
 
 
+# M17: Platform roles (8-level hierarchy)
+PLATFORM_ROLES = {
+    'owner': 100,
+    'admin': 80,
+    'moderator': 60,
+    'supporter': 40,
+}
+
+# M17: Profile tiers (subscription tiers)
+PROFILE_TIERS = {
+    'listener': {
+        'name': 'Listener',
+        'storage_gb': 0.5,
+        'active_campaigns': 1,
+    },
+    'player': {
+        'name': 'Player',
+        'storage_gb': 1.0,
+        'active_campaigns': 3,
+    },
+    'dm': {
+        'name': 'Dungeon Master',
+        'storage_gb': 1.0,
+        'active_campaigns': 3,
+    },
+    'headmaster': {
+        'name': 'Headmaster',
+        'storage_gb': 5.0,
+        'active_campaigns': 5,
+    },
+}
+
+class StagingConfig(DevelopmentConfig):
+    """Staging configuration (like development but stricter)."""
+    DEBUG = False
+    TESTING = False
+
+
 config_by_name = {
     'development': DevelopmentConfig,
+    'staging': StagingConfig,
     'testing': TestingConfig,
     'production': ProductionConfig
 }

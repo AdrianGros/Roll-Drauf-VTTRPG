@@ -190,9 +190,11 @@ def _play_mode_from_session_status(raw_status: str | None) -> str:
 
 
 def _is_admin(user: User) -> bool:
-    if not user or not user.role:
+    """Check if user is platform admin or owner (M17)."""
+    if not user:
         return False
-    return str(user.role.name).lower() == "admin"
+    # Use platform_role (M17) instead of legacy role_id
+    return user.platform_role in ['admin', 'owner']
 
 
 def _ensure_session_state(campaign_id: int, game_session: GameSession):

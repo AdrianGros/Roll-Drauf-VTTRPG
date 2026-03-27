@@ -20,9 +20,15 @@ class Campaign(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     deleted_at = db.Column(db.DateTime)  # Soft delete for GDPR
 
-    owner = db.relationship('User', backref='owned_campaigns')
+    owner = db.relationship('User', backref='owned_campaigns', foreign_keys=[owner_id])
     members = db.relationship('CampaignMember', cascade='all, delete-orphan', lazy=True)
     sessions = db.relationship('GameSession', cascade='all, delete-orphan', lazy=True)
+
+    # M17: Alias for consistency with M17 terminology
+    @property
+    def dm_id(self):
+        """Alias for owner_id (owner is the DM)."""
+        return self.owner_id
 
     def __repr__(self):
         return f'<Campaign {self.name}>'
@@ -56,3 +62,73 @@ class Campaign(db.Model):
     def can_add_player(self):
         """Check if campaign has room for more players."""
         return self.get_player_count() < self.max_players
+
+    def get_member(self, user_id):
+        """Get campaign member by user_id."""
+        from vtt_app.models import CampaignMember
+        return CampaignMember.query.filter_by(campaign_id=self.id, user_id=user_id).first()
+
+    # ===== M17: Team-View Methods =====
+
+    @staticmethod
+    def get_visible_campaigns(user):
+        """
+        Get campaigns visible to user.
+
+        Logic:
+        - Supporter+: All campaigns
+        - DM/Headmaster: Own campaigns + joined campaigns
+        - Player: Only joined campaigns
+        """
+        from vtt_app.models import CampaignMember, User
+
+        if not user:
+            return Campaign.query.filter(False)  # Empty
+
+        # Platform staff see all
+        if user.platform_role in ['supporter', 'moderator', 'admin', 'owner']:
+            return Campaign.query.all()
+
+        # DM/Headmaster see own campaigns
+        own_campaigns = Campaign.query.filter_by(owner_id=user.id).all()
+
+        # Plus campaigns they're members of
+        member_campaigns = db.session.query(Campaign).join(
+            CampaignMember,
+            Campaign.id == CampaignMember.campaign_id
+        ).filter(
+            CampaignMember.user_id == user.id,
+            CampaignMember.status == 'active'
+        ).all()
+
+        # Union (avoid duplicates)
+        campaign_ids = set(c.id for c in own_campaigns + member_campaigns)
+        return Campaign.query.filter(Campaign.id.in_(campaign_ids)).all()
+
+    @staticmethod
+    def get_team_campaigns(limit=100, offset=0, filter_dm=None, filter_status=None):
+        """
+        Get all campaigns for team dashboard (supporter+ only).
+
+        Args:
+            limit: Pagination limit
+            offset: Pagination offset
+            filter_dm: Filter by DM username
+            filter_status: Filter by campaign status ('active', 'archived', 'paused')
+
+        Returns:
+            List of Campaign objects
+        """
+        from vtt_app.models import User
+
+        query = Campaign.query
+
+        if filter_dm:
+            query = query.join(User, Campaign.owner_id == User.id).filter(
+                User.username.ilike(f"%{filter_dm}%")
+            )
+
+        if filter_status:
+            query = query.filter_by(status=filter_status)
+
+        return query.order_by(Campaign.updated_at.desc()).limit(limit).offset(offset).all()

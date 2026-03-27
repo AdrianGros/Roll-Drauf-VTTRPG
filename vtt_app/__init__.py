@@ -184,6 +184,18 @@ def create_app(config_name=None):
         resources={r"/api/*": {"origins": app.config['CORS_ORIGINS']}},
         supports_credentials=True,
     )
+
+    # M34: Security headers
+    @app.after_request
+    def set_security_headers(response):
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        if not app.config.get("DEBUG"):
+            response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'"
+        return response
+
     _setup_ops_metrics(app)
 
     @jwt.token_in_blocklist_loader
@@ -218,12 +230,19 @@ def create_app(config_name=None):
     from vtt_app.community import community_bp
     from vtt_app.ops import ops_bp
     from vtt_app.play import play_bp
+    from vtt_app.endpoints.assets import assets_bp
+    from vtt_app.endpoints.admin_dashboard import admin_dashboard_bp
+    from vtt_app.endpoints.profile_m18 import profile_m18_bp, admin_m18_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(campaigns_bp, url_prefix='/api')
     app.register_blueprint(characters_bp, url_prefix='/api')
     app.register_blueprint(community_bp, url_prefix='/api')
     app.register_blueprint(play_bp, url_prefix='/api/play')
     app.register_blueprint(ops_bp)
+    app.register_blueprint(assets_bp)
+    app.register_blueprint(admin_dashboard_bp)
+    app.register_blueprint(profile_m18_bp)
+    app.register_blueprint(admin_m18_bp)
 
     # Create database tables
     if app.config.get("AUTO_CREATE_SCHEMA", False):
