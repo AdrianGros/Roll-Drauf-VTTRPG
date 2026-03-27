@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby - roll drauf vtt</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Segoe UI, Tahoma, Geneva, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        h1 { color: #667eea; font-size: 28px; }
+        .user-info { display: flex; gap: 20px; align-items: center; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background: #5568d3; }
+        button.secondary { background: #dc3545; }
+        button.secondary:hover { background: #c82333; }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .controls input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 180px;
+        }
+        .campaigns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .campaign-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+        .campaign-card:hover { transform: translateY(-3px); }
+        .campaign-name { font-size: 20px; font-weight: 600; color: #333; margin-bottom: 10px; }
+        .campaign-owner { color: #666; font-size: 14px; margin-bottom: 5px; }
+        .campaign-players { color: #667eea; font-weight: 600; margin-bottom: 15px; }
+        .campaign-role { background: #f0f0f0; padding: 5px 10px; border-radius: 5px; font-size: 12px; display: inline-block; margin-bottom: 10px; }
+        .campaign-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .campaign-actions button { flex: 1; padding: 8px; font-size: 12px; min-width: 100px; }
+        .empty-state { background: white; padding: 40px; border-radius: 10px; text-align: center; color: #666; }
+        .message {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+        .message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>roll drauf vtt</h1>
+            <div class="user-info">
+                <span id="username">Loading...</span>
+                <button onclick="goToCampaigns()">Campaign Dashboard</button>
+                <button class="secondary" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <div id="message" class="message"></div>
+
+        <div class="controls">
+            <button onclick="createCampaign()">Create Campaign</button>
+            <input type="number" id="campaignId" placeholder="Campaign ID for invite join">
+            <input type="text" id="inviteToken" placeholder="Paste invite token...">
+            <button onclick="joinByInvite()">Join</button>
+            <button onclick="loadCampaigns()">Refresh</button>
+        </div>
+
+        <div id="campaigns" class="campaigns-grid">
+            <div style="padding: 20px; color: #666;">Loading campaigns...</div>
+        </div>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        function showMessage(text, isError = false) {
+            const box = document.getElementById("message");
+            box.className = `message ${isError ? "error" : "success"}`;
+            box.textContent = text;
+            setTimeout(() => {
+                box.className = "message";
+                box.textContent = "";
+            }, 3500);
+        }
+
+        async function loadPage() {
+            const user = await Auth.getCurrentUser();
+            if (!user) {
+                window.location.href = "/login.html";
+                return;
+            }
+            document.getElementById("username").textContent = user.username;
+            await loadCampaigns();
+        }
+
+        async function loadCampaigns() {
+            try {
+                const data = await Auth.makeAuthRequest("/api/campaigns/mine");
+                if (!data || !Array.isArray(data.campaigns)) throw new Error("Failed to load campaigns");
+                const container = document.getElementById("campaigns");
+
+                if (data.campaigns.length === 0) {
+                    container.innerHTML = "<div class='empty-state'><p>No campaigns yet. Create one to get started.</p></div>";
+                    return;
+                }
+
+                container.innerHTML = data.campaigns.map(campaign => `
+                    <div class="campaign-card">
+                        <div class="campaign-name">${campaign.name}</div>
+                        <div class="campaign-owner">DM: ${campaign.owner}</div>
+                        <div class="campaign-players">Players: ${campaign.member_count} / ${campaign.max_players}</div>
+                        <div class="campaign-role">${campaign.your_role || "Player"}</div>
+                        <div class="campaign-actions">
+                            <button onclick="enterCampaign(${campaign.id})">Enter</button>
+                            ${campaign.is_owner ? `<button onclick="deleteCampaign(${campaign.id})" class="secondary">Delete</button>` : ""}
+                        </div>
+                    </div>
+                `).join("");
+            } catch (error) {
+                showMessage(error.message || "Could not load campaigns", true);
+            }
+        }
+
+        async function createCampaign() {
+            const name = window.prompt("Campaign name:");
+            if (!name || !name.trim()) return;
+            const description = window.prompt("Description (optional):", "") ?? "";
+            const maxPlayersRaw = window.prompt("Max players (2-20):", "6");
+            const maxPlayers = Number(maxPlayersRaw);
+
+            const payload = { name: name.trim(), description: description.trim() };
+            if (Number.isInteger(maxPlayers)) {
+                payload.max_players = maxPlayers;
+            }
+
+            try {
+                const created = await Auth.makeAuthRequest("/api/campaigns", "POST", payload);
+                showMessage(`Campaign #${created.id} created`);
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Create campaign failed", true);
+            }
+        }
+
+        async function joinByInvite() {
+            const campaignIdRaw = document.getElementById("campaignId").value.trim();
+            const inviteToken = document.getElementById("inviteToken").value.trim();
+            const campaignId = Number(campaignIdRaw);
+
+            if (!Number.isInteger(campaignId) || campaignId <= 0) {
+                showMessage("Please enter a valid campaign ID", true);
+                return;
+            }
+            if (!inviteToken) {
+                showMessage("Please enter an invite token", true);
+                return;
+            }
+
+            try {
+                await Auth.makeAuthRequest(`/api/campaigns/${campaignId}/accept-invite`, "POST", {
+                    token: inviteToken
+                });
+                document.getElementById("inviteToken").value = "";
+                showMessage("Joined campaign");
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Join failed", true);
+            }
+        }
+
+        async function deleteCampaign(campaignId) {
+            if (!window.confirm("Delete this campaign?")) return;
+            try {
+                await Auth.makeAuthRequest(`/api/campaigns/${campaignId}`, "DELETE");
+                showMessage("Campaign deleted");
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Delete failed", true);
+            }
+        }
+
+        function enterCampaign(campaignId) {
+            window.location.href = `/campaigns?campaign_id=${campaignId}`;
+        }
+
+        function goToCampaigns() {
+            window.location.href = "/campaigns";
+        }
+
+        async function logout() {
+            await Auth.logout();
+        }
+
+        loadPage();
+    </script>
+</body>
+</html>

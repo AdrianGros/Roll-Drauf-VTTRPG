@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTT - Campaigns</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #4a9eff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a9eff;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #4a9eff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #357bcc;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #777;
+        }
+
+        .btn-danger {
+            background: #d74a4a;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger:hover {
+            background: #bd3636;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.7rem;
+            font-size: 0.8rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #444;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab.active {
+            color: #4a9eff;
+            border-bottom-color: #4a9eff;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.6);
+            color: #9be7a0;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(215, 74, 74, 0.2);
+            border: 1px solid rgba(215, 74, 74, 0.6);
+            color: #ff9e9e;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .campaign-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .campaign-card:hover {
+            border-color: #4a9eff;
+            box-shadow: 0 0 15px rgba(74, 158, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .campaign-banner {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(135deg, #4a9eff 0%, #2d5a8c 100%);
+            border-bottom: 1px solid #444;
+        }
+
+        .campaign-info {
+            padding: 1rem;
+        }
+
+        .campaign-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .campaign-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+            text-transform: capitalize;
+        }
+
+        .status-active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .status-paused,
+        .status-archived {
+            background: rgba(158, 158, 158, 0.2);
+            color: #bdbdbd;
+        }
+
+        .campaign-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin: 0.75rem 0;
+            font-size: 0.85rem;
+        }
+
+        .meta-item {
+            background: rgba(74, 158, 255, 0.1);
+            padding: 0.4rem;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .meta-label {
+            color: #a0a0a0;
+            font-size: 0.75rem;
+        }
+
+        .meta-value {
+            color: #4a9eff;
+            font-weight: bold;
+        }
+
+        .campaign-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .campaign-actions button {
+            flex: 1;
+            padding: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            color: #a0a0a0;
+            background: rgba(0,0,0,0.2);
+            border: 1px dashed #555;
+            border-radius: 6px;
+        }
+
+        .detail-panel {
+            margin-top: 1.5rem;
+            background: rgba(0,0,0,0.35);
+            border: 1px solid #4a9eff;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .detail-panel.hidden {
+            display: none;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .detail-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .detail-box {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.75rem;
+        }
+
+        .detail-box h3 {
+            margin-bottom: 0.75rem;
+            color: #4a9eff;
+            font-size: 1rem;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .list-item {
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.6rem;
+            background: rgba(0,0,0,0.25);
+        }
+
+        .list-item-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .muted {
+            color: #a0a0a0;
+            font-size: 0.85rem;
+        }
+
+        .inline-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .inline-controls input,
+        .inline-controls select {
+            background: #1a1a24;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.45rem 0.55rem;
+            min-width: 160px;
+        }
+
+        .community-shell {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+        }
+
+        .chat-feed {
+            min-height: 220px;
+            max-height: 320px;
+            overflow: auto;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.6rem;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .chat-item {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 0.45rem 0;
+            font-size: 0.9rem;
+        }
+
+        .chat-item:last-child {
+            border-bottom: none;
+        }
+
+        .chat-item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .chat-input-row {
+            margin-top: 0.65rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input-row input {
+            flex: 1;
+            background: #1a1a24;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.45rem 0.55rem;
+        }
+
+        .mod-queue {
+            min-height: 220px;
+            max-height: 320px;
+            overflow: auto;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.6rem;
+            background: rgba(0,0,0,0.2);
+            font-size: 0.85rem;
+        }
+
+        .mod-item {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 0.4rem 0;
+        }
+
+        .mod-item:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                padding: 1rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .community-shell {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">roll drauf VTT</div>
+        <div class="header-actions">
+            <button class="btn btn-primary" onclick="goTo('/dashboard')">Dashboard</button>
+            <button class="btn btn-secondary" onclick="goTo('/characters')">Characters</button>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Campaigns</h1>
+            <button class="btn btn-primary" onclick="createCampaign()">+ New Campaign</button>
+        </div>
+
+        <div id="messageBox" class="message"></div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('my', this)">My Campaigns</button>
+            <button class="tab" onclick="switchTab('joined', this)">Joined Campaigns</button>
+            <button class="tab" onclick="switchTab('browse', this)">Browse All</button>
+        </div>
+
+        <div class="grid" id="campaignsGrid">
+            <div class="empty-state">
+                <p>Loading campaigns...</p>
+            </div>
+        </div>
+
+        <section class="detail-panel hidden" id="campaignDetail">
+            <div class="detail-header">
+                <h2 id="detailTitle">Campaign Details</h2>
+                <div style="display:flex; gap:0.5rem;">
+                    <button class="btn btn-secondary btn-sm" id="refreshDetailBtn">Refresh</button>
+                    <button class="btn btn-secondary btn-sm" onclick="closeCampaignDetail()">Close</button>
+                </div>
+            </div>
+            <div id="detailBody"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
+    </footer>
+
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/community.js"></script>
+    <script>
+        const auth = new Auth();
+        const community = new CommunityClient(auth);
+        let campaigns = [];
+        let currentTab = "my";
+        let selectedCampaignId = null;
+        let currentUser = null;
+        let currentDetailCampaign = null;
+
+        function showMessage(text, isError = false) {
+            const box = document.getElementById("messageBox");
+            box.className = `message ${isError ? "error" : "success"}`;
+            box.textContent = text;
+            window.setTimeout(() => {
+                box.className = "message";
+                box.textContent = "";
+            }, 3500);
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function formatDate(value) {
+            if (!value) return "-";
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return value;
+            return date.toLocaleString();
+        }
+
+        function updateUrlCampaignId(campaignId) {
+            const url = new URL(window.location.href);
+            if (campaignId) {
+                url.searchParams.set("campaign_id", campaignId);
+            } else {
+                url.searchParams.delete("campaign_id");
+            }
+            window.history.replaceState({}, "", url.toString());
+        }
+
+        async function loadCampaigns() {
+            try {
+                currentUser = await auth.requireAuth("/login.html");
+                if (!currentUser) return;
+
+                campaigns = await auth.makeAuthRequest("/api/campaigns");
+                const activeTabButton = document.querySelector(".tab.active");
+                switchTab(currentTab, activeTabButton);
+
+                const queryCampaignId = Number(new URLSearchParams(window.location.search).get("campaign_id"));
+                if (Number.isInteger(queryCampaignId) && queryCampaignId > 0) {
+                    await viewCampaign(queryCampaignId, false);
+                }
+            } catch (error) {
+                document.getElementById("campaignsGrid").innerHTML = `
+                    <div class="empty-state">
+                        <p>Failed to load campaigns.</p>
+                    </div>
+                `;
+                showMessage(error.message || "Failed to load campaigns", true);
+            }
+        }
+
+        function switchTab(tab, element) {
+            currentTab = tab;
+            document.querySelectorAll(".tab").forEach(tabButton => tabButton.classList.remove("active"));
+            if (element) {
+                element.classList.add("active");
+            } else {
+                const fallback = document.querySelector(`.tab[onclick*="'${tab}'"]`);
+                if (fallback) fallback.classList.add("active");
+            }
+
+            let filtered = campaigns;
+            if (tab === "my") {
+                filtered = campaigns.filter(campaign => campaign.is_owner);
+            } else if (tab === "joined") {
+                filtered = campaigns.filter(campaign => campaign.is_member && !campaign.is_owner);
+            }
+
+            renderCampaigns(filtered);
+        }
+
+        function renderCampaigns(campaignList) {
+            const grid = document.getElementById("campaignsGrid");
+            if (!campaignList || campaignList.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <p>No campaigns in this category yet.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = campaignList.map(campaign => {
+                const statusClass = `status-${campaign.status}`;
+                const primaryAction = campaign.is_member
+                    ? `<button class="btn btn-primary" onclick="viewCampaign(${campaign.id})">View</button>`
+                    : `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">Join</button>`;
+
+                return `
+                    <div class="campaign-card">
+                        <div class="campaign-banner"></div>
+                        <div class="campaign-info">
+                            <div class="campaign-name">${escapeHtml(campaign.name)}</div>
+                            <div class="campaign-status ${statusClass}">${escapeHtml(campaign.status)}</div>
+                            <div class="muted">DM: ${escapeHtml(campaign.owner)}</div>
+                            <div class="campaign-meta">
+                                <div class="meta-item">
+                                    <div class="meta-label">Members</div>
+                                    <div class="meta-value">${campaign.member_count || 0} / ${campaign.max_players || 6}</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">Sessions</div>
+                                    <div class="meta-value">${campaign.session_count || 0}</div>
+                                </div>
+                            </div>
+                            <div class="campaign-actions">
+                                ${primaryAction}
+                                ${campaign.is_member ? `<button class="btn btn-secondary" onclick="enterCampaign(${campaign.id})">Enter</button>` : ""}
+                                ${campaign.is_owner ? `<button class="btn btn-danger" onclick="deleteCampaign(${campaign.id})">Delete</button>` : ""}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        async function createCampaign() {
+            const name = window.prompt("Campaign name:");
+            if (!name || !name.trim()) return;
+
+            const description = window.prompt("Description (optional):", "") ?? "";
+            const maxPlayersRaw = window.prompt("Max players (2-20):", "6");
+            const maxPlayers = Number(maxPlayersRaw);
+
+            try {
+                const payload = {
+                    name: name.trim(),
+                    description: description.trim(),
+                };
+                if (Number.isInteger(maxPlayers)) {
+                    payload.max_players = maxPlayers;
+                }
+
+                const created = await auth.makeAuthRequest("/api/campaigns", "POST", payload);
+                showMessage("Campaign created");
+                await loadCampaigns();
+                if (created && created.id) {
+                    await viewCampaign(created.id);
+                }
+            } catch (error) {
+                showMessage(error.message || "Failed to create campaign", true);
+            }
+        }
+
+        async function joinCampaign(campaignId) {
+            const token = window.prompt("Invite token for this campaign:");
+            if (!token || !token.trim()) return;
+
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/accept-invite`, "POST", {
+                    token: token.trim()
+                });
+                showMessage("Joined campaign successfully");
+                await loadCampaigns();
+                await viewCampaign(campaignId);
+            } catch (error) {
+                showMessage(error.message || "Failed to join campaign", true);
+            }
+        }
+
+        function buildMembersList(members) {
+            if (!members || members.length === 0) {
+                return "<div class='muted'>No members found.</div>";
+            }
+
+            return members.map(member => `
+                <div class="list-item">
+                    <div class="list-item-top">
+                        <strong>${escapeHtml(member.username)}</strong>
+                        <span>${escapeHtml(member.campaign_role)} (${escapeHtml(member.status)})</span>
+                    </div>
+                    <div class="muted">Joined: ${formatDate(member.joined_at)}</div>
+                </div>
+            `).join("");
+        }
+
+        function buildSessionsList(campaign, sessions) {
+            if (!sessions || sessions.length === 0) {
+                return "<div class='muted'>No sessions yet.</div>";
+            }
+
+            const canManage = campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
+            return sessions.map(session => {
+                const openPlayButton = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Play</button>`;
+                const startButton = canManage && session.status === "scheduled"
+                    ? `<button class="btn btn-primary btn-sm" onclick="startSession(${campaign.id}, ${session.id})">Start</button>`
+                    : "";
+                const endButton = canManage && session.status === "in_progress"
+                    ? `<button class="btn btn-danger btn-sm" onclick="endSession(${campaign.id}, ${session.id})">End</button>`
+                    : "";
+                const combatStateButton = `<button class="btn btn-secondary btn-sm" onclick="viewCombatState(${campaign.id}, ${session.id})">Combat</button>`;
+                const combatManageButtons = canManage && session.status === "in_progress"
+                    ? `
+                        <button class="btn btn-primary btn-sm" onclick="startCombat(${campaign.id}, ${session.id})">Start Combat</button>
+                        <button class="btn btn-secondary btn-sm" onclick="setCombatInitiative(${campaign.id}, ${session.id})">Set Init</button>
+                        <button class="btn btn-secondary btn-sm" onclick="advanceCombatTurn(${campaign.id}, ${session.id})">Next Turn</button>
+                        <button class="btn btn-secondary btn-sm" onclick="adjustCombatHp(${campaign.id}, ${session.id})">HP +/-</button>
+                        <button class="btn btn-danger btn-sm" onclick="endCombat(${campaign.id}, ${session.id})">End Combat</button>
+                    `
+                    : "";
+
+                return `
+                    <div class="list-item">
+                        <div class="list-item-top">
+                            <strong>${escapeHtml(session.name)}</strong>
+                            <span>${escapeHtml(session.status)}</span>
+                        </div>
+                        <div class="muted">Scheduled: ${formatDate(session.scheduled_at)}</div>
+                        <div class="muted">Started: ${formatDate(session.started_at)}</div>
+                        <div style="margin-top:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">${openPlayButton}${startButton}${endButton}${combatStateButton}</div>
+                        ${combatManageButtons ? `<div style="margin-top:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">${combatManageButtons}</div>` : ""}
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function userIsAdmin() {
+            return String(currentUser?.role || "").toLowerCase() === "admin";
+        }
+
+        function canModerateCampaign(campaign) {
+            if (!campaign) return false;
+            return userIsAdmin() || campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
+        }
+
+        function buildCommunityPanel(campaign, sessions) {
+            if (!sessions || sessions.length === 0) {
+                return `
+                    <div class="detail-box" style="margin-top:1rem;">
+                        <h3>Community</h3>
+                        <div class="muted">Create a session to enable chat and reporting.</div>
+                    </div>
+                `;
+            }
+
+            const canModerate = canModerateCampaign(campaign);
+            const options = sessions.map(session => `
+                <option value="${session.id}">${escapeHtml(session.name)} (${escapeHtml(session.status)})</option>
+            `).join("");
+
+            const moderationPanel = canModerate ? `
+                <div class="detail-box">
+                    <h3>Moderation</h3>
+                    <div class="inline-controls">
+                        <select id="modActionType">
+                            <option value="warn">warn</option>
+                            <option value="mute">mute</option>
+                            <option value="delete_message">delete_message</option>
+                            <option value="kick">kick</option>
+                            ${userIsAdmin() ? '<option value="ban">ban</option>' : ''}
+                        </select>
+                        <input id="modTargetUserId" type="number" min="1" placeholder="subject_user_id">
+                        <input id="modTargetMessageId" type="number" min="1" placeholder="subject_message_id">
+                        <input id="modReason" type="text" placeholder="reason (optional)">
+                        <input id="modDuration" type="number" min="1" max="10080" placeholder="mute minutes">
+                        <button class="btn btn-primary btn-sm" onclick="applyModerationActionFromUI(${campaign.id})">Apply</button>
+                    </div>
+                    <div class="inline-controls">
+                        <button class="btn btn-secondary btn-sm" onclick="loadModerationQueue(${campaign.id})">Refresh Queue</button>
+                        <input id="modRevokeActionId" type="number" min="1" placeholder="action_id">
+                        <button class="btn btn-secondary btn-sm" onclick="revokeModerationActionFromUI(${campaign.id})">Revoke</button>
+                    </div>
+                    <div id="modQueue" class="mod-queue muted" style="margin-top:0.5rem;">No reports loaded yet.</div>
+                </div>
+            ` : `
+                <div class="detail-box">
+                    <h3>Moderation</h3>
+                    <div class="muted">Report tools available per message. Moderator queue is DM/Admin only.</div>
+                </div>
+            `;
+
+            return `
+                <div class="detail-box" style="margin-top:1rem;">
+                    <h3>Community</h3>
+                    <div class="inline-controls">
+                        <select id="communitySessionSelect" onchange="loadCommunityPanel(${campaign.id})">${options}</select>
+                        <button class="btn btn-secondary btn-sm" onclick="loadCommunityPanel(${campaign.id})">Reload Chat</button>
+                    </div>
+                    <div class="community-shell" style="margin-top:0.75rem;">
+                        <div class="detail-box">
+                            <h3>Session Chat</h3>
+                            <div id="communityVoice" class="muted" style="margin-bottom:0.5rem;">Voice: loading...</div>
+                            <div id="communityChatFeed" class="chat-feed muted">Loading messages...</div>
+                            <div class="chat-input-row">
+                                <input id="communityMessageInput" type="text" maxlength="1000" placeholder="Write a message...">
+                                <button class="btn btn-primary btn-sm" onclick="sendCommunityMessage(${campaign.id})">Send</button>
+                            </div>
+                        </div>
+                        ${moderationPanel}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderChatMessages(messages, campaignId, sessionId) {
+            const feed = document.getElementById("communityChatFeed");
+            if (!feed) return;
+            if (!messages || messages.length === 0) {
+                feed.className = "chat-feed muted";
+                feed.innerHTML = "No messages yet.";
+                return;
+            }
+
+            const canModerate = canModerateCampaign(currentDetailCampaign);
+            feed.className = "chat-feed";
+            feed.innerHTML = messages.map(message => {
+                const canDelete = canModerate || message.author_user_id === currentUser?.id;
+                const reportButton = `<button class="btn btn-secondary btn-sm" onclick="reportCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Report</button>`;
+                const deleteButton = canDelete
+                    ? `<button class="btn btn-danger btn-sm" onclick="deleteCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Delete</button>`
+                    : "";
+
+                return `
+                    <div class="chat-item">
+                        <div class="chat-item-top">
+                            <strong>${escapeHtml(message.author_username || `User #${message.author_user_id}`)}</strong>
+                            <span class="muted">${formatDate(message.created_at)}</span>
+                        </div>
+                        <div>${escapeHtml(message.content || "")}</div>
+                        <div class="chat-actions" style="margin-top:0.35rem;">
+                            ${reportButton}
+                            ${deleteButton}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        async function loadCommunityPanel(campaignId) {
+            const sessionSelect = document.getElementById("communitySessionSelect");
+            if (!sessionSelect) return;
+
+            const sessionId = Number(sessionSelect.value);
+            if (!Number.isInteger(sessionId) || sessionId <= 0) return;
+
+            try {
+                const [chatPayload, voicePayload] = await Promise.all([
+                    community.loadMessages(campaignId, sessionId, { limit: 50 }),
+                    community.getVoiceConfig(campaignId, sessionId),
+                ]);
+                renderChatMessages(chatPayload.messages || [], campaignId, sessionId);
+
+                const voiceBox = document.getElementById("communityVoice");
+                if (voiceBox) {
+                    voiceBox.textContent = `Voice: ${voicePayload.voice_enabled ? "enabled" : "disabled (M7.1)"}`;
+                }
+            } catch (error) {
+                showMessage(error.message || "Failed to load community panel", true);
+            }
+        }
+
+        async function sendCommunityMessage(campaignId) {
+            const input = document.getElementById("communityMessageInput");
+            const sessionSelect = document.getElementById("communitySessionSelect");
+            if (!input || !sessionSelect) return;
+
+            const content = input.value.trim();
+            if (!content) return;
+            const sessionId = Number(sessionSelect.value);
+
+            try {
+                await community.sendMessage(campaignId, sessionId, content);
+                input.value = "";
+                await loadCommunityPanel(campaignId);
+            } catch (error) {
+                showMessage(error.message || "Could not send message", true);
+            }
+        }
+
+        async function reportCommunityMessage(campaignId, sessionId, messageId) {
+            const reason = (window.prompt("Report reason: spam, abuse, harassment, other", "abuse") || "").trim().toLowerCase();
+            if (!reason) return;
+            const note = window.prompt("Additional note (optional):", "") || "";
+            try {
+                await community.reportMessage(campaignId, sessionId, messageId, reason, note);
+                showMessage("Report submitted");
+            } catch (error) {
+                showMessage(error.message || "Report failed", true);
+            }
+        }
+
+        async function deleteCommunityMessage(campaignId, sessionId, messageId) {
+            if (!window.confirm("Delete this message?")) return;
+            try {
+                await community.deleteMessage(campaignId, sessionId, messageId);
+                await loadCommunityPanel(campaignId);
+                showMessage("Message deleted");
+            } catch (error) {
+                showMessage(error.message || "Delete failed", true);
+            }
+        }
+
+        async function loadModerationQueue(campaignId) {
+            const queue = document.getElementById("modQueue");
+            if (!queue) return;
+            try {
+                const payload = await community.loadReports(campaignId, { limit: 25 });
+                const reports = payload.reports || [];
+                if (!reports.length) {
+                    queue.className = "mod-queue muted";
+                    queue.textContent = "No open reports found.";
+                    return;
+                }
+
+                queue.className = "mod-queue";
+                queue.innerHTML = reports.map(report => `
+                    <div class="mod-item">
+                        <div><strong>#${report.id}</strong> ${escapeHtml(report.reason_code)} | ${escapeHtml(report.status)}</div>
+                        <div class="muted">Reporter: ${escapeHtml(report.reporter_username || String(report.reporter_user_id))}</div>
+                        <div class="muted">Target user: ${escapeHtml(report.target_username || String(report.target_user_id || "-"))}</div>
+                        <div class="muted">Target msg: ${escapeHtml(String(report.target_message_id || "-"))}</div>
+                    </div>
+                `).join("");
+            } catch (error) {
+                showMessage(error.message || "Could not load moderation queue", true);
+            }
+        }
+
+        async function applyModerationActionFromUI(campaignId) {
+            const actionType = document.getElementById("modActionType")?.value;
+            const subjectUserId = document.getElementById("modTargetUserId")?.value;
+            const subjectMessageId = document.getElementById("modTargetMessageId")?.value;
+            const reason = document.getElementById("modReason")?.value;
+            const duration = document.getElementById("modDuration")?.value;
+
+            const payload = { action_type: actionType };
+            if (subjectUserId) payload.subject_user_id = Number(subjectUserId);
+            if (subjectMessageId) payload.subject_message_id = Number(subjectMessageId);
+            if (reason) payload.reason = reason;
+            if (duration) payload.duration_minutes = Number(duration);
+
+            try {
+                await community.createModerationAction(campaignId, payload);
+                showMessage("Moderation action applied");
+                await loadModerationQueue(campaignId);
+                await loadCommunityPanel(campaignId);
+            } catch (error) {
+                showMessage(error.message || "Could not apply moderation action", true);
+            }
+        }
+
+        async function revokeModerationActionFromUI(campaignId) {
+            const actionIdRaw = document.getElementById("modRevokeActionId")?.value;
+            if (!actionIdRaw) {
+                showMessage("Enter action_id to revoke", true);
+                return;
+            }
+
+            try {
+                await community.revokeModerationAction(campaignId, Number(actionIdRaw));
+                showMessage("Action revoked");
+                await loadModerationQueue(campaignId);
+            } catch (error) {
+                showMessage(error.message || "Revoke failed", true);
+            }
+        }
+
+        async function viewCampaign(campaignId, pushHistory = true) {
+            try {
+                const data = await auth.makeAuthRequest(`/api/campaigns/${campaignId}`);
+                selectedCampaignId = campaignId;
+                renderCampaignDetail(data);
+                if (pushHistory) {
+                    updateUrlCampaignId(campaignId);
+                }
+            } catch (error) {
+                showMessage(error.message || "Failed to load campaign details", true);
+            }
+        }
+
+        function renderCampaignDetail(data) {
+            const detail = document.getElementById("campaignDetail");
+            const detailBody = document.getElementById("detailBody");
+            const campaign = data.campaign;
+            const members = data.members || [];
+            const sessions = data.sessions || [];
+            const canManage = campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
+            currentDetailCampaign = campaign;
+
+            document.getElementById("detailTitle").textContent = campaign.name;
+            document.getElementById("refreshDetailBtn").onclick = () => viewCampaign(campaign.id, false);
+
+            const inviteControls = canManage ? `
+                <div class="inline-controls">
+                    <input id="inviteUsername" type="text" placeholder="Username to invite">
+                    <button class="btn btn-primary btn-sm" onclick="invitePlayer(${campaign.id})">Generate Invite</button>
+                </div>
+            ` : "";
+
+            const sessionControls = canManage ? `
+                <div class="inline-controls">
+                    <input id="sessionName" type="text" placeholder="Session name">
+                    <input id="sessionSchedule" type="datetime-local" placeholder="Schedule">
+                    <input id="sessionDuration" type="number" min="30" step="30" placeholder="Duration (min)">
+                    <button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">Create Session</button>
+                </div>
+            ` : "";
+
+            detailBody.innerHTML = `
+                <div class="detail-columns">
+                    <div class="detail-box">
+                        <h3>Campaign</h3>
+                        <div><strong>DM:</strong> ${escapeHtml(campaign.owner)}</div>
+                        <div><strong>Status:</strong> ${escapeHtml(campaign.status)}</div>
+                        <div><strong>Members:</strong> ${campaign.member_count} / ${campaign.max_players}</div>
+                        <div class="muted" style="margin-top:0.5rem;">${escapeHtml(campaign.description || "No description")}</div>
+                        ${inviteControls}
+                    </div>
+                    <div class="detail-box">
+                        <h3>Sessions</h3>
+                        <div class="list">${buildSessionsList(campaign, sessions)}</div>
+                        ${sessionControls}
+                    </div>
+                </div>
+                <div class="detail-box" style="margin-top:1rem;">
+                    <h3>Members</h3>
+                    <div class="list">${buildMembersList(members)}</div>
+                </div>
+                ${buildCommunityPanel(campaign, sessions)}
+            `;
+
+            detail.classList.remove("hidden");
+            if (sessions.length > 0) {
+                loadCommunityPanel(campaign.id);
+                if (canModerateCampaign(campaign)) {
+                    loadModerationQueue(campaign.id);
+                }
+            }
+        }
+
+        function closeCampaignDetail() {
+            selectedCampaignId = null;
+            currentDetailCampaign = null;
+            document.getElementById("campaignDetail").classList.add("hidden");
+            updateUrlCampaignId(null);
+        }
+
+        async function invitePlayer(campaignId) {
+            const usernameField = document.getElementById("inviteUsername");
+            const playerUsername = usernameField ? usernameField.value.trim() : "";
+            if (!playerUsername) {
+                showMessage("Please enter a username", true);
+                return;
+            }
+
+            try {
+                const invite = await auth.makeAuthRequest(`/api/campaigns/${campaignId}/invite`, "POST", {
+                    player_username: playerUsername
+                });
+                if (usernameField) usernameField.value = "";
+                showMessage("Invite token generated");
+                window.prompt("Copy invite token:", invite.invite_token);
+                await viewCampaign(campaignId, false);
+            } catch (error) {
+                showMessage(error.message || "Failed to invite player", true);
+            }
+        }
+
+        async function createSession(campaignId) {
+            const nameField = document.getElementById("sessionName");
+            const scheduleField = document.getElementById("sessionSchedule");
+            const durationField = document.getElementById("sessionDuration");
+
+            const name = nameField ? nameField.value.trim() : "";
+            if (!name) {
+                showMessage("Session name is required", true);
+                return;
+            }
+
+            const payload = { name };
+            if (scheduleField && scheduleField.value) {
+                payload.scheduled_at = new Date(scheduleField.value).toISOString();
+            }
+            if (durationField && durationField.value) {
+                payload.duration_minutes = Number(durationField.value);
+            }
+
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, "POST", payload);
+                if (nameField) nameField.value = "";
+                if (scheduleField) scheduleField.value = "";
+                if (durationField) durationField.value = "";
+                showMessage("Session created");
+                await viewCampaign(campaignId, false);
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Failed to create session", true);
+            }
+        }
+
+        async function startSession(campaignId, sessionId) {
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/start`, "POST");
+                showMessage("Session started");
+                await viewCampaign(campaignId, false);
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Failed to start session", true);
+            }
+        }
+
+        async function endSession(campaignId, sessionId) {
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/end`, "POST");
+                showMessage("Session ended");
+                await viewCampaign(campaignId, false);
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Failed to end session", true);
+            }
+        }
+
+        function summarizeCombatState(payload) {
+            const encounter = payload?.encounter;
+            if (!encounter) return "No combat encounter yet.";
+            const participants = payload?.participants || [];
+            const activeToken = participants.find(token => token.id === encounter.active_token_id);
+            const activeName = activeToken ? activeToken.name : "none";
+            return `Encounter #${encounter.id} | Status: ${encounter.status} | Round: ${encounter.round_number} | Active: ${activeName} | Version: ${encounter.version}`;
+        }
+
+        async function fetchCombatState(campaignId, sessionId) {
+            return auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/combat/state`);
+        }
+
+        async function viewCombatState(campaignId, sessionId) {
+            try {
+                const payload = await fetchCombatState(campaignId, sessionId);
+                const summary = summarizeCombatState(payload);
+                showMessage(summary);
+            } catch (error) {
+                showMessage(error.message || "Failed to load combat state", true);
+            }
+        }
+
+        async function startCombat(campaignId, sessionId) {
+            const mode = (window.prompt("Combat mode? Type auto or manual.", "auto") || "auto").trim().toLowerCase();
+            if (!mode) return;
+            if (mode !== "auto" && mode !== "manual") {
+                showMessage("Combat mode must be auto or manual", true);
+                return;
+            }
+
+            try {
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/start`,
+                    "POST",
+                    { mode }
+                );
+                showMessage(`Combat started. ${summarizeCombatState(payload)}`);
+                if (selectedCampaignId === campaignId) {
+                    await viewCampaign(campaignId, false);
+                }
+            } catch (error) {
+                showMessage(error.message || "Failed to start combat", true);
+            }
+        }
+
+        async function setCombatInitiative(campaignId, sessionId) {
+            try {
+                const state = await fetchCombatState(campaignId, sessionId);
+                if (!state.encounter) {
+                    showMessage("No active encounter to set initiative", true);
+                    return;
+                }
+
+                const raw = window.prompt("Initiative entries as token_id:value comma-separated (example: 3:17,4:12)");
+                if (!raw || !raw.trim()) return;
+
+                const entries = raw.split(",").map(chunk => chunk.trim()).filter(Boolean).map(chunk => {
+                    const parts = chunk.split(":");
+                    return {
+                        token_id: Number(parts[0]),
+                        initiative: Number(parts[1])
+                    };
+                });
+
+                if (!entries.length || entries.some(entry => !Number.isInteger(entry.token_id) || !Number.isInteger(entry.initiative))) {
+                    showMessage("Invalid initiative format", true);
+                    return;
+                }
+
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/initiative`,
+                    "POST",
+                    {
+                        base_version: state.encounter.version,
+                        entries
+                    }
+                );
+                showMessage(`Initiative updated. ${summarizeCombatState(payload)}`);
+            } catch (error) {
+                showMessage(error.message || "Failed to set initiative", true);
+            }
+        }
+
+        async function advanceCombatTurn(campaignId, sessionId) {
+            try {
+                const state = await fetchCombatState(campaignId, sessionId);
+                if (!state.encounter) {
+                    showMessage("No active encounter", true);
+                    return;
+                }
+
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/turn/advance`,
+                    "POST",
+                    {
+                        base_version: state.encounter.version
+                    }
+                );
+                showMessage(`Turn advanced. ${summarizeCombatState(payload)}`);
+            } catch (error) {
+                showMessage(error.message || "Failed to advance turn", true);
+            }
+        }
+
+        async function adjustCombatHp(campaignId, sessionId) {
+            try {
+                const state = await fetchCombatState(campaignId, sessionId);
+                if (!state.encounter) {
+                    showMessage("No active encounter", true);
+                    return;
+                }
+
+                const tokenIdRaw = window.prompt("Target token id:");
+                if (!tokenIdRaw) return;
+                const tokenId = Number(tokenIdRaw);
+                if (!Number.isInteger(tokenId)) {
+                    showMessage("Token id must be a number", true);
+                    return;
+                }
+
+                const deltaRaw = window.prompt("HP delta (negative = damage, positive = heal):", "-5");
+                if (!deltaRaw) return;
+                const delta = Number(deltaRaw);
+                if (!Number.isInteger(delta)) {
+                    showMessage("Delta must be a number", true);
+                    return;
+                }
+
+                const reason = window.prompt("Reason (optional):", "") || null;
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/hp-adjust`,
+                    "POST",
+                    {
+                        base_version: state.encounter.version,
+                        target_token_id: tokenId,
+                        delta,
+                        reason
+                    }
+                );
+                showMessage(`HP updated. ${summarizeCombatState(payload)}`);
+            } catch (error) {
+                showMessage(error.message || "Failed to adjust HP", true);
+            }
+        }
+
+        async function endCombat(campaignId, sessionId) {
+            if (!window.confirm("End current combat encounter?")) return;
+            try {
+                const state = await fetchCombatState(campaignId, sessionId);
+                if (!state.encounter) {
+                    showMessage("No active encounter", true);
+                    return;
+                }
+
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/end`,
+                    "POST",
+                    {
+                        base_version: state.encounter.version
+                    }
+                );
+                showMessage(`Combat ended. ${summarizeCombatState(payload)}`);
+            } catch (error) {
+                showMessage(error.message || "Failed to end combat", true);
+            }
+        }
+
+        async function deleteCampaign(campaignId) {
+            if (!window.confirm("Delete this campaign?")) return;
+
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}`, "DELETE");
+                if (selectedCampaignId === campaignId) {
+                    closeCampaignDetail();
+                }
+                showMessage("Campaign deleted");
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Failed to delete campaign", true);
+            }
+        }
+
+        function enterCampaign(campaignId) {
+            window.location.href = `/campaigns?campaign_id=${campaignId}`;
+        }
+
+        function openPlay(campaignId, sessionId) {
+            window.location.href = `/play?campaign_id=${campaignId}&session_id=${sessionId}`;
+        }
+
+        function goTo(path) {
+            window.location.href = path;
+        }
+
+        async function logout() {
+            await auth.logout();
+        }
+
+        loadCampaigns();
+    </script>
+</body>
+</html>

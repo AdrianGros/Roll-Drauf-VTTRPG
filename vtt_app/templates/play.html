@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTT Play Runtime</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(140deg, #111a2e 0%, #1f2d4f 60%, #27385f 100%);
+            color: #eef3ff;
+            min-height: 100vh;
+        }
+        header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            background: rgba(8, 16, 30, 0.55);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        h1 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+        .badge-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .badge {
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 999px;
+            padding: 0.2rem 0.65rem;
+            font-size: 0.8rem;
+            background: rgba(255,255,255,0.08);
+        }
+        main {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+        }
+        .panel {
+            background: rgba(7, 12, 24, 0.65);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 0.9rem;
+        }
+        .panel h2 {
+            margin: 0 0 0.7rem 0;
+            font-size: 1rem;
+            color: #9ec1ff;
+        }
+        .subpanel {
+            margin-bottom: 0.7rem;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 8px;
+            padding: 0.6rem;
+            background: rgba(255,255,255,0.03);
+        }
+        .subpanel h3 {
+            margin: 0 0 0.45rem 0;
+            font-size: 0.9rem;
+            color: #d2e2ff;
+        }
+        .button-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.55rem;
+        }
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 0.45rem 0.7rem;
+            cursor: pointer;
+            background: #4f7ed7;
+            color: white;
+            font-size: 0.85rem;
+            transition: background 0.15s ease-in-out, opacity 0.15s ease-in-out;
+        }
+        button:hover { background: #3f68b8; }
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+            background: #5a6477;
+        }
+        .secondary { background: #505e79; }
+        .danger { background: #b84949; }
+        .mini-btn { padding: 0.25rem 0.55rem; font-size: 0.78rem; }
+        .message {
+            margin: 0.6rem 0;
+            border-radius: 6px;
+            padding: 0.45rem 0.6rem;
+            display: none;
+        }
+        .message.success {
+            display: block;
+            background: rgba(72, 167, 108, 0.26);
+            border: 1px solid rgba(72, 167, 108, 0.55);
+        }
+        .message.error {
+            display: block;
+            background: rgba(191, 75, 75, 0.3);
+            border: 1px solid rgba(191, 75, 75, 0.6);
+        }
+        .message.info {
+            display: block;
+            background: rgba(77, 133, 213, 0.24);
+            border: 1px solid rgba(77, 133, 213, 0.6);
+        }
+        .muted { opacity: 0.75; font-size: 0.9rem; }
+        .panel-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 6px;
+            padding: 0.45rem 0.55rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.88rem;
+        }
+        .active-row {
+            border-color: rgba(106, 176, 255, 0.75);
+            background: rgba(106, 176, 255, 0.15);
+        }
+        .grid-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        input, select {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #eef3ff;
+            border-radius: 6px;
+            padding: 0.4rem 0.55rem;
+            width: 100%;
+        }
+        #diceLog, #activityLog {
+            max-height: 140px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+        }
+        .activity-line {
+            padding: 0.25rem 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.12);
+        }
+        .activity-line:last-child { border-bottom: none; }
+        .ready-block {
+            border-left: 3px solid #d45555;
+            padding-left: 0.45rem;
+            margin: 0.35rem 0;
+        }
+        .ready-warn {
+            border-left: 3px solid #c99a3c;
+            padding-left: 0.45rem;
+            margin: 0.35rem 0;
+        }
+        .ready-ok {
+            border-left: 3px solid #4aa570;
+            padding-left: 0.45rem;
+            margin: 0.35rem 0;
+        }
+        @media (max-width: 950px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            .grid-two {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="sessionTitle">Loading session...</h1>
+        <div class="badge-row">
+            <span class="badge">Mode: <strong id="modeBadge">-</strong></span>
+            <span class="badge">Role: <strong id="roleBadge">-</strong></span>
+            <span class="badge">Access: <strong id="readOnlyBadge">-</strong></span>
+        </div>
+    </header>
+
+    <main>
+        <section class="panel">
+            <h2>Play Flow</h2>
+            <div id="msg" class="message"></div>
+            <div id="readOnlyNotice" class="message info"></div>
+
+            <div class="subpanel">
+                <h3>Navigation</h3>
+                <div class="button-row">
+                    <button id="btnBack" class="secondary">Back to Campaigns</button>
+                </div>
+            </div>
+
+            <div class="subpanel">
+                <h3>Setup Controls</h3>
+                <div class="button-row">
+                    <button id="btnInitStack" class="secondary">Init Scene Stack</button>
+                    <button id="btnReadyCheck" class="secondary">Run Ready Check</button>
+                </div>
+            </div>
+
+            <div class="subpanel">
+                <h3>Session Lifecycle</h3>
+                <div class="button-row">
+                    <button id="btnToReady">Set Ready</button>
+                    <button id="btnStart">Start Live</button>
+                    <button id="btnPause" class="secondary">Pause</button>
+                    <button id="btnResume">Resume</button>
+                    <button id="btnEnd" class="danger">End Session</button>
+                </div>
+            </div>
+
+            <div class="panel" style="margin-bottom: 0.7rem;">
+                <h2>Ready Check</h2>
+                <div id="readyCheckOutput" class="muted">No check executed yet.</div>
+            </div>
+
+            <div class="grid-two">
+                <div class="panel">
+                    <h2>Scene Layers</h2>
+                    <div class="muted" style="margin-bottom:0.4rem;">Active Map: <span id="activeMapText">-</span></div>
+                    <div id="layerList"></div>
+                </div>
+                <div class="panel">
+                    <h2>Tokens</h2>
+                    <div id="tokenList"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Actions and Dice</h2>
+            <div class="panel" style="margin-bottom: 0.7rem;">
+                <h2>Action Bar v1</h2>
+                <div class="button-row" style="margin-bottom:0.45rem;">
+                    <select id="actionTokenId"></select>
+                    <select id="actionTargetTokenId"></select>
+                </div>
+                <div class="button-row">
+                    <select id="actionCode"></select>
+                    <button id="btnExecuteAction">Execute Action</button>
+                </div>
+            </div>
+
+            <div class="panel" style="margin-bottom: 0.7rem;">
+                <h2>Dice</h2>
+                <div class="button-row">
+                    <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5">
+                    <button id="btnRoll">Roll</button>
+                </div>
+                <div id="diceResult" class="muted">No roll executed.</div>
+                <div id="diceLog" class="muted" style="margin-top:0.45rem;"></div>
+            </div>
+
+            <div class="panel">
+                <h2>Activity Feed</h2>
+                <div id="activityLog" class="muted">No events yet.</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/play-client.js"></script>
+    <script src="/static/js/play-socket.js"></script>
+    <script src="/static/js/play-ui.js"></script>
+</body>
+</html>

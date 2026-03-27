@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTT - Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #4a9eff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a9eff;
+        }
+
+        .user-menu {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .user-name {
+            color: #b0b0b0;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #4a9eff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #357bcc;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #777;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid #4a9eff;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a9eff;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #4a9eff;
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .section-header a {
+            color: #4a9eff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .section-header a:hover {
+            text-decoration: underline;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            border-color: #4a9eff;
+            box-shadow: 0 0 10px rgba(74, 158, 255, 0.2);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 150px;
+            background: #333;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3rem;
+        }
+
+        .card-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .card-buttons button {
+            flex: 1;
+            padding: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #a0a0a0;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">roll drauf VTT</div>
+        <div class="user-menu">
+            <span class="user-name" id="username">Loading...</span>
+            <button class="btn btn-secondary" onclick="goTo('/characters')">Characters</button>
+            <button class="btn btn-secondary" onclick="goTo('/campaigns')">Campaigns</button>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-header">
+            <h1>Dashboard</h1>
+            <p>Welcome back! Here's your gaming overview.</p>
+        </div>
+
+        <div class="stats-row" id="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="campaignCount">0</div>
+                <div class="stat-label">Campaigns</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="characterCount">0</div>
+                <div class="stat-label">Characters</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="sessionsCount">0</div>
+                <div class="stat-label">Sessions</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Recent Campaigns</h2>
+                <a href="/campaigns" onclick="goTo('/campaigns'); return false;">View All</a>
+            </div>
+            <div class="grid" id="campaignsGrid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📋</div>
+                    <p>No campaigns yet. <a href="/campaigns" onclick="goTo('/campaigns'); return false;">Create one!</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Recent Characters</h2>
+                <a href="/characters" onclick="goTo('/characters'); return false;">View All</a>
+            </div>
+            <div class="grid" id="charactersGrid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🧙</div>
+                    <p>No characters yet. <a href="/characters" onclick="goTo('/characters'); return false;">Create one!</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
+    </footer>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        const auth = new Auth();
+
+        async function loadDashboard() {
+            try {
+                const user = await auth.getCurrentUser();
+                if (!user) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+
+                document.getElementById('username').textContent = user.username;
+
+                // Load campaigns
+                const campaignsRes = await auth.makeAuthRequest('/api/campaigns');
+                const campaigns = campaignsRes.slice(0, 3);
+                loadCampaignsGrid(campaigns);
+                document.getElementById('campaignCount').textContent = campaignsRes.length;
+
+                // Load characters
+                const charactersRes = await auth.makeAuthRequest('/api/characters/mine');
+                const characters = charactersRes.slice(0, 3);
+                loadCharactersGrid(characters);
+                document.getElementById('characterCount').textContent = charactersRes.length;
+
+            } catch (error) {
+                console.error('Failed to load dashboard:', error);
+                window.location.href = '/login.html';
+            }
+        }
+
+        function loadCampaignsGrid(campaigns) {
+            const grid = document.getElementById('campaignsGrid');
+            if (campaigns.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">📋</div>
+                        <p>No campaigns yet. <a href="/campaigns" onclick="goTo('/campaigns'); return false;">Create one!</a></p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = campaigns.map(c => `
+                <div class="card" onclick="goTo('/campaigns')">
+                    <div class="card-image">🏰</div>
+                    <div class="card-title">${c.name}</div>
+                    <div class="card-meta">${c.status} • ${c.member_count || 0} members</div>
+                    <div class="card-buttons">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); joinCampaign(${c.id})">View</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadCharactersGrid(characters) {
+            const grid = document.getElementById('charactersGrid');
+            if (characters.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">🧙</div>
+                        <p>No characters yet. <a href="/characters" onclick="goTo('/characters'); return false;">Create one!</a></p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = characters.map(c => `
+                <div class="card" onclick="goTo('/characters')">
+                    <div class="card-image">🗡️</div>
+                    <div class="card-title">${c.name}</div>
+                    <div class="card-meta">Lvl ${c.level} ${c.class} • ${c.race}</div>
+                    <div class="card-buttons">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); viewCharacter(${c.id})">View</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function goTo(path) {
+            window.location.href = path;
+        }
+
+        function joinCampaign(id) {
+            alert('Campaign ' + id);
+        }
+
+        function viewCharacter(id) {
+            alert('Character ' + id);
+        }
+
+        async function logout() {
+            await auth.logout();
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>

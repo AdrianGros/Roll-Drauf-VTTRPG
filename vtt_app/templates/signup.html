@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - roll drauf vtt</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .signup-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102,126,234,0.3);
+        }
+        .password-requirements {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+        .requirement {
+            margin: 3px 0;
+        }
+        .requirement.met { color: #4caf50; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .error {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .link a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>roll drauf vtt</h1>
+        <p class="subtitle">Create your account</p>
+        <form id="signupForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="3-50 characters" required>
+                <div class="error" id="usernameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="password-requirements">
+                    <div class="requirement" id="req-length">✓ At least 8 characters</div>
+                    <div class="requirement" id="req-upper">✓ One uppercase letter (A-Z)</div>
+                    <div class="requirement" id="req-lower">✓ One lowercase letter (a-z)</div>
+                    <div class="requirement" id="req-digit">✓ One digit (0-9)</div>
+                    <div class="requirement" id="req-special">✓ One special character (!@#$%)</div>
+                </div>
+                <div class="error" id="passwordError"></div>
+            </div>
+
+            <button type="submit">Create Account</button>
+            <div class="loading" id="loading">Creating account...</div>
+            <div class="error" id="generalError"></div>
+        </form>
+
+        <div class="link">
+            Already have an account? <a href="/login.html">Login</a>
+        </div>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Auth.redirectIfAuthenticated('/dashboard');
+        });
+
+        // Real-time password validation
+        document.getElementById('password').addEventListener('input', (e) => {
+            const password = e.target.value;
+            updateRequirement('req-length', password.length >= 8);
+            updateRequirement('req-upper', /[A-Z]/.test(password));
+            updateRequirement('req-lower', /[a-z]/.test(password));
+            updateRequirement('req-digit', /\d/.test(password));
+            updateRequirement('req-special', /[!@#$%^&*_\-+=]/.test(password));
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            clearErrors();
+            showLoading(true);
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showError('generalError', data.error || 'Signup failed');
+                    return;
+                }
+
+                // Success
+                alert('Account created! Please log in.');
+                window.location.href = '/login.html';
+
+            } catch (error) {
+                showError('generalError', 'Network error: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        function updateRequirement(elementId, met) {
+            const el = document.getElementById(elementId);
+            if (met) {
+                el.classList.add('met');
+            } else {
+                el.classList.remove('met');
+            }
+        }
+
+        function clearErrors() {
+            document.getElementById('usernameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('generalError').textContent = '';
+        }
+
+        function showError(elementId, message) {
+            document.getElementById(elementId).textContent = message;
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

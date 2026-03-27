@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTT - Character Sheet</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0,0,0,0.35);
+            border-bottom: 2px solid #4a9eff;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo { color: #4a9eff; font-size: 1.3rem; font-weight: bold; }
+        .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn {
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0.45rem 0.85rem;
+            font-size: 0.9rem;
+        }
+        .btn-primary { background: #4a9eff; color: #fff; }
+        .btn-secondary { background: #666; color: #fff; }
+        .btn-danger { background: #d74a4a; color: #fff; }
+        main {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1rem 2rem;
+        }
+        .message {
+            display: none;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        .message.success {
+            display: block;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.6);
+        }
+        .message.error {
+            display: block;
+            background: rgba(215, 74, 74, 0.2);
+            border: 1px solid rgba(215, 74, 74, 0.6);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .panel {
+            background: rgba(0,0,0,0.35);
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .panel h2 {
+            color: #4a9eff;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .fields {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.65rem;
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .field label {
+            font-size: 0.78rem;
+            color: #a0a0a0;
+        }
+        input, textarea {
+            background: #1a1a24;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.45rem 0.55rem;
+        }
+        textarea { min-height: 80px; resize: vertical; }
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 0.6rem;
+        }
+        .item {
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.6rem;
+            background: rgba(0,0,0,0.25);
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+        .item-meta { font-size: 0.82rem; color: #a0a0a0; margin-top: 0.3rem; }
+        .inline-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.7rem;
+        }
+        .inline-form input {
+            min-width: 140px;
+            flex: 1;
+        }
+        .muted { color: #a0a0a0; font-size: 0.85rem; }
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+            .fields { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">roll drauf VTT</div>
+        <div class="actions">
+            <button class="btn btn-secondary" onclick="goBack()">Back</button>
+            <button class="btn btn-secondary" onclick="goTo('/dashboard')">Dashboard</button>
+            <button class="btn btn-secondary" onclick="goTo('/campaigns')">Campaigns</button>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="messageBox" class="message"></div>
+        <div class="panel" style="margin-bottom:1rem;">
+            <h2 id="sheetTitle">Character Sheet</h2>
+            <div class="muted" id="modeLabel"></div>
+        </div>
+
+        <div class="grid">
+            <section class="panel">
+                <h2>Core</h2>
+                <div class="fields">
+                    <div class="field"><label>Name</label><input id="charName"></div>
+                    <div class="field"><label>Race</label><input id="charRace"></div>
+                    <div class="field"><label>Class</label><input id="charClass"></div>
+                    <div class="field"><label>Background</label><input id="charBackground"></div>
+                    <div class="field"><label>Level</label><input id="charLevel" type="number" min="1"></div>
+                    <div class="field"><label>XP</label><input id="charXp" type="number" min="0"></div>
+                    <div class="field"><label>AC</label><input id="charAc" type="number"></div>
+                    <div class="field"><label>HP Current</label><input id="charHpCurrent" type="number"></div>
+                    <div class="field"><label>HP Max</label><input id="charHpMax" type="number"></div>
+                    <div class="field"><label>STR</label><input id="charStr" type="number"></div>
+                    <div class="field"><label>DEX</label><input id="charDex" type="number"></div>
+                    <div class="field"><label>CON</label><input id="charCon" type="number"></div>
+                    <div class="field"><label>INT</label><input id="charInt" type="number"></div>
+                    <div class="field"><label>WIS</label><input id="charWis" type="number"></div>
+                    <div class="field"><label>CHA</label><input id="charCha" type="number"></div>
+                </div>
+                <div style="margin-top:0.8rem; display:flex; gap:0.5rem;">
+                    <button class="btn btn-primary" id="saveCoreBtn" onclick="saveCore()">Save Core</button>
+                    <button class="btn btn-secondary" onclick="reloadSheet()">Reload</button>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>Spells</h2>
+                <div id="spellsList" class="list"></div>
+                <div id="spellsForm" class="inline-form">
+                    <input id="newSpellName" placeholder="Spell name">
+                    <input id="newSpellLevel" type="number" min="0" max="9" placeholder="Level">
+                    <input id="newSpellSchool" placeholder="School">
+                    <button class="btn btn-primary" onclick="addSpell()">Add Spell</button>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>Equipment</h2>
+                <div id="equipmentList" class="list"></div>
+                <div id="equipmentForm" class="inline-form">
+                    <input id="newEquipmentName" placeholder="Item name">
+                    <input id="newEquipmentType" placeholder="Type">
+                    <input id="newEquipmentAcBonus" type="number" placeholder="AC bonus">
+                    <button class="btn btn-primary" onclick="addEquipment()">Add Item</button>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>Inventory</h2>
+                <div id="inventoryList" class="list"></div>
+                <div id="inventoryForm" class="inline-form">
+                    <input id="newInventoryName" placeholder="Item name">
+                    <input id="newInventoryType" placeholder="Type">
+                    <input id="newInventoryQuantity" type="number" min="1" placeholder="Quantity">
+                    <button class="btn btn-primary" onclick="addInventoryItem()">Add Item</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        const auth = new Auth();
+        const params = new URLSearchParams(window.location.search);
+        const characterId = Number(params.get("id"));
+        const mode = (params.get("mode") || "view").toLowerCase();
+        const editable = mode === "edit";
+        let sheet = null;
+
+        function showMessage(text, isError = false) {
+            const box = document.getElementById("messageBox");
+            box.className = `message ${isError ? "error" : "success"}`;
+            box.textContent = text;
+            window.setTimeout(() => {
+                box.className = "message";
+                box.textContent = "";
+            }, 3500);
+        }
+
+        function goTo(path) {
+            window.location.href = path;
+        }
+
+        function goBack() {
+            window.location.href = "/characters";
+        }
+
+        async function logout() {
+            await auth.logout();
+        }
+
+        function setEditMode() {
+            document.getElementById("modeLabel").textContent = editable
+                ? "Edit Mode: You can change core stats and manage sheet resources."
+                : "View Mode: Read-only sheet preview.";
+            document.getElementById("saveCoreBtn").style.display = editable ? "inline-block" : "none";
+            document.getElementById("spellsForm").style.display = editable ? "flex" : "none";
+            document.getElementById("equipmentForm").style.display = editable ? "flex" : "none";
+            document.getElementById("inventoryForm").style.display = editable ? "flex" : "none";
+
+            const ids = [
+                "charName", "charRace", "charClass", "charBackground", "charLevel", "charXp",
+                "charAc", "charHpCurrent", "charHpMax", "charStr", "charDex", "charCon", "charInt", "charWis", "charCha"
+            ];
+            ids.forEach(id => {
+                document.getElementById(id).disabled = !editable;
+            });
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function renderCore(character) {
+            document.getElementById("sheetTitle").textContent = `Character Sheet: ${character.name || "Unknown"}`;
+            document.getElementById("charName").value = character.name || "";
+            document.getElementById("charRace").value = character.race || "";
+            document.getElementById("charClass").value = character.class || "";
+            document.getElementById("charBackground").value = character.background || "";
+            document.getElementById("charLevel").value = character.level ?? 1;
+            document.getElementById("charXp").value = character.xp ?? 0;
+            document.getElementById("charAc").value = character.ac ?? 10;
+            document.getElementById("charHpCurrent").value = character.hp_current ?? 0;
+            document.getElementById("charHpMax").value = character.hp_max ?? 0;
+            document.getElementById("charStr").value = character.str ?? 10;
+            document.getElementById("charDex").value = character.dex ?? 10;
+            document.getElementById("charCon").value = character.con ?? 10;
+            document.getElementById("charInt").value = character.int ?? 10;
+            document.getElementById("charWis").value = character.wis ?? 10;
+            document.getElementById("charCha").value = character.cha ?? 10;
+        }
+
+        function renderSpells(spells) {
+            const container = document.getElementById("spellsList");
+            if (!spells.length) {
+                container.innerHTML = "<div class='muted'>No spells</div>";
+                return;
+            }
+
+            container.innerHTML = spells.map(spell => `
+                <div class="item">
+                    <div>
+                        <strong>${escapeHtml(spell.name)}</strong>
+                        <div class="item-meta">Level ${spell.level} | ${escapeHtml(spell.school || "Unknown school")}</div>
+                        <div class="item-meta">${escapeHtml(spell.damage_dice || "-")} ${escapeHtml(spell.damage_type || "")}</div>
+                    </div>
+                    ${editable ? `<button class="btn btn-danger" onclick="deleteSpell(${spell.id})">Delete</button>` : ""}
+                </div>
+            `).join("");
+        }
+
+        function renderEquipment(items) {
+            const container = document.getElementById("equipmentList");
+            if (!items.length) {
+                container.innerHTML = "<div class='muted'>No equipment</div>";
+                return;
+            }
+
+            container.innerHTML = items.map(item => `
+                <div class="item">
+                    <div>
+                        <strong>${escapeHtml(item.name)}</strong>
+                        <div class="item-meta">${escapeHtml(item.type || "Unknown type")} | AC +${item.ac_bonus ?? 0}</div>
+                        <div class="item-meta">${escapeHtml(item.damage_dice || "-")} ${escapeHtml(item.damage_type || "")}</div>
+                    </div>
+                    ${editable ? `<button class="btn btn-danger" onclick="deleteEquipment(${item.id})">Delete</button>` : ""}
+                </div>
+            `).join("");
+        }
+
+        function renderInventory(items) {
+            const container = document.getElementById("inventoryList");
+            if (!items.length) {
+                container.innerHTML = "<div class='muted'>No inventory items</div>";
+                return;
+            }
+
+            container.innerHTML = items.map(item => `
+                <div class="item">
+                    <div>
+                        <strong>${escapeHtml(item.name)}</strong>
+                        <div class="item-meta">${escapeHtml(item.type || "Unknown type")} | Qty ${item.quantity}</div>
+                        <div class="item-meta">Weight total: ${item.total_weight ?? 0}</div>
+                    </div>
+                    ${editable ? `<button class="btn btn-danger" onclick="deleteInventoryItem(${item.id})">Delete</button>` : ""}
+                </div>
+            `).join("");
+        }
+
+        function renderSheet() {
+            if (!sheet) return;
+            renderCore(sheet.character);
+            renderSpells(sheet.spells || []);
+            renderEquipment(sheet.equipment || []);
+            renderInventory(sheet.inventory || []);
+        }
+
+        async function loadSheet() {
+            if (!Number.isInteger(characterId) || characterId <= 0) {
+                showMessage("Invalid character id", true);
+                return;
+            }
+
+            try {
+                await auth.requireAuth("/login.html");
+                sheet = await auth.makeAuthRequest(`/api/characters/${characterId}/sheet`);
+                renderSheet();
+            } catch (error) {
+                showMessage(error.message || "Failed to load character sheet", true);
+            }
+        }
+
+        async function reloadSheet() {
+            await loadSheet();
+            showMessage("Sheet reloaded");
+        }
+
+        async function saveCore() {
+            if (!editable) return;
+            try {
+                const payload = {
+                    name: document.getElementById("charName").value.trim(),
+                    race: document.getElementById("charRace").value.trim(),
+                    class: document.getElementById("charClass").value.trim(),
+                    background: document.getElementById("charBackground").value.trim(),
+                    level: Number(document.getElementById("charLevel").value),
+                    xp: Number(document.getElementById("charXp").value),
+                    ac: Number(document.getElementById("charAc").value),
+                    hp_current: Number(document.getElementById("charHpCurrent").value),
+                    hp_max: Number(document.getElementById("charHpMax").value),
+                    str: Number(document.getElementById("charStr").value),
+                    dex: Number(document.getElementById("charDex").value),
+                    con: Number(document.getElementById("charCon").value),
+                    int: Number(document.getElementById("charInt").value),
+                    wis: Number(document.getElementById("charWis").value),
+                    cha: Number(document.getElementById("charCha").value)
+                };
+                await auth.makeAuthRequest(`/api/characters/${characterId}`, "PUT", payload);
+                await loadSheet();
+                showMessage("Core stats saved");
+            } catch (error) {
+                showMessage(error.message || "Failed to save core stats", true);
+            }
+        }
+
+        async function addSpell() {
+            if (!editable) return;
+            try {
+                const payload = {
+                    name: document.getElementById("newSpellName").value.trim(),
+                    level: Number(document.getElementById("newSpellLevel").value || 0),
+                    school: document.getElementById("newSpellSchool").value.trim()
+                };
+                await auth.makeAuthRequest(`/api/characters/${characterId}/spells`, "POST", payload);
+                document.getElementById("newSpellName").value = "";
+                document.getElementById("newSpellLevel").value = "";
+                document.getElementById("newSpellSchool").value = "";
+                await loadSheet();
+                showMessage("Spell added");
+            } catch (error) {
+                showMessage(error.message || "Failed to add spell", true);
+            }
+        }
+
+        async function deleteSpell(spellId) {
+            if (!editable) return;
+            if (!window.confirm("Delete spell?")) return;
+            try {
+                await auth.makeAuthRequest(`/api/characters/${characterId}/spells/${spellId}`, "DELETE");
+                await loadSheet();
+                showMessage("Spell deleted");
+            } catch (error) {
+                showMessage(error.message || "Failed to delete spell", true);
+            }
+        }
+
+        async function addEquipment() {
+            if (!editable) return;
+            try {
+                const payload = {
+                    name: document.getElementById("newEquipmentName").value.trim(),
+                    type: document.getElementById("newEquipmentType").value.trim(),
+                    ac_bonus: Number(document.getElementById("newEquipmentAcBonus").value || 0)
+                };
+                await auth.makeAuthRequest(`/api/characters/${characterId}/equipment`, "POST", payload);
+                document.getElementById("newEquipmentName").value = "";
+                document.getElementById("newEquipmentType").value = "";
+                document.getElementById("newEquipmentAcBonus").value = "";
+                await loadSheet();
+                showMessage("Equipment added");
+            } catch (error) {
+                showMessage(error.message || "Failed to add equipment", true);
+            }
+        }
+
+        async function deleteEquipment(itemId) {
+            if (!editable) return;
+            if (!window.confirm("Delete equipment?")) return;
+            try {
+                await auth.makeAuthRequest(`/api/characters/${characterId}/equipment/${itemId}`, "DELETE");
+                await loadSheet();
+                showMessage("Equipment deleted");
+            } catch (error) {
+                showMessage(error.message || "Failed to delete equipment", true);
+            }
+        }
+
+        async function addInventoryItem() {
+            if (!editable) return;
+            try {
+                const payload = {
+                    name: document.getElementById("newInventoryName").value.trim(),
+                    type: document.getElementById("newInventoryType").value.trim(),
+                    quantity: Number(document.getElementById("newInventoryQuantity").value || 1)
+                };
+                await auth.makeAuthRequest(`/api/characters/${characterId}/inventory`, "POST", payload);
+                document.getElementById("newInventoryName").value = "";
+                document.getElementById("newInventoryType").value = "";
+                document.getElementById("newInventoryQuantity").value = "";
+                await loadSheet();
+                showMessage("Inventory item added");
+            } catch (error) {
+                showMessage(error.message || "Failed to add inventory item", true);
+            }
+        }
+
+        async function deleteInventoryItem(itemId) {
+            if (!editable) return;
+            if (!window.confirm("Delete inventory item?")) return;
+            try {
+                await auth.makeAuthRequest(`/api/characters/${characterId}/inventory/${itemId}`, "DELETE");
+                await loadSheet();
+                showMessage("Inventory item deleted");
+            } catch (error) {
+                showMessage(error.message || "Failed to delete inventory item", true);
+            }
+        }
+
+        setEditMode();
+        loadSheet();
+    </script>
+</body>
+</html>

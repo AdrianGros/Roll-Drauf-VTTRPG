@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+    - .env
+    environment:
+      FLASK_ENV: production
+      FLASK_DEBUG: "0"
+    expose:
+    - "5000"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    depends_on:
+    - app
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - ./ops/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+
+# NOTE:
+# PostgreSQL and Redis are expected as managed external services in production.

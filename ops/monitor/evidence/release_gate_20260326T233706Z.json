@@ -1,0 +1,108 @@
+{
+  "timestamp_utc": "2026-03-26T23:37:06.560307+00:00",
+  "base_url": "http://127.0.0.1:5000",
+  "checks": {
+    "health_live": {
+      "status_code": 200,
+      "ok": true,
+      "error": null,
+      "payload": {
+        "now": "2026-03-26T23:37:06.500432",
+        "service": "roll_drauf_vtt",
+        "started_at": "2026-03-26T23:34:46.133697",
+        "status": "ok"
+      }
+    },
+    "health_ready": {
+      "status_code": 200,
+      "ok": true,
+      "error": null,
+      "payload": {
+        "dependencies": {
+          "database": {
+            "message": "ok",
+            "ok": true
+          },
+          "redis": {
+            "message": "not_configured",
+            "ok": true
+          }
+        },
+        "now": "2026-03-26T23:37:06.524921",
+        "status": "ready"
+      }
+    },
+    "health_release": {
+      "status_code": 200,
+      "ok": true,
+      "error": null,
+      "payload": {
+        "checks": {
+          "dependencies": {
+            "database_message": "ok",
+            "database_ok": true,
+            "ok": true,
+            "redis_message": "not_configured",
+            "redis_ok": true
+          },
+          "error_budget": {
+            "five_xx_total": 0,
+            "max_rate": 0.1,
+            "ok": true,
+            "total_requests": 3,
+            "value_rate": 0.0
+          },
+          "latency_budget": {
+            "max_rate": 0.2,
+            "ok": true,
+            "slow_requests_total": 0,
+            "total_requests": 3,
+            "value_rate": 0.0
+          },
+          "request_volume": {
+            "min_requests": 0,
+            "ok": true,
+            "total_requests": 3
+          },
+          "rollback_runbooks": {
+            "checked_files": [],
+            "missing_files": [],
+            "ok": true,
+            "required": false
+          },
+          "socket_conflict_budget": {
+            "conflict_total": 0,
+            "max_rate": 0.4,
+            "ok": true,
+            "socket_total": 0,
+            "value_rate": 0.0
+          },
+          "socket_resync_budget": {
+            "max_rate": 0.3,
+            "ok": true,
+            "resync_total": 0,
+            "socket_total": 0,
+            "value_rate": 0.0
+          },
+          "uptime": {
+            "min_seconds": 0,
+            "ok": true,
+            "value_seconds": 140.408
+          }
+        },
+        "now": "2026-03-26T23:37:06.542626",
+        "release_ready": true,
+        "status": "go"
+      }
+    },
+    "metrics": {
+      "status_code": 200,
+      "ok": true,
+      "error": null,
+      "contains_requests_total": true,
+      "contains_socket_events": true,
+      "contains_play_transitions": true
+    }
+  },
+  "release_gate_pass": true
+}

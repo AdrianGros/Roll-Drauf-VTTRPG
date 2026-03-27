@@ -1,0 +1,42 @@
+{
+  "timestamp_utc": "2026-03-26T23:48:55.170237+00:00",
+  "overall_ok": true,
+  "steps": [
+    {
+      "name": "release_gate_evidence",
+      "command": "C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\.venv\\Scripts\\python.exe ops/monitor/release_gate_evidence.py",
+      "returncode": 0,
+      "ok": true,
+      "started_at": "2026-03-26T23:48:47.292259+00:00",
+      "ended_at": "2026-03-26T23:48:47.579132+00:00",
+      "stdout_tail": "[release-gate-evidence] wrote ops\\monitor\\evidence\\release_gate_20260326T234847Z.json\n[release-gate-evidence] release_gate_pass=True\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "targeted_regression",
+      "command": "C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\.venv\\Scripts\\python.exe -m pytest tests/test_ops_endpoints.py tests/test_play_rejoin_socket.py -q",
+      "returncode": 0,
+      "ok": true,
+      "started_at": "2026-03-26T23:48:47.579150+00:00",
+      "ended_at": "2026-03-26T23:48:52.530760+00:00",
+      "stdout_tail": " between tables: moderation_actions, moderation_reports; and backend does not support ALTER.  To restore at least a partial sort, apply use_alter=True to ForeignKey and ForeignKeyConstraint objects involved in the cycle to mark these as known cycles that will be ignored.\n    getattr(metadata, op_name)(bind=engine)\n\ntests/test_play_rejoin_socket.py: 13 warnings\n  C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\.venv\\Lib\\site-packages\\sqlalchemy\\sql\\schema.py:3624: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n    return util.wrap_callable(lambda ctx: fn(), fn)  # type: ignore\n\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_session_join_emits_play_mode\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_rejoin_gets_latest_mode_after_transition\n  C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\tests\\play_shared.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n    joined_at=datetime.utcnow(),\n\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_session_join_emits_play_mode\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_rejoin_gets_latest_mode_after_transition\n  C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\tests\\play_shared.py:38: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n    invited_at=datetime.utcnow(),\n\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_session_join_emits_play_mode\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_rejoin_gets_latest_mode_after_transition\n  C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\tests\\play_shared.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n    accepted_at=datetime.utcnow(),\n\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_session_join_emits_play_mode\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_rejoin_gets_latest_mode_after_transition\n  C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\tests\\play_shared.py:53: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n    joined_at=datetime.utcnow(),\n\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_session_join_emits_play_mode\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_rejoin_gets_latest_mode_after_transition\n  C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\tests\\play_shared.py:54: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n    invited_at=datetime.utcnow(),\n\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_session_join_emits_play_mode\ntests/test_play_rejoin_socket.py::TestPlayRejoinSocket::test_rejoin_gets_latest_mode_after_transition\n  C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\tests\\play_shared.py:55: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n    accepted_at=datetime.utcnow(),\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n10 passed, 40 warnings in 3.96s\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "browser_smoke",
+      "command": "C:\\Users\\adria\\Desktop\\DAD-M\\02_Projects\\Programmieren\\Python\\VTT\\.venv\\Scripts\\python.exe ops/monitor/browser_smoke.py",
+      "returncode": 0,
+      "ok": true,
+      "started_at": "2026-03-26T23:48:52.530790+00:00",
+      "ended_at": "2026-03-26T23:48:55.170214+00:00",
+      "stdout_tail": "[browser-smoke] PASS: login/campaign/play pages render without JS runtime errors.\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "full_regression",
+      "ok": true,
+      "skipped": true,
+      "reason": "set RUN_FULL_REGRESSION=1 to enable"
+    }
+  ]
+}

@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTT - Characters</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #4a9eff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a9eff;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #4a9eff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #357bcc;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #777;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar input {
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #e0e0e0;
+            min-width: 200px;
+        }
+
+        .filter-bar select {
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #e0e0e0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .char-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .char-card:hover {
+            border-color: #4a9eff;
+            box-shadow: 0 0 15px rgba(74, 158, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .char-portrait {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #333 0%, #222 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border-bottom: 1px solid #444;
+        }
+
+        .char-info {
+            padding: 1rem;
+        }
+
+        .char-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .char-class {
+            color: #4a9eff;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .char-race {
+            color: #a0a0a0;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .char-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin: 0.75rem 0;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .stat {
+            background: rgba(74, 158, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 3px;
+        }
+
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.75rem;
+        }
+
+        .stat-value {
+            color: #4a9eff;
+            font-weight: bold;
+        }
+
+        .char-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .char-actions button {
+            flex: 1;
+            padding: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            color: #a0a0a0;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #4a9eff;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #444;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #e0e0e0;
+        }
+
+        .progress {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+        }
+
+        .close-btn:hover {
+            color: #e0e0e0;
+        }
+
+        .modal-steps {
+            padding: 1.5rem;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4a9eff;
+            box-shadow: 0 0 10px rgba(74, 158, 255, 0.2);
+        }
+
+        .ability-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.5rem;
+            background: #444;
+            color: #a0a0a0;
+            border: 1px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #4a9eff;
+            color: #fff;
+            border-color: #4a9eff;
+        }
+
+        .ability-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .ability-item {
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid #4a9eff;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .ability-label {
+            color: #a0a0a0;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ability-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a9eff;
+            margin-bottom: 0.5rem;
+        }
+
+        .ability-modifier {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+
+        .ability-controls {
+            display: flex;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .ability-btn {
+            flex: 1;
+            padding: 0.25rem;
+            background: #444;
+            border: 1px solid #555;
+            color: #e0e0e0;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .ability-btn:hover {
+            background: #555;
+        }
+
+        .standard-array {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .array-item {
+            background: rgba(74, 158, 255, 0.2);
+            border: 1px solid #4a9eff;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .array-item.used {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+        }
+
+        .point-buy-info {
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid #4a9eff;
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-top: 1px solid #444;
+            justify-content: flex-end;
+        }
+
+        .modal-footer button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .modal-footer .btn-primary {
+            background: #4a9eff;
+            color: #fff;
+        }
+
+        .modal-footer .btn-primary:hover {
+            background: #357bcc;
+        }
+
+        .modal-footer .btn-secondary {
+            background: #666;
+            color: #fff;
+        }
+
+        .modal-footer .btn-secondary:hover {
+            background: #777;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+            }
+
+            .filter-bar input {
+                min-width: 100%;
+            }
+
+            .modal-box {
+                max-width: 95%;
+            }
+
+            .ability-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">roll drauf VTT</div>
+        <div class="header-actions">
+            <button class="btn btn-primary" onclick="goTo('/dashboard')">Dashboard</button>
+            <button class="btn btn-secondary" onclick="goTo('/campaigns')">Campaigns</button>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Characters</h1>
+            <button class="btn btn-primary" onclick="createCharacter()">+ New Character</button>
+        </div>
+
+        <div class="filter-bar">
+            <input type="text" id="searchInput" placeholder="Search characters..." onkeyup="filterCharacters()">
+            <select id="classFilter" onchange="filterCharacters()">
+                <option value="">All Classes</option>
+                <option value="Barbarian">Barbarian</option>
+                <option value="Bard">Bard</option>
+                <option value="Cleric">Cleric</option>
+                <option value="Druid">Druid</option>
+                <option value="Fighter">Fighter</option>
+                <option value="Monk">Monk</option>
+                <option value="Paladin">Paladin</option>
+                <option value="Ranger">Ranger</option>
+                <option value="Rogue">Rogue</option>
+                <option value="Sorcerer">Sorcerer</option>
+                <option value="Warlock">Warlock</option>
+                <option value="Wizard">Wizard</option>
+            </select>
+        </div>
+
+        <div class="grid" id="charactersGrid">
+            <div class="empty-state">
+                <div class="empty-state-icon">🧙</div>
+                <p>Loading characters...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Character Creation Modal -->
+    <div id="charModal" class="modal-overlay" style="display:none">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Create Character</h2>
+                <span class="progress">Step <span id="stepNum">1</span> / 3</span>
+                <button class="close-btn" onclick="closeCharModal()">×</button>
+            </div>
+
+            <div class="modal-steps">
+                <!-- Step 1: Basic Info -->
+                <div id="step1" class="step active">
+                    <h3 style="margin-bottom: 1rem; color: #4a9eff;">Basic Information</h3>
+                    <div class="form-group">
+                        <label>Character Name *</label>
+                        <input type="text" id="charName" placeholder="Enter character name">
+                        <div id="nameError" class="error-message"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Race</label>
+                        <select id="charRace">
+                            <option value="">Choose a race...</option>
+                            <option value="Human">Human</option>
+                            <option value="Elf">Elf</option>
+                            <option value="Dwarf">Dwarf</option>
+                            <option value="Halfling">Halfling</option>
+                            <option value="Half-Elf">Half-Elf</option>
+                            <option value="Half-Orc">Half-Orc</option>
+                            <option value="Gnome">Gnome</option>
+                            <option value="Tiefling">Tiefling</option>
+                            <option value="Dragonborn">Dragonborn</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Class</label>
+                        <select id="charClass" onchange="updateHitDie()">
+                            <option value="">Choose a class...</option>
+                            <option value="Barbarian">Barbarian</option>
+                            <option value="Bard">Bard</option>
+                            <option value="Cleric">Cleric</option>
+                            <option value="Druid">Druid</option>
+                            <option value="Fighter">Fighter</option>
+                            <option value="Monk">Monk</option>
+                            <option value="Paladin">Paladin</option>
+                            <option value="Ranger">Ranger</option>
+                            <option value="Rogue">Rogue</option>
+                            <option value="Sorcerer">Sorcerer</option>
+                            <option value="Warlock">Warlock</option>
+                            <option value="Wizard">Wizard</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Background</label>
+                        <select id="charBackground">
+                            <option value="">Choose a background...</option>
+                            <option value="Acolyte">Acolyte</option>
+                            <option value="Criminal">Criminal</option>
+                            <option value="Folk Hero">Folk Hero</option>
+                            <option value="Noble">Noble</option>
+                            <option value="Sage">Sage</option>
+                            <option value="Soldier">Soldier</option>
+                            <option value="Charlatan">Charlatan</option>
+                            <option value="Hermit">Hermit</option>
+                            <option value="Outlander">Outlander</option>
+                            <option value="Entertainer">Entertainer</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Step 2: Ability Scores -->
+                <div id="step2" class="step">
+                    <h3 style="margin-bottom: 1rem; color: #4a9eff;">Ability Scores</h3>
+
+                    <div class="ability-tabs">
+                        <button class="tab-btn active" id="pointBuyTab" onclick="switchAbilityTab('pointBuy')">Point Buy</button>
+                        <button class="tab-btn" id="standardTab" onclick="switchAbilityTab('standard')">Standard Array</button>
+                    </div>
+
+                    <!-- Point Buy -->
+                    <div id="pointBuySection">
+                        <div class="point-buy-info">
+                            Points remaining: <span id="pointsRemaining">27</span> / 27
+                        </div>
+
+                        <div class="ability-grid">
+                            <div class="ability-item">
+                                <div class="ability-label">STR</div>
+                                <div class="ability-score" id="strScore">10</div>
+                                <div class="ability-modifier" id="strMod">+0</div>
+                                <div class="ability-controls">
+                                    <button class="ability-btn" onclick="adjustAbility('str', -1)">−</button>
+                                    <button class="ability-btn" onclick="adjustAbility('str', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="ability-item">
+                                <div class="ability-label">DEX</div>
+                                <div class="ability-score" id="dexScore">10</div>
+                                <div class="ability-modifier" id="dexMod">+0</div>
+                                <div class="ability-controls">
+                                    <button class="ability-btn" onclick="adjustAbility('dex', -1)">−</button>
+                                    <button class="ability-btn" onclick="adjustAbility('dex', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="ability-item">
+                                <div class="ability-label">CON</div>
+                                <div class="ability-score" id="conScore">10</div>
+                                <div class="ability-modifier" id="conMod">+0</div>
+                                <div class="ability-controls">
+                                    <button class="ability-btn" onclick="adjustAbility('con', -1)">−</button>
+                                    <button class="ability-btn" onclick="adjustAbility('con', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="ability-item">
+                                <div class="ability-label">INT</div>
+                                <div class="ability-score" id="intScore">10</div>
+                                <div class="ability-modifier" id="intMod">+0</div>
+                                <div class="ability-controls">
+                                    <button class="ability-btn" onclick="adjustAbility('int', -1)">−</button>
+                                    <button class="ability-btn" onclick="adjustAbility('int', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="ability-item">
+                                <div class="ability-label">WIS</div>
+                                <div class="ability-score" id="wisScore">10</div>
+                                <div class="ability-modifier" id="wisMod">+0</div>
+                                <div class="ability-controls">
+                                    <button class="ability-btn" onclick="adjustAbility('wis', -1)">−</button>
+                                    <button class="ability-btn" onclick="adjustAbility('wis', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="ability-item">
+                                <div class="ability-label">CHA</div>
+                                <div class="ability-score" id="chaScore">10</div>
+                                <div class="ability-modifier" id="chaMod">+0</div>
+                                <div class="ability-controls">
+                                    <button class="ability-btn" onclick="adjustAbility('cha', -1)">−</button>
+                                    <button class="ability-btn" onclick="adjustAbility('cha', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Standard Array -->
+                    <div id="standardSection" style="display: none;">
+                        <p style="color: #a0a0a0; margin-bottom: 1rem; font-size: 0.9rem;">Click ability scores above to assign values from the standard array below.</p>
+                        <div class="standard-array" id="arrayValues">
+                            <div class="array-item">15</div>
+                            <div class="array-item">14</div>
+                            <div class="array-item">13</div>
+                            <div class="array-item">12</div>
+                            <div class="array-item">10</div>
+                            <div class="array-item">8</div>
+                        </div>
+
+                        <div class="ability-grid">
+                            <div class="ability-item" style="cursor: pointer;" onclick="selectAbilityForArray('str')">
+                                <div class="ability-label">STR</div>
+                                <div class="ability-score" id="strScore2">—</div>
+                                <div class="ability-modifier" id="strMod2">—</div>
+                            </div>
+
+                            <div class="ability-item" style="cursor: pointer;" onclick="selectAbilityForArray('dex')">
+                                <div class="ability-label">DEX</div>
+                                <div class="ability-score" id="dexScore2">—</div>
+                                <div class="ability-modifier" id="dexMod2">—</div>
+                            </div>
+
+                            <div class="ability-item" style="cursor: pointer;" onclick="selectAbilityForArray('con')">
+                                <div class="ability-label">CON</div>
+                                <div class="ability-score" id="conScore2">—</div>
+                                <div class="ability-modifier" id="conMod2">—</div>
+                            </div>
+
+                            <div class="ability-item" style="cursor: pointer;" onclick="selectAbilityForArray('int')">
+                                <div class="ability-label">INT</div>
+                                <div class="ability-score" id="intScore2">—</div>
+                                <div class="ability-modifier" id="intMod2">—</div>
+                            </div>
+
+                            <div class="ability-item" style="cursor: pointer;" onclick="selectAbilityForArray('wis')">
+                                <div class="ability-label">WIS</div>
+                                <div class="ability-score" id="wisScore2">—</div>
+                                <div class="ability-modifier" id="wisMod2">—</div>
+                            </div>
+
+                            <div class="ability-item" style="cursor: pointer;" onclick="selectAbilityForArray('cha')">
+                                <div class="ability-label">CHA</div>
+                                <div class="ability-score" id="chaScore2">—</div>
+                                <div class="ability-modifier" id="chaMod2">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Combat Stats -->
+                <div id="step3" class="step">
+                    <h3 style="margin-bottom: 1rem; color: #4a9eff;">Combat Stats</h3>
+
+                    <div class="form-group">
+                        <label>Armor Class (AC)</label>
+                        <input type="number" id="charAC" value="10" min="1" max="30">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hit Points (HP)</label>
+                        <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem;">
+                            <input type="number" id="charHP" value="10" min="1" max="999">
+                            <span style="color: #a0a0a0; padding: 0.5rem; text-align: center;" id="hpInfo">Based on class</span>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(74, 158, 255, 0.1); border: 1px solid #4a9eff; padding: 1rem; border-radius: 4px; font-size: 0.85rem; color: #e0e0e0;">
+                        <strong>Summary:</strong>
+                        <div id="charSummary" style="margin-top: 0.5rem; color: #a0a0a0;">
+                            Name: <span id="summaryName">—</span><br>
+                            Race: <span id="summaryRace">—</span> | Class: <span id="summaryClass">—</span><br>
+                            STR <span id="summaryStr">10</span> | DEX <span id="summaryDex">10</span> | CON <span id="summaryCon">10</span><br>
+                            INT <span id="summaryInt">10</span> | WIS <span id="summaryWis">10</span> | CHA <span id="summaryCha">10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="generalError" class="error-message" style="margin-top: 1rem;"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="backBtn" class="btn btn-secondary" onclick="prevStep()" style="display:none;">Back</button>
+                <button id="nextBtn" class="btn btn-primary" onclick="nextStep()">Next</button>
+                <button id="submitBtn" class="btn btn-primary" onclick="submitCharacter()" style="display:none;">Create Character</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
+    </footer>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        const auth = new Auth();
+        let allCharacters = [];
+
+        async function loadCharacters() {
+            try {
+                const user = await auth.getCurrentUser();
+                if (!user) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+
+                allCharacters = await auth.makeAuthRequest('/api/characters/mine');
+                renderCharacters(allCharacters);
+            } catch (error) {
+                console.error('Failed to load characters:', error);
+                document.getElementById('charactersGrid').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">❌</div>
+                        <p>Failed to load characters</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderCharacters(characters) {
+            const grid = document.getElementById('charactersGrid');
+
+            if (characters.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🧙</div>
+                        <p>No characters yet. Create your first character to begin!</p>
+                        <button class="btn btn-primary" style="margin-top: 1rem;" onclick="createCharacter()">Create Character</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = characters.map(c => `
+                <div class="char-card">
+                    <div class="char-portrait">${c.token_url ? '🎨' : '🧙'}</div>
+                    <div class="char-info">
+                        <div class="char-name">${c.name}</div>
+                        <div class="char-class">${c.class || 'Unknown'}</div>
+                        <div class="char-race">${c.race || 'Unknown'} • Level ${c.level}</div>
+
+                        <div class="char-stats">
+                            <div class="stat">
+                                <div class="stat-label">HP</div>
+                                <div class="stat-value">${c.hp}</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">AC</div>
+                                <div class="stat-value">${c.ac}</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">XP</div>
+                                <div class="stat-value">${c.xp || 0}</div>
+                            </div>
+                        </div>
+
+                        <div class="char-actions">
+                            <button class="btn btn-primary" onclick="editCharacter(${c.id})">Edit</button>
+                            <button class="btn btn-secondary" onclick="viewCharacter(${c.id})">View</button>
+                            <button class="btn btn-danger" onclick="deleteCharacter(${c.id})">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCharacters() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const classFilter = document.getElementById('classFilter').value;
+
+            const filtered = allCharacters.filter(c => {
+                const nameMatch = c.name.toLowerCase().includes(search);
+                const classMatch = !classFilter || c.class === classFilter;
+                return nameMatch && classMatch;
+            });
+
+            renderCharacters(filtered);
+        }
+
+        // Character Creation Modal Variables
+        let currentStep = 1;
+        let abilityScores = { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 };
+        let pointBudget = 27;
+        let pointCosts = { 8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9 };
+        let classHitDice = {
+            'Barbarian': 12, 'Fighter': 10, 'Paladin': 10, 'Ranger': 10,
+            'Bard': 8, 'Cleric': 8, 'Druid': 8, 'Monk': 8, 'Rogue': 8, 'Warlock': 8,
+            'Sorcerer': 6, 'Wizard': 6
+        };
+        let selectedArrayMode = false;
+        let selectedAbilityForArray = null;
+        let standardArrayValues = [15, 14, 13, 12, 10, 8];
+        let standardArrayUsed = [];
+
+        function openCharModal() {
+            currentStep = 1;
+            abilityScores = { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 };
+            pointBudget = 27;
+            selectedAbilityForArray = null;
+            standardArrayUsed = [];
+            document.getElementById('charModal').style.display = 'flex';
+            document.getElementById('charName').value = '';
+            document.getElementById('charRace').value = '';
+            document.getElementById('charClass').value = '';
+            document.getElementById('charBackground').value = '';
+            document.getElementById('charAC').value = '10';
+            document.getElementById('charHP').value = '10';
+            document.getElementById('generalError').textContent = '';
+            updateStep();
+        }
+
+        function closeCharModal() {
+            document.getElementById('charModal').style.display = 'none';
+            document.getElementById('generalError').textContent = '';
+        }
+
+        function createCharacter() {
+            openCharModal();
+        }
+
+        function updateStep() {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.getElementById('stepNum').textContent = currentStep;
+
+            // Update buttons
+            const backBtn = document.getElementById('backBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (currentStep === 1) {
+                backBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            } else if (currentStep === 2) {
+                backBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            } else {
+                backBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+                updateSummary();
+            }
+        }
+
+        function nextStep() {
+            document.getElementById('generalError').textContent = '';
+
+            if (currentStep === 1) {
+                // Validate step 1
+                if (!document.getElementById('charName').value.trim()) {
+                    document.getElementById('generalError').textContent = 'Character name is required';
+                    return;
+                }
+                currentStep = 2;
+            } else if (currentStep === 2) {
+                // Validate step 2 - all abilities assigned for standard array
+                if (selectedArrayMode && standardArrayUsed.length !== 6) {
+                    document.getElementById('generalError').textContent = 'Assign all 6 ability scores';
+                    return;
+                }
+                currentStep = 3;
+                calculateHP();
+            }
+
+            updateStep();
+        }
+
+        function prevStep() {
+            currentStep = Math.max(1, currentStep - 1);
+            updateStep();
+        }
+
+        function getModifier(score) {
+            return Math.floor((score - 10) / 2);
+        }
+
+        function adjustAbility(ability, delta) {
+            if (!selectedArrayMode) {
+                let newScore = abilityScores[ability] + delta;
+                newScore = Math.max(8, Math.min(15, newScore));
+
+                // Calculate point cost
+                let oldCost = pointCosts[abilityScores[ability]];
+                let newCost = pointCosts[newScore];
+                let costDelta = newCost - oldCost;
+
+                if (costDelta <= pointBudget) {
+                    abilityScores[ability] = newScore;
+                    pointBudget -= costDelta;
+                    updateAbilityDisplay();
+                }
+            }
+        }
+
+        function updateAbilityDisplay() {
+            Object.keys(abilityScores).forEach(ability => {
+                const score = abilityScores[ability];
+                const mod = getModifier(score);
+                const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
+                document.getElementById(`${ability}Score`).textContent = score;
+                document.getElementById(`${ability}Mod`).textContent = modStr;
+            });
+            document.getElementById('pointsRemaining').textContent = pointBudget;
+        }
+
+        function switchAbilityTab(mode) {
+            selectedArrayMode = mode === 'standard';
+
+            if (selectedArrayMode) {
+                document.getElementById('pointBuyTab').classList.remove('active');
+                document.getElementById('standardTab').classList.add('active');
+                document.getElementById('pointBuySection').style.display = 'none';
+                document.getElementById('standardSection').style.display = 'block';
+                // Reset ability scores to unassigned
+                Object.keys(abilityScores).forEach(ability => {
+                    document.getElementById(`${ability}Score2`).textContent = '—';
+                    document.getElementById(`${ability}Mod2`).textContent = '—';
+                });
+                standardArrayUsed = [];
+                renderArrayValues();
+            } else {
+                document.getElementById('pointBuyTab').classList.add('active');
+                document.getElementById('standardTab').classList.remove('active');
+                document.getElementById('pointBuySection').style.display = 'block';
+                document.getElementById('standardSection').style.display = 'none';
+                pointBudget = 27;
+                updateAbilityDisplay();
+            }
+        }
+
+        function renderArrayValues() {
+            const container = document.getElementById('arrayValues');
+            container.innerHTML = '';
+            standardArrayValues.forEach(val => {
+                const div = document.createElement('div');
+                div.className = 'array-item' + (standardArrayUsed.includes(val) ? ' used' : '');
+                div.textContent = val;
+                container.appendChild(div);
+            });
+        }
+
+        function selectAbilityForArray(ability) {
+            selectedAbilityForArray = ability;
+        }
+
+        function assignArrayValue(value) {
+            if (selectedAbilityForArray && !standardArrayUsed.includes(value)) {
+                abilityScores[selectedAbilityForArray] = value;
+                standardArrayUsed.push(value);
+                const mod = getModifier(value);
+                const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
+                document.getElementById(`${selectedAbilityForArray}Score2`).textContent = value;
+                document.getElementById(`${selectedAbilityForArray}Mod2`).textContent = modStr;
+                renderArrayValues();
+                selectedAbilityForArray = null;
+            }
+        }
+
+        function updateHitDie() {
+            calculateHP();
+        }
+
+        function calculateHP() {
+            const charClass = document.getElementById('charClass').value;
+            const hitDie = classHitDice[charClass] || 6;
+            const conMod = getModifier(abilityScores.con);
+            const hpMax = Math.max(1, hitDie + conMod);
+            document.getElementById('charHP').value = hpMax;
+            document.getElementById('hpInfo').textContent = `${hitDie} (class) + ${conMod >= 0 ? '+' : ''}${conMod} (CON) = ${hpMax}`;
+        }
+
+        function updateSummary() {
+            document.getElementById('summaryName').textContent = document.getElementById('charName').value || '—';
+            document.getElementById('summaryRace').textContent = document.getElementById('charRace').value || '—';
+            document.getElementById('summaryClass').textContent = document.getElementById('charClass').value || '—';
+            document.getElementById('summaryStr').textContent = abilityScores.str;
+            document.getElementById('summaryDex').textContent = abilityScores.dex;
+            document.getElementById('summaryCon').textContent = abilityScores.con;
+            document.getElementById('summaryInt').textContent = abilityScores.int;
+            document.getElementById('summaryWis').textContent = abilityScores.wis;
+            document.getElementById('summaryCha').textContent = abilityScores.cha;
+        }
+
+        async function submitCharacter() {
+            document.getElementById('generalError').textContent = '';
+
+            const charData = {
+                name: document.getElementById('charName').value,
+                race: document.getElementById('charRace').value,
+                class: document.getElementById('charClass').value,
+                background: document.getElementById('charBackground').value,
+                ac: parseInt(document.getElementById('charAC').value),
+                hp_max: parseInt(document.getElementById('charHP').value),
+                str: abilityScores.str,
+                dex: abilityScores.dex,
+                con: abilityScores.con,
+                int: abilityScores.int,
+                wis: abilityScores.wis,
+                cha: abilityScores.cha
+            };
+
+            try {
+                await auth.makeAuthRequest('/api/characters', 'POST', charData);
+                closeCharModal();
+                loadCharacters();
+            } catch (error) {
+                console.error('Failed to create character:', error);
+                document.getElementById('generalError').textContent = error.message || 'Failed to create character';
+            }
+        }
+
+        function editCharacter(id) {
+            window.location.href = `/character-sheet?id=${id}&mode=edit`;
+        }
+
+        function viewCharacter(id) {
+            window.location.href = `/character-sheet?id=${id}`;
+        }
+
+        async function deleteCharacter(id) {
+            if (!confirm('Delete this character?')) return;
+            try {
+                await auth.makeAuthRequest(`/api/characters/${id}`, 'DELETE');
+                loadCharacters();
+            } catch (error) {
+                console.error('Failed to delete character:', error);
+                alert('Failed to delete character');
+            }
+        }
+
+        function goTo(path) {
+            window.location.href = path;
+        }
+
+        async function logout() {
+            await auth.logout();
+        }
+
+        loadCharacters();
+    </script>
+</body>
+</html>
