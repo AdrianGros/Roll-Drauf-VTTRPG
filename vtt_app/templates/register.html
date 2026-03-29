@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter the Spellbook - roll drauf vtt</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(135deg, #4a235a 0%, #6b3d7d 50%, #8b5a8f 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .register-container {
+            background: var(--vtt-bg);
+            border: 3px solid var(--vtt-accent);
+            border-radius: 12px;
+            box-shadow:
+                0 10px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(212, 175, 55, 0.2);
+            max-width: 450px;
+            width: 100%;
+            padding: 50px;
+            position: relative;
+        }
+
+        .register-container::before {
+            content: '📖';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 60px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--vtt-primary);
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-family: 'Georgia', serif;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--vtt-accent);
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--vtt-primary);
+            font-weight: 600;
+            font-family: 'Georgia', serif;
+            font-size: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-bottom: 3px solid var(--vtt-accent);
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: white;
+            color: var(--vtt-text);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="tel"]:focus {
+            outline: none;
+            border-bottom: 3px solid var(--vtt-primary);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+            background-color: #fafaf8;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--vtt-primary) 0%, #6b3d7d 100%);
+            color: var(--vtt-light-text);
+            border: 2px solid var(--vtt-accent);
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            font-family: 'Georgia', serif;
+            letter-spacing: 0.5px;
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(135deg, var(--vtt-accent) 0%, #e0c570 100%);
+            color: var(--vtt-primary);
+            box-shadow:
+                0 0 15px var(--vtt-accent),
+                0 0 30px rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 6px;
+            padding: 8px;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+            border-radius: 3px;
+        }
+
+        .success {
+            color: var(--vtt-success);
+            font-size: 13px;
+            margin-top: 6px;
+            padding: 8px;
+            background-color: rgba(39, 174, 96, 0.1);
+            border-left: 3px solid var(--vtt-success);
+            border-radius: 3px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--vtt-accent);
+            font-weight: 600;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-top: 2px solid var(--vtt-accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--vtt-text);
+        }
+
+        .link a {
+            color: var(--vtt-primary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--vtt-accent);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .link a:hover {
+            color: var(--vtt-accent);
+        }
+
+        .status-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .status-message.error {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .status-message.success {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--vtt-success);
+            border: 1px solid var(--vtt-success);
+        }
+
+        .status-message.info {
+            background-color: rgba(212, 175, 55, 0.15);
+            color: var(--vtt-primary);
+            border: 1px solid var(--vtt-accent);
+        }
+
+        @media (max-width: 500px) {
+            .register-container {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            button[type="submit"] {
+                padding: 12px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>Enter the Spellbook</h1>
+        <p class="subtitle">Speak the access incantation to begin your adventure</p>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="key">Speak the access incantation</label>
+                <input
+                    type="text"
+                    id="key"
+                    name="key"
+                    placeholder="SPELL-XXXX-XXXX-XXXX"
+                    required
+                    autocomplete="off">
+                <div class="form-hint">Enter your registration key exactly as provided</div>
+                <div class="error" id="keyError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Choose your adventurer name</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Your username"
+                    required
+                    autocomplete="username">
+                <div class="form-hint">3-50 characters, alphanumeric and underscores only</div>
+                <div class="error" id="usernameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Contact rune (email)</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="your@email.com"
+                    required
+                    autocomplete="email">
+                <div class="form-hint">We'll use this to recover your account</div>
+                <div class="error" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Your secret incantation (password)</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="••••••••••••"
+                    required
+                    autocomplete="new-password">
+                <div class="form-hint">At least 12 characters, mix of upper, lower, numbers, and symbols</div>
+                <div class="error" id="passwordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm your incantation</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="••••••••••••"
+                    required
+                    autocomplete="new-password">
+                <div class="error" id="confirmPasswordError"></div>
+            </div>
+
+            <button type="submit" id="submitBtn">✨ The spellbook opens before you... ✨</button>
+            <div class="loading" id="loading">
+                <span class="spinner"></span>Inscribing your name into the tome...
+            </div>
+            <div class="error" id="generalError"></div>
+            <div class="status-message" id="statusMessage"></div>
+        </form>
+
+        <div class="link">
+            Already have access? <a href="/login.html">Enter here</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="/static/js/book-animation.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Redirect if already authenticated
+            const token = localStorage.getItem('access_token');
+            if (token) {
+                window.location.href = '/dashboard';
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const key = document.getElementById('key').value.trim().toUpperCase();
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Clear previous errors
+            clearErrors();
+
+            // Validate inputs
+            if (!validateInputs(key, username, email, password, confirmPassword)) {
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                const response = await fetch('/api/auth/register-with-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        registration_key: key,
+                        username,
+                        email,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    handleErrorResponse(data);
+                    return;
+                }
+
+                // Success! Show spellbook animation
+                showLoading(false);
+                showSuccessMessage('✨ The spellbook opens before you...');
+
+                // Play book opening animation
+                if (typeof animateBookOpen === 'function') {
+                    await animateBookOpen({
+                        duration: 2.5,
+                        particleCount: 12,
+                        onComplete: () => {
+                            // Redirect after animation
+                            window.location.href = '/dashboard';
+                        }
+                    });
+                } else {
+                    // Fallback if animation fails
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1000);
+                }
+
+            } catch (error) {
+                showLoading(false);
+                showError('generalError', '🔒 Connection error: ' + error.message);
+            }
+        });
+
+        function validateInputs(key, username, email, password, confirmPassword) {
+            let isValid = true;
+
+            // Validate key format
+            if (!/^[A-Z0-9\-]+$/.test(key)) {
+                showError('keyError', '🌙 No uses remain in this spell');
+                isValid = false;
+            }
+
+            // Validate username
+            if (username.length < 3 || username.length > 50) {
+                showError('usernameError', 'Username must be 3-50 characters');
+                isValid = false;
+            }
+            if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                showError('usernameError', 'Username can only contain letters, numbers, and underscores');
+                isValid = false;
+            }
+
+            // Validate email
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('emailError', 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            // Validate password
+            if (password.length < 12) {
+                showError('passwordError', 'Password must be at least 12 characters');
+                isValid = false;
+            }
+            if (!/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password) || !/[!@#$%^&*()_\-+=\[\]{};:'",.<>?/\\|`~]/.test(password)) {
+                showError('passwordError', 'Password must contain uppercase, lowercase, numbers, and symbols');
+                isValid = false;
+            }
+
+            // Validate password confirmation
+            if (password !== confirmPassword) {
+                showError('confirmPasswordError', 'Passwords do not match');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function handleErrorResponse(data) {
+            const error = data.error || 'Registration failed';
+
+            // Map errors to user-friendly spellbook messages
+            if (error.includes('revoked') || error.includes('revoke')) {
+                showError('keyError', '🔒 This incantation is sealed');
+            } else if (error.includes('expired') || error.includes('expire')) {
+                showError('keyError', '⏳ This code\'s power has faded');
+            } else if (error.includes('exhausted') || error.includes('uses')) {
+                showError('keyError', '🌙 No uses remain in this spell');
+            } else if (error.includes('not found') || error.includes('invalid')) {
+                showError('keyError', '❌ Incantation not recognized');
+            } else if (error.includes('username')) {
+                showError('usernameError', error);
+            } else if (error.includes('email')) {
+                showError('emailError', error);
+            } else {
+                showError('generalError', error);
+            }
+        }
+
+        function clearErrors() {
+            document.getElementById('keyError').textContent = '';
+            document.getElementById('usernameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+            document.getElementById('generalError').textContent = '';
+            document.getElementById('statusMessage').style.display = 'none';
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = message;
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showSuccessMessage(message) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status-message success';
+            statusDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

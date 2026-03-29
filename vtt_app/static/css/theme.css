@@ -1,0 +1,299 @@
+/**
+ * M46: Spellbook Theme CSS Variables
+ * Defines the color scheme and typography for the entire application
+ */
+
+:root {
+    /* Primary colors */
+    --vtt-primary: #4a235a;        /* Deep purple */
+    --vtt-accent: #d4af37;         /* Gold */
+    --vtt-text: #2a2a2a;           /* Dark text */
+    --vtt-bg: #f5e6d3;             /* Parchment background */
+    --vtt-dark-bg: #1a1a1a;        /* Near black for dark mode */
+
+    /* Effects */
+    --vtt-shadow: rgba(0, 0, 0, 0.3);
+    --vtt-border: #d4af37;         /* Gold borders */
+
+    /* Typography */
+    --vtt-font-heading: 'Georgia', serif;
+    --vtt-font-body: 'Segoe UI', sans-serif;
+
+    /* Animation timing */
+    --vtt-book-animation-speed: 2.5s;
+
+    /* Additional colors for UI elements */
+    --vtt-success: #27ae60;
+    --vtt-warning: #f39c12;
+    --vtt-danger: #e74c3c;
+    --vtt-info: #3498db;
+    --vtt-light-text: #f5e6d3;
+    --vtt-subtle-border: rgba(212, 175, 55, 0.2);
+}
+
+/* Subtle parchment texture background */
+@supports (background-image: radial-gradient(circle, transparent 0%, transparent 0%)) {
+    :root::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+            radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.02) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(74, 35, 90, 0.02) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+    }
+}
+
+/* Global theme application */
+body {
+    background-color: var(--vtt-bg);
+    color: var(--vtt-text);
+    font-family: var(--vtt-font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--vtt-font-heading);
+    color: var(--vtt-primary);
+}
+
+/* Button theming */
+button, .button, input[type="submit"], input[type="button"] {
+    background-color: var(--vtt-primary);
+    color: var(--vtt-light-text);
+    border: 2px solid var(--vtt-accent);
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-family: var(--vtt-font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover, .button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+    background-color: var(--vtt-accent);
+    color: var(--vtt-primary);
+    box-shadow: 0 0 10px var(--vtt-shadow);
+    text-shadow: none;
+}
+
+button:active, .button:active, input[type="submit"]:active, input[type="button"]:active {
+    transform: translateY(2px);
+}
+
+button:disabled, .button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+textarea,
+select {
+    background-color: var(--vtt-light-text);
+    color: var(--vtt-text);
+    border: 1px solid var(--vtt-subtle-border);
+    border-bottom: 2px solid var(--vtt-accent);
+    padding: 10px 12px;
+    font-family: var(--vtt-font-body);
+    font-size: 14px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-bottom: 2px solid var(--vtt-primary);
+    box-shadow: 0 4px 8px var(--vtt-shadow);
+    background-color: white;
+}
+
+/* Cards and containers */
+.card, .container, .panel, [role="dialog"] {
+    background-color: var(--vtt-light-text);
+    border: 2px solid var(--vtt-accent);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 12px var(--vtt-shadow);
+}
+
+/* Headers */
+.header, [role="banner"] {
+    background-color: var(--vtt-primary);
+    color: var(--vtt-light-text);
+    padding: 20px;
+    border-bottom: 3px solid var(--vtt-accent);
+    font-family: var(--vtt-font-heading);
+}
+
+.header h1, [role="banner"] h1 {
+    color: var(--vtt-accent);
+    font-size: 28px;
+    margin: 0;
+}
+
+/* Status indicators */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-indicator.active {
+    background-color: rgba(39, 174, 96, 0.2);
+    color: var(--vtt-success);
+}
+
+.status-indicator.active::before {
+    content: '📖';
+}
+
+.status-indicator.paused {
+    background-color: rgba(243, 156, 18, 0.2);
+    color: var(--vtt-warning);
+}
+
+.status-indicator.paused::before {
+    content: '🔮';
+}
+
+.status-indicator.ended {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: var(--vtt-danger);
+}
+
+.status-indicator.ended::before {
+    content: '📕';
+}
+
+/* Links */
+a {
+    color: var(--vtt-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--vtt-accent);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--vtt-accent);
+}
+
+/* Utility classes */
+.text-primary {
+    color: var(--vtt-primary);
+}
+
+.text-accent {
+    color: var(--vtt-accent);
+}
+
+.text-success {
+    color: var(--vtt-success);
+}
+
+.text-warning {
+    color: var(--vtt-warning);
+}
+
+.text-danger {
+    color: var(--vtt-danger);
+}
+
+.bg-primary {
+    background-color: var(--vtt-primary);
+    color: var(--vtt-light-text);
+}
+
+.bg-accent {
+    background-color: var(--vtt-accent);
+    color: var(--vtt-primary);
+}
+
+.bg-light {
+    background-color: var(--vtt-bg);
+    color: var(--vtt-text);
+}
+
+/* Border utilities */
+.border-accent {
+    border: 2px solid var(--vtt-accent);
+}
+
+.border-primary {
+    border: 2px solid var(--vtt-primary);
+}
+
+/* Shadow utilities */
+.shadow {
+    box-shadow: 0 4px 12px var(--vtt-shadow);
+}
+
+.shadow-lg {
+    box-shadow: 0 8px 24px var(--vtt-shadow);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    button, .button {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .header, [role="banner"] {
+        padding: 16px;
+    }
+
+    .header h1, [role="banner"] h1 {
+        font-size: 24px;
+    }
+
+    .card, .container, .panel {
+        padding: 16px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --vtt-light-text: #2a2a2a;
+        --vtt-bg: #1a1a1a;
+        --vtt-text: #f5e6d3;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    textarea,
+    select {
+        background-color: #2a2a2a;
+        color: #f5e6d3;
+    }
+
+    .card, .container, .panel {
+        background-color: #2a2a2a;
+    }
+}

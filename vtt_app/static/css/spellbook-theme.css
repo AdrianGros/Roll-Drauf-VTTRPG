@@ -1,0 +1,554 @@
+/**
+ * M46: Spellbook Theme - Global Overrides and Spellbook-Specific Styling
+ * Creates the magical spellbook aesthetic throughout the application
+ */
+
+/* ===== Global Body Styling ===== */
+
+body {
+    background-color: var(--vtt-bg);
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(212, 175, 55, 0.03) 2px,
+            rgba(212, 175, 55, 0.03) 4px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(74, 35, 90, 0.02) 2px,
+            rgba(74, 35, 90, 0.02) 4px
+        );
+    color: var(--vtt-text);
+    font-family: var(--vtt-font-body);
+    line-height: 1.6;
+}
+
+/* Parchment edge effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ===== Typography ===== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--vtt-font-heading);
+    color: var(--vtt-primary);
+    text-shadow: 1px 1px 2px rgba(212, 175, 55, 0.2);
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 700;
+    border-bottom: 2px solid var(--vtt-accent);
+    padding-bottom: 8px;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* ===== Button Styling ===== */
+
+button,
+.button,
+input[type="submit"],
+input[type="button"],
+.btn {
+    background-color: var(--vtt-primary);
+    color: var(--vtt-light-text);
+    border: 2px solid var(--vtt-accent);
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-family: var(--vtt-font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+button:hover,
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.btn:hover {
+    background-color: var(--vtt-accent);
+    color: var(--vtt-primary);
+    box-shadow:
+        0 0 10px var(--vtt-accent),
+        0 0 20px rgba(212, 175, 55, 0.3),
+        inset 0 0 10px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+button:active,
+.button:active,
+input[type="submit"]:active,
+input[type="button"]:active,
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 0 5px var(--vtt-accent);
+}
+
+/* Button variants */
+.btn-primary {
+    background-color: var(--vtt-primary);
+    border-color: var(--vtt-accent);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--vtt-primary);
+    border: 2px solid var(--vtt-primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--vtt-primary);
+    color: var(--vtt-light-text);
+}
+
+.btn-danger {
+    background-color: var(--vtt-danger);
+    border-color: var(--vtt-danger);
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    box-shadow: 0 0 10px var(--vtt-danger);
+}
+
+/* ===== Card/Page Styling ===== */
+
+.card,
+.page,
+.panel,
+[role="dialog"],
+.modal-content {
+    background-color: var(--vtt-light-text);
+    border: 2px solid var(--vtt-accent);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow:
+        0 4px 12px var(--vtt-shadow),
+        0 0 20px rgba(212, 175, 55, 0.1);
+    position: relative;
+}
+
+.card::before,
+.page::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(
+        135deg,
+        rgba(212, 175, 55, 0.1) 0%,
+        transparent 50%,
+        rgba(74, 35, 90, 0.05) 100%
+    );
+    border-radius: 8px;
+    z-index: -1;
+}
+
+/* ===== Form Elements ===== */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="search"],
+textarea,
+select {
+    background-color: var(--vtt-light-text);
+    color: var(--vtt-text);
+    border: 1px solid var(--vtt-subtle-border);
+    border-bottom: 3px solid var(--vtt-accent);
+    padding: 10px 12px;
+    font-family: var(--vtt-font-body);
+    font-size: 14px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-bottom: 3px solid var(--vtt-primary);
+    box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.05),
+        0 0 8px rgba(212, 175, 55, 0.3);
+    background-color: white;
+}
+
+textarea {
+    font-family: var(--vtt-font-body);
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* ===== Headers ===== */
+
+.header,
+[role="banner"],
+.navbar {
+    background: linear-gradient(
+        135deg,
+        var(--vtt-primary) 0%,
+        rgba(74, 35, 90, 0.8) 100%
+    );
+    color: var(--vtt-light-text);
+    padding: 20px 30px;
+    border-bottom: 3px solid var(--vtt-accent);
+    box-shadow: 0 4px 12px var(--vtt-shadow);
+}
+
+.header h1,
+[role="banner"] h1,
+.navbar h1 {
+    color: var(--vtt-accent);
+    font-size: 28px;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.header a,
+[role="banner"] a,
+.navbar a {
+    color: var(--vtt-light-text);
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.header a:hover,
+[role="banner"] a:hover,
+.navbar a:hover {
+    color: var(--vtt-accent);
+    border-bottom: 2px solid var(--vtt-accent);
+}
+
+/* ===== Status Indicators ===== */
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-indicator.active,
+.status-active {
+    background-color: rgba(39, 174, 96, 0.15);
+    color: var(--vtt-success);
+    border: 1px solid var(--vtt-success);
+}
+
+.status-indicator.active::before {
+    content: '📖 ';
+}
+
+.status-indicator.paused,
+.status-paused {
+    background-color: rgba(243, 156, 18, 0.15);
+    color: var(--vtt-warning);
+    border: 1px solid var(--vtt-warning);
+}
+
+.status-indicator.paused::before {
+    content: '🔮 ';
+}
+
+.status-indicator.ended,
+.status-ended {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--vtt-danger);
+    border: 1px solid var(--vtt-danger);
+}
+
+.status-indicator.ended::before {
+    content: '📕 ';
+}
+
+/* ===== Map Canvas Styling ===== */
+
+.map-canvas,
+[data-canvas="map"],
+canvas {
+    border: 3px solid var(--vtt-accent);
+    border-radius: 8px;
+    box-shadow:
+        0 4px 12px var(--vtt-shadow),
+        0 0 20px rgba(212, 175, 55, 0.2);
+    display: block;
+    background-color: #f9f6f0;
+}
+
+/* ===== Navigation and Branding ===== */
+
+.navbar-brand,
+.logo {
+    font-family: var(--vtt-font-heading);
+    color: var(--vtt-accent);
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-brand::before,
+.logo::before {
+    content: '📖';
+    font-size: 24px;
+}
+
+.nav-item {
+    color: var(--vtt-light-text);
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color: rgba(212, 175, 55, 0.2);
+    color: var(--vtt-accent);
+}
+
+/* ===== Session/Chat Elements ===== */
+
+.chat-message,
+.message {
+    background-color: var(--vtt-light-text);
+    border-left: 4px solid var(--vtt-accent);
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.chat-message.system,
+.message.system {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-left-color: #3498db;
+    color: #3498db;
+    font-style: italic;
+}
+
+.chat-message.action,
+.message.action {
+    background-color: rgba(212, 175, 55, 0.1);
+    border-left-color: var(--vtt-accent);
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background-color: var(--vtt-primary);
+    border-top: 2px solid var(--vtt-accent);
+}
+
+.chat-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--vtt-subtle-border);
+    border-bottom: 2px solid var(--vtt-accent);
+    border-radius: 4px;
+    font-family: var(--vtt-font-body);
+}
+
+/* ===== Initiative/Turn Order ===== */
+
+.initiative-tracker,
+.turn-order {
+    background-color: var(--vtt-light-text);
+    border: 2px solid var(--vtt-accent);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 12px var(--vtt-shadow);
+}
+
+.initiative-entry,
+.turn-entry {
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: rgba(212, 175, 55, 0.05);
+    border-left: 3px solid var(--vtt-accent);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.initiative-entry.current,
+.turn-entry.current {
+    background-color: rgba(212, 175, 55, 0.2);
+    border-left: 3px solid var(--vtt-accent);
+    font-weight: 600;
+}
+
+/* ===== Character Sheet ===== */
+
+.character-sheet,
+[data-sheet="character"] {
+    background-color: var(--vtt-light-text);
+    border: 2px solid var(--vtt-accent);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.sheet-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--vtt-subtle-border);
+}
+
+.sheet-section:last-child {
+    border-bottom: none;
+}
+
+.sheet-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background-color: rgba(212, 175, 55, 0.05);
+    border: 1px solid var(--vtt-subtle-border);
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+/* ===== Responsive Design ===== */
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    button,
+    .button,
+    .btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .header,
+    [role="banner"],
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .header h1,
+    [role="banner"] h1,
+    .navbar h1 {
+        font-size: 22px;
+    }
+
+    .card,
+    .page,
+    .panel {
+        padding: 16px;
+    }
+
+    .chat-input-area {
+        padding: 10px;
+    }
+
+    .map-canvas,
+    [data-canvas="map"],
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    button,
+    .button,
+    .btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .header,
+    [role="banner"],
+    .navbar {
+        padding: 12px 15px;
+    }
+}
+
+/* ===== Accessibility ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== Print Styles ===== */
+
+@media print {
+    body::before,
+    .header,
+    .navbar,
+    button,
+    .btn {
+        display: none;
+    }
+
+    .card,
+    .page {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
