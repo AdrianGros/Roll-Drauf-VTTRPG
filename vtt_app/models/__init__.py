@@ -27,6 +27,11 @@ from vtt_app.models.moderation_action import ModerationAction
 from vtt_app.models.scene_stack import SceneStack
 from vtt_app.models.scene_layer import SceneLayer
 from vtt_app.models.session_snapshot import SessionSnapshot
+from vtt_app.models.registration_key import RegistrationKey
+from vtt_app.models.app_theme_settings import AppThemeSettings
+from vtt_app.models.session_map_layer import SessionMapLayer  # M42
+from vtt_app.models.session_token import SessionToken  # M43
+from vtt_app.models.session_initiative import SessionInitiative  # M43
 
 __all__ = [
     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',
@@ -34,5 +39,7 @@ __all__ = [
     'Character', 'Spell', 'Equipment', 'InventoryItem',
     'CombatEncounter', 'CombatEvent',
     'ChatMessage', 'ModerationReport', 'ModerationAction',
-    'SceneStack', 'SceneLayer', 'SessionSnapshot'
+    'SceneStack', 'SceneLayer', 'SessionSnapshot',
+    'RegistrationKey', 'AppThemeSettings',
+    'SessionMapLayer', 'SessionToken', 'SessionInitiative'
 ]

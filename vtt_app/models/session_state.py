@@ -22,7 +22,8 @@ class SessionState(db.Model):
     created_at = db.Column(db.DateTime, default=utcnow, index=True)
     updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
 
-    game_session = db.relationship("GameSession", backref=db.backref("session_state", uselist=False))
+    # Avoid collision with GameSession.session_state (string state column).
+    game_session = db.relationship("GameSession", backref=db.backref("runtime_state", uselist=False))
     campaign = db.relationship("Campaign")
     active_map = db.relationship("CampaignMap")
 

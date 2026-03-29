@@ -233,6 +233,9 @@ def create_app(config_name=None):
     from vtt_app.endpoints.assets import assets_bp
     from vtt_app.endpoints.admin_dashboard import admin_dashboard_bp
     from vtt_app.endpoints.profile_m18 import profile_m18_bp, admin_m18_bp
+    from vtt_app.endpoints.registration_keys import registration_keys_bp
+    from vtt_app.endpoints.sessions import bp as sessions_bp  # M41-M45
+    from vtt_app.endpoints.theme import theme_bp  # M46
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(campaigns_bp, url_prefix='/api')
     app.register_blueprint(characters_bp, url_prefix='/api')
@@ -243,6 +246,9 @@ def create_app(config_name=None):
     app.register_blueprint(admin_dashboard_bp)
     app.register_blueprint(profile_m18_bp)
     app.register_blueprint(admin_m18_bp)
+    app.register_blueprint(registration_keys_bp)
+    app.register_blueprint(sessions_bp)  # M41-M45
+    app.register_blueprint(theme_bp)  # M46
 
     # Create database tables
     if app.config.get("AUTO_CREATE_SCHEMA", False):
@@ -252,6 +258,10 @@ def create_app(config_name=None):
     # Socket.IO event handlers
     from vtt_app.socket_handlers import register_socket_handlers
     register_socket_handlers(socketio)
+    # Keep one canonical session event contract active to avoid duplicate event handling.
+    if app.config.get("USE_SESSION_SOCKET_V2", False):
+        from vtt_app.socket_handlers_sessions import register_session_handlers  # M45
+        register_session_handlers(socketio)  # M45
 
     # REST endpoints for static files
     @app.route('/')
