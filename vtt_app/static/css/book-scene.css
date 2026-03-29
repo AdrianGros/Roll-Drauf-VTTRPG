@@ -247,6 +247,27 @@
     }
 }
 
+/* Accessibility: Focus indicators */
+.book-cover:focus-visible {
+    outline: 3px solid #d4af37;
+    outline-offset: 4px;
+}
+
+.book-cover:focus {
+    outline: 3px solid #d4af37;
+    outline-offset: 4px;
+}
+
+/* Keyboard focus indication for book cover */
+.book-cover[aria-pressed="false"]:focus::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 2px dashed #d4af37;
+    border-radius: 2px;
+    pointer-events: none;
+}
+
 /* Accessibility: respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
     #book,
@@ -257,5 +278,25 @@
     #login-content {
         animation: none !important;
         transition: none !important;
+    }
+}
+
+/* Accessibility: High contrast mode support */
+@media (prefers-contrast: more) {
+    .book-cover {
+        border-width: 3px;
+        box-shadow: inset -12px 0 25px rgba(0, 0, 0, 0.8),
+                    inset -1px 0 2px rgba(212, 175, 55, 0.4) !important;
+    }
+
+    .book-cover .cover-title {
+        text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+    }
+}
+
+/* Accessibility: Dark mode for light-on-dark contrast */
+@media (prefers-color-scheme: dark) {
+    .book-cover .cover-title {
+        color: #f5e6d3;  /* Lighter gold for dark mode */
     }
 }

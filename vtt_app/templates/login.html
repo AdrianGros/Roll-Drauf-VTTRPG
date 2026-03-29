@@ -244,25 +244,31 @@
                 <div class="book-subtitle">Spellbook</div>
                 <div class="book-ornament">✨</div>
 
-                <form id="loginForm" class="book-form">
+                <form id="loginForm" class="book-form" role="form" aria-label="Login form">
                     <div class="form-group">
-                        <input type="text" id="username" name="username" placeholder="Benutzername" required>
-                        <div class="error" id="usernameError"></div>
+                        <label for="username" class="form-label">Benutzername</label>
+                        <input type="text" id="username" name="username" placeholder="Benutzername" required
+                               aria-required="true" aria-describedby="usernameError">
+                        <div class="error" id="usernameError" role="alert" aria-live="polite"></div>
                     </div>
 
                     <div class="form-group">
-                        <input type="password" id="password" name="password" placeholder="Passwort" required>
-                        <div class="error" id="passwordError"></div>
+                        <label for="password" class="form-label">Passwort</label>
+                        <input type="password" id="password" name="password" placeholder="Passwort" required
+                               aria-required="true" aria-describedby="passwordError">
+                        <div class="error" id="passwordError" role="alert" aria-live="polite"></div>
                     </div>
 
                     <div class="form-group mfa-input" id="mfaGroup">
-                        <input type="text" id="mfa" name="mfa" placeholder="000000" maxlength="6">
-                        <div class="error" id="mfaError"></div>
+                        <label for="mfa" class="form-label">MFA Code</label>
+                        <input type="text" id="mfa" name="mfa" placeholder="000000" maxlength="6"
+                               aria-describedby="mfaError">
+                        <div class="error" id="mfaError" role="alert" aria-live="polite"></div>
                     </div>
 
-                    <button type="submit" class="book-login-btn">Enter</button>
-                    <div class="loading" id="loading">Logging in...</div>
-                    <div class="error" id="generalError"></div>
+                    <button type="submit" class="book-login-btn" aria-label="Enter spellbook - submit login form">Enter</button>
+                    <div class="loading" id="loading" role="status" aria-live="polite">Logging in...</div>
+                    <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
                 </form>
 
                 <div class="book-link">

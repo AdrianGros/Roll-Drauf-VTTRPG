@@ -18,14 +18,14 @@ window.BookScene = {
         console.log('[BookScene] Creating book HTML...');
 
         const bookHTML = `
-            <div id="book-scene-wrapper">
-                <div id="book">
-                    <div class="book-element book-cover">
-                        <div class="cover-title">Spellbook</div>
-                        <div class="cover-ornament">✨</div>
+            <div id="book-scene-wrapper" role="region" aria-label="Spellbook application interface">
+                <div id="book" role="doc-cover" aria-label="Interactive spellbook">
+                    <div class="book-element book-cover" role="button" tabindex="0" aria-label="Book front cover - press Enter or click to open" aria-pressed="false">
+                        <div class="cover-title" aria-hidden="false">Spellbook</div>
+                        <div class="cover-ornament" aria-hidden="true">✨</div>
                     </div>
-                    <div class="book-element book-pages"></div>
-                    <div class="book-element book-back"></div>
+                    <div class="book-element book-pages" role="doc-pagebreak" aria-label="Book pages"></div>
+                    <div class="book-element book-back" role="doc-cover" aria-label="Book back cover"></div>
                 </div>
             </div>
         `;
@@ -38,10 +38,20 @@ window.BookScene = {
         document.body.insertAdjacentHTML('beforeend', bookmarkHTML);
         console.log('[BookScene] Bookmark injected');
 
-        // Click handler for manual open
+        // Click and keyboard handler for manual open
         document.addEventListener('click', (e) => {
             if (e.target.closest('.book-cover') && !this.isOpened) {
                 console.log('[BookScene] Book clicked, opening...');
+                this.open();
+            }
+        });
+
+        // Keyboard handler for book cover (Enter or Space)
+        document.addEventListener('keydown', (e) => {
+            const cover = e.target.closest('.book-cover');
+            if (cover && !this.isOpened && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                console.log('[BookScene] Book cover activated via keyboard, opening...');
                 this.open();
             }
         });
