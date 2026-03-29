@@ -276,13 +276,25 @@
     <script src="/static/js/book-scene.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('[Login] Page loaded');
+
+            // Create book immediately
+            BookScene.create();
+
+            // Auth check (doesn't block book animation)
             Auth.redirectIfAuthenticated('/dashboard');
 
-            // Initialize 3D book scene with small delay to ensure GSAP is loaded
-            setTimeout(() => {
-                BookScene.create();
-                BookScene.open();
-            }, 100);
+            // Open book when GSAP is ready
+            const checkAndOpen = () => {
+                if (typeof gsap !== 'undefined') {
+                    console.log('[Login] GSAP ready, opening book');
+                    BookScene.open();
+                } else {
+                    console.log('[Login] GSAP not ready, retrying...');
+                    setTimeout(checkAndOpen, 50);
+                }
+            };
+            checkAndOpen();
         });
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
