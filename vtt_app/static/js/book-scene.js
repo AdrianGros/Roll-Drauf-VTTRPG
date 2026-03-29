@@ -6,6 +6,13 @@
 
 window.BookScene = {
     isOpened: false,
+    currentPage: 'dashboard',  // Track current page for keyboard navigation
+    navigationMap: {
+        'dashboard': { prev: null, next: '/campaigns' },
+        'campaigns': { prev: '/dashboard', next: '/characters' },
+        'characters': { prev: '/campaigns', next: null },
+        // Add more pages as needed
+    },
 
     create() {
         console.log('[BookScene] Creating book HTML...');
@@ -33,6 +40,49 @@ window.BookScene = {
                 this.open();
             }
         });
+
+        // Keyboard navigation (when book is open)
+        document.addEventListener('keydown', (e) => {
+            if (!this.isOpened) return;  // Only when book is open
+
+            // Prevent navigation if user is typing in a form
+            const activeElement = document.activeElement;
+            const isFormElement = activeElement.tagName === 'INPUT' ||
+                                activeElement.tagName === 'TEXTAREA' ||
+                                activeElement.tagName === 'SELECT';
+            if (isFormElement && e.key !== 'Escape') return;
+
+            switch(e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    const prevPage = this.navigationMap[this.currentPage]?.prev;
+                    if (prevPage) {
+                        console.log('[BookScene] Keyboard: Navigate to previous page');
+                        this.pageTurn(prevPage);
+                    }
+                    break;
+
+                case 'ArrowRight':
+                    e.preventDefault();
+                    const nextPage = this.navigationMap[this.currentPage]?.next;
+                    if (nextPage) {
+                        console.log('[BookScene] Keyboard: Navigate to next page');
+                        this.pageTurn(nextPage);
+                    }
+                    break;
+
+                case 'Escape':
+                    e.preventDefault();
+                    // Return to dashboard
+                    if (this.currentPage !== 'dashboard') {
+                        console.log('[BookScene] Keyboard: Return to dashboard (ESC)');
+                        this.pageTurn('/dashboard');
+                    }
+                    break;
+            }
+        });
+
+        console.log('[BookScene] Keyboard navigation initialized');
     },
 
     open() {
@@ -123,7 +173,91 @@ window.BookScene = {
         });
 
         console.log('[BookScene] 🎬 Timeline built and ready to play');
+    },
+
+    pageTurn(url) {
+        console.log('[BookScene] pageTurn() called, destination:', url);
+
+        if (!this.isOpened) {
+            console.warn('[BookScene] Book not opened, falling back to direct navigation');
+            window.location.href = url;
+            return;
+        }
+
+        if (typeof gsap === 'undefined') {
+            console.error('[BookScene] GSAP not available for page turn, falling back to direct navigation');
+            window.location.href = url;
+            return;
+        }
+
+        // Create page-turn overlay if it doesn't exist
+        let overlay = document.querySelector('.page-turn-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'page-turn-overlay';
+            document.body.appendChild(overlay);
+            console.log('[BookScene] Created page-turn overlay');
+        }
+
+        // Ensure overlay is visible and ready
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+        overlay.style.transform = 'perspective(2000px) rotateY(0deg)';
+
+        // Prevent interaction during animation
+        document.body.style.overflow = 'hidden';
+
+        // Create page-turn timeline
+        const timeline = gsap.timeline();
+
+        console.log('[BookScene] Building page-turn timeline...');
+
+        // Animate page rotation: 0° → -180° (full 180° rotation over 0.6s)
+        timeline.to(overlay, {
+            rotationY: -180,
+            duration: 0.6,
+            ease: 'power2.inOut',
+            force3D: true
+        }, 0);
+
+        // At midpoint (t=0.3s, 90° rotation), navigate to new page
+        // At this point the overlay is perpendicular to screen (invisible)
+        timeline.add(() => {
+            console.log('[BookScene] Navigating to:', url);
+            window.location.href = url;
+        }, 0.3);
+
+        // Callback on complete (may not reach if page navigation occurs)
+        timeline.eventCallback('onComplete', () => {
+            console.log('[BookScene] Page turn animation complete');
+            // Reset for potential future animations
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        console.log('[BookScene] Page turn timeline ready, duration: 0.6s');
+    },
+
+    updateCurrentPage() {
+        // Derive current page from URL pathname
+        const pathname = window.location.pathname;
+
+        if (pathname.includes('/campaigns')) {
+            this.currentPage = 'campaigns';
+        } else if (pathname.includes('/characters')) {
+            this.currentPage = 'characters';
+        } else if (pathname.includes('/dashboard') || pathname === '/') {
+            this.currentPage = 'dashboard';
+        } else {
+            this.currentPage = pathname;  // Use pathname as-is if not recognized
+        }
+
+        console.log('[BookScene] Current page:', this.currentPage);
     }
 };
+
+// Auto-update current page when script loads
+window.BookScene.updateCurrentPage();
 
 console.log('[BookScene] ✓ Script loaded and BookScene object created');

@@ -2657,7 +2657,7 @@
         }
 
         function goTo(path) {
-            if (window.BookScene) {
+            if (window.BookScene && window.BookScene.isOpened) {
                 BookScene.pageTurn(path);
             } else {
                 window.location.href = path;

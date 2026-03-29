@@ -1127,7 +1127,11 @@
         }
 
         function goTo(path) {
-            window.location.href = path;
+            if (window.BookScene && window.BookScene.isOpened) {
+                BookScene.pageTurn(path);
+            } else {
+                window.location.href = path;
+            }
         }
 
         async function logout() {

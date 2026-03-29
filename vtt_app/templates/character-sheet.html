@@ -225,11 +225,19 @@
         }
 
         function goTo(path) {
-            window.location.href = path;
+            if (window.BookScene && window.BookScene.isOpened) {
+                BookScene.pageTurn(path);
+            } else {
+                window.location.href = path;
+            }
         }
 
         function goBack() {
-            window.location.href = "/characters";
+            if (window.BookScene && window.BookScene.isOpened) {
+                BookScene.pageTurn("/characters");
+            } else {
+                window.location.href = "/characters";
+            }
         }
 
         async function logout() {
