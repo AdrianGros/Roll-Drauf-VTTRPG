@@ -1,0 +1,199 @@
+/**
+ * M46+: 3D Book Scene — Premium Spellbook Opening Animation
+ * CSS 3D transforms for realistic book opening and page turning
+ */
+
+#book-scene-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%);
+    perspective: 2000px;
+}
+
+#book-scene-wrapper.hidden {
+    display: none;
+}
+
+#book {
+    width: 320px;
+    height: 430px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(-15deg) rotateX(0deg);
+    filter: drop-shadow(-20px 10px 40px rgba(0, 0, 0, 0.8));
+}
+
+.book-element {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px 6px 6px 3px;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+/* Front cover */
+.book-cover {
+    background: linear-gradient(135deg, #3d1f4e 0%, #4a235a 40%, #3a1a48 100%);
+    border: 2px solid #d4af37;
+    z-index: 3;
+    transform: rotateY(0deg);
+    box-shadow: inset -8px 0 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.book-cover .cover-title {
+    font-family: 'Cinzel', 'Georgia', serif;
+    color: #d4af37;
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    margin: 0;
+}
+
+.book-cover .cover-ornament {
+    font-size: 60px;
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+    animation: subtle-float 3s ease-in-out infinite;
+}
+
+@keyframes subtle-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Book pages (center fold) */
+.book-pages {
+    background: linear-gradient(90deg, #e8d5b7 0%, #f5e6d3 50%, #e8d5b7 100%);
+    transform: translateX(4px) rotateY(0deg);
+    z-index: 1;
+    border-radius: 0 6px 6px 0;
+    box-shadow: inset -3px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Back cover */
+.book-back {
+    background: linear-gradient(135deg, #3a1a48 0%, #4a235a 100%);
+    border: 2px solid #d4af37;
+    transform: translateZ(-8px);
+    z-index: 0;
+    border-radius: 6px 3px 3px 6px;
+}
+
+/* Content page that appears inside open book */
+.book-open-page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--vtt-surface-card, #201530);
+    border-radius: 0 3px 3px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 30px;
+    opacity: 0;
+    z-index: 5;
+}
+
+/* Page turn transition overlay */
+.page-turn-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--vtt-surface-card, #201530);
+    transform-origin: left center;
+    transform: perspective(2000px) rotateY(0deg);
+    backface-visibility: hidden;
+    pointer-events: none;
+}
+
+/* Book rasp/rustle animation */
+@keyframes book-rustle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.book-pages.rustling {
+    animation: book-rustle 0.15s ease-in-out 3;
+}
+
+/* Login form container inside open book */
+#login-content {
+    opacity: 0;
+    position: relative;
+    z-index: 9001;
+    transition: opacity 0.6s ease-out;
+}
+
+#login-content.visible {
+    opacity: 1;
+}
+
+/* Responsive — smaller screens */
+@media (max-width: 768px) {
+    #book {
+        width: 280px;
+        height: 370px;
+    }
+
+    .book-cover .cover-title {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    .book-cover .cover-ornament {
+        font-size: 48px;
+    }
+
+    .book-open-page {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    #book {
+        width: 240px;
+        height: 320px;
+    }
+
+    .book-cover .cover-title {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .book-cover .cover-ornament {
+        font-size: 40px;
+    }
+
+    .book-open-page {
+        padding: 20px 15px;
+    }
+}
+
+/* Accessibility: respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    #book,
+    .book-cover,
+    .book-pages,
+    .cover-ornament,
+    .page-turn-overlay,
+    #login-content {
+        animation: none !important;
+        transition: none !important;
+    }
+}

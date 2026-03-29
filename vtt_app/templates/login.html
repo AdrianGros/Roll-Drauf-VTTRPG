@@ -104,9 +104,14 @@
     <!-- Spellbook Theme -->
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
 </head>
 <body class="spellbook">
-    <div class="login-container">
+    <!-- 3D Book Scene (injected via book-scene.js) -->
+
+    <!-- Login content (fades in after book opens) -->
+    <div id="login-content">
+        <div class="login-container">
         <h1>roll drauf vtt</h1>
         <form id="loginForm">
             <div class="form-group">
@@ -132,15 +137,22 @@
             <div class="error" id="generalError"></div>
         </form>
 
-        <div class="link">
-            Don't have an account? <a href="/signup.html">Sign up</a>
+            <div class="link">
+                Don't have an account? <a href="/signup.html">Sign up</a>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="/static/js/auth.js"></script>
+    <script src="/static/js/book-scene.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             Auth.redirectIfAuthenticated('/dashboard');
+
+            // Initialize 3D book scene
+            BookScene.create();
+            BookScene.open();
         });
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -175,8 +187,8 @@
                     return;
                 }
 
-                // Success
-                window.location.href = '/dashboard';
+                // Success - use page turn animation
+                BookScene.pageTurn('/dashboard');
 
             } catch (error) {
                 showError('generalError', 'Network error: ' + error.message);
