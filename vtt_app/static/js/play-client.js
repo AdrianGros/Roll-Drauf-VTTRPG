@@ -46,4 +46,31 @@ class PlayClient {
         }
         return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/actions/execute`, "POST", body);
     }
+
+    updateToken(campaignId, sessionId, tokenId, baseVersion, patch) {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/tokens/${tokenId}`, "PUT", {
+            base_version: baseVersion,
+            patch: patch && typeof patch === "object" ? patch : {},
+        });
+    }
+
+    createToken(campaignId, sessionId, token) {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/tokens`, "POST", {
+            token: token && typeof token === "object" ? token : {},
+        });
+    }
+
+    deleteToken(campaignId, sessionId, tokenId, baseVersion) {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/tokens/${tokenId}`, "DELETE", {
+            base_version: baseVersion,
+        });
+    }
+
+    rollInitiative(campaignId, sessionId) {
+        return this.auth.makeAuthRequest(`/api/sessions/${sessionId}/initiative/roll`, "POST", {});
+    }
+
+    nextTurn(campaignId, sessionId) {
+        return this.auth.makeAuthRequest(`/api/sessions/${sessionId}/initiative/next-turn`, "POST", {});
+    }
 }

@@ -4,7 +4,7 @@ import io
 from flask import Blueprint, request, jsonify, send_file, current_app
 from flask_jwt_extended import jwt_required
 from vtt_app.extensions import db
-from vtt_app.models import Asset, Campaign, User
+from vtt_app.models import Asset, Campaign, CampaignMember, GameSession, User
 from vtt_app.permissions import has_platform_role, can_view_campaign, can_edit_campaign, require_campaign_access
 from vtt_app.upload_security import validate_upload, UploadError
 from vtt_app.storage import get_storage_adapter
@@ -12,6 +12,23 @@ from vtt_app.utils.audit import log_audit
 from vtt_app.security import current_user
 
 assets_bp = Blueprint('assets', __name__, url_prefix='/api/assets')
+
+LIBRARY_ALLOWED_ASSET_TYPES = {'map', 'token', 'handout', 'image'}
+
+
+def _can_access_library(campaign, user):
+    """Return True when the user is an active campaign member or owner."""
+    if not campaign or not user:
+        return False
+
+    if campaign.owner_id == user.id:
+        return True
+
+    return CampaignMember.query.filter_by(
+        campaign_id=campaign.id,
+        user_id=user.id,
+        status='active',
+    ).first() is not None
 
 
 # ===== M19: List & Download =====
@@ -36,6 +53,113 @@ def list_campaign_assets(campaign_id):
     }), 200
 
 
+@assets_bp.route('/campaigns/<int:campaign_id>/library', methods=['GET'])
+@jwt_required()
+def get_campaign_asset_library(campaign_id):
+    """Return asset library payload for campaign hub use."""
+    campaign = Campaign.query.get(campaign_id)
+    if not campaign or not _can_access_library(campaign, current_user):
+        return jsonify({'error': 'Forbidden'}), 403
+
+    asset_type = (request.args.get('asset_type') or '').strip().lower() or None
+    if asset_type and asset_type not in LIBRARY_ALLOWED_ASSET_TYPES:
+        return jsonify({'error': 'Unsupported asset type'}), 400
+
+    scope = (request.args.get('scope') or 'all').strip().lower()
+    if scope not in {'all', 'campaign', 'session'}:
+        return jsonify({'error': 'Unsupported scope'}), 400
+
+    raw_session_id = request.args.get('session_id')
+    session_id = None
+    if raw_session_id:
+        try:
+            session_id = int(raw_session_id)
+        except (TypeError, ValueError):
+            return jsonify({'error': 'session_id must be a number'}), 400
+
+    search = (request.args.get('query') or '').strip() or None
+    page = request.args.get('page', 1)
+    per_page = request.args.get('per_page', 24)
+    try:
+        page = max(1, int(page))
+        per_page = min(100, max(1, int(per_page)))
+    except (TypeError, ValueError):
+        return jsonify({'error': 'page and per_page must be numbers'}), 400
+
+    base_query = Asset.get_library_assets(
+        campaign_id,
+        asset_type=asset_type,
+        scope=scope,
+        session_id=session_id,
+        search=search,
+        include_deleted=False,
+    )
+
+    total = base_query.count()
+    assets = base_query.offset((page - 1) * per_page).limit(per_page).all()
+
+    # Session roster for upload targets and context.
+    sessions = GameSession.query.filter_by(campaign_id=campaign_id).order_by(GameSession.created_at.desc()).all()
+
+    stats = Asset.get_library_stats(campaign_id, include_deleted=False)
+    stats.update({
+        'session_count': len(sessions),
+        'filter_total': total,
+        'active_session_count': sum(1 for session in sessions if session.status in {'in_progress', 'paused'}),
+    })
+
+    return jsonify({
+        'campaign_id': campaign_id,
+        'campaign_name': campaign.name,
+        'filters': {
+            'asset_type': asset_type,
+            'scope': scope,
+            'session_id': session_id,
+            'query': search,
+            'page': page,
+            'per_page': per_page,
+        },
+        'stats': stats,
+        'sessions': [session.serialize() for session in sessions],
+        'assets': [asset.serialize() for asset in assets],
+        'total': total,
+        'page': page,
+        'per_page': per_page,
+        'has_more': (page * per_page) < total,
+    }), 200
+
+
+@assets_bp.route('/<int:asset_id>/preview', methods=['GET'])
+@jwt_required()
+def preview_asset(asset_id):
+    """Preview an asset inline when the mime type supports it."""
+    asset = Asset.query.get(asset_id)
+    if not asset or asset.is_soft_deleted():
+        return jsonify({'error': 'Asset not found'}), 404
+
+    campaign = asset.campaign
+    if not _can_access_library(campaign, current_user):
+        return jsonify({'error': 'Forbidden'}), 403
+
+    if not asset.is_previewable():
+        return jsonify({'error': 'Preview not supported for this asset type'}), 400
+
+    storage = get_storage_adapter()
+    try:
+        content = storage.download(asset.storage_key)
+    except Exception as e:
+        return jsonify({'error': f'Preview failed: {str(e)}'}), 500
+
+    response = send_file(
+        io.BytesIO(content),
+        mimetype=asset.mime_type,
+        as_attachment=False,
+        download_name=asset.filename,
+    )
+    response.headers['Content-Disposition'] = f'inline; filename="{asset.filename}"'
+    return response
+
+
 @assets_bp.route('/<int:asset_id>/download', methods=['GET'])
 @jwt_required()
 def download_asset(asset_id):
@@ -46,7 +170,7 @@ def download_asset(asset_id):
 
     # Check permission
     campaign = asset.campaign
-    if not can_view_campaign(current_user, campaign):
+    if not _can_access_library(campaign, current_user):
         return jsonify({'error': 'Forbidden'}), 403
 
     # Get from storage
@@ -87,7 +211,9 @@ def upload_asset(campaign_id):
         return jsonify({'error': 'No file provided'}), 400
 
     file_obj = request.files['file']
-    asset_type = request.form.get('asset_type', 'image')  # map, token, handout, image
+    asset_type = str(request.form.get('asset_type', 'image')).strip().lower() or 'image'  # map, token, handout, image
+    if asset_type not in LIBRARY_ALLOWED_ASSET_TYPES:
+        return jsonify({'error': 'Unsupported asset type'}), 400
 
     # M20: Validate upload
     try:

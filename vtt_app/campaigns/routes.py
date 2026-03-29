@@ -332,12 +332,18 @@ def get_campaign(campaign_id):
         .order_by(GameSession.created_at.desc())
         .all()
     )
+    maps = (
+        CampaignMap.query.filter_by(campaign_id=campaign.id, archived_at=None)
+        .order_by(CampaignMap.created_at.desc())
+        .all()
+    )
 
     return jsonify(
         {
             "campaign": _serialize_campaign(campaign, user.id),
             "members": [member.serialize() for member in members],
             "sessions": [session.serialize() for session in sessions],
+            "maps": [campaign_map.serialize() for campaign_map in maps],
         }
     ), 200
 

@@ -1,105 +1,393 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VTT Play Runtime</title>
+    <title>VTT Spieltisch</title>
     <style>
         * { box-sizing: border-box; }
+        :root {
+            --bg-a: #0c1426;
+            --bg-b: #162746;
+            --panel: rgba(10, 19, 36, 0.86);
+            --panel-soft: rgba(255, 255, 255, 0.05);
+            --line: rgba(255, 255, 255, 0.18);
+            --line-strong: rgba(132, 182, 255, 0.7);
+            --text: #eef3ff;
+            --muted: #9eaecf;
+            --primary: #5a8dea;
+            --primary-hover: #4878cd;
+            --danger: #bc5454;
+        }
         body {
             margin: 0;
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(140deg, #111a2e 0%, #1f2d4f 60%, #27385f 100%);
-            color: #eef3ff;
-            min-height: 100vh;
+            background: linear-gradient(140deg, var(--bg-a) 0%, var(--bg-b) 100%);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
         }
         header {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            background: rgba(8, 16, 30, 0.55);
-            backdrop-filter: blur(4px);
+            height: 64px;
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--line);
+            background: rgba(3, 8, 18, 0.74);
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
         }
-        h1 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+        h1 {
+            margin: 0;
+            font-size: 1.16rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .badge-row {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.45rem;
             flex-wrap: wrap;
+            justify-content: flex-end;
         }
         .badge {
-            border: 1px solid rgba(255,255,255,0.25);
+            border: 1px solid var(--line);
             border-radius: 999px;
-            padding: 0.2rem 0.65rem;
+            padding: 0.2rem 0.64rem;
             font-size: 0.8rem;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.08);
         }
-        main {
-            padding: 1rem;
+        .tabletop-shell {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1rem;
+            grid-template-columns: 54px 1fr 370px;
+            gap: 0;
+            height: calc(100vh - 64px);
         }
-        .panel {
-            background: rgba(7, 12, 24, 0.65);
-            border: 1px solid rgba(255,255,255,0.2);
+        .left-toolbar {
+            border-right: 1px solid var(--line);
+            background: rgba(7, 14, 28, 0.9);
+            padding: 0.45rem 0.32rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            overflow-y: auto;
+        }
+        .tool-btn {
+            width: 100%;
+            height: 36px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        }
+        .tool-btn:hover { background: rgba(92, 144, 227, 0.2); }
+        .tool-btn.active {
+            border-color: var(--line-strong);
+            background: rgba(90, 141, 234, 0.34);
+        }
+        .spacer {
+            margin-top: auto;
+            border-top: 1px solid var(--line);
+            padding-top: 0.35rem;
+        }
+        .stage {
+            position: relative;
+            background: radial-gradient(circle at 20% 0%, rgba(70, 95, 146, 0.4), rgba(16, 27, 49, 0.95));
+            overflow: hidden;
+        }
+        .map-viewport {
+            position: absolute;
+            inset: 0;
+            overflow: auto;
+            padding: 1.25rem;
+            overscroll-behavior: contain;
+        }
+        .map-world {
+            position: relative;
+            width: 1800px;
+            height: 1200px;
+            margin: 0 auto;
             border-radius: 10px;
-            padding: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            background: #1d2431;
+            transform-origin: top left;
+        }
+        .map-grid-layer {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(to right, rgba(40, 40, 40, 0.24) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(40, 40, 40, 0.24) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        #mapImage {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            display: none;
+        }
+        #mapTokenLayer {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+        }
+        .token-marker {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #081226;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.36);
+            overflow: hidden;
+            cursor: default;
+            touch-action: none;
+            user-select: none;
+        }
+        .token-marker.draggable {
+            cursor: grab;
+        }
+        .token-marker.dragging {
+            cursor: grabbing;
+            opacity: 0.88;
+            z-index: 30;
+        }
+        .token-marker.selected {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25), 0 2px 10px rgba(0, 0, 0, 0.5);
+            outline: 2px solid rgba(173, 208, 255, 0.9);
+            outline-offset: 1px;
+        }
+        .token-marker.current-turn {
+            box-shadow: 0 0 0 3px rgba(255, 220, 120, 0.42), 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .token-label {
+            position: absolute;
+            left: 50%;
+            bottom: -18px;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.7rem;
+            color: #f0f4ff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        .map-empty-state {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 0;
+            pointer-events: none;
+            color: rgba(234, 240, 255, 0.7);
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            text-align: center;
+            padding: 2rem;
+        }
+        .stage-topbar {
+            position: absolute;
+            top: 0.85rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.38rem;
+            align-items: center;
+            background: rgba(3, 9, 20, 0.75);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 0.42rem;
+            z-index: 20;
+        }
+        .mini-control {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text);
+            padding: 0.22rem 0.45rem;
+            min-width: 36px;
+            text-align: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        #zoomRange { width: 86px; }
+        .floating {
+            position: absolute;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 0.55rem;
+            z-index: 18;
+            max-height: 40%;
+            overflow: auto;
+            width: 280px;
+        }
+        .floating h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.88rem;
+            color: #bad6ff;
+        }
+        #turnOrderWidget {
+            left: 1rem;
+            bottom: 1rem;
+            width: 220px;
+        }
+        #layersWidget {
+            left: 1rem;
+            top: 1rem;
+            width: 300px;
+            max-height: 44%;
+        }
+        #tokenWidget {
+            right: 1rem;
+            bottom: 1rem;
+            width: 300px;
+        }
+        .panel-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 7px;
+            padding: 0.38rem 0.5rem;
+            margin-bottom: 0.34rem;
+            font-size: 0.82rem;
+            background: rgba(255,255,255,0.03);
+        }
+        .panel-row:last-child { margin-bottom: 0; }
+        .active-row {
+            border-color: var(--line-strong);
+            background: rgba(84, 142, 238, 0.18);
+        }
+        .right-sidebar {
+            border-left: 1px solid var(--line);
+            background: rgba(5, 11, 22, 0.92);
+            display: flex;
+            flex-direction: column;
+            min-width: 320px;
+        }
+        .sidebar-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.32rem;
+            padding: 0.55rem;
+            border-bottom: 1px solid var(--line);
+        }
+        .sidebar-tab {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            color: var(--text);
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 0.34rem 0.26rem;
+            cursor: pointer;
+        }
+        .sidebar-tab.active {
+            border-color: var(--line-strong);
+            background: rgba(88, 138, 232, 0.28);
+        }
+        .sidebar-content {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+        }
+        .tab-panel {
+            display: none;
+            height: 100%;
+            overflow: auto;
+            padding: 0.7rem;
+        }
+        .tab-panel.active { display: block; }
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 0.7rem;
+            margin-bottom: 0.62rem;
         }
         .panel h2 {
-            margin: 0 0 0.7rem 0;
-            font-size: 1rem;
+            margin: 0 0 0.52rem 0;
+            font-size: 0.92rem;
             color: #9ec1ff;
         }
         .subpanel {
-            margin-bottom: 0.7rem;
-            border: 1px solid rgba(255,255,255,0.16);
+            margin-bottom: 0.55rem;
+            border: 1px solid var(--line);
             border-radius: 8px;
-            padding: 0.6rem;
-            background: rgba(255,255,255,0.03);
+            padding: 0.52rem;
+            background: var(--panel-soft);
         }
         .subpanel h3 {
-            margin: 0 0 0.45rem 0;
-            font-size: 0.9rem;
+            margin: 0 0 0.42rem 0;
+            font-size: 0.84rem;
             color: #d2e2ff;
         }
         .button-row {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.44rem;
             flex-wrap: wrap;
-            margin-bottom: 0.55rem;
+            margin-bottom: 0.42rem;
         }
         button {
             border: none;
             border-radius: 6px;
-            padding: 0.45rem 0.7rem;
+            padding: 0.43rem 0.65rem;
             cursor: pointer;
-            background: #4f7ed7;
+            background: var(--primary);
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             transition: background 0.15s ease-in-out, opacity 0.15s ease-in-out;
         }
-        button:hover { background: #3f68b8; }
+        button:hover { background: var(--primary-hover); }
         button:disabled {
             cursor: not-allowed;
-            opacity: 0.55;
+            opacity: 0.54;
             background: #5a6477;
         }
         .secondary { background: #505e79; }
-        .danger { background: #b84949; }
-        .mini-btn { padding: 0.25rem 0.55rem; font-size: 0.78rem; }
-        .message {
-            margin: 0.6rem 0;
+        .danger { background: var(--danger); }
+        .mini-btn { padding: 0.22rem 0.48rem; font-size: 0.74rem; }
+        input, select, textarea {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--line);
+            color: var(--text);
             border-radius: 6px;
-            padding: 0.45rem 0.6rem;
+            padding: 0.4rem 0.52rem;
+            width: 100%;
+        }
+        #diceLog, #activityLog, #chatLog {
+            max-height: 230px;
+            overflow-y: auto;
+            font-size: 0.83rem;
+        }
+        .activity-line {
+            padding: 0.25rem 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.12);
+        }
+        .activity-line:last-child { border-bottom: none; }
+        .muted { color: var(--muted); font-size: 0.86rem; }
+        .message {
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            padding: 0.44rem 0.56rem;
             display: none;
         }
         .message.success {
             display: block;
             background: rgba(72, 167, 108, 0.26);
-            border: 1px solid rgba(72, 167, 108, 0.55);
+            border: 1px solid rgba(72, 167, 108, 0.56);
         }
         .message.error {
             display: block;
@@ -111,159 +399,237 @@
             background: rgba(77, 133, 213, 0.24);
             border: 1px solid rgba(77, 133, 213, 0.6);
         }
-        .muted { opacity: 0.75; font-size: 0.9rem; }
-        .panel-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.6rem;
-            border: 1px solid rgba(255,255,255,0.14);
-            border-radius: 6px;
-            padding: 0.45rem 0.55rem;
-            margin-bottom: 0.4rem;
-            font-size: 0.88rem;
-        }
-        .active-row {
-            border-color: rgba(106, 176, 255, 0.75);
-            background: rgba(106, 176, 255, 0.15);
-        }
-        .grid-two {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        input, select {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: #eef3ff;
-            border-radius: 6px;
-            padding: 0.4rem 0.55rem;
-            width: 100%;
-        }
-        #diceLog, #activityLog {
-            max-height: 140px;
-            overflow-y: auto;
-            font-size: 0.85rem;
-        }
-        .activity-line {
-            padding: 0.25rem 0;
-            border-bottom: 1px dashed rgba(255,255,255,0.12);
-        }
-        .activity-line:last-child { border-bottom: none; }
         .ready-block {
             border-left: 3px solid #d45555;
-            padding-left: 0.45rem;
-            margin: 0.35rem 0;
+            padding-left: 0.42rem;
+            margin: 0.32rem 0;
         }
         .ready-warn {
             border-left: 3px solid #c99a3c;
-            padding-left: 0.45rem;
-            margin: 0.35rem 0;
+            padding-left: 0.42rem;
+            margin: 0.32rem 0;
         }
         .ready-ok {
             border-left: 3px solid #4aa570;
-            padding-left: 0.45rem;
-            margin: 0.35rem 0;
+            padding-left: 0.42rem;
+            margin: 0.32rem 0;
         }
-        @media (max-width: 950px) {
-            main {
-                grid-template-columns: 1fr;
+        .turn-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.42rem;
+            padding: 0.3rem 0.42rem;
+            border-radius: 6px;
+            margin-bottom: 0.3rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+        }
+        .turn-item.current {
+            border-color: rgba(255, 220, 120, 0.65);
+            background: rgba(255, 220, 120, 0.16);
+        }
+        .turn-item:last-child { margin-bottom: 0; }
+        .turn-score { font-weight: 700; color: #8cc0ff; }
+        .turn-state {
+            font-size: 0.72rem;
+            color: #f2dd9b;
+            margin-bottom: 0.45rem;
+        }
+        .chat-entry {
+            margin-bottom: 0.42rem;
+            padding-bottom: 0.42rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.12);
+        }
+        .chat-entry:last-child { margin-bottom: 0; border-bottom: none; }
+        .chat-meta {
+            color: #adc2ec;
+            font-size: 0.74rem;
+            margin-bottom: 0.2rem;
+        }
+        @media (max-width: 1280px) {
+            .tabletop-shell {
+                grid-template-columns: 46px 1fr 330px;
             }
-            .grid-two {
+            #layersWidget, #tokenWidget { width: 260px; }
+        }
+        @media (max-width: 1040px) {
+            .tabletop-shell {
                 grid-template-columns: 1fr;
+                grid-template-rows: 1fr auto;
             }
+            .left-toolbar {
+                position: absolute;
+                left: 0.45rem;
+                top: 72px;
+                z-index: 30;
+                width: 46px;
+                border: 1px solid var(--line);
+                border-radius: 10px;
+            }
+            .right-sidebar {
+                border-left: none;
+                border-top: 1px solid var(--line);
+                min-width: 0;
+                height: 42vh;
+            }
+            .stage { height: 58vh; }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1 id="sessionTitle">Loading session...</h1>
+        <h1 id="sessionTitle">Session wird geladen...</h1>
         <div class="badge-row">
             <span class="badge">Mode: <strong id="modeBadge">-</strong></span>
             <span class="badge">Role: <strong id="roleBadge">-</strong></span>
             <span class="badge">Access: <strong id="readOnlyBadge">-</strong></span>
+            <span class="badge">Status: <strong id="sessionStatusPill">-</strong></span>
         </div>
     </header>
 
-    <main>
-        <section class="panel">
-            <h2>Play Flow</h2>
-            <div id="msg" class="message"></div>
-            <div id="readOnlyNotice" class="message info"></div>
+    <main class="tabletop-shell">
+        <aside class="left-toolbar" aria-label="Werkzeugleiste">
+            <button class="tool-btn active" data-tool="select" title="Auswaehlen">SEL</button>
+            <button class="tool-btn" data-tool="pan" title="Verschieben">PAN</button>
+            <button class="tool-btn" data-tool="measure" title="Messen">MES</button>
+            <button class="tool-btn" data-tool="draw" title="Zeichnen">DRW</button>
+            <button class="tool-btn" data-tool="text" title="Text">TXT</button>
+            <button class="tool-btn" data-tool="token" title="Token">TOK</button>
+            <button class="tool-btn" data-tool="fog" title="Fog">FOG</button>
+            <div class="spacer">
+                <button id="btnBack" class="tool-btn" title="Zur Kampagne">BACK</button>
+            </div>
+        </aside>
 
-            <div class="subpanel">
-                <h3>Navigation</h3>
-                <div class="button-row">
-                    <button id="btnBack" class="secondary">Back to Campaigns</button>
+        <section class="stage">
+            <div class="stage-topbar">
+                <button id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
+                <span id="zoomLabel" class="mini-control">100%</span>
+                <button id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
+                <input id="zoomRange" type="range" min="50" max="200" step="5" value="100">
+                <button id="btnZoomReset" class="mini-control" title="Reset">RST</button>
+            </div>
+
+            <div class="map-viewport" id="mapViewport">
+                <div class="map-world" id="mapWorld">
+                    <div class="map-empty-state" id="mapEmptyState">Keine aktive Karte geladen. Initialisiere den Kartenstapel oder waehle eine Ebene aus.</div>
+                    <img id="mapImage" alt="Aktive Karte">
+                    <div class="map-grid-layer" id="mapGridLayer"></div>
+                    <div id="mapTokenLayer"></div>
                 </div>
             </div>
 
-            <div class="subpanel">
-                <h3>Setup Controls</h3>
-                <div class="button-row">
-                    <button id="btnInitStack" class="secondary">Init Scene Stack</button>
-                    <button id="btnReadyCheck" class="secondary">Run Ready Check</button>
-                </div>
+            <div id="layersWidget" class="floating">
+                <h3>Kartenebenen</h3>
+                <div class="muted" style="margin-bottom:0.4rem;">Aktive Karte: <span id="activeMapText">-</span></div>
+                <div id="layerList"></div>
             </div>
 
-            <div class="subpanel">
-                <h3>Session Lifecycle</h3>
-                <div class="button-row">
-                    <button id="btnToReady">Set Ready</button>
-                    <button id="btnStart">Start Live</button>
-                    <button id="btnPause" class="secondary">Pause</button>
-                    <button id="btnResume">Resume</button>
-                    <button id="btnEnd" class="danger">End Session</button>
-                </div>
+            <div id="turnOrderWidget" class="floating">
+                <h3>Turn Order</h3>
+                <div id="turnOrderSummary" class="turn-state">Noch keine Initiative-Werte.</div>
+                <div id="turnOrderList" class="muted">Noch keine Initiative-Werte.</div>
             </div>
 
-            <div class="panel" style="margin-bottom: 0.7rem;">
-                <h2>Ready Check</h2>
-                <div id="readyCheckOutput" class="muted">No check executed yet.</div>
-            </div>
-
-            <div class="grid-two">
-                <div class="panel">
-                    <h2>Scene Layers</h2>
-                    <div class="muted" style="margin-bottom:0.4rem;">Active Map: <span id="activeMapText">-</span></div>
-                    <div id="layerList"></div>
-                </div>
-                <div class="panel">
-                    <h2>Tokens</h2>
-                    <div id="tokenList"></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel">
-            <h2>Actions and Dice</h2>
-            <div class="panel" style="margin-bottom: 0.7rem;">
-                <h2>Action Bar v1</h2>
-                <div class="button-row" style="margin-bottom:0.45rem;">
-                    <select id="actionTokenId"></select>
-                    <select id="actionTargetTokenId"></select>
-                </div>
-                <div class="button-row">
-                    <select id="actionCode"></select>
-                    <button id="btnExecuteAction">Execute Action</button>
-                </div>
-            </div>
-
-            <div class="panel" style="margin-bottom: 0.7rem;">
-                <h2>Dice</h2>
-                <div class="button-row">
-                    <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5">
-                    <button id="btnRoll">Roll</button>
-                </div>
-                <div id="diceResult" class="muted">No roll executed.</div>
-                <div id="diceLog" class="muted" style="margin-top:0.45rem;"></div>
-            </div>
-
-            <div class="panel">
-                <h2>Activity Feed</h2>
-                <div id="activityLog" class="muted">No events yet.</div>
+            <div id="tokenWidget" class="floating">
+                <h3>Tokens</h3>
+                <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewaehlt.</div>
+                <div id="tokenList"></div>
             </div>
         </section>
+
+        <aside class="right-sidebar">
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab" data-tab="journal">Journal</button>
+                <button class="sidebar-tab" data-tab="chat">Chat</button>
+                <button class="sidebar-tab active" data-tab="tools">Tools</button>
+                <button class="sidebar-tab" data-tab="session">Session</button>
+            </div>
+
+            <div class="sidebar-content">
+                <section id="panel-journal" class="tab-panel">
+                    <div class="panel">
+                        <h2>Aktivitaet</h2>
+                        <div id="activityLog" class="muted">Noch keine Ereignisse.</div>
+                    </div>
+                    <div class="panel">
+                        <h2>Map-Notizen</h2>
+                        <div class="muted" id="mapMetaText">Keine aktive Karte.</div>
+                    </div>
+                </section>
+
+                <section id="panel-chat" class="tab-panel">
+                    <div class="panel">
+                        <h2>Session Chat</h2>
+                        <div id="chatLog" class="muted">Noch keine Chat-Nachrichten.</div>
+                    </div>
+                    <div class="panel">
+                        <h2>Nachricht senden</h2>
+                        <div class="button-row" style="margin-bottom:0;">
+                            <input id="chatInput" type="text" placeholder="Nachricht an den Tisch...">
+                            <button id="btnSendChat">Senden</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="panel-tools" class="tab-panel active">
+                    <div class="panel">
+                        <h2>Aktionsleiste</h2>
+                        <div class="button-row" style="margin-bottom:0.45rem;">
+                            <select id="actionTokenId"></select>
+                            <select id="actionTargetTokenId"></select>
+                        </div>
+                        <div class="button-row">
+                            <select id="actionCode"></select>
+                            <button id="btnExecuteAction">Aktion ausfuehren</button>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <h2>Wuerfel</h2>
+                        <div class="button-row">
+                            <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5">
+                            <button id="btnRoll">Wuerfeln</button>
+                        </div>
+                        <div id="diceResult" class="muted">Noch kein Wurf.</div>
+                        <div id="diceLog" class="muted" style="margin-top:0.45rem;"></div>
+                    </div>
+                </section>
+
+                <section id="panel-session" class="tab-panel">
+                    <div id="msg" class="message"></div>
+                    <div id="readOnlyNotice" class="message"></div>
+                    <div id="firstStepsNotice" class="message"></div>
+
+                    <div class="panel">
+                        <h2>Vorbereitung</h2>
+                        <div class="subpanel">
+                            <h3>Session-Aufbau</h3>
+                            <div class="button-row">
+                                <button id="btnInitStack" class="secondary">Kartenstapel initialisieren</button>
+                                <button id="btnReadyCheck" class="secondary">Start-Check</button>
+                            </div>
+                        </div>
+                        <div class="subpanel">
+                            <h3>Session-Steuerung</h3>
+                            <div class="button-row">
+                                <button id="btnToReady">Bereit setzen</button>
+                                <button id="btnStart">Live starten</button>
+                                <button id="btnPause" class="secondary">Pause</button>
+                                <button id="btnResume">Fortsetzen</button>
+                                <button id="btnEnd" class="danger">Session beenden</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <h2>Start-Check</h2>
+                        <div id="readyCheckOutput" class="muted">Noch kein Start-Check ausgefuehrt.</div>
+                    </div>
+                </section>
+            </div>
+        </aside>
     </main>
 
     <script src="/socket.io/socket.io.js"></script>

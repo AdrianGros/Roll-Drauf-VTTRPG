@@ -252,3 +252,122 @@ def mfa_disable():
     db.session.commit()
 
     return jsonify({"mfa_enabled": False}), 200
+
+
+@auth_bp.route("/register-with-key", methods=["POST"])
+@limiter.limit("3 per 10 minutes")
+def register_with_key():
+    """
+    Register a new user using a registration key (M39).
+
+    Expected JSON:
+    {
+        "username": "newuser",
+        "email": "user@example.com",
+        "password": "secure_password",
+        "registration_key": "SPELL-XXXX-XXXX-XXXX"
+    }
+
+    Returns:
+        JWT token and user data on success
+    """
+    from vtt_app.models import RegistrationKey
+    from vtt_app.utils.audit import log_audit
+
+    data = request.get_json() or {}
+    username = data.get("username", "").strip()
+    email = data.get("email", "").strip().lower()
+    password = data.get("password", "")
+    registration_key = data.get("registration_key", "").strip()
+
+    # Validate credentials
+    is_valid, error = validate_username(username)
+    if not is_valid:
+        return jsonify({"error": error}), 400
+
+    is_valid, error = validate_email_address(email)
+    if not is_valid:
+        return jsonify({"error": error}), 400
+
+    is_valid, error = validate_password(password, username, email)
+    if not is_valid:
+        return jsonify({"error": error}), 400
+
+    # Check username/email uniqueness
+    if User.query.filter_by(username=username).first():
+        return jsonify({"error": "username already exists"}), 409
+
+    if User.query.filter_by(email=email).first():
+        return jsonify({"error": "email already exists"}), 409
+
+    # Validate registration key
+    key = RegistrationKey.query.filter_by(key_code=registration_key).first()
+    if not key:
+        return jsonify({"error": "The spell is not recognized. Please check your key."}), 404
+
+    if not key.is_valid():
+        reason = "revoked"
+        if key.expires_at and utcnow() > key.expires_at:
+            reason = "expired"
+        elif key.uses_remaining <= 0:
+            reason = "depleted"
+
+        return jsonify({"error": f"The spell has been {reason}. Please contact your Dungeon Master."}), 410
+
+    # Create user with tier from key
+    player_role = Role.query.filter_by(name="Player").first() or db.session.get(Role, 1)
+    user = User(
+        username=username,
+        email=email,
+        role_id=player_role.id,
+        profile_tier=key.tier,
+    )
+    user.set_password(password)
+
+    # Set quotas based on tier
+    tier_quotas = {
+        "free": {"storage_gb": 1, "campaigns": 1},
+        "player": {"storage_gb": 5, "campaigns": 3},
+        "dm": {"storage_gb": 20, "campaigns": 10},
+        "headmaster": {"storage_gb": None, "campaigns": None},  # Unlimited
+    }
+
+    quota = tier_quotas.get(key.tier, tier_quotas["player"])
+    user.storage_quota_gb = quota["storage_gb"]
+    user.active_campaigns_quota = quota["campaigns"]
+
+    db.session.add(user)
+    db.session.flush()  # Get user ID
+
+    # Consume the key
+    key.consume(user.id)
+
+    db.session.commit()
+
+    # Audit log
+    log_audit(
+        action="user_registered_with_key",
+        resource_type="user",
+        resource_id=user.id,
+        details={
+            "key_batch_id": key.key_batch_id,
+            "tier": key.tier,
+        },
+        performed_by=user,
+    )
+
+    # Create JWT tokens
+    access_token = create_access_token(identity=str(user.id))
+    refresh_token = create_refresh_token(identity=str(user.id))
+
+    # Create session
+    _create_session_from_access_token(user.id, access_token)
+
+    user.update_last_login()
+
+    response = jsonify({
+        "user": user.serialize(include_email=True),
+    })
+    set_access_cookies(response, access_token)
+    set_refresh_cookies(response, refresh_token)
+    return response, 201

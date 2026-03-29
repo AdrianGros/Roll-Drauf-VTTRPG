@@ -98,6 +98,12 @@ For each milestone cycle we use the updated runtime flow:
 - Deploy: authenticated map/token upload flows integrated into campaign and play runtime UX
 - Monitor: authz/isolation validation, upload stability, and session-play regression evidence
 
+### M47-M54: Roll20 Workflow Copy-First (DAU)
+- Discover: lock DM/player parity workflow based on official Roll20 docs
+- Apply: map each step to explicit UI controls (no API-only steps)
+- Deploy: ship guided DM and player flows from lobby to first-session end
+- Monitor: real DAU walkthrough evidence and go/no-go gate
+
 ## Completion Targets
 
 - 200 concurrent accounts
@@ -110,3 +116,7 @@ For each milestone cycle we use the updated runtime flow:
 
 - Fuer den skalierbaren Multi-Tenant- und Asset-Governance-Ausbau wurde ein separates 20-Meilenstein-DAD-M-Programm geplant:
   - [milestone_program_multitenant_20.md](milestone_program_multitenant_20.md)
+- Fuer den DAU-orientierten Roll20-Paritaetsaufbau gibt es ein separates 8-Meilenstein-DAD-M-Programm:
+  - [milestone_program_roll20_copy_v1.md](milestone_program_roll20_copy_v1.md)
+- Fuer die naechste Session-Pipeline-Iteration mit Library, Upload, Player-Surface und Play-Flow gibt es einen groben Roadmap-Plan:
+  - [milestone_program_session_pipeline_v1.md](milestone_program_session_pipeline_v1.md)

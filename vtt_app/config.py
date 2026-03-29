@@ -98,6 +98,7 @@ class Config:
     # Socket/queue
     REDIS_URL = os.getenv("REDIS_URL")
     SOCKETIO_MESSAGE_QUEUE = os.getenv("SOCKETIO_MESSAGE_QUEUE")
+    USE_SESSION_SOCKET_V2 = _parse_bool(os.getenv("USE_SESSION_SOCKET_V2"), default=False)
 
     # Release gate defaults (M14)
     RELEASE_GATE_MIN_UPTIME_SECONDS = 0
