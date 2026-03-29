@@ -33,6 +33,11 @@ window.BookScene = {
         document.body.insertAdjacentHTML('afterbegin', bookHTML);
         console.log('[BookScene] Book HTML injected');
 
+        // Create and inject bookmark element
+        const bookmarkHTML = '<div class="bookmark dashboard"></div>';
+        document.body.insertAdjacentHTML('beforeend', bookmarkHTML);
+        console.log('[BookScene] Bookmark injected');
+
         // Click handler for manual open
         document.addEventListener('click', (e) => {
             if (e.target.closest('.book-cover') && !this.isOpened) {
@@ -224,6 +229,8 @@ window.BookScene = {
         // At this point the overlay is perpendicular to screen (invisible)
         timeline.add(() => {
             console.log('[BookScene] Navigating to:', url);
+            // Update bookmark before navigation (visual continuity)
+            this.updateBookmarkPosition(url);
             window.location.href = url;
         }, 0.3);
 
@@ -254,6 +261,53 @@ window.BookScene = {
         }
 
         console.log('[BookScene] Current page:', this.currentPage);
+
+        // Update bookmark position
+        this.updateBookmarkPosition();
+    },
+
+    updateBookmarkPosition(url = null) {
+        const bookmark = document.querySelector('.bookmark');
+        if (!bookmark) return;
+
+        // Determine target page from URL or current page
+        let targetPage = this.currentPage;
+        if (url) {
+            if (url.includes('/campaigns')) targetPage = 'campaigns';
+            else if (url.includes('/characters')) targetPage = 'characters';
+            else if (url.includes('/dashboard')) targetPage = 'dashboard';
+        }
+
+        // Remove all position classes
+        bookmark.classList.remove('dashboard', 'campaigns', 'characters');
+        // Add new position class
+        bookmark.classList.add(targetPage);
+
+        console.log('[BookScene] Bookmark updated to:', targetPage);
+    },
+
+    addPageNumbers(pageNumber) {
+        // Add page number element to the bottom center of main content
+        // pageNumber: number or string (e.g., '1', '3-4' for 2-page spread)
+
+        // Check if page number already exists
+        const existing = document.querySelector('.page-number');
+        if (existing) {
+            existing.textContent = pageNumber;
+            return;
+        }
+
+        // Create page number element
+        const pageNumEl = document.createElement('div');
+        pageNumEl.className = 'page-number';
+        pageNumEl.textContent = pageNumber;
+        pageNumEl.setAttribute('aria-hidden', 'true');  // Hide from screen readers
+
+        // Append to main content area
+        const main = document.querySelector('main') || document.body;
+        main.appendChild(pageNumEl);
+
+        console.log('[BookScene] Page number added:', pageNumber);
     }
 };
 

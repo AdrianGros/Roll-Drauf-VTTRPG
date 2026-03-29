@@ -2669,6 +2669,11 @@
         }
 
         loadCampaigns();
+
+        // Add page numbers for desktop view (2-page spread)
+        if (window.BookScene) {
+            BookScene.addPageNumbers('3–4');
+        }
     </script>
 
     <!-- Book Animation on Page Load -->

@@ -1139,6 +1139,11 @@
         }
 
         loadCharacters();
+
+        // Add page numbers for desktop view (2-page spread)
+        if (window.BookScene) {
+            BookScene.addPageNumbers('5–6');
+        }
     </script>
 </body>
 </html>

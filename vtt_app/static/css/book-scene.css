@@ -145,6 +145,67 @@
     opacity: 1;
 }
 
+/* Page number styling — appears on bottom of pages */
+.page-number {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Cinzel', 'Georgia', serif;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Bookmark element — visible on right edge of book */
+.bookmark {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 8999;
+    width: 12px;
+    height: 80px;
+    background: linear-gradient(90deg, #d4af37 0%, #f5d88d 50%, #d4af37 100%);
+    border-radius: 2px 0 0 2px;
+    box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.4);
+    transition: top 0.3s ease;
+}
+
+.bookmark.dashboard { top: 20%; }
+.bookmark.campaigns { top: 50%; }
+.bookmark.characters { top: 80%; }
+
+/* Enhanced spine/binding shadow */
+.book-cover {
+    box-shadow: inset -12px 0 25px rgba(0, 0, 0, 0.6),
+                inset -1px 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.book-pages {
+    box-shadow: inset -8px 0 15px rgba(0, 0, 0, 0.3),
+                inset -1px 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.book-back {
+    box-shadow: inset 8px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Page edge layering effect — stacked appearance */
+.book-element::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: 0;
+    height: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
 /* Responsive — smaller screens */
 @media (max-width: 768px) {
     #book {
