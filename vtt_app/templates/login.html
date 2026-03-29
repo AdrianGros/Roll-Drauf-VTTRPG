@@ -274,27 +274,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/book-scene.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('[Login] Page loaded');
+        // Wait for BOTH DOMContentLoaded AND window.load to ensure GSAP is loaded
+        function initBook() {
+            console.log('[Login] Initializing book');
 
-            // Create book immediately
+            if (typeof gsap === 'undefined') {
+                console.warn('[Login] GSAP still not available, retrying in 200ms...');
+                setTimeout(initBook, 200);
+                return;
+            }
+
+            console.log('[Login] ✓ GSAP is available');
+
+            // Create and open book
             BookScene.create();
+            BookScene.open();
 
-            // Auth check (doesn't block book animation)
+            // Auth check (non-blocking)
             Auth.redirectIfAuthenticated('/dashboard');
+        }
 
-            // Open book when GSAP is ready
-            const checkAndOpen = () => {
-                if (typeof gsap !== 'undefined') {
-                    console.log('[Login] GSAP ready, opening book');
-                    BookScene.open();
-                } else {
-                    console.log('[Login] GSAP not ready, retrying...');
-                    setTimeout(checkAndOpen, 50);
-                }
-            };
-            checkAndOpen();
+        // Try on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('[Login] DOMContentLoaded fired');
+            setTimeout(initBook, 100);
+        });
+
+        // Also try on window load (backup)
+        window.addEventListener('load', () => {
+            console.log('[Login] window.load fired');
+            setTimeout(initBook, 100);
         });
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
