@@ -236,6 +236,7 @@ def create_app(config_name=None):
     from vtt_app.endpoints.registration_keys import registration_keys_bp
     from vtt_app.endpoints.sessions import bp as sessions_bp  # M41-M45
     from vtt_app.endpoints.theme import theme_bp  # M46
+    from vtt_app.endpoints.admin_assets import admin_assets_bp  # Asset Manager MCP API
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(campaigns_bp, url_prefix='/api')
     app.register_blueprint(characters_bp, url_prefix='/api')
@@ -249,6 +250,7 @@ def create_app(config_name=None):
     app.register_blueprint(registration_keys_bp)
     app.register_blueprint(sessions_bp)  # M41-M45
     app.register_blueprint(theme_bp)  # M46
+    app.register_blueprint(admin_assets_bp)  # Asset Manager MCP API
 
     # Create database tables
     if app.config.get("AUTO_CREATE_SCHEMA", False):

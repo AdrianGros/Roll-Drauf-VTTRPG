@@ -1,0 +1,56 @@
+/**
+ * M46: Spellbook Theme - Font Definitions
+ * Google Fonts WOFF2 - Optimized for web
+ */
+
+@font-face {
+    font-family: 'Cinzel';
+    src: url('/static/fonts/cinzel-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cinzel';
+    src: url('/static/fonts/cinzel-bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BadScript';
+    src: url('/static/fonts/badscript-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PirataOne';
+    src: url('/static/fonts/piratione-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Font usage variables */
+:root {
+    --vtt-font-spellbook-title: 'Cinzel', serif;
+    --vtt-font-spellbook-subtitle: 'BadScript', script;
+    --vtt-font-spellbook-accent: 'PirataOne', serif;
+}
+
+/* Apply to elements */
+h1, h2, h3 {
+    font-family: var(--vtt-font-spellbook-title);
+}
+
+.spellbook-subtitle {
+    font-family: var(--vtt-font-spellbook-subtitle);
+}
+
+.spellbook-accent {
+    font-family: var(--vtt-font-spellbook-accent);
+}

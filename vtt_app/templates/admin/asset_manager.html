@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Manager - Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: var(--vtt-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: var(--vtt-primary);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--vtt-accent);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--vtt-text);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--vtt-primary);
+            border-bottom-color: var(--vtt-accent);
+        }
+
+        .tab-btn:hover {
+            color: var(--vtt-primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: white;
+            border: 2px solid var(--vtt-accent);
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--vtt-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--vtt-accent);
+            border-radius: 4px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--vtt-primary);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--vtt-primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--vtt-accent);
+            color: var(--vtt-primary);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 24px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 1px solid var(--vtt-accent);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--vtt-primary), var(--vtt-accent));
+            width: 0%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .status-message.info {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border-left: 4px solid #1976d2;
+            display: block;
+        }
+
+        .status-message.success {
+            background-color: #e8f5e9;
+            color: #388e3c;
+            border-left: 4px solid #388e3c;
+            display: block;
+        }
+
+        .status-message.error {
+            background-color: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #c62828;
+            display: block;
+        }
+
+        .asset-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .asset-card {
+            border: 1px solid var(--vtt-accent);
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+            background-color: #fafafa;
+            transition: all 0.3s;
+        }
+
+        .asset-card:hover {
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .asset-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .asset-icon img,
+        .asset-icon svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .asset-name {
+            font-size: 12px;
+            font-weight: 600;
+            word-break: break-word;
+            color: var(--vtt-primary);
+        }
+
+        .asset-size {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .icon-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .icon-list li {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        .icon-list li::before {
+            content: "✓ ";
+            color: var(--vtt-primary);
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .color-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .color-input-group input[type="color"] {
+            width: 60px;
+            height: 40px;
+            border: 1px solid var(--vtt-accent);
+            cursor: pointer;
+        }
+
+        .color-input-group input[type="text"] {
+            flex: 1;
+        }
+
+        .slider-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .slider-group input[type="range"] {
+            flex: 1;
+        }
+
+        .slider-value {
+            min-width: 50px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .asset-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                text-align: left;
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+
+            .tab-btn.active {
+                border-left-color: var(--vtt-accent);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌙 Asset Manager</h1>
+            <p>Download, organize, and manage Spellbook theme assets</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="download">⬇️ Download</button>
+            <button class="tab-btn" data-tab="organize">📁 Organize</button>
+            <button class="tab-btn" data-tab="batch">⚙️ Batch Ops</button>
+            <button class="tab-btn" data-tab="browse">👁️ Browse</button>
+            <button class="tab-btn" data-tab="verify">✓ Verify</button>
+        </div>
+
+        <!-- DOWNLOAD TAB -->
+        <div id="download" class="tab-content active">
+            <h2>Download Assets</h2>
+
+            <div class="form-group">
+                <label>Download Type</label>
+                <select id="download-type" onchange="updateDownloadForm()">
+                    <option value="game-icons">Game-Icons.net SVG Icons</option>
+                    <option value="fonts">Google Fonts (WOFF2)</option>
+                    <option value="pixabay">Pixabay Backgrounds</option>
+                </select>
+            </div>
+
+            <!-- Game-Icons Form -->
+            <div id="game-icons-form">
+                <div class="form-group">
+                    <label>Icons to Download (JSON format)</label>
+                    <textarea id="icons-json" rows="6" placeholder="[
+  {&quot;name&quot;: &quot;book&quot;, &quot;category&quot;: &quot;campaign&quot;},
+  {&quot;name&quot;: &quot;scroll&quot;, &quot;category&quot;: &quot;campaign&quot;},
+  {&quot;name&quot;: &quot;play&quot;, &quot;category&quot;: &quot;session&quot;}
+]"></textarea>
+                </div>
+                <button class="btn" onclick="downloadGameIcons()">📥 Download Game-Icons</button>
+            </div>
+
+            <!-- Fonts Form -->
+            <div id="fonts-form" style="display:none;">
+                <div class="form-group">
+                    <label>Fonts to Download (JSON format)</label>
+                    <textarea id="fonts-json" rows="6" placeholder="[
+  {&quot;name&quot;: &quot;Cinzel&quot;, &quot;weights&quot;: [400, 700]},
+  {&quot;name&quot;: &quot;BadScript&quot;, &quot;weights&quot;: [400]},
+  {&quot;name&quot;: &quot;PirataOne&quot;, &quot;weights&quot;: [400]}
+]"></textarea>
+                </div>
+                <button class="btn" onclick="downloadFonts()">📥 Download Fonts</button>
+            </div>
+
+            <!-- Pixabay Form -->
+            <div id="pixabay-form" style="display:none;">
+                <div class="status-message info">
+                    ℹ️ Pixabay requires manual implementation or API key. See documentation for download steps.
+                </div>
+                <div class="form-group">
+                    <label>Search Query</label>
+                    <input type="text" id="pixabay-query" value="galaxy background 4k" placeholder="e.g., galaxy background 4k">
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="pixabay-quantity" value="5" min="1" max="50">
+                </div>
+                <button class="btn" onclick="downloadPixabay()">📥 Download (Manual Required)</button>
+            </div>
+
+            <!-- Progress -->
+            <div id="download-progress" style="display:none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="download-progress-fill">0%</div>
+                </div>
+                <p id="download-status">Starting download...</p>
+            </div>
+
+            <div id="download-message" class="status-message"></div>
+        </div>
+
+        <!-- ORGANIZE TAB -->
+        <div id="organize" class="tab-content">
+            <h2>Organize Assets</h2>
+
+            <div class="form-group">
+                <label>Organization Type</label>
+                <select id="organize-type" onchange="updateOrganizeForm()">
+                    <option value="kenney">Kenney Assets (from ZIP)</option>
+                    <option value="files">Generic Files</option>
+                </select>
+            </div>
+
+            <!-- Kenney Form -->
+            <div id="kenney-form">
+                <div class="status-message info">
+                    Specify the path to the extracted Kenney assets directory
+                </div>
+                <div class="form-group">
+                    <label>Kenney ZIP Path (optional, auto-detect if empty)</label>
+                    <input type="text" id="kenney-zip-path" placeholder="e.g., vtt_app/static/downloads/kenney-assets.zip">
+                </div>
+                <button class="btn" onclick="organizeKenney()">📦 Organize Kenney Assets</button>
+            </div>
+
+            <!-- Files Form -->
+            <div id="files-form" style="display:none;">
+                <div class="form-group">
+                    <label>Source Directory</label>
+                    <input type="text" id="source-dir" placeholder="e.g., /tmp/game-icons-download">
+                </div>
+                <div class="form-group">
+                    <label>Target Directory (relative to vtt_app/static/)</label>
+                    <select id="target-dir">
+                        <option value="icons">icons</option>
+                        <option value="images/textures">images/textures</option>
+                        <option value="images/ornaments">images/ornaments</option>
+                        <option value="fonts">fonts</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="organizeFiles()">📁 Organize Files</button>
+            </div>
+
+            <div id="organize-message" class="status-message"></div>
+        </div>
+
+        <!-- BATCH OPERATIONS TAB -->
+        <div id="batch" class="tab-content">
+            <h2>Batch Operations</h2>
+
+            <div class="form-group">
+                <label>Operation Type</label>
+                <select id="batch-type" onchange="updateBatchForm()">
+                    <option value="colorize">Colorize SVGs</option>
+                    <option value="compress">Compress PNGs</option>
+                </select>
+            </div>
+
+            <!-- Colorize Form -->
+            <div id="colorize-form">
+                <div class="form-group">
+                    <label>Target Directory</label>
+                    <select id="colorize-dir">
+                        <option value="vtt_app/static/icons">icons (SVG)</option>
+                        <option value="vtt_app/static/images/ornaments">ornaments (SVG)</option>
+                        <option value="vtt_app/static/images/frames">frames (SVG)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Old Color</label>
+                    <div class="color-input-group">
+                        <input type="color" id="old-color" value="#ffffff">
+                        <input type="text" id="old-color-hex" value="#FFFFFF" placeholder="#FFFFFF">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>New Color (Purple for Spellbook)</label>
+                    <div class="color-input-group">
+                        <input type="color" id="new-color" value="#4a235a">
+                        <input type="text" id="new-color-hex" value="#4a235a" placeholder="#4a235a">
+                    </div>
+                </div>
+
+                <button class="btn" onclick="batchColorize()">🎨 Colorize SVGs</button>
+            </div>
+
+            <!-- Compress Form -->
+            <div id="compress-form" style="display:none;">
+                <div class="form-group">
+                    <label>Target Directory (PNG files)</label>
+                    <select id="compress-dir">
+                        <option value="vtt_app/static/images/textures">textures (PNG)</option>
+                        <option value="vtt_app/static/images/ornaments">ornaments (PNG)</option>
+                        <option value="vtt_app/static/images/frames">frames (PNG)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Quality</label>
+                    <div class="slider-group">
+                        <input type="range" id="quality-slider" min="1" max="100" value="85" onchange="updateQualityValue()">
+                        <span class="slider-value"><span id="quality-value">85</span>%</span>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="batchCompress()">🗜️ Compress PNGs</button>
+            </div>
+
+            <div id="batch-message" class="status-message"></div>
+        </div>
+
+        <!-- BROWSE TAB -->
+        <div id="browse" class="tab-content">
+            <h2>Browse Assets</h2>
+
+            <div class="form-group">
+                <label>Directory</label>
+                <select id="browse-dir" onchange="listAssets()">
+                    <option value="icons">icons</option>
+                    <option value="textures">textures</option>
+                    <option value="fonts">fonts</option>
+                    <option value="ornaments">ornaments</option>
+                    <option value="frames">frames</option>
+                </select>
+            </div>
+
+            <div id="asset-list-container" class="asset-list"></div>
+            <div id="browse-message" class="status-message"></div>
+        </div>
+
+        <!-- VERIFY TAB -->
+        <div id="verify" class="tab-content">
+            <h2>Verify Assets</h2>
+
+            <div class="form-group">
+                <label>Directory to Verify</label>
+                <select id="verify-dir">
+                    <option value="vtt_app/static/icons">icons</option>
+                    <option value="vtt_app/static/images/textures">textures</option>
+                    <option value="vtt_app/static/fonts">fonts</option>
+                    <option value="vtt_app/static/images/ornaments">ornaments</option>
+                    <option value="vtt_app/static/images/frames">frames</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="verifyAssets()">✓ Verify</button>
+            <div id="verify-message" class="status-message"></div>
+        </div>
+    </div>
+
+    <script src="/static/js/admin/asset_manager.js"></script>
+</body>
+</html>
