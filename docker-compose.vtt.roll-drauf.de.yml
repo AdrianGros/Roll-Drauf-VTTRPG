@@ -1,0 +1,61 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: vtt
+      POSTGRES_USER: vtt
+      POSTGRES_PASSWORD: vtt
+    volumes:
+      - vtt_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - vtt_redis_data:/data
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.vtt.roll-drauf.de
+    environment:
+      FLASK_ENV: production
+      FLASK_DEBUG: "0"
+      DATABASE_URL: postgresql://vtt:vtt@db:5432/vtt
+      REDIS_URL: redis://redis:6379/0
+      SOCKETIO_MESSAGE_QUEUE: redis://redis:6379/0
+      RATELIMIT_STORAGE_URL: redis://redis:6379/1
+      RATELIMIT_STORAGE_URI: redis://redis:6379/1
+      CORS_ORIGINS: https://vtt.roll-drauf.de,http://vtt.roll-drauf.de
+      AUTO_CREATE_SCHEMA: "true"
+      LOG_JSON: "true"
+      METRICS_ENABLED: "true"
+      VOICE_ENABLED: "false"
+      USE_SESSION_SOCKET_V2: "false"
+    depends_on:
+      - db
+      - redis
+    expose:
+      - "5000"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./ops/nginx/vtt.roll-drauf.de.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./ops/certbot/www:/var/www/certbot:ro
+      - ./ops/certbot/conf:/etc/letsencrypt:ro
+    restart: unless-stopped
+
+volumes:
+  vtt_db_data:
+  vtt_redis_data:

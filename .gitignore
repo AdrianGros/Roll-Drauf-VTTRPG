@@ -2,6 +2,9 @@
 .env
 .env.local
 .env.*.local
+.env.vtt.roll-drauf.de
+.env.vtt.roll-drauf-de
+ops/certbot/conf/
 
 # Python
 __pycache__/
@@ -42,3 +45,24 @@ instance/
 dist/
 build/
 *.egg-info/
+
+# Ephemeral milestone artifacts (Discover/Apply/Deploy/Monitor outputs)
+milestone_*_output.md
+milestone_run_*.md
+milestone_program_*.md
+
+# Implementation summaries & reports
+IMPLEMENTATION_SUMMARY.md
+IMPLEMENTATION_M*.md
+HANDBUCH_*.md
+ROLL20_SOLL_IST_VERGLEICH.md
+MILESTONE_M46_*.md
+M4[0-9]_QUICK_START.md
+M4[0-9]_SESSION_MANAGEMENT.md
+M4[0-9]_FILES_MANIFEST.txt
+M4[0-9]_FILES_SUMMARY.txt
+M4[0-9]_IMPLEMENTATION_REPORT.md
+M4[0-9]_INTEGRATION_CHECKLIST.md
+m4[0-9]_acceptance_checklist*.md
+m4[0-9]_endpoint_mapping*.md
+m4[0-9]_step_to_screen_matrix*.md
