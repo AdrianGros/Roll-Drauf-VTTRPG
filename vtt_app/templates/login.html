@@ -7,26 +7,27 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--vtt-font-body);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .login-container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            background: var(--vtt-surface-card, #201530);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.15);
             max-width: 400px;
             width: 100%;
             padding: 40px;
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: var(--vtt-accent);
             margin-bottom: 30px;
             font-size: 28px;
+            font-family: var(--vtt-font-heading);
         }
         .form-group {
             margin-bottom: 20px;
@@ -34,39 +35,46 @@
         label {
             display: block;
             margin-bottom: 5px;
-            color: #555;
+            color: var(--vtt-text-secondary);
             font-weight: 500;
         }
         input {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
+            background: var(--vtt-surface-input);
+            color: var(--vtt-text-primary);
+            border: 1px solid var(--vtt-border-subtle);
             border-radius: 5px;
             font-size: 14px;
+            font-family: var(--vtt-font-body);
         }
         input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102,126,234,0.3);
+            border-color: var(--vtt-border-focus);
+            background: var(--vtt-surface-input);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.25);
         }
         button {
             width: 100%;
             padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
+            background: var(--vtt-primary);
+            color: var(--vtt-text-primary);
+            border: 1px solid var(--vtt-accent);
             border-radius: 5px;
             font-size: 16px;
             font-weight: 600;
+            font-family: var(--vtt-font-heading);
+            letter-spacing: 0.5px;
             cursor: pointer;
             margin-top: 20px;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
         button:hover {
-            background: #5568d3;
+            background: var(--vtt-accent);
+            color: var(--vtt-primary);
         }
         .error {
-            color: #d32f2f;
+            color: var(--vtt-text-error);
             font-size: 14px;
             margin-top: 5px;
         }
@@ -76,15 +84,21 @@
         .link {
             text-align: center;
             margin-top: 20px;
+            color: var(--vtt-text-secondary);
         }
         .link a {
-            color: #667eea;
+            color: var(--vtt-accent);
             text-decoration: none;
+            transition: all 0.3s;
+        }
+        .link a:hover {
+            text-decoration: underline;
         }
         .loading {
             display: none;
             text-align: center;
             margin-top: 10px;
+            color: var(--vtt-text-secondary);
         }
     </style>
     <!-- Spellbook Theme -->

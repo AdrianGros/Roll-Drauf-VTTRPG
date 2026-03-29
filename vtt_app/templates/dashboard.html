@@ -231,6 +231,22 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* Dark mode surface styling */
+        .stat-card, .card, .section, .empty-state {
+            background: var(--vtt-surface-card, #201530) !important;
+            border: 1px solid rgba(212, 175, 55, 0.15) !important;
+            color: var(--vtt-text-primary, #e8d5b7);
+        }
+        .stat-value { color: var(--vtt-text-primary); font-family: var(--vtt-font-heading); }
+        .stat-label, .card-meta, .empty-state p { color: var(--vtt-text-secondary, #9e8fa0); }
+        .card-title, .section h2 { color: var(--vtt-accent); }
+        input, textarea, select {
+            background: var(--vtt-surface-input, #141420) !important;
+            color: var(--vtt-text-primary, #e8d5b7) !important;
+            border-color: var(--vtt-border-subtle, rgba(255,255,255,0.10)) !important;
+        }
+        input::placeholder { color: rgba(232, 213, 183, 0.5); }
     </style>
     <!-- Spellbook Theme -->
     <link rel="stylesheet" href="/static/css/fonts.css">

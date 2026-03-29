@@ -29,6 +29,17 @@
     --vtt-info: #3498db;
     --vtt-light-text: #f5e6d3;
     --vtt-subtle-border: rgba(212, 175, 55, 0.2);
+
+    /* Dark mode surface colors */
+    --vtt-surface-base: #1a0a22;      /* Page background */
+    --vtt-surface-card: #201530;      /* Card/Modal background */
+    --vtt-surface-input: #141420;     /* Input field background (inset) */
+    --vtt-surface-raised: #2a1a3a;    /* Hover/elevated panels */
+    --vtt-text-primary: #e8d5b7;      /* Off-white body text */
+    --vtt-text-secondary: #9e8fa0;    /* Muted labels and secondary text */
+    --vtt-text-error: #ff6b6b;        /* High contrast error text */
+    --vtt-border-subtle: rgba(255, 255, 255, 0.10);
+    --vtt-border-focus: #d4af37;      /* Focus border (gold) */
 }
 
 /* Subtle parchment texture background */
