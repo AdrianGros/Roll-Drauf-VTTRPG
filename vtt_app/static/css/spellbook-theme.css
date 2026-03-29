@@ -454,6 +454,90 @@ canvas {
     margin-bottom: 8px;
 }
 
+/* ===== Animations ===== */
+
+@keyframes vtt-icon-glow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0)); }
+    50% { filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.7)); }
+}
+
+@keyframes vtt-card-enter {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vtt-shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Icon utility classes */
+.vtt-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.vtt-icon-lg {
+    width: 40px;
+    height: 40px;
+}
+
+.vtt-icon-xl {
+    width: 64px;
+    height: 64px;
+}
+
+.vtt-icon-glow {
+    animation: vtt-icon-glow 3s ease-in-out infinite;
+}
+
+.vtt-card-animated {
+    animation: vtt-card-enter 0.4s ease-out both;
+}
+
+.vtt-heading-shimmer {
+    background: linear-gradient(90deg, #d4af37 25%, #fff8dc 50%, #d4af37 75%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: vtt-shimmer 3s linear infinite;
+}
+
+/* Spellbook theme overrides for all templates */
+body.spellbook {
+    background: linear-gradient(135deg, #2d1b35 0%, #1a0a22 100%) !important;
+    font-family: var(--vtt-font-body) !important;
+    color: #e8d5b7 !important;
+}
+
+body.spellbook h1,
+body.spellbook h2,
+body.spellbook h3,
+body.spellbook h4,
+body.spellbook h5,
+body.spellbook h6 {
+    font-family: var(--vtt-font-heading) !important;
+    color: var(--vtt-accent) !important;
+}
+
+body.spellbook .logo {
+    color: var(--vtt-accent) !important;
+}
+
+body.spellbook header,
+body.spellbook [role="banner"],
+body.spellbook .navbar {
+    border-bottom-color: var(--vtt-accent) !important;
+}
+
+body.spellbook .btn-primary {
+    background: var(--vtt-primary) !important;
+    color: var(--vtt-light-text) !important;
+}
+
 /* ===== Responsive Design ===== */
 
 @media (max-width: 768px) {
