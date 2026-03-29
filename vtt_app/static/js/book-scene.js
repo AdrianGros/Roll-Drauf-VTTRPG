@@ -1,6 +1,7 @@
 /**
  * BookScene - 3D Book Opening Animation
- * Stripped down, test-proven version with explicit logging
+ * Fixed GSAP camelCase property names (rotationY not rotateY)
+ * Based on GSAP docs: https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/
  */
 
 window.BookScene = {
@@ -61,43 +62,68 @@ window.BookScene = {
             return;
         }
 
-        console.log('[BookScene] Animating book...');
+        console.log('[BookScene] Found all elements, building timeline...');
 
-        // Timeline: Book opens
-        gsap.timeline()
-            // Book rotates upright (rotateY: -15 → 0)
-            .to(book, {
-                rotateY: 0,
-                duration: 0.8,
-                ease: 'power2.out'
-            }, 0)
+        // Create timeline with proper GSAP syntax
+        const timeline = gsap.timeline();
 
-            // Cover flips open (rotateY: 0 → -160)
-            .to(bookCover, {
-                rotateY: -160,
-                duration: 1.2,
-                ease: 'power2.inOut'
-            }, 0.2)
+        console.log('[BookScene] Adding animations to timeline...');
 
-            // Pages rustle
-            .to(bookPages, {
-                scaleY: [1, 1.002, 1, 1.002, 1],
-                duration: 0.4,
-                ease: 'sine.inOut'
-            }, 0.8)
+        // Phase 1: Book rotates upright (rotationY not rotateY!)
+        // -15° → 0° (front-facing)
+        timeline.to(book, {
+            rotationY: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            force3D: true
+        }, 0);
 
-            // Login form fades in
-            .to(loginContent, {
-                opacity: 1,
-                pointerEvents: 'auto',
-                duration: 0.6,
-                ease: 'power2.out'
-            }, 1.2)
+        console.log('[BookScene] → Book rotation added (rotationY: 0)');
 
-            .eventCallback('onComplete', () => {
-                console.log('[BookScene] Animation complete');
-            });
+        // Phase 2: Cover flips open (0° → -160°)
+        timeline.to(bookCover, {
+            rotationY: -160,
+            duration: 1.2,
+            ease: 'power2.inOut',
+            force3D: true
+        }, 0.2);
+
+        console.log('[BookScene] → Cover flip added (rotationY: -160)');
+
+        // Phase 3: Pages rustle effect
+        timeline.to(bookPages, {
+            scaleY: [1, 1.002, 1, 1.002, 1],
+            duration: 0.4,
+            ease: 'sine.inOut',
+            force3D: true
+        }, 0.8);
+
+        console.log('[BookScene] → Pages rustle added');
+
+        // Phase 4: Login form fades in
+        timeline.to(loginContent, {
+            opacity: 1,
+            pointerEvents: 'auto',
+            duration: 0.6,
+            ease: 'power2.out'
+        }, 1.2);
+
+        console.log('[BookScene] → Login content fade-in added');
+
+        timeline.eventCallback('onStart', () => {
+            console.log('[BookScene] ▶ Animation STARTED');
+        });
+
+        timeline.eventCallback('onUpdate', () => {
+            console.log('[BookScene] ⏱ Progress:', Math.round(timeline.progress() * 100) + '%');
+        });
+
+        timeline.eventCallback('onComplete', () => {
+            console.log('[BookScene] ✅ Animation COMPLETE');
+        });
+
+        console.log('[BookScene] 🎬 Timeline built and ready to play');
     }
 };
 
-console.log('[BookScene] Script loaded');
+console.log('[BookScene] ✓ Script loaded and BookScene object created');

@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%);
-    perspective: 2000px;
+    perspective: 1000px;
 }
 
 #book-scene-wrapper.hidden {
@@ -31,7 +31,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    border-radius: 3px 6px 6px 3px;
+    border-radius: 0;
     transform-origin: left center;
     transform-style: preserve-3d;
     backface-visibility: hidden;
@@ -50,6 +50,7 @@
     justify-content: center;
     gap: 20px;
     cursor: pointer;
+    border-radius: 0;
 }
 
 .book-cover .cover-title {
@@ -81,7 +82,7 @@
     background: linear-gradient(90deg, #e8d5b7 0%, #f5e6d3 50%, #e8d5b7 100%);
     transform: translateX(4px) rotateY(0deg);
     z-index: 1;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0;
     box-shadow: inset -3px 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -91,7 +92,7 @@
     border: 2px solid #d4af37;
     transform: translateZ(-8px);
     z-index: 0;
-    border-radius: 6px 3px 3px 6px;
+    border-radius: 0;
 }
 
 /* Content page that appears inside open book */
@@ -100,7 +101,7 @@
     width: 100%;
     height: 100%;
     background: var(--vtt-surface-card, #201530);
-    border-radius: 0 3px 3px 0;
+    border-radius: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
