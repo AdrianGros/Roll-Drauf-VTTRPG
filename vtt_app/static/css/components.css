@@ -1,0 +1,420 @@
+/**
+ * VTT Component Styles
+ * Reusable form, button, card, and UI component styles for spellbook theme
+ */
+
+/* Form Container Wrapper */
+.book-form,
+.form-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 4px;
+}
+
+/* Form Group (label + input + error) */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form Label */
+.form-label,
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--vtt-text-primary, #e8d5b7);
+    font-family: var(--vtt-font-body, 'Segoe UI', sans-serif);
+    font-size: 0.95rem;
+}
+
+label[aria-required="true"]::after {
+    content: ' *';
+    color: #ff6b6b;
+}
+
+/* Form Input Fields */
+.form-input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--vtt-surface-input, #141420);
+    color: var(--vtt-text-primary, #e8d5b7);
+    border: 2px solid var(--vtt-border-subtle, rgba(255, 255, 255, 0.10));
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: var(--vtt-font-body, 'Segoe UI', sans-serif);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(232, 213, 183, 0.5);
+}
+
+/* Input Focus State */
+.form-input:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #d4af37;
+    background: var(--vtt-surface-input, #141420);
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+
+/* Input Disabled State */
+.form-input:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: rgba(20, 20, 32, 0.5);
+}
+
+/* Input Error State */
+.form-input.error,
+input.error,
+textarea.error {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 8px rgba(255, 107, 107, 0.2);
+}
+
+.form-input.error:focus,
+input.error:focus,
+textarea.error:focus {
+    box-shadow: 0 0 12px rgba(255, 107, 107, 0.3);
+}
+
+/* Input Success State */
+.form-input.success,
+input.success,
+textarea.success {
+    border-color: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.2);
+}
+
+/* Textarea */
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: var(--vtt-font-body, 'Segoe UI', sans-serif);
+}
+
+/* Select Dropdown */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e8d5b7' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+/* Form Error Message */
+.form-error,
+.error-message,
+.form-group .error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: block;
+    font-weight: 500;
+}
+
+/* Form Success Message */
+.form-success,
+.success-message,
+.form-group .success {
+    color: #4ade80;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Form Warning Message */
+.form-warning,
+.warning-message {
+    color: #fbbf24;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Helper Text */
+.form-help,
+.help-text,
+small {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--vtt-text-secondary, #9e8fa0);
+    margin-top: 4px;
+}
+
+/* Buttons */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+button {
+    padding: 12px 20px;
+    min-height: 44px;  /* Touch target size */
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--vtt-font-body, 'Segoe UI', sans-serif);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    user-select: none;
+}
+
+/* Primary Button */
+.btn-primary,
+button[type="submit"] {
+    background: linear-gradient(135deg, #4a235a 0%, #5a2e6a 100%);
+    color: #d4af37;
+    border: 2px solid #d4af37;
+}
+
+.btn-primary:hover,
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #5a2e6a 0%, #6a3e7a 100%);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active,
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+.btn-primary:disabled,
+button[type="submit"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Secondary Button */
+.btn-secondary,
+button[type="reset"],
+button[type="button"] {
+    background: rgba(255, 255, 255, 0.1);
+    color: #d4af37;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.btn-secondary:hover,
+button[type="reset"]:hover,
+button[type="button"]:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(212, 175, 55, 0.5);
+}
+
+/* Danger Button */
+.btn-danger {
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.btn-danger:hover {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.5);
+    box-shadow: 0 0 12px rgba(255, 107, 107, 0.2);
+}
+
+/* Success Button */
+.btn-success {
+    background: rgba(74, 222, 128, 0.1);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.btn-success:hover {
+    background: rgba(74, 222, 128, 0.2);
+    border-color: rgba(74, 222, 128, 0.5);
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.2);
+}
+
+/* Focus State for All Buttons */
+.btn:focus,
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+}
+
+/* Small Button Size */
+.btn-sm {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+}
+
+/* Large Button Size */
+.btn-lg {
+    padding: 16px 28px;
+    font-size: 1.1rem;
+}
+
+/* Full Width Button */
+.btn-block {
+    width: 100%;
+    display: flex;
+}
+
+/* Button Loading State */
+.btn.loading,
+button.loading {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.btn.loading::after,
+button.loading::after {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-left: 8px;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-top-color: #d4af37;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Form Checkbox & Radio */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+    accent-color: #d4af37;
+}
+
+.checkbox-group,
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.checkbox-item,
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.checkbox-item input,
+.radio-item input {
+    cursor: pointer;
+}
+
+/* Card Component */
+.card,
+.card-wrapper {
+    background: var(--vtt-surface-card, #201530);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 4px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.card:hover,
+.card-wrapper:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+}
+
+.card-header {
+    font-weight: 700;
+    color: #d4af37;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    color: var(--vtt-text-primary, #e8d5b7);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.card-footer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* Responsive Form Adjustments */
+@media (max-width: 768px) {
+    .book-form,
+    .form-wrapper {
+        padding: 20px 15px;
+        max-width: 100%;
+    }
+
+    .btn,
+    button {
+        width: 100%;
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .checkbox-group,
+    .radio-group {
+        gap: 10px;
+    }
+}
+
+/* Accessibility: Focus Visible */
+:focus-visible {
+    outline: 2px solid #d4af37;
+    outline-offset: 2px;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .btn,
+    button,
+    input,
+    textarea,
+    select {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    button:hover {
+        transform: none !important;
+    }
+}
