@@ -278,9 +278,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             Auth.redirectIfAuthenticated('/dashboard');
 
-            // Initialize 3D book scene
-            BookScene.create();
-            BookScene.open();
+            // Initialize 3D book scene with small delay to ensure GSAP is loaded
+            setTimeout(() => {
+                BookScene.create();
+                BookScene.open();
+            }, 100);
         });
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {

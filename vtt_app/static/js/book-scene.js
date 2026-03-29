@@ -37,6 +37,16 @@ window.BookScene = {
 
         document.body.insertAdjacentHTML('afterbegin', bookHTML);
         this.isInitialized = true;
+
+        // Add click handler to book cover for manual opening
+        const bookCover = document.querySelector('.book-cover');
+        if (bookCover) {
+            bookCover.addEventListener('click', () => {
+                if (!this.isAnimating) {
+                    this.open();
+                }
+            });
+        }
     },
 
     /**
@@ -49,6 +59,11 @@ window.BookScene = {
      */
     open(options = {}) {
         if (!this.isInitialized || this.isAnimating) return;
+        if (typeof gsap === 'undefined') {
+            console.warn('BookScene.open(): GSAP not loaded yet, retrying...');
+            setTimeout(() => this.open(options), 100);
+            return;
+        }
 
         this.isAnimating = true;
         const duration = options.duration || 1.5; // seconds (not milliseconds)
