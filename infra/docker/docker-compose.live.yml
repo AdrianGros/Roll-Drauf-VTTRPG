@@ -7,6 +7,9 @@ services:
       POSTGRES_PASSWORD: vtt
     volumes:
       - vtt_db_data:/var/lib/postgresql/data
+    networks:
+      default:
+        ipv4_address: 172.19.0.2
     restart: unless-stopped
 
   redis:
@@ -14,14 +17,22 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - vtt_redis_data:/data
+    networks:
+      default:
+        ipv4_address: 172.19.0.5
     restart: unless-stopped
 
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: infra/docker/Dockerfile
     env_file:
       - .env.vtt.roll-drauf.de
+    networks:
+      default:
+        # Host nginx (/etc/nginx/conf.d/vtt.conf) proxy_passes to this fixed
+        # IP - keep in sync if this ever needs to change.
+        ipv4_address: 172.19.0.3
     environment:
       FLASK_ENV: production
       FLASK_DEBUG: "0"
@@ -59,3 +70,9 @@ services:
 volumes:
   vtt_db_data:
   vtt_redis_data:
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16
