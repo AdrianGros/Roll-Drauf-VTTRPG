@@ -537,7 +537,7 @@
 
                 const data = await response.json();
                 if (!data.enabled) {
-                    document.getElementById('loginDiscordGate').hidden = true;
+                    document.getElementById('loginDiscordGate').style.display = 'none';
                     showPasswordLoginForm();
                     return;
                 }
