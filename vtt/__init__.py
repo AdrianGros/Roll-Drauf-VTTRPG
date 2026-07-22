@@ -290,7 +290,9 @@ def create_app(config_name=None):
             return jsonify({'error': 'not found'}), 404
 
         if path in {'signup', 'signup.html', 'register', 'register.html'}:
-            return redirect('/login.html?auth_notice=discord_only', code=302)
+            from vtt.auth.discord_oauth import discord_login_enabled
+            if discord_login_enabled():
+                return redirect('/login.html?auth_notice=discord_only', code=302)
 
         # Try to serve HTML templates
         if path.endswith('.html'):

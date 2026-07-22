@@ -83,6 +83,79 @@ def _serialize_key_assignment(key: RegistrationKey) -> dict:
     }
 
 
+VALID_KEY_TIERS = ['free', 'player', 'dm', 'headmaster']
+
+
+def create_registration_keys(count, tier='player', batch_name=None, expires_in_days=None, performed_by=None):
+    """
+    Generate a batch of registration keys.
+
+    Shared core used by both the admin HTTP endpoint and CLI bootstrap tooling.
+    Raises ValueError on invalid input. Caller is responsible for the request/
+    CLI-specific error presentation.
+
+    Returns:
+        dict with batch_id, batch_name, tier, count, keys, expires_at
+    """
+    batch_name = batch_name or f'Batch {uuid.uuid4().hex[:8]}'
+
+    if not isinstance(count, int) or count < 1 or count > 10000:
+        raise ValueError('count must be between 1 and 10000')
+
+    if tier not in VALID_KEY_TIERS:
+        raise ValueError(f'tier must be one of {VALID_KEY_TIERS}')
+
+    if not batch_name or len(batch_name) > 255:
+        raise ValueError('batch_name must be 1-255 characters')
+
+    batch_id = f"batch_{uuid.uuid4().hex[:12]}"
+
+    expires_at = None
+    if expires_in_days and isinstance(expires_in_days, int) and expires_in_days > 0:
+        from datetime import timedelta
+        expires_at = utcnow() + timedelta(days=expires_in_days)
+
+    generated_keys = []
+    for _ in range(count):
+        key_code = _ensure_unique_key()
+        key = RegistrationKey(
+            key_code=key_code,
+            key_name=batch_name,
+            key_batch_id=batch_id,
+            tier=tier,
+            max_uses=1,
+            uses_remaining=1,
+            expires_at=expires_at,
+        )
+        db.session.add(key)
+        generated_keys.append(key_code)
+
+    db.session.commit()
+
+    log_audit(
+        action='key_batch_generated',
+        resource_type='registration_key',
+        resource_id=None,
+        details={
+            'batch_id': batch_id,
+            'batch_name': batch_name,
+            'tier': tier,
+            'count': count,
+            'expires_at': expires_at.isoformat() if expires_at else None,
+        },
+        performed_by=performed_by,
+    )
+
+    return {
+        'batch_id': batch_id,
+        'batch_name': batch_name,
+        'tier': tier,
+        'count': count,
+        'keys': generated_keys,
+        'expires_at': expires_at.isoformat() if expires_at else None,
+    }
+
+
 @registration_keys_bp.route('/admin/keys/generate', methods=['POST'])
 @has_platform_role('admin', 'owner')
 @limiter.limit("10 per hour")
@@ -102,74 +175,18 @@ def generate_keys():
         JSON with generated key codes and batch_id
     """
     data = request.get_json() or {}
-    count = data.get('count', 1)
-    tier = data.get('tier', 'player')
-    batch_name = data.get('batch_name', f'Batch {uuid.uuid4().hex[:8]}')
-    expires_in_days = data.get('expires_in_days')
 
-    # Validation
-    if not isinstance(count, int) or count < 1 or count > 10000:
-        return jsonify({'error': 'count must be between 1 and 10000'}), 400
-
-    valid_tiers = ['free', 'player', 'dm', 'headmaster']
-    if tier not in valid_tiers:
-        return jsonify({'error': f'tier must be one of {valid_tiers}'}), 400
-
-    if not batch_name or len(batch_name) > 255:
-        return jsonify({'error': 'batch_name must be 1-255 characters'}), 400
-
-    # Generate batch ID
-    batch_id = f"batch_{uuid.uuid4().hex[:12]}"
-
-    # Calculate expiration if specified
-    expires_at = None
-    if expires_in_days and isinstance(expires_in_days, int) and expires_in_days > 0:
-        from datetime import timedelta
-        expires_at = utcnow() + timedelta(days=expires_in_days)
-
-    # Generate all keys in transaction
-    generated_keys = []
     try:
-        for _ in range(count):
-            key_code = _ensure_unique_key()
-            key = RegistrationKey(
-                key_code=key_code,
-                key_name=batch_name,
-                key_batch_id=batch_id,
-                tier=tier,
-                max_uses=1,
-                uses_remaining=1,
-                expires_at=expires_at,
-            )
-            db.session.add(key)
-            generated_keys.append(key_code)
-
-        db.session.commit()
-
-        # Audit log
-        log_audit(
-            action='key_batch_generated',
-            resource_type='registration_key',
-            resource_id=None,
-            details={
-                'batch_id': batch_id,
-                'batch_name': batch_name,
-                'tier': tier,
-                'count': count,
-                'expires_at': expires_at.isoformat() if expires_at else None,
-            },
+        result = create_registration_keys(
+            count=data.get('count', 1),
+            tier=data.get('tier', 'player'),
+            batch_name=data.get('batch_name'),
+            expires_in_days=data.get('expires_in_days'),
             performed_by=current_user,
         )
-
-        return jsonify({
-            'batch_id': batch_id,
-            'batch_name': batch_name,
-            'tier': tier,
-            'count': count,
-            'keys': generated_keys,
-            'expires_at': expires_at.isoformat() if expires_at else None,
-        }), 201
-
+        return jsonify(result), 201
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 400
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
