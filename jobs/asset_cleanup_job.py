@@ -3,11 +3,11 @@
 
 import logging
 from datetime import datetime, timedelta
-from vtt_app import create_app
-from vtt_app.extensions import db
-from vtt_app.models import Asset, AuditLog
-from vtt_app.utils.time import utcnow
-from vtt_app.storage import get_storage_adapter
+from vtt import create_app
+from vtt.extensions import db
+from vtt.models import Asset, AuditLog
+from vtt.utils.time import utcnow
+from vtt.storage import get_storage_adapter
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

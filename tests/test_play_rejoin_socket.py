@@ -2,7 +2,7 @@
 
 pytest_plugins = ["tests.play_shared"]
 
-from vtt_app.extensions import socketio
+from vtt.extensions import socketio
 from tests.play_shared import add_map, add_member, create_campaign, create_session
 
 

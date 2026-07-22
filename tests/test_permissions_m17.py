@@ -4,14 +4,14 @@ M17 Tests: Permission system, role hierarchy, quotas, audit logging.
 
 import pytest
 from datetime import datetime
-from vtt_app import create_app
-from vtt_app.extensions import db
-from vtt_app.models import User, Role, Campaign, CampaignMember, AuditLog
-from vtt_app.permissions import (
+from vtt import create_app
+from vtt.extensions import db
+from vtt.models import User, Role, Campaign, CampaignMember, AuditLog
+from vtt.permissions import (
     can_view_campaign, can_edit_campaign, can_delete_campaign, can_create_campaign,
     can_view_all_campaigns, can_suspend_user, can_upload_asset, has_platform_role
 )
-from vtt_app.utils.audit import log_campaign_deleted, log_user_suspended
+from vtt.utils.audit import log_campaign_deleted, log_user_suspended
 
 
 # ===== FIXTURES =====

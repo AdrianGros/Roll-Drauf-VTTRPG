@@ -4,9 +4,9 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from vtt_app import create_app
-from vtt_app.extensions import db
-from vtt_app.models import Campaign, CampaignMember, GameSession, InviteToken, Role, User
+from vtt import create_app
+from vtt.extensions import db
+from vtt.models import Campaign, CampaignMember, GameSession, InviteToken, Role, User
 
 
 def _login(client, username, password="Password123!"):
@@ -116,6 +116,24 @@ class TestCampaignCRUD:
         assert data["name"] == "Dragon Quest"
         assert data["status"] == "active"
         assert data["is_owner"] is True
+
+    def test_create_campaign_requires_name(self, dm_client):
+        response = dm_client.post(
+            "/api/campaigns",
+            json={"name": "   ", "description": "No title", "max_players": 6},
+        )
+
+        assert response.status_code == 400
+        assert response.get_json()["error"] == "campaign name required"
+
+    def test_create_campaign_rejects_out_of_range_max_players(self, dm_client):
+        response = dm_client.post(
+            "/api/campaigns",
+            json={"name": "Too Big", "description": "Overflow", "max_players": 21},
+        )
+
+        assert response.status_code == 400
+        assert response.get_json()["error"] == "max_players must be between 2 and 20"
 
     def test_get_campaign_details_success(self, dm_client, dm_user):
         campaign = _create_campaign(dm_user)

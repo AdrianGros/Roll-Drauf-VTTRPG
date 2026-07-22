@@ -28,9 +28,9 @@ logger = logging.getLogger(__name__)
 def run_job():
     """Execute the hard-delete job."""
     try:
-        from vtt_app import create_app
-        from vtt_app.utils.user_deletion import delete_marked_users_after_grace_period
-        from vtt_app.models import User
+        from vtt import create_app
+        from vtt.utils.user_deletion import delete_marked_users_after_grace_period
+        from vtt.models import User
 
         app = create_app(config_name='production')
 

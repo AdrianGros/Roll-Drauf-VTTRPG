@@ -1,10 +1,10 @@
 """Character CRUD endpoint tests."""
 
 import pytest
-from vtt_app import create_app
-from vtt_app.extensions import db
-from vtt_app.models import Campaign, CampaignMember, Character, Role, User
-from vtt_app.models.role import init_default_roles
+from vtt import create_app
+from vtt.extensions import db
+from vtt.models import Campaign, CampaignMember, Character, Role, User
+from vtt.models.role import init_default_roles
 
 
 @pytest.fixture
@@ -153,6 +153,7 @@ class TestCharacterCreate:
         assert response.status_code == 201
         data = response.get_json()
         assert data["name"] == "Gandalf"
+        assert data["campaign_id"] == campaign_data
 
     def test_create_character_invalid_campaign(self, auth_client):
         """Reject character with invalid campaign."""
@@ -201,6 +202,7 @@ class TestCharacterList:
         assert len(chars) == 2
         assert chars[0]["name"] == "Legolas"
         assert chars[1]["name"] == "Gimli"
+        assert chars[0]["campaign_id"] is None
 
     def test_list_characters_empty(self, auth_client):
         """List characters when none exist."""
@@ -387,4 +389,3 @@ class TestCharacterDelete:
         other_client = _create_logged_in_other_client(app)
         response = other_client.delete(f"/api/characters/{char_id}")
         assert response.status_code == 403
-

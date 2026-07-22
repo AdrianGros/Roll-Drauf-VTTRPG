@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Sheet - roll drauf vtt</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        .sheet-core-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.7rem;
+        }
+
+        .sheet-core-grid .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .sheet-core-grid .field--wide {
+            grid-column: 1 / -1;
+        }
+
+        .sheet-core-grid .field label,
+        .sheet-form-inline label,
+        .sheet-pane-title {
+            font-size: 0.78rem;
+            color: #8e6b52;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .sheet-core-grid input,
+        .sheet-form-inline input,
+        .sheet-form-inline textarea,
+        .sheet-form-inline select {
+            background: rgba(255, 252, 246, 0.78);
+            color: #2a1a12;
+            border: 1px solid rgba(130, 89, 52, 0.22);
+            border-radius: 10px;
+            padding: 0.55rem 0.7rem;
+            font: inherit;
+        }
+
+        .sheet-core-grid input:disabled,
+        .sheet-form-inline input:disabled,
+        .sheet-form-inline textarea:disabled,
+        .sheet-form-inline select:disabled {
+            opacity: 0.72;
+            cursor: not-allowed;
+        }
+
+        .sheet-stat-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .sheet-stat {
+            padding: 0.7rem 0.8rem;
+            border-radius: 12px;
+            background: rgba(255, 252, 246, 0.72);
+            border: 1px solid rgba(130, 89, 52, 0.14);
+        }
+
+        .sheet-stat-label {
+            font-size: 0.72rem;
+            color: #8e6b52;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sheet-stat-value {
+            margin-top: 0.22rem;
+            color: #2f1638;
+            font-size: 1.02rem;
+            font-weight: 700;
+        }
+
+        .sheet-pane {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .sheet-pane + .sheet-pane {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(130, 89, 52, 0.12);
+        }
+
+        .sheet-pane-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sheet-pane-copy {
+            color: var(--vtt-ink-muted, #6e5745);
+            line-height: 1.5;
+            font-size: 0.94rem;
+        }
+
+        .sheet-form-inline {
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        .sheet-form-inline .inline-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.65rem;
+        }
+
+        .sheet-list {
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .sheet-item {
+            border: 1px solid rgba(130, 89, 52, 0.14);
+            border-radius: 12px;
+            padding: 0.8rem 0.9rem;
+            background: rgba(255, 252, 246, 0.68);
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .sheet-item strong {
+            color: #2f1638;
+        }
+
+        .sheet-item-meta {
+            margin-top: 0.22rem;
+            font-size: 0.84rem;
+            color: var(--vtt-ink-muted, #6e5745);
+            line-height: 1.4;
+        }
+
+        .sheet-split-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+
+        .sheet-split-actions .btn {
+            min-height: 42px;
+        }
+
+        .sheet-mode-note {
+            padding: 0.85rem 0.95rem;
+            border-radius: 14px;
+            border: 1px solid rgba(202, 163, 59, 0.22);
+            background: rgba(202, 163, 59, 0.08);
+            color: var(--vtt-plum-deep, #2f1638);
+            line-height: 1.5;
+        }
+
+        .sheet-empty {
+            padding: 0.95rem 1rem;
+            border-radius: 12px;
+            border: 1px dashed rgba(130, 89, 52, 0.24);
+            color: var(--vtt-ink-muted, #6e5745);
+            background: rgba(255, 252, 246, 0.58);
+        }
+
+        .sheet-help {
+            color: var(--vtt-ink-muted, #6e5745);
+            font-size: 0.84rem;
+            line-height: 1.4;
+            margin-top: -0.15rem;
+        }
+
+        .sheet-actions-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .sheet-actions-row .btn {
+            min-width: 140px;
+        }
+
+        .sheet-identity-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+        .sheet-identity-card {
+            display: grid;
+            gap: 0.7rem;
+            padding: 0.85rem;
+            border-radius: 14px;
+            border: 1px solid rgba(130, 89, 52, 0.18);
+            background: rgba(255, 252, 246, 0.68);
+        }
+
+        .sheet-identity-label {
+            color: #8e6b52;
+            font-size: 0.78rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .sheet-identity-preview {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(130, 89, 52, 0.18);
+            background: linear-gradient(135deg, rgba(143, 102, 155, 0.12), rgba(255, 252, 246, 0.88));
+            display: grid;
+            place-items: center;
+            color: var(--vtt-plum-deep, #2f1638);
+            font-size: 1.8rem;
+        }
+
+        .sheet-identity-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .sheet-identity-copy {
+            color: var(--vtt-ink-muted, #6e5745);
+            line-height: 1.45;
+            font-size: 0.88rem;
+        }
+
+        .sheet-identity-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+
+        .sheet-identity-actions .btn {
+            flex: 1 1 140px;
+        }
+
+        /* M25 — Roll-Drauf-Light content display */
+        .rdl-profile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.55rem;
+        }
+
+        .rdl-profile-field {
+            padding: 0.55rem 0.75rem;
+            border-radius: 10px;
+            background: rgba(255, 252, 246, 0.68);
+            border: 1px solid rgba(130, 89, 52, 0.14);
+        }
+
+        .rdl-profile-label {
+            font-size: 0.75rem;
+            color: #8e6b52;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .rdl-profile-value {
+            margin-top: 0.18rem;
+            color: #2f1638;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .rdl-section-sub {
+            font-size: 0.75rem;
+            color: #8e6b52;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin: 0.55rem 0 0.3rem;
+        }
+
+        .rdl-tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.2rem;
+        }
+
+        .rdl-tag {
+            display: inline-block;
+            padding: 0.18rem 0.55rem;
+            border-radius: 999px;
+            background: rgba(143, 102, 155, 0.13);
+            color: #2f1638;
+            font-size: 0.76rem;
+            border: 1px solid rgba(143, 102, 155, 0.2);
+        }
+
+        .rdl-feature-card {
+            padding: 0.7rem 0.85rem;
+            border-radius: 12px;
+            background: rgba(255, 252, 246, 0.68);
+            border: 1px solid rgba(130, 89, 52, 0.14);
+            display: grid;
+            gap: 0.25rem;
+        }
+
+        .rdl-feature-card strong {
+            color: #2f1638;
+            font-size: 0.94rem;
+        }
+
+        /* Progression ladder */
+        .rdl-prog-summary {
+            font-size: 0.86rem;
+            color: #6e5745;
+            margin-bottom: 0.45rem;
+        }
+
+        .rdl-prog-ladder {
+            display: grid;
+            gap: 0.4rem;
+        }
+
+        .rdl-prog-level {
+            padding: 0.6rem 0.8rem;
+            border-radius: 12px;
+            border: 1px solid rgba(130, 89, 52, 0.14);
+            background: rgba(255, 252, 246, 0.42);
+        }
+
+        .rdl-prog-level--complete {
+            background: rgba(76, 175, 80, 0.07);
+            border-color: rgba(76, 175, 80, 0.2);
+        }
+
+        .rdl-prog-level--locked {
+            opacity: 0.65;
+        }
+
+        .rdl-prog-level--current {
+            border-color: rgba(143, 102, 155, 0.42);
+            background: rgba(143, 102, 155, 0.08);
+            opacity: 1;
+        }
+
+        .rdl-prog-level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rdl-prog-level-num {
+            font-weight: 700;
+            color: #2f1638;
+            font-size: 0.88rem;
+        }
+
+        .rdl-prog-level-status {
+            font-size: 0.73rem;
+            color: #6e5745;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .rdl-prog-level--current .rdl-prog-level-status {
+            color: #7a3fa0;
+            font-weight: 700;
+        }
+
+        .rdl-prog-level-content {
+            margin-top: 0.32rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.32rem;
+        }
+
+        .rdl-level-feature {
+            display: inline-block;
+            padding: 0.16rem 0.48rem;
+            border-radius: 999px;
+            background: rgba(76, 175, 80, 0.11);
+            color: #2f1638;
+            font-size: 0.76rem;
+            border: 1px solid rgba(76, 175, 80, 0.18);
+        }
+
+        .rdl-level-choice {
+            display: inline-block;
+            padding: 0.16rem 0.48rem;
+            border-radius: 999px;
+            background: rgba(255, 152, 0, 0.09);
+            color: #2f1638;
+            font-size: 0.76rem;
+            border: 1px solid rgba(255, 152, 0, 0.18);
+        }
+
+        .rdl-level-empty {
+            color: #8e6b52;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .rdl-level-feature--preview {
+            display: inline-block;
+            padding: 0.16rem 0.48rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            background: rgba(130, 89, 52, 0.06);
+            color: #6e5745;
+            border: 1px dashed rgba(130, 89, 52, 0.22);
+            font-style: italic;
+        }
+
+        /* M28 — Progression polish */
+        .rdl-prog-callout {
+            margin-top: 0.6rem;
+            padding: 0.6rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+        .rdl-prog-callout--ready {
+            background: rgba(143, 102, 155, 0.1);
+            border: 1px solid rgba(143, 102, 155, 0.3);
+            color: #4a1e5a;
+            font-weight: 600;
+        }
+        .rdl-prog-callout--maxed {
+            background: rgba(76, 175, 80, 0.08);
+            border: 1px solid rgba(76, 175, 80, 0.22);
+            color: #1c4a1e;
+        }
+        .rdl-export-section {
+            margin-top: 1rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(130, 89, 52, 0.12);
+            display: grid;
+            gap: 0.5rem;
+        }
+        .rdl-export-label {
+            font-size: 0.75rem;
+            color: #8e6b52;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .rdl-export-copy {
+            font-size: 0.83rem;
+            color: #6e5745;
+            line-height: 1.45;
+        }
+        .rdl-export-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            background: rgba(74, 158, 255, 0.08);
+            border: 1px solid rgba(74, 158, 255, 0.25);
+            color: #1a3a5c;
+            font-weight: 600;
+            font-size: 0.86rem;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+        }
+        .rdl-export-btn:hover {
+            background: rgba(74, 158, 255, 0.16);
+        }
+        .rdl-identity-block {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.45rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(130, 89, 52, 0.1);
+        }
+        .rdl-identity-field {
+            padding: 0.45rem 0.65rem;
+            border-radius: 8px;
+            background: rgba(143, 102, 155, 0.06);
+            border: 1px solid rgba(143, 102, 155, 0.15);
+        }
+        .rdl-identity-label {
+            font-size: 0.72rem;
+            color: #8e6b52;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .rdl-identity-value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #2f1638;
+            margin-top: 0.12rem;
+        }
+        .sheet-next-hint {
+            margin-top: 0.5rem;
+            padding: 0.55rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            color: #4a1e5a;
+            background: rgba(143, 102, 155, 0.07);
+            border: 1px solid rgba(143, 102, 155, 0.18);
+            line-height: 1.45;
+        }
+        .sheet-next-hint[hidden] { display: none; }
+
+        /* M26 — Level-Up panel */
+        .rdl-levelup-cta {
+            margin-top: 0.75rem;
+        }
+
+        .rdl-levelup-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 1.1rem;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(143, 102, 155, 0.18), rgba(143, 102, 155, 0.08));
+            border: 1px solid rgba(143, 102, 155, 0.38);
+            color: #2f1638;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+        }
+
+        .rdl-levelup-btn:hover {
+            background: linear-gradient(135deg, rgba(143, 102, 155, 0.28), rgba(143, 102, 155, 0.14));
+        }
+
+        .rdl-levelup-panel {
+            margin-top: 0.9rem;
+            padding: 1rem 1.1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(143, 102, 155, 0.3);
+            background: rgba(143, 102, 155, 0.05);
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .rdl-levelup-panel-title {
+            font-weight: 700;
+            color: #2f1638;
+            font-size: 0.95rem;
+        }
+
+        .rdl-levelup-panel-sub {
+            font-size: 0.84rem;
+            color: #6e5745;
+            line-height: 1.45;
+        }
+
+        .rdl-choice-group {
+            display: grid;
+            gap: 0.45rem;
+        }
+
+        .rdl-choice-prompt {
+            font-size: 0.82rem;
+            color: #8e6b52;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .rdl-choice-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 10px;
+            border: 1px solid rgba(130, 89, 52, 0.18);
+            background: rgba(255, 252, 246, 0.72);
+            cursor: pointer;
+        }
+
+        .rdl-choice-option input[type="radio"] {
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .rdl-choice-option-label {
+            display: grid;
+            gap: 0.18rem;
+        }
+
+        .rdl-choice-option-name {
+            font-weight: 700;
+            color: #2f1638;
+            font-size: 0.9rem;
+        }
+
+        .rdl-choice-option-desc {
+            font-size: 0.8rem;
+            color: #6e5745;
+            line-height: 1.4;
+        }
+
+        .rdl-levelup-actions {
+            display: flex;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 900px) {
+            .sheet-core-grid,
+            .sheet-form-inline .inline-row,
+            .sheet-stat-row,
+            .sheet-identity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .sheet-actions-row .btn {
+                min-width: 0;
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-shell.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <style>
+        body.character-sheet-route-book-scene {
+            background: #0d0514;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        #characterSheetSceneStatus {
+            position: fixed;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%);
+            color: #f6e8c8;
+            font-family: var(--vtt-font-heading);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        #characterSheetSceneStatus[hidden] {
+            display: none;
+        }
+
+        .sheet-focus-page .book-shell-ribbon {
+            top: 18px;
+            right: 18px;
+            z-index: 4;
+        }
+
+        .sheet-focus-page .book-shell-frame-header {
+            margin-bottom: 1.2rem;
+            padding-right: 88px;
+        }
+
+        @media (max-width: 1040px) {
+            .sheet-focus-page .book-shell-frame-header {
+                padding-right: 0;
+            }
+
+            .sheet-focus-page .book-shell-ribbon {
+                position: static;
+                writing-mode: initial;
+                transform: none;
+                min-height: 0;
+                display: inline-flex;
+                margin-bottom: 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body class="spellbook character-sheet-route-book-scene">
+    <div id="characterSheetSceneStatus" role="status" aria-live="polite">Opening Character Sheet...</div>
+    <template id="characterSheetSceneTemplate">
+        <div class="book-dashboard-camera book-route-camera sheet-focus-camera">
+            <section class="book-dashboard-page book-route-page book-focus-page sheet-focus-page" role="region" aria-label="Character sheet focus page">
+                <div class="book-dashboard-topbar">
+                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Home</button>
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Campaigns</button>
+                        <button type="button" class="book-dashboard-ribbon-btn is-active" data-book-route="/characters" onclick="goTo('/characters')">Characters</button>
+                        <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Logout</button>
+                    </div>
+                    <div class="book-dashboard-crest" id="sheetReaderBadge" aria-label="Current reader">Sheet Focus</div>
+                </div>
+
+                <div class="book-dashboard-titlebar">
+                    <div>
+                        <p class="book-dashboard-eyebrow">Chapter IV</p>
+                        <h1 class="book-dashboard-title">Character Sheet</h1>
+                        <p class="book-dashboard-copy">
+                            This is the next zoom step after the archive: a larger parchment work surface for one hero, still inside the same spellbook language, with a clear route back to campaigns when the character is ready for session context.
+                        </p>
+                    </div>
+                    <div class="book-dashboard-meta">
+                        <span class="book-dashboard-chip">Personae Focus</span>
+                        <span class="book-dashboard-chip" id="sheetModeChip">View Mode</span>
+                        <span class="book-dashboard-chip" id="sheetCharacterChip">Awaiting Sheet</span>
+                    </div>
+                </div>
+
+                <div class="book-shell-frame">
+                    <div class="book-shell-ribbon">Focus</div>
+
+                    <div class="book-shell-frame-header">
+                        <div>
+                            <p class="book-frame-eyebrow">Personae Archive</p>
+                            <h2 class="book-page-title" data-book-field="section">Character Sheet</h2>
+                            <p class="book-frame-copy">
+                                The focus route keeps orientation, summary, and quick returns on the left while the right page turns into a denser editing desk for the active character.
+                            </p>
+                        </div>
+                        <div class="book-frame-meta">
+                            <span class="book-chip">Chapter <span data-book-field="chapter">Personae</span></span>
+                            <span class="book-chip">Focus Mode</span>
+                            <span class="book-chip">Read / Edit Split</span>
+                        </div>
+                    </div>
+
+                    <div id="messageBox" class="book-form-banner" hidden aria-live="polite"></div>
+
+                    <div class="book-spread">
+                        <section class="book-page book-page--index">
+                    <div class="sheet-pane">
+                        <div class="sheet-pane-header">
+                            <div>
+                                <div class="sheet-pane-title">Charakterblatt</div>
+                                <h2 id="sheetTitle" class="book-page-section-title">Character Sheet</h2>
+                            </div>
+                            <div class="book-page-note" id="modeLabel"></div>
+                        </div>
+                    </div>
+
+                    <div class="sheet-pane">
+                        <div class="sheet-pane-header">
+                            <div class="sheet-pane-title">Quick Ledger</div>
+                        </div>
+                        <div class="sheet-stat-row">
+                            <div class="sheet-stat">
+                                <div class="sheet-stat-label">Core</div>
+                                <div class="sheet-stat-value" id="summaryName">Pending load</div>
+                            </div>
+                            <div class="sheet-stat">
+                                <div class="sheet-stat-label">Level</div>
+                                <div class="sheet-stat-value" id="summaryLevel">-</div>
+                            </div>
+                            <div class="sheet-stat">
+                                <div class="sheet-stat-label">Hit Points</div>
+                                <div class="sheet-stat-value" id="summaryHp">-</div>
+                            </div>
+                        </div>
+                        <div class="sheet-stat-row">
+                            <div class="sheet-stat">
+                                <div class="sheet-stat-label">Armor</div>
+                                <div class="sheet-stat-value" id="summaryAc">-</div>
+                            </div>
+                            <div class="sheet-stat">
+                                <div class="sheet-stat-label">Spells</div>
+                                <div class="sheet-stat-value" id="summarySpells">-</div>
+                            </div>
+                            <div class="sheet-stat">
+                                <div class="sheet-stat-label">Inventory</div>
+                                <div class="sheet-stat-value" id="summaryInventory">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sheet-pane">
+                        <div class="sheet-pane-header">
+                            <div class="sheet-pane-title">Navigation</div>
+                        </div>
+                        <div class="sheet-split-actions">
+                            <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()">Edit Sheet</button>
+                            <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden>Campaign Context</button>
+                            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goBack()">Zurück zum Archiv</button>
+                        </div>
+                        <div id="sheetNextHint" class="sheet-next-hint" hidden></div>
+                        <div class="sheet-mode-note" id="sheetNextStepNote" hidden></div>
+                    </div>
+
+                    <div class="sheet-pane" id="rdlProfileSection">
+                        <div class="sheet-pane-header">
+                            <div class="sheet-pane-title">Roll-Drauf Profil</div>
+                        </div>
+                        <div id="rdlContentPane"><div class="sheet-empty">Lade Profildaten…</div></div>
+                    </div>
+
+                    <div class="sheet-pane" id="rdlProgressionSection">
+                        <div class="sheet-pane-header">
+                            <div class="sheet-pane-title">Progression</div>
+                        </div>
+                        <div id="rdlProgressionPane"><div class="sheet-empty">Lade Progression…</div></div>
+                    </div>
+
+                    <div class="sheet-pane">
+                        <div class="sheet-pane-header">
+                            <div class="sheet-pane-title">Identity Surface</div>
+                        </div>
+                        <div class="sheet-pane-copy">
+                            Avatar and token identity now live directly on the sheet so the hero can be completed before returning to campaign or play context.
+                        </div>
+                        <div id="sheetIdentityGrid" class="sheet-identity-grid">
+                            <div class="sheet-identity-card">
+                                <div class="sheet-identity-label">Avatar</div>
+                                <div class="sheet-identity-preview">🙂</div>
+                            </div>
+                            <div class="sheet-identity-card">
+                                <div class="sheet-identity-label">Token</div>
+                                <div class="sheet-identity-preview">🛡️</div>
+                            </div>
+                        </div>
+                    </div>
+
+                            <div class="book-page-folio" data-book-folio="left">7</div>
+                        </section>
+
+                        <section class="book-page book-page--content">
+                    <form id="sheetForm" class="sheet-form-inline" novalidate>
+                        <div class="sheet-pane">
+                            <div class="sheet-pane-header">
+                                <div class="sheet-pane-title">Core</div>
+                                <div class="sheet-help">Read mode keeps the values visible. Edit mode unlocks the inputs below.</div>
+                            </div>
+                            <div class="sheet-core-grid">
+                                <div class="field field--wide">
+                                    <label for="charName">Name</label>
+                                    <input id="charName" type="text">
+                                </div>
+                                <div class="field">
+                                    <label for="charRace">Species</label>
+                                    <input id="charRace" type="text">
+                                </div>
+                                <div class="field">
+                                    <label for="charFaction">Faction</label>
+                                    <input id="charFaction" type="text">
+                                </div>
+                                <div class="field">
+                                    <label for="charClass">Class</label>
+                                    <input id="charClass" type="text">
+                                </div>
+                                <div class="field field--wide">
+                                    <label for="charBackground">Background</label>
+                                    <input id="charBackground" type="text">
+                                </div>
+                                <div class="field">
+                                    <label for="charLevel">Level</label>
+                                    <input id="charLevel" type="number" min="1">
+                                </div>
+                                <div class="field">
+                                    <label for="charXp">XP</label>
+                                    <input id="charXp" type="number" min="0">
+                                </div>
+                                <div class="field">
+                                    <label for="charAc">AC</label>
+                                    <input id="charAc" type="number">
+                                </div>
+                                <div class="field">
+                                    <label for="charHpCurrent">HP Current</label>
+                                    <input id="charHpCurrent" type="number">
+                                </div>
+                                <div class="field">
+                                    <label for="charHpMax">HP Max</label>
+                                    <input id="charHpMax" type="number">
+                                </div>
+                                <div class="field">
+                                    <label for="charStr">STR</label>
+                                    <input id="charStr" type="number">
+                                </div>
+                                <div class="field">
+                                    <label for="charDex">DEX</label>
+                                    <input id="charDex" type="number">
+                                </div>
+                                <div class="field">
+                                    <label for="charCon">CON</label>
+                                    <input id="charCon" type="number">
+                                </div>
+                                <div class="field">
+                                    <label for="charInt">INT</label>
+                                    <input id="charInt" type="number">
+                                </div>
+                                <div class="field">
+                                    <label for="charWis">WIS</label>
+                                    <input id="charWis" type="number">
+                                </div>
+                                <div class="field">
+                                    <label for="charCha">CHA</label>
+                                    <input id="charCha" type="number">
+                                </div>
+                            </div>
+                            <div class="sheet-actions-row">
+                                <button class="btn btn-primary" type="button" id="saveCoreBtn" onclick="saveCore()">Save Core</button>
+                                <button class="btn btn-secondary" type="button" onclick="reloadSheet()">Reload</button>
+                            </div>
+                        </div>
+
+                        <div class="sheet-pane" id="rdlFeaturesSection">
+                            <div class="sheet-pane-header">
+                                <div class="sheet-pane-title">Klassenfeatures</div>
+                            </div>
+                            <div id="rdlFeaturesPane"><div class="sheet-empty">Keine Features gefunden.</div></div>
+                        </div>
+
+                        <div class="sheet-pane">
+                            <div class="sheet-pane-header">
+                                <div class="sheet-pane-title">Spells</div>
+                            </div>
+                            <div id="spellsList" class="sheet-list"></div>
+                            <div id="spellsForm" class="sheet-form-inline">
+                                <div class="inline-row">
+                                    <div>
+                                        <label for="newSpellName">Spell Name</label>
+                                        <input id="newSpellName" type="text" placeholder="Spell name">
+                                    </div>
+                                    <div>
+                                        <label for="newSpellLevel">Level</label>
+                                        <input id="newSpellLevel" type="number" min="0" max="9" placeholder="0">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="newSpellSchool">School</label>
+                                    <input id="newSpellSchool" type="text" placeholder="School">
+                                </div>
+                                <button class="btn btn-primary" type="button" onclick="addSpell()">Add Spell</button>
+                            </div>
+                        </div>
+
+                        <div class="sheet-pane">
+                            <div class="sheet-pane-header">
+                                <div class="sheet-pane-title">Equipment</div>
+                            </div>
+                            <div id="equipmentList" class="sheet-list"></div>
+                            <div id="equipmentForm" class="sheet-form-inline">
+                                <div class="inline-row">
+                                    <div>
+                                        <label for="newEquipmentName">Item Name</label>
+                                        <input id="newEquipmentName" type="text" placeholder="Item name">
+                                    </div>
+                                    <div>
+                                        <label for="newEquipmentType">Type</label>
+                                        <input id="newEquipmentType" type="text" placeholder="Type">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="newEquipmentAcBonus">AC Bonus</label>
+                                    <input id="newEquipmentAcBonus" type="number" placeholder="0">
+                                </div>
+                                <button class="btn btn-primary" type="button" onclick="addEquipment()">Add Item</button>
+                            </div>
+                        </div>
+
+                        <div class="sheet-pane">
+                            <div class="sheet-pane-header">
+                                <div class="sheet-pane-title">Inventory</div>
+                            </div>
+                            <div id="inventoryList" class="sheet-list"></div>
+                            <div id="inventoryForm" class="sheet-form-inline">
+                                <div class="inline-row">
+                                    <div>
+                                        <label for="newInventoryName">Item Name</label>
+                                        <input id="newInventoryName" type="text" placeholder="Item name">
+                                    </div>
+                                    <div>
+                                        <label for="newInventoryType">Type</label>
+                                        <input id="newInventoryType" type="text" placeholder="Type">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="newInventoryQuantity">Quantity</label>
+                                    <input id="newInventoryQuantity" type="number" min="1" placeholder="1">
+                                </div>
+                                <button class="btn btn-primary" type="button" onclick="addInventoryItem()">Add Item</button>
+                            </div>
+                        </div>
+                    </form>
+
+                            <div class="book-page-folio" data-book-folio="right">8</div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </template>
+
+    <input id="sheetIdentityFilePicker" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/book-scene.js"></script>
+    <script>
+        const auth = new Auth();
+        const params = new URLSearchParams(window.location.search);
+        const characterId = Number(params.get('id'));
+        const mode = (params.get('mode') || 'view').toLowerCase();
+        const editable = mode === 'edit';
+        let currentUser = null;
+        let sheet = null;
+        let pendingIdentityKind = null;
+
+        function showMessage(text, isError = false) {
+            const box = document.getElementById('messageBox');
+            box.hidden = false;
+            box.className = `book-form-banner ${isError ? 'is-error' : 'is-success'}`;
+            box.textContent = text;
+            window.setTimeout(() => {
+                box.className = 'book-form-banner';
+                box.textContent = '';
+                box.hidden = true;
+            }, 3500);
+        }
+
+        function goTo(path) {
+            if (window.BookScene && typeof window.BookScene.pageTurn === 'function') {
+                window.BookScene.pageTurn(path, window.BookScene.sceneUser || currentUser || null);
+                return;
+            }
+            window.location.href = path;
+        }
+
+        async function makeMultipartAuthRequest(url, method, formData, retryOn401 = true) {
+            const options = {
+                method,
+                credentials: 'include',
+                headers: Auth.buildHeaders(method, false),
+                body: formData,
+            };
+
+            let response = await fetch(url, options);
+            if (response.status === 401 && retryOn401) {
+                const refreshed = await Auth.refreshAccessToken();
+                if (refreshed) {
+                    return makeMultipartAuthRequest(url, method, formData, false);
+                }
+                window.location.href = '/login.html';
+                return null;
+            }
+
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(payload.error || 'Upload failed');
+            }
+            return payload;
+        }
+
+        function goBack() {
+            goTo('/characters');
+        }
+
+        function toggleSheetMode() {
+            const nextMode = editable ? 'view' : 'edit';
+            goTo(`/character-sheet?id=${characterId}${nextMode === 'edit' ? '&mode=edit' : ''}`);
+        }
+
+        function openCampaignContext() {
+            const campaignId = sheet?.character?.campaign_id;
+            if (campaignId) {
+                goTo(`/campaigns?campaign_id=${campaignId}`);
+                return;
+            }
+            goTo('/campaigns');
+        }
+
+        async function logout() {
+            await auth.logout();
+        }
+
+        async function bootstrapCharacterSheetScene() {
+            if (!window.BookScene || typeof BookScene.bootstrapProtectedRoute !== 'function') {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            await BookScene.bootstrapProtectedRoute({
+                routeKey: 'character-sheet',
+                auth,
+                statusElementId: 'characterSheetSceneStatus',
+                statusMessage: 'Opening Character Sheet...',
+            });
+        }
+
+        function setEditMode() {
+            document.getElementById('sheetModeChip').textContent = editable ? 'Edit Mode' : 'View Mode';
+            document.getElementById('modeLabel').textContent = editable
+                ? 'Edit mode: core stats and resources are unlocked.'
+                : 'View mode: read-only sheet preview.';
+            document.getElementById('sheetModeActionBtn').textContent = editable ? 'View Sheet' : 'Edit Sheet';
+            document.getElementById('saveCoreBtn').style.display = editable ? 'inline-flex' : 'none';
+            document.getElementById('spellsForm').style.display = editable ? 'grid' : 'none';
+            document.getElementById('equipmentForm').style.display = editable ? 'grid' : 'none';
+            document.getElementById('inventoryForm').style.display = editable ? 'grid' : 'none';
+
+            const ids = [
+                'charName', 'charRace', 'charFaction', 'charClass', 'charBackground', 'charLevel', 'charXp',
+                'charAc', 'charHpCurrent', 'charHpMax', 'charStr', 'charDex', 'charCon', 'charInt', 'charWis', 'charCha'
+            ];
+            ids.forEach((id) => {
+                const node = document.getElementById(id);
+                if (node) {
+                    node.disabled = !editable;
+                }
+            });
+        }
+
+        const _ATTR_NAMES_DE = { str: 'Kraft', dex: 'Gewandtheit', con: 'Konstitution', int: 'Verstand', wis: 'Wahrnehmung', cha: 'Ausstrahlung' };
+
+        function _prettifySlug(slug) {
+            if (!slug) return '–';
+            return String(slug).replace(/_/g, ' ').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
+
+        function updateJourneyContext(character) {
+            const contextButton = document.getElementById('campaignContextBtn');
+            const hintEl = document.getElementById('sheetNextHint');
+
+            if (contextButton) {
+                if (character?.campaign_id) {
+                    contextButton.hidden = false;
+                    contextButton.textContent = 'Kampagnen-Kontext';
+                    contextButton.dataset.bookRoute = `/campaigns?campaign_id=${character.campaign_id}`;
+                } else {
+                    contextButton.hidden = false;
+                    contextButton.textContent = 'Kampagnen-Hub';
+                    contextButton.dataset.bookRoute = '/campaigns';
+                }
+            }
+
+            if (!hintEl) return;
+
+            // State-based hint: pick the most actionable next step
+            const progression = character?.progression;
+            const currentLevel = progression?.current_level || 1;
+            const levelCap = progression?.level_cap || 5;
+            const isRdl = character?.system_id === 'roll_drauf_light';
+            const hasAvatar = !!character?.avatar_url;
+            const hasToken = !!character?.token_url;
+            const canLevelUp = isRdl && currentLevel < levelCap;
+            const atMaxLevel = isRdl && currentLevel >= levelCap;
+
+            let hint = '';
+            if (canLevelUp) {
+                hint = `Level-Up verfügbar — ${character.name} kann auf Stufe ${currentLevel + 1} aufsteigen.`;
+            } else if (atMaxLevel) {
+                hint = `Maximale Stufe ${levelCap} erreicht. Charakter ist vollständig ausgespielt.`;
+            } else if (!hasAvatar && !hasToken) {
+                hint = 'Lade Avatar und Token hoch, um den Charakter visuell zu vervollständigen.';
+            } else if (!hasAvatar) {
+                hint = 'Avatar fehlt noch — lade ein Bild hoch, um die Identität zu vervollständigen.';
+            } else if (!hasToken) {
+                hint = 'Token fehlt noch — lade ein Bild für den Spieltisch hoch.';
+            } else if (!character?.campaign_id) {
+                hint = 'Charakter bereit. Weise ihn einer Kampagne zu, bevor es an den Tisch geht.';
+            } else {
+                hint = 'Charakter vollständig. Kehre zum Kampagnen-Kontext zurück, wenn du bereit für die Session bist.';
+            }
+
+            hintEl.textContent = hint;
+            hintEl.hidden = false;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderCore(character) {
+            document.getElementById('sheetTitle').textContent = `Character Sheet: ${character.name || 'Unknown'}`;
+            document.getElementById('sheetCharacterChip').textContent = character.name || 'Unknown Hero';
+            document.getElementById('summaryName').textContent = character.name || 'Unknown';
+            document.getElementById('summaryLevel').textContent = String(character.level ?? 1);
+            document.getElementById('summaryHp').textContent = `${character.hp_current ?? 0} / ${character.hp_max ?? 0}`;
+            document.getElementById('summaryAc').textContent = String(character.ac ?? 10);
+            document.getElementById('summarySpells').textContent = String((sheet.spells || []).length);
+            document.getElementById('summaryInventory').textContent = String((sheet.inventory || []).length);
+
+            document.getElementById('charName').value = character.name || '';
+            document.getElementById('charRace').value = character.species || character.race || '';
+            document.getElementById('charFaction').value = character.faction || '';
+            document.getElementById('charClass').value = character.class || '';
+            document.getElementById('charBackground').value = character.background || '';
+            document.getElementById('charLevel').value = character.level ?? 1;
+            document.getElementById('charXp').value = character.xp ?? 0;
+            document.getElementById('charAc').value = character.ac ?? 10;
+            document.getElementById('charHpCurrent').value = character.hp_current ?? 0;
+            document.getElementById('charHpMax').value = character.hp_max ?? 0;
+            document.getElementById('charStr').value = character.str ?? 10;
+            document.getElementById('charDex').value = character.dex ?? 10;
+            document.getElementById('charCon').value = character.con ?? 10;
+            document.getElementById('charInt').value = character.int ?? 10;
+            document.getElementById('charWis').value = character.wis ?? 10;
+            document.getElementById('charCha').value = character.cha ?? 10;
+            updateJourneyContext(character);
+        }
+
+        function renderIdentityCard(character, identityKind) {
+            const isAvatar = identityKind === 'avatar';
+            const label = isAvatar ? 'Avatar' : 'Token';
+            const url = isAvatar ? character.avatar_url : character.token_url;
+            const uploadLabel = url ? `Replace ${label}` : `Upload ${label}`;
+            const removeButton = url
+                ? `<button class="btn btn-danger" type="button" onclick="removeIdentity('${identityKind}')">Remove ${label}</button>`
+                : '';
+
+            return `
+                <div class="sheet-identity-card">
+                    <div class="sheet-identity-label">${label}</div>
+                    <div class="sheet-identity-preview">
+                        ${url
+                            ? `<img src="${escapeHtml(url)}" alt="${escapeHtml(character.name || 'Character')} ${label}">`
+                            : escapeHtml(isAvatar ? '🙂' : '🛡️')}
+                    </div>
+                    <div class="sheet-identity-copy">
+                        ${url
+                            ? `${label} is stored and will remain available in archive, sheet, campaign context, and later table use.`
+                            : `${label} is empty right now. Upload one here to complete this character's identity.`}
+                    </div>
+                    <div class="sheet-identity-actions">
+                        <button class="btn btn-secondary" type="button" onclick="openIdentityPicker('${identityKind}')">${uploadLabel}</button>
+                        ${removeButton}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderIdentity(character) {
+            const grid = document.getElementById('sheetIdentityGrid');
+            if (!grid) return;
+            grid.innerHTML = `
+                ${renderIdentityCard(character, 'avatar')}
+                ${renderIdentityCard(character, 'token')}
+            `;
+        }
+
+        function renderEmpty(container, text) {
+            container.innerHTML = `<div class="sheet-empty">${escapeHtml(text)}</div>`;
+        }
+
+        function renderSpells(spells) {
+            const container = document.getElementById('spellsList');
+            if (!spells.length) {
+                renderEmpty(container, 'No spells yet');
+                return;
+            }
+
+            container.innerHTML = spells.map((spell) => `
+                <div class="sheet-item">
+                    <div>
+                        <strong>${escapeHtml(spell.name)}</strong>
+                        <div class="sheet-item-meta">Level ${spell.level} | ${escapeHtml(spell.school || 'Unknown school')}</div>
+                        <div class="sheet-item-meta">${escapeHtml(spell.damage_dice || '-')} ${escapeHtml(spell.damage_type || '')}</div>
+                    </div>
+                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteSpell(${spell.id})">Delete</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderEquipment(items) {
+            const container = document.getElementById('equipmentList');
+            if (!items.length) {
+                renderEmpty(container, 'No equipment yet');
+                return;
+            }
+
+            container.innerHTML = items.map((item) => `
+                <div class="sheet-item">
+                    <div>
+                        <strong>${escapeHtml(item.name)}</strong>
+                        <div class="sheet-item-meta">${escapeHtml(item.type || 'Unknown type')} | AC +${item.ac_bonus ?? 0}</div>
+                        <div class="sheet-item-meta">${escapeHtml(item.damage_dice || '-')} ${escapeHtml(item.damage_type || '')}</div>
+                    </div>
+                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteEquipment(${item.id})">Delete</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderInventory(items) {
+            const container = document.getElementById('inventoryList');
+            if (!items.length) {
+                renderEmpty(container, 'No inventory items yet');
+                return;
+            }
+
+            container.innerHTML = items.map((item) => `
+                <div class="sheet-item">
+                    <div>
+                        <strong>${escapeHtml(item.name)}</strong>
+                        <div class="sheet-item-meta">${escapeHtml(item.type || 'Unknown type')} | Qty ${item.quantity}</div>
+                        <div class="sheet-item-meta">Weight total: ${item.total_weight ?? 0}</div>
+                    </div>
+                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteInventoryItem(${item.id})">Delete</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderRollDraufContent(character) {
+            const container = document.getElementById('rdlContentPane');
+            if (!container) return;
+            const content = character.content;
+            if (!content) {
+                container.innerHTML = '<div class="sheet-empty">Roll-Drauf-Light-Inhalt nicht verfügbar (Altcharakter).</div>';
+                return;
+            }
+            const trainingBonus = content.training_bonus ?? character.training_bonus ?? '–';
+            const speciesTrait = content.species_trait;
+            const backgroundPerk = content.background_perk;
+            const factionTags = content.faction_tags || [];
+            const tagsHtml = factionTags.length
+                ? factionTags.map((t) => `<span class="rdl-tag">${escapeHtml(t)}</span>`).join('')
+                : '<span class="rdl-tag rdl-tag--none">–</span>';
+            const traitHtml = speciesTrait
+                ? `<div class="rdl-feature-card"><strong>${escapeHtml(speciesTrait.name)}</strong><div class="sheet-item-meta">${escapeHtml(speciesTrait.description)}</div></div>`
+                : '<div class="sheet-empty">Kein Spezies-Merkmal</div>';
+            const perkHtml = backgroundPerk
+                ? `<div class="rdl-feature-card"><strong>${escapeHtml(backgroundPerk.name)}</strong><div class="sheet-item-meta">${escapeHtml(backgroundPerk.description)}</div></div>`
+                : '<div class="sheet-empty">Kein Hintergrunds-Perk</div>';
+
+            // Identity block: species / faction / class / background
+            const identityBlock = `
+                <div class="rdl-identity-block">
+                    <div class="rdl-identity-field">
+                        <div class="rdl-identity-label">Spezies</div>
+                        <div class="rdl-identity-value">${escapeHtml(character.species || character.race || '–')}</div>
+                    </div>
+                    <div class="rdl-identity-field">
+                        <div class="rdl-identity-label">Fraktion</div>
+                        <div class="rdl-identity-value">${escapeHtml(character.faction || '–')}</div>
+                    </div>
+                    <div class="rdl-identity-field">
+                        <div class="rdl-identity-label">Klasse</div>
+                        <div class="rdl-identity-value">${escapeHtml(character.class || '–')}</div>
+                    </div>
+                    <div class="rdl-identity-field">
+                        <div class="rdl-identity-label">Hintergrund</div>
+                        <div class="rdl-identity-value">${escapeHtml(character.background || '–')}</div>
+                    </div>
+                </div>`;
+
+            container.innerHTML = `
+                ${identityBlock}
+                <div class="rdl-profile-grid">
+                    <div class="rdl-profile-field">
+                        <div class="rdl-profile-label">Trainingsbonus</div>
+                        <div class="rdl-profile-value">+${escapeHtml(String(trainingBonus))}</div>
+                    </div>
+                    <div class="rdl-profile-field">
+                        <div class="rdl-profile-label">Fraktion-Tags</div>
+                        <div class="rdl-tags-row">${tagsHtml}</div>
+                    </div>
+                </div>
+                <div class="rdl-section-sub">Spezies-Merkmal</div>
+                ${traitHtml}
+                <div class="rdl-section-sub">Hintergrunds-Perk</div>
+                ${perkHtml}
+            `;
+        }
+
+        function renderClassFeatures(character) {
+            const container = document.getElementById('rdlFeaturesPane');
+            if (!container) return;
+            // Update section header dynamically with class + level context
+            const sectionHeader = document.querySelector('#rdlFeaturesSection .sheet-pane-title');
+            if (sectionHeader) {
+                const className = character.class || '';
+                const lvl = character.level || 1;
+                sectionHeader.textContent = className
+                    ? `Klassenfeatures — ${className} (Stufe ${lvl})`
+                    : 'Klassenfeatures';
+            }
+            const classFeatures = (character.content && character.content.class_features) || [];
+            if (!classFeatures.length) {
+                container.innerHTML = '<div class="sheet-empty">Keine Klassenfeatures aktiv.</div>';
+                return;
+            }
+            container.innerHTML = classFeatures.map((f) => `
+                <div class="rdl-feature-card">
+                    <strong>${escapeHtml(f.name)}</strong>
+                    <div class="sheet-item-meta">${escapeHtml(f.description || '')}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderProgressionLadder(character) {
+            const container = document.getElementById('rdlProgressionPane');
+            if (!container) return;
+            const progression = character.progression;
+            if (!progression) {
+                container.innerHTML = '<div class="sheet-empty">Progression nicht verfügbar (Altcharakter).</div>';
+                return;
+            }
+            const currentLevel = progression.current_level || 1;
+            const levelCap = progression.level_cap || 5;
+            const levels = progression.levels || {};
+            const isRdl = character.system_id === 'roll_drauf_light';
+            const canLevelUp = isRdl && currentLevel < levelCap;
+            const atMax = isRdl && currentLevel >= levelCap;
+
+            const levelsHtml = Object.keys(levels)
+                .map(Number)
+                .sort((a, b) => a - b)
+                .map((lvl) => {
+                    const lvlData = levels[String(lvl)];
+                    const isComplete = lvlData.status === 'complete';
+                    const isCurrent = lvl === currentLevel;
+                    const isLocked = !isComplete && !isCurrent;
+                    const feats = lvlData.auto_features || [];
+                    const choicesAvail = lvlData.choices_available || [];
+                    const chosenVals = lvlData.choices || {};
+
+                    // For completed/current levels: show unlocked features + choices made
+                    // For locked levels: show what's coming as dashed preview tags
+                    let innerContent = '';
+                    if (isComplete || isCurrent) {
+                        const featTags = feats.map((f) => `<span class="rdl-level-feature">${escapeHtml(f.name)}</span>`).join('');
+                        const choiceTags = choicesAvail.map((c) => {
+                            const chosenVal = chosenVals[c.slug];
+                            if (chosenVal) {
+                                const readableVal = _ATTR_NAMES_DE[chosenVal] || _prettifySlug(chosenVal);
+                                return `<span class="rdl-level-choice">${escapeHtml(c.prompt || 'Wahl')}: <strong>${escapeHtml(readableVal)}</strong></span>`;
+                            }
+                            return `<span class="rdl-level-choice">${escapeHtml(c.prompt || 'Entscheidung ausstehend')}</span>`;
+                        }).join('');
+                        innerContent = featTags + choiceTags || `<span class="rdl-level-empty">Kein weiterer Inhalt</span>`;
+                    } else {
+                        // Locked: show preview of what's coming
+                        const previewFeats = feats.map((f) => `<span class="rdl-level-feature--preview">${escapeHtml(f.name)}</span>`).join('');
+                        const previewChoices = choicesAvail.map((c) => `<span class="rdl-level-feature--preview">${escapeHtml(c.prompt || 'Entscheidung')}</span>`).join('');
+                        innerContent = previewFeats + previewChoices || `<span class="rdl-level-empty">Freischaltung beim Aufstieg</span>`;
+                    }
+
+                    const statusClass = isComplete ? 'rdl-prog-level--complete' : isLocked ? 'rdl-prog-level--locked' : '';
+                    const currentClass = isCurrent ? 'rdl-prog-level--current' : '';
+                    const statusLabel = isCurrent ? 'Aktuell' : isComplete ? 'Abgeschlossen' : 'Noch gesperrt';
+                    return `
+                        <div class="rdl-prog-level ${statusClass} ${currentClass}">
+                            <div class="rdl-prog-level-header">
+                                <span class="rdl-prog-level-num">Stufe ${lvl}</span>
+                                <span class="rdl-prog-level-status">${statusLabel}</span>
+                            </div>
+                            <div class="rdl-prog-level-content">${innerContent}</div>
+                        </div>`;
+                }).join('');
+
+            // State callout
+            let calloutHtml = '';
+            if (canLevelUp) {
+                calloutHtml = `<div class="rdl-prog-callout rdl-prog-callout--ready">↑ Aufstieg auf Stufe ${currentLevel + 1} ist bereit.</div>`;
+            } else if (atMax) {
+                calloutHtml = `<div class="rdl-prog-callout rdl-prog-callout--maxed">Stufe ${levelCap} erreicht — vollständig ausgespielt.</div>`;
+            }
+
+            // Level-up panel
+            const levelUpHtml = canLevelUp ? `
+                <div class="rdl-levelup-cta">
+                    <button type="button" class="rdl-levelup-btn" onclick="openLevelUpPanel()">
+                        ↑ Auf Stufe ${currentLevel + 1} aufsteigen
+                    </button>
+                </div>
+                <div id="levelUpPanel" hidden></div>
+            ` : '';
+
+            // Export section — separated visually from level-up
+            const exportHtml = isRdl ? `
+                <div class="rdl-export-section">
+                    <div class="rdl-export-label">Portabilität</div>
+                    <div class="rdl-export-copy">Speichere diesen Charakter als JSON-Datei. Importiere ihn später in ein neues Konto oder teile ihn mit der Gruppe.</div>
+                    <div><button type="button" class="rdl-export-btn" onclick="exportCharacter()">↓ Charakter exportieren</button></div>
+                </div>
+            ` : '';
+
+            const summaryText = `Stufe ${currentLevel} von ${levelCap}`;
+            container.innerHTML = `
+                <div class="rdl-prog-summary">${escapeHtml(summaryText)}</div>
+                ${calloutHtml}
+                <div class="rdl-prog-ladder">${levelsHtml}</div>
+                ${levelUpHtml}
+                ${exportHtml}
+            `;
+        }
+
+        function openLevelUpPanel() {
+            const panel = document.getElementById('levelUpPanel');
+            if (!panel) return;
+            if (!sheet || !sheet.character) return;
+
+            const character = sheet.character;
+            const progression = character.progression || {};
+            const currentLevel = progression.current_level || 1;
+            const targetLevel = currentLevel + 1;
+            const levels = progression.levels || {};
+            const targetData = levels[String(targetLevel)] || {};
+            const choicesAvail = targetData.choices_available || [];
+            const autoFeats = targetData.auto_features || [];
+
+            const autoFeatHtml = autoFeats.length
+                ? `<div class="rdl-levelup-panel-sub">
+                    Neue Features bei diesem Aufstieg:
+                    ${autoFeats.map(f => `<span class="rdl-level-feature" style="margin:0 0.2rem 0.2rem 0;display:inline-block;">${escapeHtml(f.name)}</span>`).join('')}
+                   </div>`
+                : '';
+
+            const choiceGroupsHtml = choicesAvail.map((choiceDef) => {
+                const opts = choiceDef.options || [];
+                const isAttribute = choiceDef.choice_type === 'attribute';
+                const optionsHtml = opts.map((opt) => {
+                    const value = isAttribute ? opt : opt.slug;
+                    const displayName = isAttribute
+                        ? (_ATTR_NAMES_DE[opt] || opt.toUpperCase())
+                        : escapeHtml(opt.name || _prettifySlug(opt.slug));
+                    const desc = isAttribute
+                        ? `<div class="rdl-choice-option-desc">Erhöhe ${_ATTR_NAMES_DE[opt] || opt} um 1 Punkt.</div>`
+                        : `<div class="rdl-choice-option-desc">${escapeHtml(opt.description || '')}</div>`;
+                    return `
+                        <label class="rdl-choice-option">
+                            <input type="radio" name="choice_${escapeHtml(choiceDef.slug)}" value="${escapeHtml(value)}" required>
+                            <div class="rdl-choice-option-label">
+                                <div class="rdl-choice-option-name">${displayName}</div>
+                                ${desc}
+                            </div>
+                        </label>`;
+                }).join('');
+                return `
+                    <div class="rdl-choice-group">
+                        <div class="rdl-choice-prompt">${escapeHtml(choiceDef.prompt || 'Wähle eine Option:')}</div>
+                        ${optionsHtml}
+                    </div>`;
+            }).join('');
+
+            const confirmLabel = choicesAvail.length
+                ? 'Entscheidung bestätigen &amp; aufsteigen'
+                : 'Aufstieg bestätigen';
+
+            panel.innerHTML = `
+                <div class="rdl-levelup-panel">
+                    <div class="rdl-levelup-panel-title">Aufstieg auf Stufe ${targetLevel}</div>
+                    <div class="rdl-levelup-panel-sub">Überprüfe die Änderungen. Nach dem Bestätigen wird der Aufstieg sofort gespeichert.</div>
+                    ${autoFeatHtml}
+                    ${choiceGroupsHtml}
+                    <div class="rdl-levelup-actions">
+                        <button type="button" id="levelUpSubmitBtn" class="btn btn-primary" onclick="submitLevelUp(${targetLevel})">
+                            ${confirmLabel}
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="closeLevelUpPanel()">Abbrechen</button>
+                    </div>
+                </div>`;
+            panel.hidden = false;
+        }
+
+        function closeLevelUpPanel() {
+            const panel = document.getElementById('levelUpPanel');
+            if (panel) { panel.hidden = true; panel.innerHTML = ''; }
+        }
+
+        async function submitLevelUp(targetLevel) {
+            const panel = document.getElementById('levelUpPanel');
+            const choices = {};
+
+            if (panel) {
+                panel.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
+                    const match = radio.name.match(/^choice_(.+)$/);
+                    if (match) choices[match[1]] = radio.value;
+                });
+
+                // Validate all required choice groups have a selection
+                const allGroups = panel.querySelectorAll('.rdl-choice-group');
+                for (const group of allGroups) {
+                    const radios = group.querySelectorAll('input[type="radio"]');
+                    if (radios.length && !group.querySelector('input[type="radio"]:checked')) {
+                        showMessage('Bitte alle Entscheidungen treffen, bevor du aufsteigst.', true);
+                        return;
+                    }
+                }
+            }
+
+            const submitBtn = document.getElementById('levelUpSubmitBtn');
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Aufstieg wird gespeichert …'; }
+
+            try {
+                await auth.makeAuthRequest(
+                    `/api/characters/${characterId}/level-up`,
+                    'POST',
+                    { choices },
+                );
+                closeLevelUpPanel();
+                await loadSheet();
+                const charName = sheet?.character?.name || 'Der Charakter';
+                const progression = sheet?.character?.progression;
+                const newLevel = progression?.current_level || targetLevel;
+                const levelCap = progression?.level_cap || 5;
+                const atMax = newLevel >= levelCap;
+                const nextHint = atMax
+                    ? ' Maximales Level erreicht.'
+                    : ` Nächste Stufe: ${newLevel + 1}.`;
+                showMessage(`${charName} ist jetzt Stufe ${newLevel}!${nextHint}`);
+            } catch (error) {
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Aufstieg bestätigen'; }
+                showMessage(error.message || 'Level-Up fehlgeschlagen', true);
+            }
+        }
+
+        // M27: Export
+        async function exportCharacter() {
+            try {
+                const payload = await auth.makeAuthRequest(`/api/characters/${characterId}/export`);
+                const charName = sheet?.character?.name || 'charakter';
+                const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${charName.replace(/\s+/g, '_')}_export.json`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+                showMessage(`${charName} wurde als JSON exportiert. Importiere die Datei im Archiv, um eine Kopie zu erstellen.`);
+            } catch (error) {
+                showMessage(error.message || 'Export fehlgeschlagen — bitte erneut versuchen.', true);
+            }
+        }
+
+        function renderSheet() {
+            if (!sheet) return;
+            renderCore(sheet.character);
+            renderIdentity(sheet.character);
+            renderRollDraufContent(sheet.character);
+            renderClassFeatures(sheet.character);
+            renderProgressionLadder(sheet.character);
+            renderSpells(sheet.spells || []);
+            renderEquipment(sheet.equipment || []);
+            renderInventory(sheet.inventory || []);
+        }
+
+        async function loadSheet() {
+            if (!Number.isInteger(characterId) || characterId <= 0) {
+                showMessage('Invalid character id', true);
+                return;
+            }
+
+            try {
+                currentUser = await auth.requireAuth('/login.html');
+                document.getElementById('sheetReaderBadge').textContent = currentUser?.username || 'Sheet Focus';
+                sheet = await auth.makeAuthRequest(`/api/characters/${characterId}/sheet`);
+                renderSheet();
+            } catch (error) {
+                showMessage(error.message || 'Failed to load character sheet', true);
+            }
+        }
+
+        async function reloadSheet() {
+            await loadSheet();
+            showMessage('Sheet reloaded');
+        }
+
+        function openIdentityPicker(identityKind) {
+            pendingIdentityKind = identityKind;
+            const picker = document.getElementById('sheetIdentityFilePicker');
+            if (!picker) return;
+            picker.value = '';
+            picker.click();
+        }
+
+        async function handleIdentityFilePicked(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file || !pendingIdentityKind) {
+                return;
+            }
+
+            const identityKind = pendingIdentityKind;
+            pendingIdentityKind = null;
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                await makeMultipartAuthRequest(
+                    `/api/characters/${characterId}/identity/${identityKind}`,
+                    'POST',
+                    formData,
+                );
+                await loadSheet();
+                const label = identityKind === 'avatar' ? 'Avatar' : 'Token';
+                const other = identityKind === 'avatar' ? sheet?.character?.token_url : sheet?.character?.avatar_url;
+                const bothSet = !!other;
+                const hint = bothSet ? ' Beide Identitätsbilder sind gesetzt.' : ` ${identityKind === 'avatar' ? 'Token' : 'Avatar'} fehlt noch.`;
+                showMessage(`${label} gespeichert.${hint}`);
+            } catch (error) {
+                showMessage(error.message || 'Upload fehlgeschlagen — bitte erneut versuchen.', true);
+            } finally {
+                event.target.value = '';
+            }
+        }
+
+        async function removeIdentity(identityKind) {
+            const label = identityKind === 'avatar' ? 'Avatar' : 'Token';
+            if (!window.confirm(`${label} entfernen?`)) return;
+            try {
+                await auth.makeAuthRequest(`/api/characters/${characterId}/identity/${identityKind}`, 'DELETE');
+                await loadSheet();
+                showMessage(`${label} entfernt.`);
+            } catch (error) {
+                showMessage(error.message || `${label} konnte nicht entfernt werden.`, true);
+            }
+        }
+
+        async function saveCore() {
+            if (!editable) return;
+            try {
+                const payload = {
+                    name: document.getElementById('charName').value.trim(),
+                    race: document.getElementById('charRace').value.trim(),
+                    class: document.getElementById('charClass').value.trim(),
+                    background: document.getElementById('charBackground').value.trim(),
+                    level: Number(document.getElementById('charLevel').value),
+                    xp: Number(document.getElementById('charXp').value),
+                    ac: Number(document.getElementById('charAc').value),
+                    hp_current: Number(document.getElementById('charHpCurrent').value),
+                    hp_max: Number(document.getElementById('charHpMax').value),
+                    str: Number(document.getElementById('charStr').value),
+                    dex: Number(document.getElementById('charDex').value),
+                    con: Number(document.getElementById('charCon').value),
+                    int: Number(document.getElementById('charInt').value),
+                    wis: Number(document.getElementById('charWis').value),
+                    cha: Number(document.getElementById('charCha').value)
+                };
+                const factionValue = document.getElementById('charFaction').value.trim();
+                if ((sheet?.character?.system_id === 'roll_drauf_light' || factionValue) && payload.race) {
+                    payload.species = payload.race;
+                    payload.faction = factionValue;
+                }
+                await auth.makeAuthRequest(`/api/characters/${characterId}`, 'PUT', payload);
+                await loadSheet();
+                showMessage(sheet?.character?.campaign_id
+                    ? 'Core stats saved. Return to campaign context when the hero is ready for play.'
+                    : 'Core stats saved. Return to the archive or campaigns when you are ready for the next step.');
+            } catch (error) {
+                showMessage(error.message || 'Failed to save core stats', true);
+            }
+        }
+
+        async function addSpell() {
+            if (!editable) return;
+            try {
+                const payload = {
+                    name: document.getElementById('newSpellName').value.trim(),
+                    level: Number(document.getElementById('newSpellLevel').value || 0),
+                    school: document.getElementById('newSpellSchool').value.trim()
+                };
+                await auth.makeAuthRequest(`/api/characters/${characterId}/spells`, 'POST', payload);
+                document.getElementById('newSpellName').value = '';
+                document.getElementById('newSpellLevel').value = '';
+                document.getElementById('newSpellSchool').value = '';
+                await loadSheet();
+                showMessage('Spell added');
+            } catch (error) {
+                showMessage(error.message || 'Failed to add spell', true);
+            }
+        }
+
+        async function deleteSpell(spellId) {
+            if (!editable) return;
+            if (!window.confirm('Delete spell?')) return;
+            try {
+                await auth.makeAuthRequest(`/api/characters/${characterId}/spells/${spellId}`, 'DELETE');
+                await loadSheet();
+                showMessage('Spell deleted');
+            } catch (error) {
+                showMessage(error.message || 'Failed to delete spell', true);
+            }
+        }
+
+        async function addEquipment() {
+            if (!editable) return;
+            try {
+                const payload = {
+                    name: document.getElementById('newEquipmentName').value.trim(),
+                    type: document.getElementById('newEquipmentType').value.trim(),
+                    ac_bonus: Number(document.getElementById('newEquipmentAcBonus').value || 0)
+                };
+                await auth.makeAuthRequest(`/api/characters/${characterId}/equipment`, 'POST', payload);
+                document.getElementById('newEquipmentName').value = '';
+                document.getElementById('newEquipmentType').value = '';
+                document.getElementById('newEquipmentAcBonus').value = '';
+                await loadSheet();
+                showMessage('Equipment added');
+            } catch (error) {
+                showMessage(error.message || 'Failed to add equipment', true);
+            }
+        }
+
+        async function deleteEquipment(itemId) {
+            if (!editable) return;
+            if (!window.confirm('Delete equipment?')) return;
+            try {
+                await auth.makeAuthRequest(`/api/characters/${characterId}/equipment/${itemId}`, 'DELETE');
+                await loadSheet();
+                showMessage('Equipment deleted');
+            } catch (error) {
+                showMessage(error.message || 'Failed to delete equipment', true);
+            }
+        }
+
+        async function addInventoryItem() {
+            if (!editable) return;
+            try {
+                const payload = {
+                    name: document.getElementById('newInventoryName').value.trim(),
+                    type: document.getElementById('newInventoryType').value.trim(),
+                    quantity: Number(document.getElementById('newInventoryQuantity').value || 1)
+                };
+                await auth.makeAuthRequest(`/api/characters/${characterId}/inventory`, 'POST', payload);
+                document.getElementById('newInventoryName').value = '';
+                document.getElementById('newInventoryType').value = '';
+                document.getElementById('newInventoryQuantity').value = '';
+                await loadSheet();
+                showMessage('Inventory item added');
+            } catch (error) {
+                showMessage(error.message || 'Failed to add inventory item', true);
+            }
+        }
+
+        async function deleteInventoryItem(itemId) {
+            if (!editable) return;
+            if (!window.confirm('Delete inventory item?')) return;
+            try {
+                await auth.makeAuthRequest(`/api/characters/${characterId}/inventory/${itemId}`, 'DELETE');
+                await loadSheet();
+                showMessage('Inventory item deleted');
+            } catch (error) {
+                showMessage(error.message || 'Failed to delete inventory item', true);
+            }
+        }
+
+        window.BookSceneRouteInit = window.BookSceneRouteInit || {};
+        window.BookSceneRouteInit['character-sheet'] = function initCharacterSheetScene() {
+            setEditMode();
+            loadSheet();
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const picker = document.getElementById('sheetIdentityFilePicker');
+            if (picker) {
+                picker.addEventListener('change', handleIdentityFilePicked);
+            }
+            bootstrapCharacterSheetScene();
+        });
+    </script>
+</body>
+</html>

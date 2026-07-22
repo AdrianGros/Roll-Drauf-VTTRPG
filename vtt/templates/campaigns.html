@@ -1,0 +1,4250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTT - Campaigns</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #4a9eff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a9eff;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #4a9eff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #357bcc;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #777;
+        }
+
+        .btn-danger {
+            background: #d74a4a;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger:hover {
+            background: #bd3636;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.7rem;
+            font-size: 0.8rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+        }
+
+        .campaign-create-panel {
+            margin-bottom: 1.25rem;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(74, 158, 255, 0.35);
+            background: linear-gradient(135deg, rgba(28, 24, 52, 0.92), rgba(18, 14, 36, 0.88));
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+        }
+
+        .campaign-create-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .campaign-create-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f2f7ff;
+        }
+
+        .campaign-create-copy {
+            margin-top: 0.35rem;
+            max-width: 58ch;
+            color: #c5d9f4;
+            line-height: 1.45;
+            font-size: 0.92rem;
+        }
+
+        .campaign-create-meta {
+            margin-top: 0.65rem;
+            color: #9dc9ff;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+        }
+
+        .campaign-create-form {
+            display: grid;
+            gap: 0.85rem;
+            margin-top: 0.95rem;
+        }
+
+        .campaign-create-form[hidden],
+        .campaign-create-success[hidden],
+        .campaign-create-state[hidden] {
+            display: none;
+        }
+
+        .campaign-create-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.8rem;
+        }
+
+        .campaign-create-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .campaign-create-field--full {
+            grid-column: 1 / -1;
+        }
+
+        .campaign-create-label {
+            font-size: 0.82rem;
+            color: #d7e7ff;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .campaign-create-help {
+            color: #9fb9db;
+            font-size: 0.78rem;
+            line-height: 1.4;
+        }
+
+        .campaign-create-field input,
+        .campaign-create-field textarea {
+            width: 100%;
+            background: #1a1a24;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.55rem 0.65rem;
+        }
+
+        .campaign-create-field textarea {
+            min-height: 96px;
+            resize: vertical;
+        }
+
+        .campaign-create-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            align-items: center;
+        }
+
+        .campaign-create-state {
+            padding: 0.75rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+
+        .campaign-create-state.is-error {
+            background: rgba(215, 74, 74, 0.14);
+            border: 1px solid rgba(215, 74, 74, 0.42);
+            color: #ffb2b2;
+        }
+
+        .campaign-create-state.is-success {
+            background: rgba(76, 175, 80, 0.14);
+            border: 1px solid rgba(76, 175, 80, 0.42);
+            color: #a9efb2;
+        }
+
+        .campaign-create-state.is-info {
+            background: rgba(74, 158, 255, 0.12);
+            border: 1px solid rgba(74, 158, 255, 0.36);
+            color: #cfe0fb;
+        }
+
+        .campaign-create-success {
+            margin-top: 0.95rem;
+            padding: 0.9rem;
+            border-radius: 8px;
+            border: 1px solid rgba(76, 175, 80, 0.38);
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .campaign-create-success-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #dfffe3;
+            margin-bottom: 0.3rem;
+        }
+
+        .campaign-create-success-copy {
+            color: #d6ead7;
+            line-height: 1.45;
+            font-size: 0.86rem;
+        }
+
+        .campaign-create-success-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 0.75rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #444;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab.active {
+            color: #4a9eff;
+            border-bottom-color: #4a9eff;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.6);
+            color: #9be7a0;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(215, 74, 74, 0.2);
+            border: 1px solid rgba(215, 74, 74, 0.6);
+            color: #ff9e9e;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .campaign-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .campaign-card:hover {
+            border-color: #4a9eff;
+            box-shadow: 0 0 15px rgba(74, 158, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .campaign-banner {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(135deg, #4a9eff 0%, #2d5a8c 100%);
+            border-bottom: 1px solid #444;
+        }
+
+        .campaign-info {
+            padding: 1rem;
+        }
+
+        .campaign-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .campaign-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+            text-transform: capitalize;
+        }
+
+        .status-active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .status-paused,
+        .status-archived {
+            background: rgba(158, 158, 158, 0.2);
+            color: #bdbdbd;
+        }
+
+        .campaign-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin: 0.75rem 0;
+            font-size: 0.85rem;
+        }
+
+        .meta-item {
+            background: rgba(74, 158, 255, 0.1);
+            padding: 0.4rem;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .meta-label {
+            color: #a0a0a0;
+            font-size: 0.75rem;
+        }
+
+        .meta-value {
+            color: #4a9eff;
+            font-weight: bold;
+        }
+
+        .campaign-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .campaign-actions button {
+            flex: 1;
+            padding: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            color: #a0a0a0;
+            background: rgba(0,0,0,0.2);
+            border: 1px dashed #555;
+            border-radius: 6px;
+        }
+
+        .detail-panel {
+            margin-top: 1.5rem;
+            background: rgba(0,0,0,0.35);
+            border: 1px solid #4a9eff;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .detail-panel.hidden {
+            display: none;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .detail-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .hub-shell {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hub-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(320px, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(93, 171, 255, 0.45);
+            background: linear-gradient(135deg, rgba(26, 48, 72, 0.82), rgba(12, 18, 30, 0.9));
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+        }
+
+        .hub-identity h2 {
+            margin-bottom: 0.4rem;
+            font-size: 1.6rem;
+            color: #f0f6ff;
+        }
+
+        .hub-eyebrow {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9dc9ff;
+            margin-bottom: 0.35rem;
+        }
+
+        .hub-summary {
+            margin-top: 0.55rem;
+            color: #d7e7ff;
+            line-height: 1.45;
+            max-width: 62ch;
+        }
+
+        .hub-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 0.75rem;
+        }
+
+        .hub-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.32rem 0.65rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #eaf2ff;
+            font-size: 0.82rem;
+            white-space: nowrap;
+        }
+
+        .hub-primary {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.75rem;
+            border-radius: 8px;
+            padding: 0.95rem;
+            background: rgba(0, 0, 0, 0.24);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .hub-next-label {
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9dc9ff;
+            margin-bottom: 0.25rem;
+        }
+
+        .hub-next-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.35rem;
+        }
+
+        .hub-next-hint {
+            color: #bfd4f4;
+            line-height: 1.45;
+        }
+
+        .hub-primary-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.7rem;
+        }
+
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .hub-card {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 0.9rem;
+        }
+
+        .hub-card h3 {
+            margin-bottom: 0.7rem;
+            color: #4a9eff;
+            font-size: 1rem;
+        }
+
+        .hub-card-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hub-stat-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hub-stat {
+            padding: 0.55rem;
+            border-radius: 6px;
+            background: rgba(74, 158, 255, 0.08);
+            border: 1px solid rgba(74, 158, 255, 0.18);
+        }
+
+        .hub-stat-label {
+            color: #a9c7ef;
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .hub-stat-value {
+            color: #f3f8ff;
+            font-weight: 700;
+        }
+
+        .hub-step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .hub-step {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.6rem;
+            background: rgba(0, 0, 0, 0.18);
+        }
+
+        .hub-step-title {
+            font-weight: 600;
+            color: #f0f6ff;
+            margin-bottom: 0.18rem;
+        }
+
+        .hub-step-desc {
+            font-size: 0.82rem;
+            color: #b9d0ef;
+            line-height: 1.35;
+        }
+
+        .hub-step-state {
+            flex: 0 0 auto;
+            border-radius: 999px;
+            padding: 0.2rem 0.65rem;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            margin-top: 0.08rem;
+        }
+
+        .hub-step-state.state-done {
+            background: rgba(76, 175, 80, 0.22);
+            color: #9be7a0;
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .hub-step-state.state-todo {
+            background: rgba(255, 193, 7, 0.18);
+            color: #ffe08a;
+            border: 1px solid rgba(255, 193, 7, 0.45);
+        }
+
+        .hub-step-state.state-live {
+            background: rgba(74, 158, 255, 0.18);
+            color: #9dc9ff;
+            border: 1px solid rgba(74, 158, 255, 0.45);
+        }
+
+        .hub-map-list,
+        .hub-session-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .hub-map-item {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.6rem;
+            background: rgba(0, 0, 0, 0.18);
+        }
+
+        .hub-map-title {
+            font-weight: 600;
+            color: #f0f6ff;
+            margin-bottom: 0.2rem;
+        }
+
+        .hub-map-meta,
+        .hub-session-meta {
+            font-size: 0.8rem;
+            color: #b9d0ef;
+            line-height: 1.35;
+        }
+
+        .hub-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .hub-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.28rem 0.6rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #dfe9f7;
+            font-size: 0.78rem;
+        }
+
+        .hub-callout {
+            margin-top: 0.75rem;
+            padding: 0.7rem 0.85rem;
+            border-radius: 6px;
+            background: rgba(74, 158, 255, 0.08);
+            border: 1px solid rgba(74, 158, 255, 0.22);
+            color: #d9e8fb;
+            line-height: 1.4;
+        }
+
+        .hub-action-cluster {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .hub-session-note {
+            margin-top: 0.55rem;
+            color: #b9d0ef;
+            line-height: 1.35;
+            font-size: 0.82rem;
+        }
+
+        .hub-session-actions,
+        .hub-session-support {
+            margin-top: 0.55rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hub-link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .hub-surface-link {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.16);
+        }
+
+        .hub-surface-link-title {
+            font-weight: 700;
+            color: #f3f8ff;
+            margin-bottom: 0.3rem;
+        }
+
+        .hub-surface-link-copy {
+            color: #b9d0ef;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+        }
+
+        .session-prep-surface {
+            border: 1px solid rgba(93, 171, 255, 0.38);
+            background: linear-gradient(135deg, rgba(24, 28, 48, 0.94), rgba(14, 18, 34, 0.92));
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
+        }
+
+        .session-prep-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.9fr);
+            gap: 1rem;
+        }
+
+        .session-prep-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.35rem;
+        }
+
+        .session-prep-copy {
+            color: #c7daf5;
+            line-height: 1.45;
+            max-width: 62ch;
+        }
+
+        .session-prep-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.8rem;
+        }
+
+        .session-prep-toolbar select {
+            min-width: 220px;
+            background: #1a1a24;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.45rem 0.55rem;
+        }
+
+        .session-prep-next {
+            border-radius: 8px;
+            padding: 0.95rem;
+            background: rgba(0, 0, 0, 0.24);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .session-prep-next-label {
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9dc9ff;
+            margin-bottom: 0.25rem;
+        }
+
+        .session-prep-next-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f5f9ff;
+            margin-bottom: 0.35rem;
+        }
+
+        .session-prep-next-copy {
+            color: #bfd4f4;
+            line-height: 1.4;
+        }
+
+        .session-prep-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .session-prep-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .session-prep-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.85rem;
+            background: rgba(0, 0, 0, 0.18);
+        }
+
+        .session-prep-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #eef5ff;
+            margin-bottom: 0.35rem;
+        }
+
+        .session-prep-card-copy {
+            color: #bfd4f4;
+            line-height: 1.4;
+            font-size: 0.82rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .session-prep-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .asset-library-toolbar,
+        .asset-library-upload {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.6rem;
+            margin-top: 0.7rem;
+        }
+
+        .asset-library-toolbar input,
+        .asset-library-toolbar select,
+        .asset-library-upload input,
+        .asset-library-upload select {
+            width: 100%;
+            background: #1a1a24;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.45rem 0.55rem;
+            min-height: 40px;
+        }
+
+        .asset-library-upload {
+            padding: 0.85rem;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 0.8rem;
+        }
+
+        .asset-library-upload .upload-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .asset-library-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 0.75rem;
+        }
+
+        .asset-library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 0.85rem;
+            margin-top: 0.85rem;
+        }
+
+        .asset-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.22);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            min-height: 280px;
+        }
+
+        .asset-preview {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.16), rgba(0, 0, 0, 0.35));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .asset-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .asset-preview-placeholder {
+            font-size: 2rem;
+            color: #d9e8fb;
+            text-align: center;
+            padding: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .asset-preview-label {
+            font-size: 0.8rem;
+            color: #d9e8fb;
+            text-align: center;
+            padding: 0.35rem 0.65rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(0, 0, 0, 0.22);
+        }
+
+        .asset-card-body {
+            padding: 0.8rem;
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .asset-card-title {
+            font-weight: 700;
+            color: #f0f6ff;
+            word-break: break-word;
+        }
+
+        .asset-card-meta {
+            font-size: 0.8rem;
+            color: #b9d0ef;
+            line-height: 1.35;
+        }
+
+        .asset-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: auto;
+            padding-top: 0.5rem;
+        }
+
+        .asset-card-actions .btn {
+            flex: 1 1 auto;
+        }
+
+        .asset-empty-state {
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            color: #b9d0ef;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.18);
+        }
+
+        .hub-quickstart {
+            margin-top: 0.7rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid rgba(74, 158, 255, 0.4);
+            background: rgba(74, 158, 255, 0.08);
+        }
+
+        .hub-quickstart .quickstart-title {
+            margin-bottom: 0.25rem;
+        }
+
+        .hub-quickstart .quickstart-help {
+            margin-bottom: 0.55rem;
+        }
+
+        .detail-box {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.75rem;
+        }
+
+        .detail-box h3 {
+            margin-bottom: 0.75rem;
+            color: #4a9eff;
+            font-size: 1rem;
+        }
+
+        .workflow-copy-box {
+            margin-top: 1rem;
+            border: 1px solid rgba(93, 171, 255, 0.45);
+            border-radius: 6px;
+            padding: 0.85rem;
+            background: rgba(26, 48, 72, 0.35);
+        }
+
+        .workflow-copy-title {
+            color: #9dc9ff;
+            font-weight: 700;
+            margin-bottom: 0.45rem;
+        }
+
+        .workflow-copy-note {
+            color: #c8ddff;
+            font-size: 0.82rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .workflow-step {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 0.55rem;
+            margin-bottom: 0.45rem;
+            background: rgba(0, 0, 0, 0.22);
+            font-size: 0.9rem;
+        }
+
+        .workflow-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .workflow-state {
+            font-size: 0.78rem;
+            border-radius: 999px;
+            padding: 0.15rem 0.55rem;
+            white-space: nowrap;
+        }
+
+        .state-done {
+            background: rgba(76, 175, 80, 0.22);
+            color: #9be7a0;
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .state-todo {
+            background: rgba(255, 193, 7, 0.18);
+            color: #ffe08a;
+            border: 1px solid rgba(255, 193, 7, 0.45);
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .list-item {
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.6rem;
+            background: rgba(0,0,0,0.25);
+        }
+
+        .list-item-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .muted {
+            color: #a0a0a0;
+            font-size: 0.85rem;
+        }
+
+        .inline-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .inline-controls input,
+        .inline-controls select {
+            background: #1a1a24;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.45rem 0.55rem;
+            min-width: 160px;
+        }
+
+        .quickstart-panel {
+            margin-top: 0.85rem;
+            border: 1px solid rgba(74, 158, 255, 0.4);
+            background: rgba(74, 158, 255, 0.08);
+            border-radius: 6px;
+            padding: 0.75rem;
+        }
+
+        .quickstart-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #9dc9ff;
+            margin-bottom: 0.3rem;
+        }
+
+        .quickstart-help {
+            font-size: 0.82rem;
+            color: #bed9ff;
+            margin-bottom: 0.55rem;
+        }
+
+        .community-shell {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+        }
+
+        .chat-feed {
+            min-height: 220px;
+            max-height: 320px;
+            overflow: auto;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.6rem;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .chat-item {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 0.45rem 0;
+            font-size: 0.9rem;
+        }
+
+        .chat-item:last-child {
+            border-bottom: none;
+        }
+
+        .chat-item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .chat-input-row {
+            margin-top: 0.65rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input-row input {
+            flex: 1;
+            background: #1a1a24;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 0.45rem 0.55rem;
+        }
+
+        .mod-queue {
+            min-height: 220px;
+            max-height: 320px;
+            overflow: auto;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 0.6rem;
+            background: rgba(0,0,0,0.2);
+            font-size: 0.85rem;
+        }
+
+        .mod-item {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 0.4rem 0;
+        }
+
+        .mod-item:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                padding: 1rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .campaign-create-topline,
+            .campaign-create-grid {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .hub-hero,
+            .hub-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .community-shell {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dark mode surface styling */
+        .card, .campaign-card, .empty-state {
+            background: var(--vtt-surface-card, #201530) !important;
+            border: 1px solid rgba(212, 175, 55, 0.15) !important;
+            color: var(--vtt-text-primary, #e8d5b7);
+        }
+        .card-title { color: var(--vtt-accent); }
+        .card-meta, .campaign-info, .empty-state p { color: var(--vtt-text-secondary, #9e8fa0); }
+        input, textarea, select {
+            background: var(--vtt-surface-input, #141420) !important;
+            color: var(--vtt-text-primary, #e8d5b7) !important;
+            border-color: var(--vtt-border-subtle, rgba(255,255,255,0.10)) !important;
+        }
+        input::placeholder { color: rgba(232, 213, 183, 0.5); }
+    </style>
+    <!-- Spellbook Theme -->
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-shell.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <style>
+        body.campaigns-route-book-scene {
+            background: #0d0514;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body.campaigns-route-book-scene > header,
+        body.campaigns-route-book-scene > main,
+        body.campaigns-route-book-scene > footer {
+            display: none;
+        }
+
+        #campaignsSceneStatus {
+            position: fixed;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%);
+            color: #f6e8c8;
+            font-family: var(--vtt-font-heading);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        #campaignsSceneStatus[hidden] {
+            display: none;
+        }
+    </style>
+</head>
+<body class="spellbook campaigns-route-book-scene">
+    <div id="campaignsSceneStatus" role="status" aria-live="polite">Opening Campaigns Page...</div>
+    <header>
+        <div class="logo">roll drauf VTT</div>
+        <div class="header-actions">
+            <button class="btn btn-primary" type="button" data-book-route="/dashboard" onclick="goTo('/dashboard')">Cockpit</button>
+            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
+            <button class="btn btn-secondary" onclick="logout()">Abmelden</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="book-shell-frame">
+            <div class="book-dashboard-topbar">
+                <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
+                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Home</button>
+                    <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/campaigns" onclick="goTo('/campaigns')">Campaigns</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Characters</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Logout</button>
+                </div>
+                <div class="book-dashboard-crest" aria-label="Current chapter">Chronicles</div>
+            </div>
+            <div class="book-shell-ribbon">Chronicles</div>
+
+            <div class="book-shell-frame-header">
+                <div>
+                    <p class="book-frame-eyebrow">Campaign Atlas</p>
+                    <h1 class="book-page-title" data-book-field="section">Campaigns</h1>
+                    <p class="book-frame-copy">
+                        This spread separates orientation from management: left page for flow and control, right page for the actual campaign roster and detail view.
+                    </p>
+                </div>
+                <div class="book-frame-meta">
+                    <span class="book-chip">Chapter <span data-book-field="chapter">Chronicles</span></span>
+                    <span class="book-chip">Roster + Detail</span>
+                    <span class="book-chip">Wave 1 Ready</span>
+                </div>
+            </div>
+
+            <div class="book-spread">
+                <section class="book-page book-page--index">
+                    <div class="page-header">
+                        <h1>Kampagnen</h1>
+                        <button id="campaignCreateToggle" class="btn btn-primary" type="button" aria-expanded="false" onclick="createCampaign()">+ Kampagne anlegen</button>
+                    </div>
+
+                    <p class="book-page-lede">Organisiere deine aktiven Welten, halte Beitritte im Blick und nutze diese Seite als verlässlichen Weg von Kampagne zu Session und weiter nach Play.</p>
+
+                    <div class="book-page-note">
+                        Die Kampagnenerstellung lebt jetzt direkt auf dieser Buchseite: Name, kurze Beschreibung und Spielerzahl reichen fuer den Start, danach fuehrt derselbe Weg weiter in den Kampagnen-Hub und zur Session-Vorbereitung.
+                    </div>
+
+                    <div id="messageBox" class="message"></div>
+
+                    <section class="campaign-create-panel" aria-labelledby="campaignCreateTitle">
+                        <div class="campaign-create-topline">
+                            <div>
+                                <div id="campaignCreateTitle" class="campaign-create-title">Neue Kampagne im Buch anlegen</div>
+                                <div class="campaign-create-copy">Die Erstellung bleibt bewusst schlank: erst den Kern erfassen, dann im Hub die naechsten Schritte wie Einladungen, Karte oder erste Session vorbereiten.</div>
+                                <div class="campaign-create-meta">Pflicht: Kampagnenname. Optional: Kurzbeschreibung und maximale Spielerzahl.</div>
+                            </div>
+                            <div class="campaign-create-actions">
+                                <button class="btn btn-secondary" type="button" onclick="openCampaignCreationPanel()">Formular oeffnen</button>
+                            </div>
+                        </div>
+
+                        <form id="campaignCreateForm" class="campaign-create-form" hidden onsubmit="submitCampaignCreationForm(event)">
+                            <div class="campaign-create-grid">
+                                <label class="campaign-create-field campaign-create-field--full">
+                                    <span class="campaign-create-label">Kampagnenname</span>
+                                    <input id="campaignCreateName" type="text" maxlength="120" placeholder="z.B. Schatten ueber Auenwald" autocomplete="off" required>
+                                    <span class="campaign-create-help">Der Name ist der spaetere Einstiegspunkt im Hub, in Einladungen und im Weg nach Play.</span>
+                                </label>
+                                <label class="campaign-create-field campaign-create-field--full">
+                                    <span class="campaign-create-label">Kurzbeschreibung</span>
+                                    <textarea id="campaignCreateDescription" maxlength="600" placeholder="Worum geht es in dieser Kampagne, und was ist der Einstieg fuer Gruppe und Session-Vorbereitung?"></textarea>
+                                    <span class="campaign-create-help">Optional, aber hilfreich fuer spaetere Orientierung im Kampagnen-Hub.</span>
+                                </label>
+                                <label class="campaign-create-field">
+                                    <span class="campaign-create-label">Maximale Spielerzahl</span>
+                                    <input id="campaignCreateMaxPlayers" type="number" min="2" max="20" step="1" value="6" required>
+                                    <span class="campaign-create-help">Zwischen 2 und 20 Spielern, damit Session- und Einladungslogik sauber bleibt.</span>
+                                </label>
+                                <div class="campaign-create-field">
+                                    <span class="campaign-create-label">Naechster Schritt nach dem Anlegen</span>
+                                    <div class="book-shell-placeholder">
+                                        <div class="book-shell-placeholder-title">Kampagnen-Hub bleibt der naechste echte Schritt</div>
+                                        <div class="book-shell-placeholder-copy">Feinere Einstellungen, Session-Prep und Play-Einstieg bleiben bewusst im Hub statt als halbfertige Zusatzfelder im Erstellformular.</div>
+                                        <div class="book-shell-placeholder-actions">
+                                            <button class="btn btn-secondary btn-sm" type="button" disabled>Session-Prep folgt im Hub</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="campaignCreateState" class="campaign-create-state" hidden></div>
+
+                            <div class="campaign-create-actions">
+                                <button id="campaignCreateSubmit" class="btn btn-primary" type="submit">Kampagne erstellen</button>
+                                <button class="btn btn-secondary" type="button" onclick="resetCampaignCreationForm()">Zuruecksetzen</button>
+                                <button class="btn btn-secondary" type="button" onclick="closeCampaignCreationPanel()">Schliessen</button>
+                            </div>
+                        </form>
+
+                        <div id="campaignCreateSuccess" class="campaign-create-success" hidden></div>
+                    </section>
+
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchTab('my', this)">Meine Kampagnen</button>
+                        <button class="tab" onclick="switchTab('joined', this)">Beigetreten</button>
+                        <button class="tab" onclick="switchTab('browse', this)">Alle</button>
+                    </div>
+
+                    <div class="book-page-section">
+                        <h2 class="book-page-section-title">Lesefluss</h2>
+                        <div class="book-guide-list">
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Kampagnen-Hub</div>
+                                <div class="book-guide-copy">Hier beginnt der Hauptweg zum Tisch: Kampagne öffnen, Session vorbereiten oder fortsetzen, dann nach Play wechseln.</div>
+                            </div>
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Beigetreten</div>
+                                <div class="book-guide-copy">Spieler sehen hier ihre Kampagnen und folgen derselben Route über Session-Hub weiter nach Play.</div>
+                            </div>
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Alle</div>
+                                <div class="book-guide-copy">Erweitert den Blick auf browse-orientierte Flows, ohne den Lesefluss aus derselben Buchlogik zu verlieren.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="book-page-note">
+                        Der kürzeste Weg an den Tisch bleibt bewusst sichtbar: Kampagne öffnen, Session starten oder fortsetzen, dann über denselben Buchrahmen nach Play wechseln.
+                    </div>
+
+                    <div class="book-page-folio" data-book-folio="left">3</div>
+                </section>
+
+                <section class="book-page book-page--content">
+                    <div class="grid" id="campaignsGrid">
+                        <div class="empty-state">
+                            <p>Kampagnen werden geladen...</p>
+                        </div>
+                    </div>
+
+                    <section class="detail-panel hidden" id="campaignDetail">
+                        <div class="detail-header">
+                            <h2 id="detailTitle">Kampagnen-Details</h2>
+                            <div style="display:flex; gap:0.5rem;">
+                                <button class="btn btn-secondary btn-sm" id="refreshDetailBtn">Refresh</button>
+                                <button class="btn btn-secondary btn-sm" onclick="closeCampaignDetail()">Schliessen</button>
+                            </div>
+                        </div>
+                        <div id="detailBody"></div>
+                    </section>
+
+                    <div class="book-page-folio" data-book-folio="right">4</div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
+    </footer>
+
+    <script src="/static/js/gsap.min.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/community.js"></script>
+    <script src="/static/js/book-scene.js"></script>
+    <script>
+        const auth = new Auth();
+        const community = new CommunityClient(auth);
+        let campaigns = [];
+        let currentTab = "my";
+        let selectedCampaignId = null;
+        let selectedPrepSessionId = null;
+        let currentUser = null;
+        let currentDetailCampaign = null;
+        let lastCreatedCampaign = null;
+        let sessionPrepAssetStats = {};
+        let sessionPrepAssetStatsRequestToken = 0;
+
+        async function bootstrapCampaignsScene() {
+            const url = new URL(window.location.href);
+            if (url.searchParams.has('campaign_id') || url.searchParams.get('classic') === '1') {
+                document.body.classList.remove('campaigns-route-book-scene');
+                const statusNode = document.getElementById('campaignsSceneStatus');
+                if (statusNode) {
+                    statusNode.hidden = true;
+                }
+                loadCampaigns();
+                return;
+            }
+
+            if (!window.BookScene || typeof BookScene.bootstrapProtectedRoute !== 'function') {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            await BookScene.bootstrapProtectedRoute({
+                routeKey: 'campaigns',
+                auth,
+                statusElementId: 'campaignsSceneStatus',
+                statusMessage: 'Opening Campaigns Page...',
+            });
+        }
+
+        function showMessage(text, isError = false) {
+            const box = document.getElementById("messageBox");
+            box.className = `message ${isError ? "error" : "success"}`;
+            box.textContent = text;
+            window.setTimeout(() => {
+                box.className = "message";
+                box.textContent = "";
+            }, 3500);
+        }
+
+        function setCampaignCreationState(text, tone = "info") {
+            const node = document.getElementById("campaignCreateState");
+            if (!node) return;
+
+            if (!text) {
+                node.hidden = true;
+                node.className = "campaign-create-state";
+                node.textContent = "";
+                return;
+            }
+
+            node.hidden = false;
+            node.className = `campaign-create-state is-${tone}`;
+            node.textContent = text;
+        }
+
+        function renderCampaignCreateSuccess() {
+            const node = document.getElementById("campaignCreateSuccess");
+            if (!node) return;
+            if (!lastCreatedCampaign || !lastCreatedCampaign.id) {
+                node.hidden = true;
+                node.innerHTML = "";
+                return;
+            }
+
+            node.hidden = false;
+            node.innerHTML = `
+                <div class="campaign-create-success-title">Kampagne angelegt: ${escapeHtml(lastCreatedCampaign.name)}</div>
+                <div class="campaign-create-success-copy">Die Kampagne ist jetzt Teil deines Buchwegs. Als Naechstes: Hub oeffnen, Spieler einladen oder die erste Session vorbereiten.</div>
+                <div class="campaign-create-success-actions">
+                    <button class="btn btn-primary" type="button" onclick="openCreatedCampaignHub()">Kampagnen-Hub oeffnen</button>
+                    <button class="btn btn-secondary" type="button" onclick="openCampaignCreationPanel(true)">Weitere Kampagne anlegen</button>
+                </div>
+            `;
+        }
+
+        function setCampaignCreateBusy(isBusy) {
+            const submit = document.getElementById("campaignCreateSubmit");
+            if (!submit) return;
+            submit.disabled = isBusy;
+            submit.textContent = isBusy ? "Kampagne wird angelegt..." : "Kampagne erstellen";
+        }
+
+        function openCampaignCreationPanel(clearSuccess = false) {
+            const form = document.getElementById("campaignCreateForm");
+            const toggle = document.getElementById("campaignCreateToggle");
+            if (!form) return;
+
+            form.hidden = false;
+            if (toggle) {
+                toggle.setAttribute("aria-expanded", "true");
+                toggle.textContent = "Kampagnenformular geoeffnet";
+            }
+            if (clearSuccess) {
+                lastCreatedCampaign = null;
+                renderCampaignCreateSuccess();
+                setCampaignCreationState("", "info");
+            }
+
+            const nameField = document.getElementById("campaignCreateName");
+            if (nameField) {
+                window.setTimeout(() => nameField.focus(), 25);
+            }
+        }
+
+        function closeCampaignCreationPanel() {
+            const form = document.getElementById("campaignCreateForm");
+            const toggle = document.getElementById("campaignCreateToggle");
+            if (!form) return;
+
+            form.hidden = true;
+            if (toggle) {
+                toggle.setAttribute("aria-expanded", "false");
+                toggle.textContent = "+ Kampagne anlegen";
+            }
+        }
+
+        function resetCampaignCreationForm() {
+            const form = document.getElementById("campaignCreateForm");
+            if (form) {
+                form.reset();
+            }
+            const maxPlayers = document.getElementById("campaignCreateMaxPlayers");
+            if (maxPlayers && !maxPlayers.value) {
+                maxPlayers.value = "6";
+            }
+            setCampaignCreationState("", "info");
+        }
+
+        function openCreatedCampaignHub() {
+            if (!lastCreatedCampaign || !lastCreatedCampaign.id) return;
+            viewCampaign(lastCreatedCampaign.id);
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function formatDate(value) {
+            if (!value) return "-";
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return value;
+            return date.toLocaleString();
+        }
+
+        function updateUrlCampaignId(campaignId) {
+            const url = new URL(window.location.href);
+            if (campaignId) {
+                url.searchParams.set("campaign_id", campaignId);
+            } else {
+                url.searchParams.delete("campaign_id");
+            }
+            window.history.replaceState({}, "", url.toString());
+        }
+
+        function consumeCampaignIntent(intent) {
+            const url = new URL(window.location.href);
+            if (url.searchParams.get("intent") !== intent) {
+                return false;
+            }
+            url.searchParams.delete("intent");
+            window.history.replaceState({}, "", url.toString());
+            return true;
+        }
+
+        async function loadCampaigns() {
+            try {
+                currentUser = await auth.requireAuth("/login.html");
+                if (!currentUser) return;
+
+                campaigns = await auth.makeAuthRequest("/api/campaigns");
+                const activeTabButton = document.querySelector(`.tab[onclick*="'${currentTab}'"]`);
+                switchTab(currentTab, activeTabButton);
+
+                const queryCampaignId = Number(new URLSearchParams(window.location.search).get("campaign_id"));
+                if (Number.isInteger(queryCampaignId) && queryCampaignId > 0) {
+                    await viewCampaign(queryCampaignId, false);
+                }
+
+                if (consumeCampaignIntent("create")) {
+                    openCampaignCreationPanel();
+                }
+            } catch (error) {
+                document.getElementById("campaignsGrid").innerHTML = `
+                    <div class="empty-state">
+                        <p>Kampagnen konnten nicht geladen werden.</p>
+                    </div>
+                `;
+                showMessage(error.message || "Kampagnen konnten nicht geladen werden.", true);
+            }
+        }
+
+        function switchTab(tab, element) {
+            currentTab = tab;
+            document.querySelectorAll(".tab").forEach(tabButton => tabButton.classList.remove("active"));
+            if (element) {
+                element.classList.add("active");
+            } else {
+                const fallback = document.querySelector(`.tab[onclick*="'${tab}'"]`);
+                if (fallback) fallback.classList.add("active");
+            }
+
+            let filtered = campaigns;
+            if (tab === "my") {
+                filtered = campaigns.filter(campaign => campaign.is_owner);
+            } else if (tab === "joined") {
+                filtered = campaigns.filter(campaign => campaign.is_member && !campaign.is_owner);
+            }
+
+            renderCampaigns(filtered);
+        }
+
+        function renderCampaigns(campaignList) {
+            const grid = document.getElementById("campaignsGrid");
+            if (!campaignList || campaignList.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <p>In diesem Bereich gibt es noch keine Kampagnen.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = campaignList.map(campaign => {
+                const statusClass = `status-${campaign.status}`;
+                const primaryAction = campaign.is_member
+                    ? `<button class="btn btn-primary" onclick="viewCampaign(${campaign.id})">Hub oeffnen</button>`
+                    : `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">Beitreten</button>`;
+
+                return `
+                    <div class="campaign-card">
+                        <div class="campaign-banner"></div>
+                        <div class="campaign-info">
+                            <div class="campaign-name">${escapeHtml(campaign.name)}</div>
+                            <div class="campaign-status ${statusClass}">${escapeHtml(campaign.status)}</div>
+                            <div class="muted">Spielleitung: ${escapeHtml(campaign.owner)}</div>
+                            <div class="campaign-meta">
+                                <div class="meta-item">
+                                    <div class="meta-label">Mitglieder</div>
+                                    <div class="meta-value">${campaign.member_count || 0} / ${campaign.max_players || 6}</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">Sessions</div>
+                                    <div class="meta-value">${campaign.session_count || 0}</div>
+                                </div>
+                            </div>
+                            <div class="campaign-actions">
+                                ${primaryAction}
+                                ${campaign.is_owner ? `<button class="btn btn-danger" onclick="deleteCampaign(${campaign.id})">Loeschen</button>` : ""}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function createCampaign() {
+            openCampaignCreationPanel();
+        }
+
+        async function submitCampaignCreationForm(event) {
+            if (event) {
+                event.preventDefault();
+            }
+
+            const nameField = document.getElementById("campaignCreateName");
+            const descriptionField = document.getElementById("campaignCreateDescription");
+            const maxPlayersField = document.getElementById("campaignCreateMaxPlayers");
+
+            const name = nameField ? nameField.value.trim() : "";
+            const description = descriptionField ? descriptionField.value.trim() : "";
+            const maxPlayersRaw = maxPlayersField ? maxPlayersField.value : "";
+            const maxPlayers = Number(maxPlayersRaw);
+
+            if (!name) {
+                setCampaignCreationState("Bitte zuerst einen Kampagnennamen eingeben.", "error");
+                if (nameField) nameField.focus();
+                return;
+            }
+
+            if (!Number.isInteger(maxPlayers) || maxPlayers < 2 || maxPlayers > 20) {
+                setCampaignCreationState("Die maximale Spielerzahl muss als ganze Zahl zwischen 2 und 20 angegeben werden.", "error");
+                if (maxPlayersField) maxPlayersField.focus();
+                return;
+            }
+
+            setCampaignCreationState("Kampagne wird angelegt. Danach oeffnet sich direkt der Kampagnen-Hub.", "info");
+            setCampaignCreateBusy(true);
+
+            try {
+                const created = await auth.makeAuthRequest("/api/campaigns", "POST", {
+                    name,
+                    description,
+                    max_players: maxPlayers,
+                });
+                lastCreatedCampaign = created || null;
+                renderCampaignCreateSuccess();
+                showMessage("Kampagne erstellt.");
+                setCampaignCreationState("Kampagne erstellt. Oeffne jetzt den Hub oder lege direkt die naechste Kampagne an.", "success");
+                resetCampaignCreationForm();
+                closeCampaignCreationPanel();
+                currentTab = "my";
+                await loadCampaigns();
+                if (created && created.id) {
+                    await viewCampaign(created.id);
+                }
+            } catch (error) {
+                setCampaignCreationState(error.message || "Kampagne konnte nicht erstellt werden.", "error");
+                showMessage(error.message || "Kampagne konnte nicht erstellt werden.", true);
+            } finally {
+                setCampaignCreateBusy(false);
+            }
+        }
+
+        async function joinCampaign(campaignId) {
+            const token = window.prompt("Einladungs-Code fuer diese Kampagne eingeben:");
+            if (!token || !token.trim()) return;
+
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/accept-invite`, "POST", {
+                    token: token.trim()
+                });
+                showMessage("Du bist der Kampagne beigetreten.");
+                await loadCampaigns();
+                await viewCampaign(campaignId);
+            } catch (error) {
+                showMessage(error.message || "Beitritt fehlgeschlagen.", true);
+            }
+        }
+
+        function buildMembersList(members) {
+            if (!members || members.length === 0) {
+                return "<div class='muted'>Noch keine Mitglieder.</div>";
+            }
+
+            return members.map(member => `
+                <div class="list-item">
+                    <div class="list-item-top">
+                        <strong>${escapeHtml(member.username)}</strong>
+                        <span>${escapeHtml(member.campaign_role)} (${escapeHtml(member.status)})</span>
+                    </div>
+                    <div class="muted">Beigetreten: ${formatDate(member.joined_at)}</div>
+                </div>
+            `).join("");
+        }
+
+        function buildSessionsList(campaign, sessions) {
+            if (!sessions || sessions.length === 0) {
+                return "<div class='muted'>Noch keine Session vorhanden.</div>";
+            }
+
+            const canManage = campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
+            return sessions.map(session => {
+                const phase = getSessionPhase(session);
+                let primaryAction = "";
+                let prepNote = "";
+                let entryHint = "";
+                const supportActions = [`<button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${session.id})">Prep oeffnen</button>`];
+
+                if (canManage) {
+                    if (phase.tone === "scheduled" || phase.tone === "ready") {
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="startSession(${campaign.id}, ${session.id})">Session starten</button>`;
+                        supportActions.push(`<button class="btn btn-secondary btn-sm" onclick="focusMapPrepSurface()">Map Prep pruefen</button>`);
+                        prepNote = "Diese Session ist vorbereitet, aber noch nicht live. Der Start aus dem Hub bleibt der kontrollierte Weg in den Tisch.";
+                        entryHint = "Startet hier";
+                    } else if (phase.tone === "paused") {
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`;
+                        prepNote = "Die Session ist pausiert. Fortsetzen fuehrt direkt ueber den akzeptierten Buch-zu-Play-Uebergang zurueck an den Tisch.";
+                        entryHint = "Kann fortgesetzt werden";
+                    } else if (phase.tone === "live") {
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Zu Play</button>`;
+                        prepNote = "Die Session laeuft bereits. Hub und Tisch bleiben verbunden, ohne den Einstiegspfad zu wechseln.";
+                        entryHint = "Live";
+                    } else {
+                        primaryAction = `<button class="btn btn-secondary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Play erneut oeffnen</button>`;
+                        supportActions.push(`<button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">Naechste Session anlegen</button>`);
+                        prepNote = "Diese Session ist beendet. Der naechste produktive Schritt ist meist eine neue Session fuer dieselbe Kampagne.";
+                        entryHint = "Abgeschlossen";
+                    }
+                } else {
+                    if (phase.tone === "scheduled" || phase.tone === "ready") {
+                        primaryAction = `<button class="btn btn-secondary btn-sm" type="button" disabled>Auf Sessionstart warten</button>`;
+                        prepNote = "Die Session ist sichtbar, aber erst nach dem DM-Start fuer Spieler betretbar.";
+                        entryHint = "Wartet auf DM";
+                    } else if (phase.tone === "paused") {
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`;
+                        prepNote = "Die Session kann direkt aus dem Hub wieder betreten werden.";
+                        entryHint = "Kann fortgesetzt werden";
+                    } else if (phase.tone === "live") {
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session betreten</button>`;
+                        prepNote = "Die Session ist live und kann jetzt ueber denselben Hub-Pfad betreten werden.";
+                        entryHint = "Live";
+                    } else {
+                        primaryAction = `<button class="btn btn-secondary btn-sm" type="button" disabled>Warte auf naechste Session</button>`;
+                        prepNote = "Diese Session ist abgeschlossen. Die naechste freigegebene Session erscheint wieder hier im Hub.";
+                        entryHint = "Abgeschlossen";
+                    }
+                }
+
+                const endButton = canManage && session.status === "in_progress"
+                    ? `<button class="btn btn-danger btn-sm" onclick="endSession(${campaign.id}, ${session.id})">Session beenden</button>`
+                    : "";
+                const combatStateButton = `<button class="btn btn-secondary btn-sm" onclick="viewCombatState(${campaign.id}, ${session.id})">Kampfstatus</button>`;
+                const combatManageButtons = canManage && session.status === "in_progress"
+                    ? `
+                        <button class="btn btn-primary btn-sm" onclick="startCombat(${campaign.id}, ${session.id})">Kampf starten</button>
+                        <button class="btn btn-secondary btn-sm" onclick="setCombatInitiative(${campaign.id}, ${session.id})">Initiative setzen</button>
+                        <button class="btn btn-secondary btn-sm" onclick="advanceCombatTurn(${campaign.id}, ${session.id})">Naechster Zug</button>
+                        <button class="btn btn-secondary btn-sm" onclick="adjustCombatHp(${campaign.id}, ${session.id})">HP aendern</button>
+                        <button class="btn btn-danger btn-sm" onclick="endCombat(${campaign.id}, ${session.id})">Kampf beenden</button>
+                    `
+                    : "";
+
+                return `
+                    <div class="list-item">
+                        <div class="list-item-top">
+                            <strong>${escapeHtml(session.name)}</strong>
+                            <span>${escapeHtml(phase.label)} · ${escapeHtml(entryHint)}</span>
+                        </div>
+                        <div class="muted">Geplant: ${formatDate(session.scheduled_at)}</div>
+                        <div class="muted">Gestartet: ${formatDate(session.started_at)}</div>
+                        <div class="hub-session-note">${escapeHtml(prepNote)}</div>
+                        <div class="hub-session-actions">${primaryAction}${endButton}${combatStateButton}</div>
+                        ${supportActions.length ? `<div class="hub-session-support">${supportActions.join("")}</div>` : ""}
+                        ${combatManageButtons ? `<div class="hub-session-support">${combatManageButtons}</div>` : ""}
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function getLatestSession(sessions) {
+            if (!sessions || sessions.length === 0) return null;
+            return sessions[0];
+        }
+
+        function getLatestActiveSession(sessions) {
+            return (sessions || []).find(session => session.status === "in_progress" || session.session_state === "active") || null;
+        }
+
+        function getLatestMap(maps) {
+            if (!maps || maps.length === 0) return null;
+            return maps[0];
+        }
+
+        function getMapById(maps, mapId) {
+            const parsed = Number(mapId);
+            if (!Number.isInteger(parsed) || parsed <= 0) {
+                return null;
+            }
+            return (maps || []).find(map => Number(map.id) === parsed) || null;
+        }
+
+        function getSessionAssetStats(sessionId) {
+            const parsed = Number(sessionId);
+            if (!Number.isInteger(parsed) || parsed <= 0) {
+                return null;
+            }
+            return sessionPrepAssetStats[parsed] || null;
+        }
+
+        function getSessionCharacterAssignments(assignments, sessionId) {
+            const parsed = Number(sessionId);
+            if (!Number.isInteger(parsed) || parsed <= 0) {
+                return [];
+            }
+            return (assignments || []).filter(assignment => Number(assignment.session_id) === parsed);
+        }
+
+        function getAssignedCharacterIds(assignments, sessionId) {
+            return new Set(
+                getSessionCharacterAssignments(assignments, sessionId).map(assignment => Number(assignment.character_id))
+            );
+        }
+
+        function canCurrentUserManageSessionCharacter(campaign, character) {
+            if (!campaign || !character) return false;
+            if (canModerateCampaign(campaign)) return true;
+            return Number(character.user_id) === Number(currentUser?.id);
+        }
+
+        function getSessionCharacterBuckets(campaign, session, characters, assignments) {
+            const assignedIds = getAssignedCharacterIds(assignments, session?.id);
+            const campaignCharacters = (characters || []).filter(character => Number(character.campaign_id) === Number(campaign?.id));
+            const assigned = campaignCharacters.filter(character => assignedIds.has(Number(character.id)));
+            const available = campaignCharacters.filter(character => !assignedIds.has(Number(character.id)));
+            const assignable = available.filter(character => canCurrentUserManageSessionCharacter(campaign, character));
+            const restricted = available.filter(character => !canCurrentUserManageSessionCharacter(campaign, character));
+            const currentUserAssigned = assigned.filter(character => Number(character.user_id) === Number(currentUser?.id));
+
+            return {
+                assigned,
+                available,
+                assignable,
+                restricted,
+                currentUserAssigned,
+            };
+        }
+
+        function getSelectedPrepSession(sessions) {
+            const sessionId = Number(selectedPrepSessionId);
+            if (!Number.isInteger(sessionId) || sessionId <= 0) {
+                return null;
+            }
+            return (sessions || []).find(session => Number(session.id) === sessionId) || null;
+        }
+
+        function getFocusedPrepSession(sessions) {
+            return getSelectedPrepSession(sessions) || getLatestActiveSession(sessions) || getLatestSession(sessions) || null;
+        }
+
+        function getSessionPhase(session) {
+            const status = String(session?.runtime_status || session?.session_state || session?.status || "").trim().toLowerCase();
+            if (status === "in_progress" || status === "active") {
+                return { label: "Live", className: "state-live", tone: "live" };
+            }
+            if (status === "paused") {
+                return { label: "Pausiert", className: "state-todo", tone: "paused" };
+            }
+            if (status === "ended" || status === "completed") {
+                return { label: "Beendet", className: "state-done", tone: "ended" };
+            }
+            if (status === "ready") {
+                return { label: "Bereit", className: "state-live", tone: "ready" };
+            }
+            return { label: "Geplant", className: "state-todo", tone: "scheduled" };
+        }
+
+        function getCampaignRoleLabel(campaign) {
+            if (!campaign) return "Gast";
+            if (campaign.is_owner || canModerateCampaign(campaign)) {
+                return "DM";
+            }
+            return campaign.your_role || "Spieler";
+        }
+
+        function getPrepStateSummary(campaign, sessions, maps, characters = [], assignments = []) {
+            const canManage = canModerateCampaign(campaign);
+            const latestSession = getLatestSession(sessions);
+            const activeSession = getLatestActiveSession(sessions);
+            const latestMap = getLatestMap(maps);
+            const memberCount = Number(campaign?.member_count || 0);
+            const hasPlayers = memberCount > 1;
+            const hasMap = !!latestMap;
+            const phase = latestSession ? getSessionPhase(latestSession) : null;
+            const latestSessionAssignments = getSessionCharacterAssignments(assignments, latestSession?.id);
+            const hasAssignedCharacters = latestSessionAssignments.length > 0;
+
+            if (!canManage) {
+                if (!latestSession) {
+                    return {
+                        label: "Wartet auf Session",
+                        summary: "Die Kampagne ist sichtbar, aber noch gibt es keine freigegebene Session zum Betreten.",
+                        nextStep: "Warte auf die erste Session der Spielleitung oder nutze deinen Kampagnenkontext weiter von hier.",
+                    };
+                }
+                if (phase?.tone === "scheduled" || phase?.tone === "ready") {
+                    if (!hasAssignedCharacters) {
+                        return {
+                            label: "Charakter fehlt",
+                            summary: `Die Session "${latestSession.name}" ist sichtbar, aber noch ohne zugewiesenen Charakterkontext.`,
+                            nextStep: "Verknuepfe zuerst einen kampagnengebundenen Helden in der Session-Prep-Flaeche und warte dann auf den DM-Start.",
+                        };
+                    }
+                    return {
+                        label: "Bereit zum Start",
+                        summary: `Die Session "${latestSession.name}" ist angelegt, aber noch nicht live freigegeben.`,
+                        nextStep: "Sobald die DM startet, wird derselbe Hub zur Eintrittsstelle in den Tisch.",
+                    };
+                }
+                if (phase?.tone === "paused") {
+                    return {
+                        label: "Fortsetzen bereit",
+                        summary: `Die Session "${latestSession.name}" ist pausiert und kann direkt aus dem Hub fortgesetzt werden.`,
+                        nextStep: "Nutze Session fortsetzen, um ueber denselben Uebergang wieder in Play zu gehen.",
+                    };
+                }
+                if (activeSession) {
+                    return {
+                        label: "Live",
+                        summary: `Die Session "${activeSession.name}" laeuft bereits im Tisch.`,
+                        nextStep: "Session betreten fuehrt direkt in die laufende Runde.",
+                    };
+                }
+                return {
+                    label: "Abgeschlossen",
+                    summary: `Die letzte Session "${latestSession.name}" ist beendet.`,
+                    nextStep: "Warte auf die naechste freigegebene Session der Spielleitung.",
+                };
+            }
+
+            if (!hasPlayers) {
+                return {
+                    label: "Kickoff",
+                    summary: "Die Kampagne ist angelegt, aber noch ohne weitere Spieler im Hub.",
+                    nextStep: "Lade zuerst Spieler ein, damit Session-Prep und Play-Entry fuer die Gruppe Sinn ergeben.",
+                };
+            }
+            if (!hasMap && !latestSession) {
+                return {
+                    label: "Prep startet jetzt",
+                    summary: "Weder erste Karte noch erste Session sind vorbereitet.",
+                    nextStep: "Lege zuerst Karte und Session an oder nutze den Schnellstart fuer beides zusammen.",
+                };
+            }
+            if (!hasMap) {
+                return {
+                    label: "Map fehlt",
+                    summary: `Die Session-Vorbereitung hat begonnen, aber fuer "${latestSession.name}" fehlt noch eine sichtbare Kartenbasis.`,
+                    nextStep: "Gehe als Naechstes in die Karten-Vorbereitung, bevor du in Play wechselst.",
+                };
+            }
+            if (!latestSession) {
+                return {
+                    label: "Session fehlt",
+                    summary: `Die Karte "${latestMap.name}" ist bereit, aber es gibt noch keine Session fuer die Gruppe.`,
+                    nextStep: "Lege jetzt die erste Session an, damit der Weg nach Play kontrolliert sichtbar wird.",
+                };
+            }
+            if ((phase?.tone === "scheduled" || phase?.tone === "ready") && !hasAssignedCharacters) {
+                return {
+                    label: "Charaktere fehlen",
+                    summary: `Die Session "${latestSession.name}" hat bereits Kampagnenkontext, aber noch keine direkte Session-Besetzung.`,
+                    nextStep: "Oeffne jetzt die Session-Prep-Flaeche und weise mindestens einen kampagnengebundenen Charakter zu.",
+                };
+            }
+            if (phase?.tone === "scheduled" || phase?.tone === "ready") {
+                return {
+                    label: "Bereit zum Start",
+                    summary: `Die Session "${latestSession.name}" ist vorbereitet und wartet auf den Start im Hub.`,
+                    nextStep: "Starte die Session hier im Hub und gehe anschliessend ueber denselben Pfad nach Play.",
+                };
+            }
+            if (phase?.tone === "paused") {
+                return {
+                    label: "Fortsetzen bereit",
+                    summary: `Die Session "${latestSession.name}" ist pausiert und kann kontrolliert wieder aufgenommen werden.`,
+                    nextStep: "Session fortsetzen fuehrt direkt ueber den akzeptierten Uebergang zurueck in den Tisch.",
+                };
+            }
+            if (activeSession) {
+                return {
+                    label: "Live",
+                    summary: `Die Session "${activeSession.name}" ist bereits live.`,
+                    nextStep: "Der Hub bleibt deine Zentrale fuer Rueckkehr, Uebersicht und vorbereitende Folgeaktionen.",
+                };
+            }
+            return {
+                label: "Nachbereitung",
+                summary: `Die letzte Session "${latestSession.name}" ist beendet.`,
+                nextStep: "Lege von hier aus die naechste Session an oder aktualisiere Karten, Assets und Charakter-Kontext fuer die Fortsetzung.",
+            };
+        }
+
+        function getSessionPrepAction(campaign, session, maps, characters = [], assignments = []) {
+            const canManage = canModerateCampaign(campaign);
+            const phase = session ? getSessionPhase(session) : null;
+            const hasCampaignMap = !!getLatestMap(maps);
+            const hasSessionMap = !!getMapById(maps, session?.map_id);
+            const memberCount = Number(campaign?.member_count || 0);
+            const hasPlayers = memberCount > 1;
+            const buckets = getSessionCharacterBuckets(campaign, session, characters, assignments);
+            const hasAssignedCharacters = buckets.assigned.length > 0;
+            const hasSelfAssignedCharacter = buckets.currentUserAssigned.length > 0;
+            const hasAssignableCharacters = buckets.assignable.length > 0;
+
+            if (!session) {
+                if (canManage) {
+                    if (!hasPlayers) {
+                        return {
+                            label: "Spieler einladen",
+                            hint: "Bevor eine Session Sinn ergibt, sollte zuerst die Gruppe sichtbar in der Kampagne sein.",
+                            action: `<button class="btn btn-primary" type="button" onclick="focusInviteControls()">Spieler einladen</button>`,
+                        };
+                    }
+                    if (!hasCampaignMap) {
+                        return {
+                            label: "Session vorbereiten",
+                            hint: "Es fehlt noch die erste Session und eine sichtbare Kartenbasis fuer den Weg nach Play.",
+                            action: `<button class="btn btn-primary" type="button" onclick="focusQuickStart()">Karte + Session vorbereiten</button>`,
+                        };
+                    }
+                    return {
+                        label: "Erste Session anlegen",
+                        hint: "Die Kampagne ist bereit fuer ihre erste Session. Der Hub bleibt danach der Ruecksprungpunkt vor Play.",
+                        action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Session anlegen</button>`,
+                    };
+                }
+
+                return {
+                    label: "Warte auf Session",
+                    hint: "Sobald die Spielleitung eine Session vorbereitet, erscheint sie hier als naechster Schritt vor dem Tisch.",
+                    action: `<button class="btn btn-secondary" type="button" disabled>Session folgt</button>`,
+                };
+            }
+
+            if (canManage) {
+                if ((phase.tone === "scheduled" || phase.tone === "ready") && !hasSessionMap) {
+                    return {
+                        label: "Session-Map setzen",
+                        hint: hasCampaignMap
+                            ? `Fuer "${session.name}" ist noch keine aktive Karte gewaehlt. Waehle zuerst die Session-Karte, bevor du startest.`
+                            : `Fuer "${session.name}" fehlt noch jede Kartenbasis. Nutze zuerst den Map-Prep-Bereich.`,
+                        action: hasCampaignMap
+                            ? `<button class="btn btn-primary" type="button" onclick="focusSessionPrepMapSelect()">Map waehlen</button>`
+                            : `<button class="btn btn-primary" type="button" onclick="focusMapPrepSurface()">Map Prep ansehen</button>`,
+                    };
+                }
+                if ((phase.tone === "scheduled" || phase.tone === "ready") && !hasAssignedCharacters) {
+                    return {
+                        label: "Charaktere zuweisen",
+                        hint: `Fuer "${session.name}" ist noch kein Charakter direkt zugeordnet. Weise zuerst die Session-Besetzung zu, bevor du startest.`,
+                        action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">Session-Besetzung oeffnen</button>`,
+                    };
+                }
+                if (phase.tone === "scheduled" || phase.tone === "ready") {
+                    return {
+                        label: "Session starten",
+                        hint: `Die Session "${session.name}" ist vorbereitet und kann von hier kontrolliert live geschaltet werden.`,
+                        action: `<button class="btn btn-primary" type="button" onclick="startSession(${campaign.id}, ${session.id})">Session starten</button>`,
+                    };
+                }
+                if (phase.tone === "paused") {
+                    return {
+                        label: "Session fortsetzen",
+                        hint: `Die Session "${session.name}" ist pausiert und fuehrt ueber denselben Uebergang wieder in den Tisch.`,
+                        action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`,
+                    };
+                }
+                if (phase.tone === "live") {
+                    return {
+                        label: "Zu Play",
+                        hint: `Die Session "${session.name}" laeuft bereits. Die Prep-Oberflaeche bleibt der letzte Buchstopp davor.`,
+                        action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Zu Play</button>`,
+                    };
+                }
+                return {
+                    label: "Naechste Session anlegen",
+                    hint: `Die Session "${session.name}" ist abgeschlossen. Fuer die Fortsetzung ist jetzt wieder Vorbereitung statt Tisch angesagt.`,
+                    action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Naechste Session anlegen</button>`,
+                };
+            }
+
+            if (phase.tone === "scheduled" || phase.tone === "ready") {
+                if (!hasSelfAssignedCharacter && hasAssignableCharacters) {
+                    return {
+                        label: "Eigenen Charakter zuweisen",
+                        hint: `Du kannst jetzt einen deiner kampagnengebundenen Helden direkt dieser Session zuordnen und danach auf den Sessionstart warten.`,
+                        action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">Charakter zuweisen</button>`,
+                    };
+                }
+                return {
+                    label: "Auf Sessionstart warten",
+                    hint: `Die Session "${session.name}" ist sichtbar, wird aber erst nach dem DM-Start betretbar.`,
+                    action: `<button class="btn btn-secondary" type="button" disabled>Auf Sessionstart warten</button>`,
+                };
+            }
+            if (phase.tone === "paused") {
+                return {
+                    label: "Session fortsetzen",
+                    hint: `Die Session "${session.name}" kann jetzt direkt aus der Vorbereitung wieder betreten werden.`,
+                    action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`,
+                };
+            }
+            if (phase.tone === "live") {
+                return {
+                    label: "Session betreten",
+                    hint: `Die Session "${session.name}" laeuft bereits live.`,
+                    action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session betreten</button>`,
+                };
+            }
+            return {
+                label: "Warte auf naechste Session",
+                hint: `Die Session "${session.name}" ist abgeschlossen. Die naechste freigegebene Runde erscheint wieder hier.`,
+                action: `<button class="btn btn-secondary" type="button" disabled>Naechste Session folgt</button>`,
+            };
+        }
+
+        function selectPrepSession(campaignId, sessionId) {
+            const parsed = Number(sessionId);
+            selectedPrepSessionId = Number.isInteger(parsed) && parsed > 0 ? parsed : null;
+            viewCampaign(campaignId, false).then(() => {
+                scrollToHubSurface("campaignSessionPrepSurface");
+            });
+        }
+
+        function buildSessionPrepBlockers(campaign, session, maps, characters = [], assignments = []) {
+            const canManage = canModerateCampaign(campaign);
+            const activeMap = getMapById(maps, session?.map_id);
+            const buckets = getSessionCharacterBuckets(campaign, session, characters, assignments);
+            const blocking = [];
+            const deferred = [];
+
+            if (!activeMap) {
+                blocking.push("Keine aktive Session-Karte gewaehlt");
+            }
+            if (!buckets.assigned.length) {
+                blocking.push("Noch kein Session-Charakter zugewiesen");
+            }
+
+            if (canManage) {
+                deferred.push("Tieferer Map Workspace bleibt vorerst eigener Prep-Schritt");
+                deferred.push("Paketierter Import / Export bleibt vorerst Platzhalter");
+            } else {
+                blocking.push("Spieler warten weiter auf die Freigabe durch die Spielleitung");
+            }
+
+            return { blocking, deferred };
+        }
+
+        function focusSessionScopedAssetLibrary(sessionId, assetType = "") {
+            const scopeField = document.getElementById("assetLibraryScopeFilter");
+            const sessionField = document.getElementById("assetLibrarySessionFilter");
+            const typeField = document.getElementById("assetLibraryTypeFilter");
+            if (scopeField) scopeField.value = "session";
+            if (sessionField) sessionField.value = sessionId ? String(sessionId) : "";
+            if (typeField) typeField.value = assetType || "";
+            focusAssetPrepSurface();
+            if (selectedCampaignId) {
+                loadAssetLibrary(selectedCampaignId);
+            }
+        }
+
+        function prepareSessionAssetUpload(sessionId, assetType = "image") {
+            const scopeField = document.getElementById("assetLibraryUploadScope");
+            const sessionField = document.getElementById("assetLibraryUploadSession");
+            const typeField = document.getElementById("assetLibraryUploadType");
+            if (scopeField) scopeField.value = "session";
+            if (sessionField) sessionField.value = sessionId ? String(sessionId) : "";
+            if (typeField) typeField.value = assetType || "image";
+            syncAssetLibraryUploadScope();
+            focusAssetPrepSurface();
+        }
+
+        function renderSessionPrepAssetStats(sessionId) {
+            const statsNode = document.getElementById("sessionPrepAssetStats");
+            if (!statsNode) return;
+
+            const stats = getSessionAssetStats(sessionId);
+            if (!stats) {
+                statsNode.innerHTML = `<div class="muted">Session-Assets werden geladen...</div>`;
+                return;
+            }
+
+            statsNode.innerHTML = `
+                <div class="hub-pill-row">
+                    <span class="hub-badge"><strong>Session-Assets:</strong> ${escapeHtml(String(stats.total))}</span>
+                    <span class="hub-badge"><strong>Karten:</strong> ${escapeHtml(String(stats.maps))}</span>
+                    <span class="hub-badge"><strong>Handouts:</strong> ${escapeHtml(String(stats.handouts))}</span>
+                    <span class="hub-badge"><strong>Tokens:</strong> ${escapeHtml(String(stats.tokens))}</span>
+                </div>
+            `;
+        }
+
+        async function refreshSessionPrepAssetStats(campaignId, sessionId) {
+            const parsedCampaignId = Number(campaignId);
+            const parsedSessionId = Number(sessionId);
+            if (!Number.isInteger(parsedCampaignId) || parsedCampaignId <= 0 || !Number.isInteger(parsedSessionId) || parsedSessionId <= 0) {
+                return;
+            }
+
+            const requestToken = ++sessionPrepAssetStatsRequestToken;
+            try {
+                const payload = await auth.makeAuthRequest(`/api/assets/campaigns/${parsedCampaignId}/library?scope=session&session_id=${parsedSessionId}&per_page=12`);
+                sessionPrepAssetStats[parsedSessionId] = {
+                    total: payload?.total ?? 0,
+                    maps: payload?.stats?.maps ?? 0,
+                    handouts: payload?.stats?.handouts ?? 0,
+                    tokens: payload?.stats?.tokens ?? 0,
+                    images: payload?.stats?.images ?? 0,
+                };
+                if (requestToken === sessionPrepAssetStatsRequestToken) {
+                    renderSessionPrepAssetStats(parsedSessionId);
+                }
+            } catch (_error) {
+                sessionPrepAssetStats[parsedSessionId] = {
+                    total: 0,
+                    maps: 0,
+                    handouts: 0,
+                    tokens: 0,
+                    images: 0,
+                    failed: true,
+                };
+                if (requestToken === sessionPrepAssetStatsRequestToken) {
+                    const statsNode = document.getElementById("sessionPrepAssetStats");
+                    if (statsNode) {
+                        statsNode.innerHTML = `<div class="muted">Session-Assets konnten gerade nicht gelesen werden.</div>`;
+                    }
+                }
+            }
+        }
+
+        async function activatePrepSessionMap(campaignId, sessionId) {
+            const select = document.getElementById("sessionPrepMapSelect");
+            const mapId = Number(select?.value || 0);
+            if (!Number.isInteger(mapId) || mapId <= 0) {
+                showMessage("Bitte zuerst eine Karte fuer diese Session waehlen.", true);
+                return;
+            }
+
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/maps/activate`, "POST", {
+                    map_id: mapId,
+                });
+                showMessage("Session-Karte gesetzt.");
+                await viewCampaign(campaignId, false);
+                scrollToHubSurface("campaignSessionPrepSurface");
+            } catch (error) {
+                showMessage(error.message || "Session-Karte konnte nicht gesetzt werden.", true);
+            }
+        }
+
+        async function assignCharacterToPrepSession(campaignId, sessionId, characterId) {
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/characters`, "POST", {
+                    character_id: characterId,
+                });
+                showMessage("Charakter zur Session zugewiesen.");
+                await viewCampaign(campaignId, false);
+                scrollToHubSurface("campaignSessionPrepSurface");
+            } catch (error) {
+                showMessage(error.message || "Charakter konnte nicht zugewiesen werden.", true);
+            }
+        }
+
+        async function unassignCharacterFromPrepSession(campaignId, sessionId, characterId) {
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/characters/${characterId}`, "DELETE");
+                showMessage("Charakter aus der Session entfernt.");
+                await viewCampaign(campaignId, false);
+                scrollToHubSurface("campaignSessionPrepSurface");
+            } catch (error) {
+                showMessage(error.message || "Charakter konnte nicht entfernt werden.", true);
+            }
+        }
+
+        function buildSessionPrepSurface(campaign, members, sessions, maps, characters = [], assignments = []) {
+            const prepSession = getFocusedPrepSession(sessions);
+            const canManage = canModerateCampaign(campaign);
+            const sessionAction = getSessionPrepAction(campaign, prepSession, maps, characters, assignments);
+            const mapReady = !!getLatestMap(maps);
+            const activeMap = getMapById(maps, prepSession?.map_id);
+            const memberCount = Number(campaign?.member_count || 0);
+            const playerCount = Math.max(0, memberCount - 1);
+            const assetStats = getSessionAssetStats(prepSession?.id);
+            const blockers = buildSessionPrepBlockers(campaign, prepSession, maps, characters, assignments);
+            const characterBuckets = getSessionCharacterBuckets(campaign, prepSession, characters, assignments);
+            const sessionOptions = (sessions || []).map(session => {
+                const phase = getSessionPhase(session);
+                const isSelected = prepSession && Number(prepSession.id) === Number(session.id) ? "selected" : "";
+                return `<option value="${session.id}" ${isSelected}>${escapeHtml(session.name)} (${escapeHtml(phase.label)})</option>`;
+            }).join("");
+
+            if (!prepSession) {
+                return `
+                    <div class="hub-card session-prep-surface" id="campaignSessionPrepSurface">
+                        <div class="hub-card-topline">
+                            <h3>Session Prep Surface</h3>
+                            <span class="hub-pill">Before Table</span>
+                        </div>
+                        <div class="session-prep-hero">
+                            <div>
+                                <div class="session-prep-title">Noch keine Session im Fokus</div>
+                                <div class="session-prep-copy">Diese Flaeche sitzt bewusst zwischen Kampagnen-Hub und Play. Sobald eine Session existiert, wird sie hier als der konkrete Vorbereitungskontext vor dem Tisch sichtbar.</div>
+                            </div>
+                            <div class="session-prep-next">
+                                <div class="session-prep-next-label">Naechster Schritt</div>
+                                <div class="session-prep-next-title">${escapeHtml(sessionAction.label)}</div>
+                                <div class="session-prep-next-copy">${escapeHtml(sessionAction.hint)}</div>
+                                <div class="session-prep-actions">
+                                    ${sessionAction.action}
+                                    <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">Zurueck zur Sessionliste</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const phase = getSessionPhase(prepSession);
+            const readinessLabel = canManage
+                ? (phase.tone === "scheduled" || phase.tone === "ready"
+                    ? (!activeMap
+                        ? (mapReady ? "Session-Karte waehlen" : "Map fehlt noch")
+                        : (characterBuckets.assigned.length ? "Startbereit" : "Charaktere zuweisen"))
+                    : (phase.tone === "paused" ? "Fortsetzen bereit" : (phase.tone === "live" ? "Live" : "Abgeschlossen")))
+                : (phase.tone === "scheduled" || phase.tone === "ready"
+                    ? (!activeMap
+                        ? "Wartet auf Karte"
+                        : (characterBuckets.currentUserAssigned.length || !characterBuckets.assignable.length ? "Wartet auf Start" : "Charakter waehlen"))
+                    : (phase.tone === "paused" ? "Fortsetzen bereit" : (phase.tone === "live" ? "Live" : "Abgeschlossen")));
+
+            const mapOptions = (maps || []).map(map => `
+                <option value="${map.id}" ${activeMap && Number(activeMap.id) === Number(map.id) ? "selected" : ""}>${escapeHtml(map.name)}</option>
+            `).join("");
+
+            const renderSessionCharacterRows = (items, mode) => {
+                if (!items.length) {
+                    return `<div class="muted">${mode === "assigned" ? "Noch kein Charakter direkt dieser Session zugeordnet." : "Keine weiteren kampagnengebundenen Charaktere direkt verfuegbar."}</div>`;
+                }
+
+                return items.map(character => {
+                    const ownerLabel = Number(character.user_id) === Number(currentUser?.id)
+                        ? "Dein Charakter"
+                        : `Besitz: ${character.owner_username || "Unbekannt"}`;
+                    const classLabel = `${character.class || "Unknown"} · Level ${character.level || 1}`;
+                    const identityLabel = character.avatar_url ? "Avatar bereit" : (character.token_url ? "Token bereit" : "Identitaet optional");
+                    const canEditAssignment = canCurrentUserManageSessionCharacter(campaign, character);
+                    const assignmentButton = mode === "assigned"
+                        ? (canEditAssignment
+                            ? `<button class="btn btn-secondary btn-sm" type="button" onclick="unassignCharacterFromPrepSession(${campaign.id}, ${prepSession.id}, ${character.id})">Entfernen</button>`
+                            : `<button class="btn btn-secondary btn-sm" type="button" disabled>Nicht deine Zuweisung</button>`)
+                        : (canEditAssignment
+                            ? `<button class="btn btn-primary btn-sm" type="button" onclick="assignCharacterToPrepSession(${campaign.id}, ${prepSession.id}, ${character.id})">Zuordnen</button>`
+                            : `<button class="btn btn-secondary btn-sm" type="button" disabled>Nicht direkt zuweisbar</button>`);
+
+                    return `
+                        <div class="list-item">
+                            <div class="list-item-top">
+                                <strong>${escapeHtml(character.name)}</strong>
+                                <span>${escapeHtml(classLabel)}</span>
+                            </div>
+                            <div class="muted">${escapeHtml(ownerLabel)} · ${escapeHtml(identityLabel)}</div>
+                            <div class="hub-session-actions">
+                                ${assignmentButton}
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${character.id})">Open Sheet</button>
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            };
+
+            return `
+                <div class="hub-card session-prep-surface" id="campaignSessionPrepSurface">
+                    <div class="hub-card-topline">
+                        <h3>Session Prep Surface</h3>
+                        <span class="hub-pill">Before Table</span>
+                    </div>
+                    <div class="session-prep-hero">
+                        <div>
+                            <div class="session-prep-title">${escapeHtml(prepSession.name)}</div>
+                            <div class="session-prep-copy">Diese Oberflaeche ist der letzte Buchstopp vor dem Tisch. Hier wird genau diese Session lesbar: Status, fehlende Vorbereitung und der korrekte naechste Schritt nach Play.</div>
+                            <div class="session-prep-toolbar">
+                                <select id="sessionPrepSelect" onchange="selectPrepSession(${campaign.id}, this.value)">
+                                    ${sessionOptions}
+                                </select>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Zurueck zum Kampagnen-Hub</button>
+                            </div>
+                            <div class="hub-pill-row" style="margin-top:0.8rem;">
+                                <span class="hub-badge"><strong>Status:</strong> ${escapeHtml(phase.label)}</span>
+                                <span class="hub-badge"><strong>Readiness:</strong> ${escapeHtml(readinessLabel)}</span>
+                                <span class="hub-badge"><strong>Spieler:</strong> ${escapeHtml(String(playerCount))}</span>
+                                <span class="hub-badge"><strong>Karten:</strong> ${escapeHtml(String(maps ? maps.length : 0))}</span>
+                                <span class="hub-badge"><strong>Session-Charaktere:</strong> ${escapeHtml(String(characterBuckets.assigned.length))}</span>
+                            </div>
+                            <div class="hub-callout">
+                                <strong>Welche Session ist das?</strong> ${escapeHtml(prepSession.name)}. <strong>Was fehlt noch?</strong> ${escapeHtml(sessionAction.hint)}
+                            </div>
+                        </div>
+                        <div class="session-prep-next">
+                            <div class="session-prep-next-label">Naechster Schritt</div>
+                            <div class="session-prep-next-title">${escapeHtml(sessionAction.label)}</div>
+                            <div class="session-prep-next-copy">${escapeHtml(sessionAction.hint)}</div>
+                            <div class="session-prep-actions">
+                                ${sessionAction.action}
+                                <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">Sessionliste</button>
+                                <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignMapsCard')">Map Prep</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="session-prep-grid">
+                        <div class="session-prep-card">
+                            <div class="session-prep-card-title">Participants / Invite Context</div>
+                            <div class="session-prep-card-copy">${canManage ? `Die Kampagne hat aktuell ${playerCount} Spieler neben der DM. Invite- und Join-Kontext bleibt Teil derselben Vorbereitung vor Tischstart.` : "Dein Kampagnenbeitritt ist sichtbar. Sobald die DM startet, fuehrt diese Session-Vorbereitung direkt zum Tisch."}</div>
+                            <div class="session-prep-card-actions">
+                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="focusInviteControls()">Spieler einladen</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Invite-Kontext</button>`}
+                            </div>
+                        </div>
+
+                        <div class="session-prep-card" id="sessionPrepCharacterCard">
+                            <div class="session-prep-card-title">Character Context</div>
+                            <div class="session-prep-card-copy">${canManage
+                                ? "Nur kampagnengebundene Helden erscheinen hier. Weise sie direkt dieser Session zu oder entferne sie wieder, bevor der Hub nach Play uebergibt."
+                                : "Hier wird sichtbar, welche kampagnengebundenen Helden schon direkt zu dieser Session gehoeren. Eigene Helden kannst du selbst zuweisen, andere bleiben lesbar, aber nicht direkt von dir editierbar."}</div>
+                            <div class="hub-pill-row" style="margin-top:0.75rem;">
+                                <span class="hub-badge"><strong>Zugewiesen:</strong> ${escapeHtml(String(characterBuckets.assigned.length))}</span>
+                                <span class="hub-badge"><strong>Verfuegbar:</strong> ${escapeHtml(String(characterBuckets.available.length))}</span>
+                                <span class="hub-badge"><strong>Direkt zuweisbar:</strong> ${escapeHtml(String(characterBuckets.assignable.length))}</span>
+                            </div>
+                            <div class="hub-callout" style="margin-top:0.75rem;">
+                                <strong>Eligibility:</strong> Nur Charaktere, die bereits mit dieser Kampagne verknuepft sind, koennen hier als Session-Besetzung genutzt werden.
+                            </div>
+                            <div class="session-prep-toolbar" style="margin-top:0.85rem; display:block;">
+                                <strong>Zugewiesen</strong>
+                                <div class="hub-step-list" style="margin-top:0.55rem;">
+                                    ${renderSessionCharacterRows(characterBuckets.assigned, "assigned")}
+                                </div>
+                            </div>
+                            <div class="session-prep-toolbar" style="margin-top:0.85rem; display:block;">
+                                <strong>Verfuegbar fuer diese Session</strong>
+                                <div class="hub-step-list" style="margin-top:0.55rem;">
+                                    ${renderSessionCharacterRows(characterBuckets.assignable, "available")}
+                                </div>
+                            </div>
+                            ${characterBuckets.restricted.length ? `
+                                <div class="hub-callout" style="margin-top:0.75rem;">
+                                    <strong>Nur sichtbar:</strong> ${escapeHtml(String(characterBuckets.restricted.length))} weitere kampagnengebundene Charaktere gehoeren anderen Spielern und bleiben deshalb fuer dich read-only.
+                                </div>
+                            ` : ""}
+                            <div class="session-prep-card-actions">
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere oeffnen</button>
+                                ${characterBuckets.assigned.length
+                                    ? `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${characterBuckets.assigned[0].id})">Zugewiesenes Sheet</button>`
+                                    : `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Archiv fuer neue Helden</button>`}
+                            </div>
+                        </div>
+
+                        <div class="session-prep-card">
+                            <div class="session-prep-card-title">Map Context</div>
+                            <div class="session-prep-card-copy">${activeMap ? `Diese Session nutzt aktuell "${escapeHtml(activeMap.name)}" als aktive Karte. Map Prep bleibt der naechste Ort fuer Kontrolle, Aktivierung und Feinvorbereitung vor Play.` : (mapReady ? "Es gibt Kartenmaterial in der Kampagne, aber fuer diese Session ist noch keine aktive Karte gesetzt." : "Noch keine Karte im Kampagnenkontext sichtbar. Vor Tischstart sollte zuerst der Map-Prep-Bereich genutzt werden.")}</div>
+                            ${canManage && maps && maps.length ? `
+                                <div class="session-prep-toolbar" style="margin-top:0.65rem;">
+                                    <select id="sessionPrepMapSelect">
+                                        ${mapOptions}
+                                    </select>
+                                    <button class="btn btn-primary btn-sm" type="button" onclick="activatePrepSessionMap(${campaign.id}, ${prepSession.id})">Als Session-Karte setzen</button>
+                                </div>
+                            ` : ""}
+                            <div class="session-prep-card-actions">
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Map Prep ansehen</button>
+                                <button class="btn btn-secondary btn-sm" type="button" disabled>Map Workspace folgt</button>
+                            </div>
+                        </div>
+
+                        <div class="session-prep-card">
+                            <div class="session-prep-card-title">Asset Context</div>
+                            <div class="session-prep-card-copy">Assets, Uploads und Vorschau sind bereits live. Diese Session kann ihre Bibliothek jetzt gezielt filtern und Uploads direkt in den Session-Kontext lenken, waehrend Import / Export sichtbar Platzhalter bleibt.</div>
+                            <div id="sessionPrepAssetStats">
+                                ${assetStats ? `
+                                    <div class="hub-pill-row">
+                                        <span class="hub-badge"><strong>Session-Assets:</strong> ${escapeHtml(String(assetStats.total || 0))}</span>
+                                        <span class="hub-badge"><strong>Karten:</strong> ${escapeHtml(String(assetStats.maps || 0))}</span>
+                                        <span class="hub-badge"><strong>Handouts:</strong> ${escapeHtml(String(assetStats.handouts || 0))}</span>
+                                        <span class="hub-badge"><strong>Tokens:</strong> ${escapeHtml(String(assetStats.tokens || 0))}</span>
+                                    </div>
+                                ` : `<div class="muted">Session-Assets werden geladen...</div>`}
+                            </div>
+                            <div class="session-prep-card-actions">
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="focusSessionScopedAssetLibrary(${prepSession.id})">Session-Assets ansehen</button>
+                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="prepareSessionAssetUpload(${prepSession.id}, 'handout')">Session-Upload vorbereiten</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Asset Library</button>`}
+                                <button class="btn btn-secondary btn-sm" type="button" disabled>Import / Export folgt</button>
+                            </div>
+                        </div>
+
+                        <div class="session-prep-card">
+                            <div class="session-prep-card-title">Noch offen vor Play</div>
+                            <div class="session-prep-card-copy">Diese letzte Kontrolle trennt echte Vorbedingungen vor Play von bewusst sichtbaren Platzhaltern, die noch nicht blockierend ausgebaut werden muessen.</div>
+                            <div class="hub-step-list" style="margin-top:0.75rem;">
+                                ${blockers.blocking.length
+                                    ? blockers.blocking.map(blocker => hubStep(blocker, "Vor Play noch offen.", false)).join("")
+                                    : hubStep("Keine harten Vorbedingungen offen", "Diese Session kann ueber den naechsten Schritt in den Tisch wechseln.", true, "live")}
+                            </div>
+                            <div class="hub-callout" style="margin-top:0.75rem;">
+                                <strong>Sichtbar, aber nicht blockierend:</strong> ${blockers.deferred.length
+                                    ? escapeHtml(blockers.deferred.join(" · "))
+                                    : "Keine weiteren sichtbaren Platzhalter in diesem Fokusbereich."}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function hubStep(title, description, done, state = "todo") {
+            const stateLabel = done ? "Fertig" : "Offen";
+            const stateClass = done ? "state-done" : (state === "live" ? "state-live" : "state-todo");
+            return `
+                <div class="hub-step">
+                    <div>
+                        <div class="hub-step-title">${escapeHtml(title)}</div>
+                        <div class="hub-step-desc">${escapeHtml(description)}</div>
+                    </div>
+                    <span class="hub-step-state ${stateClass}">${stateLabel}</span>
+                </div>
+            `;
+        }
+
+        function buildHubChecklist(campaign, sessions, maps, characters = [], assignments = []) {
+            const canManage = canModerateCampaign(campaign);
+            const latestSession = getLatestSession(sessions);
+            const activeSession = getLatestActiveSession(sessions);
+            const latestMap = getLatestMap(maps);
+            const latestSessionMap = getMapById(maps, latestSession?.map_id);
+            const latestSessionAssignments = getSessionCharacterAssignments(assignments, latestSession?.id);
+            const hasSessionCharacters = latestSessionAssignments.length > 0;
+            const memberCount = Number(campaign?.member_count || 0);
+            const hasMembers = memberCount > 1;
+            const hasSession = !!latestSession;
+            const hasMap = !!latestMap;
+            const sessionLive = !!activeSession;
+
+            if (!canManage) {
+                return `
+                    <div class="hub-step-list">
+                        ${hubStep(
+                            "Invite annehmen",
+                            "Der Link oder Code muss zuerst zur Kampagne fuehren.",
+                            !!campaign.is_member
+                        )}
+                        ${hubStep(
+                            "Kampagne oeffnen",
+                            "Die Detailsseite ist der Einstiegspunkt vor dem Tisch.",
+                            true,
+                            "live"
+                        )}
+                        ${hubStep(
+                            "Zu Play",
+                            latestSession ? `Die Session "${latestSession.name}" ist verfuegbar.` : "Warte auf die erste Session der Spielleitung.",
+                            !!latestSession,
+                            latestSession ? "live" : "todo"
+                        )}
+                        ${hubStep(
+                            "Erste Aktion im Tisch",
+                            "Chat senden, Token bewegen oder einfach den Tisch anschauen.",
+                            sessionLive,
+                            sessionLive ? "live" : "todo"
+                        )}
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="hub-step-list">
+                    ${hubStep(
+                        "Spieler einladen",
+                        hasMembers ? `${memberCount - 1} Spieler sind bereits in der Kampagne.` : "Noch keine Spieler eingeladen.",
+                        hasMembers
+                    )}
+                    ${hubStep(
+                        "Erste Karte bereitstellen",
+                        hasMap ? `Zuletzt angelegte Karte: ${latestMap.name}.` : "Noch keine Karte hochgeladen.",
+                        hasMap
+                    )}
+                    ${hubStep(
+                        "Session anlegen",
+                        hasSession ? `Zuletzt angelegte Session: ${latestSession.name}.` : "Noch keine Session angelegt.",
+                        hasSession
+                    )}
+                    ${hubStep(
+                        "Zu Play",
+                        sessionLive
+                            ? `Die Session "${activeSession.name}" laeuft bereits.`
+                            : (latestSession
+                                ? (latestSessionMap
+                                    ? (hasSessionCharacters
+                                        ? `Die Session "${latestSession.name}" ist bereit fuer Start oder Fortsetzung.`
+                                        : `Die Session "${latestSession.name}" braucht noch direkte Session-Charaktere im Session-Prep.`)
+                                    : `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte im Session-Prep.`)
+                                : "Erst Session und Karte anlegen."),
+                        sessionLive || (hasSession && !!latestSessionMap && hasSessionCharacters),
+                        sessionLive ? "live" : "todo"
+                    )}
+                </div>
+            `;
+        }
+
+        function getHubPrimaryAction(campaign, sessions, maps, characters = [], assignments = []) {
+            const canManage = canModerateCampaign(campaign);
+            const latestSession = getLatestSession(sessions);
+            const activeSession = getLatestActiveSession(sessions);
+            const latestMap = getLatestMap(maps);
+            const latestSessionMap = getMapById(maps, latestSession?.map_id);
+            const latestSessionAssignments = getSessionCharacterAssignments(assignments, latestSession?.id);
+            const hasSessionCharacters = latestSessionAssignments.length > 0;
+            const hasMembers = Number(campaign?.member_count || 0) > 1;
+
+            if (!campaign.is_member && !canManage) {
+                return {
+                    label: "Einladung eingeben",
+                    hint: "Spieler sehen hier die schnellste Route in die Kampagne.",
+                    action: `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">Einladung eingeben</button>`,
+                };
+            }
+
+            if (canManage) {
+                if (!hasMembers) {
+                    return {
+                        label: "Spieler einladen",
+                        hint: "Die DM-Route startet mit der ersten Einladung.",
+                        action: `<button class="btn btn-primary" onclick="focusInviteControls()">Spieler einladen</button>`,
+                    };
+                }
+
+                if (!latestSession) {
+                    if (!latestMap) {
+                        return {
+                            label: "Session vorbereiten",
+                            hint: "Erste Karte und erste Session fehlen noch. Der Schnellstart verbindet beides im selben Hub-Schritt.",
+                            action: `<button class="btn btn-primary" onclick="focusQuickStart()">Karte + Session vorbereiten</button>`,
+                        };
+                    }
+                    return {
+                        label: "Erste Session anlegen",
+                        hint: "Karte und Gruppe sind sichtbar. Jetzt fehlt nur noch die erste Session als kontrollierter Weg nach Play.",
+                        action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Session anlegen</button>`,
+                    };
+                }
+
+                const phase = getSessionPhase(latestSession);
+                if (phase.tone === "scheduled" || phase.tone === "ready") {
+                    if (!latestSessionMap) {
+                        return {
+                            label: "Session-Prep oeffnen",
+                            hint: latestMap
+                                ? `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte. Oeffne zuerst die fokussierte Session-Vorbereitung.`
+                                : `Die Session "${latestSession.name}" braucht vor dem Start noch sichtbares Kartenmaterial.`,
+                            action: latestMap
+                                ? `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep oeffnen</button>`
+                                : `<button class="btn btn-primary" onclick="focusMapPrepSurface()">Map Prep ansehen</button>`,
+                        };
+                    }
+                    if (!hasSessionCharacters) {
+                        return {
+                            label: "Session-Prep oeffnen",
+                            hint: `Die Session "${latestSession.name}" braucht vor dem Start noch direkte Session-Charaktere.`,
+                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep oeffnen</button>`,
+                        };
+                    }
+                    return {
+                        label: "Session starten",
+                        hint: `Die letzte Session "${latestSession.name}" ist vorbereitet und kann live geschaltet werden.`,
+                        action: `<button class="btn btn-primary" onclick="startSession(${campaign.id}, ${latestSession.id})">Session starten</button>`,
+                    };
+                }
+
+                if (phase.tone === "paused") {
+                    return {
+                        label: "Session fortsetzen",
+                        hint: `Die Session "${latestSession.name}" ist pausiert. Im Tisch kann sie weitergefuehrt werden.`,
+                        action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">Session fortsetzen</button>`,
+                    };
+                }
+
+                if (activeSession) {
+                    return {
+                        label: "Zu Play",
+                        hint: `Die Session "${activeSession.name}" laeuft bereits im Tisch und kann direkt weitergefuehrt werden.`,
+                        action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${activeSession.id})">Zu Play</button>`,
+                    };
+                }
+
+                return {
+                    label: "Naechste Session anlegen",
+                    hint: `Die letzte Session "${latestSession.name}" ist beendet. Von hier aus beginnt die Vorbereitung fuer die naechste Runde.`,
+                    action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Naechste Session anlegen</button>`,
+                };
+            }
+
+            if (latestSession) {
+                const phase = getSessionPhase(latestSession);
+                const latestBuckets = getSessionCharacterBuckets(campaign, latestSession, characters, assignments);
+                if (phase.tone === "scheduled" || phase.tone === "ready") {
+                    if (!latestBuckets.currentUserAssigned.length && latestBuckets.assignable.length) {
+                        return {
+                            label: "Session-Prep oeffnen",
+                            hint: `Bevor die Session "${latestSession.name}" startet, kannst du hier noch deinen Helden direkt zuweisen.`,
+                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep oeffnen</button>`,
+                        };
+                    }
+                    return {
+                        label: "Auf Sessionstart warten",
+                        hint: `Die Session "${latestSession.name}" ist angelegt, wird aber erst nach dem DM-Start betretbar.`,
+                        action: `<button class="btn btn-secondary" disabled>Auf Sessionstart warten</button>`,
+                    };
+                }
+                if (phase.tone === "ended") {
+                    return {
+                        label: "Warte auf naechste Session",
+                        hint: `Die letzte Session "${latestSession.name}" ist beendet. Die naechste freigegebene Session erscheint wieder hier im Hub.`,
+                        action: `<button class="btn btn-secondary" disabled>Naechste Session folgt</button>`,
+                    };
+                }
+                return {
+                    label: "Session betreten",
+                    hint: `Als Spieler gelangst du von hier direkt in die Session "${latestSession.name}".`,
+                    action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">Session betreten</button>`,
+                };
+            }
+
+            return {
+                label: "Warte auf DM",
+                hint: "Du bist Teil der Kampagne, aber noch gibt es keine Session zum Betreten.",
+                action: `<button class="btn btn-secondary" disabled>Session folgt</button>`,
+            };
+        }
+
+        function buildMapList(maps) {
+            if (!maps || maps.length === 0) {
+                return `<div class="muted">Noch keine Karte angelegt.</div>`;
+            }
+
+            return maps.map(map => `
+                <div class="hub-map-item">
+                    <div class="hub-map-title">${escapeHtml(map.name)}</div>
+                    <div class="hub-map-meta">
+                        ${escapeHtml(map.width)} x ${escapeHtml(map.height)} px · Grid ${escapeHtml(map.grid_size)} · ${escapeHtml(map.grid_type)}
+                    </div>
+                    ${map.description ? `<div class="muted" style="margin-top:0.35rem;">${escapeHtml(map.description)}</div>` : ""}
+                </div>
+            `).join("");
+        }
+
+        function scrollToHubSurface(elementId) {
+            const node = document.getElementById(elementId);
+            if (!node) return;
+            node.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function focusSessionsSurface() {
+            scrollToHubSurface("campaignSessionsCard");
+        }
+
+        function focusMapPrepSurface() {
+            scrollToHubSurface("campaignMapsCard");
+        }
+
+        function focusAssetPrepSurface() {
+            scrollToHubSurface("campaignAssetLibraryPanel");
+        }
+
+        function focusSessionCharacterAssignment() {
+            scrollToHubSurface("sessionPrepCharacterCard");
+            window.setTimeout(() => {
+                const node = document.querySelector('#sessionPrepCharacterCard .btn');
+                if (node && typeof node.focus === "function") {
+                    node.focus();
+                }
+            }, 160);
+        }
+
+        function focusSessionPrepMapSelect() {
+            scrollToHubSurface("campaignSessionPrepSurface");
+            window.setTimeout(() => {
+                const select = document.getElementById("sessionPrepMapSelect");
+                if (select && typeof select.focus === "function") {
+                    select.focus();
+                }
+            }, 160);
+        }
+
+        function openCharacterPrepSurface() {
+            goTo("/characters");
+        }
+
+        function openCharacterSheetFromPrep(characterId) {
+            goTo(`/character-sheet?id=${characterId}`);
+        }
+
+        function focusQuickStart() {
+            const field = document.getElementById("quickMapFile");
+            if (!field) return;
+            field.focus();
+            field.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        function buildRoll20CopyWorkflow(campaign, sessions, maps, characters = [], assignments = []) {
+            const latestSession = getLatestSession(sessions);
+            const activeSession = getLatestActiveSession(sessions);
+            const latestMap = getLatestMap(maps);
+            const canManage = canModerateCampaign(campaign);
+            const primaryAction = getHubPrimaryAction(campaign, sessions, maps, characters, assignments);
+            const prepState = getPrepStateSummary(campaign, sessions, maps, characters, assignments);
+            const roleLabel = getCampaignRoleLabel(campaign);
+            const sessionPhase = latestSession ? getSessionPhase(latestSession) : null;
+
+            const sessionCount = sessions ? sessions.length : 0;
+            const mapCount = maps ? maps.length : 0;
+            const memberCount = Number(campaign?.member_count || 0);
+            const playerCount = Math.max(0, memberCount - 1);
+
+            const statusPill = (label, value) => `<span class="hub-badge"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</span>`;
+
+            const currentSessionLabel = latestSession
+                ? `${latestSession.name} · ${getSessionPhase(latestSession).label}`
+                : "Noch keine Session";
+            const mapLabel = latestMap
+                ? `${latestMap.name} · ${latestMap.width}x${latestMap.height}`
+                : "Noch keine Karte";
+
+            const inviteControls = canManage ? `
+                <div class="inline-controls">
+                    <input id="inviteUsername" type="text" placeholder="Spielername">
+                    <button class="btn btn-primary btn-sm" onclick="invitePlayer(${campaign.id})">Einladung erzeugen</button>
+                </div>
+            ` : `
+                <div class="hub-callout">
+                    Als Spieler kannst du hier eine Einladung eingeben, wenn du einen Code von der Spielleitung erhalten hast.
+                </div>
+                <div class="inline-controls">
+                    <button class="btn btn-primary btn-sm" onclick="joinCampaign(${campaign.id})">Einladung eingeben</button>
+                </div>
+            `;
+
+            const sessionControls = canManage ? `
+                <div class="inline-controls">
+                    <input id="sessionName" type="text" placeholder="Session-Name">
+                    <input id="sessionSchedule" type="datetime-local" placeholder="Startzeit">
+                    <input id="sessionDuration" type="number" min="30" step="30" placeholder="Dauer (min)">
+                    <button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">Session anlegen</button>
+                </div>
+                <div class="hub-quickstart">
+                    <div class="quickstart-title">Schnellstart fuer Nicht-Techniker</div>
+                    <div class="quickstart-help">Ein Klick: Session anlegen, Karte hochladen, Session starten, Play oeffnen.</div>
+                    <div class="inline-controls">
+                        <input id="quickSessionName" type="text" placeholder="z.B. Erste Taverne" value="Erste Session">
+                        <input id="quickMapFile" type="file" accept="image/png,image/jpeg,image/webp" />
+                        <button id="quickStartButton" class="btn btn-primary btn-sm" onclick="startSessionWithFirstMap(${campaign.id})">
+                            Session + Karte jetzt starten
+                        </button>
+                    </div>
+                </div>
+            ` : `
+                <div class="hub-callout">
+                    Die DM kann hier die Session-Historie sehen und den Launch-Status verfolgen. Karten und Sessions sind nur fuer berechtigte Rollen bearbeitbar.
+                </div>
+            `;
+
+            return `
+                <div class="hub-shell">
+                    <div class="hub-hero">
+                        <div class="hub-identity">
+                            <div class="hub-eyebrow">Campaign Prep / Session Hub</div>
+                            <h2>${escapeHtml(campaign.name)}</h2>
+                            <div class="hub-pill-row">
+                                ${statusPill("Rolle", roleLabel)}
+                                ${statusPill("Kampagne", campaign.status)}
+                                ${statusPill("Mitglieder", `${memberCount}`)}
+                                ${statusPill("Spieler", `${playerCount}`)}
+                                ${statusPill("Sessions", `${sessionCount}`)}
+                                ${statusPill("Karten", `${mapCount}`)}
+                            </div>
+                            <div class="hub-summary">
+                                ${escapeHtml(campaign.description || "Keine Beschreibung vorhanden.")}
+                            </div>
+                            <div class="hub-callout">
+                                <strong>Prep-Status:</strong> ${escapeHtml(prepState.label)}. ${escapeHtml(prepState.summary)}
+                            </div>
+                            <div class="hub-badges">
+                                <span class="hub-badge">Campaign Prep</span>
+                                <span class="hub-badge">Prep Headquarters</span>
+                                <span class="hub-badge">Session Flow</span>
+                                <span class="hub-badge">Map + Assets</span>
+                            </div>
+                        </div>
+
+                        <div class="hub-primary">
+                            <div>
+                                <div class="hub-next-label">Naechster Schritt</div>
+                                <div class="hub-next-title">${escapeHtml(primaryAction.label)}</div>
+                                <div class="hub-next-hint">${escapeHtml(primaryAction.hint)}</div>
+                                <div class="hub-next-hint">Aktueller Stand: ${escapeHtml(prepState.nextStep)}</div>
+                                <div class="hub-next-hint">Hauptweg: Home -> Kampagnen-Hub -> Session-Prep -> Session starten oder fortsetzen -> Play.</div>
+                            </div>
+                            <div class="hub-primary-actions">
+                                ${primaryAction.action}
+                                ${canManage ? `<button class="btn btn-secondary" onclick="focusInviteControls()">Spieler einladen</button>` : ""}
+                                ${canManage ? `<button class="btn btn-secondary" onclick="focusSessionsSurface()">Sessions pruefen</button>` : ""}
+                                ${sessions && sessions.length ? `<button class="btn btn-secondary" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">Session-Prep</button>` : ""}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hub-grid">
+                        <div class="hub-card">
+                            <div class="hub-card-topline">
+                                <h3>Prep Overview</h3>
+                                <span class="hub-pill">${escapeHtml(roleLabel)}</span>
+                            </div>
+                            <div class="hub-stat-row">
+                                <div class="hub-stat">
+                                    <div class="hub-stat-label">Kampagnenstatus</div>
+                                    <div class="hub-stat-value">${escapeHtml(campaign.status)}</div>
+                                </div>
+                                <div class="hub-stat">
+                                    <div class="hub-stat-label">Hub-Status</div>
+                                    <div class="hub-stat-value">${escapeHtml(sessionPhase ? sessionPhase.label : "Kein Tisch")}</div>
+                                </div>
+                                <div class="hub-stat">
+                                    <div class="hub-stat-label">Letzte Session</div>
+                                    <div class="hub-stat-value">${escapeHtml(currentSessionLabel)}</div>
+                                </div>
+                                <div class="hub-stat">
+                                    <div class="hub-stat-label">Letzte Karte</div>
+                                    <div class="hub-stat-value">${escapeHtml(mapLabel)}</div>
+                                </div>
+                            </div>
+                            <div class="hub-callout">
+                                Diese Seite ist der Einstiegspunkt vor dem Tisch. Hier siehst du, was bereits bereit ist und was als naechstes passieren soll.
+                            </div>
+                        </div>
+
+                        <div class="hub-card">
+                            <div class="hub-card-topline">
+                                <h3>Einladen / Beitreten</h3>
+                                <span class="hub-pill">${canManage ? "DM" : "Spieler"}</span>
+                            </div>
+                            ${inviteControls}
+                            <div class="hub-callout">
+                                ${canManage
+                                    ? "Die Spielleitung erzeugt hier Einladungen fuer Spieler."
+                                    : "Spieler geben hier ihren Invite-Code ein und betreten danach den Tisch ueber Session betreten."
+                                }
+                            </div>
+                        </div>
+
+                        <div class="hub-card" id="campaignSessionsCard">
+                            <div class="hub-card-topline">
+                                <h3>Sessions</h3>
+                                <span class="hub-pill">${sessionCount} Session${sessionCount === 1 ? "" : "en"}</span>
+                            </div>
+                            <div class="hub-callout">
+                                ${canManage
+                                    ? "Hier entscheidest du, ob eine Session neu angelegt, gestartet, fortgesetzt oder fuer die naechste Runde vorbereitet werden muss."
+                                    : "Hier siehst du, ob du warten, fortsetzen oder direkt in die laufende Session wechseln kannst."}
+                            </div>
+                            <div class="hub-session-list">
+                                ${buildSessionsList(campaign, sessions)}
+                            </div>
+                            ${sessionControls}
+                        </div>
+
+                        <div class="hub-card" id="campaignMapsCard">
+                            <div class="hub-card-topline">
+                                <h3>Maps</h3>
+                                <span class="hub-pill">${mapCount} Karte${mapCount === 1 ? "" : "n"}</span>
+                            </div>
+                            <div class="hub-map-list">
+                                ${buildMapList(maps)}
+                            </div>
+                            <div class="hub-callout">
+                                ${canManage
+                                    ? "Die Kartenliste und der Schnellstart sind live. Tieferes Map-Prep bleibt hier sichtbar als naechster Schritt, bis der eigene Map-Workspace kommt."
+                                    : "Spieler sehen hier den aktuellen Kartenstand read-only. Tieferes Map-Prep bleibt der Spielleitung vorbehalten."}
+                            </div>
+                            ${canManage ? `
+                                <div class="book-shell-placeholder" style="margin-top:0.85rem;">
+                                    <div class="book-shell-placeholder-title">Map Prep folgt hier</div>
+                                    <div class="book-shell-placeholder-copy">Map-Auswahl, Reihenfolge und feinere Vorbereitung bleiben sichtbar, aber bewusst noch deaktiviert statt versteckt.</div>
+                                    <div class="book-shell-placeholder-actions">
+                                        <button class="btn btn-secondary btn-sm" type="button" disabled>Map Workspace folgt</button>
+                                    </div>
+                                </div>
+                            ` : ""}
+                        </div>
+
+                        <div class="hub-card">
+                            <div class="hub-card-topline">
+                                <h3>Prep Links</h3>
+                                <span class="hub-pill">Characters + Assets</span>
+                            </div>
+                                <div class="hub-callout">
+                                    Vor dem Tisch greifen Charaktere, Karten und Assets zusammen. Diese Oberflaechen bleiben im Buch sichtbar und fuehren vorbereitet in die Session hinein.
+                                </div>
+                                <div class="hub-link-grid">
+                                <div class="hub-surface-link">
+                                    <div class="hub-surface-link-title">Characters</div>
+                                    <div class="hub-surface-link-copy">Archive, Sheets und Identitaet weiterfuehren, bevor die Session live geht.</div>
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere oeffnen</button>
+                                </div>
+                                <div class="hub-surface-link">
+                                    <div class="hub-surface-link-title">Map Prep</div>
+                                    <div class="hub-surface-link-copy">Kartenstand pruefen und den sichtbaren Prep-Bereich im Hub weiter nutzen.</div>
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Map Prep ansehen</button>
+                                </div>
+                                <div class="hub-surface-link">
+                                    <div class="hub-surface-link-title">Asset Library</div>
+                                    <div class="hub-surface-link-copy">Originale, Uploads und Vorschau bleiben Teil derselben Vorbereitung vor Play.</div>
+                                        <button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Asset Library</button>
+                                    </div>
+                                </div>
+                            <div class="hub-callout" style="margin-top:0.85rem;">
+                                <strong>Session-Besetzung:</strong> Direkte Charakter-Zuweisung lebt jetzt in der fokussierten Session-Prep-Flaeche. Von hier fuehrt derselbe Buchweg in die konkrete Besetzung vor Play.
+                            </div>
+                            ${sessions && sessions.length ? `
+                                <div class="book-shell-placeholder-actions" style="margin-top:0.75rem;">
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">Session-Besetzung oeffnen</button>
+                                </div>
+                            ` : ""}
+                        </div>
+                    </div>
+
+                    <div class="hub-card">
+                        <div class="hub-card-topline">
+                            <h3>Preparation Checklist</h3>
+                            <span class="hub-pill">Hub Flow</span>
+                        </div>
+                        ${buildHubChecklist(campaign, sessions, maps, characters, assignments)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function userIsAdmin() {
+            return String(currentUser?.role || "").toLowerCase() === "admin";
+        }
+
+        function canModerateCampaign(campaign) {
+            if (!campaign) return false;
+            return userIsAdmin() || campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
+        }
+
+        function buildCommunityPanel(campaign, sessions) {
+            if (!sessions || sessions.length === 0) {
+                return `
+                    <div class="detail-box" style="margin-top:1rem;">
+                        <h3>Community</h3>
+                        <div class="muted">Lege zuerst eine Session an, damit Chat und Meldungen aktiv werden.</div>
+                    </div>
+                `;
+            }
+
+            const canModerate = canModerateCampaign(campaign);
+            const options = sessions.map(session => `
+                <option value="${session.id}">${escapeHtml(session.name)} (${escapeHtml(session.status)})</option>
+            `).join("");
+
+            const moderationPanel = canModerate ? `
+                <div class="detail-box">
+                    <h3>Moderation</h3>
+                    <div class="inline-controls">
+                        <select id="modActionType">
+                            <option value="warn">warn</option>
+                            <option value="mute">mute</option>
+                            <option value="delete_message">delete_message</option>
+                            <option value="kick">kick</option>
+                            ${userIsAdmin() ? '<option value="ban">ban</option>' : ''}
+                        </select>
+                        <input id="modTargetUserId" type="number" min="1" placeholder="subject_user_id">
+                        <input id="modTargetMessageId" type="number" min="1" placeholder="subject_message_id">
+                        <input id="modReason" type="text" placeholder="reason (optional)">
+                        <input id="modDuration" type="number" min="1" max="10080" placeholder="mute minutes">
+                        <button class="btn btn-primary btn-sm" onclick="applyModerationActionFromUI(${campaign.id})">Anwenden</button>
+                    </div>
+                    <div class="inline-controls">
+                        <button class="btn btn-secondary btn-sm" onclick="loadModerationQueue(${campaign.id})">Neu laden</button>
+                        <input id="modRevokeActionId" type="number" min="1" placeholder="action_id">
+                        <button class="btn btn-secondary btn-sm" onclick="revokeModerationActionFromUI(${campaign.id})">Widerrufen</button>
+                    </div>
+                    <div id="modQueue" class="mod-queue muted" style="margin-top:0.5rem;">Noch keine Meldungen geladen.</div>
+                </div>
+            ` : `
+                <div class="detail-box">
+                    <h3>Moderation</h3>
+                    <div class="muted">Melden pro Nachricht ist aktiv. Moderations-Queue ist nur fuer DM/Admin.</div>
+                </div>
+            `;
+
+            return `
+                <div class="detail-box" style="margin-top:1rem;">
+                    <h3>Community</h3>
+                    <div class="inline-controls">
+                        <select id="communitySessionSelect" onchange="loadCommunityPanel(${campaign.id})">${options}</select>
+                        <button class="btn btn-secondary btn-sm" onclick="loadCommunityPanel(${campaign.id})">Chat neu laden</button>
+                    </div>
+                    <div class="community-shell" style="margin-top:0.75rem;">
+                        <div class="detail-box">
+                            <h3>Session-Chat</h3>
+                            <div id="communityVoice" class="muted" style="margin-bottom:0.5rem;">Voice: laedt...</div>
+                            <div id="communityChatFeed" class="chat-feed muted">Nachrichten werden geladen...</div>
+                            <div class="chat-input-row">
+                                <input id="communityMessageInput" type="text" maxlength="1000" placeholder="Nachricht schreiben...">
+                                <button class="btn btn-primary btn-sm" onclick="sendCommunityMessage(${campaign.id})">Senden</button>
+                            </div>
+                        </div>
+                        ${moderationPanel}
+                    </div>
+                </div>
+            `;
+        }
+
+        function formatBytes(bytes) {
+            const value = Number(bytes || 0);
+            if (!Number.isFinite(value) || value <= 0) return "0 B";
+            const units = ["B", "KB", "MB", "GB"];
+            let current = value;
+            let unitIndex = 0;
+            while (current >= 1024 && unitIndex < units.length - 1) {
+                current /= 1024;
+                unitIndex += 1;
+            }
+            return `${current.toFixed(current >= 10 || unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
+        }
+
+        function getAssetTypeLabel(assetType) {
+            const labels = {
+                map: "Karte",
+                token: "Token",
+                handout: "Handout",
+                image: "Bild",
+            };
+            return labels[String(assetType || "").toLowerCase()] || String(assetType || "Asset");
+        }
+
+        function getAssetScopeLabel(asset) {
+            if (asset?.scope_label) return asset.scope_label;
+            return asset?.session_id ? "Session" : "Campaign";
+        }
+
+        function getAssetPreviewMarkup(asset) {
+            const assetType = String(asset?.asset_type || "").toLowerCase();
+            const mimeType = String(asset?.mime_type || "").toLowerCase();
+            const label = getAssetTypeLabel(assetType);
+
+            if (asset?.previewable && mimeType.startsWith("image/")) {
+                return `<img src="${asset.preview_url}" alt="${escapeHtml(asset.filename || label)}">`;
+            }
+
+            if (asset?.previewable && mimeType === "application/pdf") {
+                return `
+                    <div class="asset-preview-placeholder">PDF</div>
+                    <div class="asset-preview-label">Inline-Vorschau</div>
+                `;
+            }
+
+            const fallback = {
+                map: "MAP",
+                token: "TOK",
+                handout: "DOC",
+                image: "IMG",
+            }[assetType] || "ASSET";
+
+            return `
+                <div class="asset-preview-placeholder">${fallback}</div>
+                <div class="asset-preview-label">${escapeHtml(label)}</div>
+            `;
+        }
+
+        function buildAssetLibraryPanel(campaign, sessions, canManage) {
+            const sessionOptions = (sessions || []).map(session => `
+                <option value="${session.id}">${escapeHtml(session.name)} (${escapeHtml(session.status)})</option>
+            `).join("");
+
+            return `
+                <div class="hub-card" id="campaignAssetLibraryPanel">
+                    <div class="hub-card-topline">
+                        <h3>Asset Library</h3>
+                        <span class="hub-pill">Originale + Vorschau</span>
+                    </div>
+                    <div class="hub-callout">
+                        Die Bibliothek zeigt die Originaldateien. Karten, Token und Handouts bleiben unveraendert und koennen hier als sichtbarer Vorbereitungsschritt fuer Sessions geordnet, geprueft und spaeter weiterverwendet werden.
+                    </div>
+                    <div class="asset-library-toolbar">
+                        <input id="assetLibrarySearch" type="text" placeholder="Suche nach Dateiname...">
+                        <select id="assetLibraryTypeFilter">
+                            <option value="">Alle Typen</option>
+                            <option value="map">Karten</option>
+                            <option value="token">Tokens</option>
+                            <option value="handout">Handouts</option>
+                            <option value="image">Bilder</option>
+                        </select>
+                        <select id="assetLibraryScopeFilter">
+                            <option value="all">Alle Scopes</option>
+                            <option value="campaign">Kampagne</option>
+                            <option value="session">Session</option>
+                        </select>
+                        <select id="assetLibrarySessionFilter">
+                            <option value="">Alle Sessions</option>
+                            ${sessionOptions}
+                        </select>
+                        <button class="btn btn-secondary btn-sm" onclick="loadAssetLibrary(${campaign.id})">Filter anwenden</button>
+                    </div>
+                    <div class="asset-library-stats" id="assetLibraryStats"></div>
+                    ${canManage ? `
+                        <div class="asset-library-upload">
+                            <input id="assetLibraryFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,text/plain">
+                            <select id="assetLibraryUploadType">
+                                <option value="image">Bild</option>
+                                <option value="map">Karte</option>
+                                <option value="token">Token</option>
+                                <option value="handout">Handout</option>
+                            </select>
+                            <select id="assetLibraryUploadScope" onchange="syncAssetLibraryUploadScope()">
+                                <option value="campaign">Kampagne</option>
+                                <option value="session">Session</option>
+                            </select>
+                            <select id="assetLibraryUploadSession">
+                                <option value="">Session waehlen</option>
+                                ${sessionOptions}
+                            </select>
+                            <div class="upload-actions">
+                                <button class="btn btn-primary btn-sm" onclick="uploadLibraryAsset(${campaign.id})">Upload</button>
+                                <button class="btn btn-secondary btn-sm" onclick="resetAssetLibraryUpload()">Zuruecksetzen</button>
+                            </div>
+                        </div>
+                        <div class="book-shell-placeholder" style="margin-top:0.8rem;">
+                            <div class="book-shell-placeholder-title">Import / Export folgt hier</div>
+                            <div class="book-shell-placeholder-copy">Die Bibliothek ist live fuer Upload, Preview und Download. Paketierter Import und Export bleiben sichtbar an derselben Stelle, bis die Pipeline produktisiert ist.</div>
+                            <div class="book-shell-placeholder-actions">
+                                <button class="btn btn-secondary btn-sm" type="button" disabled>Map Import folgt</button>
+                                <button class="btn btn-secondary btn-sm" type="button" disabled>Paket Export folgt</button>
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="hub-callout" style="margin-top:0.8rem;">
+                            Spieler sehen die Bibliothek, koennen sie aber noch nicht selbst befuellen. Upload und Loeschen bleiben der Spielleitung vorbehalten.
+                        </div>
+                    `}
+                    <div id="assetLibraryGrid" class="asset-library-grid">
+                        <div class="asset-empty-state">Bibliothek wird geladen...</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAssetLibraryStats(stats, payload) {
+            const items = [
+                { label: "Assets", value: stats?.total_assets ?? 0 },
+                { label: "Kampagne", value: stats?.campaign_assets ?? 0 },
+                { label: "Session", value: stats?.session_assets ?? 0 },
+                { label: "Karten", value: stats?.maps ?? 0 },
+                { label: "Tokens", value: stats?.tokens ?? 0 },
+                { label: "Handouts", value: stats?.handouts ?? 0 },
+                { label: "Bilder", value: stats?.images ?? 0 },
+                { label: "Preview", value: stats?.previewable_assets ?? 0 },
+                { label: "Gesamt", value: formatBytes(stats?.total_size_bytes ?? 0) },
+                { label: "Gefiltert", value: payload?.total ?? 0 },
+            ];
+
+            return items.map(item => `
+                <span class="hub-badge"><strong>${escapeHtml(item.label)}:</strong> ${escapeHtml(String(item.value))}</span>
+            `).join("");
+        }
+
+        function renderAssetLibrary(payload, campaignId) {
+            const grid = document.getElementById("assetLibraryGrid");
+            const statsNode = document.getElementById("assetLibraryStats");
+            if (!grid || !statsNode) return;
+
+            const assets = payload?.assets || [];
+            statsNode.innerHTML = renderAssetLibraryStats(payload?.stats || {}, payload);
+
+            if (!assets.length) {
+                grid.innerHTML = `<div class="asset-empty-state">Keine Assets entsprechen den aktuellen Filtern.</div>`;
+                return;
+            }
+
+            const canManage = !!currentDetailCampaign && (currentDetailCampaign.is_owner || currentDetailCampaign.your_role === "DM" || currentDetailCampaign.your_role === "CO_DM");
+
+            grid.innerHTML = assets.map(asset => {
+                const previewUrl = asset.preview_url || `/api/assets/${asset.id}/preview`;
+                const downloadUrl = asset.download_url || `/api/assets/${asset.id}/download`;
+                const canPreview = !!asset.previewable;
+                const sessionMeta = asset.session_name
+                    ? `<div class="asset-card-meta">Session: ${escapeHtml(asset.session_name)}</div>`
+                    : "";
+                const deleteButton = canManage
+                    ? `<button class="btn btn-danger btn-sm" onclick="deleteLibraryAsset(${asset.id}, ${campaignId})">Loeschen</button>`
+                    : "";
+                const previewButton = canPreview
+                    ? `<button class="btn btn-secondary btn-sm" onclick="openAssetPreview('${previewUrl.replace(/'/g, "\\'")}')">Preview</button>`
+                    : "";
+
+                return `
+                    <article class="asset-card">
+                        <div class="asset-preview" onclick="${canPreview ? `openAssetPreview('${previewUrl.replace(/'/g, "\\'")}')` : 'void(0)'}" style="${canPreview ? 'cursor:pointer;' : ''}">
+                            ${getAssetPreviewMarkup(asset)}
+                        </div>
+                        <div class="asset-card-body">
+                            <div class="asset-card-title">${escapeHtml(asset.filename || asset.display_name || "Asset")}</div>
+                            <div class="asset-card-meta">
+                                ${escapeHtml(getAssetTypeLabel(asset.asset_type))} · ${escapeHtml(getAssetScopeLabel(asset))}
+                            </div>
+                            ${sessionMeta}
+                            <div class="asset-card-meta">Uploaded by ${escapeHtml(asset.uploaded_by || "-")} · ${escapeHtml(formatBytes(asset.size_bytes))}</div>
+                            <div class="asset-card-actions">
+                                ${previewButton}
+                                <a class="btn btn-secondary btn-sm" href="${downloadUrl}" target="_blank" rel="noopener">Download</a>
+                                ${deleteButton}
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join("");
+        }
+
+        function openAssetPreview(url) {
+            if (!url) return;
+            window.open(url, "_blank", "noopener");
+        }
+
+        function syncAssetLibraryUploadScope() {
+            const scope = document.getElementById("assetLibraryUploadScope");
+            const sessionSelect = document.getElementById("assetLibraryUploadSession");
+            if (!scope || !sessionSelect) return;
+
+            const isSessionScope = scope.value === "session";
+            sessionSelect.disabled = !isSessionScope;
+            sessionSelect.style.opacity = isSessionScope ? "1" : "0.55";
+        }
+
+        function resetAssetLibraryUpload() {
+            const file = document.getElementById("assetLibraryFile");
+            const type = document.getElementById("assetLibraryUploadType");
+            const scope = document.getElementById("assetLibraryUploadScope");
+            const session = document.getElementById("assetLibraryUploadSession");
+            if (file) file.value = "";
+            if (type) type.value = "image";
+            if (scope) scope.value = "campaign";
+            if (session) session.value = "";
+            syncAssetLibraryUploadScope();
+        }
+
+        async function loadAssetLibrary(campaignId) {
+            const search = document.getElementById("assetLibrarySearch")?.value?.trim() || "";
+            const assetType = document.getElementById("assetLibraryTypeFilter")?.value || "";
+            const scope = document.getElementById("assetLibraryScopeFilter")?.value || "all";
+            const sessionId = document.getElementById("assetLibrarySessionFilter")?.value || "";
+
+            const params = new URLSearchParams();
+            if (search) params.set("query", search);
+            if (assetType) params.set("asset_type", assetType);
+            if (scope) params.set("scope", scope);
+            if (sessionId) params.set("session_id", sessionId);
+            params.set("per_page", "48");
+
+            const grid = document.getElementById("assetLibraryGrid");
+            if (grid) {
+                grid.innerHTML = `<div class="asset-empty-state">Bibliothek wird geladen...</div>`;
+            }
+
+            try {
+                const payload = await auth.makeAuthRequest(`/api/assets/campaigns/${campaignId}/library?${params.toString()}`);
+                renderAssetLibrary(payload, campaignId);
+                syncAssetLibraryUploadScope();
+            } catch (error) {
+                if (grid) {
+                    grid.innerHTML = `<div class="asset-empty-state">Bibliothek konnte nicht geladen werden.</div>`;
+                }
+                showMessage(error.message || "Asset-Library konnte nicht geladen werden.", true);
+            }
+        }
+
+        async function uploadLibraryAsset(campaignId) {
+            const fileInput = document.getElementById("assetLibraryFile");
+            const typeField = document.getElementById("assetLibraryUploadType");
+            const scopeField = document.getElementById("assetLibraryUploadScope");
+            const sessionField = document.getElementById("assetLibraryUploadSession");
+            if (!fileInput || !fileInput.files || !fileInput.files[0]) {
+                showMessage("Bitte zuerst eine Datei auswaehlen.", true);
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const assetType = typeField?.value || "image";
+            const scope = scopeField?.value || "campaign";
+            const sessionId = sessionField?.value || "";
+
+            if (scope === "session" && !sessionId) {
+                showMessage("Bitte zuerst eine Session fuer den Upload waehlen.", true);
+                return;
+            }
+
+            const button = document.querySelector('.asset-library-upload .btn.btn-primary');
+            if (button) {
+                button.disabled = true;
+                button.textContent = "Upload...";
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("asset_type", assetType);
+
+            const endpoint = scope === "session"
+                ? `/api/sessions/${sessionId}/assets/upload`
+                : `/api/assets/campaigns/${campaignId}/upload`;
+
+            try {
+                const headers = Auth.buildHeaders("POST", false);
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    credentials: "include",
+                    headers,
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const error = await response.json().catch(() => ({}));
+                    throw new Error(error.error || "Upload failed");
+                }
+
+                resetAssetLibraryUpload();
+                showMessage("Asset hochgeladen.");
+                await viewCampaign(campaignId, false);
+            } catch (error) {
+                showMessage(error.message || "Asset konnte nicht hochgeladen werden.", true);
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = "Upload";
+                }
+            }
+        }
+
+        async function deleteLibraryAsset(assetId, campaignId) {
+            if (!window.confirm("Asset wirklich loeschen?")) return;
+            try {
+                await auth.makeAuthRequest(`/api/assets/${assetId}/delete`, "DELETE");
+                showMessage("Asset geloescht.");
+                await viewCampaign(campaignId, false);
+            } catch (error) {
+                showMessage(error.message || "Asset konnte nicht geloescht werden.", true);
+            }
+        }
+
+        function renderChatMessages(messages, campaignId, sessionId) {
+            const feed = document.getElementById("communityChatFeed");
+            if (!feed) return;
+            if (!messages || messages.length === 0) {
+                feed.className = "chat-feed muted";
+                feed.innerHTML = "Noch keine Nachrichten.";
+                return;
+            }
+
+            const canModerate = canModerateCampaign(currentDetailCampaign);
+            feed.className = "chat-feed";
+            feed.innerHTML = messages.map(message => {
+                const canDelete = canModerate || message.author_user_id === currentUser?.id;
+                const reportButton = `<button class="btn btn-secondary btn-sm" onclick="reportCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Report</button>`;
+                const deleteButton = canDelete
+                    ? `<button class="btn btn-danger btn-sm" onclick="deleteCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Delete</button>`
+                    : "";
+
+                return `
+                    <div class="chat-item">
+                        <div class="chat-item-top">
+                            <strong>${escapeHtml(message.author_username || `User #${message.author_user_id}`)}</strong>
+                            <span class="muted">${formatDate(message.created_at)}</span>
+                        </div>
+                        <div>${escapeHtml(message.content || "")}</div>
+                        <div class="chat-actions" style="margin-top:0.35rem;">
+                            ${reportButton}
+                            ${deleteButton}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        async function loadCommunityPanel(campaignId) {
+            const sessionSelect = document.getElementById("communitySessionSelect");
+            if (!sessionSelect) return;
+
+            const sessionId = Number(sessionSelect.value);
+            if (!Number.isInteger(sessionId) || sessionId <= 0) return;
+
+            try {
+                const [chatPayload, voicePayload] = await Promise.all([
+                    community.loadMessages(campaignId, sessionId, { limit: 50 }),
+                    community.getVoiceConfig(campaignId, sessionId),
+                ]);
+                renderChatMessages(chatPayload.messages || [], campaignId, sessionId);
+
+                const voiceBox = document.getElementById("communityVoice");
+                if (voiceBox) {
+                    voiceBox.textContent = `Voice: ${voicePayload.voice_enabled ? "aktiv" : "deaktiviert (M7.1)"}`;
+                }
+            } catch (error) {
+                showMessage(error.message || "Community-Bereich konnte nicht geladen werden.", true);
+            }
+        }
+
+        async function sendCommunityMessage(campaignId) {
+            const input = document.getElementById("communityMessageInput");
+            const sessionSelect = document.getElementById("communitySessionSelect");
+            if (!input || !sessionSelect) return;
+
+            const content = input.value.trim();
+            if (!content) return;
+            const sessionId = Number(sessionSelect.value);
+
+            try {
+                await community.sendMessage(campaignId, sessionId, content);
+                input.value = "";
+                await loadCommunityPanel(campaignId);
+            } catch (error) {
+                showMessage(error.message || "Nachricht konnte nicht gesendet werden.", true);
+            }
+        }
+
+        async function reportCommunityMessage(campaignId, sessionId, messageId) {
+            const reason = (window.prompt("Meldegrund: spam, abuse, harassment, other", "abuse") || "").trim().toLowerCase();
+            if (!reason) return;
+            const note = window.prompt("Zusatzinfo (optional):", "") || "";
+            try {
+                await community.reportMessage(campaignId, sessionId, messageId, reason, note);
+                showMessage("Meldung gesendet.");
+            } catch (error) {
+                showMessage(error.message || "Meldung fehlgeschlagen.", true);
+            }
+        }
+
+        async function deleteCommunityMessage(campaignId, sessionId, messageId) {
+            if (!window.confirm("Nachricht wirklich loeschen?")) return;
+            try {
+                await community.deleteMessage(campaignId, sessionId, messageId);
+                await loadCommunityPanel(campaignId);
+                showMessage("Nachricht geloescht.");
+            } catch (error) {
+                showMessage(error.message || "Loeschen fehlgeschlagen.", true);
+            }
+        }
+
+        async function loadModerationQueue(campaignId) {
+            const queue = document.getElementById("modQueue");
+            if (!queue) return;
+            try {
+                const payload = await community.loadReports(campaignId, { limit: 25 });
+                const reports = payload.reports || [];
+                if (!reports.length) {
+                    queue.className = "mod-queue muted";
+                    queue.textContent = "Keine offenen Meldungen.";
+                    return;
+                }
+
+                queue.className = "mod-queue";
+                queue.innerHTML = reports.map(report => `
+                    <div class="mod-item">
+                        <div><strong>#${report.id}</strong> ${escapeHtml(report.reason_code)} | ${escapeHtml(report.status)}</div>
+                        <div class="muted">Reporter: ${escapeHtml(report.reporter_username || String(report.reporter_user_id))}</div>
+                        <div class="muted">Target user: ${escapeHtml(report.target_username || String(report.target_user_id || "-"))}</div>
+                        <div class="muted">Target msg: ${escapeHtml(String(report.target_message_id || "-"))}</div>
+                    </div>
+                `).join("");
+            } catch (error) {
+                showMessage(error.message || "Moderations-Queue konnte nicht geladen werden.", true);
+            }
+        }
+
+        async function applyModerationActionFromUI(campaignId) {
+            const actionType = document.getElementById("modActionType")?.value;
+            const subjectUserId = document.getElementById("modTargetUserId")?.value;
+            const subjectMessageId = document.getElementById("modTargetMessageId")?.value;
+            const reason = document.getElementById("modReason")?.value;
+            const duration = document.getElementById("modDuration")?.value;
+
+            const payload = { action_type: actionType };
+            if (subjectUserId) payload.subject_user_id = Number(subjectUserId);
+            if (subjectMessageId) payload.subject_message_id = Number(subjectMessageId);
+            if (reason) payload.reason = reason;
+            if (duration) payload.duration_minutes = Number(duration);
+
+            try {
+                await community.createModerationAction(campaignId, payload);
+                showMessage("Moderationsaktion ausgefuehrt.");
+                await loadModerationQueue(campaignId);
+                await loadCommunityPanel(campaignId);
+            } catch (error) {
+                showMessage(error.message || "Moderationsaktion fehlgeschlagen.", true);
+            }
+        }
+
+        async function revokeModerationActionFromUI(campaignId) {
+            const actionIdRaw = document.getElementById("modRevokeActionId")?.value;
+            if (!actionIdRaw) {
+                showMessage("Bitte action_id zum Widerruf eingeben.", true);
+                return;
+            }
+
+            try {
+                await community.revokeModerationAction(campaignId, Number(actionIdRaw));
+                showMessage("Aktion widerrufen.");
+                await loadModerationQueue(campaignId);
+            } catch (error) {
+                showMessage(error.message || "Widerruf fehlgeschlagen.", true);
+            }
+        }
+
+        async function viewCampaign(campaignId, pushHistory = true) {
+            try {
+                const data = await auth.makeAuthRequest(`/api/campaigns/${campaignId}`);
+                selectedCampaignId = campaignId;
+                renderCampaignDetail(data);
+                if (pushHistory) {
+                    updateUrlCampaignId(campaignId);
+                }
+            } catch (error) {
+                showMessage(error.message || "Kampagnen-Details konnten nicht geladen werden.", true);
+            }
+        }
+
+        function renderCampaignDetail(data) {
+            const detail = document.getElementById("campaignDetail");
+            const detailBody = document.getElementById("detailBody");
+            const campaign = data.campaign;
+            const members = data.members || [];
+            const sessions = data.sessions || [];
+            const maps = data.maps || [];
+            const characters = data.characters || [];
+            const assignments = data.session_character_assignments || [];
+            const canManage = campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
+            currentDetailCampaign = campaign;
+            document.getElementById("detailTitle").textContent = campaign.name;
+            document.getElementById("refreshDetailBtn").onclick = () => viewCampaign(campaign.id, false);
+
+            detailBody.innerHTML = `
+                ${buildRoll20CopyWorkflow(campaign, sessions, maps, characters, assignments)}
+                ${buildSessionPrepSurface(campaign, members, sessions, maps, characters, assignments)}
+                ${buildAssetLibraryPanel(campaign, sessions, canManage)}
+                <div class="detail-box" style="margin-top:1rem;">
+                    <h3>Mitglieder</h3>
+                    <div class="list">${buildMembersList(members)}</div>
+                </div>
+                ${buildCommunityPanel(campaign, sessions)}
+            `;
+
+            detail.classList.remove("hidden");
+            if (sessions.length > 0) {
+                loadCommunityPanel(campaign.id);
+                if (canModerateCampaign(campaign)) {
+                    loadModerationQueue(campaign.id);
+                }
+            }
+            loadAssetLibrary(campaign.id);
+            const focusedPrepSession = getFocusedPrepSession(sessions);
+            if (focusedPrepSession && focusedPrepSession.id) {
+                renderSessionPrepAssetStats(focusedPrepSession.id);
+                refreshSessionPrepAssetStats(campaign.id, focusedPrepSession.id);
+            }
+            detail.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function closeCampaignDetail() {
+            selectedCampaignId = null;
+            selectedPrepSessionId = null;
+            currentDetailCampaign = null;
+            document.getElementById("campaignDetail").classList.add("hidden");
+            updateUrlCampaignId(null);
+        }
+
+        async function invitePlayer(campaignId) {
+            const usernameField = document.getElementById("inviteUsername");
+            const playerUsername = usernameField ? usernameField.value.trim() : "";
+            if (!playerUsername) {
+                showMessage("Bitte zuerst einen Spielernamen eingeben.", true);
+                return;
+            }
+
+            try {
+                const invite = await auth.makeAuthRequest(`/api/campaigns/${campaignId}/invite`, "POST", {
+                    player_username: playerUsername
+                });
+                if (usernameField) usernameField.value = "";
+                showMessage("Einladungs-Code erzeugt.");
+                window.prompt("Code zum Teilen:", invite.invite_token);
+                await viewCampaign(campaignId, false);
+            } catch (error) {
+                showMessage(error.message || "Einladung fehlgeschlagen.", true);
+            }
+        }
+
+        function focusInviteControls() {
+            const field = document.getElementById("inviteUsername");
+            if (!field) return;
+            field.focus();
+            field.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        async function createSession(campaignId) {
+            const nameField = document.getElementById("sessionName");
+            const scheduleField = document.getElementById("sessionSchedule");
+            const durationField = document.getElementById("sessionDuration");
+
+            const name = nameField ? nameField.value.trim() : "";
+            if (!name) {
+                showMessage("Bitte einen Session-Namen eingeben.", true);
+                return;
+            }
+
+            const payload = { name };
+            if (scheduleField && scheduleField.value) {
+                payload.scheduled_at = new Date(scheduleField.value).toISOString();
+            }
+            if (durationField && durationField.value) {
+                payload.duration_minutes = Number(durationField.value);
+            }
+
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, "POST", payload);
+                if (nameField) nameField.value = "";
+                if (scheduleField) scheduleField.value = "";
+                if (durationField) durationField.value = "";
+                showMessage("Session angelegt.");
+                await viewCampaign(campaignId, false);
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Session konnte nicht angelegt werden.", true);
+            }
+        }
+
+        async function makeMultipartAuthRequest(url, formData, retryOn401 = true) {
+            const headers = Auth.buildHeaders("POST", false);
+            const options = {
+                method: "POST",
+                credentials: "include",
+                headers,
+                body: formData,
+            };
+
+            let response = await fetch(url, options);
+            if (response.status === 401 && retryOn401) {
+                const refreshed = await Auth.refreshAccessToken();
+                if (refreshed) {
+                    return makeMultipartAuthRequest(url, formData, false);
+                }
+                window.location.href = "/login.html";
+                return null;
+            }
+
+            if (!response.ok) {
+                const error = await response.json().catch(() => ({}));
+                throw new Error(error.error || "Upload failed");
+            }
+
+            return response.json();
+        }
+
+        async function getImageSize(file) {
+            return new Promise((resolve, reject) => {
+                const objectUrl = URL.createObjectURL(file);
+                const image = new Image();
+                image.onload = () => {
+                    const size = { width: image.naturalWidth, height: image.naturalHeight };
+                    URL.revokeObjectURL(objectUrl);
+                    resolve(size);
+                };
+                image.onerror = () => {
+                    URL.revokeObjectURL(objectUrl);
+                    reject(new Error("Could not read image dimensions"));
+                };
+                image.src = objectUrl;
+            });
+        }
+
+        async function startSessionWithFirstMap(campaignId) {
+            const nameField = document.getElementById("quickSessionName");
+            const mapField = document.getElementById("quickMapFile");
+            const button = document.getElementById("quickStartButton");
+
+            const sessionName = (nameField?.value || "").trim() || "Erste Session";
+            const file = mapField?.files?.[0];
+
+            if (!file) {
+                showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswaehlen.", true);
+                return;
+            }
+            if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+                showMessage("Bitte nur PNG, JPEG oder WebP verwenden.", true);
+                return;
+            }
+            if (file.size > 50 * 1024 * 1024) {
+                showMessage("Datei ist zu gross. Maximum sind 50MB.", true);
+                return;
+            }
+
+            if (button) {
+                button.disabled = true;
+                button.textContent = "Bitte warten...";
+            }
+
+            try {
+                showMessage("Schritt 1/4: Session wird erstellt...");
+                const createdSession = await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, "POST", {
+                    name: sessionName,
+                    duration_minutes: 180
+                });
+
+                showMessage("Schritt 2/4: Karte wird hochgeladen...");
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("asset_type", "map");
+                const uploaded = await makeMultipartAuthRequest(`/api/assets/campaigns/${campaignId}/upload`, formData);
+
+                let size = { width: 1400, height: 900 };
+                try {
+                    size = await getImageSize(file);
+                } catch (_error) {
+                    // Fallback to sensible defaults for first-run simplicity.
+                }
+
+                showMessage("Schritt 3/4: Karte wird als Session-Layer gesetzt...");
+                await auth.makeAuthRequest(`/api/sessions/${createdSession.id}/map-layers`, "POST", {
+                    layer_name: "Hauptkarte",
+                    asset_id: uploaded.asset_id,
+                    width: size.width,
+                    height: size.height,
+                    grid_size: 70,
+                    is_visible: true,
+                    fog_of_war_enabled: false
+                });
+
+                showMessage("Schritt 4/4: Session wird gestartet...");
+                await auth.makeAuthRequest(`/api/sessions/${createdSession.id}/start`, "POST");
+
+                if (mapField) mapField.value = "";
+                showMessage("Fertig. Session ist live und Karte ist geladen.");
+                await viewCampaign(campaignId, false);
+                await loadCampaigns();
+                openPlay(campaignId, createdSession.id);
+            } catch (error) {
+                showMessage(error.message || "Schnellstart fehlgeschlagen.", true);
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = "Session + Karte jetzt starten";
+                }
+            }
+        }
+
+        async function startSession(campaignId, sessionId) {
+            try {
+                await auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, "POST");
+                showMessage("Session gestartet.");
+                await viewCampaign(campaignId, false);
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Session konnte nicht gestartet werden.", true);
+            }
+        }
+
+        async function endSession(campaignId, sessionId) {
+            const ok = window.confirm(
+                "Session wirklich beenden?\n\nHinweis: Danach ist die Session nicht mehr live."
+            );
+            if (!ok) return;
+            try {
+                await auth.makeAuthRequest(`/api/sessions/${sessionId}/end`, "POST");
+                showMessage("Session beendet.");
+                await viewCampaign(campaignId, false);
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Session konnte nicht beendet werden.", true);
+            }
+        }
+
+        function summarizeCombatState(payload) {
+            const encounter = payload?.encounter;
+            if (!encounter) return "Noch kein Kampf gestartet.";
+            const participants = payload?.participants || [];
+            const activeToken = participants.find(token => token.id === encounter.active_token_id);
+            const activeName = activeToken ? activeToken.name : "none";
+            return `Kampf #${encounter.id} | Status: ${encounter.status} | Runde: ${encounter.round_number} | Aktiv: ${activeName} | Version: ${encounter.version}`;
+        }
+
+        async function fetchCombatState(campaignId, sessionId) {
+            return auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/combat/state`);
+        }
+
+        async function viewCombatState(campaignId, sessionId) {
+            try {
+                const payload = await fetchCombatState(campaignId, sessionId);
+                const summary = summarizeCombatState(payload);
+                showMessage(summary);
+            } catch (error) {
+                showMessage(error.message || "Kampfstatus konnte nicht geladen werden.", true);
+            }
+        }
+
+        async function startCombat(campaignId, sessionId) {
+            const mode = (window.prompt("Kampfmodus? auto oder manual", "auto") || "auto").trim().toLowerCase();
+            if (!mode) return;
+            if (mode !== "auto" && mode !== "manual") {
+                showMessage("Kampfmodus muss auto oder manual sein.", true);
+                return;
+            }
+
+            try {
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/start`,
+                    "POST",
+                    { mode }
+                );
+                showMessage(`Kampf gestartet. ${summarizeCombatState(payload)}`);
+                if (selectedCampaignId === campaignId) {
+                    await viewCampaign(campaignId, false);
+                }
+            } catch (error) {
+                showMessage(error.message || "Kampf konnte nicht gestartet werden.", true);
+            }
+        }
+
+        async function setCombatInitiative(campaignId, sessionId) {
+            try {
+                const state = await fetchCombatState(campaignId, sessionId);
+                if (!state.encounter) {
+                    showMessage("Kein aktiver Kampf fuer Initiative vorhanden.", true);
+                    return;
+                }
+
+                const raw = window.prompt("Initiative als token_id:wert, z.B. 3:17,4:12");
+                if (!raw || !raw.trim()) return;
+
+                const entries = raw.split(",").map(chunk => chunk.trim()).filter(Boolean).map(chunk => {
+                    const parts = chunk.split(":");
+                    return {
+                        token_id: Number(parts[0]),
+                        initiative: Number(parts[1])
+                    };
+                });
+
+                if (!entries.length || entries.some(entry => !Number.isInteger(entry.token_id) || !Number.isInteger(entry.initiative))) {
+                    showMessage("Initiative-Format ist ungueltig.", true);
+                    return;
+                }
+
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/initiative`,
+                    "POST",
+                    {
+                        base_version: state.encounter.version,
+                        entries
+                    }
+                );
+                showMessage(`Initiative aktualisiert. ${summarizeCombatState(payload)}`);
+            } catch (error) {
+                showMessage(error.message || "Initiative konnte nicht gesetzt werden.", true);
+            }
+        }
+
+        async function advanceCombatTurn(campaignId, sessionId) {
+            try {
+                const state = await fetchCombatState(campaignId, sessionId);
+                if (!state.encounter) {
+                    showMessage("Kein aktiver Kampf vorhanden.", true);
+                    return;
+                }
+
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/turn/advance`,
+                    "POST",
+                    {
+                        base_version: state.encounter.version
+                    }
+                );
+                showMessage(`Zug weitergeschaltet. ${summarizeCombatState(payload)}`);
+            } catch (error) {
+                showMessage(error.message || "Naechster Zug fehlgeschlagen.", true);
+            }
+        }
+
+        async function adjustCombatHp(campaignId, sessionId) {
+            try {
+                const state = await fetchCombatState(campaignId, sessionId);
+                if (!state.encounter) {
+                    showMessage("Kein aktiver Kampf vorhanden.", true);
+                    return;
+                }
+
+                const tokenIdRaw = window.prompt("Ziel-Token-ID:");
+                if (!tokenIdRaw) return;
+                const tokenId = Number(tokenIdRaw);
+                if (!Number.isInteger(tokenId)) {
+                    showMessage("Token-ID muss eine Zahl sein.", true);
+                    return;
+                }
+
+                const deltaRaw = window.prompt("HP-Differenz (minus = Schaden, plus = Heilung):", "-5");
+                if (!deltaRaw) return;
+                const delta = Number(deltaRaw);
+                if (!Number.isInteger(delta)) {
+                    showMessage("HP-Wert muss eine Zahl sein.", true);
+                    return;
+                }
+
+                const reason = window.prompt("Grund (optional):", "") || null;
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/hp-adjust`,
+                    "POST",
+                    {
+                        base_version: state.encounter.version,
+                        target_token_id: tokenId,
+                        delta,
+                        reason
+                    }
+                );
+                showMessage(`HP aktualisiert. ${summarizeCombatState(payload)}`);
+            } catch (error) {
+                showMessage(error.message || "HP-Aenderung fehlgeschlagen.", true);
+            }
+        }
+
+        async function endCombat(campaignId, sessionId) {
+            if (!window.confirm("Aktuellen Kampf wirklich beenden?")) return;
+            try {
+                const state = await fetchCombatState(campaignId, sessionId);
+                if (!state.encounter) {
+                    showMessage("Kein aktiver Kampf vorhanden.", true);
+                    return;
+                }
+
+                const payload = await auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/sessions/${sessionId}/combat/end`,
+                    "POST",
+                    {
+                        base_version: state.encounter.version
+                    }
+                );
+                showMessage(`Kampf beendet. ${summarizeCombatState(payload)}`);
+            } catch (error) {
+                showMessage(error.message || "Kampf konnte nicht beendet werden.", true);
+            }
+        }
+
+        async function deleteCampaign(campaignId) {
+            if (!window.confirm("Kampagne wirklich loeschen?")) return;
+
+            try {
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}`, "DELETE");
+                if (selectedCampaignId === campaignId) {
+                    closeCampaignDetail();
+                }
+                showMessage("Kampagne geloescht.");
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || "Kampagne konnte nicht geloescht werden.", true);
+            }
+        }
+
+        function enterCampaign(campaignId) {
+            window.location.href = `/campaigns?campaign_id=${campaignId}`;
+        }
+
+        function openPlay(campaignId, sessionId) {
+            if (window.BookScene && typeof BookScene.enterPlay === 'function') {
+                try {
+                    BookScene.enterPlay({
+                        campaignId,
+                        sessionId,
+                        sourceRoute: 'campaigns',
+                    });
+                    return;
+                } catch (error) {
+                    console.warn('BookScene play handoff failed.', error);
+                    showMessage('Play handoff unavailable. Please reload and try again.', true);
+                    return;
+                }
+            }
+            showMessage('Play handoff unavailable. Please reload and try again.', true);
+        }
+
+        function goTo(path) {
+            if (window.BookScene && typeof BookScene.pageTurn === 'function') {
+                BookScene.pageTurn(path, BookScene.sceneUser || null);
+            } else {
+                window.location.href = path;
+            }
+        }
+
+        async function logout() {
+            await auth.logout();
+        }
+
+        document.addEventListener('DOMContentLoaded', bootstrapCampaignsScene);
+    </script>
+</body>
+</html>

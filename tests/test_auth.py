@@ -3,9 +3,9 @@ Test suite for M3 authentication endpoints.
 """
 
 import pytest
-from vtt_app import create_app
-from vtt_app.extensions import db
-from vtt_app.models import User, Role
+from vtt import create_app
+from vtt.extensions import db
+from vtt.models import RegistrationKey, Role, User
 
 
 @pytest.fixture
@@ -30,13 +30,34 @@ def client(app):
     return app.test_client()
 
 
+def _issue_registration_key(
+    key_code: str = "SPELL-TEST-ABCD-EFGH",
+    *,
+    tier: str = "player",
+    uses_remaining: int = 1,
+):
+    key = RegistrationKey(
+        key_code=key_code,
+        key_name=f"Test key {key_code}",
+        key_batch_id=f"test-batch-{key_code}",
+        tier=tier,
+        max_uses=uses_remaining,
+        uses_remaining=uses_remaining,
+    )
+    db.session.add(key)
+    db.session.commit()
+    return key
+
+
 class TestRegister:
     def test_register_success(self, client):
         """Test successful user registration."""
+        _issue_registration_key()
         response = client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test@example.com',
-            'password': 'SecurePass123!'
+            'password': 'SecurePass123!',
+            'registration_key': 'SPELL-TEST-ABCD-EFGH',
         })
         assert response.status_code == 201
         data = response.get_json()
@@ -44,36 +65,54 @@ class TestRegister:
 
     def test_register_duplicate_username(self, client):
         """Test registration with duplicate username."""
+        _issue_registration_key("SPELL-TEST-1111-AAAA")
+        _issue_registration_key("SPELL-TEST-2222-BBBB")
         client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test1@example.com',
-            'password': 'SecurePass123!'
+            'password': 'SecurePass123!',
+            'registration_key': 'SPELL-TEST-1111-AAAA',
         })
         response = client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test2@example.com',
-            'password': 'SecurePass123!'
+            'password': 'SecurePass123!',
+            'registration_key': 'SPELL-TEST-2222-BBBB',
         })
         assert response.status_code == 409
 
     def test_register_weak_password(self, client):
         """Test registration with weak password."""
+        _issue_registration_key()
         response = client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test@example.com',
-            'password': 'weak'
+            'password': 'weak',
+            'registration_key': 'SPELL-TEST-ABCD-EFGH',
         })
         assert response.status_code == 400
+
+    def test_register_requires_registration_key(self, client):
+        """Test registration requires a valid registration key."""
+        response = client.post('/api/auth/register', json={
+            'username': 'testuser',
+            'email': 'test@example.com',
+            'password': 'SecurePass123!',
+        })
+        assert response.status_code == 400
+        assert response.get_json()['error'] == 'registration key required'
 
 
 class TestLogin:
     def test_login_success(self, client):
         """Test successful login."""
         # Register first
+        _issue_registration_key()
         client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test@example.com',
-            'password': 'SecurePass123!'
+            'password': 'SecurePass123!',
+            'registration_key': 'SPELL-TEST-ABCD-EFGH',
         })
         
         # Login
@@ -108,10 +147,12 @@ class TestMe:
     def test_me_authenticated(self, client):
         """Test /me endpoint with valid cookie-based auth."""
         # Register and login
+        _issue_registration_key()
         client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test@example.com',
-            'password': 'SecurePass123!'
+            'password': 'SecurePass123!',
+            'registration_key': 'SPELL-TEST-ABCD-EFGH',
         })
         client.post('/api/auth/login', json={
             'username': 'testuser',
@@ -133,30 +174,36 @@ class TestMe:
 class TestPasswordValidation:
     def test_password_length(self, client):
         """Test password length validation."""
+        _issue_registration_key()
         response = client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test@example.com',
-            'password': 'Short1!'
+            'password': 'Short1!',
+            'registration_key': 'SPELL-TEST-ABCD-EFGH',
         })
         assert response.status_code == 400
 
     def test_password_complexity(self, client):
         """Test password complexity requirements."""
         # Missing special char
+        _issue_registration_key()
         response = client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test@example.com',
-            'password': 'NoSpecial123'
+            'password': 'NoSpecial123',
+            'registration_key': 'SPELL-TEST-ABCD-EFGH',
         })
         assert response.status_code == 400
 
 
 class TestCsrfProtection:
     def _register_and_login(self, client):
+        _issue_registration_key("SPELL-CSRF-ABCD-EFGH")
         client.post('/api/auth/register', json={
             'username': 'csrf_user',
             'email': 'csrf@example.com',
-            'password': 'SecurePass123!'
+            'password': 'SecurePass123!',
+            'registration_key': 'SPELL-CSRF-ABCD-EFGH',
         })
         response = client.post('/api/auth/login', json={
             'username': 'csrf_user',

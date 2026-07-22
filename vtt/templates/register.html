@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter the Spellbook - roll drauf vtt</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+</head>
+<body class="spellbook register-route-book-scene">
+    <template id="registerSceneTemplate">
+        <div class="book-dashboard-camera">
+            <section class="book-dashboard-page" data-book-route="register" role="region" aria-label="Register page">
+                <div class="book-dashboard-topbar">
+                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Invitation chapter menu">
+                        <a class="book-dashboard-ribbon-btn" href="/login.html">Login</a>
+                        <a class="book-dashboard-ribbon-btn" href="/signup.html">Sign Up</a>
+                        <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page">Key Access</button>
+                    </div>
+                    <div class="book-dashboard-crest" aria-label="Reader state">Guest</div>
+                </div>
+
+                <div class="book-spread-shell">
+                    <article class="book-spread-page book-spread-page--left">
+                        <header class="book-spread-page-header">
+                            <p class="book-spread-page-kicker">Invitation Gate</p>
+                            <h1 class="book-spread-page-title">Register</h1>
+                            <p class="book-spread-page-copy">This chapter redeems a valid key and turns the same book straight toward the authenticated compendium.</p>
+                        </header>
+                        <div class="book-spread-page-body">
+                            <section class="book-scene-panel">
+                                <span class="book-scene-panel-kicker">Validation Notes</span>
+                                <h2 class="book-scene-panel-title">Redeem Your Key</h2>
+                                <p class="book-scene-panel-copy">The left page keeps the invitation rules stable while the right page performs the actual account redemption.</p>
+                                <div class="book-ledger">
+                                    <div class="book-ledger-row">
+                                        <span class="book-ledger-label">Key</span>
+                                        <span class="book-ledger-value">Uppercase spell code</span>
+                                    </div>
+                                    <div class="book-ledger-row">
+                                        <span class="book-ledger-label">Username</span>
+                                        <span class="book-ledger-value">Letters, digits, underscore</span>
+                                    </div>
+                                    <div class="book-ledger-row">
+                                        <span class="book-ledger-label">Password</span>
+                                        <span class="book-ledger-value">8+ chars with symbol mix</span>
+                                    </div>
+                                    <div class="book-ledger-row">
+                                        <span class="book-ledger-label">Success</span>
+                                        <span class="book-ledger-value">Immediate dashboard transition</span>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <div class="book-scene-note-list">
+                                <div class="book-scene-note">Keys are consumed through the same book runtime, not a detached utility route.</div>
+                                <div class="book-scene-note">A valid key creates the account and opens the authenticated session immediately.</div>
+                                <div class="book-scene-note">The next visible chapter after success is the dashboard, not another standalone page shell.</div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div aria-hidden="true"></div>
+
+                    <article class="book-spread-page book-spread-page--right">
+                        <header class="book-spread-page-header">
+                            <p class="book-spread-page-kicker">Key Ritual</p>
+                            <h2 class="book-spread-page-title">Redeem Invitation</h2>
+                            <p class="book-spread-page-copy">The right page stays practical: clear fields, visible rules, and then a direct turn into the main spellbook.</p>
+                        </header>
+                        <div class="book-spread-page-meta">
+                            <span class="book-dashboard-chip">Invitation Flow</span>
+                            <span class="book-dashboard-chip">Strong Secret</span>
+                            <span class="book-dashboard-chip">Dashboard Next</span>
+                        </div>
+                        <div class="book-spread-page-body">
+                            <div id="statusBanner" class="book-form-banner is-info" hidden aria-live="polite"></div>
+
+                            <form id="registerForm" class="book-auth-form" novalidate>
+                                <div class="form-group">
+                                    <label for="key">Registration Key</label>
+                                    <input type="text" id="key" name="key" placeholder="SPELL-XXXX-XXXX-XXXX" required autocomplete="off">
+                                    <div class="form-help">Enter the key exactly as issued.</div>
+                                    <div class="error" id="keyError" role="alert"></div>
+                                </div>
+
+                                <div class="book-inline-fields">
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" id="username" name="username" placeholder="Your table name" required autocomplete="username">
+                                        <div class="error" id="usernameError" role="alert"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+                                        <div class="error" id="emailError" role="alert"></div>
+                                    </div>
+                                </div>
+
+                                <div class="book-inline-fields">
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" id="password" name="password" placeholder="Choose a strong passphrase" required autocomplete="new-password">
+                                        <div class="book-password-list" aria-label="Password requirements">
+                                            <div class="book-password-item" id="req-length">At least 8 characters</div>
+                                            <div class="book-password-item" id="req-upper">One uppercase letter</div>
+                                            <div class="book-password-item" id="req-lower">One lowercase letter</div>
+                                            <div class="book-password-item" id="req-digit">One digit</div>
+                                            <div class="book-password-item" id="req-special">One special character</div>
+                                        </div>
+                                        <div class="error" id="passwordError" role="alert"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="confirmPassword">Confirm Password</label>
+                                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat the passphrase" required autocomplete="new-password">
+                                        <div class="error" id="confirmPasswordError" role="alert"></div>
+                                    </div>
+                                </div>
+
+                                <div class="book-page-note">On success the next visible chapter is the dashboard page within the same spellbook.</div>
+
+                                <div class="book-auth-actions">
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">Redeem Key</button>
+                                    <div class="error" id="generalError" role="alert"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </template>
+
+    <script src="/static/js/gsap.min.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/book-scene.js"></script>
+    <script src="/static/js/book-routes.js"></script>
+    <script>
+        window.BookSceneRouteInit = window.BookSceneRouteInit || {};
+        window.BookSceneRouteInit.register = function initRegisterScene() {
+            const registerForm = document.getElementById('registerForm');
+            const passwordInput = document.getElementById('password');
+            const submitBtn = document.getElementById('submitBtn');
+            const statusBanner = document.getElementById('statusBanner');
+
+            if (!registerForm || !passwordInput || !submitBtn || !statusBanner) {
+                return;
+            }
+
+            passwordInput.addEventListener('input', (event) => {
+                const password = event.target.value;
+                updateRequirement('req-length', password.length >= 8);
+                updateRequirement('req-upper', /[A-Z]/.test(password));
+                updateRequirement('req-lower', /[a-z]/.test(password));
+                updateRequirement('req-digit', /\d/.test(password));
+                updateRequirement('req-special', /[!@#$%^&*_\-+=]/.test(password));
+            });
+
+            registerForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const key = document.getElementById('key').value.trim().toUpperCase();
+                const username = document.getElementById('username').value.trim();
+                const email = document.getElementById('email').value.trim().toLowerCase();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                clearErrors();
+
+                if (!validateInputs(key, username, email, password, confirmPassword)) {
+                    return;
+                }
+
+                showLoading(true);
+
+                try {
+                    const response = await fetch('/api/auth/register-with-key', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            registration_key: key,
+                            username,
+                            email,
+                            password
+                        })
+                    });
+
+                    const data = await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        handleErrorResponse(data);
+                        showLoading(false);
+                        return;
+                    }
+
+                    showBanner('Key accepted. Turning the spellbook toward your dashboard...', 'success');
+                    window.setTimeout(async () => {
+                        if (window.BookScene && typeof window.BookScene.transitionToDashboard === 'function') {
+                            await window.BookScene.transitionToDashboard(data.user || null);
+                            return;
+                        }
+                        window.location.href = '/dashboard';
+                    }, 350);
+                } catch (error) {
+                    showError('generalError', 'Connection error: ' + error.message);
+                    showLoading(false);
+                }
+            });
+
+            function validateInputs(key, username, email, password, confirmPassword) {
+                let isValid = true;
+
+                if (!/^[A-Z0-9-]+$/.test(key)) {
+                    showError('keyError', 'Use uppercase letters, digits, and hyphens only.');
+                    isValid = false;
+                }
+
+                if (username.length < 3 || username.length > 50) {
+                    showError('usernameError', 'Username must be 3-50 characters.');
+                    isValid = false;
+                } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                    showError('usernameError', 'Username may only contain letters, numbers, and underscores.');
+                    isValid = false;
+                }
+
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('emailError', 'Please enter a valid email address.');
+                    isValid = false;
+                }
+
+                const hasStrongPassword =
+                    password.length >= 8 &&
+                    /[A-Z]/.test(password) &&
+                    /[a-z]/.test(password) &&
+                    /[0-9]/.test(password) &&
+                    /[!@#$%^&*_\-+=]/.test(password);
+
+                if (!hasStrongPassword) {
+                    showError('passwordError', 'Use at least 8 characters with uppercase, lowercase, numbers, and one of !@#$%^&*_-+=.');
+                    isValid = false;
+                }
+
+                if (password !== confirmPassword) {
+                    showError('confirmPasswordError', 'Passwords do not match.');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            function handleErrorResponse(data) {
+                const error = data.error || 'Registration failed.';
+
+                if (error.includes('spell') || error.includes('key') || error.includes('revoked') || error.includes('expired') || error.includes('depleted')) {
+                    showError('keyError', error);
+                    return;
+                }
+                if (error.includes('username')) {
+                    showError('usernameError', error);
+                    return;
+                }
+                if (error.includes('email')) {
+                    showError('emailError', error);
+                    return;
+                }
+                if (error.includes('password')) {
+                    showError('passwordError', error);
+                    return;
+                }
+                showError('generalError', error);
+            }
+
+            function updateRequirement(elementId, met) {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.classList.toggle('is-met', met);
+                }
+            }
+
+            function clearErrors() {
+                document.getElementById('keyError').textContent = '';
+                document.getElementById('usernameError').textContent = '';
+                document.getElementById('emailError').textContent = '';
+                document.getElementById('passwordError').textContent = '';
+                document.getElementById('confirmPasswordError').textContent = '';
+                document.getElementById('generalError').textContent = '';
+                statusBanner.hidden = true;
+                statusBanner.textContent = '';
+                statusBanner.className = 'book-form-banner';
+            }
+
+            function showError(elementId, message) {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.textContent = message;
+                }
+            }
+
+            function showLoading(isLoading) {
+                submitBtn.disabled = isLoading;
+                submitBtn.textContent = isLoading ? 'Redeeming Key...' : 'Redeem Key';
+            }
+
+            function showBanner(message, tone) {
+                statusBanner.hidden = false;
+                statusBanner.textContent = message;
+                statusBanner.className = `book-form-banner is-${tone}`;
+                showLoading(false);
+            }
+        };
+
+        async function bootstrapRegisterScene() {
+            try {
+                const user = await Auth.getCurrentUser();
+                if (user) {
+                    window.location.href = '/dashboard';
+                    return;
+                }
+
+                if (!window.BookScene) {
+                    throw new Error('Book scene unavailable');
+                }
+
+                BookScene.create();
+                BookScene.bootstrapRoute('register');
+            } catch (error) {
+                console.error('Failed to bootstrap register scene:', error);
+                window.location.href = '/login.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', bootstrapRegisterScene);
+    </script>
+</body>
+</html>

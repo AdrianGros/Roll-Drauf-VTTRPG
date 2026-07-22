@@ -4,9 +4,9 @@ from datetime import datetime
 
 import pytest
 
-from vtt_app import create_app
-from vtt_app.extensions import db
-from vtt_app.models import Campaign, CampaignMap, CampaignMember, Role, User
+from vtt import create_app
+from vtt.extensions import db
+from vtt.models import Campaign, CampaignMap, CampaignMember, Role, User
 
 
 def _login(client, username, password="Password123!"):

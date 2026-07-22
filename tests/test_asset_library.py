@@ -4,9 +4,9 @@ from datetime import datetime
 
 import pytest
 
-from vtt_app import create_app
-from vtt_app.extensions import db
-from vtt_app.models import Asset, Campaign, CampaignMember, Role, User
+from vtt import create_app
+from vtt.extensions import db
+from vtt.models import Asset, Campaign, CampaignMember, Role, User
 
 
 def _login(client, username, password="Password123!"):
@@ -210,7 +210,7 @@ class TestAssetLibrary:
             def download(_key):
                 return b"PNGDATA"
 
-        monkeypatch.setattr("vtt_app.endpoints.assets.get_storage_adapter", lambda: _Storage())
+        monkeypatch.setattr("vtt.endpoints.assets.get_storage_adapter", lambda: _Storage())
 
         response = dm_client.get(f"/api/assets/{asset.id}/preview")
         assert response.status_code == 200

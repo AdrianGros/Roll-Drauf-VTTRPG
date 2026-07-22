@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby - roll drauf vtt</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-shell.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+</head>
+<body class="spellbook book-shell-app">
+    <header>
+        <div class="logo">roll drauf VTT</div>
+        <div class="user-menu">
+            <span class="user-name" id="username">Loading...</span>
+            <button class="btn btn-secondary" type="button" data-book-route="/dashboard">Dashboard</button>
+            <button class="btn btn-secondary" type="button" data-book-route="/campaigns">Campaigns</button>
+            <button class="btn btn-secondary" type="button" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="book-shell-frame">
+            <div class="book-shell-ribbon">Antechamber</div>
+
+            <div class="book-shell-frame-header">
+                <div>
+                    <p class="book-frame-eyebrow">Session Staging</p>
+                    <h1 class="book-page-title" data-book-field="section">Lobby</h1>
+                    <p class="book-frame-copy">
+                        This page is the staging spread before the denser campaign and play workspaces: still book-shaped, but already optimized for quick control, joining, and roster awareness.
+                    </p>
+                </div>
+                <div class="book-frame-meta">
+                    <span class="book-chip">Chapter <span data-book-field="chapter">Antechamber</span></span>
+                    <span class="book-chip">Spread Mode</span>
+                    <span class="book-chip">Join + Create</span>
+                </div>
+            </div>
+
+            <div class="book-spread">
+                <section class="book-page book-page--index">
+                    <div class="page-header">
+                        <h1>Lobby Controls</h1>
+                        <button class="btn btn-primary" type="button" onclick="createCampaign()">Create Campaign</button>
+                    </div>
+
+                    <p class="book-page-lede">We treat the lobby as an in-between chapter: enough structure to feel like the same spellbook, but with quicker control surfaces for refresh, invites, and routing into live campaigns.</p>
+
+                    <div id="message" class="book-form-banner" hidden aria-live="polite"></div>
+
+                    <div class="book-toolbar">
+                        <div class="form-group">
+                            <label for="campaignId">Campaign ID</label>
+                            <input type="number" id="campaignId" placeholder="Campaign ID for invite join">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inviteToken">Invite Token</label>
+                            <input type="text" id="inviteToken" placeholder="Paste invite token">
+                        </div>
+
+                        <div class="book-toolbar-actions">
+                            <button class="btn btn-primary" type="button" onclick="joinByInvite()">Join Campaign</button>
+                            <button class="btn btn-secondary" type="button" onclick="loadCampaigns()">Refresh Ledger</button>
+                        </div>
+                    </div>
+
+                    <div class="book-page-section">
+                        <h2 class="book-page-section-title">Lobby Notes</h2>
+                        <div class="book-guide-list">
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Create Fast</div>
+                                <div class="book-guide-copy">Campaign creation stays lightweight so you can open a fresh table without leaving the shell.</div>
+                            </div>
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Join Precisely</div>
+                                <div class="book-guide-copy">Invite join is kept on the index page, which lets the facing page stay dedicated to campaign cards and statuses.</div>
+                            </div>
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Next Depth</div>
+                                <div class="book-guide-copy">After entering a campaign, denser flows continue in dedicated chapters rather than overloading the lobby spread.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="book-page-folio" data-book-folio="left">L</div>
+                </section>
+
+                <section class="book-page book-page--content">
+                    <div id="campaigns" class="book-lobby-grid">
+                        <div class="book-empty-shell">Loading campaigns...</div>
+                    </div>
+
+                    <div class="book-page-folio" data-book-folio="right">I</div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>roll drauf VTT - lobby spread</p>
+    </footer>
+
+    <script src="/static/js/gsap.min.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/book-routes.js"></script>
+    <script src="/static/js/book-shell.js"></script>
+    <script>
+        function showMessage(text, isError = false) {
+            const box = document.getElementById('message');
+            box.hidden = false;
+            box.className = `book-form-banner ${isError ? 'is-error' : 'is-success'}`;
+            box.textContent = text;
+            window.setTimeout(() => {
+                box.hidden = true;
+                box.className = 'book-form-banner';
+                box.textContent = '';
+            }, 3500);
+        }
+
+        async function loadPage() {
+            const user = await Auth.requireAuth('/login.html');
+            if (!user) {
+                return;
+            }
+            document.getElementById('username').textContent = user.username;
+            await loadCampaigns();
+        }
+
+        async function loadCampaigns() {
+            try {
+                const data = await Auth.makeAuthRequest('/api/campaigns/mine');
+                if (!data || !Array.isArray(data.campaigns)) {
+                    throw new Error('Failed to load campaigns');
+                }
+
+                const container = document.getElementById('campaigns');
+                if (data.campaigns.length === 0) {
+                    container.innerHTML = "<div class='book-empty-shell'>No campaigns yet. Create one to start the next chapter.</div>";
+                    return;
+                }
+
+                container.innerHTML = data.campaigns.map((campaign) => `
+                    <article class="book-lobby-card">
+                        <h2 class="book-lobby-title">${escapeHtml(campaign.name)}</h2>
+                        <div class="book-lobby-meta">DM: ${escapeHtml(campaign.owner)}</div>
+                        <div class="book-lobby-meta">Players: ${campaign.member_count} / ${campaign.max_players}</div>
+                        <div class="book-lobby-role">${escapeHtml(campaign.your_role || 'Player')}</div>
+                        <div class="book-lobby-actions">
+                            <button class="btn btn-primary" type="button" onclick="enterCampaign(${campaign.id})">Enter</button>
+                            ${campaign.is_owner ? `<button class="btn btn-danger" type="button" onclick="deleteCampaign(${campaign.id})">Delete</button>` : ''}
+                        </div>
+                    </article>
+                `).join('');
+            } catch (error) {
+                showMessage(error.message || 'Could not load campaigns', true);
+            }
+        }
+
+        async function createCampaign() {
+            const name = window.prompt('Campaign name:');
+            if (!name || !name.trim()) {
+                return;
+            }
+
+            const description = window.prompt('Description (optional):', '') ?? '';
+            const maxPlayersRaw = window.prompt('Max players (2-20):', '6');
+            const maxPlayers = Number(maxPlayersRaw);
+            const payload = { name: name.trim(), description: description.trim() };
+
+            if (Number.isInteger(maxPlayers)) {
+                payload.max_players = maxPlayers;
+            }
+
+            try {
+                const created = await Auth.makeAuthRequest('/api/campaigns', 'POST', payload);
+                showMessage(`Campaign #${created.id} created`);
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || 'Create campaign failed', true);
+            }
+        }
+
+        async function joinByInvite() {
+            const campaignIdRaw = document.getElementById('campaignId').value.trim();
+            const inviteToken = document.getElementById('inviteToken').value.trim();
+            const campaignId = Number(campaignIdRaw);
+
+            if (!Number.isInteger(campaignId) || campaignId <= 0) {
+                showMessage('Please enter a valid campaign ID.', true);
+                return;
+            }
+            if (!inviteToken) {
+                showMessage('Please enter an invite token.', true);
+                return;
+            }
+
+            try {
+                await Auth.makeAuthRequest(`/api/campaigns/${campaignId}/accept-invite`, 'POST', {
+                    token: inviteToken
+                });
+                document.getElementById('inviteToken').value = '';
+                showMessage('Joined campaign.');
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || 'Join failed', true);
+            }
+        }
+
+        async function deleteCampaign(campaignId) {
+            if (!window.confirm('Delete this campaign?')) {
+                return;
+            }
+
+            try {
+                await Auth.makeAuthRequest(`/api/campaigns/${campaignId}`, 'DELETE');
+                showMessage('Campaign deleted.');
+                await loadCampaigns();
+            } catch (error) {
+                showMessage(error.message || 'Delete failed', true);
+            }
+        }
+
+        function enterCampaign(campaignId) {
+            const target = `/campaigns?campaign_id=${campaignId}`;
+            if (window.BookShell && typeof window.BookShell.navigate === 'function') {
+                window.BookShell.navigate(target);
+                return;
+            }
+            window.location.href = target;
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#39;');
+        }
+
+        async function logout() {
+            await Auth.logout();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadPage);
+    </script>
+</body>
+</html>

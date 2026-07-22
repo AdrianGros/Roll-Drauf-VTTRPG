@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - roll drauf vtt</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+</head>
+<body class="spellbook signup-route-book-scene">
+    <template id="signupSceneTemplate">
+        <div class="book-dashboard-camera">
+            <section class="book-dashboard-page" data-book-route="signup" role="region" aria-label="Sign up page">
+                <div class="book-dashboard-topbar">
+                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Auth chapter menu">
+                        <a class="book-dashboard-ribbon-btn" href="/login.html">Login</a>
+                        <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page">Sign Up</button>
+                        <a class="book-dashboard-ribbon-btn" href="/register.html">Key Access</a>
+                    </div>
+                    <div class="book-dashboard-crest" aria-label="Reader state">Guest</div>
+                </div>
+
+                <div class="book-spread-shell">
+                    <article class="book-spread-page book-spread-page--left">
+                        <header class="book-spread-page-header">
+                            <p class="book-spread-page-kicker">Account Foundry</p>
+                            <h1 class="book-spread-page-title">Sign Up</h1>
+                            <p class="book-spread-page-copy">The sign-up ritual stays inside the same book family: quiet parchment, readable rules, and no detached admin shell.</p>
+                        </header>
+                        <div class="book-spread-page-body">
+                            <section class="book-scene-panel">
+                                <span class="book-scene-panel-kicker">Access Contract</span>
+                                <h2 class="book-scene-panel-title">Account Rules</h2>
+                                <p class="book-scene-panel-copy">This chapter is still key-gated. The left page keeps the contract visible while the right page performs the actual entry ritual.</p>
+                                <div class="book-ledger">
+                                    <div class="book-ledger-row">
+                                        <span class="book-ledger-label">Key</span>
+                                        <span class="book-ledger-value">Required from Discord bot</span>
+                                    </div>
+                                    <div class="book-ledger-row">
+                                        <span class="book-ledger-label">Username</span>
+                                        <span class="book-ledger-value">3 to 50 characters</span>
+                                    </div>
+                                    <div class="book-ledger-row">
+                                        <span class="book-ledger-label">Email</span>
+                                        <span class="book-ledger-value">Valid recovery address</span>
+                                    </div>
+                                    <div class="book-ledger-row">
+                                        <span class="book-ledger-label">Password</span>
+                                        <span class="book-ledger-value">8+ chars with mixed character classes</span>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <div class="book-scene-note-list">
+                                <div class="book-scene-note">A valid registration key is mandatory. Public signup is intentionally closed.</div>
+                                <div class="book-scene-note">This page belongs to the book runtime now, not the older standalone shell.</div>
+                                <div class="book-scene-note">After success you return to the login spread and enter with the new account.</div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div aria-hidden="true"></div>
+
+                    <article class="book-spread-page book-spread-page--right">
+                        <header class="book-spread-page-header">
+                            <p class="book-spread-page-kicker">Initiate Ritual</p>
+                            <h2 class="book-spread-page-title">Create Your Account</h2>
+                            <p class="book-spread-page-copy">The working page carries the form itself so the flow stays productive without breaking the book illusion.</p>
+                        </header>
+                        <div class="book-spread-page-meta">
+                            <span class="book-dashboard-chip">Key Required</span>
+                            <span class="book-dashboard-chip">Readable First</span>
+                            <span class="book-dashboard-chip">Login Returns</span>
+                        </div>
+                        <div class="book-spread-page-body">
+                            <div id="statusBanner" class="book-form-banner is-info" hidden aria-live="polite"></div>
+
+                            <form id="signupForm" class="book-auth-form" novalidate>
+                                <div class="form-group">
+                                    <label for="registration_key">Registration Key</label>
+                                    <input type="text" id="registration_key" name="registration_key" placeholder="SPELL-XXXX-XXXX-XXXX" required autocomplete="off">
+                                    <div class="form-help">Enter the Discord-issued key exactly as provided.</div>
+                                    <div class="error" id="registrationKeyError" role="alert"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" name="username" placeholder="3-50 characters" required autocomplete="username">
+                                    <div class="error" id="usernameError" role="alert"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+                                    <div class="error" id="emailError" role="alert"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" name="password" placeholder="Choose a strong passphrase" required autocomplete="new-password">
+                                    <div class="book-password-list" aria-label="Password requirements">
+                                        <div class="book-password-item" id="req-length">At least 8 characters</div>
+                                        <div class="book-password-item" id="req-upper">One uppercase letter</div>
+                                        <div class="book-password-item" id="req-lower">One lowercase letter</div>
+                                        <div class="book-password-item" id="req-digit">One digit</div>
+                                        <div class="book-password-item" id="req-special">One special character</div>
+                                    </div>
+                                    <div class="error" id="passwordError" role="alert"></div>
+                                </div>
+
+                                <div class="book-auth-actions">
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">Create Account</button>
+                                    <div class="book-page-note">Already have access? <a href="/login.html">Return to login</a></div>
+                                    <div class="error" id="generalError" role="alert"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </template>
+
+    <script src="/static/js/gsap.min.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/book-scene.js"></script>
+    <script src="/static/js/book-routes.js"></script>
+    <script>
+        window.BookSceneRouteInit = window.BookSceneRouteInit || {};
+        window.BookSceneRouteInit.signup = function initSignupScene() {
+            const signupForm = document.getElementById('signupForm');
+            const registrationKeyInput = document.getElementById('registration_key');
+            const passwordInput = document.getElementById('password');
+            const submitBtn = document.getElementById('submitBtn');
+            const statusBanner = document.getElementById('statusBanner');
+
+            if (!signupForm || !registrationKeyInput || !passwordInput || !submitBtn || !statusBanner) {
+                return;
+            }
+
+            passwordInput.addEventListener('input', (event) => {
+                const password = event.target.value;
+                updateRequirement('req-length', password.length >= 8);
+                updateRequirement('req-upper', /[A-Z]/.test(password));
+                updateRequirement('req-lower', /[a-z]/.test(password));
+                updateRequirement('req-digit', /\d/.test(password));
+                updateRequirement('req-special', /[!@#$%^&*_\-+=]/.test(password));
+            });
+
+            signupForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const registration_key = registrationKeyInput.value.trim().toUpperCase();
+                const username = document.getElementById('username').value.trim();
+                const email = document.getElementById('email').value.trim().toLowerCase();
+                const password = passwordInput.value;
+
+                clearErrors();
+                showLoading(true);
+
+                try {
+                    const response = await fetch('/api/auth/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ registration_key, username, email, password })
+                    });
+
+                    const data = await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        handleErrorResponse(data);
+                        showLoading(false);
+                        return;
+                    }
+
+                    showBanner('Account created. Returning you to the login chapter...', 'success');
+                    window.setTimeout(() => {
+                        window.location.href = '/login.html?signup=1';
+                    }, 900);
+                } catch (error) {
+                    showError('generalError', 'Network error: ' + error.message);
+                    showLoading(false);
+                }
+            });
+
+            function updateRequirement(elementId, met) {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.classList.toggle('is-met', met);
+                }
+            }
+
+            function clearErrors() {
+                document.getElementById('registrationKeyError').textContent = '';
+                document.getElementById('usernameError').textContent = '';
+                document.getElementById('emailError').textContent = '';
+                document.getElementById('passwordError').textContent = '';
+                document.getElementById('generalError').textContent = '';
+                statusBanner.hidden = true;
+                statusBanner.textContent = '';
+                statusBanner.className = 'book-form-banner';
+            }
+
+            function showError(elementId, message) {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.textContent = message;
+                }
+            }
+
+            function handleErrorResponse(data) {
+                const error = data.error || 'Signup failed';
+
+                if (error.includes('registration key') || error.includes('key')) {
+                    showError('registrationKeyError', error);
+                    return;
+                }
+                if (error.includes('username')) {
+                    showError('usernameError', error);
+                    return;
+                }
+                if (error.includes('email') || error.includes('Email')) {
+                    showError('emailError', error);
+                    return;
+                }
+                if (error.includes('password') || error.includes('Password')) {
+                    showError('passwordError', error);
+                    return;
+                }
+
+                showError('generalError', error);
+            }
+
+            function showLoading(isLoading) {
+                submitBtn.disabled = isLoading;
+                submitBtn.textContent = isLoading ? 'Creating Account...' : 'Create Account';
+            }
+
+            function showBanner(message, tone) {
+                statusBanner.hidden = false;
+                statusBanner.textContent = message;
+                statusBanner.className = `book-form-banner is-${tone}`;
+                showLoading(false);
+            }
+        };
+
+        async function bootstrapSignupScene() {
+            try {
+                const user = await Auth.getCurrentUser();
+                if (user) {
+                    window.location.href = '/dashboard';
+                    return;
+                }
+
+                if (!window.BookScene) {
+                    throw new Error('Book scene unavailable');
+                }
+
+                BookScene.create();
+                BookScene.bootstrapRoute('signup');
+            } catch (error) {
+                console.error('Failed to bootstrap signup scene:', error);
+                window.location.href = '/login.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', bootstrapSignupScene);
+    </script>
+</body>
+</html>

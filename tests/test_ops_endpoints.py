@@ -2,9 +2,9 @@
 
 import pytest
 
-from vtt_app import create_app
-from vtt_app.extensions import db
-from vtt_app.models import Role
+from vtt import create_app
+from vtt.extensions import db
+from vtt.models import Role
 
 
 @pytest.fixture

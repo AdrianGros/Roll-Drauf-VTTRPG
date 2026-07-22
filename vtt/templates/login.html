@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - roll drauf vtt</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--vtt-font-body);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .book-sidecar-copy {
+            color: var(--vtt-sidecar-text);
+            font-size: 14px;
+            line-height: 1.55;
+            max-width: 190px;
+        }
+
+        .book-branding {
+            font-family: 'BadScript', cursive;
+            color: var(--vtt-ink);
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+            line-height: 1.0;
+        }
+
+        .book-subtitle {
+            font-family: 'Cinzel', serif;
+            color: var(--vtt-gold);
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .book-ornament {
+            font-size: 50px;
+            filter: drop-shadow(0 0 10px rgba(202, 163, 59, 0.24));
+        }
+
+        .book-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--vtt-field-bg) !important;
+            background-color: var(--vtt-field-bg) !important;
+            color: var(--vtt-field-text) !important;
+            border: 2px solid var(--vtt-field-border-strong) !important;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: var(--vtt-font-body);
+            transition: all 0.3s;
+            box-shadow: inset 0 1px 2px rgba(42, 26, 18, 0.08) !important;
+            caret-color: var(--vtt-field-text) !important;
+            -webkit-text-fill-color: var(--vtt-field-text) !important;
+            appearance: none;
+            -webkit-appearance: none;
+            color-scheme: light;
+        }
+
+        .book-input::placeholder {
+            color: var(--vtt-field-placeholder);
+            font-style: italic;
+        }
+
+        .book-input:hover,
+        .book-input:focus,
+        .book-input:focus-visible,
+        .book-input:active {
+            outline: none;
+            color: var(--vtt-field-text) !important;
+            -webkit-text-fill-color: var(--vtt-field-text) !important;
+            border-color: var(--vtt-field-border-strong) !important;
+            background: var(--vtt-field-bg) !important;
+            background-color: var(--vtt-field-bg) !important;
+            border-radius: 6px;
+            box-shadow: inset 0 1px 2px rgba(42, 26, 18, 0.08) !important;
+        }
+
+        .book-input::selection {
+            background: rgba(199, 176, 214, 0.45);
+            color: var(--vtt-field-text);
+        }
+
+        .book-input:-webkit-autofill,
+        .book-input:-webkit-autofill:hover,
+        .book-input:-webkit-autofill:focus,
+        .book-input:-webkit-autofill:active {
+            -webkit-text-fill-color: var(--vtt-field-text) !important;
+            caret-color: var(--vtt-field-text) !important;
+            border: 2px solid var(--vtt-field-border-strong) !important;
+            border-radius: 6px;
+            background-color: var(--vtt-field-bg) !important;
+            -webkit-box-shadow: 0 0 0 1000px var(--vtt-field-bg) inset !important;
+            box-shadow: 0 0 0 1000px var(--vtt-field-bg) inset !important;
+            transition: background-color 9999s ease-out 0s;
+        }
+
+        .form-hint {
+            margin-top: 6px;
+            color: var(--vtt-ink-muted);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .book-login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--vtt-plum-deep) 0%, var(--vtt-plum) 100%);
+            color: var(--vtt-paper-panel);
+            border: 2px solid var(--vtt-gold);
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: var(--vtt-font-heading);
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 10px 22px rgba(42, 26, 18, 0.12);
+        }
+
+        .book-login-btn:hover {
+            background: linear-gradient(135deg, var(--vtt-plum) 0%, #6b3c7a 100%);
+            box-shadow: 0 0 0 3px rgba(202, 163, 59, 0.12), 0 14px 26px rgba(42, 26, 18, 0.14);
+            transform: translateY(-2px);
+        }
+
+        .error {
+            color: var(--vtt-error-ink);
+            font-size: 13px;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        #generalError:not(:empty) {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: rgba(169, 74, 69, 0.08);
+            border: 1px solid rgba(169, 74, 69, 0.22);
+            border-radius: 6px;
+            line-height: 1.4;
+        }
+
+        .mfa-input {
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: var(--vtt-ink-muted);
+            font-size: 14px;
+        }
+
+        .book-link {
+            text-align: center;
+            margin-top: 0;
+            color: var(--vtt-ink-muted);
+            font-size: 14px;
+        }
+
+        .book-link a {
+            color: var(--vtt-plum);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 1px solid var(--vtt-gold);
+        }
+
+        .book-link a:hover {
+            color: var(--vtt-gold-deep);
+            text-shadow: 0 0 8px rgba(202, 163, 59, 0.12);
+        }
+
+        .book-auth-alt {
+            margin-top: 14px;
+        }
+
+        .book-discord-gate {
+            display: grid;
+            gap: 14px;
+        }
+
+        .book-discord-gate-copy {
+            color: var(--vtt-ink-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .book-discord-steps {
+            display: grid;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .book-discord-step {
+            padding: 10px 12px;
+            border: 1px solid rgba(130, 89, 52, 0.16);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.46);
+            color: var(--vtt-ink-muted);
+            line-height: 1.5;
+        }
+
+        .book-discord-step strong {
+            color: var(--vtt-ink);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .book-status {
+            display: none;
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            line-height: 1.45;
+            border: 1px solid rgba(78, 117, 80, 0.24);
+            background: rgba(78, 117, 80, 0.08);
+            color: var(--vtt-success-ink);
+        }
+
+        .book-status.is-visible {
+            display: block;
+        }
+
+        .book-auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 12px;
+            color: var(--vtt-ink-muted);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .book-auth-divider::before,
+        .book-auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(132, 96, 74, 0.08) 0%, rgba(132, 96, 74, 0.24) 100%);
+        }
+
+        .book-discord-btn {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(81, 44, 103, 0.24);
+            border-radius: 6px;
+            background:
+                linear-gradient(180deg, rgba(81, 44, 103, 0.08) 0%, rgba(81, 44, 103, 0.03) 100%),
+                rgba(255, 251, 245, 0.92);
+            color: var(--vtt-ink);
+            font-family: var(--vtt-font-heading);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 10px 18px rgba(42, 26, 18, 0.08);
+        }
+
+        .book-discord-btn:hover,
+        .book-discord-btn:focus-visible {
+            outline: none;
+            border-color: rgba(202, 163, 59, 0.55);
+            box-shadow: 0 0 0 3px rgba(202, 163, 59, 0.12), 0 12px 22px rgba(42, 26, 18, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .book-discord-btn[disabled] {
+            cursor: wait;
+            opacity: 0.75;
+            transform: none;
+        }
+
+        .book-discord-hint {
+            margin-top: 8px;
+            color: var(--vtt-ink-muted);
+            font-size: 12px;
+            line-height: 1.45;
+            text-align: center;
+        }
+
+        #discordError:not(:empty) {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: rgba(169, 74, 69, 0.08);
+            border: 1px solid rgba(169, 74, 69, 0.22);
+            border-radius: 6px;
+            line-height: 1.4;
+        }
+
+        /* Fallback for old .login-container if needed */
+        .login-container {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .book-input {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <!-- Spellbook Theme -->
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+</head>
+<body class="spellbook">
+    <!-- 3D Book Scene (injected via book-scene.js) -->
+
+    <!-- Login content (rendered as the first open spread) -->
+    <div id="login-content">
+        <div class="login-book-spread" role="presentation">
+            <section class="login-book-page login-book-page--left" aria-label="Login page">
+                <div class="login-book-paper login-book-paper--login">
+                    <div class="login-book-page-header">
+                        <img src="/static/images/spellbook-logo.svg" alt="" class="book-logo login-book-logo">
+                        <div>
+                            <div class="book-branding">roll drauf</div>
+                            <div class="book-subtitle">Spellbook</div>
+                        </div>
+                    </div>
+
+                    <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Discord login gate">
+                        <div id="statusBanner" class="book-status" role="status" aria-live="polite"></div>
+                        <div class="book-discord-gate-copy">
+                            Der Einstieg in das VTT laeuft ausschliesslich ueber Discord. Du brauchst zwei Dinge: Mitgliedschaft im Roll-Drauf Server und eine gueltige Freischaltung durch den Bot.
+                        </div>
+                        <div class="book-discord-steps" aria-label="Discord access requirements">
+                            <div class="book-discord-step">
+                                <strong>1. Discord verbinden</strong>
+                                Melde dich mit deinem Discord-Konto an. Es gibt keine separate Website-Registrierung.
+                            </div>
+                            <div class="book-discord-step">
+                                <strong>2. Server-Mitglied sein</strong>
+                                Das Konto muss Mitglied des erlaubten Roll-Drauf Discord-Servers sein.
+                            </div>
+                            <div class="book-discord-step">
+                                <strong>3. Bot-Freischaltung besitzen</strong>
+                                Der Roll-Drauf Bot muss deinem Discord-Konto einen gueltigen VTT-Zugang zugewiesen haben.
+                            </div>
+                        </div>
+
+                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Mit Discord anmelden">Mit Discord anmelden</button>
+                        <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geoeffnet...</div>
+                        <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
+                        <div class="book-auth-alt">
+                            <div class="book-discord-hint">
+                                Wenn dir der Zugang fehlt, musst du zuerst dem Server beitreten und den Zugriff ueber den Bot erhalten.
+                            </div>
+                            <div class="error" id="discordError" role="alert" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="login-book-page login-book-page--right" aria-hidden="true">
+                <div class="login-book-paper login-book-paper--welcome" id="loginWelcomePage">
+                    <div class="login-book-welcome-kicker">Discord Access</div>
+                    <h2 class="login-book-welcome-title">Der Zugang liegt im Server</h2>
+                    <p class="login-book-welcome-copy">
+                        Dieses VTT gehoert zum Discord-Server. Discord liefert die Identitaet, der Bot prueft Mitgliedschaft und Freischaltung, und erst dann wird die lokale VTT-Session geoeffnet.
+                    </p>
+
+                    <div class="login-book-engraving">
+                        <div class="login-book-engraving-mark">roll drauf VTT</div>
+                        <p>
+                            Es gibt keinen getrennten Website-Signup mehr. Wer keinen Zugriff hat, wird mit einer klaren Meldung gestoppt und muss zuerst die Freischaltung im Discord erhalten.
+                        </p>
+                    </div>
+
+                    <div class="login-book-welcome-footer">
+                        <span>Discord Only</span>
+                        <span>Server + Bot Access Required</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- GSAP loaded locally to ensure reliable loading -->
+    <script src="/static/js/gsap.min.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/book-scene.js"></script>
+
+    <script>
+        // Wait for BOTH DOMContentLoaded AND window.load to ensure GSAP is loaded
+        function initBook() {
+            console.log('[Login] Initializing book');
+
+            if (typeof gsap === 'undefined') {
+                console.warn('[Login] GSAP still not available, retrying in 200ms...');
+                setTimeout(initBook, 200);
+                return;
+            }
+
+            console.log('[Login] ✓ GSAP is available');
+
+            // Create and open book
+            BookScene.create();
+            BookScene.open();
+
+            const loginParams = new URLSearchParams(window.location.search);
+            const forceLoggedOut = loginParams.get('logged_out') === '1' || consumeForcedLogout();
+            if (forceLoggedOut) {
+                return;
+            }
+
+            // Keep authenticated users inside the same book object.
+            Auth.getCurrentUser().then((user) => {
+                if (user && window.BookScene && typeof BookScene.transitionToDashboard === 'function') {
+                    return BookScene.transitionToDashboard(user, { instant: true });
+                }
+                return null;
+            }).catch((error) => {
+                console.warn('[Login] Could not open dashboard pilot from existing session', error);
+            });
+        }
+
+        // Try on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('[Login] DOMContentLoaded fired');
+            initEntryStatus();
+            setTimeout(initBook, 100);
+        });
+
+        // Also try on window load (backup)
+        window.addEventListener('load', () => {
+            console.log('[Login] window.load fired');
+            setTimeout(initBook, 100);
+        });
+
+        const discordLoginButton = document.getElementById('discordLoginBtn');
+        const discordError = document.getElementById('discordError');
+        const statusBanner = document.getElementById('statusBanner');
+
+        function consumeForcedLogout() {
+            try {
+                const value = sessionStorage.getItem(Auth.LOGOUT_REDIRECT_KEY);
+                if (value === '1') {
+                    sessionStorage.removeItem(Auth.LOGOUT_REDIRECT_KEY);
+                    return true;
+                }
+            } catch (error) {
+                console.warn('[Login] Could not read forced logout marker', error);
+            }
+            return false;
+        }
+
+        function clearErrors() {
+            document.getElementById('generalError').textContent = '';
+            document.getElementById('discordError').textContent = '';
+        }
+
+        function showError(elementId, message) {
+            document.getElementById(elementId).textContent = message;
+        }
+
+        function showStatus(message) {
+            statusBanner.textContent = message || '';
+            statusBanner.classList.toggle('is-visible', Boolean(message));
+        }
+
+        function initEntryStatus() {
+            const currentUrl = new URL(window.location.href);
+            const loggedOut = currentUrl.searchParams.get('logged_out');
+            const authNotice = currentUrl.searchParams.get('auth_notice');
+
+            if (authNotice === 'discord_only') {
+                showStatus('Der Zugang erfolgt jetzt ausschliesslich ueber Discord. Bitte melde dich mit deinem Discord-Konto an.');
+                currentUrl.searchParams.delete('auth_notice');
+            }
+
+            if (loggedOut === '1') {
+                showStatus('Du wurdest abgemeldet und bist wieder im Einstiegskapitel.');
+                currentUrl.searchParams.delete('logged_out');
+            }
+
+            if (authNotice === 'discord_only' || loggedOut === '1') {
+                const cleaned = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+                window.history.replaceState({}, document.title, cleaned);
+            }
+        }
+
+        function showDiscordError(message) {
+            discordError.textContent = message || '';
+            if (message) {
+                showError('generalError', message);
+            }
+        }
+
+        async function initDiscordLogin() {
+            const currentUrl = new URL(window.location.href);
+            const nextPath = currentUrl.searchParams.get('next') || '/dashboard';
+            const discordFailure = currentUrl.searchParams.get('discord_error');
+
+            if (discordFailure) {
+                showDiscordError(discordFailure);
+                currentUrl.searchParams.delete('discord_error');
+                const cleaned = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+                window.history.replaceState({}, document.title, cleaned);
+            }
+
+            try {
+                const response = await fetch('/api/auth/discord/status', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    return;
+                }
+
+                const data = await response.json();
+                if (!data.enabled) {
+                    showStatus('Discord-Zugang ist gerade nicht verfuegbar. Bitte spaeter erneut versuchen.');
+                    discordLoginButton.disabled = true;
+                    return;
+                }
+
+                discordLoginButton.addEventListener('click', () => {
+                    discordLoginButton.disabled = true;
+                    discordLoginButton.textContent = 'Discord wird geoeffnet...';
+                    showLoading(true);
+                    const discordUrl = new URL('/api/auth/discord/start', window.location.origin);
+                    discordUrl.searchParams.set('next', nextPath);
+                    window.location.href = discordUrl.toString();
+                }, { once: true });
+            } catch (error) {
+                console.warn('[Login] Discord status check failed', error);
+                showStatus('Discord-Zugang konnte gerade nicht vorbereitet werden. Bitte spaeter erneut versuchen.');
+                discordLoginButton.disabled = true;
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        initDiscordLogin();
+    </script>
+</body>
+</html>

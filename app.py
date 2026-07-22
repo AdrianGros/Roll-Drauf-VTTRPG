@@ -4,9 +4,9 @@ Entry point for roll drauf vtt application.
 
 import os
 from dotenv import load_dotenv
-from vtt_app import create_app
-from vtt_app.extensions import socketio, db
-from vtt_app.models import Role
+from vtt import create_app
+from vtt.extensions import socketio, db
+from vtt.models import Role
 
 
 def _parse_bool(value, default=False):
@@ -30,7 +30,7 @@ def _ensure_default_roles():
     """Initialize default roles once at startup, not per request."""
     with app.app_context():
         if not Role.query.first():
-            from vtt_app.models.role import init_default_roles
+            from vtt.models.role import init_default_roles
             init_default_roles(db.session)
 
 

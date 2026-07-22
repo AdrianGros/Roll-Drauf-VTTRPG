@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTT - Home</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #4a9eff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a9eff;
+        }
+
+        .user-menu {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .user-name {
+            color: #b0b0b0;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #4a9eff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #357bcc;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #777;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-callout {
+            margin-top: 1rem;
+            padding: 0.85rem 1rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(74, 158, 255, 0.35);
+            background: rgba(74, 158, 255, 0.08);
+            color: #dbe9ff;
+            font-size: 0.95rem;
+        }
+
+        .dashboard-next-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid #4a9eff;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a9eff;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #4a9eff;
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .section-header a {
+            color: #4a9eff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .section-header a:hover {
+            text-decoration: underline;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            border-color: #4a9eff;
+            box-shadow: 0 0 10px rgba(74, 158, 255, 0.2);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 150px;
+            background: #333;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3rem;
+        }
+
+        .card-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-next-step {
+            font-size: 0.82rem;
+            color: #d0c5c0;
+            min-height: 2.4em;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .card-buttons button {
+            flex: 1;
+            padding: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #a0a0a0;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Dark mode surface styling */
+        .stat-card, .card, .section, .empty-state {
+            background: var(--vtt-surface-card, #201530) !important;
+            border: 1px solid rgba(212, 175, 55, 0.15) !important;
+            color: var(--vtt-text-primary, #e8d5b7);
+        }
+        .stat-value { color: var(--vtt-text-primary); font-family: var(--vtt-font-heading); }
+        .stat-label, .card-meta, .empty-state p { color: var(--vtt-text-secondary, #9e8fa0); }
+        .card-title, .section h2 { color: var(--vtt-accent); }
+        input, textarea, select {
+            background: var(--vtt-surface-input, #141420) !important;
+            color: var(--vtt-text-primary, #e8d5b7) !important;
+            border-color: var(--vtt-border-subtle, rgba(255,255,255,0.10)) !important;
+        }
+        input::placeholder { color: rgba(232, 213, 183, 0.5); }
+    </style>
+    <!-- Spellbook Theme -->
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-shell.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+    <style>
+        body.dashboard-route-book-scene {
+            background: #0d0514;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body.dashboard-route-book-scene > header,
+        body.dashboard-route-book-scene > main,
+        body.dashboard-route-book-scene > footer {
+            display: none;
+        }
+
+        #dashboardSceneStatus {
+            position: fixed;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%);
+            color: #f6e8c8;
+            font-family: var(--vtt-font-heading);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        #dashboardSceneStatus[hidden] {
+            display: none;
+        }
+    </style>
+</head>
+<body class="spellbook dashboard-route-book-scene">
+    <div id="dashboardSceneStatus" role="status" aria-live="polite">Opening Home Page...</div>
+    <header>
+        <div class="logo">roll drauf VTT</div>
+        <div class="user-menu">
+            <span class="user-name" id="username">Loading...</span>
+            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Characters</button>
+            <button class="btn btn-secondary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Campaigns</button>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="book-shell-frame">
+            <div class="book-dashboard-topbar">
+                <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
+                    <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/dashboard" onclick="goTo('/dashboard')">Home</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Campaigns</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Characters</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Logout</button>
+                </div>
+                <div class="book-dashboard-crest" aria-label="Current chapter">Compendium</div>
+            </div>
+            <div class="book-shell-ribbon">Compendium</div>
+
+            <div class="book-shell-frame-header">
+                <div>
+                    <p class="book-frame-eyebrow">Spellbook Scene</p>
+                    <h1 class="book-page-title" data-book-field="section">Home</h1>
+                    <p class="book-frame-copy">
+                        Das Home oeffnet als lesbare Doppelseite: Orientierung und Social-Hub links, Chronik, Guilds und die Wege weiter in Kampagnen und Vorbereitung rechts.
+                    </p>
+                </div>
+                <div class="book-frame-meta">
+                    <span class="book-chip">Chapter <span data-book-field="chapter">Compendium</span></span>
+                    <span class="book-chip">BookScene Runtime</span>
+                    <span class="book-chip">Arrow Keys Turn</span>
+                </div>
+            </div>
+
+            <div class="book-spread">
+                <section class="book-page book-page--index">
+                    <div class="dashboard-header">
+                        <h1>Home</h1>
+                        <p class="book-page-lede">Willkommen zurueck. Diese Seite ist dein Heimathafen vor dem Tisch: Social, Guilds, Kampagnen, Charaktere und Session-Prep bleiben von hier aus klar erreichbar.</p>
+                        <div class="dashboard-callout">
+                            <strong>Heute wichtig:</strong> Das Home bleibt die Landing Page, waehrend Kampagnen, Charaktere und Session-Prep die operativen Folgeflaechen im selben Buch bleiben.
+                        </div>
+                        <div class="dashboard-next-actions">
+                            <button class="btn btn-primary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen oeffnen</button>
+                            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Charaktere oeffnen</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-row" id="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="campaignCount">0</div>
+                            <div class="stat-label">Campaigns</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="characterCount">0</div>
+                            <div class="stat-label">Characters</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sessionsCount">0</div>
+                            <div class="stat-label">Sessions</div>
+                        </div>
+                    </div>
+
+                    <div class="book-page-section">
+                        <h2 class="book-page-section-title">Travel Notes</h2>
+                        <div class="book-guide-list">
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Kampagnen-Pfad</div>
+                                <div class="book-guide-copy">Gehe in Kampagnen, um Kapitel anzulegen, Hubs zu oeffnen und weiter in Session-Prep und den Weg nach Play zu fuehren.</div>
+                            </div>
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Charakterarchiv</div>
+                                <div class="book-guide-copy">Charaktere bleiben der Ort fuer Archiv, Heldenerstellung und den Rueckweg in Kampagnen oder direkte Session-Vorbereitung.</div>
+                            </div>
+                            <div class="book-guide-item">
+                                <div class="book-guide-title">Hauptweg</div>
+                                <div class="book-guide-copy">Die Produktlinie fuehrt jetzt vom Home ueber Guilds, Kampagnen und Session-Prep kontrolliert weiter Richtung Play.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="book-page-folio" data-book-folio="left">1</div>
+                </section>
+
+                <section class="book-page book-page--content">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Recent Campaigns</h2>
+                            <a href="/campaigns" data-book-route="/campaigns" onclick="goTo('/campaigns'); return false;">View All</a>
+                        </div>
+                        <div class="grid" id="campaignsGrid">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📋</div>
+                        <p>No campaigns yet. <a href="/campaigns" data-book-route="/campaigns" onclick="goTo('/campaigns'); return false;">Create one!</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Recent Characters</h2>
+                            <a href="/characters" data-book-route="/characters" onclick="goTo('/characters'); return false;">View All</a>
+                        </div>
+                        <div class="grid" id="charactersGrid">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">🧙</div>
+                        <p>No characters yet. <a href="/characters" data-book-route="/characters" onclick="goTo('/characters'); return false;">Create one!</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="book-page-folio" data-book-folio="right">2</div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
+    </footer>
+
+    <script src="/static/js/gsap.min.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/book-scene.js"></script>
+    <script>
+        const auth = new Auth();
+
+        async function bootstrapDashboardScene() {
+            if (!window.BookScene || typeof BookScene.bootstrapProtectedRoute !== 'function') {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            await BookScene.bootstrapProtectedRoute({
+                routeKey: 'dashboard',
+                auth,
+                statusElementId: 'dashboardSceneStatus',
+                statusMessage: 'Opening Home Page...',
+                snapshotLoader(user) {
+                    return BookScene.loadDashboardSnapshot(user);
+                },
+            });
+        }
+
+        async function loadDashboard() {
+            try {
+                const user = await auth.getCurrentUser();
+                if (!user) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+
+                document.getElementById('username').textContent = user.username;
+
+                // Load campaigns
+                const campaignsRes = await auth.makeAuthRequest('/api/campaigns');
+                const campaigns = campaignsRes.slice(0, 3);
+                loadCampaignsGrid(campaigns);
+                document.getElementById('campaignCount').textContent = campaignsRes.length;
+                document.getElementById('sessionsCount').textContent = campaignsRes.reduce((sum, campaign) => sum + Number(campaign.session_count || 0), 0);
+
+                // Load characters
+                const charactersRes = await auth.makeAuthRequest('/api/characters/mine');
+                const characters = charactersRes.slice(0, 3);
+                loadCharactersGrid(characters);
+                document.getElementById('characterCount').textContent = charactersRes.length;
+
+            } catch (error) {
+                console.error('Failed to load dashboard:', error);
+                window.location.href = '/login.html';
+            }
+        }
+
+        function loadCampaignsGrid(campaigns) {
+            const grid = document.getElementById('campaignsGrid');
+            if (campaigns.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">📋</div>
+                        <p>No campaigns yet. <a href="/campaigns" onclick="goTo('/campaigns'); return false;">Create one!</a></p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = campaigns.map(c => `
+                <div class="card" onclick="openCampaignHub(${c.id})">
+                    <div class="card-image">🏰</div>
+                    <div class="card-title">${c.name}</div>
+                    <div class="card-meta">${c.status} • ${c.member_count || 0} members</div>
+                    <div class="card-next-step">${Number(c.session_count || 0) > 0 ? 'Next: open the hub, review session prep, and continue toward play.' : 'Next: open the hub and create the first session-prep path.'}</div>
+                    <div class="card-buttons">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); openCampaignHub(${c.id})">Open Hub</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadCharactersGrid(characters) {
+            const grid = document.getElementById('charactersGrid');
+            if (characters.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">🧙</div>
+                        <p>No characters yet. <a href="/characters" onclick="goTo('/characters'); return false;">Create one!</a></p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = characters.map(c => `
+                <div class="card" onclick="openCharacterSheet(${c.id})">
+                    <div class="card-image">🗡️</div>
+                    <div class="card-title">${c.name}</div>
+                    <div class="card-meta">Lvl ${c.level} ${c.class} • ${c.race}</div>
+                    <div class="card-next-step">${c.campaign_id ? 'Next: review the sheet, then return to campaign prep for session context.' : 'Next: finish the sheet and identity, then continue into campaign prep.'}</div>
+                    <div class="card-buttons">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); openCharacterSheet(${c.id})">Open Sheet</button>
+                        <button class="btn btn-secondary" onclick="event.stopPropagation(); openCharacterCampaignContext(${c.campaign_id || 0})">${c.campaign_id ? 'Campaign Prep' : 'Campaigns Hub'}</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openCampaignHub(id) {
+            goTo(`/campaigns?campaign_id=${id}`);
+        }
+
+        function openCharacterSheet(id) {
+            goTo(`/character-sheet?id=${id}`);
+        }
+
+        function openCharacterCampaignContext(campaignId) {
+            const parsed = Number(campaignId);
+            if (Number.isInteger(parsed) && parsed > 0) {
+                goTo(`/campaigns?campaign_id=${parsed}`);
+                return;
+            }
+            goTo('/campaigns');
+        }
+
+        function goTo(path) {
+            if (window.BookScene && typeof BookScene.pageTurn === 'function') {
+                BookScene.pageTurn(path, BookScene.sceneUser || null);
+            } else {
+                window.location.href = path;
+            }
+        }
+
+        async function logout() {
+            await auth.logout();
+        }
+
+        document.addEventListener('DOMContentLoaded', bootstrapDashboardScene);
+    </script>
+</body>
+</html>
