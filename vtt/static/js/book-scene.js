@@ -1294,6 +1294,7 @@
             this.loginContent.style.opacity = '0';
             this.loginContent.style.pointerEvents = 'none';
             this.loginContent.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('book-login-open');
             if (typeof gsap !== 'undefined') {
                 gsap.set([this.loginSpread, this.loginLeftPage, this.loginRightPage], {
                     clearProps: 'transform,opacity,filter',
@@ -1378,6 +1379,7 @@
                         this.loginContent.classList.add('visible');
                         this.loginContent.removeAttribute('aria-hidden');
                     }
+                    document.body.classList.add('book-login-open');
                     this.setSceneState('login');
                 }
             });

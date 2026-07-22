@@ -492,7 +492,8 @@
 
 body.is-book-scene-login,
 body.is-book-scene-opening {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 body.is-book-scene-dashboard,
@@ -1599,11 +1600,24 @@ body[data-book-scene-entry-boundary="arrived"] .book-dashboard-page {
     pointer-events: auto;
 }
 
+body.book-login-open .book-scene-stage {
+    align-items: flex-start;
+}
+
+body.book-login-open #book {
+    overflow: visible;
+}
+
+body.book-login-open #login-content {
+    inset: 0 0 auto 0;
+    height: auto;
+}
+
 #login-content .login-book-spread {
     position: relative;
     width: 100%;
-    height: 100%;
-    min-height: 0;
+    height: auto;
+    min-height: 100%;
     display: flex;
     align-items: stretch;
     justify-content: stretch;
@@ -1629,7 +1643,6 @@ body[data-book-scene-entry-boundary="arrived"] .book-dashboard-page {
     align-items: stretch;
     justify-content: center;
     min-width: 0;
-    min-height: 0;
 }
 
 #login-content .login-book-page--left {
@@ -1644,7 +1657,7 @@ body[data-book-scene-entry-boundary="arrived"] .book-dashboard-page {
 #login-content .login-book-paper {
     position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     padding: clamp(28px, 3vw, 44px);
     background: linear-gradient(180deg, var(--vtt-paper-panel, #fff8ef) 0%, var(--vtt-paper-card, #ead6b2) 100%);
     border: 1px solid rgba(132, 96, 74, 0.18);
@@ -1653,9 +1666,6 @@ body[data-book-scene-entry-boundary="arrived"] .book-dashboard-page {
         inset 0 0 0 1px rgba(255, 255, 255, 0.22),
         inset 0 0 44px rgba(202, 163, 59, 0.06),
         0 22px 42px rgba(42, 26, 18, 0.18);
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
 }
 
 #login-content .login-book-paper::before {
