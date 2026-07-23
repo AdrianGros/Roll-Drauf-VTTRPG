@@ -148,3 +148,10 @@ class Auth {
         return response.json();
     }
 }
+
+// `class` declarations don't attach to `window` the way `var`/`function` do -
+// book-scene.js reads window.Auth (loadSceneSnapshot, loadDashboardSnapshot,
+// and everywhere else it calls window.Auth.makeAuthRequest/getCurrentUser),
+// so without this every one of those calls silently fails its `!window.Auth`
+// guard and falls back to empty data.
+window.Auth = Auth;
