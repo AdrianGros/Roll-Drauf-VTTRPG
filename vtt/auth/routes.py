@@ -552,6 +552,14 @@ def check():
     """Check auth state once during page load."""
     verify_jwt_in_request(optional=True)
     identity = get_jwt_identity()
+    # TEMPORARY diagnostic (2026-07-23): tracking down a report of /api/auth/check
+    # still returning a real user right after logout + a browser data clear.
+    # Logs presence/shape only, never the cookie/token value itself. Remove once resolved.
+    current_app.logger.info(
+        "auth_check_debug had_access_cookie=%s identity=%s",
+        bool(request.cookies.get("access_token_cookie")),
+        identity,
+    )
     if identity is None:
         return jsonify({"user": None}), 200
 
