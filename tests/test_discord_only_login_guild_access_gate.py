@@ -1,5 +1,6 @@
 """M19 tests: Discord-only login and guild access gate."""
 
+from datetime import timedelta
 from urllib.parse import unquote, urlparse
 
 import pytest
@@ -7,6 +8,7 @@ import pytest
 from vtt import create_app
 from vtt.extensions import db
 from vtt.models import DiscordIdentityLink, RegistrationKey, Role, User
+from vtt.utils.time import utcnow
 
 
 def _read_location(response) -> str:
@@ -213,3 +215,91 @@ def test_discord_callback_reuses_existing_linked_user_with_consumed_assignment(c
 
     assert response.status_code == 302
     assert urlparse(response.headers["Location"]).path == "/dashboard"
+
+
+def test_discord_callback_allows_login_when_original_key_expired_after_consumption(client, monkeypatch, app):
+    """A key that already granted access shouldn't retroactively lock the
+    user out once its own expiry window passes — expiry only gates whether
+    an unclaimed key can still be claimed, not already-granted access."""
+    with app.app_context():
+        player_role = Role.query.filter_by(name="Player").first()
+        user = User(username="long_time_member", email="longtime@example.com", role_id=player_role.id, profile_tier="player")
+        user.set_password("Password123!")
+        db.session.add(user)
+        db.session.flush()
+
+        _add_assignment(
+            "523456789012345678",
+            tier="player",
+            uses_remaining=0,
+            used_by_id=user.id,
+            expires_at=utcnow() - timedelta(days=90),
+        )
+        db.session.add(
+            DiscordIdentityLink(
+                user_id=user.id,
+                discord_user_id="523456789012345678",
+                discord_guild_id="1328724663257268264",
+                discord_username_snapshot="Long Time Member",
+                link_status="linked",
+            )
+        )
+        db.session.commit()
+
+    _set_discord_state(client)
+
+    monkeypatch.setattr("vtt.auth.routes.exchange_discord_code", lambda code, redirect_uri: {"access_token": "discord-token"})
+    monkeypatch.setattr(
+        "vtt.auth.routes.fetch_discord_profile",
+        lambda token: {"id": "523456789012345678", "username": "Long Time Member", "email": "longtime@example.com"},
+    )
+    monkeypatch.setattr(
+        "vtt.auth.routes.verify_discord_with_bot",
+        lambda payload: {"allowed": True, "player": True, "role": "player", "guild_id": payload["guild_id"], "reason": None},
+    )
+
+    response = client.get("/api/auth/discord/callback?code=test-code&state=state-123", follow_redirects=False)
+
+    assert response.status_code == 302
+    location = unquote(_read_location(response))
+    assert "access_expired" not in location
+    assert urlparse(response.headers["Location"]).path == "/dashboard"
+
+
+def test_discord_callback_still_denies_login_when_consumed_key_is_revoked(client, monkeypatch, app):
+    """Revocation must still block access even for an already-consumed key —
+    only expiry is exempted for consumed keys, not revocation."""
+    with app.app_context():
+        player_role = Role.query.filter_by(name="Player").first()
+        user = User(username="revoked_member", email="revoked@example.com", role_id=player_role.id, profile_tier="player")
+        user.set_password("Password123!")
+        db.session.add(user)
+        db.session.flush()
+
+        _add_assignment(
+            "623456789012345678",
+            tier="player",
+            uses_remaining=0,
+            used_by_id=user.id,
+            revoked=True,
+        )
+        db.session.commit()
+
+    _set_discord_state(client)
+
+    monkeypatch.setattr("vtt.auth.routes.exchange_discord_code", lambda code, redirect_uri: {"access_token": "discord-token"})
+    monkeypatch.setattr(
+        "vtt.auth.routes.fetch_discord_profile",
+        lambda token: {"id": "623456789012345678", "username": "Revoked Member", "email": "revoked@example.com"},
+    )
+    monkeypatch.setattr(
+        "vtt.auth.routes.verify_discord_with_bot",
+        lambda payload: {"allowed": True, "player": True, "role": "player", "guild_id": payload["guild_id"], "reason": None},
+    )
+
+    response = client.get("/api/auth/discord/callback?code=test-code&state=state-123", follow_redirects=False)
+
+    assert response.status_code == 302
+    location = unquote(_read_location(response))
+    assert "/login.html?discord_error=" in location
+    assert "widerrufen" in location

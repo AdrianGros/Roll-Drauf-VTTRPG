@@ -131,7 +131,12 @@ def _resolve_discord_access_assignment(discord_user_id: str) -> tuple[Registrati
         if key.is_revoked:
             saw_revoked = True
             continue
-        if key.expires_at and now > key.expires_at:
+        # A key's expiry only gates whether it can still be *claimed* — once
+        # consumed it already granted access, and that access is a lifetime
+        # grant (see registration_keys.expires_at) that shouldn't lapse just
+        # because the original invite's expiry window has since passed.
+        consumed = key.used_at is not None or key.uses_remaining <= 0
+        if not consumed and key.expires_at and now > key.expires_at:
             saw_expired = True
             continue
         active_keys.append(key)
