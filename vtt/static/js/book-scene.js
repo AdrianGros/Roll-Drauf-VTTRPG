@@ -476,7 +476,9 @@
                 const activeRouteKey = routeKey === 'character-sheet' ? 'characters' : routeKey;
                 const active = routeKeyForPath(route.href) === activeRouteKey ? ' is-active' : '';
                 return `<button type="button" class="book-dashboard-ribbon-btn${active}" data-dashboard-route="${route.href}">${route.label}</button>`;
-            }).join('') + '<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">Logout</button>';
+            }).join('')
+                + '<button type="button" class="book-dashboard-ribbon-btn book-dashboard-ribbon-btn--play" data-dashboard-action="play-launch">&#9654; Play</button>'
+                + '<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">Logout</button>';
         },
 
         buildCampaignPreview(campaigns) {
@@ -1190,6 +1192,12 @@
                 });
             });
 
+            this.sceneSurface.querySelectorAll('[data-dashboard-action="play-launch"]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    this.openPlayLaunch();
+                });
+            });
+
             this.sceneSurface.querySelectorAll('[data-dashboard-action="logout"]').forEach((node) => {
                 node.addEventListener('click', async () => {
                     if (window.Auth && typeof window.Auth.logout === 'function') {
@@ -1203,6 +1211,289 @@
 
         bindDashboardNavigation() {
             this.bindSceneNavigation();
+        },
+
+        // ── Play Quick Launch ────────────────────────────────────────────
+        // A project-browser-style popup (grid of campaigns, one clear
+        // action each) for getting to the play table fast, reachable via
+        // the Play ribbon button on every book-mode page. Lives here
+        // rather than in a per-page template since buildRibbon() already
+        // renders the same ribbon for dashboard/campaigns/characters/
+        // character-sheet - one shared implementation keeps all four in
+        // sync automatically.
+
+        ensurePlayLaunchModal() {
+            if (document.getElementById('playLaunchModal')) {
+                return document.getElementById('playLaunchModal');
+            }
+
+            const modalHTML = `
+                <div id="playLaunchModal" class="play-launch-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="playLaunchTitle">
+                    <div class="play-launch-box">
+                        <div class="play-launch-header">
+                            <div>
+                                <h2 id="playLaunchTitle">Play</h2>
+                                <p>Waehle eine Session oder starte in wenigen Schritten eine neue.</p>
+                            </div>
+                            <button type="button" class="play-launch-close" data-play-launch-close aria-label="Schliessen">&times;</button>
+                        </div>
+                        <div class="play-launch-body">
+                            <div id="playLaunchStatus" class="play-launch-status" hidden></div>
+                            <div id="playLaunchContent">Lade Kampagnen...</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+            const modal = document.getElementById('playLaunchModal');
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal || event.target.hasAttribute('data-play-launch-close')) {
+                    this.closePlayLaunch();
+                }
+            });
+            return modal;
+        },
+
+        openPlayLaunch() {
+            const modal = this.ensurePlayLaunchModal();
+            modal.hidden = false;
+            this.setPlayLaunchStatus('');
+            this._playLaunchKeydownHandler = this._playLaunchKeydownHandler || ((event) => {
+                if (event.key === 'Escape') {
+                    this.closePlayLaunch();
+                }
+            });
+            document.addEventListener('keydown', this._playLaunchKeydownHandler);
+            this.loadPlayLaunch();
+        },
+
+        closePlayLaunch() {
+            const modal = document.getElementById('playLaunchModal');
+            if (modal) {
+                modal.hidden = true;
+            }
+            if (this._playLaunchKeydownHandler) {
+                document.removeEventListener('keydown', this._playLaunchKeydownHandler);
+            }
+        },
+
+        setPlayLaunchStatus(message, isError = false) {
+            const node = document.getElementById('playLaunchStatus');
+            if (!node) return;
+            if (!message) {
+                node.hidden = true;
+                return;
+            }
+            node.hidden = false;
+            node.textContent = message;
+            node.classList.toggle('is-error', Boolean(isError));
+        },
+
+        async loadPlayLaunch() {
+            const content = document.getElementById('playLaunchContent');
+            if (!content) return;
+            content.textContent = 'Lade Kampagnen...';
+
+            if (!window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
+                this.setPlayLaunchStatus('Nicht angemeldet.', true);
+                return;
+            }
+
+            try {
+                const snapshot = await window.Auth.makeAuthRequest('/api/dashboard/home');
+                this.renderPlayLaunch(snapshot.campaigns || [], snapshot.sessions || []);
+            } catch (error) {
+                content.innerHTML = '';
+                this.setPlayLaunchStatus(error.message || 'Kampagnen konnten nicht geladen werden.', true);
+            }
+        },
+
+        getPlayLaunchSessionPhase(session) {
+            const status = String(session?.runtime_status || '').trim().toLowerCase();
+            if (status === 'in_progress' || status === 'active' || status === 'live') {
+                return { label: 'Live', tone: 'live' };
+            }
+            if (status === 'paused') {
+                return { label: 'Pausiert', tone: 'paused' };
+            }
+            if (status === 'ended' || status === 'completed') {
+                return { label: 'Beendet', tone: 'ended' };
+            }
+            if (status === 'ready') {
+                return { label: 'Bereit', tone: 'ready' };
+            }
+            return { label: 'Geplant', tone: 'scheduled' };
+        },
+
+        renderPlayLaunch(campaigns, sessions) {
+            const content = document.getElementById('playLaunchContent');
+            if (!content) return;
+
+            if (!campaigns.length) {
+                content.innerHTML = `
+                    <div class="play-launch-empty">
+                        <h3>Noch keine Kampagne</h3>
+                        <p>Leg direkt los: Name eingeben, wir legen Kampagne und erste Session an und du bist am Tisch.</p>
+                        <div class="play-launch-quickcreate">
+                            <input type="text" id="playLaunchNewCampaignName" placeholder="Name deiner Kampagne" maxlength="255">
+                            <button class="btn btn-primary" id="playLaunchQuickCreateBtn" type="button" data-play-launch-create-campaign>Kampagne erstellen &amp; zu Play</button>
+                        </div>
+                    </div>
+                `;
+                content.querySelector('[data-play-launch-create-campaign]').addEventListener('click', () => {
+                    this.quickCreateCampaignAndPlay();
+                });
+                return;
+            }
+
+            const sessionsByCampaign = new Map();
+            sessions.forEach((session) => {
+                const list = sessionsByCampaign.get(session.campaign_id) || [];
+                list.push(session);
+                sessionsByCampaign.set(session.campaign_id, list);
+            });
+
+            const cards = campaigns.map((campaign) => {
+                const campaignSessions = sessionsByCampaign.get(campaign.id) || [];
+                // Sessions already arrive ordered by relevance (live/newest
+                // first, then soonest scheduled) - see _build_session_summaries
+                // server-side, which this list is sourced from.
+                const topSession = campaignSessions[0] || null;
+                const roleLabel = campaign.is_owner ? 'DM' : (campaign.your_role || 'Spieler');
+                const canManage = Boolean(campaign.is_owner);
+
+                let statusDot = '';
+                let sessionLine = '';
+                let action = '';
+
+                if (topSession) {
+                    const phase = this.getPlayLaunchSessionPhase(topSession);
+                    statusDot = `<span class="play-launch-status-dot is-${escapeHtml(phase.tone)}">${escapeHtml(phase.label)}</span>`;
+                    sessionLine = `<div class="play-launch-card-session">${escapeHtml(topSession.name)}</div>`;
+
+                    if (phase.tone === 'live' || phase.tone === 'paused') {
+                        const label = phase.tone === 'live' ? 'Zu Play' : 'Fortsetzen';
+                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-open="${campaign.id}:${topSession.id}">${label}</button>`;
+                    } else if ((phase.tone === 'scheduled' || phase.tone === 'ready') && canManage) {
+                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-start="${campaign.id}:${topSession.id}">Session starten</button>`;
+                    } else if (phase.tone === 'scheduled' || phase.tone === 'ready') {
+                        action = `<button class="btn btn-secondary btn-sm" type="button" disabled>Wartet auf DM</button>`;
+                    } else if (canManage) {
+                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-new-session="${campaign.id}">Naechste Session</button>`;
+                    } else {
+                        action = `<button class="btn btn-secondary btn-sm" type="button" data-play-launch-goto="/campaigns?campaign_id=${campaign.id}">Kampagne oeffnen</button>`;
+                    }
+                } else {
+                    sessionLine = '<div class="play-launch-card-session muted">Noch keine Session</div>';
+                    action = canManage
+                        ? `<button class="btn btn-primary btn-sm" type="button" data-play-launch-new-session="${campaign.id}">Session erstellen &amp; zu Play</button>`
+                        : '<button class="btn btn-secondary btn-sm" type="button" disabled>Warte auf DM</button>';
+                }
+
+                return `
+                    <div class="play-launch-card">
+                        <div class="play-launch-card-top">
+                            <h3 class="play-launch-card-title">${escapeHtml(campaign.name)}</h3>
+                            ${statusDot}
+                        </div>
+                        <div class="play-launch-card-meta">${escapeHtml(roleLabel)} &middot; ${Number(campaign.member_count || 0)} Mitglieder</div>
+                        ${sessionLine}
+                        ${action}
+                    </div>
+                `;
+            }).join('');
+
+            content.innerHTML = `
+                <div class="play-launch-grid">${cards}</div>
+                <div class="play-launch-newcampaign-row">
+                    <button class="btn btn-secondary btn-sm" type="button" data-play-launch-goto="/campaigns">Weitere Kampagne anlegen</button>
+                </div>
+            `;
+
+            content.querySelectorAll('[data-play-launch-open]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    const [campaignId, sessionId] = node.getAttribute('data-play-launch-open').split(':').map(Number);
+                    this.openPlayFromLaunch(campaignId, sessionId);
+                });
+            });
+            content.querySelectorAll('[data-play-launch-start]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    const [campaignId, sessionId] = node.getAttribute('data-play-launch-start').split(':').map(Number);
+                    this.quickStartSessionAndPlay(campaignId, sessionId);
+                });
+            });
+            content.querySelectorAll('[data-play-launch-new-session]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    const campaignId = Number(node.getAttribute('data-play-launch-new-session'));
+                    this.quickCreateSessionAndPlay(campaignId);
+                });
+            });
+            content.querySelectorAll('[data-play-launch-goto]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    this.closePlayLaunch();
+                    window.location.href = node.getAttribute('data-play-launch-goto');
+                });
+            });
+        },
+
+        openPlayFromLaunch(campaignId, sessionId) {
+            this.closePlayLaunch();
+            this.enterPlay({ campaignId, sessionId, sourceRoute: this.currentView || this.currentPage || 'dashboard' });
+        },
+
+        async quickStartSessionAndPlay(campaignId, sessionId) {
+            this.setPlayLaunchStatus('Session wird gestartet...');
+            try {
+                await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
+                this.openPlayFromLaunch(campaignId, sessionId);
+            } catch (error) {
+                this.setPlayLaunchStatus(error.message || 'Session konnte nicht gestartet werden.', true);
+            }
+        },
+
+        async quickCreateSessionAndPlay(campaignId) {
+            this.setPlayLaunchStatus('Schritt 1/2: Session wird erstellt...');
+            try {
+                const session = await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, 'POST', {
+                    name: 'Session ' + new Date().toLocaleDateString('de-DE'),
+                });
+                this.setPlayLaunchStatus('Schritt 2/2: Session wird gestartet...');
+                await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
+                this.openPlayFromLaunch(campaignId, session.id);
+            } catch (error) {
+                this.setPlayLaunchStatus(error.message || 'Session konnte nicht erstellt werden.', true);
+            }
+        },
+
+        async quickCreateCampaignAndPlay() {
+            const nameField = document.getElementById('playLaunchNewCampaignName');
+            const button = document.getElementById('playLaunchQuickCreateBtn');
+            const name = (nameField?.value || '').trim() || 'Meine erste Kampagne';
+
+            if (button) {
+                button.disabled = true;
+            }
+
+            try {
+                this.setPlayLaunchStatus('Schritt 1/3: Kampagne wird erstellt...');
+                const campaign = await window.Auth.makeAuthRequest('/api/campaigns', 'POST', { name });
+
+                this.setPlayLaunchStatus('Schritt 2/3: Erste Session wird erstellt...');
+                const session = await window.Auth.makeAuthRequest(`/api/campaigns/${campaign.id}/sessions`, 'POST', {
+                    name: 'Session 1',
+                });
+
+                this.setPlayLaunchStatus('Schritt 3/3: Session wird gestartet...');
+                await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
+
+                this.openPlayFromLaunch(campaign.id, session.id);
+            } catch (error) {
+                this.setPlayLaunchStatus(error.message || 'Schnellstart fehlgeschlagen.', true);
+                if (button) {
+                    button.disabled = false;
+                }
+            }
         },
 
         async loadSceneSnapshot(user = null) {

@@ -456,6 +456,7 @@ def _build_home_snapshot(user: User):
         "user": user.serialize(include_email=True),
         "campaigns": campaigns,
         "characters": characters,
+        "sessions": session_summaries,
         "guilds": guild_preview,
         "primary_guild": primary_guild,
         "home_state": home_state,
