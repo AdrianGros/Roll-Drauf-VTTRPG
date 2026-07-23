@@ -43,6 +43,18 @@ def _parse_bool(value) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _refresh_cookie_max_age(remember_me: bool) -> int:
+    # JWT_SESSION_COOKIE=True means a cookie Max-Age of None makes the
+    # browser drop it as soon as the browser session ends, even though the
+    # refresh JWT itself stays valid server-side for JWT_REFRESH_TOKEN_EXPIRES.
+    # That mismatch silently logs users out well before their token actually
+    # expires, so every login path gives the cookie a real lifetime matching
+    # whichever token expiry actually applies.
+    if remember_me:
+        return int(REMEMBER_ME_REFRESH_EXPIRES.total_seconds())
+    return int(current_app.config["JWT_REFRESH_TOKEN_EXPIRES"].total_seconds())
+
+
 def _sanitize_relative_path(value: str | None, fallback: str = "/dashboard") -> str:
     if not value:
         return fallback
@@ -314,8 +326,9 @@ def _register_user_with_registration_key(data: dict):
     user.update_last_login()
 
     response = jsonify({"user": user.serialize(include_email=True)})
-    set_access_cookies(response, access_token)
-    set_refresh_cookies(response, refresh_token)
+    cookie_max_age = _refresh_cookie_max_age(remember_me=False)
+    set_access_cookies(response, access_token, max_age=cookie_max_age)
+    set_refresh_cookies(response, refresh_token, max_age=cookie_max_age)
     return response, 201
 
 
@@ -361,7 +374,7 @@ def login():
     _create_session_from_access_token(user.id, access_token)
 
     response = jsonify({"user": user.serialize(include_email=True)})
-    cookie_max_age = int(REMEMBER_ME_REFRESH_EXPIRES.total_seconds()) if remember_me else None
+    cookie_max_age = _refresh_cookie_max_age(remember_me)
     set_access_cookies(response, access_token, max_age=cookie_max_age)
     set_refresh_cookies(response, refresh_token, max_age=cookie_max_age)
     return response, 200
@@ -494,7 +507,7 @@ def discord_callback():
             expires_delta=REMEMBER_ME_REFRESH_EXPIRES if remember_me else None,
         )
         response = redirect(next_path)
-        cookie_max_age = int(REMEMBER_ME_REFRESH_EXPIRES.total_seconds()) if remember_me else None
+        cookie_max_age = _refresh_cookie_max_age(remember_me)
         set_access_cookies(response, access_token, max_age=cookie_max_age)
         set_refresh_cookies(response, refresh_token, max_age=cookie_max_age)
         _create_session_from_access_token(user.id, access_token)
@@ -563,7 +576,10 @@ def refresh():
     _create_session_from_access_token(user.id, new_access_token)
 
     response = jsonify({"success": True})
-    set_access_cookies(response, new_access_token)
+    # Match the access cookie's Max-Age to the refresh cookie's so a refresh
+    # never downgrades it back to a browser-session-only cookie (see
+    # _refresh_cookie_max_age for why that matters).
+    set_access_cookies(response, new_access_token, max_age=_refresh_cookie_max_age(remember_me=False))
     return response, 200
 
 
