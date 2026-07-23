@@ -1613,6 +1613,17 @@ body.book-login-open #login-content {
     height: auto;
 }
 
+/* Same clipping bug as book-login-open above, minus the extra work: the
+   dashboard/campaigns/characters/character-sheet family's content lives in
+   #book-dashboard-scene (position: relative, not absolutely pinned like
+   #login-content was), so it already sizes to its own content via normal
+   flow. The only thing still clipping it is #book's own overflow:hidden -
+   fixing just that is enough, and (verified) does not shift the book's
+   resting position for normal, non-overflowing content. */
+body.is-book-scene-dashboard #book {
+    overflow: visible;
+}
+
 #login-content .login-book-spread {
     position: relative;
     width: 100%;
