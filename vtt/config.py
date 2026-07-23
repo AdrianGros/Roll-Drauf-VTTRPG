@@ -123,6 +123,17 @@ class Config:
     SOCKETIO_MESSAGE_QUEUE = os.getenv("SOCKETIO_MESSAGE_QUEUE")
     USE_SESSION_SOCKET_V2 = _parse_bool(os.getenv("USE_SESSION_SOCKET_V2"), default=False)
 
+    # Asset storage (M0 2026-07-23): Config.from_object only picks up class
+    # attributes, not arbitrary env vars, so these must be declared here even
+    # though get_storage_adapter() reads them via current_app.config.get().
+    STORAGE_PROVIDER = os.getenv("STORAGE_PROVIDER", "local")
+    LOCAL_STORAGE_PATH = os.getenv("LOCAL_STORAGE_PATH", "/tmp/vtt-assets")
+    S3_BUCKET = os.getenv("S3_BUCKET")
+    S3_REGION = os.getenv("S3_REGION", "us-east-1")
+    S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL")
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+
     # Release gate defaults (M14)
     RELEASE_GATE_MIN_UPTIME_SECONDS = 0
     RELEASE_GATE_MIN_REQUESTS = 0

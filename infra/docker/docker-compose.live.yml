@@ -47,6 +47,9 @@ services:
       METRICS_ENABLED: "true"
       VOICE_ENABLED: "false"
       USE_SESSION_SOCKET_V2: "false"
+      LOCAL_STORAGE_PATH: /data/vtt-assets
+    volumes:
+      - vtt_assets_data:/data/vtt-assets
     depends_on:
       - db
       - redis
@@ -70,6 +73,7 @@ services:
 volumes:
   vtt_db_data:
   vtt_redis_data:
+  vtt_assets_data:
 
 networks:
   default:

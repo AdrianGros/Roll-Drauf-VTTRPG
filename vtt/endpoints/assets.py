@@ -1,6 +1,7 @@
 """M19-M24: Asset management endpoints (upload, download, list, version)."""
 
 import io
+import logging
 from flask import Blueprint, request, jsonify, send_file, current_app
 from flask_jwt_extended import jwt_required
 from vtt.extensions import db
@@ -9,7 +10,10 @@ from vtt.permissions import has_platform_role, can_view_campaign, can_edit_campa
 from vtt.upload_security import validate_upload, UploadError
 from vtt.storage import get_storage_adapter
 from vtt.utils.audit import log_audit
+from vtt.utils.images import generate_thumbnail
 from vtt.security import current_user
+
+logger = logging.getLogger(__name__)
 
 assets_bp = Blueprint('assets', __name__, url_prefix='/api/assets')
 
@@ -160,6 +164,56 @@ def preview_asset(asset_id):
     return response
 
 
+@assets_bp.route('/<int:asset_id>/thumbnail', methods=['GET'])
+@jwt_required()
+def get_asset_thumbnail(asset_id):
+    """Serve an asset's thumbnail, falling back to the full preview when
+    no thumbnail exists (older asset, or thumbnailing failed at upload
+    time) so the UI grid degrades instead of breaking."""
+    asset = Asset.query.get(asset_id)
+    if not asset or asset.is_soft_deleted():
+        return jsonify({'error': 'Asset not found'}), 404
+
+    campaign = asset.campaign
+    if not _can_access_library(campaign, current_user):
+        return jsonify({'error': 'Forbidden'}), 403
+
+    storage = get_storage_adapter()
+
+    if asset.thumbnail_key:
+        try:
+            content = storage.download(asset.thumbnail_key)
+        except Exception as e:
+            return jsonify({'error': f'Thumbnail failed: {str(e)}'}), 500
+
+        response = send_file(
+            io.BytesIO(content),
+            mimetype='image/jpeg',
+            as_attachment=False,
+            download_name=asset.filename,
+        )
+        response.headers['Content-Disposition'] = f'inline; filename="{asset.filename}"'
+        return response
+
+    # No thumbnail available - fall back to the full preview.
+    if not asset.is_previewable():
+        return jsonify({'error': 'Preview not supported for this asset type'}), 400
+
+    try:
+        content = storage.download(asset.storage_key)
+    except Exception as e:
+        return jsonify({'error': f'Preview failed: {str(e)}'}), 500
+
+    response = send_file(
+        io.BytesIO(content),
+        mimetype=asset.mime_type,
+        as_attachment=False,
+        download_name=asset.filename,
+    )
+    response.headers['Content-Disposition'] = f'inline; filename="{asset.filename}"'
+    return response
+
+
 @assets_bp.route('/<int:asset_id>/download', methods=['GET'])
 @jwt_required()
 def download_asset(asset_id):
@@ -230,6 +284,24 @@ def upload_asset(campaign_id):
     except Exception as e:
         return jsonify({'error': f'Storage upload failed: {str(e)}'}), 500
 
+    # M4: Generate and store a thumbnail for image uploads. Best-effort -
+    # a thumbnailing failure must not fail the overall upload.
+    thumbnail_key = None
+    if validation['mime_type'].startswith('image/'):
+        try:
+            thumbnail_bytes = generate_thumbnail(validation['content'])
+            thumbnail_key = (
+                f'campaigns/{campaign_id}/assets/thumbs/'
+                f'{validation["checksum_md5"][:8]}-{validation["filename"]}.jpg'
+            )
+            storage.upload(thumbnail_key, thumbnail_bytes)
+        except Exception as e:
+            logger.warning(
+                'Thumbnail generation failed for upload %s: %s',
+                validation['filename'], e,
+            )
+            thumbnail_key = None
+
     # M19: Create asset record
     asset = Asset(
         campaign_id=campaign_id,
@@ -243,6 +315,7 @@ def upload_asset(campaign_id):
         asset_type=asset_type,
         scope='campaign',
         is_public=request.form.get('is_public', 'false').lower() == 'true',
+        thumbnail_key=thumbnail_key,
     )
     db.session.add(asset)
     db.session.commit()
@@ -264,13 +337,18 @@ def upload_asset(campaign_id):
         performed_by=current_user
     )
 
-    return jsonify({
+    response = {
         'asset_id': asset.id,
         'filename': asset.filename,
         'size_bytes': asset.size_bytes,
         'asset_type': asset_type,
         'message': 'Asset uploaded successfully',
-    }), 201
+    }
+    if 'width' in validation and 'height' in validation:
+        response['width'] = validation['width']
+        response['height'] = validation['height']
+
+    return jsonify(response), 201
 
 
 # ===== M19: Version History =====

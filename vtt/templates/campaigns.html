@@ -2895,6 +2895,71 @@
             `).join("");
         }
 
+        async function uploadStandaloneMap(campaignId) {
+            const nameField = document.getElementById(`newMapName_${campaignId}`);
+            const fileField = document.getElementById(`newMapFile_${campaignId}`);
+            const button = document.getElementById(`newMapUploadBtn_${campaignId}`);
+
+            const name = (nameField?.value || "").trim();
+            const file = fileField?.files?.[0];
+
+            if (!name) {
+                showMessage("Bitte einen Kartennamen eingeben.", true);
+                return;
+            }
+            if (!file) {
+                showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswaehlen.", true);
+                return;
+            }
+            if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+                showMessage("Bitte nur PNG, JPEG oder WebP verwenden.", true);
+                return;
+            }
+            if (file.size > 50 * 1024 * 1024) {
+                showMessage("Datei ist zu gross. Maximum sind 50MB.", true);
+                return;
+            }
+
+            if (button) {
+                button.disabled = true;
+                button.textContent = "Wird hochgeladen...";
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("asset_type", "map");
+                const uploaded = await makeMultipartAuthRequest(`/api/assets/campaigns/${campaignId}/upload`, formData);
+
+                let size = { width: uploaded.width, height: uploaded.height };
+                if (!size.width || !size.height) {
+                    try {
+                        size = await getImageSize(file);
+                    } catch (_error) {
+                        size = { width: 1400, height: 900 };
+                    }
+                }
+
+                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/maps`, "POST", {
+                    name,
+                    background_url: `/api/assets/${uploaded.asset_id}/preview`,
+                    width: size.width,
+                    height: size.height,
+                    grid_size: 70
+                });
+
+                showMessage(`Karte "${name}" hinzugefuegt.`);
+                await viewCampaign(campaignId, false);
+            } catch (error) {
+                showMessage(error.message || "Karte konnte nicht hinzugefuegt werden.", true);
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = "Karte hinzufuegen";
+                }
+            }
+        }
+
         function scrollToHubSurface(elementId) {
             const node = document.getElementById(elementId);
             if (!node) return;
@@ -3129,10 +3194,12 @@
                             </div>
                             ${canManage ? `
                                 <div class="book-shell-placeholder" style="margin-top:0.85rem;">
-                                    <div class="book-shell-placeholder-title">Map Prep folgt hier</div>
-                                    <div class="book-shell-placeholder-copy">Map-Auswahl, Reihenfolge und feinere Vorbereitung bleiben sichtbar, aber bewusst noch deaktiviert statt versteckt.</div>
-                                    <div class="book-shell-placeholder-actions">
-                                        <button class="btn btn-secondary btn-sm" type="button" disabled>Map Workspace folgt</button>
+                                    <div class="book-shell-placeholder-title">Karte hochladen</div>
+                                    <div class="book-shell-placeholder-copy">Bild von deinem PC hochladen - wird der Kampagne als wiederverwendbare Karte hinzugefuegt, ohne gleich eine Session zu starten.</div>
+                                    <div class="book-shell-placeholder-actions" style="flex-direction:column; align-items:stretch; gap:0.5rem;">
+                                        <input type="text" id="newMapName_${campaign.id}" placeholder="Kartenname" maxlength="255" class="form-input">
+                                        <input type="file" id="newMapFile_${campaign.id}" accept="image/png,image/jpeg,image/webp">
+                                        <button class="btn btn-secondary btn-sm" type="button" id="newMapUploadBtn_${campaign.id}" onclick="uploadStandaloneMap(${campaign.id})">Karte hinzufuegen</button>
                                     </div>
                                 </div>
                             ` : ""}
@@ -3965,23 +4032,31 @@
                 formData.append("asset_type", "map");
                 const uploaded = await makeMultipartAuthRequest(`/api/assets/campaigns/${campaignId}/upload`, formData);
 
-                let size = { width: 1400, height: 900 };
-                try {
-                    size = await getImageSize(file);
-                } catch (_error) {
-                    // Fallback to sensible defaults for first-run simplicity.
+                // Prefer the server-detected pixel size (from Pillow) so the
+                // map renders at native resolution; only fall back to a
+                // client-side read (or a guessed default) if that's missing.
+                let size = { width: uploaded.width, height: uploaded.height };
+                if (!size.width || !size.height) {
+                    try {
+                        size = await getImageSize(file);
+                    } catch (_error) {
+                        size = { width: 1400, height: 900 };
+                    }
                 }
 
-                showMessage("Schritt 3/4: Karte wird als Session-Layer gesetzt...");
-                await auth.makeAuthRequest(`/api/sessions/${createdSession.id}/map-layers`, "POST", {
-                    layer_name: "Hauptkarte",
-                    asset_id: uploaded.asset_id,
+                showMessage("Schritt 3/4: Karte wird der Kampagne hinzugefuegt...");
+                const campaignMap = await auth.makeAuthRequest(`/api/campaigns/${campaignId}/maps`, "POST", {
+                    name: sessionName,
+                    background_url: `/api/assets/${uploaded.asset_id}/preview`,
                     width: size.width,
                     height: size.height,
-                    grid_size: 70,
-                    is_visible: true,
-                    fog_of_war_enabled: false
+                    grid_size: 70
                 });
+                await auth.makeAuthRequest(
+                    `/api/play/campaigns/${campaignId}/sessions/${createdSession.id}/scene-stack/init`,
+                    "POST",
+                    { map_ids: [campaignMap.id] }
+                );
 
                 showMessage("Schritt 4/4: Session wird gestartet...");
                 await auth.makeAuthRequest(`/api/sessions/${createdSession.id}/start`, "POST");

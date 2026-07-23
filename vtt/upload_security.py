@@ -1,9 +1,11 @@
 """M20: Upload security validation (MIME types, sizes, safety)."""
 
 import hashlib
+import io
 import mimetypes
 import re
 from flask import current_app
+from PIL import Image, UnidentifiedImageError
 
 # M20: Allowed MIME types (whitelist)
 ALLOWED_MIME_TYPES = {
@@ -105,10 +107,21 @@ def validate_upload(file_obj, user, check_quota=True):
     # 5. Compute checksum
     checksum = compute_checksum_md5(file_content)
 
-    return {
+    result = {
         'filename': file_obj.filename,
         'mime_type': mime_type,
         'size_bytes': len(file_content),
         'checksum_md5': checksum,
         'content': file_content,
     }
+
+    # 6. Detect natural pixel dimensions for images (used to size CampaignMap
+    # at native resolution instead of a guessed default).
+    if mime_type.startswith('image/'):
+        try:
+            with Image.open(io.BytesIO(file_content)) as img:
+                result['width'], result['height'] = img.size
+        except UnidentifiedImageError:
+            pass
+
+    return result

@@ -1,8 +1,10 @@
 """M64 tests: asset library listing and preview endpoints."""
 
+import io
 from datetime import datetime
 
 import pytest
+from PIL import Image
 
 from vtt import create_app
 from vtt.extensions import db
@@ -216,3 +218,95 @@ class TestAssetLibrary:
         assert response.status_code == 200
         assert response.headers["Content-Disposition"].startswith("inline")
         assert response.data == b"PNGDATA"
+
+
+def _make_png_bytes(size=(64, 48), color=(200, 50, 50)):
+    buffer = io.BytesIO()
+    Image.new("RGB", size, color).save(buffer, format="PNG")
+    return buffer.getvalue()
+
+
+class TestAssetThumbnails:
+    """M4: thumbnail generation on upload + thumbnail serving endpoint."""
+
+    def _grant_quota(self, user, gb=1):
+        user.storage_quota_gb = gb
+        db.session.commit()
+
+    def test_image_upload_generates_thumbnail(self, app, dm_user, dm_client, tmp_path):
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        self._grant_quota(dm_user)
+        campaign = _create_campaign(dm_user)
+
+        png_bytes = _make_png_bytes()
+        response = dm_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (io.BytesIO(png_bytes), "battle-map.png"),
+                "asset_type": "map",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 201
+        asset_id = response.get_json()["asset_id"]
+
+        asset = Asset.query.get(asset_id)
+        assert asset.thumbnail_key is not None
+        assert asset.serialize()["thumbnail_url"] == f"/api/assets/{asset_id}/thumbnail"
+
+        thumb_response = dm_client.get(f"/api/assets/{asset_id}/thumbnail")
+        assert thumb_response.status_code == 200
+        assert thumb_response.data
+        # Should be a valid, smaller JPEG.
+        thumb_image = Image.open(io.BytesIO(thumb_response.data))
+        assert thumb_image.format == "JPEG"
+        assert max(thumb_image.size) <= 320
+
+    def test_non_image_upload_does_not_set_thumbnail(self, app, dm_user, dm_client, tmp_path):
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        self._grant_quota(dm_user)
+        campaign = _create_campaign(dm_user)
+
+        response = dm_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (io.BytesIO(b"just some plain text notes"), "notes.txt"),
+                "asset_type": "handout",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 201
+        asset_id = response.get_json()["asset_id"]
+
+        asset = Asset.query.get(asset_id)
+        assert asset.thumbnail_key is None
+        assert asset.serialize()["thumbnail_url"] is None
+
+    def test_thumbnail_endpoint_falls_back_to_preview_when_missing(self, dm_user, dm_client, monkeypatch):
+        campaign = _create_campaign(dm_user)
+        asset = Asset(
+            campaign_id=campaign.id,
+            uploaded_by=dm_user.id,
+            filename="legacy-map.png",
+            mime_type="image/png",
+            size_bytes=2048,
+            checksum_md5="0123456789abcdef0123456789abcdef",
+            storage_key="campaigns/1/assets/legacy-map.png",
+            storage_provider="local",
+            asset_type="map",
+            scope="campaign",
+            thumbnail_key=None,
+        )
+        db.session.add(asset)
+        db.session.commit()
+
+        class _Storage:
+            @staticmethod
+            def download(_key):
+                return b"FULLPREVIEWDATA"
+
+        monkeypatch.setattr("vtt.endpoints.assets.get_storage_adapter", lambda: _Storage())
+
+        response = dm_client.get(f"/api/assets/{asset.id}/thumbnail")
+        assert response.status_code == 200
+        assert response.data == b"FULLPREVIEWDATA"

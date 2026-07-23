@@ -511,10 +511,25 @@
         }
 
         _bindWorkspaceControls() {
+            // M3: the right sidebar (Journal/Chat/Tools/Session) is an overlay
+            // toggled on demand now, closed by default, so the map keeps the
+            // large majority of the screen instead of a permanently reserved
+            // 370px column.
+            const sidebar = document.querySelector(".right-sidebar");
+            const sidebarToggle = document.getElementById("btnSidebarToggle");
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener("click", () => {
+                    sidebar.classList.toggle("is-open");
+                });
+            }
+
             document.querySelectorAll(".sidebar-tab").forEach((button) => {
                 button.addEventListener("click", () => {
                     const tab = button.getAttribute("data-tab") || "tools";
                     this._activateSidebarTab(tab);
+                    if (sidebar) {
+                        sidebar.classList.add("is-open");
+                    }
                 });
             });
             this._activateSidebarTab(this.activeSidebarTab);

@@ -71,6 +71,7 @@ class Asset(db.Model):
             'previewable': self.is_previewable(),
             'download_url': f'/api/assets/{self.id}/download',
             'preview_url': f'/api/assets/{self.id}/preview',
+            'thumbnail_url': f'/api/assets/{self.id}/thumbnail' if self.thumbnail_key else None,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
             'is_deleted': self.deleted_at is not None,
