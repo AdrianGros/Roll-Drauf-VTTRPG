@@ -409,6 +409,17 @@
     <script src="/static/js/book-scene.js"></script>
 
     <script>
+        // Captured synchronously the instant this script runs - before
+        // DOMContentLoaded (and initEntryStatus(), which strips ?logged_out=1
+        // from the URL) and before GSAP-readiness retries or the duplicate
+        // DOMContentLoaded/window.load triggers can race a one-time
+        // sessionStorage flag. This is the single source of truth for "did we
+        // just log out" for this entire page load - a fresh logout must be
+        // treated exactly like a first-ever visit to this page, never
+        // silently re-authenticated back into the dashboard.
+        const FORCE_LOGGED_OUT = new URLSearchParams(window.location.search).get('logged_out') === '1'
+            || consumeForcedLogout();
+
         // Wait for BOTH DOMContentLoaded AND window.load to ensure GSAP is loaded
         let bookInitStarted = false;
 
@@ -423,12 +434,7 @@
 
             // DOMContentLoaded and window.load each schedule their own call, so
             // whichever fires first (once GSAP is ready) runs the real logic
-            // below exactly once. Without this, the second call re-checks
-            // "was I just logged out?" after the first call already consumed
-            // the one-time sessionStorage flag and the ?logged_out=1 URL param
-            // (stripped by initEntryStatus() on load) - finding neither, it
-            // treats the page as a normal load, re-authenticates, and bounces
-            // straight back into the dashboard right after a fresh logout.
+            // below exactly once.
             if (bookInitStarted) {
                 return;
             }
@@ -440,9 +446,7 @@
             BookScene.create();
             BookScene.open();
 
-            const loginParams = new URLSearchParams(window.location.search);
-            const forceLoggedOut = loginParams.get('logged_out') === '1' || consumeForcedLogout();
-            if (forceLoggedOut) {
+            if (FORCE_LOGGED_OUT) {
                 return;
             }
 
