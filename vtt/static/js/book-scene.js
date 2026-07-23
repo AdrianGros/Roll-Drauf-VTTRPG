@@ -1712,7 +1712,13 @@
             }, 0.8);
             if (this.loginContent) {
                 timeline.add(() => {
-                    if (this.currentView === 'login') {
+                    // currentPage (set from the real URL by updateCurrentPage())
+                    // is used here rather than currentView, which create()'s
+                    // dashboard pre-render (ensureDashboardScene(), for instant
+                    // transitions later) unconditionally overwrites to
+                    // 'dashboard' as a side effect - on every page, including
+                    // login.html, regardless of whether anyone is logged in.
+                    if (this.currentPage === 'login') {
                         gsap.set([this.loginSpread, this.loginLeftPage, this.loginRightPage], {
                             clearProps: 'transform,opacity,filter',
                         });
@@ -1737,7 +1743,7 @@
 
             timeline.eventCallback('onComplete', () => {
                 this.bookCover.classList.add('is-open');
-                if (this.currentView !== 'login') {
+                if (this.currentPage !== 'login') {
                     this.hideLoginContent();
                     this.setSceneState('dashboard');
                 } else {
