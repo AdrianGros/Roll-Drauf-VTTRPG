@@ -35,6 +35,7 @@ from vtt.models.session_initiative import SessionInitiative  # M43
 from vtt.models.session_character_assignment import SessionCharacterAssignment
 from vtt.models.discord_identity_link import DiscordIdentityLink
 from vtt.models.guild import Guild, GuildMembership
+from vtt.models.page_content import PageContent
 
 __all__ = [
     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',
@@ -45,5 +46,5 @@ __all__ = [
     'SceneStack', 'SceneLayer', 'SessionSnapshot',
     'RegistrationKey', 'AppThemeSettings',
     'SessionMapLayer', 'SessionToken', 'SessionInitiative', 'SessionCharacterAssignment', 'DiscordIdentityLink',
-    'Guild', 'GuildMembership'
+    'Guild', 'GuildMembership', 'PageContent'
 ]

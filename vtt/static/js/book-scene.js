@@ -467,18 +467,18 @@
 
         buildRibbon(routeKey) {
             const routes = [
-                { href: '/dashboard', label: 'Dashboard' },
-                { href: '/campaigns', label: 'Campaigns' },
-                { href: '/characters', label: 'Characters' },
+                { href: '/dashboard', label: this.content('ribbon.nav_dashboard', 'Dashboard') },
+                { href: '/campaigns', label: this.content('ribbon.nav_campaigns', 'Campaigns') },
+                { href: '/characters', label: this.content('ribbon.nav_characters', 'Characters') },
             ];
 
             return routes.map((route) => {
                 const activeRouteKey = routeKey === 'character-sheet' ? 'characters' : routeKey;
                 const active = routeKeyForPath(route.href) === activeRouteKey ? ' is-active' : '';
-                return `<button type="button" class="book-dashboard-ribbon-btn${active}" data-dashboard-route="${route.href}">${route.label}</button>`;
+                return `<button type="button" class="book-dashboard-ribbon-btn${active}" data-dashboard-route="${route.href}">${escapeHtml(route.label)}</button>`;
             }).join('')
-                + '<button type="button" class="book-dashboard-ribbon-btn book-dashboard-ribbon-btn--play" data-dashboard-action="play-launch">&#9654; Play</button>'
-                + '<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">Logout</button>';
+                + `<button type="button" class="book-dashboard-ribbon-btn book-dashboard-ribbon-btn--play" data-dashboard-action="play-launch">${escapeHtml(this.content('ribbon.play_button', '▶ Play'))}</button>`
+                + `<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">${escapeHtml(this.content('ribbon.logout_button', 'Logout'))}</button>`;
         },
 
         buildCampaignPreview(campaigns) {
@@ -653,17 +653,18 @@
                 href: '/characters?classic=1',
             };
             const primaryGuild = snapshot?.primary_guild || null;
-            const socialScopeNote = snapshot?.social_scope?.note || 'Dashboard-Social bleibt vom Session-Chat getrennt.';
+            const socialScopeNote = snapshot?.social_scope?.note
+                || this.content('home.social_scope_default', 'Dashboard-Social bleibt vom Session-Chat getrennt.');
 
             return `
                 <section class="book-home-hero" data-dashboard-section-target="social">
-                    <div class="book-home-hero-kicker">Home</div>
-                    <h2 class="book-home-hero-title">Dein Heimathafen vor dem Tisch</h2>
-                    <p class="book-home-hero-copy">${escapeHtml(homeState.summary || 'Von hier aus verzweigt sich das Buch in Social, Guilds, Kampagnen, Charaktere, Session-Prep und den kontrollierten Weg nach Play.')}</p>
+                    <div class="book-home-hero-kicker">${escapeHtml(this.content('home.hero_kicker', 'Home'))}</div>
+                    <h2 class="book-home-hero-title">${escapeHtml(this.content('home.hero_title', 'Dein Heimathafen vor dem Tisch'))}</h2>
+                    <p class="book-home-hero-copy">${escapeHtml(homeState.summary || this.content('home.hero_summary_default', 'Von hier aus verzweigt sich das Buch in Social, Guilds, Kampagnen, Charaktere, Session-Prep und den kontrollierten Weg nach Play.'))}</p>
                     <div class="book-home-hero-meta">
-                        <span>${Number(homeState.campaign_count || 0)} Kampagnen</span>
-                        <span>${Number(homeState.character_count || 0)} Helden</span>
-                        <span>${Number(homeState.session_count || 0)} Sessions</span>
+                        <span>${escapeHtml(this.content('home.hero_meta_campaigns', '{count} Kampagnen', { count: Number(homeState.campaign_count || 0) }))}</span>
+                        <span>${escapeHtml(this.content('home.hero_meta_characters', '{count} Helden', { count: Number(homeState.character_count || 0) }))}</span>
+                        <span>${escapeHtml(this.content('home.hero_meta_sessions', '{count} Sessions', { count: Number(homeState.session_count || 0) }))}</span>
                         ${primaryGuild ? `<span>${escapeHtml(primaryGuild.name)}</span>` : ''}
                     </div>
                     ${this.buildActionButtons([
@@ -678,7 +679,7 @@
                         },
                     ], 'book-scene-action-row--inline')}
                     <div class="book-home-hero-note">
-                        <strong>Social Scope:</strong> ${escapeHtml(socialScopeNote)}
+                        <strong>${escapeHtml(this.content('home.social_scope_label', 'Social Scope:'))}</strong> ${escapeHtml(socialScopeNote)}
                     </div>
                     ${this.dashboardNotice ? `<div class="book-home-hero-notice">${escapeHtml(this.dashboardNotice)}</div>` : ''}
                 </section>
@@ -687,12 +688,12 @@
 
         buildDashboardNavigationRail() {
             const items = [
-                { section: 'social', label: 'Social' },
-                { section: 'guilds', label: 'Guilds' },
-                { section: 'campaigns', label: 'Campaigns' },
-                { section: 'characters', label: 'Characters' },
-                { section: 'session-prep', label: 'Session Prep' },
-                { section: 'play', label: 'Play' },
+                { section: 'social', label: this.content('home.nav_social', 'Social') },
+                { section: 'guilds', label: this.content('home.nav_guilds', 'Guilds') },
+                { section: 'campaigns', label: this.content('home.nav_campaigns', 'Campaigns') },
+                { section: 'characters', label: this.content('home.nav_characters', 'Characters') },
+                { section: 'session-prep', label: this.content('home.nav_session_prep', 'Session Prep') },
+                { section: 'play', label: this.content('home.nav_play', 'Play') },
             ];
 
             return `
@@ -713,23 +714,25 @@
             if (guilds.length === 0) {
                 return `
                     <section class="book-home-guild-panel" data-dashboard-section-target="guilds">
-                        <div class="book-home-section-kicker">Guilds</div>
-                        <h3 class="book-home-section-title">Meta-Banner</h3>
-                        <p class="book-home-section-copy">Die Guild-Ebene wird vorbereitet.</p>
+                        <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_empty_kicker', 'Guilds'))}</div>
+                        <h3 class="book-home-section-title">${escapeHtml(this.content('home.guild_panel_empty_title', 'Meta-Banner'))}</h3>
+                        <p class="book-home-section-copy">${escapeHtml(this.content('home.guild_panel_empty_copy', 'Die Guild-Ebene wird vorbereitet.'))}</p>
                     </section>
                 `;
             }
 
+            const memberCountBadge = (count) => this.content('home.guild_badge_member_count', '{count} Mitglieder', { count: Number(count || 0) });
+
             return `
                 <section class="book-home-guild-panel" data-dashboard-section-target="guilds">
-                    <div class="book-home-section-kicker">Guilds</div>
-                    <h3 class="book-home-section-title">Dein Banner im Buch</h3>
+                    <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_kicker', 'Guilds'))}</div>
+                    <h3 class="book-home-section-title">${escapeHtml(this.content('home.guild_panel_title', 'Dein Banner im Buch'))}</h3>
                     <p class="book-home-section-copy">
-                        Guilds bleiben reine Meta-Identitaet. Sie veraendern keine Rollen, keine Berechtigungen und keinen Session-Chat.
+                        ${escapeHtml(this.content('home.guild_panel_copy', 'Guilds bleiben reine Meta-Identitaet. Sie veraendern keine Rollen, keine Berechtigungen und keinen Session-Chat.'))}
                     </p>
                     ${primaryGuild ? `
                         <div class="book-home-guild-primary">
-                            <span class="book-home-guild-primary-kicker">Primaere Gilde</span>
+                            <span class="book-home-guild-primary-kicker">${escapeHtml(this.content('home.guild_primary_label', 'Primaere Gilde'))}</span>
                             <strong>${escapeHtml(primaryGuild.name)}</strong>
                             <p>${escapeHtml(primaryGuild.tagline || primaryGuild.description || '')}</p>
                         </div>
@@ -742,7 +745,7 @@
                                         <strong>${escapeHtml(guild.name)}</strong>
                                         <span>${escapeHtml(guild.tagline || '')}</span>
                                     </div>
-                                    <span class="book-home-guild-badge">${guild.is_primary ? 'Primaer' : `${Number(guild.member_count || 0)} Mitglieder`}</span>
+                                    <span class="book-home-guild-badge">${guild.is_primary ? escapeHtml(this.content('home.guild_badge_primary', 'Primaer')) : escapeHtml(memberCountBadge(guild.member_count))}</span>
                                 </div>
                                 <p>${escapeHtml(guild.status_preview || guild.description || '')}</p>
                                 <button
@@ -751,7 +754,7 @@
                                     data-dashboard-guild-switch="${Number(guild.id)}"
                                     ${guild.is_primary ? 'disabled' : ''}
                                 >
-                                    ${guild.is_primary ? 'Aktuelle Gilde' : 'Als Primaergilde setzen'}
+                                    ${guild.is_primary ? escapeHtml(this.content('home.guild_button_current', 'Aktuelle Gilde')) : escapeHtml(this.content('home.guild_button_set_primary', 'Als Primaergilde setzen'))}
                                 </button>
                             </article>
                         `).join('')}
@@ -767,9 +770,9 @@
                 return `
                     <section class="book-home-feed" data-dashboard-section-target="social">
                         <div class="book-home-feed-item is-empty">
-                            <div class="book-home-feed-kicker">Chronicle</div>
-                            <h3 class="book-home-feed-title">Home-Feed wird vorbereitet</h3>
-                            <p class="book-home-feed-copy">Noch keine Home-Eintraege sichtbar. Kampagnen und Charaktere bleiben solange die stabilen Einstiege.</p>
+                            <div class="book-home-feed-kicker">${escapeHtml(this.content('home.feed_empty_kicker', 'Chronicle'))}</div>
+                            <h3 class="book-home-feed-title">${escapeHtml(this.content('home.feed_empty_title', 'Home-Feed wird vorbereitet'))}</h3>
+                            <p class="book-home-feed-copy">${escapeHtml(this.content('home.feed_empty_copy', 'Noch keine Home-Eintraege sichtbar. Kampagnen und Charaktere bleiben solange die stabilen Einstiege.'))}</p>
                         </div>
                     </section>
                 `;
@@ -812,8 +815,8 @@
                 <section class="book-home-context">
                     <div class="book-home-context-grid">
                         <section class="book-home-context-card">
-                            <div class="book-home-section-kicker">Heute wichtig</div>
-                            <h3 class="book-home-section-title">Prioritaeten</h3>
+                            <div class="book-home-section-kicker">${escapeHtml(this.content('home.priorities_kicker', 'Heute wichtig'))}</div>
+                            <h3 class="book-home-section-title">${escapeHtml(this.content('home.priorities_title', 'Prioritaeten'))}</h3>
                             <div class="book-home-priority-list">
                                 ${priorities.map((priority) => `
                                     <div class="book-home-priority-card" data-tone="${escapeHtml(priority.tone || 'info')}">
@@ -825,8 +828,8 @@
                         </section>
 
                         <section class="book-home-context-card">
-                            <div class="book-home-section-kicker">Schnellzugriffe</div>
-                            <h3 class="book-home-section-title">Wohin du als naechstes gehst</h3>
+                            <div class="book-home-section-kicker">${escapeHtml(this.content('home.quicklinks_kicker', 'Schnellzugriffe'))}</div>
+                            <h3 class="book-home-section-title">${escapeHtml(this.content('home.quicklinks_title', 'Wohin du als naechstes gehst'))}</h3>
                             <div class="book-home-quick-links">
                                 ${quickLinks.map((link) => `
                                     <button
@@ -840,7 +843,7 @@
                                 `).join('')}
                             </div>
                             <div class="book-home-context-note">
-                                Dashboard bleibt Home und Social Hub. Kampagnen, Session-Prep und Play bleiben die operativen Folgeflaechen.
+                                ${escapeHtml(this.content('home.context_note', 'Dashboard bleibt Home und Social Hub. Kampagnen, Session-Prep und Play bleiben die operativen Folgeflaechen.'))}
                             </div>
                         </section>
                     </div>
@@ -912,18 +915,22 @@
             const primaryGuild = snapshot?.primary_guild || null;
 
             return this.buildPageShell('dashboard', user, {
-                eyebrow: 'Chapter I',
-                title: 'Home',
-                copy: `Willkommen zurueck, ${user?.username || 'Donut'}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.`,
-                rightEyebrow: 'Chronicle Feed',
-                rightTitle: 'Was gerade zaehlt',
-                rightCopy: 'Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die naechsten operativen Schritte bleiben sichtbar getrennt voneinander.',
+                eyebrow: this.content('shell.left_eyebrow', 'Chapter I'),
+                title: this.content('shell.left_title', 'Home'),
+                copy: this.content(
+                    'shell.left_copy',
+                    'Willkommen zurueck, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.',
+                    { username: user?.username || 'Donut' },
+                ),
+                rightEyebrow: this.content('shell.right_eyebrow', 'Chronicle Feed'),
+                rightTitle: this.content('shell.right_title', 'Was gerade zaehlt'),
+                rightCopy: this.content('shell.right_copy', 'Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die naechsten operativen Schritte bleiben sichtbar getrennt voneinander.'),
                 chips: [
-                    'Home / Social Hub',
-                    `${campaigns.length} Kampagnen`,
-                    `${characters.length} Charaktere`,
-                    primaryGuild ? primaryGuild.name : 'Guild folgt',
-                    `${Number(homeState.prep_blocker_count || 0)} Prep-Blocker`,
+                    this.content('shell.chip_home', 'Home / Social Hub'),
+                    this.content('shell.chip_campaigns', '{count} Kampagnen', { count: campaigns.length }),
+                    this.content('shell.chip_characters', '{count} Charaktere', { count: characters.length }),
+                    primaryGuild ? primaryGuild.name : this.content('shell.chip_guild_fallback', 'Guild folgt'),
+                    this.content('shell.chip_prep_blockers', '{count} Prep-Blocker', { count: Number(homeState.prep_blocker_count || 0) }),
                 ],
                 leftPage: `
                     <div class="book-home-stack">
@@ -1213,6 +1220,59 @@
             this.bindSceneNavigation();
         },
 
+        // ── Page content (editable copy) ────────────────────────────────
+        // Text lives in the page_content table (see vtt/content_defaults.py
+        // for the current defaults), fetched once per page and cached here.
+        // Every call site passes its own hardcoded string as `fallback`, so
+        // a fetch failure or a not-yet-seeded key never blanks the UI - it
+        // just shows the same text this file always had.
+
+        async loadPageContent(routeKey) {
+            this.pageContent = this.pageContent || {};
+
+            const fetches = [];
+            if (!this.pageContent.shared) {
+                fetches.push(
+                    this._fetchContentMap('shared').then((map) => { this.pageContent.shared = map; })
+                );
+            }
+            if (routeKey && !this.pageContent[routeKey]) {
+                fetches.push(
+                    this._fetchContentMap(routeKey).then((map) => { this.pageContent[routeKey] = map; })
+                );
+            }
+            if (fetches.length) {
+                await Promise.allSettled(fetches);
+            }
+        },
+
+        async _fetchContentMap(pageKey) {
+            try {
+                const response = await fetch(`/api/content/${encodeURIComponent(pageKey)}`, { credentials: 'include' });
+                if (!response.ok) {
+                    return {};
+                }
+                const data = await response.json();
+                return (data && typeof data === 'object') ? data : {};
+            } catch (error) {
+                console.warn(`Failed to load page content for "${pageKey}", using built-in text.`, error);
+                return {};
+            }
+        },
+
+        content(key, fallback, vars = null) {
+            const routeMap = (this.pageContent && this.currentView && this.pageContent[this.currentView]) || {};
+            const sharedMap = (this.pageContent && this.pageContent.shared) || {};
+            let text = routeMap[key] ?? sharedMap[key] ?? fallback;
+
+            if (vars) {
+                Object.entries(vars).forEach(([token, value]) => {
+                    text = text.replace(new RegExp(`\\{${token}\\}`, 'g'), String(value));
+                });
+            }
+            return text;
+        },
+
         // ── Play Quick Launch ────────────────────────────────────────────
         // A project-browser-style popup (grid of campaigns, one clear
         // action each) for getting to the play table fast, reachable via
@@ -1232,14 +1292,14 @@
                     <div class="play-launch-box">
                         <div class="play-launch-header">
                             <div>
-                                <h2 id="playLaunchTitle">Play</h2>
-                                <p>Waehle eine Session oder starte in wenigen Schritten eine neue.</p>
+                                <h2 id="playLaunchTitle">${escapeHtml(this.content('play_launch.title', 'Play'))}</h2>
+                                <p>${escapeHtml(this.content('play_launch.subtitle', 'Waehle eine Session oder starte in wenigen Schritten eine neue.'))}</p>
                             </div>
                             <button type="button" class="play-launch-close" data-play-launch-close aria-label="Schliessen">&times;</button>
                         </div>
                         <div class="play-launch-body">
                             <div id="playLaunchStatus" class="play-launch-status" hidden></div>
-                            <div id="playLaunchContent">Lade Kampagnen...</div>
+                            <div id="playLaunchContent">${escapeHtml(this.content('play_launch.loading', 'Lade Kampagnen...'))}</div>
                         </div>
                     </div>
                 </div>
@@ -1293,7 +1353,7 @@
         async loadPlayLaunch() {
             const content = document.getElementById('playLaunchContent');
             if (!content) return;
-            content.textContent = 'Lade Kampagnen...';
+            content.textContent = this.content('play_launch.loading', 'Lade Kampagnen...');
 
             if (!window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
                 this.setPlayLaunchStatus('Nicht angemeldet.', true);
@@ -1312,18 +1372,18 @@
         getPlayLaunchSessionPhase(session) {
             const status = String(session?.runtime_status || '').trim().toLowerCase();
             if (status === 'in_progress' || status === 'active' || status === 'live') {
-                return { label: 'Live', tone: 'live' };
+                return { label: this.content('play_launch.phase_live', 'Live'), tone: 'live' };
             }
             if (status === 'paused') {
-                return { label: 'Pausiert', tone: 'paused' };
+                return { label: this.content('play_launch.phase_paused', 'Pausiert'), tone: 'paused' };
             }
             if (status === 'ended' || status === 'completed') {
-                return { label: 'Beendet', tone: 'ended' };
+                return { label: this.content('play_launch.phase_ended', 'Beendet'), tone: 'ended' };
             }
             if (status === 'ready') {
-                return { label: 'Bereit', tone: 'ready' };
+                return { label: this.content('play_launch.phase_ready', 'Bereit'), tone: 'ready' };
             }
-            return { label: 'Geplant', tone: 'scheduled' };
+            return { label: this.content('play_launch.phase_scheduled', 'Geplant'), tone: 'scheduled' };
         },
 
         renderPlayLaunch(campaigns, sessions) {
@@ -1333,11 +1393,11 @@
             if (!campaigns.length) {
                 content.innerHTML = `
                     <div class="play-launch-empty">
-                        <h3>Noch keine Kampagne</h3>
-                        <p>Leg direkt los: Name eingeben, wir legen Kampagne und erste Session an und du bist am Tisch.</p>
+                        <h3>${escapeHtml(this.content('play_launch.empty_title', 'Noch keine Kampagne'))}</h3>
+                        <p>${escapeHtml(this.content('play_launch.empty_copy', 'Leg direkt los: Name eingeben, wir legen Kampagne und erste Session an und du bist am Tisch.'))}</p>
                         <div class="play-launch-quickcreate">
-                            <input type="text" id="playLaunchNewCampaignName" placeholder="Name deiner Kampagne" maxlength="255">
-                            <button class="btn btn-primary" id="playLaunchQuickCreateBtn" type="button" data-play-launch-create-campaign>Kampagne erstellen &amp; zu Play</button>
+                            <input type="text" id="playLaunchNewCampaignName" placeholder="${escapeHtml(this.content('play_launch.empty_name_placeholder', 'Name deiner Kampagne'))}" maxlength="255">
+                            <button class="btn btn-primary" id="playLaunchQuickCreateBtn" type="button" data-play-launch-create-campaign>${escapeHtml(this.content('play_launch.empty_create_button', 'Kampagne erstellen & zu Play'))}</button>
                         </div>
                     </div>
                 `;
@@ -1360,8 +1420,13 @@
                 // first, then soonest scheduled) - see _build_session_summaries
                 // server-side, which this list is sourced from.
                 const topSession = campaignSessions[0] || null;
-                const roleLabel = campaign.is_owner ? 'DM' : (campaign.your_role || 'Spieler');
+                const roleLabel = campaign.is_owner
+                    ? this.content('play_launch.role_dm', 'DM')
+                    : (campaign.your_role || this.content('play_launch.role_player', 'Spieler'));
                 const canManage = Boolean(campaign.is_owner);
+                const memberCountText = this.content('play_launch.member_count', '{count} Mitglieder', {
+                    count: Number(campaign.member_count || 0),
+                });
 
                 let statusDot = '';
                 let sessionLine = '';
@@ -1373,22 +1438,24 @@
                     sessionLine = `<div class="play-launch-card-session">${escapeHtml(topSession.name)}</div>`;
 
                     if (phase.tone === 'live' || phase.tone === 'paused') {
-                        const label = phase.tone === 'live' ? 'Zu Play' : 'Fortsetzen';
-                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-open="${campaign.id}:${topSession.id}">${label}</button>`;
+                        const label = phase.tone === 'live'
+                            ? this.content('play_launch.action_to_play', 'Zu Play')
+                            : this.content('play_launch.action_resume', 'Fortsetzen');
+                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-open="${campaign.id}:${topSession.id}">${escapeHtml(label)}</button>`;
                     } else if ((phase.tone === 'scheduled' || phase.tone === 'ready') && canManage) {
-                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-start="${campaign.id}:${topSession.id}">Session starten</button>`;
+                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-start="${campaign.id}:${topSession.id}">${escapeHtml(this.content('play_launch.action_start_session', 'Session starten'))}</button>`;
                     } else if (phase.tone === 'scheduled' || phase.tone === 'ready') {
-                        action = `<button class="btn btn-secondary btn-sm" type="button" disabled>Wartet auf DM</button>`;
+                        action = `<button class="btn btn-secondary btn-sm" type="button" disabled>${escapeHtml(this.content('play_launch.action_waiting_for_dm', 'Wartet auf DM'))}</button>`;
                     } else if (canManage) {
-                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-new-session="${campaign.id}">Naechste Session</button>`;
+                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-new-session="${campaign.id}">${escapeHtml(this.content('play_launch.action_next_session', 'Naechste Session'))}</button>`;
                     } else {
-                        action = `<button class="btn btn-secondary btn-sm" type="button" data-play-launch-goto="/campaigns?campaign_id=${campaign.id}">Kampagne oeffnen</button>`;
+                        action = `<button class="btn btn-secondary btn-sm" type="button" data-play-launch-goto="/campaigns?campaign_id=${campaign.id}">${escapeHtml(this.content('play_launch.action_open_campaign', 'Kampagne oeffnen'))}</button>`;
                     }
                 } else {
-                    sessionLine = '<div class="play-launch-card-session muted">Noch keine Session</div>';
+                    sessionLine = `<div class="play-launch-card-session muted">${escapeHtml(this.content('play_launch.no_session_yet', 'Noch keine Session'))}</div>`;
                     action = canManage
-                        ? `<button class="btn btn-primary btn-sm" type="button" data-play-launch-new-session="${campaign.id}">Session erstellen &amp; zu Play</button>`
-                        : '<button class="btn btn-secondary btn-sm" type="button" disabled>Warte auf DM</button>';
+                        ? `<button class="btn btn-primary btn-sm" type="button" data-play-launch-new-session="${campaign.id}">${escapeHtml(this.content('play_launch.action_create_session', 'Session erstellen & zu Play'))}</button>`
+                        : `<button class="btn btn-secondary btn-sm" type="button" disabled>${escapeHtml(this.content('play_launch.action_waiting_for_dm_player', 'Warte auf DM'))}</button>`;
                 }
 
                 return `
@@ -1397,7 +1464,7 @@
                             <h3 class="play-launch-card-title">${escapeHtml(campaign.name)}</h3>
                             ${statusDot}
                         </div>
-                        <div class="play-launch-card-meta">${escapeHtml(roleLabel)} &middot; ${Number(campaign.member_count || 0)} Mitglieder</div>
+                        <div class="play-launch-card-meta">${escapeHtml(roleLabel)} &middot; ${escapeHtml(memberCountText)}</div>
                         ${sessionLine}
                         ${action}
                     </div>
@@ -1407,7 +1474,7 @@
             content.innerHTML = `
                 <div class="play-launch-grid">${cards}</div>
                 <div class="play-launch-newcampaign-row">
-                    <button class="btn btn-secondary btn-sm" type="button" data-play-launch-goto="/campaigns">Weitere Kampagne anlegen</button>
+                    <button class="btn btn-secondary btn-sm" type="button" data-play-launch-goto="/campaigns">${escapeHtml(this.content('play_launch.add_campaign_button', 'Weitere Kampagne anlegen'))}</button>
                 </div>
             `;
 
@@ -1545,6 +1612,11 @@
             if (!this.sceneSurface) {
                 return;
             }
+
+            // content() reads this.currentView to pick the right page's
+            // content map - set it here since this is the one place every
+            // render path (instant or animated) funnels through.
+            this.currentView = routeKey;
 
             if (user) {
                 this.sceneUser = user;
@@ -1823,6 +1895,7 @@
 
                 this.sceneSnapshot = resolvedSnapshot || { user };
                 this.sceneUser = this.sceneSnapshot.user || user;
+                await this.loadPageContent(routeKey);
                 this.bootstrapRoute(routeKey, user);
                 this.finalizeBookEntryBoundary(entryBoundary);
                 setStatus('');
@@ -2084,6 +2157,7 @@
             const snapshot = await this.loadSceneSnapshot(user);
             this.sceneSnapshot = snapshot;
             this.sceneUser = snapshot.user || user || this.sceneUser;
+            await this.loadPageContent(routeKey);
 
             const instant = Boolean(options.instant) || reducedMotion.matches || typeof gsap === 'undefined';
             if (instant) {

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Editor - Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/spellbook-theme.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: var(--vtt-bg);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--vtt-primary);
+            font-size: 2.2em;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--vtt-text-secondary, #9e8fa0);
+        }
+
+        .page-select-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .page-select-btn {
+            padding: 8px 18px;
+            background: none;
+            border: 1px solid var(--vtt-accent);
+            border-radius: 20px;
+            color: var(--vtt-text);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .page-select-btn.active {
+            background: var(--vtt-accent);
+            color: var(--vtt-dark-bg, #1a1a1a);
+        }
+
+        #status-message {
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        #status-message.visible {
+            display: block;
+        }
+
+        #status-message.success {
+            background: rgba(46, 148, 79, 0.15);
+            color: #2e944f;
+        }
+
+        #status-message.error {
+            background: rgba(178, 46, 46, 0.15);
+            color: #b22e2e;
+        }
+
+        .entry-card {
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--vtt-border-subtle, rgba(255,255,255,0.10));
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 14px;
+        }
+
+        .entry-key {
+            font-family: monospace;
+            font-size: 0.82em;
+            color: var(--vtt-accent);
+            margin-bottom: 4px;
+        }
+
+        .entry-description {
+            font-size: 0.85em;
+            color: var(--vtt-text-secondary, #9e8fa0);
+            margin-bottom: 10px;
+        }
+
+        .entry-textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--vtt-border-subtle, rgba(255,255,255,0.10));
+            background: var(--vtt-surface-input, #141420);
+            color: var(--vtt-text-primary, #e8d5b7);
+            font: inherit;
+            resize: vertical;
+        }
+
+        .entry-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .entry-updated {
+            font-size: 0.78em;
+            color: var(--vtt-text-secondary, #9e8fa0);
+        }
+
+        .save-btn {
+            padding: 6px 16px;
+            background: var(--vtt-primary);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .save-btn:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .save-btn.is-dirty {
+            background: var(--vtt-accent);
+        }
+
+        .empty-state, .loading-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--vtt-text-secondary, #9e8fa0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Content Editor</h1>
+            <p>Text auf der Website bearbeiten - Aenderungen sind sofort live, kein Deploy noetig.</p>
+        </div>
+
+        <div id="status-message"></div>
+
+        <div class="page-select-row" id="pageSelectRow"></div>
+        <div id="entriesContainer" class="loading-state">Lade...</div>
+    </div>
+
+    <script>
+        const PAGE_LABELS = {
+            shared: 'Shared (Ribbon, Play-Popup)',
+            dashboard: 'Dashboard / Home',
+        };
+
+        let currentPageKey = 'shared';
+        let availablePages = [];
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function showStatus(message, isError) {
+            const node = document.getElementById('status-message');
+            node.textContent = message;
+            node.className = 'visible ' + (isError ? 'error' : 'success');
+            if (!isError) {
+                setTimeout(() => { node.classList.remove('visible'); }, 2500);
+            }
+        }
+
+        async function loadPages() {
+            try {
+                const response = await fetch('/api/content/admin/pages');
+                if (!response.ok) {
+                    if (response.status === 403 || response.status === 401) {
+                        document.getElementById('entriesContainer').innerHTML =
+                            '<div class="empty-state">Kein Zugriff - Admin-Rechte erforderlich.</div>';
+                        return;
+                    }
+                    throw new Error('Failed to load pages');
+                }
+                const data = await response.json();
+                availablePages = data.pages || [];
+                renderPageSelector();
+                if (availablePages.length) {
+                    currentPageKey = availablePages.includes('shared') ? 'shared' : availablePages[0];
+                    loadEntries(currentPageKey);
+                } else {
+                    document.getElementById('entriesContainer').innerHTML =
+                        '<div class="empty-state">Noch keine Inhalte vorhanden.</div>';
+                }
+            } catch (error) {
+                document.getElementById('entriesContainer').innerHTML =
+                    '<div class="empty-state">Fehler beim Laden der Seiten.</div>';
+            }
+        }
+
+        function renderPageSelector() {
+            const row = document.getElementById('pageSelectRow');
+            row.innerHTML = availablePages.map((pageKey) => `
+                <button type="button" class="page-select-btn${pageKey === currentPageKey ? ' active' : ''}" data-page-key="${pageKey}">
+                    ${PAGE_LABELS[pageKey] || pageKey}
+                </button>
+            `).join('');
+            row.querySelectorAll('[data-page-key]').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    currentPageKey = btn.getAttribute('data-page-key');
+                    renderPageSelector();
+                    loadEntries(currentPageKey);
+                });
+            });
+        }
+
+        async function loadEntries(pageKey) {
+            const container = document.getElementById('entriesContainer');
+            container.className = 'loading-state';
+            container.textContent = 'Lade...';
+
+            try {
+                const response = await fetch(`/api/content/admin/${encodeURIComponent(pageKey)}`);
+                if (!response.ok) {
+                    throw new Error('Failed to load content');
+                }
+                const data = await response.json();
+                renderEntries(data.entries || []);
+            } catch (error) {
+                container.className = 'empty-state';
+                container.textContent = 'Fehler beim Laden.';
+            }
+        }
+
+        function renderEntries(entries) {
+            const container = document.getElementById('entriesContainer');
+            if (!entries.length) {
+                container.className = 'empty-state';
+                container.textContent = 'Keine Eintraege fuer diese Seite.';
+                return;
+            }
+
+            container.className = '';
+            container.innerHTML = entries.map((entry) => `
+                <div class="entry-card" data-entry-key="${escapeHtml(entry.content_key)}">
+                    <div class="entry-key">${escapeHtml(entry.content_key)}</div>
+                    ${entry.description ? `<div class="entry-description">${escapeHtml(entry.description)}</div>` : ''}
+                    <textarea class="entry-textarea">${escapeHtml(entry.text)}</textarea>
+                    <div class="entry-footer">
+                        <span class="entry-updated">${entry.updated_at ? 'Zuletzt geaendert: ' + new Date(entry.updated_at).toLocaleString('de-DE') + (entry.updated_by ? ' von ' + entry.updated_by : '') : 'Noch nie bearbeitet'}</span>
+                        <button type="button" class="save-btn" disabled>Speichern</button>
+                    </div>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('.entry-card').forEach((card) => {
+                const textarea = card.querySelector('.entry-textarea');
+                const saveBtn = card.querySelector('.save-btn');
+                const originalText = textarea.value;
+
+                textarea.addEventListener('input', () => {
+                    const dirty = textarea.value !== originalText;
+                    saveBtn.disabled = !dirty;
+                    saveBtn.classList.toggle('is-dirty', dirty);
+                });
+
+                saveBtn.addEventListener('click', async () => {
+                    const contentKey = card.getAttribute('data-entry-key');
+                    saveBtn.disabled = true;
+                    saveBtn.textContent = 'Speichert...';
+                    try {
+                        const response = await fetch(`/api/content/admin/${encodeURIComponent(currentPageKey)}/${encodeURIComponent(contentKey)}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ text: textarea.value }),
+                        });
+                        const data = await response.json();
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Speichern fehlgeschlagen');
+                        }
+                        showStatus(`"${contentKey}" gespeichert.`, false);
+                        saveBtn.classList.remove('is-dirty');
+                        card.querySelector('.entry-updated').textContent =
+                            'Zuletzt geaendert: ' + new Date(data.entry.updated_at).toLocaleString('de-DE') + (data.entry.updated_by ? ' von ' + data.entry.updated_by : '');
+                    } catch (error) {
+                        showStatus(error.message || 'Speichern fehlgeschlagen.', true);
+                        saveBtn.disabled = false;
+                    } finally {
+                        saveBtn.textContent = 'Speichern';
+                    }
+                });
+            });
+        }
+
+        loadPages();
+    </script>
+</body>
+</html>
