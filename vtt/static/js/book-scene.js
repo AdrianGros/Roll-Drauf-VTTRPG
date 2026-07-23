@@ -1362,6 +1362,9 @@
 
             try {
                 const snapshot = await window.Auth.makeAuthRequest('/api/dashboard/home');
+                // makeAuthRequest returns null when the session was expired and it
+                // already redirected to /login.html - nothing left to render here.
+                if (!snapshot) return;
                 this.renderPlayLaunch(snapshot.campaigns || [], snapshot.sessions || []);
             } catch (error) {
                 content.innerHTML = '';
