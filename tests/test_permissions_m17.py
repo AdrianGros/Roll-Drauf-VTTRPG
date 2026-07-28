@@ -56,7 +56,7 @@ def _create_user(username, email=None, platform_role=None, profile_tier=None,
         username=username,
         email=email or f'{username}@test.com',
         role_id=role_id,
-        platform_role=platform_role or 'supporter',
+        platform_role=platform_role,
         profile_tier=profile_tier or 'player',
         storage_quota_gb=storage_quota,
         active_campaigns_quota=campaigns_quota

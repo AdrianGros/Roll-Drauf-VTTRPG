@@ -118,7 +118,7 @@ def can_view_campaign(user, campaign):
 
     # Campaign members can see their campaign
     member = campaign.get_member(user.id) if hasattr(campaign, 'get_member') else None
-    return member and member.is_active()
+    return bool(member and member.is_active())
 
 
 def can_edit_campaign(user, campaign):

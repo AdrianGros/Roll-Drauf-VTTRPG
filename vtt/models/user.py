@@ -29,8 +29,13 @@ class User(db.Model):
     email_verified_at = db.Column(db.DateTime)
     last_login = db.Column(db.DateTime)
 
-    # M17: Platform Role (owner, admin, moderator, supporter)
-    platform_role = db.Column(db.String(20), default='supporter', index=True)
+    # M17: Platform Role (owner, admin, moderator, supporter). Default is
+    # intentionally None, not 'supporter' — 'supporter' is a deliberately
+    # granted elevated tier (PLATFORM_ROLES: owner=100, admin=80,
+    # moderator=60, supporter=40) with cross-campaign visibility
+    # (see permissions.py::can_view_campaign/can_view_all_campaigns).
+    # A plain new registrant must not silently inherit that.
+    platform_role = db.Column(db.String(20), default=None, index=True)
 
     # M17: Profile Tier (dm, headmaster, player, listener)
     profile_tier = db.Column(db.String(20), default='player', index=True)
