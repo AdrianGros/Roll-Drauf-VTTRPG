@@ -221,6 +221,7 @@
                     mode: (payload) => this._handleMode(payload),
                     stateChanged: (payload) => this._handleStateChanged(payload),
                     layerActivated: () => this.loadBootstrap(),
+                    layersUpdated: () => this.loadBootstrap(),
                     actionExecuted: (payload) => this._handleAction(payload),
                     diceRolled: (payload) => this._handleDiceBroadcast(payload),
                     chatMessageSent: (payload) => this._handleChatBroadcast(payload),
@@ -871,48 +872,184 @@
             btnRoll.disabled = this.readOnly || this.mode === "ended";
         }
 
-        _renderLayers() {
+        _thumbUrl(campaignMap) {
+            // background_url is /api/assets/<id>/preview (see M1 wiring in
+            // campaigns.html) - the thumbnail endpoint from M4 lives at the
+            // same asset id, so this avoids needing to thread asset_id
+            // through CampaignMap just for a preview image.
+            const url = campaignMap?.background_url || "";
+            return url.includes("/preview") ? url.replace("/preview", "/thumbnail") : url;
+        }
+
+        async _renderLayers() {
             const stack = this.bootstrap?.scene_stack;
             const container = document.getElementById("layerList");
-            if (!stack || !Array.isArray(stack.layers) || stack.layers.length === 0) {
-                container.innerHTML = "<div class='muted'>Noch kein aktiver Kartenstapel.</div>";
-                return;
+            const layers = (stack && Array.isArray(stack.layers)) ? stack.layers.slice().sort((a, b) => a.order_index - b.order_index) : [];
+
+            if (!layers.length) {
+                container.innerHTML = "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufuegen.</div>";
+            } else {
+                container.innerHTML = layers.map((layer, index) => {
+                    const isActive = Number(layer.id) === Number(stack.active_layer_id);
+                    const mapName = escapeHtml(layer.campaign_map?.name || `Map ${layer.campaign_map_id}`);
+                    const thumb = this._thumbUrl(layer.campaign_map);
+                    const visIcon = layer.is_player_visible ? "&#128065;" : "&#128683;";
+                    const activateControl = isActive
+                        ? `<span class="mini-btn" style="opacity:0.7;cursor:default;">aktiv</span>`
+                        : `<button data-act="activate" data-layer-id="${layer.id}" class="mini-btn">Aktivieren</button>`;
+                    return `
+                        <div class="layer-row ${isActive ? "active-row" : ""}" data-layer-id="${layer.id}">
+                            ${thumb ? `<img class="layer-thumb" src="${thumb}" alt="">` : `<div class="layer-thumb"></div>`}
+                            <div class="layer-info">
+                                <input class="layer-label-input" data-act="rename" data-layer-id="${layer.id}" value="${escapeHtml(layer.label)}" ${this.readOnly ? "disabled" : ""}>
+                                <div class="layer-map-name">${mapName}</div>
+                            </div>
+                            <div class="layer-actions">
+                                <div class="layer-actions-row">
+                                    <button data-act="up" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach oben" ${index === 0 ? "disabled" : ""}>&uarr;</button>
+                                    <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach unten" ${index === layers.length - 1 ? "disabled" : ""}>&darr;</button>
+                                    <button data-act="visibility" data-layer-id="${layer.id}" data-current="${layer.is_player_visible}" class="mini-btn layer-icon-btn" title="Spieler-Sichtbarkeit">${visIcon}</button>
+                                    <button data-act="delete" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn danger" title="Seite entfernen">&times;</button>
+                                </div>
+                                ${activateControl}
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+
+                if (!this.readOnly) {
+                    container.querySelectorAll('[data-act="activate"]').forEach((button) => {
+                        button.addEventListener("click", () => this._activateLayer(Number(button.dataset.layerId)));
+                    });
+                    container.querySelectorAll('[data-act="rename"]').forEach((input) => {
+                        input.addEventListener("change", () => this._renameLayer(Number(input.dataset.layerId), input.value));
+                    });
+                    container.querySelectorAll('[data-act="visibility"]').forEach((button) => {
+                        button.addEventListener("click", () => this._toggleLayerVisibility(Number(button.dataset.layerId), button.dataset.current !== "true"));
+                    });
+                    container.querySelectorAll('[data-act="delete"]').forEach((button) => {
+                        button.addEventListener("click", () => this._deleteLayer(Number(button.dataset.layerId)));
+                    });
+                    container.querySelectorAll('[data-act="up"]:not(:disabled)').forEach((button) => {
+                        button.addEventListener("click", () => this._moveLayer(Number(button.dataset.layerId), -1));
+                    });
+                    container.querySelectorAll('[data-act="down"]:not(:disabled)').forEach((button) => {
+                        button.addEventListener("click", () => this._moveLayer(Number(button.dataset.layerId), 1));
+                    });
+                }
             }
 
-            container.innerHTML = stack.layers.map((layer) => {
-                const isActive = Number(layer.id) === Number(stack.active_layer_id);
-                const activateBtn = this.readOnly ? "" : `<button data-layer-id="${layer.id}" class="mini-btn">Aktivieren</button>`;
-                const mapName = escapeHtml(layer.campaign_map?.name || `Map ${layer.campaign_map_id}`);
-                return `
-                    <div class="panel-row ${isActive ? "active-row" : ""}">
-                        <div><strong>${escapeHtml(layer.label)}</strong> (${mapName})</div>
-                        ${isActive ? "<span>aktiv</span>" : activateBtn}
-                    </div>
-                `;
-            }).join("");
+            if (!this.readOnly) {
+                await this._renderLayerAddControl(layers);
+            }
+        }
 
-            container.querySelectorAll("button[data-layer-id]").forEach((button) => {
-                button.addEventListener("click", async () => {
-                    const layerId = Number(button.getAttribute("data-layer-id"));
-                    try {
-                        await this.api.activateLayer(this.campaignId, this.sessionId, layerId);
-                        this._showMessage("Kartenebene aktiviert.");
-                        this._logActivity(`Kartenebene ${layerId} aktiviert.`, "info");
-                        await this.loadBootstrap();
-                    } catch (error) {
-                        this._showMessage(error.message || "Kartenebene konnte nicht gewechselt werden.", true);
-                    }
-                });
-            });
+        async _renderLayerAddControl(existingLayers) {
+            const select = document.getElementById("layerAddSelect");
+            const addBtn = document.getElementById("layerAddBtn");
+            if (!select || !addBtn) return;
+
+            try {
+                const maps = await this.api.campaignMaps(this.campaignId);
+                const usedMapIds = new Set(existingLayers.map((l) => Number(l.campaign_map_id)));
+                const available = (Array.isArray(maps) ? maps : []).filter((m) => !usedMapIds.has(Number(m.id)));
+
+                select.innerHTML = `<option value="">+ Seite hinzufuegen...</option>` +
+                    available.map((m) => `<option value="${m.id}">${escapeHtml(m.name)}</option>`).join("");
+                addBtn.disabled = available.length === 0;
+            } catch (error) {
+                select.innerHTML = `<option value="">Karten konnten nicht geladen werden</option>`;
+                addBtn.disabled = true;
+            }
+
+            addBtn.onclick = async () => {
+                const mapId = Number(select.value);
+                if (!mapId) return;
+                addBtn.disabled = true;
+                try {
+                    await this.api.addLayer(this.campaignId, this.sessionId, mapId);
+                    this._showMessage("Seite hinzugefuegt.");
+                    await this.loadBootstrap();
+                } catch (error) {
+                    this._showMessage(error.message || "Seite konnte nicht hinzugefuegt werden.", true);
+                    addBtn.disabled = false;
+                }
+            };
+        }
+
+        async _activateLayer(layerId) {
+            try {
+                await this.api.activateLayer(this.campaignId, this.sessionId, layerId);
+                this._showMessage("Seite aktiviert - alle Spieler wechseln mit.");
+                this._logActivity(`Seite ${layerId} aktiviert.`, "info");
+                await this.loadBootstrap();
+            } catch (error) {
+                this._showMessage(error.message || "Seite konnte nicht gewechselt werden.", true);
+            }
+        }
+
+        async _renameLayer(layerId, label) {
+            const trimmed = String(label || "").trim();
+            if (!trimmed) return;
+            try {
+                await this.api.updateLayer(this.campaignId, this.sessionId, layerId, { label: trimmed });
+                await this.loadBootstrap();
+            } catch (error) {
+                this._showMessage(error.message || "Umbenennen fehlgeschlagen.", true);
+            }
+        }
+
+        async _toggleLayerVisibility(layerId, nextVisible) {
+            try {
+                await this.api.updateLayer(this.campaignId, this.sessionId, layerId, { is_player_visible: nextVisible });
+                await this.loadBootstrap();
+            } catch (error) {
+                this._showMessage(error.message || "Sichtbarkeit konnte nicht geaendert werden.", true);
+            }
+        }
+
+        async _deleteLayer(layerId) {
+            if (!window.confirm("Diese Seite aus dem Kartenstapel entfernen?")) return;
+            try {
+                await this.api.deleteLayer(this.campaignId, this.sessionId, layerId);
+                this._showMessage("Seite entfernt.");
+                await this.loadBootstrap();
+            } catch (error) {
+                this._showMessage(error.message || "Seite konnte nicht entfernt werden.", true);
+            }
+        }
+
+        async _moveLayer(layerId, direction) {
+            const stack = this.bootstrap?.scene_stack;
+            const layers = (stack && Array.isArray(stack.layers)) ? stack.layers.slice().sort((a, b) => a.order_index - b.order_index) : [];
+            const index = layers.findIndex((l) => Number(l.id) === layerId);
+            const swapWith = index + direction;
+            if (index === -1 || swapWith < 0 || swapWith >= layers.length) return;
+
+            [layers[index].order_index, layers[swapWith].order_index] = [layers[swapWith].order_index, layers[index].order_index];
+            const order = layers.map((l) => ({ layer_id: l.id, order_index: l.order_index }));
+            try {
+                await this.api.reorderLayers(this.campaignId, this.sessionId, order);
+                await this.loadBootstrap();
+            } catch (error) {
+                this._showMessage(error.message || "Reihenfolge konnte nicht geaendert werden.", true);
+            }
         }
 
         _renderState() {
             const statePayload = this.bootstrap?.state_payload;
             const tokenList = document.getElementById("tokenList");
             const activeMap = statePayload?.active_map;
-            document.getElementById("activeMapText").textContent = activeMap
-                ? `${activeMap.name} (#${activeMap.id})`
-                : "Keine aktive Karte";
+            const pill = document.getElementById("activePagePill");
+            const pillName = document.getElementById("activePageName");
+            if (pill && pillName) {
+                if (activeMap) {
+                    pillName.textContent = activeMap.name;
+                    pill.hidden = false;
+                } else {
+                    pill.hidden = true;
+                }
+            }
 
             const tokens = statePayload?.tokens || [];
             if (!this._isTokenAvailable(this.selectedTokenId, tokens)) {

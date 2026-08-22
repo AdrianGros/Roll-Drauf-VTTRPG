@@ -29,8 +29,6 @@ from vtt.models.scene_layer import SceneLayer
 from vtt.models.session_snapshot import SessionSnapshot
 from vtt.models.registration_key import RegistrationKey
 from vtt.models.app_theme_settings import AppThemeSettings
-from vtt.models.session_map_layer import SessionMapLayer  # M42
-from vtt.models.session_token import SessionToken  # M43
 from vtt.models.session_initiative import SessionInitiative  # M43
 from vtt.models.session_character_assignment import SessionCharacterAssignment
 from vtt.models.discord_identity_link import DiscordIdentityLink
@@ -45,6 +43,6 @@ __all__ = [
     'ChatMessage', 'ModerationReport', 'ModerationAction',
     'SceneStack', 'SceneLayer', 'SessionSnapshot',
     'RegistrationKey', 'AppThemeSettings',
-    'SessionMapLayer', 'SessionToken', 'SessionInitiative', 'SessionCharacterAssignment', 'DiscordIdentityLink',
+    'SessionInitiative', 'SessionCharacterAssignment', 'DiscordIdentityLink',
     'Guild', 'GuildMembership', 'PageContent'
 ]

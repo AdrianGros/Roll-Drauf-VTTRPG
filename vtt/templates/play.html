@@ -457,8 +457,98 @@
         #layersWidget {
             left: 1rem;
             top: 1rem;
-            width: 300px;
-            max-height: 44%;
+            width: 320px;
+            max-height: 54%;
+        }
+        .layer-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem;
+            border-radius: 7px;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(255,255,255,0.04);
+            margin-bottom: 0.35rem;
+        }
+        .layer-row:last-child { margin-bottom: 0; }
+        .layer-row.active-row {
+            border-color: var(--line-strong);
+            background: rgba(84, 142, 238, 0.18);
+        }
+        .layer-thumb {
+            width: 44px;
+            height: 32px;
+            border-radius: 5px;
+            object-fit: cover;
+            background: rgba(255,255,255,0.08);
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.14);
+        }
+        .layer-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .layer-label-input {
+            width: 100%;
+            padding: 0.15rem 0.3rem;
+            font-size: 0.8rem;
+            background: transparent;
+            border: 1px solid transparent;
+        }
+        .layer-label-input:hover, .layer-label-input:focus {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--line);
+        }
+        .layer-map-name {
+            font-size: 0.68rem;
+            color: var(--muted);
+            padding: 0 0.3rem;
+        }
+        .layer-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            flex-shrink: 0;
+        }
+        .layer-actions-row {
+            display: flex;
+            gap: 0.2rem;
+        }
+        .layer-icon-btn {
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            font-size: 0.68rem;
+            line-height: 1;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--line);
+        }
+        .layer-icon-btn:hover { background: rgba(92, 144, 227, 0.3); }
+        .layer-icon-btn.danger:hover { background: rgba(191, 75, 75, 0.4); }
+        .layer-add-row {
+            display: flex;
+            gap: 0.35rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed rgba(255,255,255,0.16);
+        }
+        .layer-add-row select {
+            flex: 1;
+            font-size: 0.76rem;
+            padding: 0.28rem 0.3rem;
+        }
+        .active-page-pill {
+            position: absolute;
+            top: 0.85rem;
+            left: 1rem;
+            background: rgba(3, 9, 20, 0.75);
+            border: 1px solid var(--line-strong);
+            border-radius: 999px;
+            padding: 0.3rem 0.75rem;
+            font-size: 0.78rem;
+            color: #cfe0ff;
+            z-index: 20;
+            pointer-events: none;
         }
         #tokenWidget {
             right: 1rem;
@@ -805,6 +895,8 @@
         </aside>
 
         <section class="stage">
+            <div id="activePagePill" class="active-page-pill" hidden>Seite: <strong id="activePageName">-</strong></div>
+
             <div class="stage-topbar">
                 <button id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
                 <span id="zoomLabel" class="mini-control">100%</span>
@@ -824,9 +916,12 @@
             </div>
 
             <div id="layersWidget" class="floating">
-                <h3>Kartenebenen</h3>
-                <div class="muted" style="margin-bottom:0.4rem;">Aktive Karte: <span id="activeMapText">-</span></div>
+                <h3>Seiten (Kartenebenen)</h3>
                 <div id="layerList"></div>
+                <div class="layer-add-row">
+                    <select id="layerAddSelect"><option value="">+ Seite hinzufuegen...</option></select>
+                    <button id="layerAddBtn" class="mini-btn" type="button">Hinzufuegen</button>
+                </div>
             </div>
 
             <div id="turnOrderWidget" class="floating">

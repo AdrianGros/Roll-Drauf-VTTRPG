@@ -24,6 +24,43 @@ class PlayClient {
         );
     }
 
+    addLayer(campaignId, sessionId, campaignMapId, label = null) {
+        const body = { campaign_map_id: campaignMapId };
+        if (label) body.label = label;
+        return this.auth.makeAuthRequest(
+            `/api/play/campaigns/${campaignId}/sessions/${sessionId}/scene-stack/layers`,
+            "POST",
+            body
+        );
+    }
+
+    updateLayer(campaignId, sessionId, layerId, patch) {
+        return this.auth.makeAuthRequest(
+            `/api/play/campaigns/${campaignId}/sessions/${sessionId}/scene-stack/layers/${layerId}`,
+            "PUT",
+            patch
+        );
+    }
+
+    reorderLayers(campaignId, sessionId, order) {
+        return this.auth.makeAuthRequest(
+            `/api/play/campaigns/${campaignId}/sessions/${sessionId}/scene-stack/layers/reorder`,
+            "PUT",
+            { order }
+        );
+    }
+
+    deleteLayer(campaignId, sessionId, layerId) {
+        return this.auth.makeAuthRequest(
+            `/api/play/campaigns/${campaignId}/sessions/${sessionId}/scene-stack/layers/${layerId}`,
+            "DELETE"
+        );
+    }
+
+    campaignMaps(campaignId) {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/maps`);
+    }
+
     transition(campaignId, sessionId, targetState, ignoreWarnings = false) {
         return this.auth.makeAuthRequest(
             `/api/play/campaigns/${campaignId}/sessions/${sessionId}/transition`,

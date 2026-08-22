@@ -121,7 +121,6 @@ class Config:
     # Socket/queue
     REDIS_URL = os.getenv("REDIS_URL")
     SOCKETIO_MESSAGE_QUEUE = os.getenv("SOCKETIO_MESSAGE_QUEUE")
-    USE_SESSION_SOCKET_V2 = _parse_bool(os.getenv("USE_SESSION_SOCKET_V2"), default=False)
 
     # Asset storage (M0 2026-07-23): Config.from_object only picks up class
     # attributes, not arbitrary env vars, so these must be declared here even

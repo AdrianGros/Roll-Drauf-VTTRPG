@@ -46,7 +46,6 @@ services:
       LOG_JSON: "true"
       METRICS_ENABLED: "true"
       VOICE_ENABLED: "false"
-      USE_SESSION_SOCKET_V2: "false"
       LOCAL_STORAGE_PATH: /data/vtt-assets
     volumes:
       - vtt_assets_data:/data/vtt-assets

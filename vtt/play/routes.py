@@ -15,8 +15,10 @@ from vtt.utils.time import utcnow
 from vtt.play.service import (
     SESSION_TRANSITIONS,
     activate_scene_layer,
+    add_scene_layer,
     coerce_int,
     create_session_snapshot,
+    delete_scene_layer,
     ensure_session_state,
     get_campaign_or_404,
     get_campaign_session,
@@ -30,10 +32,12 @@ from vtt.play.service import (
     normalize_session_status,
     play_mode_from_session_status,
     refresh_state_snapshot,
+    reorder_scene_layers,
     run_ready_check,
     serialize_scene_stack,
     serialize_state_payload,
     state_status_from_session_status,
+    update_scene_layer,
 )
 
 
@@ -215,6 +219,170 @@ def play_activate_layer(campaign_id, session_id, layer_id):
             "state": state.serialize(),
         }
     ), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/scene-stack/layers", methods=["POST"])
+@limiter.limit("60 per hour")
+@jwt_required()
+def play_add_scene_layer(campaign_id, session_id):
+    """Add a single new scene layer from an existing CampaignMap."""
+    user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    data = request.get_json() or {}
+    campaign_map_id, parse_error = coerce_int(data.get("campaign_map_id"), "campaign_map_id")
+    if parse_error:
+        return parse_error
+
+    label = data.get("label")
+    if label is not None:
+        label = str(label).strip() or None
+
+    scene_stack, layer, error = add_scene_layer(campaign, game_session, user, campaign_map_id, label=label)
+    if error:
+        return error
+
+    room = _room_name(campaign.id, game_session.id)
+    socketio.emit(
+        "scene:layers_updated",
+        build_event_envelope(campaign.id, game_session.id, serialize_scene_stack(scene_stack)),
+        room=room,
+    )
+
+    return jsonify({"scene_stack": serialize_scene_stack(scene_stack), "layer": layer.serialize()}), 201
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/scene-stack/layers/reorder", methods=["PUT"])
+@limiter.limit("60 per hour")
+@jwt_required()
+def play_reorder_scene_layers(campaign_id, session_id):
+    """Bulk reorder scene layers within a session's scene stack."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    scene_stack = get_scene_stack(game_session.id)
+    if not scene_stack:
+        return jsonify({"error": "scene stack not initialized"}), 409
+
+    data = request.get_json() or {}
+    raw_order = data.get("order")
+    if not isinstance(raw_order, list) or not raw_order:
+        return jsonify({"error": "order must be a non-empty list"}), 400
+
+    order_entries = []
+    for entry in raw_order:
+        if not isinstance(entry, dict):
+            return jsonify({"error": "each order entry must be an object"}), 400
+        layer_id, parse_error = coerce_int(entry.get("layer_id"), "layer_id")
+        if parse_error:
+            return parse_error
+        order_index, parse_error = coerce_int(entry.get("order_index"), "order_index")
+        if parse_error:
+            return parse_error
+        order_entries.append((layer_id, order_index))
+
+    scene_stack, error = reorder_scene_layers(scene_stack, order_entries)
+    if error:
+        return error
+
+    room = _room_name(campaign.id, game_session.id)
+    socketio.emit(
+        "scene:layers_updated",
+        build_event_envelope(campaign.id, game_session.id, serialize_scene_stack(scene_stack)),
+        room=room,
+    )
+
+    return jsonify({"scene_stack": serialize_scene_stack(scene_stack)}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/scene-stack/layers/<int:layer_id>", methods=["PUT"])
+@limiter.limit("60 per hour")
+@jwt_required()
+def play_update_scene_layer(campaign_id, session_id, layer_id):
+    """Update a scene layer's label and/or player visibility."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    scene_stack = get_scene_stack(game_session.id)
+    if not scene_stack:
+        return jsonify({"error": "scene stack not initialized"}), 409
+
+    layer = SceneLayer.query.filter_by(id=layer_id, scene_stack_id=scene_stack.id).first()
+    if not layer:
+        return jsonify({"error": "scene layer not found"}), 404
+
+    data = request.get_json() or {}
+
+    label = None
+    if "label" in data:
+        raw_label = data.get("label")
+        label = str(raw_label).strip() if raw_label is not None else ""
+        if not label:
+            return jsonify({"error": "label must be a non-empty string"}), 400
+
+    is_player_visible = None
+    if "is_player_visible" in data:
+        raw_visible = data.get("is_player_visible")
+        if not isinstance(raw_visible, bool):
+            return jsonify({"error": "is_player_visible must be a boolean"}), 400
+        is_player_visible = raw_visible
+
+    layer = update_scene_layer(layer, label=label, is_player_visible=is_player_visible)
+
+    room = _room_name(campaign.id, game_session.id)
+    socketio.emit(
+        "scene:layers_updated",
+        build_event_envelope(campaign.id, game_session.id, serialize_scene_stack(scene_stack)),
+        room=room,
+    )
+
+    return jsonify({"scene_stack": serialize_scene_stack(scene_stack), "layer": layer.serialize()}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/scene-stack/layers/<int:layer_id>", methods=["DELETE"])
+@limiter.limit("60 per hour")
+@jwt_required()
+def play_delete_scene_layer(campaign_id, session_id, layer_id):
+    """Remove a scene layer, promoting a new active layer if needed."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    scene_stack = get_scene_stack(game_session.id)
+    if not scene_stack:
+        return jsonify({"error": "scene stack not initialized"}), 409
+
+    layer = SceneLayer.query.filter_by(id=layer_id, scene_stack_id=scene_stack.id).first()
+    if not layer:
+        return jsonify({"error": "scene layer not found"}), 404
+
+    scene_stack, state, active_changed = delete_scene_layer(campaign, game_session, scene_stack, layer)
+
+    room = _room_name(campaign.id, game_session.id)
+    socketio.emit(
+        "scene:layers_updated",
+        build_event_envelope(campaign.id, game_session.id, serialize_scene_stack(scene_stack)),
+        room=room,
+    )
+    if active_changed and state:
+        socketio.emit(
+            "state:snapshot",
+            build_event_envelope(campaign.id, game_session.id, serialize_state_payload(game_session, state)),
+            room=room,
+        )
+
+    return jsonify({"scene_stack": serialize_scene_stack(scene_stack)}), 200
 
 
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/transition", methods=["POST"])

@@ -272,10 +272,6 @@ def create_app(config_name=None):
     # Socket.IO event handlers
     from vtt.socket_handlers import register_socket_handlers
     register_socket_handlers(socketio)
-    # Keep one canonical session event contract active to avoid duplicate event handling.
-    if app.config.get("USE_SESSION_SOCKET_V2", False):
-        from vtt.socket_handlers_sessions import register_session_handlers  # M45
-        register_session_handlers(socketio)  # M45
 
     # REST endpoints for static files
     @app.route('/')

@@ -41,6 +41,7 @@ class PlaySocketRuntime {
         this.socket.on("play:mode", (payload) => this._handleSequencedEvent("play:mode", payload, "mode"));
         this.socket.on("session:state_changed", (payload) => this._handleSequencedEvent("session:state_changed", payload, "stateChanged"));
         this.socket.on("scene:layer_activated", (payload) => this._handleSequencedEvent("scene:layer_activated", payload, "layerActivated"));
+        this.socket.on("scene:layers_updated", (payload) => this._handleSequencedEvent("scene:layers_updated", payload, "layersUpdated"));
         this.socket.on("action:executed", (payload) => this._handleSequencedEvent("action:executed", payload, "actionExecuted"));
         this.socket.on("dice_rolled", (payload) => this._handleSequencedEvent("dice_rolled", payload, "diceRolled"));
         this.socket.on("chat:message_sent", (payload) => this._handleSequencedEvent("chat:message_sent", payload, "chatMessageSent"));

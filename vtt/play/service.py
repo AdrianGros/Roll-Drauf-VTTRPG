@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from flask import jsonify
+from sqlalchemy.exc import IntegrityError
 
 from vtt.extensions import db
 from vtt.models import (
@@ -297,6 +298,151 @@ def init_scene_stack(campaign: Campaign, game_session: GameSession, user: User, 
 
     db.session.commit()
     return scene_stack
+
+
+def get_or_create_scene_stack(campaign: Campaign, game_session: GameSession, user: User):
+    """Return the session's scene stack, creating an empty one if needed."""
+    scene_stack = get_scene_stack(game_session.id)
+    if scene_stack:
+        return scene_stack
+
+    scene_stack = SceneStack(
+        campaign_id=campaign.id,
+        game_session_id=game_session.id,
+        name=f"{game_session.name} Stack",
+        created_by=user.id,
+    )
+    db.session.add(scene_stack)
+    db.session.commit()
+    return scene_stack
+
+
+def add_scene_layer(
+    campaign: Campaign,
+    game_session: GameSession,
+    user: User,
+    campaign_map_id: int,
+    label: str | None = None,
+):
+    """Add a single new SceneLayer for an existing CampaignMap.
+
+    Returns (scene_stack, layer, error) where error is a Flask response tuple
+    on failure and None on success.
+    """
+    campaign_map = CampaignMap.query.filter_by(
+        id=campaign_map_id, campaign_id=campaign.id, archived_at=None
+    ).first()
+    if not campaign_map:
+        return None, None, (jsonify({"error": "campaign map not found"}), 404)
+
+    scene_stack = get_or_create_scene_stack(campaign, game_session, user)
+
+    existing_layer = SceneLayer.query.filter_by(
+        scene_stack_id=scene_stack.id, campaign_map_id=campaign_map.id
+    ).first()
+    if existing_layer:
+        return None, None, (
+            jsonify({"error": "campaign map is already a layer in this scene stack"}),
+            409,
+        )
+
+    max_order = (
+        db.session.query(db.func.max(SceneLayer.order_index))
+        .filter_by(scene_stack_id=scene_stack.id)
+        .scalar()
+    )
+    next_order_index = (max_order + 1) if max_order is not None else 0
+
+    layer = SceneLayer(
+        scene_stack_id=scene_stack.id,
+        campaign_map_id=campaign_map.id,
+        label=label or campaign_map.name,
+        order_index=next_order_index,
+        is_player_visible=True,
+    )
+    db.session.add(layer)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return None, None, (
+            jsonify({"error": "campaign map is already a layer in this scene stack"}),
+            409,
+        )
+
+    return scene_stack, layer, None
+
+
+def update_scene_layer(layer: SceneLayer, label: str | None = None, is_player_visible: bool | None = None):
+    """Update label and/or player-visibility of a scene layer."""
+    if label is not None:
+        layer.label = label
+    if is_player_visible is not None:
+        layer.is_player_visible = is_player_visible
+    db.session.commit()
+    return layer
+
+
+def reorder_scene_layers(scene_stack: SceneStack, order_entries: list[tuple[int, int]]):
+    """Bulk-apply new order_index values to layers of a scene stack.
+
+    All-or-nothing: validates every layer_id belongs to this scene stack
+    before mutating anything. Returns (scene_stack, error).
+    """
+    layer_ids = [layer_id for layer_id, _ in order_entries]
+    layers = SceneLayer.query.filter(
+        SceneLayer.scene_stack_id == scene_stack.id,
+        SceneLayer.id.in_(layer_ids),
+    ).all()
+    layers_by_id = {layer.id: layer for layer in layers}
+
+    missing_ids = [layer_id for layer_id in layer_ids if layer_id not in layers_by_id]
+    if missing_ids:
+        return None, (
+            jsonify({"error": f"layer ids not found in this scene stack: {missing_ids}"}),
+            400,
+        )
+
+    for layer_id, order_index in order_entries:
+        layers_by_id[layer_id].order_index = order_index
+
+    db.session.commit()
+    return scene_stack, None
+
+
+def delete_scene_layer(campaign: Campaign, game_session: GameSession, scene_stack: SceneStack, layer: SceneLayer):
+    """Delete a scene layer, reassigning the active layer if it was active.
+
+    Returns (scene_stack, state, active_changed). `state` is the
+    SessionState if the active map changed as a result, else None.
+    """
+    was_active = scene_stack.active_layer_id == layer.id
+    db.session.delete(layer)
+    db.session.flush()
+
+    state = None
+    active_changed = False
+    if was_active:
+        next_layer = (
+            SceneLayer.query.filter_by(scene_stack_id=scene_stack.id)
+            .order_by(SceneLayer.order_index.asc(), SceneLayer.id.asc())
+            .first()
+        )
+        if next_layer:
+            state = activate_scene_layer(campaign, game_session, next_layer)
+        else:
+            scene_stack.active_layer_id = None
+            game_session.map_id = None
+            state = ensure_session_state(campaign, game_session)
+            state.active_map_id = None
+            state.bump_version()
+            refresh_state_snapshot(state)
+            db.session.commit()
+        active_changed = True
+    else:
+        db.session.commit()
+
+    return scene_stack, state, active_changed
 
 
 def activate_scene_layer(campaign: Campaign, game_session: GameSession, layer: SceneLayer):
