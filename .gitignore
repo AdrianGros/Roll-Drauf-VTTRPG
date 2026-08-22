@@ -4,7 +4,16 @@
 .env.*.local
 .env.vtt.roll-drauf.de
 .env.vtt.roll-drauf-de
+# Any dated/backup copy of an env file, wherever it lands (2026-08-22:
+# a real secrets-bearing .env.vtt.roll-drauf.de.bak.20260723_165703 was
+# found sitting untracked in the repo root, not covered by the exact-name
+# rules above — moved to /home/admin/backups/, this closes the pattern
+# so a future one can never be `git add -A`ed by accident).
+.env*.bak*
 ops/certbot/conf/
+
+# Robot run evidence (tools/robots/) — reproducible on demand, not source.
+artifacts/
 
 # Python
 __pycache__/
