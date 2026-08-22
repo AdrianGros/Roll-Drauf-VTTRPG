@@ -1034,7 +1034,27 @@
         </div>
     </main>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- Robot audit, 2026-08-22: python-socketio 5.x/python-engineio no
+         longer bundle or auto-serve a client library at
+         /socket.io/socket.io.js (older Flask-SocketIO versions did; this
+         one doesn't -- confirmed no such file ships in the installed
+         package, no Dockerfile step vendors one, no nginx location
+         overrides the path). Every request to that path was answered
+         with HTTP 400 "unsupported version of the Socket.IO or
+         Engine.IO protocols" by Engine.IO's own handshake handler,
+         which silently swallowed the <script> tag's load failure and
+         left window.io undefined -- so play-socket.js's `new
+         PlaySocketClient(...)` threw "socket.io client not loaded" the
+         moment a real browser opened this page. No pytest in the suite
+         caught it because none of them load this template in a browser.
+         Vendored locally rather than a CDN reference: the app's own
+         Content-Security-Policy (vtt/__init__.py) is `script-src 'self'
+         'unsafe-inline'` and blocks cdn.socket.io outright -- a CDN tag
+         would fail exactly the same way, just with a different error.
+         vtt/static/js/socket.io.min.js is socket.io-client 4.5.4
+         unmodified (protocol-compatible with the installed
+         python-engineio, which negotiates Engine.IO v4). -->
+    <script src="/static/js/socket.io.min.js"></script>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/book-routes.js"></script>
     <script src="/static/js/book-shell.js"></script>
