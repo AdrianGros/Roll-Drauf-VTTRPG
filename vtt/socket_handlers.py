@@ -9,6 +9,7 @@ from flask_socketio import emit, join_room, leave_room
 
 from vtt.combat import service as combat_service
 from vtt.extensions import db
+from vtt.play.service import get_session_role, is_read_only_mode
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
 from vtt.utils.realtime import build_event_envelope, current_event_seq
 from vtt.utils.time import utcnow
@@ -16,6 +17,7 @@ from vtt.models import (
     Campaign,
     CampaignMap,
     CampaignMember,
+    ChatMessage,
     GameSession,
     Session,
     SessionState,
@@ -64,6 +66,18 @@ def _emit_session_event(event_name: str, campaign_id: int, session_id: int, payl
     event_payload = build_event_envelope(campaign_id, session_id, payload, advance=True)
     emit(event_name, event_payload, room=_room_name(campaign_id, session_id))
     return event_payload
+
+
+def _reject_read_only(campaign, game_session, user):
+    """Robot audit 2026-08-23 (D10): the token socket handlers only checked
+    membership + ownership, so OBSERVER members and players in waiting/ended
+    sessions could mutate tokens over the socket while every REST play route
+    and the whole UI treated them as read-only. Same rule as the play
+    routes: is_read_only_mode(session status, session role)."""
+    role = get_session_role(campaign, user.id)
+    if is_read_only_mode(game_session.status, role):
+        return {"code": "forbidden", "message": "read-only for your role or the current session status"}
+    return None
 
 
 def _extract_client_event_id(payload: dict):
@@ -585,6 +599,10 @@ def register_socket_handlers(socketio):
         if not _is_active_member(campaign.id, user.id):
             _emit_error("forbidden", "campaign membership required")
             return
+        read_only_error = _reject_read_only(campaign, game_session, user)
+        if read_only_error:
+            _emit_error(read_only_error["code"], read_only_error["message"])
+            return
 
         client_event_id, event_id_error = _extract_client_event_id(payload)
         if event_id_error:
@@ -743,6 +761,10 @@ def register_socket_handlers(socketio):
         if not _is_active_member(campaign.id, user.id):
             _emit_error("forbidden", "campaign membership required")
             return
+        read_only_error = _reject_read_only(campaign, game_session, user)
+        if read_only_error:
+            _emit_error(read_only_error["code"], read_only_error["message"])
+            return
 
         state = _ensure_session_state(campaign.id, game_session)
         token = TokenState.query.filter_by(id=token_id, game_session_id=game_session.id).first()
@@ -843,6 +865,10 @@ def register_socket_handlers(socketio):
             return
         if not _is_active_member(campaign.id, user.id):
             _emit_error("forbidden", "campaign membership required")
+            return
+        read_only_error = _reject_read_only(campaign, game_session, user)
+        if read_only_error:
+            _emit_error(read_only_error["code"], read_only_error["message"])
             return
 
         state = _ensure_session_state(campaign.id, game_session)
@@ -954,4 +980,73 @@ def register_socket_handlers(socketio):
             campaign.id,
             game_session.id,
             {"player": player_tag, "dice": dice_str, "result": result},
+        )
+
+    @socketio.on("chat:message_sent")
+    def handle_chat_message(data):
+        """Persist and broadcast a table chat message.
+
+        Robot audit 2026-08-23: play-socket.js has emitted this event
+        since the chat UI was built, but no server handler ever existed --
+        every message sent from the play table silently vanished (the
+        sender's own chat log only appends on receiving the broadcast,
+        which never came). Persists via the same ChatMessage model the
+        REST chat endpoints use, so play chat and the moderation tooling
+        see one shared history.
+        """
+        _track_socket_event("chat:message_sent")
+        user, error = _parse_authenticated_user()
+        if error:
+            _emit_error(error["code"], error["message"])
+            return
+
+        payload = data or {}
+        campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
+        if parse_error:
+            _emit_error(parse_error["code"], parse_error["message"])
+            return
+        session_id, parse_error = _coerce_int(payload.get("session_id"), "session_id")
+        if parse_error:
+            _emit_error(parse_error["code"], parse_error["message"])
+            return
+
+        campaign, game_session, lookup_error = _get_campaign_session(campaign_id, session_id)
+        if lookup_error:
+            _emit_error(lookup_error["code"], lookup_error["message"])
+            return
+        if not _is_active_member(campaign.id, user.id):
+            _emit_error("forbidden", "campaign membership required")
+            return
+
+        message = str(payload.get("message", "")).strip()
+        if not message:
+            _emit_error("bad_request", "message required")
+            return
+        if len(message) > 2000:
+            _emit_error("bad_request", "message too long (max 2000)")
+            return
+
+        chat_message = ChatMessage(
+            campaign_id=campaign.id,
+            game_session_id=game_session.id,
+            # Identity comes from the authenticated socket user, never from
+            # the client-supplied sender fields.
+            author_user_id=user.id,
+            content=message,
+            content_type="user",
+        )
+        db.session.add(chat_message)
+        db.session.commit()
+
+        _emit_session_event(
+            "chat:message_sent",
+            campaign.id,
+            game_session.id,
+            {
+                "message_id": chat_message.id,
+                "message": message,
+                "sender_id": user.id,
+                "sender_name": user.username,
+                "timestamp": chat_message.created_at.isoformat() if chat_message.created_at else utcnow().isoformat(),
+            },
         )

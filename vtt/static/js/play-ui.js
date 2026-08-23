@@ -47,11 +47,16 @@
             this.chatRows = [];
             this.selectedTokenId = null;
             this.dragState = null;
+            this.panState = null;
             this.mapInteractionsBound = false;
             this.tokenIndex = new Map();
             this.currentTool = "select";
             this.zoomLevel = 100;
             this.activeSidebarTab = "tools";
+            // Auto-fit runs once per activated map so the DM's manual zoom
+            // choice survives snapshots/re-renders of the same map.
+            this.autoFitMapId = null;
+            this.pendingTokenPlacement = null;
         }
 
         async init() {
@@ -204,6 +209,18 @@
                 this.bootstrap = payload;
                 this.mode = payload.mode || "waiting";
                 this.readOnly = Boolean(payload.read_only);
+                // Persisted chat history arrives with the bootstrap payload
+                // (newest first, same shape the live broadcast uses), so a
+                // reload no longer wipes the table conversation.
+                if (Array.isArray(payload.chat_history) && !this.chatRows.length) {
+                    this.chatRows = payload.chat_history.map((entry) => ({
+                        time: String(entry.created_at || entry.timestamp || "").slice(11, 19),
+                        user: entry.sender_name || "player",
+                        sender_name: entry.sender_name || "player",
+                        text: entry.message || entry.content || "",
+                        message: entry.message || entry.content || "",
+                    }));
+                }
                 this._render();
             } catch (error) {
                 this._showMessage(error.message || "Startdaten konnten nicht geladen werden.", true);
@@ -509,6 +526,7 @@
             });
 
             this._bindWorkspaceControls();
+            this._bindTableActions();
         }
 
         _bindWorkspaceControls() {
@@ -545,16 +563,20 @@
             const zoomOut = document.getElementById("btnZoomOut");
             const zoomIn = document.getElementById("btnZoomIn");
             const zoomReset = document.getElementById("btnZoomReset");
+            const zoomFit = document.getElementById("btnZoomFit");
             const zoomRange = document.getElementById("zoomRange");
             if (zoomOut) zoomOut.addEventListener("click", () => this._setZoom(this.zoomLevel - 10));
             if (zoomIn) zoomIn.addEventListener("click", () => this._setZoom(this.zoomLevel + 10));
             if (zoomReset) zoomReset.addEventListener("click", () => this._setZoom(100));
+            if (zoomFit) zoomFit.addEventListener("click", () => this._zoomFit());
             if (zoomRange) {
                 zoomRange.addEventListener("input", () => {
                     this._setZoom(Number(zoomRange.value || 100));
                 });
             }
             this._setZoom(this.zoomLevel);
+            this._bindViewportNavigation();
+            this._bindWidgetToggles();
 
             const sendChat = () => {
                 const input = document.getElementById("chatInput");
@@ -602,23 +624,421 @@
         }
 
         _setTool(toolName) {
+            // Placing-a-token mode is exclusive: switching tools cancels a
+            // half-finished placement instead of leaving the panel orphaned.
+            if (toolName !== "token") {
+                this._cancelTokenPlacement();
+            }
             this.currentTool = toolName;
             document.querySelectorAll(".tool-btn[data-tool]").forEach((button) => {
                 const isActive = button.getAttribute("data-tool") === toolName;
                 button.classList.toggle("active", isActive);
             });
-            this._logActivity(`Werkzeug gewechselt: ${toolName}`, "info");
+            const viewport = document.getElementById("mapViewport");
+            if (viewport) {
+                viewport.classList.toggle("tool-pan", toolName === "pan");
+                viewport.classList.toggle("tool-token", toolName === "token");
+            }
         }
 
-        _setZoom(nextZoom) {
-            const clamped = Math.max(50, Math.min(200, Math.round(Number(nextZoom) || 100)));
+        _worldSize() {
+            const world = document.getElementById("mapWorld");
+            return {
+                width: Number(world?.dataset?.mapWidth) || 1800,
+                height: Number(world?.dataset?.mapHeight) || 1200,
+            };
+        }
+
+        // The scroll spacer (#mapExtent) must always be world-size * zoom:
+        // scale() alone leaves the layout box unscaled, which made the
+        // scrollbars lie in both directions (robot audit 2026-08-23).
+        _syncExtent() {
+            const extent = document.getElementById("mapExtent");
+            if (!extent) return;
+            const { width, height } = this._worldSize();
+            const scale = this.zoomLevel / 100;
+            extent.style.width = `${Math.round(width * scale)}px`;
+            extent.style.height = `${Math.round(height * scale)}px`;
+        }
+
+        _setZoom(nextZoom, anchor = null) {
+            const clamped = Math.max(20, Math.min(300, Math.round(Number(nextZoom) || 100)));
+            const viewport = document.getElementById("mapViewport");
+            const previousScale = this.zoomLevel / 100;
+            const nextScale = clamped / 100;
+
+            // Keep the world point under the anchor (e.g. the mouse wheel
+            // cursor) stationary: convert the anchor to world coordinates at
+            // the old scale, then scroll so the same world point sits under
+            // the anchor again at the new scale.
+            let anchorWorld = null;
+            if (anchor && viewport) {
+                const rect = viewport.getBoundingClientRect();
+                const viewX = anchor.clientX - rect.left;
+                const viewY = anchor.clientY - rect.top;
+                anchorWorld = {
+                    viewX,
+                    viewY,
+                    worldX: (viewport.scrollLeft + viewX) / previousScale,
+                    worldY: (viewport.scrollTop + viewY) / previousScale,
+                };
+            }
+
             this.zoomLevel = clamped;
             const world = document.getElementById("mapWorld");
             const zoomLabel = document.getElementById("zoomLabel");
             const zoomRange = document.getElementById("zoomRange");
-            if (world) world.style.transform = `scale(${clamped / 100})`;
+            if (world) world.style.transform = `scale(${nextScale})`;
+            this._syncExtent();
             if (zoomLabel) zoomLabel.textContent = `${clamped}%`;
             if (zoomRange) zoomRange.value = String(clamped);
+
+            if (anchorWorld && viewport) {
+                viewport.scrollLeft = anchorWorld.worldX * nextScale - anchorWorld.viewX;
+                viewport.scrollTop = anchorWorld.worldY * nextScale - anchorWorld.viewY;
+            }
+        }
+
+        _zoomFit() {
+            const viewport = document.getElementById("mapViewport");
+            if (!viewport) return;
+            const { width, height } = this._worldSize();
+            const availableW = Math.max(120, viewport.clientWidth - 48);
+            const availableH = Math.max(120, viewport.clientHeight - 48);
+            const fit = Math.min(availableW / width, availableH / height) * 100;
+            this._setZoom(Math.min(150, fit));
+            viewport.scrollLeft = 0;
+            viewport.scrollTop = 0;
+        }
+
+        _bindViewportNavigation() {
+            const viewport = document.getElementById("mapViewport");
+            if (!viewport) return;
+
+            // Wheel = zoom to cursor (the standard VTT gesture); plain
+            // scrolling of a huge map happens by panning instead.
+            viewport.addEventListener("wheel", (event) => {
+                event.preventDefault();
+                const step = event.deltaY < 0 ? 10 : -10;
+                this._setZoom(this.zoomLevel + step, event);
+            }, { passive: false });
+
+            // Panning: PAN tool with the left button, or middle button in
+            // any tool. Uses scroll offsets, so it composes with zoom.
+            viewport.addEventListener("pointerdown", (event) => {
+                const isMiddle = event.button === 1;
+                const isPanTool = this.currentTool === "pan" && event.button === 0;
+                if (!isMiddle && !isPanTool) return;
+                if (event.target.closest?.(".floating, .stage-topbar, .token-marker")) return;
+                event.preventDefault();
+                this.panState = {
+                    startX: event.clientX,
+                    startY: event.clientY,
+                    scrollLeft: viewport.scrollLeft,
+                    scrollTop: viewport.scrollTop,
+                };
+                viewport.classList.add("panning");
+            });
+            window.addEventListener("pointermove", (event) => {
+                if (!this.panState) return;
+                viewport.scrollLeft = this.panState.scrollLeft - (event.clientX - this.panState.startX);
+                viewport.scrollTop = this.panState.scrollTop - (event.clientY - this.panState.startY);
+            });
+            window.addEventListener("pointerup", () => {
+                if (!this.panState) return;
+                this.panState = null;
+                viewport.classList.remove("panning");
+            });
+
+            // Token placement: with the TOK tool armed, a click on the map
+            // (not on an existing marker) opens the small create panel.
+            viewport.addEventListener("click", (event) => {
+                if (this.currentTool !== "token") return;
+                if (event.target.closest?.(".token-marker, .floating, .stage-topbar")) return;
+                const world = document.getElementById("mapWorld");
+                const worldRect = world?.getBoundingClientRect();
+                if (!worldRect) return;
+                const scale = this.zoomLevel / 100;
+                const worldX = (event.clientX - worldRect.left) / scale;
+                const worldY = (event.clientY - worldRect.top) / scale;
+                const { width, height } = this._worldSize();
+                if (worldX < 0 || worldY < 0 || worldX > width || worldY > height) return;
+                this._openTokenCreatePanel(worldX, worldY, event);
+            });
+        }
+
+        _openTokenCreatePanel(worldX, worldY, clickEvent) {
+            if (this.readOnly) {
+                this._showMessage("Nur-Lesen aktiv: Tokens koennen nicht platziert werden.", true);
+                return;
+            }
+            const activeMap = this.bootstrap?.state_payload?.active_map;
+            if (!activeMap) {
+                this._showMessage("Erst eine Karte aktivieren, dann Tokens platzieren.", true);
+                return;
+            }
+            const gridSize = Math.max(16, Number(activeMap.grid_size) || 70);
+            const panel = document.getElementById("tokenCreatePanel");
+            const stage = document.querySelector(".stage");
+            if (!panel || !stage) return;
+
+            this.pendingTokenPlacement = {
+                x: Math.max(0, Math.round(worldX / gridSize) * gridSize),
+                y: Math.max(0, Math.round(worldY / gridSize) * gridSize),
+            };
+
+            const stageRect = stage.getBoundingClientRect();
+            const left = Math.min(stageRect.width - 270, Math.max(8, clickEvent.clientX - stageRect.left + 12));
+            const top = Math.min(stageRect.height - 260, Math.max(8, clickEvent.clientY - stageRect.top + 12));
+            panel.style.left = `${left}px`;
+            panel.style.top = `${top}px`;
+            panel.hidden = false;
+
+            const nameInput = document.getElementById("tokenCreateName");
+            if (nameInput) {
+                nameInput.value = "";
+                nameInput.focus();
+            }
+            const visibilityRow = document.getElementById("tokenCreateVisibility");
+            if (visibilityRow) {
+                visibilityRow.parentElement && (visibilityRow.style.display = isOperatorRole(this.bootstrap?.session_role) ? "" : "none");
+            }
+        }
+
+        _cancelTokenPlacement() {
+            this.pendingTokenPlacement = null;
+            const panel = document.getElementById("tokenCreatePanel");
+            if (panel) panel.hidden = true;
+        }
+
+        async _confirmTokenPlacement() {
+            const placement = this.pendingTokenPlacement;
+            if (!placement) return;
+            const name = String(document.getElementById("tokenCreateName")?.value || "").trim();
+            if (!name) {
+                this._showMessage("Der Token braucht einen Namen.", true);
+                return;
+            }
+            const tokenType = document.getElementById("tokenCreateType")?.value || "npc";
+            const sizeCells = Math.max(1, Math.min(6, Number(document.getElementById("tokenCreateSize")?.value) || 1));
+            const visibility = isOperatorRole(this.bootstrap?.session_role)
+                ? (document.getElementById("tokenCreateVisibility")?.value || "public")
+                : "public";
+
+            const token = {
+                name,
+                token_type: tokenType,
+                x: placement.x,
+                y: placement.y,
+                size: sizeCells,
+                visibility,
+                // New tokens always declare their coordinate system so the
+                // renderer never has to guess (the old <=300 heuristic).
+                metadata_json: { position_mode: "pixel" },
+            };
+            this._cancelTokenPlacement();
+            try {
+                if (this.socket && this.socket.isConnected) {
+                    this.socket.createToken(token);
+                } else {
+                    await this.api.createToken(this.campaignId, this.sessionId, token);
+                    await this.loadBootstrap();
+                }
+                this._logActivity(`Token platziert: ${name}.`, "info");
+            } catch (error) {
+                this._showMessage(error.message || "Token konnte nicht erstellt werden.", true);
+            }
+        }
+
+        async _deleteSelectedToken() {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            if (!window.confirm(`Token "${token.name}" wirklich loeschen?`)) return;
+            try {
+                if (this.socket && this.socket.isConnected) {
+                    this.socket.deleteToken(token.id, Number(token.version || 1));
+                } else {
+                    await this.api.deleteToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1));
+                    await this.loadBootstrap();
+                }
+            } catch (error) {
+                this._showMessage(error.message || "Token konnte nicht geloescht werden.", true);
+            }
+        }
+
+        async _setSelectedTokenHp() {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            const hpCurrentRaw = document.getElementById("tokenHpCurrent")?.value;
+            const hpMaxRaw = document.getElementById("tokenHpMax")?.value;
+            const patch = {};
+            if (hpCurrentRaw !== "" && hpCurrentRaw !== undefined) patch.hp_current = Number(hpCurrentRaw);
+            if (hpMaxRaw !== "" && hpMaxRaw !== undefined) patch.hp_max = Number(hpMaxRaw);
+            if (!Object.keys(patch).length) return;
+            try {
+                if (this.socket && this.socket.isConnected) {
+                    this.socket.updateToken(token.id, Number(token.version || 1), patch);
+                } else {
+                    await this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), patch);
+                    await this.loadBootstrap();
+                }
+            } catch (error) {
+                this._showMessage(error.message || "HP konnten nicht gesetzt werden.", true);
+            }
+        }
+
+        // DM helper: roll a d20 for every token that has no initiative yet,
+        // via the normal token-update path so every client's turn-order
+        // widget fills in live. Tokens with a value keep it (reroll = clear
+        // first, by rolling again after a fresh round is a follow-up).
+        async _rollInitiativeForTokens() {
+            const tokens = Array.isArray(this.bootstrap?.state_payload?.tokens) ? this.bootstrap.state_payload.tokens : [];
+            if (!tokens.length) {
+                this._showMessage("Keine Tokens auf der Karte.", true);
+                return;
+            }
+            let rolled = 0;
+            for (const token of tokens) {
+                const roll = 1 + Math.floor(Math.random() * 20);
+                try {
+                    if (this.socket && this.socket.isConnected) {
+                        this.socket.updateToken(token.id, Number(token.version || 1), { initiative: roll });
+                    } else {
+                        await this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), { initiative: roll });
+                    }
+                    rolled += 1;
+                } catch (error) {
+                    this._logActivity(`Initiative fuer ${token.name} fehlgeschlagen.`, "error");
+                }
+            }
+            if (!(this.socket && this.socket.isConnected)) {
+                await this.loadBootstrap();
+            }
+            this._logActivity(`Initiative fuer ${rolled} Token(s) gewuerfelt.`, "info");
+        }
+
+        _bindWidgetToggles() {
+            document.querySelectorAll(".widget-toggle[data-widget]").forEach((header) => {
+                header.addEventListener("click", () => {
+                    const widget = document.getElementById(header.getAttribute("data-widget"));
+                    if (widget) widget.classList.toggle("collapsed");
+                });
+            });
+            // Collapsed by default: the map is the main surface. The layer
+            // panel starts open for the DM only, because it is the entry
+            // point for getting a first map onto the table.
+            const layersWidget = document.getElementById("layersWidget");
+            const turnWidget = document.getElementById("turnOrderWidget");
+            const tokenWidget = document.getElementById("tokenWidget");
+            if (turnWidget) turnWidget.classList.add("collapsed");
+            if (tokenWidget) tokenWidget.classList.add("collapsed");
+            if (layersWidget) layersWidget.classList.add("collapsed");
+        }
+
+        _bindTableActions() {
+            const confirmBtn = document.getElementById("btnTokenCreateConfirm");
+            const cancelBtn = document.getElementById("btnTokenCreateCancel");
+            if (confirmBtn) confirmBtn.addEventListener("click", () => this._confirmTokenPlacement());
+            if (cancelBtn) cancelBtn.addEventListener("click", () => this._cancelTokenPlacement());
+            const nameInput = document.getElementById("tokenCreateName");
+            if (nameInput) {
+                nameInput.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        this._confirmTokenPlacement();
+                    } else if (event.key === "Escape") {
+                        this._cancelTokenPlacement();
+                    }
+                });
+            }
+
+            const deleteBtn = document.getElementById("btnTokenDelete");
+            if (deleteBtn) deleteBtn.addEventListener("click", () => this._deleteSelectedToken());
+            const hpBtn = document.getElementById("btnTokenHpSet");
+            if (hpBtn) hpBtn.addEventListener("click", () => this._setSelectedTokenHp());
+
+            const initiativeBtn = document.getElementById("btnRollInitiative");
+            if (initiativeBtn) initiativeBtn.addEventListener("click", () => this._rollInitiativeForTokens());
+
+            this._bindMapUpload();
+        }
+
+        // Upload a map image straight from the table: asset upload ->
+        // CampaignMap create (pixel dims from the upload response) -> scene
+        // stack layer -> activate. This is the same three-endpoint
+        // choreography the campaign hub uses; before this the play table
+        // had no upload path at all (robot audit 2026-08-23).
+        _bindMapUpload() {
+            const button = document.getElementById("btnMapUpload");
+            const fileInput = document.getElementById("mapUploadFile");
+            if (!button || !fileInput) return;
+
+            button.addEventListener("click", () => fileInput.click());
+            fileInput.addEventListener("change", async () => {
+                const file = fileInput.files && fileInput.files[0];
+                fileInput.value = "";
+                if (!file) return;
+                await this._uploadMapFromTable(file);
+            });
+        }
+
+        async _uploadMapFromTable(file) {
+            const statusNode = document.getElementById("mapUploadStatus");
+            const setStatus = (text) => {
+                if (statusNode) {
+                    statusNode.hidden = !text;
+                    statusNode.textContent = text || "";
+                }
+            };
+            const gridSize = Math.max(16, Math.min(300, Number(document.getElementById("mapUploadGridSize")?.value) || 70));
+
+            try {
+                setStatus(`Lade ${file.name} hoch...`);
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("asset_type", "map");
+                const uploadResponse = await fetch(`/api/assets/campaigns/${this.campaignId}/upload`, {
+                    method: "POST",
+                    credentials: "include",
+                    headers: Auth.buildHeaders("POST", false),
+                    body: formData,
+                });
+                const uploadBody = await uploadResponse.json().catch(() => ({}));
+                if (!uploadResponse.ok) {
+                    throw new Error(uploadBody.error || `Upload fehlgeschlagen (HTTP ${uploadResponse.status})`);
+                }
+
+                setStatus("Erzeuge Karte...");
+                const mapName = file.name.replace(/\.[^.]+$/, "").slice(0, 120) || "Neue Karte";
+                const created = await this.auth.makeAuthRequest(`/api/campaigns/${this.campaignId}/maps`, "POST", {
+                    name: mapName,
+                    width: Number(uploadBody.width) || 1400,
+                    height: Number(uploadBody.height) || 1000,
+                    grid_size: gridSize,
+                    background_url: `/api/assets/${uploadBody.asset_id}/preview`,
+                });
+
+                setStatus("Fuege Seite hinzu...");
+                const stack = this.bootstrap?.scene_stack;
+                if (stack && Array.isArray(stack.layers)) {
+                    const layerResult = await this.api.addLayer(this.campaignId, this.sessionId, created.id, mapName);
+                    const newLayer = layerResult?.layer || (layerResult?.scene_stack?.layers || []).find(
+                        (l) => Number(l.campaign_map_id) === Number(created.id)
+                    );
+                    if (newLayer?.id) {
+                        await this.api.activateLayer(this.campaignId, this.sessionId, newLayer.id);
+                    }
+                } else {
+                    await this.api.initSceneStack(this.campaignId, this.sessionId, [created.id]);
+                }
+
+                setStatus("");
+                this._showMessage(`Karte "${mapName}" hochgeladen und aktiviert.`);
+                await this.loadBootstrap();
+            } catch (error) {
+                setStatus("");
+                this._showMessage(error.message || "Karten-Upload fehlgeschlagen.", true);
+            }
         }
 
         async _runReadyCheck() {
@@ -1051,19 +1471,26 @@
                 }
             }
 
+            const operator = isOperatorRole(this.bootstrap?.session_role || "");
+            const gridSize = Math.max(16, Number(activeMap?.grid_size) || 70);
             const tokens = statePayload?.tokens || [];
             if (!this._isTokenAvailable(this.selectedTokenId, tokens)) {
                 this.selectedTokenId = null;
             }
             if (!tokens.length) {
-                tokenList.innerHTML = "<div class='muted'>Keine Tokens im aktuellen Session-Status.</div>";
+                tokenList.innerHTML = "<div class='muted'>Keine Tokens. Mit dem TOK-Werkzeug auf die Karte klicken.</div>";
             } else {
-                tokenList.innerHTML = tokens.map((token) => `
+                tokenList.innerHTML = tokens.map((token) => {
+                    const cell = this._resolveTokenPosition(token, gridSize);
+                    const cellX = Math.round(cell.left / gridSize);
+                    const cellY = Math.round(cell.top / gridSize);
+                    return `
                     <div class="panel-row ${Number(this.selectedTokenId) === Number(token.id) ? "active-row" : ""}" data-token-id="${token.id}" style="cursor:pointer;">
                         <div><strong>${escapeHtml(token.name)}</strong> (${escapeHtml(token.token_type)})</div>
-                        <div>HP ${token.hp_current ?? "-"} / ${token.hp_max ?? "-"}, Pos ${token.x},${token.y}</div>
+                        <div>HP ${token.hp_current ?? "-"} / ${token.hp_max ?? "-"}, Feld ${cellX},${cellY}</div>
                     </div>
-                `).join("");
+                `;
+                }).join("");
                 tokenList.querySelectorAll(".panel-row[data-token-id]").forEach((row) => {
                     row.addEventListener("click", () => {
                         const tokenId = Number(row.getAttribute("data-token-id"));
@@ -1075,19 +1502,38 @@
             }
 
             const selectedSummary = document.getElementById("tokenSelectionSummary");
+            const selectedDetail = document.getElementById("tokenSelectionDetail");
             const selectedToken = this._findStateToken(this.selectedTokenId);
             if (selectedSummary) {
                 selectedSummary.textContent = selectedToken
                     ? `Ausgewaehlt: ${selectedToken.name} (#${selectedToken.id})`
                     : "Kein Token ausgewaehlt.";
             }
+            if (selectedDetail) {
+                const canEditSelected = selectedToken && this._canMoveToken(selectedToken);
+                selectedDetail.hidden = !canEditSelected;
+                if (canEditSelected) {
+                    const hpCurrent = document.getElementById("tokenHpCurrent");
+                    const hpMax = document.getElementById("tokenHpMax");
+                    if (hpCurrent) hpCurrent.value = selectedToken.hp_current ?? "";
+                    if (hpMax) hpMax.value = selectedToken.hp_max ?? "";
+                }
+            }
+
+            // DM-only table controls: map upload and initiative rolling.
+            const uploadRow = document.getElementById("mapUploadRow");
+            if (uploadRow) uploadRow.hidden = !operator || this.readOnly;
+            const initiativeControls = document.getElementById("initiativeControls");
+            if (initiativeControls) initiativeControls.hidden = !operator || this.readOnly;
+            const tokenToolBtn = document.querySelector('.tool-btn[data-tool="token"]');
+            if (tokenToolBtn) tokenToolBtn.style.display = this.readOnly ? "none" : "";
 
             const mapMetaText = document.getElementById("mapMetaText");
             if (mapMetaText) {
                 if (!activeMap) {
                     mapMetaText.textContent = "Keine aktive Karte.";
                 } else {
-                    mapMetaText.textContent = `${activeMap.name} (${activeMap.width}x${activeMap.height}), Grid ${activeMap.grid_size || 32}px`;
+                    mapMetaText.textContent = `${activeMap.name} (${activeMap.width}x${activeMap.height}), Grid ${activeMap.grid_size || 70}px`;
                 }
             }
         }
@@ -1095,16 +1541,36 @@
         _renderMapCanvas() {
             const statePayload = this.bootstrap?.state_payload || {};
             const activeMap = statePayload.active_map;
-            const tokens = Array.isArray(statePayload.tokens) ? statePayload.tokens : [];
+            const allTokens = Array.isArray(statePayload.tokens) ? statePayload.tokens : [];
+            // dm_only tokens are hidden from non-operator viewers. (The
+            // server currently still sends them - server-side filtering is
+            // tracked as a follow-up; this at least makes the UI honest.)
+            const operator = isOperatorRole(this.bootstrap?.session_role || "");
+            const tokens = operator
+                ? allTokens
+                : allTokens.filter((token) => String(token.visibility || "all") !== "dm_only");
             const mapWorld = document.getElementById("mapWorld");
             const mapImage = document.getElementById("mapImage");
             const mapGrid = document.getElementById("mapGridLayer");
             const tokenLayer = document.getElementById("mapTokenLayer");
             if (!mapWorld || !mapImage || !mapGrid || !tokenLayer) return;
 
-            const gridSize = Math.max(16, Number(activeMap?.grid_size) || 32);
-            const width = Math.max(900, Number(activeMap?.width) || 1800);
-            const height = Math.max(600, Number(activeMap?.height) || 1200);
+            const gridSize = Math.max(16, Number(activeMap?.grid_size) || 70);
+            // width/height semantics healed in place: maps made through the
+            // upload paths store PIXEL dimensions; older hand-made maps
+            // stored GRID-CELL counts (20x15 etc.). Values that small can't
+            // be a real pixel surface, so they are treated as cells. The old
+            // renderer instead clamped everything to >=900x600, which
+            // letterboxed/stretched every map that didn't match (the "scale
+            // is bad" bug, robot audit 2026-08-23).
+            const rawWidth = Number(activeMap?.width) || 0;
+            const rawHeight = Number(activeMap?.height) || 0;
+            const width = activeMap
+                ? Math.round(rawWidth > 200 ? rawWidth : Math.max(1, rawWidth) * gridSize)
+                : 1800;
+            const height = activeMap
+                ? Math.round(rawHeight > 200 ? rawHeight : Math.max(1, rawHeight) * gridSize)
+                : 1200;
             mapWorld.style.width = `${width}px`;
             mapWorld.style.height = `${height}px`;
             mapGrid.style.backgroundSize = `${gridSize}px ${gridSize}px`;
@@ -1112,6 +1578,7 @@
             mapWorld.dataset.mapWidth = String(width);
             mapWorld.dataset.mapHeight = String(height);
             mapWorld.dataset.hasMap = activeMap ? "true" : "false";
+            this._syncExtent();
 
             const emptyState = document.getElementById("mapEmptyState");
             if (emptyState) {
@@ -1119,14 +1586,24 @@
             }
 
             if (activeMap?.background_url) {
-                mapImage.src = activeMap.background_url;
+                if (mapImage.getAttribute("src") !== activeMap.background_url) {
+                    mapImage.src = activeMap.background_url;
+                }
                 mapImage.style.display = "block";
             } else {
                 mapImage.removeAttribute("src");
                 mapImage.style.display = "none";
             }
 
-            this.tokenIndex = new Map(tokens.map((token) => [Number(token.id), token]));
+            // First render of a newly-activated map: fit it to the screen
+            // once, then leave the zoom alone so manual choices stick.
+            const activeMapId = activeMap ? Number(activeMap.id) : null;
+            if (activeMapId !== null && activeMapId !== this.autoFitMapId) {
+                this.autoFitMapId = activeMapId;
+                this._zoomFit();
+            }
+
+            this.tokenIndex = new Map(allTokens.map((token) => [Number(token.id), token]));
             const initiativeEntries = this._getInitiativeEntries(tokens);
             const currentTurnTokenId = initiativeEntries.length ? Number(initiativeEntries[0].id) : null;
             tokenLayer.innerHTML = tokens.map((token) => {
@@ -1366,7 +1843,7 @@
                 const baseLeft = Number(marker.getAttribute("data-token-left")) || 0;
                 const baseTop = Number(marker.getAttribute("data-token-top")) || 0;
                 const baseVersion = Number(marker.getAttribute("data-token-version")) || Number(token.version || 1);
-                const gridSize = Number(document.getElementById("mapWorld")?.dataset?.gridSize || this.bootstrap?.state_payload?.active_map?.grid_size || 32);
+                const gridSize = Number(document.getElementById("mapWorld")?.dataset?.gridSize || this.bootstrap?.state_payload?.active_map?.grid_size || 70);
                 const world = document.getElementById("mapWorld");
                 const scale = this.zoomLevel / 100;
                 const worldRect = world?.getBoundingClientRect();

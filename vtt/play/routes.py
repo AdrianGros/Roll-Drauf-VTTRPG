@@ -6,7 +6,7 @@ from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from vtt.extensions import db, limiter, socketio
-from vtt.models import SceneLayer, TokenState
+from vtt.models import ChatMessage, SceneLayer, TokenState
 from vtt.play import play_bp
 from vtt.play.actions import execute_action, get_action_catalog
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
@@ -101,6 +101,27 @@ def bootstrap_play_runtime(campaign_id, session_id):
         "scene_stack": serialize_scene_stack(scene_stack),
         "state_payload": serialize_state_payload(game_session, state),
         "action_catalog": get_action_catalog(),
+        # Last 30 visible chat messages, newest first (same shape the live
+        # "chat:message_sent" broadcast uses), so a page reload no longer
+        # wipes the table conversation (robot audit 2026-08-23).
+        "chat_history": [
+            {
+                "message_id": row.id,
+                "message": row.content,
+                "sender_id": row.author_user_id,
+                "sender_name": row.author.username if row.author else "player",
+                "timestamp": row.created_at.isoformat() if row.created_at else None,
+                "created_at": row.created_at.isoformat() if row.created_at else None,
+            }
+            for row in ChatMessage.query.filter_by(
+                game_session_id=game_session.id,
+                deleted_at=None,
+            )
+            .filter(ChatMessage.moderation_state == "visible")
+            .order_by(ChatMessage.created_at.desc())
+            .limit(30)
+            .all()
+        ],
         "server_time": utcnow().isoformat(),
     }
     return jsonify(payload), 200

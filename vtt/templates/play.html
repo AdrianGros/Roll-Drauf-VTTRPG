@@ -86,6 +86,33 @@
             min-height: 0;
             overflow: hidden;
         }
+        /* Table refactor, 2026-08-23: the shared book-scene layout gives
+           `main` content-driven height, which on this page left a large
+           dead band of empty backdrop while the actual table got squeezed
+           against the bottom of the viewport (verified via full-page
+           screenshots in the robot probe). The play table is the one page
+           that must own the whole viewport, so pin the entire ancestor
+           chain to 100% height explicitly instead of relying on the
+           book-page grid. */
+        main {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 8px 0 10px !important;
+        }
+        .play-workspace-camera {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+        }
+        .play-workspace-page {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            gap: 8px;
+        }
         /* M3: single thin status strip replacing the old two-title-plus-two-
            paragraph chrome stack, so the map gets ~90% of the viewport
            instead of a large fraction going to descriptive copy above it. */
@@ -130,7 +157,12 @@
             will-change: transform, opacity, filter;
         }
         .play-entry-curtain {
-            position: fixed;
+            /* !important: book-shell.css's `body.book-shell-app > *`
+               { position: relative } out-specifies this class selector and
+               silently turned both overlay curtains into in-flow blocks --
+               324px of empty "void" pushing the whole table down (robot
+               layout probe, 2026-08-23). */
+            position: fixed !important;
             inset: 0;
             z-index: 80;
             pointer-events: none;
@@ -145,7 +177,8 @@
             transition: opacity 680ms ease;
         }
         .play-return-curtain {
-            position: fixed;
+            /* Same body.book-shell-app > * override as .play-entry-curtain. */
+            position: fixed !important;
             inset: 0;
             z-index: 85;
             pointer-events: none;
@@ -311,15 +344,27 @@
             position: absolute;
             inset: 0;
             overflow: auto;
-            padding: 1.25rem;
             overscroll-behavior: contain;
+        }
+        .map-viewport.tool-pan { cursor: grab; }
+        .map-viewport.tool-pan.panning { cursor: grabbing; }
+        .map-viewport.tool-token #mapWorld { cursor: crosshair; }
+        /* Table refactor, 2026-08-23: #mapExtent is the scroll spacer. A CSS
+           scale() on #mapWorld does not change its layout box, so scrollbars
+           used to be sized for the UNscaled world - dead scroll space when
+           zoomed out, unreachable map when zoomed in. The renderer sizes
+           this wrapper to world-size * zoom so the scroll area always
+           matches what is visually there. */
+        #mapExtent {
+            position: relative;
+            margin: 0 auto;
+            padding: 24px;
         }
         .map-world {
             position: relative;
             width: 1800px;
             height: 1200px;
-            margin: 0 auto;
-            border-radius: 10px;
+            border-radius: 4px;
             border: 1px solid rgba(255, 255, 255, 0.24);
             background: #1d2431;
             transform-origin: top left;
@@ -328,8 +373,8 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(to right, rgba(40, 40, 40, 0.24) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(40, 40, 40, 0.24) 1px, transparent 1px);
+                linear-gradient(to right, rgba(20, 20, 20, 0.38) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(20, 20, 20, 0.38) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 2;
@@ -339,10 +384,13 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            /* contain, not cover: #mapWorld is already sized to the active
-               map's true width/height, so this only guards against a DM
-               editing width/height independently of the source image later. */
-            object-fit: contain;
+            /* fill, not contain: the world IS the declared map surface; the
+               normal upload path sets width/height to the image's exact
+               pixel dimensions, so fill is 1:1. contain letterboxed the art
+               against the world whenever the dims diverged, which silently
+               misaligned the grid and every token coordinate (robot audit
+               2026-08-23). */
+            object-fit: fill;
             z-index: 1;
             display: none;
         }
@@ -449,6 +497,30 @@
             font-size: 0.88rem;
             color: #bad6ff;
         }
+        /* Table refactor, 2026-08-23: the three floating widgets used to sit
+           permanently expanded on top of the map (the layer panel alone
+           covered the top-left quarter, and in the robot screenshots it hid
+           tokens standing under it). Collapsible now, collapsed by default -
+           the map is the main surface, panels are on demand. */
+        .floating .widget-toggle {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .floating.collapsed {
+            width: auto;
+            min-width: 0;
+        }
+        .floating.collapsed .widget-body { display: none; }
+        .floating.collapsed h3 { margin-bottom: 0; white-space: nowrap; }
+        .floating.collapsed .widget-caret { transform: rotate(-90deg); }
+        .widget-caret {
+            font-size: 0.7rem;
+            transition: transform 150ms ease;
+        }
         #turnOrderWidget {
             left: 1rem;
             bottom: 1rem;
@@ -456,7 +528,7 @@
         }
         #layersWidget {
             left: 1rem;
-            top: 1rem;
+            top: 3.4rem;
             width: 320px;
             max-height: 54%;
         }
@@ -883,12 +955,12 @@
                     <div class="tabletop-shell">
         <aside class="left-toolbar" aria-label="Werkzeugleiste">
             <button class="tool-btn active" data-tool="select" title="Auswaehlen">SEL</button>
-            <button class="tool-btn" data-tool="pan" title="Verschieben">PAN</button>
-            <button class="tool-btn" data-tool="measure" title="Messen">MES</button>
-            <button class="tool-btn" data-tool="draw" title="Zeichnen">DRW</button>
-            <button class="tool-btn" data-tool="text" title="Text">TXT</button>
-            <button class="tool-btn" data-tool="token" title="Token">TOK</button>
-            <button class="tool-btn" data-tool="fog" title="Fog">FOG</button>
+            <button class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)">PAN</button>
+            <button class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug waehlen, dann auf die Karte klicken">TOK</button>
+            <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
+                 used to sit here as silent no-ops (the handler only toggled
+                 a CSS class). Removed until the tools actually exist -- a
+                 button that does nothing reads as "broken", not "planned". -->
             <div class="spacer">
                 <button id="btnBack" class="tool-btn" title="Zur Kampagne">BACK</button>
             </div>
@@ -901,39 +973,97 @@
                 <button id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
                 <span id="zoomLabel" class="mini-control">100%</span>
                 <button id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
-                <input id="zoomRange" type="range" min="50" max="200" step="5" value="100">
-                <button id="btnZoomReset" class="mini-control" title="Reset">RST</button>
+                <input id="zoomRange" type="range" min="20" max="300" step="5" value="100">
+                <button id="btnZoomFit" class="mini-control" title="Karte einpassen">FIT</button>
+                <button id="btnZoomReset" class="mini-control" title="100%">RST</button>
                 <button id="btnSidebarToggle" class="mini-control" title="Journal / Chat / Tools / Session">☰</button>
             </div>
 
             <div class="map-viewport" id="mapViewport">
-                <div class="map-world" id="mapWorld">
-                    <div class="map-empty-state" id="mapEmptyState">Keine aktive Karte geladen. Initialisiere den Kartenstapel oder waehle eine Ebene aus.</div>
-                    <img id="mapImage" alt="Aktive Karte">
-                    <div class="map-grid-layer" id="mapGridLayer"></div>
-                    <div id="mapTokenLayer"></div>
+                <div id="mapExtent">
+                    <div class="map-world" id="mapWorld">
+                        <div class="map-empty-state" id="mapEmptyState">Keine aktive Karte geladen. Initialisiere den Kartenstapel oder waehle eine Ebene aus.</div>
+                        <img id="mapImage" alt="Aktive Karte">
+                        <div class="map-grid-layer" id="mapGridLayer"></div>
+                        <div id="mapTokenLayer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tokenCreatePanel" class="floating" hidden style="width: 250px;">
+                <h3>Token platzieren</h3>
+                <div style="display:flex; flex-direction:column; gap:0.4rem;">
+                    <input id="tokenCreateName" type="text" placeholder="Name" maxlength="120">
+                    <select id="tokenCreateType">
+                        <option value="npc">NPC</option>
+                        <option value="player">Spieler</option>
+                        <option value="monster">Monster</option>
+                        <option value="object">Objekt</option>
+                    </select>
+                    <select id="tokenCreateSize">
+                        <option value="1">1x1 Feld</option>
+                        <option value="2">2x2 Felder</option>
+                        <option value="3">3x3 Felder</option>
+                    </select>
+                    <select id="tokenCreateVisibility">
+                        <option value="public">Sichtbar fuer alle</option>
+                        <option value="dm_only">Nur DM</option>
+                    </select>
+                    <div class="button-row" style="margin-bottom:0;">
+                        <button id="btnTokenCreateConfirm">Platzieren</button>
+                        <button id="btnTokenCreateCancel" class="secondary">Abbrechen</button>
+                    </div>
                 </div>
             </div>
 
             <div id="layersWidget" class="floating">
-                <h3>Seiten (Kartenebenen)</h3>
-                <div id="layerList"></div>
-                <div class="layer-add-row">
-                    <select id="layerAddSelect"><option value="">+ Seite hinzufuegen...</option></select>
-                    <button id="layerAddBtn" class="mini-btn" type="button">Hinzufuegen</button>
+                <h3 class="widget-toggle" data-widget="layersWidget">Seiten (Kartenebenen) <span class="widget-caret">▾</span></h3>
+                <div class="widget-body">
+                    <div id="layerList"></div>
+                    <div class="layer-add-row">
+                        <select id="layerAddSelect"><option value="">+ Seite hinzufuegen...</option></select>
+                        <button id="layerAddBtn" class="mini-btn" type="button">Hinzufuegen</button>
+                    </div>
+                    <div id="mapUploadRow" class="layer-add-row" hidden>
+                        <input id="mapUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                        <button id="btnMapUpload" class="mini-btn" type="button">Karte hochladen...</button>
+                        <label style="display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;color:var(--muted);white-space:nowrap;">
+                            Raster
+                            <input id="mapUploadGridSize" type="number" min="16" max="300" step="1" value="70" style="width:60px;padding:0.2rem 0.3rem;">
+                            px
+                        </label>
+                    </div>
+                    <div id="mapUploadStatus" class="muted" style="font-size:0.74rem;margin-top:0.3rem;" hidden></div>
                 </div>
             </div>
 
             <div id="turnOrderWidget" class="floating">
-                <h3>Turn Order</h3>
-                <div id="turnOrderSummary" class="turn-state">Noch keine Initiative-Werte.</div>
-                <div id="turnOrderList" class="muted">Noch keine Initiative-Werte.</div>
+                <h3 class="widget-toggle" data-widget="turnOrderWidget">Turn Order <span class="widget-caret">▾</span></h3>
+                <div class="widget-body">
+                    <div id="turnOrderSummary" class="turn-state">Noch keine Initiative-Werte.</div>
+                    <div id="turnOrderList" class="muted">Noch keine Initiative-Werte.</div>
+                    <div class="button-row" id="initiativeControls" style="margin:0.45rem 0 0;" hidden>
+                        <button id="btnRollInitiative" class="mini-btn secondary">Initiative auswuerfeln</button>
+                    </div>
+                </div>
             </div>
 
             <div id="tokenWidget" class="floating">
-                <h3>Tokens</h3>
-                <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewaehlt.</div>
-                <div id="tokenList"></div>
+                <h3 class="widget-toggle" data-widget="tokenWidget">Tokens <span class="widget-caret">▾</span></h3>
+                <div class="widget-body">
+                    <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewaehlt.</div>
+                    <div id="tokenSelectionDetail" hidden style="margin-bottom:0.45rem;">
+                        <div class="button-row" style="margin-bottom:0.35rem;">
+                            <input id="tokenHpCurrent" type="number" placeholder="HP" style="width:70px;" title="Aktuelle HP">
+                            <input id="tokenHpMax" type="number" placeholder="Max" style="width:70px;" title="Maximale HP">
+                            <button id="btnTokenHpSet" class="mini-btn">HP setzen</button>
+                        </div>
+                        <div class="button-row" style="margin-bottom:0;">
+                            <button id="btnTokenDelete" class="mini-btn danger">Token loeschen</button>
+                        </div>
+                    </div>
+                    <div id="tokenList"></div>
+                </div>
             </div>
         </section>
 

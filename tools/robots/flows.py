@@ -142,8 +142,162 @@ def _dice_roll_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _map_token_table_flow(stack, workdir: Path) -> list[str]:
+    """The journey the 2026-08-23 table refactor exists for: a DM uploads
+    a map image, creates a CampaignMap from it, activates it for the
+    session, places a token -- and the play table must actually RENDER
+    both. Before the refactor this failed at every step: no upload path
+    on the table, tokens invisible under overlapping panels, map world
+    clamped/letterboxed so grid and art never aligned."""
+    import struct
+    import zlib
+
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    def _make_png(width, height, rgb):
+        def chunk(tag, data):
+            piece = struct.pack(">I", len(data)) + tag + data
+            return piece + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+        raw = b""
+        row = bytes(rgb) * width
+        for _ in range(height):
+            raw += b"\x00" + row
+        ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr)
+                + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="karten_dm", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="karten_dm_bot",
+                email="karten_dm_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Kartenkampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Kartensitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        upload = api.post(
+            f"{stack.base_url}/api/assets/campaigns/{campaign_id}/upload",
+            multipart={"file": {"name": "robot_map.png", "mimeType": "image/png",
+                                "buffer": _make_png(700, 490, (70, 110, 60))}},
+            headers={"X-CSRF-TOKEN": csrf_token})
+        if upload.status != 201:
+            findings.append(f"[upload] asset upload returned HTTP {upload.status}: {upload.text()[:200]}")
+            browser.close()
+            return findings
+        asset_id = upload.json()["asset_id"]
+
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Roboterkarte", "width": 700, "height": 490,
+                             "grid_size": 70,
+                             "background_url": f"/api/assets/{asset_id}/preview"}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[map] map create returned HTTP {map_response.status}: {map_response.text()[:200]}")
+            browser.close()
+            return findings
+        map_id = map_response.json()["id"]
+
+        activate = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/maps/activate",
+            data=json.dumps({"map_id": map_id}), headers=json_headers)
+        if activate.status != 200:
+            findings.append(f"[map] activate returned HTTP {activate.status}: {activate.text()[:200]}")
+
+        token_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Robotertoken", "x": 140, "y": 140,
+                             "token_type": "npc",
+                             "metadata_json": {"position_mode": "pixel"}}),
+            headers=json_headers)
+        if token_response.status != 201:
+            findings.append(f"[token] create returned HTTP {token_response.status}: {token_response.text()[:200]}")
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_selector("#mapImage", state="visible", timeout=15_000)
+        except Exception:
+            findings.append("[render] #mapImage never became visible - map background not rendered")
+
+        page.wait_for_timeout(1_500)
+        verdict = page.evaluate(
+            """() => {
+                const img = document.getElementById('mapImage');
+                const world = document.getElementById('mapWorld');
+                const marker = document.querySelector('.token-marker');
+                const markerRect = marker ? marker.getBoundingClientRect() : null;
+                const viewport = document.getElementById('mapViewport');
+                const viewRect = viewport ? viewport.getBoundingClientRect() : null;
+                return {
+                    imgLoaded: Boolean(img && img.complete && img.naturalWidth > 0),
+                    worldWidth: world ? world.style.width : null,
+                    markerExists: Boolean(marker),
+                    markerVisibleInViewport: Boolean(markerRect && viewRect
+                        && markerRect.width > 0
+                        && markerRect.left >= viewRect.left && markerRect.right <= viewRect.right
+                        && markerRect.top >= viewRect.top && markerRect.bottom <= viewRect.bottom),
+                    uploadControlExists: Boolean(document.getElementById('btnMapUpload')),
+                };
+            }"""
+        )
+        if not verdict.get("imgLoaded"):
+            findings.append("[render] map background image did not load on the table")
+        if verdict.get("worldWidth") != "700px":
+            findings.append(
+                f"[scale] map world width is {verdict.get('worldWidth')!r}, expected '700px' "
+                "(the declared pixel size - clamping/letterboxing is back)")
+        if not verdict.get("markerExists"):
+            findings.append("[token] no .token-marker rendered for the created token")
+        elif not verdict.get("markerVisibleInViewport"):
+            findings.append("[token] token marker exists but is outside/hidden in the viewport")
+        if not verdict.get("uploadControlExists"):
+            findings.append("[upload-ui] #btnMapUpload missing - the DM upload path left the table again")
+
+        if findings:
+            try:
+                shot = workdir / "map-token-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
+    "map_token_table": _map_token_table_flow,
 }
 
 
