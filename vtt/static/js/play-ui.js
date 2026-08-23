@@ -471,11 +471,11 @@
                 const dice = document.getElementById("diceInput").value.trim() || "1d20";
                 this.socket.rollDice(dice, this.user?.username || "player", (result) => {
                     const target = document.getElementById("diceResult");
-                    if (result?.error) {
-                        target.textContent = `Fehler: ${result.error}`;
+                    if (!result || result.error) {
+                        target.textContent = `Fehler: ${result?.error || "keine Antwort vom Server"}`;
                         return;
                     }
-                    const rolls = Array.isArray(result?.rolls) ? result.rolls.join(",") : "-";
+                    const rolls = Array.isArray(result.rolls) ? result.rolls.join(",") : "-";
                     target.textContent = `${dice} -> ${result.total} (${rolls})`;
                 });
             });
@@ -799,9 +799,20 @@
                 nameInput.value = "";
                 nameInput.focus();
             }
+            const operator = isOperatorRole(this.bootstrap?.session_role);
             const visibilityRow = document.getElementById("tokenCreateVisibility");
             if (visibilityRow) {
-                visibilityRow.parentElement && (visibilityRow.style.display = isOperatorRole(this.bootstrap?.session_role) ? "" : "none");
+                visibilityRow.style.display = operator ? "" : "none";
+            }
+            // The server only lets players create player-type tokens they
+            // own -- pin the select instead of offering options that would
+            // come back as a 403.
+            const typeSelect = document.getElementById("tokenCreateType");
+            if (typeSelect) {
+                if (!operator) {
+                    typeSelect.value = "player";
+                }
+                typeSelect.disabled = !operator;
             }
         }
 
@@ -1473,7 +1484,7 @@
 
             const operator = isOperatorRole(this.bootstrap?.session_role || "");
             const gridSize = Math.max(16, Number(activeMap?.grid_size) || 70);
-            const tokens = statePayload?.tokens || [];
+            const tokens = this._visibleTokens(statePayload?.tokens || []);
             if (!this._isTokenAvailable(this.selectedTokenId, tokens)) {
                 this.selectedTokenId = null;
             }
@@ -1545,10 +1556,7 @@
             // dm_only tokens are hidden from non-operator viewers. (The
             // server currently still sends them - server-side filtering is
             // tracked as a follow-up; this at least makes the UI honest.)
-            const operator = isOperatorRole(this.bootstrap?.session_role || "");
-            const tokens = operator
-                ? allTokens
-                : allTokens.filter((token) => String(token.visibility || "all") !== "dm_only");
+            const tokens = this._visibleTokens(allTokens);
             const mapWorld = document.getElementById("mapWorld");
             const mapImage = document.getElementById("mapImage");
             const mapGrid = document.getElementById("mapGridLayer");
@@ -1646,7 +1654,7 @@
             const container = document.getElementById("turnOrderList");
             const summary = document.getElementById("turnOrderSummary");
             if (!container) return;
-            const tokens = Array.isArray(this.bootstrap?.state_payload?.tokens) ? this.bootstrap.state_payload.tokens : [];
+            const tokens = this._visibleTokens();
             const entries = this._getInitiativeEntries(tokens);
 
             if (!entries.length) {
@@ -1696,6 +1704,32 @@
                 this.chatRows = this.chatRows.slice(0, 50);
             }
             this._renderChat();
+        }
+
+        // Every player-facing token surface (map canvas, sidebar list, turn
+        // order, action selectors) must share ONE visibility filter --
+        // during the fullsession robot build-out the dm_only filter existed
+        // only on the canvas, so hidden tokens still leaked through the
+        // token list and turn order for players.
+        _visibleTokens(tokens = null) {
+            let list = Array.isArray(tokens)
+                ? tokens
+                : Array.isArray(this.bootstrap?.state_payload?.tokens)
+                    ? this.bootstrap.state_payload.tokens
+                    : [];
+            // Tokens belong to a map (token_states.map_id), but the state
+            // payload returns every token in the session -- without this
+            // filter, tokens placed on map A kept rendering after the DM
+            // switched the table to map B (found while building the
+            // fullsession robot).
+            const activeMapId = Number(this.bootstrap?.state_payload?.active_map?.id);
+            if (Number.isInteger(activeMapId) && activeMapId > 0) {
+                list = list.filter((token) => Number(token.map_id) === activeMapId);
+            }
+            if (isOperatorRole(this.bootstrap?.session_role || "")) {
+                return list;
+            }
+            return list.filter((token) => String(token.visibility || "public") !== "dm_only");
         }
 
         _findStateToken(tokenId, tokens = null) {
@@ -1950,7 +1984,7 @@
         _renderTokenSelectors() {
             const actorSelect = document.getElementById("actionTokenId");
             const targetSelect = document.getElementById("actionTargetTokenId");
-            const tokens = Array.isArray(this.bootstrap?.state_payload?.tokens) ? this.bootstrap.state_payload.tokens : [];
+            const tokens = this._visibleTokens();
             const myUserId = Number(this.user?.id);
 
             if (!tokens.length) {

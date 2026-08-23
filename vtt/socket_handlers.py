@@ -933,24 +933,29 @@ def register_socket_handlers(socketio):
         )
 
     @socketio.on("roll_dice")
-    def handle_roll_dice(data: dict, callback=None):
-        """Roll dice and return result."""
+    def handle_roll_dice(data: dict):
+        """Roll dice and return result.
+
+        Fullsession robot, 2026-08-23: this used to take a `callback=None`
+        parameter and call it with the result -- but Flask-SocketIO never
+        passes the client's ack function as a handler argument; the ack is
+        whatever the handler RETURNS. `callback` was always None, the
+        client's own ack fired with undefined, and the roller's result
+        display crashed on `result.total` on every single roll. Return
+        values are the actual ack mechanism.
+        """
         _track_socket_event("roll_dice")
         import random
         import re
 
         user, error = _parse_authenticated_user()
         if error:
-            if callable(callback):
-                callback({"error": error["message"]})
-            return
+            return {"error": error["message"]}
 
         dice_str = (data or {}).get("dice", "1d20")
         match = re.match(r"(\d+)d(\d+)([+-]\d+)?", dice_str)
         if not match:
-            if callable(callback):
-                callback({"error": "Invalid dice format"})
-            return
+            return {"error": "Invalid dice format"}
 
         num = int(match.group(1))
         sides = int(match.group(2))
@@ -960,20 +965,18 @@ def register_socket_handlers(socketio):
         total = sum(rolls) + mod
 
         result = {"rolls": rolls, "modifier": mod, "total": total}
-        if callable(callback):
-            callback(result)
 
         player_tag = (data or {}).get("player", "anonymous")
         campaign_id, campaign_parse_error = _coerce_int((data or {}).get("campaign_id"), "campaign_id")
         session_id, session_parse_error = _coerce_int((data or {}).get("session_id"), "session_id")
         if campaign_parse_error or session_parse_error:
             emit("dice_rolled", {"player": player_tag, "dice": dice_str, "result": result}, room=request.sid)
-            return
+            return result
 
         campaign, game_session, lookup_error = _get_campaign_session(campaign_id, session_id)
         if lookup_error or not campaign or not game_session or not _is_active_member(campaign.id, user.id):
             emit("dice_rolled", {"player": player_tag, "dice": dice_str, "result": result}, room=request.sid)
-            return
+            return result
 
         _emit_session_event(
             "dice_rolled",
@@ -981,6 +984,7 @@ def register_socket_handlers(socketio):
             game_session.id,
             {"player": player_tag, "dice": dice_str, "result": result},
         )
+        return result
 
     @socketio.on("chat:message_sent")
     def handle_chat_message(data):

@@ -84,7 +84,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     for name, module in (("views", "tools.robots.views"),
-                         ("flows", "tools.robots.flows")):
+                         ("flows", "tools.robots.flows"),
+                         ("fullsession", "tools.robots.fullsession")):
         print(f"{name} …")
         record = _run_suite(
             ev, name, [PY, "-m", module, "--out", str(ev.suite_dir(name) / f"{name}.json")])

@@ -467,7 +467,23 @@
             border: 1px solid var(--line);
             border-radius: 10px;
             padding: 0.42rem;
-            z-index: 20;
+            /* Above the right sidebar (z 26): the fullsession robot caught
+               the open sidebar covering the very toggle button that opened
+               it, making it impossible to close from where it was opened. */
+            z-index: 30;
+            transition: right 240ms ease;
+        }
+        /* ...and the inverse (same robot, next run): at z 30 the topbar
+           covered the open drawer's tab row instead. Neither layer may sit
+           on the other -- while the drawer is open, the topbar slides left
+           of it. */
+        .tabletop-shell:has(.right-sidebar.is-open) .stage-topbar {
+            right: calc(340px + 1rem);
+        }
+        @media (max-height: 720px) {
+            .tabletop-shell:has(.right-sidebar.is-open) .stage-topbar {
+                right: calc(280px + 1rem);
+            }
         }
         .mini-control {
             border: 1px solid var(--line);
