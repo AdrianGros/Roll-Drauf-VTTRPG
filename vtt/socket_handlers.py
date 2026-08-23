@@ -545,59 +545,20 @@ def register_socket_handlers(socketio):
         payload["server_time"] = utcnow().isoformat()
         emit("combat:updated", payload, room=request.sid)
 
-    @socketio.on("map:activate")
-    def handle_map_activate(data):
-        _track_socket_event("map:activate")
-        user, error = _parse_authenticated_user()
-        if error:
-            _emit_error(error["code"], error["message"])
-            return
-
-        payload = data or {}
-        campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
-        if parse_error:
-            _emit_error(parse_error["code"], parse_error["message"])
-            return
-        session_id, parse_error = _coerce_int(payload.get("session_id"), "session_id")
-        if parse_error:
-            _emit_error(parse_error["code"], parse_error["message"])
-            return
-        map_id, parse_error = _coerce_int(payload.get("map_id"), "map_id")
-        if parse_error:
-            _emit_error(parse_error["code"], parse_error["message"])
-            return
-
-        campaign, game_session, lookup_error = _get_campaign_session(campaign_id, session_id)
-        if lookup_error:
-            _emit_error(lookup_error["code"], lookup_error["message"])
-            return
-        if not _is_dm(campaign.id, user.id):
-            _emit_error("forbidden", "dm role required")
-            return
-
-        campaign_map = CampaignMap.query.filter_by(
-            id=map_id,
-            campaign_id=campaign.id,
-            archived_at=None,
-        ).first()
-        if not campaign_map:
-            _emit_error("not_found", "map not found")
-            return
-
-        state = _ensure_session_state(campaign.id, game_session)
-        state.active_map_id = campaign_map.id
-        state.bump_version()
-        _refresh_state_snapshot(state)
-        game_session.map_id = campaign_map.id
-        db.session.commit()
-
-        _emit_session_event(
-            "map:activated",
-            campaign.id,
-            game_session.id,
-            {"map_id": campaign_map.id, "version": state.version},
-        )
-        _emit_session_event("state:snapshot", campaign.id, game_session.id, _serialize_snapshot(state))
+    # A "map:activate" handler used to live here, duplicating
+    # campaigns/routes.py's POST .../maps/activate REST endpoint exactly
+    # (same state.active_map_id write, same fields) but through a
+    # DIFFERENT event name than the scene-stack system's own
+    # "scene:layer_activated" broadcast -- so a client using the new
+    # page-manager UI would never notice a map change made this way.
+    # Removed 2026-08-23 (robot audit, Arc 0.4): no client ever emitted
+    # "map:activate" (confirmed via a repo-wide search of vtt/static/js/
+    # and vtt/templates/), and no test referenced it either -- genuinely
+    # dead code, not a second supported path. The one still-reachable
+    # legacy writer (campaigns/routes.py's REST endpoint, still called
+    # from campaigns.html's pre-session map picker) now delegates to the
+    # scene-stack system instead of writing active_map_id directly, so
+    # there is exactly one place that decides "what map is active."
 
     @socketio.on("token:create")
     def handle_token_create(data):

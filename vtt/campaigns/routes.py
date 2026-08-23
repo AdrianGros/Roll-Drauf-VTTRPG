@@ -7,6 +7,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from sqlalchemy.exc import IntegrityError
 
 from vtt.combat import service as combat_service
+from vtt.play import service as scene_service
 from vtt.campaigns import campaigns_bp
 from vtt.extensions import db, limiter, socketio
 from vtt.models import (
@@ -17,6 +18,7 @@ from vtt.models import (
     CombatEncounter,
     GameSession,
     InviteToken,
+    SceneLayer,
     SessionCharacterAssignment,
     SessionState,
     TokenState,
@@ -1003,12 +1005,45 @@ def activate_session_map(campaign_id, session_id):
     if error:
         return error
 
-    state = _ensure_session_state(campaign, game_session)
-    state.active_map_id = campaign_map.id
-    state.bump_version()
-    _refresh_state_snapshot(state)
-    game_session.map_id = campaign_map.id
-    db.session.commit()
+    # Delegates to the scene-stack system (vtt/play/service.py) instead
+    # of writing SessionState.active_map_id directly (robot audit,
+    # 2026-08-23, Arc 0.4). This is campaigns.html's pre-session map
+    # picker, the one remaining caller of this endpoint -- it used to
+    # bypass the scene stack entirely, so a map picked here got silently
+    # discarded the moment init_scene_stack() next ran for this session
+    # (it always activates its own first layer), and no other connected
+    # client ever heard about the change (no broadcast). Finding or
+    # creating a layer for this map and activating it through
+    # activate_scene_layer() means scene_stack.active_layer_id,
+    # game_session.map_id and state.active_map_id can no longer diverge,
+    # no matter which surface (this prep page or live /play) changes it.
+    scene_stack = scene_service.get_or_create_scene_stack(campaign, game_session, user)
+    layer = SceneLayer.query.filter_by(
+        scene_stack_id=scene_stack.id, campaign_map_id=campaign_map.id
+    ).first()
+    if layer is None:
+        scene_stack, layer, layer_error = scene_service.add_scene_layer(
+            campaign, game_session, user, campaign_map.id)
+        if layer_error:
+            return layer_error
+
+    state = scene_service.activate_scene_layer(campaign, game_session, layer)
+    if not state:
+        return jsonify({"error": "failed to activate map"}), 500
+
+    room = _room_name(campaign.id, game_session.id)
+    socketio.emit(
+        "scene:layer_activated",
+        build_event_envelope(campaign.id, game_session.id, {
+            "campaign_id": campaign.id,
+            "session_id": game_session.id,
+            "scene_stack_id": scene_stack.id,
+            "active_layer_id": layer.id,
+            "active_map_id": layer.campaign_map_id,
+            "state_version": state.version,
+        }),
+        room=room,
+    )
 
     return jsonify(
         {

@@ -6,7 +6,17 @@ import pytest
 
 from vtt import create_app
 from vtt.extensions import db
-from vtt.models import Campaign, CampaignMap, CampaignMember, GameSession, Role, SessionState, User
+from vtt.models import (
+    Campaign,
+    CampaignMap,
+    CampaignMember,
+    GameSession,
+    Role,
+    SceneLayer,
+    SceneStack,
+    SessionState,
+    User,
+)
 
 
 def _login(client, username, password="Password123!"):
@@ -168,6 +178,67 @@ class TestSessionState:
         assert allowed.status_code == 200
         body = allowed.get_json()
         assert body["active_map"]["id"] == map_two.id
+
+    def test_activate_map_stays_in_sync_with_the_scene_stack(self, dm_user, dm_client):
+        """Regression test for the write-path unification (robot audit,
+        2026-08-23, Arc 0.4): this legacy endpoint (still called from
+        campaigns.html's pre-session map picker) used to write
+        SessionState.active_map_id directly, bypassing the scene-stack
+        model entirely -- so a map activated here got silently discarded
+        the moment init_scene_stack() next ran (it always activates its
+        own first layer), and no scene-stack-aware client ever heard
+        about the change. It must now go through the same
+        activate_scene_layer() path /play uses, so scene_stack.active_layer_id
+        and state.active_map_id can never diverge, and re-activating an
+        already-picked map must not create a duplicate layer."""
+        campaign = _create_campaign(dm_user)
+        map_one = CampaignMap(campaign_id=campaign.id, name="Map 1", width=20, height=20, created_by=dm_user.id)
+        map_two = CampaignMap(campaign_id=campaign.id, name="Map 2", width=20, height=20, created_by=dm_user.id)
+        db.session.add_all([map_one, map_two])
+        db.session.flush()
+        session = GameSession(campaign_id=campaign.id, name="Session Sync", status="scheduled")
+        db.session.add(session)
+        db.session.commit()
+
+        first = dm_client.post(
+            f"/api/campaigns/{campaign.id}/sessions/{session.id}/maps/activate",
+            json={"map_id": map_one.id},
+        )
+        assert first.status_code == 200
+
+        scene_stack = SceneStack.query.filter_by(game_session_id=session.id).first()
+        assert scene_stack is not None, "activating a map must create a scene stack, not bypass it"
+        state = SessionState.query.filter_by(game_session_id=session.id).first()
+        active_layer = db.session.get(SceneLayer, scene_stack.active_layer_id)
+        assert active_layer.campaign_map_id == map_one.id
+        assert state.active_map_id == map_one.id, "state.active_map_id must match the scene stack's active layer"
+
+        # Switching to a second map must reuse the same scene stack, not
+        # fight it or spawn a second one.
+        second = dm_client.post(
+            f"/api/campaigns/{campaign.id}/sessions/{session.id}/maps/activate",
+            json={"map_id": map_two.id},
+        )
+        assert second.status_code == 200
+        db.session.refresh(scene_stack)
+        db.session.refresh(state)
+        active_layer = db.session.get(SceneLayer, scene_stack.active_layer_id)
+        assert active_layer.campaign_map_id == map_two.id
+        assert state.active_map_id == map_two.id
+        assert SceneStack.query.filter_by(game_session_id=session.id).count() == 1
+
+        # Re-activating a map that already has a layer must not create a
+        # duplicate layer for it (add_scene_layer's own 409 guard would
+        # otherwise surface here as a user-facing error on a click that
+        # should just be idempotent).
+        third = dm_client.post(
+            f"/api/campaigns/{campaign.id}/sessions/{session.id}/maps/activate",
+            json={"map_id": map_one.id},
+        )
+        assert third.status_code == 200
+        assert SceneLayer.query.filter_by(
+            scene_stack_id=scene_stack.id, campaign_map_id=map_one.id
+        ).count() == 1
 
     def test_state_persists_between_requests(self, dm_user, dm_client):
         campaign = _create_campaign(dm_user)
