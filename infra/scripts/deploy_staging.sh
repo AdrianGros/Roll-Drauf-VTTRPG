@@ -19,7 +19,7 @@ echo "======================================${NC}"
 echo ""
 
 # Step 1: Activate venv
-echo -e "${YELLOW}[1/8] Setting up virtual environment...${NC}"
+echo -e "${YELLOW}[1/6] Setting up virtual environment...${NC}"
 if [ ! -d "venv" ]; then
     python3 -m venv venv
     echo -e "${GREEN}✓ Virtual environment created${NC}"
@@ -29,39 +29,61 @@ fi
 source venv/bin/activate
 
 # Step 2: Install dependencies
-echo -e "${YELLOW}[2/8] Installing dependencies...${NC}"
+echo -e "${YELLOW}[2/6] Installing dependencies...${NC}"
 pip install -q --upgrade pip
 pip install -q -r requirements.txt 2>/dev/null
 echo -e "${GREEN}✓ Dependencies installed${NC}"
 
 # Step 3: Create instance directory
-echo -e "${YELLOW}[3/8] Creating instance directory...${NC}"
+echo -e "${YELLOW}[3/6] Creating instance directory...${NC}"
 mkdir -p instance
 export FLASK_ENV=staging
-export DATABASE_URL='sqlite:///instance/vtt_staging.db'
+export DATABASE_URL="sqlite:///$PROJECT_DIR/instance/vtt_staging.db"
 echo -e "${GREEN}✓ Instance directory ready${NC}"
 
 # Step 4: Initialize database
-echo -e "${YELLOW}[4/8] Initializing base database schema...${NC}"
-python3 << 'INIT_SCRIPT'
+#
+# Robot audit, 2026-08-23 (Arc 0.9): this used to `from vtt_app import
+# create_app` -- the real package has been `vtt` for the whole life of
+# this repo (confirmed: no vtt_app/ directory has ever existed), so
+# this script ImportErrored on line 1 of its own bootstrap, every time,
+# for as long as it has existed. It also used to hand-apply three named
+# migration files (M17/M18/M19) AFTER db.create_all() already built the
+# complete current schema from the live models -- create_all() is not
+# incremental, so those ALTER TABLE ADD COLUMN statements (none of them
+# idempotent) would fail with "duplicate column" the moment the import
+# bug was fixed and this ever got far enough to try them. There is
+# nothing left for them to add: create_all() already includes every
+# column those three migrations describe, because the models module is
+# the one live source of schema, same as dev and prod (see
+# migrations/README.md's own admission that this repo has no Alembic
+# versions/ directory to replay). Dropped rather than fixed.
+echo -e "${YELLOW}[4/6] Initializing base database schema...${NC}"
+# Robot audit, 2026-08-23 (Arc 0.9, cont'd): a relative sqlite URI
+# ('sqlite:///instance/vtt_staging.db') reliably failed here with
+# "unable to open database file" even though the bash cwd is correct --
+# confirmed by testing the identical create_app() call with an absolute
+# path instead, which works. Using $PROJECT_DIR (already absolute)
+# makes this robust regardless of cwd assumptions.
+python3 << INIT_SCRIPT
 import os
 import sys
-os.environ['DATABASE_URL'] = 'sqlite:///instance/vtt_staging.db'
+os.environ['DATABASE_URL'] = 'sqlite:///$PROJECT_DIR/instance/vtt_staging.db'
 os.environ['FLASK_ENV'] = 'staging'
 
 try:
-    from vtt_app import create_app
-    from vtt_app.extensions import db
+    from vtt import create_app
+    from vtt.extensions import db
 
     app = create_app('development')
     app.config['AUTO_CREATE_SCHEMA'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/vtt_staging.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///$PROJECT_DIR/instance/vtt_staging.db'
 
     with app.app_context():
         db.create_all()
         inspector = db.inspect(db.engine)
         tables = inspector.get_table_names()
-        print(f"✓ Schema created with {len(tables)} base tables")
+        print(f"✓ Schema created with {len(tables)} tables (current models, complete)")
 except Exception as e:
     print(f"✗ Error: {e}")
     sys.exit(1)
@@ -73,33 +95,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Step 5: Apply migrations
-echo -e "${YELLOW}[5/8] Applying M17 migration...${NC}"
-if sqlite3 instance/vtt_staging.db < migrations/migration_m17_add_platform_roles_and_audit.sql 2>/dev/null; then
-    echo -e "${GREEN}✓ M17 migration applied${NC}"
-else
-    echo -e "${RED}✗ M17 migration failed${NC}"
-    exit 1
-fi
-
-echo -e "${YELLOW}[6/8] Applying M18 migration...${NC}"
-if sqlite3 instance/vtt_staging.db < migrations/migration_m18_user_lifecycle.sql 2>/dev/null; then
-    echo -e "${GREEN}✓ M18 migration applied${NC}"
-else
-    echo -e "${RED}✗ M18 migration failed${NC}"
-    exit 1
-fi
-
-echo -e "${YELLOW}[7/8] Applying M19 migration...${NC}"
-if sqlite3 instance/vtt_staging.db < migrations/migration_m19_add_assets.sql 2>/dev/null; then
-    echo -e "${GREEN}✓ M19 migration applied${NC}"
-else
-    echo -e "${RED}✗ M19 migration failed${NC}"
-    exit 1
-fi
-
-# Step 6: Verify database
-echo -e "${YELLOW}[8/8] Verifying database...${NC}"
+# Step 5: Verify database
+echo -e "${YELLOW}[5/6] Verifying database...${NC}"
 TABLE_COUNT=$(sqlite3 instance/vtt_staging.db "SELECT COUNT(*) FROM sqlite_master WHERE type='table';")
 INDEX_COUNT=$(sqlite3 instance/vtt_staging.db "SELECT COUNT(*) FROM sqlite_master WHERE type='index';")
 echo -e "${GREEN}✓ Database verified: $TABLE_COUNT tables, $INDEX_COUNT indexes${NC}"
@@ -111,11 +108,11 @@ echo "✓ STAGING DEPLOYMENT COMPLETE"
 echo "======================================${NC}"
 echo ""
 echo "Database location: instance/vtt_staging.db"
-echo "Environment: DATABASE_URL=sqlite:///instance/vtt_staging.db"
+echo "Environment: DATABASE_URL=sqlite:///$PROJECT_DIR/instance/vtt_staging.db"
 echo ""
 echo "Next steps:"
 echo "  1. Start application:"
-echo "     export DATABASE_URL='sqlite:///instance/vtt_staging.db'"
+echo "     export DATABASE_URL='sqlite:///$PROJECT_DIR/instance/vtt_staging.db'"
 echo "     source venv/bin/activate"
 echo "     flask run"
 echo ""
