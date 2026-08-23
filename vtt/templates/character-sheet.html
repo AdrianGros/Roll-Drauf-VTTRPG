@@ -780,11 +780,21 @@
                         </div>
                         <div class="sheet-split-actions">
                             <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()">Edit Sheet</button>
-                            <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden>Campaign Context</button>
+                            <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden>Open Campaign Context</button>
                             <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goBack()">Zurück zum Archiv</button>
                         </div>
+                        <!-- Robot audit, 2026-08-23, Arc 0.7: a second,
+                             static "next step" element (id=sheetNextStepNote,
+                             English placeholder text) used to sit right
+                             here -- dead HTML nothing ever populated or
+                             un-hid. This one element (sheetNextHint) is the
+                             real, working implementation: updateJourneyContext()
+                             below sets its text dynamically (level-up
+                             available, avatar/token missing, campaign-ready,
+                             etc.) in German, matching the rest of this
+                             page. Removed rather than wired up, since
+                             wiring it up would just duplicate this one. -->
                         <div id="sheetNextHint" class="sheet-next-hint" hidden></div>
-                        <div class="sheet-mode-note" id="sheetNextStepNote" hidden></div>
                     </div>
 
                     <div class="sheet-pane" id="rdlProfileSection">

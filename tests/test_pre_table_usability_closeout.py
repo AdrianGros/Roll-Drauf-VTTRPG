@@ -33,9 +33,18 @@ def test_character_surfaces_strengthen_sheet_to_campaign_continuity():
     assert "Campaigns Hub" in characters
     assert "Session Assignment Route" in characters
 
-    assert 'id="sheetNextStepNote"' in sheet
-    assert "return to campaign prep to assign this hero to a session before play" in sheet
-    assert "This hero is not yet tied to a campaign." in sheet
+    # The character-sheet side of this continuity used to be a second,
+    # static "sheetNextStepNote" element with English placeholder text
+    # nothing ever populated -- removed 2026-08-23 (Arc 0.7 robot audit)
+    # in favor of the one that actually works: updateJourneyContext()
+    # sets #sheetNextHint's text dynamically (state-based, German,
+    # matching the rest of the app), including exactly the "not yet in a
+    # campaign -> assign before play" and "ready -> return to campaign
+    # context" cases this test originally meant to cover.
+    assert 'id="sheetNextHint"' in sheet
+    assert "function updateJourneyContext(character)" in sheet
+    assert "Weise ihn einer Kampagne zu, bevor es an den Tisch geht." in sheet
+    assert "Kehre zum Kampagnen-Kontext zurück, wenn du bereit für die Session bist." in sheet
 
 
 def test_campaigns_route_aligns_hub_and_session_prep_readiness_language():

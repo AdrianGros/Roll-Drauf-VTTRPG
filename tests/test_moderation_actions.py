@@ -108,7 +108,13 @@ def player_user(app):
 
 @pytest.fixture
 def admin_user(app):
-    user = User(username="mod_admin", email="mod_admin@test.com", role_id=3)
+    # role_id=3 ("Admin" in the legacy campaign-role table) does NOT grant
+    # platform-moderation access -- vtt/community/policy.py::is_admin()
+    # checks platform_role explicitly ("Use platform_role (M17) instead
+    # of legacy role_id"). This fixture set only role_id and never
+    # platform_role, so it silently tested a 403 instead of the ban flow
+    # it claims to (robot audit, 2026-08-23, Arc 0.7).
+    user = User(username="mod_admin", email="mod_admin@test.com", role_id=3, platform_role="admin")
     user.set_password("Password123!")
     db.session.add(user)
     db.session.commit()
