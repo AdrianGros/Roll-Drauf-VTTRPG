@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Roll-Drauf VTT: ein klarer, Discord-nativer Spieltisch mit Beyond20-Integration.">
+    <title>Roll-Drauf VTT – Der offene Spieltisch</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --ink: #f5efe5;
+            --muted: #b9b0c4;
+            --line: rgba(255, 255, 255, .14);
+            --panel: rgba(22, 18, 39, .82);
+            --accent: #e7b96c;
+            --accent-strong: #f4d18f;
+            --plum: #241431;
+            --plum-deep: #110b1c;
+            --success: #9ed5ac;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 12% 8%, rgba(108, 73, 133, .42), transparent 34rem),
+                radial-gradient(circle at 87% 22%, rgba(68, 104, 126, .32), transparent 28rem),
+                linear-gradient(145deg, var(--plum-deep), var(--plum) 54%, #19283a);
+            font: 16px/1.55 Georgia, "Times New Roman", serif;
+        }
+        a { color: inherit; }
+        .site-header, main, footer { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .brand { color: var(--accent-strong); font: 700 1.35rem/1.1 Georgia, serif; text-decoration: none; letter-spacing: .04em; }
+        .brand span { color: var(--muted); font-size: .72em; letter-spacing: .18em; }
+        .nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+        .nav a { color: var(--muted); text-decoration: none; }
+        .nav a:hover, .nav a:focus-visible { color: var(--accent-strong); }
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 9px 17px;
+            border: 1px solid rgba(244, 209, 143, .55);
+            border-radius: 9px;
+            background: linear-gradient(180deg, #8f443d, #6f2f35);
+            color: #fff7e8 !important;
+            text-decoration: none;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
+        }
+        .button.secondary { background: rgba(255, 255, 255, .06); color: var(--accent-strong) !important; }
+        .button:hover, .button:focus-visible { transform: translateY(-1px); filter: brightness(1.1); }
+        .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 60px; align-items: center; padding: 92px 0 76px; }
+        .eyebrow { color: var(--accent); font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; }
+        h1, h2, h3 { margin: 0; font-weight: 700; line-height: 1.08; }
+        h1 { max-width: 760px; margin-top: 14px; font-size: clamp(2.7rem, 7vw, 5.8rem); letter-spacing: -.045em; }
+        h2 { font-size: clamp(1.9rem, 4vw, 3rem); }
+        h3 { font-size: 1.15rem; color: var(--accent-strong); }
+        .hero-copy { max-width: 650px; margin: 22px 0 30px; color: var(--muted); font-size: 1.2rem; }
+        .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+        .proof-card, .card, .integration {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: var(--panel);
+            box-shadow: 0 22px 70px rgba(0, 0, 0, .2);
+        }
+        .proof-card { padding: 28px; transform: rotate(1.2deg); }
+        .proof-card strong { display: block; margin: 10px 0 8px; font-size: 1.8rem; }
+        .proof-card p { margin: 0 0 22px; color: var(--muted); }
+        .status { display: inline-flex; align-items: center; gap: 8px; color: var(--success); font-size: .9rem; }
+        .status::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; box-shadow: 0 0 14px currentColor; }
+        .section { padding: 70px 0; }
+        .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+        .section-heading p { max-width: 520px; margin: 0; color: var(--muted); }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .card { min-height: 190px; padding: 24px; }
+        .card p { margin: 12px 0 0; color: var(--muted); }
+        .integration { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; padding: 28px; }
+        .integration p { margin: 10px 0 0; color: var(--muted); }
+        .integration code { color: var(--accent-strong); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .86em; }
+        footer { display: flex; justify-content: space-between; gap: 20px; padding: 28px 0 36px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+        footer a { color: var(--accent-strong); text-decoration: none; }
+        @media (max-width: 760px) {
+            .site-header, main, footer { width: min(100% - 28px, 620px); }
+            .site-header { align-items: flex-start; flex-direction: column; }
+            .nav { justify-content: flex-start; gap: 12px; }
+            .hero { grid-template-columns: 1fr; gap: 32px; padding: 62px 0 44px; }
+            .proof-card { transform: none; }
+            .grid, .integration { grid-template-columns: 1fr; }
+            .section { padding: 48px 0; }
+            footer { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="Roll-Drauf VTT Startseite">roll drauf <span>VTT</span></a>
+        <nav class="nav" aria-label="Öffentliche Navigation">
+            <a href="#features">Was ist hier?</a>
+            <a href="#flow">Ablauf</a>
+            <a href="/beyond20.html">Beyond20</a>
+            <a class="button" href="/login.html">Zum Spieltisch</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="hero-title">
+            <div>
+                <div class="eyebrow">Der Spieltisch für eure Kampagne</div>
+                <h1 id="hero-title">Vom Discord-Server direkt in die nächste Szene.</h1>
+                <p class="hero-copy">Roll-Drauf verbindet Kampagnen, Charaktere, Karten, Tokens und Live-Würfe in einem ruhigen, gemeinsamen VTT. Diese Startseite ist öffentlich lesbar; nur die eigentliche Sitzung benötigt Discord-Zugang.</p>
+                <div class="actions">
+                    <a class="button" href="/login.html">Mit Discord zum Spieltisch</a>
+                    <a class="button secondary" href="/beyond20.html">Beyond20-Integration ansehen</a>
+                </div>
+            </div>
+            <aside class="proof-card" aria-label="Öffentlicher Prüfpfad">
+                <span class="eyebrow">Öffentlicher Prüfpfad</span>
+                <strong>Kein Login für die Übersicht.</strong>
+                <p>Externe Maintainer können Oberfläche, Integrationsvertrag und Systemstatus prüfen, ohne eine Discord-Session zu benötigen.</p>
+                <span class="status">Öffentliche Oberfläche erreichbar</span>
+            </aside>
+        </section>
+
+        <section class="section" id="features" aria-labelledby="features-title">
+            <div class="section-heading">
+                <h2 id="features-title">Alles Wichtige am Tisch.</h2>
+                <p>Die Oberfläche bleibt auf den nächsten sinnvollen Schritt fokussiert und führt aus der Vorbereitung in die laufende Session.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Karten und Seiten</h3><p>Karten direkt im Spieltisch hochladen, als Seiten verwalten und für alle Spieler aktivieren.</p></article>
+                <article class="card"><h3>Tokens und Zustände</h3><p>Tokenbilder aus einer Datei übernehmen, platzieren und HP, Bedingungen sowie Initiative synchron halten.</p></article>
+                <article class="card"><h3>Live-Würfe</h3><p>Native Würfe und Beyond20-Ereignisse laufen über denselben Tisch- und Chatkanal.</p></article>
+            </div>
+        </section>
+
+        <section class="section" id="flow" aria-labelledby="flow-title">
+            <div class="section-heading">
+                <h2 id="flow-title">Ein klarer Weg bis zum Abend.</h2>
+                <p>Es gibt keine versteckten Zukunftsversprechen: Jeder sichtbare Einstieg führt zu einer echten Seite oder zu einer überprüfbaren Statusantwort.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>01 · Kampagne vorbereiten</h3><p>Im Discord-Zugang anmelden, Kampagne und Session auswählen.</p></article>
+                <article class="card"><h3>02 · Szene aufbauen</h3><p>Eine Karte hochladen oder eine vorhandene Kampagnenkarte als Seite hinzufügen.</p></article>
+                <article class="card"><h3>03 · Spiel starten</h3><p>Tokens platzieren, Beyond20 verbinden und gemeinsam spielen.</p></article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="integration-title">
+            <div class="integration">
+                <div>
+                    <div class="eyebrow">Für Beyond20-Maintainer</div>
+                    <h2 id="integration-title">Der Integrationsvertrag ist öffentlich.</h2>
+                    <p>Die Event-Oberfläche dokumentiert <code>Beyond20_RenderedRoll</code>, HP-, Conditions- und Combat-Updates sowie den sicheren Login-Grenzpunkt.</p>
+                </div>
+                <a class="button secondary" href="/beyond20.html">Technische Übersicht</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <span>Roll-Drauf VTT · öffentliche Produktübersicht</span>
+        <span><a href="/health/live">Systemstatus</a> · <a href="/login.html">Login</a></span>
+    </footer>
+</body>
+</html>

@@ -228,6 +228,23 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
                 findings.append("[menu] map file action is not labelled 'Datei hinzufügen'")
             if not page.locator("#btnTokenUpload").count():
                 findings.append("[token-upload] no direct token file-dialog action is visible")
+            page.wait_for_function(
+                "() => document.getElementById('layerAddSelect')?.options.length >= 1",
+                timeout=10_000)
+            empty_layer_state = page.evaluate(
+                """() => ({
+                    addDisabled: Boolean(document.getElementById('layerAddBtn')?.disabled),
+                    status: (document.getElementById('layerAddStatus')?.textContent || '').trim(),
+                    statusHidden: Boolean(document.getElementById('layerAddStatus')?.hidden),
+                    uploadVisible: Boolean(document.getElementById('btnMapUpload')
+                        && !document.getElementById('mapUploadRow')?.hidden),
+                })""")
+            if empty_layer_state.get("addDisabled") and (
+                    empty_layer_state.get("statusHidden")
+                    or not empty_layer_state.get("status")):
+                findings.append(
+                    "[empty-state] disabled 'Hinzufügen' has no visible explanation or "
+                    "replacement action when no unused campaign map exists")
             page.click("#btnSidebarToggle")
             page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
             for tab in ("journal", "chat", "tools", "session"):

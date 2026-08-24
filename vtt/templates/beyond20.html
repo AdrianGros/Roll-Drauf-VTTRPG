@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Öffentliche technische Übersicht der Roll-Drauf Beyond20-Integration.">
+    <title>Beyond20-Integration – Roll-Drauf VTT</title>
+    <style>
+        :root { color-scheme: dark; --ink:#f5efe5; --muted:#b9b0c4; --line:rgba(255,255,255,.14); --panel:rgba(22,18,39,.86); --accent:#e7b96c; --plum:#110b1c; }
+        * { box-sizing:border-box; }
+        body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 15% 10%,#4a2d60,transparent 34rem),linear-gradient(145deg,var(--plum),#19283a); font:16px/1.55 Georgia,"Times New Roman",serif; }
+        a { color:var(--accent); }
+        .wrap { width:min(920px,calc(100% - 32px)); margin:0 auto; }
+        header { display:flex; justify-content:space-between; gap:18px; align-items:center; padding:24px 0; border-bottom:1px solid var(--line); }
+        header a { text-decoration:none; }
+        .brand { font-size:1.3rem; font-weight:700; color:#f4d18f; }
+        main { padding:72px 0; }
+        .eyebrow { color:var(--accent); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; }
+        h1 { margin:12px 0 18px; max-width:720px; font-size:clamp(2.4rem,6vw,4.8rem); line-height:1.05; letter-spacing:-.04em; }
+        h2 { margin:0 0 12px; font-size:1.65rem; }
+        .lead { max-width:700px; color:var(--muted); font-size:1.15rem; }
+        .panel { margin-top:34px; padding:26px; border:1px solid var(--line); border-radius:15px; background:var(--panel); }
+        .contract { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0 0; }
+        .item { padding:16px; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.035); }
+        .item strong { display:block; color:#f4d18f; }
+        code { color:#f4d18f; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:.9em; }
+        .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+        .button { display:inline-flex; align-items:center; min-height:44px; padding:9px 16px; border:1px solid rgba(244,209,143,.55); border-radius:9px; background:#752f35; color:#fff7e8; text-decoration:none; }
+        .button.secondary { background:rgba(255,255,255,.06); color:#f4d18f; }
+        footer { padding:0 0 36px; color:var(--muted); }
+        @media (max-width:650px) { header { align-items:flex-start; flex-direction:column; } .contract { grid-template-columns:1fr; } main { padding:48px 0; } }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <a class="brand" href="/">roll drauf VTT</a>
+            <a href="/login.html">Zum geschützten Spieltisch</a>
+        </header>
+        <main>
+            <div class="eyebrow">Öffentliche technische Übersicht</div>
+            <h1>Beyond20 ist am Tisch angekommen.</h1>
+            <p class="lead">Diese Seite ist ohne Discord-Zugang erreichbar und beschreibt den überprüfbaren Integrationsrand. Die eigentliche Session bleibt geschützt; die öffentliche Produkt- und Integrationsoberfläche bleibt für Maintainer sichtbar.</p>
+
+            <section class="panel" aria-labelledby="events-title">
+                <h2 id="events-title">Unterstützte DOM-Ereignisse</h2>
+                <div class="contract">
+                    <div class="item"><strong><code>Beyond20_RenderedRoll</code></strong>Übernimmt vorgerenderte Würfe in Dice-Log, Chat und Broadcast.</div>
+                    <div class="item"><strong><code>Beyond20_UpdateHP</code></strong>Synchronisiert HP und maximale HP zum passenden Token.</div>
+                    <div class="item"><strong><code>Beyond20_UpdateConditions</code></strong>Zeigt Conditions und Erschöpfung am Token und in der Liste.</div>
+                    <div class="item"><strong><code>Beyond20_UpdateCombat</code></strong>Übernimmt Initiative und aktuelle Runde für bekannte Tisch-Token.</div>
+                </div>
+                <p>Die Listener folgen dem Beyond20-DOM-Vertrag mit <code>CustomEvent</code> und einem Argument-Array in <code>event.detail</code>. Unbekannte Combat-Teilnehmer werden nicht in die lokale Session geschrieben.</p>
+            </section>
+
+            <section class="panel" aria-labelledby="access-title">
+                <h2 id="access-title">Zugang und Sicherheitsgrenze</h2>
+                <p>Die öffentliche Oberfläche enthält keine Kampagnen- oder Sessiondaten. Live-Rolls, Karten, Tokenbilder und Socket-Verbindungen werden erst nach erfolgreicher Discord-/Bot-Freischaltung im geschützten Spieltisch geöffnet.</p>
+                <p>Für die Prüfung der öffentlichen Erreichbarkeit steht außerdem der <a href="/health/live">Liveness-Status</a> zur Verfügung.</p>
+            </section>
+
+            <div class="actions">
+                <a class="button" href="/">Zur öffentlichen Startseite</a>
+                <a class="button secondary" href="https://beyond20.here-for-more.info/api">Offizielle Beyond20-API-Doku</a>
+            </div>
+        </main>
+        <footer>Roll-Drauf VTT · Integrationsvertrag öffentlich, Sessiondaten geschützt</footer>
+    </div>
+</body>
+</html>

@@ -1669,7 +1669,20 @@
         async _renderLayerAddControl(existingLayers) {
             const select = document.getElementById("layerAddSelect");
             const addBtn = document.getElementById("layerAddBtn");
+            const status = document.getElementById("layerAddStatus");
             if (!select || !addBtn) return;
+
+            const setStatus = (message) => {
+                if (!status) return;
+                status.textContent = message || "";
+                status.hidden = !message;
+            };
+            const syncButton = () => {
+                addBtn.disabled = !select.value;
+                addBtn.title = addBtn.disabled
+                    ? "Wähle zuerst eine vorhandene Kampagnenkarte aus"
+                    : "Eine vorhandene Kampagnenkarte als Seite hinzufügen";
+            };
 
             try {
                 const maps = await this.api.campaignMaps(this.campaignId);
@@ -1678,11 +1691,23 @@
 
                 select.innerHTML = `<option value="">+ Seite hinzufügen...</option>` +
                     available.map((m) => `<option value="${m.id}">${escapeHtml(m.name)}</option>`).join("");
-                addBtn.disabled = available.length === 0;
+                select.disabled = available.length === 0;
+                if (available.length === 0) {
+                    setStatus(existingLayers.length
+                        ? "Alle vorhandenen Kampagnenkarten sind bereits Seiten. Nutze „Datei hinzufügen“, um eine neue Karte anzulegen."
+                        : "Noch keine Kampagnenkarte vorhanden. Nutze „Datei hinzufügen“, um die erste Seite hochzuladen.");
+                } else {
+                    setStatus("");
+                }
             } catch (error) {
                 select.innerHTML = `<option value="">Karten konnten nicht geladen werden</option>`;
+                select.disabled = true;
                 addBtn.disabled = true;
+                setStatus("Karten konnten nicht geladen werden. Prüfe die Verbindung und versuche es erneut.");
             }
+
+            select.onchange = syncButton;
+            syncButton();
 
             addBtn.onclick = async () => {
                 const mapId = Number(select.value);

@@ -276,9 +276,12 @@ def create_app(config_name=None):
 
     # REST endpoints for static files
     @app.route('/')
+    @app.route('/showcase')
+    @app.route('/showcase.html')
     def index():
-        from flask import redirect
-        return redirect('/login.html')
+        import os
+        from flask import send_from_directory
+        return send_from_directory(os.path.join(os.path.dirname(__file__), 'templates'), 'landing.html')
 
     @app.route('/<path:path>')
     def serve_static(path):

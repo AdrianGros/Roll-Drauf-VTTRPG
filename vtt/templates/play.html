@@ -676,6 +676,16 @@
             font-size: 0.76rem;
             padding: 0.28rem 0.3rem;
         }
+        .layer-empty-state {
+            margin-top: 0.5rem;
+            padding: 0.48rem 0.58rem;
+            border: 1px solid rgba(231, 185, 108, 0.28);
+            border-radius: 7px;
+            background: rgba(231, 185, 108, 0.08);
+            color: #d8c8b1;
+            font-size: 0.74rem;
+            line-height: 1.4;
+        }
         .active-page-pill {
             position: absolute;
             top: 0.85rem;
@@ -1276,8 +1286,9 @@
                     <div id="layerList"></div>
                     <div class="layer-add-row">
                         <select id="layerAddSelect"><option value="">+ Seite hinzufügen...</option></select>
-                        <button id="layerAddBtn" class="mini-btn" type="button">Hinzufügen</button>
+                        <button id="layerAddBtn" class="mini-btn" type="button" title="Eine vorhandene Kampagnenkarte als Seite hinzufügen">Hinzufügen</button>
                     </div>
+                    <div id="layerAddStatus" class="layer-empty-state" role="status" aria-live="polite" hidden></div>
                 </div>
             </div>
 
