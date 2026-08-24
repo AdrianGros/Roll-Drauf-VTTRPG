@@ -231,6 +231,18 @@ denselben Tokens abgeleitet, nicht aus einem Fremdsystem.
 Jede Phase: voller Pytest + Robot-Suite + Screenshot-Review vor Commit,
 Deploy einzeln (Haus-Disziplin).
 
+## 8b. Mobile (Erweiterung 2026-08-24)
+
+Vollständiger Telefon-Audit + Designrichtung in
+**MOBILE_AUDIT_BUCH_UI_2026-08-24.md**: Der Spieltisch ist auf Telefonen
+heute unbenutzbar (46px-Karten-Schlitz, Würfelknopf off-screen, Chat
+zero-size); die Buchseiten überleben strukturell. Kernentscheidungen:
+Ein Portrait-Telefon ist die reinste Form der Einzelseite (B2 wird
+mobile-first gebaut); der Tisch bekommt zwei Telefon-Modi — Spielerbuch
+(Portrait-Companion: Bogen/Würfel/Chat/Mini-Karte, neue Phase B6) und
+Voller Tisch (Landscape, Daumenzonen-Leiste, Phase B7); Sofort-Fix-Wurf
+plus Telefon-Viewports/Tap-Ziel/Daumenzonen-Gates in den Robots.
+
 ## 9. Quellen
 
 - NN/g: Skeuomorphism; Flat Design; Animation Duration; Animation Purpose;
