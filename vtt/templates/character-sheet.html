@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Sheet - roll drauf vtt</title>
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -185,6 +186,35 @@
 
         .sheet-actions-row .btn {
             min-width: 140px;
+        }
+
+        .sheet-empty-state {
+            display: grid;
+            gap: 0.8rem;
+            justify-items: start;
+            padding: 2rem;
+            border: 1px dashed rgba(130, 89, 52, 0.24);
+            border-radius: 16px;
+            background: rgba(255, 252, 246, 0.58);
+        }
+
+        .book-spread[hidden] {
+            display: none !important;
+        }
+
+        body[data-sheet-empty="true"] .sheet-focus-page .book-shell-frame-header,
+        body[data-sheet-empty="true"] .sheet-focus-page .book-shell-ribbon {
+            display: none;
+        }
+
+        .sheet-empty-state h2,
+        .sheet-empty-state p {
+            margin: 0;
+        }
+
+        .sheet-empty-state p {
+            color: var(--vtt-ink-muted, #6e5745);
+            line-height: 1.5;
         }
 
         .sheet-identity-grid {
@@ -690,51 +720,57 @@
                         <button type="button" class="book-dashboard-ribbon-btn is-active" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
                         <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
                     </div>
-                    <div class="book-dashboard-crest" id="sheetReaderBadge" aria-label="Current reader">Sheet Focus</div>
+                    <div class="book-dashboard-crest" id="sheetReaderBadge" aria-label="Aktuelle Person">Bogenfokus</div>
                 </div>
 
                 <div class="book-dashboard-titlebar">
                     <div>
                         <p class="book-dashboard-eyebrow">Kapitel IV</p>
-                        <h1 class="book-dashboard-title">Character Sheet</h1>
+                        <h1 class="book-dashboard-title">Charakterbogen</h1>
                         <p class="book-dashboard-copy">
-                            This is the next zoom step after the archive: a larger parchment work surface for one hero, still inside the same spellbook language, with a clear route back to campaigns when the character is ready for session context.
+                            Öffne hier einen Charakter aus dem Archiv, bearbeite seine Werte und kehre danach direkt in den Kampagnenkontext zurück.
                         </p>
                     </div>
                     <div class="book-dashboard-meta">
-                        <span class="book-dashboard-chip">Personae Focus</span>
-                        <span class="book-dashboard-chip" id="sheetModeChip">View Mode</span>
-                        <span class="book-dashboard-chip" id="sheetCharacterChip">Awaiting Sheet</span>
+                        <span class="book-dashboard-chip">Charakterfokus</span>
+                        <span class="book-dashboard-chip" id="sheetModeChip">Ansicht</span>
+                        <span class="book-dashboard-chip" id="sheetCharacterChip">Kein Charakter gewählt</span>
                     </div>
                 </div>
 
                 <div class="book-shell-frame">
-                    <div class="book-shell-ribbon">Focus</div>
+                    <div class="book-shell-ribbon">Fokus</div>
 
                     <div class="book-shell-frame-header">
                         <div>
-                            <p class="book-frame-eyebrow">Personae Archive</p>
-                            <h2 class="book-page-title" data-book-field="section">Character Sheet</h2>
+                            <p class="book-frame-eyebrow">Charakterarchiv</p>
+                            <h2 class="book-page-title" data-book-field="section">Charakterbogen</h2>
                             <p class="book-frame-copy">
-                                The focus route keeps orientation, summary, and quick returns on the left while the right page turns into a denser editing desk for the active character.
+                                Links bleiben Übersicht und Rückweg sichtbar; rechts bearbeitest du den gewählten Charakter.
                             </p>
                         </div>
                         <div class="book-frame-meta">
                             <span class="book-chip">Kapitel <span data-book-field="chapter">Helden</span></span>
-                            <span class="book-chip">Focus Mode</span>
-                            <span class="book-chip">Read / Edit Split</span>
+                            <span class="book-chip">Fokusmodus</span>
+                            <span class="book-chip">Lesen / Bearbeiten</span>
                         </div>
                     </div>
 
                     <div id="messageBox" class="book-form-banner" hidden aria-live="polite"></div>
 
-                    <div class="book-spread">
+                    <section id="sheetEmptyState" class="sheet-empty-state" hidden aria-live="polite">
+                        <h2>Kein Charakter ausgewählt</h2>
+                        <p>Öffne zuerst einen Charakter aus deinem Archiv, um den Bogen zu bearbeiten.</p>
+                        <button class="btn btn-primary" type="button" onclick="goBack()">Zum Charakterarchiv</button>
+                    </section>
+
+                    <div class="book-spread" id="sheetSpread">
                         <section class="book-page book-page--index">
                     <div class="sheet-pane">
                         <div class="sheet-pane-header">
                             <div>
                                 <div class="sheet-pane-title">Charakterblatt</div>
-                                <h2 id="sheetTitle" class="book-page-section-title">Character Sheet</h2>
+                            <h2 id="sheetTitle" class="book-page-section-title">Charakterbogen</h2>
                             </div>
                             <div class="book-page-note" id="modeLabel"></div>
                         </div>
@@ -746,29 +782,29 @@
                         </div>
                         <div class="sheet-stat-row">
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Core</div>
-                                <div class="sheet-stat-value" id="summaryName">Pending load</div>
+                                <div class="sheet-stat-label">Kern</div>
+                            <div class="sheet-stat-value" id="summaryName">—</div>
                             </div>
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Level</div>
+                                <div class="sheet-stat-label">Stufe</div>
                                 <div class="sheet-stat-value" id="summaryLevel">-</div>
                             </div>
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Hit Points</div>
+                                <div class="sheet-stat-label">Trefferpunkte</div>
                                 <div class="sheet-stat-value" id="summaryHp">-</div>
                             </div>
                         </div>
                         <div class="sheet-stat-row">
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Armor</div>
+                                <div class="sheet-stat-label">Rüstung</div>
                                 <div class="sheet-stat-value" id="summaryAc">-</div>
                             </div>
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Spells</div>
+                                <div class="sheet-stat-label">Zauber</div>
                                 <div class="sheet-stat-value" id="summarySpells">-</div>
                             </div>
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Inventory</div>
+                                <div class="sheet-stat-label">Inventar</div>
                                 <div class="sheet-stat-value" id="summaryInventory">-</div>
                             </div>
                         </div>
@@ -776,11 +812,11 @@
 
                     <div class="sheet-pane">
                         <div class="sheet-pane-header">
-                            <div class="sheet-pane-title">Navigation</div>
+                        <div class="sheet-pane-title">Navigation</div>
                         </div>
                         <div class="sheet-split-actions">
-                            <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()">Edit Sheet</button>
-                            <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden>Open Campaign Context</button>
+                            <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()">Bogen bearbeiten</button>
+                            <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden>Kampagnen-Kontext</button>
                             <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goBack()">Zurück zum Archiv</button>
                         </div>
                         <!-- Robot audit, 2026-08-23, Arc 0.7: a second,
@@ -813,10 +849,10 @@
 
                     <div class="sheet-pane">
                         <div class="sheet-pane-header">
-                            <div class="sheet-pane-title">Identity Surface</div>
+                        <div class="sheet-pane-title">Identität</div>
                         </div>
                         <div class="sheet-pane-copy">
-                            Avatar and token identity now live directly on the sheet so the hero can be completed before returning to campaign or play context.
+                            Avatar und Spielmarker werden hier gepflegt, bevor der Charakter in Kampagne oder Spieltisch verwendet wird.
                         </div>
                         <div id="sheetIdentityGrid" class="sheet-identity-grid">
                             <div class="sheet-identity-card">
@@ -846,39 +882,39 @@
                                     <input id="charName" type="text">
                                 </div>
                                 <div class="field">
-                                    <label for="charRace">Species</label>
+                                    <label for="charRace">Spezies</label>
                                     <input id="charRace" type="text">
                                 </div>
                                 <div class="field">
-                                    <label for="charFaction">Faction</label>
+                                    <label for="charFaction">Fraktion</label>
                                     <input id="charFaction" type="text">
                                 </div>
                                 <div class="field">
-                                    <label for="charClass">Class</label>
+                                    <label for="charClass">Klasse</label>
                                     <input id="charClass" type="text">
                                 </div>
                                 <div class="field field--wide">
-                                    <label for="charBackground">Background</label>
+                                    <label for="charBackground">Hintergrund</label>
                                     <input id="charBackground" type="text">
                                 </div>
                                 <div class="field">
-                                    <label for="charLevel">Level</label>
+                                    <label for="charLevel">Stufe</label>
                                     <input id="charLevel" type="number" min="1">
                                 </div>
                                 <div class="field">
-                                    <label for="charXp">XP</label>
+                                    <label for="charXp">Erfahrung</label>
                                     <input id="charXp" type="number" min="0">
                                 </div>
                                 <div class="field">
-                                    <label for="charAc">AC</label>
+                                    <label for="charAc">Rüstung</label>
                                     <input id="charAc" type="number">
                                 </div>
                                 <div class="field">
-                                    <label for="charHpCurrent">HP Current</label>
+                                    <label for="charHpCurrent">Trefferpunkte aktuell</label>
                                     <input id="charHpCurrent" type="number">
                                 </div>
                                 <div class="field">
-                                    <label for="charHpMax">HP Max</label>
+                                    <label for="charHpMax">Trefferpunkte maximal</label>
                                     <input id="charHpMax" type="number">
                                 </div>
                                 <div class="field">
@@ -907,8 +943,8 @@
                                 </div>
                             </div>
                             <div class="sheet-actions-row">
-                                <button class="btn btn-primary" type="button" id="saveCoreBtn" onclick="saveCore()">Save Core</button>
-                                <button class="btn btn-secondary" type="button" onclick="reloadSheet()">Reload</button>
+                                <button class="btn btn-primary" type="button" id="saveCoreBtn" onclick="saveCore()">Kernwerte speichern</button>
+                                <button class="btn btn-secondary" type="button" onclick="reloadSheet()">Neu laden</button>
                             </div>
                         </div>
 
@@ -921,73 +957,73 @@
 
                         <div class="sheet-pane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Spells</div>
+                                <div class="sheet-pane-title">Zauber</div>
                             </div>
                             <div id="spellsList" class="sheet-list"></div>
                             <div id="spellsForm" class="sheet-form-inline">
                                 <div class="inline-row">
                                     <div>
-                                        <label for="newSpellName">Spell Name</label>
-                                        <input id="newSpellName" type="text" placeholder="Spell name">
+                                        <label for="newSpellName">Name des Zaubers</label>
+                                        <input id="newSpellName" type="text" placeholder="Zaubername">
                                     </div>
                                     <div>
-                                        <label for="newSpellLevel">Level</label>
+                                        <label for="newSpellLevel">Stufe</label>
                                         <input id="newSpellLevel" type="number" min="0" max="9" placeholder="0">
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="newSpellSchool">School</label>
-                                    <input id="newSpellSchool" type="text" placeholder="School">
+                                        <label for="newSpellSchool">Schule</label>
+                                    <input id="newSpellSchool" type="text" placeholder="Zauberschule">
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="addSpell()">Add Spell</button>
+                                <button class="btn btn-primary" type="button" onclick="addSpell()">Zauber hinzufügen</button>
                             </div>
                         </div>
 
                         <div class="sheet-pane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Equipment</div>
+                                <div class="sheet-pane-title">Ausrüstung</div>
                             </div>
                             <div id="equipmentList" class="sheet-list"></div>
                             <div id="equipmentForm" class="sheet-form-inline">
                                 <div class="inline-row">
                                     <div>
-                                        <label for="newEquipmentName">Item Name</label>
-                                        <input id="newEquipmentName" type="text" placeholder="Item name">
+                                        <label for="newEquipmentName">Gegenstand</label>
+                                        <input id="newEquipmentName" type="text" placeholder="Name des Gegenstands">
                                     </div>
                                     <div>
-                                        <label for="newEquipmentType">Type</label>
-                                        <input id="newEquipmentType" type="text" placeholder="Type">
+                                        <label for="newEquipmentType">Typ</label>
+                                        <input id="newEquipmentType" type="text" placeholder="Gegenstandstyp">
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="newEquipmentAcBonus">AC Bonus</label>
+                                    <label for="newEquipmentAcBonus">Rüstungsbonus</label>
                                     <input id="newEquipmentAcBonus" type="number" placeholder="0">
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="addEquipment()">Add Item</button>
+                                <button class="btn btn-primary" type="button" onclick="addEquipment()">Ausrüstung hinzufügen</button>
                             </div>
                         </div>
 
                         <div class="sheet-pane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Inventory</div>
+                                <div class="sheet-pane-title">Inventar</div>
                             </div>
                             <div id="inventoryList" class="sheet-list"></div>
                             <div id="inventoryForm" class="sheet-form-inline">
                                 <div class="inline-row">
                                     <div>
-                                        <label for="newInventoryName">Item Name</label>
-                                        <input id="newInventoryName" type="text" placeholder="Item name">
+                                        <label for="newInventoryName">Gegenstand</label>
+                                        <input id="newInventoryName" type="text" placeholder="Name des Gegenstands">
                                     </div>
                                     <div>
-                                        <label for="newInventoryType">Type</label>
-                                        <input id="newInventoryType" type="text" placeholder="Type">
+                                        <label for="newInventoryType">Typ</label>
+                                        <input id="newInventoryType" type="text" placeholder="Gegenstandstyp">
                                     </div>
                                 </div>
                                 <div>
                                     <label for="newInventoryQuantity">Quantity</label>
                                     <input id="newInventoryQuantity" type="number" min="1" placeholder="1">
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="addInventoryItem()">Add Item</button>
+                                <button class="btn btn-primary" type="button" onclick="addInventoryItem()">Ins Inventar legen</button>
                             </div>
                         </div>
                     </form>
@@ -1096,11 +1132,11 @@
         }
 
         function setEditMode() {
-            document.getElementById('sheetModeChip').textContent = editable ? 'Edit Mode' : 'View Mode';
+            document.getElementById('sheetModeChip').textContent = editable ? 'Bearbeiten' : 'Ansicht';
             document.getElementById('modeLabel').textContent = editable
-                ? 'Edit mode: core stats and resources are unlocked.'
-                : 'View mode: read-only sheet preview.';
-            document.getElementById('sheetModeActionBtn').textContent = editable ? 'View Sheet' : 'Edit Sheet';
+                ? 'Bearbeitungsmodus: Kernwerte und Ressourcen können geändert werden.'
+                : 'Ansicht: Der Charakterbogen ist schreibgeschützt.';
+            document.getElementById('sheetModeActionBtn').textContent = editable ? 'Bogen ansehen' : 'Bogen bearbeiten';
             document.getElementById('saveCoreBtn').style.display = editable ? 'inline-flex' : 'none';
             document.getElementById('spellsForm').style.display = editable ? 'grid' : 'none';
             document.getElementById('equipmentForm').style.display = editable ? 'grid' : 'none';
@@ -1184,9 +1220,9 @@
         }
 
         function renderCore(character) {
-            document.getElementById('sheetTitle').textContent = `Character Sheet: ${character.name || 'Unknown'}`;
-            document.getElementById('sheetCharacterChip').textContent = character.name || 'Unknown Hero';
-            document.getElementById('summaryName').textContent = character.name || 'Unknown';
+            document.getElementById('sheetTitle').textContent = `Character Sheet: ${character.name || 'Nicht angegeben'}`;
+            document.getElementById('sheetCharacterChip').textContent = character.name || 'Nicht angegeben';
+            document.getElementById('summaryName').textContent = character.name || 'Nicht angegeben';
             document.getElementById('summaryLevel').textContent = String(character.level ?? 1);
             document.getElementById('summaryHp').textContent = `${character.hp_current ?? 0} / ${character.hp_max ?? 0}`;
             document.getElementById('summaryAc').textContent = String(character.ac ?? 10);
@@ -1266,7 +1302,7 @@
                 <div class="sheet-item">
                     <div>
                         <strong>${escapeHtml(spell.name)}</strong>
-                        <div class="sheet-item-meta">Level ${spell.level} | ${escapeHtml(spell.school || 'Unknown school')}</div>
+                        <div class="sheet-item-meta">Level ${spell.level} | ${escapeHtml(spell.school || 'Schule nicht angegeben')}</div>
                         <div class="sheet-item-meta">${escapeHtml(spell.damage_dice || '-')} ${escapeHtml(spell.damage_type || '')}</div>
                     </div>
                     ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteSpell(${spell.id})">Delete</button>` : ''}
@@ -1285,7 +1321,7 @@
                 <div class="sheet-item">
                     <div>
                         <strong>${escapeHtml(item.name)}</strong>
-                        <div class="sheet-item-meta">${escapeHtml(item.type || 'Unknown type')} | AC +${item.ac_bonus ?? 0}</div>
+                        <div class="sheet-item-meta">${escapeHtml(item.type || 'Typ nicht angegeben')} | AC +${item.ac_bonus ?? 0}</div>
                         <div class="sheet-item-meta">${escapeHtml(item.damage_dice || '-')} ${escapeHtml(item.damage_type || '')}</div>
                     </div>
                     ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteEquipment(${item.id})">Delete</button>` : ''}
@@ -1304,7 +1340,7 @@
                 <div class="sheet-item">
                     <div>
                         <strong>${escapeHtml(item.name)}</strong>
-                        <div class="sheet-item-meta">${escapeHtml(item.type || 'Unknown type')} | Qty ${item.quantity}</div>
+                        <div class="sheet-item-meta">${escapeHtml(item.type || 'Typ nicht angegeben')} | Anzahl ${item.quantity}</div>
                         <div class="sheet-item-meta">Weight total: ${item.total_weight ?? 0}</div>
                     </div>
                     ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteInventoryItem(${item.id})">Delete</button>` : ''}
@@ -1651,11 +1687,15 @@
 
         async function loadSheet() {
             if (!Number.isInteger(characterId) || characterId <= 0) {
-                showMessage('Invalid character id', true);
+                document.body.dataset.sheetEmpty = 'true';
+                document.getElementById('sheetCharacterChip').textContent = 'Kein Charakter gewählt';
+                document.getElementById('sheetEmptyState').hidden = false;
+                document.getElementById('sheetSpread').hidden = true;
                 return;
             }
 
             try {
+                delete document.body.dataset.sheetEmpty;
                 currentUser = await auth.requireAuth('/login.html');
                 document.getElementById('sheetReaderBadge').textContent = currentUser?.username || 'Sheet Focus';
                 sheet = await auth.makeAuthRequest(`/api/characters/${characterId}/sheet`);

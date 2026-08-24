@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - roll drauf vtt</title>
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon.png">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
@@ -14,52 +15,51 @@
 <body class="spellbook signup-route-book-scene">
     <template id="signupSceneTemplate">
         <div class="book-dashboard-camera">
-            <section class="book-dashboard-page" data-book-route="signup" role="region" aria-label="Sign up page">
+            <section class="book-dashboard-page" data-book-route="signup" role="region" aria-label="Registrierungsseite">
                 <div class="book-dashboard-topbar">
                     <div class="book-dashboard-ribbon" role="navigation" aria-label="Auth chapter menu">
                         <a class="book-dashboard-ribbon-btn" href="/login.html">Anmelden</a>
-                        <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page">Sign Up</button>
+                        <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page">Registrieren</button>
                         <a class="book-dashboard-ribbon-btn" href="/register.html">Mit Schlüssel</a>
                     </div>
-                    <div class="book-dashboard-crest" aria-label="Reader state">Guest</div>
+                    <div class="book-dashboard-crest" aria-label="Zugangsstatus">Gast</div>
                 </div>
 
                 <div class="book-spread-shell">
                     <article class="book-spread-page book-spread-page--left">
                         <header class="book-spread-page-header">
-                            <p class="book-spread-page-kicker">Account Foundry</p>
-                            <h1 class="book-spread-page-title">Sign Up</h1>
-                            <p class="book-spread-page-copy">The sign-up ritual stays inside the same book family: quiet parchment, readable rules, and no detached admin shell.</p>
+                            <p class="book-spread-page-kicker">Konto einrichten</p>
+                            <h1 class="book-spread-page-title">Konto erstellen</h1>
+                            <p class="book-spread-page-copy">Erstelle ein Standardkonto für Kampagnen und Spieltisch.</p>
                         </header>
                         <div class="book-spread-page-body">
                             <section class="book-scene-panel">
-                                <span class="book-scene-panel-kicker">Access Contract</span>
-                                <h2 class="book-scene-panel-title">Account Rules</h2>
-                                <p class="book-scene-panel-copy">Create a standard Player account with your email and password. An invitation key is optional and can grant an assigned profile tier.</p>
+                                <span class="book-scene-panel-kicker">Zugangsregeln</span>
+                                <h2 class="book-scene-panel-title">Standardkonto</h2>
+                                <p class="book-scene-panel-copy">E-Mail und Passwort genügen. Ein Einladungsschlüssel ist optional und kann zusätzliche Rechte vergeben.</p>
                                 <div class="book-ledger">
                                     <div class="book-ledger-row">
-                                        <span class="book-ledger-label">Key</span>
-                                        <span class="book-ledger-value">Optional invitation tier</span>
+                                        <span class="book-ledger-label">Schlüssel</span>
+                                        <span class="book-ledger-value">Optionaler Einladungsschlüssel</span>
                                     </div>
                                     <div class="book-ledger-row">
-                                        <span class="book-ledger-label">Username</span>
-                                        <span class="book-ledger-value">3 to 50 characters</span>
+                                        <span class="book-ledger-label">Benutzername</span>
+                                        <span class="book-ledger-value">3 bis 50 Zeichen</span>
                                     </div>
                                     <div class="book-ledger-row">
-                                        <span class="book-ledger-label">Email</span>
-                                        <span class="book-ledger-value">Valid recovery address</span>
+                                        <span class="book-ledger-label">E-Mail</span>
+                                        <span class="book-ledger-value">Gültige Adresse für Wiederherstellung</span>
                                     </div>
                                     <div class="book-ledger-row">
-                                        <span class="book-ledger-label">Password</span>
-                                        <span class="book-ledger-value">8+ chars with mixed character classes</span>
+                                        <span class="book-ledger-label">Passwort</span>
+                                        <span class="book-ledger-value">Mindestens 8 Zeichen, mehrere Zeichentypen</span>
                                     </div>
                                 </div>
                             </section>
 
                             <div class="book-scene-note-list">
-                                <div class="book-scene-note">Public registration creates a least-privilege Player account by default.</div>
-                                <div class="book-scene-note">This page belongs to the book runtime now, not the older standalone shell.</div>
-                                <div class="book-scene-note">After success you return to the login spread and enter with the new account.</div>
+                                <div class="book-scene-note">Die Registrierung vergibt standardmäßig die Rolle Spieler.</div>
+                                <div class="book-scene-note">Nach erfolgreicher Registrierung meldest du dich mit dem neuen Konto an.</div>
                             </div>
                         </div>
                     </article>
@@ -68,54 +68,54 @@
 
                     <article class="book-spread-page book-spread-page--right">
                         <header class="book-spread-page-header">
-                            <p class="book-spread-page-kicker">Initiate Ritual</p>
-                            <h2 class="book-spread-page-title">Create Your Account</h2>
-                            <p class="book-spread-page-copy">The working page carries the form itself so the flow stays productive without breaking the book illusion.</p>
+                            <p class="book-spread-page-kicker">Registrierung</p>
+                            <h2 class="book-spread-page-title">Dein Konto</h2>
+                            <p class="book-spread-page-copy">Fülle das Formular aus und melde dich danach direkt an.</p>
                         </header>
                         <div class="book-spread-page-meta">
-                            <span class="book-dashboard-chip">Player by Default</span>
-                            <span class="book-dashboard-chip">Readable First</span>
-                            <span class="book-dashboard-chip">Login Returns</span>
+                            <span class="book-dashboard-chip">Spieler als Standard</span>
+                            <span class="book-dashboard-chip">E-Mail-Wiederherstellung</span>
+                            <span class="book-dashboard-chip">Danach anmelden</span>
                         </div>
                         <div class="book-spread-page-body">
                             <div id="statusBanner" class="book-form-banner is-info" hidden aria-live="polite"></div>
 
                             <form id="signupForm" class="book-auth-form" novalidate>
                                 <div class="form-group">
-                                    <label for="registration_key">Invitation key (optional)</label>
+                                    <label for="registration_key">Einladungsschlüssel (optional)</label>
                                     <input type="text" id="registration_key" name="registration_key" placeholder="SPELL-XXXX-XXXX-XXXX" autocomplete="off">
-                                    <div class="form-help">Leave empty for a standard Player account. Use a valid key only when you received one.</div>
+                                    <div class="form-help">Leer lassen für ein Standardkonto. Nur verwenden, wenn du einen gültigen Schlüssel erhalten hast.</div>
                                     <div class="error" id="registrationKeyError" role="alert"></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username">Benutzername</label>
-                                    <input type="text" id="username" name="username" placeholder="3-50 characters" required autocomplete="username">
+                                    <input type="text" id="username" name="username" placeholder="3–50 Zeichen" required autocomplete="username">
                                     <div class="error" id="usernameError" role="alert"></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">E-Mail</label>
-                                    <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+                                    <input type="email" id="email" name="email" placeholder="du@beispiel.de" required autocomplete="email">
                                     <div class="error" id="emailError" role="alert"></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="password">Passwort</label>
-                                    <input type="password" id="password" name="password" placeholder="Choose a strong passphrase" required autocomplete="new-password">
-                                    <div class="book-password-list" aria-label="Password requirements">
-                                        <div class="book-password-item" id="req-length">At least 8 characters</div>
-                                        <div class="book-password-item" id="req-upper">One uppercase letter</div>
-                                        <div class="book-password-item" id="req-lower">One lowercase letter</div>
-                                        <div class="book-password-item" id="req-digit">One digit</div>
-                                        <div class="book-password-item" id="req-special">One special character</div>
+                                    <input type="password" id="password" name="password" placeholder="Sicheres Passwort wählen" required autocomplete="new-password">
+                                    <div class="book-password-list" aria-label="Passwortanforderungen">
+                                        <div class="book-password-item" id="req-length">Mindestens 8 Zeichen</div>
+                                        <div class="book-password-item" id="req-upper">Ein Großbuchstabe</div>
+                                        <div class="book-password-item" id="req-lower">Ein Kleinbuchstabe</div>
+                                        <div class="book-password-item" id="req-digit">Eine Ziffer</div>
+                                        <div class="book-password-item" id="req-special">Ein Sonderzeichen</div>
                                     </div>
                                     <div class="error" id="passwordError" role="alert"></div>
                                 </div>
 
                                 <div class="book-auth-actions">
-                                    <button type="submit" class="btn btn-primary" id="submitBtn">Create Account</button>
-                                    <div class="book-page-note">Already have access? <a href="/login.html">Return to login</a></div>
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">Konto erstellen</button>
+                                    <div class="book-page-note">Schon ein Konto? <a href="/login.html">Zur Anmeldung</a></div>
                                     <div class="error" id="generalError" role="alert"></div>
                                 </div>
                             </form>
@@ -177,12 +177,12 @@
                         return;
                     }
 
-                    showBanner('Account created. Returning you to the login chapter...', 'success');
+                    showBanner('Konto erstellt. Du wirst zur Anmeldung weitergeleitet …', 'success');
                     window.setTimeout(() => {
                         window.location.href = '/login.html?signup=1';
                     }, 900);
                 } catch (error) {
-                    showError('generalError', 'Network error: ' + error.message);
+                    showError('generalError', 'Netzwerkfehler: ' + error.message);
                     showLoading(false);
                 }
             });
@@ -237,7 +237,7 @@
 
             function showLoading(isLoading) {
                 submitBtn.disabled = isLoading;
-                submitBtn.textContent = isLoading ? 'Creating Account...' : 'Create Account';
+                submitBtn.textContent = isLoading ? 'Konto wird erstellt …' : 'Konto erstellen';
             }
 
             function showBanner(message, tone) {

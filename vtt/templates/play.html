@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VTT Spieltisch</title>
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon.png">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
@@ -94,6 +95,9 @@
             flex-direction: column;
             gap: 0;
         }
+        .book-workspace-shell[hidden] {
+            display: none !important;
+        }
         .play-workspace-page .book-shell-frame {
             flex: 1;
             min-height: 0;
@@ -126,6 +130,9 @@
             grid-template-rows: auto auto 1fr;
             gap: 8px;
         }
+        .play-workspace-page.is-empty {
+            display: block;
+        }
         /* M3: single thin status strip replacing the old two-title-plus-two-
            paragraph chrome stack, so the map gets ~90% of the viewport
            instead of a large fraction going to descriptive copy above it. */
@@ -148,6 +155,28 @@
         }
         .play-status-strip .book-dashboard-meta {
             flex-wrap: nowrap;
+        }
+        .play-status-strip[hidden] {
+            display: none !important;
+        }
+
+        .play-empty-state {
+            display: grid;
+            gap: 0.75rem;
+            padding: 1.4rem 1.6rem;
+            border: 1px dashed rgba(130, 89, 52, 0.28);
+            border-radius: 16px;
+            background: rgba(255, 252, 246, 0.72);
+        }
+
+        .play-empty-state h2,
+        .play-empty-state p {
+            margin: 0;
+        }
+
+        .play-empty-state p {
+            color: var(--vtt-ink-muted, #6e5745);
+            line-height: 1.5;
         }
         .book-workspace-shell .book-chip {
             background: rgba(255, 248, 238, 0.08);
@@ -1175,10 +1204,8 @@
 </head>
 <body class="spellbook book-shell-app play-workspace-realign" data-play-entry-boundary="pending" data-play-return-boundary="idle" data-play-mode-family="table" data-play-transition-stage="pending" data-play-entry-phase="pending" data-play-return-phase="TABLE_MODE">
     <div class="play-entry-curtain" aria-hidden="true">
-        <div class="play-entry-curtain-copy">The spellbook closes into table focus before the live workspace settles into view.</div>
     </div>
     <div class="play-return-curtain" aria-hidden="true">
-        <div class="play-return-curtain-copy">The table folds back into the spellbook before the next chapter settles into view.</div>
     </div>
     <main>
         <div class="book-dashboard-camera book-route-camera play-workspace-camera">
@@ -1196,12 +1223,18 @@
                 <div class="book-dashboard-titlebar play-status-strip">
                     <p id="sessionTitle" class="play-session-title">Session wird geladen...</p>
                     <div class="book-dashboard-meta">
-                        <span class="book-dashboard-chip">Mode: <strong id="modeBadge">-</strong></span>
-                        <span class="book-dashboard-chip">Role: <strong id="roleBadge">-</strong></span>
-                        <span class="book-dashboard-chip">Access: <strong id="readOnlyBadge">-</strong></span>
+                        <span class="book-dashboard-chip">Modus: <strong id="modeBadge">-</strong></span>
+                        <span class="book-dashboard-chip">Rolle: <strong id="roleBadge">-</strong></span>
+                        <span class="book-dashboard-chip">Zugriff: <strong id="readOnlyBadge">-</strong></span>
                         <span class="book-dashboard-chip">Status: <strong id="sessionStatusPill">-</strong></span>
                     </div>
                 </div>
+
+                <section id="playEmptyState" class="play-empty-state" hidden aria-live="polite">
+                    <h2>Kein Spieltisch ausgewählt</h2>
+                    <p>Öffne eine Session aus deiner Kampagnenvorbereitung, um den Spieltisch zu betreten.</p>
+                    <a class="btn btn-primary" href="/campaigns">Kampagnen öffnen</a>
+                </section>
 
                 <div class="book-shell-frame book-workspace-shell">
                     <div class="tabletop-shell">

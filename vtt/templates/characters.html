@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VTT - Characters</title>
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -766,7 +767,7 @@
                     <div id="charactersJourneyNote" class="journey-note" hidden aria-live="polite"></div>
 
                     <div class="filter-bar">
-                        <input type="text" id="searchInput" placeholder="Search characters..." onkeyup="filterCharacters()">
+                        <input type="text" id="searchInput" placeholder="Charaktere durchsuchen …" onkeyup="filterCharacters()">
                         <select id="classFilter" onchange="filterCharacters()">
                             <option value="">All Classes</option>
                             <option value="Kämpfer">Kämpfer</option>
@@ -814,7 +815,7 @@
                     <div class="grid" id="charactersGrid">
                         <div class="empty-state">
                             <div class="empty-state-icon">🧙</div>
-                            <p>Loading characters...</p>
+                            <p>Charaktere werden geladen …</p>
                         </div>
                     </div>
 
@@ -841,7 +842,7 @@
                     <h3 style="margin-bottom: 1rem; color: #4a9eff;">Roll Drauf Light Identity</h3>
                     <div class="form-group">
                         <label>Character Name *</label>
-                        <input type="text" id="charName" placeholder="Enter character name">
+                        <input type="text" id="charName" placeholder="Name des Charakters">
                         <div id="nameError" class="error-message"></div>
                     </div>
 
@@ -1241,8 +1242,8 @@
                     <div class="char-portrait">${renderCharacterPortrait(c)}</div>
                     <div class="char-info">
                         <div class="char-name">${escapeHtml(c.name)}</div>
-                        <div class="char-class">${escapeHtml(c.class || 'Unknown')}</div>
-                        <div class="char-race">${escapeHtml(c.species || c.race || 'Unknown')}${c.faction ? ` • ${escapeHtml(c.faction)}` : ''} • Level ${escapeHtml(c.level)}</div>
+                <div class="char-class">${escapeHtml(c.class || 'Nicht angegeben')}</div>
+                <div class="char-race">${escapeHtml(c.species || c.race || 'Nicht angegeben')}${c.faction ? ` • ${escapeHtml(c.faction)}` : ''} • Level ${escapeHtml(c.level)}</div>
                         ${c.campaign_id ? `<div class="char-context-badge">Campaign Context Linked</div>` : ''}
                         <div class="char-next-step">${c.campaign_id ? 'Next: open the sheet for final review, then return to campaign prep to assign the hero to a session.' : 'Next: finish the sheet and identity here, then continue into campaigns to place the hero in prep context.'}</div>
 
@@ -1632,7 +1633,7 @@
 
         function calculateHP() {
             const charClass = document.getElementById('charClass').value;
-            const classProfile = rollDraufClassCatalog[charClass] || { hitDie: 6, defense: 10, label: 'Unknown' };
+            const classProfile = rollDraufClassCatalog[charClass] || { hitDie: 6, defense: 10, label: 'Nicht angegeben' };
             const hitDie = classProfile.hitDie;
             const conMod = getModifier(abilityScores.con);
             const hpMax = Math.max(1, hitDie + conMod);

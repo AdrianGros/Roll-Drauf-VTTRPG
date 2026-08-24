@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lobby - roll drauf vtt</title>
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon.png">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
@@ -24,65 +25,65 @@
 
     <main>
         <div class="book-shell-frame">
-            <div class="book-shell-ribbon">Antechamber</div>
+            <div class="book-shell-ribbon">Vorhalle</div>
 
             <div class="book-shell-frame-header">
                 <div>
-                    <p class="book-frame-eyebrow">Session Staging</p>
+                    <p class="book-frame-eyebrow">Session-Vorbereitung</p>
                     <h1 class="book-page-title" data-book-field="section">Lobby</h1>
                     <p class="book-frame-copy">
-                        This page is the staging spread before the denser campaign and play workspaces: still book-shaped, but already optimized for quick control, joining, and roster awareness.
+                        Erstelle eine Kampagne, tritt per Einladung bei und öffne danach direkt den Kampagnen-Hub.
                     </p>
                 </div>
                 <div class="book-frame-meta">
                     <span class="book-chip">Kapitel <span data-book-field="chapter">Vorhalle</span></span>
-                    <span class="book-chip">Spread Mode</span>
-                    <span class="book-chip">Join + Create</span>
+                    <span class="book-chip">Übersicht</span>
+                    <span class="book-chip">Beitreten + Erstellen</span>
                 </div>
             </div>
 
             <div class="book-spread">
                 <section class="book-page book-page--index">
                     <div class="page-header">
-                        <h1>Lobby Controls</h1>
-                        <button class="btn btn-primary" type="button" onclick="createCampaign()">Create Campaign</button>
+                        <h1>Lobby-Steuerung</h1>
+                        <button class="btn btn-primary" type="button" onclick="createCampaign()">Kampagne erstellen</button>
                     </div>
 
-                    <p class="book-page-lede">We treat the lobby as an in-between chapter: enough structure to feel like the same spellbook, but with quicker control surfaces for refresh, invites, and routing into live campaigns.</p>
+                    <p class="book-page-lede">Erstelle hier eine Kampagne oder tritt mit einer Kampagnen-ID und einem Einladungstoken bei.</p>
 
                     <div id="message" class="book-form-banner" hidden aria-live="polite"></div>
 
                     <div class="book-toolbar">
                         <div class="form-group">
-                            <label for="campaignId">Campaign ID</label>
-                            <input type="number" id="campaignId" placeholder="Campaign ID for invite join">
+                            <label for="campaignId">Kampagnen-ID</label>
+                            <input type="number" id="campaignId" placeholder="ID der Kampagne">
                         </div>
 
                         <div class="form-group">
-                            <label for="inviteToken">Invite Token</label>
-                            <input type="text" id="inviteToken" placeholder="Paste invite token">
+                            <label for="inviteToken">Einladungstoken</label>
+                            <input type="text" id="inviteToken" placeholder="Einladungstoken einfügen">
                         </div>
 
                         <div class="book-toolbar-actions">
-                            <button class="btn btn-primary" type="button" onclick="joinByInvite()">Join Campaign</button>
-                            <button class="btn btn-secondary" type="button" onclick="loadCampaigns()">Refresh Ledger</button>
+                            <button class="btn btn-primary" type="button" onclick="joinByInvite()">Kampagne beitreten</button>
+                            <button class="btn btn-secondary" type="button" onclick="loadCampaigns()">Liste aktualisieren</button>
                         </div>
                     </div>
 
                     <div class="book-page-section">
-                        <h2 class="book-page-section-title">Lobby Notes</h2>
+                        <h2 class="book-page-section-title">Hinweise</h2>
                         <div class="book-guide-list">
                             <div class="book-guide-item">
-                                <div class="book-guide-title">Create Fast</div>
-                                <div class="book-guide-copy">Campaign creation stays lightweight so you can open a fresh table without leaving the shell.</div>
+                                <div class="book-guide-title">Schnell erstellen</div>
+                                <div class="book-guide-copy">Lege eine Kampagne an und öffne danach ihre Vorbereitung.</div>
                             </div>
                             <div class="book-guide-item">
-                                <div class="book-guide-title">Join Precisely</div>
-                                <div class="book-guide-copy">Invite join is kept on the index page, which lets the facing page stay dedicated to campaign cards and statuses.</div>
+                                <div class="book-guide-title">Per Einladung beitreten</div>
+                                <div class="book-guide-copy">Kampagnen-ID und Einladungstoken reichen für den Beitritt.</div>
                             </div>
                             <div class="book-guide-item">
-                                <div class="book-guide-title">Next Depth</div>
-                                <div class="book-guide-copy">After entering a campaign, denser flows continue in dedicated chapters rather than overloading the lobby spread.</div>
+                                <div class="book-guide-title">Weiter zur Vorbereitung</div>
+                                <div class="book-guide-copy">Nach dem Beitritt öffnest du die Kampagne für Session, Karten und Charaktere.</div>
                             </div>
                         </div>
                     </div>
@@ -92,7 +93,7 @@
 
                 <section class="book-page book-page--content">
                     <div id="campaigns" class="book-lobby-grid">
-                        <div class="book-empty-shell">Loading campaigns...</div>
+                        <div class="book-empty-shell">Kampagnen werden geladen …</div>
                     </div>
 
                     <div class="book-page-folio" data-book-folio="right">I</div>
@@ -102,7 +103,7 @@
     </main>
 
     <footer>
-        <p>roll drauf VTT - lobby spread</p>
+        <p>roll drauf VTT · Lobby</p>
     </footer>
 
     <script src="/static/js/auth.js"></script>
@@ -139,7 +140,7 @@
 
                 const container = document.getElementById('campaigns');
                 if (data.campaigns.length === 0) {
-                    container.innerHTML = "<div class='book-empty-shell'>No campaigns yet. Create one to start the next chapter.</div>";
+                    container.innerHTML = "<div class='book-empty-shell'>Noch keine Kampagne vorhanden. Erstelle jetzt deine erste Kampagne.</div>";
                     return;
                 }
 
@@ -147,11 +148,11 @@
                     <article class="book-lobby-card">
                         <h2 class="book-lobby-title">${escapeHtml(campaign.name)}</h2>
                         <div class="book-lobby-meta">DM: ${escapeHtml(campaign.owner)}</div>
-                        <div class="book-lobby-meta">Players: ${campaign.member_count} / ${campaign.max_players}</div>
-                        <div class="book-lobby-role">${escapeHtml(campaign.your_role || 'Player')}</div>
+                        <div class="book-lobby-meta">Spieler: ${campaign.member_count} / ${campaign.max_players}</div>
+                        <div class="book-lobby-role">${escapeHtml(campaign.your_role || 'Spieler')}</div>
                         <div class="book-lobby-actions">
-                            <button class="btn btn-primary" type="button" onclick="enterCampaign(${campaign.id})">Enter</button>
-                            ${campaign.is_owner ? `<button class="btn btn-danger" type="button" onclick="deleteCampaign(${campaign.id})">Delete</button>` : ''}
+                            <button class="btn btn-primary" type="button" onclick="enterCampaign(${campaign.id})">Öffnen</button>
+                            ${campaign.is_owner ? `<button class="btn btn-danger" type="button" onclick="deleteCampaign(${campaign.id})">Löschen</button>` : ''}
                         </div>
                     </article>
                 `).join('');

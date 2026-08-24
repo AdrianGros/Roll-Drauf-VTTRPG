@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VTT - Campaigns</title>
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -846,6 +847,18 @@
             gap: 0.5rem;
         }
 
+        .session-action-status {
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px;
+            padding: 0.45rem 0.75rem;
+            border: 1px solid rgba(202, 163, 59, 0.24);
+            border-radius: 8px;
+            color: #e4d2ad;
+            background: rgba(202, 163, 59, 0.08);
+            font-size: 0.86rem;
+        }
+
         .asset-library-toolbar,
         .asset-library-upload {
             display: grid;
@@ -1391,13 +1404,7 @@
                                 </label>
                                 <div class="campaign-create-field">
                                     <span class="campaign-create-label">Nächster Schritt nach dem Anlegen</span>
-                                    <div class="book-shell-placeholder">
-                                        <div class="book-shell-placeholder-title">Kampagnen-Hub bleibt der nächste echte Schritt</div>
-                                        <div class="book-shell-placeholder-copy">Feinere Einstellungen, Session-Prep und Play-Einstieg bleiben bewusst im Hub statt als halbfertige Zusatzfelder im Erstellformular.</div>
-                                        <div class="book-shell-placeholder-actions">
-                                            <button class="btn btn-secondary btn-sm" type="button" disabled>Session-Prep folgt im Hub</button>
-                                        </div>
-                                    </div>
+                                    <div class="campaign-create-help">Nach dem Anlegen öffnet sich der Kampagnen-Hub mit Einladungen, Karten und Session-Vorbereitung.</div>
                                 </div>
                             </div>
 
@@ -1869,7 +1876,7 @@
                     }
                 } else {
                     if (phase.tone === "scheduled" || phase.tone === "ready") {
-                        primaryAction = `<button class="btn btn-secondary btn-sm" type="button" disabled>Auf Sessionstart warten</button>`;
+                        primaryAction = `<span class="session-action-status">Warte auf den Start durch die Spielleitung</span>`;
                         prepNote = "Die Session ist sichtbar, aber erst nach dem DM-Start für Spieler betretbar.";
                         entryHint = "Wartet auf DM";
                     } else if (phase.tone === "paused") {
@@ -1881,7 +1888,7 @@
                         prepNote = "Die Session ist live und kann jetzt über denselben Hub-Pfad betreten werden.";
                         entryHint = "Live";
                     } else {
-                        primaryAction = `<button class="btn btn-secondary btn-sm" type="button" disabled>Warte auf nächste Session</button>`;
+                        primaryAction = `<span class="session-action-status">Keine aktive Session</span>`;
                         prepNote = "Diese Session ist abgeschlossen. Die nächste freigegebene Session erscheint wieder hier im Hub.";
                         entryHint = "Abgeschlossen";
                     }
@@ -2179,7 +2186,7 @@
                 return {
                     label: "Warte auf Session",
                     hint: "Sobald die Spielleitung eine Session vorbereitet, erscheint sie hier als nächster Schritt vor dem Tisch.",
-                    action: `<button class="btn btn-secondary" type="button" disabled>Session folgt</button>`,
+                            action: `<span class="session-action-status">Warte auf die Spielleitung</span>`,
                 };
             }
 
@@ -2241,7 +2248,7 @@
                 return {
                     label: "Auf Sessionstart warten",
                     hint: `Die Session "${session.name}" ist sichtbar, wird aber erst nach dem DM-Start betretbar.`,
-                    action: `<button class="btn btn-secondary" type="button" disabled>Auf Sessionstart warten</button>`,
+                    action: `<span class="session-action-status">Warte auf den Start durch die Spielleitung</span>`,
                 };
             }
             if (phase.tone === "paused") {
@@ -2261,7 +2268,7 @@
             return {
                 label: "Warte auf nächste Session",
                 hint: `Die Session "${session.name}" ist abgeschlossen. Die nächste freigegebene Runde erscheint wieder hier.`,
-                action: `<button class="btn btn-secondary" type="button" disabled>Nächste Session folgt</button>`,
+                    action: `<span class="session-action-status">Keine aktive Session</span>`,
             };
         }
 
@@ -2288,8 +2295,6 @@
             }
 
             if (canManage) {
-                deferred.push("Tieferer Map Workspace bleibt vorerst eigener Prep-Schritt");
-                deferred.push("Paketierter Import / Export bleibt vorerst Platzhalter");
             } else {
                 blocking.push("Spieler warten weiter auf die Freigabe durch die Spielleitung");
             }
@@ -2618,13 +2623,12 @@
                             ` : ""}
                             <div class="session-prep-card-actions">
                                 <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Map Prep ansehen</button>
-                                <button class="btn btn-secondary btn-sm" type="button" disabled>Map Workspace folgt</button>
                             </div>
                         </div>
 
                         <div class="session-prep-card">
                             <div class="session-prep-card-title">Asset Context</div>
-                            <div class="session-prep-card-copy">Assets, Uploads und Vorschau sind bereits live. Diese Session kann ihre Bibliothek jetzt gezielt filtern und Uploads direkt in den Session-Kontext lenken, während Import / Export sichtbar Platzhalter bleibt.</div>
+                            <div class="session-prep-card-copy">Assets, Uploads und Vorschau sind verfügbar. Filtere die Bibliothek oder bereite einen Upload direkt für diese Session vor.</div>
                             <div id="sessionPrepAssetStats">
                                 ${assetStats ? `
                                     <div class="hub-pill-row">
@@ -2638,23 +2642,22 @@
                             <div class="session-prep-card-actions">
                                 <button class="btn btn-secondary btn-sm" type="button" onclick="focusSessionScopedAssetLibrary(${prepSession.id})">Session-Assets ansehen</button>
                                 ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="prepareSessionAssetUpload(${prepSession.id}, 'handout')">Session-Upload vorbereiten</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Asset Library</button>`}
-                                <button class="btn btn-secondary btn-sm" type="button" disabled>Import / Export folgt</button>
                             </div>
                         </div>
 
                         <div class="session-prep-card">
                             <div class="session-prep-card-title">Noch offen vor Play</div>
-                            <div class="session-prep-card-copy">Diese letzte Kontrolle trennt echte Vorbedingungen vor Play von bewusst sichtbaren Platzhaltern, die noch nicht blockierend ausgebaut werden müssen.</div>
+                            <div class="session-prep-card-copy">Diese Kontrolle zeigt die Bedingungen, die vor dem Wechsel an den Spieltisch erfüllt sein müssen.</div>
                             <div class="hub-step-list" style="margin-top:0.75rem;">
                                 ${blockers.blocking.length
                                     ? blockers.blocking.map(blocker => hubStep(blocker, "Vor Play noch offen.", false)).join("")
                                     : hubStep("Keine harten Vorbedingungen offen", "Diese Session kann über den nächsten Schritt in den Tisch wechseln.", true, "live")}
                             </div>
-                            <div class="hub-callout" style="margin-top:0.75rem;">
-                                <strong>Sichtbar, aber nicht blockierend:</strong> ${blockers.deferred.length
-                                    ? escapeHtml(blockers.deferred.join(" · "))
-                                    : "Keine weiteren sichtbaren Platzhalter in diesem Fokusbereich."}
-                            </div>
+                            ${blockers.deferred.length ? `
+                                <div class="hub-callout" style="margin-top:0.75rem;">
+                                    <strong>Weitere Hinweise:</strong> ${escapeHtml(blockers.deferred.join(" · "))}
+                                </div>
+                            ` : ""}
                         </div>
                     </div>
                 </div>
@@ -2860,14 +2863,14 @@
                     return {
                         label: "Auf Sessionstart warten",
                         hint: `Die Session "${latestSession.name}" ist angelegt, wird aber erst nach dem DM-Start betretbar.`,
-                        action: `<button class="btn btn-secondary" disabled>Auf Sessionstart warten</button>`,
+                        action: `<span class="session-action-status">Warte auf den Start durch die Spielleitung</span>`,
                     };
                 }
                 if (phase.tone === "ended") {
                     return {
                         label: "Warte auf nächste Session",
                         hint: `Die letzte Session "${latestSession.name}" ist beendet. Die nächste freigegebene Session erscheint wieder hier im Hub.`,
-                        action: `<button class="btn btn-secondary" disabled>Nächste Session folgt</button>`,
+                        action: `<span class="session-action-status">Keine aktive Session</span>`,
                     };
                 }
                 return {
@@ -2880,7 +2883,7 @@
             return {
                 label: "Warte auf DM",
                 hint: "Du bist Teil der Kampagne, aber noch gibt es keine Session zum Betreten.",
-                action: `<button class="btn btn-secondary" disabled>Session folgt</button>`,
+                action: `<span class="session-action-status">Warte auf die Spielleitung</span>`,
             };
         }
 
@@ -3194,7 +3197,7 @@
                             </div>
                             <div class="hub-callout">
                                 ${canManage
-                                    ? "Die Kartenliste und der Schnellstart sind live. Tieferes Map-Prep bleibt hier sichtbar als nächster Schritt, bis der eigene Map-Workspace kommt."
+                                    ? "Die Kartenliste und der Schnellstart sind live. Nutze Map Prep, um Karten zu prüfen und für eine Session zu aktivieren."
                                     : "Spieler sehen hier den aktuellen Kartenstand read-only. Tieferes Map-Prep bleibt der Spielleitung vorbehalten."}
                             </div>
                             ${canManage ? `
@@ -3447,14 +3450,6 @@
                             <div class="upload-actions">
                                 <button class="btn btn-primary btn-sm" onclick="uploadLibraryAsset(${campaign.id})">Upload</button>
                                 <button class="btn btn-secondary btn-sm" onclick="resetAssetLibraryUpload()">Zurücksetzen</button>
-                            </div>
-                        </div>
-                        <div class="book-shell-placeholder" style="margin-top:0.8rem;">
-                            <div class="book-shell-placeholder-title">Import / Export folgt hier</div>
-                            <div class="book-shell-placeholder-copy">Die Bibliothek ist live für Upload, Preview und Download. Paketierter Import und Export bleiben sichtbar an derselben Stelle, bis die Pipeline produktisiert ist.</div>
-                            <div class="book-shell-placeholder-actions">
-                                <button class="btn btn-secondary btn-sm" type="button" disabled>Map Import folgt</button>
-                                <button class="btn btn-secondary btn-sm" type="button" disabled>Paket Export folgt</button>
                             </div>
                         </div>
                     ` : `
