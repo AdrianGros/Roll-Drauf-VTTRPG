@@ -295,9 +295,129 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
+    """External-roll compatibility (M-Beyond20): dispatch the exact DOM
+    event the Beyond20 extension fires into registered pages
+    (Beyond20_RenderedRoll, detail as an argument array -- see
+    https://beyond20.here-for-more.info/api) and prove the roll travels
+    bridge -> normalized envelope -> socket -> server (sanitize +
+    persist) -> room broadcast -> dice log + chat, and SURVIVES a page
+    reload via chat history."""
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="beyond_dm", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="beyond_dm_bot",
+                email="beyond_dm_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Beyondkampagne", "max_players": 4}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Beyondsitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_function(
+                "() => window.RollDraufTable && document.body.dataset.playTransitionStage === 'table'",
+                timeout=15_000)
+            page.wait_for_timeout(1_500)  # session:join round trip
+        except Exception:
+            findings.append("[bridge] window.RollDraufTable never appeared - "
+                            "the external-roll surface is gone")
+            browser.close()
+            return findings
+
+        # The exact shape Beyond20 dispatches (detail is an ARRAY of args).
+        page.evaluate(
+            """() => {
+                const request = {
+                    action: "rendered-roll",
+                    title: "Langschwert: Angriff",
+                    character: {name: "Rilbo Steinfaust", type: "Character"},
+                    whisper: 0,
+                    attack_rolls: [{
+                        formula: "1d20+7",
+                        parts: [{rolls: [{roll: 16}]}, "+", 7],
+                        total: 23,
+                        "critical-success": false,
+                        "critical-failure": false,
+                        type: "to-hit",
+                    }],
+                    damage_rolls: [["Slashing", {formula: "1d8+4",
+                                                 parts: [{rolls: [{roll: 6}]}, "+", 4],
+                                                 total: 10}]],
+                    total_damages: {"Slashing": 10},
+                    roll_info: [],
+                    source: "beyond20-robot",
+                };
+                document.dispatchEvent(new CustomEvent(
+                    "Beyond20_RenderedRoll", {detail: [request]}));
+            }""")
+
+        # Broadcast round trip: the sender renders only on receiving the
+        # server's broadcast, so this asserts the full server path.
+        try:
+            page.wait_for_function(
+                "() => (document.getElementById('diceLog')?.textContent || '')"
+                ".includes('Rilbo Steinfaust')", timeout=10_000)
+        except Exception:
+            findings.append("[bridge] Beyond20 roll never reached the dice log "
+                            "(bridge -> socket -> broadcast chain broke)")
+        dice_text = page.locator("#diceLog").text_content() or ""
+        if "beyond20" not in dice_text or "= 23" not in dice_text:
+            findings.append(f"[bridge] dice log entry malformed: {dice_text[:150]!r}")
+        chat_text = page.locator("#chatLog").text_content() or ""
+        if "Rilbo Steinfaust" not in chat_text:
+            findings.append("[bridge] Beyond20 roll missing from the chat log")
+
+        # Reload: the roll must come back via bootstrap chat history.
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[reload] {f.detail}" for f in session.findings)
+        else:
+            try:
+                page.wait_for_function(
+                    "() => (document.getElementById('chatLog')?.textContent || '')"
+                    ".includes('Rilbo Steinfaust')", timeout=10_000)
+            except Exception:
+                findings.append("[bridge] Beyond20 roll did not survive a page "
+                                "reload (chat history persistence broke)")
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
+    "beyond20_bridge": _beyond20_bridge_flow,
 }
 
 

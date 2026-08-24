@@ -45,6 +45,7 @@ class PlaySocketRuntime {
         this.socket.on("action:executed", (payload) => this._handleSequencedEvent("action:executed", payload, "actionExecuted"));
         this.socket.on("dice_rolled", (payload) => this._handleSequencedEvent("dice_rolled", payload, "diceRolled"));
         this.socket.on("chat:message_sent", (payload) => this._handleSequencedEvent("chat:message_sent", payload, "chatMessageSent"));
+        this.socket.on("external:roll", (payload) => this._handleSequencedEvent("external:roll", payload, "externalRoll"));
         this.socket.on("token:created", (payload) => this._handleSequencedEvent("token:created", payload, "tokenCreated"));
         this.socket.on("token:updated", (payload) => this._handleSequencedEvent("token:updated", payload, "tokenUpdated"));
         this.socket.on("token:deleted", (payload) => this._handleSequencedEvent("token:deleted", payload, "tokenDeleted"));
@@ -79,6 +80,15 @@ class PlaySocketRuntime {
             },
             callback
         );
+    }
+
+    sendExternalRoll(roll) {
+        if (!this.socket) return;
+        this.socket.emit("external:roll", {
+            campaign_id: this.campaignId,
+            session_id: this.sessionId,
+            roll: roll && typeof roll === "object" ? roll : {},
+        });
     }
 
     sendChat(message, senderName, senderId = null) {

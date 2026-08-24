@@ -242,6 +242,7 @@
                     actionExecuted: (payload) => this._handleAction(payload),
                     diceRolled: (payload) => this._handleDiceBroadcast(payload),
                     chatMessageSent: (payload) => this._handleChatBroadcast(payload),
+                    externalRoll: (payload) => this._handleExternalRoll(payload),
                     tokenCreated: (payload) => this._handleTokenCreated(payload),
                     tokenUpdated: (payload) => this._handleTokenUpdated(payload),
                     tokenDeleted: (payload) => this._handleTokenDeleted(payload),
@@ -263,6 +264,18 @@
                 },
             });
             this.socket.connect();
+            // Minimal public surface for external-roll adapters (e.g.
+            // beyond20-bridge.js): hand a normalized envelope to the table
+            // without reaching into runtime internals.
+            window.RollDraufTable = {
+                sendExternalRoll: (roll) => {
+                    if (this.readOnly) return false;
+                    if (!this.socket || !this.socket.isConnected) return false;
+                    this.socket.sendExternalRoll(roll);
+                    return true;
+                },
+            };
+            window.dispatchEvent(new CustomEvent("rolldrauf:table-ready"));
             window.addEventListener("beforeunload", () => {
                 if (this.entryArrivalTimer) {
                     window.clearTimeout(this.entryArrivalTimer);
@@ -1224,6 +1237,27 @@
             this._showMessage(`Konflikt bei Token ${tokenId}. Bitte Ansicht neu laden.`, true);
             this._logActivity("Socket-Konflikt erkannt, Ansicht wird neu synchronisiert.", "error");
             this.loadBootstrap();
+        }
+
+        _handleExternalRoll(payload) {
+            const roll = payload?.roll || {};
+            const summary = payload?.summary
+                || `[${roll.source || "external"}] ${roll.character || payload?.sender_name || "?"}: ${roll.title || roll.formula || "Wurf"}${roll.total != null ? ` = ${roll.total}` : ""}`;
+            const log = document.getElementById("diceLog");
+            if (log) {
+                const line = document.createElement("div");
+                line.textContent = summary;
+                log.prepend(line);
+                while (log.children.length > 8) {
+                    log.removeChild(log.lastChild);
+                }
+            }
+            this._appendChatMessage({
+                time: String(payload?.timestamp || new Date().toISOString()).slice(11, 19),
+                sender_name: roll.character || payload?.sender_name || "external",
+                message: summary,
+            });
+            this._logActivity(summary, "info");
         }
 
         _handleDiceBroadcast(payload) {

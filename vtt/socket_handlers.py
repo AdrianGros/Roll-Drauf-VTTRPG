@@ -1054,3 +1054,144 @@ def register_socket_handlers(socketio):
                 "timestamp": chat_message.created_at.isoformat() if chat_message.created_at else utcnow().isoformat(),
             },
         )
+
+    @socketio.on("external:roll")
+    def handle_external_roll(data):
+        """Ingest a roll made OUTSIDE this VTT and broadcast it to the table.
+
+        M-Beyond20 (2026-08-23): the first external source is the Beyond20
+        browser extension relaying D&D Beyond rolls, but this handler is
+        deliberately source-agnostic -- the client-side adapter (e.g.
+        static/js/beyond20-bridge.js) normalizes whatever the source emits
+        into ONE envelope shape, so future systems (other character-sheet
+        sites, dice services, non-D&D systems) only need a new client
+        adapter, never a new server contract:
+
+            {source, system, character, title, roll_type, formula,
+             total, rolls[], advantage}
+
+        Everything is validated/capped server-side and the relaying VTT
+        account is always attached from the authenticated socket -- the
+        envelope's own identity claims are display data, not authority.
+        Persisted as a ChatMessage (content_type="external_roll") so the
+        roll survives reloads via the same chat history the table already
+        loads.
+        """
+        _track_socket_event("external:roll")
+        user, error = _parse_authenticated_user()
+        if error:
+            _emit_error(error["code"], error["message"])
+            return
+
+        payload = data or {}
+        campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
+        if parse_error:
+            _emit_error(parse_error["code"], parse_error["message"])
+            return
+        session_id, parse_error = _coerce_int(payload.get("session_id"), "session_id")
+        if parse_error:
+            _emit_error(parse_error["code"], parse_error["message"])
+            return
+
+        campaign, game_session, lookup_error = _get_campaign_session(campaign_id, session_id)
+        if lookup_error:
+            _emit_error(lookup_error["code"], lookup_error["message"])
+            return
+        if not _is_active_member(campaign.id, user.id):
+            _emit_error("forbidden", "campaign membership required")
+            return
+        read_only_error = _reject_read_only(campaign, game_session, user)
+        if read_only_error:
+            _emit_error(read_only_error["code"], read_only_error["message"])
+            return
+
+        roll = payload.get("roll") or {}
+
+        def _clean_str(value, max_length, default=""):
+            text = str(value if value is not None else default).strip()
+            return text[:max_length]
+
+        def _clean_number(value):
+            try:
+                number = float(value)
+            except (TypeError, ValueError):
+                return None
+            if number != number or number in (float("inf"), float("-inf")):
+                return None
+            return int(number) if number == int(number) else round(number, 2)
+
+        source = _clean_str(roll.get("source"), 40, "external") or "external"
+        system = _clean_str(roll.get("system"), 40, "unknown") or "unknown"
+        character = _clean_str(roll.get("character"), 120)
+        title = _clean_str(roll.get("title"), 200)
+        roll_type = _clean_str(roll.get("roll_type"), 40, "custom") or "custom"
+        formula = _clean_str(roll.get("formula"), 200)
+        advantage = _clean_str(roll.get("advantage"), 20, "normal") or "normal"
+        total = _clean_number(roll.get("total"))
+
+        if not title and not formula:
+            _emit_error("bad_request", "external roll needs a title or formula")
+            return
+
+        clean_rolls = []
+        raw_rolls = roll.get("rolls")
+        if isinstance(raw_rolls, list):
+            for entry in raw_rolls[:20]:
+                if not isinstance(entry, dict):
+                    continue
+                clean_entry = {
+                    "formula": _clean_str(entry.get("formula"), 200),
+                    "total": _clean_number(entry.get("total")),
+                }
+                dice = entry.get("dice")
+                if isinstance(dice, list):
+                    clean_entry["dice"] = [
+                        cleaned for cleaned in (_clean_number(die) for die in dice[:50])
+                        if cleaned is not None
+                    ]
+                clean_rolls.append(clean_entry)
+
+        envelope = {
+            "source": source,
+            "system": system,
+            "character": character,
+            "title": title,
+            "roll_type": roll_type,
+            "formula": formula,
+            "total": total,
+            "rolls": clean_rolls,
+            "advantage": advantage,
+        }
+
+        # Compact one-line form for persistence + chat history.
+        who = character or user.username
+        parts = [part for part in (title, formula) if part]
+        summary = f"[{source}] {who}: {' | '.join(parts) if parts else roll_type}"
+        if total is not None:
+            summary += f" = {total}"
+        if advantage not in ("", "normal"):
+            summary += f" ({advantage})"
+
+        chat_message = ChatMessage(
+            campaign_id=campaign.id,
+            game_session_id=game_session.id,
+            author_user_id=user.id,
+            content=summary[:2000],
+            content_type="external_roll",
+        )
+        db.session.add(chat_message)
+        db.session.commit()
+
+        _emit_session_event(
+            "external:roll",
+            campaign.id,
+            game_session.id,
+            {
+                "roll": envelope,
+                "summary": summary[:2000],
+                "sender_id": user.id,
+                "sender_name": user.username,
+                "message_id": chat_message.id,
+                "timestamp": chat_message.created_at.isoformat() if chat_message.created_at else utcnow().isoformat(),
+            },
+        )
