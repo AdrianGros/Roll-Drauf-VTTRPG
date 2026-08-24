@@ -24,3 +24,11 @@ def test_login_actions_are_compact_buttons_without_redundant_prompt():
     assert "Noch kein Konto?" not in action_block
     assert "Jetzt registrieren" not in action_block
     assert "grid-template-columns: repeat(3, minmax(0, 1fr));" in html
+
+
+def test_discord_login_button_keeps_blue_theme_after_shared_button_css():
+    html = LOGIN_TEMPLATE.read_text(encoding="utf-8")
+
+    assert "#login-content .book-login-btn" in html
+    assert "background: #5865f2;" in html
+    assert "margin: 24px 0 12px;" in html
