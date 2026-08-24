@@ -280,25 +280,72 @@
                 // the usual ownership/read-only rules apply.
                 updateCharacterHp: (update) => {
                     if (this.readOnly || !update) return false;
-                    const name = String(update.name || "").trim().toLowerCase();
-                    if (!name) return false;
-                    const token = this._visibleTokens().find(
-                        (entry) => String(entry.name || "").trim().toLowerCase() === name
-                    );
+                    const token = this._findTokenByName(update.name);
                     if (!token || !this._canMoveToken(token)) return false;
                     const patch = {};
                     if (Number.isFinite(update.hp)) patch.hp_current = Math.round(update.hp);
                     if (Number.isFinite(update.maxHp) && update.maxHp > 0) patch.hp_max = Math.round(update.maxHp);
                     if (!Object.keys(patch).length) return false;
-                    if (this.socket && this.socket.isConnected) {
-                        this.socket.updateToken(token.id, Number(token.version || 1), patch);
-                    } else {
-                        this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), patch)
-                            .then(() => this.loadBootstrap())
-                            .catch(() => {});
-                    }
+                    this._patchToken(token, patch);
                     this._logActivity(`HP-Sync: ${token.name} -> ${patch.hp_current ?? "?"}${patch.hp_max ? ` / ${patch.hp_max}` : ""}.`, "info");
                     return true;
+                },
+                // Conditions sync (Beyond20 conditions-update): conditions
+                // live in metadata_json.conditions (TokenState has no
+                // dedicated column) and render as a marker badge + token
+                // list line.
+                updateCharacterConditions: (update) => {
+                    if (this.readOnly || !update) return false;
+                    const token = this._findTokenByName(update.name);
+                    if (!token || !this._canMoveToken(token)) return false;
+                    const conditions = (Array.isArray(update.conditions) ? update.conditions : [])
+                        .slice(0, 20)
+                        .map((entry) => String(entry).slice(0, 40))
+                        .filter(Boolean);
+                    const metadataJson = token.metadata_json && typeof token.metadata_json === "object"
+                        ? { ...token.metadata_json } : {};
+                    const before = JSON.stringify(metadataJson.conditions || []);
+                    if (before === JSON.stringify(conditions)) return true;
+                    metadataJson.conditions = conditions;
+                    this._patchToken(token, { metadata_json: metadataJson });
+                    this._logActivity(
+                        conditions.length
+                            ? `Zustaende: ${token.name} -> ${conditions.join(", ")}.`
+                            : `Zustaende: ${token.name} -> keine.`,
+                        "info");
+                    return true;
+                },
+                // Turn tracker sync (Beyond20 update-combat): initiative +
+                // current-turn flag for every combatant whose name matches
+                // a table token; only changed tokens get patched.
+                updateCombatTracker: (combatants) => {
+                    if (this.readOnly || !Array.isArray(combatants)) return 0;
+                    let patched = 0;
+                    for (const combatant of combatants) {
+                        const token = this._findTokenByName(combatant?.name);
+                        if (!token || !this._canMoveToken(token)) continue;
+                        const patch = {};
+                        const initiative = Number(combatant.initiative);
+                        if (Number.isFinite(initiative) && Number(token.initiative) !== Math.round(initiative)) {
+                            patch.initiative = Math.round(initiative);
+                        }
+                        const isTurn = Boolean(combatant.turn);
+                        const hadTurn = Boolean(token.metadata_json?.current_turn);
+                        if (isTurn !== hadTurn) {
+                            const metadataJson = token.metadata_json && typeof token.metadata_json === "object"
+                                ? { ...token.metadata_json } : {};
+                            metadataJson.current_turn = isTurn;
+                            patch.metadata_json = metadataJson;
+                        }
+                        if (Object.keys(patch).length) {
+                            this._patchToken(token, patch);
+                            patched += 1;
+                        }
+                    }
+                    if (patched) {
+                        this._logActivity(`Turn-Tracker synchronisiert (${patched} Token).`, "info");
+                    }
+                    return patched;
                 },
             };
             window.dispatchEvent(new CustomEvent("rolldrauf:table-ready"));
@@ -1620,10 +1667,18 @@
                     const cell = this._resolveTokenPosition(token, gridSize);
                     const cellX = Math.round(cell.left / gridSize);
                     const cellY = Math.round(cell.top / gridSize);
+                    const conditions = Array.isArray(token.metadata_json?.conditions)
+                        ? token.metadata_json.conditions : [];
+                    const conditionsLine = conditions.length
+                        ? `<div class="token-conditions-line">${escapeHtml(conditions.join(", "))}</div>`
+                        : "";
                     return `
-                    <div class="panel-row ${Number(this.selectedTokenId) === Number(token.id) ? "active-row" : ""}" data-token-id="${token.id}" style="cursor:pointer;">
-                        <div><strong>${escapeHtml(token.name)}</strong> (${escapeHtml(token.token_type)})</div>
-                        <div>HP ${token.hp_current ?? "-"} / ${token.hp_max ?? "-"}, Feld ${cellX},${cellY}</div>
+                    <div class="panel-row ${Number(this.selectedTokenId) === Number(token.id) ? "active-row" : ""}" data-token-id="${token.id}" style="cursor:pointer;display:block;">
+                        <div style="display:flex;justify-content:space-between;gap:0.5rem;">
+                            <div><strong>${escapeHtml(token.name)}</strong> (${escapeHtml(token.token_type)})</div>
+                            <div>HP ${token.hp_current ?? "-"} / ${token.hp_max ?? "-"}, Feld ${cellX},${cellY}</div>
+                        </div>
+                        ${conditionsLine}
                     </div>
                 `;
                 }).join("");
@@ -1738,13 +1793,20 @@
 
             this.tokenIndex = new Map(allTokens.map((token) => [Number(token.id), token]));
             const initiativeEntries = this._getInitiativeEntries(tokens);
-            const currentTurnTokenId = initiativeEntries.length ? Number(initiativeEntries[0].id) : null;
+            const currentTurnEntry = initiativeEntries.find((entry) => entry.is_current_turn)
+                || initiativeEntries[0] || null;
+            const currentTurnTokenId = currentTurnEntry ? Number(currentTurnEntry.id) : null;
             tokenLayer.innerHTML = tokens.map((token) => {
                 const position = this._resolveTokenPosition(token, gridSize);
                 const pixelSize = this._resolveTokenSize(token, gridSize);
                 const rawName = String(token.name || "");
                 const label = escapeHtml(rawName);
                 const initials = escapeHtml(rawName.trim().slice(0, 2).toUpperCase() || "??");
+                const conditions = Array.isArray(token.metadata_json?.conditions)
+                    ? token.metadata_json.conditions : [];
+                const conditionsBadge = conditions.length
+                    ? `<div class="token-conditions" title="${escapeHtml(conditions.join(", "))}">${conditions.length}</div>`
+                    : "";
                 const colorByType = {
                     player: "#8cc0ff",
                     npc: "#ffd27d",
@@ -1768,6 +1830,7 @@
                         title="${label}"
                     >
                         ${initials}
+                        ${conditionsBadge}
                         <div class="token-label">${label}</div>
                     </div>
                 `;
@@ -1788,17 +1851,20 @@
                 return;
             }
 
-            const currentEntry = entries[0];
+            const currentEntry = entries.find((entry) => entry.is_current_turn) || entries[0];
             if (summary) {
                 summary.textContent = `Aktuell: ${currentEntry.name} (${currentEntry.initiative})`;
             }
 
-            container.innerHTML = entries.map((token, index) => `
-                <div class="turn-item ${index === 0 ? "current" : ""}">
-                    <span>${escapeHtml(token.name)}${index === 0 ? " <strong>• aktuell</strong>" : ""}</span>
+            container.innerHTML = entries.map((token) => {
+                const isCurrent = token === currentEntry;
+                return `
+                <div class="turn-item ${isCurrent ? "current" : ""}">
+                    <span>${escapeHtml(token.name)}${isCurrent ? " <strong>• aktuell</strong>" : ""}</span>
                     <span class="turn-score">${escapeHtml(token.initiative)}</span>
                 </div>
-            `).join("");
+            `;
+            }).join("");
         }
 
         _renderChat() {
@@ -1855,6 +1921,26 @@
                 return list;
             }
             return list.filter((token) => String(token.visibility || "public") !== "dm_only");
+        }
+
+        // Shared by every external-sync surface (HP/conditions/combat):
+        // external tools identify characters by display name.
+        _findTokenByName(rawName) {
+            const name = String(rawName || "").trim().toLowerCase();
+            if (!name) return null;
+            return this._visibleTokens().find(
+                (entry) => String(entry.name || "").trim().toLowerCase() === name
+            ) || null;
+        }
+
+        _patchToken(token, patch) {
+            if (this.socket && this.socket.isConnected) {
+                this.socket.updateToken(token.id, Number(token.version || 1), patch);
+            } else {
+                this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), patch)
+                    .then(() => this.loadBootstrap())
+                    .catch(() => {});
+            }
         }
 
         _findStateToken(tokenId, tokens = null) {
@@ -1926,7 +2012,10 @@
                     id: Number(token.id),
                     name: token.name,
                     initiative: Number(token.initiative),
-                    is_current_turn: false,
+                    // Set by the external turn tracker sync (Beyond20
+                    // update-combat); without it the top initiative counts
+                    // as "current" like before.
+                    is_current_turn: Boolean(token.metadata_json?.current_turn),
                 }))
                 .sort((a, b) => Number(b.initiative) - Number(a.initiative) || Number(a.id) - Number(b.id));
         }

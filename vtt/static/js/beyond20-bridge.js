@@ -35,6 +35,10 @@
             window.RollDraufTable.sendExternalRoll(action.payload);
         } else if (action.type === "hp" && typeof window.RollDraufTable.updateCharacterHp === "function") {
             window.RollDraufTable.updateCharacterHp(action.payload);
+        } else if (action.type === "conditions" && typeof window.RollDraufTable.updateCharacterConditions === "function") {
+            window.RollDraufTable.updateCharacterConditions(action.payload);
+        } else if (action.type === "combat" && typeof window.RollDraufTable.updateCombatTracker === "function") {
+            window.RollDraufTable.updateCombatTracker(action.payload);
         }
     }
 
@@ -196,6 +200,60 @@
             deliver("roll", normalizeRenderedRoll(detailPayload(event)));
         } catch (error) {
             console.warn("[beyond20-bridge] roll konnte nicht verarbeitet werden:", error);
+        }
+    });
+
+    // conditions-update messages: {action, character} where
+    // character.conditions is an Array<string> and character.exhaustion a
+    // separate number (exact shape per the Beyond20 API docs).
+    document.addEventListener("Beyond20_UpdateConditions", function (event) {
+        try {
+            var request = detailPayload(event) || {};
+            var character = request.character || request;
+            var name = String((character && character.name) || "").trim();
+            if (!name) {
+                return;
+            }
+            var conditions = Array.isArray(character.conditions)
+                ? character.conditions.map(function (entry) { return String(entry); })
+                : [];
+            var exhaustion = Number(character.exhaustion);
+            if (isFinite(exhaustion) && exhaustion >= 1) {
+                conditions = conditions.concat(["Erschoepfung " + Math.min(6, Math.round(exhaustion))]);
+            }
+            deliver("conditions", { name: name, conditions: conditions });
+        } catch (error) {
+            console.warn("[beyond20-bridge] conditions-update konnte nicht verarbeitet werden:", error);
+        }
+    });
+
+    // update-combat messages: {action, combat: [{name, initiative, turn,
+    // tags}]} -- the full turn order from D&D Beyond's encounter tracker.
+    document.addEventListener("Beyond20_UpdateCombat", function (event) {
+        try {
+            var request = detailPayload(event) || {};
+            var combat = Array.isArray(request.combat) ? request.combat : [];
+            var combatants = [];
+            combat.forEach(function (entry) {
+                if (!entry || typeof entry !== "object") {
+                    return;
+                }
+                var name = String(entry.name || "").trim();
+                if (!name) {
+                    return;
+                }
+                var initiative = Number(entry.initiative);
+                combatants.push({
+                    name: name,
+                    initiative: isFinite(initiative) ? initiative : null,
+                    turn: Boolean(entry.turn),
+                });
+            });
+            if (combatants.length) {
+                deliver("combat", combatants);
+            }
+        } catch (error) {
+            console.warn("[beyond20-bridge] update-combat konnte nicht verarbeitet werden:", error);
         }
     });
 

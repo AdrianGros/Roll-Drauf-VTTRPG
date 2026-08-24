@@ -455,6 +455,60 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
             findings.append(f"[hp-sync] Beyond20 hp-update never reached the token "
                             f"(token list shows: {token_text[:120]!r})")
 
+        # Conditions sync: conditions array + exhaustion land as a marker
+        # badge and a token-list line.
+        page.evaluate(
+            """() => {
+                document.dispatchEvent(new CustomEvent("Beyond20_UpdateConditions", {
+                    detail: [{action: "conditions-update",
+                              character: {name: "Rilbo Steinfaust",
+                                          conditions: ["Poisoned", "Prone"],
+                                          exhaustion: 1}}],
+                }));
+            }""")
+        try:
+            page.wait_for_function(
+                "() => (document.getElementById('tokenList')?.textContent || '')"
+                ".includes('Poisoned, Prone, Erschoepfung 1')", timeout=10_000)
+        except Exception:
+            token_text = page.locator("#tokenList").text_content() or ""
+            findings.append(f"[conditions] Beyond20 conditions-update never reached "
+                            f"the token list (shows: {token_text[:120]!r})")
+        badge = page.evaluate(
+            "() => document.querySelector('.token-marker .token-conditions')?.textContent || null")
+        if badge != "3":
+            findings.append(f"[conditions] marker badge should show 3 conditions, shows {badge!r}")
+
+        # Turn tracker sync: initiative + current-turn flag from D&D
+        # Beyond's encounter tracker; unknown combatants are ignored.
+        page.evaluate(
+            """() => {
+                document.dispatchEvent(new CustomEvent("Beyond20_UpdateCombat", {
+                    detail: [{action: "update-combat",
+                              combat: [
+                                  {name: "Rilbo Steinfaust", initiative: 17,
+                                   turn: true, tags: ["character"]},
+                                  {name: "Fremder Ork", initiative: 12,
+                                   turn: false, tags: ["monster"]},
+                              ]}],
+                }));
+            }""")
+        try:
+            page.wait_for_function(
+                """() => {
+                    const current = document.querySelector('#turnOrderList .turn-item.current');
+                    return current && current.textContent.includes('Rilbo Steinfaust')
+                        && current.textContent.includes('17');
+                }""", timeout=10_000)
+        except Exception:
+            turn_text = page.locator("#turnOrderList").text_content() or ""
+            findings.append(f"[turn-tracker] Beyond20 update-combat never marked Rilbo "
+                            f"as current with initiative 17 (turn order: {turn_text[:120]!r})")
+        turn_items = page.locator("#turnOrderList .turn-item").count()
+        if turn_items != 1:
+            findings.append(f"[turn-tracker] expected 1 turn entry (unknown combatant "
+                            f"ignored), turn order lists {turn_items}")
+
         # Reload: the roll must come back via bootstrap chat history.
         if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
             findings.extend(f"[reload] {f.detail}" for f in session.findings)
