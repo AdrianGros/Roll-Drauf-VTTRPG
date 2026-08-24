@@ -41,3 +41,17 @@ another boundary.
 **New standard account** starts as a least-privilege Player with no platform
 role. An invitation key may grant an explicitly assigned profile tier; it does
 not silently grant platform staff privileges.
+
+## Product surfaces
+
+**VTT overview** is the protected personal starting point for campaigns,
+characters, session preparation, and the live table. Its content must remain
+useful when a user has no Discord account and no Discord membership.
+
+**Discord integration** is an optional external identity and community
+connection. Discord login, server membership checks, and community messaging
+must not be prerequisites or primary content on the VTT overview.
+
+**Guild** is a Discord/community metadata concept, not a VTT workspace
+resource. Guild data may remain available to the optional integration boundary,
+but it is not shown, ranked, or created by the VTT overview.

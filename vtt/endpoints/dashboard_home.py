@@ -1,26 +1,21 @@
-"""Dashboard home/social hub and guild navigation endpoints."""
+"""Personal VTT overview endpoints."""
 
 from __future__ import annotations
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from sqlalchemy import and_, func, or_
 
-from vtt.extensions import db, limiter
+from vtt.extensions import db
 from vtt.models import (
     Campaign,
-    CampaignMap,
     CampaignMember,
     Character,
     GameSession,
-    Guild,
-    GuildMembership,
     SessionCharacterAssignment,
     SessionState,
     User,
 )
-from vtt.models.guild import ensure_fixed_guilds
-from vtt.utils.time import utcnow
 
 
 dashboard_home_bp = Blueprint("dashboard_home", __name__, url_prefix="/api/dashboard")
@@ -79,49 +74,6 @@ def _serialize_character_for_home(character: Character) -> dict:
     payload = character.serialize(include_details=True)
     payload["has_identity"] = bool(character.avatar_storage_key or character.token_storage_key)
     return payload
-
-
-def _ensure_primary_guild_membership(user: User) -> GuildMembership:
-    guilds = ensure_fixed_guilds()
-    membership = GuildMembership.query.filter_by(user_id=user.id).first()
-    if membership:
-        return membership
-
-    default_guild = guilds[(max(user.id, 1) - 1) % len(guilds)]
-    membership = GuildMembership(user_id=user.id, guild_id=default_guild.id)
-    db.session.add(membership)
-    db.session.commit()
-    return membership
-
-
-def _guild_member_counts() -> dict[int, int]:
-    rows = (
-        db.session.query(GuildMembership.guild_id, func.count(GuildMembership.id))
-        .group_by(GuildMembership.guild_id)
-        .all()
-    )
-    return {guild_id: int(count) for guild_id, count in rows}
-
-
-def _build_guild_preview(guilds: list[Guild], primary_membership: GuildMembership) -> tuple[list[dict], dict]:
-    member_counts = _guild_member_counts()
-    primary = None
-    serialized = []
-
-    for guild in guilds:
-        member_count = member_counts.get(guild.id, 0)
-        is_primary = primary_membership.guild_id == guild.id
-        payload = guild.serialize(member_count=member_count, is_primary=is_primary)
-        payload["status_preview"] = (
-            "Dein aktuelles Banner für Neuigkeiten und Hinweise."
-            if is_primary
-            else (f"{member_count} Mitglieder tragen dieses Banner." if member_count else "Noch niemand führt dieses Banner als primäre Gilde.")
-        )
-        serialized.append(payload)
-        if is_primary:
-            primary = payload
-
-    return serialized, primary or serialized[0]
 
 
 def _build_session_summaries(campaigns: list[Campaign]) -> list[dict]:
@@ -216,7 +168,13 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
             "note": "Lege deinen ersten eigenen Einstieg an." if is_player else "Lege die erste Runde an und beginne die Vorbereitung.",
         }
 
-    if not characters:
+    if characters:
+        secondary = {
+            "label": "Charakterarchiv öffnen",
+            "href": "/characters?classic=1",
+            "note": "Bögen, Identität und der Rückweg in die Vorbereitung bleiben hier gebündelt.",
+        }
+    elif campaigns:
         secondary = {
             "label": "Held anlegen",
             "href": "/characters?classic=1&intent=create",
@@ -224,22 +182,16 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
         }
     else:
         secondary = {
-            "label": "Charakterarchiv öffnen",
-            "href": "/characters?classic=1",
-            "note": "Bögen, Identität und der Rückweg in die Vorbereitung bleiben hier gebündelt.",
+            "label": "Kampagnen öffnen",
+            "href": "/campaigns?classic=1",
+            "note": "Sieh dir bestehende Runden an oder tritt einer Kampagne bei.",
         }
 
     return primary, secondary
 
 
-def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: list[dict], primary_guild: dict) -> list[dict]:
-    priorities = [
-        {
-                "title": "Primäre Gilde",
-            "tone": "info",
-                "copy": f"{primary_guild['name']} ist dein aktuelles Banner für Neuigkeiten und Hinweise.",
-        }
-    ]
+def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: list[dict]) -> list[dict]:
+    priorities = []
 
     prep_session = next((session for session in sessions if session["prep_blockers"]), None)
     if prep_session:
@@ -302,29 +254,8 @@ def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: l
     return priorities
 
 
-def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions: list[dict], primary_guild: dict) -> list[dict]:
-    feed = [
-        {
-            "id": "common-room",
-            "section": "social",
-            "kicker": "Gemeinschaft",
-            "title": "Gemeinschaftssaal",
-            "meta": "Neuigkeiten und Hinweise",
-            "copy": "Hier findest du Neuigkeiten, Gildenhinweise und den nächsten Vorbereitungsschritt.",
-            "action_label": "Kampagnen öffnen",
-            "action_href": "/campaigns?classic=1",
-        },
-        {
-            "id": f"guild-{primary_guild['slug']}",
-            "section": "guilds",
-            "kicker": "Primäre Gilde",
-            "title": primary_guild["name"],
-            "meta": f"{primary_guild['member_count']} Mitglieder",
-            "copy": primary_guild["description"],
-            "action_label": "Zur Gildenübersicht",
-            "action_section": "guilds",
-        },
-    ]
+def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions: list[dict]) -> list[dict]:
+    feed = []
 
     prep_session = next((session for session in sessions if session["prep_blockers"]), None)
     live_session = next((session for session in sessions if session["runtime_status"] in {"in_progress", "active", "live"}), None)
@@ -407,8 +338,6 @@ def _build_quick_links(campaigns: list[dict], characters: list[dict]) -> list[di
     first_campaign_href = f"/campaigns?campaign_id={campaigns[0]['id']}&classic=1" if campaigns else "/campaigns?classic=1&intent=create"
     first_character_href = f"/character-sheet?id={characters[0]['id']}" if characters else "/characters?classic=1&intent=create"
     return [
-        {"label": "Gemeinschaft", "section": "social"},
-        {"label": "Gilden", "section": "guilds"},
         {"label": "Kampagnen", "href": first_campaign_href},
         {"label": "Charaktere", "href": first_character_href},
         {"label": "Vorbereitung", "href": "/campaigns?classic=1"},
@@ -417,16 +346,13 @@ def _build_quick_links(campaigns: list[dict], characters: list[dict]) -> list[di
 
 
 def _build_home_snapshot(user: User):
-    guilds = ensure_fixed_guilds()
-    primary_membership = _ensure_primary_guild_membership(user)
-    guild_preview, primary_guild = _build_guild_preview(guilds, primary_membership)
-
-    campaigns = [_serialize_campaign_for_home(campaign, user.id) for campaign in _visible_campaigns_for_user(user)]
+    visible_campaigns = _visible_campaigns_for_user(user)
+    campaigns = [_serialize_campaign_for_home(campaign, user.id) for campaign in visible_campaigns]
     characters = [_serialize_character_for_home(character) for character in Character.query.filter_by(user_id=user.id, deleted_at=None).order_by(Character.updated_at.desc(), Character.created_at.desc()).all()]
-    session_summaries = _build_session_summaries(_visible_campaigns_for_user(user))
+    session_summaries = _build_session_summaries(visible_campaigns)
     primary_action, secondary_action = _build_primary_and_secondary_actions(campaigns, characters, session_summaries, user)
-    priorities = _build_priorities(campaigns, characters, session_summaries, primary_guild)
-    feed_preview = _build_feed_preview(campaigns, characters, session_summaries, primary_guild)
+    priorities = _build_priorities(campaigns, characters, session_summaries)
+    feed_preview = _build_feed_preview(campaigns, characters, session_summaries)
     quick_links = _build_quick_links(campaigns, characters)
 
     prep_blocker_count = sum(1 for session in session_summaries if session["prep_blockers"])
@@ -445,9 +371,9 @@ def _build_home_snapshot(user: User):
                 f"{live_session_count} Live-Session{'s' if live_session_count != 1 else ''} sind sichtbar."
                 if live_session_count
                 else (
-                    "Die Übersicht ist bereit für Kampagnen, Gilden und die nächsten Vorbereitungsschritte."
+                    "Die Übersicht ist bereit für Kampagnen und die nächsten Vorbereitungsschritte."
                     if campaigns or characters
-                    else "Noch kein Kapitel offen. Die Übersicht startet mit einer Kampagne, einer Gilde und dem ersten Helden."
+                    else "Noch kein Kapitel offen. Starte mit deiner ersten Kampagne oder deinem ersten Helden."
                 )
             )
         ),
@@ -458,18 +384,16 @@ def _build_home_snapshot(user: User):
         "campaigns": campaigns,
         "characters": characters,
         "sessions": session_summaries,
-        "guilds": guild_preview,
-        "primary_guild": primary_guild,
         "home_state": home_state,
         "primary_action": primary_action,
         "secondary_action": secondary_action,
         "priorities": priorities,
         "feed_preview": feed_preview,
         "quick_links": quick_links,
-        "social_scope": {
-            "kind": "dashboard_home",
+        "overview_scope": {
+            "kind": "personal_vtt_home",
             "read_only": True,
-            "note": "Neuigkeiten, Gildenhinweise und Vorbereitung stehen hier gesammelt; Tischnachrichten bleiben in der jeweiligen Session.",
+            "note": "Diese Übersicht zeigt deinen VTT-Stand: Kampagnen, Charaktere, Sitzungen und Vorbereitung.",
         },
     }
 
@@ -483,44 +407,3 @@ def get_dashboard_home():
         return error
 
     return jsonify(_build_home_snapshot(user)), 200
-
-
-@dashboard_home_bp.route("/guilds/primary", methods=["POST"])
-@limiter.limit("40 per hour")
-@jwt_required()
-def set_primary_guild():
-    """Switch the user's primary guild within the fixed first-version guild layer."""
-    user, error = _get_current_user()
-    if error:
-        return error
-
-    guilds = ensure_fixed_guilds()
-    data = request.get_json() or {}
-    raw_guild_id = data.get("guild_id")
-    raw_slug = str(data.get("guild_slug") or "").strip().lower()
-
-    guild = None
-    if raw_guild_id is not None:
-        try:
-            guild = db.session.get(Guild, int(raw_guild_id))
-        except (TypeError, ValueError):
-            return jsonify({"error": "guild_id must be a number"}), 400
-    elif raw_slug:
-        guild = Guild.query.filter_by(slug=raw_slug).first()
-
-    if not guild or guild.id not in {item.id for item in guilds}:
-        return jsonify({"error": "guild not found"}), 404
-
-    membership = GuildMembership.query.filter_by(user_id=user.id).first()
-    if membership is None:
-        membership = GuildMembership(user_id=user.id, guild_id=guild.id)
-        db.session.add(membership)
-    else:
-        membership.guild_id = guild.id
-        membership.updated_at = utcnow()
-
-    db.session.commit()
-
-    snapshot = _build_home_snapshot(user)
-    snapshot["guild_notice"] = f"Primäre Gilde gewechselt: {guild.name}."
-    return jsonify(snapshot), 200

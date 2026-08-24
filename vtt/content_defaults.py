@@ -159,7 +159,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Right-page title",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.right_copy", "text": "Neuigkeiten, Gildenstatus und nächste Schritte.",
+        "page_key": "dashboard", "content_key": "shell.right_copy", "text": "VTT-Stand und nächste Vorbereitungsschritte.",
         "description": "Right-page intro copy",
     },
     {
@@ -173,10 +173,6 @@ PAGE_CONTENT_DEFAULTS = [
     {
         "page_key": "dashboard", "content_key": "shell.chip_characters", "text": "{count} Charaktere",
         "description": "Meta chip; {count} is substituted",
-    },
-    {
-        "page_key": "dashboard", "content_key": "shell.chip_guild_fallback", "text": "Gilde folgt",
-        "description": "Meta chip shown when the user has no primary guild yet",
     },
     {
         "page_key": "dashboard", "content_key": "shell.chip_prep_blockers", "text": "{count} offene Punkte",
@@ -209,67 +205,19 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Hero meta stat; {count} is substituted",
     },
     {
-        "page_key": "dashboard", "content_key": "home.social_scope_label", "text": "Sichtbarkeit:",
-        "description": "Bold label before the social-scope note",
+        "page_key": "dashboard", "content_key": "home.overview_scope_label", "text": "Bereich:",
+        "description": "Bold label before the personal VTT overview note",
     },
     {
-        "page_key": "dashboard", "content_key": "home.social_scope_default", "text": "Neuigkeiten und Vorbereitung stehen hier gesammelt.",
-        "description": "Social-scope note (default; server may send a live note instead)",
+        "page_key": "dashboard", "content_key": "home.overview_scope_default", "text": "Diese Übersicht zeigt deinen VTT-Stand: Kampagnen, Charaktere, Sitzungen und Vorbereitung.",
+        "description": "Personal VTT overview note (default; server may send a live note instead)",
     },
 
     # ── dashboard: navigation rail ──────────────────────────────────────────
-    {"page_key": "dashboard", "content_key": "home.nav_social", "text": "Gemeinschaft", "description": "Home nav-rail link"},
-    {"page_key": "dashboard", "content_key": "home.nav_guilds", "text": "Gilden", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_campaigns", "text": "Kampagnen", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_characters", "text": "Charaktere", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_session_prep", "text": "Vorbereitung", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_play", "text": "Spieltisch", "description": "Home nav-rail link"},
-
-    # ── dashboard: guild panel ───────────────────────────────────────────
-    {
-        "page_key": "dashboard", "content_key": "home.guild_panel_empty_kicker", "text": "Gilden",
-        "description": "Kicker shown when there are no guilds yet",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_panel_empty_title", "text": "Gildenübersicht",
-        "description": "Heading shown when there are no guilds yet",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_panel_empty_copy", "text": "Die Gildenübersicht wird vorbereitet.",
-        "description": "Body copy shown when there are no guilds yet",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_panel_kicker", "text": "Gilden",
-        "description": "Guild panel kicker",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_panel_title", "text": "Dein Banner im Buch",
-        "description": "Guild panel heading",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_panel_copy", "text": "Dein Banner zeigt die Gilde, zu der du im Home gehörst.",
-        "description": "Guild panel intro copy",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_primary_label", "text": "Primäre Gilde",
-        "description": "Kicker above the user's primary guild card",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_badge_primary", "text": "Primär",
-        "description": "Badge on the user's primary guild card",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_badge_member_count", "text": "{count} Mitglieder",
-        "description": "Badge on non-primary guild cards; {count} is substituted",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_button_current", "text": "Aktuelle Gilde",
-        "description": "Disabled button on the user's current primary guild card",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.guild_button_set_primary", "text": "Als Primärgilde setzen",
-        "description": "Button to switch primary guild",
-    },
 
     # ── dashboard: chronicle feed ────────────────────────────────────────
     {
@@ -313,8 +261,7 @@ PAGE_CONTENT_DEFAULTS = [
 # default texts get retranslated in place at startup -- ONLY if the row
 # still exactly matches the old default, so editor changes survive.
 PAGE_CONTENT_RETRANSLATIONS = [
-    ('dashboard', 'shell.left_copy', 'Willkommen zurück, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.', 'Willkommen zurück, {username}.'),
-    ('dashboard', 'shell.right_copy', 'Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die nächsten operativen Schritte bleiben sichtbar getrennt voneinander.', 'Social-Hinweise, Guild-Status und nächste Schritte.'),
+    ('dashboard', 'shell.left_copy', 'Willkommen zurück, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.', 'Willkommen zurück, {username}. Hier siehst du deinen persönlichen VTT-Stand und den nächsten Weg in Kampagnen, Charaktere, Session-Prep und Play.'),
     ('dashboard', 'home.hero_kicker', 'Übersicht', 'Lesebändchen'),
     ('dashboard', 'home.hero_title', 'Dein Heimathafen vor dem Tisch', 'Weiterlesen'),
     ('shared', 'ribbon.nav_dashboard', 'Dashboard', 'Übersicht'),
@@ -328,19 +275,12 @@ PAGE_CONTENT_RETRANSLATIONS = [
     ('dashboard', 'shell.right_eyebrow', 'Chronicle Feed', 'Chronik'),
     ('dashboard', 'shell.chip_home', 'Home / Social Hub', 'Übersicht'),
     ('dashboard', 'home.hero_kicker', 'Home', 'Übersicht'),
-    ('dashboard', 'home.social_scope_label', 'Social Scope:', 'Sichtbarkeit:'),
-    ('dashboard', 'shell.right_copy', 'Social-Hinweise, Guild-Status und nächste Schritte.', 'Neuigkeiten, Gildenstatus und nächste Schritte.'),
-    ('dashboard', 'home.nav_social', 'Social', 'Gemeinschaft'),
-    ('dashboard', 'home.nav_guilds', 'Guilds', 'Gilden'),
+    ('dashboard', 'home.overview_scope_label', 'Social Scope:', 'Bereich:'),
+    ('dashboard', 'home.overview_scope_default', 'Neuigkeiten und Vorbereitung stehen hier gesammelt.', 'Diese Übersicht zeigt deinen VTT-Stand: Kampagnen, Charaktere, Sitzungen und Vorbereitung.'),
+    ('dashboard', 'shell.right_copy', 'Social-Hinweise, Guild-Status und nächste Schritte.', 'VTT-Stand und nächste Vorbereitungsschritte.'),
     ('dashboard', 'home.nav_session_prep', 'Session Prep', 'Vorbereitung'),
-    ('dashboard', 'home.guild_panel_kicker', 'Guilds', 'Gilden'),
-    ('dashboard', 'home.guild_panel_copy', 'Guilds bleiben reine Meta-Identität. Sie verändern keine Rollen, keine Berechtigungen und keinen Session-Chat.', 'Dein Banner zeigt die Gilde, zu der du im Home gehörst.'),
     ('dashboard', 'home.nav_campaigns', 'Campaigns', 'Kampagnen'),
     ('dashboard', 'home.nav_characters', 'Characters', 'Charaktere'),
     ('dashboard', 'home.nav_play', 'Play', 'Spieltisch'),
     ('dashboard', 'home.feed_empty_kicker', 'Chronicle', 'Chronik'),
-    ('dashboard', 'home.guild_panel_copy', 'Guilds bleiben reine Meta-Identität. Sie veraendern keine Rollen, keine Berechtigungen und keinen Session-Chat.', 'Guilds bleiben reine Meta-Identität. Sie verändern keine Rollen, keine Berechtigungen und keinen Session-Chat.'),
-    ('dashboard', 'home.guild_primary_label', 'Primaere Gilde', 'Primäre Gilde'),
-    ('dashboard', 'home.guild_badge_primary', 'Primaer', 'Primär'),
-    ('dashboard', 'home.guild_button_set_primary', 'Als Primaergilde setzen', 'Als Primärgilde setzen'),
 ]

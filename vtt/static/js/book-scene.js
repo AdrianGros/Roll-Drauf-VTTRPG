@@ -763,9 +763,8 @@
                 label: 'Charaktere öffnen',
                 href: '/characters?classic=1',
             };
-            const primaryGuild = snapshot?.primary_guild || null;
-            const socialScopeNote = snapshot?.social_scope?.note
-                || this.content('home.social_scope_default', 'Neuigkeiten und Vorbereitung stehen hier gesammelt.');
+            const overviewScopeNote = snapshot?.overview_scope?.note
+                || this.content('home.overview_scope_default', 'Diese Übersicht zeigt deinen VTT-Stand: Kampagnen, Charaktere, Sitzungen und Vorbereitung.');
 
             // B2 (Designbrief §5): Die Startseite ist das Inhaltsverzeichnis
             // des Buches -- Lesebändchen zuerst (weiterlesen, wo du warst),
@@ -783,7 +782,7 @@
                                            { count: Number(homeState.session_count || 0) }) },
             ];
             return `
-                <section class="book-home-hero book-ribbon-card" data-dashboard-section-target="social">
+                <section class="book-home-hero book-ribbon-card">
                     <div class="book-ribbon-marker" aria-hidden="true"></div>
                     <div class="book-home-hero-kicker">${escapeHtml(this.content('home.hero_kicker', 'Lesebändchen'))}</div>
                     <h2 class="book-home-hero-title">${escapeHtml(this.content('home.hero_title', 'Weiterlesen'))}</h2>
@@ -800,7 +799,7 @@
                         },
                     ], 'book-scene-action-row--inline')}
                     <div class="book-home-hero-note">
-                        <strong>${escapeHtml(this.content('home.social_scope_label', 'Sichtbarkeit:'))}</strong> ${escapeHtml(socialScopeNote)}
+                        <strong>${escapeHtml(this.content('home.overview_scope_label', 'Bereich:'))}</strong> ${escapeHtml(overviewScopeNote)}
                     </div>
                     ${this.dashboardNotice ? `<div class="book-home-hero-notice">${escapeHtml(this.dashboardNotice)}</div>` : ''}
                 </section>
@@ -820,8 +819,6 @@
 
         buildDashboardNavigationRail() {
             const items = [
-                { section: 'social', label: this.content('home.nav_social', 'Gemeinschaft') },
-                { section: 'guilds', label: this.content('home.nav_guilds', 'Gilden') },
                 { section: 'campaigns', label: this.content('home.nav_campaigns', 'Kampagnen') },
                 { section: 'characters', label: this.content('home.nav_characters', 'Charaktere') },
                 { section: 'session-prep', label: this.content('home.nav_session_prep', 'Vorbereitung') },
@@ -839,68 +836,12 @@
             `;
         },
 
-        buildDashboardGuildPanel(snapshot = null) {
-            const guilds = Array.isArray(snapshot?.guilds) ? snapshot.guilds : [];
-            const primaryGuild = snapshot?.primary_guild || null;
-
-            if (guilds.length === 0) {
-                return `
-                    <section class="book-home-guild-panel" data-dashboard-section-target="guilds">
-                        <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_empty_kicker', 'Gilden'))}</div>
-                        <h3 class="book-home-section-title">${escapeHtml(this.content('home.guild_panel_empty_title', 'Gildenübersicht'))}</h3>
-                        <p class="book-home-section-copy">${escapeHtml(this.content('home.guild_panel_empty_copy', 'Die Gildenübersicht wird vorbereitet.'))}</p>
-                    </section>
-                `;
-            }
-
-            const memberCountBadge = (count) => this.content('home.guild_badge_member_count', '{count} Mitglieder', { count: Number(count || 0) });
-
-            return `
-                <section class="book-home-guild-panel" data-dashboard-section-target="guilds">
-                    <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_kicker', 'Gilden'))}</div>
-                    <h3 class="book-home-section-title">${escapeHtml(this.content('home.guild_panel_title', 'Dein Banner im Buch'))}</h3>
-                    <p class="book-home-section-copy">
-                        ${escapeHtml(this.content('home.guild_panel_copy', 'Dein Banner zeigt die Gilde, zu der du im Buch gehörst.'))}
-                    </p>
-                    ${primaryGuild ? `
-                        <div class="book-home-guild-primary">
-                            <span class="book-home-guild-primary-kicker">${escapeHtml(this.content('home.guild_primary_label', 'Primäre Gilde'))}</span>
-                            <strong>${escapeHtml(primaryGuild.name)}</strong>
-                            <p>${escapeHtml(primaryGuild.tagline || primaryGuild.description || '')}</p>
-                        </div>
-                    ` : ''}
-                    <div class="book-home-guild-list">
-                        ${guilds.map((guild) => `
-                            <article class="book-home-guild-card${guild.is_primary ? ' is-primary' : ''}" data-guild-accent="${escapeHtml(guild.accent || 'gold')}">
-                                <div class="book-home-guild-card-head">
-                                    <div>
-                                        <strong>${escapeHtml(guild.name)}</strong>
-                                        <span>${escapeHtml(guild.tagline || '')}</span>
-                                    </div>
-                                    <span class="book-home-guild-badge">${guild.is_primary ? escapeHtml(this.content('home.guild_badge_primary', 'Primär')) : escapeHtml(memberCountBadge(guild.member_count))}</span>
-                                </div>
-                                <p>${escapeHtml(guild.status_preview || guild.description || '')}</p>
-                                <button
-                                    type="button"
-                                    class="btn ${guild.is_primary ? 'btn-secondary' : 'btn-primary'} book-scene-action-btn"
-                                    data-dashboard-guild-switch="${Number(guild.id)}"
-                                    ${guild.is_primary ? 'disabled' : ''}
-                                >
-                                    ${guild.is_primary ? escapeHtml(this.content('home.guild_button_current', 'Aktuelle Gilde')) : escapeHtml(this.content('home.guild_button_set_primary', 'Als Primärgilde setzen'))}
-                                </button>
-                            </article>
-                        `).join('')}
-                    </div>
-                </section>
-            `;
-        },
-
         buildDashboardFeed(snapshot = null) {
             const feedItems = Array.isArray(snapshot?.feed_preview) ? snapshot.feed_preview : [];
 
             if (feedItems.length === 0) {
                 return `
-                    <section class="book-home-feed" data-dashboard-section-target="social">
+                    <section class="book-home-feed">
                         <div class="book-home-feed-item is-empty">
                             <div class="book-home-feed-kicker">${escapeHtml(this.content('home.feed_empty_kicker', 'Chronik'))}</div>
                             <h3 class="book-home-feed-title">${escapeHtml(this.content('home.feed_empty_title', 'Neuigkeiten werden vorbereitet'))}</h3>
@@ -913,7 +854,7 @@
             return `
                 <section class="book-home-feed">
                     ${feedItems.map((item) => `
-                        <article class="book-home-feed-item" data-dashboard-section-target="${escapeHtml(item.section || 'social')}">
+                        <article class="book-home-feed-item" data-dashboard-section-target="${escapeHtml(item.section || 'campaigns')}">
                             <div class="book-home-feed-kicker">${escapeHtml(item.kicker || 'Chronik')}</div>
                             <h3 class="book-home-feed-title">${escapeHtml(item.title || 'Eintrag')}</h3>
                             ${item.meta ? `<div class="book-home-feed-meta">${escapeHtml(item.meta)}</div>` : ''}
@@ -1040,7 +981,6 @@
             const campaigns = snapshot?.campaigns || [];
             const characters = snapshot?.characters || [];
             const homeState = snapshot?.home_state || {};
-            const primaryGuild = snapshot?.primary_guild || null;
 
             const scene = routeMeta.dashboard || {};
             return this.buildPageShell('dashboard', user, {
@@ -1050,18 +990,17 @@
                 title: this.content('shell.left_title', 'Übersicht'),
                 copy: this.content(
                     'shell.left_copy',
-                    'Willkommen zurück, {username}. Dieses Kapitel bündelt Neuigkeiten, Gilden, Kampagnen, Charaktere und die nächsten Vorbereitungsschritte.',
+                    'Willkommen zurück, {username}. Hier siehst du deinen persönlichen VTT-Stand und den nächsten Weg in Kampagnen, Charaktere, Session-Prep und Play.',
                     { username: user?.username || 'Donut' },
                 ),
                 rightEyebrow: this.content('shell.right_eyebrow', 'Chronik'),
                 rightTitle: this.content('shell.right_title', 'Was gerade zählt'),
-                rightCopy: this.content('shell.right_copy', 'Neuigkeiten, Gildenstatus und die nächsten Vorbereitungsschritte bleiben hier gebündelt.'),
+                rightCopy: this.content('shell.right_copy', 'Dein persönlicher VTT-Stand und die nächsten Vorbereitungsschritte bleiben hier gebündelt.'),
                 chips: [],
                 leftPage: `
                     <div class="book-home-stack">
                         ${this.buildDashboardHero(snapshot)}
                         ${this.buildDashboardNavigationRail()}
-                        ${this.buildDashboardGuildPanel(snapshot)}
                     </div>
                 `,
                 rightPage: `
@@ -1298,28 +1237,6 @@
                     const target = this.sceneSurface.querySelector(`[data-dashboard-section-target="${section}"]`);
                     if (target) {
                         target.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
-                    }
-                });
-            });
-
-            this.sceneSurface.querySelectorAll('[data-dashboard-guild-switch]').forEach((node) => {
-                node.addEventListener('click', async () => {
-                    const guildId = Number(node.getAttribute('data-dashboard-guild-switch') || '0');
-                    if (!guildId || !window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
-                        return;
-                    }
-
-                    node.setAttribute('disabled', 'disabled');
-                    try {
-                        const snapshot = await window.Auth.makeAuthRequest('/api/dashboard/guilds/primary', 'POST', { guild_id: guildId });
-                        this.dashboardNotice = snapshot?.guild_notice || 'Primäre Gilde aktualisiert.';
-                        this.sceneSnapshot = snapshot || this.sceneSnapshot;
-                        this.sceneUser = this.sceneSnapshot?.user || this.sceneUser;
-                        this.renderSceneRoute('dashboard', this.sceneUser, this.sceneSnapshot);
-                    } catch (error) {
-                        console.error('Failed to switch primary guild:', error);
-                        this.dashboardNotice = error.message || 'Primäre Gilde konnte nicht gewechselt werden.';
-                        this.renderSceneRoute('dashboard', this.sceneUser, this.sceneSnapshot);
                     }
                 });
             });

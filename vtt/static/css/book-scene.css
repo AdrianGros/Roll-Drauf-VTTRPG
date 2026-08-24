@@ -1051,7 +1051,6 @@ body.play-workspace-realign main {
 }
 
 .book-home-hero,
-.book-home-guild-panel,
 .book-home-context-card,
 .book-home-feed-item {
     border: 1px solid rgba(130, 89, 52, 0.18);
@@ -1102,8 +1101,6 @@ body.play-workspace-realign main {
 .book-home-hero-copy,
 .book-home-section-copy,
 .book-home-feed-copy,
-.book-home-guild-primary p,
-.book-home-guild-card p,
 .book-home-priority-card p,
 .book-home-context-note {
     margin: 0;
@@ -1118,8 +1115,7 @@ body.play-workspace-realign main {
 }
 
 .book-home-hero-meta span,
-.book-home-feed-meta,
-.book-home-guild-badge {
+.book-home-feed-meta {
     display: inline-flex;
     align-items: center;
     padding: 0.42rem 0.72rem;
@@ -1178,42 +1174,21 @@ body.play-workspace-realign main {
     outline: none;
 }
 
-.book-home-guild-panel,
 .book-home-context-card {
     display: grid;
     gap: 0.8rem;
     padding: 20px 18px;
 }
 
-.book-home-guild-primary {
-    display: grid;
-    gap: 0.3rem;
-    padding: 0.95rem 1rem;
-    border-radius: 14px;
-    border: 1px solid rgba(202, 163, 59, 0.26);
-    background: rgba(255, 248, 232, 0.8);
-}
-
-.book-home-guild-primary strong,
-.book-home-guild-card strong,
 .book-home-priority-card strong {
     color: var(--vtt-plum-deep, #2f1638);
 }
 
-.book-home-guild-primary-kicker {
-    color: #8e6b52;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-}
-
-.book-home-guild-list,
 .book-home-priority-list {
     display: grid;
     gap: 0.7rem;
 }
 
-.book-home-guild-card,
 .book-home-priority-card {
     display: grid;
     gap: 0.45rem;
@@ -1221,44 +1196,6 @@ body.play-workspace-realign main {
     border-radius: 14px;
     border: 1px solid rgba(130, 89, 52, 0.14);
     background: rgba(255, 255, 255, 0.42);
-}
-
-.book-home-guild-card.is-primary {
-    border-color: rgba(202, 163, 59, 0.34);
-    background: rgba(255, 248, 232, 0.86);
-}
-
-.book-home-guild-card-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.8rem;
-}
-
-.book-home-guild-card-head > div {
-    display: grid;
-    gap: 0.16rem;
-}
-
-.book-home-guild-card-head span {
-    color: var(--vtt-ink-muted, #6e5745);
-    font-size: 0.84rem;
-}
-
-.book-home-guild-card[data-guild-accent="violet"] {
-    box-shadow: inset 3px 0 0 rgba(102, 79, 151, 0.45);
-}
-
-.book-home-guild-card[data-guild-accent="amber"] {
-    box-shadow: inset 3px 0 0 rgba(202, 163, 59, 0.45);
-}
-
-.book-home-guild-card[data-guild-accent="mist"] {
-    box-shadow: inset 3px 0 0 rgba(119, 139, 172, 0.45);
-}
-
-.book-home-guild-card[data-guild-accent="oak"] {
-    box-shadow: inset 3px 0 0 rgba(94, 122, 74, 0.45);
 }
 
 .book-home-feed {
@@ -2090,10 +2027,6 @@ body.is-book-scene-dashboard #book {
         grid-template-columns: 1fr;
     }
 
-    .book-home-guild-card-head {
-        flex-direction: column;
-    }
-
     .book-scene-turn-leaf {
         display: none;
     }
@@ -2133,7 +2066,6 @@ body.is-book-scene-dashboard #book {
     }
 
     .book-home-hero,
-    .book-home-guild-panel,
     .book-home-feed-item,
     .book-home-context-card {
         padding: 18px 16px;
@@ -2476,7 +2408,6 @@ body.has-reduced-motion .book-dashboard-topbar {
 }
 
 .book-home-hero,
-.book-home-guild-panel,
 .book-home-context-card,
 .book-home-feed-item {
     background: var(--vtt-paper-panel, #fdfaf3);
@@ -2726,7 +2657,6 @@ body.has-reduced-motion .book-dashboard-topbar {
 }
 
 .book-home-hero,
-.book-home-guild-panel,
 .book-home-context-card,
 .book-home-feed-item,
 .book-scene-panel {

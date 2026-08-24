@@ -1,4 +1,4 @@
-"""M20 tests: dashboard social hub and guild navigation."""
+"""Dashboard overview keeps the personal VTT path separate from Discord."""
 
 from pathlib import Path
 
@@ -6,7 +6,7 @@ import pytest
 
 from vtt import create_app
 from vtt.extensions import db
-from vtt.models import Campaign, Character, GameSession, Guild, GuildMembership, Role, User
+from vtt.models import Campaign, Character, GameSession, Role, User
 from vtt.utils.time import utcnow
 
 
@@ -64,7 +64,7 @@ def _login(client, username: str = "home_user", password: str = "SecurePass123!"
     return response
 
 
-def test_dashboard_home_snapshot_adds_guild_layer_and_feed_first_home_state(client, app):
+def test_dashboard_home_snapshot_is_a_personal_vtt_start_point(client, app):
     with app.app_context():
         user = _create_user()
         user_id = user.id
@@ -101,53 +101,35 @@ def test_dashboard_home_snapshot_adds_guild_layer_and_feed_first_home_state(clie
     assert data["home_state"]["prep_blocker_count"] >= 1
     assert data["primary_action"]["label"] == "Session-Prep fortsetzen"
     assert data["secondary_action"]["label"] == "Charakterarchiv öffnen"
-    assert data["social_scope"]["kind"] == "dashboard_home"
-    assert data["social_scope"]["read_only"] is True
-    assert "Neuigkeiten" in data["social_scope"]["note"]
-    assert len(data["guilds"]) == 4
-    assert data["primary_guild"]["is_primary"] is True
+    assert data["overview_scope"]["kind"] == "personal_vtt_home"
+    assert data["overview_scope"]["read_only"] is True
+    assert "Kampagnen" in data["overview_scope"]["note"]
+    assert "guilds" not in data
+    assert "primary_guild" not in data
     assert {link["label"] for link in data["quick_links"]} == {
-        "Gemeinschaft",
-        "Gilden",
         "Kampagnen",
         "Charaktere",
         "Vorbereitung",
         "Spieltisch",
     }
-    assert any(item["section"] == "social" and item["title"] == "Gemeinschaftssaal" for item in data["feed_preview"])
-    assert any(item["section"] == "guilds" for item in data["feed_preview"])
+    assert all(item["section"] not in {"social", "guilds"} for item in data["feed_preview"])
     assert any(item["section"] == "session-prep" for item in data["feed_preview"])
 
     with app.app_context():
-        assert Guild.query.count() == 4
-        membership = GuildMembership.query.filter_by(user_id=user_id).first()
-        assert membership is not None
-
-
-def test_dashboard_home_can_switch_primary_guild_without_touching_permissions(client, app):
-    with app.app_context():
-        user = _create_user(username="guildswitch", email="guildswitch@example.com")
-        user_id = user.id
-
-    _login(client, username="guildswitch")
-    initial = client.get("/api/dashboard/home").get_json()
-    initial_guild_id = initial["primary_guild"]["id"]
-    target_guild = next(guild for guild in initial["guilds"] if guild["id"] != initial_guild_id)
-
-    response = client.post("/api/dashboard/guilds/primary", json={"guild_id": target_guild["id"]})
-
-    assert response.status_code == 200
-    data = response.get_json()
-    assert data["primary_guild"]["id"] == target_guild["id"]
-    assert data["primary_guild"]["is_primary"] is True
-    assert "Primäre Gilde gewechselt" in data["guild_notice"]
-
-    with app.app_context():
-        membership = GuildMembership.query.filter_by(user_id=user_id).first()
-        assert membership is not None
-        assert membership.guild_id == target_guild["id"]
         resolved_user = db.session.get(User, user_id)
-        assert resolved_user.role.name == "Player"
+        assert resolved_user is not None
+
+
+def test_standard_player_gets_distinct_first_actions_without_discord(client, app):
+    with app.app_context():
+        _create_user(username="emptyplayer", email="emptyplayer@example.com")
+
+    _login(client, username="emptyplayer")
+    data = client.get("/api/dashboard/home").get_json()
+
+    assert data["primary_action"]["label"] == "Charakter anlegen"
+    assert data["secondary_action"]["label"] == "Kampagnen öffnen"
+    assert data["primary_action"]["href"] != data["secondary_action"]["href"]
 
 
 def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_chat():
@@ -163,16 +145,17 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     assert "book-toc" in js
     assert "Lesebändchen" in js
     assert "book-toc" in js
-    assert "Gemeinschaftssaal" in dashboard_home
-    assert "Neuigkeiten und Vorbereitung stehen hier gesammelt." in js
-    assert "Dein Banner zeigt die Gilde" in js
-    assert "data-dashboard-guild-switch" in js
+    assert "Gemeinschaftssaal" not in dashboard_home
+    assert "home.overview_scope_default" in js
+    assert "buildDashboardGuildPanel" not in js
+    assert "data-dashboard-guild-switch" not in js
+    assert "/api/dashboard/guilds/primary" not in dashboard_home
     assert ".book-home-rail {" in css
     assert ".book-home-feed {" in css
-    assert ".book-home-guild-panel," in css
+    assert "book-home-guild-panel" not in css
     assert ".book-home-context-grid {" in css
     assert "Übersicht wird vorbereitet" in dashboard_template
     assert ">Übersicht</button>" in dashboard_template
-    assert "Neuigkeiten und Hinweise" in dashboard_home
+    assert "Neuigkeiten und Hinweise" not in dashboard_home
     assert "/api/dashboard/chat" not in dashboard_home
     assert "/campaigns/<int:campaign_id>/sessions/<int:session_id>/chat/messages" in community_routes
