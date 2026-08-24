@@ -2427,3 +2427,154 @@ body.has-reduced-motion .book-dashboard-topbar {
     border-top: 1px dashed rgba(130, 89, 52, 0.28);
     text-align: center;
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   B2 Seitenmodell (Designbrief §4.3 + Mobile-Audit §3, 2026-08-24).
+   Mobile-first: die Einzelseite ist der Grundzustand, der Spread die
+   Desktop-Erweiterung ab 1200px. Seiten sind OPAKES Papier -- die
+   halbtransparenten Flächen komposit(iert)en über dem dunklen Einband
+   zu den grauen Kacheln des Audits. Später geladene Regeln gewinnen
+   die Kaskade gegen die älteren Definitionen oben in dieser Datei.
+   ════════════════════════════════════════════════════════════════════ */
+
+.book-spread-page {
+    background: var(--vtt-paper-panel, #fdfaf3);
+    border-radius: 6px;
+    /* Satzspiegel: innen < oben < außen < unten */
+    padding: 1.5rem 1.5rem 2.2rem 1.25rem;
+    box-shadow: 0 10px 30px rgba(42, 26, 18, 0.18);
+}
+
+.book-home-hero,
+.book-home-guild-panel,
+.book-home-context-card,
+.book-home-feed-item {
+    background: var(--vtt-paper-panel, #fdfaf3);
+    box-shadow: 0 4px 14px rgba(42, 26, 18, 0.08);
+}
+
+/* Kapitelkopf statt Kachel: Rubrizierungs-Kicker, Cinzel-Titel, Luft. */
+.book-spread-page-kicker {
+    color: var(--vtt-rubric, #7a2e2e);
+    letter-spacing: 0.18em;
+}
+.book-spread-page-header {
+    padding-top: 0.5rem;
+}
+
+/* Prosa-Messung + deutsche Trennung (Butterick/Bringhurst: ~66ch). */
+.book-spread-page-copy,
+.book-home-hero-copy,
+.book-home-section-copy,
+.book-home-feed-copy,
+.book-page-lede {
+    max-width: 66ch;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+/* Kolumnentitel: kleine Kapitälchen-Zeile mit Haarlinie. */
+.book-running-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin: 0.35rem 0.25rem 0.6rem;
+    font-family: var(--vtt-font-heading, 'Cinzel', serif);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--vtt-ink-muted, #63564b);
+}
+.book-running-head-rule {
+    flex: 1;
+    border-bottom: 1px solid rgba(58, 50, 44, 0.25);
+}
+
+/* Folio: Seitenzahlen im Fuß, außen. */
+.book-folio {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.7rem;
+    padding: 0 1.2rem;
+    font-family: var(--vtt-font-body, 'Literata', serif);
+    font-size: 0.85rem;
+    color: var(--vtt-ink-muted, #63564b);
+}
+
+/* Lesebändchen: rotes Band am linken Kartenrand. */
+.book-ribbon-card { position: relative; overflow: visible; }
+.book-ribbon-marker {
+    position: absolute;
+    top: -6px;
+    right: 1.3rem;
+    width: 14px;
+    height: 52px;
+    background: var(--vtt-rubric, #7a2e2e);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 86%, 0 100%);
+    box-shadow: 0 2px 6px rgba(42, 26, 18, 0.3);
+}
+
+/* Inhaltsverzeichnis: Kapitelzeilen mit punktiertem Führer. */
+.book-toc {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1rem 1.1rem 1.2rem;
+    background: var(--vtt-paper-panel, #fdfaf3);
+    border: 1px solid rgba(130, 89, 52, 0.18);
+    border-radius: 12px;
+}
+.book-toc-kicker {
+    color: var(--vtt-rubric, #7a2e2e);
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+.book-toc-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    min-height: 44px;
+    padding: 0.35rem 0.2rem;
+    text-decoration: none;
+    color: var(--vtt-ink, #3a322c);
+    border-radius: 8px;
+}
+.book-toc-row:hover { background: rgba(122, 46, 46, 0.06); }
+.book-toc-numeral {
+    font-family: var(--vtt-font-heading, 'Cinzel', serif);
+    color: var(--vtt-rubric, #7a2e2e);
+    min-width: 2.2ch;
+}
+.book-toc-label {
+    font-family: var(--vtt-font-heading, 'Cinzel', serif);
+    font-size: 1.05rem;
+}
+.book-toc-leader {
+    flex: 1;
+    border-bottom: 2px dotted rgba(58, 50, 44, 0.35);
+    transform: translateY(-4px);
+}
+.book-toc-count {
+    font-variant-numeric: oldstyle-nums;
+    color: var(--vtt-ink-muted, #63564b);
+}
+
+/* Einzelseite < 1200px: Spread stapelt, Einband tritt zurück. */
+@media (max-width: 1199px) {
+    .book-spread-shell {
+        display: flex !important;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .book-spread-shell > div[aria-hidden="true"] { display: none; }
+    .book-dashboard-camera { perspective: none; }
+    .book-dashboard-page {
+        padding: 0.4rem;
+        gap: 10px;
+    }
+    body.book-shell-app main {
+        width: 100%;
+        padding: 8px 0 16px;
+    }
+}

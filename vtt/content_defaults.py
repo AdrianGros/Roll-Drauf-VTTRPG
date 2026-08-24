@@ -147,7 +147,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Left-page title",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.left_copy", "text": "Willkommen zurück, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.",
+        "page_key": "dashboard", "content_key": "shell.left_copy", "text": "Willkommen zurück, {username}.",
         "description": "Left-page intro copy; {username} is substituted",
     },
     {
@@ -159,7 +159,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Right-page title",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.right_copy", "text": "Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die nächsten operativen Schritte bleiben sichtbar getrennt voneinander.",
+        "page_key": "dashboard", "content_key": "shell.right_copy", "text": "Social-Hinweise, Guild-Status und nächste Schritte.",
         "description": "Right-page intro copy",
     },
     {
@@ -185,11 +185,11 @@ PAGE_CONTENT_DEFAULTS = [
 
     # ── dashboard: hero section ────────────────────────────────────────────
     {
-        "page_key": "dashboard", "content_key": "home.hero_kicker", "text": "Übersicht",
+        "page_key": "dashboard", "content_key": "home.hero_kicker", "text": "Lesebändchen",
         "description": "Hero small kicker",
     },
     {
-        "page_key": "dashboard", "content_key": "home.hero_title", "text": "Dein Heimathafen vor dem Tisch",
+        "page_key": "dashboard", "content_key": "home.hero_title", "text": "Weiterlesen",
         "description": "Hero heading",
     },
     {
@@ -313,6 +313,10 @@ PAGE_CONTENT_DEFAULTS = [
 # default texts get retranslated in place at startup -- ONLY if the row
 # still exactly matches the old default, so editor changes survive.
 PAGE_CONTENT_RETRANSLATIONS = [
+    ('dashboard', 'shell.left_copy', 'Willkommen zurück, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.', 'Willkommen zurück, {username}.'),
+    ('dashboard', 'shell.right_copy', 'Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die nächsten operativen Schritte bleiben sichtbar getrennt voneinander.', 'Social-Hinweise, Guild-Status und nächste Schritte.'),
+    ('dashboard', 'home.hero_kicker', 'Übersicht', 'Lesebändchen'),
+    ('dashboard', 'home.hero_title', 'Dein Heimathafen vor dem Tisch', 'Weiterlesen'),
     ('shared', 'ribbon.nav_dashboard', 'Dashboard', 'Übersicht'),
     ('shared', 'ribbon.nav_campaigns', 'Campaigns', 'Kampagnen'),
     ('shared', 'ribbon.nav_characters', 'Characters', 'Charaktere'),

@@ -13,12 +13,12 @@
 
     const routeMeta = {
         login: { prev: null, next: 'signup', chapter: 'Schwelle', section: 'Eintritt', folio: ['0', '0'] },
-        signup: { prev: 'login', next: 'register', chapter: 'Initiates', section: 'Sign Up', folio: ['I', 'II'] },
-        register: { prev: 'signup', next: 'dashboard', chapter: 'Keys', section: 'Register', folio: ['III', 'IV'] },
-        dashboard: { prev: 'login', next: 'campaigns', chapter: 'Kompendium', section: 'Dashboard', folio: ['1', '2'] },
+        signup: { prev: 'login', next: 'register', chapter: 'Novizen', section: 'Registrierung', folio: ['I', 'II'] },
+        register: { prev: 'signup', next: 'dashboard', chapter: 'Schlüssel', section: 'Zugang', folio: ['III', 'IV'] },
+        dashboard: { prev: 'login', next: 'campaigns', chapter: 'Kompendium', section: 'Übersicht', folio: ['1', '2'] },
         campaigns: { prev: 'dashboard', next: 'characters', chapter: 'Chroniken', section: 'Kampagnen', folio: ['3', '4'] },
         characters: { prev: 'campaigns', next: null, chapter: 'Helden', section: 'Charaktere', folio: ['5', '6'] },
-        'character-sheet': { prev: 'characters', next: null, chapter: 'Helden', section: 'Character Sheet', folio: ['7', '8'] },
+        'character-sheet': { prev: 'characters', next: null, chapter: 'Helden', section: 'Heldenbogen', folio: ['7', '8'] },
     };
     const routeOrder = ['login', 'signup', 'register', 'dashboard', 'campaigns', 'characters', 'character-sheet'];
 
@@ -656,17 +656,27 @@
             const socialScopeNote = snapshot?.social_scope?.note
                 || this.content('home.social_scope_default', 'Dashboard-Social bleibt vom Session-Chat getrennt.');
 
+            // B2 (Designbrief §5): Die Startseite ist das Inhaltsverzeichnis
+            // des Buches -- Lesebändchen zuerst (weiterlesen, wo du warst),
+            // dann die Kapitelliste mit echten Zahlen. Keine Prosa mehr, die
+            // die App beschreibt.
+            const tocRows = [
+                { numeral: 'II', label: this.content('home.nav_campaigns', 'Kampagnen'),
+                  count: Number(homeState.campaign_count || 0), href: '/campaigns' },
+                { numeral: 'III', label: this.content('home.nav_characters', 'Charaktere'),
+                  count: Number(homeState.character_count || 0), href: '/characters' },
+                { numeral: 'IV', label: this.content('home.nav_play', 'Spieltisch'),
+                  count: Number(homeState.session_count || 0), href: null,
+                  action: 'play-launch',
+                  countLabel: this.content('home.toc_sessions', '{count} Sessions',
+                                           { count: Number(homeState.session_count || 0) }) },
+            ];
             return `
-                <section class="book-home-hero" data-dashboard-section-target="social">
-                    <div class="book-home-hero-kicker">${escapeHtml(this.content('home.hero_kicker', 'Übersicht'))}</div>
-                    <h2 class="book-home-hero-title">${escapeHtml(this.content('home.hero_title', 'Dein Heimathafen vor dem Tisch'))}</h2>
-                    <p class="book-home-hero-copy">${escapeHtml(homeState.summary || this.content('home.hero_summary_default', 'Von hier aus verzweigt sich das Buch in Social, Guilds, Kampagnen, Charaktere, Session-Prep und den kontrollierten Weg nach Play.'))}</p>
-                    <div class="book-home-hero-meta">
-                        <span>${escapeHtml(this.content('home.hero_meta_campaigns', '{count} Kampagnen', { count: Number(homeState.campaign_count || 0) }))}</span>
-                        <span>${escapeHtml(this.content('home.hero_meta_characters', '{count} Helden', { count: Number(homeState.character_count || 0) }))}</span>
-                        <span>${escapeHtml(this.content('home.hero_meta_sessions', '{count} Sessions', { count: Number(homeState.session_count || 0) }))}</span>
-                        ${primaryGuild ? `<span>${escapeHtml(primaryGuild.name)}</span>` : ''}
-                    </div>
+                <section class="book-home-hero book-ribbon-card" data-dashboard-section-target="social">
+                    <div class="book-ribbon-marker" aria-hidden="true"></div>
+                    <div class="book-home-hero-kicker">${escapeHtml(this.content('home.hero_kicker', 'Lesebändchen'))}</div>
+                    <h2 class="book-home-hero-title">${escapeHtml(this.content('home.hero_title', 'Weiterlesen'))}</h2>
+                    ${homeState.summary ? `<p class="book-home-hero-copy">${escapeHtml(homeState.summary)}</p>` : ''}
                     ${this.buildActionButtons([
                         {
                             label: primaryAction.label || 'Weiter',
@@ -683,6 +693,17 @@
                     </div>
                     ${this.dashboardNotice ? `<div class="book-home-hero-notice">${escapeHtml(this.dashboardNotice)}</div>` : ''}
                 </section>
+                <nav class="book-toc" aria-label="Inhaltsverzeichnis">
+                    <div class="book-toc-kicker">${escapeHtml(this.content('home.toc_kicker', 'Inhaltsverzeichnis'))}</div>
+                    ${tocRows.map((row) => `
+                        <a class="book-toc-row" href="${row.href || '#'}" ${row.action ? `data-dashboard-action="${row.action}"` : `data-book-route="${row.href}"`}>
+                            <span class="book-toc-numeral">${row.numeral}</span>
+                            <span class="book-toc-label">${escapeHtml(row.label)}</span>
+                            <span class="book-toc-leader" aria-hidden="true"></span>
+                            <span class="book-toc-count">${escapeHtml(row.countLabel || String(row.count))}</span>
+                        </a>
+                    `).join('')}
+                </nav>
             `;
         },
 
@@ -871,6 +892,11 @@
                             <div class="book-dashboard-crest" aria-label="Current reader">${displayName}</div>
                         </div>
 
+                        <div class="book-running-head" aria-hidden="true">
+                            <span class="book-running-head-place">${escapeHtml(options.runningHead || leftTitle)}</span>
+                            <span class="book-running-head-rule"></span>
+                        </div>
+
                         <div class="book-spread-shell">
                             <article class="book-spread-page book-spread-page--left">
                                 <header class="book-spread-page-header">
@@ -903,6 +929,11 @@
                         <section class="book-spread-footer">
                             ${options.footer || ''}
                         </section>
+
+                        <footer class="book-folio" aria-hidden="true">
+                            <span>${escapeHtml((options.folio && options.folio[0]) || '')}</span>
+                            <span>${escapeHtml((options.folio && options.folio[1]) || '')}</span>
+                        </footer>
                     </section>
                 </div>
             `;
@@ -914,7 +945,10 @@
             const homeState = snapshot?.home_state || {};
             const primaryGuild = snapshot?.primary_guild || null;
 
+            const scene = routeMeta.dashboard || {};
             return this.buildPageShell('dashboard', user, {
+                runningHead: `${this.content('shell.left_eyebrow', 'Kapitel I')} · ${scene.section || 'Übersicht'}`,
+                folio: scene.folio,
                 eyebrow: this.content('shell.left_eyebrow', 'Kapitel I'),
                 title: this.content('shell.left_title', 'Übersicht'),
                 copy: this.content(

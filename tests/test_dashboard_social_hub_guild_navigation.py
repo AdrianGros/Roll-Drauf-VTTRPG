@@ -157,7 +157,11 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     dashboard_home = _read(DASHBOARD_HOME_ENDPOINT)
     community_routes = _read(COMMUNITY_ROUTES)
 
-    assert "Dein Heimathafen vor dem Tisch" in js
+    # B2: die Startseite ist jetzt Lesebändchen + Inhaltsverzeichnis
+    # statt Hero-Prosa (Designbrief §5).
+    assert "Weiterlesen" in js
+    assert "book-toc" in js
+    assert "Lesebändchen" in js
     assert "Übersicht / Social" in js
     assert "Gemeinschaftssaal" in dashboard_home
     assert "Dashboard-Social bleibt vom Session-Chat getrennt" in js
