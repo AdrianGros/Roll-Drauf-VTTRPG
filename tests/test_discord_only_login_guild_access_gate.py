@@ -80,6 +80,9 @@ def test_login_page_exposes_standard_auth_and_optional_discord(client):
     assert "Dein Zugang, deine Wahl" not in html
     assert "Die Registrierung legt einen normalen Player-Account" not in html
     assert "/static/images/discord-symbol.svg" in html
+    assert "/static/assets/sternenstaub/banners/banner-starry-sky.jpg" in html
+    assert 'class="login-book-banner-image"' in html
+    assert "spellbook-logo.svg" not in html
     assert "Discord ist ein optionaler Schnellzugang." not in html
     assert "Discord access requirements" not in html
     assert 'class="book-discord-step"' not in html
