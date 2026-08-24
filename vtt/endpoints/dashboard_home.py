@@ -113,9 +113,9 @@ def _build_guild_preview(guilds: list[Guild], primary_membership: GuildMembershi
         is_primary = primary_membership.guild_id == guild.id
         payload = guild.serialize(member_count=member_count, is_primary=is_primary)
         payload["status_preview"] = (
-            "Dein aktuelles Banner für Home-Updates, Hinweise und Meta-Identität."
+            "Dein aktuelles Banner für Neuigkeiten und Hinweise."
             if is_primary
-            else (f"{member_count} Mitglieder tragen dieses Banner." if member_count else "Noch niemand führt dieses Banner als primaere Gilde.")
+            else (f"{member_count} Mitglieder tragen dieses Banner." if member_count else "Noch niemand führt dieses Banner als primäre Gilde.")
         )
         serialized.append(payload)
         if is_primary:
@@ -186,7 +186,8 @@ def _build_session_summaries(campaigns: list[Campaign]) -> list[dict]:
     return summaries
 
 
-def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list[dict], sessions: list[dict]) -> tuple[dict, dict]:
+def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list[dict], sessions: list[dict], user: User | None = None) -> tuple[dict, dict]:
+    is_player = bool(user and str(getattr(user, "profile_tier", "")).lower() == "player")
     live_session = next((session for session in sessions if session["runtime_status"] in {"in_progress", "active", "live"}), None)
     prep_session = next((session for session in sessions if session["prep_blockers"]), None)
 
@@ -194,25 +195,25 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
         primary = {
             "label": "Zur Live-Session",
             "href": f"/campaigns?campaign_id={live_session['campaign_id']}&classic=1",
-            "note": "Führt in den Kampagnen-Hub und von dort kontrolliert weiter nach Play.",
+            "note": "Öffnet die aktive Runde und ihre nächsten Schritte.",
         }
     elif prep_session:
         primary = {
             "label": "Session-Prep fortsetzen",
             "href": f"/campaigns?campaign_id={prep_session['campaign_id']}&classic=1",
-            "note": "Es gibt noch offene Vorbereitung vor dem nächsten Schritt Richtung Tisch.",
+            "note": "Karte oder Charaktere fehlen noch für den nächsten Spielabend.",
         }
     elif campaigns:
         primary = {
-            "label": "Kampagnen-Hub öffnen",
+            "label": "Meine Kampagne öffnen" if is_player else "Kampagnen-Hub öffnen",
             "href": f"/campaigns?campaign_id={campaigns[0]['id']}&classic=1",
-            "note": "Der Kampagnen-Hub bleibt der zuverlaessige operative Weg vor Play.",
+            "note": "Öffnet deine nächste Runde und den aktuellen Vorbereitungsstand.",
         }
     else:
         primary = {
-            "label": "Erste Kampagne anlegen",
-            "href": "/campaigns?classic=1&intent=create",
-            "note": "Starte dein erstes Kapitel direkt im Buch.",
+            "label": "Charakter anlegen" if is_player else "Erste Kampagne anlegen",
+            "href": "/characters?classic=1&intent=create" if is_player else "/campaigns?classic=1&intent=create",
+            "note": "Lege deinen ersten eigenen Einstieg an." if is_player else "Lege die erste Runde an und beginne die Vorbereitung.",
         }
 
     if not characters:
@@ -225,7 +226,7 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
         secondary = {
             "label": "Charakterarchiv öffnen",
             "href": "/characters?classic=1",
-            "note": "Boegen, Identität und Rueckweg in die Vorbereitung bleiben hier gebuendelt.",
+            "note": "Bögen, Identität und der Rückweg in die Vorbereitung bleiben hier gebündelt.",
         }
 
     return primary, secondary
@@ -234,9 +235,9 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
 def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: list[dict], primary_guild: dict) -> list[dict]:
     priorities = [
         {
-            "title": "Primaere Gilde",
+                "title": "Primäre Gilde",
             "tone": "info",
-            "copy": f"{primary_guild['name']} ist dein aktuelles Meta-Banner für Home, Hinweise und Zugehoerigkeit.",
+                "copy": f"{primary_guild['name']} ist dein aktuelles Banner für Neuigkeiten und Hinweise.",
         }
     ]
 
@@ -270,7 +271,7 @@ def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: l
             {
                 "title": "Noch kein Kapitel offen",
                 "tone": "info",
-                "copy": "Lege die erste Kampagne an, damit das Home von Übersicht in Vorbereitung übergehen kann.",
+                "copy": "Lege die erste Kampagne an, damit die Übersicht in die Vorbereitung übergehen kann.",
             }
         )
 
@@ -295,7 +296,7 @@ def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: l
         {
             "title": "Hinweise",
             "tone": "muted",
-            "copy": "Dashboard-Social bleibt vom Session-Chat getrennt. Tischnachrichten leben weiter nur innerhalb einer Session.",
+            "copy": "Neuigkeiten und Vorbereitung stehen hier gesammelt; Tischnachrichten bleiben in der jeweiligen Session.",
         }
     )
     return priorities
@@ -306,21 +307,21 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
         {
             "id": "common-room",
             "section": "social",
-            "kicker": "Common Room",
+            "kicker": "Gemeinschaft",
             "title": "Gemeinschaftssaal",
-            "meta": "Home-Stream · kein Session-Chat",
-            "copy": "Dieser Stream sammelt Home-, Guild- und Vorbereitungsimpulse. Sitzungsnachrichten bleiben ausschliesslich im Session-Kontext.",
+            "meta": "Neuigkeiten und Hinweise",
+            "copy": "Hier findest du Neuigkeiten, Gildenhinweise und den nächsten Vorbereitungsschritt.",
             "action_label": "Kampagnen öffnen",
             "action_href": "/campaigns?classic=1",
         },
         {
             "id": f"guild-{primary_guild['slug']}",
             "section": "guilds",
-            "kicker": "Primaere Gilde",
+            "kicker": "Primäre Gilde",
             "title": primary_guild["name"],
-            "meta": f"{primary_guild['member_count']} Mitglieder · Meta-Identität",
+            "meta": f"{primary_guild['member_count']} Mitglieder",
             "copy": primary_guild["description"],
-            "action_label": "Zur Guild-Leiste",
+            "action_label": "Zur Gildenübersicht",
             "action_section": "guilds",
         },
     ]
@@ -333,7 +334,7 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
             {
                 "id": f"prep-{prep_session['id']}",
                 "section": "session-prep",
-                "kicker": "Session Prep",
+                "kicker": "Vorbereitung",
                 "title": f"{prep_session['campaign_name']} braucht noch Vorbereitung",
                 "meta": prep_session["name"],
                 "copy": f"Offen vor dem Tisch: {', '.join(prep_session['prep_blockers'])}.",
@@ -350,8 +351,8 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "section": "campaigns",
                 "kicker": "Kampagnen",
                 "title": campaign["name"],
-                "meta": f"{campaign['member_count']} Mitglieder · {campaign['session_count']} Sessions",
-                "copy": campaign.get("description") or "Vom Home direkt in Hub, Session-Prep und die weiteren Schritte Richtung Play.",
+                "meta": f"{campaign['member_count']} Mitglieder · {campaign['session_count']} Sitzungen",
+                "copy": campaign.get("description") or "Von der Übersicht direkt in Hub, Vorbereitung und die nächsten Schritte zum Spielabend.",
                 "action_label": "Hub öffnen",
                 "action_href": f"/campaigns?campaign_id={campaign['id']}&classic=1",
             }
@@ -365,8 +366,8 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "section": "characters",
                 "kicker": "Charaktere",
                 "title": character["name"],
-                "meta": f"Lvl {character['level']} {character.get('class') or 'Abenteurer'}",
-                "copy": "Bogen, Identität und Rueckweg in Kampagnen oder Session-Prep bleiben von hier aus klar erreichbar.",
+                "meta": f"Stufe {character['level']} · {character.get('class') or 'Abenteurer'}",
+                "copy": "Bogen, Identität und der Rückweg in Kampagnen oder Vorbereitung bleiben von hier aus erreichbar.",
                 "action_label": "Bogen öffnen",
                 "action_href": f"/character-sheet?id={character['id']}",
             }
@@ -380,8 +381,8 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "kicker": "Play",
                 "title": f"Live-Pfad für {live_session['campaign_name']}",
                 "meta": live_session["name"],
-                "copy": "Play bleibt ein eigener Runtime-Zweig. Dieser Weg führt zuerst sauber in den Kampagnen-Kontext und von dort kontrolliert weiter nach Play.",
-                "action_label": "Zum Kampagnen-Kontext",
+                "copy": "Öffne die laufende Runde und kehre direkt zum nächsten Spielschritt zurück.",
+                "action_label": "Runde öffnen",
                 "action_href": f"/campaigns?campaign_id={live_session['campaign_id']}&classic=1",
             }
         )
@@ -391,10 +392,10 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "id": "play-path",
                 "section": "play",
                 "kicker": "Play",
-                "title": "Play bleibt nachgeordnet",
-                "meta": "Kein direkter Session-Chat-Ersatz",
-                "copy": "Das Home führt in Kampagnen und Session-Prep. Play bleibt ein eigener Tischmodus und wird nicht aus dem Social-Feed heraus ersetzt.",
-                "action_label": "Session-Prep ansehen",
+                "title": "Spieltisch vorbereiten",
+                "meta": "Nächster Schritt vor der Session",
+                "copy": "Öffne die Vorbereitung, prüfe Karte und Charaktere und starte danach den Spielabend.",
+                "action_label": "Vorbereitung öffnen",
                 "action_href": "/campaigns?classic=1",
             }
         )
@@ -406,12 +407,12 @@ def _build_quick_links(campaigns: list[dict], characters: list[dict]) -> list[di
     first_campaign_href = f"/campaigns?campaign_id={campaigns[0]['id']}&classic=1" if campaigns else "/campaigns?classic=1&intent=create"
     first_character_href = f"/character-sheet?id={characters[0]['id']}" if characters else "/characters?classic=1&intent=create"
     return [
-        {"label": "Social", "section": "social"},
-        {"label": "Guilds", "section": "guilds"},
+        {"label": "Gemeinschaft", "section": "social"},
+        {"label": "Gilden", "section": "guilds"},
         {"label": "Kampagnen", "href": first_campaign_href},
         {"label": "Charaktere", "href": first_character_href},
-        {"label": "Session Prep", "href": "/campaigns?classic=1"},
-        {"label": "Play-Pfad", "section": "play"},
+        {"label": "Vorbereitung", "href": "/campaigns?classic=1"},
+        {"label": "Spieltisch", "section": "play"},
     ]
 
 
@@ -423,7 +424,7 @@ def _build_home_snapshot(user: User):
     campaigns = [_serialize_campaign_for_home(campaign, user.id) for campaign in _visible_campaigns_for_user(user)]
     characters = [_serialize_character_for_home(character) for character in Character.query.filter_by(user_id=user.id, deleted_at=None).order_by(Character.updated_at.desc(), Character.created_at.desc()).all()]
     session_summaries = _build_session_summaries(_visible_campaigns_for_user(user))
-    primary_action, secondary_action = _build_primary_and_secondary_actions(campaigns, characters, session_summaries)
+    primary_action, secondary_action = _build_primary_and_secondary_actions(campaigns, characters, session_summaries, user)
     priorities = _build_priorities(campaigns, characters, session_summaries, primary_guild)
     feed_preview = _build_feed_preview(campaigns, characters, session_summaries, primary_guild)
     quick_links = _build_quick_links(campaigns, characters)
@@ -444,9 +445,9 @@ def _build_home_snapshot(user: User):
                 f"{live_session_count} Live-Session{'s' if live_session_count != 1 else ''} sind sichtbar."
                 if live_session_count
                 else (
-                    "Das Home ist bereit für Kampagnen, Guilds und die nächsten Vorbereitungswege."
+                    "Die Übersicht ist bereit für Kampagnen, Gilden und die nächsten Vorbereitungsschritte."
                     if campaigns or characters
-                    else "Noch keine Kapitel offen. Das Home startet mit Kampagne, Guild und dem ersten Held."
+                    else "Noch kein Kapitel offen. Die Übersicht startet mit einer Kampagne, einer Gilde und dem ersten Helden."
                 )
             )
         ),
@@ -468,7 +469,7 @@ def _build_home_snapshot(user: User):
         "social_scope": {
             "kind": "dashboard_home",
             "read_only": True,
-            "note": "Dashboard-Social bleibt vom Session-Chat getrennt und zeigt nur Home-, Guild- und Vorbereitungsimpulse.",
+            "note": "Neuigkeiten, Gildenhinweise und Vorbereitung stehen hier gesammelt; Tischnachrichten bleiben in der jeweiligen Session.",
         },
     }
 
@@ -521,5 +522,5 @@ def set_primary_guild():
     db.session.commit()
 
     snapshot = _build_home_snapshot(user)
-    snapshot["guild_notice"] = f"Primaere Gilde gewechselt: {guild.name}."
+    snapshot["guild_notice"] = f"Primäre Gilde gewechselt: {guild.name}."
     return jsonify(snapshot), 200

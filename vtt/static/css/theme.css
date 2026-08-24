@@ -224,7 +224,11 @@ select:focus {
 }
 
 .status-indicator.active::before {
-    content: '📖';
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: currentColor;
 }
 
 .status-indicator.paused {
@@ -233,7 +237,11 @@ select:focus {
 }
 
 .status-indicator.paused::before {
-    content: '🔮';
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: currentColor;
 }
 
 .status-indicator.ended {
@@ -242,7 +250,11 @@ select:focus {
 }
 
 .status-indicator.ended::before {
-    content: '📕';
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: currentColor;
 }
 
 /* Links */

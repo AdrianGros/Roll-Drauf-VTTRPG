@@ -44,7 +44,7 @@ def mint_registration_keys(database_url: str, *, count: int,
     from vtt.endpoints.registration_keys import create_registration_keys
     from vtt.models import Role, User
 
-    app = create_app(config_name="development")
+    app = create_app(config_name="staging")
     with app.app_context():
         db.create_all()
         if not Role.query.first():

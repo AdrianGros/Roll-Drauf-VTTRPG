@@ -20,8 +20,8 @@ def test_dashboard_exposes_clearer_pre_table_starting_points():
     assert "Heute wichtig:" in content
     assert "Kampagnen öffnen" in content
     assert "Charaktere öffnen" in content
-    assert "Next: open the hub, review session prep, and continue toward play." in content
-    assert "Next: finish the sheet and identity, then continue into campaign prep." in content
+    assert "Gehe in Kampagnen, um Runden anzulegen, Hubs zu öffnen und die Vorbereitung zu starten." in content
+    assert "Charaktere bleiben der Ort für Archiv, Heldenerstellung und den Rückweg in Kampagnen oder Vorbereitung." in content
     assert "function openCharacterCampaignContext(campaignId)" in content
 
 

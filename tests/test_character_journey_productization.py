@@ -25,7 +25,7 @@ def test_characters_template_wires_standard_array_end_to_end():
 def test_characters_template_exposes_clear_archive_to_sheet_and_campaign_actions():
     content = _read(CHARACTERS_TEMPLATE)
 
-    assert "Open Sheet" in content
+    assert "Bogen öffnen" in content
     assert "Edit Sheet" in content
     assert "Campaign Context" in content
     assert "openCharacterIdentityPicker" in content

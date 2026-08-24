@@ -74,7 +74,7 @@ def test_login_page_is_discord_only_from_user_perspective(client):
     html = response.get_data(as_text=True)
 
     assert "Mit Discord anmelden" in html
-    assert "Server + Bot Access Required" in html
+    assert "Server- und Bot-Freischaltung" in html
     assert "Es gibt keine separate Website-Registrierung." in html
     # The password form exists for staff/robot flows but must ship HIDDEN.
     # (This used to be asserted as '"Benutzername" not in html' -- a proxy

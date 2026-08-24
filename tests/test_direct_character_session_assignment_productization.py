@@ -144,7 +144,7 @@ def test_campaigns_route_exposes_real_session_assignment_surface(client):
     assert "unassignCharacterFromPrepSession(campaignId, sessionId, characterId)" in html
     assert "Eligibility:" in html
     assert "Session-Besetzung öffnen" in html
-    assert "Open Sheet" in html
+    assert "Bogen öffnen" in html
 
 
 def test_campaign_detail_exposes_campaign_characters_and_assignment_state(dm_client, dm_user, player_user):

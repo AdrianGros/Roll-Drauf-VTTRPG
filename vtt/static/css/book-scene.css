@@ -91,27 +91,56 @@
 
 .book-cover .cover-title {
     font-family: 'Cinzel', 'Georgia', serif;
-    color: #d4af37;
+    color: var(--vtt-paper);
     text-align: center;
     padding: 30px;
     font-size: clamp(42px, 4.8vw, 72px);
     font-weight: 700;
     line-height: 1.3;
     letter-spacing: 1px;
-    text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.34);
     margin: 0;
     transition: opacity 0.25s ease;
 }
 
 .book-cover .cover-ornament {
-    font-size: clamp(100px, 10vw, 160px);
-    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
-    animation: subtle-float 3s ease-in-out infinite;
-    transition: opacity 0.25s ease;
+    width: clamp(78px, 8vw, 128px);
+    height: clamp(78px, 8vw, 128px);
+    filter: drop-shadow(0 0 18px rgba(168, 132, 44, 0.38));
+    transition: opacity 180ms ease;
+}
+
+.book-cover .cover-ornament img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.book-cover .cover-kicker,
+.book-cover .cover-action {
+    color: var(--vtt-gold);
+    font-family: var(--vtt-font-heading, 'Cinzel', serif);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.book-cover .cover-kicker {
+    font-size: 0.82rem;
+}
+
+.book-cover .cover-action {
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--vtt-gold);
+    border-radius: 5px;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 .book-cover.is-open .cover-title,
-.book-cover.is-open .cover-ornament {
+.book-cover.is-open .cover-ornament,
+.book-cover.is-open .cover-kicker,
+.book-cover.is-open .cover-action {
     opacity: 0;
 }
 
@@ -156,7 +185,7 @@
     left: var(--book-shell-pad);
     background:
         linear-gradient(90deg, rgba(186, 160, 126, 0.22), rgba(255, 250, 243, 0) 14%),
-        repeating-linear-gradient(180deg, rgba(231, 217, 191, 0.6) 0 2px, rgba(244, 233, 209, 0.9) 2px 6px, rgba(218, 197, 164, 0.5) 6px 7px);
+        linear-gradient(180deg, rgba(241, 233, 216, 0.96), rgba(221, 202, 172, 0.88));
     clip-path: polygon(0 3%, 97% 0, 100% 100%, 0 97%);
     transform: translateZ(-14px) translateX(-2px);
     box-shadow: -18px 24px 30px rgba(0, 0, 0, 0.16);
@@ -166,7 +195,7 @@
     right: var(--book-shell-pad);
     background:
         linear-gradient(270deg, rgba(186, 160, 126, 0.22), rgba(255, 250, 243, 0) 14%),
-        repeating-linear-gradient(180deg, rgba(231, 217, 191, 0.6) 0 2px, rgba(244, 233, 209, 0.9) 2px 6px, rgba(218, 197, 164, 0.5) 6px 7px);
+        linear-gradient(180deg, rgba(241, 233, 216, 0.96), rgba(221, 202, 172, 0.88));
     clip-path: polygon(3% 0, 100% 3%, 100% 97%, 0 100%);
     transform: translateZ(-14px) translateX(2px);
     box-shadow: 18px 24px 30px rgba(0, 0, 0, 0.16);
@@ -544,9 +573,9 @@ body.play-workspace-realign main {
 }
 
 .book-dashboard-ribbon-btn {
-    /* 44px: Touch-Mindestgroesse (Mobile-Audit 2026-08-24; vorher 38px
-       auf jeder Seite der App). */
-    min-height: 44px;
+    /* 48px leaves room for the book transition transform while preserving
+       the 44px minimum interaction target from the mobile audit. */
+    min-height: 48px;
     padding: 0 14px;
     border: 1px solid rgba(130, 89, 52, 0.18);
     border-radius: 10px;
@@ -1572,16 +1601,6 @@ body[data-book-scene-entry-boundary="arrived"] .book-dashboard-page {
     }
 }
 
-/* Book rasp/rustle animation */
-@keyframes book-rustle {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-.book-pages.rustling {
-    animation: book-rustle 0.15s ease-in-out 3;
-}
-
 /* Login form container inside open book */
 #login-content {
     position: absolute;
@@ -2438,7 +2457,7 @@ body.has-reduced-motion .book-dashboard-topbar {
    ════════════════════════════════════════════════════════════════════ */
 
 .book-spread-page {
-    background: var(--vtt-paper-panel, #fdfaf3);
+    background: var(--vtt-paper-panel);
     border-radius: 6px;
     /* Satzspiegel: innen < oben < außen < unten */
     padding: 1.5rem 1.5rem 2.2rem 1.25rem;
@@ -2538,9 +2557,18 @@ body.has-reduced-motion .book-dashboard-topbar {
     padding: 0.35rem 0.2rem;
     text-decoration: none;
     color: var(--vtt-ink, #3a322c);
+    background: var(--vtt-paper-panel, #fdfaf3);
     border-radius: 8px;
 }
-.book-toc-row:hover { background: rgba(122, 46, 46, 0.06); }
+.book-toc-row:hover,
+.book-toc-row:focus-visible {
+    background: rgba(122, 46, 46, 0.06);
+    color: var(--vtt-plum-deep);
+}
+.book-toc-row:focus-visible {
+    outline: 2px solid var(--vtt-gold);
+    outline-offset: 2px;
+}
 .book-toc-numeral {
     font-family: var(--vtt-font-heading, 'Cinzel', serif);
     color: var(--vtt-rubric, #7a2e2e);
@@ -2576,5 +2604,240 @@ body.has-reduced-motion .book-dashboard-topbar {
     body.book-shell-app main {
         width: 100%;
         padding: 8px 0 16px;
+    }
+}
+
+/* B2 responsive closeout: below the spread breakpoint the book is a normal
+   reading surface, not a scaled desktop object. This keeps the first useful
+   action reachable at 1024px and in phone landscape without horizontal pan. */
+@media (max-width: 1199px) {
+    #book {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        transform: none;
+    }
+
+    .book-dashboard-scene {
+        max-width: 100%;
+        padding-inline: clamp(10px, 2vw, 24px);
+    }
+
+    .book-dashboard-topbar {
+        grid-template-columns: 1fr;
+        justify-items: stretch;
+        gap: 8px;
+    }
+
+    .book-dashboard-ribbon {
+        grid-column: 1;
+        justify-self: stretch;
+        justify-content: center;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .book-dashboard-crest {
+        grid-column: 1;
+        justify-self: end;
+    }
+
+    .book-dashboard-ribbon-btn {
+        min-height: 48px;
+    }
+
+    .book-home-rail,
+    .book-home-context-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Acceptance closeout: all visible states use one settled composition. */
+.book-cover .cover-ornament,
+.book-cover .cover-title,
+.book-cover .cover-kicker,
+.book-cover .cover-action {
+    transition: opacity 160ms ease;
+}
+
+.book-dashboard-topbar {
+    background: var(--vtt-paper-panel);
+    backdrop-filter: none;
+    box-shadow: 0 1px 0 rgba(58, 50, 44, 0.12);
+}
+
+.book-running-head {
+    position: sticky;
+    top: 74px;
+    z-index: 7;
+    padding: 0.45rem 0.25rem 0.6rem;
+    background: var(--vtt-paper-panel, #fdfaf3);
+}
+
+.book-folio {
+    position: sticky;
+    bottom: 0;
+    z-index: 7;
+    padding-block: 0.45rem;
+    background: var(--vtt-paper-panel, #fdfaf3);
+}
+
+.book-dashboard-ribbon-btn:focus-visible,
+.book-home-rail-link:focus-visible,
+.book-toc-row:focus-visible,
+.book-scene-action-btn:focus-visible,
+.book-login-btn:focus-visible,
+.book-input:focus-visible {
+    outline: 3px solid var(--vtt-rubric);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 2px var(--vtt-paper-panel);
+}
+
+.book-dashboard-ribbon-btn--play,
+.book-dashboard-ribbon-btn--play:hover,
+.book-dashboard-ribbon-btn--play:focus-visible {
+    background: rgba(122, 46, 46, 0.06);
+    border-color: rgba(122, 46, 46, 0.28);
+    color: var(--vtt-rubric-deep);
+    box-shadow: none;
+}
+
+.book-scene-action-btn.btn-primary,
+.book-home-hero .btn-primary {
+    background: var(--vtt-rubric);
+    border-color: var(--vtt-rubric-deep);
+    color: var(--vtt-paper-panel);
+}
+
+.book-scene-action-btn.btn-primary:hover,
+.book-home-hero .btn-primary:hover {
+    background: var(--vtt-rubric-deep);
+}
+
+.book-home-hero,
+.book-home-guild-panel,
+.book-home-context-card,
+.book-home-feed-item,
+.book-scene-panel {
+    background: var(--vtt-paper-panel);
+    box-shadow: 0 2px 8px rgba(42, 26, 18, 0.06);
+}
+
+body.is-book-scene-dashboard #book,
+body.is-book-scene-transition #book {
+    background: var(--vtt-paper);
+}
+
+body.is-book-scene-dashboard .book-shell-page-stack,
+body.is-book-scene-transition .book-shell-page-stack {
+    opacity: 0.08;
+    background: linear-gradient(90deg, rgba(186, 160, 126, 0.12), rgba(255, 250, 243, 0));
+}
+
+.book-dashboard-chip {
+    color: var(--vtt-ink);
+}
+
+@media (max-width: 1199px) {
+    .bookmark {
+        display: none;
+    }
+
+    #login-content .login-book-spread {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: clamp(16px, 3vw, 28px);
+    }
+
+    #login-content .login-book-spread::before {
+        display: none;
+    }
+
+    #login-content .login-book-page--right {
+        order: 2;
+    }
+
+    #login-content .login-book-paper--login,
+    #login-content .login-book-paper--welcome {
+        width: 100%;
+        max-width: none;
+    }
+
+    #login-content .login-book-paper--login {
+        padding: clamp(18px, 3vw, 28px);
+    }
+
+    #login-content .login-book-page-header {
+        margin-bottom: 16px;
+    }
+
+    #login-content .form-group {
+        margin-bottom: 12px;
+    }
+
+    #login-content .book-input {
+        padding-block: 10px;
+    }
+
+    #login-content .book-login-btn,
+    #login-content .book-auth-actions .btn {
+        min-height: 48px;
+        margin-top: 6px;
+    }
+
+    .book-dashboard-topbar {
+        padding: 0.55rem;
+    }
+
+    .book-running-head {
+        top: 120px;
+    }
+}
+
+@media (max-width: 1199px) and (max-height: 520px) {
+    #login-content .login-book-spread {
+        padding: 10px;
+    }
+
+    #login-content .login-book-paper--welcome {
+        display: none;
+    }
+
+    #login-content .login-book-logo {
+        width: 54px;
+        height: 54px;
+    }
+
+    #login-content .login-book-page-header {
+        gap: 12px;
+        margin-bottom: 10px;
+    }
+
+    #login-content .book-branding {
+        font-size: 24px;
+    }
+
+    #login-content .book-subtitle {
+        font-size: 18px;
+    }
+
+    #login-content .book-discord-gate-copy,
+    #login-content .book-discord-steps,
+    #login-content .book-discord-hint {
+        font-size: 0.86rem;
+    }
+
+    #login-content .book-auth-error {
+        margin-top: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .book-cover .cover-ornament,
+    .book-cover .cover-title,
+    .book-cover .cover-kicker,
+    .book-cover .cover-action {
+        transition: none;
     }
 }

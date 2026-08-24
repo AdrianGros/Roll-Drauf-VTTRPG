@@ -38,9 +38,13 @@ def _run_suite(ev: RunEvidence, name: str, argv: list[str]) -> SuiteRecord:
     record.seconds = round(time.monotonic() - started, 1)
     record.detail_path = str(log_path.relative_to(ev.run_dir))
 
-    findings_json = out_dir / f"{name}.json"
-    for candidate in (out_dir / f"{name}.json",
-                     ev.run_dir.parent / f"vtt-{name.replace('_', '-')}.json"):
+    candidates = [out_dir / f"{name}.json"]
+    # strict_journey owns its output directory and writes this fixed filename;
+    # the older suites receive an explicit JSON file path instead.
+    if name == "strict_journey":
+        candidates.append(out_dir / "strict_journey.json")
+    candidates.append(ev.run_dir.parent / f"vtt-{name.replace('_', '-')}.json")
+    for candidate in candidates:
         if candidate.is_file():
             try:
                 data = json.loads(candidate.read_text(encoding="utf-8"))
@@ -48,6 +52,10 @@ def _run_suite(ev: RunEvidence, name: str, argv: list[str]) -> SuiteRecord:
                     record.findings = len(data["findings"])
                 elif isinstance(data.get("flows"), dict):
                     record.findings = sum(len(v) for v in data["flows"].values())
+                if isinstance(data.get("severity_counts"), dict):
+                    record.severity_counts = {
+                        str(key): int(value) for key, value in data["severity_counts"].items()
+                    }
             except Exception:
                 pass
             break
@@ -86,10 +94,17 @@ def main(argv: list[str] | None = None) -> int:
     for name, module in (("views", "tools.robots.views"),
                          ("flows", "tools.robots.flows"),
                          ("fullsession", "tools.robots.fullsession"),
-                         ("mobile", "tools.robots.mobile")):
+                         ("mobile", "tools.robots.mobile"),
+                         ("mobile_session", "tools.robots.mobile_session"),
+                         ("strict_journey", "tools.robots.strict_journey")):
         print(f"{name} …")
+        suite_out = ev.suite_dir(name)
+        suite_argv = [PY, "-m", module, "--out"]
+        # strict_journey treats --out as a directory because it emits a
+        # report, screenshots, DOM, ARIA, telemetry, and traces beside JSON.
+        output = suite_out if name == "strict_journey" else suite_out / f"{name}.json"
         record = _run_suite(
-            ev, name, [PY, "-m", module, "--out", str(ev.suite_dir(name) / f"{name}.json")])
+            ev, name, [*suite_argv, str(output)])
         ev.suites.append(record)
         print(f"  {record.status} ({record.findings} finding(s), {record.seconds}s)")
 

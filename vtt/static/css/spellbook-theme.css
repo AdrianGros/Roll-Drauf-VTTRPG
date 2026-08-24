@@ -8,20 +8,8 @@
 body {
     background-color: var(--vtt-bg);
     background-image:
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 2px,
-            rgba(212, 175, 55, 0.03) 2px,
-            rgba(212, 175, 55, 0.03) 4px
-        ),
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(74, 35, 90, 0.02) 2px,
-            rgba(74, 35, 90, 0.02) 4px
-        );
+        radial-gradient(circle at 20% 20%, rgba(168, 132, 44, 0.035), transparent 32%),
+        radial-gradient(circle at 80% 75%, rgba(122, 46, 46, 0.025), transparent 34%);
     color: var(--vtt-text);
     font-family: var(--vtt-font-body);
     line-height: 1.6;
@@ -44,7 +32,7 @@ body::before {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--vtt-font-heading);
-    color: var(--vtt-primary);
+    color: var(--vtt-rubric);
     text-shadow: 1px 1px 2px rgba(212, 175, 55, 0.2);
 }
 
@@ -280,7 +268,11 @@ textarea {
 }
 
 .status-indicator.active::before {
-    content: '📖 ';
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: currentColor;
 }
 
 .status-indicator.paused,
@@ -291,7 +283,11 @@ textarea {
 }
 
 .status-indicator.paused::before {
-    content: '🔮 ';
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: currentColor;
 }
 
 .status-indicator.ended,
@@ -302,7 +298,11 @@ textarea {
 }
 
 .status-indicator.ended::before {
-    content: '📕 ';
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: currentColor;
 }
 
 /* ===== Map Canvas Styling ===== */
@@ -334,8 +334,12 @@ canvas {
 
 .navbar-brand::before,
 .logo::before {
-    content: '📖';
-    font-size: 24px;
+    content: '';
+    width: 1rem;
+    height: 1.15rem;
+    border: 1px solid currentColor;
+    border-radius: 2px 4px 4px 2px;
+    box-shadow: inset 0.22rem 0 0 currentColor;
 }
 
 .nav-item {
@@ -520,7 +524,7 @@ body.spellbook h4,
 body.spellbook h5,
 body.spellbook h6 {
     font-family: var(--vtt-font-heading) !important;
-    color: var(--vtt-accent) !important;
+    color: var(--vtt-rubric) !important;
 }
 
 body.spellbook .logo {
@@ -534,8 +538,9 @@ body.spellbook .navbar {
 }
 
 body.spellbook .btn-primary {
-    background: var(--vtt-primary) !important;
-    color: var(--vtt-light-text) !important;
+    background: var(--vtt-rubric) !important;
+    border-color: var(--vtt-rubric-deep) !important;
+    color: var(--vtt-paper-panel) !important;
 }
 
 /* ===== Responsive Design ===== */

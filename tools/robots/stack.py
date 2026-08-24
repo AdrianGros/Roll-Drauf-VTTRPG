@@ -92,18 +92,25 @@ def disposable_stack(workdir: Path):
     """Bring up Postgres + the Flask/SocketIO app, yield a Stack, tear
     both down."""
     workdir.mkdir(parents=True, exist_ok=True)
+    # mkdtemp creates a 0700 parent.  PostgreSQL needs to traverse this exact
+    # throwaway directory, while the app still owns its own files within it.
+    workdir.chmod(0o711)
     data_dir = workdir / "pgdata"
     socket_dir = workdir / "pgsock"
+    data_dir.mkdir(exist_ok=True)
     socket_dir.mkdir(exist_ok=True)
+    postgres_log = workdir / "postgres.log"
+    postgres_log.touch()
     pg_port = _free_port()
     app_port = _free_port()
 
-    subprocess.run(["chown", "-R", POSTGRES_USER, str(workdir)], check=True)
+    for postgres_path in (data_dir, socket_dir, postgres_log):
+        _grant_postgres_access(postgres_path)
 
     _run_as_postgres(["initdb", "-D", str(data_dir), "-A", "trust",
                       "-U", "postgres"])
     _run_as_postgres([
-        "pg_ctl", "-D", str(data_dir), "-l", str(workdir / "postgres.log"),
+        "pg_ctl", "-D", str(data_dir), "-l", str(postgres_log),
         "-o", f"-p {pg_port} -k {socket_dir}", "start"])
     app_process = None
     try:
@@ -114,7 +121,7 @@ def disposable_stack(workdir: Path):
         _refuse_live_database(database_url)
 
         log_path = workdir / "app.log"
-        env = _app_environment(database_url, app_port)
+        env = _app_environment(database_url, app_port, storage_path=workdir / "assets")
         with log_path.open("w", encoding="utf-8") as log_file:
             app_process = subprocess.Popen(
                 [str(VENV_PYTHON), str(REPO / "app.py")],
@@ -133,9 +140,11 @@ def disposable_stack(workdir: Path):
                           "stop"], check=False)
 
 
-def _app_environment(database_url: str, app_port: int) -> dict:
+def _app_environment(database_url: str, app_port: int, *, storage_path: Path | None = None) -> dict:
     env = dict(os.environ)
-    env["FLASK_ENV"] = "development"
+    # Staging keeps the development database bootstrap but disables the
+    # development SQL echo.  Robot logs are evidence, not a SQL transcript.
+    env["FLASK_ENV"] = "staging"
     env["DATABASE_URL"] = database_url
     # Fresh, throwaway secrets per run -- never the insecure dev defaults
     # vtt/config.py ships (those would trip _validate_production_config
@@ -155,6 +164,11 @@ def _app_environment(database_url: str, app_port: int) -> dict:
     # local-password registration form the robots use instead.
     env["DISCORD_LOGIN_ENABLED"] = "false"
     env["RATELIMIT_STORAGE_URL"] = "memory://"
+    # The local stack deliberately repeats the same authenticated journey
+    # across the browser matrix; production rate limits must not turn later
+    # matrix cells into 429/login failures.
+    env["RATELIMIT_ENABLED"] = "false"
+    env["LOCAL_STORAGE_PATH"] = str(storage_path or Path("/tmp/vtt-assets"))
     env["CORS_ORIGINS"] = f"http://127.0.0.1:{app_port}"
     env["PYTHONPATH"] = str(REPO)
     return env
@@ -162,11 +176,38 @@ def _app_environment(database_url: str, app_port: int) -> dict:
 
 def _run_as_postgres(argv: list[str], *, check: bool = True) -> None:
     binary = shutil.which(argv[0]) or f"/usr/bin/{argv[0]}"
-    quoted = " ".join(_shell_quote(part) for part in [binary, *argv[1:]])
-    result = subprocess.run(["su", POSTGRES_USER, "-c", quoted],
-                            capture_output=True, text=True)
+    sudo = shutil.which("sudo")
+    if sudo and os.geteuid() != 0:
+        result = subprocess.run(
+            [sudo, "-n", "-u", POSTGRES_USER, binary, *argv[1:]],
+            capture_output=True, text=True,
+        )
+    else:
+        quoted = " ".join(_shell_quote(part) for part in [binary, *argv[1:]])
+        result = subprocess.run(["su", POSTGRES_USER, "-c", quoted],
+                                capture_output=True, text=True)
     if check and result.returncode != 0:
         raise StackError(f"{argv[0]} failed: {result.stderr.strip()}")
+
+
+def _grant_postgres_access(workdir: Path) -> None:
+    """Make only this newly-created disposable stack usable by postgres.
+
+    CI and the local developer shell may run as an unprivileged user.  The
+    previous direct ``chown`` worked only when the whole robot process ran as
+    root, which made the disposable stack fail before any browser test could
+    start.  Prefer the direct operation, then use non-interactive sudo for
+    this exact temp path when policy allows it.
+    """
+    command = ["chown", "-R", POSTGRES_USER, str(workdir)]
+    try:
+        subprocess.run(command, check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError:
+        sudo = shutil.which("sudo")
+        if not sudo or os.geteuid() == 0:
+            raise
+        subprocess.run([sudo, "-n", *command], check=True,
+                       capture_output=True, text=True)
 
 
 def _shell_quote(value: str) -> str:

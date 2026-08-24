@@ -1,0 +1,279 @@
+{
+  "page": "dashboard",
+  "path": "/dashboard",
+  "ready": "#book-dashboard-scene",
+  "_hinweis": "Die sichtbare Navigation wird von book-scene.js gerendert (ohne onclick/data-book-route); das Template-Ribbon in dashboard.html ist verstecktes Alt-Markup mit onclick. Deshalb wählt :not([onclick]) plus Textfilter die Live-Elemente. B3 räumt das Doppel-Markup ab; danach bekommen die Live-Knöpfe data-testid (§13) und diese Selektoren werden ersetzt. effect:any-Verträge sind Mindestverträge (§2 kein toter Knopf) — in B3 durch präzise Nachbedingungen ersetzen.",
+  "elements": [
+    {
+      "id": "ribbon-overview",
+      "selector": ".book-dashboard-ribbon-btn:not([onclick])",
+      "text": "Übersicht",
+      "label": "Lesebändchen: Übersicht",
+      "kind": "nav",
+      "engines": ["mouse", "keyboard"],
+      "expect": {"route": "/dashboard"},
+      "severity": "blocker"
+    },
+    {
+      "id": "ribbon-campaigns",
+      "selector": ".book-dashboard-ribbon-btn:not([onclick])",
+      "text": "Kampagnen",
+      "label": "Lesebändchen: Kampagnen",
+      "kind": "nav",
+      "engines": ["mouse", "keyboard"],
+      "expect": {"route": "/campaigns"},
+      "severity": "blocker"
+    },
+    {
+      "id": "ribbon-characters",
+      "selector": ".book-dashboard-ribbon-btn:not([onclick])",
+      "text": "Charaktere",
+      "label": "Lesebändchen: Charaktere",
+      "kind": "nav",
+      "engines": ["mouse", "keyboard"],
+      "expect": {"route": "/characters"},
+      "severity": "blocker"
+    },
+    {
+      "id": "ribbon-play",
+      "selector": ".book-dashboard-ribbon-btn--play:not([onclick])",
+      "label": "Lesebändchen: Spieltisch",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "high"
+    },
+    {
+      "id": "ribbon-logout",
+      "selector": ".book-dashboard-ribbon-btn:not([onclick])",
+      "text": "Abmelden",
+      "label": "Lesebändchen: Abmelden",
+      "kind": "auth",
+      "engines": ["mouse"],
+      "expect": {"route": "/login"},
+      "severity": "blocker",
+      "resets_auth": true
+    },
+    {
+      "id": "toc-campaigns",
+      "selector": "a.book-toc-row[href='/campaigns']",
+      "label": "Inhaltsverzeichnis: Kampagnen",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"route": "/campaigns"},
+      "severity": "high"
+    },
+    {
+      "id": "toc-characters",
+      "selector": "a.book-toc-row[href='/characters']",
+      "label": "Inhaltsverzeichnis: Charaktere",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"route": "/characters"},
+      "severity": "high"
+    },
+    {
+      "id": "toc-play",
+      "selector": "a.book-toc-row[href='#']",
+      "label": "Inhaltsverzeichnis: Spieltisch (0 Sessions)",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "medium"
+    },
+    {
+      "id": "rail-social",
+      "selector": ".book-home-rail-link[data-dashboard-section='social']",
+      "label": "Home-Rail: Social",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"in_viewport": "[data-dashboard-section-target='social']"},
+      "severity": "medium"
+    },
+    {
+      "id": "rail-guilds",
+      "selector": ".book-home-rail-link[data-dashboard-section='guilds']",
+      "label": "Home-Rail: Guilds",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"in_viewport": "[data-dashboard-section-target='guilds']"},
+      "severity": "medium"
+    },
+    {
+      "id": "rail-campaigns",
+      "selector": ".book-home-rail-link[data-dashboard-section='campaigns']",
+      "label": "Home-Rail: Kampagnen",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    },
+    {
+      "id": "rail-characters",
+      "selector": ".book-home-rail-link[data-dashboard-section='characters']",
+      "label": "Home-Rail: Charaktere",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    },
+    {
+      "id": "rail-session-prep",
+      "selector": ".book-home-rail-link[data-dashboard-section='session-prep']",
+      "label": "Home-Rail: Session Prep",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    },
+    {
+      "id": "rail-play",
+      "selector": ".book-home-rail-link[data-dashboard-section='play']",
+      "label": "Home-Rail: Spieltisch",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    },
+    {
+      "id": "guild-switch-first",
+      "selector": "[data-dashboard-guild-switch]:not([disabled])",
+      "nth": 0,
+      "label": "Guild-Karte: Als Primärgilde setzen (erste)",
+      "kind": "action",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "medium"
+    },
+    {
+      "id": "guild-current-disabled",
+      "selector": "[data-dashboard-guild-switch][disabled]",
+      "label": "Guild-Karte: Aktuelle Gilde (muss inaktiv sein)",
+      "kind": "action",
+      "engines": ["mouse"],
+      "expect_disabled": true,
+      "severity": "medium"
+    },
+    {
+      "id": "cta-first-campaign",
+      "selector": ".book-scene-action-btn",
+      "text": "Erste Kampagne anlegen",
+      "text_exact": true,
+      "label": "Leerzustand-CTA: Erste Kampagne anlegen",
+      "kind": "action",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "high"
+    },
+    {
+      "id": "cta-create-character",
+      "selector": ".book-scene-action-btn",
+      "text": "Held anlegen",
+      "text_exact": true,
+      "label": "Leerzustand-CTA: Held anlegen",
+      "kind": "action",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "high"
+    },
+    {
+      "id": "action-open-campaigns",
+      "selector": ".book-scene-action-btn",
+      "text": "Kampagnen öffnen",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Kampagnen öffnen",
+      "kind": "action",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "medium"
+    },
+    {
+      "id": "action-guild-rail",
+      "selector": ".book-scene-action-btn",
+      "text": "Zur Guild-Leiste",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Zur Guild-Leiste",
+      "kind": "action",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "medium"
+    },
+    {
+      "id": "action-session-prep",
+      "selector": ".book-scene-action-btn",
+      "text": "Session-Prep ansehen",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Session-Prep ansehen",
+      "kind": "action",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "medium"
+    },
+    {
+      "id": "action-play-path",
+      "selector": ".book-scene-action-btn",
+      "text": "Play-Pfad",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Play-Pfad",
+      "kind": "action",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "medium"
+    },
+    {
+      "id": "action-social",
+      "selector": ".book-scene-action-btn",
+      "text": "Social",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Social",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    },
+    {
+      "id": "action-guilds",
+      "selector": ".book-scene-action-btn",
+      "text": "Guilds",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Guilds",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    },
+    {
+      "id": "action-campaigns",
+      "selector": ".book-scene-action-btn",
+      "text": "Kampagnen",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Kampagnen",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    },
+    {
+      "id": "action-characters",
+      "selector": ".book-scene-action-btn",
+      "text": "Charaktere",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Charaktere",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    },
+    {
+      "id": "action-session-prep-link",
+      "selector": ".book-scene-action-btn",
+      "text": "Session Prep",
+      "text_exact": true,
+      "label": "Szenen-Aktion: Session Prep",
+      "kind": "nav",
+      "engines": ["mouse"],
+      "expect": {"effect": "any"},
+      "severity": "low"
+    }
+  ]
+}

@@ -30,7 +30,8 @@ import time
 from pathlib import Path
 
 from tools.robots.stack import (StackError, _live_database_url,
-                                _refuse_live_database, disposable_stack)
+                                _refuse_live_database, _run_as_postgres,
+                                disposable_stack)
 
 
 def _check_chromium(record) -> None:
@@ -42,15 +43,14 @@ def _check_chromium(record) -> None:
 
 
 def _check_postgres_binaries(record) -> None:
-    import subprocess
     for tool in ("initdb", "pg_ctl", "psql"):
         if not (shutil.which(tool) or Path(f"/usr/bin/{tool}").exists()):
             raise RuntimeError(f"{tool} not found on PATH or /usr/bin")
-    probe = subprocess.run(["su", "postgres", "-c", "true"],
-                           capture_output=True, text=True)
-    if probe.returncode != 0:
+    try:
+        _run_as_postgres(["true"])
+    except StackError as error:
         raise RuntimeError(
-            f"cannot become the postgres user: {probe.stderr.strip()} "
+            f"cannot become the postgres user: {error} "
             "(the stack needs root)")
     record["postgres"] = "binaries + user ok"
 

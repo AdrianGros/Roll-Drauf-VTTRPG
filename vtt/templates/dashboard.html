@@ -304,7 +304,7 @@
             place-items: center;
             padding: 2rem;
             background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%);
-            color: #f6e8c8;
+            color: var(--vtt-paper, #f8f3e9);
             font-family: var(--vtt-font-heading);
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -317,7 +317,7 @@
     </style>
 </head>
 <body class="spellbook dashboard-route-book-scene">
-    <div id="dashboardSceneStatus" role="status" aria-live="polite">Opening Home Page...</div>
+    <div id="dashboardSceneStatus" role="status" aria-live="polite">Übersicht wird vorbereitet …</div>
     <header>
         <div class="logo">roll drauf VTT</div>
         <div class="user-menu">
@@ -331,7 +331,7 @@
     <main>
         <div class="book-shell-frame">
             <div class="book-dashboard-topbar">
-                <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
+                <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
                     <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
@@ -343,10 +343,10 @@
 
             <div class="book-shell-frame-header">
                 <div>
-                    <p class="book-frame-eyebrow">Spellbook Scene</p>
-                    <h1 class="book-page-title" data-book-field="section">Home</h1>
+                    <p class="book-frame-eyebrow">Kapitel I</p>
+                    <h1 class="book-page-title" data-book-field="section">Übersicht</h1>
                     <p class="book-frame-copy">
-                        Das Home öffnet als lesbare Doppelseite: Orientierung und Social-Hub links, Chronik, Guilds und die Wege weiter in Kampagnen und Vorbereitung rechts.
+                        Die Übersicht zeigt deinen Stand und die nächsten Schritte in Kampagnen, Charakteren und Vorbereitung.
                     </p>
                 </div>
                 <div class="book-frame-meta">
@@ -359,10 +359,10 @@
             <div class="book-spread">
                 <section class="book-page book-page--index">
                     <div class="dashboard-header">
-                        <h1>Home</h1>
-                        <p class="book-page-lede">Willkommen zurück. Diese Seite ist dein Heimathafen vor dem Tisch: Social, Guilds, Kampagnen, Charaktere und Session-Prep bleiben von hier aus klar erreichbar.</p>
+                        <h1>Übersicht</h1>
+                        <p class="book-page-lede">Willkommen zurück. Diese Seite bündelt Neuigkeiten, Gilden, Kampagnen, Charaktere und die nächsten Vorbereitungsschritte.</p>
                         <div class="dashboard-callout">
-                            <strong>Heute wichtig:</strong> Das Home bleibt die Landing Page, während Kampagnen, Charaktere und Session-Prep die operativen Folgeflächen im selben Buch bleiben.
+                            <strong>Heute wichtig:</strong> Die Übersicht zeigt deinen Stand; Kampagnen, Charaktere und Vorbereitung führen dich in die nächsten Aufgaben.
                         </div>
                         <div class="dashboard-next-actions">
                             <button class="btn btn-primary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen öffnen</button>
@@ -373,32 +373,32 @@
                     <div class="stats-row" id="stats">
                         <div class="stat-card">
                             <div class="stat-value" id="campaignCount">0</div>
-                            <div class="stat-label">Campaigns</div>
+                            <div class="stat-label">Kampagnen</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value" id="characterCount">0</div>
-                            <div class="stat-label">Characters</div>
+                            <div class="stat-label">Charaktere</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value" id="sessionsCount">0</div>
-                            <div class="stat-label">Sessions</div>
+                            <div class="stat-label">Sitzungen</div>
                         </div>
                     </div>
 
                     <div class="book-page-section">
-                        <h2 class="book-page-section-title">Travel Notes</h2>
+                        <h2 class="book-page-section-title">Nächste Schritte</h2>
                         <div class="book-guide-list">
                             <div class="book-guide-item">
                                 <div class="book-guide-title">Kampagnen-Pfad</div>
-                                <div class="book-guide-copy">Gehe in Kampagnen, um Kapitel anzulegen, Hubs zu öffnen und weiter in Session-Prep und den Weg nach Play zu führen.</div>
+                                <div class="book-guide-copy">Gehe in Kampagnen, um Runden anzulegen, Hubs zu öffnen und die Vorbereitung zu starten.</div>
                             </div>
                             <div class="book-guide-item">
                                 <div class="book-guide-title">Charakterarchiv</div>
-                                <div class="book-guide-copy">Charaktere bleiben der Ort für Archiv, Heldenerstellung und den Rueckweg in Kampagnen oder direkte Session-Vorbereitung.</div>
+                                <div class="book-guide-copy">Charaktere bleiben der Ort für Archiv, Heldenerstellung und den Rückweg in Kampagnen oder Vorbereitung.</div>
                             </div>
                             <div class="book-guide-item">
                                 <div class="book-guide-title">Hauptweg</div>
-                                <div class="book-guide-copy">Die Produktlinie führt jetzt vom Home über Guilds, Kampagnen und Session-Prep kontrolliert weiter Richtung Play.</div>
+                                <div class="book-guide-copy">Der Weg führt von der Übersicht über Gilden und Kampagnen in die Vorbereitung und an den Spieltisch.</div>
                             </div>
                         </div>
                     </div>
@@ -409,26 +409,26 @@
                 <section class="book-page book-page--content">
                     <div class="section">
                         <div class="section-header">
-                            <h2>Recent Campaigns</h2>
-                            <a href="/campaigns" data-book-route="/campaigns" onclick="goTo('/campaigns'); return false;">View All</a>
+                            <h2>Letzte Kampagnen</h2>
+                            <a href="/campaigns" data-book-route="/campaigns" onclick="goTo('/campaigns'); return false;">Alle öffnen</a>
                         </div>
                         <div class="grid" id="campaignsGrid">
                             <div class="empty-state">
-                                <div class="empty-state-icon">📋</div>
-                        <p>No campaigns yet. <a href="/campaigns" data-book-route="/campaigns" onclick="goTo('/campaigns'); return false;">Create one!</a></p>
+                                <div class="empty-state-icon" aria-hidden="true"></div>
+                        <p>Noch keine Kampagne. <a href="/campaigns" data-book-route="/campaigns" onclick="goTo('/campaigns'); return false;">Erste anlegen</a></p>
                             </div>
                         </div>
                     </div>
 
                     <div class="section">
                         <div class="section-header">
-                            <h2>Recent Characters</h2>
-                            <a href="/characters" data-book-route="/characters" onclick="goTo('/characters'); return false;">View All</a>
+                            <h2>Letzte Charaktere</h2>
+                            <a href="/characters" data-book-route="/characters" onclick="goTo('/characters'); return false;">Alle öffnen</a>
                         </div>
                         <div class="grid" id="charactersGrid">
                             <div class="empty-state">
-                                <div class="empty-state-icon">🧙</div>
-                        <p>No characters yet. <a href="/characters" data-book-route="/characters" onclick="goTo('/characters'); return false;">Create one!</a></p>
+                                <div class="empty-state-icon" aria-hidden="true"></div>
+                        <p>Noch kein Charakter. <a href="/characters" data-book-route="/characters" onclick="goTo('/characters'); return false;">Ersten anlegen</a></p>
                             </div>
                         </div>
                     </div>
@@ -443,7 +443,6 @@
         <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
     </footer>
 
-    <script src="/static/js/gsap.min.js"></script>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>
@@ -459,7 +458,8 @@
                 routeKey: 'dashboard',
                 auth,
                 statusElementId: 'dashboardSceneStatus',
-                statusMessage: 'Opening Home Page...',
+                statusMessage: 'Übersicht wird vorbereitet …',
+                minimumStatusDuration: 620,
                 snapshotLoader(user) {
                     return BookScene.loadDashboardSnapshot(user);
                 },
@@ -500,8 +500,8 @@
             if (campaigns.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state" style="grid-column: 1/-1;">
-                        <div class="empty-state-icon">📋</div>
-                        <p>No campaigns yet. <a href="/campaigns" onclick="goTo('/campaigns'); return false;">Create one!</a></p>
+                        <div class="empty-state-icon" aria-hidden="true"></div>
+                        <p>Noch keine Kampagne. <a href="/campaigns" onclick="goTo('/campaigns'); return false;">Erste anlegen</a></p>
                     </div>
                 `;
                 return;
@@ -509,12 +509,12 @@
 
             grid.innerHTML = campaigns.map(c => `
                 <div class="card" onclick="openCampaignHub(${c.id})">
-                    <div class="card-image">🏰</div>
+                    <div class="card-image" aria-hidden="true"></div>
                     <div class="card-title">${c.name}</div>
-                    <div class="card-meta">${c.status} • ${c.member_count || 0} members</div>
-                    <div class="card-next-step">${Number(c.session_count || 0) > 0 ? 'Next: open the hub, review session prep, and continue toward play.' : 'Next: open the hub and create the first session-prep path.'}</div>
+                    <div class="card-meta">${c.status} · ${c.member_count || 0} Mitglieder</div>
+                    <div class="card-next-step">${Number(c.session_count || 0) > 0 ? 'Nächster Schritt: Hub öffnen und Vorbereitung prüfen.' : 'Nächster Schritt: den ersten Vorbereitungsschritt anlegen.'}</div>
                     <div class="card-buttons">
-                        <button class="btn btn-primary" onclick="event.stopPropagation(); openCampaignHub(${c.id})">Open Hub</button>
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); openCampaignHub(${c.id})">Hub öffnen</button>
                     </div>
                 </div>
             `).join('');
@@ -525,8 +525,8 @@
             if (characters.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state" style="grid-column: 1/-1;">
-                        <div class="empty-state-icon">🧙</div>
-                        <p>No characters yet. <a href="/characters" onclick="goTo('/characters'); return false;">Create one!</a></p>
+                        <div class="empty-state-icon" aria-hidden="true"></div>
+                        <p>Noch kein Charakter. <a href="/characters" onclick="goTo('/characters'); return false;">Ersten anlegen</a></p>
                     </div>
                 `;
                 return;
@@ -534,13 +534,13 @@
 
             grid.innerHTML = characters.map(c => `
                 <div class="card" onclick="openCharacterSheet(${c.id})">
-                    <div class="card-image">🗡️</div>
+                    <div class="card-image" aria-hidden="true"></div>
                     <div class="card-title">${c.name}</div>
-                    <div class="card-meta">Lvl ${c.level} ${c.class} • ${c.race}</div>
-                    <div class="card-next-step">${c.campaign_id ? 'Next: review the sheet, then return to campaign prep for session context.' : 'Next: finish the sheet and identity, then continue into campaign prep.'}</div>
+                    <div class="card-meta">Stufe ${c.level} ${c.class} · ${c.race}</div>
+                    <div class="card-next-step">${c.campaign_id ? 'Nächster Schritt: Bogen prüfen und zur Vorbereitung zurückkehren.' : 'Nächster Schritt: Bogen und Identität vervollständigen.'}</div>
                     <div class="card-buttons">
-                        <button class="btn btn-primary" onclick="event.stopPropagation(); openCharacterSheet(${c.id})">Open Sheet</button>
-                        <button class="btn btn-secondary" onclick="event.stopPropagation(); openCharacterCampaignContext(${c.campaign_id || 0})">${c.campaign_id ? 'Campaign Prep' : 'Campaigns Hub'}</button>
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); openCharacterSheet(${c.id})">Bogen öffnen</button>
+                        <button class="btn btn-secondary" onclick="event.stopPropagation(); openCharacterCampaignContext(${c.campaign_id || 0})">${c.campaign_id ? 'Vorbereitung' : 'Kampagnen-Hub'}</button>
                     </div>
                 </div>
             `).join('');

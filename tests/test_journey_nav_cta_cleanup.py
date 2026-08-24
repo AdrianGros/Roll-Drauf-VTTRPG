@@ -33,7 +33,7 @@ def test_non_play_routes_share_primary_spellbook_nav(path, active_label, client)
 
     assert 'book-dashboard-topbar' in html
     assert 'book-dashboard-ribbon' in html
-    assert 'aria-label="Primary spellbook menu"' in html
+    assert 'aria-label="Buchnavigation"' in html
     assert '>Übersicht<' in html
     assert '>Kampagnen<' in html
     assert '>Charaktere<' in html

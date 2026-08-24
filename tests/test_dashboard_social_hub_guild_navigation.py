@@ -103,16 +103,16 @@ def test_dashboard_home_snapshot_adds_guild_layer_and_feed_first_home_state(clie
     assert data["secondary_action"]["label"] == "Charakterarchiv öffnen"
     assert data["social_scope"]["kind"] == "dashboard_home"
     assert data["social_scope"]["read_only"] is True
-    assert "Session-Chat getrennt" in data["social_scope"]["note"]
+    assert "Neuigkeiten" in data["social_scope"]["note"]
     assert len(data["guilds"]) == 4
     assert data["primary_guild"]["is_primary"] is True
     assert {link["label"] for link in data["quick_links"]} == {
-        "Social",
-        "Guilds",
+        "Gemeinschaft",
+        "Gilden",
         "Kampagnen",
         "Charaktere",
-        "Session Prep",
-        "Play-Pfad",
+        "Vorbereitung",
+        "Spieltisch",
     }
     assert any(item["section"] == "social" and item["title"] == "Gemeinschaftssaal" for item in data["feed_preview"])
     assert any(item["section"] == "guilds" for item in data["feed_preview"])
@@ -140,7 +140,7 @@ def test_dashboard_home_can_switch_primary_guild_without_touching_permissions(cl
     data = response.get_json()
     assert data["primary_guild"]["id"] == target_guild["id"]
     assert data["primary_guild"]["is_primary"] is True
-    assert "Primaere Gilde gewechselt" in data["guild_notice"]
+    assert "Primäre Gilde gewechselt" in data["guild_notice"]
 
     with app.app_context():
         membership = GuildMembership.query.filter_by(user_id=user_id).first()
@@ -162,17 +162,17 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     assert "Weiterlesen" in js
     assert "book-toc" in js
     assert "Lesebändchen" in js
-    assert "Übersicht / Social" in js
+    assert "book-toc" in js
     assert "Gemeinschaftssaal" in dashboard_home
-    assert "Dashboard-Social bleibt vom Session-Chat getrennt" in js
-    assert "Guilds bleiben reine Meta-Identität." in js
+    assert "Neuigkeiten und Vorbereitung stehen hier gesammelt." in js
+    assert "Dein Banner zeigt die Gilde" in js
     assert "data-dashboard-guild-switch" in js
     assert ".book-home-rail {" in css
     assert ".book-home-feed {" in css
     assert ".book-home-guild-panel," in css
     assert ".book-home-context-grid {" in css
-    assert "Opening Home Page..." in dashboard_template
+    assert "Übersicht wird vorbereitet" in dashboard_template
     assert ">Übersicht</button>" in dashboard_template
-    assert "Dashboard-Social bleibt vom Session-Chat getrennt" in dashboard_home
+    assert "Neuigkeiten und Hinweise" in dashboard_home
     assert "/api/dashboard/chat" not in dashboard_home
     assert "/campaigns/<int:campaign_id>/sessions/<int:session_id>/chat/messages" in community_routes

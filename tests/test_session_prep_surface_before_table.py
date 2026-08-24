@@ -22,9 +22,9 @@ def test_campaigns_route_exposes_dedicated_session_prep_surface(client):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert "Session Prep Surface" in html
+    assert "Vorbereitungsbereich" in html
     assert 'id="campaignSessionPrepSurface"' in html
-    assert "Before Table" in html
+    assert "Vor dem Spielabend" in html
     assert 'id="sessionPrepSelect"' in html
     assert "Session-Prep" in html
     assert "Prep öffnen" in html

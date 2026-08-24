@@ -679,12 +679,12 @@
     </style>
 </head>
 <body class="spellbook character-sheet-route-book-scene">
-    <div id="characterSheetSceneStatus" role="status" aria-live="polite">Opening Character Sheet...</div>
+    <div id="characterSheetSceneStatus" role="status" aria-live="polite">Charakterbogen wird vorbereitet …</div>
     <template id="characterSheetSceneTemplate">
         <div class="book-dashboard-camera book-route-camera sheet-focus-camera">
             <section class="book-dashboard-page book-route-page book-focus-page sheet-focus-page" role="region" aria-label="Character sheet focus page">
                 <div class="book-dashboard-topbar">
-                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
+                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
                         <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
                         <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
                         <button type="button" class="book-dashboard-ribbon-btn is-active" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
@@ -1091,7 +1091,7 @@
                 routeKey: 'character-sheet',
                 auth,
                 statusElementId: 'characterSheetSceneStatus',
-                statusMessage: 'Opening Character Sheet...',
+                statusMessage: 'Charakterbogen wird vorbereitet …',
             });
         }
 

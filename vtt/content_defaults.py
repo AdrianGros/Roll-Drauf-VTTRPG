@@ -159,11 +159,11 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Right-page title",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.right_copy", "text": "Social-Hinweise, Guild-Status und nächste Schritte.",
+        "page_key": "dashboard", "content_key": "shell.right_copy", "text": "Neuigkeiten, Gildenstatus und nächste Schritte.",
         "description": "Right-page intro copy",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.chip_home", "text": "Übersicht / Social",
+        "page_key": "dashboard", "content_key": "shell.chip_home", "text": "Übersicht",
         "description": "Meta chip on the right page",
     },
     {
@@ -175,11 +175,11 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Meta chip; {count} is substituted",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.chip_guild_fallback", "text": "Guild folgt",
+        "page_key": "dashboard", "content_key": "shell.chip_guild_fallback", "text": "Gilde folgt",
         "description": "Meta chip shown when the user has no primary guild yet",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.chip_prep_blockers", "text": "{count} Prep-Blocker",
+        "page_key": "dashboard", "content_key": "shell.chip_prep_blockers", "text": "{count} offene Punkte",
         "description": "Meta chip; {count} is substituted",
     },
 
@@ -193,7 +193,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Hero heading",
     },
     {
-        "page_key": "dashboard", "content_key": "home.hero_summary_default", "text": "Von hier aus verzweigt sich das Buch in Social, Guilds, Kampagnen, Charaktere, Session-Prep und den kontrollierten Weg nach Play.",
+        "page_key": "dashboard", "content_key": "home.hero_summary_default", "text": "Dein Stand auf einen Blick: Kampagnen, Charaktere, Vorbereitung und Spieltisch.",
         "description": "Hero body copy (default; server may send a live summary instead)",
     },
     {
@@ -205,7 +205,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Hero meta stat; {count} is substituted",
     },
     {
-        "page_key": "dashboard", "content_key": "home.hero_meta_sessions", "text": "{count} Sessions",
+        "page_key": "dashboard", "content_key": "home.hero_meta_sessions", "text": "{count} Sitzungen",
         "description": "Hero meta stat; {count} is substituted",
     },
     {
@@ -213,33 +213,33 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Bold label before the social-scope note",
     },
     {
-        "page_key": "dashboard", "content_key": "home.social_scope_default", "text": "Dashboard-Social bleibt vom Session-Chat getrennt.",
+        "page_key": "dashboard", "content_key": "home.social_scope_default", "text": "Neuigkeiten und Vorbereitung stehen hier gesammelt.",
         "description": "Social-scope note (default; server may send a live note instead)",
     },
 
     # ── dashboard: navigation rail ──────────────────────────────────────────
-    {"page_key": "dashboard", "content_key": "home.nav_social", "text": "Social", "description": "Home nav-rail link"},
-    {"page_key": "dashboard", "content_key": "home.nav_guilds", "text": "Guilds", "description": "Home nav-rail link"},
+    {"page_key": "dashboard", "content_key": "home.nav_social", "text": "Gemeinschaft", "description": "Home nav-rail link"},
+    {"page_key": "dashboard", "content_key": "home.nav_guilds", "text": "Gilden", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_campaigns", "text": "Kampagnen", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_characters", "text": "Charaktere", "description": "Home nav-rail link"},
-    {"page_key": "dashboard", "content_key": "home.nav_session_prep", "text": "Session Prep", "description": "Home nav-rail link"},
+    {"page_key": "dashboard", "content_key": "home.nav_session_prep", "text": "Vorbereitung", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_play", "text": "Spieltisch", "description": "Home nav-rail link"},
 
     # ── dashboard: guild panel ───────────────────────────────────────────
     {
-        "page_key": "dashboard", "content_key": "home.guild_panel_empty_kicker", "text": "Guilds",
+        "page_key": "dashboard", "content_key": "home.guild_panel_empty_kicker", "text": "Gilden",
         "description": "Kicker shown when there are no guilds yet",
     },
     {
-        "page_key": "dashboard", "content_key": "home.guild_panel_empty_title", "text": "Meta-Banner",
+        "page_key": "dashboard", "content_key": "home.guild_panel_empty_title", "text": "Gildenübersicht",
         "description": "Heading shown when there are no guilds yet",
     },
     {
-        "page_key": "dashboard", "content_key": "home.guild_panel_empty_copy", "text": "Die Guild-Ebene wird vorbereitet.",
+        "page_key": "dashboard", "content_key": "home.guild_panel_empty_copy", "text": "Die Gildenübersicht wird vorbereitet.",
         "description": "Body copy shown when there are no guilds yet",
     },
     {
-        "page_key": "dashboard", "content_key": "home.guild_panel_kicker", "text": "Guilds",
+        "page_key": "dashboard", "content_key": "home.guild_panel_kicker", "text": "Gilden",
         "description": "Guild panel kicker",
     },
     {
@@ -247,7 +247,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Guild panel heading",
     },
     {
-        "page_key": "dashboard", "content_key": "home.guild_panel_copy", "text": "Guilds bleiben reine Meta-Identität. Sie verändern keine Rollen, keine Berechtigungen und keinen Session-Chat.",
+        "page_key": "dashboard", "content_key": "home.guild_panel_copy", "text": "Dein Banner zeigt die Gilde, zu der du im Home gehörst.",
         "description": "Guild panel intro copy",
     },
     {
@@ -277,11 +277,11 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Kicker shown when the feed is empty",
     },
     {
-        "page_key": "dashboard", "content_key": "home.feed_empty_title", "text": "Home-Feed wird vorbereitet",
+        "page_key": "dashboard", "content_key": "home.feed_empty_title", "text": "Neuigkeiten werden vorbereitet",
         "description": "Heading shown when the feed is empty",
     },
     {
-        "page_key": "dashboard", "content_key": "home.feed_empty_copy", "text": "Noch keine Home-Eintraege sichtbar. Kampagnen und Charaktere bleiben solange die stabilen Einstiege.",
+        "page_key": "dashboard", "content_key": "home.feed_empty_copy", "text": "Noch keine Neuigkeiten sichtbar. Kampagnen und Charaktere sind deine nächsten Einstiege.",
         "description": "Body copy shown when the feed is empty",
     },
 
@@ -303,7 +303,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Quick-links section heading",
     },
     {
-        "page_key": "dashboard", "content_key": "home.context_note", "text": "Dashboard bleibt Home und Social Hub. Kampagnen, Session-Prep und Play bleiben die operativen Folgeflächen.",
+        "page_key": "dashboard", "content_key": "home.context_note", "text": "Die Übersicht zeigt deinen Stand. Öffne eine Kapitelzeile oben, um weiterzuarbeiten.",
         "description": "Closing note under quick links",
     },
 ]
@@ -326,9 +326,15 @@ PAGE_CONTENT_RETRANSLATIONS = [
     ('dashboard', 'shell.left_eyebrow', 'Chapter I', 'Kapitel I'),
     ('dashboard', 'shell.left_title', 'Home', 'Übersicht'),
     ('dashboard', 'shell.right_eyebrow', 'Chronicle Feed', 'Chronik'),
-    ('dashboard', 'shell.chip_home', 'Home / Social Hub', 'Übersicht / Social'),
+    ('dashboard', 'shell.chip_home', 'Home / Social Hub', 'Übersicht'),
     ('dashboard', 'home.hero_kicker', 'Home', 'Übersicht'),
     ('dashboard', 'home.social_scope_label', 'Social Scope:', 'Sichtbarkeit:'),
+    ('dashboard', 'shell.right_copy', 'Social-Hinweise, Guild-Status und nächste Schritte.', 'Neuigkeiten, Gildenstatus und nächste Schritte.'),
+    ('dashboard', 'home.nav_social', 'Social', 'Gemeinschaft'),
+    ('dashboard', 'home.nav_guilds', 'Guilds', 'Gilden'),
+    ('dashboard', 'home.nav_session_prep', 'Session Prep', 'Vorbereitung'),
+    ('dashboard', 'home.guild_panel_kicker', 'Guilds', 'Gilden'),
+    ('dashboard', 'home.guild_panel_copy', 'Guilds bleiben reine Meta-Identität. Sie verändern keine Rollen, keine Berechtigungen und keinen Session-Chat.', 'Dein Banner zeigt die Gilde, zu der du im Home gehörst.'),
     ('dashboard', 'home.nav_campaigns', 'Campaigns', 'Kampagnen'),
     ('dashboard', 'home.nav_characters', 'Characters', 'Charaktere'),
     ('dashboard', 'home.nav_play', 'Play', 'Spieltisch'),

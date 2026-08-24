@@ -23,8 +23,8 @@ def test_dashboard_recent_item_actions_are_real_routes_not_fake_live_alerts():
     assert "alert('Character '" not in content
     assert "function openCampaignHub(id)" in content
     assert "function openCharacterSheet(id)" in content
-    assert "Open Hub" in content
-    assert "Open Sheet" in content
+    assert "Hub öffnen" in content
+    assert "Bogen öffnen" in content
     assert "goTo(`/campaigns?campaign_id=${id}`);" in content
     assert "goTo(`/character-sheet?id=${id}`);" in content
 
@@ -49,7 +49,7 @@ def test_book_scene_routes_use_production_copy_and_real_feature_entry_points():
     assert "same enchanted object" not in content
     assert "Neue Kampagne anlegen" in content
     assert "Held anlegen" in content
-    assert "Hub & Session-Prep" in content
+    assert "Hub und Vorbereitung" in content
     assert "data-dashboard-href" in content
     assert "buildIntentHref('/campaigns', { classic: 1, intent: 'create' })" in content
     assert "buildIntentHref('/characters', { classic: 1, intent: 'create' })" in content

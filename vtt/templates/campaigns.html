@@ -1307,7 +1307,7 @@
     </style>
 </head>
 <body class="spellbook campaigns-route-book-scene">
-    <div id="campaignsSceneStatus" role="status" aria-live="polite">Opening Campaigns Page...</div>
+    <div id="campaignsSceneStatus" role="status" aria-live="polite">Kampagnen werden vorbereitet …</div>
     <header>
         <div class="logo">roll drauf VTT</div>
         <div class="header-actions">
@@ -1320,7 +1320,7 @@
     <main>
         <div class="book-shell-frame">
             <div class="book-dashboard-topbar">
-                <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
+                <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
                     <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
@@ -1472,7 +1472,6 @@
         <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
     </footer>
 
-    <script src="/static/js/gsap.min.js"></script>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/community.js"></script>
     <script src="/static/js/book-scene.js"></script>
@@ -1510,7 +1509,7 @@
                 routeKey: 'campaigns',
                 auth,
                 statusElementId: 'campaignsSceneStatus',
-                statusMessage: 'Opening Campaigns Page...',
+                statusMessage: 'Kampagnen werden vorbereitet …',
             });
         }
 
@@ -2132,7 +2131,7 @@
                 return {
                     label: "Live",
                     summary: `Die Session "${activeSession.name}" ist bereits live.`,
-                    nextStep: "Der Hub bleibt deine Zentrale für Rueckkehr, Übersicht und vorbereitende Folgeaktionen.",
+                    nextStep: "Der Hub bleibt deine Zentrale für Rückkehr, Übersicht und vorbereitende Folgeaktionen.",
                 };
             }
             return {
@@ -2172,7 +2171,7 @@
                     }
                     return {
                         label: "Erste Session anlegen",
-                        hint: "Die Kampagne ist bereit für ihre erste Session. Der Hub bleibt danach der Ruecksprungpunkt vor Play.",
+                        hint: "Die Kampagne ist bereit für ihre erste Sitzung. Der Hub bleibt danach der Rücksprungpunkt vor dem Spieltisch.",
                         action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Session anlegen</button>`,
                     };
                 }
@@ -2445,8 +2444,8 @@
                 return `
                     <div class="hub-card session-prep-surface" id="campaignSessionPrepSurface">
                         <div class="hub-card-topline">
-                            <h3>Session Prep Surface</h3>
-                            <span class="hub-pill">Before Table</span>
+                            <h3>Vorbereitungsbereich</h3>
+                            <span class="hub-pill">Vor dem Spielabend</span>
                         </div>
                         <div class="session-prep-hero">
                             <div>
@@ -2513,7 +2512,7 @@
                             <div class="muted">${escapeHtml(ownerLabel)} · ${escapeHtml(identityLabel)}</div>
                             <div class="hub-session-actions">
                                 ${assignmentButton}
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${character.id})">Open Sheet</button>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${character.id})">Bogen öffnen</button>
                             </div>
                         </div>
                     `;
@@ -2523,8 +2522,8 @@
             return `
                 <div class="hub-card session-prep-surface" id="campaignSessionPrepSurface">
                     <div class="hub-card-topline">
-                        <h3>Session Prep Surface</h3>
-                        <span class="hub-pill">Before Table</span>
+                        <h3>Vorbereitungsbereich</h3>
+                        <span class="hub-pill">Vor dem Spielabend</span>
                     </div>
                     <div class="session-prep-hero">
                         <div>

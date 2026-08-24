@@ -166,6 +166,7 @@ class DevelopmentConfig(Config):
     SOCKETIO_MESSAGE_QUEUE = os.getenv("SOCKETIO_MESSAGE_QUEUE", REDIS_URL)
     RATELIMIT_STORAGE_URL = os.getenv("RATELIMIT_STORAGE_URL", "memory://")
     RATELIMIT_STORAGE_URI = RATELIMIT_STORAGE_URL
+    RATELIMIT_ENABLED = _parse_bool(os.getenv("RATELIMIT_ENABLED"), default=True)
     CORS_ORIGINS = _parse_origins(os.getenv("CORS_ORIGINS"), Config.CORS_ORIGINS)
     RELEASE_GATE_MIN_UPTIME_SECONDS = _parse_int(os.getenv("RELEASE_GATE_MIN_UPTIME_SECONDS"), 0)
     RELEASE_GATE_MIN_REQUESTS = _parse_int(os.getenv("RELEASE_GATE_MIN_REQUESTS"), 0)
@@ -273,6 +274,7 @@ PROFILE_TIERS = {
 class StagingConfig(DevelopmentConfig):
     """Staging configuration (like development but stricter)."""
     DEBUG = False
+    SQLALCHEMY_ECHO = False
     TESTING = False
 
 

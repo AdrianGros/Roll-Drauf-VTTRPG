@@ -712,7 +712,7 @@
     </style>
 </head>
 <body class="spellbook characters-route-book-scene">
-    <div id="charactersSceneStatus" role="status" aria-live="polite">Opening Characters Page...</div>
+    <div id="charactersSceneStatus" role="status" aria-live="polite">Charaktere werden vorbereitet …</div>
     <header>
         <div class="logo">roll drauf VTT</div>
         <div class="header-actions">
@@ -725,7 +725,7 @@
     <main>
         <div class="book-shell-frame">
             <div class="book-dashboard-topbar">
-                <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
+                <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
                     <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
@@ -1060,7 +1060,6 @@
         <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
     </footer>
 
-    <script src="/static/js/gsap.min.js"></script>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>
@@ -1138,7 +1137,7 @@
                 routeKey: 'characters',
                 auth,
                 statusElementId: 'charactersSceneStatus',
-                statusMessage: 'Opening Characters Page...',
+                statusMessage: 'Charaktere werden vorbereitet …',
             });
         }
 
@@ -1263,7 +1262,7 @@
                         </div>
 
                         <div class="char-actions">
-                            <button class="btn btn-primary" onclick="openCharacterSheet(${c.id}, 'view')">Open Sheet</button>
+                            <button class="btn btn-primary" onclick="openCharacterSheet(${c.id}, 'view')">Bogen öffnen</button>
                             <button class="btn btn-secondary" onclick="openCharacterSheet(${c.id}, 'edit')">Edit Sheet</button>
                             <button class="btn btn-secondary" onclick="goToCampaignContext(${c.campaign_id || 0})">${c.campaign_id ? 'Campaign Context' : 'Campaigns Hub'}</button>
                             <button class="btn btn-danger" onclick="deleteCharacter(${c.id})">Delete</button>
@@ -1790,7 +1789,7 @@
                 <div class="journey-note-title">${journeyNoteState.title}</div>
                 <div class="journey-note-copy">${journeyNoteState.message}</div>
                 <div class="journey-note-actions">
-                    <button class="btn btn-primary" onclick="openCharacterSheet(${journeyNoteState.characterId}, 'edit')">Open Sheet</button>
+                    <button class="btn btn-primary" onclick="openCharacterSheet(${journeyNoteState.characterId}, 'edit')">Bogen öffnen</button>
                     ${campaignAction}
                     <button class="btn btn-secondary" onclick="goTo('/campaigns')">Session Assignment Route</button>
                     <button class="btn btn-secondary" onclick="clearJourneyNote()">Dismiss</button>

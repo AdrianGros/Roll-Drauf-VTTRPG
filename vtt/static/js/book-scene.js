@@ -2,6 +2,11 @@
  * BookScene v2
  * Persistent spellbook scene for login, auth chapters, dashboard, campaigns,
  * characters, and the character-sheet focus route.
+ *
+ * The public interface is deliberately small: create(), open(), pageTurn(),
+ * and the protected-route bootstrap helpers. Rendering, focus containment,
+ * and transition fallback stay behind that seam so every caller gets the same
+ * settled state.
  */
 
 (function () {
@@ -198,16 +203,18 @@
             }
 
             const bookHTML = `
-                <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="Spellbook application interface">
+                <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="Buchoberfläche">
                     <div class="book-scene-backdrop" aria-hidden="true"></div>
                     <div class="book-scene-stage">
                         <div id="book" class="book-scene-book" role="doc-cover" aria-label="Interactive spellbook">
-                            <div class="book-element book-cover" role="button" tabindex="0" aria-label="Book front cover - press Enter or click to open" aria-pressed="false">
-                                <div class="cover-title" aria-hidden="false">Spellbook</div>
-                                <div class="cover-ornament" aria-hidden="true">✨</div>
+                            <div class="book-element book-cover" role="button" tabindex="0" aria-label="Buchzugang öffnen" aria-pressed="false">
+                                <div class="cover-kicker" aria-hidden="true">roll drauf</div>
+                                <div class="cover-title" aria-hidden="false">Zum Buchzugang</div>
+                                <div class="cover-ornament" aria-hidden="true"><img src="/static/icons/icon-book-sparkles.svg" alt=""></div>
+                                <div class="cover-action" aria-hidden="true">Anmelden</div>
                             </div>
-                            <div class="book-element book-pages" role="doc-pagebreak" aria-label="Book pages"></div>
-                            <div class="book-element book-back" role="doc-cover" aria-label="Book back cover"></div>
+                            <div class="book-element book-pages" role="doc-pagebreak" aria-label="Buchseiten"></div>
+                            <div class="book-element book-back" role="doc-cover" aria-label="Buchrückseite"></div>
                             <div class="book-shell-page-stack book-shell-page-stack--left" aria-hidden="true"></div>
                             <div class="book-shell-page-stack book-shell-page-stack--right" aria-hidden="true"></div>
                             <div class="book-shell-spine" aria-hidden="true">
@@ -262,6 +269,8 @@
             this.turnFront = document.getElementById('book-scene-turn-front');
             this.turnBack = document.getElementById('book-scene-turn-back');
 
+            this.setCoverState('login');
+
             this.syncMotionPreference();
             if (reducedMotion.addEventListener) {
                 reducedMotion.addEventListener('change', () => this.syncMotionPreference());
@@ -281,6 +290,24 @@
                     event.preventDefault();
                     this.open();
                 }
+            });
+
+            // Keep keyboard focus in the readable part of the page. The
+            // dashboard is intentionally taller than a phone viewport, so a
+            // focus event must be allowed to scroll before the next capture.
+            document.addEventListener('focusin', (event) => {
+                const node = event.target;
+                if (!node || !this.sceneSurface || !this.sceneSurface.contains(node)) {
+                    return;
+                }
+                window.requestAnimationFrame(() => {
+                    const rect = node.getBoundingClientRect();
+                    const topbar = this.sceneSurface.querySelector('.book-dashboard-topbar');
+                    const topbarBottom = topbar ? topbar.getBoundingClientRect().bottom : 0;
+                    if (rect.top < topbarBottom + 12 || rect.bottom > window.innerHeight - 12) {
+                        node.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'nearest' });
+                    }
+                });
             });
 
             document.addEventListener('keydown', (event) => {
@@ -319,6 +346,53 @@
             document.body.classList.toggle('has-reduced-motion', Boolean(reducedMotion.matches));
         },
 
+        setCoverInteractive(enabled) {
+            if (!this.bookCover) {
+                return;
+            }
+
+            if (enabled) {
+                this.bookCover.setAttribute('role', 'button');
+                this.bookCover.setAttribute('tabindex', '0');
+                this.bookCover.setAttribute('aria-hidden', 'false');
+                this.bookCover.setAttribute('aria-pressed', 'false');
+                return;
+            }
+
+            if (document.activeElement === this.bookCover) {
+                this.bookCover.blur();
+            }
+            this.bookCover.setAttribute('tabindex', '-1');
+            this.bookCover.setAttribute('aria-hidden', 'true');
+            this.bookCover.setAttribute('aria-pressed', 'true');
+            this.bookCover.removeAttribute('role');
+        },
+
+        setCoverState(state = 'login') {
+            if (!this.bookCover) {
+                return;
+            }
+
+            const title = this.bookCover.querySelector('.cover-title');
+            const kicker = this.bookCover.querySelector('.cover-kicker');
+            const action = this.bookCover.querySelector('.cover-action');
+            const loggedOut = state === 'logged-out';
+            if (kicker) {
+                kicker.textContent = loggedOut ? 'Abmeldung bestätigt' : 'roll drauf';
+            }
+            if (title) {
+                title.textContent = loggedOut ? 'Du bist abgemeldet' : 'Zum Buchzugang';
+            }
+            if (action) {
+                action.textContent = loggedOut ? 'Erneut anmelden' : 'Anmelden';
+            }
+            this.bookCover.setAttribute(
+                'aria-label',
+                loggedOut ? 'Abmeldung bestätigt. Buchzugang öffnen' : 'Buchzugang öffnen',
+            );
+            this.bookCover.dataset.coverState = state;
+        },
+
         setSceneState(state) {
             document.body.dataset.bookSceneState = state;
             document.body.classList.toggle('is-book-scene-login', state === 'login');
@@ -343,29 +417,29 @@
         },
 
         getSpreadTitle(routeKey) {
-            if (routeKey === 'login') return 'Welcome, Reader';
-            if (routeKey === 'signup') return 'Sign Up';
-            if (routeKey === 'register') return 'Register';
+            if (routeKey === 'login') return 'Buchzugang';
+            if (routeKey === 'signup') return 'Registrierung';
+            if (routeKey === 'register') return 'Einladung';
             if (routeKey === 'dashboard') return 'Übersicht';
             if (routeKey === 'campaigns') return 'Kampagnen';
             if (routeKey === 'characters') return 'Charaktere';
-            if (routeKey === 'character-sheet') return 'Character Sheet';
-            return 'Spellbook';
+            if (routeKey === 'character-sheet') return 'Charakterbogen';
+            return 'Buch';
         },
 
         getSpreadCopy(routeKey, side = 'front') {
             if (routeKey === 'login' && side === 'front') {
-                return 'The archive opens on a calm title leaf before the first real chapter turns into view.';
+                return 'Der Buchzugang öffnet ruhig, bevor das erste Kapitel sichtbar wird.';
             }
             if (routeKey === 'signup') {
                 return side === 'back'
-                    ? 'The sign-up chapter keeps the reader inside the same spellbook while the account ritual stays readable and calm.'
-                    : 'The next folio introduces the key-gated sign-up ritual without leaving the bound object.';
+                        ? 'Die Registrierung bleibt im selben Buch und führt klar durch die Kontoanlage.'
+                    : 'Das nächste Blatt erklärt die Registrierung, ohne den Buchrahmen zu verlassen.';
             }
             if (routeKey === 'register') {
                 return side === 'back'
-                    ? 'The key redemption page waits under the current leaf so the first authenticated chapter can rise straight from the same book.'
-                    : 'The invitation chapter continues the onboarding ritual on the same parchment spread.';
+                        ? 'Die Einladungsseite bleibt im selben Buch, damit der erste geschützte Abschnitt direkt folgen kann.'
+                    : 'Das Einladungs-Kapitel setzt die Anmeldung auf derselben Seite fort.';
             }
             if (routeKey === 'dashboard') {
                 return side === 'back'
@@ -380,14 +454,14 @@
             if (routeKey === 'characters') {
                 return side === 'back'
                     ? 'Im Charakterarchiv legst du Helden an, pflegst Avatar und Token und öffnest den Bogen für den Feinschliff.'
-                    : 'Charaktere ist der Ort für Heldenanlage, Identität und den Rueckweg in die Session-Vorbereitung.';
+                    : 'Charaktere ist der Ort für Heldenanlage, Identität und den Rückweg in die Session-Vorbereitung.';
             }
             if (routeKey === 'character-sheet') {
                 return side === 'back'
-                    ? 'The focused character sheet settles into the same spellbook, only zoomed deeper into a single hero.'
-                    : 'The focus sheet waits as the next in-book zoom step rather than a detached utility screen.';
+                    ? 'Der Charakterbogen bleibt im selben Buch und zoomt tiefer in eine einzelne Figur.'
+                    : 'Der Bogen ist der nächste fokussierte Schritt innerhalb des Buches.';
             }
-            return 'The next folio keeps the reader inside the same book.';
+            return 'Das nächste Blatt führt innerhalb desselben Buches weiter.';
         },
 
         buildTurnFaceMarkup(routeKey, side = 'front') {
@@ -437,15 +511,12 @@
             this.turnLeaf.setAttribute('aria-hidden', 'false');
             this.turnLeaf.classList.add('is-visible');
 
-            if (typeof gsap !== 'undefined') {
-                gsap.set(this.turnLeaf, { opacity: 1, x: 0 });
-                gsap.set(this.turnSheet, {
-                    rotationY: 0,
-                    transformOrigin: 'left center',
-                });
-                if (this.turnShadow) {
-                    gsap.set(this.turnShadow, { opacity: 0 });
-                }
+            this.turnLeaf.style.opacity = '1';
+            this.turnLeaf.style.transform = 'translateX(0)';
+            this.turnSheet.style.transform = 'rotateY(0deg)';
+            this.turnSheet.style.transformOrigin = 'left center';
+            if (this.turnShadow) {
+                this.turnShadow.style.opacity = '0';
             }
         },
 
@@ -458,10 +529,12 @@
             this.turnLeaf.setAttribute('aria-hidden', 'true');
             this.turnLeaf.hidden = true;
 
-            if (typeof gsap !== 'undefined') {
-                gsap.set([this.turnLeaf, this.turnSheet, this.turnShadow], {
-                    clearProps: 'transform,opacity',
-                });
+            this.turnLeaf.style.removeProperty('transform');
+            this.turnLeaf.style.removeProperty('opacity');
+            this.turnSheet.style.removeProperty('transform');
+            this.turnSheet.style.removeProperty('transform-origin');
+            if (this.turnShadow) {
+                this.turnShadow.style.removeProperty('opacity');
             }
         },
 
@@ -485,7 +558,7 @@
             if (!Array.isArray(campaigns) || campaigns.length === 0) {
                 return `
                     <div class="book-dashboard-preview-empty">
-                        Noch keine Kampagnen. Erstelle das erste Kapitel in den Chronicles.
+                        Noch keine Kampagnen. Lege die erste Runde an.
                     </div>
                 `;
             }
@@ -495,7 +568,7 @@
                     ${campaigns.slice(0, 3).map((campaign) => `
                         <div class="book-dashboard-preview-item">
                             <span class="book-dashboard-preview-name">${escapeHtml(campaign.name || 'Unbenannte Kampagne')}</span>
-                            <span class="book-dashboard-preview-meta">${escapeHtml(campaign.status || 'active')} · ${Number(campaign.member_count || 0)} Mitglieder</span>
+                                <span class="book-dashboard-preview-meta">${escapeHtml(campaign.status || 'aktiv')} · ${Number(campaign.member_count || 0)} Mitglieder</span>
                         </div>
                     `).join('')}
                 </div>
@@ -506,7 +579,7 @@
             if (!Array.isArray(characters) || characters.length === 0) {
                 return `
                     <div class="book-dashboard-preview-empty">
-                        Noch keine Charaktere. Öffne das Personae-Archiv und lege den ersten Helden an.
+                        Noch keine Charaktere. Lege den ersten Helden an.
                     </div>
                 `;
             }
@@ -516,7 +589,7 @@
                     ${characters.slice(0, 3).map((character) => `
                         <div class="book-dashboard-preview-item">
                             <span class="book-dashboard-preview-name">${escapeHtml(character.name || 'Unbekannt')}</span>
-                            <span class="book-dashboard-preview-meta">Lvl ${Number(character.level || 1)} ${escapeHtml(character.class || 'Abenteurer')} · ${escapeHtml(character.race || 'Volk offen')}</span>
+                            <span class="book-dashboard-preview-meta">Stufe ${Number(character.level || 1)} ${escapeHtml(character.class || 'Abenteurer')} · ${escapeHtml(character.race || 'Volk offen')}</span>
                         </div>
                     `).join('')}
                 </div>
@@ -559,7 +632,7 @@
             if (!Array.isArray(campaigns) || campaigns.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
-                        <div>Noch keine Kampagne angelegt. Starte hier mit deinem ersten Hub für Einladungen, Session-Prep und den späteren Weg nach Play.</div>
+                        <div>Noch keine Kampagne angelegt. Starte hier mit deiner ersten Runde und ihrer Vorbereitung.</div>
                         ${this.buildActionButtons([
                             {
                                 label: 'Erste Kampagne anlegen',
@@ -579,11 +652,11 @@
                                 <strong>${escapeHtml(campaign.name || 'Unbenannte Kampagne')}</strong>
                                 <span>${escapeHtml(campaign.status || 'active')}</span>
                             </div>
-                            <div class="book-scene-ledger-meta">${Number(campaign.member_count || 0)} Mitglieder · ${campaign.is_owner ? 'Eigene Kampagne' : 'Geteiltes Kapitel'}</div>
-                            <div class="book-scene-ledger-copy">${escapeHtml(campaign.description || 'Bereit für Session-Prep, direkte Charakterzuweisung, Karten und Assets vor dem Tisch.')}</div>
+                            <div class="book-scene-ledger-meta">${Number(campaign.member_count || 0)} Mitglieder · ${campaign.is_owner ? 'Eigene Kampagne' : 'Geteilte Kampagne'}</div>
+                            <div class="book-scene-ledger-copy">${escapeHtml(campaign.description || 'Bereit für Vorbereitung, Charaktere und Karte vor dem Spielabend.')}</div>
                             ${this.buildActionButtons([
                                 {
-                                    label: Number(campaign.session_count || 0) > 0 ? 'Hub & Session-Prep' : 'Hub öffnen',
+                                    label: Number(campaign.session_count || 0) > 0 ? 'Hub und Vorbereitung' : 'Hub öffnen',
                                     href: buildIntentHref('/campaigns', { campaign_id: campaign.id, classic: 1 }),
                                     primary: true,
                                 },
@@ -598,7 +671,7 @@
             if (!Array.isArray(characters) || characters.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
-                        <div>Noch kein Held im Archiv. Lege hier den ersten Charakter an und führe ihn danach über Bogen und Kampagnenkontext in die Session-Vorbereitung.</div>
+                        <div>Noch kein Held im Archiv. Lege hier den ersten Charakter an und führe ihn danach über Bogen und Kampagne in die Vorbereitung.</div>
                         ${this.buildActionButtons([
                             {
                                 label: 'Held anlegen',
@@ -616,10 +689,10 @@
                         <div class="book-scene-ledger-item">
                             <div class="book-scene-ledger-head">
                                 <strong>${escapeHtml(character.name || 'Unbekannt')}</strong>
-                                <span>Lvl ${Number(character.level || 1)}</span>
+                                <span>Stufe ${Number(character.level || 1)}</span>
                             </div>
                             <div class="book-scene-ledger-meta">${escapeHtml(character.class || 'Abenteurer')} · ${escapeHtml(character.race || 'Volk offen')}</div>
-                            <div class="book-scene-ledger-copy">${escapeHtml(character.background || 'Bereit für Bogen, Identität und die spätere Zuweisung in eine Session.')}</div>
+                            <div class="book-scene-ledger-copy">${escapeHtml(character.background || 'Bereit für Bogen, Identität und die spätere Zuweisung in eine Runde.')}</div>
                             ${this.buildActionButtons([
                                 {
                                     label: 'Bogen öffnen',
@@ -654,7 +727,7 @@
             };
             const primaryGuild = snapshot?.primary_guild || null;
             const socialScopeNote = snapshot?.social_scope?.note
-                || this.content('home.social_scope_default', 'Dashboard-Social bleibt vom Session-Chat getrennt.');
+                || this.content('home.social_scope_default', 'Neuigkeiten und Vorbereitung stehen hier gesammelt.');
 
             // B2 (Designbrief §5): Die Startseite ist das Inhaltsverzeichnis
             // des Buches -- Lesebändchen zuerst (weiterlesen, wo du warst),
@@ -668,7 +741,7 @@
                 { numeral: 'IV', label: this.content('home.nav_play', 'Spieltisch'),
                   count: Number(homeState.session_count || 0), href: null,
                   action: 'play-launch',
-                  countLabel: this.content('home.toc_sessions', '{count} Sessions',
+                  countLabel: this.content('home.toc_sessions', '{count} Sitzungen',
                                            { count: Number(homeState.session_count || 0) }) },
             ];
             return `
@@ -709,16 +782,16 @@
 
         buildDashboardNavigationRail() {
             const items = [
-                { section: 'social', label: this.content('home.nav_social', 'Social') },
-                { section: 'guilds', label: this.content('home.nav_guilds', 'Guilds') },
+                { section: 'social', label: this.content('home.nav_social', 'Gemeinschaft') },
+                { section: 'guilds', label: this.content('home.nav_guilds', 'Gilden') },
                 { section: 'campaigns', label: this.content('home.nav_campaigns', 'Kampagnen') },
                 { section: 'characters', label: this.content('home.nav_characters', 'Charaktere') },
-                { section: 'session-prep', label: this.content('home.nav_session_prep', 'Session Prep') },
+                { section: 'session-prep', label: this.content('home.nav_session_prep', 'Vorbereitung') },
                 { section: 'play', label: this.content('home.nav_play', 'Spieltisch') },
             ];
 
             return `
-                <nav class="book-home-rail" aria-label="Dashboard home sections">
+                <nav class="book-home-rail" aria-label="Bereiche der Übersicht" hidden>
                     ${items.map((item) => `
                         <button type="button" class="book-home-rail-link" data-dashboard-section="${escapeHtml(item.section)}">
                             ${escapeHtml(item.label)}
@@ -735,9 +808,9 @@
             if (guilds.length === 0) {
                 return `
                     <section class="book-home-guild-panel" data-dashboard-section-target="guilds">
-                        <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_empty_kicker', 'Guilds'))}</div>
-                        <h3 class="book-home-section-title">${escapeHtml(this.content('home.guild_panel_empty_title', 'Meta-Banner'))}</h3>
-                        <p class="book-home-section-copy">${escapeHtml(this.content('home.guild_panel_empty_copy', 'Die Guild-Ebene wird vorbereitet.'))}</p>
+                        <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_empty_kicker', 'Gilden'))}</div>
+                        <h3 class="book-home-section-title">${escapeHtml(this.content('home.guild_panel_empty_title', 'Gildenübersicht'))}</h3>
+                        <p class="book-home-section-copy">${escapeHtml(this.content('home.guild_panel_empty_copy', 'Die Gildenübersicht wird vorbereitet.'))}</p>
                     </section>
                 `;
             }
@@ -746,14 +819,14 @@
 
             return `
                 <section class="book-home-guild-panel" data-dashboard-section-target="guilds">
-                    <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_kicker', 'Guilds'))}</div>
+                    <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_kicker', 'Gilden'))}</div>
                     <h3 class="book-home-section-title">${escapeHtml(this.content('home.guild_panel_title', 'Dein Banner im Buch'))}</h3>
                     <p class="book-home-section-copy">
-                        ${escapeHtml(this.content('home.guild_panel_copy', 'Guilds bleiben reine Meta-Identität. Sie veraendern keine Rollen, keine Berechtigungen und keinen Session-Chat.'))}
+                        ${escapeHtml(this.content('home.guild_panel_copy', 'Dein Banner zeigt die Gilde, zu der du im Buch gehörst.'))}
                     </p>
                     ${primaryGuild ? `
                         <div class="book-home-guild-primary">
-                            <span class="book-home-guild-primary-kicker">${escapeHtml(this.content('home.guild_primary_label', 'Primaere Gilde'))}</span>
+                            <span class="book-home-guild-primary-kicker">${escapeHtml(this.content('home.guild_primary_label', 'Primäre Gilde'))}</span>
                             <strong>${escapeHtml(primaryGuild.name)}</strong>
                             <p>${escapeHtml(primaryGuild.tagline || primaryGuild.description || '')}</p>
                         </div>
@@ -766,7 +839,7 @@
                                         <strong>${escapeHtml(guild.name)}</strong>
                                         <span>${escapeHtml(guild.tagline || '')}</span>
                                     </div>
-                                    <span class="book-home-guild-badge">${guild.is_primary ? escapeHtml(this.content('home.guild_badge_primary', 'Primaer')) : escapeHtml(memberCountBadge(guild.member_count))}</span>
+                                    <span class="book-home-guild-badge">${guild.is_primary ? escapeHtml(this.content('home.guild_badge_primary', 'Primär')) : escapeHtml(memberCountBadge(guild.member_count))}</span>
                                 </div>
                                 <p>${escapeHtml(guild.status_preview || guild.description || '')}</p>
                                 <button
@@ -775,7 +848,7 @@
                                     data-dashboard-guild-switch="${Number(guild.id)}"
                                     ${guild.is_primary ? 'disabled' : ''}
                                 >
-                                    ${guild.is_primary ? escapeHtml(this.content('home.guild_button_current', 'Aktuelle Gilde')) : escapeHtml(this.content('home.guild_button_set_primary', 'Als Primaergilde setzen'))}
+                                    ${guild.is_primary ? escapeHtml(this.content('home.guild_button_current', 'Aktuelle Gilde')) : escapeHtml(this.content('home.guild_button_set_primary', 'Als Primärgilde setzen'))}
                                 </button>
                             </article>
                         `).join('')}
@@ -792,8 +865,8 @@
                     <section class="book-home-feed" data-dashboard-section-target="social">
                         <div class="book-home-feed-item is-empty">
                             <div class="book-home-feed-kicker">${escapeHtml(this.content('home.feed_empty_kicker', 'Chronik'))}</div>
-                            <h3 class="book-home-feed-title">${escapeHtml(this.content('home.feed_empty_title', 'Home-Feed wird vorbereitet'))}</h3>
-                            <p class="book-home-feed-copy">${escapeHtml(this.content('home.feed_empty_copy', 'Noch keine Home-Eintraege sichtbar. Kampagnen und Charaktere bleiben solange die stabilen Einstiege.'))}</p>
+                            <h3 class="book-home-feed-title">${escapeHtml(this.content('home.feed_empty_title', 'Neuigkeiten werden vorbereitet'))}</h3>
+                            <p class="book-home-feed-copy">${escapeHtml(this.content('home.feed_empty_copy', 'Noch keine Neuigkeiten sichtbar. Kampagnen und Charaktere bleiben solange die stabilen Einstiege.'))}</p>
                         </div>
                     </section>
                 `;
@@ -830,8 +903,6 @@
 
         buildDashboardContext(snapshot = null) {
             const priorities = Array.isArray(snapshot?.priorities) ? snapshot.priorities : [];
-            const quickLinks = Array.isArray(snapshot?.quick_links) ? snapshot.quick_links : [];
-
             return `
                 <section class="book-home-context">
                     <div class="book-home-context-grid">
@@ -851,20 +922,8 @@
                         <section class="book-home-context-card">
                             <div class="book-home-section-kicker">${escapeHtml(this.content('home.quicklinks_kicker', 'Schnellzugriffe'))}</div>
                             <h3 class="book-home-section-title">${escapeHtml(this.content('home.quicklinks_title', 'Wohin du als nächstes gehst'))}</h3>
-                            <div class="book-home-quick-links">
-                                ${quickLinks.map((link) => `
-                                    <button
-                                        type="button"
-                                        class="btn btn-secondary book-scene-action-btn"
-                                        ${link.href ? `data-dashboard-href="${escapeHtml(link.href)}"` : ''}
-                                        ${link.section ? `data-dashboard-section="${escapeHtml(link.section)}"` : ''}
-                                    >
-                                        ${escapeHtml(link.label || 'Öffnen')}
-                                    </button>
-                                `).join('')}
-                            </div>
                             <div class="book-home-context-note">
-                                ${escapeHtml(this.content('home.context_note', 'Dashboard bleibt Home und Social Hub. Kampagnen, Session-Prep und Play bleiben die operativen Folgeflächen.'))}
+                                ${escapeHtml(this.content('home.context_note', 'Die Übersicht zeigt deinen Stand. Öffne eine Kapitelzeile oben, um weiterzuarbeiten.'))}
                             </div>
                         </section>
                     </div>
@@ -886,7 +945,7 @@
                 <div class="book-dashboard-camera">
                     <section class="book-dashboard-page" data-book-route="${routeKey}" role="region" aria-label="${leftTitle} page">
                         <div class="book-dashboard-topbar">
-                            <div class="book-dashboard-ribbon" role="navigation" aria-label="Book page menu">
+                            <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
                                 ${this.buildRibbon(routeKey)}
                             </div>
                             <div class="book-dashboard-crest" aria-label="Current reader">${displayName}</div>
@@ -953,19 +1012,13 @@
                 title: this.content('shell.left_title', 'Übersicht'),
                 copy: this.content(
                     'shell.left_copy',
-                    'Willkommen zurück, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.',
+                    'Willkommen zurück, {username}. Dieses Kapitel bündelt Neuigkeiten, Gilden, Kampagnen, Charaktere und die nächsten Vorbereitungsschritte.',
                     { username: user?.username || 'Donut' },
                 ),
                 rightEyebrow: this.content('shell.right_eyebrow', 'Chronik'),
                 rightTitle: this.content('shell.right_title', 'Was gerade zählt'),
-                rightCopy: this.content('shell.right_copy', 'Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die nächsten operativen Schritte bleiben sichtbar getrennt voneinander.'),
-                chips: [
-                    this.content('shell.chip_home', 'Übersicht / Social'),
-                    this.content('shell.chip_campaigns', '{count} Kampagnen', { count: campaigns.length }),
-                    this.content('shell.chip_characters', '{count} Charaktere', { count: characters.length }),
-                    primaryGuild ? primaryGuild.name : this.content('shell.chip_guild_fallback', 'Guild folgt'),
-                    this.content('shell.chip_prep_blockers', '{count} Prep-Blocker', { count: Number(homeState.prep_blocker_count || 0) }),
-                ],
+                rightCopy: this.content('shell.right_copy', 'Neuigkeiten, Gildenstatus und die nächsten Vorbereitungsschritte bleiben hier gebündelt.'),
+                chips: [],
                 leftPage: `
                     <div class="book-home-stack">
                         ${this.buildDashboardHero(snapshot)}
@@ -987,8 +1040,8 @@
             const activeCount = campaigns.filter((campaign) => String(campaign.status || '').toLowerCase() === 'active').length;
 
             return this.buildPageShell('campaigns', user, {
-                eyebrow: 'Chapter II',
-                title: 'Campaigns',
+                eyebrow: 'Kapitel II',
+                title: 'Kampagnen',
                 copy: 'Lege Kampagnen an, öffne den Kampagnen-Hub und gehe von dort weiter in Session-Prep, direkte Charakterzuweisung, Karten, Assets und schließlich nach Play.',
                 rightEyebrow: 'Nächste Schritte',
                 rightTitle: 'Kampagnen produktiv nutzen',
@@ -1046,7 +1099,7 @@
                 footer: `
                     <div class="book-dashboard-widget-header">
                         <h2>Kampagnen-Werkzeuge</h2>
-                        <span class="book-dashboard-widget-tag">hub, session-prep, maps, assets</span>
+                        <span class="book-dashboard-widget-tag">Hub, Vorbereitung, Karten, Assets</span>
                     </div>
                     <p class="book-dashboard-widget-copy">
                         Die wichtigsten Folgeflächen sind bereits nutzbar und hängen am Kampagnen-Hub: Session-Prep, Karten, Assets und die nächsten Schritte Richtung Play.
@@ -1066,7 +1119,7 @@
                         </div>
                         <div class="book-scene-widget-card">
                             <span>Assets</span>
-                            <small>Session-bezogene Assets öffnen, Upload vorbereiten und den Vorbereitungsstand vor Play pruefen.</small>
+                            <small>Sessionbezogene Assets öffnen, Upload vorbereiten und den Vorbereitungsstand vor dem Spielabend prüfen.</small>
                         </div>
                     </div>
                 `,
@@ -1079,8 +1132,8 @@
             const highestLevel = characters.reduce((highest, character) => Math.max(highest, Number(character.level || 1)), 1);
 
             return this.buildPageShell('characters', user, {
-                eyebrow: 'Chapter III',
-                title: 'Characters',
+                eyebrow: 'Kapitel III',
+                title: 'Charaktere',
                 copy: 'Lege Helden an, pflege Avatar und Token und wechsle für Details in den Bogen. Danach führt der Weg sauber zurück in Kampagnen und Session-Prep.',
                 rightEyebrow: 'Nächste Schritte',
                 rightTitle: 'Helden vorbereiten',
@@ -1136,7 +1189,7 @@
                 footer: `
                     <div class="book-dashboard-widget-header">
                         <h2>Charakter-Werkzeuge</h2>
-                        <span class="book-dashboard-widget-tag">anlage, boegen, identität, rueckweg in prep</span>
+                        <span class="book-dashboard-widget-tag">Anlage, Bögen, Identität, Vorbereitung</span>
                     </div>
                     <p class="book-dashboard-widget-copy">
                         Die Charakterarbeit ist bereits operativ: Helden anlegen, Standard Array oder Point Buy nutzen, Avatar und Token setzen und danach zurück in die Kampagnenvorbereitung gehen.
@@ -1155,7 +1208,7 @@
                             <small>Identität ist im Archiv und im Bogen vorhanden und kann dort direkt gepflegt werden.</small>
                         </div>
                         <div class="book-scene-widget-card">
-                            <span>Rueckweg in Prep</span>
+                            <span>Rückweg in die Vorbereitung</span>
                             <small>Nach dem Bogen geht es sichtbar zurück in Kampagnen und weiter in die Session-Zuweisung.</small>
                         </div>
                     </div>
@@ -1221,13 +1274,13 @@
                     node.setAttribute('disabled', 'disabled');
                     try {
                         const snapshot = await window.Auth.makeAuthRequest('/api/dashboard/guilds/primary', 'POST', { guild_id: guildId });
-                        this.dashboardNotice = snapshot?.guild_notice || 'Primaere Gilde aktualisiert.';
+                        this.dashboardNotice = snapshot?.guild_notice || 'Primäre Gilde aktualisiert.';
                         this.sceneSnapshot = snapshot || this.sceneSnapshot;
                         this.sceneUser = this.sceneSnapshot?.user || this.sceneUser;
                         this.renderSceneRoute('dashboard', this.sceneUser, this.sceneSnapshot);
                     } catch (error) {
                         console.error('Failed to switch primary guild:', error);
-                        this.dashboardNotice = error.message || 'Primaere Gilde konnte nicht gewechselt werden.';
+                        this.dashboardNotice = error.message || 'Primäre Gilde konnte nicht gewechselt werden.';
                         this.renderSceneRoute('dashboard', this.sceneUser, this.sceneSnapshot);
                     }
                 });
@@ -1695,11 +1748,14 @@
             this.loginContent.style.pointerEvents = 'none';
             this.loginContent.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('book-login-open');
-            if (typeof gsap !== 'undefined') {
-                gsap.set([this.loginSpread, this.loginLeftPage, this.loginRightPage], {
-                    clearProps: 'transform,opacity,filter',
-                });
-            }
+            [this.loginSpread, this.loginLeftPage, this.loginRightPage].forEach((node) => {
+                if (!node) {
+                    return;
+                }
+                node.style.removeProperty('transform');
+                node.style.removeProperty('opacity');
+                node.style.removeProperty('filter');
+            });
         },
 
         open() {
@@ -1707,113 +1763,47 @@
                 return;
             }
 
-            if (typeof gsap === 'undefined') {
-                setTimeout(() => this.open(), 100);
-                return;
-            }
-
             this.isOpened = true;
             this.setSceneState('opening');
 
-            const timeline = gsap.timeline();
-            timeline.to(this.book, {
-                rotationY: 0,
-                scale: 1,
-                x: 0,
-                y: 0,
-                duration: 0.92,
-                ease: 'power2.out',
-                force3D: true,
-            }, 0);
-            timeline.to(this.bookCover, {
-                rotationY: -160,
-                duration: 1.2,
-                ease: 'power2.inOut',
-                force3D: true,
-            }, 0.15);
-            if (this.coverTitle && this.coverOrnament) {
-                timeline.to([this.coverTitle, this.coverOrnament], {
-                    opacity: 0,
-                    duration: 0.25,
-                    ease: 'power1.out',
-                }, 0.4);
-            }
-            timeline.to(this.bookPages, {
-                scaleY: [1, 1.002, 1, 1.002, 1],
-                duration: 0.4,
-                ease: 'sine.inOut',
-                force3D: true,
-            }, 0.8);
-            if (this.loginContent) {
-                timeline.add(() => {
-                    // currentPage (set from the real URL by updateCurrentPage())
-                    // is used here rather than currentView, which create()'s
-                    // dashboard pre-render (ensureDashboardScene(), for instant
-                    // transitions later) unconditionally overwrites to
-                    // 'dashboard' as a side effect - on every page, including
-                    // login.html, regardless of whether anyone is logged in.
-                    if (this.currentPage === 'login') {
-                        gsap.set([this.loginSpread, this.loginLeftPage, this.loginRightPage], {
-                            clearProps: 'transform,opacity,filter',
-                        });
-                        gsap.set(this.loginContent, { opacity: 1, pointerEvents: 'auto' });
-                        gsap.fromTo([this.loginLeftPage, this.loginRightPage], {
-                            opacity: 0,
-                            y: 24,
-                            rotationY: (index) => index === 0 ? 5 : -5,
-                            transformOrigin: (index) => index === 0 ? 'right center' : 'left center',
-                        }, {
-                            opacity: 1,
-                            y: 0,
-                            rotationY: 0,
-                            duration: 0.64,
-                            ease: 'power2.out',
-                            stagger: 0.08,
-                            force3D: true,
-                        });
-                    }
-                }, 1.05);
+            // The cover is a semantic entry surface, not a loading curtain.
+            // Settle it in one synchronous state so Firefox, Chromium, slow
+            // devices, and acceptance captures all see the same composition.
+            this.applyOpenedBookState();
+            if (this.currentPage !== 'login') {
+                this.hideLoginContent();
+                this.setSceneState('dashboard');
+                return;
             }
 
-            timeline.eventCallback('onComplete', () => {
-                this.bookCover.classList.add('is-open');
-                if (this.currentPage !== 'login') {
-                    this.hideLoginContent();
-                    this.setSceneState('dashboard');
-                } else {
-                    if (this.loginContent) {
-                        this.loginContent.classList.add('visible');
-                        this.loginContent.removeAttribute('aria-hidden');
-                    }
-                    document.body.classList.add('book-login-open');
-                    this.setSceneState('login');
-                }
-            });
+            if (this.loginContent) {
+                this.loginContent.classList.add('visible');
+                this.loginContent.style.opacity = '1';
+                this.loginContent.style.pointerEvents = 'auto';
+                this.loginContent.removeAttribute('aria-hidden');
+            }
+            document.body.classList.add('book-login-open');
+            this.setSceneState('login');
         },
 
         applyOpenedBookState() {
-            if (typeof gsap !== 'undefined') {
-                gsap.set(this.book, { rotationY: 0, scale: 1, x: 0, y: 0 });
-                gsap.set(this.bookCover, { rotationY: -160 });
-                gsap.set(this.bookPages, { x: 0, scaleX: 1, scaleY: 1 });
-                if (this.bookBack) {
-                    gsap.set(this.bookBack, { opacity: 1 });
-                }
-            } else {
-                if (this.book) {
-                    this.book.style.transform = 'rotateY(0deg) scale(1)';
-                }
-                if (this.bookCover) {
-                    this.bookCover.style.transform = 'rotateY(-160deg)';
-                }
-                if (this.bookPages) {
-                    this.bookPages.style.transform = 'translateX(4px) rotateY(0deg) scaleX(1) scaleY(1)';
-                }
+            if (this.book) {
+                this.book.style.transform = 'rotateY(0deg) scale(1)';
+            }
+            if (this.bookCover) {
+                this.bookCover.style.transform = 'rotateY(-160deg)';
+            }
+            if (this.bookPages) {
+                this.bookPages.style.transform = 'translateX(4px) rotateY(0deg) scaleX(1) scaleY(1)';
+            }
+            if (this.bookBack) {
+                this.bookBack.style.opacity = '1';
             }
 
             if (this.bookCover) {
                 this.bookCover.classList.add('is-open');
             }
+            this.setCoverInteractive(false);
         },
 
         showSceneInstant(routeKey, user = null, snapshot = null) {
@@ -1853,41 +1843,6 @@
             this.currentPage = routeKey;
             this.isOpened = true;
             this.showSceneInstant(routeKey, user, this.sceneSnapshot);
-            if (!reducedMotion.matches && typeof gsap !== 'undefined') {
-                const direction = this.getTurnDirection('login', routeKey);
-                const camera = this.sceneSurface ? this.sceneSurface.querySelector('.book-dashboard-camera') : null;
-                const page = this.sceneSurface ? this.sceneSurface.querySelector('.book-dashboard-page') : null;
-                if (camera) {
-                    gsap.fromTo(camera, {
-                        opacity: 0,
-                        scale: 1.12,
-                        x: direction * 96,
-                        y: 34,
-                        rotationY: direction * -14,
-                        transformOrigin: direction > 0 ? 'left center' : 'right center',
-                    }, {
-                        opacity: 1,
-                        scale: 1,
-                        x: 0,
-                        y: 0,
-                        rotationY: 0,
-                        duration: 0.86,
-                        ease: 'expo.out',
-                        force3D: true,
-                    });
-                }
-                if (page) {
-                    gsap.fromTo(page, {
-                        opacity: 0.86,
-                        boxShadow: '0 34px 78px rgba(0, 0, 0, 0.22)',
-                    }, {
-                        opacity: 1,
-                        boxShadow: '0 24px 52px rgba(0, 0, 0, 0.15)',
-                        duration: 0.82,
-                        ease: 'power2.out',
-                    });
-                }
-            }
         },
 
         bootstrapDashboardRoute(user = null) {
@@ -1900,6 +1855,7 @@
                 auth,
                 statusElementId = null,
                 statusMessage = null,
+                minimumStatusDuration = 0,
                 loginPath = '/login.html',
                 snapshotLoader = null,
             } = config;
@@ -1918,7 +1874,8 @@
             };
 
             try {
-                setStatus(statusMessage || `Opening ${this.getSpreadTitle(routeKey)}...`);
+                const statusStartedAt = performance.now();
+                setStatus(statusMessage || `${this.getSpreadTitle(routeKey)} wird vorbereitet …`);
 
                 if (!auth || typeof auth.requireAuth !== 'function') {
                     throw new Error('Auth client unavailable');
@@ -1941,6 +1898,10 @@
                 await this.loadPageContent(routeKey);
                 this.bootstrapRoute(routeKey, user);
                 this.finalizeBookEntryBoundary(entryBoundary);
+                const remaining = Math.max(0, Number(minimumStatusDuration) - (performance.now() - statusStartedAt));
+                if (remaining) {
+                    await new Promise((resolve) => window.setTimeout(resolve, remaining));
+                }
                 setStatus('');
                 return true;
             } catch (error) {
@@ -2075,78 +2036,10 @@
             this.setSceneState('play-transition');
             document.body.dataset.bookSceneTransitionTarget = 'play';
             document.body.dataset.bookSceneTransitionPhase = 'BOOK_TO_TABLE_TRANSITION';
-
-            const currentCamera = this.sceneSurface ? this.sceneSurface.querySelector('.book-dashboard-camera') : null;
-            const currentPage = this.sceneSurface ? this.sceneSurface.querySelector('.book-dashboard-page') : null;
-
-            if (reducedMotion.matches || typeof gsap === 'undefined') {
-                window.setTimeout(navigateToPlay, 64);
-                return true;
-            }
-
-            const timeline = gsap.timeline({
-                defaults: { ease: 'power2.inOut' },
-                onComplete: navigateToPlay,
-            });
-
-            if (this.sceneBackdrop) {
-                timeline.to(this.sceneBackdrop, {
-                    opacity: 0.74,
-                    filter: 'saturate(0.8) brightness(0.74)',
-                    duration: 0.24,
-                }, 0);
-            }
-
-            if (currentCamera) {
-                timeline.to(currentCamera, {
-                    opacity: 0.18,
-                    scale: 0.94,
-                    y: 28,
-                    filter: 'blur(1.8px)',
-                    duration: 0.3,
-                    force3D: true,
-                }, 0);
-            }
-
-            if (currentPage) {
-                timeline.to(currentPage, {
-                    opacity: 0.72,
-                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.10)',
-                    duration: 0.26,
-                }, 0.02);
-            }
-
-            if (this.bookCover) {
-                timeline.to(this.bookCover, {
-                    rotationY: -18,
-                    duration: PLAY_EXIT_DURATION_MS / 1000,
-                    ease: 'expo.inOut',
-                    force3D: true,
-                }, 0.06);
-            }
-
-            if (this.bookPages) {
-                timeline.to(this.bookPages, {
-                    scaleX: 0.987,
-                    scaleY: 0.994,
-                    duration: 0.34,
-                    force3D: true,
-                }, 0.08);
-            }
-
-            if (this.book) {
-                timeline.to(this.book, {
-                    scale: 0.84,
-                    x: -112,
-                    y: 18,
-                    rotationY: -20,
-                    rotationX: 5,
-                    duration: PLAY_EXIT_DURATION_MS / 1000,
-                    ease: 'expo.inOut',
-                    force3D: true,
-                }, 0.02);
-            }
-
+            // Cross-document navigation cannot use a same-document View
+            // Transition. Persist the boundary and leave immediately so no
+            // animation curtain can block the play surface or input focus.
+            navigateToPlay();
             return true;
         },
 
@@ -2202,178 +2095,22 @@
             this.sceneUser = snapshot.user || user || this.sceneUser;
             await this.loadPageContent(routeKey);
 
-            const instant = Boolean(options.instant) || reducedMotion.matches || typeof gsap === 'undefined';
-            if (instant) {
-                this.showSceneInstant(routeKey, this.sceneUser, snapshot);
-                this.transitionInFlight = false;
-                return;
-            }
-
             const currentRoute = this.currentView || this.currentPage || 'login';
-            const direction = this.getTurnDirection(currentRoute, routeKey);
-            const currentCamera = this.sceneSurface ? this.sceneSurface.querySelector('.book-dashboard-camera') : null;
-            const currentPage = this.sceneSurface ? this.sceneSurface.querySelector('.book-dashboard-page') : null;
-            const timeline = gsap.timeline();
-            let nextCamera = null;
-            let nextPage = null;
-            let sceneRendered = false;
-
-            this.setSceneState('transition');
-            this.sceneSurface.hidden = false;
-            this.sceneSurface.setAttribute('aria-hidden', 'false');
-            this.sceneSurface.classList.add('is-visible');
-
-            const renderIncomingScene = () => {
-                if (sceneRendered) {
-                    return;
-                }
-
-                sceneRendered = true;
+            const render = () => {
+                this.setSceneState('transition');
                 this.renderSceneRoute(routeKey, this.sceneUser, snapshot);
-                nextCamera = this.sceneSurface ? this.sceneSurface.querySelector('.book-dashboard-camera') : null;
-                nextPage = this.sceneSurface ? this.sceneSurface.querySelector('.book-dashboard-page') : null;
-
-                if (nextCamera) {
-                    gsap.set(nextCamera, {
-                        opacity: 0.8,
-                        scale: 1.03,
-                        x: direction * 26,
-                        y: 8,
-                        rotationY: direction * -3,
-                        filter: 'blur(0.8px)',
-                        transformOrigin: direction > 0 ? 'left center' : 'right center',
-                    });
-                }
-
-                if (nextPage) {
-                    gsap.set(nextPage, {
-                        opacity: 0.92,
-                        boxShadow: '0 30px 72px rgba(0, 0, 0, 0.22)',
-                    });
-                }
-            };
-
-            this.prepareTurnLeaf(currentRoute, routeKey);
-            if (currentRoute === 'login') {
-                renderIncomingScene();
-            }
-
-            timeline.to(this.book, {
-                y: -6,
-                rotationX: direction * 0.7,
-                duration: 0.22,
-                ease: 'sine.out',
-            }, 0);
-            timeline.to(this.bookPages, {
-                scaleY: 1.006,
-                duration: 0.26,
-                ease: 'sine.out',
-            }, 0.06);
-
-            if (this.turnSheet) {
-                timeline.to(this.turnSheet, {
-                    rotationY: -176,
-                    duration: 1.04,
-                    ease: 'power2.inOut',
-                    force3D: true,
-                }, 0.02);
-            }
-
-            if (this.turnShadow) {
-                timeline.to(this.turnShadow, {
-                    opacity: 0.48,
-                    duration: 0.22,
-                    ease: 'sine.out',
-                }, 0.12);
-                timeline.to(this.turnShadow, {
-                    opacity: 0,
-                    duration: 0.34,
-                    ease: 'sine.inOut',
-                }, 0.58);
-            }
-
-            if (this.loginContent && currentRoute === 'login') {
-                timeline.to(this.loginLeftPage, {
-                    opacity: 0.8,
-                    scale: 0.992,
-                    filter: 'blur(0.4px)',
-                    duration: 0.32,
-                    ease: 'power1.out',
-                }, 0.08);
-                timeline.to(this.loginContent, {
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: 'power2.in',
-                }, 0.54);
-            } else if (currentCamera) {
-                timeline.to(currentCamera, {
-                    opacity: 0.8,
-                    scale: 0.985,
-                    y: 6,
-                    filter: 'blur(0.6px)',
-                    duration: 0.28,
-                    ease: 'power1.out',
-                    force3D: true,
-                }, 0.04);
-            }
-
-            if (currentPage) {
-                timeline.to(currentPage, {
-                    opacity: 0.9,
-                    boxShadow: '0 10px 24px rgba(0, 0, 0, 0.08)',
-                    duration: 0.24,
-                    ease: 'power1.out',
-                }, 0.06);
-            }
-
-            timeline.add(() => {
-                if (currentRoute !== 'login') {
-                    renderIncomingScene();
-                }
-
-                if (nextCamera) {
-                    gsap.to(nextCamera, {
-                        opacity: 1,
-                        scale: 1,
-                        x: 0,
-                        y: 0,
-                        rotationY: 0,
-                        filter: 'blur(0px)',
-                        duration: 0.48,
-                        ease: 'expo.out',
-                        force3D: true,
-                    });
-                }
-
-                if (nextPage) {
-                    gsap.to(nextPage, {
-                        opacity: 1,
-                        boxShadow: '0 24px 52px rgba(0, 0, 0, 0.15)',
-                        duration: 0.42,
-                        ease: 'power2.out',
-                    });
-                }
-            }, 0.54);
-
-            timeline.to(this.book, {
-                y: 0,
-                rotationX: 0,
-                duration: 0.62,
-                ease: 'expo.out',
-            }, 0.42);
-            timeline.to(this.bookPages, {
-                scaleY: 1,
-                duration: 0.56,
-                ease: 'expo.out',
-            }, 0.44);
-
-            timeline.eventCallback('onComplete', () => {
                 this.hideLoginContent();
                 this.hideTurnLeaf();
-                if (nextCamera) {
-                    nextCamera.style.opacity = '1';
-                    nextCamera.style.transform = 'none';
-                    nextCamera.style.filter = 'none';
+                if (this.sceneSurface) {
+                    this.sceneSurface.hidden = false;
+                    this.sceneSurface.setAttribute('aria-hidden', 'false');
+                    this.sceneSurface.classList.add('is-visible');
+                    const camera = this.sceneSurface.querySelector('.book-dashboard-camera');
+                    if (camera) {
+                        camera.style.opacity = '1';
+                        camera.style.transform = 'none';
+                        camera.style.filter = 'none';
+                    }
                 }
                 this.currentView = routeKey;
                 this.currentPage = routeKey;
@@ -2382,8 +2119,28 @@
                 document.body.dataset.bookSceneRoute = routeKey;
                 this.updateBookmarkPosition(routePathForKey(routeKey));
                 window.history.replaceState({ book_scene: routeKey }, '', historyHrefForRoute(routeKey));
-                this.transitionInFlight = false;
-            });
+            };
+
+            const useNativeTransition = !options.instant
+                && !reducedMotion.matches
+                && typeof document.startViewTransition === 'function'
+                && currentRoute !== routeKey;
+
+            if (useNativeTransition) {
+                try {
+                    const transition = document.startViewTransition({
+                        update: render,
+                        types: ['book-route', `book-route-${routeKey}`],
+                    });
+                    await transition.finished.catch(() => undefined);
+                } catch (error) {
+                    // A failed enhancement must never strand the route.
+                    render();
+                }
+            } else {
+                render();
+            }
+            this.transitionInFlight = false;
         },
 
         async transitionToDashboard(user = null, options = {}) {

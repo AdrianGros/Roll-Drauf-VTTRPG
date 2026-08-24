@@ -33,7 +33,7 @@
 
         .book-subtitle {
             font-family: 'Cinzel', serif;
-            color: var(--vtt-gold);
+            color: var(--vtt-rubric);
             font-size: 28px;
             font-weight: 700;
             letter-spacing: 1px;
@@ -111,23 +111,23 @@
         .book-login-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, var(--vtt-plum-deep) 0%, var(--vtt-plum) 100%);
+            background: var(--vtt-rubric);
             color: var(--vtt-paper-panel);
-            border: 2px solid var(--vtt-gold);
+            border: 2px solid var(--vtt-rubric-deep);
             border-radius: 6px;
             font-size: 16px;
             font-weight: 600;
             font-family: var(--vtt-font-heading);
             letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
             margin-top: 10px;
             box-shadow: 0 10px 22px rgba(42, 26, 18, 0.12);
         }
 
         .book-login-btn:hover {
-            background: linear-gradient(135deg, var(--vtt-plum) 0%, #6b3c7a 100%);
-            box-shadow: 0 0 0 3px rgba(202, 163, 59, 0.12), 0 14px 26px rgba(42, 26, 18, 0.14);
+            background: var(--vtt-rubric-deep);
+            box-shadow: 0 0 0 3px rgba(122, 46, 46, 0.16), 0 14px 26px rgba(42, 26, 18, 0.14);
             transform: translateY(-2px);
         }
 
@@ -145,6 +145,48 @@
             border: 1px solid rgba(169, 74, 69, 0.22);
             border-radius: 6px;
             line-height: 1.4;
+        }
+
+        .book-form-status {
+            margin: 0 0 14px;
+            padding: 10px 12px;
+            border: 1px solid rgba(63, 107, 79, 0.35);
+            border-radius: 6px;
+            background: rgba(63, 107, 79, 0.09);
+            color: var(--vtt-success-ink);
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .book-form-status-action {
+            width: 100%;
+            min-height: 46px;
+            margin: 0 0 14px;
+            background: var(--vtt-rubric);
+            border: 1px solid var(--vtt-rubric-deep);
+            color: var(--vtt-paper-panel);
+        }
+
+        .book-form-status-action:hover,
+        .book-form-status-action:focus-visible {
+            background: var(--vtt-rubric-deep);
+        }
+
+        .book-auth-error {
+            margin: 12px 0 0;
+            padding: 10px 12px;
+            border: 1px solid rgba(122, 46, 46, 0.35);
+            border-radius: 6px;
+            background: rgba(122, 46, 46, 0.08);
+            color: var(--vtt-error-ink);
+            font-size: 15px;
+            line-height: 1.45;
+            text-align: left;
+        }
+
+        .book-input[aria-invalid="true"] {
+            border-color: var(--vtt-error-ink) !important;
+            box-shadow: 0 0 0 3px rgba(122, 46, 46, 0.14) !important;
         }
 
         .mfa-input {
@@ -327,14 +369,14 @@
                         <img src="/static/images/spellbook-logo.svg" alt="" class="book-logo login-book-logo">
                         <div>
                             <div class="book-branding">roll drauf</div>
-                            <div class="book-subtitle">Spellbook</div>
+                            <div class="book-subtitle">Buchzugang</div>
                         </div>
                     </div>
 
                     <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Discord login gate">
                         <div id="statusBanner" class="book-status" role="status" aria-live="polite"></div>
                         <div class="book-discord-gate-copy">
-                            Der Einstieg in das VTT läuft ausschließlich über Discord. Du brauchst zwei Dinge: Mitgliedschaft im Roll-Drauf Server und eine gueltige Freischaltung durch den Bot.
+                            Der Einstieg in das VTT läuft ausschließlich über Discord. Du brauchst zwei Dinge: Mitgliedschaft im Roll-Drauf-Server und eine gültige Freischaltung durch den Bot.
                         </div>
                         <div class="book-discord-steps" aria-label="Discord access requirements">
                             <div class="book-discord-step">
@@ -347,7 +389,7 @@
                             </div>
                             <div class="book-discord-step">
                                 <strong>3. Bot-Freischaltung besitzen</strong>
-                                Der Roll-Drauf Bot muss deinem Discord-Konto einen gueltigen VTT-Zugang zugewiesen haben.
+                                Der Roll-Drauf-Bot muss deinem Discord-Konto einen gültigen VTT-Zugang zugewiesen haben.
                             </div>
                         </div>
 
@@ -362,29 +404,31 @@
                         </div>
                     </div>
 
-                    <form id="passwordLoginForm" class="book-form book-auth-form" hidden novalidate aria-label="Password login">
+                    <form id="passwordLoginForm" class="book-form book-auth-form" hidden novalidate aria-label="Anmeldung">
+                        <div id="passwordLoginStatus" class="book-form-status" role="status" aria-live="polite" hidden></div>
+                        <button type="button" class="book-form-status-action" id="passwordLoginContinueBtn" hidden>Übersicht öffnen</button>
                         <div class="form-group">
                             <label for="loginUsername">Benutzername</label>
-                            <input type="text" id="loginUsername" name="username" required autocomplete="username">
+                            <input type="text" class="book-input" id="loginUsername" name="username" required autocomplete="username" aria-describedby="passwordLoginError">
                         </div>
                         <div class="form-group">
                             <label for="loginPassword">Passwort</label>
-                            <input type="password" id="loginPassword" name="password" required autocomplete="current-password">
+                            <input type="password" class="book-input" id="loginPassword" name="password" required autocomplete="current-password" aria-describedby="passwordLoginError">
                         </div>
                         <div class="book-auth-actions">
                             <button type="submit" class="btn btn-primary" id="passwordLoginSubmitBtn">Anmelden</button>
-                            <div class="error" id="passwordLoginError" role="alert"></div>
                         </div>
+                        <div class="error book-auth-error" id="passwordLoginError" role="alert" aria-live="assertive" tabindex="-1"></div>
                     </form>
                 </div>
             </section>
 
             <section class="login-book-page login-book-page--right" aria-hidden="true">
                 <div class="login-book-paper login-book-paper--welcome" id="loginWelcomePage">
-                    <div class="login-book-welcome-kicker">Discord Access</div>
+                    <div class="login-book-welcome-kicker">Discord-Zugang</div>
                     <h2 class="login-book-welcome-title">Der Zugang liegt im Server</h2>
                     <p class="login-book-welcome-copy">
-                        Dieses VTT gehört zum Discord-Server. Discord liefert die Identität, der Bot prueft Mitgliedschaft und Freischaltung, und erst dann wird die lokale VTT-Session geöffnet.
+                        Dieses VTT gehört zum Discord-Server. Discord liefert die Identität, der Bot prüft Mitgliedschaft und Freischaltung, und erst dann wird die lokale VTT-Session geöffnet.
                     </p>
 
                     <div class="login-book-engraving">
@@ -395,23 +439,21 @@
                     </div>
 
                     <div class="login-book-welcome-footer">
-                        <span>Discord Only</span>
-                        <span>Server + Bot Access Required</span>
+                        <span>Nur Discord</span>
+                        <span>Server- und Bot-Freischaltung</span>
                     </div>
                 </div>
             </section>
         </div>
     </div>
 
-    <!-- GSAP loaded locally to ensure reliable loading -->
-    <script src="/static/js/gsap.min.js"></script>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/book-scene.js"></script>
 
     <script>
         // Captured synchronously the instant this script runs - before
         // DOMContentLoaded (and initEntryStatus(), which strips ?logged_out=1
-        // from the URL) and before GSAP-readiness retries or the duplicate
+        // from the URL) and before duplicate
         // DOMContentLoaded/window.load triggers can race a one-time
         // sessionStorage flag. This is the single source of truth for "did we
         // just log out" for this entire page load - a fresh logout must be
@@ -420,31 +462,21 @@
         const FORCE_LOGGED_OUT = new URLSearchParams(window.location.search).get('logged_out') === '1'
             || consumeForcedLogout();
 
-        // Wait for BOTH DOMContentLoaded AND window.load to ensure GSAP is loaded
+        // The cover is an explicit, deterministic entry state. The form is
+        // revealed only after the reader activates the cover, so the first
+        // checkpoint is meaningful and never captures an in-flight animation.
         let bookInitStarted = false;
 
         function initBook() {
             console.log('[Login] Initializing book');
 
-            if (typeof gsap === 'undefined') {
-                console.warn('[Login] GSAP still not available, retrying in 200ms...');
-                setTimeout(initBook, 200);
-                return;
-            }
-
-            // DOMContentLoaded and window.load each schedule their own call, so
-            // whichever fires first (once GSAP is ready) runs the real logic
-            // below exactly once.
             if (bookInitStarted) {
                 return;
             }
             bookInitStarted = true;
 
-            console.log('[Login] ✓ GSAP is available');
-
-            // Create and open book
             BookScene.create();
-            BookScene.open();
+            BookScene.setCoverState(FORCE_LOGGED_OUT ? 'logged-out' : 'login');
 
             if (FORCE_LOGGED_OUT) {
                 return;
@@ -582,17 +614,38 @@
 
         function showPasswordLoginForm() {
             const form = document.getElementById('passwordLoginForm');
+            if (!form.hidden) {
+                return;
+            }
             form.hidden = false;
 
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 const errorEl = document.getElementById('passwordLoginError');
+                const statusEl = document.getElementById('passwordLoginStatus');
+                const continueBtn = document.getElementById('passwordLoginContinueBtn');
+                const usernameEl = document.getElementById('loginUsername');
+                const passwordEl = document.getElementById('loginPassword');
                 errorEl.textContent = '';
+                statusEl.hidden = true;
+                continueBtn.hidden = true;
+                usernameEl.removeAttribute('aria-invalid');
+                passwordEl.removeAttribute('aria-invalid');
 
-                const username = document.getElementById('loginUsername').value.trim();
-                const password = document.getElementById('loginPassword').value;
+                const username = usernameEl.value.trim();
+                const password = passwordEl.value;
                 const submitBtn = document.getElementById('passwordLoginSubmitBtn');
                 submitBtn.disabled = true;
+
+                if (!username || !password) {
+                    errorEl.textContent = 'Benutzername und Passwort werden benötigt.';
+                    usernameEl.setAttribute('aria-invalid', username ? 'false' : 'true');
+                    passwordEl.setAttribute('aria-invalid', password ? 'false' : 'true');
+                    submitBtn.disabled = false;
+                    errorEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                    errorEl.focus({ preventScroll: true });
+                    return;
+                }
 
                 try {
                     const response = await fetch('/api/auth/login', {
@@ -601,18 +654,33 @@
                         credentials: 'include',
                         body: JSON.stringify({ username, password })
                     });
-                    const data = await response.json().catch(() => ({}));
+                    await response.json().catch(() => ({}));
 
                     if (!response.ok) {
-                        errorEl.textContent = data.error || 'Login fehlgeschlagen.';
+                        errorEl.textContent = 'Benutzername oder Passwort ist nicht korrekt. Prüfe beide Angaben und versuche es erneut.';
+                        usernameEl.setAttribute('aria-invalid', 'true');
+                        passwordEl.setAttribute('aria-invalid', 'true');
                         submitBtn.disabled = false;
+                        errorEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                        errorEl.focus({ preventScroll: true });
                         return;
                     }
 
-                    window.location.href = '/dashboard';
+                    statusEl.textContent = 'Anmeldung bestätigt. Öffne deine Übersicht, sobald du bereit bist.';
+                    statusEl.hidden = false;
+                    submitBtn.textContent = 'Anmeldung bestätigt';
+                    continueBtn.hidden = false;
+                    continueBtn.focus();
+                    continueBtn.addEventListener('click', () => {
+                        window.location.href = '/dashboard';
+                    }, { once: true });
                 } catch (error) {
-                    errorEl.textContent = 'Netzwerkfehler: ' + error.message;
+                    errorEl.textContent = 'Der Zugang konnte gerade nicht geprüft werden. Bitte versuche es erneut.';
+                    usernameEl.setAttribute('aria-invalid', 'true');
+                    passwordEl.setAttribute('aria-invalid', 'true');
                     submitBtn.disabled = false;
+                    errorEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                    errorEl.focus({ preventScroll: true });
                 }
             });
         }

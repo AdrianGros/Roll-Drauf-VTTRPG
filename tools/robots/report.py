@@ -35,6 +35,7 @@ class SuiteRecord:
     findings: int = 0
     seconds: float = 0.0
     detail_path: str = ""
+    severity_counts: dict[str, int] = field(default_factory=dict)
 
 
 @dataclass
@@ -67,13 +68,16 @@ class RunEvidence:
         lines = [
             f"# Roll Drauf VTT — Robot Run {self.git_sha}",
             f"", f"Started: {self.started_at}", f"",
-            "| Suite | Status | Findings | Seconds |",
-            "|---|---|---|---|",
+            "| Suite | Status | Findings | Seconds | Severity |",
+            "|---|---|---:|---:|---|",
         ]
         for suite in self.suites:
+            severity = ", ".join(
+                f"{name}:{count}" for name, count in sorted(suite.severity_counts.items())
+            ) or "-"
             lines.append(
                 f"| {suite.name} | {suite.status} | {suite.findings} | "
-                f"{suite.seconds:.1f} |")
+                f"{suite.seconds:.1f} | {severity} |")
         lines.append("")
         lines.append(f"Overall: **{run_json['status']}**")
         (self.run_dir / "report.md").write_text(
