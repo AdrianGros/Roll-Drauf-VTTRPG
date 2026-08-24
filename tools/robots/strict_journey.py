@@ -592,6 +592,7 @@ class StrictJourney:
                 return {
                     viewport: {width: innerWidth, height: innerHeight},
                     elements: {
+                        'book-surface': rect('#book'),
                         'dashboard-scene': rect('#book-dashboard-scene'),
                         'dashboard-page': rect('.book-dashboard-page'),
                         'primary-nav': rect('.book-dashboard-ribbon'),
@@ -617,6 +618,19 @@ class StrictJourney:
             viewport_name=viewport_name,
             overlap_pairs=CRITICAL_OVERLAP_PAIRS,
         ))
+        book_surface = elements.get('book-surface')
+        page = elements.get('dashboard-page')
+        if book_surface and page and book_surface.bottom < page.bottom - 1:
+            self._finding(
+                "high",
+                "visual",
+                "dashboard-settled",
+                "the book paper surface extends to the bottom of the page content",
+                (
+                    f"book surface ends at y={book_surface.bottom:.0f}, "
+                    f"page content ends at y={page.bottom:.0f}"
+                ),
+            )
 
     def _assert_document_geometry(self, page, role: str, viewport_name: str) -> None:
         raw = page.evaluate(

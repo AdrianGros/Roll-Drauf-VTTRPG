@@ -2724,8 +2724,37 @@ body.has-reduced-motion .book-dashboard-topbar {
 }
 
 body.is-book-scene-dashboard #book,
-body.is-book-scene-transition #book {
+body.is-book-scene-transition #book,
+body.is-book-scene-return-transition #book {
+    /* The dashboard is a scrollable reading surface. Let its in-flow page
+       content determine the book height instead of stopping at the cover's
+       viewport-shaped aspect ratio. */
+    aspect-ratio: auto;
+    height: auto;
+    min-height: min(78vh, 880px);
     background: var(--vtt-paper);
+}
+
+body.is-book-scene-dashboard #book-scene-wrapper,
+body.is-book-scene-transition #book-scene-wrapper,
+body.is-book-scene-return-transition #book-scene-wrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+body.is-book-scene-dashboard .book-scene-stage,
+body.is-book-scene-transition .book-scene-stage,
+body.is-book-scene-return-transition .book-scene-stage {
+    align-items: flex-start;
+}
+
+body.is-book-scene-dashboard .book-scene-backdrop,
+body.is-book-scene-transition .book-scene-backdrop,
+body.is-book-scene-return-transition .book-scene-backdrop {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    will-change: transform;
 }
 
 body.is-book-scene-dashboard .book-shell-page-stack,
