@@ -1749,57 +1749,22 @@ body.is-book-scene-dashboard #book {
 #login-content .login-book-page-header {
     position: relative;
     isolation: isolate;
-    min-height: 148px;
+    aspect-ratio: 16 / 9;
     display: flex;
     align-items: center;
     gap: 18px;
     margin-bottom: 26px;
-    padding: 24px 28px;
+    padding: 0;
     overflow: hidden;
-    border: 1px solid rgba(202, 163, 59, 0.56);
-    border-radius: 10px;
-    background: #102142;
-    box-shadow: 0 14px 24px rgba(20, 30, 64, 0.2);
-}
-
-#login-content .login-book-page-header::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-        linear-gradient(90deg, rgba(8, 19, 48, 0.82) 0%, rgba(11, 27, 61, 0.58) 54%, rgba(8, 19, 48, 0.3) 100%),
-        radial-gradient(circle at 18% 40%, rgba(202, 163, 59, 0.2), transparent 30%);
-    pointer-events: none;
+    background: transparent;
 }
 
 #login-content .login-book-banner-image {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
+    position: relative;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center 48%;
+    object-fit: contain;
     display: block;
-    filter: saturate(0.88) contrast(1.04);
-}
-
-#login-content .login-book-page-header > div {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    gap: 0.35rem;
-}
-
-#login-content .login-book-page-header .book-branding {
-    color: #fffaf0;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.58);
-}
-
-#login-content .login-book-page-header .book-subtitle {
-    color: #f0d27e;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.64);
 }
 
 #login-content .login-book-paper--login,
@@ -2879,10 +2844,7 @@ body.is-book-scene-transition .book-shell-page-stack {
     }
 
     #login-content .login-book-page-header {
-        gap: 12px;
         margin-bottom: 10px;
-        min-height: 112px;
-        padding: 18px 22px;
     }
 
     #login-content .book-branding {
