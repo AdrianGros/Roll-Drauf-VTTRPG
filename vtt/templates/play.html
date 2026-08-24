@@ -34,10 +34,23 @@
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(140deg, var(--bg-a) 0%, var(--bg-b) 100%);
             color: var(--text);
+            /* svh, nicht vh: 100vh luegt auf Telefonen (Browser-Chrome
+               verdeckt den unteren Streifen -- Goblin-Delve-Mobile-Lektion,
+               Mobile-Audit 2026-08-24). vh-Zeile als Fallback davor. */
             height: 100vh;
+            height: 100svh;
             overflow: hidden;
+            overscroll-behavior-y: contain;
             display: flex;
             flex-direction: column;
+        }
+        button, .tool-btn, .mini-control, .sidebar-tab, .mini-btn {
+            /* Doppeltipp-Zoom frisst sonst Aktionen (300ms-Delay). */
+            touch-action: manipulation;
+        }
+        input, select, textarea {
+            /* iOS zoomt bei Fokus auf Inputs mit Schrift < 16px. */
+            font-size: 16px;
         }
         header {
             height: 64px;
@@ -727,6 +740,14 @@
             padding: 0.55rem;
             border-bottom: 1px solid var(--line);
         }
+        /* Mobil ist die Sidebar ein Vollbild-Sheet und verdeckt den
+           Toggle -- sie braucht ihren eigenen Schliessen-Knopf. Desktop
+           behaelt den Toggle, der Knopf bleibt dort versteckt. */
+        .sidebar-close { display: none; }
+        @media (max-width: 1040px) {
+            .sidebar-tabs { grid-template-columns: repeat(4, 1fr) 48px; }
+            .sidebar-close { display: block; font-size: 1.2rem; }
+        }
         .sidebar-tab {
             border: 1px solid var(--line);
             border-radius: 8px;
@@ -993,21 +1014,138 @@
                 font-size: 0.74rem;
             }
         }
+        /* Mobile-Audit 2026-08-24 §5: unter 1040px ist der Tisch die
+           Ausklappkarte und braucht den GANZEN Screen. Vorher: 46px breiter
+           Karten-Schlitz, Wuerfelknopf off-screen, Werkzeugleiste als
+           ueberlappender Stapel. Jetzt: Buch-Chrome weg, Toolbar als
+           Daumenzonen-Leiste unten, Widgets als volle Sheets. */
         @media (max-width: 1040px) {
+            body.play-workspace-realign main {
+                width: 100vw;
+                padding: 0 !important;
+            }
+            .book-dashboard-topbar,
+            .play-status-strip .book-dashboard-meta {
+                display: none;
+            }
+            /* !important + explizite Zeilen: die Basisregeln (drei
+               Grid-Zeilen, Transform-Uebergaenge) gewinnen sonst den
+               Kaskaden-Streit -- gemessen: die Shell landete in einer
+               auto-Zeile (58px) und Zeile 3 (726px) blieb leer. Und:
+               will-change/transform auf der Ahnenkette macht die Kette
+               zum Containing Block fuer position:fixed -- die
+               Daumenzonen-Leiste klebte deshalb in der Shell statt am
+               Viewport. Mobil gibt es kein Desktop-Kino: alles aus. */
+            .play-workspace-page {
+                grid-template-rows: auto 1fr !important;
+                gap: 0;
+            }
+            .book-workspace-shell {
+                grid-row: 2;
+            }
+            .play-workspace-camera,
+            .play-workspace-page,
+            .book-workspace-shell,
+            .tabletop-shell,
+            header {
+                transition: none !important;
+                will-change: auto !important;
+                transform: none !important;
+                filter: none !important;
+            }
+            .play-status-strip {
+                padding: 0.35rem 0.6rem 0.15rem;
+            }
+            .tabletop-shell {
+                grid-template-columns: 1fr;
+                min-height: 0;
+            }
             .left-toolbar {
-                position: absolute;
-                left: 0.45rem;
-                top: 72px;
-                z-index: 30;
-                width: 46px;
-                border: 1px solid var(--line);
-                border-radius: 10px;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                top: auto;
+                width: auto;
+                height: calc(56px + env(safe-area-inset-bottom, 0px));
+                padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                gap: 8px;
+                border-right: none;
+                border-top: 1px solid var(--line);
+                background: rgba(7, 14, 28, 0.96);
+                z-index: 40;
+                overflow: visible;
+            }
+            .left-toolbar .spacer {
+                margin-top: 0;
+                margin-left: auto;
+                border-top: none;
+                padding-top: 0;
+            }
+            .tool-btn {
+                width: auto;
+                min-width: 64px;
+                height: 44px;
+                flex: 0 1 auto;
+            }
+            .stage {
+                padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+            }
+            .stage-topbar {
+                top: 0.4rem;
+                right: 0.4rem;
+                padding: 0.28rem;
+                gap: 0.28rem;
+            }
+            #zoomRange { display: none; }
+            .floating {
+                left: 0.4rem !important;
+                right: 0.4rem !important;
+                width: auto !important;
+                max-height: 42svh;
+            }
+            #layersWidget { top: 3rem; }
+            #tokenWidget {
+                bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+            }
+            /* Gestapelt, nicht uebereinander: beide Widgets teilten sich
+               denselben bottom-Anker und ueberlappten als Textbrei. */
+            #turnOrderWidget {
+                bottom: calc(118px + env(safe-area-inset-bottom, 0px));
+            }
+            .stage-topbar { flex-wrap: nowrap; }
+            .stage-topbar .mini-control {
+                width: auto;
+                flex: 0 0 auto;
+                padding: 0.35rem 0.5rem;
+                min-height: 44px;
+            }
+            #tokenCreatePanel {
+                width: min(280px, calc(100vw - 0.8rem)) !important;
             }
             .right-sidebar {
                 width: 100%;
                 max-width: 100%;
                 border-left: none;
+                padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
             }
+            .tabletop-shell:has(.right-sidebar.is-open) .stage-topbar {
+                right: 0.4rem;
+                opacity: 0;
+                pointer-events: none;
+            }
+            /* Auf kleinen Screens ist Wuerfeln die Kernaktion des
+               Tools-Tabs -- sie gehoert an den Anfang des Sheets, sonst
+               liegt sie im Landscape unter der Falz (Mobile-Gate). */
+            #panel-tools {
+                display: flex;
+                flex-direction: column;
+            }
+            #panel-tools.active { display: flex; }
+            #panel-tools .panel:has(#btnRoll) { order: -1; }
         }
         @media (prefers-reduced-motion: reduce) {
             .tool-btn,
@@ -1181,6 +1319,7 @@
                 <button class="sidebar-tab" data-tab="chat">Chat</button>
                 <button class="sidebar-tab active" data-tab="tools">Tools</button>
                 <button class="sidebar-tab" data-tab="session">Session</button>
+                <button id="btnSidebarClose" class="sidebar-tab sidebar-close" title="Schliessen" aria-label="Seitenleiste schliessen">×</button>
             </div>
 
             <div class="sidebar-content">

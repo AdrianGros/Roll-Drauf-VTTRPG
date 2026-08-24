@@ -381,8 +381,14 @@ input[type="radio"] {
         max-width: 100%;
     }
 
-    .btn,
-    button {
+    /* Nur Formular-Buttons stretchen -- die Pauschalregel "alle
+       Buttons 100%" hat seit der B1-CSS-Vereinheitlichung die
+       Spieltisch-Toolbars zu Vollbreite-Stapeln gesprengt
+       (Mobile-Gate-Screenshot 2026-08-24). */
+    .book-form .btn,
+    .book-form button,
+    .form-wrapper .btn,
+    .form-wrapper button {
         width: 100%;
     }
 
@@ -418,4 +424,17 @@ input[type="radio"] {
     button:hover {
         transform: none !important;
     }
+}
+
+
+/* Mobile-Audit 2026-08-24 §5: iOS zoomt beim Fokussieren von Inputs mit
+   Schrift unter 16px; auf Touch-Geraeten erzwingen wir die Grenze global.
+   Doppeltipp-Zoom-Delay auf allen Bedienelementen abschalten. */
+@media (pointer: coarse) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
+button, [role="button"], a.btn, .btn {
+    touch-action: manipulation;
 }

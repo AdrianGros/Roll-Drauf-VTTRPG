@@ -627,6 +627,12 @@
                     sidebar.classList.toggle("is-open");
                 });
             }
+            const sidebarClose = document.getElementById("btnSidebarClose");
+            if (sidebarClose && sidebar) {
+                sidebarClose.addEventListener("click", () => {
+                    sidebar.classList.remove("is-open");
+                });
+            }
 
             document.querySelectorAll(".sidebar-tab").forEach((button) => {
                 button.addEventListener("click", () => {
