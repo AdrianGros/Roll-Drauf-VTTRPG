@@ -193,6 +193,31 @@
             display: block;
         }
 
+        .book-auth-actions {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        #login-content .book-auth-actions > .btn {
+            width: 100%;
+            min-width: 0;
+            min-height: 44px;
+            padding: 9px 8px;
+            font-family: var(--vtt-font-heading);
+            font-size: clamp(0.68rem, 1.1vw, 0.82rem);
+            line-height: 1.15;
+            text-align: center;
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+
+        #login-content .book-auth-actions > .btn:hover,
+        #login-content .book-auth-actions > .btn:focus-visible {
+            outline: none;
+        }
+
         .book-input[aria-invalid="true"] {
             border-color: var(--vtt-error-ink) !important;
             box-shadow: 0 0 0 3px rgba(122, 46, 46, 0.14) !important;
@@ -465,8 +490,8 @@
                         </div>
                         <div class="book-auth-actions">
                             <button type="submit" class="btn btn-primary" id="passwordLoginSubmitBtn">Anmelden</button>
-                            <div class="book-page-note">Noch kein Konto? <a href="/signup.html">Jetzt registrieren</a></div>
-                            <div class="book-page-note"><a href="/forgot-password.html">Passwort vergessen?</a></div>
+                            <a class="btn btn-primary book-auth-action" href="/signup.html">Registrieren</a>
+                            <a class="btn btn-primary book-auth-action" href="/forgot-password.html">Passwort vergessen</a>
                         </div>
                         <div class="error book-auth-error" id="passwordLoginError" role="alert" aria-live="assertive" tabindex="-1"></div>
                     </form>
