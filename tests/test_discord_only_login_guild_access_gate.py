@@ -73,7 +73,10 @@ def test_login_page_exposes_standard_auth_and_optional_discord(client):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert "Optional mit Discord anmelden" in html
+    assert 'aria-label="Mit Discord anmelden"' in html
+    assert '<img src="/static/images/discord-symbol.svg" alt="" class="login-discord-button-icon">' in html
+    assert "<span>Mit Discord anmelden</span>" in html
+    assert "Optional mit Discord anmelden" not in html
     assert "Roll drauf im Discord" in html
     assert 'href="https://discord.gg/rolldrauf"' in html
     assert 'href="https://disboard.org/de/server/1244342177539166238"' in html

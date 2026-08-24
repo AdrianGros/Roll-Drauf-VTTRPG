@@ -124,26 +124,38 @@
         }
 
         .book-login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             width: 100%;
-            padding: 14px;
-            background: var(--vtt-rubric);
-            color: var(--vtt-paper-panel);
-            border: 2px solid var(--vtt-rubric-deep);
+            padding: 10px 14px;
+            background: #5865f2;
+            color: #fff;
+            border: 1px solid #4752c4;
             border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
             font-family: var(--vtt-font-heading);
-            letter-spacing: 1px;
+            letter-spacing: 0.02em;
             cursor: pointer;
             transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
-            margin-top: 10px;
-            box-shadow: 0 10px 22px rgba(42, 26, 18, 0.12);
+            margin-top: 0;
+            box-shadow: 0 8px 18px rgba(88, 101, 242, 0.2);
         }
 
         .book-login-btn:hover {
-            background: var(--vtt-rubric-deep);
-            box-shadow: 0 0 0 3px rgba(122, 46, 46, 0.16), 0 14px 26px rgba(42, 26, 18, 0.14);
+            background: #4752c4;
+            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.18), 0 12px 22px rgba(88, 101, 242, 0.24);
             transform: translateY(-2px);
+        }
+
+        .login-discord-button-icon {
+            width: 20px;
+            height: 15px;
+            display: block;
+            flex: 0 0 auto;
+            filter: brightness(0) invert(1);
         }
 
         .error {
@@ -278,7 +290,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin: 0 0 12px;
+            margin: 20px 0 12px;
             color: var(--vtt-ink-muted);
             font-size: 11px;
             letter-spacing: 0.08em;
@@ -500,7 +512,7 @@
 
                     <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Optionaler Discord-Login">
                         <div id="statusBanner" class="book-status" role="status" aria-live="polite"></div>
-                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Optional mit Discord anmelden">Optional mit Discord anmelden</button>
+                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Mit Discord anmelden"><img src="/static/images/discord-symbol.svg" alt="" class="login-discord-button-icon"><span>Mit Discord anmelden</span></button>
                         <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geöffnet...</div>
                         <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
                         <div class="error" id="discordError" role="alert" aria-live="polite"></div>
