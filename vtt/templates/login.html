@@ -185,6 +185,14 @@
             text-align: left;
         }
 
+        .book-auth-error:empty {
+            display: none;
+        }
+
+        .book-auth-error:not(:empty) {
+            display: block;
+        }
+
         .book-input[aria-invalid="true"] {
             border-color: var(--vtt-error-ink) !important;
             box-shadow: 0 0 0 3px rgba(122, 46, 46, 0.14) !important;
