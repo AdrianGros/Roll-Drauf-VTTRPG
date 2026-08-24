@@ -186,6 +186,7 @@
         sceneBuiltRoute: null,
         transitionInFlight: false,
         bookEntryArrivalTimer: null,
+        loginBookResizeObserver: null,
         navigationMap: {
             login: { prev: null, next: '/dashboard' },
             signup: { prev: '/login', next: '/register' },
@@ -269,6 +270,14 @@
             this.turnFront = document.getElementById('book-scene-turn-front');
             this.turnBack = document.getElementById('book-scene-turn-back');
 
+            if (this.loginContent && typeof window.ResizeObserver === 'function') {
+                this.loginBookResizeObserver = new window.ResizeObserver(() => {
+                    this.syncLoginBookHeight();
+                });
+                this.loginBookResizeObserver.observe(this.loginContent);
+            }
+            window.addEventListener('resize', () => this.syncLoginBookHeight());
+
             this.setCoverState('login');
 
             this.syncMotionPreference();
@@ -344,6 +353,35 @@
 
         syncMotionPreference() {
             document.body.classList.toggle('has-reduced-motion', Boolean(reducedMotion.matches));
+        },
+
+        syncLoginBookHeight() {
+            if (!this.book || !this.loginContent || !document.body.classList.contains('book-login-open')) {
+                return;
+            }
+
+            // The login spread is absolutely positioned inside the 3D shell,
+            // so its form content cannot contribute to #book's auto height.
+            // Measure the real spread and let the shell/background layers use
+            // that height instead of the cover's aspect-ratio height.
+            const contentHeight = Math.ceil(Math.max(
+                this.loginContent.scrollHeight,
+                this.loginContent.getBoundingClientRect().height,
+            ));
+            if (!contentHeight) {
+                return;
+            }
+
+            this.book.style.aspectRatio = 'auto';
+            this.book.style.height = `${contentHeight}px`;
+        },
+
+        resetLoginBookHeight() {
+            if (!this.book) {
+                return;
+            }
+            this.book.style.removeProperty('height');
+            this.book.style.removeProperty('aspect-ratio');
         },
 
         setCoverInteractive(enabled) {
@@ -1748,6 +1786,7 @@
             this.loginContent.style.pointerEvents = 'none';
             this.loginContent.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('book-login-open');
+            this.resetLoginBookHeight();
             [this.loginSpread, this.loginLeftPage, this.loginRightPage].forEach((node) => {
                 if (!node) {
                     return;
@@ -1783,6 +1822,7 @@
                 this.loginContent.removeAttribute('aria-hidden');
             }
             document.body.classList.add('book-login-open');
+            this.syncLoginBookHeight();
             this.setSceneState('login');
         },
 
