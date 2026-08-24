@@ -194,7 +194,10 @@ class TestExternalRollIngest:
                 "title": "Wurf",
                 "total": float("inf"),
                 "rolls": [{"formula": "z" * 500, "total": "not-a-number",
-                           "dice": ["a", 3, 4.5]}] * 40,
+                           "dice": ["a", 3, 4.5],
+                           "label": "L" * 200, "kind": "K" * 200,
+                           "surprise": "dropped"}] * 40,
+                "info": ["I" * 500] * 20,
                 "unexpected_key": {"nested": "junk"},
             },
         })
@@ -209,6 +212,11 @@ class TestExternalRollIngest:
         assert len(roll["rolls"][0]["formula"]) == 200
         assert roll["rolls"][0]["total"] is None
         assert roll["rolls"][0]["dice"] == [3, 4.5]
+        assert len(roll["rolls"][0]["label"]) == 60
+        assert len(roll["rolls"][0]["kind"]) == 20
+        assert "surprise" not in roll["rolls"][0]
+        assert len(roll["info"]) == 6
+        assert len(roll["info"][0]) == 120
         assert "unexpected_key" not in roll
 
     def test_needs_title_or_formula(self, app, dm_user, dm_client):

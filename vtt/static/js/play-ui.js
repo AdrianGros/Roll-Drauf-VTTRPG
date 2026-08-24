@@ -274,6 +274,32 @@
                     this.socket.sendExternalRoll(roll);
                     return true;
                 },
+                // HP sync (Beyond20 hp-update et al.): match the external
+                // character to a table token BY NAME and patch its HP via
+                // the normal token-update path, so every client sees it and
+                // the usual ownership/read-only rules apply.
+                updateCharacterHp: (update) => {
+                    if (this.readOnly || !update) return false;
+                    const name = String(update.name || "").trim().toLowerCase();
+                    if (!name) return false;
+                    const token = this._visibleTokens().find(
+                        (entry) => String(entry.name || "").trim().toLowerCase() === name
+                    );
+                    if (!token || !this._canMoveToken(token)) return false;
+                    const patch = {};
+                    if (Number.isFinite(update.hp)) patch.hp_current = Math.round(update.hp);
+                    if (Number.isFinite(update.maxHp) && update.maxHp > 0) patch.hp_max = Math.round(update.maxHp);
+                    if (!Object.keys(patch).length) return false;
+                    if (this.socket && this.socket.isConnected) {
+                        this.socket.updateToken(token.id, Number(token.version || 1), patch);
+                    } else {
+                        this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), patch)
+                            .then(() => this.loadBootstrap())
+                            .catch(() => {});
+                    }
+                    this._logActivity(`HP-Sync: ${token.name} -> ${patch.hp_current ?? "?"}${patch.hp_max ? ` / ${patch.hp_max}` : ""}.`, "info");
+                    return true;
+                },
             };
             window.dispatchEvent(new CustomEvent("rolldrauf:table-ready"));
             window.addEventListener("beforeunload", () => {
@@ -1245,9 +1271,7 @@
                 || `[${roll.source || "external"}] ${roll.character || payload?.sender_name || "?"}: ${roll.title || roll.formula || "Wurf"}${roll.total != null ? ` = ${roll.total}` : ""}`;
             const log = document.getElementById("diceLog");
             if (log) {
-                const line = document.createElement("div");
-                line.textContent = summary;
-                log.prepend(line);
+                log.prepend(this._buildExternalRollCard(roll, payload));
                 while (log.children.length > 8) {
                     log.removeChild(log.lastChild);
                 }
@@ -1258,6 +1282,73 @@
                 message: summary,
             });
             this._logActivity(summary, "info");
+        }
+
+        // Rich roll card: header (character + title), one row per
+        // component roll (label / formula / dice / total), context lines
+        // (save DCs etc). Built with DOM nodes + textContent only -- the
+        // envelope is server-sanitized, but external strings still never
+        // become HTML here.
+        _buildExternalRollCard(roll, payload) {
+            const card = document.createElement("div");
+            const advantage = String(roll.advantage || "normal");
+            card.className = `ext-roll-card${advantage === "crit" ? " crit" : ""}${advantage === "fumble" ? " fumble" : ""}`;
+
+            const header = document.createElement("div");
+            header.className = "ext-roll-header";
+            const who = document.createElement("strong");
+            who.textContent = roll.character || payload?.sender_name || "extern";
+            header.appendChild(who);
+            const title = document.createElement("span");
+            title.textContent = ` ${roll.title || roll.formula || "Wurf"}`;
+            header.appendChild(title);
+            if (advantage === "crit") {
+                const badge = document.createElement("span");
+                badge.className = "ext-roll-badge";
+                badge.textContent = "KRIT!";
+                header.appendChild(badge);
+            }
+            card.appendChild(header);
+
+            const rolls = Array.isArray(roll.rolls) ? roll.rolls : [];
+            rolls.slice(0, 8).forEach((entry) => {
+                const row = document.createElement("div");
+                row.className = `ext-roll-row${entry.kind ? ` kind-${entry.kind}` : ""}`;
+                const label = document.createElement("span");
+                label.className = "ext-roll-label";
+                label.textContent = entry.label || entry.kind || "Wurf";
+                row.appendChild(label);
+                const detail = document.createElement("span");
+                const dice = Array.isArray(entry.dice) && entry.dice.length
+                    ? ` [${entry.dice.join(", ")}]` : "";
+                detail.textContent = `${entry.formula || ""}${dice}`;
+                row.appendChild(detail);
+                const total = document.createElement("span");
+                total.className = "ext-roll-total";
+                total.textContent = entry.total != null ? String(entry.total) : "-";
+                row.appendChild(total);
+                card.appendChild(row);
+            });
+            if (!rolls.length && roll.total != null) {
+                const row = document.createElement("div");
+                row.className = "ext-roll-row";
+                row.textContent = `${roll.formula || ""} = ${roll.total}`;
+                card.appendChild(row);
+            }
+
+            const info = Array.isArray(roll.info) ? roll.info : [];
+            info.slice(0, 4).forEach((line) => {
+                const infoRow = document.createElement("div");
+                infoRow.className = "ext-roll-info";
+                infoRow.textContent = line;
+                card.appendChild(infoRow);
+            });
+
+            const source = document.createElement("div");
+            source.className = "ext-roll-source";
+            source.textContent = `via ${roll.source || "extern"}${roll.system ? ` · ${roll.system}` : ""}`;
+            card.appendChild(source);
+            return card;
         }
 
         _handleDiceBroadcast(payload) {

@@ -354,6 +354,30 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
             browser.close()
             return findings
 
+        # HP sync needs a token whose name matches the D&D Beyond
+        # character -- set up a map + token through the API first.
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Beyondkarte", "width": 700, "height": 490,
+                             "grid_size": 70}), headers=json_headers)
+        map_id = map_response.json().get("id")
+        api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/maps/activate",
+            data=json.dumps({"map_id": map_id}), headers=json_headers)
+        api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Rilbo Steinfaust", "x": 70, "y": 70,
+                             "token_type": "npc", "hp_current": 25, "hp_max": 25,
+                             "metadata_json": {"position_mode": "pixel"}}),
+            headers=json_headers)
+        # Reload so the table picks up map + token, then wait for the socket.
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[reload-setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+        page.wait_for_function("() => window.RollDraufTable", timeout=15_000)
+        page.wait_for_timeout(1_500)
+
         # The exact shape Beyond20 dispatches (detail is an ARRAY of args).
         page.evaluate(
             """() => {
@@ -364,17 +388,17 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
                     whisper: 0,
                     attack_rolls: [{
                         formula: "1d20+7",
-                        parts: [{rolls: [{roll: 16}]}, "+", 7],
-                        total: 23,
-                        "critical-success": false,
+                        parts: [{rolls: [{roll: 20}]}, "+", 7],
+                        total: 27,
+                        "critical-success": true,
                         "critical-failure": false,
                         type: "to-hit",
                     }],
                     damage_rolls: [["Slashing", {formula: "1d8+4",
                                                  parts: [{rolls: [{roll: 6}]}, "+", 4],
-                                                 total: 10}]],
+                                                 total: 10}, 0]],
                     total_damages: {"Slashing": 10},
-                    roll_info: [],
+                    roll_info: [["Save DC", "15 CON"]],
                     source: "beyond20-robot",
                 };
                 document.dispatchEvent(new CustomEvent(
@@ -384,18 +408,52 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
         # Broadcast round trip: the sender renders only on receiving the
         # server's broadcast, so this asserts the full server path.
         try:
-            page.wait_for_function(
-                "() => (document.getElementById('diceLog')?.textContent || '')"
-                ".includes('Rilbo Steinfaust')", timeout=10_000)
+            page.wait_for_selector("#diceLog .ext-roll-card", state="attached",
+                                   timeout=10_000)
         except Exception:
-            findings.append("[bridge] Beyond20 roll never reached the dice log "
+            findings.append("[bridge] Beyond20 roll never rendered a roll card "
                             "(bridge -> socket -> broadcast chain broke)")
-        dice_text = page.locator("#diceLog").text_content() or ""
-        if "beyond20" not in dice_text or "= 23" not in dice_text:
-            findings.append(f"[bridge] dice log entry malformed: {dice_text[:150]!r}")
+        card_checks = page.evaluate(
+            """() => {
+                const card = document.querySelector('#diceLog .ext-roll-card');
+                if (!card) return null;
+                const text = card.textContent || '';
+                return {
+                    crit: card.classList.contains('crit') && text.includes('KRIT'),
+                    character: text.includes('Rilbo Steinfaust'),
+                    damageRow: text.includes('Slashing') && text.includes('1d8+4'),
+                    dice: text.includes('[20]') && text.includes('[6]'),
+                    info: text.includes('Save DC: 15 CON'),
+                    source: text.includes('via beyond20'),
+                };
+            }""")
+        if not card_checks:
+            findings.append("[card] no .ext-roll-card in the dice log")
+        else:
+            for key, ok in card_checks.items():
+                if not ok:
+                    findings.append(f"[card] roll card missing expected part: {key}")
         chat_text = page.locator("#chatLog").text_content() or ""
         if "Rilbo Steinfaust" not in chat_text:
             findings.append("[bridge] Beyond20 roll missing from the chat log")
+
+        # HP sync: Beyond20_UpdateHP must patch the matching token's HP.
+        page.evaluate(
+            """() => {
+                document.dispatchEvent(new CustomEvent("Beyond20_UpdateHP", {
+                    detail: [{action: "hp-update",
+                              character: {name: "Rilbo Steinfaust", hp: 18,
+                                          "max-hp": 25, "temp-hp": 0}}],
+                }));
+            }""")
+        try:
+            page.wait_for_function(
+                "() => (document.getElementById('tokenList')?.textContent || '')"
+                ".includes('HP 18 / 25')", timeout=10_000)
+        except Exception:
+            token_text = page.locator("#tokenList").text_content() or ""
+            findings.append(f"[hp-sync] Beyond20 hp-update never reached the token "
+                            f"(token list shows: {token_text[:120]!r})")
 
         # Reload: the roll must come back via bootstrap chat history.
         if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):

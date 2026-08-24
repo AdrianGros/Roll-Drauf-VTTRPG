@@ -1142,6 +1142,11 @@ def register_socket_handlers(socketio):
                 clean_entry = {
                     "formula": _clean_str(entry.get("formula"), 200),
                     "total": _clean_number(entry.get("total")),
+                    # Rich-card fields (M-Beyond20 cards): a short display
+                    # label ("Slashing", "To Hit") and a kind tag
+                    # ("attack"/"damage"/...) per component roll.
+                    "label": _clean_str(entry.get("label"), 60),
+                    "kind": _clean_str(entry.get("kind"), 20),
                 }
                 dice = entry.get("dice")
                 if isinstance(dice, list):
@@ -1150,6 +1155,15 @@ def register_socket_handlers(socketio):
                         if cleaned is not None
                     ]
                 clean_rolls.append(clean_entry)
+
+        # Free-form context lines ("Save DC: 15 CON") -- short strings only.
+        clean_info = []
+        raw_info = roll.get("info")
+        if isinstance(raw_info, list):
+            for line in raw_info[:6]:
+                text = _clean_str(line, 120)
+                if text:
+                    clean_info.append(text)
 
         envelope = {
             "source": source,
@@ -1161,6 +1175,7 @@ def register_socket_handlers(socketio):
             "total": total,
             "rolls": clean_rolls,
             "advantage": advantage,
+            "info": clean_info,
         }
 
         # Compact one-line form for persistence + chat history.

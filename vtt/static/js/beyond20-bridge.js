@@ -30,6 +30,14 @@
         return Boolean(window.RollDraufTable && typeof window.RollDraufTable.sendExternalRoll === "function");
     }
 
+    function dispatchToTable(action) {
+        if (action.type === "roll") {
+            window.RollDraufTable.sendExternalRoll(action.payload);
+        } else if (action.type === "hp" && typeof window.RollDraufTable.updateCharacterHp === "function") {
+            window.RollDraufTable.updateCharacterHp(action.payload);
+        }
+    }
+
     function detailPayload(event) {
         var detail = event && event.detail;
         if (Array.isArray(detail)) {
@@ -75,21 +83,38 @@
         var attackRolls = Array.isArray(request.attack_rolls) ? request.attack_rolls : [];
         attackRolls.forEach(function (roll) {
             var entry = asRollEntry(roll);
-            if (entry) rolls.push(entry);
+            if (entry) {
+                entry.kind = "attack";
+                entry.label = String((roll && roll.type) || "Wurf");
+                rolls.push(entry);
+            }
         });
 
+        // damage_rolls entries are [damageType, Roll, flags] tuples per the
+        // Beyond20 API docs; tolerate a plain roll object too.
         var damageRolls = Array.isArray(request.damage_rolls) ? request.damage_rolls : [];
         damageRolls.forEach(function (item) {
-            // Entries are commonly [label, rollObject, flags]; tolerate a
-            // plain roll object too.
             var label = Array.isArray(item) ? String(item[0] || "") : "";
             var roll = Array.isArray(item) ? item[1] : item;
             var entry = asRollEntry(roll, label);
             if (entry) {
+                entry.kind = "damage";
+                entry.label = label || "Schaden";
                 if (label && !entry.formula) entry.formula = label;
                 rolls.push(entry);
             }
         });
+
+        // roll_info is an array of [name, value] string tuples (save DCs
+        // and similar context).
+        var info = [];
+        if (Array.isArray(request.roll_info)) {
+            request.roll_info.forEach(function (tuple) {
+                if (Array.isArray(tuple) && tuple.length >= 2) {
+                    info.push(String(tuple[0]) + ": " + String(tuple[1]));
+                }
+            });
+        }
 
         var primary = attackRolls[0] || null;
         var anyCrit = attackRolls.some(function (roll) {
@@ -116,7 +141,8 @@
         }
 
         var title = String(request.title || "").trim();
-        if (request.whisper) {
+        // whisper enum: 0 = none, 1 = whisper, 2 = query, 3 = hide info.
+        if (request.whisper === 1 || request.whisper === 3) {
             title = (title ? title + " " : "") + "(gefluestert)";
         }
 
@@ -130,19 +156,21 @@
             total: total,
             rolls: rolls,
             advantage: anyCrit ? "crit" : (anyFumble ? "fumble" : "normal"),
+            info: info,
         };
     }
 
-    function deliver(envelope) {
-        if (!envelope) {
+    function deliver(type, payload) {
+        if (!payload) {
             return;
         }
+        var action = { type: type, payload: payload };
         if (tableReady()) {
-            window.RollDraufTable.sendExternalRoll(envelope);
+            dispatchToTable(action);
         } else {
-            // Table socket not up yet -- keep a short queue so rolls made
-            // during page load are not lost.
-            queue.push(envelope);
+            // Table socket not up yet -- keep a short queue so events that
+            // arrive during page load are not lost.
+            queue.push(action);
             if (queue.length > 10) {
                 queue.shift();
             }
@@ -151,7 +179,7 @@
 
     window.addEventListener("rolldrauf:table-ready", function () {
         while (queue.length && tableReady()) {
-            window.RollDraufTable.sendExternalRoll(queue.shift());
+            dispatchToTable(queue.shift());
         }
     });
 
@@ -165,9 +193,32 @@
 
     document.addEventListener("Beyond20_RenderedRoll", function (event) {
         try {
-            deliver(normalizeRenderedRoll(detailPayload(event)));
+            deliver("roll", normalizeRenderedRoll(detailPayload(event)));
         } catch (error) {
             console.warn("[beyond20-bridge] roll konnte nicht verarbeitet werden:", error);
+        }
+    });
+
+    // hp-update messages: {action, character} with character carrying
+    // name, hp, "max-hp", "temp-hp" (exact keys per the Beyond20 API
+    // docs). Also fired once when a sheet is opened, seeding start HP.
+    document.addEventListener("Beyond20_UpdateHP", function (event) {
+        try {
+            var request = detailPayload(event) || {};
+            var character = request.character || request;
+            var name = String((character && character.name) || "").trim();
+            if (!name) {
+                return;
+            }
+            var hp = Number(character.hp);
+            var maxHp = Number(character["max-hp"]);
+            deliver("hp", {
+                name: name,
+                hp: isFinite(hp) ? hp : null,
+                maxHp: isFinite(maxHp) ? maxHp : null,
+            });
+        } catch (error) {
+            console.warn("[beyond20-bridge] hp-update konnte nicht verarbeitet werden:", error);
         }
     });
 })();

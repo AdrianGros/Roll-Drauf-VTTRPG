@@ -777,6 +777,56 @@
             overflow-y: auto;
             font-size: 0.83rem;
         }
+        /* Rich cards for external rolls (Beyond20 etc.) in the dice log. */
+        .ext-roll-card {
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--primary);
+            border-radius: 8px;
+            padding: 0.4rem 0.5rem;
+            margin-bottom: 0.4rem;
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .ext-roll-card.crit { border-left-color: #e8c766; }
+        .ext-roll-card.fumble { border-left-color: var(--danger); }
+        .ext-roll-header { margin-bottom: 0.28rem; }
+        .ext-roll-badge {
+            margin-left: 0.4rem;
+            padding: 0.05rem 0.4rem;
+            border-radius: 999px;
+            background: rgba(232, 199, 102, 0.25);
+            border: 1px solid rgba(232, 199, 102, 0.6);
+            color: #f2dd9b;
+            font-size: 0.68rem;
+            font-weight: 700;
+        }
+        .ext-roll-row {
+            display: flex;
+            gap: 0.45rem;
+            align-items: baseline;
+            font-size: 0.78rem;
+            padding: 0.1rem 0;
+        }
+        .ext-roll-label {
+            color: var(--muted);
+            min-width: 72px;
+            text-transform: capitalize;
+        }
+        .ext-roll-row.kind-damage .ext-roll-label { color: #ffb3a0; }
+        .ext-roll-total {
+            margin-left: auto;
+            font-weight: 700;
+            color: #8cc0ff;
+        }
+        .ext-roll-info {
+            font-size: 0.72rem;
+            color: var(--muted);
+            padding-top: 0.15rem;
+        }
+        .ext-roll-source {
+            font-size: 0.66rem;
+            color: rgba(158, 174, 207, 0.7);
+            margin-top: 0.25rem;
+        }
         .activity-line {
             padding: 0.25rem 0;
             border-bottom: 1px dashed rgba(255,255,255,0.12);
