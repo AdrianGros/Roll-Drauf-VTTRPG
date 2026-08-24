@@ -74,7 +74,12 @@ def test_login_page_exposes_standard_auth_and_optional_discord(client):
     html = response.get_data(as_text=True)
 
     assert "Optional mit Discord anmelden" in html
-    assert "Serverseitige Rollenprüfung" in html
+    assert "Roll drauf im Discord" in html
+    assert 'href="https://discord.gg/rolldrauf"' in html
+    assert 'href="https://disboard.org/de/server/1244342177539166238"' in html
+    assert "Dein Zugang, deine Wahl" not in html
+    assert "Die Registrierung legt einen normalen Player-Account" not in html
+    assert "/static/images/discord-symbol.svg" in html
     assert "E-Mail oder Benutzername" in html
     assert '<form id="passwordLoginForm" class="book-form book-auth-form" hidden' not in html
     assert "/signup.html" in html

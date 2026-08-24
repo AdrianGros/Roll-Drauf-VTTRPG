@@ -2066,8 +2066,9 @@ body.is-book-scene-dashboard #book {
         max-width: 100%;
     }
 
+    /* Keep the community CTA reachable on mobile; the two pages stack. */
     #login-content .login-book-page--right {
-        display: none;
+        display: flex;
     }
 
     #login-content .book-link {

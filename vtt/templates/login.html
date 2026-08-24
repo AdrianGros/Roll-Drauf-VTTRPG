@@ -343,6 +343,120 @@
             text-align: center;
         }
 
+        .login-discord-community {
+            display: grid;
+            gap: 16px;
+            width: min(100%, 420px);
+            margin: 0 auto;
+            padding: 22px 24px;
+            border: 1px solid rgba(88, 101, 242, 0.2);
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(255, 252, 247, 0.82), rgba(236, 224, 207, 0.58)),
+                rgba(255, 249, 239, 0.48);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.54),
+                0 12px 24px rgba(42, 26, 18, 0.08);
+            text-align: left;
+        }
+
+        .login-discord-community-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .login-discord-logo {
+            flex: 0 0 auto;
+            width: 44px;
+            height: 32px;
+            display: block;
+        }
+
+        .login-discord-community-mark {
+            margin-bottom: 3px;
+            color: rgba(133, 95, 63, 0.94);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .login-discord-community-name {
+            margin: 0;
+            color: rgba(73, 41, 39, 0.96);
+            font-family: var(--vtt-font-heading);
+            font-size: 1.34rem;
+            line-height: 1.1;
+        }
+
+        .login-discord-community-copy {
+            margin: 0;
+            color: rgba(90, 63, 53, 0.92);
+            line-height: 1.6;
+        }
+
+        .login-discord-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .login-discord-tag {
+            padding: 5px 9px;
+            border: 1px solid rgba(88, 101, 242, 0.18);
+            border-radius: 999px;
+            background: rgba(224, 227, 255, 0.52);
+            color: rgba(67, 63, 103, 0.92);
+            font-size: 0.74rem;
+            line-height: 1.1;
+        }
+
+        .login-discord-join {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 14px;
+            border: 1px solid #5865f2;
+            border-radius: 8px;
+            background: #5865f2;
+            color: #fff;
+            font-family: var(--vtt-font-heading);
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 9px 18px rgba(88, 101, 242, 0.2);
+            transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+        }
+
+        .login-discord-join:hover,
+        .login-discord-join:focus-visible {
+            outline: none;
+            background: #4752c4;
+            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.18), 0 12px 22px rgba(88, 101, 242, 0.24);
+            transform: translateY(-1px);
+        }
+
+        .login-discord-directory {
+            width: fit-content;
+            color: rgba(73, 41, 39, 0.86);
+            font-size: 0.82rem;
+            text-decoration: underline;
+            text-decoration-color: rgba(202, 163, 59, 0.7);
+            text-underline-offset: 3px;
+        }
+
+        .login-discord-directory:hover,
+        .login-discord-directory:focus-visible {
+            color: var(--vtt-gold-deep);
+        }
+
+        .login-discord-disclaimer {
+            margin: 0;
+            color: rgba(101, 73, 60, 0.72);
+            font-size: 0.7rem;
+            line-height: 1.45;
+        }
+
         #discordError:not(:empty) {
             margin-top: 10px;
             padding: 10px 12px;
@@ -444,22 +558,44 @@
 
             <section class="login-book-page login-book-page--right" aria-hidden="true">
                 <div class="login-book-paper login-book-paper--welcome" id="loginWelcomePage">
-                    <div class="login-book-welcome-kicker">Buchzugang</div>
-                    <h2 class="login-book-welcome-title">Dein Zugang, deine Wahl</h2>
+                    <div class="login-book-welcome-kicker">Unsere Gemeinschaft</div>
+                    <h2 class="login-book-welcome-title">Roll drauf im Discord</h2>
                     <p class="login-book-welcome-copy">
-                        Ein Standardkonto startet mit E-Mail und Passwort. Discord bleibt als optionaler, serverseitig geprüfter Identitätslink verfügbar.
+                        Dein Abenteuer beginnt nicht allein: Im Roll-Drauf-Server findest du Menschen für D&amp;D, Geschichten und gemeinsame Spielabende.
                     </p>
 
-                    <div class="login-book-engraving">
-                        <div class="login-book-engraving-mark">roll drauf VTT</div>
-                        <p>
-                            Die Registrierung legt einen normalen Player-Account an. Kampagnen- und Plattformrechte werden anschließend ausschließlich serverseitig geprüft.
+                    <div class="login-discord-community" aria-label="Roll drauf Discord-Community">
+                        <div class="login-discord-community-header">
+                            <img src="/static/images/discord-symbol.svg" alt="Discord" class="login-discord-logo">
+                            <div>
+                                <div class="login-discord-community-mark">Roll drauf</div>
+                                <h3 class="login-discord-community-name">Würfel, Welten und Weggefährten</h3>
+                            </div>
+                        </div>
+                        <p class="login-discord-community-copy">
+                            LGBTQIA+-freundlich, offen für Neulinge und erfahrene Abenteurer:innen. Dich erwarten Kampagnen, One-Shots, Sessions zum Zuschauen und eine Community, die dir den Einstieg Schritt für Schritt erleichtert.
+                        </p>
+                        <div class="login-discord-tags" aria-label="Community-Schwerpunkte">
+                            <span class="login-discord-tag">D&amp;D</span>
+                            <span class="login-discord-tag">VTT</span>
+                            <span class="login-discord-tag">One-Shots</span>
+                            <span class="login-discord-tag">Queer-friendly</span>
+                        </div>
+                        <a class="login-discord-join" href="https://discord.gg/rolldrauf" target="_blank" rel="noopener noreferrer">
+                            <span>Discord-Server beitreten</span>
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                        <a class="login-discord-directory" href="https://disboard.org/de/server/1244342177539166238" target="_blank" rel="noopener noreferrer">
+                            Serverprofil auf DISBOARD ansehen
+                        </a>
+                        <p class="login-discord-disclaimer">
+                            Discord ist ein unabhängiger Dienst. Roll Drauf steht in keiner Partnerschaft mit Discord.
                         </p>
                     </div>
 
                     <div class="login-book-welcome-footer">
-                        <span>E-Mail oder Discord</span>
-                        <span>Serverseitige Rollenprüfung</span>
+                        <span>Offene Community</span>
+                        <span>Für Neulinge willkommen</span>
                     </div>
                 </div>
             </section>
