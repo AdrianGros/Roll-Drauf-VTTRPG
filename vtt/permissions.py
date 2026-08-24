@@ -16,8 +16,12 @@ from vtt.security import current_user
 # ============= PLATFORM ROLE CHECKS =============
 
 def _is_authenticated_user(user):
-    """Return True when the object is an active authenticated user model."""
-    return bool(user and getattr(user, 'id', None) is not None and getattr(user, 'is_active', False))
+    """Return True only for an authenticated, usable account."""
+    return bool(
+        user
+        and getattr(user, 'id', None) is not None
+        and getattr(user, 'is_usable', lambda: False)()
+    )
 
 
 def _resolve_authenticated_user():
@@ -101,11 +105,7 @@ def can_view_campaign(user, campaign):
     - DM/Headmaster: Own campaigns + joined campaigns
     - Player: Only joined campaigns
     """
-    if not user:
-        return False
-
-    # Suspended users can't view anything
-    if user.is_suspended:
+    if not _is_authenticated_user(user):
         return False
 
     # Platform support+ can see all
@@ -130,7 +130,7 @@ def can_edit_campaign(user, campaign):
     - DM/Headmaster who owns it: Own campaign
     - CO_DM: Co-edit capability
     """
-    if not user or user.is_suspended:
+    if not _is_authenticated_user(user):
         return False
 
     # Platform staff edit all
@@ -153,7 +153,7 @@ def can_delete_campaign(user, campaign):
     Rules:
     - Only DM who created it + mods/admins can delete
     """
-    if not user or user.is_suspended:
+    if not _is_authenticated_user(user):
         return False
 
     # Platform staff can delete any
@@ -240,11 +240,8 @@ def can_upload_asset(user, size_mb):
     Returns:
         (allowed: bool, message: str)
     """
-    if not user:
+    if not _is_authenticated_user(user):
         return False, "Not authenticated"
-
-    if user.is_suspended:
-        return False, "Account suspended"
 
     # Platform staff unlimited
     if user.platform_role in ['admin', 'owner']:

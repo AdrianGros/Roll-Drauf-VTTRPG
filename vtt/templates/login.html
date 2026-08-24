@@ -68,6 +68,20 @@
             font-style: italic;
         }
 
+        .book-auth-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 12px;
+            font-size: 0.86rem;
+        }
+
+        .book-auth-links a {
+            color: var(--vtt-rubric);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
         .book-input:hover,
         .book-input:focus,
         .book-input:focus-visible,
@@ -376,12 +390,12 @@
                     <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Discord login gate">
                         <div id="statusBanner" class="book-status" role="status" aria-live="polite"></div>
                         <div class="book-discord-gate-copy">
-                            Der Einstieg in das VTT läuft ausschließlich über Discord. Du brauchst zwei Dinge: Mitgliedschaft im Roll-Drauf-Server und eine gültige Freischaltung durch den Bot.
+                            Discord ist ein optionaler Schnellzugang. Für den normalen Einstieg kannst du dich direkt darunter mit deiner E-Mail-Adresse und deinem Passwort anmelden.
                         </div>
                         <div class="book-discord-steps" aria-label="Discord access requirements">
                             <div class="book-discord-step">
                                 <strong>1. Discord verbinden</strong>
-                                Melde dich mit deinem Discord-Konto an. Es gibt keine separate Website-Registrierung.
+                                Wenn dein Discord-Konto freigeschaltet ist, übernimmt Discord den Einstieg.
                             </div>
                             <div class="book-discord-step">
                                 <strong>2. Server-Mitglied sein</strong>
@@ -393,7 +407,7 @@
                             </div>
                         </div>
 
-                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Mit Discord anmelden">Mit Discord anmelden</button>
+                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Optional mit Discord anmelden">Optional mit Discord anmelden</button>
                         <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geöffnet...</div>
                         <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
                         <div class="book-auth-alt">
@@ -404,12 +418,12 @@
                         </div>
                     </div>
 
-                    <form id="passwordLoginForm" class="book-form book-auth-form" hidden novalidate aria-label="Anmeldung">
+                    <form id="passwordLoginForm" class="book-form book-auth-form" novalidate aria-label="Anmeldung mit E-Mail oder Benutzername">
                         <div id="passwordLoginStatus" class="book-form-status" role="status" aria-live="polite" hidden></div>
                         <button type="button" class="book-form-status-action" id="passwordLoginContinueBtn" hidden>Übersicht öffnen</button>
                         <div class="form-group">
-                            <label for="loginUsername">Benutzername</label>
-                            <input type="text" class="book-input" id="loginUsername" name="username" required autocomplete="username" aria-describedby="passwordLoginError">
+                            <label for="loginUsername">E-Mail oder Benutzername</label>
+                            <input type="text" class="book-input" id="loginUsername" name="identifier" required autocomplete="username" aria-describedby="passwordLoginError">
                         </div>
                         <div class="form-group">
                             <label for="loginPassword">Passwort</label>
@@ -417,6 +431,11 @@
                         </div>
                         <div class="book-auth-actions">
                             <button type="submit" class="btn btn-primary" id="passwordLoginSubmitBtn">Anmelden</button>
+                            <div class="book-page-note">Noch kein Konto? <a href="/signup.html">Jetzt registrieren</a></div>
+                            <div class="book-page-note"><a href="/forgot-password.html">Passwort vergessen?</a></div>
+                        </div>
+                        <div class="book-auth-links">
+                            <a href="/forgot-password.html">Passwort vergessen?</a>
                         </div>
                         <div class="error book-auth-error" id="passwordLoginError" role="alert" aria-live="assertive" tabindex="-1"></div>
                     </form>
@@ -425,22 +444,22 @@
 
             <section class="login-book-page login-book-page--right" aria-hidden="true">
                 <div class="login-book-paper login-book-paper--welcome" id="loginWelcomePage">
-                    <div class="login-book-welcome-kicker">Discord-Zugang</div>
-                    <h2 class="login-book-welcome-title">Der Zugang liegt im Server</h2>
+                    <div class="login-book-welcome-kicker">Buchzugang</div>
+                    <h2 class="login-book-welcome-title">Dein Zugang, deine Wahl</h2>
                     <p class="login-book-welcome-copy">
-                        Dieses VTT gehört zum Discord-Server. Discord liefert die Identität, der Bot prüft Mitgliedschaft und Freischaltung, und erst dann wird die lokale VTT-Session geöffnet.
+                        Ein Standardkonto startet mit E-Mail und Passwort. Discord bleibt als optionaler, serverseitig geprüfter Identitätslink verfügbar.
                     </p>
 
                     <div class="login-book-engraving">
                         <div class="login-book-engraving-mark">roll drauf VTT</div>
                         <p>
-                            Es gibt keinen getrennten Website-Signup mehr. Wer keinen Zugriff hat, wird mit einer klaren Meldung gestoppt und muss zuerst die Freischaltung im Discord erhalten.
+                            Die Registrierung legt einen normalen Player-Account an. Kampagnen- und Plattformrechte werden anschließend ausschließlich serverseitig geprüft.
                         </p>
                     </div>
 
                     <div class="login-book-welcome-footer">
-                        <span>Nur Discord</span>
-                        <span>Server- und Bot-Freischaltung</span>
+                        <span>E-Mail oder Discord</span>
+                        <span>Serverseitige Rollenprüfung</span>
                     </div>
                 </div>
             </section>
@@ -543,7 +562,7 @@
             const authNotice = currentUrl.searchParams.get('auth_notice');
 
             if (authNotice === 'discord_only') {
-                showStatus('Der Zugang erfolgt jetzt ausschließlich über Discord. Bitte melde dich mit deinem Discord-Konto an.');
+                showStatus('Du kannst dich direkt mit E-Mail und Passwort anmelden. Discord bleibt optional.');
                 currentUrl.searchParams.delete('auth_notice');
             }
 
@@ -566,6 +585,9 @@
         }
 
         async function initDiscordLogin() {
+            // The local login form is always available. Discord configuration
+            // only controls whether the optional button is shown.
+            showPasswordLoginForm();
             const currentUrl = new URL(window.location.href);
             const nextPath = currentUrl.searchParams.get('next') || '/dashboard';
             const discordFailure = currentUrl.searchParams.get('discord_error');
@@ -589,7 +611,6 @@
                 const data = await response.json();
                 if (!data.enabled) {
                     document.getElementById('loginDiscordGate').style.display = 'none';
-                    showPasswordLoginForm();
                     return;
                 }
 
@@ -614,10 +635,11 @@
 
         function showPasswordLoginForm() {
             const form = document.getElementById('passwordLoginForm');
-            if (!form.hidden) {
+            form.hidden = false;
+            if (form.dataset.bound === 'true') {
                 return;
             }
-            form.hidden = false;
+            form.dataset.bound = 'true';
 
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -632,14 +654,14 @@
                 usernameEl.removeAttribute('aria-invalid');
                 passwordEl.removeAttribute('aria-invalid');
 
-                const username = usernameEl.value.trim();
+                const identifier = usernameEl.value.trim();
                 const password = passwordEl.value;
                 const submitBtn = document.getElementById('passwordLoginSubmitBtn');
                 submitBtn.disabled = true;
 
-                if (!username || !password) {
-                    errorEl.textContent = 'Benutzername und Passwort werden benötigt.';
-                    usernameEl.setAttribute('aria-invalid', username ? 'false' : 'true');
+                if (!identifier || !password) {
+                    errorEl.textContent = 'E-Mail/Benutzername und Passwort werden benötigt.';
+                    usernameEl.setAttribute('aria-invalid', identifier ? 'false' : 'true');
                     passwordEl.setAttribute('aria-invalid', password ? 'false' : 'true');
                     submitBtn.disabled = false;
                     errorEl.scrollIntoView({ behavior: 'auto', block: 'center' });
@@ -652,12 +674,12 @@
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         credentials: 'include',
-                        body: JSON.stringify({ username, password })
+                        body: JSON.stringify({ identifier, password })
                     });
                     await response.json().catch(() => ({}));
 
                     if (!response.ok) {
-                        errorEl.textContent = 'Benutzername oder Passwort ist nicht korrekt. Prüfe beide Angaben und versuche es erneut.';
+                        errorEl.textContent = 'E-Mail/Benutzername oder Passwort ist nicht korrekt. Prüfe beide Angaben und versuche es erneut.';
                         usernameEl.setAttribute('aria-invalid', 'true');
                         passwordEl.setAttribute('aria-invalid', 'true');
                         submitBtn.disabled = false;

@@ -23,7 +23,9 @@ class CurrentUserProxy:
         try:
             user_id = get_jwt_identity()
             if user_id:
-                return User.query.get(user_id)
+                user = User.query.get(user_id)
+                if user and user.is_usable():
+                    return user
         except:
             pass
         return None

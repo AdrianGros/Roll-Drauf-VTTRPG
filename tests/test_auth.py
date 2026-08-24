@@ -92,15 +92,16 @@ class TestRegister:
         })
         assert response.status_code == 400
 
-    def test_register_requires_registration_key(self, client):
-        """Test registration requires a valid registration key."""
+    def test_register_without_registration_key_defaults_to_player(self, client):
+        """Standard registration works without an invitation key."""
         response = client.post('/api/auth/register', json={
             'username': 'testuser',
             'email': 'test@example.com',
             'password': 'SecurePass123!',
         })
-        assert response.status_code == 400
-        assert response.get_json()['error'] == 'registration key required'
+        assert response.status_code == 201
+        assert response.get_json()['user']['role'] == 'Player'
+        assert response.get_json()['user']['profile_tier'] == 'player'
 
 
 class TestLogin:

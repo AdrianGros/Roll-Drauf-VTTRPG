@@ -67,30 +67,24 @@ def _add_assignment(discord_user_id: str, *, tier="player", uses_remaining=1, us
     return key
 
 
-def test_login_page_is_discord_only_from_user_perspective(client):
+def test_login_page_exposes_standard_auth_and_optional_discord(client):
     response = client.get("/login.html")
 
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert "Mit Discord anmelden" in html
-    assert "Server- und Bot-Freischaltung" in html
-    assert "Es gibt keine separate Website-Registrierung." in html
-    # The password form exists for staff/robot flows but must ship HIDDEN.
-    # (This used to be asserted as '"Benutzername" not in html' -- a proxy
-    # that only held while the form labels were accidentally English; the
-    # B1 language pass made the labels German and exposed the loophole.)
-    assert '<form id="passwordLoginForm" class="book-form book-auth-form" hidden' in html
-    assert "/signup.html" not in html
-    assert "/register.html" not in html
+    assert "Optional mit Discord anmelden" in html
+    assert "Serverseitige Rollenprüfung" in html
+    assert "E-Mail oder Benutzername" in html
+    assert '<form id="passwordLoginForm" class="book-form book-auth-form" hidden' not in html
+    assert "/signup.html" in html
 
 
 @pytest.mark.parametrize("path", ["/signup.html", "/register.html", "/signup", "/register"])
-def test_signup_and_register_routes_redirect_back_to_discord_login(path, client):
+def test_signup_and_register_routes_remain_reachable_with_discord_enabled(path, client):
     response = client.get(path, follow_redirects=False)
 
-    assert response.status_code == 302
-    assert response.headers["Location"].startswith("/login.html?auth_notice=discord_only")
+    assert response.status_code == 200
 
 
 def test_discord_callback_denies_user_not_in_guild(client, monkeypatch):

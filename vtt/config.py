@@ -106,6 +106,17 @@ class Config:
     # Bcrypt
     BCRYPT_LOG_ROUNDS = 12
 
+    # Account recovery mail. Production supplies these through the deploy
+    # environment; without them the reset request remains generic but no
+    # misleading success mail is emitted.
+    MAIL_SERVER = os.getenv("MAIL_SERVER")
+    MAIL_PORT = _parse_int(os.getenv("MAIL_PORT"), 587)
+    MAIL_USE_TLS = _parse_bool(os.getenv("MAIL_USE_TLS"), default=True)
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
+    PASSWORD_RESET_EXPIRES = timedelta(hours=1)
+
     # HTTPS
     PREFERRED_URL_SCHEME = 'https'
     SESSION_COOKIE_SECURE = False  # Set True in production

@@ -166,7 +166,18 @@ class User(db.Model):
 
     def is_active_account(self):
         """Check if user has active account (not deactivated, deleted, or suspended)."""
-        return self.account_state == 'active'
+        # Treat NULL as active for accounts created before lifecycle state was
+        # introduced; only an explicit non-active state blocks access.
+        return self.account_state in (None, 'active')
+
+    def is_usable(self):
+        """Return whether this account may authenticate or use protected APIs.
+
+        Authentication code must use one account-state predicate.  Keeping
+        this decision on the model prevents one route from accepting a
+        deactivated or suspended account while another route rejects it.
+        """
+        return bool(self.is_active) and self.is_accessible() and self.is_active_account()
 
     def request_deletion(self, reason=None, requested_by=None):
         """Mark user account for deletion (30-day grace period)."""

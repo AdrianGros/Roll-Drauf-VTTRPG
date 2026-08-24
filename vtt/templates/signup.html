@@ -35,11 +35,11 @@
                             <section class="book-scene-panel">
                                 <span class="book-scene-panel-kicker">Access Contract</span>
                                 <h2 class="book-scene-panel-title">Account Rules</h2>
-                                <p class="book-scene-panel-copy">This chapter is still key-gated. The left page keeps the contract visible while the right page performs the actual entry ritual.</p>
+                                <p class="book-scene-panel-copy">Create a standard Player account with your email and password. An invitation key is optional and can grant an assigned profile tier.</p>
                                 <div class="book-ledger">
                                     <div class="book-ledger-row">
                                         <span class="book-ledger-label">Key</span>
-                                        <span class="book-ledger-value">Required from Discord bot</span>
+                                        <span class="book-ledger-value">Optional invitation tier</span>
                                     </div>
                                     <div class="book-ledger-row">
                                         <span class="book-ledger-label">Username</span>
@@ -57,7 +57,7 @@
                             </section>
 
                             <div class="book-scene-note-list">
-                                <div class="book-scene-note">A valid registration key is mandatory. Public signup is intentionally closed.</div>
+                                <div class="book-scene-note">Public registration creates a least-privilege Player account by default.</div>
                                 <div class="book-scene-note">This page belongs to the book runtime now, not the older standalone shell.</div>
                                 <div class="book-scene-note">After success you return to the login spread and enter with the new account.</div>
                             </div>
@@ -73,7 +73,7 @@
                             <p class="book-spread-page-copy">The working page carries the form itself so the flow stays productive without breaking the book illusion.</p>
                         </header>
                         <div class="book-spread-page-meta">
-                            <span class="book-dashboard-chip">Key Required</span>
+                            <span class="book-dashboard-chip">Player by Default</span>
                             <span class="book-dashboard-chip">Readable First</span>
                             <span class="book-dashboard-chip">Login Returns</span>
                         </div>
@@ -82,9 +82,9 @@
 
                             <form id="signupForm" class="book-auth-form" novalidate>
                                 <div class="form-group">
-                                    <label for="registration_key">Registration Key</label>
-                                    <input type="text" id="registration_key" name="registration_key" placeholder="SPELL-XXXX-XXXX-XXXX" required autocomplete="off">
-                                    <div class="form-help">Enter the Discord-issued key exactly as provided.</div>
+                                    <label for="registration_key">Invitation key (optional)</label>
+                                    <input type="text" id="registration_key" name="registration_key" placeholder="SPELL-XXXX-XXXX-XXXX" autocomplete="off">
+                                    <div class="form-help">Leave empty for a standard Player account. Use a valid key only when you received one.</div>
                                     <div class="error" id="registrationKeyError" role="alert"></div>
                                 </div>
 

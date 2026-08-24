@@ -146,7 +146,7 @@ def get_current_user(user_id):
     except (TypeError, ValueError):
         return None, (jsonify({"error": "authentication required"}), 401)
     user = db.session.get(User, user_id_int)
-    if not user or not user.is_active:
+    if not user or not user.is_usable():
         return None, (jsonify({"error": "user not found"}), 404)
     return user, None
 

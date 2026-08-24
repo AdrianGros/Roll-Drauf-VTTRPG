@@ -1,5 +1,6 @@
 """Auth routes."""
 from datetime import datetime, timedelta, timezone
+import hashlib
 import secrets
 from urllib.parse import quote
 
@@ -9,6 +10,7 @@ from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     decode_token,
+    get_jwt,
     get_jwt_identity,
     jwt_required,
     set_access_cookies,
@@ -17,7 +19,15 @@ from flask_jwt_extended import (
     verify_jwt_in_request,
 )
 from vtt.extensions import db, limiter
-from vtt.models import DiscordIdentityLink, MFABackupCode, RegistrationKey, Role, Session, User
+from vtt.models import (
+    DiscordIdentityLink,
+    MFABackupCode,
+    PasswordResetToken,
+    RegistrationKey,
+    Role,
+    Session,
+    User,
+)
 from vtt.auth import auth_bp
 from vtt.auth.discord_oauth import (
     DiscordAuthError,
@@ -35,8 +45,13 @@ from vtt.auth.validators import (
     validate_password,
     validate_username,
 )
+from vtt.auth.mailer import MailDeliveryError, send_password_reset_email
 
 REMEMBER_ME_REFRESH_EXPIRES = timedelta(days=30)
+PASSWORD_RESET_GENERIC_MESSAGE = (
+    "Wenn zu dieser E-Mail-Adresse ein Konto gehört, wurde eine Nachricht "
+    "zum Zurücksetzen des Passworts versendet."
+)
 
 
 def _parse_bool(value) -> bool:
@@ -62,6 +77,26 @@ def _sanitize_relative_path(value: str | None, fallback: str = "/dashboard") -> 
     if candidate.startswith("/") and not candidate.startswith("//"):
         return candidate
     return fallback
+
+
+def _password_reset_hash(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def _password_reset_url(token: str) -> str:
+    base = str(current_app.config.get("PASSWORD_RESET_URL_BASE") or "").strip()
+    if not base:
+        base = request.host_url.rstrip("/")
+    return f"{base}/reset-password.html?token={quote(token)}"
+
+
+def _revoke_user_sessions(user_id: int, *, keep_jti: str | None = None) -> None:
+    sessions = Session.query.filter_by(user_id=user_id, revoked_at=None).all()
+    now = utcnow()
+    for session_row in sessions:
+        if keep_jti and session_row.token_jti == keep_jti:
+            continue
+        session_row.revoked_at = now
 
 
 def _discord_login_redirect(message: str, status_code: int = 302):
@@ -251,16 +286,21 @@ def _create_session_from_access_token(user_id: int, access_token: str) -> None:
     db.session.commit()
 
 
-def _register_user_with_registration_key(data: dict):
-    """Create a user account after validating a registration key."""
+def _register_user(data: dict, *, require_registration_key: bool = False):
+    """Create a standard account, optionally applying an invitation tier.
+
+    Email/password is the canonical local identity flow.  Registration keys
+    remain useful for Discord assignments and tier elevation, but they are no
+    longer a prerequisite for a regular Player account.
+    """
     from vtt.utils.audit import log_audit
 
-    username = data.get("username", "").strip()
-    email = data.get("email", "").strip().lower()
-    password = data.get("password", "")
-    registration_key = data.get("registration_key", "").strip()
+    username = str(data.get("username") or "").strip()
+    email = str(data.get("email") or "").strip().lower()
+    password = data.get("password") or ""
+    registration_key = str(data.get("registration_key") or "").strip()
 
-    if not registration_key:
+    if require_registration_key and not registration_key:
         return jsonify({"error": "registration key required"}), 400
 
     is_valid, error = validate_username(username)
@@ -281,41 +321,48 @@ def _register_user_with_registration_key(data: dict):
     if User.query.filter_by(email=email).first():
         return jsonify({"error": "email already exists"}), 409
 
-    key = RegistrationKey.query.filter_by(key_code=registration_key).first()
-    if not key:
-        return jsonify({"error": "The spell is not recognized. Please check your key."}), 404
+    key = None
+    if registration_key:
+        key = RegistrationKey.query.filter_by(key_code=registration_key).first()
+        if not key:
+            return jsonify({"error": "The spell is not recognized. Please check your key."}), 404
 
-    if not key.is_valid():
-        reason = "revoked"
-        if key.expires_at and utcnow() > key.expires_at:
-            reason = "expired"
-        elif key.uses_remaining <= 0:
-            reason = "depleted"
+        if not key.is_valid():
+            reason = "revoked"
+            if key.expires_at and utcnow() > key.expires_at:
+                reason = "expired"
+            elif key.uses_remaining <= 0:
+                reason = "depleted"
 
-        return jsonify({"error": f"The spell has been {reason}. Please contact your Dungeon Master."}), 410
+            return jsonify({"error": f"The spell has been {reason}. Please contact your Dungeon Master."}), 410
 
     player_role = Role.query.filter_by(name="Player").first() or db.session.get(Role, 1)
+    if not player_role:
+        return jsonify({"error": "account roles are not initialized"}), 503
+
+    tier = key.tier if key else "player"
     user = User(
         username=username,
         email=email,
         role_id=player_role.id,
-        profile_tier=key.tier,
+        profile_tier=tier,
     )
     user.set_password(password)
-    _apply_profile_tier_quota(user, key.tier)
+    _apply_profile_tier_quota(user, tier)
 
     db.session.add(user)
     db.session.flush()
-    key.consume(user.id)
+    if key:
+        key.consume(user.id)
     db.session.commit()
 
     log_audit(
-        action="user_registered_with_key",
+        action="user_registered_with_key" if key else "user_registered",
         resource_type="user",
         resource_id=user.id,
         details={
-            "key_batch_id": key.key_batch_id,
-            "tier": key.tier,
+            "key_batch_id": key.key_batch_id if key else None,
+            "tier": tier,
         },
         performed_by=user,
     )
@@ -332,11 +379,16 @@ def _register_user_with_registration_key(data: dict):
     return response, 201
 
 
+def _register_user_with_registration_key(data: dict):
+    """Create an account only when a valid invitation key is supplied."""
+    return _register_user(data, require_registration_key=True)
+
+
 @auth_bp.route("/register", methods=["POST"])
 @limiter.limit("3 per 10 minutes")
 def register():
-    """Register new user."""
-    return _register_user_with_registration_key(request.get_json() or {})
+    """Register a standard Player account, with an optional invite tier."""
+    return _register_user(request.get_json() or {})
 
 
 @auth_bp.route("/login", methods=["POST"])
@@ -344,19 +396,29 @@ def register():
 def login():
     """Login user and set JWT cookies."""
     data = request.get_json() or {}
-    username = data.get("username", "").strip()
-    password = data.get("password", "")
-    otp = data.get("otp", "").strip()
+    identifier = str(
+        data.get("identifier")
+        or data.get("email")
+        or data.get("username")
+        or ""
+    ).strip()
+    password = data.get("password") or ""
+    otp = str(data.get("otp") or "").strip()
     remember_me = _parse_bool(data.get("remember_me", False))
 
-    if not username or not password:
-        return jsonify({"error": "username and password required"}), 400
+    if not identifier or not password:
+        return jsonify({"error": "email or username and password required"}), 400
 
-    user = User.query.filter_by(username=username).first()
+    # Emails are normalized at registration, so this lookup is deliberately
+    # case-insensitive.  Keep username login as a compatibility path for
+    # existing accounts and API clients.
+    user = User.query.filter_by(email=identifier.lower()).first()
+    if not user:
+        user = User.query.filter_by(username=identifier).first()
     if not user or not user.check_password(password):
         return jsonify({"error": "invalid credentials"}), 401
 
-    if not user.is_active:
+    if not user.is_usable():
         return jsonify({"error": "account is inactive"}), 401
 
     if user.mfa_enabled and not user.verify_mfa_code(otp):
@@ -542,7 +604,7 @@ def me():
     """Get current user."""
     user_id = int(get_jwt_identity())
     user = db.session.get(User, user_id)
-    if not user:
+    if not user or not user.is_usable():
         return jsonify({"error": "user not found"}), 404
     return jsonify(user.serialize(include_email=True)), 200
 
@@ -556,7 +618,7 @@ def check():
         return jsonify({"user": None}), 200
 
     user = db.session.get(User, int(identity))
-    if not user or not user.is_active:
+    if not user or not user.is_usable():
         return jsonify({"user": None}), 200
 
     return jsonify({"user": user.serialize(include_email=True)}), 200
@@ -569,7 +631,7 @@ def refresh():
     """Refresh access token using refresh cookie."""
     user_id = int(get_jwt_identity())
     user = db.session.get(User, user_id)
-    if not user or not user.is_active:
+    if not user or not user.is_usable():
         return jsonify({"error": "user not found or inactive"}), 401
 
     new_access_token = create_access_token(identity=str(user.id))
@@ -581,6 +643,106 @@ def refresh():
     # _refresh_cookie_max_age for why that matters).
     set_access_cookies(response, new_access_token, max_age=_refresh_cookie_max_age(remember_me=False))
     return response, 200
+
+
+@auth_bp.route("/password-reset/request", methods=["POST"])
+@limiter.limit("3 per hour")
+def request_password_reset():
+    """Request a reset link without revealing whether an account exists."""
+    data = request.get_json() or {}
+    email = str(data.get("email") or "").strip().lower()
+    generic = {"message": PASSWORD_RESET_GENERIC_MESSAGE}
+
+    if not email:
+        return jsonify(generic), 202
+
+    user = User.query.filter_by(email=email).first()
+    if not user or not user.is_usable():
+        return jsonify(generic), 202
+
+    raw_token = secrets.token_urlsafe(32)
+    token_row = PasswordResetToken(
+        user_id=user.id,
+        token_hash=_password_reset_hash(raw_token),
+        expires_at=utcnow() + current_app.config["PASSWORD_RESET_EXPIRES"],
+        requested_ip=request.remote_addr,
+    )
+    PasswordResetToken.query.filter_by(user_id=user.id, used_at=None).update(
+        {"used_at": utcnow()}, synchronize_session=False
+    )
+    db.session.add(token_row)
+    try:
+        db.session.flush()
+        send_password_reset_email(
+            recipient=user.email,
+            reset_url=_password_reset_url(raw_token),
+        )
+        db.session.commit()
+    except MailDeliveryError:
+        db.session.rollback()
+        current_app.logger.error("Password reset mail transport is unavailable")
+    except Exception:
+        db.session.rollback()
+        current_app.logger.exception("Password reset request failed")
+
+    return jsonify(generic), 202
+
+
+@auth_bp.route("/password-reset/confirm", methods=["POST"])
+@limiter.limit("10 per hour")
+def confirm_password_reset():
+    """Consume one reset token and terminate the account's sessions."""
+    data = request.get_json() or {}
+    raw_token = str(data.get("token") or "").strip()
+    password = data.get("password") or data.get("new_password") or ""
+    if not raw_token or not password:
+        return jsonify({"error": "reset token and password required"}), 400
+
+    token_row = PasswordResetToken.query.filter_by(
+        token_hash=_password_reset_hash(raw_token)
+    ).first()
+    if not token_row or not token_row.is_valid():
+        return jsonify({"error": "reset link is invalid or expired"}), 400
+
+    user = db.session.get(User, token_row.user_id)
+    if not user or not user.is_usable():
+        return jsonify({"error": "reset link is invalid or expired"}), 400
+
+    valid, error = validate_password(password, user.username, user.email)
+    if not valid:
+        return jsonify({"error": error}), 400
+
+    token_row.used_at = utcnow()
+    token_row.consumed_ip = request.remote_addr
+    user.set_password(password)
+    _revoke_user_sessions(user.id)
+    db.session.commit()
+    return jsonify({"message": "Passwort geändert. Bitte melde dich erneut an."}), 200
+
+
+@auth_bp.route("/password/change", methods=["POST"])
+@jwt_required()
+@limiter.limit("5 per hour")
+def change_password():
+    """Change a password after verifying the current credential."""
+    user_id = int(get_jwt_identity())
+    user = db.session.get(User, user_id)
+    data = request.get_json() or {}
+    current_password = data.get("current_password") or ""
+    new_password = data.get("new_password") or data.get("password") or ""
+    if not user or not user.is_usable():
+        return jsonify({"error": "user not found or inactive"}), 404
+    if not user.check_password(current_password):
+        return jsonify({"error": "current password is incorrect"}), 401
+
+    valid, error = validate_password(new_password, user.username, user.email)
+    if not valid:
+        return jsonify({"error": error}), 400
+
+    user.set_password(new_password)
+    _revoke_user_sessions(user.id, keep_jti=get_jwt().get("jti"))
+    db.session.commit()
+    return jsonify({"message": "Passwort geändert. Andere Sitzungen wurden beendet."}), 200
 
 
 @auth_bp.route("/mfa/setup", methods=["POST"])

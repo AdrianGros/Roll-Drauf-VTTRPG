@@ -72,13 +72,12 @@ def test_login_route_remains_bookscene_owned(client):
 
 
 @pytest.mark.parametrize("path", ["/signup.html", "/register.html"])
-def test_signup_and_register_redirect_to_canonical_login(path, client, app):
+def test_signup_and_register_remain_reachable_with_discord_enabled(path, client, app):
     app.config["DISCORD_LOGIN_ENABLED"] = True
 
     response = client.get(path, follow_redirects=False)
 
-    assert response.status_code == 302
-    assert response.headers["Location"].startswith("/login.html?auth_notice=discord_only")
+    assert response.status_code == 200
 
 
 @pytest.mark.parametrize("path", ["/signup.html", "/register.html"])
