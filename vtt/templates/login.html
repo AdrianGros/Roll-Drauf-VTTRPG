@@ -172,20 +172,6 @@
             line-height: 1.4;
         }
 
-        .book-form-status-action {
-            width: 100%;
-            min-height: 46px;
-            margin: 0 0 14px;
-            background: var(--vtt-rubric);
-            border: 1px solid var(--vtt-rubric-deep);
-            color: var(--vtt-paper-panel);
-        }
-
-        .book-form-status-action:hover,
-        .book-form-status-action:focus-visible {
-            background: var(--vtt-rubric-deep);
-        }
-
         .book-auth-error {
             margin: 12px 0 0;
             padding: 10px 12px;
@@ -464,7 +450,6 @@
 
                     <form id="passwordLoginForm" class="book-form book-auth-form" novalidate aria-label="Anmeldung mit E-Mail oder Benutzername">
                         <div id="passwordLoginStatus" class="book-form-status" role="status" aria-live="polite" hidden></div>
-                        <button type="button" class="book-form-status-action" id="passwordLoginContinueBtn" hidden>Übersicht öffnen</button>
                         <div class="form-group">
                             <label for="loginUsername">E-Mail oder Benutzername</label>
                             <input type="text" class="book-input" id="loginUsername" name="identifier" required autocomplete="username" aria-describedby="passwordLoginError">
@@ -718,12 +703,10 @@
                 event.preventDefault();
                 const errorEl = document.getElementById('passwordLoginError');
                 const statusEl = document.getElementById('passwordLoginStatus');
-                const continueBtn = document.getElementById('passwordLoginContinueBtn');
                 const usernameEl = document.getElementById('loginUsername');
                 const passwordEl = document.getElementById('loginPassword');
                 errorEl.textContent = '';
                 statusEl.hidden = true;
-                continueBtn.hidden = true;
                 usernameEl.removeAttribute('aria-invalid');
                 passwordEl.removeAttribute('aria-invalid');
 
@@ -761,14 +744,10 @@
                         return;
                     }
 
-                    statusEl.textContent = 'Anmeldung bestätigt. Öffne deine Übersicht, sobald du bereit bist.';
+                    statusEl.textContent = 'Anmeldung bestätigt. Übersicht wird geöffnet.';
                     statusEl.hidden = false;
                     submitBtn.textContent = 'Anmeldung bestätigt';
-                    continueBtn.hidden = false;
-                    continueBtn.focus();
-                    continueBtn.addEventListener('click', () => {
-                        window.location.href = '/dashboard';
-                    }, { once: true });
+                    window.location.href = '/dashboard';
                 } catch (error) {
                     errorEl.textContent = 'Der Zugang konnte gerade nicht geprüft werden. Bitte versuche es erneut.';
                     usernameEl.setAttribute('aria-invalid', 'true');

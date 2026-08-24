@@ -86,6 +86,8 @@ def test_login_page_exposes_standard_auth_and_optional_discord(client):
     assert 'class="book-discord-hint"' not in html
     assert html.index('id="passwordLoginForm"') < html.index('id="loginDiscordGate"')
     assert html.count('href="/forgot-password.html"') == 1
+    assert 'id="passwordLoginContinueBtn"' not in html
+    assert "Übersicht öffnen" not in html
     assert "E-Mail oder Benutzername" in html
     assert '<form id="passwordLoginForm" class="book-form book-auth-form" hidden' not in html
     assert "/signup.html" in html
