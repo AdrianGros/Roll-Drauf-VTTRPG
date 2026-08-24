@@ -248,6 +248,14 @@
     transition: opacity 320ms ease, transform 320ms ease;
 }
 
+/* The dashboard scene is rendered ahead of time for fast route changes. Keep
+   it out of layout while the login spread is active; the generic display:flex
+   rule otherwise overrides the browser's default [hidden] behavior and adds
+   an invisible page to the document's scroll height. */
+.book-dashboard-scene[hidden] {
+    display: none;
+}
+
 .book-dashboard-scene.is-visible {
     opacity: 1;
     pointer-events: auto;
