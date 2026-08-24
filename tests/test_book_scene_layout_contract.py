@@ -21,3 +21,10 @@ def test_hidden_dashboard_scene_does_not_extend_login_scroll_height():
 
     assert ".book-dashboard-scene[hidden]" in source
     assert ".book-dashboard-scene[hidden] {\n    display: none;\n}" in source
+
+
+def test_login_banner_sits_above_the_paper_overlay():
+    source = BOOK_SCENE_CSS.read_text(encoding="utf-8")
+    header_rule = source.split("#login-content .login-book-page-header {", 1)[1].split("}", 1)[0]
+
+    assert "z-index: 1;" in header_rule

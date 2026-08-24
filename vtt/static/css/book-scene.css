@@ -1749,6 +1749,7 @@ body.is-book-scene-dashboard #book {
 #login-content .login-book-page-header {
     position: relative;
     isolation: isolate;
+    z-index: 1;
     aspect-ratio: 16 / 9;
     display: flex;
     align-items: center;
