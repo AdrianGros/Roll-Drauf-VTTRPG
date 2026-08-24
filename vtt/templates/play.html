@@ -1196,15 +1196,15 @@
                 <div class="book-shell-frame book-workspace-shell">
                     <div class="tabletop-shell">
         <aside class="left-toolbar" aria-label="Werkzeugleiste">
-            <button class="tool-btn active" data-tool="select" title="Auswählen">SEL</button>
-            <button class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)">PAN</button>
-            <button class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken">TOK</button>
+            <button type="button" class="tool-btn active" data-tool="select" title="Auswählen">SEL</button>
+            <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)">PAN</button>
+            <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken">TOK</button>
             <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
                  used to sit here as silent no-ops (the handler only toggled
                  a CSS class). Removed until the tools actually exist -- a
                  button that does nothing reads as "broken", not "planned". -->
             <div class="spacer">
-                <button id="btnBack" class="tool-btn" title="Zur Kampagne">BACK</button>
+                <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne">BACK</button>
             </div>
         </aside>
 
@@ -1212,13 +1212,13 @@
             <div id="activePagePill" class="active-page-pill" hidden>Seite: <strong id="activePageName">-</strong></div>
 
             <div class="stage-topbar">
-                <button id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
+                <button type="button" id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
                 <span id="zoomLabel" class="mini-control">100%</span>
-                <button id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
+                <button type="button" id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
                 <input id="zoomRange" type="range" min="20" max="300" step="5" value="100">
-                <button id="btnZoomFit" class="mini-control" title="Karte einpassen">FIT</button>
-                <button id="btnZoomReset" class="mini-control" title="100%">RST</button>
-                <button id="btnSidebarToggle" class="mini-control" title="Journal / Chat / Tools / Session">☰</button>
+                <button type="button" id="btnZoomFit" class="mini-control" title="Karte einpassen">FIT</button>
+                <button type="button" id="btnZoomReset" class="mini-control" title="100%">RST</button>
+                <button type="button" id="btnSidebarToggle" class="mini-control" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen">☰</button>
             </div>
 
             <div class="map-viewport" id="mapViewport">
@@ -1254,23 +1254,18 @@
                     <input id="tokenCreateImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                     <button id="btnTokenCreateImage" class="secondary" type="button"><span id="tokenCreateImageLabel">Bild (optional)...</span></button>
                     <div class="button-row" style="margin-bottom:0;">
-                        <button id="btnTokenCreateConfirm">Platzieren</button>
-                        <button id="btnTokenCreateCancel" class="secondary">Abbrechen</button>
+                        <button type="button" id="btnTokenCreateConfirm">Platzieren</button>
+                        <button type="button" id="btnTokenCreateCancel" class="secondary">Abbrechen</button>
                     </div>
                 </div>
             </div>
 
             <div id="layersWidget" class="floating">
-                <h3 class="widget-toggle" data-widget="layersWidget">Seiten (Kartenebenen) <span class="widget-caret">▾</span></h3>
-                <div class="widget-body">
-                    <div id="layerList"></div>
-                    <div class="layer-add-row">
-                        <select id="layerAddSelect"><option value="">+ Seite hinzufügen...</option></select>
-                        <button id="layerAddBtn" class="mini-btn" type="button">Hinzufügen</button>
-                    </div>
+                <h3 class="widget-toggle" data-widget="layersWidget" role="button" tabindex="0" aria-controls="layersWidgetBody" aria-expanded="true">Seiten (Kartenebenen) <span class="widget-caret">▾</span></h3>
+                <div id="layersWidgetBody" class="widget-body">
                     <div id="mapUploadRow" class="layer-add-row" hidden>
                         <input id="mapUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-                        <button id="btnMapUpload" class="mini-btn" type="button">Karte hochladen...</button>
+                        <button id="btnMapUpload" class="mini-btn" type="button" title="Eine Karte als Datei auswählen">Datei hinzufügen</button>
                         <label style="display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;color:var(--muted);white-space:nowrap;">
                             Raster
                             <input id="mapUploadGridSize" type="number" min="16" max="300" step="1" value="70" style="width:60px;padding:0.2rem 0.3rem;">
@@ -1278,34 +1273,44 @@
                         </label>
                     </div>
                     <div id="mapUploadStatus" class="muted" style="font-size:0.74rem;margin-top:0.3rem;" hidden></div>
+                    <div id="layerList"></div>
+                    <div class="layer-add-row">
+                        <select id="layerAddSelect"><option value="">+ Seite hinzufügen...</option></select>
+                        <button id="layerAddBtn" class="mini-btn" type="button">Hinzufügen</button>
+                    </div>
                 </div>
             </div>
 
             <div id="turnOrderWidget" class="floating">
-                <h3 class="widget-toggle" data-widget="turnOrderWidget">Turn Order <span class="widget-caret">▾</span></h3>
-                <div class="widget-body">
+                <h3 class="widget-toggle" data-widget="turnOrderWidget" role="button" tabindex="0" aria-controls="turnOrderWidgetBody" aria-expanded="false">Turn Order <span class="widget-caret">▾</span></h3>
+                <div id="turnOrderWidgetBody" class="widget-body">
                     <div id="turnOrderSummary" class="turn-state">Noch keine Initiative-Werte.</div>
                     <div id="turnOrderList" class="muted">Noch keine Initiative-Werte.</div>
                     <div class="button-row" id="initiativeControls" style="margin:0.45rem 0 0;" hidden>
-                        <button id="btnRollInitiative" class="mini-btn secondary">Initiative auswürfeln</button>
+                        <button type="button" id="btnRollInitiative" class="mini-btn secondary">Initiative auswürfeln</button>
                     </div>
                 </div>
             </div>
 
             <div id="tokenWidget" class="floating">
-                <h3 class="widget-toggle" data-widget="tokenWidget">Tokens <span class="widget-caret">▾</span></h3>
-                <div class="widget-body">
+                <h3 class="widget-toggle" data-widget="tokenWidget" role="button" tabindex="0" aria-controls="tokenWidgetBody" aria-expanded="false">Tokens <span class="widget-caret">▾</span></h3>
+                <div id="tokenWidgetBody" class="widget-body">
                     <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewählt.</div>
+                    <div id="tokenUploadRow" class="button-row" hidden style="margin-bottom:0.45rem;">
+                        <input id="tokenUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                        <button type="button" id="btnTokenUpload" class="mini-btn secondary" title="Tokenbild aus einer Datei hinzufügen">Token-Datei hinzufügen</button>
+                        <span id="tokenUploadStatus" class="muted" aria-live="polite"></span>
+                    </div>
                     <div id="tokenSelectionDetail" hidden style="margin-bottom:0.45rem;">
                         <div class="button-row" style="margin-bottom:0.35rem;">
                             <input id="tokenHpCurrent" type="number" placeholder="HP" style="width:70px;" title="Aktuelle HP">
                             <input id="tokenHpMax" type="number" placeholder="Max" style="width:70px;" title="Maximale HP">
-                            <button id="btnTokenHpSet" class="mini-btn">HP setzen</button>
+                            <button type="button" id="btnTokenHpSet" class="mini-btn">HP setzen</button>
                         </div>
                         <div class="button-row" style="margin-bottom:0;">
                             <input id="tokenImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-                            <button id="btnTokenImageSet" class="mini-btn secondary">Bild setzen...</button>
-                            <button id="btnTokenDelete" class="mini-btn danger">Token löschen</button>
+                            <button type="button" id="btnTokenImageSet" class="mini-btn secondary">Bild setzen...</button>
+                            <button type="button" id="btnTokenDelete" class="mini-btn danger">Token löschen</button>
                         </div>
                     </div>
                     <div id="tokenList"></div>
@@ -1315,11 +1320,11 @@
 
         <aside class="right-sidebar">
             <div class="sidebar-tabs">
-                <button class="sidebar-tab" data-tab="journal">Journal</button>
-                <button class="sidebar-tab" data-tab="chat">Chat</button>
-                <button class="sidebar-tab active" data-tab="tools">Tools</button>
-                <button class="sidebar-tab" data-tab="session">Session</button>
-                <button id="btnSidebarClose" class="sidebar-tab sidebar-close" title="Schliessen" aria-label="Seitenleiste schliessen">×</button>
+                <button type="button" class="sidebar-tab" data-tab="journal">Journal</button>
+                <button type="button" class="sidebar-tab" data-tab="chat">Chat</button>
+                <button type="button" class="sidebar-tab active" data-tab="tools">Tools</button>
+                <button type="button" class="sidebar-tab" data-tab="session">Session</button>
+                <button type="button" id="btnSidebarClose" class="sidebar-tab sidebar-close" title="Schliessen" aria-label="Seitenleiste schliessen">×</button>
             </div>
 
             <div class="sidebar-content">
@@ -1343,7 +1348,7 @@
                         <h2>Nachricht senden</h2>
                         <div class="button-row" style="margin-bottom:0;">
                             <input id="chatInput" type="text" placeholder="Nachricht an den Tisch...">
-                            <button id="btnSendChat">Senden</button>
+                            <button type="button" id="btnSendChat">Senden</button>
                         </div>
                     </div>
                 </section>
@@ -1357,7 +1362,7 @@
                         </div>
                         <div class="button-row">
                             <select id="actionCode"></select>
-                            <button id="btnExecuteAction">Aktion ausführen</button>
+                            <button type="button" id="btnExecuteAction">Aktion ausführen</button>
                         </div>
                     </div>
 
@@ -1365,7 +1370,7 @@
                         <h2>Würfel</h2>
                         <div class="button-row">
                             <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5">
-                            <button id="btnRoll">Würfeln</button>
+                            <button type="button" id="btnRoll">Würfeln</button>
                         </div>
                         <div id="diceResult" class="muted">Noch kein Wurf.</div>
                         <div id="diceLog" class="muted" style="margin-top:0.45rem;"></div>
@@ -1393,18 +1398,18 @@
                         <div class="subpanel">
                             <h3>Session-Aufbau</h3>
                             <div class="button-row">
-                                <button id="btnInitStack" class="secondary">Kartenstapel initialisieren</button>
-                                <button id="btnReadyCheck" class="secondary">Start-Check</button>
+                                <button type="button" id="btnInitStack" class="secondary">Kartenstapel initialisieren</button>
+                                <button type="button" id="btnReadyCheck" class="secondary">Start-Check</button>
                             </div>
                         </div>
                         <div class="subpanel">
                             <h3>Session-Steuerung</h3>
                             <div class="button-row">
-                                <button id="btnToReady">Bereit setzen</button>
-                                <button id="btnStart">Live starten</button>
-                                <button id="btnPause" class="secondary">Pause</button>
-                                <button id="btnResume">Fortsetzen</button>
-                                <button id="btnEnd" class="danger">Session beenden</button>
+                                <button type="button" id="btnToReady">Bereit setzen</button>
+                                <button type="button" id="btnStart">Live starten</button>
+                                <button type="button" id="btnPause" class="secondary">Pause</button>
+                                <button type="button" id="btnResume">Fortsetzen</button>
+                                <button type="button" id="btnEnd" class="danger">Session beenden</button>
                             </div>
                         </div>
                     </div>

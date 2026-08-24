@@ -215,8 +215,11 @@ class SessionScript:
             self.fail("dm-play", "play table never rendered #layersWidget", page)
             return False
 
-        # Widgets start collapsed -- open the layer panel like a user would.
-        page.click('#layersWidget .widget-toggle')
+        # The layer panel is the DM's first-run entry point and starts open.
+        # Keep the guard so this journey also tolerates a remembered/compact
+        # presentation without turning the control itself into a dependency.
+        if "collapsed" in (page.locator("#layersWidget").get_attribute("class") or "").split():
+            page.click('#layersWidget .widget-toggle')
         try:
             page.wait_for_selector("#btnMapUpload", state="visible",
                                    timeout=STEP_TIMEOUT_MS)

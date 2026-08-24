@@ -57,6 +57,8 @@
             // choice survives snapshots/re-renders of the same map.
             this.autoFitMapId = null;
             this.pendingTokenPlacement = null;
+            this.pendingTokenImage = null;
+            this.pendingTokenImageLabel = "";
         }
 
         async init() {
@@ -886,6 +888,13 @@
             panel.style.top = `${top}px`;
             panel.hidden = false;
 
+            const imageLabel = document.getElementById("tokenCreateImageLabel");
+            if (imageLabel) {
+                imageLabel.textContent = this.pendingTokenImage
+                    ? (this.pendingTokenImageLabel || "Bild ausgewählt")
+                    : "Bild (optional)...";
+            }
+
             const nameInput = document.getElementById("tokenCreateName");
             if (nameInput) {
                 nameInput.value = "";
@@ -911,6 +920,7 @@
         _cancelTokenPlacement() {
             this.pendingTokenPlacement = null;
             this.pendingTokenImage = null;
+            this.pendingTokenImageLabel = "";
             const imageLabel = document.getElementById("tokenCreateImageLabel");
             if (imageLabel) imageLabel.textContent = "Bild (optional)...";
             const panel = document.getElementById("tokenCreatePanel");
@@ -1029,20 +1039,33 @@
 
         _bindWidgetToggles() {
             document.querySelectorAll(".widget-toggle[data-widget]").forEach((header) => {
-                header.addEventListener("click", () => {
+                const toggle = () => {
                     const widget = document.getElementById(header.getAttribute("data-widget"));
-                    if (widget) widget.classList.toggle("collapsed");
+                    if (!widget) return;
+                    const collapsed = widget.classList.toggle("collapsed");
+                    header.setAttribute("aria-expanded", String(!collapsed));
+                };
+                header.addEventListener("click", toggle);
+                header.addEventListener("keydown", (event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    event.preventDefault();
+                    toggle();
                 });
             });
-            // Collapsed by default: the map is the main surface. The layer
-            // panel starts open for the DM only, because it is the entry
-            // point for getting a first map onto the table.
+            // The layer panel is the first-run entry point for the table:
+            // leave it open so a DM can add the first map without hunting
+            // for a collapsed heading. The less frequent widgets remain
+            // compact until explicitly opened.
             const layersWidget = document.getElementById("layersWidget");
             const turnWidget = document.getElementById("turnOrderWidget");
             const tokenWidget = document.getElementById("tokenWidget");
+            const layersToggle = layersWidget?.querySelector(".widget-toggle");
+            if (layersWidget) layersWidget.classList.remove("collapsed");
+            if (layersToggle) layersToggle.setAttribute("aria-expanded", "true");
             if (turnWidget) turnWidget.classList.add("collapsed");
             if (tokenWidget) tokenWidget.classList.add("collapsed");
-            if (layersWidget) layersWidget.classList.add("collapsed");
+            turnWidget?.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "false");
+            tokenWidget?.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "false");
         }
 
         _bindTableActions() {
@@ -1108,6 +1131,37 @@
                         this._patchToken(token, { metadata_json: metadataJson });
                         this._logActivity(`Token-Bild gesetzt: ${token.name}.`, "info");
                     } catch (error) {
+                        this._showMessage(error.message || "Token-Bild-Upload fehlgeschlagen.", true);
+                    }
+                });
+            }
+
+            // DM shortcut: upload token art before placing the token. The
+            // image is kept as pending state, then attached to the next
+            // token created through TOK + map click. This removes the old
+            // requirement to discover the create panel before a file dialog
+            // was available.
+            const tokenUploadBtn = document.getElementById("btnTokenUpload");
+            const tokenUploadInput = document.getElementById("tokenUploadFile");
+            if (tokenUploadBtn && tokenUploadInput) {
+                tokenUploadBtn.addEventListener("click", () => tokenUploadInput.click());
+                tokenUploadInput.addEventListener("change", async () => {
+                    const file = tokenUploadInput.files && tokenUploadInput.files[0];
+                    tokenUploadInput.value = "";
+                    if (!file) return;
+                    const status = document.getElementById("tokenUploadStatus");
+                    try {
+                        if (status) status.textContent = "Lade hoch...";
+                        const uploaded = await this._uploadAssetFile(file, "token");
+                        this.pendingTokenImage = `/api/assets/${uploaded.asset_id}/preview`;
+                        this.pendingTokenImageLabel = file.name.slice(0, 24);
+                        if (status) status.textContent = "Tokenbild geladen – auf die Karte klicken.";
+                        this._setTool("token");
+                        this._showMessage("Tokenbild geladen. Klicke auf die Karte, um den Token zu platzieren.");
+                    } catch (error) {
+                        this.pendingTokenImage = null;
+                        this.pendingTokenImageLabel = "";
+                        if (status) status.textContent = "Upload fehlgeschlagen.";
                         this._showMessage(error.message || "Token-Bild-Upload fehlgeschlagen.", true);
                     }
                 });
@@ -1783,6 +1837,8 @@
             if (initiativeControls) initiativeControls.hidden = !operator || this.readOnly;
             const tokenToolBtn = document.querySelector('.tool-btn[data-tool="token"]');
             if (tokenToolBtn) tokenToolBtn.style.display = this.readOnly ? "none" : "";
+            const tokenUploadRow = document.getElementById("tokenUploadRow");
+            if (tokenUploadRow) tokenUploadRow.hidden = !operator || this.readOnly;
 
             const mapMetaText = document.getElementById("mapMetaText");
             if (mapMetaText) {

@@ -220,7 +220,21 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
             if body_route_leak:
                 findings.append("[click-defaults] body carries data-book-route again - "
                                 "the app-wide preventDefault bug is back")
-            page.click('#layersWidget .widget-toggle')
+            layer_widget_classes = page.locator("#layersWidget").get_attribute("class") or ""
+            if "collapsed" in layer_widget_classes.split():
+                findings.append("[menu] layer menu is collapsed on first DM render")
+                page.click('#layersWidget .widget-toggle')
+            if page.locator("#btnMapUpload").inner_text().strip() != "Datei hinzufügen":
+                findings.append("[menu] map file action is not labelled 'Datei hinzufügen'")
+            if not page.locator("#btnTokenUpload").count():
+                findings.append("[token-upload] no direct token file-dialog action is visible")
+            page.click("#btnSidebarToggle")
+            page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
+            for tab in ("journal", "chat", "tools", "session"):
+                page.click(f'.sidebar-tab[data-tab="{tab}"]')
+                if not page.locator(f"#panel-{tab}.active").count():
+                    findings.append(f"[menu] sidebar tab {tab!r} did not activate its panel")
+            page.click("#btnSidebarToggle")
             page.wait_for_selector("#btnMapUpload", state="visible", timeout=15_000)
             with page.expect_file_chooser(timeout=10_000) as chooser_info:
                 page.click("#btnMapUpload")
@@ -233,6 +247,24 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
                             f"failed: {type(error).__name__}: {str(error)[:200]}")
             browser.close()
             return findings
+
+        # Token art has its own direct file-dialog entry point. It should be
+        # usable before the placement panel is opened; the uploaded image is
+        # kept as pending art for the next TOK placement.
+        try:
+            page.click('#tokenWidget .widget-toggle')
+            page.wait_for_selector("#btnTokenUpload", state="visible", timeout=15_000)
+            token_file = workdir / "robot_token_face.png"
+            token_file.write_bytes(_make_png(96, 96, (200, 170, 40)))
+            with page.expect_file_chooser(timeout=10_000) as chooser_info:
+                page.click("#btnTokenUpload")
+            chooser_info.value.set_files(str(token_file))
+            page.wait_for_function(
+                "() => (document.getElementById('tokenUploadStatus')?.textContent || '')"
+                ".includes('Tokenbild geladen')", timeout=20_000)
+        except Exception as error:
+            findings.append(f"[token-upload] direct token file chooser failed: "
+                            f"{type(error).__name__}: {str(error)[:200]}")
 
         # Token art: uploaded as a token asset, referenced via
         # metadata_json.image_url, must render as an image face.
