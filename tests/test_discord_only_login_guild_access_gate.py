@@ -80,6 +80,11 @@ def test_login_page_exposes_standard_auth_and_optional_discord(client):
     assert "Dein Zugang, deine Wahl" not in html
     assert "Die Registrierung legt einen normalen Player-Account" not in html
     assert "/static/images/discord-symbol.svg" in html
+    assert "Discord ist ein optionaler Schnellzugang." not in html
+    assert "Discord access requirements" not in html
+    assert 'class="book-discord-step"' not in html
+    assert 'class="book-discord-hint"' not in html
+    assert html.index('id="passwordLoginForm"') < html.index('id="loginDiscordGate"')
     assert "E-Mail oder Benutzername" in html
     assert '<form id="passwordLoginForm" class="book-form book-auth-form" hidden' not in html
     assert "/signup.html" in html

@@ -234,40 +234,9 @@
             text-shadow: 0 0 8px rgba(202, 163, 59, 0.12);
         }
 
-        .book-auth-alt {
-            margin-top: 14px;
-        }
-
         .book-discord-gate {
             display: grid;
             gap: 14px;
-        }
-
-        .book-discord-gate-copy {
-            color: var(--vtt-ink-muted);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .book-discord-steps {
-            display: grid;
-            gap: 10px;
-            margin-top: 4px;
-        }
-
-        .book-discord-step {
-            padding: 10px 12px;
-            border: 1px solid rgba(130, 89, 52, 0.16);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.46);
-            color: var(--vtt-ink-muted);
-            line-height: 1.5;
-        }
-
-        .book-discord-step strong {
-            color: var(--vtt-ink);
-            display: block;
-            margin-bottom: 2px;
         }
 
         .book-status {
@@ -333,14 +302,6 @@
             cursor: wait;
             opacity: 0.75;
             transform: none;
-        }
-
-        .book-discord-hint {
-            margin-top: 8px;
-            color: var(--vtt-ink-muted);
-            font-size: 12px;
-            line-height: 1.45;
-            text-align: center;
         }
 
         .login-discord-community {
@@ -501,37 +462,6 @@
                         </div>
                     </div>
 
-                    <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Discord login gate">
-                        <div id="statusBanner" class="book-status" role="status" aria-live="polite"></div>
-                        <div class="book-discord-gate-copy">
-                            Discord ist ein optionaler Schnellzugang. Für den normalen Einstieg kannst du dich direkt darunter mit deiner E-Mail-Adresse und deinem Passwort anmelden.
-                        </div>
-                        <div class="book-discord-steps" aria-label="Discord access requirements">
-                            <div class="book-discord-step">
-                                <strong>1. Discord verbinden</strong>
-                                Wenn dein Discord-Konto freigeschaltet ist, übernimmt Discord den Einstieg.
-                            </div>
-                            <div class="book-discord-step">
-                                <strong>2. Server-Mitglied sein</strong>
-                                Das Konto muss Mitglied des erlaubten Roll-Drauf Discord-Servers sein.
-                            </div>
-                            <div class="book-discord-step">
-                                <strong>3. Bot-Freischaltung besitzen</strong>
-                                Der Roll-Drauf-Bot muss deinem Discord-Konto einen gültigen VTT-Zugang zugewiesen haben.
-                            </div>
-                        </div>
-
-                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Optional mit Discord anmelden">Optional mit Discord anmelden</button>
-                        <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geöffnet...</div>
-                        <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
-                        <div class="book-auth-alt">
-                            <div class="book-discord-hint">
-                                Wenn dir der Zugang fehlt, musst du zuerst dem Server beitreten und den Zugriff über den Bot erhalten.
-                            </div>
-                            <div class="error" id="discordError" role="alert" aria-live="polite"></div>
-                        </div>
-                    </div>
-
                     <form id="passwordLoginForm" class="book-form book-auth-form" novalidate aria-label="Anmeldung mit E-Mail oder Benutzername">
                         <div id="passwordLoginStatus" class="book-form-status" role="status" aria-live="polite" hidden></div>
                         <button type="button" class="book-form-status-action" id="passwordLoginContinueBtn" hidden>Übersicht öffnen</button>
@@ -553,6 +483,16 @@
                         </div>
                         <div class="error book-auth-error" id="passwordLoginError" role="alert" aria-live="assertive" tabindex="-1"></div>
                     </form>
+
+                    <div class="book-auth-divider" aria-hidden="true"><span>oder</span></div>
+
+                    <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Optionaler Discord-Login">
+                        <div id="statusBanner" class="book-status" role="status" aria-live="polite"></div>
+                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Optional mit Discord anmelden">Optional mit Discord anmelden</button>
+                        <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geöffnet...</div>
+                        <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
+                        <div class="error" id="discordError" role="alert" aria-live="polite"></div>
+                    </div>
                 </div>
             </section>
 
