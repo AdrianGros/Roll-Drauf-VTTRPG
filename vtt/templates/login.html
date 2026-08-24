@@ -271,6 +271,23 @@
             gap: 14px;
         }
 
+        #login-content .login-profile-art {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            width: min(100%, 390px);
+            margin: 12px auto 0;
+            pointer-events: none;
+        }
+
+        #login-content .login-profile-art img {
+            display: block;
+            width: min(100%, 390px);
+            height: auto;
+            max-height: 390px;
+            object-fit: contain;
+        }
+
         .book-status {
             display: none;
             margin-bottom: 14px;
@@ -516,6 +533,10 @@
                         <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geöffnet...</div>
                         <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
                         <div class="error" id="discordError" role="alert" aria-live="polite"></div>
+                    </div>
+
+                    <div class="login-profile-art" aria-hidden="true">
+                        <img src="/static/assets/sternenstaub/illustrations/profile-bunny.png" alt="">
                     </div>
                 </div>
             </section>
