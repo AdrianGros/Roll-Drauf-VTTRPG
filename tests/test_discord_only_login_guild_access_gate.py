@@ -76,8 +76,11 @@ def test_login_page_is_discord_only_from_user_perspective(client):
     assert "Mit Discord anmelden" in html
     assert "Server + Bot Access Required" in html
     assert "Es gibt keine separate Website-Registrierung." in html
-    assert "Benutzername" not in html
-    assert "Passwort" not in html
+    # The password form exists for staff/robot flows but must ship HIDDEN.
+    # (This used to be asserted as '"Benutzername" not in html' -- a proxy
+    # that only held while the form labels were accidentally English; the
+    # B1 language pass made the labels German and exposed the loophole.)
+    assert '<form id="passwordLoginForm" class="book-form book-auth-form" hidden' in html
     assert "/signup.html" not in html
     assert "/register.html" not in html
 

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - roll drauf vtt</title>
-    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
     <link rel="stylesheet" href="/static/css/components.css">
-    <link rel="stylesheet" href="/static/css/book-scene.css">
     <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
 </head>
 <body class="spellbook signup-route-book-scene">
     <template id="signupSceneTemplate">
@@ -17,9 +17,9 @@
             <section class="book-dashboard-page" data-book-route="signup" role="region" aria-label="Sign up page">
                 <div class="book-dashboard-topbar">
                     <div class="book-dashboard-ribbon" role="navigation" aria-label="Auth chapter menu">
-                        <a class="book-dashboard-ribbon-btn" href="/login.html">Login</a>
+                        <a class="book-dashboard-ribbon-btn" href="/login.html">Anmelden</a>
                         <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page">Sign Up</button>
-                        <a class="book-dashboard-ribbon-btn" href="/register.html">Key Access</a>
+                        <a class="book-dashboard-ribbon-btn" href="/register.html">Mit Schlüssel</a>
                     </div>
                     <div class="book-dashboard-crest" aria-label="Reader state">Guest</div>
                 </div>
@@ -89,19 +89,19 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username">Username</label>
+                                    <label for="username">Benutzername</label>
                                     <input type="text" id="username" name="username" placeholder="3-50 characters" required autocomplete="username">
                                     <div class="error" id="usernameError" role="alert"></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email">Email</label>
+                                    <label for="email">E-Mail</label>
                                     <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
                                     <div class="error" id="emailError" role="alert"></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password">Password</label>
+                                    <label for="password">Passwort</label>
                                     <input type="password" id="password" name="password" placeholder="Choose a strong passphrase" required autocomplete="new-password">
                                     <div class="book-password-list" aria-label="Password requirements">
                                         <div class="book-password-item" id="req-length">At least 8 characters</div>

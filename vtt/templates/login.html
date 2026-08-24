@@ -309,11 +309,11 @@
         }
     </style>
     <!-- Spellbook Theme -->
-    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
-    <link rel="stylesheet" href="/static/css/book-scene.css">
     <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
 </head>
 <body class="spellbook">
     <!-- 3D Book Scene (injected via book-scene.js) -->
@@ -334,7 +334,7 @@
                     <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Discord login gate">
                         <div id="statusBanner" class="book-status" role="status" aria-live="polite"></div>
                         <div class="book-discord-gate-copy">
-                            Der Einstieg in das VTT laeuft ausschliesslich ueber Discord. Du brauchst zwei Dinge: Mitgliedschaft im Roll-Drauf Server und eine gueltige Freischaltung durch den Bot.
+                            Der Einstieg in das VTT läuft ausschließlich über Discord. Du brauchst zwei Dinge: Mitgliedschaft im Roll-Drauf Server und eine gueltige Freischaltung durch den Bot.
                         </div>
                         <div class="book-discord-steps" aria-label="Discord access requirements">
                             <div class="book-discord-step">
@@ -352,11 +352,11 @@
                         </div>
 
                         <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Mit Discord anmelden">Mit Discord anmelden</button>
-                        <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geoeffnet...</div>
+                        <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geöffnet...</div>
                         <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
                         <div class="book-auth-alt">
                             <div class="book-discord-hint">
-                                Wenn dir der Zugang fehlt, musst du zuerst dem Server beitreten und den Zugriff ueber den Bot erhalten.
+                                Wenn dir der Zugang fehlt, musst du zuerst dem Server beitreten und den Zugriff über den Bot erhalten.
                             </div>
                             <div class="error" id="discordError" role="alert" aria-live="polite"></div>
                         </div>
@@ -364,11 +364,11 @@
 
                     <form id="passwordLoginForm" class="book-form book-auth-form" hidden novalidate aria-label="Password login">
                         <div class="form-group">
-                            <label for="loginUsername">Username</label>
+                            <label for="loginUsername">Benutzername</label>
                             <input type="text" id="loginUsername" name="username" required autocomplete="username">
                         </div>
                         <div class="form-group">
-                            <label for="loginPassword">Password</label>
+                            <label for="loginPassword">Passwort</label>
                             <input type="password" id="loginPassword" name="password" required autocomplete="current-password">
                         </div>
                         <div class="book-auth-actions">
@@ -384,7 +384,7 @@
                     <div class="login-book-welcome-kicker">Discord Access</div>
                     <h2 class="login-book-welcome-title">Der Zugang liegt im Server</h2>
                     <p class="login-book-welcome-copy">
-                        Dieses VTT gehoert zum Discord-Server. Discord liefert die Identitaet, der Bot prueft Mitgliedschaft und Freischaltung, und erst dann wird die lokale VTT-Session geoeffnet.
+                        Dieses VTT gehört zum Discord-Server. Discord liefert die Identität, der Bot prueft Mitgliedschaft und Freischaltung, und erst dann wird die lokale VTT-Session geöffnet.
                     </p>
 
                     <div class="login-book-engraving">
@@ -511,7 +511,7 @@
             const authNotice = currentUrl.searchParams.get('auth_notice');
 
             if (authNotice === 'discord_only') {
-                showStatus('Der Zugang erfolgt jetzt ausschliesslich ueber Discord. Bitte melde dich mit deinem Discord-Konto an.');
+                showStatus('Der Zugang erfolgt jetzt ausschließlich über Discord. Bitte melde dich mit deinem Discord-Konto an.');
                 currentUrl.searchParams.delete('auth_notice');
             }
 
@@ -563,7 +563,7 @@
 
                 discordLoginButton.addEventListener('click', () => {
                     discordLoginButton.disabled = true;
-                    discordLoginButton.textContent = 'Discord wird geoeffnet...';
+                    discordLoginButton.textContent = 'Discord wird geöffnet...';
                     showLoading(true);
                     const discordUrl = new URL('/api/auth/discord/start', window.location.origin);
                     discordUrl.searchParams.set('next', nextPath);
@@ -571,7 +571,7 @@
                 }, { once: true });
             } catch (error) {
                 console.warn('[Login] Discord status check failed', error);
-                showStatus('Discord-Zugang konnte gerade nicht vorbereitet werden. Bitte spaeter erneut versuchen.');
+                showStatus('Discord-Zugang konnte gerade nicht vorbereitet werden. Bitte später erneut versuchen.');
                 discordLoginButton.disabled = true;
             }
         }

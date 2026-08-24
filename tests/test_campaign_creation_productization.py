@@ -29,7 +29,7 @@ def test_campaigns_route_exposes_real_book_creation_surface(client):
     assert 'id="campaignCreateDescription"' in html
     assert 'id="campaignCreateMaxPlayers"' in html
     assert "submitCampaignCreationForm(event)" in html
-    assert "Kampagnen-Hub oeffnen" in html
+    assert "Kampagnen-Hub öffnen" in html
 
 
 def test_campaign_creation_no_longer_uses_prompt_chain_as_primary_path(client):
@@ -52,7 +52,7 @@ def test_campaign_creation_success_copy_points_into_hub_and_session_prep(client)
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert "Danach oeffnet sich direkt der Kampagnen-Hub." in html
-    assert "Als Naechstes: Hub oeffnen, Spieler einladen oder die erste Session vorbereiten." in html
+    assert "Danach öffnet sich direkt der Kampagnen-Hub." in html
+    assert "Als Nächstes: Hub öffnen, Spieler einladen oder die erste Session vorbereiten." in html
     assert "Session-Prep folgt im Hub" in html
     assert "viewCampaign(created.id)" in html

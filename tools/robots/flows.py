@@ -127,12 +127,12 @@ def _dice_roll_flow(stack, workdir: Path) -> list[str]:
             return findings
 
         log_text = page.locator("#diceLog").inner_text()
-        if "gewuerfelt" not in log_text:
+        if "gewürfelt" not in log_text:
             findings.append(f"[dice] #diceLog updated but text looks wrong: {log_text[:200]!r}")
 
         activity_text = page.locator("#activityLog").inner_text() \
             if page.locator("#activityLog").count() else ""
-        if "gewuerfelt" not in activity_text:
+        if "gewürfelt" not in activity_text:
             findings.append(
                 f"[dice] #diceLog updated but #activityLog was not "
                 f"(only one of the two broadcast handlers fired): {activity_text[:200]!r}")
@@ -504,7 +504,7 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
         try:
             page.wait_for_function(
                 "() => (document.getElementById('tokenList')?.textContent || '')"
-                ".includes('Poisoned, Prone, Erschoepfung 1')", timeout=10_000)
+                ".includes('Poisoned, Prone, Erschöpfung 1')", timeout=10_000)
         except Exception:
             token_text = page.locator("#tokenList").text_content() or ""
             findings.append(f"[conditions] Beyond20 conditions-update never reached "

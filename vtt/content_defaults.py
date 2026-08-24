@@ -15,33 +15,33 @@ paths, not editorial content, and change meaning if reworded carelessly.
 PAGE_CONTENT_DEFAULTS = [
     # ── shared: ribbon (renders on every book-mode page) ──────────────────
     {
-        "page_key": "shared", "content_key": "ribbon.nav_dashboard", "text": "Dashboard",
+        "page_key": "shared", "content_key": "ribbon.nav_dashboard", "text": "Übersicht",
         "description": "Ribbon nav button label",
     },
     {
-        "page_key": "shared", "content_key": "ribbon.nav_campaigns", "text": "Campaigns",
+        "page_key": "shared", "content_key": "ribbon.nav_campaigns", "text": "Kampagnen",
         "description": "Ribbon nav button label",
     },
     {
-        "page_key": "shared", "content_key": "ribbon.nav_characters", "text": "Characters",
+        "page_key": "shared", "content_key": "ribbon.nav_characters", "text": "Charaktere",
         "description": "Ribbon nav button label",
     },
     {
-        "page_key": "shared", "content_key": "ribbon.play_button", "text": "▶ Play",
+        "page_key": "shared", "content_key": "ribbon.play_button", "text": "▶ Spieltisch",
         "description": "Ribbon Play button label (opens the quick-launch popup)",
     },
     {
-        "page_key": "shared", "content_key": "ribbon.logout_button", "text": "Logout",
+        "page_key": "shared", "content_key": "ribbon.logout_button", "text": "Abmelden",
         "description": "Ribbon logout button label",
     },
 
     # ── shared: Play quick-launch popup ────────────────────────────────────
     {
-        "page_key": "shared", "content_key": "play_launch.title", "text": "Play",
+        "page_key": "shared", "content_key": "play_launch.title", "text": "Spieltisch",
         "description": "Popup title",
     },
     {
-        "page_key": "shared", "content_key": "play_launch.subtitle", "text": "Waehle eine Session oder starte in wenigen Schritten eine neue.",
+        "page_key": "shared", "content_key": "play_launch.subtitle", "text": "Wähle eine Session oder starte in wenigen Schritten eine neue.",
         "description": "Popup subtitle",
     },
     {
@@ -81,11 +81,11 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Disabled card button: player waiting for DM to start (owner view context)",
     },
     {
-        "page_key": "shared", "content_key": "play_launch.action_next_session", "text": "Naechste Session",
+        "page_key": "shared", "content_key": "play_launch.action_next_session", "text": "Nächste Session",
         "description": "Card button: DM creates the next session after one ended",
     },
     {
-        "page_key": "shared", "content_key": "play_launch.action_open_campaign", "text": "Kampagne oeffnen",
+        "page_key": "shared", "content_key": "play_launch.action_open_campaign", "text": "Kampagne öffnen",
         "description": "Card button: non-owner opens the campaign hub after a session ended",
     },
     {
@@ -139,31 +139,31 @@ PAGE_CONTENT_DEFAULTS = [
 
     # ── dashboard: page shell (title/copy/chips around the Home spread) ───
     {
-        "page_key": "dashboard", "content_key": "shell.left_eyebrow", "text": "Chapter I",
+        "page_key": "dashboard", "content_key": "shell.left_eyebrow", "text": "Kapitel I",
         "description": "Small kicker above the left-page title",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.left_title", "text": "Home",
+        "page_key": "dashboard", "content_key": "shell.left_title", "text": "Übersicht",
         "description": "Left-page title",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.left_copy", "text": "Willkommen zurueck, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.",
+        "page_key": "dashboard", "content_key": "shell.left_copy", "text": "Willkommen zurück, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.",
         "description": "Left-page intro copy; {username} is substituted",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.right_eyebrow", "text": "Chronicle Feed",
+        "page_key": "dashboard", "content_key": "shell.right_eyebrow", "text": "Chronik",
         "description": "Small kicker above the right-page title",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.right_title", "text": "Was gerade zaehlt",
+        "page_key": "dashboard", "content_key": "shell.right_title", "text": "Was gerade zählt",
         "description": "Right-page title",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.right_copy", "text": "Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die naechsten operativen Schritte bleiben sichtbar getrennt voneinander.",
+        "page_key": "dashboard", "content_key": "shell.right_copy", "text": "Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die nächsten operativen Schritte bleiben sichtbar getrennt voneinander.",
         "description": "Right-page intro copy",
     },
     {
-        "page_key": "dashboard", "content_key": "shell.chip_home", "text": "Home / Social Hub",
+        "page_key": "dashboard", "content_key": "shell.chip_home", "text": "Übersicht / Social",
         "description": "Meta chip on the right page",
     },
     {
@@ -185,7 +185,7 @@ PAGE_CONTENT_DEFAULTS = [
 
     # ── dashboard: hero section ────────────────────────────────────────────
     {
-        "page_key": "dashboard", "content_key": "home.hero_kicker", "text": "Home",
+        "page_key": "dashboard", "content_key": "home.hero_kicker", "text": "Übersicht",
         "description": "Hero small kicker",
     },
     {
@@ -209,7 +209,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Hero meta stat; {count} is substituted",
     },
     {
-        "page_key": "dashboard", "content_key": "home.social_scope_label", "text": "Social Scope:",
+        "page_key": "dashboard", "content_key": "home.social_scope_label", "text": "Sichtbarkeit:",
         "description": "Bold label before the social-scope note",
     },
     {
@@ -220,10 +220,10 @@ PAGE_CONTENT_DEFAULTS = [
     # ── dashboard: navigation rail ──────────────────────────────────────────
     {"page_key": "dashboard", "content_key": "home.nav_social", "text": "Social", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_guilds", "text": "Guilds", "description": "Home nav-rail link"},
-    {"page_key": "dashboard", "content_key": "home.nav_campaigns", "text": "Campaigns", "description": "Home nav-rail link"},
-    {"page_key": "dashboard", "content_key": "home.nav_characters", "text": "Characters", "description": "Home nav-rail link"},
+    {"page_key": "dashboard", "content_key": "home.nav_campaigns", "text": "Kampagnen", "description": "Home nav-rail link"},
+    {"page_key": "dashboard", "content_key": "home.nav_characters", "text": "Charaktere", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_session_prep", "text": "Session Prep", "description": "Home nav-rail link"},
-    {"page_key": "dashboard", "content_key": "home.nav_play", "text": "Play", "description": "Home nav-rail link"},
+    {"page_key": "dashboard", "content_key": "home.nav_play", "text": "Spieltisch", "description": "Home nav-rail link"},
 
     # ── dashboard: guild panel ───────────────────────────────────────────
     {
@@ -247,15 +247,15 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Guild panel heading",
     },
     {
-        "page_key": "dashboard", "content_key": "home.guild_panel_copy", "text": "Guilds bleiben reine Meta-Identitaet. Sie veraendern keine Rollen, keine Berechtigungen und keinen Session-Chat.",
+        "page_key": "dashboard", "content_key": "home.guild_panel_copy", "text": "Guilds bleiben reine Meta-Identität. Sie verändern keine Rollen, keine Berechtigungen und keinen Session-Chat.",
         "description": "Guild panel intro copy",
     },
     {
-        "page_key": "dashboard", "content_key": "home.guild_primary_label", "text": "Primaere Gilde",
+        "page_key": "dashboard", "content_key": "home.guild_primary_label", "text": "Primäre Gilde",
         "description": "Kicker above the user's primary guild card",
     },
     {
-        "page_key": "dashboard", "content_key": "home.guild_badge_primary", "text": "Primaer",
+        "page_key": "dashboard", "content_key": "home.guild_badge_primary", "text": "Primär",
         "description": "Badge on the user's primary guild card",
     },
     {
@@ -267,13 +267,13 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Disabled button on the user's current primary guild card",
     },
     {
-        "page_key": "dashboard", "content_key": "home.guild_button_set_primary", "text": "Als Primaergilde setzen",
+        "page_key": "dashboard", "content_key": "home.guild_button_set_primary", "text": "Als Primärgilde setzen",
         "description": "Button to switch primary guild",
     },
 
     # ── dashboard: chronicle feed ────────────────────────────────────────
     {
-        "page_key": "dashboard", "content_key": "home.feed_empty_kicker", "text": "Chronicle",
+        "page_key": "dashboard", "content_key": "home.feed_empty_kicker", "text": "Chronik",
         "description": "Kicker shown when the feed is empty",
     },
     {
@@ -291,7 +291,7 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Priorities section kicker",
     },
     {
-        "page_key": "dashboard", "content_key": "home.priorities_title", "text": "Prioritaeten",
+        "page_key": "dashboard", "content_key": "home.priorities_title", "text": "Prioritäten",
         "description": "Priorities section heading",
     },
     {
@@ -299,11 +299,38 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Quick-links section kicker",
     },
     {
-        "page_key": "dashboard", "content_key": "home.quicklinks_title", "text": "Wohin du als naechstes gehst",
+        "page_key": "dashboard", "content_key": "home.quicklinks_title", "text": "Wohin du als nächstes gehst",
         "description": "Quick-links section heading",
     },
     {
-        "page_key": "dashboard", "content_key": "home.context_note", "text": "Dashboard bleibt Home und Social Hub. Kampagnen, Session-Prep und Play bleiben die operativen Folgeflaechen.",
+        "page_key": "dashboard", "content_key": "home.context_note", "text": "Dashboard bleibt Home und Social Hub. Kampagnen, Session-Prep und Play bleiben die operativen Folgeflächen.",
         "description": "Closing note under quick links",
     },
+]
+
+
+# B1 language pass (Designbrief 2026-08-24): rows seeded with these OLD
+# default texts get retranslated in place at startup -- ONLY if the row
+# still exactly matches the old default, so editor changes survive.
+PAGE_CONTENT_RETRANSLATIONS = [
+    ('shared', 'ribbon.nav_dashboard', 'Dashboard', 'Übersicht'),
+    ('shared', 'ribbon.nav_campaigns', 'Campaigns', 'Kampagnen'),
+    ('shared', 'ribbon.nav_characters', 'Characters', 'Charaktere'),
+    ('shared', 'ribbon.play_button', '▶ Play', '▶ Spieltisch'),
+    ('shared', 'ribbon.logout_button', 'Logout', 'Abmelden'),
+    ('shared', 'play_launch.title', 'Play', 'Spieltisch'),
+    ('dashboard', 'shell.left_eyebrow', 'Chapter I', 'Kapitel I'),
+    ('dashboard', 'shell.left_title', 'Home', 'Übersicht'),
+    ('dashboard', 'shell.right_eyebrow', 'Chronicle Feed', 'Chronik'),
+    ('dashboard', 'shell.chip_home', 'Home / Social Hub', 'Übersicht / Social'),
+    ('dashboard', 'home.hero_kicker', 'Home', 'Übersicht'),
+    ('dashboard', 'home.social_scope_label', 'Social Scope:', 'Sichtbarkeit:'),
+    ('dashboard', 'home.nav_campaigns', 'Campaigns', 'Kampagnen'),
+    ('dashboard', 'home.nav_characters', 'Characters', 'Charaktere'),
+    ('dashboard', 'home.nav_play', 'Play', 'Spieltisch'),
+    ('dashboard', 'home.feed_empty_kicker', 'Chronicle', 'Chronik'),
+    ('dashboard', 'home.guild_panel_copy', 'Guilds bleiben reine Meta-Identität. Sie veraendern keine Rollen, keine Berechtigungen und keinen Session-Chat.', 'Guilds bleiben reine Meta-Identität. Sie verändern keine Rollen, keine Berechtigungen und keinen Session-Chat.'),
+    ('dashboard', 'home.guild_primary_label', 'Primaere Gilde', 'Primäre Gilde'),
+    ('dashboard', 'home.guild_badge_primary', 'Primaer', 'Primär'),
+    ('dashboard', 'home.guild_button_set_primary', 'Als Primaergilde setzen', 'Als Primärgilde setzen'),
 ]

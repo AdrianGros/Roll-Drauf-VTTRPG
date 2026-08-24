@@ -19,10 +19,10 @@ def client(app):
 @pytest.mark.parametrize(
     ("path", "active_label"),
     [
-        ("/dashboard", "Home"),
-        ("/campaigns", "Campaigns"),
-        ("/characters", "Characters"),
-        ("/character-sheet?id=42&mode=edit", "Characters"),
+        ("/dashboard", "Übersicht"),
+        ("/campaigns", "Kampagnen"),
+        ("/characters", "Charaktere"),
+        ("/character-sheet?id=42&mode=edit", "Charaktere"),
     ],
 )
 def test_non_play_routes_share_primary_spellbook_nav(path, active_label, client):
@@ -34,9 +34,9 @@ def test_non_play_routes_share_primary_spellbook_nav(path, active_label, client)
     assert 'book-dashboard-topbar' in html
     assert 'book-dashboard-ribbon' in html
     assert 'aria-label="Primary spellbook menu"' in html
-    assert '>Home<' in html
-    assert '>Campaigns<' in html
-    assert '>Characters<' in html
+    assert '>Übersicht<' in html
+    assert '>Kampagnen<' in html
+    assert '>Charaktere<' in html
     assert 'aria-current="page"' in html or 'book-dashboard-ribbon-btn is-active' in html
     assert f'>{active_label}<' in html
 
@@ -47,7 +47,7 @@ def test_campaigns_route_surfaces_clearer_play_path_language(client):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert "Hub oeffnen" in html
+    assert "Hub öffnen" in html
     assert "Session fortsetzen" in html
     assert "Session betreten" in html
     assert "Zu Play" in html

@@ -272,13 +272,13 @@
         input::placeholder { color: rgba(232, 213, 183, 0.5); }
     </style>
     <!-- Spellbook Theme -->
-    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
-    <link rel="stylesheet" href="/static/css/book-scene.css">
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-shell.css">
     <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
     <style>
         body.dashboard-route-book-scene {
             background: #0d0514;
@@ -317,9 +317,9 @@
         <div class="logo">roll drauf VTT</div>
         <div class="user-menu">
             <span class="user-name" id="username">Loading...</span>
-            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Characters</button>
-            <button class="btn btn-secondary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Campaigns</button>
-            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
+            <button class="btn btn-secondary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
+            <button class="btn btn-secondary" onclick="logout()">Abmelden</button>
         </div>
     </header>
 
@@ -327,27 +327,27 @@
         <div class="book-shell-frame">
             <div class="book-dashboard-topbar">
                 <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
-                    <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/dashboard" onclick="goTo('/dashboard')">Home</button>
-                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Campaigns</button>
-                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Characters</button>
-                    <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Logout</button>
+                    <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
                 </div>
-                <div class="book-dashboard-crest" aria-label="Current chapter">Compendium</div>
+                <div class="book-dashboard-crest" aria-label="Aktuelles Kapitel">Kompendium</div>
             </div>
-            <div class="book-shell-ribbon">Compendium</div>
+            <div class="book-shell-ribbon">Kompendium</div>
 
             <div class="book-shell-frame-header">
                 <div>
                     <p class="book-frame-eyebrow">Spellbook Scene</p>
                     <h1 class="book-page-title" data-book-field="section">Home</h1>
                     <p class="book-frame-copy">
-                        Das Home oeffnet als lesbare Doppelseite: Orientierung und Social-Hub links, Chronik, Guilds und die Wege weiter in Kampagnen und Vorbereitung rechts.
+                        Das Home öffnet als lesbare Doppelseite: Orientierung und Social-Hub links, Chronik, Guilds und die Wege weiter in Kampagnen und Vorbereitung rechts.
                     </p>
                 </div>
                 <div class="book-frame-meta">
-                    <span class="book-chip">Chapter <span data-book-field="chapter">Compendium</span></span>
-                    <span class="book-chip">BookScene Runtime</span>
-                    <span class="book-chip">Arrow Keys Turn</span>
+                    <span class="book-chip">Kapitel <span data-book-field="chapter">Kompendium</span></span>
+                    
+                    
                 </div>
             </div>
 
@@ -355,13 +355,13 @@
                 <section class="book-page book-page--index">
                     <div class="dashboard-header">
                         <h1>Home</h1>
-                        <p class="book-page-lede">Willkommen zurueck. Diese Seite ist dein Heimathafen vor dem Tisch: Social, Guilds, Kampagnen, Charaktere und Session-Prep bleiben von hier aus klar erreichbar.</p>
+                        <p class="book-page-lede">Willkommen zurück. Diese Seite ist dein Heimathafen vor dem Tisch: Social, Guilds, Kampagnen, Charaktere und Session-Prep bleiben von hier aus klar erreichbar.</p>
                         <div class="dashboard-callout">
-                            <strong>Heute wichtig:</strong> Das Home bleibt die Landing Page, waehrend Kampagnen, Charaktere und Session-Prep die operativen Folgeflaechen im selben Buch bleiben.
+                            <strong>Heute wichtig:</strong> Das Home bleibt die Landing Page, während Kampagnen, Charaktere und Session-Prep die operativen Folgeflächen im selben Buch bleiben.
                         </div>
                         <div class="dashboard-next-actions">
-                            <button class="btn btn-primary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen oeffnen</button>
-                            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Charaktere oeffnen</button>
+                            <button class="btn btn-primary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen öffnen</button>
+                            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Charaktere öffnen</button>
                         </div>
                     </div>
 
@@ -385,15 +385,15 @@
                         <div class="book-guide-list">
                             <div class="book-guide-item">
                                 <div class="book-guide-title">Kampagnen-Pfad</div>
-                                <div class="book-guide-copy">Gehe in Kampagnen, um Kapitel anzulegen, Hubs zu oeffnen und weiter in Session-Prep und den Weg nach Play zu fuehren.</div>
+                                <div class="book-guide-copy">Gehe in Kampagnen, um Kapitel anzulegen, Hubs zu öffnen und weiter in Session-Prep und den Weg nach Play zu führen.</div>
                             </div>
                             <div class="book-guide-item">
                                 <div class="book-guide-title">Charakterarchiv</div>
-                                <div class="book-guide-copy">Charaktere bleiben der Ort fuer Archiv, Heldenerstellung und den Rueckweg in Kampagnen oder direkte Session-Vorbereitung.</div>
+                                <div class="book-guide-copy">Charaktere bleiben der Ort für Archiv, Heldenerstellung und den Rueckweg in Kampagnen oder direkte Session-Vorbereitung.</div>
                             </div>
                             <div class="book-guide-item">
                                 <div class="book-guide-title">Hauptweg</div>
-                                <div class="book-guide-copy">Die Produktlinie fuehrt jetzt vom Home ueber Guilds, Kampagnen und Session-Prep kontrolliert weiter Richtung Play.</div>
+                                <div class="book-guide-copy">Die Produktlinie führt jetzt vom Home über Guilds, Kampagnen und Session-Prep kontrolliert weiter Richtung Play.</div>
                             </div>
                         </div>
                     </div>

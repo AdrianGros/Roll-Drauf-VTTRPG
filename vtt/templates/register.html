@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter the Spellbook - roll drauf vtt</title>
-    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
     <link rel="stylesheet" href="/static/css/components.css">
-    <link rel="stylesheet" href="/static/css/book-scene.css">
     <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
 </head>
 <body class="spellbook register-route-book-scene">
     <template id="registerSceneTemplate">
@@ -17,8 +17,8 @@
             <section class="book-dashboard-page" data-book-route="register" role="region" aria-label="Register page">
                 <div class="book-dashboard-topbar">
                     <div class="book-dashboard-ribbon" role="navigation" aria-label="Invitation chapter menu">
-                        <a class="book-dashboard-ribbon-btn" href="/login.html">Login</a>
-                        <a class="book-dashboard-ribbon-btn" href="/signup.html">Sign Up</a>
+                        <a class="book-dashboard-ribbon-btn" href="/login.html">Anmelden</a>
+                        <a class="book-dashboard-ribbon-btn" href="/signup.html">Registrieren</a>
                         <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page">Key Access</button>
                     </div>
                     <div class="book-dashboard-crest" aria-label="Reader state">Guest</div>
@@ -82,7 +82,7 @@
 
                             <form id="registerForm" class="book-auth-form" novalidate>
                                 <div class="form-group">
-                                    <label for="key">Registration Key</label>
+                                    <label for="key">Registrierungsschlüssel</label>
                                     <input type="text" id="key" name="key" placeholder="SPELL-XXXX-XXXX-XXXX" required autocomplete="off">
                                     <div class="form-help">Enter the key exactly as issued.</div>
                                     <div class="error" id="keyError" role="alert"></div>
@@ -90,13 +90,13 @@
 
                                 <div class="book-inline-fields">
                                     <div class="form-group">
-                                        <label for="username">Username</label>
+                                        <label for="username">Benutzername</label>
                                         <input type="text" id="username" name="username" placeholder="Your table name" required autocomplete="username">
                                         <div class="error" id="usernameError" role="alert"></div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="email">Email</label>
+                                        <label for="email">E-Mail</label>
                                         <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
                                         <div class="error" id="emailError" role="alert"></div>
                                     </div>
@@ -104,7 +104,7 @@
 
                                 <div class="book-inline-fields">
                                     <div class="form-group">
-                                        <label for="password">Password</label>
+                                        <label for="password">Passwort</label>
                                         <input type="password" id="password" name="password" placeholder="Choose a strong passphrase" required autocomplete="new-password">
                                         <div class="book-password-list" aria-label="Password requirements">
                                             <div class="book-password-item" id="req-length">At least 8 characters</div>
@@ -117,7 +117,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="confirmPassword">Confirm Password</label>
+                                        <label for="confirmPassword">Passwort bestätigen</label>
                                         <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat the passphrase" required autocomplete="new-password">
                                         <div class="error" id="confirmPasswordError" role="alert"></div>
                                     </div>

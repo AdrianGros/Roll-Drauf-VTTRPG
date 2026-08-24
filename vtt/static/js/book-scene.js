@@ -12,13 +12,13 @@
         : { matches: false, addEventListener: null, removeEventListener: null };
 
     const routeMeta = {
-        login: { prev: null, next: 'signup', chapter: 'Threshold', section: 'Entry', folio: ['0', '0'] },
+        login: { prev: null, next: 'signup', chapter: 'Schwelle', section: 'Eintritt', folio: ['0', '0'] },
         signup: { prev: 'login', next: 'register', chapter: 'Initiates', section: 'Sign Up', folio: ['I', 'II'] },
         register: { prev: 'signup', next: 'dashboard', chapter: 'Keys', section: 'Register', folio: ['III', 'IV'] },
-        dashboard: { prev: 'login', next: 'campaigns', chapter: 'Compendium', section: 'Dashboard', folio: ['1', '2'] },
-        campaigns: { prev: 'dashboard', next: 'characters', chapter: 'Chronicles', section: 'Campaigns', folio: ['3', '4'] },
-        characters: { prev: 'campaigns', next: null, chapter: 'Personae', section: 'Characters', folio: ['5', '6'] },
-        'character-sheet': { prev: 'characters', next: null, chapter: 'Personae', section: 'Character Sheet', folio: ['7', '8'] },
+        dashboard: { prev: 'login', next: 'campaigns', chapter: 'Kompendium', section: 'Dashboard', folio: ['1', '2'] },
+        campaigns: { prev: 'dashboard', next: 'characters', chapter: 'Chroniken', section: 'Kampagnen', folio: ['3', '4'] },
+        characters: { prev: 'campaigns', next: null, chapter: 'Helden', section: 'Charaktere', folio: ['5', '6'] },
+        'character-sheet': { prev: 'characters', next: null, chapter: 'Helden', section: 'Character Sheet', folio: ['7', '8'] },
     };
     const routeOrder = ['login', 'signup', 'register', 'dashboard', 'campaigns', 'characters', 'character-sheet'];
 
@@ -346,9 +346,9 @@
             if (routeKey === 'login') return 'Welcome, Reader';
             if (routeKey === 'signup') return 'Sign Up';
             if (routeKey === 'register') return 'Register';
-            if (routeKey === 'dashboard') return 'Dashboard';
-            if (routeKey === 'campaigns') return 'Campaigns';
-            if (routeKey === 'characters') return 'Characters';
+            if (routeKey === 'dashboard') return 'Übersicht';
+            if (routeKey === 'campaigns') return 'Kampagnen';
+            if (routeKey === 'characters') return 'Charaktere';
             if (routeKey === 'character-sheet') return 'Character Sheet';
             return 'Spellbook';
         },
@@ -369,18 +369,18 @@
             }
             if (routeKey === 'dashboard') {
                 return side === 'back'
-                    ? 'Das Dashboard ist der Startpunkt fuer Kampagnen, Charaktere und den naechsten Weg in die Session-Vorbereitung.'
-                    : 'Das Dashboard oeffnet die stabile Vorbereitungsroute vor dem Tisch.';
+                    ? 'Das Dashboard ist der Startpunkt für Kampagnen, Charaktere und den nächsten Weg in die Session-Vorbereitung.'
+                    : 'Das Dashboard öffnet die stabile Vorbereitungsroute vor dem Tisch.';
             }
             if (routeKey === 'campaigns') {
                 return side === 'back'
-                    ? 'In Kampagnen legst du neue Runden an, oeffnest den Hub und gehst weiter in Session-Prep.'
-                    : 'Kampagnen ist der direkte Weg von der Uebersicht in Hub, Session-Prep und Play.';
+                    ? 'In Kampagnen legst du neue Runden an, öffnest den Hub und gehst weiter in Session-Prep.'
+                    : 'Kampagnen ist der direkte Weg von der Übersicht in Hub, Session-Prep und Play.';
             }
             if (routeKey === 'characters') {
                 return side === 'back'
-                    ? 'Im Charakterarchiv legst du Helden an, pflegst Avatar und Token und oeffnest den Bogen fuer den Feinschliff.'
-                    : 'Charaktere ist der Ort fuer Heldenanlage, Identitaet und den Rueckweg in die Session-Vorbereitung.';
+                    ? 'Im Charakterarchiv legst du Helden an, pflegst Avatar und Token und öffnest den Bogen für den Feinschliff.'
+                    : 'Charaktere ist der Ort für Heldenanlage, Identität und den Rueckweg in die Session-Vorbereitung.';
             }
             if (routeKey === 'character-sheet') {
                 return side === 'back'
@@ -467,9 +467,9 @@
 
         buildRibbon(routeKey) {
             const routes = [
-                { href: '/dashboard', label: this.content('ribbon.nav_dashboard', 'Dashboard') },
-                { href: '/campaigns', label: this.content('ribbon.nav_campaigns', 'Campaigns') },
-                { href: '/characters', label: this.content('ribbon.nav_characters', 'Characters') },
+                { href: '/dashboard', label: this.content('ribbon.nav_dashboard', 'Übersicht') },
+                { href: '/campaigns', label: this.content('ribbon.nav_campaigns', 'Kampagnen') },
+                { href: '/characters', label: this.content('ribbon.nav_characters', 'Charaktere') },
             ];
 
             return routes.map((route) => {
@@ -477,8 +477,8 @@
                 const active = routeKeyForPath(route.href) === activeRouteKey ? ' is-active' : '';
                 return `<button type="button" class="book-dashboard-ribbon-btn${active}" data-dashboard-route="${route.href}">${escapeHtml(route.label)}</button>`;
             }).join('')
-                + `<button type="button" class="book-dashboard-ribbon-btn book-dashboard-ribbon-btn--play" data-dashboard-action="play-launch">${escapeHtml(this.content('ribbon.play_button', '▶ Play'))}</button>`
-                + `<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">${escapeHtml(this.content('ribbon.logout_button', 'Logout'))}</button>`;
+                + `<button type="button" class="book-dashboard-ribbon-btn book-dashboard-ribbon-btn--play" data-dashboard-action="play-launch">${escapeHtml(this.content('ribbon.play_button', '▶ Spieltisch'))}</button>`
+                + `<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">${escapeHtml(this.content('ribbon.logout_button', 'Abmelden'))}</button>`;
         },
 
         buildCampaignPreview(campaigns) {
@@ -506,7 +506,7 @@
             if (!Array.isArray(characters) || characters.length === 0) {
                 return `
                     <div class="book-dashboard-preview-empty">
-                        Noch keine Charaktere. Oeffne das Personae-Archiv und lege den ersten Helden an.
+                        Noch keine Charaktere. Öffne das Personae-Archiv und lege den ersten Helden an.
                     </div>
                 `;
             }
@@ -559,7 +559,7 @@
             if (!Array.isArray(campaigns) || campaigns.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
-                        <div>Noch keine Kampagne angelegt. Starte hier mit deinem ersten Hub fuer Einladungen, Session-Prep und den spaeteren Weg nach Play.</div>
+                        <div>Noch keine Kampagne angelegt. Starte hier mit deinem ersten Hub für Einladungen, Session-Prep und den späteren Weg nach Play.</div>
                         ${this.buildActionButtons([
                             {
                                 label: 'Erste Kampagne anlegen',
@@ -580,10 +580,10 @@
                                 <span>${escapeHtml(campaign.status || 'active')}</span>
                             </div>
                             <div class="book-scene-ledger-meta">${Number(campaign.member_count || 0)} Mitglieder · ${campaign.is_owner ? 'Eigene Kampagne' : 'Geteiltes Kapitel'}</div>
-                            <div class="book-scene-ledger-copy">${escapeHtml(campaign.description || 'Bereit fuer Session-Prep, direkte Charakterzuweisung, Karten und Assets vor dem Tisch.')}</div>
+                            <div class="book-scene-ledger-copy">${escapeHtml(campaign.description || 'Bereit für Session-Prep, direkte Charakterzuweisung, Karten und Assets vor dem Tisch.')}</div>
                             ${this.buildActionButtons([
                                 {
-                                    label: Number(campaign.session_count || 0) > 0 ? 'Hub & Session-Prep' : 'Hub oeffnen',
+                                    label: Number(campaign.session_count || 0) > 0 ? 'Hub & Session-Prep' : 'Hub öffnen',
                                     href: buildIntentHref('/campaigns', { campaign_id: campaign.id, classic: 1 }),
                                     primary: true,
                                 },
@@ -598,7 +598,7 @@
             if (!Array.isArray(characters) || characters.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
-                        <div>Noch kein Held im Archiv. Lege hier den ersten Charakter an und fuehre ihn danach ueber Bogen und Kampagnenkontext in die Session-Vorbereitung.</div>
+                        <div>Noch kein Held im Archiv. Lege hier den ersten Charakter an und führe ihn danach über Bogen und Kampagnenkontext in die Session-Vorbereitung.</div>
                         ${this.buildActionButtons([
                             {
                                 label: 'Held anlegen',
@@ -619,10 +619,10 @@
                                 <span>Lvl ${Number(character.level || 1)}</span>
                             </div>
                             <div class="book-scene-ledger-meta">${escapeHtml(character.class || 'Abenteurer')} · ${escapeHtml(character.race || 'Volk offen')}</div>
-                            <div class="book-scene-ledger-copy">${escapeHtml(character.background || 'Bereit fuer Bogen, Identitaet und die spaetere Zuweisung in eine Session.')}</div>
+                            <div class="book-scene-ledger-copy">${escapeHtml(character.background || 'Bereit für Bogen, Identität und die spätere Zuweisung in eine Session.')}</div>
                             ${this.buildActionButtons([
                                 {
-                                    label: 'Bogen oeffnen',
+                                    label: 'Bogen öffnen',
                                     href: buildIntentHref('/character-sheet', { id: character.id }),
                                     primary: true,
                                 },
@@ -632,7 +632,7 @@
                                         href: buildIntentHref('/campaigns', { campaign_id: character.campaign_id, classic: 1 }),
                                     }
                                     : {
-                                        label: 'Kampagnen oeffnen',
+                                        label: 'Kampagnen öffnen',
                                         href: buildIntentHref('/campaigns', { classic: 1 }),
                                     },
                             ], 'book-scene-action-row--inline')}
@@ -645,11 +645,11 @@
         buildDashboardHero(snapshot = null) {
             const homeState = snapshot?.home_state || {};
             const primaryAction = snapshot?.primary_action || {
-                label: 'Kampagnen oeffnen',
+                label: 'Kampagnen öffnen',
                 href: '/campaigns?classic=1',
             };
             const secondaryAction = snapshot?.secondary_action || {
-                label: 'Charaktere oeffnen',
+                label: 'Charaktere öffnen',
                 href: '/characters?classic=1',
             };
             const primaryGuild = snapshot?.primary_guild || null;
@@ -658,7 +658,7 @@
 
             return `
                 <section class="book-home-hero" data-dashboard-section-target="social">
-                    <div class="book-home-hero-kicker">${escapeHtml(this.content('home.hero_kicker', 'Home'))}</div>
+                    <div class="book-home-hero-kicker">${escapeHtml(this.content('home.hero_kicker', 'Übersicht'))}</div>
                     <h2 class="book-home-hero-title">${escapeHtml(this.content('home.hero_title', 'Dein Heimathafen vor dem Tisch'))}</h2>
                     <p class="book-home-hero-copy">${escapeHtml(homeState.summary || this.content('home.hero_summary_default', 'Von hier aus verzweigt sich das Buch in Social, Guilds, Kampagnen, Charaktere, Session-Prep und den kontrollierten Weg nach Play.'))}</p>
                     <div class="book-home-hero-meta">
@@ -674,12 +674,12 @@
                             primary: true,
                         },
                         {
-                            label: secondaryAction.label || 'Charaktere oeffnen',
+                            label: secondaryAction.label || 'Charaktere öffnen',
                             href: secondaryAction.href || '/characters?classic=1',
                         },
                     ], 'book-scene-action-row--inline')}
                     <div class="book-home-hero-note">
-                        <strong>${escapeHtml(this.content('home.social_scope_label', 'Social Scope:'))}</strong> ${escapeHtml(socialScopeNote)}
+                        <strong>${escapeHtml(this.content('home.social_scope_label', 'Sichtbarkeit:'))}</strong> ${escapeHtml(socialScopeNote)}
                     </div>
                     ${this.dashboardNotice ? `<div class="book-home-hero-notice">${escapeHtml(this.dashboardNotice)}</div>` : ''}
                 </section>
@@ -690,10 +690,10 @@
             const items = [
                 { section: 'social', label: this.content('home.nav_social', 'Social') },
                 { section: 'guilds', label: this.content('home.nav_guilds', 'Guilds') },
-                { section: 'campaigns', label: this.content('home.nav_campaigns', 'Campaigns') },
-                { section: 'characters', label: this.content('home.nav_characters', 'Characters') },
+                { section: 'campaigns', label: this.content('home.nav_campaigns', 'Kampagnen') },
+                { section: 'characters', label: this.content('home.nav_characters', 'Charaktere') },
                 { section: 'session-prep', label: this.content('home.nav_session_prep', 'Session Prep') },
-                { section: 'play', label: this.content('home.nav_play', 'Play') },
+                { section: 'play', label: this.content('home.nav_play', 'Spieltisch') },
             ];
 
             return `
@@ -728,7 +728,7 @@
                     <div class="book-home-section-kicker">${escapeHtml(this.content('home.guild_panel_kicker', 'Guilds'))}</div>
                     <h3 class="book-home-section-title">${escapeHtml(this.content('home.guild_panel_title', 'Dein Banner im Buch'))}</h3>
                     <p class="book-home-section-copy">
-                        ${escapeHtml(this.content('home.guild_panel_copy', 'Guilds bleiben reine Meta-Identitaet. Sie veraendern keine Rollen, keine Berechtigungen und keinen Session-Chat.'))}
+                        ${escapeHtml(this.content('home.guild_panel_copy', 'Guilds bleiben reine Meta-Identität. Sie veraendern keine Rollen, keine Berechtigungen und keinen Session-Chat.'))}
                     </p>
                     ${primaryGuild ? `
                         <div class="book-home-guild-primary">
@@ -770,7 +770,7 @@
                 return `
                     <section class="book-home-feed" data-dashboard-section-target="social">
                         <div class="book-home-feed-item is-empty">
-                            <div class="book-home-feed-kicker">${escapeHtml(this.content('home.feed_empty_kicker', 'Chronicle'))}</div>
+                            <div class="book-home-feed-kicker">${escapeHtml(this.content('home.feed_empty_kicker', 'Chronik'))}</div>
                             <h3 class="book-home-feed-title">${escapeHtml(this.content('home.feed_empty_title', 'Home-Feed wird vorbereitet'))}</h3>
                             <p class="book-home-feed-copy">${escapeHtml(this.content('home.feed_empty_copy', 'Noch keine Home-Eintraege sichtbar. Kampagnen und Charaktere bleiben solange die stabilen Einstiege.'))}</p>
                         </div>
@@ -782,7 +782,7 @@
                 <section class="book-home-feed">
                     ${feedItems.map((item) => `
                         <article class="book-home-feed-item" data-dashboard-section-target="${escapeHtml(item.section || 'social')}">
-                            <div class="book-home-feed-kicker">${escapeHtml(item.kicker || 'Chronicle')}</div>
+                            <div class="book-home-feed-kicker">${escapeHtml(item.kicker || 'Chronik')}</div>
                             <h3 class="book-home-feed-title">${escapeHtml(item.title || 'Eintrag')}</h3>
                             ${item.meta ? `<div class="book-home-feed-meta">${escapeHtml(item.meta)}</div>` : ''}
                             <p class="book-home-feed-copy">${escapeHtml(item.copy || '')}</p>
@@ -816,7 +816,7 @@
                     <div class="book-home-context-grid">
                         <section class="book-home-context-card">
                             <div class="book-home-section-kicker">${escapeHtml(this.content('home.priorities_kicker', 'Heute wichtig'))}</div>
-                            <h3 class="book-home-section-title">${escapeHtml(this.content('home.priorities_title', 'Prioritaeten'))}</h3>
+                            <h3 class="book-home-section-title">${escapeHtml(this.content('home.priorities_title', 'Prioritäten'))}</h3>
                             <div class="book-home-priority-list">
                                 ${priorities.map((priority) => `
                                     <div class="book-home-priority-card" data-tone="${escapeHtml(priority.tone || 'info')}">
@@ -829,7 +829,7 @@
 
                         <section class="book-home-context-card">
                             <div class="book-home-section-kicker">${escapeHtml(this.content('home.quicklinks_kicker', 'Schnellzugriffe'))}</div>
-                            <h3 class="book-home-section-title">${escapeHtml(this.content('home.quicklinks_title', 'Wohin du als naechstes gehst'))}</h3>
+                            <h3 class="book-home-section-title">${escapeHtml(this.content('home.quicklinks_title', 'Wohin du als nächstes gehst'))}</h3>
                             <div class="book-home-quick-links">
                                 ${quickLinks.map((link) => `
                                     <button
@@ -838,12 +838,12 @@
                                         ${link.href ? `data-dashboard-href="${escapeHtml(link.href)}"` : ''}
                                         ${link.section ? `data-dashboard-section="${escapeHtml(link.section)}"` : ''}
                                     >
-                                        ${escapeHtml(link.label || 'Oeffnen')}
+                                        ${escapeHtml(link.label || 'Öffnen')}
                                     </button>
                                 `).join('')}
                             </div>
                             <div class="book-home-context-note">
-                                ${escapeHtml(this.content('home.context_note', 'Dashboard bleibt Home und Social Hub. Kampagnen, Session-Prep und Play bleiben die operativen Folgeflaechen.'))}
+                                ${escapeHtml(this.content('home.context_note', 'Dashboard bleibt Home und Social Hub. Kampagnen, Session-Prep und Play bleiben die operativen Folgeflächen.'))}
                             </div>
                         </section>
                     </div>
@@ -854,7 +854,7 @@
         buildPageShell(routeKey, user, options) {
             const displayName = escapeHtml(user?.username || 'Donut');
             const chips = Array.isArray(options.chips) ? options.chips : [];
-            const leftTitle = escapeHtml(options.title || 'Dashboard');
+            const leftTitle = escapeHtml(options.title || 'Übersicht');
             const leftCopy = escapeHtml(options.copy || '');
             const leftEyebrow = escapeHtml(options.eyebrow || '');
             const rightTitle = escapeHtml(options.rightTitle || 'Marginalia');
@@ -915,18 +915,18 @@
             const primaryGuild = snapshot?.primary_guild || null;
 
             return this.buildPageShell('dashboard', user, {
-                eyebrow: this.content('shell.left_eyebrow', 'Chapter I'),
-                title: this.content('shell.left_title', 'Home'),
+                eyebrow: this.content('shell.left_eyebrow', 'Kapitel I'),
+                title: this.content('shell.left_title', 'Übersicht'),
                 copy: this.content(
                     'shell.left_copy',
-                    'Willkommen zurueck, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.',
+                    'Willkommen zurück, {username}. Dieses Kapitel ist jetzt dein soziales Zuhause: Guilds, Chronik-Feed und die klaren Wege weiter in Kampagnen, Charaktere, Session-Prep und den kontrollierten Pfad nach Play.',
                     { username: user?.username || 'Donut' },
                 ),
-                rightEyebrow: this.content('shell.right_eyebrow', 'Chronicle Feed'),
-                rightTitle: this.content('shell.right_title', 'Was gerade zaehlt'),
-                rightCopy: this.content('shell.right_copy', 'Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die naechsten operativen Schritte bleiben sichtbar getrennt voneinander.'),
+                rightEyebrow: this.content('shell.right_eyebrow', 'Chronik'),
+                rightTitle: this.content('shell.right_title', 'Was gerade zählt'),
+                rightCopy: this.content('shell.right_copy', 'Der Feed liest sich wie eine laufende Chronik: Social-Hinweise, Guild-Status und die nächsten operativen Schritte bleiben sichtbar getrennt voneinander.'),
                 chips: [
-                    this.content('shell.chip_home', 'Home / Social Hub'),
+                    this.content('shell.chip_home', 'Übersicht / Social'),
                     this.content('shell.chip_campaigns', '{count} Kampagnen', { count: campaigns.length }),
                     this.content('shell.chip_characters', '{count} Charaktere', { count: characters.length }),
                     primaryGuild ? primaryGuild.name : this.content('shell.chip_guild_fallback', 'Guild folgt'),
@@ -955,10 +955,10 @@
             return this.buildPageShell('campaigns', user, {
                 eyebrow: 'Chapter II',
                 title: 'Campaigns',
-                copy: 'Lege Kampagnen an, oeffne den Kampagnen-Hub und gehe von dort weiter in Session-Prep, direkte Charakterzuweisung, Karten, Assets und schliesslich nach Play.',
-                rightEyebrow: 'Naechste Schritte',
+                copy: 'Lege Kampagnen an, öffne den Kampagnen-Hub und gehe von dort weiter in Session-Prep, direkte Charakterzuweisung, Karten, Assets und schließlich nach Play.',
+                rightEyebrow: 'Nächste Schritte',
                 rightTitle: 'Kampagnen produktiv nutzen',
-                rightCopy: 'Diese Seite ist der Einstieg in die echte Vorbereitungsarbeit: neue Kampagne starten, bestehenden Hub oeffnen oder Charaktere fuer die naechste Session vorbereiten.',
+                rightCopy: 'Diese Seite ist der Einstieg in die echte Vorbereitungsarbeit: neue Kampagne starten, bestehenden Hub öffnen oder Charaktere für die nächste Session vorbereiten.',
                 chips: [`${campaigns.length} Kampagnen`, `${ownedCount} Eigene`, `${joinedCount} Beigetreten`, `${activeCount} Aktiv`],
                 leftPage: `
                     ${this.buildStatStrip([
@@ -969,7 +969,7 @@
                     <section class="book-scene-panel">
                         <span class="book-scene-panel-kicker">Kampagnenliste</span>
                         <h2 class="book-scene-panel-title">Meine Kampagnen</h2>
-                        <p class="book-scene-panel-copy">Oeffne von hier aus bestehende Kampagnen oder starte eine neue. Der produktive Weg danach bleibt derselbe: Hub, Session-Prep und erst dann Play.</p>
+                        <p class="book-scene-panel-copy">Öffne von hier aus bestehende Kampagnen oder starte eine neue. Der produktive Weg danach bleibt derselbe: Hub, Session-Prep und erst dann Play.</p>
                         ${this.buildActionButtons([
                             {
                                 label: 'Neue Kampagne anlegen',
@@ -977,7 +977,7 @@
                                 primary: true,
                             },
                             {
-                                label: 'Kampagnen-Hub oeffnen',
+                                label: 'Kampagnen-Hub öffnen',
                                 href: campaigns.length > 0
                                     ? buildIntentHref('/campaigns', { campaign_id: campaigns[0].id, classic: 1 })
                                     : buildIntentHref('/campaigns', { classic: 1 }),
@@ -990,7 +990,7 @@
                     <section class="book-scene-panel">
                         <span class="book-scene-panel-kicker">Vorbereitung</span>
                         <h2 class="book-scene-panel-title">Was du hier erledigst</h2>
-                        <p class="book-scene-panel-copy">Kampagnen werden hier nicht nur angezeigt. Von hier aus oeffnest du den Hub, bereitest Sessions vor und gehst mit klaren Schritten Richtung Tisch.</p>
+                        <p class="book-scene-panel-copy">Kampagnen werden hier nicht nur angezeigt. Von hier aus öffnest du den Hub, bereitest Sessions vor und gehst mit klaren Schritten Richtung Tisch.</p>
                         ${this.buildActionButtons([
                             {
                                 label: '+ Kampagne anlegen',
@@ -998,14 +998,14 @@
                                 primary: true,
                             },
                             {
-                                label: 'Charaktere oeffnen',
+                                label: 'Charaktere öffnen',
                                 href: buildIntentHref('/characters', { classic: 1 }),
                             },
                         ])}
                         <div class="book-scene-note-list">
-                            <div class="book-scene-note">Neue Kampagnen werden direkt ueber das echte Erstellformular gestartet, nicht ueber Prompt-Dialoge.</div>
-                            <div class="book-scene-note">Bestehende Kampagnen fuehren in den Hub, dort weiter in Session-Prep mit Karten, Assets und direkter Charakterzuweisung.</div>
-                            <div class="book-scene-note">Wenn noch keine Kampagne existiert, ist der erste klare Schritt: Kampagne anlegen und danach den Hub oeffnen.</div>
+                            <div class="book-scene-note">Neue Kampagnen werden direkt über das echte Erstellformular gestartet, nicht über Prompt-Dialoge.</div>
+                            <div class="book-scene-note">Bestehende Kampagnen führen in den Hub, dort weiter in Session-Prep mit Karten, Assets und direkter Charakterzuweisung.</div>
+                            <div class="book-scene-note">Wenn noch keine Kampagne existiert, ist der erste klare Schritt: Kampagne anlegen und danach den Hub öffnen.</div>
                         </div>
                     </section>
                 `,
@@ -1015,12 +1015,12 @@
                         <span class="book-dashboard-widget-tag">hub, session-prep, maps, assets</span>
                     </div>
                     <p class="book-dashboard-widget-copy">
-                        Die wichtigsten Folgeflaechen sind bereits nutzbar und haengen am Kampagnen-Hub: Session-Prep, Karten, Assets und die naechsten Schritte Richtung Play.
+                        Die wichtigsten Folgeflächen sind bereits nutzbar und hängen am Kampagnen-Hub: Session-Prep, Karten, Assets und die nächsten Schritte Richtung Play.
                     </p>
                     <div class="book-scene-widget-stack">
                         <div class="book-scene-widget-card">
                             <span>Einladungen</span>
-                            <small>Mitspieler aufnehmen und Kampagnen sauber fuer die gemeinsame Vorbereitung oeffnen.</small>
+                            <small>Mitspieler aufnehmen und Kampagnen sauber für die gemeinsame Vorbereitung öffnen.</small>
                         </div>
                         <div class="book-scene-widget-card">
                             <span>Session-Prep</span>
@@ -1028,11 +1028,11 @@
                         </div>
                         <div class="book-scene-widget-card">
                             <span>Karten</span>
-                            <small>Session-Karte setzen und den Kartenkontext fuer die naechste Runde vorbereiten.</small>
+                            <small>Session-Karte setzen und den Kartenkontext für die nächste Runde vorbereiten.</small>
                         </div>
                         <div class="book-scene-widget-card">
                             <span>Assets</span>
-                            <small>Session-bezogene Assets oeffnen, Upload vorbereiten und den Vorbereitungsstand vor Play pruefen.</small>
+                            <small>Session-bezogene Assets öffnen, Upload vorbereiten und den Vorbereitungsstand vor Play pruefen.</small>
                         </div>
                     </div>
                 `,
@@ -1047,21 +1047,21 @@
             return this.buildPageShell('characters', user, {
                 eyebrow: 'Chapter III',
                 title: 'Characters',
-                copy: 'Lege Helden an, pflege Avatar und Token und wechsle fuer Details in den Bogen. Danach fuehrt der Weg sauber zurueck in Kampagnen und Session-Prep.',
-                rightEyebrow: 'Naechste Schritte',
+                copy: 'Lege Helden an, pflege Avatar und Token und wechsle für Details in den Bogen. Danach führt der Weg sauber zurück in Kampagnen und Session-Prep.',
+                rightEyebrow: 'Nächste Schritte',
                 rightTitle: 'Helden vorbereiten',
-                rightCopy: 'Das Charakterarchiv ist kein Platzhalter mehr: hier beginnst du die Heldenarbeit und springst von dort in Bogen, Kampagnenkontext und spaeter in die Session-Zuweisung.',
-                chips: [`${characters.length} Helden`, `${distinctClasses} Klassen`, `Hoechstes Level ${highestLevel}`],
+                rightCopy: 'Das Charakterarchiv ist kein Platzhalter mehr: hier beginnst du die Heldenarbeit und springst von dort in Bogen, Kampagnenkontext und später in die Session-Zuweisung.',
+                chips: [`${characters.length} Helden`, `${distinctClasses} Klassen`, `Höchstes Level ${highestLevel}`],
                 leftPage: `
                     ${this.buildStatStrip([
                         { value: String(characters.length), label: 'Charaktere' },
                         { value: String(distinctClasses), label: 'Klassen' },
-                        { value: String(highestLevel), label: 'Hoechstes Level' },
+                        { value: String(highestLevel), label: 'Höchstes Level' },
                     ])}
                     <section class="book-scene-panel">
                         <span class="book-scene-panel-kicker">Archiv</span>
                         <h2 class="book-scene-panel-title">Heldenarchiv</h2>
-                        <p class="book-scene-panel-copy">Oeffne bestehende Helden, starte neue Figuren direkt aus dem Archiv und fuehre sie danach ueber Bogen und Kampagnenkontext bis in die Session-Vorbereitung.</p>
+                        <p class="book-scene-panel-copy">Öffne bestehende Helden, starte neue Figuren direkt aus dem Archiv und führe sie danach über Bogen und Kampagnenkontext bis in die Session-Vorbereitung.</p>
                         ${this.buildActionButtons([
                             {
                                 label: 'Held anlegen',
@@ -1069,7 +1069,7 @@
                                 primary: true,
                             },
                             {
-                                label: 'Archiv oeffnen',
+                                label: 'Archiv öffnen',
                                 href: buildIntentHref('/characters', { classic: 1 }),
                             },
                         ])}
@@ -1080,7 +1080,7 @@
                     <section class="book-scene-panel">
                         <span class="book-scene-panel-kicker">Heldenarbeit</span>
                         <h2 class="book-scene-panel-title">Was du von hier aus tust</h2>
-                        <p class="book-scene-panel-copy">Erstelle neue Helden, oeffne den Bogen fuer Werte und Ausruestung und gehe danach zurueck in Kampagnen oder Session-Prep, um den Held einsatzbereit zu machen.</p>
+                        <p class="book-scene-panel-copy">Erstelle neue Helden, öffne den Bogen für Werte und Ausrüstung und gehe danach zurück in Kampagnen oder Session-Prep, um den Held einsatzbereit zu machen.</p>
                         ${this.buildActionButtons([
                             {
                                 label: 'Held anlegen',
@@ -1088,24 +1088,24 @@
                                 primary: true,
                             },
                             {
-                                label: 'Kampagnen oeffnen',
+                                label: 'Kampagnen öffnen',
                                 href: buildIntentHref('/campaigns', { classic: 1 }),
                             },
                         ])}
                         <div class="book-scene-note-list">
-                            <div class="book-scene-note">Der Bogen bleibt die richtige Flaeche fuer detaillierte Bearbeitung von Werten, Inventar, Zaubern und Notizen.</div>
-                            <div class="book-scene-note">Avatar und Token werden ueber Archiv und Bogen konsistent gepflegt und bleiben spaeter im Session-Kontext sichtbar.</div>
-                            <div class="book-scene-note">Wenn ein Held kampagnengebunden ist, fuehrt der naechste sinnvolle Schritt ueber Kampagnen-Hub und Session-Prep in die direkte Zuweisung.</div>
+                            <div class="book-scene-note">Der Bogen bleibt die richtige Fläche für detaillierte Bearbeitung von Werten, Inventar, Zaubern und Notizen.</div>
+                            <div class="book-scene-note">Avatar und Token werden über Archiv und Bogen konsistent gepflegt und bleiben später im Session-Kontext sichtbar.</div>
+                            <div class="book-scene-note">Wenn ein Held kampagnengebunden ist, führt der nächste sinnvolle Schritt über Kampagnen-Hub und Session-Prep in die direkte Zuweisung.</div>
                         </div>
                     </section>
                 `,
                 footer: `
                     <div class="book-dashboard-widget-header">
                         <h2>Charakter-Werkzeuge</h2>
-                        <span class="book-dashboard-widget-tag">anlage, boegen, identitaet, rueckweg in prep</span>
+                        <span class="book-dashboard-widget-tag">anlage, boegen, identität, rueckweg in prep</span>
                     </div>
                     <p class="book-dashboard-widget-copy">
-                        Die Charakterarbeit ist bereits operativ: Helden anlegen, Standard Array oder Point Buy nutzen, Avatar und Token setzen und danach zurueck in die Kampagnenvorbereitung gehen.
+                        Die Charakterarbeit ist bereits operativ: Helden anlegen, Standard Array oder Point Buy nutzen, Avatar und Token setzen und danach zurück in die Kampagnenvorbereitung gehen.
                     </p>
                     <div class="book-scene-widget-stack">
                         <div class="book-scene-widget-card">
@@ -1114,15 +1114,15 @@
                         </div>
                         <div class="book-scene-widget-card">
                             <span>Werte</span>
-                            <small>Standard Array und Point Buy bleiben in der Anlage direkt verfuegbar.</small>
+                            <small>Standard Array und Point Buy bleiben in der Anlage direkt verfügbar.</small>
                         </div>
                         <div class="book-scene-widget-card">
                             <span>Avatar & Token</span>
-                            <small>Identitaet ist im Archiv und im Bogen vorhanden und kann dort direkt gepflegt werden.</small>
+                            <small>Identität ist im Archiv und im Bogen vorhanden und kann dort direkt gepflegt werden.</small>
                         </div>
                         <div class="book-scene-widget-card">
                             <span>Rueckweg in Prep</span>
-                            <small>Nach dem Bogen geht es sichtbar zurueck in Kampagnen und weiter in die Session-Zuweisung.</small>
+                            <small>Nach dem Bogen geht es sichtbar zurück in Kampagnen und weiter in die Session-Zuweisung.</small>
                         </div>
                     </div>
                 `,
@@ -1293,9 +1293,9 @@
                         <div class="play-launch-header">
                             <div>
                                 <h2 id="playLaunchTitle">${escapeHtml(this.content('play_launch.title', 'Play'))}</h2>
-                                <p>${escapeHtml(this.content('play_launch.subtitle', 'Waehle eine Session oder starte in wenigen Schritten eine neue.'))}</p>
+                                <p>${escapeHtml(this.content('play_launch.subtitle', 'Wähle eine Session oder starte in wenigen Schritten eine neue.'))}</p>
                             </div>
-                            <button type="button" class="play-launch-close" data-play-launch-close aria-label="Schliessen">&times;</button>
+                            <button type="button" class="play-launch-close" data-play-launch-close aria-label="Schließen">&times;</button>
                         </div>
                         <div class="play-launch-body">
                             <div id="playLaunchStatus" class="play-launch-status" hidden></div>
@@ -1450,9 +1450,9 @@
                     } else if (phase.tone === 'scheduled' || phase.tone === 'ready') {
                         action = `<button class="btn btn-secondary btn-sm" type="button" disabled>${escapeHtml(this.content('play_launch.action_waiting_for_dm', 'Wartet auf DM'))}</button>`;
                     } else if (canManage) {
-                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-new-session="${campaign.id}">${escapeHtml(this.content('play_launch.action_next_session', 'Naechste Session'))}</button>`;
+                        action = `<button class="btn btn-primary btn-sm" type="button" data-play-launch-new-session="${campaign.id}">${escapeHtml(this.content('play_launch.action_next_session', 'Nächste Session'))}</button>`;
                     } else {
-                        action = `<button class="btn btn-secondary btn-sm" type="button" data-play-launch-goto="/campaigns?campaign_id=${campaign.id}">${escapeHtml(this.content('play_launch.action_open_campaign', 'Kampagne oeffnen'))}</button>`;
+                        action = `<button class="btn btn-secondary btn-sm" type="button" data-play-launch-goto="/campaigns?campaign_id=${campaign.id}">${escapeHtml(this.content('play_launch.action_open_campaign', 'Kampagne öffnen'))}</button>`;
                     }
                 } else {
                     sessionLine = `<div class="play-launch-card-session muted">${escapeHtml(this.content('play_launch.no_session_yet', 'Noch keine Session'))}</div>`;

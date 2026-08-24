@@ -147,7 +147,7 @@
         var title = String(request.title || "").trim();
         // whisper enum: 0 = none, 1 = whisper, 2 = query, 3 = hide info.
         if (request.whisper === 1 || request.whisper === 3) {
-            title = (title ? title + " " : "") + "(gefluestert)";
+            title = (title ? title + " " : "") + "(geflüstert)";
         }
 
         return {
@@ -219,7 +219,7 @@
                 : [];
             var exhaustion = Number(character.exhaustion);
             if (isFinite(exhaustion) && exhaustion >= 1) {
-                conditions = conditions.concat(["Erschoepfung " + Math.min(6, Math.round(exhaustion))]);
+                conditions = conditions.concat(["Erschöpfung " + Math.min(6, Math.round(exhaustion))]);
             }
             deliver("conditions", { name: name, conditions: conditions });
         } catch (error) {

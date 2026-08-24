@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VTT Spieltisch</title>
-    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-shell.css">
@@ -1037,12 +1037,12 @@
             <section class="book-dashboard-page book-route-page book-workspace-page play-workspace-page" role="region" aria-label="Play workspace page">
                 <div class="book-dashboard-topbar">
                     <div class="book-dashboard-ribbon" role="navigation" aria-label="Workspace page menu">
-                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/dashboard">Dashboard</button>
-                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/campaigns">Campaigns</button>
-                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/characters">Characters</button>
-                        <button type="button" class="book-dashboard-ribbon-btn is-active">Play</button>
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/dashboard">Übersicht</button>
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/campaigns">Kampagnen</button>
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/characters">Charaktere</button>
+                        <button type="button" class="book-dashboard-ribbon-btn is-active">Spieltisch</button>
                     </div>
-                    <div class="book-dashboard-crest" aria-label="Workspace state">Table Focus</div>
+                    <div class="book-dashboard-crest" aria-label="Tischmodus">Am Spieltisch</div>
                 </div>
 
                 <div class="book-dashboard-titlebar play-status-strip">
@@ -1058,9 +1058,9 @@
                 <div class="book-shell-frame book-workspace-shell">
                     <div class="tabletop-shell">
         <aside class="left-toolbar" aria-label="Werkzeugleiste">
-            <button class="tool-btn active" data-tool="select" title="Auswaehlen">SEL</button>
+            <button class="tool-btn active" data-tool="select" title="Auswählen">SEL</button>
             <button class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)">PAN</button>
-            <button class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug waehlen, dann auf die Karte klicken">TOK</button>
+            <button class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken">TOK</button>
             <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
                  used to sit here as silent no-ops (the handler only toggled
                  a CSS class). Removed until the tools actually exist -- a
@@ -1086,7 +1086,7 @@
             <div class="map-viewport" id="mapViewport">
                 <div id="mapExtent">
                     <div class="map-world" id="mapWorld">
-                        <div class="map-empty-state" id="mapEmptyState">Keine aktive Karte geladen. Initialisiere den Kartenstapel oder waehle eine Ebene aus.</div>
+                        <div class="map-empty-state" id="mapEmptyState">Keine aktive Karte geladen. Initialisiere den Kartenstapel oder wähle eine Ebene aus.</div>
                         <img id="mapImage" alt="Aktive Karte">
                         <div class="map-grid-layer" id="mapGridLayer"></div>
                         <div id="mapTokenLayer"></div>
@@ -1110,7 +1110,7 @@
                         <option value="3">3x3 Felder</option>
                     </select>
                     <select id="tokenCreateVisibility">
-                        <option value="public">Sichtbar fuer alle</option>
+                        <option value="public">Sichtbar für alle</option>
                         <option value="dm_only">Nur DM</option>
                     </select>
                     <input id="tokenCreateImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
@@ -1127,8 +1127,8 @@
                 <div class="widget-body">
                     <div id="layerList"></div>
                     <div class="layer-add-row">
-                        <select id="layerAddSelect"><option value="">+ Seite hinzufuegen...</option></select>
-                        <button id="layerAddBtn" class="mini-btn" type="button">Hinzufuegen</button>
+                        <select id="layerAddSelect"><option value="">+ Seite hinzufügen...</option></select>
+                        <button id="layerAddBtn" class="mini-btn" type="button">Hinzufügen</button>
                     </div>
                     <div id="mapUploadRow" class="layer-add-row" hidden>
                         <input id="mapUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
@@ -1149,7 +1149,7 @@
                     <div id="turnOrderSummary" class="turn-state">Noch keine Initiative-Werte.</div>
                     <div id="turnOrderList" class="muted">Noch keine Initiative-Werte.</div>
                     <div class="button-row" id="initiativeControls" style="margin:0.45rem 0 0;" hidden>
-                        <button id="btnRollInitiative" class="mini-btn secondary">Initiative auswuerfeln</button>
+                        <button id="btnRollInitiative" class="mini-btn secondary">Initiative auswürfeln</button>
                     </div>
                 </div>
             </div>
@@ -1157,7 +1157,7 @@
             <div id="tokenWidget" class="floating">
                 <h3 class="widget-toggle" data-widget="tokenWidget">Tokens <span class="widget-caret">▾</span></h3>
                 <div class="widget-body">
-                    <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewaehlt.</div>
+                    <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewählt.</div>
                     <div id="tokenSelectionDetail" hidden style="margin-bottom:0.45rem;">
                         <div class="button-row" style="margin-bottom:0.35rem;">
                             <input id="tokenHpCurrent" type="number" placeholder="HP" style="width:70px;" title="Aktuelle HP">
@@ -1167,7 +1167,7 @@
                         <div class="button-row" style="margin-bottom:0;">
                             <input id="tokenImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                             <button id="btnTokenImageSet" class="mini-btn secondary">Bild setzen...</button>
-                            <button id="btnTokenDelete" class="mini-btn danger">Token loeschen</button>
+                            <button id="btnTokenDelete" class="mini-btn danger">Token löschen</button>
                         </div>
                     </div>
                     <div id="tokenList"></div>
@@ -1186,7 +1186,7 @@
             <div class="sidebar-content">
                 <section id="panel-journal" class="tab-panel">
                     <div class="panel">
-                        <h2>Aktivitaet</h2>
+                        <h2>Aktivität</h2>
                         <div id="activityLog" class="muted">Noch keine Ereignisse.</div>
                     </div>
                     <div class="panel">
@@ -1218,15 +1218,15 @@
                         </div>
                         <div class="button-row">
                             <select id="actionCode"></select>
-                            <button id="btnExecuteAction">Aktion ausfuehren</button>
+                            <button id="btnExecuteAction">Aktion ausführen</button>
                         </div>
                     </div>
 
                     <div class="panel">
-                        <h2>Wuerfel</h2>
+                        <h2>Würfel</h2>
                         <div class="button-row">
                             <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5">
-                            <button id="btnRoll">Wuerfeln</button>
+                            <button id="btnRoll">Würfeln</button>
                         </div>
                         <div id="diceResult" class="muted">Noch kein Wurf.</div>
                         <div id="diceLog" class="muted" style="margin-top:0.45rem;"></div>
@@ -1272,7 +1272,7 @@
 
                     <div class="panel">
                         <h2>Start-Check</h2>
-                        <div id="readyCheckOutput" class="muted">Noch kein Start-Check ausgefuehrt.</div>
+                        <div id="readyCheckOutput" class="muted">Noch kein Start-Check ausgeführt.</div>
                     </div>
                 </section>
             </div>

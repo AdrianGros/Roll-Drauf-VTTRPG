@@ -265,9 +265,10 @@ def create_app(config_name=None):
             ensure_fixed_guilds()
 
             from vtt.models import PageContent
-            from vtt.content_defaults import PAGE_CONTENT_DEFAULTS
+            from vtt.content_defaults import PAGE_CONTENT_DEFAULTS, PAGE_CONTENT_RETRANSLATIONS
 
             PageContent.ensure_defaults(PAGE_CONTENT_DEFAULTS)
+            PageContent.apply_retranslations(PAGE_CONTENT_RETRANSLATIONS)
 
     # Socket.IO event handlers
     from vtt.socket_handlers import register_socket_handlers

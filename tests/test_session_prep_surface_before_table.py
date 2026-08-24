@@ -27,7 +27,7 @@ def test_campaigns_route_exposes_dedicated_session_prep_surface(client):
     assert "Before Table" in html
     assert 'id="sessionPrepSelect"' in html
     assert "Session-Prep" in html
-    assert "Prep oeffnen" in html
+    assert "Prep öffnen" in html
 
 
 def test_session_prep_surface_makes_state_and_next_steps_clearer(client):
@@ -38,10 +38,10 @@ def test_session_prep_surface_makes_state_and_next_steps_clearer(client):
 
     assert "letzte Buchstopp vor dem Tisch" in html
     assert "Welche Session ist das?" in html
-    assert "Naechster Schritt" in html
+    assert "Nächster Schritt" in html
     assert "Readiness:" in html
     assert "Sessionliste" in html
-    assert "Zurueck zum Kampagnen-Hub" in html
+    assert "Zurück zum Kampagnen-Hub" in html
 
 
 def test_session_prep_surface_connects_existing_prep_pillars_honestly(client):
@@ -56,7 +56,7 @@ def test_session_prep_surface_connects_existing_prep_pillars_honestly(client):
     assert "Asset Context" in html
     assert 'id="sessionPrepCharacterCard"' in html
     assert "Zugewiesen" in html
-    assert "Verfuegbar fuer diese Session" in html
+    assert "Verfügbar für diese Session" in html
     assert "Map Workspace folgt" in html
     assert "Import / Export folgt" in html
 

@@ -49,7 +49,7 @@ def test_session_prep_surface_makes_remaining_blockers_clearer(client):
     html = response.get_data(as_text=True)
 
     assert "Noch offen vor Play" in html
-    assert "Keine aktive Session-Karte gewaehlt" in html
+    assert "Keine aktive Session-Karte gewählt" in html
     assert "Noch kein Session-Charakter zugewiesen" in html
     assert "Tieferer Map Workspace bleibt vorerst eigener Prep-Schritt" in html
     assert "Paketierter Import / Export bleibt vorerst Platzhalter" in html

@@ -3,69 +3,90 @@
  * Defines the color scheme and typography for the entire application
  */
 
+/*
+ * ONE token set (Designbrief 2026-08-24 §4.1, Phase B1). The audit found
+ * five competing systems: this parchment set, a near-duplicate "primary"
+ * set (--vtt-primary #4a235a vs --vtt-plum #4b235a; --vtt-accent #d4af37
+ * vs --vtt-gold #caa33b), a Flat-UI status set (#27ae60/#3498db...), a
+ * side-by-side dark-mode set, and play.html's own navy system. Book
+ * material is now canonical: paper + ink + rubrication + gold. Legacy
+ * token NAMES are kept as aliases of the canonical values so the ~630
+ * existing references keep resolving -- the alias block shrinks as pages
+ * are reworked in B2-B4 (Token-Lint gate: the count may only fall).
+ */
 :root {
-    /* Semantic parchment palette for readable book UI surfaces */
-    --vtt-paper: #f5e7cf;
-    --vtt-paper-card: #ead6b2;
-    --vtt-paper-panel: #fff8ef;
-    --vtt-paper-panel-soft: #f8efe0;
-    --vtt-ink: #2a1a12;
-    --vtt-ink-muted: #6e5745;
-    --vtt-ink-soft: #8a735f;
+    /* Material: paper + ink (WCAG: ink on paper ~10:1; muted ink >=4.5:1) */
+    --vtt-paper: #f8f3e9;
+    --vtt-paper-card: #f1e9d8;
+    --vtt-paper-panel: #fdfaf3;
+    --vtt-paper-panel-soft: #f4ede0;
+    --vtt-ink: #3a322c;
+    --vtt-ink-muted: #63564b;
+    --vtt-ink-soft: #7c6e60;
     --vtt-ink-inverse: #f7efe4;
+
+    /* Binding + ornament */
     --vtt-plum: #4b235a;
     --vtt-plum-deep: #2f1638;
-    --vtt-gold: #caa33b;
-    --vtt-gold-deep: #a88324;
-    --vtt-field-bg: #fff9f2;
-    --vtt-field-text: #23160f;
+    --vtt-gold: #a8842c;
+    --vtt-gold-deep: #8a6b20;
+
+    /* Rubrication: the book's one accent (links, primary actions,
+       chapter numerals) */
+    --vtt-rubric: #7a2e2e;
+    --vtt-rubric-deep: #5e2222;
+
+    /* Fields */
+    --vtt-field-bg: #fdfaf3;
+    --vtt-field-text: #2f2822;
     --vtt-field-placeholder: #8b7561;
     --vtt-field-border: rgba(75, 35, 90, 0.18);
     --vtt-field-border-strong: rgba(75, 35, 90, 0.36);
-    --vtt-field-focus: #caa33b;
+    --vtt-field-focus: #a8842c;
     --vtt-field-shadow: rgba(75, 35, 90, 0.16);
-    --vtt-sidecar-bg: rgba(255, 248, 238, 0.82);
-    --vtt-sidecar-border: rgba(202, 163, 59, 0.18);
-    --vtt-sidecar-text: #4a235a;
-    --vtt-error-ink: #a94a45;
-    --vtt-success-ink: #4e7550;
+    --vtt-sidecar-bg: rgba(253, 250, 243, 0.92);
+    --vtt-sidecar-border: rgba(168, 132, 44, 0.22);
+    --vtt-sidecar-text: #4b235a;
 
-    /* Primary colors */
-    --vtt-primary: #4a235a;        /* Deep purple */
-    --vtt-accent: #d4af37;         /* Gold */
-    --vtt-text: #2a2a2a;           /* Dark text */
-    --vtt-bg: #f5e6d3;             /* Parchment background */
-    --vtt-dark-bg: #1a1a1a;        /* Near black for dark mode */
+    /* Status in book material (replaces the Flat-UI set) */
+    --vtt-success: #3f6b4f;
+    --vtt-warning: #9a6b1f;
+    --vtt-danger: #7a2e2e;
+    --vtt-info: #45586e;
+    --vtt-error-ink: #7a2e2e;
+    --vtt-success-ink: #3f6b4f;
 
-    /* Effects */
-    --vtt-shadow: rgba(0, 0, 0, 0.3);
-    --vtt-border: #d4af37;         /* Gold borders */
-
-    /* Typography */
+    /* Typography: reading serif for prose, Cinzel for display only,
+       system sans for tool surfaces (stat blocks, table controls). */
     --vtt-font-heading: 'Cinzel', 'Georgia', serif;
-    --vtt-font-body: 'PirataOne', 'Segoe UI', sans-serif;
+    --vtt-font-body: 'Literata', 'Georgia', serif;
+    --vtt-font-ui: 'Segoe UI', system-ui, sans-serif;
 
-    /* Animation timing */
+    /* Motion (Designbrief §4.4: flips only at page boundaries) */
+    --vtt-page-turn-duration: 420ms;
+    --vtt-ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --vtt-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+    /* ── Legacy aliases (do not add new references; B2-B4 remove them) ── */
+    --vtt-primary: var(--vtt-plum);
+    --vtt-accent: var(--vtt-gold);
+    --vtt-text: var(--vtt-ink);
+    --vtt-bg: var(--vtt-paper);
+    --vtt-dark-bg: var(--vtt-plum-deep);
+    --vtt-shadow: rgba(42, 26, 18, 0.28);
+    --vtt-border: var(--vtt-gold);
     --vtt-book-animation-speed: 2.5s;
-
-    /* Additional colors for UI elements */
-    --vtt-success: #27ae60;
-    --vtt-warning: #f39c12;
-    --vtt-danger: #e74c3c;
-    --vtt-info: #3498db;
-    --vtt-light-text: #f5e6d3;
-    --vtt-subtle-border: rgba(212, 175, 55, 0.2);
-
-    /* Dark mode surface colors */
-    --vtt-surface-base: #1a0a22;      /* Page background */
-    --vtt-surface-card: #201530;      /* Card/Modal background */
-    --vtt-surface-input: #141420;     /* Input field background (inset) */
-    --vtt-surface-raised: #2a1a3a;    /* Hover/elevated panels */
-    --vtt-text-primary: #e8d5b7;      /* Off-white body text */
-    --vtt-text-secondary: #9e8fa0;    /* Muted labels and secondary text */
-    --vtt-text-error: #ff6b6b;        /* High contrast error text */
+    --vtt-light-text: var(--vtt-ink-inverse);
+    --vtt-subtle-border: rgba(168, 132, 44, 0.2);
+    --vtt-surface-base: var(--vtt-plum-deep);
+    --vtt-surface-card: #201530;
+    --vtt-surface-input: #141420;
+    --vtt-surface-raised: #2a1a3a;
+    --vtt-text-primary: #e8d5b7;
+    --vtt-text-secondary: #9e8fa0;
+    --vtt-text-error: #c65f5f;
     --vtt-border-subtle: rgba(255, 255, 255, 0.10);
-    --vtt-border-focus: #d4af37;      /* Focus border (gold) */
+    --vtt-border-focus: var(--vtt-gold);
 }
 
 /* Subtle parchment texture background */
@@ -311,26 +332,8 @@ a:hover {
 }
 
 /* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --vtt-light-text: #2a2a2a;
-        --vtt-bg: #1a1a1a;
-        --vtt-text: #f5e6d3;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="number"],
-    input[type="date"],
-    input[type="time"],
-    textarea,
-    select {
-        background-color: #2a2a2a;
-        color: #f5e6d3;
-    }
-
-    .card, .container, .panel {
-        background-color: #2a2a2a;
-    }
-}
+/* The half-applied prefers-color-scheme override that used to live here
+   (3 tokens + hardcoded #2a2a2a inputs) silently pulled the parchment out
+   from under book components on OS dark mode. Removed with B1; a real
+   "Nachtlesung" mode is Designbrief Phase B5 -- a deliberate warm-dark
+   token set, not an auto-patch. */

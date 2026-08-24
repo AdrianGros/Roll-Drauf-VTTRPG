@@ -143,7 +143,7 @@ def test_campaigns_route_exposes_real_session_assignment_surface(client):
     assert "assignCharacterToPrepSession(campaignId, sessionId, characterId)" in html
     assert "unassignCharacterFromPrepSession(campaignId, sessionId, characterId)" in html
     assert "Eligibility:" in html
-    assert "Session-Besetzung oeffnen" in html
+    assert "Session-Besetzung öffnen" in html
     assert "Open Sheet" in html
 
 

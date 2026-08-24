@@ -61,6 +61,21 @@ class PageContent(db.Model):
         return {row.content_key: row.text for row in rows}
 
     @classmethod
+    def apply_retranslations(cls, retranslations):
+        """B1 language pass: update rows whose text still EXACTLY equals an
+        old default to the new default. Rows an editor changed never match
+        the old text, so they are never touched. Idempotent: after the
+        first run the old text no longer exists and nothing matches."""
+        changed = False
+        for page_key, content_key, old_text, new_text in retranslations:
+            row = cls.query.filter_by(page_key=page_key, content_key=content_key).first()
+            if row is not None and row.text == old_text:
+                row.text = new_text
+                changed = True
+        if changed:
+            db.session.commit()
+
+    @classmethod
     def ensure_defaults(cls, definitions):
         """Insert any (page_key, content_key) pairs in `definitions` that don't
         already exist. Never touches existing rows - editors' changes survive

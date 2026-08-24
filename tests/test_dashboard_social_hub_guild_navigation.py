@@ -68,7 +68,7 @@ def test_dashboard_home_snapshot_adds_guild_layer_and_feed_first_home_state(clie
     with app.app_context():
         user = _create_user()
         user_id = user.id
-        campaign = Campaign(name="Die Bernsteinfahrt", description="Vorbereitung fuer Kapitel I.", owner_id=user.id)
+        campaign = Campaign(name="Die Bernsteinfahrt", description="Vorbereitung für Kapitel I.", owner_id=user.id)
         db.session.add(campaign)
         db.session.flush()
 
@@ -100,7 +100,7 @@ def test_dashboard_home_snapshot_adds_guild_layer_and_feed_first_home_state(clie
 
     assert data["home_state"]["prep_blocker_count"] >= 1
     assert data["primary_action"]["label"] == "Session-Prep fortsetzen"
-    assert data["secondary_action"]["label"] == "Charakterarchiv oeffnen"
+    assert data["secondary_action"]["label"] == "Charakterarchiv öffnen"
     assert data["social_scope"]["kind"] == "dashboard_home"
     assert data["social_scope"]["read_only"] is True
     assert "Session-Chat getrennt" in data["social_scope"]["note"]
@@ -158,17 +158,17 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     community_routes = _read(COMMUNITY_ROUTES)
 
     assert "Dein Heimathafen vor dem Tisch" in js
-    assert "Home / Social Hub" in js
+    assert "Übersicht / Social" in js
     assert "Gemeinschaftssaal" in dashboard_home
     assert "Dashboard-Social bleibt vom Session-Chat getrennt" in js
-    assert "Guilds bleiben reine Meta-Identitaet." in js
+    assert "Guilds bleiben reine Meta-Identität." in js
     assert "data-dashboard-guild-switch" in js
     assert ".book-home-rail {" in css
     assert ".book-home-feed {" in css
     assert ".book-home-guild-panel," in css
     assert ".book-home-context-grid {" in css
     assert "Opening Home Page..." in dashboard_template
-    assert ">Home</button>" in dashboard_template
+    assert ">Übersicht</button>" in dashboard_template
     assert "Dashboard-Social bleibt vom Session-Chat getrennt" in dashboard_home
     assert "/api/dashboard/chat" not in dashboard_home
     assert "/campaigns/<int:campaign_id>/sessions/<int:session_id>/chat/messages" in community_routes

@@ -61,7 +61,7 @@ def test_campaigns_template_honestly_marks_creation_map_and_import_export_surfac
     assert "+ Kampagne anlegen" in content
     assert "Neue Kampagne im Buch anlegen" in content
     assert 'id="campaignCreateForm"' in content
-    assert "Kampagnen-Hub oeffnen" in content
+    assert "Kampagnen-Hub öffnen" in content
     # Map upload is a real, working feature now (M1 of the map/token/scene
     # plan) - no longer a disabled placeholder, so it's no longer marked
     # "folgt" (coming soon). Import/Export remains an honest placeholder.

@@ -1,7 +1,33 @@
 /**
- * M46: Spellbook Theme - Font Definitions
- * Google Fonts WOFF2 - Optimized for web
+ * Font definitions — Buch-UI (Designbrief 2026-08-24, Phase B1).
+ *
+ * Reading serif: Literata (variable, opsz+wght axes; designed for long-form
+ * e-book reading, real italics, full German diacritics). Latin-subset
+ * variable files vendored from Google Fonts (CSP is font-src 'self').
+ *
+ * Display: Cinzel — chapter heads / running headers ONLY (via the
+ * heading token, never body text). BadScript — handwritten marginalia
+ * accents only. PirataOne stays installed but is referenced by no token
+ * anymore: it was the app-wide body font by mistake (theme.css:46), which
+ * went unnoticed for months only because the font files were broken HTML
+ * until 2026-08-23.
  */
+
+@font-face {
+    font-family: 'Literata';
+    src: url('/static/fonts/literata-var.woff2') format('woff2');
+    font-weight: 200 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Literata';
+    src: url('/static/fonts/literata-italic-var.woff2') format('woff2');
+    font-weight: 200 900;
+    font-style: italic;
+    font-display: swap;
+}
 
 @font-face {
     font-family: 'Cinzel';
@@ -35,14 +61,15 @@
     font-display: swap;
 }
 
-/* Font usage variables */
+/* Font usage variables (single source: mirrors theme.css assignments). */
 :root {
     --vtt-font-spellbook-title: 'Cinzel', serif;
-    --vtt-font-spellbook-subtitle: 'BadScript', script;
-    --vtt-font-spellbook-accent: 'PirataOne', serif;
+    --vtt-font-spellbook-subtitle: 'BadScript', cursive;
+    --vtt-font-spellbook-accent: 'Cinzel', serif;
 }
 
-/* Apply to elements */
+/* Chapter/display headings in Cinzel; running text stays in the body
+   serif set by theme.css. */
 h1, h2, h3 {
     font-family: var(--vtt-font-spellbook-title);
 }

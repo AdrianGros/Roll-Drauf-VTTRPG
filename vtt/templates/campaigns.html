@@ -1263,6 +1263,7 @@
     </style>
     <!-- Spellbook Theme -->
     <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-shell.css">
@@ -1315,10 +1316,10 @@
         <div class="book-shell-frame">
             <div class="book-dashboard-topbar">
                 <div class="book-dashboard-ribbon" role="navigation" aria-label="Primary spellbook menu">
-                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Home</button>
-                    <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/campaigns" onclick="goTo('/campaigns')">Campaigns</button>
-                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Characters</button>
-                    <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Logout</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
+                    <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
+                    <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
                 </div>
                 <div class="book-dashboard-crest" aria-label="Current chapter">Chronicles</div>
             </div>
@@ -1333,7 +1334,7 @@
                     </p>
                 </div>
                 <div class="book-frame-meta">
-                    <span class="book-chip">Chapter <span data-book-field="chapter">Chronicles</span></span>
+                    <span class="book-chip">Kapitel <span data-book-field="chapter">Chroniken</span></span>
                     <span class="book-chip">Roster + Detail</span>
                     <span class="book-chip">Wave 1 Ready</span>
                 </div>
@@ -1349,7 +1350,7 @@
                     <p class="book-page-lede">Organisiere deine aktiven Welten, halte Beitritte im Blick und nutze diese Seite als verlässlichen Weg von Kampagne zu Session und weiter nach Play.</p>
 
                     <div class="book-page-note">
-                        Die Kampagnenerstellung lebt jetzt direkt auf dieser Buchseite: Name, kurze Beschreibung und Spielerzahl reichen fuer den Start, danach fuehrt derselbe Weg weiter in den Kampagnen-Hub und zur Session-Vorbereitung.
+                        Die Kampagnenerstellung lebt jetzt direkt auf dieser Buchseite: Name, kurze Beschreibung und Spielerzahl reichen für den Start, danach führt derselbe Weg weiter in den Kampagnen-Hub und zur Session-Vorbereitung.
                     </div>
 
                     <div id="messageBox" class="message"></div>
@@ -1358,11 +1359,11 @@
                         <div class="campaign-create-topline">
                             <div>
                                 <div id="campaignCreateTitle" class="campaign-create-title">Neue Kampagne im Buch anlegen</div>
-                                <div class="campaign-create-copy">Die Erstellung bleibt bewusst schlank: erst den Kern erfassen, dann im Hub die naechsten Schritte wie Einladungen, Karte oder erste Session vorbereiten.</div>
+                                <div class="campaign-create-copy">Die Erstellung bleibt bewusst schlank: erst den Kern erfassen, dann im Hub die nächsten Schritte wie Einladungen, Karte oder erste Session vorbereiten.</div>
                                 <div class="campaign-create-meta">Pflicht: Kampagnenname. Optional: Kurzbeschreibung und maximale Spielerzahl.</div>
                             </div>
                             <div class="campaign-create-actions">
-                                <button class="btn btn-secondary" type="button" onclick="openCampaignCreationPanel()">Formular oeffnen</button>
+                                <button class="btn btn-secondary" type="button" onclick="openCampaignCreationPanel()">Formular öffnen</button>
                             </div>
                         </div>
 
@@ -1370,13 +1371,13 @@
                             <div class="campaign-create-grid">
                                 <label class="campaign-create-field campaign-create-field--full">
                                     <span class="campaign-create-label">Kampagnenname</span>
-                                    <input id="campaignCreateName" type="text" maxlength="120" placeholder="z.B. Schatten ueber Auenwald" autocomplete="off" required>
-                                    <span class="campaign-create-help">Der Name ist der spaetere Einstiegspunkt im Hub, in Einladungen und im Weg nach Play.</span>
+                                    <input id="campaignCreateName" type="text" maxlength="120" placeholder="z.B. Schatten über Auenwald" autocomplete="off" required>
+                                    <span class="campaign-create-help">Der Name ist der spätere Einstiegspunkt im Hub, in Einladungen und im Weg nach Play.</span>
                                 </label>
                                 <label class="campaign-create-field campaign-create-field--full">
                                     <span class="campaign-create-label">Kurzbeschreibung</span>
-                                    <textarea id="campaignCreateDescription" maxlength="600" placeholder="Worum geht es in dieser Kampagne, und was ist der Einstieg fuer Gruppe und Session-Vorbereitung?"></textarea>
-                                    <span class="campaign-create-help">Optional, aber hilfreich fuer spaetere Orientierung im Kampagnen-Hub.</span>
+                                    <textarea id="campaignCreateDescription" maxlength="600" placeholder="Worum geht es in dieser Kampagne, und was ist der Einstieg für Gruppe und Session-Vorbereitung?"></textarea>
+                                    <span class="campaign-create-help">Optional, aber hilfreich für spätere Orientierung im Kampagnen-Hub.</span>
                                 </label>
                                 <label class="campaign-create-field">
                                     <span class="campaign-create-label">Maximale Spielerzahl</span>
@@ -1384,9 +1385,9 @@
                                     <span class="campaign-create-help">Zwischen 2 und 20 Spielern, damit Session- und Einladungslogik sauber bleibt.</span>
                                 </label>
                                 <div class="campaign-create-field">
-                                    <span class="campaign-create-label">Naechster Schritt nach dem Anlegen</span>
+                                    <span class="campaign-create-label">Nächster Schritt nach dem Anlegen</span>
                                     <div class="book-shell-placeholder">
-                                        <div class="book-shell-placeholder-title">Kampagnen-Hub bleibt der naechste echte Schritt</div>
+                                        <div class="book-shell-placeholder-title">Kampagnen-Hub bleibt der nächste echte Schritt</div>
                                         <div class="book-shell-placeholder-copy">Feinere Einstellungen, Session-Prep und Play-Einstieg bleiben bewusst im Hub statt als halbfertige Zusatzfelder im Erstellformular.</div>
                                         <div class="book-shell-placeholder-actions">
                                             <button class="btn btn-secondary btn-sm" type="button" disabled>Session-Prep folgt im Hub</button>
@@ -1399,8 +1400,8 @@
 
                             <div class="campaign-create-actions">
                                 <button id="campaignCreateSubmit" class="btn btn-primary" type="submit">Kampagne erstellen</button>
-                                <button class="btn btn-secondary" type="button" onclick="resetCampaignCreationForm()">Zuruecksetzen</button>
-                                <button class="btn btn-secondary" type="button" onclick="closeCampaignCreationPanel()">Schliessen</button>
+                                <button class="btn btn-secondary" type="button" onclick="resetCampaignCreationForm()">Zurücksetzen</button>
+                                <button class="btn btn-secondary" type="button" onclick="closeCampaignCreationPanel()">Schließen</button>
                             </div>
                         </form>
 
@@ -1450,7 +1451,7 @@
                             <h2 id="detailTitle">Kampagnen-Details</h2>
                             <div style="display:flex; gap:0.5rem;">
                                 <button class="btn btn-secondary btn-sm" id="refreshDetailBtn">Refresh</button>
-                                <button class="btn btn-secondary btn-sm" onclick="closeCampaignDetail()">Schliessen</button>
+                                <button class="btn btn-secondary btn-sm" onclick="closeCampaignDetail()">Schließen</button>
                             </div>
                         </div>
                         <div id="detailBody"></div>
@@ -1546,9 +1547,9 @@
             node.hidden = false;
             node.innerHTML = `
                 <div class="campaign-create-success-title">Kampagne angelegt: ${escapeHtml(lastCreatedCampaign.name)}</div>
-                <div class="campaign-create-success-copy">Die Kampagne ist jetzt Teil deines Buchwegs. Als Naechstes: Hub oeffnen, Spieler einladen oder die erste Session vorbereiten.</div>
+                <div class="campaign-create-success-copy">Die Kampagne ist jetzt Teil deines Buchwegs. Als Nächstes: Hub öffnen, Spieler einladen oder die erste Session vorbereiten.</div>
                 <div class="campaign-create-success-actions">
-                    <button class="btn btn-primary" type="button" onclick="openCreatedCampaignHub()">Kampagnen-Hub oeffnen</button>
+                    <button class="btn btn-primary" type="button" onclick="openCreatedCampaignHub()">Kampagnen-Hub öffnen</button>
                     <button class="btn btn-secondary" type="button" onclick="openCampaignCreationPanel(true)">Weitere Kampagne anlegen</button>
                 </div>
             `;
@@ -1569,7 +1570,7 @@
             form.hidden = false;
             if (toggle) {
                 toggle.setAttribute("aria-expanded", "true");
-                toggle.textContent = "Kampagnenformular geoeffnet";
+                toggle.textContent = "Kampagnenformular geöffnet";
             }
             if (clearSuccess) {
                 lastCreatedCampaign = null;
@@ -1709,7 +1710,7 @@
             grid.innerHTML = campaignList.map(campaign => {
                 const statusClass = `status-${campaign.status}`;
                 const primaryAction = campaign.is_member
-                    ? `<button class="btn btn-primary" onclick="viewCampaign(${campaign.id})">Hub oeffnen</button>`
+                    ? `<button class="btn btn-primary" onclick="viewCampaign(${campaign.id})">Hub öffnen</button>`
                     : `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">Beitreten</button>`;
 
                 return `
@@ -1731,7 +1732,7 @@
                             </div>
                             <div class="campaign-actions">
                                 ${primaryAction}
-                                ${campaign.is_owner ? `<button class="btn btn-danger" onclick="deleteCampaign(${campaign.id})">Loeschen</button>` : ""}
+                                ${campaign.is_owner ? `<button class="btn btn-danger" onclick="deleteCampaign(${campaign.id})">Löschen</button>` : ""}
                             </div>
                         </div>
                     </div>
@@ -1769,7 +1770,7 @@
                 return;
             }
 
-            setCampaignCreationState("Kampagne wird angelegt. Danach oeffnet sich direkt der Kampagnen-Hub.", "info");
+            setCampaignCreationState("Kampagne wird angelegt. Danach öffnet sich direkt der Kampagnen-Hub.", "info");
             setCampaignCreateBusy(true);
 
             try {
@@ -1781,7 +1782,7 @@
                 lastCreatedCampaign = created || null;
                 renderCampaignCreateSuccess();
                 showMessage("Kampagne erstellt.");
-                setCampaignCreationState("Kampagne erstellt. Oeffne jetzt den Hub oder lege direkt die naechste Kampagne an.", "success");
+                setCampaignCreationState("Kampagne erstellt. Öffne jetzt den Hub oder lege direkt die nächste Kampagne an.", "success");
                 resetCampaignCreationForm();
                 closeCampaignCreationPanel();
                 currentTab = "my";
@@ -1798,7 +1799,7 @@
         }
 
         async function joinCampaign(campaignId) {
-            const token = window.prompt("Einladungs-Code fuer diese Kampagne eingeben:");
+            const token = window.prompt("Einladungs-Code für diese Kampagne eingeben:");
             if (!token || !token.trim()) return;
 
             try {
@@ -1840,7 +1841,7 @@
                 let primaryAction = "";
                 let prepNote = "";
                 let entryHint = "";
-                const supportActions = [`<button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${session.id})">Prep oeffnen</button>`];
+                const supportActions = [`<button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${session.id})">Prep öffnen</button>`];
 
                 if (canManage) {
                     if (phase.tone === "scheduled" || phase.tone === "ready") {
@@ -1850,22 +1851,22 @@
                         entryHint = "Startet hier";
                     } else if (phase.tone === "paused") {
                         primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`;
-                        prepNote = "Die Session ist pausiert. Fortsetzen fuehrt direkt ueber den akzeptierten Buch-zu-Play-Uebergang zurueck an den Tisch.";
+                        prepNote = "Die Session ist pausiert. Fortsetzen führt direkt über den akzeptierten Buch-zu-Play-Übergang zurück an den Tisch.";
                         entryHint = "Kann fortgesetzt werden";
                     } else if (phase.tone === "live") {
                         primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Zu Play</button>`;
-                        prepNote = "Die Session laeuft bereits. Hub und Tisch bleiben verbunden, ohne den Einstiegspfad zu wechseln.";
+                        prepNote = "Die Session läuft bereits. Hub und Tisch bleiben verbunden, ohne den Einstiegspfad zu wechseln.";
                         entryHint = "Live";
                     } else {
-                        primaryAction = `<button class="btn btn-secondary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Play erneut oeffnen</button>`;
-                        supportActions.push(`<button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">Naechste Session anlegen</button>`);
-                        prepNote = "Diese Session ist beendet. Der naechste produktive Schritt ist meist eine neue Session fuer dieselbe Kampagne.";
+                        primaryAction = `<button class="btn btn-secondary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Play erneut öffnen</button>`;
+                        supportActions.push(`<button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">Nächste Session anlegen</button>`);
+                        prepNote = "Diese Session ist beendet. Der nächste produktive Schritt ist meist eine neue Session für dieselbe Kampagne.";
                         entryHint = "Abgeschlossen";
                     }
                 } else {
                     if (phase.tone === "scheduled" || phase.tone === "ready") {
                         primaryAction = `<button class="btn btn-secondary btn-sm" type="button" disabled>Auf Sessionstart warten</button>`;
-                        prepNote = "Die Session ist sichtbar, aber erst nach dem DM-Start fuer Spieler betretbar.";
+                        prepNote = "Die Session ist sichtbar, aber erst nach dem DM-Start für Spieler betretbar.";
                         entryHint = "Wartet auf DM";
                     } else if (phase.tone === "paused") {
                         primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`;
@@ -1873,11 +1874,11 @@
                         entryHint = "Kann fortgesetzt werden";
                     } else if (phase.tone === "live") {
                         primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session betreten</button>`;
-                        prepNote = "Die Session ist live und kann jetzt ueber denselben Hub-Pfad betreten werden.";
+                        prepNote = "Die Session ist live und kann jetzt über denselben Hub-Pfad betreten werden.";
                         entryHint = "Live";
                     } else {
-                        primaryAction = `<button class="btn btn-secondary btn-sm" type="button" disabled>Warte auf naechste Session</button>`;
-                        prepNote = "Diese Session ist abgeschlossen. Die naechste freigegebene Session erscheint wieder hier im Hub.";
+                        primaryAction = `<button class="btn btn-secondary btn-sm" type="button" disabled>Warte auf nächste Session</button>`;
+                        prepNote = "Diese Session ist abgeschlossen. Die nächste freigegebene Session erscheint wieder hier im Hub.";
                         entryHint = "Abgeschlossen";
                     }
                 }
@@ -1890,7 +1891,7 @@
                     ? `
                         <button class="btn btn-primary btn-sm" onclick="startCombat(${campaign.id}, ${session.id})">Kampf starten</button>
                         <button class="btn btn-secondary btn-sm" onclick="setCombatInitiative(${campaign.id}, ${session.id})">Initiative setzen</button>
-                        <button class="btn btn-secondary btn-sm" onclick="advanceCombatTurn(${campaign.id}, ${session.id})">Naechster Zug</button>
+                        <button class="btn btn-secondary btn-sm" onclick="advanceCombatTurn(${campaign.id}, ${session.id})">Nächster Zug</button>
                         <button class="btn btn-secondary btn-sm" onclick="adjustCombatHp(${campaign.id}, ${session.id})">HP aendern</button>
                         <button class="btn btn-danger btn-sm" onclick="endCombat(${campaign.id}, ${session.id})">Kampf beenden</button>
                     `
@@ -2043,7 +2044,7 @@
                         return {
                             label: "Charakter fehlt",
                             summary: `Die Session "${latestSession.name}" ist sichtbar, aber noch ohne zugewiesenen Charakterkontext.`,
-                            nextStep: "Verknuepfe zuerst einen kampagnengebundenen Helden in der Session-Prep-Flaeche und warte dann auf den DM-Start.",
+                            nextStep: "Verknuepfe zuerst einen kampagnengebundenen Helden in der Session-Prep-Fläche und warte dann auf den DM-Start.",
                         };
                     }
                     return {
@@ -2056,20 +2057,20 @@
                     return {
                         label: "Fortsetzen bereit",
                         summary: `Die Session "${latestSession.name}" ist pausiert und kann direkt aus dem Hub fortgesetzt werden.`,
-                        nextStep: "Nutze Session fortsetzen, um ueber denselben Uebergang wieder in Play zu gehen.",
+                        nextStep: "Nutze Session fortsetzen, um über denselben Übergang wieder in Play zu gehen.",
                     };
                 }
                 if (activeSession) {
                     return {
                         label: "Live",
-                        summary: `Die Session "${activeSession.name}" laeuft bereits im Tisch.`,
-                        nextStep: "Session betreten fuehrt direkt in die laufende Runde.",
+                        summary: `Die Session "${activeSession.name}" läuft bereits im Tisch.`,
+                        nextStep: "Session betreten führt direkt in die laufende Runde.",
                     };
                 }
                 return {
                     label: "Abgeschlossen",
                     summary: `Die letzte Session "${latestSession.name}" ist beendet.`,
-                    nextStep: "Warte auf die naechste freigegebene Session der Spielleitung.",
+                    nextStep: "Warte auf die nächste freigegebene Session der Spielleitung.",
                 };
             }
 
@@ -2077,27 +2078,27 @@
                 return {
                     label: "Kickoff",
                     summary: "Die Kampagne ist angelegt, aber noch ohne weitere Spieler im Hub.",
-                    nextStep: "Lade zuerst Spieler ein, damit Session-Prep und Play-Entry fuer die Gruppe Sinn ergeben.",
+                    nextStep: "Lade zuerst Spieler ein, damit Session-Prep und Play-Entry für die Gruppe Sinn ergeben.",
                 };
             }
             if (!hasMap && !latestSession) {
                 return {
                     label: "Prep startet jetzt",
                     summary: "Weder erste Karte noch erste Session sind vorbereitet.",
-                    nextStep: "Lege zuerst Karte und Session an oder nutze den Schnellstart fuer beides zusammen.",
+                    nextStep: "Lege zuerst Karte und Session an oder nutze den Schnellstart für beides zusammen.",
                 };
             }
             if (!hasMap) {
                 return {
                     label: "Map fehlt",
-                    summary: `Die Session-Vorbereitung hat begonnen, aber fuer "${latestSession.name}" fehlt noch eine sichtbare Kartenbasis.`,
-                    nextStep: "Gehe als Naechstes in die Karten-Vorbereitung, bevor du in Play wechselst.",
+                    summary: `Die Session-Vorbereitung hat begonnen, aber für "${latestSession.name}" fehlt noch eine sichtbare Kartenbasis.`,
+                    nextStep: "Gehe als Nächstes in die Karten-Vorbereitung, bevor du in Play wechselst.",
                 };
             }
             if (!latestSession) {
                 return {
                     label: "Session fehlt",
-                    summary: `Die Karte "${latestMap.name}" ist bereit, aber es gibt noch keine Session fuer die Gruppe.`,
+                    summary: `Die Karte "${latestMap.name}" ist bereit, aber es gibt noch keine Session für die Gruppe.`,
                     nextStep: "Lege jetzt die erste Session an, damit der Weg nach Play kontrolliert sichtbar wird.",
                 };
             }
@@ -2105,34 +2106,34 @@
                 return {
                     label: "Charaktere fehlen",
                     summary: `Die Session "${latestSession.name}" hat bereits Kampagnenkontext, aber noch keine direkte Session-Besetzung.`,
-                    nextStep: "Oeffne jetzt die Session-Prep-Flaeche und weise mindestens einen kampagnengebundenen Charakter zu.",
+                    nextStep: "Öffne jetzt die Session-Prep-Fläche und weise mindestens einen kampagnengebundenen Charakter zu.",
                 };
             }
             if (phase?.tone === "scheduled" || phase?.tone === "ready") {
                 return {
                     label: "Bereit zum Start",
                     summary: `Die Session "${latestSession.name}" ist vorbereitet und wartet auf den Start im Hub.`,
-                    nextStep: "Starte die Session hier im Hub und gehe anschliessend ueber denselben Pfad nach Play.",
+                    nextStep: "Starte die Session hier im Hub und gehe anschließend über denselben Pfad nach Play.",
                 };
             }
             if (phase?.tone === "paused") {
                 return {
                     label: "Fortsetzen bereit",
                     summary: `Die Session "${latestSession.name}" ist pausiert und kann kontrolliert wieder aufgenommen werden.`,
-                    nextStep: "Session fortsetzen fuehrt direkt ueber den akzeptierten Uebergang zurueck in den Tisch.",
+                    nextStep: "Session fortsetzen führt direkt über den akzeptierten Übergang zurück in den Tisch.",
                 };
             }
             if (activeSession) {
                 return {
                     label: "Live",
                     summary: `Die Session "${activeSession.name}" ist bereits live.`,
-                    nextStep: "Der Hub bleibt deine Zentrale fuer Rueckkehr, Uebersicht und vorbereitende Folgeaktionen.",
+                    nextStep: "Der Hub bleibt deine Zentrale für Rueckkehr, Übersicht und vorbereitende Folgeaktionen.",
                 };
             }
             return {
                 label: "Nachbereitung",
                 summary: `Die letzte Session "${latestSession.name}" ist beendet.`,
-                nextStep: "Lege von hier aus die naechste Session an oder aktualisiere Karten, Assets und Charakter-Kontext fuer die Fortsetzung.",
+                nextStep: "Lege von hier aus die nächste Session an oder aktualisiere Karten, Assets und Charakter-Kontext für die Fortsetzung.",
             };
         }
 
@@ -2160,20 +2161,20 @@
                     if (!hasCampaignMap) {
                         return {
                             label: "Session vorbereiten",
-                            hint: "Es fehlt noch die erste Session und eine sichtbare Kartenbasis fuer den Weg nach Play.",
+                            hint: "Es fehlt noch die erste Session und eine sichtbare Kartenbasis für den Weg nach Play.",
                             action: `<button class="btn btn-primary" type="button" onclick="focusQuickStart()">Karte + Session vorbereiten</button>`,
                         };
                     }
                     return {
                         label: "Erste Session anlegen",
-                        hint: "Die Kampagne ist bereit fuer ihre erste Session. Der Hub bleibt danach der Ruecksprungpunkt vor Play.",
+                        hint: "Die Kampagne ist bereit für ihre erste Session. Der Hub bleibt danach der Ruecksprungpunkt vor Play.",
                         action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Session anlegen</button>`,
                     };
                 }
 
                 return {
                     label: "Warte auf Session",
-                    hint: "Sobald die Spielleitung eine Session vorbereitet, erscheint sie hier als naechster Schritt vor dem Tisch.",
+                    hint: "Sobald die Spielleitung eine Session vorbereitet, erscheint sie hier als nächster Schritt vor dem Tisch.",
                     action: `<button class="btn btn-secondary" type="button" disabled>Session folgt</button>`,
                 };
             }
@@ -2183,18 +2184,18 @@
                     return {
                         label: "Session-Map setzen",
                         hint: hasCampaignMap
-                            ? `Fuer "${session.name}" ist noch keine aktive Karte gewaehlt. Waehle zuerst die Session-Karte, bevor du startest.`
-                            : `Fuer "${session.name}" fehlt noch jede Kartenbasis. Nutze zuerst den Map-Prep-Bereich.`,
+                            ? `Für "${session.name}" ist noch keine aktive Karte gewählt. Wähle zuerst die Session-Karte, bevor du startest.`
+                            : `Für "${session.name}" fehlt noch jede Kartenbasis. Nutze zuerst den Map-Prep-Bereich.`,
                         action: hasCampaignMap
-                            ? `<button class="btn btn-primary" type="button" onclick="focusSessionPrepMapSelect()">Map waehlen</button>`
+                            ? `<button class="btn btn-primary" type="button" onclick="focusSessionPrepMapSelect()">Map wählen</button>`
                             : `<button class="btn btn-primary" type="button" onclick="focusMapPrepSurface()">Map Prep ansehen</button>`,
                     };
                 }
                 if ((phase.tone === "scheduled" || phase.tone === "ready") && !hasAssignedCharacters) {
                     return {
                         label: "Charaktere zuweisen",
-                        hint: `Fuer "${session.name}" ist noch kein Charakter direkt zugeordnet. Weise zuerst die Session-Besetzung zu, bevor du startest.`,
-                        action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">Session-Besetzung oeffnen</button>`,
+                        hint: `Für "${session.name}" ist noch kein Charakter direkt zugeordnet. Weise zuerst die Session-Besetzung zu, bevor du startest.`,
+                        action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">Session-Besetzung öffnen</button>`,
                     };
                 }
                 if (phase.tone === "scheduled" || phase.tone === "ready") {
@@ -2207,21 +2208,21 @@
                 if (phase.tone === "paused") {
                     return {
                         label: "Session fortsetzen",
-                        hint: `Die Session "${session.name}" ist pausiert und fuehrt ueber denselben Uebergang wieder in den Tisch.`,
+                        hint: `Die Session "${session.name}" ist pausiert und führt über denselben Übergang wieder in den Tisch.`,
                         action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`,
                     };
                 }
                 if (phase.tone === "live") {
                     return {
                         label: "Zu Play",
-                        hint: `Die Session "${session.name}" laeuft bereits. Die Prep-Oberflaeche bleibt der letzte Buchstopp davor.`,
+                        hint: `Die Session "${session.name}" läuft bereits. Die Prep-Oberfläche bleibt der letzte Buchstopp davor.`,
                         action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Zu Play</button>`,
                     };
                 }
                 return {
-                    label: "Naechste Session anlegen",
-                    hint: `Die Session "${session.name}" ist abgeschlossen. Fuer die Fortsetzung ist jetzt wieder Vorbereitung statt Tisch angesagt.`,
-                    action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Naechste Session anlegen</button>`,
+                    label: "Nächste Session anlegen",
+                    hint: `Die Session "${session.name}" ist abgeschlossen. Für die Fortsetzung ist jetzt wieder Vorbereitung statt Tisch angesagt.`,
+                    action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Nächste Session anlegen</button>`,
                 };
             }
 
@@ -2249,14 +2250,14 @@
             if (phase.tone === "live") {
                 return {
                     label: "Session betreten",
-                    hint: `Die Session "${session.name}" laeuft bereits live.`,
+                    hint: `Die Session "${session.name}" läuft bereits live.`,
                     action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session betreten</button>`,
                 };
             }
             return {
-                label: "Warte auf naechste Session",
-                hint: `Die Session "${session.name}" ist abgeschlossen. Die naechste freigegebene Runde erscheint wieder hier.`,
-                action: `<button class="btn btn-secondary" type="button" disabled>Naechste Session folgt</button>`,
+                label: "Warte auf nächste Session",
+                hint: `Die Session "${session.name}" ist abgeschlossen. Die nächste freigegebene Runde erscheint wieder hier.`,
+                action: `<button class="btn btn-secondary" type="button" disabled>Nächste Session folgt</button>`,
             };
         }
 
@@ -2276,7 +2277,7 @@
             const deferred = [];
 
             if (!activeMap) {
-                blocking.push("Keine aktive Session-Karte gewaehlt");
+                blocking.push("Keine aktive Session-Karte gewählt");
             }
             if (!buckets.assigned.length) {
                 blocking.push("Noch kein Session-Charakter zugewiesen");
@@ -2378,7 +2379,7 @@
             const select = document.getElementById("sessionPrepMapSelect");
             const mapId = Number(select?.value || 0);
             if (!Number.isInteger(mapId) || mapId <= 0) {
-                showMessage("Bitte zuerst eine Karte fuer diese Session waehlen.", true);
+                showMessage("Bitte zuerst eine Karte für diese Session wählen.", true);
                 return;
             }
 
@@ -2445,15 +2446,15 @@
                         <div class="session-prep-hero">
                             <div>
                                 <div class="session-prep-title">Noch keine Session im Fokus</div>
-                                <div class="session-prep-copy">Diese Flaeche sitzt bewusst zwischen Kampagnen-Hub und Play. Sobald eine Session existiert, wird sie hier als der konkrete Vorbereitungskontext vor dem Tisch sichtbar.</div>
+                                <div class="session-prep-copy">Diese Fläche sitzt bewusst zwischen Kampagnen-Hub und Play. Sobald eine Session existiert, wird sie hier als der konkrete Vorbereitungskontext vor dem Tisch sichtbar.</div>
                             </div>
                             <div class="session-prep-next">
-                                <div class="session-prep-next-label">Naechster Schritt</div>
+                                <div class="session-prep-next-label">Nächster Schritt</div>
                                 <div class="session-prep-next-title">${escapeHtml(sessionAction.label)}</div>
                                 <div class="session-prep-next-copy">${escapeHtml(sessionAction.hint)}</div>
                                 <div class="session-prep-actions">
                                     ${sessionAction.action}
-                                    <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">Zurueck zur Sessionliste</button>
+                                    <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">Zurück zur Sessionliste</button>
                                 </div>
                             </div>
                         </div>
@@ -2465,13 +2466,13 @@
             const readinessLabel = canManage
                 ? (phase.tone === "scheduled" || phase.tone === "ready"
                     ? (!activeMap
-                        ? (mapReady ? "Session-Karte waehlen" : "Map fehlt noch")
+                        ? (mapReady ? "Session-Karte wählen" : "Map fehlt noch")
                         : (characterBuckets.assigned.length ? "Startbereit" : "Charaktere zuweisen"))
                     : (phase.tone === "paused" ? "Fortsetzen bereit" : (phase.tone === "live" ? "Live" : "Abgeschlossen")))
                 : (phase.tone === "scheduled" || phase.tone === "ready"
                     ? (!activeMap
                         ? "Wartet auf Karte"
-                        : (characterBuckets.currentUserAssigned.length || !characterBuckets.assignable.length ? "Wartet auf Start" : "Charakter waehlen"))
+                        : (characterBuckets.currentUserAssigned.length || !characterBuckets.assignable.length ? "Wartet auf Start" : "Charakter wählen"))
                     : (phase.tone === "paused" ? "Fortsetzen bereit" : (phase.tone === "live" ? "Live" : "Abgeschlossen")));
 
             const mapOptions = (maps || []).map(map => `
@@ -2480,7 +2481,7 @@
 
             const renderSessionCharacterRows = (items, mode) => {
                 if (!items.length) {
-                    return `<div class="muted">${mode === "assigned" ? "Noch kein Charakter direkt dieser Session zugeordnet." : "Keine weiteren kampagnengebundenen Charaktere direkt verfuegbar."}</div>`;
+                    return `<div class="muted">${mode === "assigned" ? "Noch kein Charakter direkt dieser Session zugeordnet." : "Keine weiteren kampagnengebundenen Charaktere direkt verfügbar."}</div>`;
                 }
 
                 return items.map(character => {
@@ -2488,7 +2489,7 @@
                         ? "Dein Charakter"
                         : `Besitz: ${character.owner_username || "Unbekannt"}`;
                     const classLabel = `${character.class || "Unknown"} · Level ${character.level || 1}`;
-                    const identityLabel = character.avatar_url ? "Avatar bereit" : (character.token_url ? "Token bereit" : "Identitaet optional");
+                    const identityLabel = character.avatar_url ? "Avatar bereit" : (character.token_url ? "Token bereit" : "Identität optional");
                     const canEditAssignment = canCurrentUserManageSessionCharacter(campaign, character);
                     const assignmentButton = mode === "assigned"
                         ? (canEditAssignment
@@ -2523,12 +2524,12 @@
                     <div class="session-prep-hero">
                         <div>
                             <div class="session-prep-title">${escapeHtml(prepSession.name)}</div>
-                            <div class="session-prep-copy">Diese Oberflaeche ist der letzte Buchstopp vor dem Tisch. Hier wird genau diese Session lesbar: Status, fehlende Vorbereitung und der korrekte naechste Schritt nach Play.</div>
+                            <div class="session-prep-copy">Diese Oberfläche ist der letzte Buchstopp vor dem Tisch. Hier wird genau diese Session lesbar: Status, fehlende Vorbereitung und der korrekte nächste Schritt nach Play.</div>
                             <div class="session-prep-toolbar">
                                 <select id="sessionPrepSelect" onchange="selectPrepSession(${campaign.id}, this.value)">
                                     ${sessionOptions}
                                 </select>
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Zurueck zum Kampagnen-Hub</button>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Zurück zum Kampagnen-Hub</button>
                             </div>
                             <div class="hub-pill-row" style="margin-top:0.8rem;">
                                 <span class="hub-badge"><strong>Status:</strong> ${escapeHtml(phase.label)}</span>
@@ -2542,7 +2543,7 @@
                             </div>
                         </div>
                         <div class="session-prep-next">
-                            <div class="session-prep-next-label">Naechster Schritt</div>
+                            <div class="session-prep-next-label">Nächster Schritt</div>
                             <div class="session-prep-next-title">${escapeHtml(sessionAction.label)}</div>
                             <div class="session-prep-next-copy">${escapeHtml(sessionAction.hint)}</div>
                             <div class="session-prep-actions">
@@ -2556,7 +2557,7 @@
                     <div class="session-prep-grid">
                         <div class="session-prep-card">
                             <div class="session-prep-card-title">Participants / Invite Context</div>
-                            <div class="session-prep-card-copy">${canManage ? `Die Kampagne hat aktuell ${playerCount} Spieler neben der DM. Invite- und Join-Kontext bleibt Teil derselben Vorbereitung vor Tischstart.` : "Dein Kampagnenbeitritt ist sichtbar. Sobald die DM startet, fuehrt diese Session-Vorbereitung direkt zum Tisch."}</div>
+                            <div class="session-prep-card-copy">${canManage ? `Die Kampagne hat aktuell ${playerCount} Spieler neben der DM. Invite- und Join-Kontext bleibt Teil derselben Vorbereitung vor Tischstart.` : "Dein Kampagnenbeitritt ist sichtbar. Sobald die DM startet, führt diese Session-Vorbereitung direkt zum Tisch."}</div>
                             <div class="session-prep-card-actions">
                                 ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="focusInviteControls()">Spieler einladen</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Invite-Kontext</button>`}
                             </div>
@@ -2565,15 +2566,15 @@
                         <div class="session-prep-card" id="sessionPrepCharacterCard">
                             <div class="session-prep-card-title">Character Context</div>
                             <div class="session-prep-card-copy">${canManage
-                                ? "Nur kampagnengebundene Helden erscheinen hier. Weise sie direkt dieser Session zu oder entferne sie wieder, bevor der Hub nach Play uebergibt."
-                                : "Hier wird sichtbar, welche kampagnengebundenen Helden schon direkt zu dieser Session gehoeren. Eigene Helden kannst du selbst zuweisen, andere bleiben lesbar, aber nicht direkt von dir editierbar."}</div>
+                                ? "Nur kampagnengebundene Helden erscheinen hier. Weise sie direkt dieser Session zu oder entferne sie wieder, bevor der Hub nach Play übergibt."
+                                : "Hier wird sichtbar, welche kampagnengebundenen Helden schon direkt zu dieser Session gehören. Eigene Helden kannst du selbst zuweisen, andere bleiben lesbar, aber nicht direkt von dir editierbar."}</div>
                             <div class="hub-pill-row" style="margin-top:0.75rem;">
                                 <span class="hub-badge"><strong>Zugewiesen:</strong> ${escapeHtml(String(characterBuckets.assigned.length))}</span>
-                                <span class="hub-badge"><strong>Verfuegbar:</strong> ${escapeHtml(String(characterBuckets.available.length))}</span>
+                                <span class="hub-badge"><strong>Verfügbar:</strong> ${escapeHtml(String(characterBuckets.available.length))}</span>
                                 <span class="hub-badge"><strong>Direkt zuweisbar:</strong> ${escapeHtml(String(characterBuckets.assignable.length))}</span>
                             </div>
                             <div class="hub-callout" style="margin-top:0.75rem;">
-                                <strong>Eligibility:</strong> Nur Charaktere, die bereits mit dieser Kampagne verknuepft sind, koennen hier als Session-Besetzung genutzt werden.
+                                <strong>Eligibility:</strong> Nur Charaktere, die bereits mit dieser Kampagne verknuepft sind, können hier als Session-Besetzung genutzt werden.
                             </div>
                             <div class="session-prep-toolbar" style="margin-top:0.85rem; display:block;">
                                 <strong>Zugewiesen</strong>
@@ -2582,27 +2583,27 @@
                                 </div>
                             </div>
                             <div class="session-prep-toolbar" style="margin-top:0.85rem; display:block;">
-                                <strong>Verfuegbar fuer diese Session</strong>
+                                <strong>Verfügbar für diese Session</strong>
                                 <div class="hub-step-list" style="margin-top:0.55rem;">
                                     ${renderSessionCharacterRows(characterBuckets.assignable, "available")}
                                 </div>
                             </div>
                             ${characterBuckets.restricted.length ? `
                                 <div class="hub-callout" style="margin-top:0.75rem;">
-                                    <strong>Nur sichtbar:</strong> ${escapeHtml(String(characterBuckets.restricted.length))} weitere kampagnengebundene Charaktere gehoeren anderen Spielern und bleiben deshalb fuer dich read-only.
+                                    <strong>Nur sichtbar:</strong> ${escapeHtml(String(characterBuckets.restricted.length))} weitere kampagnengebundene Charaktere gehören anderen Spielern und bleiben deshalb für dich read-only.
                                 </div>
                             ` : ""}
                             <div class="session-prep-card-actions">
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere oeffnen</button>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere öffnen</button>
                                 ${characterBuckets.assigned.length
                                     ? `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${characterBuckets.assigned[0].id})">Zugewiesenes Sheet</button>`
-                                    : `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Archiv fuer neue Helden</button>`}
+                                    : `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Archiv für neue Helden</button>`}
                             </div>
                         </div>
 
                         <div class="session-prep-card">
                             <div class="session-prep-card-title">Map Context</div>
-                            <div class="session-prep-card-copy">${activeMap ? `Diese Session nutzt aktuell "${escapeHtml(activeMap.name)}" als aktive Karte. Map Prep bleibt der naechste Ort fuer Kontrolle, Aktivierung und Feinvorbereitung vor Play.` : (mapReady ? "Es gibt Kartenmaterial in der Kampagne, aber fuer diese Session ist noch keine aktive Karte gesetzt." : "Noch keine Karte im Kampagnenkontext sichtbar. Vor Tischstart sollte zuerst der Map-Prep-Bereich genutzt werden.")}</div>
+                            <div class="session-prep-card-copy">${activeMap ? `Diese Session nutzt aktuell "${escapeHtml(activeMap.name)}" als aktive Karte. Map Prep bleibt der nächste Ort für Kontrolle, Aktivierung und Feinvorbereitung vor Play.` : (mapReady ? "Es gibt Kartenmaterial in der Kampagne, aber für diese Session ist noch keine aktive Karte gesetzt." : "Noch keine Karte im Kampagnenkontext sichtbar. Vor Tischstart sollte zuerst der Map-Prep-Bereich genutzt werden.")}</div>
                             ${canManage && maps && maps.length ? `
                                 <div class="session-prep-toolbar" style="margin-top:0.65rem;">
                                     <select id="sessionPrepMapSelect">
@@ -2619,7 +2620,7 @@
 
                         <div class="session-prep-card">
                             <div class="session-prep-card-title">Asset Context</div>
-                            <div class="session-prep-card-copy">Assets, Uploads und Vorschau sind bereits live. Diese Session kann ihre Bibliothek jetzt gezielt filtern und Uploads direkt in den Session-Kontext lenken, waehrend Import / Export sichtbar Platzhalter bleibt.</div>
+                            <div class="session-prep-card-copy">Assets, Uploads und Vorschau sind bereits live. Diese Session kann ihre Bibliothek jetzt gezielt filtern und Uploads direkt in den Session-Kontext lenken, während Import / Export sichtbar Platzhalter bleibt.</div>
                             <div id="sessionPrepAssetStats">
                                 ${assetStats ? `
                                     <div class="hub-pill-row">
@@ -2639,11 +2640,11 @@
 
                         <div class="session-prep-card">
                             <div class="session-prep-card-title">Noch offen vor Play</div>
-                            <div class="session-prep-card-copy">Diese letzte Kontrolle trennt echte Vorbedingungen vor Play von bewusst sichtbaren Platzhaltern, die noch nicht blockierend ausgebaut werden muessen.</div>
+                            <div class="session-prep-card-copy">Diese letzte Kontrolle trennt echte Vorbedingungen vor Play von bewusst sichtbaren Platzhaltern, die noch nicht blockierend ausgebaut werden müssen.</div>
                             <div class="hub-step-list" style="margin-top:0.75rem;">
                                 ${blockers.blocking.length
                                     ? blockers.blocking.map(blocker => hubStep(blocker, "Vor Play noch offen.", false)).join("")
-                                    : hubStep("Keine harten Vorbedingungen offen", "Diese Session kann ueber den naechsten Schritt in den Tisch wechseln.", true, "live")}
+                                    : hubStep("Keine harten Vorbedingungen offen", "Diese Session kann über den nächsten Schritt in den Tisch wechseln.", true, "live")}
                             </div>
                             <div class="hub-callout" style="margin-top:0.75rem;">
                                 <strong>Sichtbar, aber nicht blockierend:</strong> ${blockers.deferred.length
@@ -2689,18 +2690,18 @@
                     <div class="hub-step-list">
                         ${hubStep(
                             "Invite annehmen",
-                            "Der Link oder Code muss zuerst zur Kampagne fuehren.",
+                            "Der Link oder Code muss zuerst zur Kampagne führen.",
                             !!campaign.is_member
                         )}
                         ${hubStep(
-                            "Kampagne oeffnen",
+                            "Kampagne öffnen",
                             "Die Detailsseite ist der Einstiegspunkt vor dem Tisch.",
                             true,
                             "live"
                         )}
                         ${hubStep(
                             "Zu Play",
-                            latestSession ? `Die Session "${latestSession.name}" ist verfuegbar.` : "Warte auf die erste Session der Spielleitung.",
+                            latestSession ? `Die Session "${latestSession.name}" ist verfügbar.` : "Warte auf die erste Session der Spielleitung.",
                             !!latestSession,
                             latestSession ? "live" : "todo"
                         )}
@@ -2734,11 +2735,11 @@
                     ${hubStep(
                         "Zu Play",
                         sessionLive
-                            ? `Die Session "${activeSession.name}" laeuft bereits.`
+                            ? `Die Session "${activeSession.name}" läuft bereits.`
                             : (latestSession
                                 ? (latestSessionMap
                                     ? (hasSessionCharacters
-                                        ? `Die Session "${latestSession.name}" ist bereit fuer Start oder Fortsetzung.`
+                                        ? `Die Session "${latestSession.name}" ist bereit für Start oder Fortsetzung.`
                                         : `Die Session "${latestSession.name}" braucht noch direkte Session-Charaktere im Session-Prep.`)
                                     : `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte im Session-Prep.`)
                                 : "Erst Session und Karte anlegen."),
@@ -2795,20 +2796,20 @@
                 if (phase.tone === "scheduled" || phase.tone === "ready") {
                     if (!latestSessionMap) {
                         return {
-                            label: "Session-Prep oeffnen",
+                            label: "Session-Prep öffnen",
                             hint: latestMap
-                                ? `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte. Oeffne zuerst die fokussierte Session-Vorbereitung.`
+                                ? `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte. Öffne zuerst die fokussierte Session-Vorbereitung.`
                                 : `Die Session "${latestSession.name}" braucht vor dem Start noch sichtbares Kartenmaterial.`,
                             action: latestMap
-                                ? `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep oeffnen</button>`
+                                ? `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`
                                 : `<button class="btn btn-primary" onclick="focusMapPrepSurface()">Map Prep ansehen</button>`,
                         };
                     }
                     if (!hasSessionCharacters) {
                         return {
-                            label: "Session-Prep oeffnen",
+                            label: "Session-Prep öffnen",
                             hint: `Die Session "${latestSession.name}" braucht vor dem Start noch direkte Session-Charaktere.`,
-                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep oeffnen</button>`,
+                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`,
                         };
                     }
                     return {
@@ -2821,7 +2822,7 @@
                 if (phase.tone === "paused") {
                     return {
                         label: "Session fortsetzen",
-                        hint: `Die Session "${latestSession.name}" ist pausiert. Im Tisch kann sie weitergefuehrt werden.`,
+                        hint: `Die Session "${latestSession.name}" ist pausiert. Im Tisch kann sie weitergeführt werden.`,
                         action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">Session fortsetzen</button>`,
                     };
                 }
@@ -2829,15 +2830,15 @@
                 if (activeSession) {
                     return {
                         label: "Zu Play",
-                        hint: `Die Session "${activeSession.name}" laeuft bereits im Tisch und kann direkt weitergefuehrt werden.`,
+                        hint: `Die Session "${activeSession.name}" läuft bereits im Tisch und kann direkt weitergeführt werden.`,
                         action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${activeSession.id})">Zu Play</button>`,
                     };
                 }
 
                 return {
-                    label: "Naechste Session anlegen",
-                    hint: `Die letzte Session "${latestSession.name}" ist beendet. Von hier aus beginnt die Vorbereitung fuer die naechste Runde.`,
-                    action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Naechste Session anlegen</button>`,
+                    label: "Nächste Session anlegen",
+                    hint: `Die letzte Session "${latestSession.name}" ist beendet. Von hier aus beginnt die Vorbereitung für die nächste Runde.`,
+                    action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Nächste Session anlegen</button>`,
                 };
             }
 
@@ -2847,9 +2848,9 @@
                 if (phase.tone === "scheduled" || phase.tone === "ready") {
                     if (!latestBuckets.currentUserAssigned.length && latestBuckets.assignable.length) {
                         return {
-                            label: "Session-Prep oeffnen",
+                            label: "Session-Prep öffnen",
                             hint: `Bevor die Session "${latestSession.name}" startet, kannst du hier noch deinen Helden direkt zuweisen.`,
-                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep oeffnen</button>`,
+                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`,
                         };
                     }
                     return {
@@ -2860,9 +2861,9 @@
                 }
                 if (phase.tone === "ended") {
                     return {
-                        label: "Warte auf naechste Session",
-                        hint: `Die letzte Session "${latestSession.name}" ist beendet. Die naechste freigegebene Session erscheint wieder hier im Hub.`,
-                        action: `<button class="btn btn-secondary" disabled>Naechste Session folgt</button>`,
+                        label: "Warte auf nächste Session",
+                        hint: `Die letzte Session "${latestSession.name}" ist beendet. Die nächste freigegebene Session erscheint wieder hier im Hub.`,
+                        action: `<button class="btn btn-secondary" disabled>Nächste Session folgt</button>`,
                     };
                 }
                 return {
@@ -2908,7 +2909,7 @@
                 return;
             }
             if (!file) {
-                showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswaehlen.", true);
+                showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswählen.", true);
                 return;
             }
             if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
@@ -2948,14 +2949,14 @@
                     grid_size: 70
                 });
 
-                showMessage(`Karte "${name}" hinzugefuegt.`);
+                showMessage(`Karte "${name}" hinzugefügt.`);
                 await viewCampaign(campaignId, false);
             } catch (error) {
-                showMessage(error.message || "Karte konnte nicht hinzugefuegt werden.", true);
+                showMessage(error.message || "Karte konnte nicht hinzugefügt werden.", true);
             } finally {
                 if (button) {
                     button.disabled = false;
-                    button.textContent = "Karte hinzufuegen";
+                    button.textContent = "Karte hinzufügen";
                 }
             }
         }
@@ -3059,8 +3060,8 @@
                     <button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">Session anlegen</button>
                 </div>
                 <div class="hub-quickstart">
-                    <div class="quickstart-title">Schnellstart fuer Nicht-Techniker</div>
-                    <div class="quickstart-help">Ein Klick: Session anlegen, Karte hochladen, Session starten, Play oeffnen.</div>
+                    <div class="quickstart-title">Schnellstart für Nicht-Techniker</div>
+                    <div class="quickstart-help">Ein Klick: Session anlegen, Karte hochladen, Session starten, Play öffnen.</div>
                     <div class="inline-controls">
                         <input id="quickSessionName" type="text" placeholder="z.B. Erste Taverne" value="Erste Session">
                         <input id="quickMapFile" type="file" accept="image/png,image/jpeg,image/webp" />
@@ -3071,7 +3072,7 @@
                 </div>
             ` : `
                 <div class="hub-callout">
-                    Die DM kann hier die Session-Historie sehen und den Launch-Status verfolgen. Karten und Sessions sind nur fuer berechtigte Rollen bearbeitbar.
+                    Die DM kann hier die Session-Historie sehen und den Launch-Status verfolgen. Karten und Sessions sind nur für berechtigte Rollen bearbeitbar.
                 </div>
             `;
 
@@ -3105,7 +3106,7 @@
 
                         <div class="hub-primary">
                             <div>
-                                <div class="hub-next-label">Naechster Schritt</div>
+                                <div class="hub-next-label">Nächster Schritt</div>
                                 <div class="hub-next-title">${escapeHtml(primaryAction.label)}</div>
                                 <div class="hub-next-hint">${escapeHtml(primaryAction.hint)}</div>
                                 <div class="hub-next-hint">Aktueller Stand: ${escapeHtml(prepState.nextStep)}</div>
@@ -3145,7 +3146,7 @@
                                 </div>
                             </div>
                             <div class="hub-callout">
-                                Diese Seite ist der Einstiegspunkt vor dem Tisch. Hier siehst du, was bereits bereit ist und was als naechstes passieren soll.
+                                Diese Seite ist der Einstiegspunkt vor dem Tisch. Hier siehst du, was bereits bereit ist und was als nächstes passieren soll.
                             </div>
                         </div>
 
@@ -3157,8 +3158,8 @@
                             ${inviteControls}
                             <div class="hub-callout">
                                 ${canManage
-                                    ? "Die Spielleitung erzeugt hier Einladungen fuer Spieler."
-                                    : "Spieler geben hier ihren Invite-Code ein und betreten danach den Tisch ueber Session betreten."
+                                    ? "Die Spielleitung erzeugt hier Einladungen für Spieler."
+                                    : "Spieler geben hier ihren Invite-Code ein und betreten danach den Tisch über Session betreten."
                                 }
                             </div>
                         </div>
@@ -3170,7 +3171,7 @@
                             </div>
                             <div class="hub-callout">
                                 ${canManage
-                                    ? "Hier entscheidest du, ob eine Session neu angelegt, gestartet, fortgesetzt oder fuer die naechste Runde vorbereitet werden muss."
+                                    ? "Hier entscheidest du, ob eine Session neu angelegt, gestartet, fortgesetzt oder für die nächste Runde vorbereitet werden muss."
                                     : "Hier siehst du, ob du warten, fortsetzen oder direkt in die laufende Session wechseln kannst."}
                             </div>
                             <div class="hub-session-list">
@@ -3189,17 +3190,17 @@
                             </div>
                             <div class="hub-callout">
                                 ${canManage
-                                    ? "Die Kartenliste und der Schnellstart sind live. Tieferes Map-Prep bleibt hier sichtbar als naechster Schritt, bis der eigene Map-Workspace kommt."
+                                    ? "Die Kartenliste und der Schnellstart sind live. Tieferes Map-Prep bleibt hier sichtbar als nächster Schritt, bis der eigene Map-Workspace kommt."
                                     : "Spieler sehen hier den aktuellen Kartenstand read-only. Tieferes Map-Prep bleibt der Spielleitung vorbehalten."}
                             </div>
                             ${canManage ? `
                                 <div class="book-shell-placeholder" style="margin-top:0.85rem;">
                                     <div class="book-shell-placeholder-title">Karte hochladen</div>
-                                    <div class="book-shell-placeholder-copy">Bild von deinem PC hochladen - wird der Kampagne als wiederverwendbare Karte hinzugefuegt, ohne gleich eine Session zu starten.</div>
+                                    <div class="book-shell-placeholder-copy">Bild von deinem PC hochladen - wird der Kampagne als wiederverwendbare Karte hinzugefügt, ohne gleich eine Session zu starten.</div>
                                     <div class="book-shell-placeholder-actions" style="flex-direction:column; align-items:stretch; gap:0.5rem;">
                                         <input type="text" id="newMapName_${campaign.id}" placeholder="Kartenname" maxlength="255" class="form-input">
                                         <input type="file" id="newMapFile_${campaign.id}" accept="image/png,image/jpeg,image/webp">
-                                        <button class="btn btn-secondary btn-sm" type="button" id="newMapUploadBtn_${campaign.id}" onclick="uploadStandaloneMap(${campaign.id})">Karte hinzufuegen</button>
+                                        <button class="btn btn-secondary btn-sm" type="button" id="newMapUploadBtn_${campaign.id}" onclick="uploadStandaloneMap(${campaign.id})">Karte hinzufügen</button>
                                     </div>
                                 </div>
                             ` : ""}
@@ -3211,13 +3212,13 @@
                                 <span class="hub-pill">Characters + Assets</span>
                             </div>
                                 <div class="hub-callout">
-                                    Vor dem Tisch greifen Charaktere, Karten und Assets zusammen. Diese Oberflaechen bleiben im Buch sichtbar und fuehren vorbereitet in die Session hinein.
+                                    Vor dem Tisch greifen Charaktere, Karten und Assets zusammen. Diese Oberflächen bleiben im Buch sichtbar und führen vorbereitet in die Session hinein.
                                 </div>
                                 <div class="hub-link-grid">
                                 <div class="hub-surface-link">
                                     <div class="hub-surface-link-title">Characters</div>
-                                    <div class="hub-surface-link-copy">Archive, Sheets und Identitaet weiterfuehren, bevor die Session live geht.</div>
-                                    <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere oeffnen</button>
+                                    <div class="hub-surface-link-copy">Archive, Sheets und Identität weiterführen, bevor die Session live geht.</div>
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere öffnen</button>
                                 </div>
                                 <div class="hub-surface-link">
                                     <div class="hub-surface-link-title">Map Prep</div>
@@ -3231,11 +3232,11 @@
                                     </div>
                                 </div>
                             <div class="hub-callout" style="margin-top:0.85rem;">
-                                <strong>Session-Besetzung:</strong> Direkte Charakter-Zuweisung lebt jetzt in der fokussierten Session-Prep-Flaeche. Von hier fuehrt derselbe Buchweg in die konkrete Besetzung vor Play.
+                                <strong>Session-Besetzung:</strong> Direkte Charakter-Zuweisung lebt jetzt in der fokussierten Session-Prep-Fläche. Von hier führt derselbe Buchweg in die konkrete Besetzung vor Play.
                             </div>
                             ${sessions && sessions.length ? `
                                 <div class="book-shell-placeholder-actions" style="margin-top:0.75rem;">
-                                    <button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">Session-Besetzung oeffnen</button>
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">Session-Besetzung öffnen</button>
                                 </div>
                             ` : ""}
                         </div>
@@ -3303,7 +3304,7 @@
             ` : `
                 <div class="detail-box">
                     <h3>Moderation</h3>
-                    <div class="muted">Melden pro Nachricht ist aktiv. Moderations-Queue ist nur fuer DM/Admin.</div>
+                    <div class="muted">Melden pro Nachricht ist aktiv. Moderations-Queue ist nur für DM/Admin.</div>
                 </div>
             `;
 
@@ -3399,7 +3400,7 @@
                         <span class="hub-pill">Originale + Vorschau</span>
                     </div>
                     <div class="hub-callout">
-                        Die Bibliothek zeigt die Originaldateien. Karten, Token und Handouts bleiben unveraendert und koennen hier als sichtbarer Vorbereitungsschritt fuer Sessions geordnet, geprueft und spaeter weiterverwendet werden.
+                        Die Bibliothek zeigt die Originaldateien. Karten, Token und Handouts bleiben unveraendert und können hier als sichtbarer Vorbereitungsschritt für Sessions geordnet, geprueft und später weiterverwendet werden.
                     </div>
                     <div class="asset-library-toolbar">
                         <input id="assetLibrarySearch" type="text" placeholder="Suche nach Dateiname...">
@@ -3436,17 +3437,17 @@
                                 <option value="session">Session</option>
                             </select>
                             <select id="assetLibraryUploadSession">
-                                <option value="">Session waehlen</option>
+                                <option value="">Session wählen</option>
                                 ${sessionOptions}
                             </select>
                             <div class="upload-actions">
                                 <button class="btn btn-primary btn-sm" onclick="uploadLibraryAsset(${campaign.id})">Upload</button>
-                                <button class="btn btn-secondary btn-sm" onclick="resetAssetLibraryUpload()">Zuruecksetzen</button>
+                                <button class="btn btn-secondary btn-sm" onclick="resetAssetLibraryUpload()">Zurücksetzen</button>
                             </div>
                         </div>
                         <div class="book-shell-placeholder" style="margin-top:0.8rem;">
                             <div class="book-shell-placeholder-title">Import / Export folgt hier</div>
-                            <div class="book-shell-placeholder-copy">Die Bibliothek ist live fuer Upload, Preview und Download. Paketierter Import und Export bleiben sichtbar an derselben Stelle, bis die Pipeline produktisiert ist.</div>
+                            <div class="book-shell-placeholder-copy">Die Bibliothek ist live für Upload, Preview und Download. Paketierter Import und Export bleiben sichtbar an derselben Stelle, bis die Pipeline produktisiert ist.</div>
                             <div class="book-shell-placeholder-actions">
                                 <button class="btn btn-secondary btn-sm" type="button" disabled>Map Import folgt</button>
                                 <button class="btn btn-secondary btn-sm" type="button" disabled>Paket Export folgt</button>
@@ -3454,7 +3455,7 @@
                         </div>
                     ` : `
                         <div class="hub-callout" style="margin-top:0.8rem;">
-                            Spieler sehen die Bibliothek, koennen sie aber noch nicht selbst befuellen. Upload und Loeschen bleiben der Spielleitung vorbehalten.
+                            Spieler sehen die Bibliothek, können sie aber noch nicht selbst befuellen. Upload und Löschen bleiben der Spielleitung vorbehalten.
                         </div>
                     `}
                     <div id="assetLibraryGrid" class="asset-library-grid">
@@ -3506,7 +3507,7 @@
                     ? `<div class="asset-card-meta">Session: ${escapeHtml(asset.session_name)}</div>`
                     : "";
                 const deleteButton = canManage
-                    ? `<button class="btn btn-danger btn-sm" onclick="deleteLibraryAsset(${asset.id}, ${campaignId})">Loeschen</button>`
+                    ? `<button class="btn btn-danger btn-sm" onclick="deleteLibraryAsset(${asset.id}, ${campaignId})">Löschen</button>`
                     : "";
                 const previewButton = canPreview
                     ? `<button class="btn btn-secondary btn-sm" onclick="openAssetPreview('${previewUrl.replace(/'/g, "\\'")}')">Preview</button>`
@@ -3598,7 +3599,7 @@
             const scopeField = document.getElementById("assetLibraryUploadScope");
             const sessionField = document.getElementById("assetLibraryUploadSession");
             if (!fileInput || !fileInput.files || !fileInput.files[0]) {
-                showMessage("Bitte zuerst eine Datei auswaehlen.", true);
+                showMessage("Bitte zuerst eine Datei auswählen.", true);
                 return;
             }
 
@@ -3608,7 +3609,7 @@
             const sessionId = sessionField?.value || "";
 
             if (scope === "session" && !sessionId) {
-                showMessage("Bitte zuerst eine Session fuer den Upload waehlen.", true);
+                showMessage("Bitte zuerst eine Session für den Upload wählen.", true);
                 return;
             }
 
@@ -3654,13 +3655,13 @@
         }
 
         async function deleteLibraryAsset(assetId, campaignId) {
-            if (!window.confirm("Asset wirklich loeschen?")) return;
+            if (!window.confirm("Asset wirklich löschen?")) return;
             try {
                 await auth.makeAuthRequest(`/api/assets/${assetId}/delete`, "DELETE");
-                showMessage("Asset geloescht.");
+                showMessage("Asset gelöscht.");
                 await viewCampaign(campaignId, false);
             } catch (error) {
-                showMessage(error.message || "Asset konnte nicht geloescht werden.", true);
+                showMessage(error.message || "Asset konnte nicht gelöscht werden.", true);
             }
         }
 
@@ -3752,13 +3753,13 @@
         }
 
         async function deleteCommunityMessage(campaignId, sessionId, messageId) {
-            if (!window.confirm("Nachricht wirklich loeschen?")) return;
+            if (!window.confirm("Nachricht wirklich löschen?")) return;
             try {
                 await community.deleteMessage(campaignId, sessionId, messageId);
                 await loadCommunityPanel(campaignId);
-                showMessage("Nachricht geloescht.");
+                showMessage("Nachricht gelöscht.");
             } catch (error) {
-                showMessage(error.message || "Loeschen fehlgeschlagen.", true);
+                showMessage(error.message || "Löschen fehlgeschlagen.", true);
             }
         }
 
@@ -3803,7 +3804,7 @@
 
             try {
                 await community.createModerationAction(campaignId, payload);
-                showMessage("Moderationsaktion ausgefuehrt.");
+                showMessage("Moderationsaktion ausgeführt.");
                 await loadModerationQueue(campaignId);
                 await loadCommunityPanel(campaignId);
             } catch (error) {
@@ -4002,7 +4003,7 @@
             const file = mapField?.files?.[0];
 
             if (!file) {
-                showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswaehlen.", true);
+                showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswählen.", true);
                 return;
             }
             if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
@@ -4044,7 +4045,7 @@
                     }
                 }
 
-                showMessage("Schritt 3/4: Karte wird der Kampagne hinzugefuegt...");
+                showMessage("Schritt 3/4: Karte wird der Kampagne hinzugefügt...");
                 const campaignMap = await auth.makeAuthRequest(`/api/campaigns/${campaignId}/maps`, "POST", {
                     name: sessionName,
                     background_url: `/api/assets/${uploaded.asset_id}/preview`,
@@ -4152,7 +4153,7 @@
             try {
                 const state = await fetchCombatState(campaignId, sessionId);
                 if (!state.encounter) {
-                    showMessage("Kein aktiver Kampf fuer Initiative vorhanden.", true);
+                    showMessage("Kein aktiver Kampf für Initiative vorhanden.", true);
                     return;
                 }
 
@@ -4203,7 +4204,7 @@
                 );
                 showMessage(`Zug weitergeschaltet. ${summarizeCombatState(payload)}`);
             } catch (error) {
-                showMessage(error.message || "Naechster Zug fehlgeschlagen.", true);
+                showMessage(error.message || "Nächster Zug fehlgeschlagen.", true);
             }
         }
 
@@ -4271,17 +4272,17 @@
         }
 
         async function deleteCampaign(campaignId) {
-            if (!window.confirm("Kampagne wirklich loeschen?")) return;
+            if (!window.confirm("Kampagne wirklich löschen?")) return;
 
             try {
                 await auth.makeAuthRequest(`/api/campaigns/${campaignId}`, "DELETE");
                 if (selectedCampaignId === campaignId) {
                     closeCampaignDetail();
                 }
-                showMessage("Kampagne geloescht.");
+                showMessage("Kampagne gelöscht.");
                 await loadCampaigns();
             } catch (error) {
-                showMessage(error.message || "Kampagne konnte nicht geloescht werden.", true);
+                showMessage(error.message || "Kampagne konnte nicht gelöscht werden.", true);
             }
         }
 

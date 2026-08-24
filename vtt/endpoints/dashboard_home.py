@@ -113,9 +113,9 @@ def _build_guild_preview(guilds: list[Guild], primary_membership: GuildMembershi
         is_primary = primary_membership.guild_id == guild.id
         payload = guild.serialize(member_count=member_count, is_primary=is_primary)
         payload["status_preview"] = (
-            "Dein aktuelles Banner fuer Home-Updates, Hinweise und Meta-Identitaet."
+            "Dein aktuelles Banner für Home-Updates, Hinweise und Meta-Identität."
             if is_primary
-            else (f"{member_count} Mitglieder tragen dieses Banner." if member_count else "Noch niemand fuehrt dieses Banner als primaere Gilde.")
+            else (f"{member_count} Mitglieder tragen dieses Banner." if member_count else "Noch niemand führt dieses Banner als primaere Gilde.")
         )
         serialized.append(payload)
         if is_primary:
@@ -194,17 +194,17 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
         primary = {
             "label": "Zur Live-Session",
             "href": f"/campaigns?campaign_id={live_session['campaign_id']}&classic=1",
-            "note": "Fuehrt in den Kampagnen-Hub und von dort kontrolliert weiter nach Play.",
+            "note": "Führt in den Kampagnen-Hub und von dort kontrolliert weiter nach Play.",
         }
     elif prep_session:
         primary = {
             "label": "Session-Prep fortsetzen",
             "href": f"/campaigns?campaign_id={prep_session['campaign_id']}&classic=1",
-            "note": "Es gibt noch offene Vorbereitung vor dem naechsten Schritt Richtung Tisch.",
+            "note": "Es gibt noch offene Vorbereitung vor dem nächsten Schritt Richtung Tisch.",
         }
     elif campaigns:
         primary = {
-            "label": "Kampagnen-Hub oeffnen",
+            "label": "Kampagnen-Hub öffnen",
             "href": f"/campaigns?campaign_id={campaigns[0]['id']}&classic=1",
             "note": "Der Kampagnen-Hub bleibt der zuverlaessige operative Weg vor Play.",
         }
@@ -219,13 +219,13 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
         secondary = {
             "label": "Held anlegen",
             "href": "/characters?classic=1&intent=create",
-            "note": "Lege den ersten Helden an und fuehre ihn danach in die Vorbereitung.",
+            "note": "Lege den ersten Helden an und führe ihn danach in die Vorbereitung.",
         }
     else:
         secondary = {
-            "label": "Charakterarchiv oeffnen",
+            "label": "Charakterarchiv öffnen",
             "href": "/characters?classic=1",
-            "note": "Boegen, Identitaet und Rueckweg in die Vorbereitung bleiben hier gebuendelt.",
+            "note": "Boegen, Identität und Rueckweg in die Vorbereitung bleiben hier gebuendelt.",
         }
 
     return primary, secondary
@@ -236,7 +236,7 @@ def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: l
         {
             "title": "Primaere Gilde",
             "tone": "info",
-            "copy": f"{primary_guild['name']} ist dein aktuelles Meta-Banner fuer Home, Hinweise und Zugehoerigkeit.",
+            "copy": f"{primary_guild['name']} ist dein aktuelles Meta-Banner für Home, Hinweise und Zugehoerigkeit.",
         }
     ]
 
@@ -260,9 +260,9 @@ def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: l
     elif campaigns:
         priorities.append(
             {
-                "title": "Naechster Schritt",
+                "title": "Nächster Schritt",
                 "tone": "info",
-                "copy": "Oeffne einen Kampagnen-Hub und lege die naechste Session-Prep-Spur fest.",
+                "copy": "Öffne einen Kampagnen-Hub und lege die nächste Session-Prep-Spur fest.",
             }
         )
     else:
@@ -270,7 +270,7 @@ def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: l
             {
                 "title": "Noch kein Kapitel offen",
                 "tone": "info",
-                "copy": "Lege die erste Kampagne an, damit das Home von Uebersicht in Vorbereitung uebergehen kann.",
+                "copy": "Lege die erste Kampagne an, damit das Home von Übersicht in Vorbereitung übergehen kann.",
             }
         )
 
@@ -279,7 +279,7 @@ def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: l
             {
                 "title": "Held fehlt noch",
                 "tone": "warning",
-                "copy": "Noch kein eigener Held im Archiv. Ein Held macht Session-Prep und direkte Zuweisung vollstaendig.",
+                "copy": "Noch kein eigener Held im Archiv. Ein Held macht Session-Prep und direkte Zuweisung vollständig.",
             }
         )
     else:
@@ -287,7 +287,7 @@ def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: l
             {
                 "title": "Charaktere bereit",
                 "tone": "success",
-                "copy": f"{len(characters)} Helden sind im Archiv sichtbar und koennen aus Bogen oder Kampagnenkontext weitergefuehrt werden.",
+                "copy": f"{len(characters)} Helden sind im Archiv sichtbar und können aus Bogen oder Kampagnenkontext weitergeführt werden.",
             }
         )
 
@@ -310,7 +310,7 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
             "title": "Gemeinschaftssaal",
             "meta": "Home-Stream · kein Session-Chat",
             "copy": "Dieser Stream sammelt Home-, Guild- und Vorbereitungsimpulse. Sitzungsnachrichten bleiben ausschliesslich im Session-Kontext.",
-            "action_label": "Kampagnen oeffnen",
+            "action_label": "Kampagnen öffnen",
             "action_href": "/campaigns?classic=1",
         },
         {
@@ -318,7 +318,7 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
             "section": "guilds",
             "kicker": "Primaere Gilde",
             "title": primary_guild["name"],
-            "meta": f"{primary_guild['member_count']} Mitglieder · Meta-Identitaet",
+            "meta": f"{primary_guild['member_count']} Mitglieder · Meta-Identität",
             "copy": primary_guild["description"],
             "action_label": "Zur Guild-Leiste",
             "action_section": "guilds",
@@ -337,7 +337,7 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "title": f"{prep_session['campaign_name']} braucht noch Vorbereitung",
                 "meta": prep_session["name"],
                 "copy": f"Offen vor dem Tisch: {', '.join(prep_session['prep_blockers'])}.",
-                "action_label": "Session-Prep oeffnen",
+                "action_label": "Session-Prep öffnen",
                 "action_href": f"/campaigns?campaign_id={prep_session['campaign_id']}&classic=1",
             }
         )
@@ -352,7 +352,7 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "title": campaign["name"],
                 "meta": f"{campaign['member_count']} Mitglieder · {campaign['session_count']} Sessions",
                 "copy": campaign.get("description") or "Vom Home direkt in Hub, Session-Prep und die weiteren Schritte Richtung Play.",
-                "action_label": "Hub oeffnen",
+                "action_label": "Hub öffnen",
                 "action_href": f"/campaigns?campaign_id={campaign['id']}&classic=1",
             }
         )
@@ -366,8 +366,8 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "kicker": "Charaktere",
                 "title": character["name"],
                 "meta": f"Lvl {character['level']} {character.get('class') or 'Abenteurer'}",
-                "copy": "Bogen, Identitaet und Rueckweg in Kampagnen oder Session-Prep bleiben von hier aus klar erreichbar.",
-                "action_label": "Bogen oeffnen",
+                "copy": "Bogen, Identität und Rueckweg in Kampagnen oder Session-Prep bleiben von hier aus klar erreichbar.",
+                "action_label": "Bogen öffnen",
                 "action_href": f"/character-sheet?id={character['id']}",
             }
         )
@@ -378,9 +378,9 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "id": f"play-{live_session['id']}",
                 "section": "play",
                 "kicker": "Play",
-                "title": f"Live-Pfad fuer {live_session['campaign_name']}",
+                "title": f"Live-Pfad für {live_session['campaign_name']}",
                 "meta": live_session["name"],
-                "copy": "Play bleibt ein eigener Runtime-Zweig. Dieser Weg fuehrt zuerst sauber in den Kampagnen-Kontext und von dort kontrolliert weiter nach Play.",
+                "copy": "Play bleibt ein eigener Runtime-Zweig. Dieser Weg führt zuerst sauber in den Kampagnen-Kontext und von dort kontrolliert weiter nach Play.",
                 "action_label": "Zum Kampagnen-Kontext",
                 "action_href": f"/campaigns?campaign_id={live_session['campaign_id']}&classic=1",
             }
@@ -393,7 +393,7 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
                 "kicker": "Play",
                 "title": "Play bleibt nachgeordnet",
                 "meta": "Kein direkter Session-Chat-Ersatz",
-                "copy": "Das Home fuehrt in Kampagnen und Session-Prep. Play bleibt ein eigener Tischmodus und wird nicht aus dem Social-Feed heraus ersetzt.",
+                "copy": "Das Home führt in Kampagnen und Session-Prep. Play bleibt ein eigener Tischmodus und wird nicht aus dem Social-Feed heraus ersetzt.",
                 "action_label": "Session-Prep ansehen",
                 "action_href": "/campaigns?classic=1",
             }
@@ -444,7 +444,7 @@ def _build_home_snapshot(user: User):
                 f"{live_session_count} Live-Session{'s' if live_session_count != 1 else ''} sind sichtbar."
                 if live_session_count
                 else (
-                    "Das Home ist bereit fuer Kampagnen, Guilds und die naechsten Vorbereitungswege."
+                    "Das Home ist bereit für Kampagnen, Guilds und die nächsten Vorbereitungswege."
                     if campaigns or characters
                     else "Noch keine Kapitel offen. Das Home startet mit Kampagne, Guild und dem ersten Held."
                 )

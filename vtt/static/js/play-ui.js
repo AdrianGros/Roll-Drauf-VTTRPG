@@ -310,8 +310,8 @@
                     this._patchToken(token, { metadata_json: metadataJson });
                     this._logActivity(
                         conditions.length
-                            ? `Zustaende: ${token.name} -> ${conditions.join(", ")}.`
-                            : `Zustaende: ${token.name} -> keine.`,
+                            ? `Zustände: ${token.name} -> ${conditions.join(", ")}.`
+                            : `Zustände: ${token.name} -> keine.`,
                         "info");
                     return true;
                 },
@@ -551,7 +551,7 @@
 
             document.getElementById("btnRoll").addEventListener("click", () => {
                 if (this.readOnly || !this.socket) {
-                    this._showMessage("Nur-Lesen aktiv: Wuerfeln ist gesperrt.", true);
+                    this._showMessage("Nur-Lesen aktiv: Würfeln ist gesperrt.", true);
                     return;
                 }
                 const dice = document.getElementById("diceInput").value.trim() || "1d20";
@@ -586,11 +586,11 @@
                 const targetTokenId = targetRaw ? Number(targetRaw) : null;
 
                 if (!Number.isInteger(tokenId) || tokenId <= 0) {
-                    this._showMessage("Bitte einen gueltigen Token waehlen.", true);
+                    this._showMessage("Bitte einen gueltigen Token wählen.", true);
                     return;
                 }
                 if (!actionCode) {
-                    this._showMessage("Bitte zuerst eine Aktion waehlen.", true);
+                    this._showMessage("Bitte zuerst eine Aktion wählen.", true);
                     return;
                 }
                 if (targetTokenId !== null && (!Number.isInteger(targetTokenId) || targetTokenId <= 0)) {
@@ -605,7 +605,7 @@
                         actionCode,
                         targetTokenId
                     );
-                    this._showMessage(`Aktion ausgefuehrt: ${payload.result.action_code}`);
+                    this._showMessage(`Aktion ausgeführt: ${payload.result.action_code}`);
                 } catch (error) {
                     this._showMessage(error.message || "Aktion fehlgeschlagen.", true);
                 }
@@ -855,7 +855,7 @@
 
         _openTokenCreatePanel(worldX, worldY, clickEvent) {
             if (this.readOnly) {
-                this._showMessage("Nur-Lesen aktiv: Tokens koennen nicht platziert werden.", true);
+                this._showMessage("Nur-Lesen aktiv: Tokens können nicht platziert werden.", true);
                 return;
             }
             const activeMap = this.bootstrap?.state_payload?.active_map;
@@ -957,7 +957,7 @@
         async _deleteSelectedToken() {
             const token = this._findStateToken(this.selectedTokenId);
             if (!token) return;
-            if (!window.confirm(`Token "${token.name}" wirklich loeschen?`)) return;
+            if (!window.confirm(`Token "${token.name}" wirklich löschen?`)) return;
             try {
                 if (this.socket && this.socket.isConnected) {
                     this.socket.deleteToken(token.id, Number(token.version || 1));
@@ -966,7 +966,7 @@
                     await this.loadBootstrap();
                 }
             } catch (error) {
-                this._showMessage(error.message || "Token konnte nicht geloescht werden.", true);
+                this._showMessage(error.message || "Token konnte nicht gelöscht werden.", true);
             }
         }
 
@@ -1012,13 +1012,13 @@
                     }
                     rolled += 1;
                 } catch (error) {
-                    this._logActivity(`Initiative fuer ${token.name} fehlgeschlagen.`, "error");
+                    this._logActivity(`Initiative für ${token.name} fehlgeschlagen.`, "error");
                 }
             }
             if (!(this.socket && this.socket.isConnected)) {
                 await this.loadBootstrap();
             }
-            this._logActivity(`Initiative fuer ${rolled} Token(s) gewuerfelt.`, "info");
+            this._logActivity(`Initiative für ${rolled} Token(s) gewürfelt.`, "info");
         }
 
         _bindWidgetToggles() {
@@ -1174,7 +1174,7 @@
                     background_url: `/api/assets/${uploadBody.asset_id}/preview`,
                 });
 
-                setStatus("Fuege Seite hinzu...");
+                setStatus("Füge Seite hinzu...");
                 const stack = this.bootstrap?.scene_stack;
                 if (stack && Array.isArray(stack.layers)) {
                     const layerResult = await this.api.addLayer(this.campaignId, this.sessionId, created.id, mapName);
@@ -1219,7 +1219,7 @@
                     ${warnHtml}
                 `;
 
-                this._logActivity(`Start-Check ausgefuehrt (startbar=${result.can_start ? "ja" : "nein"}).`, "info");
+                this._logActivity(`Start-Check ausgeführt (startbar=${result.can_start ? "ja" : "nein"}).`, "info");
                 return result;
             } catch (error) {
                 this._showMessage(error.message || "Start-Check fehlgeschlagen.", true);
@@ -1312,7 +1312,7 @@
             this._renderMapCanvas();
             this._renderTurnOrder();
             this._renderTokenSelectors();
-            this._logActivity(`Token geloescht: #${tokenId}.`, "info");
+            this._logActivity(`Token gelöscht: #${tokenId}.`, "info");
         }
 
         _handleTokenBatchMoved(payload) {
@@ -1460,12 +1460,12 @@
         _handleDiceBroadcast(payload) {
             const log = document.getElementById("diceLog");
             const line = document.createElement("div");
-            line.textContent = `${payload.player || "player"} hat ${payload.dice} gewuerfelt: ${payload.result?.total}`;
+            line.textContent = `${payload.player || "player"} hat ${payload.dice} gewürfelt: ${payload.result?.total}`;
             log.prepend(line);
             while (log.children.length > 8) {
                 log.removeChild(log.lastChild);
             }
-            this._logActivity(`${payload.player || "player"} hat ${payload.dice} gewuerfelt.`, "info");
+            this._logActivity(`${payload.player || "player"} hat ${payload.dice} gewürfelt.`, "info");
         }
 
         _render() {
@@ -1498,7 +1498,7 @@
             const notice = document.getElementById("readOnlyNotice");
             if (this.readOnly) {
                 notice.className = "message info";
-                notice.textContent = "Nur-Lesen ist aktiv fuer deine Rolle oder den Session-Status.";
+                notice.textContent = "Nur-Lesen ist aktiv für deine Rolle oder den Session-Status.";
             } else {
                 notice.className = "message";
                 notice.textContent = "";
@@ -1549,7 +1549,7 @@
             const layers = (stack && Array.isArray(stack.layers)) ? stack.layers.slice().sort((a, b) => a.order_index - b.order_index) : [];
 
             if (!layers.length) {
-                container.innerHTML = "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufuegen.</div>";
+                container.innerHTML = "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufügen.</div>";
             } else {
                 container.innerHTML = layers.map((layer, index) => {
                     const isActive = Number(layer.id) === Number(stack.active_layer_id);
@@ -1616,7 +1616,7 @@
                 const usedMapIds = new Set(existingLayers.map((l) => Number(l.campaign_map_id)));
                 const available = (Array.isArray(maps) ? maps : []).filter((m) => !usedMapIds.has(Number(m.id)));
 
-                select.innerHTML = `<option value="">+ Seite hinzufuegen...</option>` +
+                select.innerHTML = `<option value="">+ Seite hinzufügen...</option>` +
                     available.map((m) => `<option value="${m.id}">${escapeHtml(m.name)}</option>`).join("");
                 addBtn.disabled = available.length === 0;
             } catch (error) {
@@ -1630,10 +1630,10 @@
                 addBtn.disabled = true;
                 try {
                     await this.api.addLayer(this.campaignId, this.sessionId, mapId);
-                    this._showMessage("Seite hinzugefuegt.");
+                    this._showMessage("Seite hinzugefügt.");
                     await this.loadBootstrap();
                 } catch (error) {
-                    this._showMessage(error.message || "Seite konnte nicht hinzugefuegt werden.", true);
+                    this._showMessage(error.message || "Seite konnte nicht hinzugefügt werden.", true);
                     addBtn.disabled = false;
                 }
             };
@@ -1756,8 +1756,8 @@
             const selectedToken = this._findStateToken(this.selectedTokenId);
             if (selectedSummary) {
                 selectedSummary.textContent = selectedToken
-                    ? `Ausgewaehlt: ${selectedToken.name} (#${selectedToken.id})`
-                    : "Kein Token ausgewaehlt.";
+                    ? `Ausgewählt: ${selectedToken.name} (#${selectedToken.id})`
+                    : "Kein Token ausgewählt.";
             }
             if (selectedDetail) {
                 const canEditSelected = selectedToken && this._canMoveToken(selectedToken);
@@ -2308,12 +2308,12 @@
                 } else if (status === "ready") {
                     text = "Session ist bereit. Mit 'Live starten' beginnt die Runde.";
                 } else if (status === "in_progress") {
-                    text = "Session laeuft: Karte pruefen, Tokens bewegen und Wuerfeln nutzen.";
+                    text = "Session läuft: Karte pruefen, Tokens bewegen und Würfeln nutzen.";
                 } else if (status === "paused") {
                     text = "Session pausiert: Fortsetzen oder sauber beenden.";
                 }
             } else {
-                text = "Spieler Schnellstart: 1) Karte ansehen 2) Wuerfeln testen 3) Eine Aktion ausfuehren.";
+                text = "Spieler Schnellstart: 1) Karte ansehen 2) Würfeln testen 3) Eine Aktion ausführen.";
             }
 
             if (!text) {

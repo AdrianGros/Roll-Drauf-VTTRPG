@@ -500,7 +500,7 @@ class SessionScript:
             dm_page.select_option("#actionCode",
                                   index=0)
             dm_page.click("#btnExecuteAction")
-            self._wait_text(dm_page, "activityLog", "Aktion ausgefuehrt", "combat",
+            self._wait_text(dm_page, "activityLog", "Aktion ausgeführt", "combat",
                             "action execution never confirmed on the DM side")
             self._wait_text(self.pc.page, "activityLog", "Aktions-Event", "combat",
                             "the executed action never reached the player's journal")
@@ -512,7 +512,7 @@ class SessionScript:
         dm_page.click("#btnRoll")
         self._wait_text(dm_page, "diceResult", "1d20+3 ->", "dice",
                         "the roller's own #diceResult never showed the ack result")
-        self._wait_text(self.pc.page, "diceLog", "gewuerfelt", "dice",
+        self._wait_text(self.pc.page, "diceLog", "gewürfelt", "dice",
                         "DM dice roll never reached the player's dice log")
 
         # Chat: player talks, DM reads.

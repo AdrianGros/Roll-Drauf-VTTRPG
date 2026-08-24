@@ -18,8 +18,8 @@ def test_dashboard_exposes_clearer_pre_table_starting_points():
     content = _read(DASHBOARD_TEMPLATE)
 
     assert "Heute wichtig:" in content
-    assert "Kampagnen oeffnen" in content
-    assert "Charaktere oeffnen" in content
+    assert "Kampagnen öffnen" in content
+    assert "Charaktere öffnen" in content
     assert "Next: open the hub, review session prep, and continue toward play." in content
     assert "Next: finish the sheet and identity, then continue into campaign prep." in content
     assert "function openCharacterCampaignContext(campaignId)" in content
@@ -50,7 +50,7 @@ def test_character_surfaces_strengthen_sheet_to_campaign_continuity():
 def test_campaigns_route_aligns_hub_and_session_prep_readiness_language():
     content = _read(CAMPAIGNS_TEMPLATE)
 
-    assert "Session-Prep oeffnen" in content
+    assert "Session-Prep öffnen" in content
     assert "braucht noch eine aktive Session-Karte" in content
     assert "Home -> Kampagnen-Hub -> Session-Prep -> Session starten oder fortsetzen -> Play." in content
     assert "Sichtbar, aber nicht blockierend:" in content

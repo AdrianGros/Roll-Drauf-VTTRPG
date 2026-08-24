@@ -42,8 +42,8 @@ def test_campaign_hub_exposes_clearer_session_action_hierarchy(client):
     assert "Session fortsetzen" in html
     assert "Session betreten" in html
     assert "Auf Sessionstart warten" in html
-    assert "Play erneut oeffnen" in html
-    assert "Naechste Session anlegen" in html
+    assert "Play erneut öffnen" in html
+    assert "Nächste Session anlegen" in html
 
 
 def test_campaign_hub_connects_map_asset_and_character_prep_surfaces_honestly(client):
@@ -53,11 +53,11 @@ def test_campaign_hub_connects_map_asset_and_character_prep_surfaces_honestly(cl
     html = response.get_data(as_text=True)
 
     assert "Prep Links" in html
-    assert "Charaktere oeffnen" in html
+    assert "Charaktere öffnen" in html
     assert "Map Prep ansehen" in html
     assert 'id="campaignAssetLibraryPanel"' in html
     assert "Session-Besetzung:" in html
-    assert "Session-Besetzung oeffnen" in html
+    assert "Session-Besetzung öffnen" in html
     assert "Map Workspace folgt" in html
     assert "Import / Export folgt hier" in html
 
