@@ -200,40 +200,57 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
             data=json.dumps({"name": "Kartensitzung"}), headers=json_headers).json()
         session_id = (game_session.get("session") or game_session)["id"]
 
-        upload = api.post(
+        # The map goes in through the REAL widget upload: click the button,
+        # let the browser's file chooser open (this exact path was dead
+        # until 2026-08-24 -- a global book-shell click handler
+        # preventDefault-ed every click, which cancels the file-picker
+        # default action; robots only ever set_input_files directly and
+        # missed it), then feed the file through the chooser.
+        map_file = workdir / "robot_map.png"
+        map_file.write_bytes(_make_png(700, 490, (70, 110, 60)))
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+        try:
+            page.wait_for_function("() => window.RollDraufTable", timeout=15_000)
+            page.wait_for_timeout(1_000)
+            body_route_leak = page.evaluate("() => document.body.hasAttribute('data-book-route')")
+            if body_route_leak:
+                findings.append("[click-defaults] body carries data-book-route again - "
+                                "the app-wide preventDefault bug is back")
+            page.click('#layersWidget .widget-toggle')
+            page.wait_for_selector("#btnMapUpload", state="visible", timeout=15_000)
+            with page.expect_file_chooser(timeout=10_000) as chooser_info:
+                page.click("#btnMapUpload")
+            chooser_info.value.set_files(str(map_file))
+            page.wait_for_function(
+                "() => (document.getElementById('activePageName')?.textContent || '')"
+                ".includes('robot_map')", timeout=20_000)
+        except Exception as error:
+            findings.append(f"[upload-ui] map upload through the real file chooser "
+                            f"failed: {type(error).__name__}: {str(error)[:200]}")
+            browser.close()
+            return findings
+
+        # Token art: uploaded as a token asset, referenced via
+        # metadata_json.image_url, must render as an image face.
+        art = api.post(
             f"{stack.base_url}/api/assets/campaigns/{campaign_id}/upload",
-            multipart={"file": {"name": "robot_map.png", "mimeType": "image/png",
-                                "buffer": _make_png(700, 490, (70, 110, 60))}},
+            multipart={"file": {"name": "robot_face.png", "mimeType": "image/png",
+                                "buffer": _make_png(96, 96, (200, 170, 40))},
+                       "asset_type": "token"},
             headers={"X-CSRF-TOKEN": csrf_token})
-        if upload.status != 201:
-            findings.append(f"[upload] asset upload returned HTTP {upload.status}: {upload.text()[:200]}")
-            browser.close()
-            return findings
-        asset_id = upload.json()["asset_id"]
-
-        map_response = api.post(
-            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
-            data=json.dumps({"name": "Roboterkarte", "width": 700, "height": 490,
-                             "grid_size": 70,
-                             "background_url": f"/api/assets/{asset_id}/preview"}),
-            headers=json_headers)
-        if map_response.status != 201:
-            findings.append(f"[map] map create returned HTTP {map_response.status}: {map_response.text()[:200]}")
-            browser.close()
-            return findings
-        map_id = map_response.json()["id"]
-
-        activate = api.post(
-            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/maps/activate",
-            data=json.dumps({"map_id": map_id}), headers=json_headers)
-        if activate.status != 200:
-            findings.append(f"[map] activate returned HTTP {activate.status}: {activate.text()[:200]}")
-
+        art_id = art.json().get("asset_id") if art.status == 201 else None
+        if not art_id:
+            findings.append(f"[token-art] token asset upload returned HTTP {art.status}")
         token_response = api.post(
             f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
             data=json.dumps({"name": "Robotertoken", "x": 140, "y": 140,
                              "token_type": "npc",
-                             "metadata_json": {"position_mode": "pixel"}}),
+                             "metadata_json": {"position_mode": "pixel",
+                                               "image_url": f"/api/assets/{art_id}/preview"}}),
             headers=json_headers)
         if token_response.status != 201:
             findings.append(f"[token] create returned HTTP {token_response.status}: {token_response.text()[:200]}")
@@ -249,6 +266,24 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
             findings.append("[render] #mapImage never became visible - map background not rendered")
 
         page.wait_for_timeout(1_500)
+
+        token_art = page.evaluate(
+            """() => {
+                const img = document.querySelector('.token-marker .token-image');
+                return img ? {src: img.getAttribute('src'), loaded: img.complete && img.naturalWidth > 0} : null;
+            }""")
+        if not token_art:
+            findings.append("[token-art] token marker did not render its image face")
+        elif not token_art.get("loaded"):
+            findings.append(f"[token-art] token image present but did not load: {token_art.get('src')!r}")
+        ui_controls = page.evaluate(
+            """() => ({
+                createImage: Boolean(document.getElementById('btnTokenCreateImage')),
+                setImage: Boolean(document.getElementById('btnTokenImageSet')),
+            })""")
+        for key, ok in (ui_controls or {}).items():
+            if not ok:
+                findings.append(f"[token-art] visible token-image control missing: {key}")
         verdict = page.evaluate(
             """() => {
                 const img = document.getElementById('mapImage');

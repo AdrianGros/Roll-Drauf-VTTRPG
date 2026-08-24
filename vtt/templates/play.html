@@ -418,6 +418,15 @@
         .token-marker.draggable {
             cursor: grab;
         }
+        .token-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            pointer-events: none;
+        }
         .token-marker.dragging {
             cursor: grabbing;
             opacity: 0.88;
@@ -645,6 +654,10 @@
             padding-top: 0.5rem;
             border-top: 1px dashed rgba(255,255,255,0.16);
         }
+        /* display:flex on the class silently beat the `hidden` attribute
+           (author styles override the UA's hidden->display:none mapping),
+           so the DM-only upload row showed for players too. */
+        .layer-add-row[hidden] { display: none; }
         .layer-add-row select {
             flex: 1;
             font-size: 0.76rem;
@@ -1100,6 +1113,8 @@
                         <option value="public">Sichtbar fuer alle</option>
                         <option value="dm_only">Nur DM</option>
                     </select>
+                    <input id="tokenCreateImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                    <button id="btnTokenCreateImage" class="secondary" type="button"><span id="tokenCreateImageLabel">Bild (optional)...</span></button>
                     <div class="button-row" style="margin-bottom:0;">
                         <button id="btnTokenCreateConfirm">Platzieren</button>
                         <button id="btnTokenCreateCancel" class="secondary">Abbrechen</button>
@@ -1150,6 +1165,8 @@
                             <button id="btnTokenHpSet" class="mini-btn">HP setzen</button>
                         </div>
                         <div class="button-row" style="margin-bottom:0;">
+                            <input id="tokenImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                            <button id="btnTokenImageSet" class="mini-btn secondary">Bild setzen...</button>
                             <button id="btnTokenDelete" class="mini-btn danger">Token loeschen</button>
                         </div>
                     </div>

@@ -904,6 +904,9 @@
 
         _cancelTokenPlacement() {
             this.pendingTokenPlacement = null;
+            this.pendingTokenImage = null;
+            const imageLabel = document.getElementById("tokenCreateImageLabel");
+            if (imageLabel) imageLabel.textContent = "Bild (optional)...";
             const panel = document.getElementById("tokenCreatePanel");
             if (panel) panel.hidden = true;
         }
@@ -922,6 +925,10 @@
                 ? (document.getElementById("tokenCreateVisibility")?.value || "public")
                 : "public";
 
+            const metadataJson = { position_mode: "pixel" };
+            if (this.pendingTokenImage) {
+                metadataJson.image_url = this.pendingTokenImage;
+            }
             const token = {
                 name,
                 token_type: tokenType,
@@ -931,7 +938,7 @@
                 visibility,
                 // New tokens always declare their coordinate system so the
                 // renderer never has to guess (the old <=300 heuristic).
-                metadata_json: { position_mode: "pixel" },
+                metadata_json: metadataJson,
             };
             this._cancelTokenPlacement();
             try {
@@ -1054,6 +1061,52 @@
             const hpBtn = document.getElementById("btnTokenHpSet");
             if (hpBtn) hpBtn.addEventListener("click", () => this._setSelectedTokenHp());
 
+            // Token art: one picker on the create panel (image applied when
+            // the token is placed) and one on the selected-token detail
+            // (image applied to an existing token).
+            const createImageBtn = document.getElementById("btnTokenCreateImage");
+            const createImageInput = document.getElementById("tokenCreateImageFile");
+            if (createImageBtn && createImageInput) {
+                createImageBtn.addEventListener("click", () => createImageInput.click());
+                createImageInput.addEventListener("change", async () => {
+                    const file = createImageInput.files && createImageInput.files[0];
+                    createImageInput.value = "";
+                    if (!file) return;
+                    const label = document.getElementById("tokenCreateImageLabel");
+                    try {
+                        if (label) label.textContent = "Lade hoch...";
+                        const uploaded = await this._uploadAssetFile(file, "token");
+                        this.pendingTokenImage = `/api/assets/${uploaded.asset_id}/preview`;
+                        if (label) label.textContent = file.name.slice(0, 24);
+                    } catch (error) {
+                        this.pendingTokenImage = null;
+                        if (label) label.textContent = "Bild (optional)...";
+                        this._showMessage(error.message || "Token-Bild-Upload fehlgeschlagen.", true);
+                    }
+                });
+            }
+            const setImageBtn = document.getElementById("btnTokenImageSet");
+            const setImageInput = document.getElementById("tokenImageFile");
+            if (setImageBtn && setImageInput) {
+                setImageBtn.addEventListener("click", () => setImageInput.click());
+                setImageInput.addEventListener("change", async () => {
+                    const file = setImageInput.files && setImageInput.files[0];
+                    setImageInput.value = "";
+                    const token = this._findStateToken(this.selectedTokenId);
+                    if (!file || !token || !this._canMoveToken(token)) return;
+                    try {
+                        const uploaded = await this._uploadAssetFile(file, "token");
+                        const metadataJson = token.metadata_json && typeof token.metadata_json === "object"
+                            ? { ...token.metadata_json } : {};
+                        metadataJson.image_url = `/api/assets/${uploaded.asset_id}/preview`;
+                        this._patchToken(token, { metadata_json: metadataJson });
+                        this._logActivity(`Token-Bild gesetzt: ${token.name}.`, "info");
+                    } catch (error) {
+                        this._showMessage(error.message || "Token-Bild-Upload fehlgeschlagen.", true);
+                    }
+                });
+            }
+
             const initiativeBtn = document.getElementById("btnRollInitiative");
             if (initiativeBtn) initiativeBtn.addEventListener("click", () => this._rollInitiativeForTokens());
 
@@ -1079,6 +1132,24 @@
             });
         }
 
+        // One multipart uploader for every table asset (maps, token art).
+        async _uploadAssetFile(file, assetType) {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("asset_type", assetType);
+            const response = await fetch(`/api/assets/campaigns/${this.campaignId}/upload`, {
+                method: "POST",
+                credentials: "include",
+                headers: Auth.buildHeaders("POST", false),
+                body: formData,
+            });
+            const body = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(body.error || `Upload fehlgeschlagen (HTTP ${response.status})`);
+            }
+            return body;
+        }
+
         async _uploadMapFromTable(file) {
             const statusNode = document.getElementById("mapUploadStatus");
             const setStatus = (text) => {
@@ -1091,19 +1162,7 @@
 
             try {
                 setStatus(`Lade ${file.name} hoch...`);
-                const formData = new FormData();
-                formData.append("file", file);
-                formData.append("asset_type", "map");
-                const uploadResponse = await fetch(`/api/assets/campaigns/${this.campaignId}/upload`, {
-                    method: "POST",
-                    credentials: "include",
-                    headers: Auth.buildHeaders("POST", false),
-                    body: formData,
-                });
-                const uploadBody = await uploadResponse.json().catch(() => ({}));
-                if (!uploadResponse.ok) {
-                    throw new Error(uploadBody.error || `Upload fehlgeschlagen (HTTP ${uploadResponse.status})`);
-                }
+                const uploadBody = await this._uploadAssetFile(file, "map");
 
                 setStatus("Erzeuge Karte...");
                 const mapName = file.name.replace(/\.[^.]+$/, "").slice(0, 120) || "Neue Karte";
@@ -1807,6 +1866,13 @@
                 const conditionsBadge = conditions.length
                     ? `<div class="token-conditions" title="${escapeHtml(conditions.join(", "))}">${conditions.length}</div>`
                     : "";
+                // Token art (metadata_json.image_url): same-origin asset
+                // URLs only -- anything else falls back to initials.
+                const rawImageUrl = String(token.metadata_json?.image_url || "");
+                const imageUrl = rawImageUrl.startsWith("/api/assets/") ? rawImageUrl : "";
+                const face = imageUrl
+                    ? `<img class="token-image" src="${escapeHtml(imageUrl)}" alt="">`
+                    : "";
                 const colorByType = {
                     player: "#8cc0ff",
                     npc: "#ffd27d",
@@ -1829,7 +1895,7 @@
                         style="left:${position.left}px;top:${position.top}px;width:${pixelSize}px;height:${pixelSize}px;background:${color};"
                         title="${label}"
                     >
-                        ${initials}
+                        ${face || initials}
                         ${conditionsBadge}
                         <div class="token-label">${label}</div>
                     </div>

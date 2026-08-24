@@ -118,7 +118,16 @@
             return;
         }
 
-        document.body.dataset.bookRoute = currentPath();
+        // Body used to get `data-book-route` here -- the SAME attribute
+        // that marks navigation links. wireRouteLinks() therefore bound its
+        // click handler to <body> itself, and because body's route always
+        // equals the current path, EVERY click anywhere in the app got
+        // event.preventDefault() -- silently cancelling every native click
+        // default (file-picker dialogs most visibly: the play table's map
+        // upload button could never open one). Found via the upload-button
+        // robot probe, 2026-08-24. Renamed so body never matches the link
+        // selector.
+        document.body.dataset.bookCurrentRoute = currentPath();
         document.body.dataset.bookMode = config.mode;
         document.body.dataset.bookChapter = config.chapter.toLowerCase();
         document.body.dataset.bookSection = config.section.toLowerCase().replace(/\s+/g, '-');
@@ -139,6 +148,9 @@
         });
 
         document.querySelectorAll('[data-book-route]').forEach((node) => {
+            if (node === document.body) {
+                return;
+            }
             const nodeRoute = normalizePath(node.getAttribute('data-book-route'));
             const active = nodeRoute === currentPath();
             node.classList.toggle('is-active', active);
@@ -328,7 +340,8 @@
 
     function wireRouteLinks() {
         document.querySelectorAll('[data-book-route]').forEach((node) => {
-            if (node.hasAttribute('onclick')) {
+            // Never the body/scene wrappers -- only actual link elements.
+            if (node === document.body || node.hasAttribute('onclick')) {
                 return;
             }
             node.addEventListener('click', (event) => {
