@@ -917,6 +917,9 @@
                                 <div class="book-spread-page-body">
                                     ${options.leftPage || ''}
                                 </div>
+                                <span class="book-page-folio book-page-folio--left" aria-hidden="true">
+                                    ${escapeHtml((options.folio && options.folio[0]) || '')}
+                                </span>
                             </article>
 
                             <div aria-hidden="true"></div>
@@ -933,6 +936,9 @@
                                 <div class="book-spread-page-body">
                                     ${options.rightPage || ''}
                                 </div>
+                                <span class="book-page-folio book-page-folio--right" aria-hidden="true">
+                                    ${escapeHtml((options.folio && options.folio[1]) || '')}
+                                </span>
                             </article>
                         </div>
 
@@ -942,10 +948,6 @@
                             </section>
                         ` : ''}
 
-                        <footer class="book-folio" aria-hidden="true">
-                            <span>${escapeHtml((options.folio && options.folio[0]) || '')}</span>
-                            <span>${escapeHtml((options.folio && options.folio[1]) || '')}</span>
-                        </footer>
                     </section>
                 </div>
             `;

@@ -513,6 +513,28 @@
     line-height: 1.52;
 }
 
+.book-page-folio {
+    position: absolute;
+    bottom: 14px;
+    z-index: 2;
+    min-width: 1.5rem;
+    color: var(--vtt-ink-muted, #63564b);
+    font-family: var(--vtt-font-body, 'Literata', serif);
+    font-size: 0.82rem;
+    line-height: 1;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+}
+
+.book-page-folio--left {
+    left: 14px;
+}
+
+.book-page-folio--right {
+    right: 14px;
+}
+
 .book-spread-footer {
     grid-column: 1 / -1;
     border: 1px solid rgba(130, 89, 52, 0.18);
@@ -2386,17 +2408,6 @@ body.has-reduced-motion .book-dashboard-topbar {
     border-bottom: 1px solid rgba(58, 50, 44, 0.25);
 }
 
-/* Folio: Seitenzahlen im Fuß, außen. */
-.book-folio {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.7rem;
-    padding: 0 1.2rem;
-    font-family: var(--vtt-font-body, 'Literata', serif);
-    font-size: 0.85rem;
-    color: var(--vtt-ink-muted, #63564b);
-}
-
 /* Lesebändchen: rotes Band am linken Kartenrand. */
 .book-ribbon-card { position: relative; overflow: visible; }
 .book-ribbon-marker {
@@ -2547,14 +2558,6 @@ body.has-reduced-motion .book-dashboard-topbar {
     top: 74px;
     z-index: 7;
     padding: 0.45rem 0.25rem 0.6rem;
-    background: var(--vtt-paper-panel, #fdfaf3);
-}
-
-.book-folio {
-    position: sticky;
-    bottom: 0;
-    z-index: 7;
-    padding-block: 0.45rem;
     background: var(--vtt-paper-panel, #fdfaf3);
 }
 
