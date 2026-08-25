@@ -17,7 +17,16 @@
    effectively-universal body class across this app -- match it here so
    any exposed sliver blends instead of flashing white. */
 html {
-    background: linear-gradient(135deg, #2d1b35 0%, #1a0a22 100%);
+    /* The solid color in this shorthand is NOT redundant with the
+       gradient: Gecko fills not-yet-rasterized areas during fast
+       async scrolling (and overscroll) with the document's CANVAS
+       COLOR, which is derived from background-COLOR only — a
+       gradient-only shorthand resets background-color to transparent
+       and the canvas falls back to white, which is exactly the "screen
+       turns white before catching up" flash on fast phone flings
+       (2026-08-25). kulissen's v2-html-unbemalt check has warned about
+       the transparent color from the start. */
+    background: #1a0a22 linear-gradient(135deg, #2d1b35 0%, #1a0a22 100%);
 }
 
 body {
@@ -527,7 +536,8 @@ canvas {
 
 /* Spellbook theme overrides for all templates */
 body.spellbook {
-    background: linear-gradient(135deg, #2d1b35 0%, #1a0a22 100%) !important;
+    /* Solid color included for the canvas-color fallback — see html above. */
+    background: #1a0a22 linear-gradient(135deg, #2d1b35 0%, #1a0a22 100%) !important;
     font-family: var(--vtt-font-body) !important;
     color: #e8d5b7 !important;
 }
