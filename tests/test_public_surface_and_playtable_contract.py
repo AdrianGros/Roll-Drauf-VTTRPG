@@ -100,3 +100,27 @@ def test_playtable_uses_one_upper_control_strip_for_page_and_zoom_controls():
     assert template.count('class="stage-topbar"') == 1
     assert template.count('id="activePagePill"') == 1
     assert template.count('id="btnZoomFit"') == 1
+
+
+def test_playtable_keeps_session_title_and_tools_in_upper_desktop_chrome():
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+
+    status_start = template.index('class="book-dashboard-titlebar play-status-strip"')
+    toolbar_start = template.index('<aside class="left-toolbar"')
+    shell_start = template.index('<div class="book-shell-frame book-workspace-shell">')
+
+    assert status_start < toolbar_start < shell_start
+    assert template.count('<aside class="left-toolbar"') == 1
+    assert 'id="sessionTitleHeader"' in template
+    assert "grid-template-columns: 1fr;" in template
+
+
+def test_playtable_eye_control_activates_pages_without_a_second_activate_row():
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    assert 'data-act="visibility"' not in script
+    assert 'title="Seite aktivieren"' in script
+    assert 'aria-label="Seite aktivieren"' in script
+    assert 'Aktivieren</button>' not in script
+    assert 'container.querySelectorAll(\'[data-act="visibility"]\')' not in script
+    assert '_activateLayer(Number(button.dataset.layerId))' in script

@@ -1761,7 +1761,12 @@
             const sessionName = this.bootstrap?.session?.name || `Session ${this.sessionId}`;
             const role = this.bootstrap?.session_role || "-";
 
-            document.getElementById("sessionTitle").textContent = `${campaignName} / ${sessionName}`;
+            const sessionTitle = `${campaignName} / ${sessionName}`;
+            document.getElementById("sessionTitle").textContent = sessionTitle;
+            const sessionTitleHeader = document.getElementById("sessionTitleHeader");
+            if (sessionTitleHeader) {
+                sessionTitleHeader.textContent = sessionTitle;
+            }
             document.getElementById("modeBadge").textContent = this.mode;
             document.getElementById("roleBadge").textContent = role;
             document.getElementById("readOnlyBadge").textContent = this.readOnly ? "nur lesen" : "interaktiv";
@@ -1824,7 +1829,7 @@
             const layers = (stack && Array.isArray(stack.layers)) ? stack.layers.slice().sort((a, b) => a.order_index - b.order_index) : [];
             // Desktop-Audit D18: ein interaktiver PLAYER hat read_only=false
             // (er darf ja Tokens ziehen), bekam aber bislang dieselben
-            // Rename-/Auf-Ab-/Sichtbarkeits-/Löschen-/Aktivieren-Knöpfe wie
+            // Rename-/Auf-Ab-/Aktivieren-/Löschen-Knöpfe wie
             // die DM -- Knöpfe, die der Server für diese Rolle nur ablehnen
             // kann (§2: kein Knopf ohne erreichbare Wirkung für die Rolle).
             // Gleiches Muster wie layerAddRow weiter unten: serverseitige
@@ -1839,13 +1844,10 @@
                     const isActive = Number(layer.id) === Number(stack.active_layer_id);
                     const mapName = escapeHtml(layer.campaign_map?.name || `Map ${layer.campaign_map_id}`);
                     const thumb = this._thumbUrl(layer.campaign_map);
-                    const visIcon = layer.is_player_visible ? "&#128065;" : "&#128683;";
-                    const activeChip = `<span class="mini-btn" style="opacity:0.7;cursor:default;">aktiv</span>`;
-                    const activateControl = isActive
-                        ? activeChip
-                        : (canEdit
-                            ? `<button data-act="activate" data-layer-id="${layer.id}" class="mini-btn">Aktivieren</button>`
-                            : "");
+                    // The eye is the activation affordance. Visibility is
+                    // still part of the layer model, but no longer consumes
+                    // a second control or pretends the eye changes visibility.
+                    const activateIcon = "&#128065;";
                     const labelField = canEdit
                         ? `<input class="layer-label-input" data-act="rename" data-layer-id="${layer.id}" value="${escapeHtml(layer.label)}">`
                         : `<div class="layer-label-input" style="cursor:default;">${escapeHtml(layer.label)}</div>`;
@@ -1853,7 +1855,7 @@
                                 <div class="layer-actions-row">
                                     <button data-act="up" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach oben" ${index === 0 ? "disabled" : ""}>&uarr;</button>
                                     <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach unten" ${index === layers.length - 1 ? "disabled" : ""}>&darr;</button>
-                                    <button data-act="visibility" data-layer-id="${layer.id}" data-current="${layer.is_player_visible}" class="mini-btn layer-icon-btn" title="Spieler-Sichtbarkeit">${visIcon}</button>
+                                    <button data-act="activate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Seite aktivieren" aria-label="Seite aktivieren">${activateIcon}</button>
                                     <button data-act="delete" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn danger" title="Seite entfernen">&times;</button>
                                 </div>
                     ` : "";
@@ -1866,7 +1868,6 @@
                             </div>
                             <div class="layer-actions">
                                 ${actionsRow}
-                                ${activateControl}
                             </div>
                         </div>
                     `;
@@ -1878,9 +1879,6 @@
                     });
                     container.querySelectorAll('[data-act="rename"]').forEach((input) => {
                         input.addEventListener("change", () => this._renameLayer(Number(input.dataset.layerId), input.value));
-                    });
-                    container.querySelectorAll('[data-act="visibility"]').forEach((button) => {
-                        button.addEventListener("click", () => this._toggleLayerVisibility(Number(button.dataset.layerId), button.dataset.current !== "true"));
                     });
                     container.querySelectorAll('[data-act="delete"]').forEach((button) => {
                         button.addEventListener("click", () => this._deleteLayer(Number(button.dataset.layerId)));

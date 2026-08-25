@@ -145,7 +145,7 @@
            instead of a large fraction going to descriptive copy above it. */
         .play-status-strip {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+            grid-template-columns: auto auto minmax(0, 1fr);
             align-items: center;
             gap: 0.75rem;
             padding: 0.3rem 0.1rem;
@@ -159,6 +159,18 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        .play-workspace-page .book-dashboard-topbar .play-session-title {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: start;
+            min-width: 0;
+            max-width: 100%;
+        }
+        /* The status copy remains in the DOM as the compact mobile title;
+           desktop shows the same live value in the white header instead. */
+        .play-status-strip #sessionTitle {
+            display: none;
         }
         .play-status-strip .book-dashboard-meta {
             flex-wrap: nowrap;
@@ -332,7 +344,7 @@
         }
         .tabletop-shell {
             display: grid;
-            grid-template-columns: 54px 1fr;
+            grid-template-columns: 1fr;
             gap: 0;
             height: 100%;
             min-height: 520px;
@@ -350,6 +362,32 @@
             flex-direction: column;
             gap: 0.35rem;
             overflow-y: auto;
+        }
+        /* Desktop-Audit: the tool rail belongs to the upper chrome, not to a
+           permanent 54px map column. This returns that width to the map and
+           leaves the lower edge of every map available for future widgets. */
+        .play-status-strip > .left-toolbar {
+            border-right: 0;
+            background: transparent;
+            padding: 0;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.35rem;
+            overflow: visible;
+            min-width: 0;
+        }
+        .play-status-strip > .left-toolbar .tool-btn {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+        }
+        .play-status-strip > .left-toolbar .spacer {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 0;
+            border-top: 0;
+            padding-top: 0;
         }
         .tool-btn {
             width: 100%;
@@ -1145,13 +1183,13 @@
         }
         @media (max-width: 1280px) {
             .tabletop-shell {
-                grid-template-columns: 46px 1fr;
+                grid-template-columns: 1fr;
             }
             #layersWidget, #tokenWidget { width: 260px; }
         }
         @media (max-height: 860px) {
             .tabletop-shell {
-                grid-template-columns: 46px 1fr;
+                grid-template-columns: 1fr;
                 min-height: 460px;
             }
             .stage-topbar {
@@ -1172,7 +1210,7 @@
         }
         @media (max-height: 720px) {
             .tabletop-shell {
-                grid-template-columns: 42px 1fr;
+                grid-template-columns: 1fr;
                 min-height: 400px;
             }
             .stage-topbar {
@@ -1238,11 +1276,14 @@
             .play-status-strip {
                 padding: 0.35rem 0.6rem 0.15rem;
             }
+            .play-status-strip #sessionTitle {
+                display: block;
+            }
             .tabletop-shell {
                 grid-template-columns: 1fr;
                 min-height: 0;
             }
-            .left-toolbar {
+            .play-status-strip > .left-toolbar {
                 position: fixed;
                 left: 0;
                 right: 0;
@@ -1261,10 +1302,16 @@
                 z-index: 40;
                 overflow: visible;
             }
+            .play-status-strip > .left-toolbar .tool-btn {
+                width: auto;
+                min-width: 56px;
+                height: 48px;
+                flex: 1 1 0;
+            }
             /* The desktop rail's spacer is layout poison in a flat ribbon:
                its auto-margin ejected Menü/Zurück out of the bar. On the
                phone all five buttons are direct, equal flex items. */
-            .left-toolbar .spacer {
+            .play-status-strip > .left-toolbar .spacer {
                 display: contents;
             }
             /* Phone ribbon: Zurück lebt im Tisch-Sheet (seltene Aktion,
@@ -1481,6 +1528,7 @@
         <div class="book-dashboard-camera book-route-camera play-workspace-camera">
             <section class="book-dashboard-page book-route-page book-workspace-page play-workspace-page" role="region" aria-label="Play workspace page">
                 <div class="book-dashboard-topbar">
+                    <p id="sessionTitleHeader" class="play-session-title">Session wird geladen...</p>
                     <div class="book-dashboard-ribbon" role="navigation" aria-label="Workspace page menu">
                         <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/dashboard">Übersicht</button>
                         <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/campaigns">Kampagnen</button>
@@ -1491,6 +1539,23 @@
                 </div>
 
                 <div class="book-dashboard-titlebar play-status-strip">
+                    <aside class="left-toolbar" aria-label="Werkzeugleiste">
+                        <!-- GD-Ribbon-Anatomie (Goblin Delve mobile.css, Patch 117):
+                             Icon über Label, ein fester Balken, Panels öffnen AUS ihm
+                             heraus statt über dem Inhalt zu schweben. -->
+                        <button type="button" class="tool-btn active" data-tool="select" title="Auswählen"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label">Wählen</span></button>
+                        <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label">Bewegen</span></button>
+                        <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label">Token</span></button>
+                        <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
+                             used to sit here as silent no-ops (the handler only toggled
+                             a CSS class). Removed until the tools actually exist -- a
+                             button that does nothing reads as "broken", not "planned". -->
+                        <div class="spacer">
+                            <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
+                            <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
+                            <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span></button>
+                        </div>
+                    </aside>
                     <p id="sessionTitle" class="play-session-title">Session wird geladen...</p>
                     <div class="stage-topbar" aria-label="Seiten- und Zoomsteuerung">
                         <div id="activePagePill" class="active-page-pill" hidden>Seite: <strong id="activePageName">-</strong></div>
@@ -1521,24 +1586,6 @@
                      Tisch (Robot-Fund). -->
                 <div class="book-shell-frame book-workspace-shell">
                     <div class="tabletop-shell">
-        <aside class="left-toolbar" aria-label="Werkzeugleiste">
-            <!-- GD-Ribbon-Anatomie (Goblin Delve mobile.css, Patch 117):
-                 Icon über Label, ein fester Balken, Panels öffnen AUS ihm
-                 heraus statt über dem Inhalt zu schweben. -->
-            <button type="button" class="tool-btn active" data-tool="select" title="Auswählen"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label">Wählen</span></button>
-            <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label">Bewegen</span></button>
-            <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label">Token</span></button>
-            <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
-                 used to sit here as silent no-ops (the handler only toggled
-                 a CSS class). Removed until the tools actually exist -- a
-                 button that does nothing reads as "broken", not "planned". -->
-            <div class="spacer">
-                <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
-                <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
-                <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span></button>
-            </div>
-        </aside>
-
         <!-- GD-Sheet (Vorbild: goblin_delve base.html "Mehr"): die drei
              Tisch-Panels öffnen auf Telefonen AUS dem Ribbon heraus statt
              über oder unter der Karte zu schweben. play-ui.js verschiebt
