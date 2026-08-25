@@ -562,6 +562,8 @@
         }
         #zoomRange { width: 86px; }
         .stage-zoom-cluster { display: contents; }
+        #btnTableSheet { display: none; }
+        .table-sheet, .table-sheet-backdrop { display: none; }
         /* Desktop rail: icon only (the title attribute explains); the label
            is the phone ribbon's job. */
         .tool-btn .tool-ico { display: block; font-size: 0.95rem; line-height: 1.2; }
@@ -1126,6 +1128,58 @@
             .left-toolbar .spacer {
                 display: contents;
             }
+            /* Phone ribbon: Zurück lebt im Tisch-Sheet (seltene Aktion,
+               GD-Regel: sekundäres hinter "Mehr"), Tisch übernimmt den
+               Slot. Desktop behält BACK in der Leiste. */
+            .left-toolbar #btnBack { display: none; }
+            #btnTableSheet { display: flex; }
+            .table-sheet-backdrop {
+                display: block;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.45);
+                z-index: 55;
+            }
+            .table-sheet-backdrop[hidden] { display: none; }
+            .table-sheet {
+                display: block;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+                z-index: 60;
+                max-height: 62svh;
+                overflow-y: auto;
+                padding: 10px 10px calc(10px + env(safe-area-inset-bottom, 0px));
+                background: rgba(7, 14, 28, 0.98);
+                border-top: 2px solid var(--line-strong);
+                box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.5);
+            }
+            .table-sheet[hidden] { display: none; }
+            /* Inside the sheet the widgets are plain stacked blocks — every
+               floating/fixed anchor is neutralised. */
+            .table-sheet .floating,
+            .table-sheet #layersWidget,
+            .table-sheet #turnOrderWidget,
+            .table-sheet #tokenWidget {
+                position: static !important;
+                left: auto !important;
+                right: auto !important;
+                top: auto !important;
+                bottom: auto !important;
+                width: auto !important;
+                max-height: none;
+                margin: 0 0 8px;
+            }
+            .table-sheet-back {
+                width: 100%;
+                min-height: 48px;
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.05);
+                color: inherit;
+                font-weight: 600;
+            }
             .tool-btn {
                 width: auto;
                 min-width: 56px;
@@ -1313,10 +1367,21 @@
                  a CSS class). Removed until the tools actually exist -- a
                  button that does nothing reads as "broken", not "planned". -->
             <div class="spacer">
+                <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
                 <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
                 <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span></button>
             </div>
         </aside>
+
+        <!-- GD-Sheet (Vorbild: goblin_delve base.html "Mehr"): die drei
+             Tisch-Panels öffnen auf Telefonen AUS dem Ribbon heraus statt
+             über oder unter der Karte zu schweben. play-ui.js verschiebt
+             die Widgets unterhalb von 1040px hierher und zurück. -->
+        <div id="tableSheetBackdrop" class="table-sheet-backdrop" hidden></div>
+        <div id="tableSheet" class="table-sheet" hidden role="region" aria-label="Tisch-Panels">
+            <div id="tableSheetBody" class="table-sheet-body"></div>
+            <button type="button" id="btnTableSheetBack" class="table-sheet-back">↩ Zur Kampagne</button>
+        </div>
 
         <section class="stage">
             <div class="stage-topbar">

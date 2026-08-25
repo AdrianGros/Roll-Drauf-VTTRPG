@@ -790,6 +790,7 @@
             this._setZoom(this.zoomLevel);
             this._bindViewportNavigation();
             this._bindWidgetToggles();
+            this._setupTableSheet();
 
             const sendChat = () => {
                 const input = document.getElementById("chatInput");
@@ -1185,6 +1186,47 @@
             if (tokenWidget) tokenWidget.classList.add("collapsed");
             turnWidget?.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "false");
             tokenWidget?.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "false");
+        }
+
+        _setupTableSheet() {
+            // GD-Sheet-Muster: unterhalb 1040px wandern die drei Panels in
+            // ein Bottom-Sheet, das aus dem Ribbon öffnet; auf dem Desktop
+            // bleiben sie schwebende Widgets. IDs bleiben stabil — die
+            // Desktop-Robots (fullsession/flows) greifen weiter direkt zu.
+            const sheet = document.getElementById("tableSheet");
+            const backdrop = document.getElementById("tableSheetBackdrop");
+            const btn = document.getElementById("btnTableSheet");
+            const body = document.getElementById("tableSheetBody");
+            if (!sheet || !btn || !body) return;
+            const stage = document.querySelector(".stage");
+            const media = window.matchMedia("(max-width: 1040px)");
+            const widgetIds = ["layersWidget", "turnOrderWidget", "tokenWidget"];
+            const place = () => {
+                widgetIds.forEach((id) => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    if (media.matches && el.parentElement !== body) {
+                        body.appendChild(el);
+                    } else if (!media.matches && el.parentElement === body && stage) {
+                        stage.appendChild(el);
+                    }
+                });
+            };
+            const setOpen = (open) => {
+                sheet.hidden = !open;
+                if (backdrop) backdrop.hidden = !open;
+                btn.classList.toggle("active", open);
+                btn.setAttribute("aria-expanded", String(open));
+            };
+            btn.addEventListener("click", () => setOpen(sheet.hidden));
+            if (backdrop) backdrop.addEventListener("click", () => setOpen(false));
+            document.getElementById("btnTableSheetBack")?.addEventListener("click", () => {
+                document.getElementById("btnBack")?.click();
+            });
+            place();
+            if (typeof media.addEventListener === "function") {
+                media.addEventListener("change", place);
+            }
         }
 
         _bindTableActions() {
