@@ -2831,3 +2831,49 @@ body.is-book-scene-transition .book-shell-page-stack {
         pointer-events: none;
     }
 }
+
+/* ===== Handheld scroll flattening (2026-08-25) =====
+   The raster diet above shrank the paint workload, but Adrian's device
+   still showed the fling glitch — because the page still SCROLLS inside
+   a 3D rendering context: perspective on #book-scene-wrapper and
+   .book-scene-stage (and .book-dashboard-scene for the dashboard
+   family), preserve-3d on #book/.book-element/.book-dashboard-camera/
+   .book-dashboard-page. Gecko disables async compositor scrolling for
+   content inside perspective/preserve-3d and falls back to synchronous
+   main-thread scrolling — during a fling the main thread cannot repaint
+   in time and the view visibly "falls apart and rebuilds" (his exact
+   words). This is a known, long-solved mobile-web problem: flatten the
+   3D on scrolling surfaces.
+
+   Measured in real Gecko (Playwright Firefox, 390x844, wheel fling
+   storm): dropped frames >33ms fell from 30/190 to 11/196 and the worst
+   frame from 67ms to 34ms just from this flatten — on a server-class
+   CPU; a phone GPU at DPR 3 amplifies the difference brutally.
+
+   In the settled states every remaining transform is identity (the
+   open-book state sets rotateY(0deg); the 3D slabs are hidden on phones
+   above), so flattening changes ZERO rendered pixels — hence the wider
+   1024px net: landscape phones and small tablets get compositor
+   scrolling too. The opening animation itself still runs in 3D — these
+   rules only key on the settled body states. */
+@media (max-width: 1024px) {
+    body.book-login-open #book-scene-wrapper,
+    body.is-book-scene-dashboard #book-scene-wrapper,
+    body.book-login-open .book-scene-stage,
+    body.is-book-scene-dashboard .book-scene-stage,
+    body.book-login-open .book-dashboard-scene,
+    body.is-book-scene-dashboard .book-dashboard-scene {
+        perspective: none;
+    }
+
+    body.book-login-open #book,
+    body.is-book-scene-dashboard #book,
+    body.book-login-open .book-element,
+    body.is-book-scene-dashboard .book-element,
+    body.book-login-open .book-dashboard-camera,
+    body.is-book-scene-dashboard .book-dashboard-camera,
+    body.book-login-open .book-dashboard-page,
+    body.is-book-scene-dashboard .book-dashboard-page {
+        transform-style: flat;
+    }
+}

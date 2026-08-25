@@ -682,18 +682,21 @@
             });
         }
 
-        // Try on DOMContentLoaded
+        // Bind immediately. The 100ms setTimeout that used to sit here was
+        // a relic of the JS-injected shell era; with the shell
+        // server-rendered (2026-08-25) the cover is VISIBLE from first
+        // paint, so every deferred millisecond is a window where clicking
+        // the cover silently does nothing.
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('[Login] DOMContentLoaded fired');
             initEntryStatus();
-            setTimeout(initBook, 100);
+            initBook();
         });
 
-        // Also try on window load (backup)
-        window.addEventListener('load', () => {
-            console.log('[Login] window.load fired');
-            setTimeout(initBook, 100);
-        });
+        // Backup for readyState edge cases (script runs after DCL).
+        if (document.readyState !== 'loading') {
+            initEntryStatus();
+            initBook();
+        }
 
         const discordLoginButton = document.getElementById('discordLoginBtn');
         const discordError = document.getElementById('discordError');
