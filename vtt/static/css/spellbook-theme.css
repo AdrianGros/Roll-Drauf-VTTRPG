@@ -5,6 +5,21 @@
 
 /* ===== Global Body Styling ===== */
 
+/* Bug (2026-08-25, player report + phone photos): flicking the page on a
+   real device rubber-bands past body's own edges, and any compositor
+   frame not yet rasterized during a fast scroll reveals whatever html
+   itself is painted with -- which was nothing, so it flashed plain
+   browser-default white through the theme. Scripted `window.scrollTo`
+   testing never reproduces this (no bounce, no rasterization lag),
+   which is why tools/robots/kulissen.py only ever caught it as a
+   "low" v2-html-unbemalt finding rather than the blocker it actually is
+   on a phone. body.spellbook (the dark plum gradient below) is the
+   effectively-universal body class across this app -- match it here so
+   any exposed sliver blends instead of flashing white. */
+html {
+    background: linear-gradient(135deg, #2d1b35 0%, #1a0a22 100%);
+}
+
 body {
     background-color: var(--vtt-bg);
     background-image:
