@@ -2749,3 +2749,85 @@ body.is-book-scene-transition .book-shell-page-stack {
         transition: none;
     }
 }
+
+/* ===== Phone raster diet (2026-08-25) =====
+   Player report with photos: flinging the page on a real phone flashed
+   the purple book-cover slabs and blank white through the content — the
+   "whole page rebuilds" glitch. Root cause is compositor workload, not
+   layout: once the book is open, .book-cover (rotateY(-160deg)),
+   .book-back and .book-pages stay fully painted as separate 3D-composited
+   layers behind the paper, and #book's drop-shadow FILTER forces the
+   entire ~full-page book subtree to rasterize as one giant surface —
+   at DPR 3 that is several ~5-megapixel GPU layers a mid-range phone
+   cannot re-rasterize fast enough during a fling, so half-finished
+   frames show whatever sits below (purple slabs) or nothing (white).
+   Scripted window.scrollTo() never flings and desktop GPUs never lag,
+   which is why no robot ever caught it.
+
+   On phones the slabs' entire visible contribution is the tan page-edge
+   frame around the paper (pixel-diffed: hiding them changes ONLY those
+   strips; the gold hairline is wrapper decoration and stays). So below
+   767px, once the book is open, the slabs are hidden and #book itself
+   carries the same page-edge gradient as a plain, cheap background —
+   identical look, one flat paint instead of three composited layers —
+   and the drop-shadow filter is dropped (the book spans the full width;
+   the shadow was practically invisible on phones and its cost was the
+   whole-book blanking). Desktop is untouched. */
+@media (max-width: 767px) {
+    body.book-login-open .book-cover,
+    body.book-login-open .book-back,
+    body.book-login-open .book-pages,
+    body.is-book-scene-dashboard .book-cover,
+    body.is-book-scene-dashboard .book-back,
+    body.is-book-scene-dashboard .book-pages {
+        visibility: hidden;
+    }
+
+    body.book-login-open #book,
+    body.is-book-scene-dashboard #book {
+        /* .book-pages' own page-edge gradient and inset shadows, as a flat
+           background. */
+        background:
+            linear-gradient(90deg, rgba(208, 186, 151, 0.95) 0%, rgba(244, 231, 207, 0.98) 12%, rgba(244, 231, 207, 0.98) 88%, rgba(205, 180, 145, 0.95) 100%);
+        /* Deeper than .book-pages' own inset shadow: pixel-matched against
+           the pre-change composite, where the slab's shadow, its 95%-alpha
+           gradient over the dark stage and the paper card's drop shadow
+           stacked into a stronger right-edge ramp than any single layer. */
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 252, 246, 0.08),
+            inset -8px 0 14px rgba(42, 26, 18, 0.16);
+        filter: none;
+    }
+
+    /* The spine the hidden cover/back slabs painted at the left edge sits
+       partly OUTSIDE #book's box (the slabs overhang the stage margin), so
+       it cannot live in #book's background — a pseudo overhangs instead.
+       Geometry and colors are sampled from a pre-change screenshot at
+       DPR 3: 8px purple, 4px gold, 2px dark, starting 10px left of the
+       book's own edge (both states keep #book overflow: visible). */
+    body.book-login-open #book::before,
+    body.is-book-scene-dashboard #book::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -10px;
+        width: 14px;
+        background: linear-gradient(90deg, #462055 0, #462055 8px, #d0ac36 8px, #d0ac36 12px, #27102e 12px, #27102e 14px);
+        pointer-events: none;
+    }
+
+    /* .book-pages was translateX(4px): its tan slab overhung the book's
+       right edge by 4px, leaving only 6px of dark stage margin. */
+    body.book-login-open #book::after,
+    body.is-book-scene-dashboard #book::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: -4px;
+        width: 4px;
+        background: rgba(205, 180, 145, 0.95);
+        pointer-events: none;
+    }
+}
