@@ -770,6 +770,9 @@
                 button.addEventListener("click", () => {
                     const tool = button.getAttribute("data-tool") || "select";
                     this._setTool(tool);
+                    if (tool === "token") {
+                        this._openTokenMenu();
+                    }
                 });
             });
 
@@ -852,6 +855,29 @@
             if (viewport) {
                 viewport.classList.toggle("tool-pan", toolName === "pan");
                 viewport.classList.toggle("tool-token", toolName === "token");
+            }
+        }
+
+        _openTokenMenu() {
+            const tokenWidget = document.getElementById("tokenWidget");
+            if (!tokenWidget) return;
+
+            tokenWidget.classList.remove("collapsed");
+            tokenWidget.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "true");
+
+            // On a phone the widgets live inside the table sheet. Opening the
+            // Token ribbon action must open that sheet as well, otherwise the
+            // upload control exists in the DOM but remains unreachable behind
+            // the closed sheet.
+            const tableSheet = document.getElementById("tableSheet");
+            const tableSheetButton = document.getElementById("btnTableSheet");
+            if (tableSheet && tableSheet.hidden && tableSheetButton) {
+                tableSheetButton.click();
+            }
+
+            const uploadButton = document.getElementById("btnTokenUpload");
+            if (uploadButton && !uploadButton.hidden) {
+                uploadButton.focus({ preventScroll: true });
             }
         }
 

@@ -23,6 +23,7 @@ import tempfile
 from pathlib import Path
 
 from tools.robots.accounts import mint_registration_keys
+from tools.robots.evidence import finding as evidence_finding
 from tools.robots.stack import disposable_stack
 
 
@@ -224,20 +225,17 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
             if "collapsed" in layer_widget_classes.split():
                 findings.append("[menu] layer menu is collapsed on first DM render")
                 page.click('#layersWidget .widget-toggle')
-            if page.locator("#btnMapUpload").inner_text().strip() != "Datei hinzufügen":
-                findings.append("[menu] map file action is not labelled 'Datei hinzufügen'")
+            if page.locator("#layerAddBtn").inner_text().strip() != "Hinzufügen":
+                findings.append("[menu] map file action does not expose 'Hinzufügen'")
             if not page.locator("#btnTokenUpload").count():
                 findings.append("[token-upload] no direct token file-dialog action is visible")
-            page.wait_for_function(
-                "() => document.getElementById('layerAddSelect')?.options.length >= 1",
-                timeout=10_000)
             empty_layer_state = page.evaluate(
                 """() => ({
                     addDisabled: Boolean(document.getElementById('layerAddBtn')?.disabled),
                     status: (document.getElementById('layerAddStatus')?.textContent || '').trim(),
                     statusHidden: Boolean(document.getElementById('layerAddStatus')?.hidden),
-                    uploadVisible: Boolean(document.getElementById('btnMapUpload')
-                        && !document.getElementById('mapUploadRow')?.hidden),
+                    uploadVisible: Boolean(document.getElementById('layerAddUpload')
+                        && !document.getElementById('layerAddChoice')?.hidden),
                 })""")
             if empty_layer_state.get("addDisabled") and (
                     empty_layer_state.get("statusHidden")
@@ -252,9 +250,10 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
                 if not page.locator(f"#panel-{tab}.active").count():
                     findings.append(f"[menu] sidebar tab {tab!r} did not activate its panel")
             page.click("#btnSidebarToggle")
-            page.wait_for_selector("#btnMapUpload", state="visible", timeout=15_000)
+            page.click("#layerAddBtn")
+            page.wait_for_selector("#layerAddChoice", state="visible", timeout=15_000)
             with page.expect_file_chooser(timeout=10_000) as chooser_info:
-                page.click("#btnMapUpload")
+                page.click("#layerAddUpload")
             chooser_info.value.set_files(str(map_file))
             page.wait_for_function(
                 "() => (document.getElementById('activePageName')?.textContent || '')"
@@ -269,7 +268,22 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
         # usable before the placement panel is opened; the uploaded image is
         # kept as pending art for the next TOK placement.
         try:
-            page.click('#tokenWidget .widget-toggle')
+            # The visible ribbon button is the user's entry point. It must
+            # open the token menu that contains the upload action; checking
+            # the widget header alone would miss a dead ribbon control.
+            page.click('.tool-btn[data-tool="select"]')
+            if "collapsed" not in (page.locator("#tokenWidget").get_attribute("class") or "").split():
+                page.click("#tokenWidget .widget-toggle")
+            page.click('.tool-btn[data-tool="token"]')
+            page.wait_for_function(
+                """() => {
+                    const widget = document.getElementById('tokenWidget');
+                    const row = document.getElementById('tokenUploadRow');
+                    return widget && !widget.classList.contains('collapsed')
+                        && row && !row.hidden;
+                }""",
+                timeout=15_000,
+            )
             page.wait_for_selector("#btnTokenUpload", state="visible", timeout=15_000)
             token_file = workdir / "robot_token_face.png"
             token_file.write_bytes(_make_png(96, 96, (200, 170, 40)))
@@ -280,8 +294,15 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
                 "() => (document.getElementById('tokenUploadStatus')?.textContent || '')"
                 ".includes('Tokenbild geladen')", timeout=20_000)
         except Exception as error:
-            findings.append(f"[token-upload] direct token file chooser failed: "
-                            f"{type(error).__name__}: {str(error)[:200]}")
+            evidence_finding(
+                findings,
+                page,
+                workdir,
+                f"[token-upload] direct token file chooser failed: "
+                f"{type(error).__name__}: {str(error)[:200]}",
+                "finding-token-upload-menu",
+                ['.tool-btn[data-tool="token"]', "#tokenWidget", "#btnTokenUpload"],
+            )
 
         # Token art: uploaded as a token asset, referenced via
         # metadata_json.image_url, must render as an image face.
@@ -349,7 +370,7 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
                         && markerRect.width > 0
                         && markerRect.left >= viewRect.left && markerRect.right <= viewRect.right
                         && markerRect.top >= viewRect.top && markerRect.bottom <= viewRect.bottom),
-                    uploadControlExists: Boolean(document.getElementById('btnMapUpload')),
+                    uploadControlExists: Boolean(document.getElementById('layerAddBtn')),
                 };
             }"""
         )
@@ -364,7 +385,7 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
         elif not verdict.get("markerVisibleInViewport"):
             findings.append("[token] token marker exists but is outside/hidden in the viewport")
         if not verdict.get("uploadControlExists"):
-            findings.append("[upload-ui] #btnMapUpload missing - the DM upload path left the table again")
+            findings.append("[upload-ui] #layerAddBtn missing - the DM upload path left the table again")
 
         if findings:
             try:

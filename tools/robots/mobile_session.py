@@ -16,6 +16,7 @@ import tempfile
 from pathlib import Path
 
 from tools.robots.accounts import mint_registration_keys
+from tools.robots.evidence import capture
 from tools.robots.fullsession import GRID, _make_png
 from tools.robots.mobile import PHONE_LANDSCAPE, PHONE_PORTRAIT
 from tools.robots.session import RobotSession
@@ -51,9 +52,13 @@ class MobileSessionScript:
         shot = ""
         if page is not None:
             try:
-                path = self.workdir / f"mobile-session-{step}-{len(self.findings)}.png"
-                page.screenshot(path=str(path))
-                shot = f" (screenshot: {path.name})"
+                path = capture(
+                    page,
+                    self.workdir,
+                    f"mobile-session-{step}-{len(self.findings)}",
+                    marks=["body"],
+                )
+                shot = f" (screenshot: {path})"
             except Exception:
                 pass
         self.findings.append(f"[{step}] {detail}{shot}")
@@ -97,6 +102,12 @@ class MobileSessionScript:
     def _touch_place_token(self, page, *, cell: tuple[int, int], name: str) -> bool:
         try:
             page.click('.tool-btn[data-tool="token"]')
+            # The Token ribbon action opens the phone table sheet so its
+            # upload menu is reachable. Close that sheet before tapping the
+            # map; otherwise the backdrop correctly intercepts the map tap.
+            if page.locator("#tableSheet").get_attribute("hidden") is None:
+                page.locator("#tableSheetBackdrop").click(position={"x": 5, "y": 5})
+                page.wait_for_timeout(150)
             x, y = self._map_point(page, *cell)
             page.touchscreen.tap(x, y)
             page.wait_for_selector("#tokenCreatePanel:not([hidden])",

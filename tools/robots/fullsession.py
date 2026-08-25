@@ -30,6 +30,7 @@ import zlib
 from pathlib import Path
 
 from tools.robots.accounts import mint_registration_keys
+from tools.robots.evidence import capture
 from tools.robots.stack import disposable_stack
 
 GRID = 70
@@ -67,9 +68,13 @@ class SessionScript:
         shot = ""
         if page is not None:
             try:
-                path = self.workdir / f"fullsession-{step}-{len(self.findings)}.png"
-                page.screenshot(path=str(path))
-                shot = f" (screenshot: {path.name})"
+                path = capture(
+                    page,
+                    self.workdir,
+                    f"fullsession-{step}-{len(self.findings)}",
+                    marks=["body"],
+                )
+                shot = f" (screenshot: {path})"
             except Exception:
                 pass
         self.findings.append(f"[{step}] {detail}{shot}")
@@ -103,6 +108,11 @@ class SessionScript:
                             token_type: str | None, dm_only: bool = False) -> bool:
         """TOK tool -> click the map -> fill the panel -> Platzieren."""
         page.click('.tool-btn[data-tool="token"]')
+        # Token now opens the upload menu as its first-class entry point.
+        # Collapse that menu before the placement tap so a desktop floating
+        # widget cannot intercept a map point near the right edge.
+        if "collapsed" not in (page.locator("#tokenWidget").get_attribute("class") or "").split():
+            page.click("#tokenWidget .widget-toggle")
         x, y = self._world_click_point(page, *cell)
         page.mouse.click(x, y)
         try:

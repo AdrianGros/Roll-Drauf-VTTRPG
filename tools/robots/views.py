@@ -22,6 +22,7 @@ import tempfile
 from pathlib import Path
 
 from tools.robots.accounts import mint_registration_keys
+from tools.robots.evidence import capture, finding
 from tools.robots.stack import disposable_stack
 
 # Text fragments that mean a template hole, on ANY page.
@@ -60,6 +61,9 @@ def main(argv: list[str] | None = None) -> int:
     workdir = Path(tempfile.mkdtemp(prefix="vtt-views-"))
     print(f"View pins: disposable stack in {workdir} …")
     findings: list[str] = []
+    evidence_dir = ((args.out.parent / "screenshots") if args.out
+                    else (workdir / "screenshots"))
+    screenshots: list[str] = []
     checked = 0
     with disposable_stack(workdir) as stack:
         keys = mint_registration_keys(stack.database_url, count=1)
@@ -81,7 +85,36 @@ def main(argv: list[str] | None = None) -> int:
 
             page = session.page
             authenticated_cookies = context.cookies() if registered else []
-            for path, (label, selectors, needs_auth) in pins.items():
+            view_pins = dict(pins)
+            if registered and "/play" in view_pins:
+                csrf = next((c["value"] for c in context.cookies()
+                             if c["name"] == "csrf_access_token"), None)
+                headers = {"Content-Type": "application/json",
+                           "X-CSRF-TOKEN": csrf}
+                campaign_response = context.request.post(
+                    f"{stack.base_url}/api/campaigns",
+                    data=json.dumps({"name": "View Pin Campaign", "max_players": 4}),
+                    headers=headers)
+                if campaign_response.status == 201:
+                    campaign_body = campaign_response.json()
+                    campaign = campaign_body.get("campaign") or campaign_body
+                    session_response = context.request.post(
+                        f"{stack.base_url}/api/campaigns/{campaign['id']}/sessions",
+                        data=json.dumps({"name": "View Pin Session"}),
+                        headers=headers)
+                    if session_response.status == 201:
+                        session_body = session_response.json()
+                        game_session = session_body.get("session") or session_body
+                        label, selectors, needs_auth = view_pins.pop("/play")
+                        view_pins[
+                            f"/play?campaign_id={campaign['id']}&session_id={game_session['id']}"
+                        ] = (label, selectors, needs_auth)
+                else:
+                    findings.append(
+                        f"[setup] could not create disposable play campaign: "
+                        f"HTTP {campaign_response.status}")
+
+            for path, (label, selectors, needs_auth) in view_pins.items():
                 if needs_auth and not registered:
                     findings.append(f"[{label}] skipped: no authenticated robot available")
                     continue
@@ -96,37 +129,59 @@ def main(argv: list[str] | None = None) -> int:
                                          timeout=30_000)
                     page.wait_for_timeout(500)
                 except Exception as error:
-                    findings.append(f"[{label}] did not load: {error}")
+                    evidence = finding(
+                        findings, page, evidence_dir,
+                        f"[{label}] did not load: {error}",
+                        f"finding-{label}-load", ["body"])
+                    if evidence:
+                        screenshots.append(str(evidence))
                     continue
                 finally:
                     if not needs_auth and registered:
                         # Restore the session for whatever pin comes next.
                         context.add_cookies(authenticated_cookies)
                 checked += 1
+                view_shot = capture(page, evidence_dir, f"view-{label}-{path}")
+                screenshots.append(str(view_shot))
                 if response is not None and response.status >= 400:
-                    findings.append(f"[{label}] HTTP {response.status}")
+                    evidence = finding(
+                        findings, page, evidence_dir,
+                        f"[{label}] HTTP {response.status}",
+                        f"finding-{label}-http-{response.status}", ["body"])
+                    if evidence:
+                        screenshots.append(str(evidence))
                     continue
                 for selector in selectors:
                     if page.locator(selector).count() == 0:
-                        findings.append(f"[{label}] pin missing: {selector}")
+                        evidence = finding(
+                            findings, page, evidence_dir,
+                            f"[{label}] pin missing: {selector}",
+                            f"finding-{label}-missing-{selector}", [selector])
+                        if evidence:
+                            screenshots.append(str(evidence))
                 visible = page.evaluate("() => document.body.innerText")
                 for debris in DEBRIS:
                     if debris in visible:
-                        findings.append(f"[{label}] debris in visible text: {debris!r}")
+                        evidence = finding(
+                            findings, page, evidence_dir,
+                            f"[{label}] debris in visible text: {debris!r}",
+                            f"finding-{label}-debris-{debris}", ["body"])
+                        if evidence:
+                            screenshots.append(str(evidence))
             browser.close()
 
     print(f"\n{checked} views · {len(findings)} finding(s)")
-    for finding in findings:
-        print(f"  - {finding}")
+    for detail in findings:
+        print(f"  - {detail}")
     report = args.out or workdir / "vtt-view-pins.json"
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(json.dumps(
         {"status": "failed" if findings else "passed",
          "views_checked": checked, "canary": args.canary,
-         "findings": findings}, indent=2), encoding="utf-8")
+         "findings": findings, "screenshots": screenshots},
+        indent=2), encoding="utf-8")
     print(f"JSON: {report}")
-    import shutil
-    shutil.rmtree(workdir, ignore_errors=True)
+    print(f"Screenshots: {evidence_dir}")
     return 0 if not findings else 1
 
 

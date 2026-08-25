@@ -28,6 +28,7 @@ import zlib
 from pathlib import Path
 
 from tools.robots.accounts import mint_registration_keys
+from tools.robots.evidence import capture
 from tools.robots.stack import disposable_stack
 
 PHONE_PORTRAIT = {"width": 390, "height": 844}
@@ -53,7 +54,48 @@ def _phone_context(browser, viewport, cookies):
     return context
 
 
-def _check_play_table(page, orientation: str, findings: list[str]) -> None:
+def _finding_marks(detail: str) -> list[str]:
+    lowered = detail.lower()
+    if "dice" in lowered or "roll" in lowered:
+        return ["#btnRoll"]
+    if "sidebar tab" in lowered:
+        return [".sidebar-tab"]
+    if "sidebar close" in lowered:
+        return ["#btnSidebarClose", ".right-sidebar"]
+    if "token" in lowered:
+        return ['.tool-btn[data-tool="token"]', "#tokenWidget"]
+    if "table sheet" in lowered or "tisch" in lowered:
+        return ["#btnTableSheet", "#tableSheet"]
+    if "zoom" in lowered:
+        return ["#btnZoomIn"]
+    if "input" in lowered:
+        return ["input", "select", "textarea"]
+    if "bright" in lowered or "purple" in lowered or "button" in lowered:
+        return ["button"]
+    if "map" in lowered:
+        return ["#mapViewport"]
+    return ["body"]
+
+
+def _annotate_new_findings(page, orientation: str, findings: list[str],
+                           start: int, evidence_dir: Path,
+                           screenshots: list[str]) -> None:
+    for index in range(start, len(findings)):
+        if "(screenshot:" in findings[index]:
+            continue
+        path = capture(
+            page,
+            evidence_dir,
+            f"finding-{orientation}-{index}",
+            marks=_finding_marks(findings[index]),
+        )
+        findings[index] += f" (screenshot: {path})"
+        screenshots.append(str(path))
+
+
+def _check_play_table(page: object, orientation: str, findings: list[str],
+                      evidence_dir: Path, screenshots: list[str]) -> None:
+    finding_start = len(findings)
     verdict = page.evaluate(
         """() => {
             const r = {};
@@ -150,6 +192,11 @@ def _check_play_table(page, orientation: str, findings: list[str]) -> None:
             findings.append(
                 f"[{orientation}] selected tool {tool!r} is not Roll-Drauf purple: "
                 f"{selected['surface']}")
+        if tool == "token":
+            sheet = page.locator("#tableSheet")
+            if sheet.get_attribute("hidden") is None:
+                page.locator("#tableSheetBackdrop").click(position={"x": 5, "y": 5})
+                page.wait_for_timeout(150)
 
     # Dice must be reachable: open the sidebar tools tab, then measure.
     zoom_before = page.evaluate("() => document.getElementById('mapWorld')?.style.transform || ''")
@@ -183,6 +230,45 @@ def _check_play_table(page, orientation: str, findings: list[str]) -> None:
         page.wait_for_timeout(150)
         if page.locator("#tableSheet").get_attribute("hidden") is None:
             findings.append(f"[{orientation}] table sheet backdrop did not close the sheet")
+
+    # The toolbar Token action is the upload menu entry point. Test the
+    # visible click path and the actual chooser, including the mobile sheet
+    # relocation, rather than opening the widget through the DOM.
+    page.click('.tool-btn[data-tool="select"]')
+    page.click('.tool-btn[data-tool="token"]')
+    page.wait_for_timeout(200)
+    token_menu = page.evaluate(
+        """() => ({
+            active: document.querySelector('.tool-btn[data-tool="token"]')?.classList.contains('active'),
+            sheetOpen: !document.getElementById('tableSheet')?.hidden,
+            widgetOpen: !document.getElementById('tokenWidget')?.classList.contains('collapsed'),
+            uploadVisible: Boolean(document.getElementById('btnTokenUpload')
+                && !document.getElementById('tokenUploadRow')?.hidden),
+        })""")
+    if not token_menu["active"] or not token_menu["widgetOpen"]:
+        findings.append(f"[{orientation}] Token ribbon did not open the Tokens menu")
+    elif not token_menu["uploadVisible"]:
+        findings.append(f"[{orientation}] Token menu has no visible upload action")
+    else:
+        try:
+            with page.expect_file_chooser(timeout=10_000) as chooser_info:
+                page.click("#btnTokenUpload")
+            chooser_info.value.set_files({
+                "name": f"{orientation}-token.png",
+                "mimeType": "image/png",
+                "buffer": _make_png(48, 48, (200, 170, 40)),
+            })
+            page.wait_for_function(
+                "() => (document.getElementById('tokenUploadStatus')?.textContent || '')"
+                ".includes('Tokenbild geladen')",
+                timeout=20_000,
+            )
+        except Exception as error:
+            findings.append(
+                f"[{orientation}] Token upload chooser did not complete: "
+                f"{type(error).__name__}: {str(error)[:160]}")
+    if token_menu["sheetOpen"]:
+        page.locator("#tableSheetBackdrop").click(position={"x": 5, "y": 5})
 
     page.click("#btnSidebarToggle")
     for tab in ("journal", "chat", "tools", "session"):
@@ -237,6 +323,8 @@ def _check_play_table(page, orientation: str, findings: list[str]) -> None:
         if page.locator(".right-sidebar.is-open").count():
             findings.append(
                 f"[{orientation}] sidebar close button left the mobile sheet open")
+    _annotate_new_findings(
+        page, orientation, findings, finding_start, evidence_dir, screenshots)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -247,6 +335,9 @@ def main(argv: list[str] | None = None) -> int:
 
     findings: list[str] = []
     workdir = Path(tempfile.mkdtemp(prefix="vtt-mobile-"))
+    evidence_dir = ((args.out.parent / "screenshots") if args.out
+                    else (workdir / "screenshots"))
+    screenshots: list[str] = []
     print(f"Mobile gates: disposable stack in {workdir} …")
 
     with disposable_stack(workdir) as stack:
@@ -266,7 +357,7 @@ def main(argv: list[str] | None = None) -> int:
                                     registration_key=keys[0]):
                 findings.extend(f"[setup] {f.detail}" for f in session.findings)
                 browser.close()
-                _write_report(args, workdir, findings)
+                _write_report(args, workdir, findings, screenshots)
                 return 2
 
             api = desktop.request
@@ -308,41 +399,69 @@ def main(argv: list[str] | None = None) -> int:
             for path in BOOK_PAGES:
                 page.goto(f"{stack.base_url}{path}", wait_until="networkidle")
                 page.wait_for_timeout(1200)
+                view_shot = capture(page, evidence_dir, f"view-portrait-{path}")
+                screenshots.append(str(view_shot))
                 overflow = page.evaluate(
                     "() => document.documentElement.scrollWidth - window.innerWidth")
                 if overflow > 1:
-                    findings.append(f"[portrait] {path}: {overflow}px horizontal overflow")
+                    finding_shot = capture(
+                        page, evidence_dir, f"finding-portrait-{path}-overflow",
+                        marks=["body"])
+                    findings.append(
+                        f"[portrait] {path}: {overflow}px horizontal overflow "
+                        f"(screenshot: {finding_shot})")
+                    screenshots.append(str(finding_shot))
 
             play_url = f"{stack.base_url}/play?campaign_id={campaign_id}&session_id={session_id}"
             page.goto(play_url, wait_until="networkidle")
             page.wait_for_timeout(2500)
-            page.screenshot(path=str(workdir / "gate-play-portrait.png"))
-            _check_play_table(page, "portrait", findings)
+            view_shot = capture(page, evidence_dir, "view-play-portrait")
+            screenshots.append(str(view_shot))
+            _check_play_table(page, "portrait", findings, evidence_dir, screenshots)
             portrait.close()
 
             landscape = _phone_context(browser, PHONE_LANDSCAPE, cookies)
             page = landscape.new_page()
+            for path in BOOK_PAGES:
+                page.goto(f"{stack.base_url}{path}", wait_until="networkidle")
+                page.wait_for_timeout(1200)
+                view_shot = capture(page, evidence_dir, f"view-landscape-{path}")
+                screenshots.append(str(view_shot))
+                overflow = page.evaluate(
+                    "() => document.documentElement.scrollWidth - window.innerWidth")
+                if overflow > 1:
+                    finding_shot = capture(
+                        page, evidence_dir, f"finding-landscape-{path}-overflow",
+                        marks=["body"])
+                    findings.append(
+                        f"[landscape] {path}: {overflow}px horizontal overflow "
+                        f"(screenshot: {finding_shot})")
+                    screenshots.append(str(finding_shot))
             page.goto(play_url, wait_until="networkidle")
             page.wait_for_timeout(2500)
-            page.screenshot(path=str(workdir / "gate-play-landscape.png"))
-            _check_play_table(page, "landscape", findings)
+            view_shot = capture(page, evidence_dir, "view-play-landscape")
+            screenshots.append(str(view_shot))
+            _check_play_table(page, "landscape", findings, evidence_dir, screenshots)
             landscape.close()
             browser.close()
 
-    _write_report(args, workdir, findings)
+    _write_report(args, workdir, findings, screenshots)
     return 0 if not findings else 1
 
 
-def _write_report(args, workdir: Path, findings: list[str]) -> None:
+def _write_report(args, workdir: Path, findings: list[str],
+                  screenshots: list[str]) -> None:
     print(f"\nmobile · {len(findings)} finding(s)")
     for finding in findings:
         print(f"  - {finding}")
     report = args.out or workdir / "vtt-mobile.json"
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(json.dumps(
-        {"status": "failed" if findings else "passed", "findings": findings},
+        {"status": "failed" if findings else "passed",
+         "findings": findings, "screenshots": screenshots},
         indent=2), encoding="utf-8")
     print(f"JSON: {report}")
+    print(f"Screenshots: {((args.out.parent / 'screenshots') if args.out else workdir / 'screenshots')}")
 
 
 if __name__ == "__main__":
