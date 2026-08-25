@@ -95,22 +95,6 @@ window.BookRoutes = {
         prev: '/campaigns',
         next: '/character-sheet',
     },
-    '/lobby': {
-        mode: 'spread',
-        chapter: 'Antechamber',
-        section: 'Halle',
-        folio: ['L', 'I'],
-        prev: '/dashboard',
-        next: '/campaigns',
-    },
-    '/lobby.html': {
-        mode: 'spread',
-        chapter: 'Antechamber',
-        section: 'Halle',
-        folio: ['L', 'I'],
-        prev: '/dashboard',
-        next: '/campaigns',
-    },
     '/character-sheet': {
         mode: 'focus',
         chapter: 'Helden',

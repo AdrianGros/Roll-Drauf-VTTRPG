@@ -179,7 +179,14 @@
 
                     showBanner('Konto erstellt. Du wirst zur Anmeldung weitergeleitet …', 'success');
                     window.setTimeout(() => {
-                        window.location.href = '/login.html?signup=1';
+                        // Deferred deep link (Invite-Flow A1): ein mitgegebenes
+                        // next= überlebt die Registrierung bis nach dem Login.
+                        // Nur seiteninterne Pfade, sonst offener Redirect.
+                        const nextParam = new URL(window.location.href).searchParams.get('next');
+                        const safeNext = nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')
+                            ? `&next=${encodeURIComponent(nextParam)}`
+                            : '';
+                        window.location.href = `/login.html?signup=1${safeNext}`;
                     }, 900);
                 } catch (error) {
                     showError('generalError', 'Netzwerkfehler: ' + error.message);
@@ -252,7 +259,10 @@
             try {
                 const user = await Auth.getCurrentUser();
                 if (user) {
-                    window.location.href = '/dashboard';
+                    const nextParam = new URL(window.location.href).searchParams.get('next');
+                    window.location.href = nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')
+                        ? nextParam
+                        : '/dashboard';
                     return;
                 }
 

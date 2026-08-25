@@ -1324,7 +1324,7 @@
     <header>
         <div class="logo">roll drauf VTT</div>
         <div class="header-actions">
-            <button class="btn btn-primary" type="button" data-book-route="/dashboard" onclick="goTo('/dashboard')">Cockpit</button>
+            <button class="btn btn-primary" type="button" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
             <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
             <button class="btn btn-secondary" onclick="logout()">Abmelden</button>
         </div>
@@ -1339,22 +1339,22 @@
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
                     <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
                 </div>
-                <div class="book-dashboard-crest" aria-label="Current chapter">Chronicles</div>
+                <div class="book-dashboard-crest" aria-label="Aktuelles Kapitel">Chroniken</div>
             </div>
-            <div class="book-shell-ribbon">Chronicles</div>
+            <div class="book-shell-ribbon">Chroniken</div>
 
             <div class="book-shell-frame-header">
                 <div>
-                    <p class="book-frame-eyebrow">Campaign Atlas</p>
-                    <h1 class="book-page-title" data-book-field="section">Campaigns</h1>
+                    <p class="book-frame-eyebrow">Kampagnen-Atlas</p>
+                    <h1 class="book-page-title" data-book-field="section">Kampagnen</h1>
                     <p class="book-frame-copy">
-                        This spread separates orientation from management: left page for flow and control, right page for the actual campaign roster and detail view.
+                        Diese Doppelseite trennt Orientierung von Verwaltung: linke Seite für Ablauf und Steuerung, rechte Seite für die eigentliche Kampagnenliste und Detailansicht.
                     </p>
                 </div>
                 <div class="book-frame-meta">
                     <span class="book-chip">Kapitel <span data-book-field="chapter">Chroniken</span></span>
-                    <span class="book-chip">Roster + Detail</span>
-                    <span class="book-chip">Wave 1 Ready</span>
+                    <span class="book-chip">Liste + Detail</span>
+                    <span class="book-chip">Einsatzbereit</span>
                 </div>
             </div>
 
@@ -1462,7 +1462,7 @@
                         <div class="detail-header">
                             <h2 id="detailTitle">Kampagnen-Details</h2>
                             <div style="display:flex; gap:0.5rem;">
-                                <button class="btn btn-secondary btn-sm" id="refreshDetailBtn">Refresh</button>
+                                <button class="btn btn-secondary btn-sm" id="refreshDetailBtn">Aktualisieren</button>
                                 <button class="btn btn-secondary btn-sm" onclick="closeCampaignDetail()">Schließen</button>
                             </div>
                         </div>
@@ -1857,7 +1857,7 @@
                 if (canManage) {
                     if (phase.tone === "scheduled" || phase.tone === "ready") {
                         primaryAction = `<button class="btn btn-primary btn-sm" onclick="startSession(${campaign.id}, ${session.id})">Session starten</button>`;
-                        supportActions.push(`<button class="btn btn-secondary btn-sm" onclick="focusMapPrepSurface()">Map Prep pruefen</button>`);
+                        supportActions.push(`<button class="btn btn-secondary btn-sm" onclick="focusMapPrepSurface()">Kartenvorbereitung prüfen</button>`);
                         prepNote = "Diese Session ist vorbereitet, aber noch nicht live. Der Start aus dem Hub bleibt der kontrollierte Weg in den Tisch.";
                         entryHint = "Startet hier";
                     } else if (phase.tone === "paused") {
@@ -2199,7 +2199,7 @@
                             : `Für "${session.name}" fehlt noch jede Kartenbasis. Nutze zuerst den Map-Prep-Bereich.`,
                         action: hasCampaignMap
                             ? `<button class="btn btn-primary" type="button" onclick="focusSessionPrepMapSelect()">Map wählen</button>`
-                            : `<button class="btn btn-primary" type="button" onclick="focusMapPrepSurface()">Map Prep ansehen</button>`,
+                            : `<button class="btn btn-primary" type="button" onclick="focusMapPrepSurface()">Kartenvorbereitung ansehen</button>`,
                     };
                 }
                 if ((phase.tone === "scheduled" || phase.tone === "ready") && !hasAssignedCharacters) {
@@ -2497,7 +2497,7 @@
                     const ownerLabel = Number(character.user_id) === Number(currentUser?.id)
                         ? "Dein Charakter"
                         : `Besitz: ${character.owner_username || "Unbekannt"}`;
-                    const classLabel = `${character.class || "Unknown"} · Level ${character.level || 1}`;
+                    const classLabel = `${character.class || "Unbekannt"} · Level ${character.level || 1}`;
                     const identityLabel = character.avatar_url ? "Avatar bereit" : (character.token_url ? "Token bereit" : "Identität optional");
                     const canEditAssignment = canCurrentUserManageSessionCharacter(campaign, character);
                     const assignmentButton = mode === "assigned"
@@ -2558,22 +2558,22 @@
                             <div class="session-prep-actions">
                                 ${sessionAction.action}
                                 <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">Sessionliste</button>
-                                <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignMapsCard')">Map Prep</button>
+                                <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignMapsCard')">Kartenvorbereitung</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="session-prep-grid">
                         <div class="session-prep-card">
-                            <div class="session-prep-card-title">Participants / Invite Context</div>
+                            <div class="session-prep-card-title">Teilnehmer / Einladungen</div>
                             <div class="session-prep-card-copy">${canManage ? `Die Kampagne hat aktuell ${playerCount} Spieler neben der DM. Invite- und Join-Kontext bleibt Teil derselben Vorbereitung vor Tischstart.` : "Dein Kampagnenbeitritt ist sichtbar. Sobald die DM startet, führt diese Session-Vorbereitung direkt zum Tisch."}</div>
                             <div class="session-prep-card-actions">
-                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="focusInviteControls()">Spieler einladen</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Invite-Kontext</button>`}
+                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="focusInviteControls()">Spieler einladen</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Einladungs-Kontext</button>`}
                             </div>
                         </div>
 
                         <div class="session-prep-card" id="sessionPrepCharacterCard">
-                            <div class="session-prep-card-title">Character Context</div>
+                            <div class="session-prep-card-title">Charakter-Kontext</div>
                             <div class="session-prep-card-copy">${canManage
                                 ? "Nur kampagnengebundene Helden erscheinen hier. Weise sie direkt dieser Session zu oder entferne sie wieder, bevor der Hub nach Play übergibt."
                                 : "Hier wird sichtbar, welche kampagnengebundenen Helden schon direkt zu dieser Session gehören. Eigene Helden kannst du selbst zuweisen, andere bleiben lesbar, aber nicht direkt von dir editierbar."}</div>
@@ -2611,8 +2611,8 @@
                         </div>
 
                         <div class="session-prep-card">
-                            <div class="session-prep-card-title">Map Context</div>
-                            <div class="session-prep-card-copy">${activeMap ? `Diese Session nutzt aktuell "${escapeHtml(activeMap.name)}" als aktive Karte. Map Prep bleibt der nächste Ort für Kontrolle, Aktivierung und Feinvorbereitung vor Play.` : (mapReady ? "Es gibt Kartenmaterial in der Kampagne, aber für diese Session ist noch keine aktive Karte gesetzt." : "Noch keine Karte im Kampagnenkontext sichtbar. Vor Tischstart sollte zuerst der Map-Prep-Bereich genutzt werden.")}</div>
+                            <div class="session-prep-card-title">Karten-Kontext</div>
+                            <div class="session-prep-card-copy">${activeMap ? `Diese Session nutzt aktuell "${escapeHtml(activeMap.name)}" als aktive Karte. Die Kartenvorbereitung bleibt der nächste Ort für Kontrolle, Aktivierung und Feinvorbereitung vor Play.` : (mapReady ? "Es gibt Kartenmaterial in der Kampagne, aber für diese Session ist noch keine aktive Karte gesetzt." : "Noch keine Karte im Kampagnenkontext sichtbar. Vor Tischstart sollte zuerst der Kartenvorbereitungs-Bereich genutzt werden.")}</div>
                             ${canManage && maps && maps.length ? `
                                 <div class="session-prep-toolbar" style="margin-top:0.65rem;">
                                     <select id="sessionPrepMapSelect">
@@ -2622,12 +2622,12 @@
                                 </div>
                             ` : ""}
                             <div class="session-prep-card-actions">
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Map Prep ansehen</button>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Kartenvorbereitung ansehen</button>
                             </div>
                         </div>
 
                         <div class="session-prep-card">
-                            <div class="session-prep-card-title">Asset Context</div>
+                            <div class="session-prep-card-title">Material-Kontext</div>
                             <div class="session-prep-card-copy">Assets, Uploads und Vorschau sind verfügbar. Filtere die Bibliothek oder bereite einen Upload direkt für diese Session vor.</div>
                             <div id="sessionPrepAssetStats">
                                 ${assetStats ? `
@@ -2641,7 +2641,7 @@
                             </div>
                             <div class="session-prep-card-actions">
                                 <button class="btn btn-secondary btn-sm" type="button" onclick="focusSessionScopedAssetLibrary(${prepSession.id})">Session-Assets ansehen</button>
-                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="prepareSessionAssetUpload(${prepSession.id}, 'handout')">Session-Upload vorbereiten</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Asset Library</button>`}
+                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="prepareSessionAssetUpload(${prepSession.id}, 'handout')">Session-Upload vorbereiten</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Materialbibliothek</button>`}
                             </div>
                         </div>
 
@@ -2809,7 +2809,7 @@
                                 : `Die Session "${latestSession.name}" braucht vor dem Start noch sichtbares Kartenmaterial.`,
                             action: latestMap
                                 ? `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`
-                                : `<button class="btn btn-primary" onclick="focusMapPrepSurface()">Map Prep ansehen</button>`,
+                                : `<button class="btn btn-primary" onclick="focusMapPrepSurface()">Kartenvorbereitung ansehen</button>`,
                         };
                     }
                     if (!hasSessionCharacters) {
@@ -3047,8 +3047,12 @@
 
             const inviteControls = canManage ? `
                 <div class="inline-controls">
-                    <input id="inviteUsername" type="text" placeholder="Spielername">
-                    <button class="btn btn-primary btn-sm" onclick="invitePlayer(${campaign.id})">Einladung erzeugen</button>
+                    <input id="inviteUsername" type="text" placeholder="Spielername" data-testid="invite-username">
+                    <button class="btn btn-primary btn-sm" data-testid="invite-create" onclick="invitePlayer(${campaign.id})">Einladung erzeugen</button>
+                </div>
+                <div id="inviteLinkRow" class="inline-controls" hidden data-testid="invite-link-row">
+                    <input id="inviteLinkField" type="text" readonly aria-label="Einladungslink">
+                    <button class="btn btn-secondary btn-sm" id="btnCopyInviteLink" data-testid="invite-copy" onclick="copyInviteLink()">Kopieren</button>
                 </div>
             ` : `
                 <div class="hub-callout">
@@ -3079,7 +3083,7 @@
                 </div>
             ` : `
                 <div class="hub-callout">
-                    Die DM kann hier die Session-Historie sehen und den Launch-Status verfolgen. Karten und Sessions sind nur für berechtigte Rollen bearbeitbar.
+                    Die DM kann hier die Session-Historie sehen und den Startstatus verfolgen. Karten und Sessions sind nur für berechtigte Rollen bearbeitbar.
                 </div>
             `;
 
@@ -3087,7 +3091,7 @@
                 <div class="hub-shell">
                     <div class="hub-hero">
                         <div class="hub-identity">
-                            <div class="hub-eyebrow">Campaign Prep / Session Hub</div>
+                            <div class="hub-eyebrow">Kampagnen-Vorbereitung / Session-Hub</div>
                             <h2>${escapeHtml(campaign.name)}</h2>
                             <div class="hub-pill-row">
                                 ${statusPill("Rolle", roleLabel)}
@@ -3104,10 +3108,10 @@
                                 <strong>Prep-Status:</strong> ${escapeHtml(prepState.label)}. ${escapeHtml(prepState.summary)}
                             </div>
                             <div class="hub-badges">
-                                <span class="hub-badge">Campaign Prep</span>
-                                <span class="hub-badge">Prep Headquarters</span>
-                                <span class="hub-badge">Session Flow</span>
-                                <span class="hub-badge">Map + Assets</span>
+                                <span class="hub-badge">Kampagnen-Vorbereitung</span>
+                                <span class="hub-badge">Vorbereitungs-Zentrale</span>
+                                <span class="hub-badge">Session-Ablauf</span>
+                                <span class="hub-badge">Karten + Material</span>
                             </div>
                         </div>
 
@@ -3121,8 +3125,8 @@
                             </div>
                             <div class="hub-primary-actions">
                                 ${primaryAction.action}
-                                ${canManage ? `<button class="btn btn-secondary" onclick="focusInviteControls()">Spieler einladen</button>` : ""}
-                                ${canManage ? `<button class="btn btn-secondary" onclick="focusSessionsSurface()">Sessions pruefen</button>` : ""}
+                                ${canManage && !String(primaryAction.action).includes("focusInviteControls") ? `<button class="btn btn-secondary" onclick="focusInviteControls()">Spieler einladen</button>` : ""}
+                                ${canManage ? `<button class="btn btn-secondary" onclick="focusSessionsSurface()">Sessions prüfen</button>` : ""}
                                 ${sessions && sessions.length ? `<button class="btn btn-secondary" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">Session-Prep</button>` : ""}
                             </div>
                         </div>
@@ -3131,7 +3135,7 @@
                     <div class="hub-grid">
                         <div class="hub-card">
                             <div class="hub-card-topline">
-                                <h3>Prep Overview</h3>
+                                <h3>Vorbereitungs-Überblick</h3>
                                 <span class="hub-pill">${escapeHtml(roleLabel)}</span>
                             </div>
                             <div class="hub-stat-row">
@@ -3189,7 +3193,7 @@
 
                         <div class="hub-card" id="campaignMapsCard">
                             <div class="hub-card-topline">
-                                <h3>Maps</h3>
+                                <h3>Karten</h3>
                                 <span class="hub-pill">${mapCount} Karte${mapCount === 1 ? "" : "n"}</span>
                             </div>
                             <div class="hub-map-list">
@@ -3197,7 +3201,7 @@
                             </div>
                             <div class="hub-callout">
                                 ${canManage
-                                    ? "Die Kartenliste und der Schnellstart sind live. Nutze Map Prep, um Karten zu prüfen und für eine Session zu aktivieren."
+                                    ? "Die Kartenliste und der Schnellstart sind live. Nutze die Kartenvorbereitung, um Karten zu prüfen und für eine Session zu aktivieren."
                                     : "Spieler sehen hier den aktuellen Kartenstand read-only. Tieferes Map-Prep bleibt der Spielleitung vorbehalten."}
                             </div>
                             ${canManage ? `
@@ -3215,7 +3219,7 @@
 
                         <div class="hub-card">
                             <div class="hub-card-topline">
-                                <h3>Prep Links</h3>
+                                <h3>Vorbereitungs-Links</h3>
                                 <span class="hub-pill">Characters + Assets</span>
                             </div>
                                 <div class="hub-callout">
@@ -3223,19 +3227,19 @@
                                 </div>
                                 <div class="hub-link-grid">
                                 <div class="hub-surface-link">
-                                    <div class="hub-surface-link-title">Characters</div>
+                                    <div class="hub-surface-link-title">Charaktere</div>
                                     <div class="hub-surface-link-copy">Archive, Sheets und Identität weiterführen, bevor die Session live geht.</div>
                                     <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere öffnen</button>
                                 </div>
                                 <div class="hub-surface-link">
-                                    <div class="hub-surface-link-title">Map Prep</div>
-                                    <div class="hub-surface-link-copy">Kartenstand pruefen und den sichtbaren Prep-Bereich im Hub weiter nutzen.</div>
-                                    <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Map Prep ansehen</button>
+                                    <div class="hub-surface-link-title">Kartenvorbereitung</div>
+                                    <div class="hub-surface-link-copy">Kartenstand prüfen und den sichtbaren Vorbereitungsbereich im Hub weiter nutzen.</div>
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Kartenvorbereitung ansehen</button>
                                 </div>
                                 <div class="hub-surface-link">
-                                    <div class="hub-surface-link-title">Asset Library</div>
+                                    <div class="hub-surface-link-title">Materialbibliothek</div>
                                     <div class="hub-surface-link-copy">Originale, Uploads und Vorschau bleiben Teil derselben Vorbereitung vor Play.</div>
-                                        <button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Asset Library</button>
+                                        <button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Materialbibliothek</button>
                                     </div>
                                 </div>
                             <div class="hub-callout" style="margin-top:0.85rem;">
@@ -3251,8 +3255,8 @@
 
                     <div class="hub-card">
                         <div class="hub-card-topline">
-                            <h3>Preparation Checklist</h3>
-                            <span class="hub-pill">Hub Flow</span>
+                            <h3>Vorbereitungs-Checkliste</h3>
+                            <span class="hub-pill">Hub-Ablauf</span>
                         </div>
                         ${buildHubChecklist(campaign, sessions, maps, characters, assignments)}
                     </div>
@@ -3403,11 +3407,11 @@
             return `
                 <div class="hub-card" id="campaignAssetLibraryPanel">
                     <div class="hub-card-topline">
-                        <h3>Asset Library</h3>
+                        <h3>Materialbibliothek</h3>
                         <span class="hub-pill">Originale + Vorschau</span>
                     </div>
                     <div class="hub-callout">
-                        Die Bibliothek zeigt die Originaldateien. Karten, Token und Handouts bleiben unveraendert und können hier als sichtbarer Vorbereitungsschritt für Sessions geordnet, geprueft und später weiterverwendet werden.
+                        Die Bibliothek zeigt die Originaldateien. Karten, Token und Handouts bleiben unverändert und können hier als sichtbarer Vorbereitungsschritt für Sessions geordnet, geprüft und später weiterverwendet werden.
                     </div>
                     <div class="asset-library-toolbar">
                         <input id="assetLibrarySearch" type="text" placeholder="Suche nach Dateiname...">
@@ -3509,7 +3513,7 @@
                     ? `<button class="btn btn-danger btn-sm" onclick="deleteLibraryAsset(${asset.id}, ${campaignId})">Löschen</button>`
                     : "";
                 const previewButton = canPreview
-                    ? `<button class="btn btn-secondary btn-sm" onclick="openAssetPreview('${previewUrl.replace(/'/g, "\\'")}')">Preview</button>`
+                    ? `<button class="btn btn-secondary btn-sm" onclick="openAssetPreview('${previewUrl.replace(/'/g, "\\'")}')">Vorschau</button>`
                     : "";
 
                 return `
@@ -3526,7 +3530,7 @@
                             <div class="asset-card-meta">Uploaded by ${escapeHtml(asset.uploaded_by || "-")} · ${escapeHtml(formatBytes(asset.size_bytes))}</div>
                             <div class="asset-card-actions">
                                 ${previewButton}
-                                <a class="btn btn-secondary btn-sm" href="${downloadUrl}" target="_blank" rel="noopener">Download</a>
+                                <a class="btn btn-secondary btn-sm" href="${downloadUrl}" target="_blank" rel="noopener">Herunterladen</a>
                                 ${deleteButton}
                             </div>
                         </div>
@@ -3677,9 +3681,9 @@
             feed.className = "chat-feed";
             feed.innerHTML = messages.map(message => {
                 const canDelete = canModerate || message.author_user_id === currentUser?.id;
-                const reportButton = `<button class="btn btn-secondary btn-sm" onclick="reportCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Report</button>`;
+                const reportButton = `<button class="btn btn-secondary btn-sm" onclick="reportCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Melden</button>`;
                 const deleteButton = canDelete
-                    ? `<button class="btn btn-danger btn-sm" onclick="deleteCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Delete</button>`
+                    ? `<button class="btn btn-danger btn-sm" onclick="deleteCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Löschen</button>`
                     : "";
 
                 return `
@@ -3828,6 +3832,18 @@
         }
 
         async function viewCampaign(campaignId, pushHistory = true) {
+            // Desktop-Audit D07/B1: Nicht-Mitglieder liefen hier in einen
+            // garantierten 403 ("forbidden"-Banner). Die Liste kennt die
+            // Mitgliedschaft bereits — statt des toten Calls direkt der
+            // Einladungs-Dialog.
+            const known = Array.isArray(campaigns)
+                ? campaigns.find((c) => c.id === Number(campaignId))
+                : null;
+            if (known && !known.is_member) {
+                showMessage("Du bist noch nicht Mitglied dieser Kampagne. Löse zuerst deine Einladung ein.", true);
+                joinCampaign(campaignId);
+                return;
+            }
             try {
                 const data = await auth.makeAuthRequest(`/api/campaigns/${campaignId}`);
                 selectedCampaignId = campaignId;
@@ -3902,11 +3918,44 @@
                     player_username: playerUsername
                 });
                 if (usernameField) usernameField.value = "";
-                showMessage("Einladungs-Code erzeugt.");
-                window.prompt("Code zum Teilen:", invite.invite_token);
+                showMessage("Einladungslink erzeugt.");
+                // Desktop-Audit D06: teilbarer Link statt window.prompt-Code.
+                // viewCampaign rendert das Detail neu, also erst danach die
+                // Link-Zeile füllen, sonst ist sie sofort wieder weg.
                 await viewCampaign(campaignId, false);
+                showInviteLink(`${window.location.origin}/invite/${invite.invite_token}`);
             } catch (error) {
                 showMessage(error.message || "Einladung fehlgeschlagen.", true);
+            }
+        }
+
+        function showInviteLink(url) {
+            const row = document.getElementById("inviteLinkRow");
+            const field = document.getElementById("inviteLinkField");
+            if (!row || !field) return;
+            field.value = url;
+            row.hidden = false;
+            field.focus();
+            field.select();
+        }
+
+        async function copyInviteLink() {
+            const field = document.getElementById("inviteLinkField");
+            const button = document.getElementById("btnCopyInviteLink");
+            if (!field || !field.value) return;
+            let copied = false;
+            try {
+                await navigator.clipboard.writeText(field.value);
+                copied = true;
+            } catch (error) {
+                field.focus();
+                field.select();
+                copied = document.execCommand && document.execCommand("copy");
+            }
+            if (button) {
+                const label = button.textContent;
+                button.textContent = copied ? "Kopiert ✓" : "Manuell kopieren (Strg+C)";
+                window.setTimeout(() => { button.textContent = label; }, 2000);
             }
         }
 

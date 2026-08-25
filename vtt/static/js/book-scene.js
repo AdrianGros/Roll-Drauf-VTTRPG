@@ -697,25 +697,49 @@
                 `;
             }
 
+            // Desktop-Audit D01/D02/A2: Mitglieder bekommen den Hub (und die
+            // ganze Zeile als Klickziel — der Eintrag war ein toter Klick);
+            // Nicht-Mitglieder bekommen hier die Beitreten-Affordance, die in
+            // der Buch-Ansicht komplett fehlte (F4-Loch). Der garantierte
+            // 403-Hub-Link für Nicht-Mitglieder (D07/B1) entfällt damit.
             return `
                 <div class="book-scene-ledger">
-                    ${campaigns.slice(0, 6).map((campaign) => `
-                        <div class="book-scene-ledger-item">
+                    ${campaigns.slice(0, 6).map((campaign) => {
+                        const hubHref = buildIntentHref('/campaigns', { campaign_id: campaign.id, classic: 1 });
+                        const isMember = Boolean(campaign.is_member);
+                        const rowAttrs = isMember
+                            ? ` data-dashboard-href="${hubHref}" role="link" tabindex="0" data-testid="campaign-ledger-item"`
+                            : ' data-testid="campaign-ledger-item"';
+                        const actions = isMember
+                            ? this.buildActionButtons([
+                                {
+                                    label: Number(campaign.session_count || 0) > 0 ? 'Hub und Vorbereitung' : 'Hub öffnen',
+                                    href: hubHref,
+                                    primary: true,
+                                },
+                            ], 'book-scene-action-row--inline')
+                            : `
+                                <div class="book-scene-join" data-campaign-id="${Number(campaign.id)}">
+                                    <div class="book-scene-ledger-meta">Einladung von der Spielleitung? Öffne ihren Einladungslink — oder löse den Code hier ein:</div>
+                                    <div class="book-scene-join-row">
+                                        <input type="text" data-join-input placeholder="Einladungscode" aria-label="Einladungscode" data-testid="join-code-input">
+                                        <button type="button" class="btn btn-primary book-scene-action-btn" data-dashboard-action="join-campaign" data-testid="join-code-submit">Beitreten</button>
+                                    </div>
+                                    <div class="book-scene-ledger-meta" data-join-status role="status" hidden></div>
+                                </div>
+                            `;
+                        return `
+                        <div class="book-scene-ledger-item"${rowAttrs}>
                             <div class="book-scene-ledger-head">
                                 <strong>${escapeHtml(campaign.name || 'Unbenannte Kampagne')}</strong>
                                 <span>${escapeHtml(campaign.status || 'active')}</span>
                             </div>
                             <div class="book-scene-ledger-meta">${Number(campaign.member_count || 0)} Mitglieder · ${campaign.is_owner ? 'Eigene Kampagne' : 'Geteilte Kampagne'}</div>
                             <div class="book-scene-ledger-copy">${escapeHtml(campaign.description || 'Bereit für Vorbereitung, Charaktere und Karte vor dem Spielabend.')}</div>
-                            ${this.buildActionButtons([
-                                {
-                                    label: Number(campaign.session_count || 0) > 0 ? 'Hub und Vorbereitung' : 'Hub öffnen',
-                                    href: buildIntentHref('/campaigns', { campaign_id: campaign.id, classic: 1 }),
-                                    primary: true,
-                                },
-                            ], 'book-scene-action-row--inline')}
+                            ${actions}
                         </div>
-                    `).join('')}
+                        `;
+                    }).join('')}
                 </div>
             `;
         },
@@ -1020,9 +1044,14 @@
                             },
                             {
                                 label: 'Kampagnen-Hub öffnen',
-                                href: campaigns.length > 0
-                                    ? buildIntentHref('/campaigns', { campaign_id: campaigns[0].id, classic: 1 })
-                                    : buildIntentHref('/campaigns', { classic: 1 }),
+                                // D07/B1: nur Kampagnen, in denen man Mitglied
+                                // ist — der Hub-Call für Fremde ist ein 403.
+                                href: (() => {
+                                    const mine = campaigns.find((c) => c.is_member);
+                                    return mine
+                                        ? buildIntentHref('/campaigns', { campaign_id: mine.id, classic: 1 })
+                                        : buildIntentHref('/campaigns', { classic: 1 });
+                                })(),
                             },
                         ])}
                         ${this.buildCampaignLedger(campaigns)}
@@ -1197,12 +1226,63 @@
             });
 
             this.sceneSurface.querySelectorAll('[data-dashboard-href]').forEach((node) => {
-                node.addEventListener('click', () => {
+                const navigate = () => {
                     const href = node.getAttribute('data-dashboard-href');
                     if (!href) {
                         return;
                     }
                     window.location.href = href;
+                };
+                node.addEventListener('click', navigate);
+                // Ein-Engine-Invariante (§3): Nicht-Button-Klickziele (z. B.
+                // die Ledger-Zeile, D02) müssen per Tastatur dieselbe
+                // Transition auslösen wie per Maus.
+                if (node.tagName !== 'BUTTON' && node.tagName !== 'A') {
+                    node.addEventListener('keydown', (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            navigate();
+                        }
+                    });
+                }
+            });
+
+            this.sceneSurface.querySelectorAll('[data-dashboard-action="join-campaign"]').forEach((node) => {
+                node.addEventListener('click', async () => {
+                    const joinBox = node.closest('.book-scene-join');
+                    if (!joinBox) {
+                        return;
+                    }
+                    const campaignId = Number(joinBox.getAttribute('data-campaign-id'));
+                    const input = joinBox.querySelector('[data-join-input]');
+                    const status = joinBox.querySelector('[data-join-status]');
+                    const say = (text) => {
+                        if (status) {
+                            status.hidden = false;
+                            status.textContent = text;
+                        }
+                    };
+                    const code = input ? input.value.trim() : '';
+                    if (!code) {
+                        say('Bitte zuerst den Einladungscode einfügen.');
+                        if (input) {
+                            input.focus();
+                        }
+                        return;
+                    }
+                    node.disabled = true;
+                    try {
+                        await window.Auth.makeAuthRequest(
+                            `/api/campaigns/${campaignId}/accept-invite`,
+                            'POST',
+                            { token: code },
+                        );
+                        say('Beigetreten! Der Kampagnen-Hub öffnet sich …');
+                        window.location.href = `/campaigns?campaign_id=${campaignId}`;
+                    } catch (error) {
+                        node.disabled = false;
+                        say(error.message || 'Beitritt fehlgeschlagen. Bitte prüfe den Code.');
+                    }
                 });
             });
 

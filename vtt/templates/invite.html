@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Invite-Landing (Desktop-Audit D01/A1): der Token steht in der URL, also
+         so wenig Abfluss wie möglich — keine Fremd-Assets, kein Referrer. -->
+    <meta name="referrer" content="no-referrer">
+    <title>Einladung - roll drauf vtt</title>
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--vtt-font-body);
+            background: var(--vtt-backdrop, #241a2e);
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .invite-page {
+            background: var(--vtt-paper, #f7f1e3);
+            color: var(--vtt-ink, #2c1f14);
+            border-radius: 10px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+            max-width: 30rem;
+            width: 100%;
+            padding: 2.2rem 2.4rem;
+        }
+        .invite-eyebrow {
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--vtt-accent, #7a2f2f);
+            margin-bottom: 0.6rem;
+        }
+        h1 { font-size: 1.6rem; margin-bottom: 0.9rem; }
+        .invite-detail { line-height: 1.55; margin-bottom: 1.4rem; }
+        .invite-detail strong { color: var(--vtt-accent, #7a2f2f); }
+        .invite-state { line-height: 1.5; margin-bottom: 1.4rem; }
+        .invite-state.error { color: var(--vtt-danger, #8c2f2f); }
+        .invite-actions { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+        .btn {
+            font-family: inherit;
+            font-size: 1rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: 1px solid var(--vtt-accent, #7a2f2f);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary { background: var(--vtt-accent, #7a2f2f); color: #fff; }
+        .btn-secondary { background: transparent; color: var(--vtt-accent, #7a2f2f); }
+        .btn[disabled] { opacity: 0.6; cursor: default; }
+        [hidden] { display: none !important; }
+    </style>
+</head>
+<body>
+    <main id="inviteScene" class="invite-page" aria-live="polite">
+        <div class="invite-eyebrow">Einladung an den Spieltisch</div>
+        <h1 id="inviteTitle">Einladung wird geprüft …</h1>
+        <div id="inviteDetail" class="invite-detail" hidden></div>
+        <div id="inviteState" class="invite-state"></div>
+        <div class="invite-actions">
+            <button id="btnAcceptInvite" class="btn btn-primary" type="button"
+                    data-testid="invite-accept" hidden>Kampagne beitreten</button>
+            <a id="linkLogin" class="btn btn-primary" data-testid="invite-login" hidden>Anmelden</a>
+            <a id="linkRegister" class="btn btn-secondary" data-testid="invite-register" hidden>Registrieren</a>
+            <a id="linkCampaigns" class="btn btn-secondary" href="/campaigns" hidden>Zu meinen Kampagnen</a>
+        </div>
+    </main>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        (async function () {
+            const token = decodeURIComponent(window.location.pathname.split("/").pop() || "");
+            const el = (id) => document.getElementById(id);
+            const show = (id) => { el(id).hidden = false; };
+            const state = (text, isError) => {
+                el("inviteState").textContent = text;
+                el("inviteState").classList.toggle("error", Boolean(isError));
+            };
+
+            let info = null;
+            try {
+                const response = await fetch(`/api/invites/${encodeURIComponent(token)}`);
+                if (response.ok) info = await response.json();
+            } catch (error) { /* handled below as invalid */ }
+
+            if (!info) {
+                el("inviteTitle").textContent = "Diese Einladung gibt es nicht";
+                state("Der Link ist unvollständig oder wurde widerrufen. Bitte die Spielleitung um einen neuen Einladungslink.", true);
+                return;
+            }
+
+            el("inviteDetail").innerHTML =
+                `Du bist eingeladen zur Kampagne <strong></strong> ` +
+                `(Spielleitung: <span id="inviteDm"></span>).`;
+            el("inviteDetail").querySelector("strong").textContent = info.campaign_name;
+            el("inviteDetail").querySelector("#inviteDm").textContent = info.dm_username || "unbekannt";
+            show("inviteDetail");
+
+            if (info.status === "expired") {
+                el("inviteTitle").textContent = "Einladung abgelaufen";
+                state("Dieser Link ist abgelaufen. Bitte die Spielleitung um einen neuen Einladungslink.", true);
+                return;
+            }
+            if (info.status === "used") {
+                el("inviteTitle").textContent = "Einladung bereits eingelöst";
+                state("Dieser Link wurde schon benutzt. Wenn du das warst: deine Kampagne wartet.", false);
+                show("linkCampaigns");
+                return;
+            }
+
+            const user = await Auth.getCurrentUser().catch(() => null);
+            if (!user) {
+                el("inviteTitle").textContent = "Fast am Tisch";
+                state("Melde dich an oder registriere dich — danach landest du direkt wieder bei dieser Einladung.");
+                const next = encodeURIComponent(`/invite/${token}`);
+                el("linkLogin").href = `/login.html?next=${next}`;
+                el("linkRegister").href = `/signup.html?next=${next}`;
+                show("linkLogin");
+                show("linkRegister");
+                return;
+            }
+
+            el("inviteTitle").textContent = "Willkommen am Tisch";
+            state(`Angemeldet als ${user.username}. Ein Klick, und du sitzt mit am Tisch.`);
+            show("btnAcceptInvite");
+
+            el("btnAcceptInvite").addEventListener("click", async () => {
+                el("btnAcceptInvite").disabled = true;
+                try {
+                    await Auth.makeAuthRequest(
+                        `/api/campaigns/${info.campaign_id}/accept-invite`,
+                        "POST",
+                        { token }
+                    );
+                    state("Beigetreten! Du wirst zur Kampagne gebracht …");
+                    // Clean URL after accept: the token must not linger in the
+                    // address bar (fix research §1, OWASP referrer/log notes).
+                    window.location.replace(`/campaigns?campaign_id=${info.campaign_id}`);
+                } catch (error) {
+                    el("btnAcceptInvite").disabled = false;
+                    const known = {
+                        "no invitation found for this user":
+                            "Diese Einladung ist an ein anderes Konto gerichtet. Melde dich mit dem eingeladenen Konto an.",
+                        "invite token does not belong to this user":
+                            "Diese Einladung ist an ein anderes Konto gerichtet. Melde dich mit dem eingeladenen Konto an.",
+                        "already a campaign member": "Du bist bereits Mitglied dieser Kampagne.",
+                        "campaign is full": "Die Kampagne ist bereits voll besetzt.",
+                        "invite token expired or already used":
+                            "Dieser Link ist abgelaufen oder wurde schon benutzt.",
+                    };
+                    state(known[error.apiError || error.message] || "Beitritt fehlgeschlagen. Bitte versuche es erneut oder bitte die Spielleitung um einen neuen Link.", true);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

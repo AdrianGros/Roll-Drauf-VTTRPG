@@ -284,6 +284,18 @@ def create_app(config_name=None):
         from flask import redirect
         return redirect('/login.html')
 
+    @app.route('/invite/<token>')
+    def invite_landing(token):
+        """Invite deep link (Desktop-Audit D01/A1): explicit route because the
+        template catch-all below would fall back to login.html for any
+        /invite/<token> path. The page renders its state client-side from
+        GET /api/invites/<token>; the token never reaches the server log
+        beyond this request line."""
+        import os
+        from flask import send_from_directory
+        return send_from_directory(
+            os.path.join(os.path.dirname(__file__), 'templates'), 'invite.html')
+
     @app.route('/<path:path>')
     def serve_static(path):
         import os

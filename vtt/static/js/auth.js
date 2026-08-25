@@ -137,7 +137,20 @@ class Auth {
 
         if (!response.ok) {
             const error = await response.json().catch(() => ({}));
-            throw new Error(error.error || 'API request failed');
+            const rawCode = error.error || 'API request failed';
+            // Desktop-Audit D07/B2: rohe API-Codes ("forbidden") erreichten als
+            // Banner die Spieler. Bekannte Codes werden hier einmal zentral
+            // übersetzt; der Original-Code bleibt für Aufrufer mit eigener
+            // Behandlung als err.apiError erhalten.
+            const translations = {
+                'forbidden': 'Dafür fehlt dir die Berechtigung.',
+                'not found': 'Das wurde nicht gefunden.',
+                'API request failed': 'Die Anfrage ist fehlgeschlagen. Bitte versuche es erneut.'
+            };
+            const err = new Error(translations[rawCode] || rawCode);
+            err.apiError = rawCode;
+            err.status = response.status;
+            throw err;
         }
 
         const contentType = response.headers.get('Content-Type') || '';

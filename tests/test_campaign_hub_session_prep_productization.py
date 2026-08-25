@@ -23,11 +23,14 @@ def test_campaign_hub_surfaces_prep_state_more_explicitly(client):
     html = response.get_data(as_text=True)
 
     assert "Prep-Status:" in html
-    assert "Campaign Prep / Session Hub" in html
-    assert "Prep Overview" in html
+    # Desktop-Audit D12 (2026-08-25): diese Strings waren englisches
+    # Chrome-Leck im sichtbaren Hub-Render und wurden auf Deutsch
+    # umgestellt (docs/FIX_RESEARCH_DESKTOP_AUDIT_2026-08-25.md §6).
+    assert "Kampagnen-Vorbereitung / Session-Hub" in html
+    assert "Vorbereitungs-Überblick" in html
     assert "Aktueller Stand:" in html
-    assert "Preparation Checklist" in html
-    assert "Sessions pruefen" in html
+    assert "Vorbereitungs-Checkliste" in html
+    assert "Sessions prüfen" in html
 
 
 def test_campaign_hub_exposes_clearer_session_action_hierarchy(client):
@@ -52,9 +55,10 @@ def test_campaign_hub_connects_map_asset_and_character_prep_surfaces_honestly(cl
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert "Prep Links" in html
+    # Desktop-Audit D12: siehe Kommentar oben.
+    assert "Vorbereitungs-Links" in html
     assert "Charaktere öffnen" in html
-    assert "Map Prep ansehen" in html
+    assert "Kartenvorbereitung ansehen" in html
     assert 'id="campaignAssetLibraryPanel"' in html
     assert "Session-Besetzung:" in html
     assert "Session-Besetzung öffnen" in html

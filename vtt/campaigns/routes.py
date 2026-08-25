@@ -670,6 +670,42 @@ def accept_invite(campaign_id):
     ), 200
 
 
+@campaigns_bp.route("/invites/<token_value>", methods=["GET"])
+@limiter.limit("60 per hour")
+def invite_info(token_value):
+    """Resolve a bare invite token to its campaign for the /invite/<token>
+    landing page (Desktop-Audit D01/A1). The token itself is the capability:
+    knowing it entitles you to see which table you were invited to — nothing
+    more. No auth required so a logged-out invitee can see where the link
+    leads before registering; the accept itself stays a CSRF-protected POST
+    on the existing endpoint."""
+    token = InviteToken.query.filter_by(token=str(token_value).strip()).first()
+    if not token:
+        return jsonify({"error": "not found"}), 404
+
+    if token.used_at:
+        status = "used"
+    elif token.expires_at and token.expires_at < utcnow():
+        status = "expired"
+    else:
+        status = "valid"
+
+    campaign = Campaign.query.get(token.campaign_id)
+    if not campaign or campaign.deleted_at:
+        return jsonify({"error": "not found"}), 404
+
+    dm = User.query.get(campaign.owner_id)
+    return jsonify(
+        {
+            "status": status,
+            "campaign_id": campaign.id,
+            "campaign_name": campaign.name,
+            "dm_username": dm.username if dm else None,
+            "expires_at": token.expires_at.isoformat() if token.expires_at else None,
+        }
+    ), 200
+
+
 @campaigns_bp.route("/campaigns/<int:campaign_id>/members", methods=["GET"])
 @jwt_required()
 def list_campaign_members(campaign_id):

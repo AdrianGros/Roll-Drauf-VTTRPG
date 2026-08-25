@@ -50,10 +50,12 @@ def test_session_prep_surface_connects_existing_prep_pillars_honestly(client):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert "Participants / Invite Context" in html
-    assert "Character Context" in html
-    assert "Map Context" in html
-    assert "Asset Context" in html
+    # Desktop-Audit D12 (2026-08-25): englisches Chrome-Leck auf Deutsch
+    # umgestellt (docs/FIX_RESEARCH_DESKTOP_AUDIT_2026-08-25.md §6).
+    assert "Teilnehmer / Einladungen" in html
+    assert "Charakter-Kontext" in html
+    assert "Karten-Kontext" in html
+    assert "Material-Kontext" in html
     assert 'id="sessionPrepCharacterCard"' in html
     assert "Zugewiesen" in html
     assert "Verfügbar für diese Session" in html
