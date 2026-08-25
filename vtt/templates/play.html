@@ -117,6 +117,13 @@
             display: flex;
             flex-direction: column;
             padding: 8px 0 10px !important;
+            /* Desktop-Audit D17 (Entscheidung 2026-08-25): der Spieltisch ist
+               die eine Seite, auf der ein grosser Monitor ganz Karte sein
+               darf -- der min(1680px)-Buchdeckel aus book-scene.css:580 gilt
+               hier nicht (bei 2560px blieben sonst 63% Kartenanteil). Kein
+               VTT deckelt seinen Canvas; der Charakterbogen behaelt 1680. */
+            width: calc(100vw - 24px) !important;
+            max-width: none !important;
         }
         .play-workspace-camera {
             flex: 1;
@@ -326,6 +333,10 @@
             height: 100%;
             min-height: 520px;
             position: relative;
+            /* Eine Quelle für die Sidebar-Breite (Desktop-Audit D14): die
+               Ausweichregeln von Topbar und Token-Widget rechnen mit derselben
+               Variable statt mit verstreuten 340/280-Kopien. */
+            --sidebar-w: 340px;
         }
         .left-toolbar {
             border-right: 1px solid var(--line);
@@ -542,12 +553,13 @@
            on the other -- while the drawer is open, the topbar slides left
            of it. */
         .tabletop-shell:has(.right-sidebar.is-open) .stage-topbar {
-            right: calc(340px + 1rem);
+            right: calc(var(--sidebar-w) + 1rem);
         }
-        @media (max-height: 720px) {
-            .tabletop-shell:has(.right-sidebar.is-open) .stage-topbar {
-                right: calc(280px + 1rem);
-            }
+        /* Desktop-Audit D14: dieselbe Ausweichregel für das Token-Widget --
+           die offene Sidebar (z 26) hat es auf jedem Desktop-Viewport
+           vollständig überdeckt (Widgets liegen auf z 18). */
+        .tabletop-shell:has(.right-sidebar.is-open) .stage #tokenWidget {
+            right: calc(var(--sidebar-w) + 1rem);
         }
         .mini-control {
             border: 1px solid var(--line);
@@ -615,9 +627,13 @@
         }
         #layersWidget {
             left: 1rem;
-            top: 3.4rem;
+            /* Desktop-Audit D16: der Widget-Kopf klemmte unter dem
+               "Seite:"-Chip der Topbar (top 0.85rem + ~44px Leiste). Der
+               Abstand rechnet jetzt mit der Leistenhöhe statt zufällig
+               knapp darunter zu landen. */
+            top: calc(0.85rem + var(--topbar-h, 44px) + 0.5rem);
             width: 320px;
-            max-height: 54%;
+            max-height: 50%;
         }
         .layer-row {
             display: flex;
@@ -736,6 +752,8 @@
             right: 1rem;
             bottom: 1rem;
             width: 300px;
+            /* Gleitet synchron zur Sidebar-Ausweichregel (D14). */
+            transition: right 240ms ease;
         }
         .panel-row {
             display: flex;
@@ -761,7 +779,7 @@
             top: 0;
             right: 0;
             bottom: 0;
-            width: 340px;
+            width: var(--sidebar-w);
             max-width: 88vw;
             border-left: 1px solid var(--line);
             background: rgba(5, 11, 22, 0.96);
@@ -770,11 +788,21 @@
             min-height: 0;
             z-index: 26;
             transform: translateX(100%);
-            transition: transform 240ms ease;
+            /* Desktop-Audit D15: zu heisst wirklich weg. Bisher hing die
+               Unsichtbarkeit der rausgeschobenen Sidebar allein am
+               overflow:hidden eines Vorfahren -- eine z-index- oder
+               Overflow-Aenderung haette sie lautlos zum Klick-Dieb gemacht.
+               visibility mit 240ms Delay laesst die Zufahr-Animation intakt. */
+            visibility: hidden;
+            pointer-events: none;
+            transition: transform 240ms ease, visibility 0s 240ms;
             box-shadow: -14px 0 36px rgba(0, 0, 0, 0.4);
         }
         .right-sidebar.is-open {
             transform: translateX(0);
+            visibility: visible;
+            pointer-events: auto;
+            transition: transform 240ms ease, visibility 0s;
         }
         .sidebar-tabs {
             display: grid;
@@ -1130,8 +1158,8 @@
                 max-height: 30%;
                 padding: 0.45rem;
             }
-            .right-sidebar {
-                width: 280px;
+            .tabletop-shell {
+                --sidebar-w: 280px;
             }
             .sidebar-tabs {
                 padding: 0.4rem;

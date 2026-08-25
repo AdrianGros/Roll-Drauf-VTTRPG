@@ -1822,6 +1822,15 @@
             const stack = this.bootstrap?.scene_stack;
             const container = document.getElementById("layerList");
             const layers = (stack && Array.isArray(stack.layers)) ? stack.layers.slice().sort((a, b) => a.order_index - b.order_index) : [];
+            // Desktop-Audit D18: ein interaktiver PLAYER hat read_only=false
+            // (er darf ja Tokens ziehen), bekam aber bislang dieselben
+            // Rename-/Auf-Ab-/Sichtbarkeits-/Löschen-/Aktivieren-Knöpfe wie
+            // die DM -- Knöpfe, die der Server für diese Rolle nur ablehnen
+            // kann (§2: kein Knopf ohne erreichbare Wirkung für die Rolle).
+            // Gleiches Muster wie layerAddRow weiter unten: serverseitige
+            // session_role entscheidet, nicht geraten.
+            const operator = isOperatorRole(this.bootstrap?.session_role || "");
+            const canEdit = operator && !this.readOnly;
 
             if (!layers.length) {
                 container.innerHTML = "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufügen.</div>";
@@ -1831,30 +1840,39 @@
                     const mapName = escapeHtml(layer.campaign_map?.name || `Map ${layer.campaign_map_id}`);
                     const thumb = this._thumbUrl(layer.campaign_map);
                     const visIcon = layer.is_player_visible ? "&#128065;" : "&#128683;";
+                    const activeChip = `<span class="mini-btn" style="opacity:0.7;cursor:default;">aktiv</span>`;
                     const activateControl = isActive
-                        ? `<span class="mini-btn" style="opacity:0.7;cursor:default;">aktiv</span>`
-                        : `<button data-act="activate" data-layer-id="${layer.id}" class="mini-btn">Aktivieren</button>`;
-                    return `
-                        <div class="layer-row ${isActive ? "active-row" : ""}" data-layer-id="${layer.id}">
-                            ${thumb ? `<img class="layer-thumb" src="${thumb}" alt="">` : `<div class="layer-thumb"></div>`}
-                            <div class="layer-info">
-                                <input class="layer-label-input" data-act="rename" data-layer-id="${layer.id}" value="${escapeHtml(layer.label)}" ${this.readOnly ? "disabled" : ""}>
-                                <div class="layer-map-name">${mapName}</div>
-                            </div>
-                            <div class="layer-actions">
+                        ? activeChip
+                        : (canEdit
+                            ? `<button data-act="activate" data-layer-id="${layer.id}" class="mini-btn">Aktivieren</button>`
+                            : "");
+                    const labelField = canEdit
+                        ? `<input class="layer-label-input" data-act="rename" data-layer-id="${layer.id}" value="${escapeHtml(layer.label)}">`
+                        : `<div class="layer-label-input" style="cursor:default;">${escapeHtml(layer.label)}</div>`;
+                    const actionsRow = canEdit ? `
                                 <div class="layer-actions-row">
                                     <button data-act="up" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach oben" ${index === 0 ? "disabled" : ""}>&uarr;</button>
                                     <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach unten" ${index === layers.length - 1 ? "disabled" : ""}>&darr;</button>
                                     <button data-act="visibility" data-layer-id="${layer.id}" data-current="${layer.is_player_visible}" class="mini-btn layer-icon-btn" title="Spieler-Sichtbarkeit">${visIcon}</button>
                                     <button data-act="delete" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn danger" title="Seite entfernen">&times;</button>
                                 </div>
+                    ` : "";
+                    return `
+                        <div class="layer-row ${isActive ? "active-row" : ""}" data-layer-id="${layer.id}">
+                            ${thumb ? `<img class="layer-thumb" src="${thumb}" alt="">` : `<div class="layer-thumb"></div>`}
+                            <div class="layer-info">
+                                ${labelField}
+                                <div class="layer-map-name">${mapName}</div>
+                            </div>
+                            <div class="layer-actions">
+                                ${actionsRow}
                                 ${activateControl}
                             </div>
                         </div>
                     `;
                 }).join("");
 
-                if (!this.readOnly) {
+                if (canEdit) {
                     container.querySelectorAll('[data-act="activate"]').forEach((button) => {
                         button.addEventListener("click", () => this._activateLayer(Number(button.dataset.layerId)));
                     });
@@ -1876,7 +1894,7 @@
                 }
             }
 
-            if (!this.readOnly) {
+            if (canEdit) {
                 await this._renderLayerAddControl(layers);
             }
         }

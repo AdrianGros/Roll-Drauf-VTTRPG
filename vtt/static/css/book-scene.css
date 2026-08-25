@@ -861,6 +861,37 @@ body.play-workspace-realign main {
     line-height: 1.45;
 }
 
+/* Mitglieder-Zeilen sind seit dem Desktop-Audit (D02) selbst Klickziele. */
+.book-scene-ledger-item[data-dashboard-href] {
+    cursor: pointer;
+}
+
+.book-scene-ledger-item[data-dashboard-href]:focus-visible {
+    outline: 2px solid var(--vtt-accent, #7a2f2f);
+    outline-offset: 2px;
+}
+
+/* Beitreten-Affordance für Nicht-Mitglieder (Desktop-Audit D01/A2). */
+.book-scene-join-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+    margin-top: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.book-scene-join-row [data-join-input] {
+    flex: 1 1 12rem;
+    min-width: 0;
+    font: inherit;
+    font-size: max(1rem, 16px);
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid rgba(130, 89, 52, 0.3);
+    background: rgba(255, 255, 255, 0.65);
+    color: inherit;
+}
+
 .book-scene-ledger-head {
     display: flex;
     align-items: baseline;
