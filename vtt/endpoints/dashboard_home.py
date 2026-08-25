@@ -190,84 +190,21 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
     return primary, secondary
 
 
-def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions: list[dict]) -> list[dict]:
-    feed = []
-
-    prep_session = next((session for session in sessions if session["prep_blockers"]), None)
-    live_session = next((session for session in sessions if session["runtime_status"] in {"in_progress", "active", "live"}), None)
-
-    if prep_session:
-        feed.append(
-            {
-                "id": f"prep-{prep_session['id']}",
-                "section": "session-prep",
-                "kicker": "Vorbereitung",
-                "title": f"{prep_session['campaign_name']} braucht noch Vorbereitung",
-                "meta": prep_session["name"],
-                "copy": f"Offen vor dem Tisch: {', '.join(prep_session['prep_blockers'])}.",
-                "action_label": "Session-Prep öffnen",
-                "action_href": f"/campaigns?campaign_id={prep_session['campaign_id']}&classic=1",
-            }
-        )
-
-    if campaigns:
-        campaign = campaigns[0]
-        feed.append(
-            {
-                "id": f"campaign-{campaign['id']}",
-                "section": "campaigns",
-                "kicker": "Kampagnen",
-                "title": campaign["name"],
-                "meta": f"{campaign['member_count']} Mitglieder · {campaign['session_count']} Sitzungen",
-                "copy": campaign.get("description") or "Von der Übersicht direkt in Hub, Vorbereitung und die nächsten Schritte zum Spielabend.",
-                "action_label": "Hub öffnen",
-                "action_href": f"/campaigns?campaign_id={campaign['id']}&classic=1",
-            }
-        )
-
-    if characters:
-        character = characters[0]
-        feed.append(
-            {
-                "id": f"character-{character['id']}",
-                "section": "characters",
-                "kicker": "Charaktere",
-                "title": character["name"],
-                "meta": f"Stufe {character['level']} · {character.get('class') or 'Abenteurer'}",
-                "copy": "Bogen, Identität und der Rückweg in Kampagnen oder Vorbereitung bleiben von hier aus erreichbar.",
-                "action_label": "Bogen öffnen",
-                "action_href": f"/character-sheet?id={character['id']}",
-            }
-        )
-
-    if live_session:
-        feed.append(
-            {
-                "id": f"play-{live_session['id']}",
-                "section": "play",
-                "kicker": "Play",
-                "title": f"Live-Pfad für {live_session['campaign_name']}",
-                "meta": live_session["name"],
-                "copy": "Öffne die laufende Runde und kehre direkt zum nächsten Spielschritt zurück.",
-                "action_label": "Runde öffnen",
-                "action_href": f"/campaigns?campaign_id={live_session['campaign_id']}&classic=1",
-            }
-        )
-    else:
-        feed.append(
-            {
-                "id": "play-path",
-                "section": "play",
-                "kicker": "Play",
-                "title": "Spieltisch vorbereiten",
-                "meta": "Nächster Schritt vor der Session",
-                "copy": "Öffne die Vorbereitung, prüfe Karte und Charaktere und starte danach den Spielabend.",
-                "action_label": "Vorbereitung öffnen",
-                "action_href": "/campaigns?classic=1",
-            }
-        )
-
-    return feed
+def _build_active_campaign_feed(campaigns: list[dict]) -> list[dict]:
+    return [
+        {
+            "id": f"campaign-{campaign['id']}",
+            "section": "campaigns",
+            "kicker": "Kampagnen",
+            "title": campaign["name"],
+            "meta": f"{campaign['member_count']} Mitglieder · {campaign['session_count']} Sitzungen",
+            "copy": campaign.get("description") or "Öffne den Hub, um Vorbereitung und den nächsten Spielabend weiterzuführen.",
+            "action_label": "Hub öffnen",
+            "action_href": f"/campaigns?campaign_id={campaign['id']}&classic=1",
+        }
+        for campaign in campaigns
+        if str(campaign.get("status") or "").strip().lower() == "active"
+    ]
 
 
 def _build_home_snapshot(user: User):
@@ -276,7 +213,7 @@ def _build_home_snapshot(user: User):
     characters = [_serialize_character_for_home(character) for character in Character.query.filter_by(user_id=user.id, deleted_at=None).order_by(Character.updated_at.desc(), Character.created_at.desc()).all()]
     session_summaries = _build_session_summaries(visible_campaigns)
     primary_action, secondary_action = _build_primary_and_secondary_actions(campaigns, characters, session_summaries, user)
-    feed_preview = _build_feed_preview(campaigns, characters, session_summaries)
+    feed_preview = _build_active_campaign_feed(campaigns)
 
     prep_blocker_count = sum(1 for session in session_summaries if session["prep_blockers"])
     live_session_count = sum(1 for session in session_summaries if session["runtime_status"] in {"in_progress", "active", "live"})

@@ -840,15 +840,7 @@
             const feedItems = Array.isArray(snapshot?.feed_preview) ? snapshot.feed_preview : [];
 
             if (feedItems.length === 0) {
-                return `
-                    <section class="book-home-feed">
-                        <div class="book-home-feed-item is-empty">
-                            <div class="book-home-feed-kicker">${escapeHtml(this.content('home.feed_empty_kicker', 'Chronik'))}</div>
-                            <h3 class="book-home-feed-title">${escapeHtml(this.content('home.feed_empty_title', 'Neuigkeiten werden vorbereitet'))}</h3>
-                            <p class="book-home-feed-copy">${escapeHtml(this.content('home.feed_empty_copy', 'Noch keine Neuigkeiten sichtbar. Kampagnen und Charaktere bleiben solange die stabilen Einstiege.'))}</p>
-                        </div>
-                    </section>
-                `;
+                return '';
             }
 
             return `
@@ -925,14 +917,16 @@
                             <div aria-hidden="true"></div>
 
                             <article class="book-spread-page book-spread-page--right">
-                                <header class="book-spread-page-header">
-                                    <p class="book-spread-page-kicker">${rightEyebrow}</p>
-                                    <h2 class="book-spread-page-title">${rightTitle}</h2>
-                                    <p class="book-spread-page-copy">${rightCopy}</p>
-                                </header>
-                                <div class="book-spread-page-meta">
-                                    ${chips.map((chip) => `<span class="book-dashboard-chip">${escapeHtml(chip)}</span>`).join('')}
-                                </div>
+                                ${options.showRightHeader !== false ? `
+                                    <header class="book-spread-page-header">
+                                        <p class="book-spread-page-kicker">${rightEyebrow}</p>
+                                        <h2 class="book-spread-page-title">${rightTitle}</h2>
+                                        <p class="book-spread-page-copy">${rightCopy}</p>
+                                    </header>
+                                    <div class="book-spread-page-meta">
+                                        ${chips.map((chip) => `<span class="book-dashboard-chip">${escapeHtml(chip)}</span>`).join('')}
+                                    </div>
+                                ` : ''}
                                 <div class="book-spread-page-body">
                                     ${options.rightPage || ''}
                                 </div>
@@ -957,6 +951,7 @@
             const scene = routeMeta.dashboard || {};
             return this.buildPageShell('dashboard', user, {
                 showRunningHead: false,
+                showRightHeader: false,
                 folio: scene.folio,
                 eyebrow: this.content('shell.left_eyebrow', 'Kapitel I'),
                 title: this.content('shell.left_title', 'Übersicht'),
@@ -965,9 +960,6 @@
                     'Willkommen zurück, {username}. Hier siehst du deinen persönlichen VTT-Stand und den nächsten Weg in Kampagnen, Charaktere, Session-Prep und Play.',
                     { username: user?.username || 'Donut' },
                 ),
-                rightEyebrow: this.content('shell.right_eyebrow', 'Chronik'),
-                rightTitle: this.content('shell.right_title', 'Was gerade zählt'),
-                rightCopy: this.content('shell.right_copy', 'Dein persönlicher VTT-Stand und die nächsten Vorbereitungsschritte bleiben hier gebündelt.'),
                 chips: [],
                 leftPage: `
                     <div class="book-home-stack">

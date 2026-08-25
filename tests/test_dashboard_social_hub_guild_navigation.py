@@ -71,6 +71,7 @@ def test_dashboard_home_snapshot_is_a_personal_vtt_start_point(client, app):
         campaign = Campaign(name="Die Bernsteinfahrt", description="Vorbereitung für Kapitel I.", owner_id=user.id)
         db.session.add(campaign)
         db.session.flush()
+        db.session.add(Campaign(name="Archivierte Runde", status="paused", owner_id=user.id))
 
         db.session.add(
             Character(
@@ -109,7 +110,8 @@ def test_dashboard_home_snapshot_is_a_personal_vtt_start_point(client, app):
     assert "priorities" not in data
     assert "quick_links" not in data
     assert all(item["section"] not in {"social", "guilds"} for item in data["feed_preview"])
-    assert any(item["section"] == "session-prep" for item in data["feed_preview"])
+    assert {item["section"] for item in data["feed_preview"]} == {"campaigns"}
+    assert {item["title"] for item in data["feed_preview"]} == {"Die Bernsteinfahrt"}
 
     with app.app_context():
         resolved_user = db.session.get(User, user_id)
@@ -142,10 +144,13 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     assert "Lesebändchen" in js
     assert "book-toc" in js
     assert "showRunningHead: false" in js
+    assert "showRightHeader: false" in js
     assert "book-page-folio--left" in js
     assert "book-page-folio--right" in js
     assert "book-folio" not in js
     assert "book-folio" not in css
+    assert "Live-Pfad" not in dashboard_home
+    assert "Spieltisch vorbereiten" not in dashboard_home
     assert "Gemeinschaftssaal" not in dashboard_home
     assert "home.overview_scope_default" in js
     assert "buildDashboardGuildPanel" not in js

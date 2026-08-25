@@ -219,20 +219,6 @@ PAGE_CONTENT_DEFAULTS = [
     {"page_key": "dashboard", "content_key": "home.nav_session_prep", "text": "Vorbereitung", "description": "Home nav-rail link"},
     {"page_key": "dashboard", "content_key": "home.nav_play", "text": "Spieltisch", "description": "Home nav-rail link"},
 
-    # ── dashboard: chronicle feed ────────────────────────────────────────
-    {
-        "page_key": "dashboard", "content_key": "home.feed_empty_kicker", "text": "Chronik",
-        "description": "Kicker shown when the feed is empty",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.feed_empty_title", "text": "Neuigkeiten werden vorbereitet",
-        "description": "Heading shown when the feed is empty",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.feed_empty_copy", "text": "Noch keine Neuigkeiten sichtbar. Kampagnen und Charaktere sind deine nächsten Einstiege.",
-        "description": "Body copy shown when the feed is empty",
-    },
-
 ]
 
 
