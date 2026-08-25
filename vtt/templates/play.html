@@ -144,9 +144,9 @@
            paragraph chrome stack, so the map gets ~90% of the viewport
            instead of a large fraction going to descriptive copy above it. */
         .play-status-strip {
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
             align-items: center;
-            justify-content: space-between;
             gap: 0.75rem;
             padding: 0.3rem 0.1rem;
         }
@@ -162,6 +162,10 @@
         }
         .play-status-strip .book-dashboard-meta {
             flex-wrap: nowrap;
+            min-width: 0;
+            justify-content: flex-end;
+            overflow-x: auto;
+            scrollbar-width: thin;
         }
         .play-status-strip[hidden] {
             display: none !important;
@@ -547,6 +551,29 @@
                it, making it impossible to close from where it was opened. */
             z-index: 30;
             transition: right 240ms ease;
+        }
+        /* Desktop: the page/zoom controls share the single status row. The
+           map starts cleanly underneath it instead of carrying a second
+           floating chrome strip over the artwork. */
+        .play-status-strip .stage-topbar {
+            position: static;
+            inset: auto;
+            display: flex;
+            flex: 0 0 auto;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            gap: 0.38rem;
+            padding: 0;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            z-index: auto;
+            transition: none;
+        }
+        .play-status-strip .stage-zoom-cluster {
+            display: flex;
+            align-items: center;
+            gap: 0.38rem;
         }
         /* ...and the inverse (same robot, next run): at z 30 the topbar
            covered the open drawer's tab row instead. Neither layer may sit
@@ -1327,11 +1354,9 @@
                 padding: 0.28rem;
                 gap: 0.28rem;
             }
-            /* The name has the top bar to itself now: the zoom controls
-               hang as a compact vertical rail on the map's right edge
-               (map-app idiom) instead of occupying a second chrome row —
-               "Buttons und Menüs ohne den Inhalt zu stören" (Adrian,
-               2026-08-25, nach dem GD-Vorbild). */
+            /* Keep zoom reachable without putting a second chrome row over
+               the map. The controls become a compact vertical rail while
+               the active page pill stays in the status strip. */
             .active-page-pill {
                 flex: 1 1 100%;
             }
@@ -1388,6 +1413,24 @@
                 flex: 0 0 auto;
                 padding: 0.35rem 0.5rem;
                 min-height: 44px;
+            }
+            .play-status-strip {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
+                align-items: stretch;
+            }
+            .play-status-strip .stage-topbar {
+                position: static;
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                gap: 0.28rem;
+                padding: 0;
+                background: transparent;
+                border: 0;
+            }
+            .play-status-strip .stage-zoom-cluster {
+                display: flex;
             }
             #tokenCreatePanel {
                 width: min(280px, calc(100vw - 0.8rem)) !important;
@@ -1449,6 +1492,17 @@
 
                 <div class="book-dashboard-titlebar play-status-strip">
                     <p id="sessionTitle" class="play-session-title">Session wird geladen...</p>
+                    <div class="stage-topbar" aria-label="Seiten- und Zoomsteuerung">
+                        <div id="activePagePill" class="active-page-pill" hidden>Seite: <strong id="activePageName">-</strong></div>
+                        <div class="stage-zoom-cluster">
+                            <button type="button" id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
+                            <span id="zoomLabel" class="mini-control">100%</span>
+                            <button type="button" id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
+                            <input id="zoomRange" type="range" min="20" max="300" step="5" value="100">
+                            <button type="button" id="btnZoomFit" class="mini-control" title="Karte einpassen">FIT</button>
+                            <button type="button" id="btnZoomReset" class="mini-control" title="100%">RST</button>
+                        </div>
+                    </div>
                     <div class="book-dashboard-meta">
                         <span class="book-dashboard-chip">Modus: <strong id="modeBadge">-</strong></span>
                         <span class="book-dashboard-chip">Rolle: <strong id="roleBadge">-</strong></span>
@@ -1496,18 +1550,6 @@
         </div>
 
         <section class="stage">
-            <div class="stage-topbar">
-                <div id="activePagePill" class="active-page-pill" hidden>Seite: <strong id="activePageName">-</strong></div>
-                <div class="stage-zoom-cluster">
-                    <button type="button" id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
-                    <span id="zoomLabel" class="mini-control">100%</span>
-                    <button type="button" id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
-                    <input id="zoomRange" type="range" min="20" max="300" step="5" value="100">
-                    <button type="button" id="btnZoomFit" class="mini-control" title="Karte einpassen">FIT</button>
-                    <button type="button" id="btnZoomReset" class="mini-control" title="100%">RST</button>
-                </div>
-            </div>
-
             <div class="map-viewport" id="mapViewport">
                 <div id="mapExtent">
                     <div class="map-world" id="mapWorld">

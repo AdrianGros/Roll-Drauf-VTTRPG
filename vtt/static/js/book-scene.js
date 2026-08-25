@@ -805,21 +805,6 @@
             const overviewScopeNote = snapshot?.overview_scope?.note
                 || this.content('home.overview_scope_default', 'Diese Übersicht zeigt deinen VTT-Stand: Kampagnen, Charaktere, Sitzungen und Vorbereitung.');
 
-            // B2 (Designbrief §5): Die Startseite ist das Inhaltsverzeichnis
-            // des Buches -- Lesebändchen zuerst (weiterlesen, wo du warst),
-            // dann die Kapitelliste mit echten Zahlen. Keine Prosa mehr, die
-            // die App beschreibt.
-            const tocRows = [
-                { numeral: 'II', label: this.content('home.nav_campaigns', 'Kampagnen'),
-                  count: Number(homeState.campaign_count || 0), href: '/campaigns' },
-                { numeral: 'III', label: this.content('home.nav_characters', 'Charaktere'),
-                  count: Number(homeState.character_count || 0), href: '/characters' },
-                { numeral: 'IV', label: this.content('home.nav_play', 'Spieltisch'),
-                  count: Number(homeState.session_count || 0), href: null,
-                  action: 'play-launch',
-                  countLabel: this.content('home.toc_sessions', '{count} Sitzungen',
-                                           { count: Number(homeState.session_count || 0) }) },
-            ];
             return `
                 <section class="book-home-hero book-ribbon-card">
                     <div class="book-ribbon-marker" aria-hidden="true"></div>
@@ -842,6 +827,28 @@
                     </div>
                     ${this.dashboardNotice ? `<div class="book-home-hero-notice">${escapeHtml(this.dashboardNotice)}</div>` : ''}
                 </section>
+            `;
+        },
+
+        buildDashboardToc(snapshot = null) {
+            const homeState = snapshot?.home_state || {};
+
+            // The contents list is the dashboard's compact route map. Keep it
+            // separate from the hero so the book spread can place each block
+            // on the page marked by the visual audit.
+            const tocRows = [
+                { numeral: 'II', label: this.content('home.nav_campaigns', 'Kampagnen'),
+                  count: Number(homeState.campaign_count || 0), href: '/campaigns' },
+                { numeral: 'III', label: this.content('home.nav_characters', 'Charaktere'),
+                  count: Number(homeState.character_count || 0), href: '/characters' },
+                { numeral: 'IV', label: this.content('home.nav_play', 'Spieltisch'),
+                  count: Number(homeState.session_count || 0), href: null,
+                  action: 'play-launch',
+                  countLabel: this.content('home.toc_sessions', '{count} Sitzungen',
+                                           { count: Number(homeState.session_count || 0) }) },
+            ];
+
+            return `
                 <nav class="book-toc" aria-label="Inhaltsverzeichnis">
                     <div class="book-toc-kicker">${escapeHtml(this.content('home.toc_kicker', 'Inhaltsverzeichnis'))}</div>
                     ${tocRows.map((row) => `
@@ -924,7 +931,7 @@
                                 <header class="book-spread-page-header">
                                     <p class="book-spread-page-kicker">${leftEyebrow}</p>
                                     <h1 class="book-spread-page-title">${leftTitle}</h1>
-                                    <p class="book-spread-page-copy">${leftCopy}</p>
+                                    ${leftCopy ? `<p class="book-spread-page-copy">${leftCopy}</p>` : ''}
                                 </header>
                                 <div class="book-spread-page-body">
                                     ${options.leftPage || ''}
@@ -941,7 +948,7 @@
                                     <header class="book-spread-page-header">
                                         <p class="book-spread-page-kicker">${rightEyebrow}</p>
                                         <h2 class="book-spread-page-title">${rightTitle}</h2>
-                                        <p class="book-spread-page-copy">${rightCopy}</p>
+                                        ${rightCopy ? `<p class="book-spread-page-copy">${rightCopy}</p>` : ''}
                                     </header>
                                     <div class="book-spread-page-meta">
                                         ${chips.map((chip) => `<span class="book-dashboard-chip">${escapeHtml(chip)}</span>`).join('')}
@@ -975,19 +982,18 @@
                 folio: scene.folio,
                 eyebrow: this.content('shell.left_eyebrow', 'Kapitel I'),
                 title: this.content('shell.left_title', 'Übersicht'),
-                copy: this.content(
-                    'shell.left_copy',
-                    'Willkommen zurück, {username}. Hier siehst du deinen persönlichen VTT-Stand und den nächsten Weg in Kampagnen, Charaktere, Session-Prep und Play.',
-                    { username: user?.username || 'Donut' },
-                ),
+                copy: '',
                 chips: [],
                 leftPage: `
                     <div class="book-home-stack">
-                        ${this.buildDashboardHero(snapshot)}
+                        ${this.buildDashboardToc(snapshot)}
                     </div>
                 `,
                 rightPage: `
-                    ${this.buildDashboardFeed(snapshot)}
+                    <div class="book-home-stack">
+                        ${this.buildDashboardHero(snapshot)}
+                        ${this.buildDashboardFeed(snapshot)}
+                    </div>
                 `,
             });
         },
@@ -1001,10 +1007,9 @@
             return this.buildPageShell('campaigns', user, {
                 eyebrow: 'Kapitel II',
                 title: 'Kampagnen',
-                copy: 'Lege Kampagnen an, öffne den Kampagnen-Hub und gehe von dort weiter in Session-Prep, direkte Charakterzuweisung, Karten, Assets und schließlich nach Play.',
-                rightEyebrow: 'Nächste Schritte',
-                rightTitle: 'Kampagnen produktiv nutzen',
-                rightCopy: 'Diese Seite ist der Einstieg in die echte Vorbereitungsarbeit: neue Kampagne starten, bestehenden Hub öffnen oder Charaktere für die nächste Session vorbereiten.',
+                showRunningHead: false,
+                copy: '',
+                showRightHeader: false,
                 chips: [`${campaigns.length} Kampagnen`, `${ownedCount} Eigene`, `${joinedCount} Beigetreten`, `${activeCount} Aktiv`],
                 leftPage: `
                     ${this.buildStatStrip([
@@ -1022,70 +1027,38 @@
                                 href: buildIntentHref('/campaigns', { classic: 1, intent: 'create' }),
                                 primary: true,
                             },
-                            {
-                                label: 'Kampagnen-Hub öffnen',
-                                // D07/B1: nur Kampagnen, in denen man Mitglied
-                                // ist — der Hub-Call für Fremde ist ein 403.
-                                href: (() => {
-                                    const mine = campaigns.find((c) => c.is_member);
-                                    return mine
-                                        ? buildIntentHref('/campaigns', { campaign_id: mine.id, classic: 1 })
-                                        : buildIntentHref('/campaigns', { classic: 1 });
-                                })(),
-                            },
                         ])}
                         ${this.buildCampaignLedger(campaigns)}
                     </section>
                 `,
                 rightPage: `
-                    <section class="book-scene-panel">
-                        <span class="book-scene-panel-kicker">Vorbereitung</span>
-                        <h2 class="book-scene-panel-title">Was du hier erledigst</h2>
-                        <p class="book-scene-panel-copy">Kampagnen werden hier nicht nur angezeigt. Von hier aus öffnest du den Hub, bereitest Sessions vor und gehst mit klaren Schritten Richtung Tisch.</p>
-                        ${this.buildActionButtons([
-                            {
-                                label: '+ Kampagne anlegen',
-                                href: buildIntentHref('/campaigns', { classic: 1, intent: 'create' }),
-                                primary: true,
-                            },
-                            {
-                                label: 'Charaktere öffnen',
-                                href: buildIntentHref('/characters', { classic: 1 }),
-                            },
-                        ])}
-                        <div class="book-scene-note-list">
-                            <div class="book-scene-note">Neue Kampagnen werden direkt über das echte Erstellformular gestartet, nicht über Prompt-Dialoge.</div>
-                            <div class="book-scene-note">Bestehende Kampagnen führen in den Hub, dort weiter in Session-Prep mit Karten, Assets und direkter Charakterzuweisung.</div>
-                            <div class="book-scene-note">Wenn noch keine Kampagne existiert, ist der erste klare Schritt: Kampagne anlegen und danach den Hub öffnen.</div>
+                    <section class="book-spread-footer">
+                        <div class="book-dashboard-widget-header">
+                            <h2>Kampagnen-Werkzeuge</h2>
+                            <span class="book-dashboard-widget-tag">Hub, Vorbereitung, Karten, Assets</span>
+                        </div>
+                        <p class="book-dashboard-widget-copy">
+                            Die wichtigsten Folgeflächen sind bereits nutzbar und hängen am Kampagnen-Hub: Session-Prep, Karten, Assets und die nächsten Schritte Richtung Play.
+                        </p>
+                        <div class="book-scene-widget-stack">
+                            <div class="book-scene-widget-card">
+                                <span>Einladungen</span>
+                                <small>Mitspieler aufnehmen und Kampagnen sauber für die gemeinsame Vorbereitung öffnen.</small>
+                            </div>
+                            <div class="book-scene-widget-card">
+                                <span>Session-Prep</span>
+                                <small>Sessionstatus lesen, Charaktere zuweisen und entscheiden, ob Start, Fortsetzen oder Warten dran ist.</small>
+                            </div>
+                            <div class="book-scene-widget-card">
+                                <span>Karten</span>
+                                <small>Session-Karte setzen und den Kartenkontext für die nächste Runde vorbereiten.</small>
+                            </div>
+                            <div class="book-scene-widget-card">
+                                <span>Assets</span>
+                                <small>Sessionbezogene Assets öffnen, Upload vorbereiten und den Vorbereitungsstand vor dem Spielabend prüfen.</small>
+                            </div>
                         </div>
                     </section>
-                `,
-                footer: `
-                    <div class="book-dashboard-widget-header">
-                        <h2>Kampagnen-Werkzeuge</h2>
-                        <span class="book-dashboard-widget-tag">Hub, Vorbereitung, Karten, Assets</span>
-                    </div>
-                    <p class="book-dashboard-widget-copy">
-                        Die wichtigsten Folgeflächen sind bereits nutzbar und hängen am Kampagnen-Hub: Session-Prep, Karten, Assets und die nächsten Schritte Richtung Play.
-                    </p>
-                    <div class="book-scene-widget-stack">
-                        <div class="book-scene-widget-card">
-                            <span>Einladungen</span>
-                            <small>Mitspieler aufnehmen und Kampagnen sauber für die gemeinsame Vorbereitung öffnen.</small>
-                        </div>
-                        <div class="book-scene-widget-card">
-                            <span>Session-Prep</span>
-                            <small>Sessionstatus lesen, Charaktere zuweisen und entscheiden, ob Start, Fortsetzen oder Warten dran ist.</small>
-                        </div>
-                        <div class="book-scene-widget-card">
-                            <span>Karten</span>
-                            <small>Session-Karte setzen und den Kartenkontext für die nächste Runde vorbereiten.</small>
-                        </div>
-                        <div class="book-scene-widget-card">
-                            <span>Assets</span>
-                            <small>Sessionbezogene Assets öffnen, Upload vorbereiten und den Vorbereitungsstand vor dem Spielabend prüfen.</small>
-                        </div>
-                    </div>
                 `,
             });
         },
@@ -1098,10 +1071,11 @@
             return this.buildPageShell('characters', user, {
                 eyebrow: 'Kapitel III',
                 title: 'Charaktere',
-                copy: 'Lege Helden an, pflege Avatar und Token und wechsle für Details in den Bogen. Danach führt der Weg sauber zurück in Kampagnen und Session-Prep.',
+                showRunningHead: false,
+                copy: '',
                 rightEyebrow: 'Nächste Schritte',
                 rightTitle: 'Helden vorbereiten',
-                rightCopy: 'Hier beginnst du die Heldenarbeit und springst von dort in Bogen, Kampagnenkontext und Session-Zuweisung.',
+                rightCopy: '',
                 chips: [`${characters.length} Helden`, `${distinctClasses} Klassen`, `Höchstes Level ${highestLevel}`],
                 leftPage: `
                     ${this.buildStatStrip([
@@ -1112,70 +1086,8 @@
                     <section class="book-scene-panel">
                         <span class="book-scene-panel-kicker">Archiv</span>
                         <h2 class="book-scene-panel-title">Heldenarchiv</h2>
-                        <p class="book-scene-panel-copy">Öffne bestehende Helden, starte neue Figuren direkt aus dem Archiv und führe sie danach über Bogen und Kampagnenkontext bis in die Session-Vorbereitung.</p>
-                        ${this.buildActionButtons([
-                            {
-                                label: 'Held anlegen',
-                                href: buildIntentHref('/characters', { classic: 1, intent: 'create' }),
-                                primary: true,
-                            },
-                            {
-                                label: 'Archiv öffnen',
-                                href: buildIntentHref('/characters', { classic: 1 }),
-                            },
-                        ])}
                         ${this.buildCharacterLedger(characters)}
                     </section>
-                `,
-                rightPage: `
-                    <section class="book-scene-panel">
-                        <span class="book-scene-panel-kicker">Heldenarbeit</span>
-                        <h2 class="book-scene-panel-title">Was du von hier aus tust</h2>
-                        <p class="book-scene-panel-copy">Erstelle neue Helden, öffne den Bogen für Werte und Ausrüstung und gehe danach zurück in Kampagnen oder Session-Prep, um den Held einsatzbereit zu machen.</p>
-                        ${this.buildActionButtons([
-                            {
-                                label: 'Held anlegen',
-                                href: buildIntentHref('/characters', { classic: 1, intent: 'create' }),
-                                primary: true,
-                            },
-                            {
-                                label: 'Kampagnen öffnen',
-                                href: buildIntentHref('/campaigns', { classic: 1 }),
-                            },
-                        ])}
-                        <div class="book-scene-note-list">
-                            <div class="book-scene-note">Der Bogen bleibt die richtige Fläche für detaillierte Bearbeitung von Werten, Inventar, Zaubern und Notizen.</div>
-                            <div class="book-scene-note">Avatar und Token werden über Archiv und Bogen konsistent gepflegt und bleiben später im Session-Kontext sichtbar.</div>
-                            <div class="book-scene-note">Wenn ein Held kampagnengebunden ist, führt der nächste sinnvolle Schritt über Kampagnen-Hub und Session-Prep in die direkte Zuweisung.</div>
-                        </div>
-                    </section>
-                `,
-                footer: `
-                    <div class="book-dashboard-widget-header">
-                        <h2>Charakter-Werkzeuge</h2>
-                        <span class="book-dashboard-widget-tag">Anlage, Bögen, Identität, Vorbereitung</span>
-                    </div>
-                    <p class="book-dashboard-widget-copy">
-                        Die Charakterarbeit ist bereits operativ: Helden anlegen, Standard Array oder Point Buy nutzen, Avatar und Token setzen und danach zurück in die Kampagnenvorbereitung gehen.
-                    </p>
-                    <div class="book-scene-widget-stack">
-                        <div class="book-scene-widget-card">
-                            <span>Erstellung</span>
-                            <small>Neue Helden direkt aus dem Archiv starten, ohne den Vorbereitungsweg zu verlassen.</small>
-                        </div>
-                        <div class="book-scene-widget-card">
-                            <span>Werte</span>
-                            <small>Standard Array und Point Buy bleiben in der Anlage direkt verfügbar.</small>
-                        </div>
-                        <div class="book-scene-widget-card">
-                            <span>Avatar & Token</span>
-                            <small>Identität ist im Archiv und im Bogen vorhanden und kann dort direkt gepflegt werden.</small>
-                        </div>
-                        <div class="book-scene-widget-card">
-                            <span>Rückweg in die Vorbereitung</span>
-                            <small>Nach dem Bogen geht es sichtbar zurück in Kampagnen und weiter in die Session-Zuweisung.</small>
-                        </div>
-                    </div>
                 `,
             });
         },

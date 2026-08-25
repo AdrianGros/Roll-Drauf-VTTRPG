@@ -86,3 +86,17 @@ def test_playtable_add_page_offers_upload_or_copy_never_a_dead_end():
     assert 'id="layerAddCopy"' in template
     assert "Alle vorhandenen Kampagnenkarten sind bereits Seiten" not in script
     assert "wird kopiert" in script
+
+
+def test_playtable_uses_one_upper_control_strip_for_page_and_zoom_controls():
+    """The map must not carry a second chrome bar over its artwork."""
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+
+    strip_start = template.index('class="book-dashboard-titlebar play-status-strip"')
+    controls_start = template.index('class="stage-topbar"')
+    map_start = template.index('<section class="stage">')
+
+    assert strip_start < controls_start < map_start
+    assert template.count('class="stage-topbar"') == 1
+    assert template.count('id="activePagePill"') == 1
+    assert template.count('id="btnZoomFit"') == 1
