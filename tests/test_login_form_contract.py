@@ -37,12 +37,17 @@ def test_discord_login_button_keeps_blue_theme_after_shared_button_css():
 
 
 def test_login_profile_art_uses_the_exact_discord_attachment():
+    """The page SERVES a delivery derivative (2026-08-25: 236KB PNG ->
+    41KB WebP of the same artwork, prerender/pageweight pass), while the
+    exact original attachment stays in the repo, byte-pinned below."""
     html = LOGIN_TEMPLATE.read_text(encoding="utf-8")
 
     assert PROFILE_BUNNY_ASSET.is_file()
     assert hashlib.sha256(PROFILE_BUNNY_ASSET.read_bytes()).hexdigest() == (
         "bb07de4949c0d05c39cafcd87988fa5784c35dbfe78fa874ebf9bda3062e9697"
     )
+    derivative = PROFILE_BUNNY_ASSET.with_name("profile-bunny-800.webp")
+    assert derivative.is_file()
     assert '<div class="login-profile-art" aria-hidden="true">' in html
-    assert '<img src="/static/assets/sternenstaub/illustrations/profile-bunny.png" alt="">' in html
+    assert 'src="/static/assets/sternenstaub/illustrations/profile-bunny-800.webp"' in html
     assert "object-fit: contain;" in html

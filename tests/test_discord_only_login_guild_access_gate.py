@@ -83,7 +83,9 @@ def test_login_page_exposes_standard_auth_and_optional_discord(client):
     assert "Dein Zugang, deine Wahl" not in html
     assert "Die Registrierung legt einen normalen Player-Account" not in html
     assert "/static/images/discord-symbol.svg" in html
-    assert "/static/assets/sternenstaub/banners/banner-roll-drauf.png" in html
+    # Served as a 1400px WebP delivery derivative since 2026-08-25 (the
+    # exact 2.4MB original stays in the repo untouched).
+    assert "/static/assets/sternenstaub/banners/banner-roll-drauf-1400.webp" in html
     assert 'class="login-book-banner-image"' in html
     assert "spellbook-logo.svg" not in html
     assert "banner-starry-sky.jpg" not in html

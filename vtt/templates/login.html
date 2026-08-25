@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - roll drauf vtt</title>
-    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon.png">
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
+    <link rel="preload" as="image" href="/static/assets/sternenstaub/banners/banner-roll-drauf-1400.webp">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -506,7 +507,40 @@
     <link rel="stylesheet" href="/static/css/book-scene.css">
 </head>
 <body class="spellbook">
-    <!-- 3D Book Scene (injected via book-scene.js) -->
+    <!-- 3D Book Scene — server-rendered (2026-08-25). This markup is the
+         verbatim shell book-scene.js used to inject at runtime; shipping it
+         in the HTML means the user's FIRST paint is the finished closed
+         book instead of an empty body that JS visibly assembles.
+         book-scene.js's create() detects it and only binds. -->
+    <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="Buchoberfläche">
+        <div class="book-scene-backdrop" aria-hidden="true"></div>
+        <div class="book-scene-stage">
+            <div id="book" class="book-scene-book" role="doc-cover" aria-label="Interactive spellbook">
+                <div class="book-element book-cover" role="button" tabindex="0" aria-label="Buchzugang öffnen" aria-pressed="false">
+                    <div class="cover-kicker" aria-hidden="true">roll drauf</div>
+                    <div class="cover-title" aria-hidden="false">Zum Buchzugang</div>
+                    <div class="cover-ornament" aria-hidden="true"><img src="/static/icons/icon-book-sparkles.svg" alt=""></div>
+                    <div class="cover-action" aria-hidden="true">Anmelden</div>
+                </div>
+                <div class="book-element book-pages" role="doc-pagebreak" aria-label="Buchseiten"></div>
+                <div class="book-element book-back" role="doc-cover" aria-label="Buchrückseite"></div>
+                <div class="book-shell-page-stack book-shell-page-stack--left" aria-hidden="true"></div>
+                <div class="book-shell-page-stack book-shell-page-stack--right" aria-hidden="true"></div>
+                <div class="book-shell-spine" aria-hidden="true">
+                    <div class="book-shell-spine-core"></div>
+                </div>
+                <div id="book-scene-turn-leaf" class="book-scene-turn-leaf" hidden aria-hidden="true">
+                    <div id="book-scene-turn-shadow" class="book-scene-turn-shadow"></div>
+                    <div id="book-scene-turn-sheet" class="book-scene-turn-sheet">
+                        <div class="book-scene-turn-face book-scene-turn-face--front">
+                            <div id="book-scene-turn-front" class="book-scene-turn-content"></div>
+                        </div>
+                        <div class="book-scene-turn-face book-scene-turn-face--back">
+                            <div id="book-scene-turn-back" class="book-scene-turn-content"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="book-dashboard-scene" class="book-dashboard-scene" hidden aria-hidden="true"></div>
 
     <!-- Login content (rendered as the first open spread) -->
     <main id="login-content">
@@ -514,7 +548,7 @@
             <section class="login-book-page login-book-page--left" aria-label="Login page">
                 <div class="login-book-paper login-book-paper--login">
                     <div class="login-book-page-header" aria-label="Roll drauf Buchzugang">
-                        <img src="/static/assets/sternenstaub/banners/banner-roll-drauf.png" alt="Roll drauf – Buchzugang" class="login-book-banner-image">
+                        <img src="/static/assets/sternenstaub/banners/banner-roll-drauf-1400.webp" width="1400" height="788" alt="Roll drauf – Buchzugang" class="login-book-banner-image">
                     </div>
 
                     <h1 class="login-book-page-title">Anmelden</h1>
@@ -548,7 +582,7 @@
                     </div>
 
                     <div class="login-profile-art" aria-hidden="true">
-                        <img src="/static/assets/sternenstaub/illustrations/profile-bunny.png" alt="">
+                        <img src="/static/assets/sternenstaub/illustrations/profile-bunny-800.webp" width="800" height="800" alt="" loading="lazy" decoding="async">
                     </div>
                 </div>
             </section>
@@ -598,6 +632,9 @@
             </section>
         </div>
     </main>
+            </div>
+        </div>
+    </div>
 
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/book-scene.js"></script>

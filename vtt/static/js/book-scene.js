@@ -198,10 +198,18 @@
         },
 
         create() {
-            if (document.getElementById('book-scene-wrapper')) {
+            // Bind-once guard. This was previously keyed on the wrapper
+            // existing in the DOM, which conflated two different things:
+            // "the markup is present" and "this scene object is wired up".
+            // Since 2026-08-25 login.html ships the wrapper server-rendered
+            // (so the user's first paint is the finished book instead of
+            // watching JS build it), so the markup existing must NOT skip
+            // binding — only a prior create() call may.
+            if (this.sceneCreated) {
                 this.syncMotionPreference();
                 return;
             }
+            this.sceneCreated = true;
 
             const bookHTML = `
                 <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="Buchoberfläche">
@@ -238,7 +246,9 @@
                 </div>
             `;
 
-            document.body.insertAdjacentHTML('afterbegin', bookHTML);
+            if (!document.getElementById('book-scene-wrapper')) {
+                document.body.insertAdjacentHTML('afterbegin', bookHTML);
+            }
 
             if (!document.querySelector('.bookmark')) {
                 document.body.insertAdjacentHTML('beforeend', '<div class="bookmark login"></div>');
