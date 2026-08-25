@@ -1196,34 +1196,6 @@ body.play-workspace-realign main {
     color: var(--vtt-plum-deep, #2f1638);
 }
 
-.book-home-rail {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.65rem;
-}
-
-.book-home-rail-link {
-    appearance: none;
-    border: 1px solid rgba(130, 89, 52, 0.18);
-    border-radius: 14px;
-    background: rgba(255, 249, 239, 0.78);
-    color: var(--vtt-plum-deep, #2f1638);
-    font-weight: 600;
-    min-height: 44px;
-    padding: 0.8rem 0.9rem;
-    text-align: left;
-    cursor: pointer;
-    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
-}
-
-.book-home-rail-link:hover,
-.book-home-rail-link:focus-visible {
-    transform: translateY(-1px);
-    border-color: rgba(202, 163, 59, 0.48);
-    box-shadow: 0 12px 24px rgba(42, 26, 18, 0.08);
-    outline: none;
-}
-
 .book-home-feed {
     display: grid;
     gap: 16px;
@@ -2023,10 +1995,6 @@ body.is-book-scene-dashboard #book {
         text-align: center;
     }
 
-    .book-home-rail {
-        grid-template-columns: 1fr;
-    }
-
     .book-scene-turn-leaf {
         display: none;
     }
@@ -2462,10 +2430,13 @@ body.has-reduced-motion .book-dashboard-topbar {
     box-shadow: 0 2px 6px rgba(42, 26, 18, 0.3);
 }
 
-/* Inhaltsverzeichnis: Kapitelzeilen mit punktiertem Führer. */
+/* Inhaltsverzeichnis: Kapitelzeilen mit punktiertem Führer, zugleich die
+   einzige Navigation von der Übersicht aus (2026-08-25: der separate
+   Home-Rail-Knopfreihe darunter ist entfallen, die Buch-Metapher zeigt den
+   Weg schon hier). */
 .book-toc {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.55rem;
     padding: 1rem 1.1rem 1.2rem;
     background: var(--vtt-paper-panel, #fdfaf3);
     border: 1px solid rgba(130, 89, 52, 0.18);
@@ -2483,16 +2454,22 @@ body.has-reduced-motion .book-dashboard-topbar {
     align-items: baseline;
     gap: 0.6rem;
     min-height: 44px;
-    padding: 0.35rem 0.2rem;
+    padding: 0.6rem 0.75rem;
     text-decoration: none;
     color: var(--vtt-ink, #3a322c);
-    background: var(--vtt-paper-panel, #fdfaf3);
-    border-radius: 8px;
+    background: rgba(255, 249, 239, 0.78);
+    border: 1px solid rgba(130, 89, 52, 0.18);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 .book-toc-row:hover,
 .book-toc-row:focus-visible {
-    background: rgba(122, 46, 46, 0.06);
+    background: rgba(122, 46, 46, 0.08);
     color: var(--vtt-plum-deep);
+    transform: translateY(-1px);
+    border-color: rgba(202, 163, 59, 0.48);
+    box-shadow: 0 12px 24px rgba(42, 26, 18, 0.08);
 }
 .book-toc-row:focus-visible {
     outline: 2px solid var(--vtt-gold);
@@ -2574,10 +2551,6 @@ body.has-reduced-motion .book-dashboard-topbar {
     .book-dashboard-ribbon-btn {
         min-height: 48px;
     }
-
-    .book-home-rail {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Acceptance closeout: all visible states use one settled composition. */
@@ -2603,7 +2576,6 @@ body.has-reduced-motion .book-dashboard-topbar {
 }
 
 .book-dashboard-ribbon-btn:focus-visible,
-.book-home-rail-link:focus-visible,
 .book-toc-row:focus-visible,
 .book-scene-action-btn:focus-visible,
 .book-login-btn:focus-visible,

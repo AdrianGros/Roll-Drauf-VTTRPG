@@ -156,7 +156,13 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     assert "buildDashboardGuildPanel" not in js
     assert "data-dashboard-guild-switch" not in js
     assert "/api/dashboard/guilds/primary" not in dashboard_home
-    assert ".book-home-rail {" in css
+    # 2026-08-25: die separate Home-Rail-Knopfreihe unter dem
+    # Inhaltsverzeichnis ist entfallen (war per `hidden` ohnehin schon als
+    # tot markiert, aber `.book-home-rail { display: grid }` hebelte das
+    # Attribut aus -- dieselbe Fehlerklasse wie der `.play-empty-state`-Fund
+    # am Spieltisch). Die Inhaltsverzeichnis-Zeilen sind jetzt selbst die
+    # Buttons (siehe .book-toc-row unten).
+    assert ".book-home-rail" not in css
     assert ".book-home-feed {" in css
     assert "book-home-guild-panel" not in css
     assert "book-home-context-grid" not in css

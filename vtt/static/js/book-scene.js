@@ -856,25 +856,6 @@
             `;
         },
 
-        buildDashboardNavigationRail() {
-            const items = [
-                { section: 'campaigns', label: this.content('home.nav_campaigns', 'Kampagnen') },
-                { section: 'characters', label: this.content('home.nav_characters', 'Charaktere') },
-                { section: 'session-prep', label: this.content('home.nav_session_prep', 'Vorbereitung') },
-                { section: 'play', label: this.content('home.nav_play', 'Spieltisch') },
-            ];
-
-            return `
-                <nav class="book-home-rail" aria-label="Bereiche der Übersicht" hidden>
-                    ${items.map((item) => `
-                        <button type="button" class="book-home-rail-link" data-dashboard-section="${escapeHtml(item.section)}">
-                            ${escapeHtml(item.label)}
-                        </button>
-                    `).join('')}
-                </nav>
-            `;
-        },
-
         buildDashboardFeed(snapshot = null) {
             const feedItems = Array.isArray(snapshot?.feed_preview) ? snapshot.feed_preview : [];
 
@@ -1003,7 +984,6 @@
                 leftPage: `
                     <div class="book-home-stack">
                         ${this.buildDashboardHero(snapshot)}
-                        ${this.buildDashboardNavigationRail()}
                     </div>
                 `,
                 rightPage: `

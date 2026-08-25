@@ -82,60 +82,6 @@
       "severity": "medium"
     },
     {
-      "id": "rail-social",
-      "selector": ".book-home-rail-link[data-dashboard-section='social']",
-      "label": "Home-Rail: Social",
-      "kind": "nav",
-      "engines": ["mouse"],
-      "expect": {"in_viewport": "[data-dashboard-section-target='social']"},
-      "severity": "medium"
-    },
-    {
-      "id": "rail-guilds",
-      "selector": ".book-home-rail-link[data-dashboard-section='guilds']",
-      "label": "Home-Rail: Guilds",
-      "kind": "nav",
-      "engines": ["mouse"],
-      "expect": {"in_viewport": "[data-dashboard-section-target='guilds']"},
-      "severity": "medium"
-    },
-    {
-      "id": "rail-campaigns",
-      "selector": ".book-home-rail-link[data-dashboard-section='campaigns']",
-      "label": "Home-Rail: Kampagnen",
-      "kind": "nav",
-      "engines": ["mouse"],
-      "expect": {"effect": "any"},
-      "severity": "low"
-    },
-    {
-      "id": "rail-characters",
-      "selector": ".book-home-rail-link[data-dashboard-section='characters']",
-      "label": "Home-Rail: Charaktere",
-      "kind": "nav",
-      "engines": ["mouse"],
-      "expect": {"effect": "any"},
-      "severity": "low"
-    },
-    {
-      "id": "rail-session-prep",
-      "selector": ".book-home-rail-link[data-dashboard-section='session-prep']",
-      "label": "Home-Rail: Session Prep",
-      "kind": "nav",
-      "engines": ["mouse"],
-      "expect": {"effect": "any"},
-      "severity": "low"
-    },
-    {
-      "id": "rail-play",
-      "selector": ".book-home-rail-link[data-dashboard-section='play']",
-      "label": "Home-Rail: Spieltisch",
-      "kind": "nav",
-      "engines": ["mouse"],
-      "expect": {"effect": "any"},
-      "severity": "low"
-    },
-    {
       "id": "guild-switch-first",
       "selector": "[data-dashboard-guild-switch]:not([disabled])",
       "nth": 0,
