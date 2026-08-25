@@ -54,7 +54,15 @@ VIEWPORTS = {
 }
 
 PAGES = (
-    {"name": "login", "path": "/login.html", "ready": "#login-content"},
+    # This harness always authenticates before testing "login" (see the
+    # account prelude below), so /login.html's own instant client-side
+    # transition (book-scene.js) fires immediately and the login form is
+    # hidden (display:none, 2026-08-25) almost as soon as it appears --
+    # deliberately, it is no longer the surface actually on screen. Wait
+    # for whichever of the two actually settles rather than assuming the
+    # anonymous-visitor case.
+    {"name": "login", "path": "/login.html",
+     "ready": "#login-content.visible, #book-dashboard-scene.is-visible"},
     {"name": "dashboard", "path": "/dashboard", "ready": "#book-dashboard-scene"},
 )
 
@@ -91,25 +99,42 @@ SCROLL_TO_JS = """
 """
 
 SURFACE_JS = """
-() => ({
-  html: getComputedStyle(document.documentElement).backgroundColor,
-  body: document.body ? getComputedStyle(document.body).backgroundColor : null,
-  scrollWidth: document.scrollingElement
-    ? document.scrollingElement.scrollWidth : 0,
-  innerWidth: window.innerWidth,
-})
+() => {
+  const paint = (el) => {
+    if (!el) return { color: null, image: null, painted: false };
+    const style = getComputedStyle(el);
+    return {
+      color: style.backgroundColor,
+      image: style.backgroundImage,
+      painted: style.backgroundColor !== 'rgba(0, 0, 0, 0)'
+        || style.backgroundImage !== 'none',
+    };
+  };
+  return {
+    html: paint(document.documentElement),
+    body: paint(document.body),
+    scrollWidth: document.scrollingElement
+      ? document.scrollingElement.scrollWidth : 0,
+    innerWidth: window.innerWidth,
+  };
+}
 """
 
-CANARY_JS = """
-() => { document.body.style.minHeight = '300vh'; }
-"""
+# The canary tests the DETECTOR, not the app: a bare data: page with a
+# long unpainted body is the pure form of the defect (nothing designed
+# covers the viewport once scrolled).  App-independent by design -- a
+# fixed full-viewport backdrop in the app would otherwise hide any
+# injected defect from elementFromPoint.
+CANARY_URL = ("data:text/html,<html><body style='margin:0'>"
+              "<div style='height:4000px;width:50%'>canary</div>"
+              "</body></html>")
 
 COVER_JS = """
-(points) => points.map(([x, y]) => {
+(args) => args.points.map(([x, y]) => {
   const el = document.elementFromPoint(x, y);
   if (!el) return 'none';
-  if (el === document.documentElement) return 'html';
-  if (el === document.body) return 'body';
+  if (el === document.documentElement) return args.htmlPainted ? 'covered' : 'html';
+  if (el === document.body) return args.bodyPainted ? 'covered' : 'body';
   return 'covered';
 })
 """
@@ -186,17 +211,17 @@ def _staircase(run: KulissenRun, page, cell: str, shots_dir: Path) -> int:
                  "kein horizontaler Dokument-Überlauf (Gate C)",
                  f"scrollWidth {surface['scrollWidth']} > "
                  f"innerWidth {surface['innerWidth']}")
-    transparent = "rgba(0, 0, 0, 0)"
-    if surface["html"] == transparent and surface["body"] == transparent:
+    if not surface["html"]["painted"] and not surface["body"]["painted"]:
         run.find("high", "v2-nackter-body", cell,
                  "html oder body trägt eine konkrete Fläche (V2)",
-                 "html UND body sind transparent — Overscroll zeigt "
-                 "Browser-Default")
-    elif surface["html"] == transparent:
+                 "html UND body sind unbemalt (weder Farbe noch Bild) — "
+                 "Overscroll zeigt Browser-Default")
+    elif not surface["html"]["painted"]:
         run.find("low", "v2-html-unbemalt", cell,
                  "html trägt eine eigene Fläche (V2, Overscroll)",
-                 f"nur body ist bemalt ({surface['body']}); "
-                 "Rubber-Banding hängt an Browser-Propagation")
+                 f"nur body ist bemalt (Farbe {surface['body']['color']}, "
+                 f"Bild {surface['body']['image'][:60]}); Rubber-Banding "
+                 "hängt an Browser-Propagation")
 
     scroller = page.evaluate(FIND_SCROLLER_JS)
     tears = 0
@@ -211,7 +236,10 @@ def _staircase(run: KulissenRun, page, cell: str, shots_dir: Path) -> int:
         # The defect V1 names is an edge point where NOTHING designed is
         # painted -- elementFromPoint answering html/body/none.  Wrongly
         # *colored* but covered surfaces are R6-baseline territory.
-        cover = page.evaluate(COVER_JS, points)
+        cover = page.evaluate(COVER_JS, {
+            "points": points,
+            "htmlPainted": surface["html"]["painted"],
+            "bodyPainted": surface["body"]["painted"]})
         bare = [(points[i], cover[i]) for i in range(len(points))
                 if cover[i] != "covered"]
         if bare:
@@ -227,7 +255,9 @@ def _staircase(run: KulissenRun, page, cell: str, shots_dir: Path) -> int:
                      [shot.name])
     run.cells.append({"cell": cell, "scroller": scroller["kind"],
                       "scroll_max": scroller["max"],
-                      "html_bg": surface["html"], "body_bg": surface["body"]})
+                      "html_painted": surface["html"]["painted"],
+                      "body_painted": surface["body"]["painted"],
+                      "body_bg": surface["body"]["color"]})
     return tears
 
 
@@ -271,6 +301,11 @@ def run_kulissen(*, out_dir: Path) -> int:
                                 username=credentials["username"],
                                 password=credentials["password"]):
                             run.blocked = True
+                            for finding in session.findings:
+                                run.find("blocker", "harness",
+                                         f"login-{viewport_name}",
+                                         "Robot kann sich anmelden",
+                                         f"{finding.kind}: {finding.detail[:180]}")
                             break
                     for page_def in PAGES:
                         cell = f"{page_def['name']}-{viewport_name}"
@@ -288,31 +323,23 @@ def run_kulissen(*, out_dir: Path) -> int:
                         _staircase(run, session.page, cell, shots_dir)
                     context.close()
 
-                # §11 canary: stretch the login page and paint a white
-                # stripe at the bottom -- the staircase must flag it.
-                if registered:
-                    context = browser.new_context(
-                        viewport={"width": 1440, "height": 900}, locale="de-DE")
-                    context.set_default_timeout(10_000)
-                    session = RobotSession(
-                        context, base_url=stack.base_url,
-                        robot_name="kulissen-canary", artifacts_dir=shots_dir)
-                    session.open()
-                    session.goto("/login.html")
-                    session.page.wait_for_selector("#login-content",
-                                                   state="visible")
-                    session.page.evaluate(CANARY_JS)
-                    canary_run = KulissenRun(out_dir)
-                    tears = _staircase(canary_run, session.page,
-                                       "canary-login", shots_dir)
-                    run.canary_caught = tears > 0
-                    if not run.canary_caught:
-                        run.find("blocker", "canary", "canary-login",
-                                 "die Treppe erkennt einen weißen "
-                                 "Kulissen-Abriss",
-                                 "injizierter weißer Streifen wurde nicht "
-                                 "gefunden — Prüfung ist blind")
-                    context.close()
+                # §11 canary on a bare data: page (see CANARY_URL note).
+                context = browser.new_context(
+                    viewport={"width": 1440, "height": 900}, locale="de-DE")
+                context.set_default_timeout(10_000)
+                canary_page = context.new_page()
+                canary_page.goto(CANARY_URL)
+                canary_run = KulissenRun(out_dir)
+                tears = _staircase(canary_run, canary_page,
+                                   "canary-bare", shots_dir)
+                run.canary_caught = tears > 0
+                if not run.canary_caught:
+                    run.find("blocker", "canary", "canary-bare",
+                             "die Treppe erkennt eine ungedeckte, "
+                             "gescrollte Seite",
+                             "nackte data:-Seite wurde nicht beanstandet "
+                             "— Prüfung ist blind")
+                context.close()
                 browser.close()
     except StackError as error:
         run.blocked = True

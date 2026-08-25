@@ -1243,6 +1243,16 @@ body.is-book-scene-transition #login-content {
 
 body.is-book-scene-dashboard #login-content {
     opacity: 0;
+    /* Bug (2026-08-25): opacity alone left the login form's box (and its
+       .login-book-spread child, which on narrow phones stacks taller than
+       the dashboard content behind it) in normal layout -- an invisible
+       box nobody clips, silently extending document scrollHeight past
+       where the dashboard's own content and backdrop end, and exposing
+       raw unpainted html once scrolled that far. It is fully covered by
+       opaque dashboard content by the time this state is reached, so
+       there is nothing left to visibly fade -- display:none removes it
+       from layout outright instead of just hiding it. */
+    display: none;
 }
 
 body.is-book-scene-dashboard .book-cover,
@@ -2625,14 +2635,18 @@ body.is-book-scene-return-transition .book-scene-stage {
     align-items: flex-start;
 }
 
-body.is-book-scene-dashboard .book-scene-backdrop,
-body.is-book-scene-transition .book-scene-backdrop,
-body.is-book-scene-return-transition .book-scene-backdrop {
-    position: fixed;
-    inset: 0;
-    height: 100vh;
-    will-change: transform;
-}
+/* Bug (2026-08-25): #book-scene-wrapper's own `perspective` (line ~15)
+   establishes a new containing block for any `position: fixed` descendant,
+   so this backdrop was never actually pinned to the true viewport -- it
+   moved together with the wrapper as the page scrolled (verified: its
+   getBoundingClientRect().top tracked window.scrollY 1:1). Capped at a
+   fixed `height: 100vh` on top of that, it covered only the wrapper's own
+   first screen; scrolling into taller dashboard content exposed raw,
+   unpainted html below it -- a visible "hole" opening up mid-scroll.
+   The wrapper is `position: relative` here and grows to the page's full
+   content height, so an `absolute; inset: 0` backdrop (the plain
+   .book-scene-backdrop rule above) already tracks that height exactly,
+   with no viewport-unit math needed. */
 
 body.is-book-scene-dashboard .book-shell-page-stack,
 body.is-book-scene-transition .book-shell-page-stack {
