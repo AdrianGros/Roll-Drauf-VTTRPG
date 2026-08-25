@@ -189,11 +189,15 @@ def create_app(config_name=None):
     @app.after_request
     def set_security_headers(response):
         response.headers['X-Content-Type-Options'] = 'nosniff'
-        response.headers['X-Frame-Options'] = 'DENY'
+        # SAMEORIGIN statt DENY (Playtable-Vordermann 2026-08-25): die
+        # Bogen-Lade am Spieltisch rahmt /character-sheet same-origin ein;
+        # Fremd-Framing (Clickjacking) bleibt blockiert — gespiegelt in
+        # CSP frame-ancestors 'self'.
+        response.headers['X-Frame-Options'] = 'SAMEORIGIN'
         response.headers['X-XSS-Protection'] = '1; mode=block'
         if not app.config.get("DEBUG"):
             response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'"
+            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; frame-ancestors 'self'"
         return response
 
     _setup_ops_metrics(app)
@@ -276,12 +280,9 @@ def create_app(config_name=None):
 
     # REST endpoints for static files
     @app.route('/')
-    @app.route('/showcase')
-    @app.route('/showcase.html')
     def index():
-        import os
-        from flask import send_from_directory
-        return send_from_directory(os.path.join(os.path.dirname(__file__), 'templates'), 'landing.html')
+        from flask import redirect
+        return redirect('/login.html')
 
     @app.route('/<path:path>')
     def serve_static(path):

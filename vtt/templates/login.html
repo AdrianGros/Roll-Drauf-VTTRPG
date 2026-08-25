@@ -481,6 +481,16 @@
             display: none;
         }
 
+        .login-book-page-title {
+            margin: 18px 0 4px;
+            font-family: var(--vtt-font-display, Georgia, serif);
+            font-size: clamp(1.35rem, 1.1rem + 1vw, 1.9rem);
+            font-weight: 700;
+            letter-spacing: .02em;
+            text-align: center;
+            color: var(--vtt-ink, #3b2a22);
+        }
+
         @media (max-width: 480px) {
             .book-input {
                 padding: 10px 14px;
@@ -499,13 +509,15 @@
     <!-- 3D Book Scene (injected via book-scene.js) -->
 
     <!-- Login content (rendered as the first open spread) -->
-    <div id="login-content">
+    <main id="login-content">
         <div class="login-book-spread" role="presentation">
             <section class="login-book-page login-book-page--left" aria-label="Login page">
                 <div class="login-book-paper login-book-paper--login">
                     <div class="login-book-page-header" aria-label="Roll drauf Buchzugang">
                         <img src="/static/assets/sternenstaub/banners/banner-roll-drauf.png" alt="Roll drauf – Buchzugang" class="login-book-banner-image">
                     </div>
+
+                    <h1 class="login-book-page-title">Anmelden</h1>
 
                     <form id="passwordLoginForm" class="book-form book-auth-form" novalidate aria-label="Anmeldung mit E-Mail oder Benutzername">
                         <div id="passwordLoginStatus" class="book-form-status" role="status" aria-live="polite" hidden></div>
@@ -541,7 +553,7 @@
                 </div>
             </section>
 
-            <section class="login-book-page login-book-page--right" aria-hidden="true">
+            <section class="login-book-page login-book-page--right" aria-label="Roll drauf Discord-Gemeinschaft">
                 <div class="login-book-paper login-book-paper--welcome" id="loginWelcomePage">
                     <div class="login-book-welcome-kicker">Unsere Gemeinschaft</div>
                     <h2 class="login-book-welcome-title">Roll drauf im Discord</h2>
@@ -585,7 +597,7 @@
                 </div>
             </section>
         </div>
-    </div>
+    </main>
 
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/book-scene.js"></script>
