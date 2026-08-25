@@ -229,7 +229,7 @@ def _write_report(args, workdir: Path, findings: list[str]) -> None:
     print(f"\nmobile · {len(findings)} finding(s)")
     for finding in findings:
         print(f"  - {finding}")
-    report = args.out or workdir.parent / "vtt-mobile.json"
+    report = args.out or workdir / "vtt-mobile.json"
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(json.dumps(
         {"status": "failed" if findings else "passed", "findings": findings},

@@ -115,6 +115,7 @@ class Config:
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
     MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
+    PASSWORD_RESET_URL_BASE = os.getenv("PASSWORD_RESET_URL_BASE")
     PASSWORD_RESET_EXPIRES = timedelta(hours=1)
 
     # HTTPS

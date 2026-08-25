@@ -8,10 +8,23 @@ from flask_jwt_extended import decode_token
 from flask_socketio import emit, join_room, leave_room
 
 from vtt.combat import service as combat_service
-from vtt.extensions import db
-from vtt.play.service import get_session_role, is_read_only_mode
+from vtt.extensions import db, socketio
+from vtt.play.service import (
+    filter_combat_payload,
+    get_session_role,
+    is_operator_role,
+    is_read_only_mode,
+    is_token_visible_to,
+)
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
-from vtt.utils.realtime import build_event_envelope, current_event_seq
+from vtt.utils.realtime import (
+    build_event_envelope,
+    current_event_seq,
+    dm_room,
+    players_room,
+    sibling_envelope,
+    user_room,
+)
 from vtt.utils.time import utcnow
 from vtt.models import (
     Campaign,
@@ -27,6 +40,9 @@ from vtt.models import (
 
 _connected_rooms = defaultdict(set)
 _seen_client_events = defaultdict(dict)
+# Playtable-Vordermann 2026-08-25 (P2 Presence): who sits at which table.
+# room -> sid -> {user_id, username, role}; broadcast as presence:update.
+_room_presence: dict[str, dict[str, dict]] = defaultdict(dict)
 
 _DEDUPE_TTL_SECONDS = 120.0
 _DEDUPE_MAX_PER_SCOPE = 512
@@ -66,6 +82,107 @@ def _emit_session_event(event_name: str, campaign_id: int, session_id: int, payl
     event_payload = build_event_envelope(campaign_id, session_id, payload, advance=True)
     emit(event_name, event_payload, room=_room_name(campaign_id, session_id))
     return event_payload
+
+
+def _parse_session_room(room: str) -> tuple[int, int] | None:
+    parts = room.split(":")
+    if len(parts) == 4 and parts[0] == "campaign" and parts[2] == "session":
+        try:
+            return int(parts[1]), int(parts[3])
+        except ValueError:
+            return None
+    return None
+
+
+def _broadcast_presence(campaign_id: int, session_id: int) -> None:
+    room = _room_name(campaign_id, session_id)
+    by_user: dict[int, dict] = {}
+    for info in _room_presence.get(room, {}).values():
+        by_user[info["user_id"]] = info  # one entry per user, not per tab
+    users = sorted(by_user.values(), key=lambda info: info["username"].lower())
+    _emit_session_event("presence:update", campaign_id, session_id,
+                        {"users": users})
+
+
+def _drop_presence(sid: str, room: str) -> None:
+    """Remove one connection from a session room's roster and broadcast
+    the new roster (no-op for non-session rooms)."""
+    ids = _parse_session_room(room)
+    if ids is None:
+        return
+    if _room_presence.get(room, {}).pop(sid, None) is not None:
+        _broadcast_presence(*ids)
+
+
+def _token_player_audience(visibility: str, owner_user_id: int | None,
+                           campaign_id: int, session_id: int) -> str | None:
+    """Which non-operator room may see a token with this visibility.
+    None means: no player may see it (dm_only)."""
+    if visibility == "public":
+        return players_room(campaign_id, session_id)
+    if visibility == "owner_only" and owner_user_id is not None:
+        return user_room(campaign_id, session_id, owner_user_id)
+    return None
+
+
+def _emit_token_event(kind: str, campaign_id: int, session_id: int,
+                      payload: dict, *, visibility: str,
+                      owner_user_id: int | None,
+                      old_visibility: str | None = None,
+                      old_owner_user_id: int | None = None):
+    """Playtable-Audit 2026-08-25 (P0): token events are role-scoped.
+
+    Operators always get the real event (unfiltered, DM room).  Players
+    get the event only if the token is visible to them; a visibility flip
+    is translated (reveal -> token:created, hide -> token:deleted) because
+    the player client never knew the hidden token.  Exactly ONE sequence
+    number is advanced per mutation; audiences that receive nothing get a
+    seq-bearing no-op `state:tick` so their gap detection can stay quiet
+    once play-socket.js registers it (until then a hidden mutation costs
+    those clients one filtered resync — correct, just noisier).
+    """
+    envelope = build_event_envelope(campaign_id, session_id, payload,
+                                    advance=True)
+    socketio.emit(f"token:{kind}", envelope, room=dm_room(campaign_id, session_id))
+
+    after = _token_player_audience(visibility, owner_user_id,
+                                   campaign_id, session_id)
+    before = after
+    if kind == "updated":
+        before = _token_player_audience(old_visibility or visibility,
+                                        old_owner_user_id,
+                                        campaign_id, session_id)
+
+    token_id = payload.get("token", {}).get("id", payload.get("token_id"))
+    deleted_payload = sibling_envelope(envelope, {
+        "token_id": token_id,
+        "version": payload.get("version"),
+        "state_version": payload.get("state_version"),
+        "client_event_id": payload.get("client_event_id"),
+    })
+    reached_players = False
+    if kind == "created" and after:
+        socketio.emit("token:created", envelope, room=after)
+        reached_players = after == players_room(campaign_id, session_id)
+    elif kind == "deleted" and before:
+        socketio.emit("token:deleted", envelope, room=before)
+        reached_players = before == players_room(campaign_id, session_id)
+    elif kind == "updated":
+        if before == after and after:
+            socketio.emit("token:updated", envelope, room=after)
+            reached_players = after == players_room(campaign_id, session_id)
+        else:
+            if before:
+                socketio.emit("token:deleted", deleted_payload, room=before)
+            if after:
+                socketio.emit("token:created",
+                     sibling_envelope(envelope, payload), room=after)
+            reached_players = players_room(campaign_id, session_id) in (
+                before, after)
+    if not reached_players:
+        socketio.emit("state:tick", sibling_envelope(envelope, {}),
+             room=players_room(campaign_id, session_id))
+    return envelope
 
 
 def _reject_read_only(campaign, game_session, user):
@@ -269,7 +386,8 @@ def _refresh_state_snapshot(state: SessionState):
     }
 
 
-def _serialize_snapshot(state: SessionState):
+def _serialize_snapshot(state: SessionState, *, role: str | None = None,
+                        viewer_id: int | None = None):
     game_session = db.session.get(GameSession, state.game_session_id)
     active_map = db.session.get(CampaignMap, state.active_map_id) if state.active_map_id else None
     tokens = (
@@ -278,6 +396,11 @@ def _serialize_snapshot(state: SessionState):
         .order_by(TokenState.id.asc())
         .all()
     )
+    if role is not None and not is_operator_role(role):
+        # Playtable-Audit 2026-08-25 (P0): snapshots are per-connection,
+        # so this is where a player's read boundary is enforced.
+        tokens = [token for token in tokens
+                  if is_token_visible_to(token, role, viewer_id)]
 
     return {
         "campaign_id": state.campaign_id,
@@ -370,6 +493,7 @@ def register_socket_handlers(socketio):
         _track_socket_event("disconnect")
         for room in _connected_rooms.get(request.sid, set()):
             leave_room(room)
+            _drop_presence(request.sid, room)
         _connected_rooms.pop(request.sid, None)
 
     @socketio.on("session:join")
@@ -400,13 +524,32 @@ def register_socket_handlers(socketio):
         room = _room_name(campaign.id, game_session.id)
         existing_rooms = list(_connected_rooms.get(request.sid, set()))
         for existing_room in existing_rooms:
-            if _is_session_room(existing_room) and existing_room != room:
+            if _is_session_room(existing_room) and not existing_room.startswith(room):
                 leave_room(existing_room)
                 _connected_rooms[request.sid].discard(existing_room)
+                _drop_presence(request.sid, existing_room)
 
         join_room(room)
         _connected_rooms[request.sid].add(room)
+        # Role-scoped rooms (Playtable-Audit 2026-08-25, P0): operators get
+        # unfiltered broadcasts, everyone else the player-filtered variant,
+        # and owner_only token events target the owner's user room.
+        session_role = get_session_role(campaign, user.id)
+        role_room = (dm_room(campaign.id, game_session.id)
+                     if is_operator_role(session_role)
+                     else players_room(campaign.id, game_session.id))
+        for scoped_room in (role_room,
+                            user_room(campaign.id, game_session.id, user.id)):
+            join_room(scoped_room)
+            _connected_rooms[request.sid].add(scoped_room)
         increment_counter("socket_reconnect_recoveries_total")
+
+        _room_presence[room][request.sid] = {
+            "user_id": user.id,
+            "username": user.username,
+            "role": session_role,
+        }
+        _broadcast_presence(campaign.id, game_session.id)
 
         state = _ensure_session_state(campaign.id, game_session)
         current_seq = current_event_seq(campaign.id, game_session.id)
@@ -420,7 +563,8 @@ def register_socket_handlers(socketio):
             },
             room=request.sid,
         )
-        snapshot_payload = _serialize_snapshot(state)
+        snapshot_payload = _serialize_snapshot(state, role=session_role,
+                                               viewer_id=user.id)
         snapshot_payload["event_seq"] = current_seq
         snapshot_payload["server_time"] = utcnow().isoformat()
         emit("state:snapshot", snapshot_payload, room=request.sid)
@@ -450,8 +594,11 @@ def register_socket_handlers(socketio):
             return
 
         room = _room_name(campaign_id, session_id)
-        leave_room(room)
-        _connected_rooms[request.sid].discard(room)
+        for tracked_room in list(_connected_rooms.get(request.sid, set())):
+            if tracked_room.startswith(room):
+                leave_room(tracked_room)
+                _connected_rooms[request.sid].discard(tracked_room)
+        _drop_presence(request.sid, room)
         emit("session:left", {"campaign_id": campaign_id, "session_id": session_id}, room=request.sid)
 
     @socketio.on("mod:join")
@@ -522,7 +669,8 @@ def register_socket_handlers(socketio):
             return
 
         state = _ensure_session_state(campaign.id, game_session)
-        snapshot_payload = _serialize_snapshot(state)
+        snapshot_payload = _serialize_snapshot(
+            state, role=get_session_role(campaign, user.id), viewer_id=user.id)
         snapshot_payload["event_seq"] = current_event_seq(campaign.id, game_session.id)
         snapshot_payload["server_time"] = utcnow().isoformat()
         emit("state:snapshot", snapshot_payload, room=request.sid)
@@ -554,7 +702,9 @@ def register_socket_handlers(socketio):
             return
 
         state = _ensure_session_state(campaign.id, game_session)
-        payload = _serialize_combat_snapshot(state)
+        payload = filter_combat_payload(
+            _serialize_combat_snapshot(state),
+            get_session_role(campaign, user.id), user.id)
         payload["event_seq"] = current_event_seq(campaign.id, game_session.id)
         payload["server_time"] = utcnow().isoformat()
         emit("combat:updated", payload, room=request.sid)
@@ -720,8 +870,8 @@ def register_socket_handlers(socketio):
         _refresh_state_snapshot(state)
         db.session.commit()
 
-        _emit_session_event(
-            "token:created",
+        _emit_token_event(
+            "created",
             campaign.id,
             game_session.id,
             {
@@ -730,6 +880,8 @@ def register_socket_handlers(socketio):
                 "state_version": state.version,
                 "client_event_id": client_event_id,
             },
+            visibility=token.visibility,
+            owner_user_id=token.owner_user_id,
         )
 
     @socketio.on("token:update")
@@ -813,6 +965,8 @@ def register_socket_handlers(socketio):
             _emit_error(patch_error["code"], patch_error["message"])
             return
 
+        old_visibility = token.visibility
+        old_owner_user_id = token.owner_user_id
         for key, value in parsed_patch.items():
             setattr(token, key, value)
 
@@ -825,8 +979,8 @@ def register_socket_handlers(socketio):
         _refresh_state_snapshot(state)
         db.session.commit()
 
-        _emit_session_event(
-            "token:updated",
+        _emit_token_event(
+            "updated",
             campaign.id,
             game_session.id,
             {
@@ -835,6 +989,10 @@ def register_socket_handlers(socketio):
                 "state_version": state.version,
                 "client_event_id": client_event_id,
             },
+            visibility=token.visibility,
+            owner_user_id=token.owner_user_id,
+            old_visibility=old_visibility,
+            old_owner_user_id=old_owner_user_id,
         )
 
     @socketio.on("token:delete")
@@ -920,8 +1078,8 @@ def register_socket_handlers(socketio):
         _refresh_state_snapshot(state)
         db.session.commit()
 
-        _emit_session_event(
-            "token:deleted",
+        _emit_token_event(
+            "deleted",
             campaign.id,
             game_session.id,
             {
@@ -930,6 +1088,8 @@ def register_socket_handlers(socketio):
                 "state_version": state.version,
                 "client_event_id": client_event_id,
             },
+            visibility=token.visibility,
+            owner_user_id=token.owner_user_id,
         )
 
     @socketio.on("roll_dice")
@@ -978,11 +1138,29 @@ def register_socket_handlers(socketio):
             emit("dice_rolled", {"player": player_tag, "dice": dice_str, "result": result}, room=request.sid)
             return result
 
+        # Playtable-Audit 2026-08-25 (P2): internal rolls used to live only
+        # in the client's 8-line ring buffer and vanished on reload, while
+        # Beyond20 rolls were persisted.  Same treatment for both now.
+        chat_message = ChatMessage(
+            campaign_id=campaign.id,
+            game_session_id=game_session.id,
+            author_user_id=user.id,
+            content=(
+                f"würfelt {dice_str}: "
+                f"{' + '.join(str(roll) for roll in rolls)}"
+                f"{f' {mod:+d}' if mod else ''} = {total}"
+            ),
+            content_type="dice_roll",
+        )
+        db.session.add(chat_message)
+        db.session.commit()
+
         _emit_session_event(
             "dice_rolled",
             campaign.id,
             game_session.id,
-            {"player": player_tag, "dice": dice_str, "result": result},
+            {"player": player_tag, "dice": dice_str, "result": result,
+             "message_id": chat_message.id},
         )
         return result
 

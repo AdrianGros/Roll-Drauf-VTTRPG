@@ -8,6 +8,7 @@ from sqlalchemy.exc import IntegrityError
 
 from vtt.combat import service as combat_service
 from vtt.play import service as scene_service
+from vtt.socket_handlers import _emit_token_event
 from vtt.campaigns import campaigns_bp
 from vtt.extensions import db, limiter, socketio
 from vtt.models import (
@@ -25,7 +26,13 @@ from vtt.models import (
     User,
 )
 from vtt.utils.time import utcnow
-from vtt.utils.realtime import build_event_envelope
+from vtt.utils.realtime import (
+    build_event_envelope,
+    dm_room,
+    players_room,
+    sibling_envelope,
+    user_room,
+)
 
 
 def _get_current_user():
@@ -35,7 +42,7 @@ def _get_current_user():
         return None, (jsonify({"error": "authentication required"}), 401)
 
     user = db.session.get(User, int(user_id))
-    if not user or not user.is_active:
+    if not user or not user.is_usable():
         return None, (jsonify({"error": "user not found"}), 404)
 
     return user, None
@@ -259,11 +266,36 @@ def _room_name(campaign_id: int, session_id: int) -> str:
 
 
 def _emit_combat_event(campaign_id: int, session_id: int, event_name: str, payload: dict):
-    socketio.emit(
-        event_name,
-        build_event_envelope(campaign_id, session_id, payload),
-        room=_room_name(campaign_id, session_id),
-    )
+    """Playtable-Vordermann 2026-08-25: combat payloads re-serialize every
+    participant token, so broadcasts are role-scoped like state snapshots —
+    full view to the DM room, filtered view to the players room, and a
+    personal view to owners of owner_only participants.  One event_seq for
+    all variants."""
+    envelope = build_event_envelope(campaign_id, session_id, payload)
+    socketio.emit(event_name, envelope, room=dm_room(campaign_id, session_id))
+
+    # Most specific first: the client drops repeated event_seq values as
+    # stale, so an owner must receive the personal variant BEFORE the
+    # public players-room variant.
+    owner_ids = {
+        token.get("owner_user_id")
+        for token in payload.get("participants", [])
+        if token.get("visibility") == "owner_only" and token.get("owner_user_id")
+    }
+    if owner_ids:
+        campaign = db.session.get(Campaign, campaign_id)
+        for owner_id in owner_ids:
+            role = scene_service.get_session_role(campaign, owner_id)
+            if scene_service.is_operator_role(role):
+                continue
+            owner_view = scene_service.filter_combat_payload(
+                payload, "PLAYER", owner_id)
+            socketio.emit(event_name, sibling_envelope(envelope, owner_view),
+                          room=user_room(campaign_id, session_id, owner_id))
+
+    player_view = scene_service.filter_combat_payload(payload, "PLAYER", None)
+    socketio.emit(event_name, sibling_envelope(envelope, player_view),
+                  room=players_room(campaign_id, session_id))
 
 
 def _serialize_combat_state(encounter: CombatEncounter | None, state: SessionState):
@@ -1253,6 +1285,14 @@ def create_token(campaign_id, session_id):
     _refresh_state_snapshot(state)
     db.session.commit()
 
+    # REST twin broadcasts like the socket handler (Playtable-Vordermann
+    # 2026-08-25): without this, REST-created tokens were invisible to
+    # every connected client until a manual reload.
+    _emit_token_event(
+        "created", campaign.id, game_session.id,
+        {"token": token.serialize(), "version": token.version,
+         "state_version": state.version, "client_event_id": None},
+        visibility=token.visibility, owner_user_id=token.owner_user_id)
     return jsonify({"token": token.serialize(), "state_version": state.version}), 201
 
 
@@ -1302,6 +1342,8 @@ def update_token(campaign_id, session_id, token_id):
     if error:
         return error
 
+    old_visibility = token.visibility
+    old_owner_user_id = token.owner_user_id
     for key, value in patch.items():
         setattr(token, key, value)
 
@@ -1312,6 +1354,12 @@ def update_token(campaign_id, session_id, token_id):
     _refresh_state_snapshot(state)
     db.session.commit()
 
+    _emit_token_event(
+        "updated", campaign.id, game_session.id,
+        {"token": token.serialize(), "version": token.version,
+         "state_version": state.version, "client_event_id": None},
+        visibility=token.visibility, owner_user_id=token.owner_user_id,
+        old_visibility=old_visibility, old_owner_user_id=old_owner_user_id)
     return jsonify({"token": token.serialize(), "state_version": state.version}), 200
 
 
@@ -1363,6 +1411,11 @@ def delete_token(campaign_id, session_id, token_id):
     state.bump_version()
     _refresh_state_snapshot(state)
     db.session.commit()
+    _emit_token_event(
+        "deleted", campaign.id, game_session.id,
+        {"token_id": token.id, "version": token.version,
+         "state_version": state.version, "client_event_id": None},
+        visibility=token.visibility, owner_user_id=token.owner_user_id)
     return jsonify({"message": "token deleted", "state_version": state.version}), 200
 
 
@@ -1389,7 +1442,12 @@ def get_combat_state(campaign_id, session_id):
     if not encounter:
         encounter = combat_service.get_latest_encounter(game_session.id)
 
-    return jsonify(_serialize_combat_state(encounter, state)), 200
+    payload = scene_service.filter_combat_payload(
+        _serialize_combat_state(encounter, state),
+        scene_service.get_session_role(campaign, user.id),
+        user.id,
+    )
+    return jsonify(payload), 200
 
 
 @campaigns_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/combat/start", methods=["POST"])

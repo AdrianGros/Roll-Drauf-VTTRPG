@@ -160,24 +160,6 @@
             display: none !important;
         }
 
-        .play-empty-state {
-            display: grid;
-            gap: 0.75rem;
-            padding: 1.4rem 1.6rem;
-            border: 1px dashed rgba(130, 89, 52, 0.28);
-            border-radius: 16px;
-            background: rgba(255, 252, 246, 0.72);
-        }
-
-        .play-empty-state h2,
-        .play-empty-state p {
-            margin: 0;
-        }
-
-        .play-empty-state p {
-            color: var(--vtt-ink-muted, #6e5745);
-            line-height: 1.5;
-        }
         .book-workspace-shell .book-chip {
             background: rgba(255, 248, 238, 0.08);
             border-color: rgba(255, 248, 238, 0.12);
@@ -1227,15 +1209,17 @@
                         <span class="book-dashboard-chip">Rolle: <strong id="roleBadge">-</strong></span>
                         <span class="book-dashboard-chip">Zugriff: <strong id="readOnlyBadge">-</strong></span>
                         <span class="book-dashboard-chip">Status: <strong id="sessionStatusPill">-</strong></span>
+                        <span class="book-dashboard-chip">Am Tisch: <strong id="presenceRoster">–</strong></span>
                     </div>
                 </div>
 
-                <section id="playEmptyState" class="play-empty-state" hidden aria-live="polite">
-                    <h2>Kein Spieltisch ausgewählt</h2>
-                    <p>Öffne eine Session aus deiner Kampagnenvorbereitung, um den Spieltisch zu betreten.</p>
-                    <a class="btn btn-primary" href="/campaigns">Kampagnen öffnen</a>
-                </section>
-
+                <!-- Der frühere "Kein Spieltisch ausgewählt"-Leerzustand ist
+                     abgerissen (2026-08-25): /play ohne Parameter leitet
+                     sofort nach /campaigns um — der Tisch startet immer aus
+                     einer aktiven Kampagne, eine Sackgassen-Seite ist per
+                     UI-Regel unnötig. Sein display:grid hatte außerdem das
+                     hidden-Attribut geschlagen und lag permanent über dem
+                     Tisch (Robot-Fund). -->
                 <div class="book-shell-frame book-workspace-shell">
                     <div class="tabletop-shell">
         <aside class="left-toolbar" aria-label="Werkzeugleiste">
@@ -1306,20 +1290,33 @@
             <div id="layersWidget" class="floating">
                 <h3 class="widget-toggle" data-widget="layersWidget" role="button" tabindex="0" aria-controls="layersWidgetBody" aria-expanded="true">Seiten (Kartenebenen) <span class="widget-caret">▾</span></h3>
                 <div id="layersWidgetBody" class="widget-body">
-                    <div id="mapUploadRow" class="layer-add-row" hidden>
-                        <input id="mapUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-                        <button id="btnMapUpload" class="mini-btn" type="button" title="Eine Karte als Datei auswählen">Datei hinzufügen</button>
-                        <label style="display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;color:var(--muted);white-space:nowrap;">
-                            Raster
-                            <input id="mapUploadGridSize" type="number" min="16" max="300" step="1" value="70" style="width:60px;padding:0.2rem 0.3rem;">
-                            px
-                        </label>
-                    </div>
+                    <!-- Seiten-Hinzufügen-Flow (Adrian, 2026-08-25): EIN Weg.
+                         „Hinzufügen" fragt: neue Karte hochladen oder eine
+                         vorhandene übernehmen (bereits verwendete werden
+                         serverseitig kopiert) — in beiden Fällen entsteht
+                         eine neue Seite; die alte Sackgasse „alle Karten
+                         sind bereits Seiten" existiert nicht mehr. -->
+                    <input id="mapUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                     <div id="mapUploadStatus" class="muted" style="font-size:0.74rem;margin-top:0.3rem;" hidden></div>
                     <div id="layerList"></div>
-                    <div class="layer-add-row">
-                        <select id="layerAddSelect"><option value="">+ Seite hinzufügen...</option></select>
-                        <button id="layerAddBtn" class="mini-btn" type="button" title="Eine vorhandene Kampagnenkarte als Seite hinzufügen">Hinzufügen</button>
+                    <div id="layerAddRow" class="layer-add-row">
+                        <input id="layerAddName" type="text" maxlength="120" placeholder="Name der neuen Seite..." style="flex:1;min-width:0;padding:0.25rem 0.4rem;">
+                        <button id="layerAddBtn" class="mini-btn" type="button" title="Neue Seite anlegen: Karte hochladen oder vorhandene übernehmen">Hinzufügen</button>
+                    </div>
+                    <div id="layerAddChoice" class="layer-add-choice" hidden>
+                        <div class="layer-add-row">
+                            <button id="layerAddUpload" class="mini-btn" type="button" title="Eine Bilddatei als neue Karte hochladen">Neue Karte hochladen</button>
+                            <label style="display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;color:var(--muted);white-space:nowrap;">
+                                Raster
+                                <input id="mapUploadGridSize" type="number" min="16" max="300" step="1" value="70" style="width:60px;padding:0.2rem 0.3rem;">
+                                px
+                            </label>
+                        </div>
+                        <div class="layer-add-row">
+                            <select id="layerAddSource" style="flex:1;min-width:0;"></select>
+                            <button id="layerAddCopy" class="mini-btn secondary" type="button" title="Die gewählte Karte als neue Seite übernehmen (bereits verwendete werden kopiert)">Übernehmen</button>
+                        </div>
+                        <button id="layerAddCancel" class="mini-btn secondary" type="button">Abbrechen</button>
                     </div>
                     <div id="layerAddStatus" class="layer-empty-state" role="status" aria-live="polite" hidden></div>
                 </div>
@@ -1331,6 +1328,13 @@
                     <div id="turnOrderSummary" class="turn-state">Noch keine Initiative-Werte.</div>
                     <div id="turnOrderList" class="muted">Noch keine Initiative-Werte.</div>
                     <div class="button-row" id="initiativeControls" style="margin:0.45rem 0 0;" hidden>
+                        <!-- Playtable-Vordermann 2026-08-25: der Kampf läuft
+                             über das getestete Server-Backend (Encounter,
+                             Runden, Züge) statt über den früheren
+                             clientseitigen d20. -->
+                        <button type="button" id="btnStartCombat" class="mini-btn">Kampf starten</button>
+                        <button type="button" id="btnNextTurn" class="mini-btn" hidden>Nächster Zug</button>
+                        <button type="button" id="btnEndCombat" class="mini-btn secondary" hidden>Kampf beenden</button>
                         <button type="button" id="btnRollInitiative" class="mini-btn secondary">Initiative auswürfeln</button>
                     </div>
                 </div>
@@ -1344,6 +1348,9 @@
                         <input id="tokenUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                         <button type="button" id="btnTokenUpload" class="mini-btn secondary" title="Tokenbild aus einer Datei hinzufügen">Token-Datei hinzufügen</button>
                         <span id="tokenUploadStatus" class="muted" aria-live="polite"></span>
+                    </div>
+                    <div class="button-row" id="sheetButtonRow" hidden style="margin-bottom:0.45rem;">
+                        <button type="button" id="btnOpenSheet" class="mini-btn">Bogen öffnen</button>
                     </div>
                     <div id="tokenSelectionDetail" hidden style="margin-bottom:0.45rem;">
                         <div class="button-row" style="margin-bottom:0.35rem;">
@@ -1491,6 +1498,58 @@
          vtt/static/js/socket.io.min.js is socket.io-client 4.5.4
          unmodified (protocol-compatible with the installed
          python-engineio, which negotiates Engine.IO v4). -->
+    <!-- Charakterbogen am Tisch (Playtable-Vordermann 2026-08-25, Audit P1):
+         der bestehende, getestete Bogen als Seitenlade, ohne den Tisch zu
+         verlassen. Geöffnet über den Token (Bogen öffnen), geschlossen per
+         Knopf oder Escape. -->
+    <aside id="sheetDrawer" hidden aria-label="Charakterbogen">
+        <header class="sheet-drawer-head">
+            <strong id="sheetDrawerTitle">Charakterbogen</strong>
+            <button type="button" id="btnCloseSheet" class="mini-btn secondary" title="Bogen schließen (Esc)">Schließen ✕</button>
+        </header>
+        <iframe id="sheetFrame" title="Charakterbogen"></iframe>
+    </aside>
+    <style>
+        #sheetDrawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100svh;
+            width: min(520px, 92vw);
+            z-index: 340;
+            display: flex;
+            flex-direction: column;
+            background: var(--book-paper, #f3ead8);
+            border-left: 3px solid var(--book-gold, #a8842c);
+            box-shadow: -12px 0 28px rgba(20, 8, 28, 0.45);
+        }
+        #sheetDrawer[hidden] { display: none; }
+        .sheet-drawer-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.55rem 0.8rem;
+            border-bottom: 1px solid rgba(120, 90, 40, 0.35);
+        }
+        #sheetFrame { flex: 1; width: 100%; border: 0; background: transparent; }
+        .layer-add-choice {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
+            padding: 0.5rem;
+            border: 1px solid rgba(168, 132, 44, 0.35);
+            border-radius: 8px;
+            background: rgba(20, 8, 28, 0.25);
+        }
+        .layer-add-choice[hidden] { display: none; }
+        .turn-item.is-active {
+            border-left: 3px solid var(--book-gold, #a8842c);
+            background: rgba(168, 132, 44, 0.18);
+            font-weight: 600;
+        }
+    </style>
     <script src="/static/js/socket.io.min.js"></script>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/book-routes.js"></script>

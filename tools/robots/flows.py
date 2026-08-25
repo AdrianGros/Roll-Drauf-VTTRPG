@@ -637,7 +637,7 @@ def main(argv: list[str] | None = None) -> int:
         for finding in findings:
             print(f"  - [{name}] {finding}")
 
-    report = args.out or workdir.parent / "vtt-flows.json"
+    report = args.out or workdir / "vtt-flows.json"
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(json.dumps(
         {"status": "failed" if total else "passed", "flows": all_findings},

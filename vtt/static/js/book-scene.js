@@ -394,6 +394,7 @@
                 this.bookCover.setAttribute('tabindex', '0');
                 this.bookCover.setAttribute('aria-hidden', 'false');
                 this.bookCover.setAttribute('aria-pressed', 'false');
+                this.bookCover.style.pointerEvents = 'auto';
                 return;
             }
 
@@ -404,6 +405,10 @@
             this.bookCover.setAttribute('aria-hidden', 'true');
             this.bookCover.setAttribute('aria-pressed', 'true');
             this.bookCover.removeAttribute('role');
+            // The cover is transformed away when the book opens, but its
+            // transformed box can still win hit-testing in Chromium. Keep
+            // it from intercepting the login form underneath it.
+            this.bookCover.style.pointerEvents = 'none';
         },
 
         setCoverState(state = 'login') {
@@ -1077,7 +1082,7 @@
                 copy: 'Lege Helden an, pflege Avatar und Token und wechsle für Details in den Bogen. Danach führt der Weg sauber zurück in Kampagnen und Session-Prep.',
                 rightEyebrow: 'Nächste Schritte',
                 rightTitle: 'Helden vorbereiten',
-                rightCopy: 'Das Charakterarchiv ist kein Platzhalter mehr: hier beginnst du die Heldenarbeit und springst von dort in Bogen, Kampagnenkontext und später in die Session-Zuweisung.',
+                rightCopy: 'Hier beginnst du die Heldenarbeit und springst von dort in Bogen, Kampagnenkontext und Session-Zuweisung.',
                 chips: [`${characters.length} Helden`, `${distinctClasses} Klassen`, `Höchstes Level ${highestLevel}`],
                 leftPage: `
                     ${this.buildStatStrip([

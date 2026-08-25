@@ -57,8 +57,9 @@ def test_session_prep_surface_connects_existing_prep_pillars_honestly(client):
     assert 'id="sessionPrepCharacterCard"' in html
     assert "Zugewiesen" in html
     assert "Verfügbar für diese Session" in html
-    assert "Map Workspace folgt" in html
-    assert "Import / Export folgt" in html
+    assert "Map Workspace folgt" not in html
+    assert "Import / Export folgt" not in html
+    assert "Assets, Uploads und Vorschau sind verfügbar." in html
 
 
 def test_session_prep_surface_keeps_play_entry_seam_owned(client):

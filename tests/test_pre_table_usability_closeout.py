@@ -53,7 +53,7 @@ def test_campaigns_route_aligns_hub_and_session_prep_readiness_language():
     assert "Session-Prep öffnen" in content
     assert "braucht noch eine aktive Session-Karte" in content
     assert "Home -> Kampagnen-Hub -> Session-Prep -> Session starten oder fortsetzen -> Play." in content
-    assert "Sichtbar, aber nicht blockierend:" in content
+    assert "Sichtbar, aber nicht blockierend:" not in content
     assert "Keine harten Vorbedingungen offen" in content
 
 

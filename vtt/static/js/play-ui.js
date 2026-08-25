@@ -46,6 +46,9 @@
             this.activityRows = [];
             this.chatRows = [];
             this.selectedTokenId = null;
+            // Playtable-Vordermann 2026-08-25: server-backed combat state
+            // ({encounter, participants, events}) for the table.
+            this.combat = null;
             this.dragState = null;
             this.panState = null;
             this.mapInteractionsBound = false;
@@ -65,20 +68,31 @@
             const params = new URLSearchParams(window.location.search);
             this.campaignId = Number(params.get("campaign_id"));
             this.sessionId = Number(params.get("session_id"));
-            if (!Number.isInteger(this.campaignId) || !Number.isInteger(this.sessionId)) {
-                this._showMessage("campaign_id und session_id werden benoetigt.", true);
-                return;
-            }
-
-            this._consumeEntryBoundary();
             this.user = await this.auth.requireAuth("/login.html");
             if (!this.user) {
                 return;
             }
 
+            if (!Number.isInteger(this.campaignId) || this.campaignId <= 0
+                || !Number.isInteger(this.sessionId) || this.sessionId <= 0) {
+                this._showMissingSessionState();
+                return;
+            }
+
+            this._consumeEntryBoundary();
+
             this._bindControls();
             await this.loadBootstrap();
             this._connectSocket();
+        }
+
+        _showMissingSessionState() {
+            // UI-Regel (Adrian, 2026-08-25): der Spieltisch wird IMMER aus
+            // einer aktiven Kampagne heraus geöffnet — ein /play ohne
+            // Parameter ist kein Zustand, den man ansieht, sondern eine
+            // falsche Adresse.  Keine Sackgassen-Seite, direkt zurück ins
+            // Buch zur Kampagnenliste.
+            window.location.replace("/campaigns");
         }
 
         _consumeEntryBoundary() {
@@ -223,12 +237,113 @@
                         message: entry.message || entry.content || "",
                     }));
                 }
+                await this._refreshCombatState();
                 this._render();
             } catch (error) {
                 this._showMessage(error.message || "Startdaten konnten nicht geladen werden.", true);
             } finally {
                 this._finalizeEntryArrival();
             }
+        }
+
+        async _refreshCombatState() {
+            try {
+                this.combat = await this.api.combatState(this.campaignId, this.sessionId);
+            } catch (error) {
+                this.combat = null;
+            }
+        }
+
+        _combatActive() {
+            return this.combat?.encounter?.status === "active";
+        }
+
+        _handleCombatState(payload) {
+            if (!payload || typeof payload !== "object") return;
+            this.combat = payload;
+            // Server combat mutates participant tokens (initiative,
+            // version) — merge so drag base_versions stay correct.
+            const tokens = this.bootstrap?.state_payload?.tokens;
+            if (Array.isArray(tokens)) {
+                (payload.participants || []).forEach((incoming) => {
+                    const existing = tokens.find(
+                        (token) => Number(token.id) === Number(incoming.id));
+                    if (existing) Object.assign(existing, incoming);
+                });
+            }
+            this._render();
+        }
+
+        async _startCombat() {
+            try {
+                this._handleCombatState(
+                    await this.api.combatStart(this.campaignId, this.sessionId, "auto"));
+                this._logActivity("Kampf gestartet — Initiative vom Server ausgewürfelt.", "info");
+            } catch (error) {
+                this._showMessage(error.message || "Kampf konnte nicht gestartet werden.", true);
+            }
+        }
+
+        async _advanceCombatTurn(allowRetry = true) {
+            const baseVersion = Number(this.combat?.encounter?.version || 0);
+            try {
+                this._handleCombatState(
+                    await this.api.combatAdvanceTurn(this.campaignId, this.sessionId, baseVersion));
+            } catch (error) {
+                // Version conflict (REST response vs. socket event racing the
+                // local merge): fetch the fresh encounter once and retry.
+                if (allowRetry) {
+                    await this._refreshCombatState();
+                    return this._advanceCombatTurn(false);
+                }
+                this._showMessage(error.message || "Zugwechsel fehlgeschlagen.", true);
+            }
+        }
+
+        async _endCombat(allowRetry = true) {
+            const baseVersion = Number(this.combat?.encounter?.version || 0);
+            try {
+                this._handleCombatState(
+                    await this.api.combatEnd(this.campaignId, this.sessionId, baseVersion));
+                this._logActivity("Kampf beendet.", "info");
+            } catch (error) {
+                if (allowRetry) {
+                    await this._refreshCombatState();
+                    return this._endCombat(false);
+                }
+                this._showMessage(error.message || "Kampf konnte nicht beendet werden.", true);
+            }
+        }
+
+        _handlePresence(payload) {
+            const roster = document.getElementById("presenceRoster");
+            if (!roster) return;
+            const users = Array.isArray(payload?.users) ? payload.users : [];
+            roster.textContent = users.length
+                ? users.map((user) => user.username).join(", ")
+                : "–";
+        }
+
+        _openSheet(characterId, characterName) {
+            if (!characterId) return;
+            const drawer = document.getElementById("sheetDrawer");
+            const frame = document.getElementById("sheetFrame");
+            const title = document.getElementById("sheetDrawerTitle");
+            if (!drawer || !frame) return;
+            frame.src = `/character-sheet?id=${encodeURIComponent(characterId)}`;
+            if (title) {
+                title.textContent = characterName
+                    ? `Charakterbogen · ${characterName}` : "Charakterbogen";
+            }
+            drawer.hidden = false;
+        }
+
+        _closeSheet() {
+            const drawer = document.getElementById("sheetDrawer");
+            const frame = document.getElementById("sheetFrame");
+            if (!drawer || drawer.hidden) return;
+            drawer.hidden = true;
+            if (frame) frame.src = "about:blank";
         }
 
         _connectSocket() {
@@ -251,6 +366,10 @@
                     tokenBatchMoved: (payload) => this._handleTokenBatchMoved(payload),
                     initiativeUpdated: (payload) => this._handleInitiativeUpdated(payload),
                     initiativeTurnChanged: (payload) => this._handleInitiativeTurnChanged(payload),
+                    combatState: (payload) => this._handleCombatState(payload),
+                    combatEnded: (payload) => this._handleCombatState(payload),
+                    presenceUpdate: (payload) => this._handlePresence(payload),
+                    tick: () => {},
                     sessionPaused: (payload) => this._handleLifecycleBroadcast("paused", payload),
                     sessionResumed: (payload) => this._handleLifecycleBroadcast("resumed", payload),
                     sessionEnded: (payload) => this._handleLifecycleBroadcast("ended", payload),
@@ -1170,6 +1289,27 @@
             const initiativeBtn = document.getElementById("btnRollInitiative");
             if (initiativeBtn) initiativeBtn.addEventListener("click", () => this._rollInitiativeForTokens());
 
+            // Server-Kampf (Playtable-Vordermann 2026-08-25).
+            const startCombatBtn = document.getElementById("btnStartCombat");
+            if (startCombatBtn) startCombatBtn.addEventListener("click", () => this._startCombat());
+            const nextTurnBtn = document.getElementById("btnNextTurn");
+            if (nextTurnBtn) nextTurnBtn.addEventListener("click", () => this._advanceCombatTurn());
+            const endCombatBtn = document.getElementById("btnEndCombat");
+            if (endCombatBtn) endCombatBtn.addEventListener("click", () => this._endCombat());
+
+            // Charakterbogen-Lade.
+            const openSheetBtn = document.getElementById("btnOpenSheet");
+            if (openSheetBtn) openSheetBtn.addEventListener("click", () => {
+                const sheetRow = document.getElementById("sheetButtonRow");
+                this._openSheet(sheetRow?.dataset.characterId,
+                                sheetRow?.dataset.characterName);
+            });
+            const closeSheetBtn = document.getElementById("btnCloseSheet");
+            if (closeSheetBtn) closeSheetBtn.addEventListener("click", () => this._closeSheet());
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") this._closeSheet();
+            });
+
             this._bindMapUpload();
         }
 
@@ -1179,11 +1319,11 @@
         // choreography the campaign hub uses; before this the play table
         // had no upload path at all (robot audit 2026-08-23).
         _bindMapUpload() {
-            const button = document.getElementById("btnMapUpload");
+            // Der Upload wird aus dem Hinzufügen-Dialog heraus gestartet
+            // (#layerAddUpload in _renderLayerAddControl); hier hängt nur
+            // noch der Datei-Handler am versteckten Input.
             const fileInput = document.getElementById("mapUploadFile");
-            if (!button || !fileInput) return;
-
-            button.addEventListener("click", () => fileInput.click());
+            if (!fileInput) return;
             fileInput.addEventListener("change", async () => {
                 const file = fileInput.files && fileInput.files[0];
                 fileInput.value = "";
@@ -1225,7 +1365,10 @@
                 const uploadBody = await this._uploadAssetFile(file, "map");
 
                 setStatus("Erzeuge Karte...");
-                const mapName = file.name.replace(/\.[^.]+$/, "").slice(0, 120) || "Neue Karte";
+                // Eingegebener Seitenname gewinnt gegen den Dateinamen —
+                // sonst heißen Karten wie ihre Asset-Hashes.
+                const enteredName = document.getElementById("layerAddName")?.value.trim() || "";
+                const mapName = (enteredName || file.name.replace(/\.[^.]+$/, "")).slice(0, 120) || "Neue Karte";
                 const created = await this.auth.makeAuthRequest(`/api/campaigns/${this.campaignId}/maps`, "POST", {
                     name: mapName,
                     width: Number(uploadBody.width) || 1400,
@@ -1249,6 +1392,10 @@
                 }
 
                 setStatus("");
+                const nameInput = document.getElementById("layerAddName");
+                if (nameInput) nameInput.value = "";
+                const choice = document.getElementById("layerAddChoice");
+                if (choice) choice.hidden = true;
                 this._showMessage(`Karte "${mapName}" hochgeladen und aktiviert.`);
                 await this.loadBootstrap();
             } catch (error) {
@@ -1667,59 +1814,69 @@
         }
 
         async _renderLayerAddControl(existingLayers) {
-            const select = document.getElementById("layerAddSelect");
+            // UI-Regel (Adrian, 2026-08-25): „Hinzufügen" ist der eine Weg
+            // zu einer neuen Seite.  Klick öffnet die Wahl: neue Karte
+            // hochladen ODER eine vorhandene übernehmen — bereits als Seite
+            // verwendete Karten werden dabei serverseitig kopiert, es gibt
+            // keine „alle Karten sind bereits Seiten"-Sackgasse mehr.
             const addBtn = document.getElementById("layerAddBtn");
+            const choice = document.getElementById("layerAddChoice");
+            const source = document.getElementById("layerAddSource");
+            const copyBtn = document.getElementById("layerAddCopy");
+            const uploadBtn = document.getElementById("layerAddUpload");
+            const cancelBtn = document.getElementById("layerAddCancel");
+            const nameInput = document.getElementById("layerAddName");
             const status = document.getElementById("layerAddStatus");
-            if (!select || !addBtn) return;
+            if (!addBtn || !choice || !source) return;
 
             const setStatus = (message) => {
                 if (!status) return;
                 status.textContent = message || "";
                 status.hidden = !message;
             };
-            const syncButton = () => {
-                addBtn.disabled = !select.value;
-                addBtn.title = addBtn.disabled
-                    ? "Wähle zuerst eine vorhandene Kampagnenkarte aus"
-                    : "Eine vorhandene Kampagnenkarte als Seite hinzufügen";
-            };
 
+            const usedMapIds = new Set(existingLayers.map((l) => Number(l.campaign_map_id)));
             try {
                 const maps = await this.api.campaignMaps(this.campaignId);
-                const usedMapIds = new Set(existingLayers.map((l) => Number(l.campaign_map_id)));
-                const available = (Array.isArray(maps) ? maps : []).filter((m) => !usedMapIds.has(Number(m.id)));
-
-                select.innerHTML = `<option value="">+ Seite hinzufügen...</option>` +
-                    available.map((m) => `<option value="${m.id}">${escapeHtml(m.name)}</option>`).join("");
-                select.disabled = available.length === 0;
-                if (available.length === 0) {
-                    setStatus(existingLayers.length
-                        ? "Alle vorhandenen Kampagnenkarten sind bereits Seiten. Nutze „Datei hinzufügen“, um eine neue Karte anzulegen."
-                        : "Noch keine Kampagnenkarte vorhanden. Nutze „Datei hinzufügen“, um die erste Seite hochzuladen.");
-                } else {
-                    setStatus("");
-                }
+                // Die Maps-API antwortet {maps: [...]} — das alte nackte
+                // Array-Parsing ließ die Auswahl IMMER leer und war die
+                // eigentliche Ursache des Sackgassen-Menüs (2026-08-25).
+                const rows = Array.isArray(maps) ? maps
+                    : (Array.isArray(maps?.maps) ? maps.maps : []);
+                source.innerHTML = rows.length
+                    ? rows.map((m) => `<option value="${m.id}">${escapeHtml(m.name)}${usedMapIds.has(Number(m.id)) ? " — wird kopiert" : ""}</option>`).join("")
+                    : `<option value="">Noch keine Karte — lade eine hoch</option>`;
+                if (copyBtn) copyBtn.disabled = rows.length === 0;
+                setStatus("");
             } catch (error) {
-                select.innerHTML = `<option value="">Karten konnten nicht geladen werden</option>`;
-                select.disabled = true;
-                addBtn.disabled = true;
+                source.innerHTML = `<option value="">Karten konnten nicht geladen werden</option>`;
+                if (copyBtn) copyBtn.disabled = true;
                 setStatus("Karten konnten nicht geladen werden. Prüfe die Verbindung und versuche es erneut.");
             }
 
-            select.onchange = syncButton;
-            syncButton();
-
-            addBtn.onclick = async () => {
-                const mapId = Number(select.value);
+            addBtn.onclick = () => {
+                choice.hidden = !choice.hidden;
+            };
+            if (cancelBtn) cancelBtn.onclick = () => {
+                choice.hidden = true;
+            };
+            if (uploadBtn) uploadBtn.onclick = () => {
+                document.getElementById("mapUploadFile")?.click();
+            };
+            if (copyBtn) copyBtn.onclick = async () => {
+                const mapId = Number(source.value);
                 if (!mapId) return;
-                addBtn.disabled = true;
+                copyBtn.disabled = true;
                 try {
-                    await this.api.addLayer(this.campaignId, this.sessionId, mapId);
+                    const label = nameInput?.value.trim() || null;
+                    await this.api.addLayer(this.campaignId, this.sessionId, mapId, label, true);
                     this._showMessage("Seite hinzugefügt.");
+                    if (nameInput) nameInput.value = "";
+                    choice.hidden = true;
                     await this.loadBootstrap();
                 } catch (error) {
                     this._showMessage(error.message || "Seite konnte nicht hinzugefügt werden.", true);
-                    addBtn.disabled = false;
+                    copyBtn.disabled = false;
                 }
             };
         }
@@ -1856,10 +2013,38 @@
             }
 
             // DM-only table controls: map upload and initiative rolling.
-            const uploadRow = document.getElementById("mapUploadRow");
-            if (uploadRow) uploadRow.hidden = !operator || this.readOnly;
+            const layerAddRow = document.getElementById("layerAddRow");
+            if (layerAddRow) layerAddRow.hidden = !operator || this.readOnly;
+            if (!operator || this.readOnly) {
+                const layerAddChoice = document.getElementById("layerAddChoice");
+                if (layerAddChoice) layerAddChoice.hidden = true;
+            }
             const initiativeControls = document.getElementById("initiativeControls");
             if (initiativeControls) initiativeControls.hidden = !operator || this.readOnly;
+            const combatActive = this._combatActive();
+            const startCombatBtn = document.getElementById("btnStartCombat");
+            if (startCombatBtn) startCombatBtn.hidden = combatActive;
+            const nextTurnBtn = document.getElementById("btnNextTurn");
+            if (nextTurnBtn) nextTurnBtn.hidden = !combatActive;
+            const endCombatBtn = document.getElementById("btnEndCombat");
+            if (endCombatBtn) endCombatBtn.hidden = !combatActive;
+            const legacyInitiativeBtn = document.getElementById("btnRollInitiative");
+            if (legacyInitiativeBtn) legacyInitiativeBtn.hidden = combatActive;
+
+            // Charakterbogen am Tisch: sichtbar für den Besitzer des
+            // ausgewählten Tokens und für Operatoren, sobald ein Charakter
+            // verknüpft ist.
+            const sheetRow = document.getElementById("sheetButtonRow");
+            if (sheetRow) {
+                const sheetToken = this._findStateToken(this.selectedTokenId);
+                const canOpenSheet = Boolean(sheetToken && sheetToken.character_id
+                    && (operator || Number(sheetToken.owner_user_id) === Number(this.user?.id)));
+                sheetRow.hidden = !canOpenSheet;
+                if (canOpenSheet) {
+                    sheetRow.dataset.characterId = String(sheetToken.character_id);
+                    sheetRow.dataset.characterName = sheetToken.name || "";
+                }
+            }
             const tokenToolBtn = document.querySelector('.tool-btn[data-tool="token"]');
             if (tokenToolBtn) tokenToolBtn.style.display = this.readOnly ? "none" : "";
             const tokenUploadRow = document.getElementById("tokenUploadRow");
@@ -1995,6 +2180,31 @@
             const container = document.getElementById("turnOrderList");
             const summary = document.getElementById("turnOrderSummary");
             if (!container) return;
+
+            // Active server encounter: render rounds/turns from the combat
+            // backend. Hidden participants are already filtered server-side;
+            // a hidden active actor arrives as active_token_id = null.
+            if (this._combatActive()) {
+                const encounter = this.combat.encounter;
+                const byId = new Map((this.combat.participants || [])
+                    .map((token) => [Number(token.id), token]));
+                const order = (encounter.initiative_order || [])
+                    .map((tokenId) => byId.get(Number(tokenId)))
+                    .filter(Boolean);
+                const active = byId.get(Number(encounter.active_token_id)) || null;
+                if (summary) {
+                    summary.textContent = `Runde ${encounter.round_number} · Am Zug: `
+                        + (active ? active.name : "Verdeckter Akteur");
+                }
+                container.innerHTML = order.length ? order.map((token) => `
+                    <div class="turn-item ${Number(token.id) === Number(encounter.active_token_id) ? "is-active" : ""}">
+                        <span>${escapeHtml(token.name)}</span>
+                        <span class="turn-score">${escapeHtml(token.initiative)}</span>
+                    </div>
+                `).join("") : "<div class='muted'>Alle Akteure sind verdeckt.</div>";
+                return;
+            }
+
             const tokens = this._visibleTokens();
             const entries = this._getInitiativeEntries(tokens);
 

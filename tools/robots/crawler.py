@@ -422,8 +422,13 @@ def _execute_contract(run: CrawlerRun, session: RobotSession, contract: dict,
     })
 
     if element.get("resets_auth"):
-        session.login(username=credentials["username"],
-                      password=credentials["password"])
+        if not session.login(username=credentials["username"],
+                             password=credentials["password"]):
+            run.blocked = True
+            run.find("blocker", "harness", name,
+                     "Robot kann sich nach Abmelde-Vertrag wieder anmelden",
+                     "Re-Login scheiterte — Folgeverträge liefen sonst "
+                     "unbemerkt ausgeloggt weiter")
     return landing_url
 
 

@@ -52,6 +52,17 @@ class PlaySocketRuntime {
         this.socket.on("token:batch_moved", (payload) => this._handleSequencedEvent("token:batch_moved", payload, "tokenBatchMoved"));
         this.socket.on("initiative:updated", (payload) => this._handleSequencedEvent("initiative:updated", payload, "initiativeUpdated"));
         this.socket.on("initiative:turn_changed", (payload) => this._handleSequencedEvent("initiative:turn_changed", payload, "initiativeTurnChanged"));
+        // Playtable-Vordermann 2026-08-25: combat backend wired to the table.
+        this.socket.on("combat:started", (payload) => this._handleSequencedEvent("combat:started", payload, "combatState"));
+        this.socket.on("combat:updated", (payload) => this._handleSequencedEvent("combat:updated", payload, "combatState"));
+        this.socket.on("combat:turn", (payload) => this._handleSequencedEvent("combat:turn", payload, "combatState"));
+        this.socket.on("combat:hp", (payload) => this._handleSequencedEvent("combat:hp", payload, "combatState"));
+        this.socket.on("combat:ended", (payload) => this._handleSequencedEvent("combat:ended", payload, "combatEnded"));
+        this.socket.on("presence:update", (payload) => this._handleSequencedEvent("presence:update", payload, "presenceUpdate"));
+        // Seq-bearing no-op: a mutation whose real event is not for this
+        // role (hidden token moves).  Processing it keeps the gap detector
+        // quiet; there is nothing else to do.
+        this.socket.on("state:tick", (payload) => this._handleSequencedEvent("state:tick", payload, "tick"));
         this.socket.on("session:paused", (payload) => this._handleSequencedEvent("session:paused", payload, "sessionPaused"));
         this.socket.on("session:resumed", (payload) => this._handleSequencedEvent("session:resumed", payload, "sessionResumed"));
         this.socket.on("session:ended", (payload) => this._handleSequencedEvent("session:ended", payload, "sessionEnded"));

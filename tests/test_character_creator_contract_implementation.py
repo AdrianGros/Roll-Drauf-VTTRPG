@@ -81,7 +81,7 @@ def test_characters_template_exposes_roll_drauf_light_creator_contract():
 def test_character_sheet_surfaces_faction_without_reopening_sheet_architecture():
     content = _read(CHARACTER_SHEET_TEMPLATE)
 
-    assert 'label for="charFaction">Faction</label>' in content
+    assert 'label for="charFaction">Fraktion</label>' in content
     assert "document.getElementById('charFaction').value = character.faction || '';" in content
     assert "payload.faction = factionValue;" in content
 

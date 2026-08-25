@@ -47,5 +47,5 @@ def test_character_sheet_template_links_view_edit_and_campaign_context():
     assert "sheetIdentityGrid" in content
     assert "function openIdentityPicker(identityKind)" in content
     assert "function removeIdentity(identityKind)" in content
-    assert "Open Campaign Context" in content
-    assert "Return to campaign context when the hero is ready for play." in content
+    assert "Kampagnen-Kontext" in content
+    assert "Kehre zum Kampagnen-Kontext zurück, wenn du bereit für die Session bist." in content

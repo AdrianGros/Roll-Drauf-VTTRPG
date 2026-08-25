@@ -51,10 +51,11 @@ def test_session_prep_surface_makes_remaining_blockers_clearer(client):
     assert "Noch offen vor Play" in html
     assert "Keine aktive Session-Karte gewählt" in html
     assert "Noch kein Session-Charakter zugewiesen" in html
-    assert "Tieferer Map Workspace bleibt vorerst eigener Prep-Schritt" in html
-    assert "Paketierter Import / Export bleibt vorerst Platzhalter" in html
-    assert "Map Workspace folgt" in html
-    assert "Import / Export folgt" in html
+    assert "Tieferer Map Workspace bleibt vorerst eigener Prep-Schritt" not in html
+    assert "Paketierter Import / Export bleibt vorerst Platzhalter" not in html
+    assert "Map Workspace folgt" not in html
+    assert "Import / Export folgt" not in html
+    assert "Assets, Uploads und Vorschau sind verfügbar." in html
 
 
 def test_session_prep_deepening_keeps_play_entry_seam_owned(client):

@@ -24,10 +24,10 @@ services:
 
   app:
     build:
-      context: .
+      context: ../..
       dockerfile: infra/docker/Dockerfile
     env_file:
-      - .env.vtt.roll-drauf.de
+      - ../../.env.vtt.roll-drauf.de
     networks:
       default:
         # Host nginx (/etc/nginx/conf.d/vtt.conf) proxy_passes to this fixed
@@ -47,13 +47,60 @@ services:
       METRICS_ENABLED: "true"
       VOICE_ENABLED: "false"
       LOCAL_STORAGE_PATH: /data/vtt-assets
+      MAIL_SERVER: vtt.roll-drauf.de
+      MAIL_PORT: "587"
+      MAIL_USE_TLS: "true"
+      MAIL_USERNAME: no-reply@vtt.roll-drauf.de
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_DEFAULT_SENDER: no-reply@vtt.roll-drauf.de
     volumes:
       - vtt_assets_data:/data/vtt-assets
     depends_on:
       - db
       - redis
+      - mailserver
     expose:
       - "5000"
+    restart: unless-stopped
+
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:15.1.0
+    hostname: mail.vtt.roll-drauf.de
+    environment:
+      OVERRIDE_HOSTNAME: mail.vtt.roll-drauf.de
+      PERMIT_DOCKER: none
+      POSTFIX_INET_PROTOCOLS: ipv4
+      ACCOUNT_PROVISIONER: FILE
+      ONE_DIR: "1"
+      ENABLE_CLAMAV: "0"
+      ENABLE_FAIL2BAN: "0"
+      ENABLE_IMAP: "1"
+      ENABLE_POP3: "0"
+      ENABLE_OPENDKIM: "1"
+      ENABLE_OPENDMARC: "1"
+      ENABLE_RSPAMD: "0"
+      SPOOF_PROTECTION: "1"
+      SSL_TYPE: manual
+      SSL_CERT_PATH: /etc/letsencrypt/live/vtt.roll-drauf.de/fullchain.pem
+      SSL_KEY_PATH: /etc/letsencrypt/live/vtt.roll-drauf.de/privkey.pem
+      TZ: Europe/Berlin
+    volumes:
+      - ../mailserver/docker-data/dms/mail-data/:/var/mail/
+      - ../mailserver/docker-data/dms/mail-state/:/var/mail-state/
+      - ../mailserver/docker-data/dms/mail-logs/:/var/log/mail/
+      - ../mailserver/docker-data/dms/config/:/tmp/docker-mailserver/
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      default:
+        ipv4_address: 172.19.0.6
+        aliases:
+          - vtt.roll-drauf.de
+    expose:
+      - "25"
+      - "465"
+      - "587"
+      - "993"
     restart: unless-stopped
 
   nginx:

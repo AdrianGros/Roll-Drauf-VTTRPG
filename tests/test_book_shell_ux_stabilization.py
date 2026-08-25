@@ -55,22 +55,21 @@ def test_book_scene_routes_use_production_copy_and_real_feature_entry_points():
     assert "buildIntentHref('/characters', { classic: 1, intent: 'create' })" in content
 
 
-def test_campaigns_template_honestly_marks_creation_map_and_import_export_surfaces():
+def test_campaigns_template_exposes_only_ready_creation_and_map_surfaces():
     content = _read(CAMPAIGNS_TEMPLATE)
 
     assert "+ Kampagne anlegen" in content
     assert "Neue Kampagne im Buch anlegen" in content
     assert 'id="campaignCreateForm"' in content
     assert "Kampagnen-Hub öffnen" in content
-    # Map upload is a real, working feature now (M1 of the map/token/scene
-    # plan) - no longer a disabled placeholder, so it's no longer marked
-    # "folgt" (coming soon). Import/Export remains an honest placeholder.
+    # Map upload is a real, working feature. Unbuilt import/export and
+    # disabled "coming soon" controls must not be presented to users.
     assert "Karte hochladen" in content
     assert "uploadStandaloneMap(" in content
-    assert "Import / Export folgt hier" in content
-    assert "Map Import folgt" in content
-    assert "Paket Export folgt" in content
-    assert '<button class="btn btn-secondary" disabled>Session folgt</button>' in content
+    assert "Import / Export folgt hier" not in content
+    assert "Map Import folgt" not in content
+    assert "Paket Export folgt" not in content
+    assert "Session folgt" not in content
 
 
 def test_character_surfaces_expose_identity_surfaces_consistently():
@@ -82,7 +81,7 @@ def test_character_surfaces_expose_identity_surfaces_consistently():
     assert "Avatar First" in characters
     assert "Token Ready" in characters
 
-    assert "Identity Surface" in sheet
+    assert "Identität" in sheet
     assert 'id="sheetIdentityFilePicker"' in sheet
     assert "function openIdentityPicker(identityKind)" in sheet
     assert "function removeIdentity(identityKind)" in sheet

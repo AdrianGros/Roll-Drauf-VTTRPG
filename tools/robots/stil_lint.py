@@ -43,10 +43,17 @@ CHECKS = {
         "roots": ["vtt/templates", "vtt/static/css", "vtt/static/js"],
         "suffixes": {".html", ".css", ".js"},
     },
+    # Design-Jury 2026-08-25: "PRIMAERE GILDE"/"prueft"/"ausschliesslich"
+    # standen im RENDERING neben korrekten Umlauten — die Strings kommen
+    # aus JS/Python-Content, die der reine Template-Grep nie sah.  Daher
+    # Muster erweitert und JS + content_defaults in den Scan genommen.
     "umlaut-ersatz": {
-        "pattern": re.compile(r"(?i)\b(oeffnen|zurueck|wuerfel|loeschen)"),
-        "roots": ["vtt/templates"],
-        "suffixes": {".html"},
+        "pattern": re.compile(
+            r"(?i)\b(oeffnen|zurueck|wuerfel|loeschen|prueft|pruefen"
+            r"|primaer\w*|ausschliess\w*|veraender\w*|waehl\w*|uebersicht"
+            r"|naechste\w*|gewaehlt\w*)"),
+        "roots": ["vtt/templates", "vtt/static/js", "vtt/content_defaults.py"],
+        "suffixes": {".html", ".js", ".py"},
     },
 }
 
@@ -56,7 +63,10 @@ def _scan() -> dict[str, dict[str, int]]:
     for check_name, check in CHECKS.items():
         per_file: dict[str, int] = {}
         for root in check["roots"]:
-            for path in sorted((REPO / root).rglob("*")):
+            root_path = REPO / root
+            paths = ([root_path] if root_path.is_file()
+                     else sorted(root_path.rglob("*")))
+            for path in paths:
                 if (path.suffix not in check["suffixes"]
                         or path.name in VENDORED
                         or path.name in TOKEN_CATALOG):

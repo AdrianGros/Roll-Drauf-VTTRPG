@@ -5,3 +5,11 @@ ops/certbot/www/
 .pytest_cache/
 __pycache__/
 venv/
+# Mailserver-Laufzeitdaten (root-eigene DKIM-Schlüssel!) liegen im Repo —
+# gehören nie in den Build-Kontext; ohne diesen Ausschluss bricht
+# `docker compose build` mit "no permission to read ... mail.private" ab
+# (Deploy-Fund 2026-08-25).
+infra/mailserver/docker-data/
+# Ebenfalls nie ins Image: Robot-Artefakte und Screenshot-Baselines.
+artifacts/
+tools/robots/snapshots/

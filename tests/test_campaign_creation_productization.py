@@ -54,5 +54,6 @@ def test_campaign_creation_success_copy_points_into_hub_and_session_prep(client)
 
     assert "Danach öffnet sich direkt der Kampagnen-Hub." in html
     assert "Als Nächstes: Hub öffnen, Spieler einladen oder die erste Session vorbereiten." in html
-    assert "Session-Prep folgt im Hub" in html
+    assert "Session-Prep folgt im Hub" not in html
+    assert "Session-Prep" in html
     assert "viewCampaign(created.id)" in html

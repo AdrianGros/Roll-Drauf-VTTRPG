@@ -24,9 +24,10 @@ class PlayClient {
         );
     }
 
-    addLayer(campaignId, sessionId, campaignMapId, label = null) {
+    addLayer(campaignId, sessionId, campaignMapId, label = null, allowCopy = false) {
         const body = { campaign_map_id: campaignMapId };
         if (label) body.label = label;
+        if (allowCopy) body.allow_copy = true;
         return this.auth.makeAuthRequest(
             `/api/play/campaigns/${campaignId}/sessions/${sessionId}/scene-stack/layers`,
             "POST",
@@ -109,5 +110,27 @@ class PlayClient {
 
     nextTurn(campaignId, sessionId) {
         return this.auth.makeAuthRequest(`/api/sessions/${sessionId}/initiative/next-turn`, "POST", {});
+    }
+
+    // Playtable-Vordermann 2026-08-25: the tested combat backend, finally
+    // wired to the table (docs/PLAYTABLE_AUDIT_2026-08-25.md, P1).
+    combatState(campaignId, sessionId) {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/combat/state`);
+    }
+
+    combatStart(campaignId, sessionId, mode = "auto") {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/combat/start`, "POST", { mode });
+    }
+
+    combatAdvanceTurn(campaignId, sessionId, baseVersion) {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/combat/turn/advance`, "POST", {
+            base_version: baseVersion,
+        });
+    }
+
+    combatEnd(campaignId, sessionId, baseVersion) {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/combat/end`, "POST", {
+            base_version: baseVersion,
+        });
     }
 }

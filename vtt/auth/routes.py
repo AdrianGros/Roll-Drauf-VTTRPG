@@ -86,7 +86,10 @@ def _password_reset_hash(token: str) -> str:
 def _password_reset_url(token: str) -> str:
     base = str(current_app.config.get("PASSWORD_RESET_URL_BASE") or "").strip()
     if not base:
-        base = request.host_url.rstrip("/")
+        if current_app.testing:
+            base = request.host_url.rstrip("/")
+        else:
+            raise MailDeliveryError("PASSWORD_RESET_URL_BASE is not configured")
     return f"{base}/reset-password.html?token={quote(token)}"
 
 

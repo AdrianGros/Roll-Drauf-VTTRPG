@@ -214,7 +214,80 @@ def refresh_state_snapshot(state: SessionState):
     }
 
 
-def serialize_state_payload(game_session: GameSession, state: SessionState):
+def is_token_visible_to(token: TokenState, role: str | None, viewer_id: int | None) -> bool:
+    """Server-side read rule for DM secrets (Playtable-Audit 2026-08-25, P0):
+    `dm_only` and foreign `owner_only` tokens must never reach a player's
+    wire — the client-side filter in play-ui.js is a display convenience,
+    not a boundary."""
+    if is_operator_role(role):
+        return True
+    if token.visibility == "owner_only":
+        return viewer_id is not None and token.owner_user_id == viewer_id
+    return token.visibility == "public"
+
+
+def filter_tokens_for(tokens, role: str | None, viewer_id: int | None):
+    return [token for token in tokens
+            if is_token_visible_to(token, role, viewer_id)]
+
+
+def is_serialized_token_visible_to(token: dict, role: str | None,
+                                   viewer_id: int | None) -> bool:
+    """Same read rule as is_token_visible_to, for already-serialized dicts
+    (combat payloads carry token serializations, not model instances)."""
+    if is_operator_role(role):
+        return True
+    if token.get("visibility") == "owner_only":
+        return viewer_id is not None and token.get("owner_user_id") == viewer_id
+    return token.get("visibility") == "public"
+
+
+def filter_combat_payload(payload: dict | None, role: str | None,
+                          viewer_id: int | None) -> dict | None:
+    """Playtable-Vordermann 2026-08-25: combat payloads (state + events)
+    re-serialize every participant token, so they must apply the same
+    role filter as snapshots — including scrubbing hidden token ids from
+    initiative_order, masking a hidden active actor, and dropping events
+    that reference hidden tokens."""
+    if payload is None or is_operator_role(role):
+        return payload
+    filtered = dict(payload)
+    visible = [token for token in payload.get("participants", [])
+               if is_serialized_token_visible_to(token, role, viewer_id)]
+    visible_ids = {token["id"] for token in visible}
+    filtered["participants"] = visible
+
+    encounter = payload.get("encounter")
+    if encounter:
+        encounter = dict(encounter)
+        encounter["initiative_order"] = [
+            token_id for token_id in encounter.get("initiative_order", [])
+            if token_id in visible_ids]
+        if encounter.get("active_token_id") not in visible_ids:
+            encounter["active_token_id"] = None
+        filtered["encounter"] = encounter
+
+    events = []
+    for event in payload.get("events", []):
+        event_payload = dict(event.get("payload") or {})
+        token_id = event_payload.get("token_id")
+        if token_id and token_id not in visible_ids:
+            continue
+        if (event_payload.get("active_token_id")
+                and event_payload["active_token_id"] not in visible_ids):
+            event = dict(event)
+            event_payload["active_token_id"] = None
+            event["payload"] = event_payload
+        events.append(event)
+    filtered["events"] = events
+    return filtered
+
+
+def serialize_state_payload(game_session: GameSession, state: SessionState,
+                            *, role: str | None = None,
+                            viewer_id: int | None = None):
+    """role=None keeps the unfiltered operator view (DM room broadcasts,
+    audits); pass the viewer's session role for anything a player receives."""
     active_map = None
     if state.active_map_id:
         active_map = db.session.get(CampaignMap, state.active_map_id)
@@ -225,6 +298,8 @@ def serialize_state_payload(game_session: GameSession, state: SessionState):
         .order_by(TokenState.id.asc())
         .all()
     )
+    if role is not None and not is_operator_role(role):
+        tokens = filter_tokens_for(tokens, role, viewer_id)
     return {
         "session": game_session.serialize(),
         "state": state.serialize(),
@@ -237,7 +312,10 @@ def get_scene_stack(game_session_id: int):
     return SceneStack.query.filter_by(game_session_id=game_session_id).first()
 
 
-def serialize_scene_stack(scene_stack: SceneStack | None):
+def serialize_scene_stack(scene_stack: SceneStack | None, *,
+                          role: str | None = None):
+    """role=None keeps the unfiltered operator view; players only receive
+    layers marked is_player_visible (Playtable-Audit 2026-08-25, P0)."""
     if not scene_stack:
         return None
     layers = (
@@ -245,6 +323,8 @@ def serialize_scene_stack(scene_stack: SceneStack | None):
         .order_by(SceneLayer.order_index.asc(), SceneLayer.id.asc())
         .all()
     )
+    if role is not None and not is_operator_role(role):
+        layers = [layer for layer in layers if layer.is_player_visible]
     return {
         **scene_stack.serialize(),
         "layers": [layer.serialize() for layer in layers],
@@ -323,8 +403,16 @@ def add_scene_layer(
     user: User,
     campaign_map_id: int,
     label: str | None = None,
+    allow_copy: bool = False,
 ):
     """Add a single new SceneLayer for an existing CampaignMap.
+
+    UI-Regel (Adrian, 2026-08-25): „Hinzufügen" erzeugt IMMER eine neue
+    Seite.  Ist die Karte bereits eine Seite dieses Stacks und allow_copy
+    gesetzt, wird die CampaignMap kopiert (gleiche Grafik/Geometrie, neuer
+    Name = label, eigene Tokens) statt mit 409 in der Sackgasse „alle
+    Karten sind bereits Seiten" zu enden.  Ohne allow_copy bleibt das
+    409-Verhalten für Alt-Aufrufer erhalten.
 
     Returns (scene_stack, layer, error) where error is a Flask response tuple
     on failure and None on success.
@@ -340,11 +428,28 @@ def add_scene_layer(
     existing_layer = SceneLayer.query.filter_by(
         scene_stack_id=scene_stack.id, campaign_map_id=campaign_map.id
     ).first()
-    if existing_layer:
+    if existing_layer and not allow_copy:
         return None, None, (
             jsonify({"error": "campaign map is already a layer in this scene stack"}),
             409,
         )
+    if existing_layer:
+        copy_name = (label or f"{campaign_map.name} (Kopie)").strip()[:120]
+        campaign_map = CampaignMap(
+            campaign_id=campaign.id,
+            name=copy_name,
+            description=campaign_map.description,
+            grid_type=campaign_map.grid_type,
+            grid_size=campaign_map.grid_size,
+            width=campaign_map.width,
+            height=campaign_map.height,
+            background_url=campaign_map.background_url,
+            fog_enabled=campaign_map.fog_enabled,
+            light_rules=campaign_map.light_rules,
+            created_by=user.id,
+        )
+        db.session.add(campaign_map)
+        db.session.flush()
 
     max_order = (
         db.session.query(db.func.max(SceneLayer.order_index))

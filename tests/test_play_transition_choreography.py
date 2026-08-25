@@ -51,7 +51,7 @@ def test_play_entry_shell_exposes_arrival_choreography_state(client):
     assert 'data-play-transition-stage="pending"' in html
     assert 'data-play-entry-phase="pending"' in html
     assert 'class="play-entry-curtain"' in html
-    assert "The spellbook closes into table focus before the live workspace settles into view." in html
+    assert "The spellbook closes into table focus" not in html
 
 
 def test_play_runtime_honors_arrival_transition_states(client):

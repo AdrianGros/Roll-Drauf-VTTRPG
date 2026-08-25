@@ -221,10 +221,10 @@ class SessionScript:
         if "collapsed" in (page.locator("#layersWidget").get_attribute("class") or "").split():
             page.click('#layersWidget .widget-toggle')
         try:
-            page.wait_for_selector("#btnMapUpload", state="visible",
+            page.wait_for_selector("#layerAddBtn", state="visible",
                                    timeout=STEP_TIMEOUT_MS)
         except Exception:
-            self.fail("upload", "DM upload control never became visible", page)
+            self.fail("upload", "DM Hinzufügen control never became visible", page)
             return False
 
         maps = [
@@ -234,7 +234,17 @@ class SessionScript:
         ]
         for index, (filename, width, height, rgb) in enumerate(maps, start=1):
             real_file = _make_png(self.workdir / filename, width, height, rgb)
-            page.set_input_files("#mapUploadFile", str(real_file))
+            if index == 1:
+                # Der erste Upload beweist den echten Nutzerpfad des neuen
+                # Hinzufügen-Flows: Knopf -> Wahl -> Datei-Dialog.
+                page.click("#layerAddBtn")
+                page.wait_for_selector("#layerAddChoice:not([hidden])",
+                                       timeout=STEP_TIMEOUT_MS)
+                with page.expect_file_chooser() as chooser_info:
+                    page.click("#layerAddUpload")
+                chooser_info.value.set_files(str(real_file))
+            else:
+                page.set_input_files("#mapUploadFile", str(real_file))
             expected_name = filename.rsplit(".", 1)[0]
             try:
                 page.wait_for_function(
@@ -531,6 +541,193 @@ class SessionScript:
         self.pc.page.screenshot(path=str(self.workdir / "fullsession-combat-pc.png"))
         return True
 
+    def server_encounter(self) -> bool:
+        """Playtable-Vordermann 2026-08-25: the combat backend drives the
+        table — start, rounds, turn advance, end — replacing the old
+        client-side d20.  The hidden boss must stay out of the player's
+        order under the server flow too."""
+        dm_page = self.dm.page
+
+        try:
+            dm_page.wait_for_selector("#btnStartCombat", state="visible",
+                                      timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("encounter", "DM start-combat button never became visible", dm_page)
+            return False
+        dm_page.click("#btnStartCombat")
+
+        try:
+            dm_page.wait_for_function(
+                "() => (document.getElementById('turnOrderSummary')?.textContent || '').includes('Runde 1')",
+                timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            summary = dm_page.locator("#turnOrderSummary").text_content() or ""
+            self.fail("encounter", f"DM summary never showed round 1, shows: {summary!r}", dm_page)
+            return False
+        if dm_page.locator("#turnOrderList .turn-item").count() != 3:
+            self.fail("encounter", "DM encounter order should list 3 combatants", dm_page)
+        if dm_page.locator("#turnOrderList .turn-item.is-active").count() != 1:
+            self.fail("encounter", "DM encounter order should mark exactly one active row", dm_page)
+
+        try:
+            self.pc.page.wait_for_function(
+                "() => (document.getElementById('turnOrderSummary')?.textContent || '').includes('Runde 1')",
+                timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("encounter", "encounter start never reached the player's summary", self.pc.page)
+        if self.pc.page.locator("#turnOrderList .turn-item").count() != 2:
+            count = self.pc.page.locator("#turnOrderList .turn-item").count()
+            self.fail("encounter", f"player encounter order should list 2 combatants, lists {count}", self.pc.page)
+        if "Geheimboss" in (self.pc.page.locator("#turnOrderList").text_content() or ""):
+            self.fail("dm-layer-leak", "DM-only token leaked into the player's server encounter order", self.pc.page)
+
+        active_before = (dm_page.locator("#turnOrderList .turn-item.is-active")
+                         .text_content() or "").strip()
+        dm_page.click("#btnNextTurn")
+        try:
+            dm_page.wait_for_function(
+                """(before) => {
+                    const active = document.querySelector('#turnOrderList .turn-item.is-active');
+                    const summary = document.getElementById('turnOrderSummary')?.textContent || '';
+                    return (active && active.textContent.trim() !== before) || summary.includes('Runde 2');
+                }""",
+                arg=active_before, timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("encounter", "advancing the turn changed neither active row nor round", dm_page)
+
+        dm_page.click("#btnEndCombat")
+        try:
+            dm_page.wait_for_function(
+                "() => !(document.getElementById('turnOrderSummary')?.textContent || '').includes('Runde')",
+                timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("encounter", "ending combat never cleared the round summary", dm_page)
+        dm_page.screenshot(path=str(self.workdir / "fullsession-encounter-dm.png"))
+        return True
+
+    def sheet_at_table(self) -> bool:
+        """Audit P1: the character sheet opens AT the table (drawer) instead
+        of forcing the player to leave the session page."""
+        headers = self._json_headers(self.pc.context)
+        create = self.pc.context.request.post(
+            f"{self.stack.base_url}/api/characters",
+            data=json.dumps({"name": "Robo Bogenheld", "race": "Mensch",
+                             "class": "Fighter", "campaign_id": self.campaign_id}),
+            headers=headers)
+        if create.status != 201:
+            self.fail("sheet", f"character create returned HTTP {create.status}: {create.text()[:200]}")
+            return False
+        character_id = create.json()["id"]
+
+        me = self.pc.context.request.get(f"{self.stack.base_url}/api/auth/me",
+                                         headers=headers)
+        player_user_id = (me.json().get("user") or me.json()).get("id")
+
+        dm_headers = self._json_headers(self.dm.context)
+        token_create = self.dm.context.request.post(
+            f"{self.stack.base_url}/api/campaigns/{self.campaign_id}/sessions/{self.session_id}/tokens",
+            data=json.dumps({
+                "name": "Bogen-Held", "x": 4, "y": 4, "token_type": "player",
+                "character_id": character_id, "owner_user_id": player_user_id,
+            }),
+            headers=dm_headers)
+        if token_create.status != 201:
+            self.fail("sheet", f"token create returned HTTP {token_create.status}: {token_create.text()[:200]}")
+            return False
+
+        page = self.pc.page
+        # The open right sidebar (chat, from the previous phase) overlaps
+        # the floating widgets and intercepts pointer clicks — a known
+        # layout quirk, not this phase's subject.  Toggle/select via DOM
+        # click so the sheet feature itself is what gets tested.
+        page.eval_on_selector(
+            "#tokenWidget .widget-toggle",
+            "el => el.getAttribute('aria-expanded') === 'true' || el.click()")
+        row = page.locator("#tokenList .panel-row", has_text="Bogen-Held")
+        try:
+            row.first.wait_for(state="attached", timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("sheet", "token with linked character never appeared in the player's panel", page)
+            return False
+        row.first.evaluate("el => el.click()")
+        try:
+            page.wait_for_selector("#btnOpenSheet", state="visible",
+                                   timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("sheet", "selecting an owned character token never revealed the sheet button", page)
+            return False
+        page.eval_on_selector("#btnOpenSheet", "el => el.click()")
+        try:
+            page.wait_for_selector("#sheetDrawer:not([hidden])",
+                                   timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("sheet", "sheet drawer never opened", page)
+            return False
+        frame_src = page.locator("#sheetFrame").get_attribute("src") or ""
+        if f"id={character_id}" not in frame_src:
+            self.fail("sheet", f"sheet frame loads {frame_src!r}, expected character {character_id}", page)
+        page.screenshot(path=str(self.workdir / "fullsession-sheet-pc.png"))
+        page.keyboard.press("Escape")
+        try:
+            page.wait_for_selector("#sheetDrawer", state="hidden",
+                                   timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("sheet", "Escape never closed the sheet drawer", page)
+        return True
+
+    def presence_roster(self) -> bool:
+        """Audit P2: both seats see who is at the table."""
+        for label, page in (("dm", self.dm.page), ("player", self.pc.page)):
+            try:
+                page.wait_for_function(
+                    """() => {
+                        const text = document.getElementById('presenceRoster')?.textContent || '';
+                        return text.includes('regie_dm_bot') && text.includes('held_pc_bot');
+                    }""",
+                    timeout=STEP_TIMEOUT_MS)
+            except Exception:
+                roster = page.locator("#presenceRoster").text_content() or ""
+                self.fail("presence", f"{label} roster shows {roster!r}, expected both usernames", page)
+        return True
+
+    def dm_adds_copied_page(self) -> bool:
+        """Adrian-Regel 2026-08-25: „Hinzufügen" endet nie in der Sackgasse
+        „alle Karten sind bereits Seiten" — eine schon verwendete Karte wird
+        als neue Seite kopiert (eigene CampaignMap, gleiche Grafik)."""
+        page = self.dm.page
+        # Sidebar kann die Floating-Widgets überlappen (bekannter Layout-
+        # Befund) — Werte/Klicks daher über das DOM setzen.
+        page.eval_on_selector("#layerAddName", "el => { el.value = 'Welt-Anhang'; }")
+        page.eval_on_selector("#layerAddBtn", "el => el.click()")
+        try:
+            page.wait_for_selector("#layerAddChoice:not([hidden])",
+                                   timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("page-copy", "Hinzufügen never opened the choice panel", page)
+            return False
+        picked = page.eval_on_selector("#layerAddSource", """
+            el => {
+                const option = [...el.options].find(o => o.textContent.includes('wird kopiert'));
+                if (!option) return null;
+                el.value = option.value;
+                return option.value;
+            }""")
+        if not picked:
+            self.fail("page-copy", "no already-used map offered for copying", page)
+            return False
+        page.eval_on_selector("#layerAddCopy", "el => el.click()")
+        try:
+            page.wait_for_function(
+                "() => document.querySelectorAll('#layerList .layer-row').length >= 4",
+                timeout=STEP_TIMEOUT_MS)
+            page.wait_for_function(
+                "() => (document.getElementById('layerList')?.textContent || '').includes('Welt-Anhang')",
+                timeout=STEP_TIMEOUT_MS)
+        except Exception:
+            self.fail("page-copy", "copied page 'Welt-Anhang' never appeared in the layer list", page)
+            return False
+        return True
+
     def dm_ends_session(self) -> bool:
         page = self.dm.page
         self._open_sidebar_tab(page, "session")
@@ -557,6 +754,10 @@ class SessionScript:
                           self.player_joins_and_verifies_visibility,
                           self.player_places_and_moves_hero,
                           self.combat_round,
+                          self.server_encounter,
+                          self.sheet_at_table,
+                          self.presence_roster,
+                          self.dm_adds_copied_page,
                           self.dm_ends_session):
                 if not phase():
                     break
@@ -582,7 +783,7 @@ def main(argv: list[str] | None = None) -> int:
     for finding in findings:
         print(f"  - {finding}")
 
-    report = args.out or workdir.parent / "vtt-fullsession.json"
+    report = args.out or workdir / "vtt-fullsession.json"
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(json.dumps(
         {"status": "failed" if findings else "passed",

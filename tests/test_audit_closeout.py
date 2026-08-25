@@ -31,6 +31,8 @@ def test_login_entry_and_failure_states_are_explicit_and_capture_safe():
     assert "Buchzugang öffnen" in scene
     assert "/static/icons/icon-book-sparkles.svg" in scene
     assert "BookScene.open();" not in login
+    assert "this.bookCover.style.pointerEvents = 'auto';" in scene
+    assert "this.bookCover.style.pointerEvents = 'none';" in scene
 
 
 def test_dashboard_bootstrap_keeps_status_visible_long_enough_for_redirect_checkpoint():

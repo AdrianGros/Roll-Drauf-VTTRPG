@@ -58,8 +58,9 @@ def test_campaign_hub_connects_map_asset_and_character_prep_surfaces_honestly(cl
     assert 'id="campaignAssetLibraryPanel"' in html
     assert "Session-Besetzung:" in html
     assert "Session-Besetzung öffnen" in html
-    assert "Map Workspace folgt" in html
-    assert "Import / Export folgt hier" in html
+    assert "Map Workspace folgt" not in html
+    assert "Import / Export folgt hier" not in html
+    assert "Karte hochladen" in html
 
 
 def test_campaign_hub_play_entry_remains_bookscene_seam_owned(client):

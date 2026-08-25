@@ -87,6 +87,17 @@ class RobotSession:
         self.page.goto(f"{self.base_url}/login.html",
                        wait_until="domcontentloaded")
         try:
+            # The login form lives inside the book.  Its CSS visibility is
+            # not enough to make it clickable while the cover is closed;
+            # open the same entry surface a human uses before filling it.
+            self.page.wait_for_function(
+                "() => document.body.classList.contains('is-book-scene-login') "
+                "&& document.querySelector('.book-cover')",
+                timeout=READY_TIMEOUT_MS,
+            )
+            cover = self.page.locator(".book-cover[aria-pressed='false']")
+            if cover.count() and cover.is_visible():
+                cover.click()
             self.page.wait_for_selector("#passwordLoginForm", state="visible",
                                         timeout=READY_TIMEOUT_MS)
             self.page.fill("#loginUsername", username)
@@ -103,6 +114,12 @@ class RobotSession:
             if self.page.input_value("#loginPassword") != password:
                 self.page.fill("#loginPassword", password)
             self.page.click("#passwordLoginSubmitBtn")
+            # 2026-08-25: the committed login flow (login.html @35efeab)
+            # navigates straight to /dashboard on success — the interim
+            # #passwordLoginContinueBtn two-step no longer exists in the
+            # template, and waiting for it broke crawler re-login and every
+            # phone-viewport login (kulissen).  If a Continue step returns,
+            # update this together with strict_journey._journey (§13).
             self.page.wait_for_url("**/dashboard*", timeout=READY_TIMEOUT_MS)
         except Exception as error:
             self._record("login-failed",

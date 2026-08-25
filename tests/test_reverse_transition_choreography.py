@@ -41,7 +41,7 @@ def test_play_route_exposes_reverse_transition_choreography_shell(client):
     assert 'data-play-return-boundary="idle"' in html
     assert 'data-play-return-phase="TABLE_MODE"' in html
     assert 'class="play-return-curtain"' in html
-    assert "The table folds back into the spellbook before the next chapter settles into view." in html
+    assert "The table folds back into the spellbook" not in html
     assert 'body[data-play-transition-stage="table-exit"] .play-return-curtain' in html
     assert 'body[data-play-transition-stage="book-handoff"] .play-return-curtain' in html
 
@@ -68,4 +68,3 @@ def test_bookscene_honors_reverse_arrival_transition_state(client):
     assert "body.is-book-scene-return-transition" in css
     assert 'body[data-book-scene-entry-boundary="table-to-book"] .book-dashboard-camera' in css
     assert 'body[data-book-scene-entry-boundary="arrived"] .book-dashboard-camera' in css
-

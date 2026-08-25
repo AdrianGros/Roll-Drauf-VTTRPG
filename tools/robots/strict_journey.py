@@ -404,6 +404,7 @@ class StrictJourney:
         self._wait_for(page, "#book", "login book surface is initialized")
         self._checkpoint(page, "login-initial", role, viewport_name, path="/login.html")
         self._assert_login_initial(page)
+        self._wait_visual_settle(page, "#book", "login-initial")
         self._capture(page, "login-initial", role, viewport_name)
 
         try:
@@ -413,6 +414,7 @@ class StrictJourney:
 
         self._checkpoint(page, "login-ready", role, viewport_name)
         self._wait_for(page, "#passwordLoginForm:not([hidden])", "password login form is visible")
+        self._wait_visual_settle(page, "#passwordLoginForm", "login-ready")
         self._assert_login_ready(page)
         self._capture(page, "login-ready", role, viewport_name)
 
@@ -440,12 +442,14 @@ class StrictJourney:
         except Exception as error:
             self._finding("blocker", "journey", "login-submitted", "login submit is actionable", str(error))
         self._checkpoint(page, "login-submitted", role, viewport_name)
-        self._wait_for(page, "#passwordLoginStatus:not([hidden])", "successful login exposes a submission status")
+        # Committed flow (login.html @35efeab): success sets the short
+        # status and navigates in the SAME tick — the former
+        # #passwordLoginContinueBtn two-step no longer exists.  Waiting for
+        # the status here raced the navigation and cascaded into three
+        # bogus blockers (robot fix 2026-08-25, Design-Jury Befund 3: the
+        # submitted capture is an honest in-flight frame now, not a
+        # settled duplicate).
         self._capture(page, "login-submitted", role, viewport_name)
-        try:
-            page.click("#passwordLoginContinueBtn", timeout=5_000)
-        except Exception as error:
-            self._finding("blocker", "journey", "login-submitted", "successful login exposes an actionable dashboard CTA", str(error))
         self._wait_for_url(page, "**/dashboard*")
         self._checkpoint(page, "dashboard-redirect", role, viewport_name)
         self._assert_route(page, "/dashboard")
@@ -469,6 +473,7 @@ class StrictJourney:
         self._checkpoint(page, "logout-return", role, viewport_name)
         self._assert_route(page, "/login.html")
         self._wait_for(page, ".book-cover", "logout returns to the readable login cover")
+        self._wait_visual_settle(page, ".book-cover", "logout-return")
         self._capture(page, "logout-return", role, viewport_name)
 
     def _attach_telemetry(self, page) -> None:
@@ -672,6 +677,27 @@ class StrictJourney:
                 viewport = _viewport_rect(page)
                 if rect.right <= viewport.left or rect.left >= viewport.right:
                     self._finding("high", "a11y", "dashboard-keyboard", "focused control is not fully horizontally obscured", f"focus outside viewport: {focus}")
+                elif rect.bottom > viewport.bottom or rect.top < viewport.top:
+                    # Design-Jury 2026-08-25 (Befunde D4/D5): at 1920x1080 the
+                    # focused chip sat half below the fold and Firefox never
+                    # scrolled it in.  A browser that focuses must show; give
+                    # it one scroll and fail if the control stays cut.
+                    page.evaluate("() => document.activeElement && document.activeElement.scrollIntoView({block: 'nearest'})")
+                    page.wait_for_timeout(150)
+                    after = page.evaluate(
+                        """() => {
+                            const node = document.activeElement;
+                            if (!node) return null;
+                            const r = node.getBoundingClientRect();
+                            return {left: r.left, top: r.top, right: r.right, bottom: r.bottom};
+                        }"""
+                    )
+                    if after:
+                        after_rect = Rect(**after)
+                        cut = max(0.0, viewport.top - after_rect.top) + max(0.0, after_rect.bottom - viewport.bottom)
+                        height = max(1.0, after_rect.bottom - after_rect.top)
+                        if cut / height > 0.1:
+                            self._finding("high", "a11y", "dashboard-keyboard", "focused control scrolls fully into view", f"focus stays vertically cut after scrollIntoView: {focus}")
             page.keyboard.press("Tab")
         self._assert_accessibility_shape(page, checkpoint="dashboard-keyboard")
         self._assert_text_resize(page)
@@ -802,6 +828,43 @@ class StrictJourney:
 
     def _visible_count(self, page, selector: str) -> int:
         return sum(1 for index in range(page.locator(selector).count()) if page.locator(selector).nth(index).is_visible())
+
+    def _wait_visual_settle(self, page, selector: str, checkpoint: str, *,
+                            timeout_ms: int = 6_000) -> None:
+        """Playwright counts opacity:0 as 'visible', so a fade-in passes the
+        visibility wait while the capture records an empty ghost frame —
+        exactly the Design-Jury 2026-08-25 findings 2/4 (empty Firefox
+        login-ready pages, frozen Chromium cover frames).  Settled means:
+        effective opacity ~1 and an unchanged box in two consecutive
+        samples."""
+        deadline = time.monotonic() + timeout_ms / 1000
+        previous = None
+        while time.monotonic() < deadline:
+            sample = page.evaluate(
+                """(sel) => {
+                    const node = document.querySelector(sel);
+                    if (!node) return null;
+                    const r = node.getBoundingClientRect();
+                    let opacity = 1;
+                    for (let el = node; el; el = el.parentElement) {
+                        opacity *= parseFloat(getComputedStyle(el).opacity || '1');
+                    }
+                    return {left: Math.round(r.left), top: Math.round(r.top),
+                            width: Math.round(r.width), height: Math.round(r.height),
+                            opacity: Math.round(opacity * 100) / 100};
+                }""",
+                selector,
+            )
+            if sample and sample["opacity"] >= 0.99 and sample == previous:
+                return
+            previous = sample
+            page.wait_for_timeout(250)
+        self._finding(
+            "high", "evidence", checkpoint,
+            f"{selector} settles fully opaque before the capture",
+            f"animation/fade never settled: last sample {previous} — the "
+            "screenshot would record a ghost frame",
+        )
 
     def _wait_for(self, page, selector: str, message: str = "") -> None:
         try:

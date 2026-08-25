@@ -10,7 +10,13 @@ from vtt.models import ChatMessage, SceneLayer, TokenState
 from vtt.play import play_bp
 from vtt.play.actions import execute_action, get_action_catalog
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
-from vtt.utils.realtime import build_event_envelope
+from vtt.utils.realtime import (
+    build_event_envelope,
+    dm_room,
+    players_room,
+    sibling_envelope,
+    user_room,
+)
 from vtt.utils.time import utcnow
 from vtt.play.service import (
     SESSION_TRANSITIONS,
@@ -39,6 +45,54 @@ from vtt.play.service import (
     state_status_from_session_status,
     update_scene_layer,
 )
+
+
+def _emit_scoped_state_snapshot(campaign, game_session, state):
+    """Playtable-Audit 2026-08-25 (P0): room-wide state snapshots are
+    role-scoped.  Operators get the full view; owners of owner_only tokens
+    get their personal view via their user room; the players room gets the
+    public view.  All variants share ONE event_seq, and the client DROPS
+    a repeated seq as stale — so the most specific variant must be
+    emitted FIRST (an owner then discards the later public variant)."""
+    full = serialize_state_payload(game_session, state)
+    envelope = build_event_envelope(campaign.id, game_session.id, full)
+    socketio.emit("state:snapshot", envelope,
+                  room=dm_room(campaign.id, game_session.id))
+
+    owner_ids = {
+        token.owner_user_id
+        for token in TokenState.query.filter_by(
+            session_state_id=state.id, visibility="owner_only")
+        .filter(TokenState.deleted_at.is_(None))
+        .all()
+        if token.owner_user_id is not None
+    }
+    for owner_id in owner_ids:
+        if is_operator_role(get_session_role(campaign, owner_id)):
+            continue  # operators already hold the full view
+        owner_view = serialize_state_payload(game_session, state,
+                                             role="PLAYER",
+                                             viewer_id=owner_id)
+        socketio.emit("state:snapshot", sibling_envelope(envelope, owner_view),
+                      room=user_room(campaign.id, game_session.id, owner_id))
+
+    public_view = serialize_state_payload(game_session, state,
+                                          role="PLAYER", viewer_id=None)
+    socketio.emit("state:snapshot", sibling_envelope(envelope, public_view),
+                  room=players_room(campaign.id, game_session.id))
+
+
+def _emit_scoped_layers_updated(campaign, game_session, scene_stack):
+    """scene:layers_updated, role-scoped (hidden layers stay with the DM)."""
+    envelope = build_event_envelope(campaign.id, game_session.id,
+                                    serialize_scene_stack(scene_stack))
+    socketio.emit("scene:layers_updated", envelope,
+                  room=dm_room(campaign.id, game_session.id))
+    socketio.emit(
+        "scene:layers_updated",
+        sibling_envelope(envelope,
+                         serialize_scene_stack(scene_stack, role="PLAYER")),
+        room=players_room(campaign.id, game_session.id))
 
 
 def _room_name(campaign_id: int, session_id: int) -> str:
@@ -98,8 +152,11 @@ def bootstrap_play_runtime(campaign_id, session_id):
         "session_role": session_role,
         "mode": mode,
         "read_only": read_only,
-        "scene_stack": serialize_scene_stack(scene_stack),
-        "state_payload": serialize_state_payload(game_session, state),
+        # Playtable-Audit 2026-08-25 (P0): the bootstrap is role-scoped —
+        # players never receive dm_only/foreign-owner tokens or hidden layers.
+        "scene_stack": serialize_scene_stack(scene_stack, role=session_role),
+        "state_payload": serialize_state_payload(
+            game_session, state, role=session_role, viewer_id=user.id),
         "action_catalog": get_action_catalog(),
         # Last 30 visible chat messages, newest first (same shape the live
         # "chat:message_sent" broadcast uses), so a page reload no longer
@@ -182,11 +239,7 @@ def play_init_scene_stack(campaign_id, session_id):
         }),
         room=room,
     )
-    socketio.emit(
-        "state:snapshot",
-        build_event_envelope(campaign.id, game_session.id, serialize_state_payload(game_session, state)),
-        room=room,
-    )
+    _emit_scoped_state_snapshot(campaign, game_session, state)
 
     return jsonify({"scene_stack": serialize_scene_stack(scene_stack)}), 201
 
@@ -227,11 +280,7 @@ def play_activate_layer(campaign_id, session_id, layer_id):
         }),
         room=room,
     )
-    socketio.emit(
-        "state:snapshot",
-        build_event_envelope(campaign.id, game_session.id, serialize_state_payload(game_session, state)),
-        room=room,
-    )
+    _emit_scoped_state_snapshot(campaign, game_session, state)
 
     return jsonify(
         {
@@ -262,16 +311,14 @@ def play_add_scene_layer(campaign_id, session_id):
     if label is not None:
         label = str(label).strip() or None
 
-    scene_stack, layer, error = add_scene_layer(campaign, game_session, user, campaign_map_id, label=label)
+    allow_copy = bool(data.get("allow_copy"))
+    scene_stack, layer, error = add_scene_layer(
+        campaign, game_session, user, campaign_map_id,
+        label=label, allow_copy=allow_copy)
     if error:
         return error
 
-    room = _room_name(campaign.id, game_session.id)
-    socketio.emit(
-        "scene:layers_updated",
-        build_event_envelope(campaign.id, game_session.id, serialize_scene_stack(scene_stack)),
-        room=room,
-    )
+    _emit_scoped_layers_updated(campaign, game_session, scene_stack)
 
     return jsonify({"scene_stack": serialize_scene_stack(scene_stack), "layer": layer.serialize()}), 201
 
@@ -312,12 +359,7 @@ def play_reorder_scene_layers(campaign_id, session_id):
     if error:
         return error
 
-    room = _room_name(campaign.id, game_session.id)
-    socketio.emit(
-        "scene:layers_updated",
-        build_event_envelope(campaign.id, game_session.id, serialize_scene_stack(scene_stack)),
-        room=room,
-    )
+    _emit_scoped_layers_updated(campaign, game_session, scene_stack)
 
     return jsonify({"scene_stack": serialize_scene_stack(scene_stack)}), 200
 
@@ -359,12 +401,7 @@ def play_update_scene_layer(campaign_id, session_id, layer_id):
 
     layer = update_scene_layer(layer, label=label, is_player_visible=is_player_visible)
 
-    room = _room_name(campaign.id, game_session.id)
-    socketio.emit(
-        "scene:layers_updated",
-        build_event_envelope(campaign.id, game_session.id, serialize_scene_stack(scene_stack)),
-        room=room,
-    )
+    _emit_scoped_layers_updated(campaign, game_session, scene_stack)
 
     return jsonify({"scene_stack": serialize_scene_stack(scene_stack), "layer": layer.serialize()}), 200
 
@@ -390,18 +427,9 @@ def play_delete_scene_layer(campaign_id, session_id, layer_id):
 
     scene_stack, state, active_changed = delete_scene_layer(campaign, game_session, scene_stack, layer)
 
-    room = _room_name(campaign.id, game_session.id)
-    socketio.emit(
-        "scene:layers_updated",
-        build_event_envelope(campaign.id, game_session.id, serialize_scene_stack(scene_stack)),
-        room=room,
-    )
+    _emit_scoped_layers_updated(campaign, game_session, scene_stack)
     if active_changed and state:
-        socketio.emit(
-            "state:snapshot",
-            build_event_envelope(campaign.id, game_session.id, serialize_state_payload(game_session, state)),
-            room=room,
-        )
+        _emit_scoped_state_snapshot(campaign, game_session, state)
 
     return jsonify({"scene_stack": serialize_scene_stack(scene_stack)}), 200
 
@@ -486,11 +514,7 @@ def play_transition_session(campaign_id, session_id):
         }),
         room=room,
     )
-    socketio.emit(
-        "state:snapshot",
-        build_event_envelope(campaign.id, game_session.id, serialize_state_payload(game_session, state)),
-        room=room,
-    )
+    _emit_scoped_state_snapshot(campaign, game_session, state)
 
     return jsonify(
         {

@@ -118,7 +118,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"\n{checked} views · {len(findings)} finding(s)")
     for finding in findings:
         print(f"  - {finding}")
-    report = args.out or workdir.parent / "vtt-view-pins.json"
+    report = args.out or workdir / "vtt-view-pins.json"
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(json.dumps(
         {"status": "failed" if findings else "passed",

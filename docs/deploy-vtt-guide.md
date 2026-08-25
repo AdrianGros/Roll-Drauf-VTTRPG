@@ -69,3 +69,24 @@ docker compose -f docker-compose.vtt.roll-drauf.de.yml logs -f --tail=200
 git pull
 docker compose -f docker-compose.vtt.roll-drauf.de.yml --env-file .env.vtt.roll-drauf.de up -d --build
 ```
+
+## Nachtrag 2026-08-25 — kanonisches Live-Deploy-Kommando
+
+Der laufende Stack heißt `roll-drauf-vtt`; ohne `-p` leitet Compose den
+Projektnamen aus dem Verzeichnis `infra/docker` ab und versucht, einen
+zweiten Stack samt kollidierendem Netzwerk anzulegen. Deshalb immer:
+
+```bash
+cd /home/admin/projects/roll-drauf-vtt
+docker compose -p roll-drauf-vtt \
+  -f infra/docker/docker-compose.live.yml \
+  --env-file .env.vtt.roll-drauf.de \
+  up -d --build app
+```
+
+Baut das Image frisch aus dem Arbeitsbaum und tauscht nur den
+App-Container (db/redis/mailserver laufen weiter). Danach im Browser hart
+neu laden (Strg+Shift+R). Die Mailserver-Laufzeitdaten
+(`infra/mailserver/docker-data/`, root-eigene DKIM-Schlüssel) sind per
+`.dockerignore` vom Build-Kontext ausgeschlossen — nie entfernen, sonst
+bricht der Kontext-Scan mit "no permission to read … mail.private" ab.
