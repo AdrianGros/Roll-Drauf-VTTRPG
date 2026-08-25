@@ -561,6 +561,11 @@
             cursor: pointer;
         }
         #zoomRange { width: 86px; }
+        .stage-zoom-cluster { display: contents; }
+        /* Desktop rail: icon only (the title attribute explains); the label
+           is the phone ribbon's job. */
+        .tool-btn .tool-ico { display: block; font-size: 0.95rem; line-height: 1.2; }
+        .tool-btn .tool-label { display: none; }
         .floating {
             position: absolute;
             background: var(--panel);
@@ -1115,18 +1120,37 @@
                 z-index: 40;
                 overflow: visible;
             }
+            /* The desktop rail's spacer is layout poison in a flat ribbon:
+               its auto-margin ejected Menü/Zurück out of the bar. On the
+               phone all five buttons are direct, equal flex items. */
             .left-toolbar .spacer {
-                margin-top: 0;
-                margin-left: auto;
-                border-top: none;
-                padding-top: 0;
+                display: contents;
             }
             .tool-btn {
                 width: auto;
-                min-width: 64px;
-                height: 44px;
-                flex: 0 1 auto;
+                min-width: 56px;
+                height: 48px;
+                flex: 1 1 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
             }
+            /* GD-Ribbon: Icon über Label (mobile.css der Schwester-App). */
+            .tool-btn .tool-label {
+                display: block;
+                font-size: 0.62rem;
+                letter-spacing: 0.03em;
+                font-weight: 600;
+            }
+            /* Drei Browser-Defaults, die im Kampf echte Züge kosten
+               (GD Patch 117): Pull-to-refresh wirkt wie ein Absturz,
+               Double-Tap-Zoom frisst den schnellen zweiten Tap, und
+               Schnelltippen selektiert Button-Text. */
+            html:has(body.play-workspace-realign) { overscroll-behavior-y: contain; }
+            .left-toolbar button, .stage-topbar button { touch-action: manipulation; }
+            .left-toolbar, .stage-topbar { -webkit-user-select: none; user-select: none; }
             .stage {
                 padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
             }
@@ -1137,12 +1161,34 @@
                 padding: 0.28rem;
                 gap: 0.28rem;
             }
-            /* One shared row squeezed the page name to "Seite: ..." between
-               seven controls; on phones the name takes its own full row
-               (flex-wrap is already on) and the controls wrap below. */
+            /* The name has the top bar to itself now: the zoom controls
+               hang as a compact vertical rail on the map's right edge
+               (map-app idiom) instead of occupying a second chrome row —
+               "Buttons und Menüs ohne den Inhalt zu stören" (Adrian,
+               2026-08-25, nach dem GD-Vorbild). */
             .active-page-pill {
                 flex: 1 1 100%;
             }
+            .stage-zoom-cluster {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                position: fixed;
+                right: 8px;
+                top: 22%;
+                z-index: 35;
+            }
+            .stage-zoom-cluster .mini-control {
+                width: 44px;
+                min-height: 44px;
+                background: rgba(3, 9, 20, 0.72);
+                color: #e8e2f2;
+                border: 1px solid var(--line);
+            }
+            /* Slim rail: -, +, FIT. The % readout is information, not an
+               action, and RST duplicates FIT for phone purposes — both
+               only lengthened the rail into the widget stack below. */
+            #zoomLabel, #btnZoomReset { display: none; }
             #zoomRange { display: none; }
             .floating {
                 left: 0.4rem !important;
@@ -1256,28 +1302,33 @@
                 <div class="book-shell-frame book-workspace-shell">
                     <div class="tabletop-shell">
         <aside class="left-toolbar" aria-label="Werkzeugleiste">
-            <button type="button" class="tool-btn active" data-tool="select" title="Auswählen">SEL</button>
-            <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)">PAN</button>
-            <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken">TOK</button>
+            <!-- GD-Ribbon-Anatomie (Goblin Delve mobile.css, Patch 117):
+                 Icon über Label, ein fester Balken, Panels öffnen AUS ihm
+                 heraus statt über dem Inhalt zu schweben. -->
+            <button type="button" class="tool-btn active" data-tool="select" title="Auswählen"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label">Wählen</span></button>
+            <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label">Bewegen</span></button>
+            <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label">Token</span></button>
             <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
                  used to sit here as silent no-ops (the handler only toggled
                  a CSS class). Removed until the tools actually exist -- a
                  button that does nothing reads as "broken", not "planned". -->
             <div class="spacer">
-                <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne">BACK</button>
+                <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
+                <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span></button>
             </div>
         </aside>
 
         <section class="stage">
             <div class="stage-topbar">
                 <div id="activePagePill" class="active-page-pill" hidden>Seite: <strong id="activePageName">-</strong></div>
-                <button type="button" id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
-                <span id="zoomLabel" class="mini-control">100%</span>
-                <button type="button" id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
-                <input id="zoomRange" type="range" min="20" max="300" step="5" value="100">
-                <button type="button" id="btnZoomFit" class="mini-control" title="Karte einpassen">FIT</button>
-                <button type="button" id="btnZoomReset" class="mini-control" title="100%">RST</button>
-                <button type="button" id="btnSidebarToggle" class="mini-control" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen">☰</button>
+                <div class="stage-zoom-cluster">
+                    <button type="button" id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
+                    <span id="zoomLabel" class="mini-control">100%</span>
+                    <button type="button" id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
+                    <input id="zoomRange" type="range" min="20" max="300" step="5" value="100">
+                    <button type="button" id="btnZoomFit" class="mini-control" title="Karte einpassen">FIT</button>
+                    <button type="button" id="btnZoomReset" class="mini-control" title="100%">RST</button>
+                </div>
             </div>
 
             <div class="map-viewport" id="mapViewport">
