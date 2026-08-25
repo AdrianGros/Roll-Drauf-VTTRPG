@@ -1,0 +1,20 @@
+{
+  "journey": [
+    "DM registered via real UI form",
+    "Player registered via real UI form",
+    "OK: create campaign via UI (opens hub)",
+    "OK: DM generates invite via UI",
+    "player /campaigns visible actions: ['\u00dcbersicht', 'Kampagnen', 'Charaktere', '\u25b6 Spieltisch', 'Abmelden', 'Neue Kampagne anlegen', 'Kampagnen-Hub \u00f6ffnen', 'Hub \u00f6ffnen', '+ Kampagne anlegen', 'Charaktere \u00f6ffnen']",
+    "player after campaign click: ['\u00dcbersicht', 'Kampagnen', 'Charaktere', '\u25b6 Spieltisch', 'Abmelden', 'Neue Kampagne anlegen', 'Kampagnen-Hub \u00f6ffnen', 'Hub \u00f6ffnen', '+ Kampagne anlegen', 'Charaktere \u00f6ffnen']",
+    "NO join affordance in the book view -> trying the legacy escape hatch: Hub \u00f6ffnen -> Alle tab",
+    "player legacy Alle tab actions: ['Cockpit', 'Charaktere', 'Abmelden', '\u00dcbersicht', 'Kampagnen', '+ Kampagne anlegen', 'Formular \u00f6ffnen', 'Meine Kampagnen', 'Beigetreten', 'Alle', 'Beitreten']",
+    "OK: player accepts invite via UI (Alle tab -> Beitreten -> prompt)",
+    "OK: DM quickstart: session + map + start + table open",
+    "player hub visible actions: ['Cockpit', 'Charaktere', 'Abmelden', '\u00dcbersicht', 'Kampagnen', '+ Kampagne anlegen', 'Formular \u00f6ffnen', 'Meine Kampagnen', 'Beigetreten', 'Alle', 'Refresh', 'Schlie\u00dfen', 'Session betreten', 'Session-Prep', 'Einladung eingeben', 'Kampfstatus', 'Prep \u00f6ffnen', 'Charaktere \u00f6ffnen', 'Map Prep ansehen', 'Asset Library', 'Session-Besetzung \u00f6ffnen', 'Zur\u00fcck zum Kampagnen-Hub', 'Sessionliste', 'Map Prep', 'Invite-Kontext', 'Archiv f\u00fcr neue Helden', 'Session-Assets ansehen', 'Filter anwenden', 'Preview', 'Download', 'Chat neu laden', 'Senden']",
+    "OK: player reaches the table via UI (hub -> session)"
+  ],
+  "findings": [
+    "[journey] player console errors: ['Failed to load resource: the server responded with a status of 403 (FORBIDDEN)']"
+  ],
+  "metrics": []
+}

@@ -230,6 +230,15 @@ Szenarien zuerst (§10): [test_playtable_audit_fixes.py](../tests/test_playtable
 - **Nebenbefunde gefixt:** (a) REST-Token-Endpunkte broadcasten jetzt (vorher waren REST-erzeugte Tokens bis zum Reload unsichtbar — Robot-Fund); (b) `.play-empty-state` überschrieb per `display:grid` das `hidden`-Attribut — der Leerzustand lag IMMER über dem Tisch (Robot-Screenshot-Fund, Ein-Zeilen-Fix); (c) Robot-Reports schreiben in den Lauf-Workdir statt nach `/tmp` (root-Altdateien → PermissionError).
 - **Offener Layout-Befund an Codex:** die geöffnete rechte Sidebar überdeckt die Floating-Widgets und fängt deren Klicks ab (drei Robot-Treffer; Robot umgeht per DOM-Klick, UI-Fix steht aus).
 
+**Nachtrag 2026-08-25 — Desktop-Audit der Browser-Journey:**
+[DESKTOP_AUDIT_BROWSER_JOURNEY_2026-08-25.md](DESKTOP_AUDIT_BROWSER_JOURNEY_2026-08-25.md) —
+Buchseiten + Tisch geometrisch sauber über 8 Desktop-Viewports; DM-Journey durch die echte UI
+grün; ABER: Spieler-Beitritt in der Buch-Ansicht ohne jede Affordance (nur über die
+Alt-Ansicht erreichbar — F4-Funnel-Loch, Doppel-Markup-Klasse), und die offene Sidebar
+überdeckt das Token-Widget auf JEDEM Viewport ≥1199. Empfehlung dort: fullsession bekommt
+eine UI-Invite-Phase (Kampagne/Invite/Accept per Klick statt API), contracts/campaigns.json
+in die B3-Liste.
+
 **Offen vor B3-Start (Reihenfolge, Stand 2026-08-25):**
 
 1. **Mensch (Adrian):** `baseline_review.html` des Abnahmelaufs öffnen, reviewen, `--promote --note` ausführen, Baselines committen — hebt den `blocked`-Status des Abnahmelaufs.
