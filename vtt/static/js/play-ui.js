@@ -1948,7 +1948,14 @@
             const pillName = document.getElementById("activePageName");
             if (pill && pillName) {
                 if (activeMap) {
-                    pillName.textContent = activeMap.name;
+                    // Prefer the active LAYER's human label: map names can be
+                    // upload-derived junk (Adrian's live table showed a raw
+                    // hash as "Seite:"), while layer labels are typed by the
+                    // DM in the add-page flow.
+                    const stack = this.bootstrap?.scene_stack;
+                    const activeLayer = (stack?.layers || []).find(
+                        (layer) => Number(layer.id) === Number(stack?.active_layer_id));
+                    pillName.textContent = (activeLayer?.label || "").trim() || activeMap.name;
                     pill.hidden = false;
                 } else {
                     pill.hidden = true;

@@ -356,7 +356,12 @@ def init_scene_stack(campaign: Campaign, game_session: GameSession, user: User, 
         layer = SceneLayer(
             scene_stack_id=scene_stack.id,
             campaign_map_id=campaign_map.id,
-            label=f"Layer {index + 1}",
+            # Label from the map's own name, not a generic counter: the
+            # page pill and the layer widget both surface this label, and
+            # "Layer 1" tells the table nothing (2026-08-25; the add-layer
+            # path already labels from the map name — this init path was
+            # the leftover).
+            label=(campaign_map.name or "").strip()[:120] or f"Layer {index + 1}",
             order_index=index,
             is_player_visible=True,
         )
