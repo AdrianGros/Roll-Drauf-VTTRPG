@@ -866,6 +866,90 @@
         .secondary { background: #505e79; }
         .danger { background: var(--danger); }
         .mini-btn { padding: 0.22rem 0.48rem; font-size: 0.74rem; }
+
+        /* Play-table controls have to own their palette. The shared
+           spellbook stylesheet has a more specific `button[type="button"]:
+           hover` rule, which wins on touch devices where a tapped button
+           keeps :hover. That made mobile controls flash parchment-white and
+           hid the selected state. Keep the table dark at rest and use the
+           Roll-Drauf plum gradient for every selected control. */
+        body.play-workspace-realign .tabletop-shell button {
+            background: var(--vtt-plum, #4b235a);
+            border: 1px solid var(--vtt-gold, #a8842c);
+            color: var(--vtt-paper-panel, #fdfaf3);
+            box-shadow: none;
+            transform: none;
+        }
+        body.play-workspace-realign .tabletop-shell button:hover,
+        body.play-workspace-realign .tabletop-shell button:focus-visible {
+            background: var(--vtt-plum-deep, #2f1638);
+            border-color: var(--vtt-gold, #a8842c);
+            color: var(--vtt-paper-panel, #fdfaf3);
+            box-shadow: 0 0 0 2px rgba(168, 132, 44, 0.22);
+            transform: none;
+        }
+        body.play-workspace-realign .tabletop-shell button:active {
+            transform: translateY(1px);
+        }
+        body.play-workspace-realign .tabletop-shell .tool-btn,
+        body.play-workspace-realign .tabletop-shell .sidebar-tab {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--line);
+            color: var(--text);
+        }
+        body.play-workspace-realign .tabletop-shell .tool-btn:hover,
+        body.play-workspace-realign .tabletop-shell .tool-btn:focus-visible,
+        body.play-workspace-realign .tabletop-shell .sidebar-tab:hover,
+        body.play-workspace-realign .tabletop-shell .sidebar-tab:focus-visible {
+            background: rgba(75, 35, 90, 0.72);
+            border-color: rgba(168, 132, 44, 0.72);
+            color: var(--vtt-paper-panel, #fdfaf3);
+            box-shadow: none;
+        }
+        body.play-workspace-realign .tabletop-shell .tool-btn.active,
+        body.play-workspace-realign .tabletop-shell .tool-btn.active:hover,
+        body.play-workspace-realign .tabletop-shell .tool-btn.active:focus-visible,
+        body.play-workspace-realign .tabletop-shell .sidebar-tab.active,
+        body.play-workspace-realign .tabletop-shell .sidebar-tab.active:hover,
+        body.play-workspace-realign .tabletop-shell .sidebar-tab.active:focus-visible {
+            background: linear-gradient(135deg, var(--vtt-plum-deep, #2f1638) 0%, var(--vtt-plum, #4b235a) 100%);
+            border-color: var(--vtt-gold, #a8842c);
+            color: var(--vtt-paper-panel, #fdfaf3) !important;
+            box-shadow: 0 0 0 2px rgba(168, 132, 44, 0.18);
+            transform: none;
+        }
+        body.play-workspace-realign .tabletop-shell .mini-control {
+            background: rgba(3, 9, 20, 0.78);
+            border-color: var(--line);
+            color: var(--text);
+        }
+        body.play-workspace-realign .tabletop-shell .mini-control:hover,
+        body.play-workspace-realign .tabletop-shell .mini-control:focus-visible {
+            background: rgba(75, 35, 90, 0.86);
+            border-color: var(--vtt-gold, #a8842c);
+            color: var(--vtt-paper-panel, #fdfaf3);
+        }
+        body.play-workspace-realign .tabletop-shell button.secondary {
+            background: rgba(80, 94, 121, 0.9);
+            border-color: rgba(255, 255, 255, 0.24);
+            color: var(--text);
+        }
+        body.play-workspace-realign .tabletop-shell button.secondary:hover,
+        body.play-workspace-realign .tabletop-shell button.secondary:focus-visible {
+            background: rgba(75, 35, 90, 0.86);
+            border-color: var(--vtt-gold, #a8842c);
+            color: var(--vtt-paper-panel, #fdfaf3);
+        }
+        body.play-workspace-realign .tabletop-shell button.danger {
+            background: rgba(122, 46, 46, 0.88);
+            border-color: rgba(202, 132, 132, 0.6);
+            color: var(--vtt-paper-panel, #fdfaf3);
+        }
+        body.play-workspace-realign .tabletop-shell button.danger:hover,
+        body.play-workspace-realign .tabletop-shell button.danger:focus-visible {
+            background: var(--vtt-rubric-deep, #5e2222);
+            border-color: var(--vtt-gold, #a8842c);
+        }
         input, select, textarea {
             background: rgba(255,255,255,0.06);
             border: 1px solid var(--line);

@@ -57,6 +57,15 @@ def _check_play_table(page, orientation: str, findings: list[str]) -> None:
     verdict = page.evaluate(
         """() => {
             const r = {};
+            const visible = el => {
+                const box = el.getBoundingClientRect();
+                const style = getComputedStyle(el);
+                return box.width > 0 && box.height > 0
+                    && style.display !== 'none'
+                    && style.visibility !== 'hidden'
+                    && box.bottom > 0 && box.right > 0
+                    && box.top < innerHeight && box.left < innerWidth;
+            };
             r.innerW = window.innerWidth;
             const vp = document.getElementById('mapViewport');
             r.mapW = vp ? vp.getBoundingClientRect().width : 0;
@@ -78,6 +87,16 @@ def _check_play_table(page, orientation: str, findings: list[str]) -> None:
             r.smallInputs = [...document.querySelectorAll('input, select, textarea')]
                 .filter(el => el.offsetParent && parseFloat(getComputedStyle(el).fontSize) < 16)
                 .map(el => `${el.id || el.tagName} ${getComputedStyle(el).fontSize}`);
+            // Global spellbook button rules have higher specificity than the
+            // table's local rules. On touch, the sticky :hover state made
+            // visible table controls parchment-white instead of the dark
+            // play surface. Keep this as a user-facing visual gate: every
+            // visible play-table button must stay off the bright paper fill.
+            r.brightButtons = [...document.querySelectorAll('button')]
+                .filter(visible)
+                .filter(button => /255,\\s*248|255,\\s*249/.test(
+                    `${getComputedStyle(button).backgroundColor} ${getComputedStyle(button).backgroundImage}`))
+                .map(button => button.id || button.textContent.trim());
             return r;
         }""")
 
@@ -98,9 +117,94 @@ def _check_play_table(page, orientation: str, findings: list[str]) -> None:
                 f"is outside the bottom thumb zone (>= {inner_h * 0.75:.0f})")
     if verdict["smallInputs"]:
         findings.append(f"[{orientation}] inputs below 16px (iOS zoom trigger): {verdict['smallInputs'][:4]}")
+    if verdict["brightButtons"]:
+        findings.append(
+            f"[{orientation}] visible table buttons use the bright paper palette: "
+            f"{verdict['brightButtons'][:8]}")
+
+    # Selecting a tool must produce the Roll-Drauf purple state after the
+    # touch hover/focus transition has settled, not just toggle a class.
+    for tool in ("pan", "token", "select"):
+        button = page.locator(f'.tool-btn[data-tool="{tool}"]')
+        if not button.is_visible():
+            continue
+        button.click()
+        page.wait_for_timeout(350)
+        selected = page.evaluate(
+            """tool => {
+                const button = document.querySelector(`.tool-btn[data-tool="${tool}"]`);
+                if (!button) return null;
+                const style = getComputedStyle(button);
+                const surface = `${style.backgroundColor} ${style.backgroundImage}`;
+                return {
+                    active: button.classList.contains('active'),
+                    purple: /47,\\s*22,\\s*56|75,\\s*35,\\s*90/.test(surface),
+                    surface,
+                };
+            }""",
+            tool,
+        )
+        if not selected or not selected["active"]:
+            findings.append(f"[{orientation}] tool {tool!r} did not become selected")
+        elif not selected["purple"]:
+            findings.append(
+                f"[{orientation}] selected tool {tool!r} is not Roll-Drauf purple: "
+                f"{selected['surface']}")
 
     # Dice must be reachable: open the sidebar tools tab, then measure.
+    zoom_before = page.evaluate("() => document.getElementById('mapWorld')?.style.transform || ''")
+    page.click("#btnZoomIn")
+    page.wait_for_timeout(150)
+    zoom_after = page.evaluate("() => document.getElementById('mapWorld')?.style.transform || ''")
+    if zoom_before == zoom_after:
+        findings.append(f"[{orientation}] zoom-in button did not change the map zoom")
+    page.click("#btnZoomOut")
+
+    table_button = page.locator("#btnTableSheet")
+    if table_button.is_visible():
+        table_button.click()
+        page.wait_for_timeout(150)
+        table_state = page.evaluate(
+            """() => {
+                const button = document.getElementById('btnTableSheet');
+                const style = getComputedStyle(button);
+                const surface = `${style.backgroundColor} ${style.backgroundImage}`;
+                return {
+                    open: !document.getElementById('tableSheet').hidden,
+                    active: button.classList.contains('active'),
+                    purple: /47,\\s*22,\\s*56|75,\\s*35,\\s*90/.test(surface),
+                };
+            }""")
+        if not table_state["open"]:
+            findings.append(f"[{orientation}] Tisch button did not open the table sheet")
+        if not table_state["active"] or not table_state["purple"]:
+            findings.append(f"[{orientation}] open Tisch button is not Roll-Drauf purple")
+        page.locator("#tableSheetBackdrop").click(position={"x": 5, "y": 5})
+        page.wait_for_timeout(150)
+        if page.locator("#tableSheet").get_attribute("hidden") is None:
+            findings.append(f"[{orientation}] table sheet backdrop did not close the sheet")
+
     page.click("#btnSidebarToggle")
+    for tab in ("journal", "chat", "tools", "session"):
+        page.click(f'.sidebar-tab[data-tab="{tab}"]')
+        page.wait_for_timeout(120)
+        tab_state = page.evaluate(
+            """tab => {
+                const button = document.querySelector(`.sidebar-tab[data-tab="${tab}"]`);
+                const style = getComputedStyle(button);
+                const surface = `${style.backgroundColor} ${style.backgroundImage}`;
+                return {
+                    active: button.classList.contains('active'),
+                    panel: document.getElementById(`panel-${tab}`)?.classList.contains('active'),
+                    purple: /47,\\s*22,\\s*56|75,\\s*35,\\s*90/.test(surface),
+                };
+            }""",
+            tab,
+        )
+        if not tab_state["active"] or not tab_state["panel"]:
+            findings.append(f"[{orientation}] sidebar tab {tab!r} did not activate its panel")
+        if not tab_state["purple"]:
+            findings.append(f"[{orientation}] selected sidebar tab {tab!r} is not Roll-Drauf purple")
     page.click('.sidebar-tab[data-tab="tools"]')
     page.wait_for_timeout(400)
     dice = page.evaluate(
@@ -129,6 +233,10 @@ def _check_play_table(page, orientation: str, findings: list[str]) -> None:
         page.keyboard.press("Escape")
     else:
         close_button.click()
+        page.wait_for_timeout(250)
+        if page.locator(".right-sidebar.is-open").count():
+            findings.append(
+                f"[{orientation}] sidebar close button left the mobile sheet open")
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -755,7 +755,7 @@
                 });
             }
 
-            document.querySelectorAll(".sidebar-tab").forEach((button) => {
+            document.querySelectorAll(".sidebar-tab:not(.sidebar-close)").forEach((button) => {
                 button.addEventListener("click", () => {
                     const tab = button.getAttribute("data-tab") || "tools";
                     this._activateSidebarTab(tab);
