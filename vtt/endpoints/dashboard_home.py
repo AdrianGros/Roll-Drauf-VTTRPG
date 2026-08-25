@@ -190,70 +190,6 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
     return primary, secondary
 
 
-def _build_priorities(campaigns: list[dict], characters: list[dict], sessions: list[dict]) -> list[dict]:
-    priorities = []
-
-    prep_session = next((session for session in sessions if session["prep_blockers"]), None)
-    if prep_session:
-        priorities.append(
-            {
-                "title": "Vorbereitung offen",
-                "tone": "warning",
-                "copy": f"{prep_session['campaign_name']} braucht noch: {', '.join(prep_session['prep_blockers'])}.",
-            }
-        )
-    elif sessions:
-        priorities.append(
-            {
-                "title": "Session klar",
-                "tone": "success",
-                "copy": "Mindestens eine Session ist ohne harte Vorbedingungen sichtbar vorbereitet.",
-            }
-        )
-    elif campaigns:
-        priorities.append(
-            {
-                "title": "Nächster Schritt",
-                "tone": "info",
-                "copy": "Öffne einen Kampagnen-Hub und lege die nächste Session-Prep-Spur fest.",
-            }
-        )
-    else:
-        priorities.append(
-            {
-                "title": "Noch kein Kapitel offen",
-                "tone": "info",
-                "copy": "Lege die erste Kampagne an, damit die Übersicht in die Vorbereitung übergehen kann.",
-            }
-        )
-
-    if not characters:
-        priorities.append(
-            {
-                "title": "Held fehlt noch",
-                "tone": "warning",
-                "copy": "Noch kein eigener Held im Archiv. Ein Held macht Session-Prep und direkte Zuweisung vollständig.",
-            }
-        )
-    else:
-        priorities.append(
-            {
-                "title": "Charaktere bereit",
-                "tone": "success",
-                "copy": f"{len(characters)} Helden sind im Archiv sichtbar und können aus Bogen oder Kampagnenkontext weitergeführt werden.",
-            }
-        )
-
-    priorities.append(
-        {
-            "title": "Hinweise",
-            "tone": "muted",
-            "copy": "Neuigkeiten und Vorbereitung stehen hier gesammelt; Tischnachrichten bleiben in der jeweiligen Session.",
-        }
-    )
-    return priorities
-
-
 def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions: list[dict]) -> list[dict]:
     feed = []
 
@@ -334,26 +270,13 @@ def _build_feed_preview(campaigns: list[dict], characters: list[dict], sessions:
     return feed
 
 
-def _build_quick_links(campaigns: list[dict], characters: list[dict]) -> list[dict]:
-    first_campaign_href = f"/campaigns?campaign_id={campaigns[0]['id']}&classic=1" if campaigns else "/campaigns?classic=1&intent=create"
-    first_character_href = f"/character-sheet?id={characters[0]['id']}" if characters else "/characters?classic=1&intent=create"
-    return [
-        {"label": "Kampagnen", "href": first_campaign_href},
-        {"label": "Charaktere", "href": first_character_href},
-        {"label": "Vorbereitung", "href": "/campaigns?classic=1"},
-        {"label": "Spieltisch", "section": "play"},
-    ]
-
-
 def _build_home_snapshot(user: User):
     visible_campaigns = _visible_campaigns_for_user(user)
     campaigns = [_serialize_campaign_for_home(campaign, user.id) for campaign in visible_campaigns]
     characters = [_serialize_character_for_home(character) for character in Character.query.filter_by(user_id=user.id, deleted_at=None).order_by(Character.updated_at.desc(), Character.created_at.desc()).all()]
     session_summaries = _build_session_summaries(visible_campaigns)
     primary_action, secondary_action = _build_primary_and_secondary_actions(campaigns, characters, session_summaries, user)
-    priorities = _build_priorities(campaigns, characters, session_summaries)
     feed_preview = _build_feed_preview(campaigns, characters, session_summaries)
-    quick_links = _build_quick_links(campaigns, characters)
 
     prep_blocker_count = sum(1 for session in session_summaries if session["prep_blockers"])
     live_session_count = sum(1 for session in session_summaries if session["runtime_status"] in {"in_progress", "active", "live"})
@@ -387,9 +310,7 @@ def _build_home_snapshot(user: User):
         "home_state": home_state,
         "primary_action": primary_action,
         "secondary_action": secondary_action,
-        "priorities": priorities,
         "feed_preview": feed_preview,
-        "quick_links": quick_links,
         "overview_scope": {
             "kind": "personal_vtt_home",
             "read_only": True,

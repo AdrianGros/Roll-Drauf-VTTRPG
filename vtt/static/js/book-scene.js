@@ -880,36 +880,6 @@
             `;
         },
 
-        buildDashboardContext(snapshot = null) {
-            const priorities = Array.isArray(snapshot?.priorities) ? snapshot.priorities : [];
-            return `
-                <section class="book-home-context">
-                    <div class="book-home-context-grid">
-                        <section class="book-home-context-card">
-                            <div class="book-home-section-kicker">${escapeHtml(this.content('home.priorities_kicker', 'Heute wichtig'))}</div>
-                            <h3 class="book-home-section-title">${escapeHtml(this.content('home.priorities_title', 'Prioritäten'))}</h3>
-                            <div class="book-home-priority-list">
-                                ${priorities.map((priority) => `
-                                    <div class="book-home-priority-card" data-tone="${escapeHtml(priority.tone || 'info')}">
-                                        <strong>${escapeHtml(priority.title || 'Hinweis')}</strong>
-                                        <p>${escapeHtml(priority.copy || '')}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </section>
-
-                        <section class="book-home-context-card">
-                            <div class="book-home-section-kicker">${escapeHtml(this.content('home.quicklinks_kicker', 'Schnellzugriffe'))}</div>
-                            <h3 class="book-home-section-title">${escapeHtml(this.content('home.quicklinks_title', 'Wohin du als nächstes gehst'))}</h3>
-                            <div class="book-home-context-note">
-                                ${escapeHtml(this.content('home.context_note', 'Die Übersicht zeigt deinen Stand. Öffne eine Kapitelzeile oben, um weiterzuarbeiten.'))}
-                            </div>
-                        </section>
-                    </div>
-                </section>
-            `;
-        },
-
         buildPageShell(routeKey, user, options) {
             const displayName = escapeHtml(user?.username || 'Donut');
             const chips = Array.isArray(options.chips) ? options.chips : [];
@@ -964,9 +934,11 @@
                             </article>
                         </div>
 
-                        <section class="book-spread-footer">
-                            ${options.footer || ''}
-                        </section>
+                        ${options.footer ? `
+                            <section class="book-spread-footer">
+                                ${options.footer}
+                            </section>
+                        ` : ''}
 
                         <footer class="book-folio" aria-hidden="true">
                             <span>${escapeHtml((options.folio && options.folio[0]) || '')}</span>
@@ -978,10 +950,6 @@
         },
 
         buildDashboardMarkup(user, snapshot = null) {
-            const campaigns = snapshot?.campaigns || [];
-            const characters = snapshot?.characters || [];
-            const homeState = snapshot?.home_state || {};
-
             const scene = routeMeta.dashboard || {};
             return this.buildPageShell('dashboard', user, {
                 runningHead: `${this.content('shell.left_eyebrow', 'Kapitel I')} · ${scene.section || 'Übersicht'}`,
@@ -1006,7 +974,6 @@
                 rightPage: `
                     ${this.buildDashboardFeed(snapshot)}
                 `,
-                footer: this.buildDashboardContext(snapshot),
             });
         },
 

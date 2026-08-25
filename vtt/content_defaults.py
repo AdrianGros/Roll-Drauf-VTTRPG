@@ -233,27 +233,6 @@ PAGE_CONTENT_DEFAULTS = [
         "description": "Body copy shown when the feed is empty",
     },
 
-    # ── dashboard: context (priorities + quick links) ──────────────────
-    {
-        "page_key": "dashboard", "content_key": "home.priorities_kicker", "text": "Heute wichtig",
-        "description": "Priorities section kicker",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.priorities_title", "text": "Prioritäten",
-        "description": "Priorities section heading",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.quicklinks_kicker", "text": "Schnellzugriffe",
-        "description": "Quick-links section kicker",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.quicklinks_title", "text": "Wohin du als nächstes gehst",
-        "description": "Quick-links section heading",
-    },
-    {
-        "page_key": "dashboard", "content_key": "home.context_note", "text": "Die Übersicht zeigt deinen Stand. Öffne eine Kapitelzeile oben, um weiterzuarbeiten.",
-        "description": "Closing note under quick links",
-    },
 ]
 
 

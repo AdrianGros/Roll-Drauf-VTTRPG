@@ -106,12 +106,8 @@ def test_dashboard_home_snapshot_is_a_personal_vtt_start_point(client, app):
     assert "Kampagnen" in data["overview_scope"]["note"]
     assert "guilds" not in data
     assert "primary_guild" not in data
-    assert {link["label"] for link in data["quick_links"]} == {
-        "Kampagnen",
-        "Charaktere",
-        "Vorbereitung",
-        "Spieltisch",
-    }
+    assert "priorities" not in data
+    assert "quick_links" not in data
     assert all(item["section"] not in {"social", "guilds"} for item in data["feed_preview"])
     assert any(item["section"] == "session-prep" for item in data["feed_preview"])
 
@@ -153,7 +149,7 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     assert ".book-home-rail {" in css
     assert ".book-home-feed {" in css
     assert "book-home-guild-panel" not in css
-    assert ".book-home-context-grid {" in css
+    assert "book-home-context-grid" not in css
     assert "Übersicht wird vorbereitet" in dashboard_template
     assert ">Übersicht</button>" in dashboard_template
     assert "Neuigkeiten und Hinweise" not in dashboard_home
