@@ -900,10 +900,12 @@
                             <div class="book-dashboard-crest" aria-label="Current reader">${displayName}</div>
                         </div>
 
-                        <div class="book-running-head" aria-hidden="true">
-                            <span class="book-running-head-place">${escapeHtml(options.runningHead || leftTitle)}</span>
-                            <span class="book-running-head-rule"></span>
-                        </div>
+                        ${options.showRunningHead !== false ? `
+                            <div class="book-running-head" aria-hidden="true">
+                                <span class="book-running-head-place">${escapeHtml(options.runningHead || leftTitle)}</span>
+                                <span class="book-running-head-rule"></span>
+                            </div>
+                        ` : ''}
 
                         <div class="book-spread-shell">
                             <article class="book-spread-page book-spread-page--left">
@@ -952,7 +954,7 @@
         buildDashboardMarkup(user, snapshot = null) {
             const scene = routeMeta.dashboard || {};
             return this.buildPageShell('dashboard', user, {
-                runningHead: `${this.content('shell.left_eyebrow', 'Kapitel I')} · ${scene.section || 'Übersicht'}`,
+                showRunningHead: false,
                 folio: scene.folio,
                 eyebrow: this.content('shell.left_eyebrow', 'Kapitel I'),
                 title: this.content('shell.left_title', 'Übersicht'),

@@ -141,6 +141,7 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     assert "book-toc" in js
     assert "Lesebändchen" in js
     assert "book-toc" in js
+    assert "showRunningHead: false" in js
     assert "Gemeinschaftssaal" not in dashboard_home
     assert "home.overview_scope_default" in js
     assert "buildDashboardGuildPanel" not in js
