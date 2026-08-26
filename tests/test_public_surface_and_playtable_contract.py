@@ -102,17 +102,19 @@ def test_playtable_uses_one_upper_control_strip_for_page_and_zoom_controls():
     assert template.count('id="btnZoomFit"') == 1
 
 
-def test_playtable_keeps_session_title_and_tools_in_upper_desktop_chrome():
+def test_playtable_keeps_session_title_in_header_and_tools_under_map():
     template = PLAY_TEMPLATE.read_text(encoding="utf-8")
 
     status_start = template.index('class="book-dashboard-titlebar play-status-strip"')
     toolbar_start = template.index('<aside class="left-toolbar"')
     shell_start = template.index('<div class="book-shell-frame book-workspace-shell">')
+    sidebar_start = template.index('<aside class="right-sidebar"')
 
-    assert status_start < toolbar_start < shell_start
+    assert status_start < shell_start < toolbar_start < sidebar_start
     assert template.count('<aside class="left-toolbar"') == 1
     assert 'id="sessionTitleHeader"' in template
     assert "grid-template-columns: 1fr;" in template
+    assert "grid-template-rows: minmax(0, 1fr) auto;" in template
 
 
 def test_playtable_eye_control_activates_pages_without_a_second_activate_row():

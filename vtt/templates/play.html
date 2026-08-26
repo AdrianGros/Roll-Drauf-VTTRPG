@@ -145,7 +145,7 @@
            instead of a large fraction going to descriptive copy above it. */
         .play-status-strip {
             display: grid;
-            grid-template-columns: auto auto minmax(0, 1fr);
+            grid-template-columns: minmax(0, 1fr) auto;
             align-items: center;
             gap: 0.75rem;
             padding: 0.3rem 0.1rem;
@@ -345,6 +345,7 @@
         .tabletop-shell {
             display: grid;
             grid-template-columns: 1fr;
+            grid-template-rows: minmax(0, 1fr) auto;
             gap: 0;
             height: 100%;
             min-height: 520px;
@@ -363,25 +364,31 @@
             gap: 0.35rem;
             overflow-y: auto;
         }
-        /* Desktop-Audit: the tool rail belongs to the upper chrome, not to a
-           permanent 54px map column. This returns that width to the map and
-           leaves the lower edge of every map available for future widgets. */
-        .play-status-strip > .left-toolbar {
-            border-right: 0;
-            background: transparent;
-            padding: 0;
+        /* MMO-style action dock: the tools stay in a dedicated, centered row
+           directly below the map instead of consuming header space. */
+        .tabletop-shell > .left-toolbar {
+            grid-column: 1;
+            grid-row: 2;
+            justify-self: center;
+            width: max-content;
+            max-width: calc(100% - 1rem);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: rgba(7, 14, 28, 0.96);
+            padding: 0.35rem 0.5rem;
             flex-direction: row;
             align-items: center;
+            justify-content: center;
             gap: 0.35rem;
             overflow: visible;
-            min-width: 0;
+            box-shadow: 0 -5px 18px rgba(0, 0, 0, 0.24);
         }
-        .play-status-strip > .left-toolbar .tool-btn {
+        .tabletop-shell > .left-toolbar .tool-btn {
             width: 34px;
             height: 34px;
             flex: 0 0 34px;
         }
-        .play-status-strip > .left-toolbar .spacer {
+        .tabletop-shell > .left-toolbar .spacer {
             display: flex;
             align-items: center;
             gap: 0.35rem;
@@ -1281,9 +1288,10 @@
             }
             .tabletop-shell {
                 grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
                 min-height: 0;
             }
-            .play-status-strip > .left-toolbar {
+            .tabletop-shell > .left-toolbar {
                 position: fixed;
                 left: 0;
                 right: 0;
@@ -1302,7 +1310,7 @@
                 z-index: 40;
                 overflow: visible;
             }
-            .play-status-strip > .left-toolbar .tool-btn {
+            .tabletop-shell > .left-toolbar .tool-btn {
                 width: auto;
                 min-width: 56px;
                 height: 48px;
@@ -1311,7 +1319,7 @@
             /* The desktop rail's spacer is layout poison in a flat ribbon:
                its auto-margin ejected Menü/Zurück out of the bar. On the
                phone all five buttons are direct, equal flex items. */
-            .play-status-strip > .left-toolbar .spacer {
+            .tabletop-shell > .left-toolbar .spacer {
                 display: contents;
             }
             /* Phone ribbon: Zurück lebt im Tisch-Sheet (seltene Aktion,
@@ -1539,23 +1547,6 @@
                 </div>
 
                 <div class="book-dashboard-titlebar play-status-strip">
-                    <aside class="left-toolbar" aria-label="Werkzeugleiste">
-                        <!-- GD-Ribbon-Anatomie (Goblin Delve mobile.css, Patch 117):
-                             Icon über Label, ein fester Balken, Panels öffnen AUS ihm
-                             heraus statt über dem Inhalt zu schweben. -->
-                        <button type="button" class="tool-btn active" data-tool="select" title="Auswählen"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label">Wählen</span></button>
-                        <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label">Bewegen</span></button>
-                        <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label">Token</span></button>
-                        <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
-                             used to sit here as silent no-ops (the handler only toggled
-                             a CSS class). Removed until the tools actually exist -- a
-                             button that does nothing reads as "broken", not "planned". -->
-                        <div class="spacer">
-                            <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
-                            <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
-                            <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span></button>
-                        </div>
-                    </aside>
                     <p id="sessionTitle" class="play-session-title">Session wird geladen...</p>
                     <div class="stage-topbar" aria-label="Seiten- und Zoomsteuerung">
                         <div id="activePagePill" class="active-page-pill" hidden>Seite: <strong id="activePageName">-</strong></div>
@@ -1717,6 +1708,23 @@
                 </div>
             </div>
         </section>
+
+        <aside class="left-toolbar" aria-label="Werkzeugleiste">
+            <!-- MMO-Aktionsleiste: dauerhaft sichtbar und zentral direkt
+                 unter der Karte, statt die obere Statusleiste zu belasten. -->
+            <button type="button" class="tool-btn active" data-tool="select" title="Auswählen"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label">Wählen</span></button>
+            <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label">Bewegen</span></button>
+            <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label">Token</span></button>
+            <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
+                 used to sit here as silent no-ops (the handler only toggled
+                 a CSS class). Removed until the tools actually exist -- a
+                 button that does nothing reads as "broken", not "planned". -->
+            <div class="spacer">
+                <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
+                <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
+                <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span></button>
+            </div>
+        </aside>
 
         <aside class="right-sidebar">
             <div class="sidebar-tabs">
