@@ -391,6 +391,37 @@ def test_playtable_observed_token_gets_a_readonly_summary_not_nothing():
     assert 'disconnect: () => { this._connectionLost = true;' in script
 
 
+def test_playtable_conditions_picker_merges_metadata_instead_of_overwriting():
+    """S05 (Apply-approved slice, docs/PLAYTABLE_FEATURE_RESEARCH_05_STATUSES_2026-08-27.md):
+    the conditions/status picker reachable from the token HUD. The server
+    applies a metadata_json patch as a whole-value overwrite (confirmed by
+    reading handle_token_update: `setattr(token, key, value)`, not a merge)
+    -- sending a bare {conditions: [...]} patch would silently wipe
+    image_url and anything else already on the token. This is the specific
+    bug that would have shipped without checking that first.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    assert 'id="btnTokenConditions"' in template
+    assert 'id="conditionsPopover"' in template
+    assert 'id="conditionsList"' in template
+    assert 'id="btnConditionsClearAll"' in template
+    assert 'role="dialog" aria-label="Zustände"' in template
+
+    assert "const mergedMetadata = { ...(token.metadata_json || {}), conditions: nextConditions }" in script
+    assert "CONDITION_CATALOG" in script
+    assert len([line for line in script.splitlines() if '{ id: "' in line and 'label:' in line]) == 16
+
+    # Clear-all names the token and states the count, not a bare "really?".
+    assert 'window.confirm(`Alle ${current.length} Zustände von "${token.name}" entfernen?`)' in script
+
+    # Popover is non-modal (Apply decision) -- light-dismiss + Escape, same
+    # pattern as the S02 app menu, not a native <dialog>.
+    assert "onOutsideClick" in script
+    assert "closePopover" in script
+
+
 def test_playtable_selecting_a_token_surfaces_its_controls():
     """F4 Gap B: clicking a token on the map already drew a real selection
     ring and updated #tokenSelectionSummary/#tokenSelectionDetail text --

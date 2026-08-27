@@ -217,11 +217,17 @@
             var conditions = Array.isArray(character.conditions)
                 ? character.conditions.map(function (entry) { return String(entry); })
                 : [];
+            // S05: exhaustion is a 0-6 LEVEL, not a togglable condition, so
+            // it travels as its own field instead of a synthesized
+            // "Erschöpfung N" string smuggled into the conditions array --
+            // that string previously defeated S05's canonical-id
+            // validation on the server (every entry in conditions must now
+            // be one of the ~16 known condition ids; a free-text level
+            // label always failed that check and silently dropped the
+            // WHOLE conditions update, not just the exhaustion part).
             var exhaustion = Number(character.exhaustion);
-            if (isFinite(exhaustion) && exhaustion >= 1) {
-                conditions = conditions.concat(["Erschöpfung " + Math.min(6, Math.round(exhaustion))]);
-            }
-            deliver("conditions", { name: name, conditions: conditions });
+            var exhaustionLevel = (isFinite(exhaustion) && exhaustion >= 1) ? Math.min(6, Math.round(exhaustion)) : 0;
+            deliver("conditions", { name: name, conditions: conditions, exhaustion_level: exhaustionLevel });
         } catch (error) {
             console.warn("[beyond20-bridge] conditions-update konnte nicht verarbeitet werden:", error);
         }

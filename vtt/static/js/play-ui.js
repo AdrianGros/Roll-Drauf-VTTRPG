@@ -13,6 +13,32 @@
     // is explicitly out of scope, see _bindWidgetDragging).
     const WIDGET_POSITION_STORAGE_PREFIX = "vtt.play.widget-pos.";
     const DRAGGABLE_WIDGET_IDS = ["layersWidget", "turnOrderWidget", "tokenWidget", "tokenCreatePanel"];
+
+    // S05: mirrors vtt/play/conditions.py's CONDITION_CATALOG exactly (id
+    // + label) -- the server is the source of truth/validator, this is
+    // just what the picker renders. Text-only labels for this slice (Apply
+    // decision: icons are a later polish pass); duration/value/source
+    // fields are deliberately not part of this shape yet, reserved for
+    // Slice 06 to define once combat owns tick semantics.
+    const CONDITION_CATALOG = [
+        { id: "blinded", label: "Blind" },
+        { id: "charmed", label: "Bezaubert" },
+        { id: "concentrating", label: "Konzentriert" },
+        { id: "deafened", label: "Taub" },
+        { id: "exhausted", label: "Erschöpft" },
+        { id: "frightened", label: "Verängstigt" },
+        { id: "grappled", label: "Gepackt" },
+        { id: "incapacitated", label: "Kampfunfähig" },
+        { id: "invisible", label: "Unsichtbar" },
+        { id: "paralyzed", label: "Gelähmt" },
+        { id: "petrified", label: "Versteinert" },
+        { id: "poisoned", label: "Vergiftet" },
+        { id: "prone", label: "Liegend" },
+        { id: "restrained", label: "Festgesetzt" },
+        { id: "stunned", label: "Betäubt" },
+        { id: "unconscious", label: "Bewusstlos" },
+    ];
+    const CONDITION_LABELS = Object.fromEntries(CONDITION_CATALOG.map((c) => [c.id, c.label]));
     const WIDGET_DRAG_MIN_WIDTH_MEDIA = "(min-width: 1040px)";
     // At least this many px of the panel must stay inside the stage on
     // every edge -- "clamped" per F5, not "confined": a corner may still
@@ -448,21 +474,42 @@
                     if (this.readOnly || !update) return false;
                     const token = this._findTokenByName(update.name);
                     if (!token || !this._canMoveToken(token)) return false;
-                    const conditions = (Array.isArray(update.conditions) ? update.conditions : [])
+                    // S05: the server now validates every metadata_json.
+                    // conditions entry against the canonical ~16-id
+                    // catalog and rejects the WHOLE patch on any unknown
+                    // value -- correct for our own picker (which only ever
+                    // sends canonical ids by construction) but Beyond20's
+                    // vocabulary is richer than ours and not under our
+                    // control. Filter here instead of failing the sync:
+                    // known conditions still land, unrecognized ones are
+                    // silently dropped rather than blocking everything.
+                    const catalogIds = new Set(CONDITION_CATALOG.map((c) => c.id));
+                    const rawConditions = (Array.isArray(update.conditions) ? update.conditions : [])
                         .slice(0, 20)
-                        .map((entry) => String(entry).slice(0, 40))
+                        .map((entry) => String(entry).slice(0, 40).trim().toLowerCase())
                         .filter(Boolean);
+                    const conditions = [...new Set(rawConditions.filter((id) => catalogIds.has(id)))];
+                    const dropped = rawConditions.filter((id) => !catalogIds.has(id));
+                    const exhaustionLevel = Number(update.exhaustion_level) || 0;
+
                     const metadataJson = token.metadata_json && typeof token.metadata_json === "object"
                         ? { ...token.metadata_json } : {};
-                    const before = JSON.stringify(metadataJson.conditions || []);
-                    if (before === JSON.stringify(conditions)) return true;
+                    const before = JSON.stringify({ conditions: metadataJson.conditions || [], exhaustion_level: metadataJson.exhaustion_level || 0 });
+                    const nextState = JSON.stringify({ conditions, exhaustion_level: exhaustionLevel });
+                    if (before === nextState) return true;
                     metadataJson.conditions = conditions;
+                    metadataJson.exhaustion_level = exhaustionLevel;
                     this._patchToken(token, { metadata_json: metadataJson });
+                    const displayParts = conditions.map((id) => CONDITION_LABELS[id] || id);
+                    if (exhaustionLevel > 0) displayParts.push(`Erschöpfung ${exhaustionLevel}`);
                     this._logActivity(
-                        conditions.length
-                            ? `Zustände: ${token.name} -> ${conditions.join(", ")}.`
+                        displayParts.length
+                            ? `Zustände: ${token.name} -> ${displayParts.join(", ")}.`
                             : `Zustände: ${token.name} -> keine.`,
                         "info");
+                    if (dropped.length) {
+                        this._logActivity(`Unbekannte Zustände von Beyond20 ignoriert: ${dropped.join(", ")}.`, "info");
+                    }
                     return true;
                 },
                 // Turn tracker sync (Beyond20 update-combat): initiative +
@@ -1385,6 +1432,138 @@
             }
         }
 
+        // S05: conditions/status picker. All three mutators merge into the
+        // token's EXISTING metadata_json client-side before sending the
+        // patch -- the server applies metadata_json as a whole-value
+        // overwrite (setattr, not a merge; confirmed by reading
+        // handle_token_update), so sending a bare {conditions: [...]}
+        // patch would silently wipe image_url and anything else already
+        // stored there.
+        async _patchTokenConditions(token, nextConditions) {
+            const mergedMetadata = { ...(token.metadata_json || {}), conditions: nextConditions };
+            const patch = { metadata_json: mergedMetadata };
+            try {
+                if (this.socket && this.socket.isConnected) {
+                    this.socket.updateToken(token.id, Number(token.version || 1), patch);
+                } else {
+                    await this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), patch);
+                    await this.loadBootstrap();
+                }
+            } catch (error) {
+                this._showMessage(error.message || "Zustände konnten nicht geändert werden.", true);
+            }
+        }
+
+        async _toggleCondition(conditionId) {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            const current = Array.isArray(token.metadata_json?.conditions) ? token.metadata_json.conditions : [];
+            const next = current.includes(conditionId)
+                ? current.filter((id) => id !== conditionId)
+                : [...current, conditionId];
+            await this._patchTokenConditions(token, next);
+        }
+
+        async _clearAllConditions() {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            const current = Array.isArray(token.metadata_json?.conditions) ? token.metadata_json.conditions : [];
+            if (!current.length) return;
+            // Destructive acceptance: names the token AND the count, not a
+            // bare "really clear?".
+            if (!window.confirm(`Alle ${current.length} Zustände von "${token.name}" entfernen?`)) return;
+            await this._patchTokenConditions(token, []);
+        }
+
+        _renderConditionsPopover() {
+            const list = document.getElementById("conditionsList");
+            const badge = document.getElementById("conditionsCountBadge");
+            const clearBtn = document.getElementById("btnConditionsClearAll");
+            if (!list) return;
+            const token = this._findStateToken(this.selectedTokenId);
+            const canEdit = token && this._canMoveToken(token);
+            const active = new Set(Array.isArray(token?.metadata_json?.conditions) ? token.metadata_json.conditions : []);
+
+            // Bug this comment exists to prevent reintroducing: this method
+            // runs on every realtime state render, including immediately
+            // after the user's OWN toggle click (server round-trip ->
+            // token:updated -> _renderState()). Rebuilding the checkbox
+            // list wholesale destroys whatever was focused, silently
+            // breaking Escape-to-close and arrow-key navigation the moment
+            // anyone actually uses them -- caught by the conditions_picker
+            // robot flow timing out waiting for Escape to close the
+            // popover. Remember which condition id had focus and restore
+            // it to the corresponding NEW checkbox after rebuilding.
+            const focusedConditionId = document.activeElement?.dataset?.conditionId;
+
+            list.innerHTML = CONDITION_CATALOG.map((entry) => `
+                <label>
+                    <input type="checkbox" data-condition-id="${entry.id}" ${active.has(entry.id) ? "checked" : ""} ${canEdit ? "" : "disabled"}>
+                    ${escapeHtml(entry.label)}
+                </label>
+            `).join("");
+            list.querySelectorAll("input[data-condition-id]").forEach((checkbox) => {
+                checkbox.addEventListener("change", () => this._toggleCondition(checkbox.dataset.conditionId));
+            });
+            if (focusedConditionId) {
+                list.querySelector(`input[data-condition-id="${focusedConditionId}"]`)?.focus();
+            }
+
+            if (badge) {
+                badge.hidden = active.size === 0;
+                badge.textContent = String(active.size);
+            }
+            if (clearBtn) {
+                clearBtn.disabled = !canEdit || active.size === 0;
+                clearBtn.title = canEdit ? "" : "Nur für den Besitzer oder die Spielleitung.";
+            }
+        }
+
+        _bindConditionsPopover() {
+            const trigger = document.getElementById("btnTokenConditions");
+            const popover = document.getElementById("conditionsPopover");
+            const closeBtn = document.getElementById("btnConditionsClose");
+            const clearBtn = document.getElementById("btnConditionsClearAll");
+            if (!trigger || !popover) return;
+
+            const openPopover = () => {
+                this._renderConditionsPopover();
+                popover.hidden = false;
+                trigger.setAttribute("aria-expanded", "true");
+                // Anchored just above the trigger button, matching the
+                // app-menu's fixed-position popover convention (S02).
+                const rect = trigger.getBoundingClientRect();
+                popover.style.left = `${Math.max(8, rect.left)}px`;
+                popover.style.top = `${Math.max(8, rect.top - 8)}px`;
+                popover.style.transform = "translateY(-100%)";
+                popover.querySelector("input[type=checkbox]:not(:disabled)")?.focus();
+                document.addEventListener("click", onOutsideClick, true);
+            };
+            const closePopover = ({ returnFocus = true } = {}) => {
+                if (popover.hidden) return;
+                popover.hidden = true;
+                trigger.setAttribute("aria-expanded", "false");
+                document.removeEventListener("click", onOutsideClick, true);
+                if (returnFocus) trigger.focus();
+            };
+            const onOutsideClick = (event) => {
+                if (popover.contains(event.target) || trigger.contains(event.target)) return;
+                closePopover({ returnFocus: false });
+            };
+
+            trigger.addEventListener("click", () => (popover.hidden ? openPopover() : closePopover()));
+            if (closeBtn) closeBtn.addEventListener("click", () => closePopover());
+            if (clearBtn) clearBtn.addEventListener("click", () => this._clearAllConditions());
+            popover.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    closePopover();
+                }
+            });
+            this._closeConditionsPopover = closePopover;
+        }
+
         async _setSelectedTokenHp() {
             const token = this._findStateToken(this.selectedTokenId);
             if (!token) return;
@@ -1689,6 +1868,7 @@
             if (hpBtn) hpBtn.addEventListener("click", () => this._setSelectedTokenHp());
             const nameBtn = document.getElementById("btnTokenNameSet");
             if (nameBtn) nameBtn.addEventListener("click", () => this._setSelectedTokenName());
+            this._bindConditionsPopover();
 
             // Token art: one picker on the create panel (image applied when
             // the token is placed) and one on the selected-token detail
@@ -2747,8 +2927,15 @@
                     const cellY = Math.round(cell.top / gridSize);
                     const conditions = Array.isArray(token.metadata_json?.conditions)
                         ? token.metadata_json.conditions : [];
-                    const conditionsLine = conditions.length
-                        ? `<div class="token-conditions-line">${escapeHtml(conditions.join(", "))}</div>`
+                    // S05: exhaustion_level (0-6, e.g. from Beyond20) is a
+                    // separate field, not a canonical-catalog condition --
+                    // folded back in here purely for display, same combined
+                    // text as before the S05 split.
+                    const exhaustionLevel = Number(token.metadata_json?.exhaustion_level) || 0;
+                    const conditionLabels = conditions.map((id) => CONDITION_LABELS[id] || id);
+                    if (exhaustionLevel > 0) conditionLabels.push(`Erschöpfung ${exhaustionLevel}`);
+                    const conditionsLine = conditionLabels.length
+                        ? `<div class="token-conditions-line">${escapeHtml(conditionLabels.join(", "))}</div>`
                         : "";
                     return `
                     <div class="panel-row ${Number(this.selectedTokenId) === Number(token.id) ? "active-row" : ""}" data-token-id="${token.id}" style="cursor:pointer;display:block;">
@@ -2812,6 +2999,17 @@
             }
             const connectionNotice = document.getElementById("tokenConnectionNotice");
             if (connectionNotice) connectionNotice.hidden = !this._connectionLost;
+
+            // S05: keep the badge/checkbox-list live on every state render
+            // (cheap even when the popover is closed) -- also closes the
+            // popover if the selection is gone (deleted-while-open
+            // acceptance criterion, same pattern S04 already relies on for
+            // the rest of the detail panel reverting to "nothing selected").
+            const conditionsPopoverEl = document.getElementById("conditionsPopover");
+            if (conditionsPopoverEl && !conditionsPopoverEl.hidden && !selectedToken) {
+                this._closeConditionsPopover?.({ returnFocus: false });
+            }
+            this._renderConditionsPopover();
 
             // DM-only table controls: map upload and initiative rolling.
             const layerAddRow = document.getElementById("layerAddRow");
@@ -2936,8 +3134,11 @@
                 const initials = escapeHtml(rawName.trim().slice(0, 2).toUpperCase() || "??");
                 const conditions = Array.isArray(token.metadata_json?.conditions)
                     ? token.metadata_json.conditions : [];
-                const conditionsBadge = conditions.length
-                    ? `<div class="token-conditions" title="${escapeHtml(conditions.join(", "))}">${conditions.length}</div>`
+                const badgeExhaustionLevel = Number(token.metadata_json?.exhaustion_level) || 0;
+                const badgeLabels = conditions.map((id) => CONDITION_LABELS[id] || id);
+                if (badgeExhaustionLevel > 0) badgeLabels.push(`Erschöpfung ${badgeExhaustionLevel}`);
+                const conditionsBadge = badgeLabels.length
+                    ? `<div class="token-conditions" title="${escapeHtml(badgeLabels.join(", "))}">${badgeLabels.length}</div>`
                     : "";
                 // Token art (metadata_json.image_url): same-origin asset
                 // URLs only -- anything else falls back to initials.

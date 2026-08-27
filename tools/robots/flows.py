@@ -741,6 +741,184 @@ def _token_hud_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _conditions_picker_flow(stack, workdir: Path) -> list[str]:
+    """S05, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_05_STATUSES_2026-08-27.md,
+    Apply-approved): the token conditions/status picker. Places a token
+    with a pre-existing metadata_json.image_url, toggles two conditions
+    through the real popover, and asserts image_url survived the round
+    trip -- the server applies metadata_json as a whole-value overwrite, so
+    a client that sent a bare {conditions: [...]} patch would silently
+    wipe it. Also covers the badge count, clear-all confirmation, and
+    Escape-to-close."""
+    import struct
+    import zlib
+
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    def _make_png(width, height, rgb):
+        def chunk(tag, data):
+            piece = struct.pack(">I", len(data)) + tag + data
+            return piece + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+        raw = b""
+        row = bytes(rgb) * width
+        for _ in range(height):
+            raw += b"\x00" + row
+        ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr)
+                + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="zustaende_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="zustaende_bot",
+                email="zustaende_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Zustaende-Kampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Zustaende-Sitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Zustaende-Karte", "width": 600, "height": 400}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[setup] map create returned HTTP {map_response.status}")
+            browser.close()
+            return findings
+        map_payload = map_response.json()
+        map_id = (map_payload.get("map") or map_payload.get("campaign_map") or map_payload)["id"]
+        init_response = api.post(
+            f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
+            data=json.dumps({"map_ids": [map_id]}), headers=json_headers)
+        if init_response.status != 201:
+            findings.append(f"[setup] scene-stack init returned HTTP {init_response.status}")
+            browser.close()
+            return findings
+
+        # A pre-existing image_url this flow must NOT lose after toggling
+        # conditions -- the exact bug a whole-value metadata_json overwrite
+        # would cause.
+        art = api.post(
+            f"{stack.base_url}/api/assets/campaigns/{campaign_id}/upload",
+            multipart={"file": {"name": "robot_face.png", "mimeType": "image/png",
+                                "buffer": _make_png(64, 64, (150, 90, 40))},
+                       "asset_type": "token"},
+            headers={"X-CSRF-TOKEN": csrf_token})
+        art_id = art.json().get("asset_id") if art.status == 201 else None
+        image_url = f"/api/assets/{art_id}/preview" if art_id else None
+        token_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Waldtroll", "x": 100, "y": 100, "token_type": "npc",
+                             "metadata_json": {"position_mode": "pixel", "image_url": image_url}}),
+            headers=json_headers)
+        if token_response.status != 201:
+            findings.append(f"[setup] token create returned HTTP {token_response.status}")
+            browser.close()
+            return findings
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.click(".token-marker")
+            page.wait_for_selector("#tokenSelectionDetail:not([hidden])", timeout=10_000)
+
+            page.click("#btnTokenConditions")
+            page.wait_for_selector("#conditionsPopover:not([hidden])", timeout=10_000)
+
+            catalog_size = page.locator("#conditionsList input[type=checkbox]").count()
+            if catalog_size < 15:
+                findings.append(f"[conditions] expected the full catalog (~15+ checkboxes), found {catalog_size}")
+
+            page.check('#conditionsList input[data-condition-id="poisoned"]')
+            page.wait_for_timeout(400)
+            page.check('#conditionsList input[data-condition-id="prone"]')
+            page.wait_for_timeout(400)
+
+            badge_text = (page.locator("#conditionsCountBadge").text_content() or "").strip()
+            if badge_text != "2":
+                findings.append(f"[conditions] count badge shows {badge_text!r}, expected '2' after two toggles")
+
+            # The bug this flow exists to catch: image_url must survive.
+            # Checked via the actual rendered marker (its <img src> comes
+            # straight from token.metadata_json.image_url), not a REST
+            # re-fetch -- there is no GET on the tokens-list route, only
+            # POST for creation; the live client state is the real source
+            # of truth for "did the browser keep this" anyway.
+            rendered_image_src = page.locator(".token-marker .token-image").get_attribute("src")
+            if rendered_image_src != image_url:
+                findings.append(
+                    f"[conditions] image_url was lost after toggling conditions - "
+                    f"metadata_json overwrite bug: expected {image_url!r}, "
+                    f"rendered marker shows {rendered_image_src!r}")
+
+            # Escape closes and returns focus to the trigger.
+            page.keyboard.press("Escape")
+            page.wait_for_selector("#conditionsPopover[hidden]", state="attached", timeout=5_000)
+            focused_id = page.evaluate("() => document.activeElement?.id || null")
+            if focused_id != "btnTokenConditions":
+                findings.append(f"[conditions] Escape did not return focus to the trigger button (focused: {focused_id!r})")
+
+            # Clear-all: confirmation names the token and the count.
+            page.click("#btnTokenConditions")
+            page.wait_for_selector("#conditionsPopover:not([hidden])", timeout=10_000)
+            dialog_messages = []
+            page.on("dialog", lambda dialog: (dialog_messages.append(dialog.message), dialog.accept()))
+            page.click("#btnConditionsClearAll")
+            page.wait_for_function(
+                "() => document.getElementById('conditionsCountBadge')?.hidden === true",
+                timeout=5_000)
+            if not dialog_messages:
+                findings.append("[conditions] no confirmation dialog appeared for 'Alle löschen'")
+            else:
+                message = dialog_messages[0]
+                if "Waldtroll" not in message or "2" not in message:
+                    findings.append(f"[conditions] clear-all confirmation missing token name or count: {message!r}")
+            # wait_for_function above already proved the badge hides; a
+            # timeout there raises and lands in the except block below with
+            # a real error message instead of a generic bool check here.
+
+        except Exception as error:
+            findings.append(f"[conditions] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "conditions-picker-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _measure_tool_flow(stack, workdir: Path) -> list[str]:
     """S03, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_03_MAP_TOOLS_2026-08-27.md,
     Apply-approved): the waypoint measurement tool added to the select/pan/
@@ -1325,7 +1503,17 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
                             f"(token list shows: {token_text[:120]!r})")
 
         # Conditions sync: conditions array + exhaustion land as a marker
-        # badge and a token-list line.
+        # badge and a token-list line. S05, 2026-08-27: incoming Beyond20
+        # condition names ("Poisoned", "Prone") are now canonicalized
+        # against the S05 condition catalog and rendered with ITS German
+        # labels ("Vergiftet", "Liegend") -- consistent with the rest of
+        # this German-language app and with the S05 picker's own UI,
+        # rather than leaking raw English strings through from an external
+        # integration. Exhaustion travels as its own metadata_json field
+        # now (not smuggled into the conditions array as a free-text
+        # "Erschöpfung N" string, which used to defeat S05's server-side
+        # canonical-id validation and silently drop the WHOLE conditions
+        # update) but still folds back into this combined display text.
         page.evaluate(
             """() => {
                 document.dispatchEvent(new CustomEvent("Beyond20_UpdateConditions", {
@@ -1338,7 +1526,7 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
         try:
             page.wait_for_function(
                 "() => (document.getElementById('tokenList')?.textContent || '')"
-                ".includes('Poisoned, Prone, Erschöpfung 1')", timeout=10_000)
+                ".includes('Vergiftet, Liegend, Erschöpfung 1')", timeout=10_000)
         except Exception:
             token_text = page.locator("#tokenList").text_content() or ""
             findings.append(f"[conditions] Beyond20 conditions-update never reached "
@@ -1401,6 +1589,7 @@ FLOWS = {
     "scene_directory": _scene_directory_flow,
     "measure_tool": _measure_tool_flow,
     "token_hud": _token_hud_flow,
+    "conditions_picker": _conditions_picker_flow,
     "app_menu": _app_menu_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,

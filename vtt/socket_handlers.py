@@ -474,6 +474,17 @@ def _parse_token_patch(data: dict, is_dm_member: bool):
             return None, {"code": "bad_request", "message": "invalid token_type"}
         patch["token_type"] = token_type
 
+    # S05: metadata_json was previously accepted whole with zero validation
+    # -- token.metadata_json.conditions was a free-form string array (any
+    # value at all). Only the conditions key gets checked; every other
+    # metadata_json key (image_url etc.) stays as permissive as before.
+    if "metadata_json" in patch and isinstance(patch["metadata_json"], dict) and "conditions" in patch["metadata_json"]:
+        from vtt.play.conditions import validate_condition_ids
+        validated, error = validate_condition_ids(patch["metadata_json"].get("conditions"))
+        if error:
+            return None, error
+        patch["metadata_json"]["conditions"] = validated
+
     return patch, None
 
 
