@@ -2509,6 +2509,173 @@ def _vision_fog_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _quality_flow(stack, workdir: Path) -> list[str]:
+    """S11, 2026-08-28 (docs/PLAYTABLE_FEATURE_RESEARCH_11_QUALITY_2026-08-27.md,
+    Apply-approved): cross-cutting quality, scoped to the concrete gaps the
+    research doc's own current-state audit actually confirmed (not the
+    full 40-cell test matrix): the app-wide error/success toast reaching
+    the user regardless of which sidebar tab is active, a shared focus
+    trap in the existing popovers, and prefers-reduced-motion actually
+    collapsing transition durations. A full offline/pending-action-replay
+    queue and formal performance profiling were explicitly descoped in
+    the work package doc (real architecture commitments needing product
+    input, not implementation detail) -- not covered here."""
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="qualitaet_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="qualitaet_bot",
+                email="qualitaet_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Qualitaets-Kampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Qualitaets-Sitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Qualitaets-Karte", "width": 600, "height": 400}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[setup] map create returned HTTP {map_response.status}")
+            browser.close()
+            return findings
+        map_payload = map_response.json()
+        map_id = (map_payload.get("map") or map_payload.get("campaign_map") or map_payload)["id"]
+        init_response = api.post(
+            f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
+            data=json.dumps({"map_ids": [map_id]}), headers=json_headers)
+        if init_response.status != 201:
+            findings.append(f"[setup] scene-stack init returned HTTP {init_response.status}")
+            browser.close()
+            return findings
+        for target_state in ("ready", "in_progress"):
+            transition_response = api.post(
+                f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/transition",
+                data=json.dumps({"target_state": target_state, "ignore_warnings": True}),
+                headers=json_headers)
+            if transition_response.status != 200:
+                findings.append(f"[setup] session transition to {target_state!r} returned HTTP {transition_response.status}")
+                browser.close()
+                return findings
+        token_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Held", "x": 100, "y": 100, "token_type": "npc",
+                             "metadata_json": {"position_mode": "pixel"}}),
+            headers=json_headers)
+        if token_response.status != 201:
+            findings.append(f"[setup] token create returned HTTP {token_response.status}")
+            browser.close()
+            return findings
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            # prefers-reduced-motion: the context was created with
+            # reduced_motion="reduce" -- confirm the media query actually
+            # matches AND that it collapses a real transition duration,
+            # not just that the query itself evaluates true.
+            reduced_motion_matches = page.evaluate(
+                "() => window.matchMedia('(prefers-reduced-motion: reduce)').matches")
+            if not reduced_motion_matches:
+                findings.append("[quality] reduced-motion context did not make the media query match")
+            transition_duration = page.eval_on_selector(
+                ".tool-btn", "el => getComputedStyle(el).transitionDuration")
+            if transition_duration not in ("0s", "0.001ms", "0.0000001s"):
+                findings.append(
+                    f"[quality] .tool-btn transition-duration under prefers-reduced-motion should collapse to ~0, got {transition_duration!r}")
+
+            # App-wide error toast: switch to the Tools tab (NOT Session,
+            # where #msg used to live and was invisible from anywhere
+            # else), select the token, trigger a real client-side
+            # validation error, and confirm the toast is actually visible
+            # and marked assertive -- not just present in the DOM.
+            page.click("#btnSidebarToggle")
+            page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
+            page.click('.sidebar-tab[data-tab="tools"]')
+            page.wait_for_selector("#panel-tools.active", timeout=10_000)
+
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.click(".token-marker")
+            page.wait_for_selector("#tokenSelectionDetail:not([hidden])", timeout=10_000)
+            page.fill("#tokenSightRange", "-5")
+            page.click("#btnTokenSightRangeSet")
+            page.wait_for_selector("#msg.error", state="visible", timeout=10_000)
+            aria_live = page.eval_on_selector("#msg", "el => el.getAttribute('aria-live')")
+            if aria_live != "assertive":
+                findings.append(f"[quality] error toast should set aria-live=assertive, got {aria_live!r}")
+            msg_text = page.locator("#msg").text_content() or ""
+            if "positive Zahl" not in msg_text:
+                findings.append(f"[quality] error toast text unexpected: {msg_text!r}")
+
+            # Focus trap: open the conditions popover, jump focus to its
+            # LAST focusable element, press Tab once more -- it must wrap
+            # to the FIRST element, not escape into the page behind it.
+            page.click("#btnTokenConditions")
+            page.wait_for_selector("#conditionsPopover:not([hidden])", timeout=10_000)
+            last_focusable_id = page.eval_on_selector(
+                "#conditionsPopover",
+                """el => {
+                    const items = Array.from(el.querySelectorAll(
+                        'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                    )).filter(x => x.offsetParent !== null);
+                    const last = items[items.length - 1];
+                    if (last) last.focus();
+                    return last ? (last.id || last.dataset.conditionId || last.tagName) : null;
+                }""")
+            if not last_focusable_id:
+                findings.append("[quality] conditions popover has no focusable elements to trap")
+            else:
+                page.keyboard.press("Tab")
+                still_inside = page.evaluate(
+                    "() => document.getElementById('conditionsPopover')?.contains(document.activeElement)")
+                if not still_inside:
+                    findings.append(
+                        "[quality] Tab from the last focusable element in the conditions popover escaped "
+                        "the popover instead of wrapping to the first -- focus trap not working")
+            page.keyboard.press("Escape")
+
+        except Exception as error:
+            findings.append(f"[quality] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "quality-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
@@ -2524,6 +2691,7 @@ FLOWS = {
     "beyond20_bridge": _beyond20_bridge_flow,
     "loot_transfer": _loot_transfer_flow,
     "vision_fog": _vision_fog_flow,
+    "quality": _quality_flow,
 }
 
 

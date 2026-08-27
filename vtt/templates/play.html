@@ -756,6 +756,11 @@
            being plain static stacked headers). */
         .floating h3.widget-drag-handle {
             cursor: grab;
+            /* S11: without this, dragging the header on touch fights the
+               browser's default pan/scroll gesture on the same surface --
+               same class of jank #mapViewport's tokens already avoid via
+               their own touch-action: none. */
+            touch-action: none;
         }
         .floating.widget-dragging {
             user-select: none;
@@ -1510,6 +1515,19 @@
             background: rgba(77, 133, 213, 0.24);
             border: 1px solid rgba(77, 133, 213, 0.6);
         }
+        /* S11: #msg only -- readOnlyNotice/firstStepsNotice stay inline,
+           sharing everything else .message defines (colors, padding). ID
+           specificity wins over the .message rules above without
+           touching them. */
+        #msg {
+            position: fixed;
+            top: calc(1rem + env(safe-area-inset-top, 0px));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            max-width: min(90vw, 480px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
         .ready-block {
             border-left: 3px solid #d45555;
             padding-left: 0.42rem;
@@ -1908,6 +1926,23 @@
             header {
                 transition: none !important;
             }
+            /* S11: the curated list above predates several later slices'
+               own transitions (popovers, sidebar dodge rules, widget
+               drag) that never got added to it piecemeal. A global
+               override is the actual AC ("instant state changes instead
+               of animations"), not a substitute for the list above --
+               kept together since removing the specific list risks
+               losing intent documentation for why those particular
+               elements needed it. A `visibility 0s <delay>` component
+               (e.g. the closed-sidebar dodge rule) loses only its delay
+               under this override, which is correct for reduced motion:
+               instant, not delayed-then-instant. */
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
 </head>
@@ -1916,6 +1951,12 @@
     </div>
     <div class="play-return-curtain" aria-hidden="true">
     </div>
+    <!-- S11: app-wide error/success toast, deliberately body-level (not
+         inside any sidebar tab or widget) so it's visible no matter what
+         else is open/closed. role="status" + aria-live is static in the
+         markup; _showMessage() only ever toggles aria-live between
+         polite/assertive (success/error) and never removes it. -->
+    <div id="msg" class="message" role="status" aria-live="polite" aria-atomic="true"></div>
     <main>
         <div class="book-dashboard-camera book-route-camera play-workspace-camera">
             <section class="book-dashboard-page book-route-page book-workspace-page play-workspace-page" role="region" aria-label="Play workspace page">
@@ -2453,7 +2494,16 @@
                 </section>
 
                 <section id="panel-session" class="tab-panel">
-                    <div id="msg" class="message"></div>
+                    <!-- S11: #msg used to live here, but _showMessage() is
+                         called app-wide (loot/vision/combat/every error
+                         path) while this is one sidebar tab among several
+                         -- an error fired while any OTHER tab was active
+                         (or the sidebar closed on mobile) landed inside a
+                         display:none ancestor and was never seen. Moved
+                         to a body-level fixed toast near the top of the
+                         page body (same id, so _showMessage()'s getElementById("msg")
+                         needed no JS change) -- see the fixed-position
+                         #msg near the entry/return curtains. -->
                     <div id="readOnlyNotice" class="message"></div>
                     <div id="firstStepsNotice" class="message"></div>
 

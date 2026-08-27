@@ -1693,6 +1693,7 @@
                 }
             });
             this._closeConditionsPopover = closePopover;
+            this._bindFocusTrap(popover);
         }
 
         // S09: loot transfer. The popover's data (items on the token,
@@ -1904,6 +1905,7 @@
             trigger.addEventListener("click", () => (popover.hidden ? openPopover() : closePopover()));
             if (closeBtn) closeBtn.addEventListener("click", () => closePopover());
             this._closeLootPopover = closePopover;
+            this._bindFocusTrap(popover);
 
             if (toggleBtn) toggleBtn.addEventListener("click", () => this._toggleTokenLootSource());
             if (addBtn) addBtn.addEventListener("click", () => this._addLootItem());
@@ -2216,6 +2218,10 @@
 
             document.getElementById("btnFogEnabledToggle")?.addEventListener("click", () => this._toggleFogEnabled());
             document.getElementById("btnFogReset")?.addEventListener("click", () => this._resetFogOfWar());
+
+            this._bindFocusTrap(wallEditPopover);
+            this._bindFocusTrap(lightEditPopover);
+            this._bindFocusTrap(visibleTokensPopover);
         }
 
         // S07: personal action hotbar. A pure UI trigger layer over the
@@ -4531,9 +4537,43 @@
             box.textContent = text;
         }
 
+        // S11: shared focus trap for the popovers/menus this file already
+        // builds (conditions, loot, wall/light edit, visible tokens, the
+        // app menu) -- Tab/Shift+Tab cycle within the container instead of
+        // leaking into the page behind it. Bound ONCE per container at
+        // bind-time (not on every open/close): the listener itself checks
+        // `container.hidden`/visibility, so it's a no-op while closed and
+        // needs no add/remove bookkeeping layered onto each popover's
+        // already-distinct open/close implementation.
+        _bindFocusTrap(container) {
+            if (!container) return;
+            container.addEventListener("keydown", (event) => {
+                if (event.key !== "Tab" || container.hidden) return;
+                const focusable = Array.from(container.querySelectorAll(
+                    'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )).filter((el) => el.offsetParent !== null);
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            });
+        }
+
         _showMessage(text, isError = false) {
             const box = document.getElementById("msg");
             box.className = isError ? "message error" : "message success";
+            // S11 (research doc's own recommendation #4): assertive for
+            // time-critical/error content, polite for ambient success --
+            // an assertive region interrupts a screen reader's current
+            // reading, which is warranted for "your action failed" but
+            // not for routine confirmations.
+            box.setAttribute("aria-live", isError ? "assertive" : "polite");
             box.textContent = text;
             this._logActivity(text, isError ? "error" : "success");
             window.setTimeout(() => {
