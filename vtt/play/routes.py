@@ -6,9 +6,24 @@ from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from vtt.extensions import db, limiter, socketio
-from vtt.models import Character, ChatMessage, InventoryItem, LootTransfer, SceneLayer, TokenLoot, TokenState
+from vtt.models import (
+    CampaignMap,
+    Character,
+    ChatMessage,
+    FogOfWarState,
+    InventoryItem,
+    LootTransfer,
+    SceneLayer,
+    SceneLight,
+    SceneWall,
+    TokenLoot,
+    TokenState,
+)
 from vtt.play import play_bp
 from vtt.play.actions import execute_action, get_action_catalog
+from vtt.models.scene_wall import LIGHT_VALUES, SIGHT_VALUES
+from vtt.models.scene_light import LIGHT_TYPES
+from vtt.play.vision import visible_token_ids
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
 from vtt.utils.realtime import (
     build_event_envelope,
@@ -37,6 +52,8 @@ from vtt.play.service import (
     is_read_only_mode,
     normalize_session_status,
     play_mode_from_session_status,
+    recalculate_fog_for_all_owners,
+    recalculate_fog_for_owner,
     refresh_state_snapshot,
     reorder_scene_layers,
     run_ready_check,
@@ -857,3 +874,432 @@ def play_add_token_loot_item(campaign_id, session_id, token_id):
     )
 
     return jsonify({"item": loot_item.serialize(), "token": {"id": token.id, "is_loot_source": token.is_loot_source}}), 201
+
+
+# S10: vision, walls, lights, Fog of War. Geometry (walls/lights) is keyed
+# to the session's ACTIVE map (state.active_map_id) rather than taking a
+# map_id param -- every AC in the research doc frames this as acting on
+# "the map"/"the scene", matching how scene-stack layer activation already
+# treats one map as current at a time.
+def _get_active_map_or_404(campaign, game_session):
+    state = ensure_session_state(campaign, game_session)
+    if not state.active_map_id:
+        return None, None, (jsonify({"error": "no active map for this session"}), 409)
+    campaign_map = db.session.get(CampaignMap, state.active_map_id)
+    if not campaign_map:
+        return None, None, (jsonify({"error": "active map not found"}), 404)
+    return state, campaign_map, None
+
+
+def _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_map):
+    """Walls/lights are not secret (unlike hidden tokens) -- every client
+    gets the geometry change so it can re-render wall/light markers, plus
+    each owner with a token on the map gets their own recomputed fog."""
+    room = _room_name(campaign.id, game_session.id)
+    socketio.emit(
+        "vision:geometry_changed",
+        build_event_envelope(campaign.id, game_session.id, {"campaign_map_id": campaign_map.id}),
+        room=room,
+    )
+    for owner_id, fog in recalculate_fog_for_all_owners(campaign_map, state).items():
+        socketio.emit(
+            "fog:updated",
+            build_event_envelope(campaign.id, game_session.id, {"fog": fog.serialize()}),
+            room=user_room(campaign.id, game_session.id, owner_id),
+        )
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/walls", methods=["POST"])
+@limiter.limit("240 per hour")
+@jwt_required()
+def play_create_wall(campaign_id, session_id):
+    """DM-only: place a sight/light-blocking wall segment on the active map."""
+    user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+
+    data = request.get_json() or {}
+    x0, error = coerce_int(data.get("x0"), "x0")
+    if error:
+        return error
+    y0, error = coerce_int(data.get("y0"), "y0")
+    if error:
+        return error
+    x1, error = coerce_int(data.get("x1"), "x1")
+    if error:
+        return error
+    y1, error = coerce_int(data.get("y1"), "y1")
+    if error:
+        return error
+    if x0 == x1 and y0 == y1:
+        return jsonify({"error": "Wall must have non-zero length."}), 400
+
+    sight = str(data.get("sight") or "normal").strip().lower()
+    if sight not in SIGHT_VALUES:
+        return jsonify({"error": f"sight must be one of {sorted(SIGHT_VALUES)}"}), 400
+    light = str(data.get("light") or "normal").strip().lower()
+    if light not in LIGHT_VALUES:
+        return jsonify({"error": f"light must be one of {sorted(LIGHT_VALUES)}"}), 400
+
+    wall = SceneWall(campaign_map_id=campaign_map.id, x0=x0, y0=y0, x1=x1, y1=y1,
+                      sight=sight, light=light, created_by=user.id)
+    db.session.add(wall)
+    db.session.commit()
+
+    _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_map)
+
+    return jsonify({"wall": wall.serialize()}), 201
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/walls", methods=["GET"])
+@jwt_required()
+def play_list_walls(campaign_id, session_id):
+    """Walls are geometry, not a DM secret -- any active member can read
+    the list (used by every client's marker rendering, not just the DM)."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    _state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+    walls = SceneWall.query.filter_by(campaign_map_id=campaign_map.id).order_by(SceneWall.id.asc()).all()
+    return jsonify({"walls": [wall.serialize() for wall in walls]}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/walls/<int:wall_id>", methods=["PATCH"])
+@limiter.limit("240 per hour")
+@jwt_required()
+def play_update_wall(campaign_id, session_id, wall_id):
+    """DM-only: toggle a wall's sight/light-blocking property."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+    wall = SceneWall.query.filter_by(id=wall_id, campaign_map_id=campaign_map.id).first()
+    if not wall:
+        return jsonify({"error": "wall not found"}), 404
+
+    data = request.get_json() or {}
+    if "sight" in data:
+        sight = str(data["sight"]).strip().lower()
+        if sight not in SIGHT_VALUES:
+            return jsonify({"error": f"sight must be one of {sorted(SIGHT_VALUES)}"}), 400
+        wall.sight = sight
+    if "light" in data:
+        light = str(data["light"]).strip().lower()
+        if light not in LIGHT_VALUES:
+            return jsonify({"error": f"light must be one of {sorted(LIGHT_VALUES)}"}), 400
+        wall.light = light
+    db.session.commit()
+
+    _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_map)
+
+    return jsonify({"wall": wall.serialize()}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/walls/<int:wall_id>", methods=["DELETE"])
+@limiter.limit("240 per hour")
+@jwt_required()
+def play_delete_wall(campaign_id, session_id, wall_id):
+    """DM-only: remove a wall."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+    wall = SceneWall.query.filter_by(id=wall_id, campaign_map_id=campaign_map.id).first()
+    if not wall:
+        return jsonify({"error": "wall not found"}), 404
+
+    db.session.delete(wall)
+    db.session.commit()
+
+    _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_map)
+
+    return jsonify({"deleted": True}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/lights", methods=["POST"])
+@limiter.limit("240 per hour")
+@jwt_required()
+def play_create_light(campaign_id, session_id):
+    """DM-only: place a light (or darkness) source on the active map."""
+    user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+
+    data = request.get_json() or {}
+    x, error = coerce_int(data.get("x"), "x")
+    if error:
+        return error
+    y, error = coerce_int(data.get("y"), "y")
+    if error:
+        return error
+    bright_radius, error = coerce_int(data.get("bright_radius", 0), "bright_radius")
+    if error:
+        return error
+    dim_radius, error = coerce_int(data.get("dim_radius", 0), "dim_radius")
+    if error:
+        return error
+    if bright_radius < 0 or dim_radius < 0:
+        return jsonify({"error": "radii must not be negative"}), 400
+
+    light_type = str(data.get("light_type") or "light").strip().lower()
+    if light_type not in LIGHT_TYPES:
+        return jsonify({"error": f"light_type must be one of {sorted(LIGHT_TYPES)}"}), 400
+
+    light = SceneLight(
+        campaign_map_id=campaign_map.id, x=x, y=y,
+        bright_radius=bright_radius, dim_radius=dim_radius,
+        color=str(data.get("color") or "#ffffff")[:20],
+        provides_vision=bool(data.get("provides_vision", True)),
+        light_type=light_type,
+        created_by=user.id,
+    )
+    db.session.add(light)
+    db.session.commit()
+
+    _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_map)
+
+    return jsonify({"light": light.serialize()}), 201
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/lights", methods=["GET"])
+@jwt_required()
+def play_list_lights(campaign_id, session_id):
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    _state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+    lights = SceneLight.query.filter_by(campaign_map_id=campaign_map.id).order_by(SceneLight.id.asc()).all()
+    return jsonify({"lights": [light.serialize() for light in lights]}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/lights/<int:light_id>", methods=["PATCH"])
+@limiter.limit("240 per hour")
+@jwt_required()
+def play_update_light(campaign_id, session_id, light_id):
+    """DM-only: edit a light's radius/color/vision/type properties."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+    light = SceneLight.query.filter_by(id=light_id, campaign_map_id=campaign_map.id).first()
+    if not light:
+        return jsonify({"error": "light not found"}), 404
+
+    data = request.get_json() or {}
+    if "bright_radius" in data:
+        bright_radius, error = coerce_int(data["bright_radius"], "bright_radius")
+        if error:
+            return error
+        if bright_radius < 0:
+            return jsonify({"error": "radii must not be negative"}), 400
+        light.bright_radius = bright_radius
+    if "dim_radius" in data:
+        dim_radius, error = coerce_int(data["dim_radius"], "dim_radius")
+        if error:
+            return error
+        if dim_radius < 0:
+            return jsonify({"error": "radii must not be negative"}), 400
+        light.dim_radius = dim_radius
+    if "color" in data:
+        light.color = str(data["color"] or "#ffffff")[:20]
+    if "provides_vision" in data:
+        light.provides_vision = bool(data["provides_vision"])
+    if "light_type" in data:
+        light_type = str(data["light_type"]).strip().lower()
+        if light_type not in LIGHT_TYPES:
+            return jsonify({"error": f"light_type must be one of {sorted(LIGHT_TYPES)}"}), 400
+        light.light_type = light_type
+    db.session.commit()
+
+    _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_map)
+
+    return jsonify({"light": light.serialize()}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/lights/<int:light_id>", methods=["DELETE"])
+@limiter.limit("240 per hour")
+@jwt_required()
+def play_delete_light(campaign_id, session_id, light_id):
+    """DM-only: remove a light."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+    light = SceneLight.query.filter_by(id=light_id, campaign_map_id=campaign_map.id).first()
+    if not light:
+        return jsonify({"error": "light not found"}), 404
+
+    db.session.delete(light)
+    db.session.commit()
+
+    _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_map)
+
+    return jsonify({"deleted": True}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/fog", methods=["GET"])
+@jwt_required()
+def play_get_fog(campaign_id, session_id):
+    """The requester's OWN Fog of War for the active map -- never another
+    user's; that boundary is structural here (query is always scoped to
+    user.id), not just a display-layer filter."""
+    user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    _state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+    fog = FogOfWarState.query.filter_by(user_id=user.id, campaign_map_id=campaign_map.id).first()
+    return jsonify({
+        "fog": fog.serialize() if fog else None,
+        "fog_enabled": campaign_map.fog_enabled,
+    }), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/fog/reset", methods=["POST"])
+@limiter.limit("20 per hour")
+@jwt_required()
+def play_reset_fog(campaign_id, session_id):
+    """DM-only, destructive: clears explored history for EVERY user on the
+    active map. Naturally idempotent in effect (resetting an already-empty
+    exploration set is a no-op), so no idempotency-key mechanism is needed
+    here the way S09's loot transfer required one -- a double-click cannot
+    cause a worse outcome than a single click, only a redundant one."""
+    user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+
+    data = request.get_json() or {}
+    if not data.get("confirm"):
+        return jsonify({"error": "confirm required"}), 400
+
+    fog_rows = FogOfWarState.query.filter_by(campaign_map_id=campaign_map.id).all()
+    affected_user_ids = [row.user_id for row in fog_rows]
+    for row in fog_rows:
+        row.explored_cells = []
+        row.visible_cells = []
+        row.version = (row.version or 1) + 1
+
+    chat_message = ChatMessage(
+        campaign_id=campaign.id,
+        game_session_id=game_session.id,
+        author_user_id=user.id,
+        content="hat die Aufklärung (Fog of War) für alle Spieler zurückgesetzt.",
+        content_type="fog_reset",
+    )
+    db.session.add(chat_message)
+    db.session.commit()
+
+    room = _room_name(campaign.id, game_session.id)
+    socketio.emit(
+        "chat:message_sent",
+        build_event_envelope(campaign.id, game_session.id, {
+            "message_id": chat_message.id,
+            "message": chat_message.content,
+            "sender_id": user.id,
+            "sender_name": user.username,
+            "timestamp": chat_message.created_at.isoformat() if chat_message.created_at else utcnow().isoformat(),
+        }),
+        room=room,
+    )
+    socketio.emit(
+        "fog:reset",
+        build_event_envelope(campaign.id, game_session.id, {
+            "campaign_map_id": campaign_map.id,
+            "affected_user_ids": affected_user_ids,
+        }),
+        room=room,
+    )
+
+    # "Currently visible" should reflect current token positions right
+    # away, not go dark until the next unrelated token move -- only the
+    # cumulative explored history was meant to be wiped.
+    for owner_id, fog in recalculate_fog_for_all_owners(campaign_map, state).items():
+        socketio.emit(
+            "fog:updated",
+            build_event_envelope(campaign.id, game_session.id, {"fog": fog.serialize()}),
+            room=user_room(campaign.id, game_session.id, owner_id),
+        )
+
+    return jsonify({"reset": True, "affected_user_ids": affected_user_ids}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/tokens/<int:token_id>/visible", methods=["GET"])
+@jwt_required()
+def play_token_visible_tokens(campaign_id, session_id, token_id):
+    """DM-only verification tool (AC: 'A DM can see a list of visible
+    tokens from a selected token's perspective, read-only'). Works
+    independent of fog_enabled/persisted Fog of War -- this is an ad-hoc
+    calculation for previewing/debugging geometry, not the persisted
+    per-player fog state."""
+    _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
+
+    state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
+    if error:
+        return error
+    origin_token = TokenState.query.filter_by(id=token_id, game_session_id=game_session.id, deleted_at=None).first()
+    if not origin_token:
+        return jsonify({"error": "token not found"}), 404
+
+    walls = SceneWall.query.filter_by(campaign_map_id=campaign_map.id).all()
+    lights = SceneLight.query.filter_by(campaign_map_id=campaign_map.id).all()
+    all_tokens = (
+        TokenState.query.filter_by(session_state_id=state.id, map_id=campaign_map.id)
+        .filter(TokenState.deleted_at.is_(None))
+        .all()
+    )
+    ids = set(visible_token_ids(
+        origin_token.x, origin_token.y, origin_token.sight_range,
+        walls, lights, all_tokens, campaign_map.grid_size))
+    visible = [token for token in all_tokens if token.id in ids]
+
+    return jsonify({
+        "origin_token_id": origin_token.id,
+        "visible_tokens": [token.serialize() for token in visible],
+    }), 200

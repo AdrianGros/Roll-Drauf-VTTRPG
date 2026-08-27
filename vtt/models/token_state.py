@@ -33,6 +33,11 @@ class TokenState(db.Model):
     metadata_json = db.Column(db.JSON)
     # S09: flags this token as a lootable corpse/chest (see TokenLoot).
     is_loot_source = db.Column(db.Boolean, default=False, nullable=False)
+    # S10: vision radius in world (pixel) units, same coordinate space as
+    # x/y. NULL means unlimited natural sight (still wall-blocked) -- most
+    # tokens don't have a game-mechanical sight limit, so this stays opt-in
+    # per token rather than a mandatory field every token must set.
+    sight_range = db.Column(db.Integer)
 
     version = db.Column(db.Integer, default=1, nullable=False)
     updated_by = db.Column(db.Integer, db.ForeignKey("users.id"), index=True)
@@ -76,6 +81,7 @@ class TokenState(db.Model):
             "visibility": self.visibility,
             "metadata_json": self.metadata_json or {},
             "is_loot_source": self.is_loot_source,
+            "sight_range": self.sight_range,
             "version": self.version,
             "updated_by": self.updated_by,
             "created_at": self.created_at.isoformat() if self.created_at else None,

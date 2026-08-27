@@ -110,6 +110,55 @@ class PlayClient {
         });
     }
 
+    // S10: vision/walls/lights/Fog of War.
+    listWalls(campaignId, sessionId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/walls`, "GET");
+    }
+
+    createWall(campaignId, sessionId, wall) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/walls`, "POST", wall);
+    }
+
+    updateWall(campaignId, sessionId, wallId, patch) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/walls/${wallId}`, "PATCH", patch);
+    }
+
+    deleteWall(campaignId, sessionId, wallId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/walls/${wallId}`, "DELETE");
+    }
+
+    listLights(campaignId, sessionId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/lights`, "GET");
+    }
+
+    createLight(campaignId, sessionId, light) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/lights`, "POST", light);
+    }
+
+    updateLight(campaignId, sessionId, lightId, patch) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/lights/${lightId}`, "PATCH", patch);
+    }
+
+    deleteLight(campaignId, sessionId, lightId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/lights/${lightId}`, "DELETE");
+    }
+
+    getFog(campaignId, sessionId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/fog`, "GET");
+    }
+
+    resetFog(campaignId, sessionId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/fog/reset`, "POST", { confirm: true });
+    }
+
+    getVisibleTokens(campaignId, sessionId, tokenId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/vision/tokens/${tokenId}/visible`, "GET");
+    }
+
+    setMapFogEnabled(campaignId, mapId, fogEnabled) {
+        return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/maps/${mapId}`, "PUT", { fog_enabled: fogEnabled });
+    }
+
     createToken(campaignId, sessionId, token) {
         return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/tokens`, "POST", {
             token: token && typeof token === "object" ? token : {},

@@ -12,14 +12,18 @@ from vtt.models import (
     Campaign,
     CampaignMap,
     CampaignMember,
+    FogOfWarState,
     GameSession,
     SceneLayer,
+    SceneLight,
     SceneStack,
+    SceneWall,
     SessionSnapshot,
     SessionState,
     TokenState,
     User,
 )
+from vtt.play.vision import calculate_visible_cells
 from vtt.utils.time import utcnow
 
 SESSION_TRANSITIONS = {
@@ -626,3 +630,78 @@ def create_session_snapshot(game_session: GameSession, state: SessionState, snap
     )
     db.session.add(snapshot)
     return snapshot
+
+
+def recalculate_fog_for_owner(owner_user_id: int, campaign_map: CampaignMap, session_state: SessionState):
+    """S10: recompute + persist one user's Fog of War for one map, unioning
+    vision across every token that user owns in the CURRENT session on
+    that map (not just a single moved token) -- a player who controls two
+    tokens should not have their fog flicker down to one token's view
+    every time only the other one moves.
+
+    No-ops (returns None) if the map has fog disabled or the owner has no
+    tokens there -- callers should skip broadcasting when this returns
+    None rather than emit an empty/unchanged update.
+    """
+    if not campaign_map or not campaign_map.fog_enabled or not owner_user_id:
+        return None
+
+    owned_tokens = (
+        TokenState.query.filter_by(
+            session_state_id=session_state.id,
+            owner_user_id=owner_user_id,
+            map_id=campaign_map.id,
+        )
+        .filter(TokenState.deleted_at.is_(None))
+        .all()
+    )
+    if not owned_tokens:
+        return None
+
+    walls = SceneWall.query.filter_by(campaign_map_id=campaign_map.id).all()
+    lights = SceneLight.query.filter_by(campaign_map_id=campaign_map.id).all()
+
+    visible_cells: set[tuple[int, int]] = set()
+    for token in owned_tokens:
+        visible_cells |= calculate_visible_cells(
+            token.x, token.y, token.sight_range, walls, lights, campaign_map.grid_size)
+
+    fog = FogOfWarState.query.filter_by(
+        user_id=owner_user_id, campaign_map_id=campaign_map.id).first()
+    if not fog:
+        fog = FogOfWarState(user_id=owner_user_id, campaign_map_id=campaign_map.id,
+                            explored_cells=[], visible_cells=[])
+        db.session.add(fog)
+
+    explored = {tuple(cell) for cell in (fog.explored_cells or [])}
+    explored |= visible_cells
+    fog.explored_cells = [list(cell) for cell in explored]
+    fog.visible_cells = [list(cell) for cell in visible_cells]
+    fog.version = (fog.version or 1) + 1
+    db.session.commit()
+    return fog
+
+
+def recalculate_fog_for_all_owners(campaign_map: CampaignMap, session_state: SessionState):
+    """S10: after a wall/light edit, every owner with a token on this map
+    needs their vision recomputed -- geometry changed under all of them at
+    once, not just the actor who moved. Returns {owner_user_id: FogOfWarState}
+    for every owner whose fog actually changed (map fog-disabled or an
+    owner with no tokens there are simply absent from the result)."""
+    if not campaign_map or not campaign_map.fog_enabled:
+        return {}
+
+    owner_ids = {
+        token.owner_user_id
+        for token in TokenState.query.filter_by(
+            session_state_id=session_state.id, map_id=campaign_map.id)
+        .filter(TokenState.deleted_at.is_(None))
+        .all()
+        if token.owner_user_id is not None
+    }
+    results = {}
+    for owner_id in owner_ids:
+        fog = recalculate_fog_for_owner(owner_id, campaign_map, session_state)
+        if fog is not None:
+            results[owner_id] = fog
+    return results

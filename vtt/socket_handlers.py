@@ -15,6 +15,7 @@ from vtt.play.service import (
     is_operator_role,
     is_read_only_mode,
     is_token_visible_to,
+    recalculate_fog_for_owner,
 )
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
 from vtt.utils.realtime import (
@@ -466,6 +467,7 @@ def _parse_token_patch(data: dict, is_dm_member: bool):
         "initiative",
         "visibility",
         "metadata_json",
+        "sight_range",
     }
     if is_dm_member:
         # S09: only the DM may flag a token as a lootable corpse/chest --
@@ -1038,6 +1040,20 @@ def register_socket_handlers(socketio):
             old_visibility=old_visibility,
             old_owner_user_id=old_owner_user_id,
         )
+
+        # S10: a moved token (or a changed sight_range) can change what its
+        # owner can see. Recompute + broadcast to that owner ONLY -- fog is
+        # per-user; another player must never learn what this token can
+        # see. No-ops silently if the map has fog disabled.
+        if token.owner_user_id and ({"x", "y", "sight_range"} & set(parsed_patch)):
+            campaign_map = db.session.get(CampaignMap, token.map_id)
+            fog = recalculate_fog_for_owner(token.owner_user_id, campaign_map, state)
+            if fog is not None:
+                emit(
+                    "fog:updated",
+                    build_event_envelope(campaign.id, game_session.id, {"fog": fog.serialize()}),
+                    room=user_room(campaign.id, game_session.id, token.owner_user_id),
+                )
 
     @socketio.on("token:delete")
     def handle_token_delete(data):

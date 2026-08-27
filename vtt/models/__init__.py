@@ -37,6 +37,9 @@ from vtt.models.page_content import PageContent
 from vtt.models.password_reset_token import PasswordResetToken
 from vtt.models.token_loot import TokenLoot  # S09
 from vtt.models.loot_transfer import LootTransfer  # S09
+from vtt.models.scene_wall import SceneWall  # S10
+from vtt.models.scene_light import SceneLight  # S10
+from vtt.models.fog_of_war_state import FogOfWarState  # S10
 
 __all__ = [
     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',
@@ -49,4 +52,5 @@ __all__ = [
     'SessionInitiative', 'SessionCharacterAssignment', 'DiscordIdentityLink',
     'Guild', 'GuildMembership', 'PageContent', 'PasswordResetToken',
     'TokenLoot', 'LootTransfer',
+    'SceneWall', 'SceneLight', 'FogOfWarState',
 ]

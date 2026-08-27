@@ -1164,9 +1164,14 @@ def _parse_token_patch(data: dict, is_dm: bool):
         "initiative",
         "visibility",
         "metadata_json",
+        "sight_range",
     }
     if is_dm:
-        allowed_fields.update({"token_type", "owner_user_id", "character_id"})
+        # S09/S10: this REST patch path had drifted from the socket
+        # handler's allowlist (vtt/socket_handlers.py::_parse_token_patch)
+        # -- is_loot_source was DM-writable over the socket but silently
+        # rejected here; folding both allowlists back in sync.
+        allowed_fields.update({"token_type", "owner_user_id", "character_id", "is_loot_source"})
 
     for key in allowed_fields:
         if key in data:
@@ -1200,6 +1205,10 @@ def _parse_token_patch(data: dict, is_dm: bool):
             return None, error
     if "initiative" in patch and patch["initiative"] is not None:
         patch["initiative"], error = _coerce_int(patch["initiative"], "initiative")
+        if error:
+            return None, error
+    if "sight_range" in patch and patch["sight_range"] is not None:
+        patch["sight_range"], error = _coerce_int(patch["sight_range"], "sight_range")
         if error:
             return None, error
     if "owner_user_id" in patch and patch["owner_user_id"] is not None:
@@ -1419,6 +1428,20 @@ def update_token(campaign_id, session_id, token_id):
          "state_version": state.version, "client_event_id": None},
         visibility=token.visibility, owner_user_id=token.owner_user_id,
         old_visibility=old_visibility, old_owner_user_id=old_owner_user_id)
+
+    # S10: REST fallback path for the same recalculation the socket
+    # handler does (vtt/socket_handlers.py::handle_token_update) -- used
+    # when the client isn't socket-connected.
+    if token.owner_user_id and ({"x", "y", "sight_range"} & set(patch)):
+        campaign_map = db.session.get(CampaignMap, token.map_id)
+        fog = scene_service.recalculate_fog_for_owner(token.owner_user_id, campaign_map, state)
+        if fog is not None:
+            socketio.emit(
+                "fog:updated",
+                build_event_envelope(campaign.id, game_session.id, {"fog": fog.serialize()}),
+                room=user_room(campaign.id, game_session.id, token.owner_user_id),
+            )
+
     return jsonify({"token": token.serialize(), "state_version": state.version}), 200
 
 

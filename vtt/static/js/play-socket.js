@@ -62,6 +62,10 @@ class PlaySocketRuntime {
         // S09: loot transfer.
         this.socket.on("loot:updated", (payload) => this._handleSequencedEvent("loot:updated", payload, "lootUpdated"));
         this.socket.on("loot:transferred", (payload) => this._handleSequencedEvent("loot:transferred", payload, "lootTransferred"));
+        // S10: vision/Fog of War.
+        this.socket.on("vision:geometry_changed", (payload) => this._handleSequencedEvent("vision:geometry_changed", payload, "visionGeometryChanged"));
+        this.socket.on("fog:updated", (payload) => this._handleSequencedEvent("fog:updated", payload, "fogUpdated"));
+        this.socket.on("fog:reset", (payload) => this._handleSequencedEvent("fog:reset", payload, "fogReset"));
         // Seq-bearing no-op: a mutation whose real event is not for this
         // role (hidden token moves).  Processing it keeps the gap detector
         // quiet; there is nothing else to do.

@@ -2285,6 +2285,230 @@ def _loot_transfer_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _vision_fog_flow(stack, workdir: Path) -> list[str]:
+    """S10, 2026-08-28 (docs/PLAYTABLE_FEATURE_RESEARCH_10_VISION_2026-08-27.md,
+    Apply-approved): vision/walls/lights/Fog of War. Single DM user, same
+    documented scope split as S08/S09 -- fog per-user isolation and the
+    idempotent-reset/permission contract are covered server-side in
+    tests/test_playtable_vision_fog.py, not duplicated here. This flow
+    proves the actual click path: toggle Fog of War on, place a light and
+    a wall through the real tools, edit each through its popover, verify
+    the geometry-changed round trip actually updates the DOM (not just
+    the server), and drive the destructive fog-reset confirmation."""
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="sicht_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="sicht_bot",
+                email="sicht_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Sicht-Kampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Sicht-Sitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Sicht-Karte", "width": 1600, "height": 1200}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[setup] map create returned HTTP {map_response.status}")
+            browser.close()
+            return findings
+        map_payload = map_response.json()
+        map_id = (map_payload.get("map") or map_payload.get("campaign_map") or map_payload)["id"]
+        init_response = api.post(
+            f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
+            data=json.dumps({"map_ids": [map_id]}), headers=json_headers)
+        if init_response.status != 201:
+            findings.append(f"[setup] scene-stack init returned HTTP {init_response.status}")
+            browser.close()
+            return findings
+
+        for target_state in ("ready", "in_progress"):
+            transition_response = api.post(
+                f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/transition",
+                data=json.dumps({"target_state": target_state, "ignore_warnings": True}),
+                headers=json_headers)
+            if transition_response.status != 200:
+                findings.append(
+                    f"[setup] session transition to {target_state!r} returned "
+                    f"HTTP {transition_response.status}: {transition_response.text()[:200]}")
+                browser.close()
+                return findings
+
+        token_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Wache", "x": 200, "y": 200, "token_type": "npc",
+                             "metadata_json": {"position_mode": "pixel"}}),
+            headers=json_headers)
+        if token_response.status != 201:
+            findings.append(f"[setup] token create returned HTTP {token_response.status}")
+            browser.close()
+            return findings
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            # #visionControls lives inside the Turn Order widget, which is
+            # collapsed by default (same pre-existing state
+            # combat_turn_order_flow already has to expand) -- its hidden
+            # attribute being false does not make it *visible* while its
+            # collapsed ancestor still is.
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            if "collapsed" in (page.locator("#turnOrderWidget").get_attribute("class") or "").split():
+                page.click("#turnOrderWidget .widget-toggle")
+
+            # Fog of War toggle (DM-only, session-wide -- not gated on a
+            # token being selected, unlike the wall/light tools' visible
+            # state which is but not their reachability).
+            page.wait_for_selector("#visionControls:not([hidden])", timeout=15_000)
+            fog_toggle_text_before = (page.locator("#btnFogEnabledToggle").text_content() or "").strip()
+            if "aus" not in fog_toggle_text_before:
+                findings.append(f"[vision] fog toggle should start 'aus', shows {fog_toggle_text_before!r}")
+            page.click("#btnFogEnabledToggle")
+            page.wait_for_function(
+                "() => (document.getElementById('btnFogEnabledToggle')?.textContent || '').includes('an')",
+                timeout=10_000)
+
+            # Light placement: arm the tool, click the map, a marker with
+            # the documented defaults (bright=100, dim=200) should appear.
+            page.click('.tool-btn[data-tool="light"]')
+            page.click("#mapWorld", position={"x": 400, "y": 300})
+            page.wait_for_selector("#visionLayer .vision-light-marker", timeout=10_000)
+            light_count = page.locator("#visionLayer .vision-light-marker").count()
+            if light_count != 1:
+                findings.append(f"[vision] expected exactly 1 light marker after one placement click, found {light_count}")
+
+            # Edit popover: click the marker, change type to darkness,
+            # verify the round trip (server PATCH -> geometry_changed
+            # broadcast -> this SAME client's own re-render) actually
+            # applied the .darkness class, not just that the request
+            # returned 200.
+            page.click("#visionLayer .vision-light-marker")
+            page.wait_for_selector("#lightEditPopover:not([hidden])", timeout=10_000)
+            bright_value = page.locator("#lightEditBright").input_value()
+            if bright_value != "100":
+                findings.append(f"[vision] light edit popover should show default bright_radius 100, got {bright_value!r}")
+            page.select_option("#lightEditType", "darkness")
+            page.wait_for_selector("#visionLayer .vision-light-marker.darkness", timeout=10_000)
+            page.click("#btnLightEditClose")
+            page.wait_for_selector("#lightEditPopover[hidden]", state="attached", timeout=5_000)
+
+            # Wall placement: two clicks define a segment. Diagonal, not
+            # axis-aligned -- a perfectly horizontal/vertical SVG <line>
+            # has a zero-height/width geometric bounding box, which fails
+            # Playwright's "visible" check even though the stroke renders
+            # fine (a robot-flow artifact, not a product bug). Both points
+            # stay in the map's top-left quadrant: within #mapWorld's own
+            # rendered box (1600x1200 map at 50% zoom = 800x600 screen px,
+            # a position past that falls outside the element entirely),
+            # clear of the light placed at (400, 300), and clear of
+            # #actionHotbar which overlays the bottom-center of the map
+            # (a y around 580 on an 800x600 box lands ON the hotbar, not
+            # the map -- confirmed via elementFromPoint, not a wall-tool
+            # bug at all).
+            page.click('.tool-btn[data-tool="wall"]')
+            page.click("#mapWorld", position={"x": 50, "y": 50})
+            page.click("#mapWorld", position={"x": 200, "y": 180})
+            page.wait_for_selector("#visionLayer .vision-wall-line", timeout=10_000)
+            wall_count = page.locator("#visionLayer .vision-wall-line").count()
+            if wall_count != 1:
+                findings.append(f"[vision] expected exactly 1 wall after a two-click placement, found {wall_count}")
+
+            page.click("#visionLayer .vision-wall-line")
+            page.wait_for_selector("#wallEditPopover:not([hidden])", timeout=10_000)
+            page.select_option("#wallEditSight", "none")
+            page.wait_for_selector("#visionLayer .vision-wall-line.sight-none", timeout=10_000)
+            page.click("#btnWallEditClose")
+            page.wait_for_selector("#wallEditPopover[hidden]", state="attached", timeout=5_000)
+
+            # Sichtbare Tokens (DM verification tool): select the token,
+            # open the popover, expect the token to see itself at minimum.
+            page.click('.tool-btn[data-tool="select"]')
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.click(".token-marker")
+            page.wait_for_selector("#tokenVisibleRow:not([hidden])", timeout=10_000)
+            page.click("#btnTokenVisible")
+            page.wait_for_selector("#visibleTokensPopover:not([hidden])", timeout=10_000)
+            page.wait_for_function(
+                "() => (document.getElementById('visibleTokensList')?.textContent || '').includes('Wache')",
+                timeout=10_000)
+            page.click("#btnVisibleTokensClose")
+
+            # Sight range field, then a reload proves it is a real server
+            # round trip, same pattern the loot flow already established
+            # for is_loot_source.
+            page.fill("#tokenSightRange", "250")
+            page.click("#btnTokenSightRangeSet")
+            page.wait_for_timeout(400)
+            page.reload()
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.click(".token-marker")
+            page.wait_for_selector("#tokenSelectionDetail:not([hidden])", timeout=10_000)
+            sight_range_after_reload = page.locator("#tokenSightRange").input_value()
+            if sight_range_after_reload != "250":
+                findings.append(
+                    f"[vision] sight_range did not survive a reload -- shows {sight_range_after_reload!r}")
+
+            # The reload above reset every widget to its default collapsed
+            # state -- re-expand Turn Order before reaching #btnFogReset
+            # inside it, same as the very first expand earlier.
+            if "collapsed" in (page.locator("#turnOrderWidget").get_attribute("class") or "").split():
+                page.click("#turnOrderWidget .widget-toggle")
+            page.wait_for_selector("#visionControls:not([hidden])", timeout=10_000)
+
+            # Destructive reset: confirm() dialog must name the consequence.
+            dialog_messages = []
+            page.on("dialog", lambda dialog: (dialog_messages.append(dialog.message), dialog.accept()))
+            page.click("#btnFogReset")
+            page.wait_for_timeout(500)
+            if not dialog_messages:
+                findings.append("[vision] no confirmation dialog appeared for 'Nebel zurücksetzen'")
+            elif "zurückgesetzt werden" not in dialog_messages[0] and "zurücksetzen" not in dialog_messages[0]:
+                findings.append(f"[vision] reset confirmation text unclear: {dialog_messages[0]!r}")
+
+        except Exception as error:
+            findings.append(f"[vision] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "vision-fog-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
@@ -2299,6 +2523,7 @@ FLOWS = {
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,
     "loot_transfer": _loot_transfer_flow,
+    "vision_fog": _vision_fog_flow,
 }
 
 

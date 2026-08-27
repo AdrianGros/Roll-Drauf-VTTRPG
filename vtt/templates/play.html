@@ -900,6 +900,84 @@
         }
         #btnMeasureSnap[hidden] { display: none; }
 
+        /* S10: wall/light geometry markers -- deliberately simple lines
+           and circles, not the fog-of-war shadow render (out of scope
+           this slice). Interactive (unlike #measureLayer) so a DM can
+           click a wall/light to edit or delete it; pointer-events are
+           re-enabled per-shape, not on the whole SVG, so clicks still
+           reach the map underneath everywhere else. */
+        #visionLayer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: visible;
+            pointer-events: none;
+            z-index: 4;
+        }
+        #visionLayer[hidden] { display: none; }
+        .vision-wall-line {
+            stroke: #ff5d73;
+            stroke-width: 3;
+            stroke-linecap: round;
+            cursor: pointer;
+            pointer-events: stroke;
+        }
+        .vision-wall-line.sight-none {
+            stroke: #7a8194;
+            stroke-dasharray: 5 5;
+        }
+        .vision-wall-draft {
+            stroke: #ff5d73;
+            stroke-width: 2;
+            stroke-dasharray: 4 4;
+            opacity: 0.7;
+        }
+        .vision-light-marker {
+            /* The group itself intercepts nothing -- see .vision-light-dot
+               below. A light's bright/dim rings can be huge (up to
+               map-wide); if the whole group captured clicks, a single
+               light would block wall placement, token selection, and
+               panning across a large chunk of the map underneath its
+               glow. Only the small center dot is a click target. */
+            pointer-events: none;
+        }
+        .vision-light-marker .vision-light-dim {
+            fill: rgba(255, 210, 100, 0.10);
+            stroke: rgba(255, 210, 100, 0.35);
+            stroke-width: 1;
+        }
+        .vision-light-marker .vision-light-bright {
+            fill: rgba(255, 210, 100, 0.18);
+            stroke: rgba(255, 210, 100, 0.55);
+            stroke-width: 1;
+        }
+        .vision-light-marker.darkness .vision-light-dim,
+        .vision-light-marker.darkness .vision-light-bright {
+            fill: rgba(90, 60, 160, 0.16);
+            stroke: rgba(90, 60, 160, 0.5);
+        }
+        .vision-light-marker .vision-light-dot {
+            fill: #ffd23f;
+            stroke: #241a12;
+            stroke-width: 1.5;
+            cursor: pointer;
+            pointer-events: fill;
+        }
+        .vision-light-marker.darkness .vision-light-dot {
+            fill: #5a3ca0;
+        }
+        .vision-geom-popover {
+            position: fixed;
+            z-index: 340;
+            min-width: 220px;
+            background: var(--panel-bg, #1c1526);
+            border: 1px solid var(--line-strong, #443a5c);
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            padding: 0.5rem;
+        }
+        .vision-geom-popover[hidden] { display: none; }
+
         /* S02: application command menu, anchored to the action-dock's
            evolved btnBack trigger. #sheetDrawer (the highest floating
            surface today) sits at z-index:340 -- this sits above it so the
@@ -1902,9 +1980,77 @@
                         <div class="map-grid-layer" id="mapGridLayer"></div>
                         <div id="mapTokenLayer"></div>
                         <svg id="measureLayer" aria-hidden="true"></svg>
+                        <!-- S10: wall/light markers -- NOT the fog-of-war
+                             shadow overlay (explicitly deferred by the
+                             research doc), just simple line/circle
+                             geometry so a DM can see and edit what they
+                             placed. Toggled by the "Sicht" tool button;
+                             read-only users get it too, same as the
+                             measure layer, since it mutates nothing. -->
+                        <svg id="visionLayer" aria-hidden="true"></svg>
                     </div>
                 </div>
                 <div id="measureAnnounce" class="sr-only" role="status" aria-live="polite"></div>
+            </div>
+
+            <!-- S10: click-to-edit popovers for a placed wall/light --
+                 DM-only (the tool buttons that create these are already
+                 hidden from players, and these can't be reached without
+                 clicking a rendered marker). Placement itself uses map
+                 clicks with sensible defaults (documented Apply decision:
+                 no freehand draw-tool UI this slice), refined here after
+                 the fact. -->
+            <div id="wallEditPopover" class="vision-geom-popover" role="dialog" aria-label="Wand bearbeiten" hidden>
+                <div class="button-row" style="margin-bottom:0.4rem;">
+                    <strong>Wand</strong>
+                    <button type="button" id="btnWallEditClose" class="mini-btn secondary" aria-label="Schließen" style="margin-left:auto;">✕</button>
+                </div>
+                <div class="button-row" style="margin-bottom:0.4rem;">
+                    <label for="wallEditSight" style="min-width:60px;">Sicht</label>
+                    <select id="wallEditSight">
+                        <option value="normal">Blockiert</option>
+                        <option value="limited">Begrenzt</option>
+                        <option value="proximity">Näherung</option>
+                        <option value="none">Frei</option>
+                    </select>
+                </div>
+                <div class="button-row" style="margin-bottom:0.4rem;">
+                    <label for="wallEditLight" style="min-width:60px;">Licht</label>
+                    <select id="wallEditLight">
+                        <option value="normal">Blockiert</option>
+                        <option value="ethereal">Ätherisch</option>
+                        <option value="none">Frei</option>
+                    </select>
+                </div>
+                <div class="button-row">
+                    <button type="button" id="btnWallDelete" class="mini-btn danger">Wand löschen</button>
+                </div>
+            </div>
+
+            <div id="lightEditPopover" class="vision-geom-popover" role="dialog" aria-label="Lichtquelle bearbeiten" hidden>
+                <div class="button-row" style="margin-bottom:0.4rem;">
+                    <strong>Lichtquelle</strong>
+                    <button type="button" id="btnLightEditClose" class="mini-btn secondary" aria-label="Schließen" style="margin-left:auto;">✕</button>
+                </div>
+                <div class="button-row" style="margin-bottom:0.4rem;">
+                    <label for="lightEditType" style="min-width:60px;">Typ</label>
+                    <select id="lightEditType">
+                        <option value="light">Licht</option>
+                        <option value="darkness">Dunkelheit</option>
+                    </select>
+                </div>
+                <div class="button-row" style="margin-bottom:0.4rem;">
+                    <label for="lightEditBright" style="min-width:60px;">Hell</label>
+                    <input id="lightEditBright" type="number" min="0" style="width:70px;">
+                    <label for="lightEditDim" style="min-width:40px;">Dämm.</label>
+                    <input id="lightEditDim" type="number" min="0" style="width:70px;">
+                </div>
+                <div class="button-row" style="margin-bottom:0.4rem;">
+                    <label><input type="checkbox" id="lightEditProvidesVision"> Gewährt Sicht</label>
+                </div>
+                <div class="button-row">
+                    <button type="button" id="btnLightDelete" class="mini-btn danger">Licht löschen</button>
+                </div>
             </div>
 
             <div id="tokenCreatePanel" class="floating" hidden style="width: 250px;">
@@ -1991,6 +2137,17 @@
                         <button type="button" id="btnEndCombat" class="mini-btn secondary" hidden>Kampf beenden</button>
                         <button type="button" id="btnRollInitiative" class="mini-btn secondary">Initiative auswürfeln</button>
                     </div>
+                    <!-- S10: DM-only, session-wide (not per-token). Fog of
+                         War only actually computes/persists per player
+                         while fog_enabled is on (CampaignMap.fog_enabled,
+                         a pre-existing but previously-unused column) --
+                         walls/lights can still be placed and previewed via
+                         "Sichtbare Tokens" either way. Reset is
+                         destructive and asks for explicit confirmation. -->
+                    <div class="button-row" id="visionControls" style="margin:0.45rem 0 0;" hidden>
+                        <button type="button" id="btnFogEnabledToggle" class="mini-btn secondary">Nebel des Krieges: aus</button>
+                        <button type="button" id="btnFogReset" class="mini-btn danger">Nebel zurücksetzen</button>
+                    </div>
                 </div>
             </div>
 
@@ -2021,8 +2178,17 @@
                             <button type="button" id="btnTokenImageSet" class="mini-btn secondary">Bild setzen...</button>
                             <button type="button" id="btnTokenDelete" class="mini-btn danger">Token löschen</button>
                         </div>
-                        <div class="button-row" style="margin-bottom:0;">
+                        <div class="button-row" style="margin-bottom:0.35rem;">
                             <button type="button" id="btnTokenConditions" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="conditionsPopover">Zustände<span id="conditionsCountBadge" class="conditions-count-badge" hidden>0</span></button>
+                        </div>
+                        <!-- S10: NULL/empty = unlimited natural sight
+                             (still wall-blocked) -- most tokens leave this
+                             unset. Owner-or-DM editable, same permission
+                             tier as HP; unlike the loot-source toggle
+                             below, sight_range is not DM-exclusive. -->
+                        <div class="button-row" style="margin-bottom:0;">
+                            <input id="tokenSightRange" type="number" min="0" placeholder="Sichtweite" style="width:110px;" title="Sichtweite in Weltkoordinaten (leer = unbegrenzt)">
+                            <button type="button" id="btnTokenSightRangeSet" class="mini-btn secondary">Setzen</button>
                         </div>
                         <!-- S09: DM-only, marks a corpse/chest token as
                              lootable -- distinct from owner-or-DM
@@ -2039,6 +2205,21 @@
                          which is gated to the owning player or the DM. -->
                     <div class="button-row" id="tokenLootRow" hidden style="margin-bottom:0.45rem;">
                         <button type="button" id="btnTokenLoot" class="mini-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lootPopover">Beute</button>
+                    </div>
+                    <!-- S10: DM-only verification tool (AC: read-only,
+                         "see what this token can see"), gated on operator
+                         alone -- unlike sight_range above this is not an
+                         owner-editable field, and unlike the loot row it
+                         is not reachable by players at all. -->
+                    <div class="button-row" id="tokenVisibleRow" hidden style="margin-bottom:0.45rem;">
+                        <button type="button" id="btnTokenVisible" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="visibleTokensPopover">Sichtbare Tokens</button>
+                    </div>
+                    <div id="visibleTokensPopover" class="conditions-popover" role="dialog" aria-label="Sichtbare Tokens" hidden>
+                        <div class="conditions-popover-head">
+                            <strong>Sichtbare Tokens</strong>
+                            <button type="button" id="btnVisibleTokensClose" class="mini-btn secondary" aria-label="Schließen">✕</button>
+                        </div>
+                        <div id="visibleTokensList" class="conditions-list" style="grid-template-columns:1fr;"></div>
                     </div>
                     <div id="lootPopover" class="conditions-popover" role="dialog" aria-label="Beute übertragen" hidden>
                         <div class="conditions-popover-head">
@@ -2110,7 +2291,14 @@
             <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
                  used to sit here as silent no-ops (the handler only toggled
                  a CSS class). Removed until the tools actually exist -- a
-                 button that does nothing reads as "broken", not "planned". -->
+                 button that does nothing reads as "broken", not "planned".
+                 S10 builds the real thing: wall/light placement (DM-only,
+                 hidden for players via JS) and a vision-overlay toggle
+                 (all roles, incl. read-only -- client-only, mutates
+                 nothing, same as Messen). -->
+            <button type="button" id="toolWall" class="tool-btn" data-tool="wall" title="Wand setzen: zwei Punkte anklicken" hidden><span class="tool-ico" aria-hidden="true">🧱</span><span class="tool-label">Wand</span></button>
+            <button type="button" id="toolLight" class="tool-btn" data-tool="light" title="Lichtquelle platzieren: auf die Karte klicken" hidden><span class="tool-ico" aria-hidden="true">💡</span><span class="tool-label">Licht</span></button>
+            <button type="button" id="btnVisionToggle" class="tool-btn active" title="Wand-/Licht-Markierungen ein-/ausblenden" aria-pressed="true"><span class="tool-ico" aria-hidden="true">👁</span><span class="tool-label">Sicht</span></button>
             <div class="spacer">
                 <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
                 <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>

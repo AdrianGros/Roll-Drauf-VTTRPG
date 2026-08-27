@@ -110,6 +110,20 @@
             // whenever loot:updated/loot:transferred names the open token.
             this._lootData = null;
             this._openLootTokenId = null;
+            // S10: wall/light geometry for the active map -- fetched once
+            // per map activation (not carried in state_payload, same
+            // reasoning as loot) and kept live via vision:geometry_changed.
+            // Fog of War itself is server-persisted per-user; the client
+            // only holds the LAST fog:updated payload for its own user,
+            // there is no fog-mask rendering this slice (explicitly
+            // deferred by the research doc).
+            this._walls = [];
+            this._lights = [];
+            this._fog = null;
+            this._visionGeometryLoadedForMapId = null;
+            this._wallDraftStart = null;
+            this._openWallEditId = null;
+            this._openLightEditId = null;
             // Auto-fit runs once per activated map so the DM's manual zoom
             // choice survives snapshots/re-renders of the same map.
             this.autoFitMapId = null;
@@ -445,6 +459,9 @@
                     presenceUpdate: (payload) => this._handlePresence(payload),
                     lootUpdated: (payload) => this._handleLootBroadcast(payload),
                     lootTransferred: (payload) => this._handleLootBroadcast(payload),
+                    visionGeometryChanged: () => this._loadVisionGeometry(),
+                    fogUpdated: (payload) => { this._fog = payload?.fog || null; },
+                    fogReset: () => this._logActivity("Die Spielleitung hat die Aufklärung zurückgesetzt.", "info"),
                     tick: () => {},
                     sessionPaused: (payload) => this._handleLifecycleBroadcast("paused", payload),
                     sessionResumed: (payload) => this._handleLifecycleBroadcast("resumed", payload),
@@ -1005,6 +1022,14 @@
             if (toolName !== "measure") {
                 this._cancelMeasurement();
             }
+            // S10: switching away from the wall tool cancels a half-placed
+            // draft (first click armed, second not yet clicked) -- same
+            // silent-no-confirmation precedent as the measure tool above.
+            if (toolName !== "wall" && this._wallDraftStart) {
+                this._wallDraftStart = null;
+                this._wallDraftPreviewPoint = null;
+                this._renderVisionLayer();
+            }
             this.currentTool = toolName;
             document.querySelectorAll(".tool-btn[data-tool]").forEach((button) => {
                 const isActive = button.getAttribute("data-tool") === toolName;
@@ -1178,6 +1203,53 @@
                 const { width, height } = this._worldSize();
                 if (worldX < 0 || worldY < 0 || worldX > width || worldY > height) return;
                 this._openTokenCreatePanel(worldX, worldY, event);
+            });
+
+            // S10: light placement -- a single click places a light with
+            // sensible defaults; refinement (radius/type/color) happens
+            // afterward via the click-to-edit popover, same "place first,
+            // refine after" split as everywhere else in this file. Apply
+            // decision: no freehand draw-tool UI this slice.
+            viewport.addEventListener("click", (event) => {
+                if (this.currentTool !== "light") return;
+                if (event.target.closest?.(".floating, .stage-topbar, .vision-light-marker, .vision-wall-line")) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                this._placeLight(point.x, point.y);
+            });
+
+            // S10: wall placement -- two clicks define a segment (first
+            // click arms the draft and shows a rubber-band preview
+            // following the pointer, mirroring the measure tool's own
+            // preview mechanics; second click commits). Right-click
+            // cancels an armed draft instead of placing anything.
+            viewport.addEventListener("click", (event) => {
+                if (this.currentTool !== "wall") return;
+                if (event.target.closest?.(".floating, .stage-topbar, .vision-light-marker, .vision-wall-line")) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                if (!this._wallDraftStart) {
+                    this._wallDraftStart = point;
+                    this._renderVisionLayer();
+                    return;
+                }
+                this._placeWall(this._wallDraftStart, point);
+                this._wallDraftStart = null;
+                this._renderVisionLayer();
+            });
+            viewport.addEventListener("pointermove", (event) => {
+                if (this.currentTool !== "wall" || !this._wallDraftStart) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                this._wallDraftPreviewPoint = point;
+                this._renderVisionLayer();
+            });
+            viewport.addEventListener("contextmenu", (event) => {
+                if (this.currentTool !== "wall" || !this._wallDraftStart) return;
+                event.preventDefault();
+                this._wallDraftStart = null;
+                this._wallDraftPreviewPoint = null;
+                this._renderVisionLayer();
             });
 
             // S03 measurement tool. Available to read-only users too (no
@@ -1838,6 +1910,314 @@
             if (transferBtn) transferBtn.addEventListener("click", () => this._transferSelectedLoot());
         }
 
+        // S10: vision/walls/lights/Fog of War. Walls/lights are fetched
+        // once per active-map change (not carried in state_payload, same
+        // reasoning as S09's loot) and kept live via
+        // vision:geometry_changed. There is NO fog-of-war mask/shadow
+        // rendering in this slice -- the research doc explicitly defers
+        // that; these are just simple line/circle markers so a DM can see
+        // and edit what they placed, a materially smaller, distinct thing.
+        async _loadVisionGeometry() {
+            const activeMap = this.bootstrap?.state_payload?.active_map;
+            if (!activeMap) {
+                this._walls = [];
+                this._lights = [];
+                this._visionGeometryLoadedForMapId = null;
+                this._renderVisionLayer();
+                return;
+            }
+            try {
+                const [wallsResponse, lightsResponse] = await Promise.all([
+                    this.api.listWalls(this.campaignId, this.sessionId),
+                    this.api.listLights(this.campaignId, this.sessionId),
+                ]);
+                this._walls = Array.isArray(wallsResponse?.walls) ? wallsResponse.walls : [];
+                this._lights = Array.isArray(lightsResponse?.lights) ? lightsResponse.lights : [];
+                this._visionGeometryLoadedForMapId = activeMap.id;
+                this._renderVisionLayer();
+            } catch (error) {
+                this._showMessage(error.message || "Wand-/Lichtdaten konnten nicht geladen werden.", true);
+            }
+        }
+
+        _renderVisionLayer() {
+            const svg = document.getElementById("visionLayer");
+            if (!svg) return;
+            const parts = [];
+
+            for (const wall of this._walls) {
+                const blockingClass = wall.sight === "none" ? " sight-none" : "";
+                parts.push(`<line class="vision-wall-line${blockingClass}" data-wall-id="${wall.id}" x1="${wall.x0}" y1="${wall.y0}" x2="${wall.x1}" y2="${wall.y1}"></line>`);
+            }
+            if (this._wallDraftStart) {
+                const end = this._wallDraftPreviewPoint || this._wallDraftStart;
+                parts.push(`<line class="vision-wall-draft" x1="${this._wallDraftStart.x}" y1="${this._wallDraftStart.y}" x2="${end.x}" y2="${end.y}"></line>`);
+            }
+
+            for (const light of this._lights) {
+                const darkClass = light.light_type === "darkness" ? " darkness" : "";
+                const outer = Math.max(light.bright_radius || 0, light.dim_radius || 0);
+                const inner = Math.min(light.bright_radius || 0, light.dim_radius || 0);
+                parts.push(`<g class="vision-light-marker${darkClass}" data-light-id="${light.id}">`
+                    + (outer > 0 ? `<circle class="vision-light-dim" cx="${light.x}" cy="${light.y}" r="${outer}"></circle>` : "")
+                    + (inner > 0 ? `<circle class="vision-light-bright" cx="${light.x}" cy="${light.y}" r="${inner}"></circle>` : "")
+                    + `<circle class="vision-light-dot" cx="${light.x}" cy="${light.y}" r="5"></circle></g>`);
+            }
+
+            svg.innerHTML = parts.join("");
+            svg.querySelectorAll(".vision-wall-line[data-wall-id]").forEach((el) => {
+                el.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    this._openWallEditPopover(Number(el.dataset.wallId), event);
+                });
+            });
+            svg.querySelectorAll(".vision-light-marker[data-light-id]").forEach((el) => {
+                el.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    this._openLightEditPopover(Number(el.dataset.lightId), event);
+                });
+            });
+        }
+
+        async _placeLight(x, y) {
+            try {
+                await this.api.createLight(this.campaignId, this.sessionId, {
+                    x: Math.round(x), y: Math.round(y), bright_radius: 100, dim_radius: 200,
+                });
+                await this._loadVisionGeometry();
+            } catch (error) {
+                this._showMessage(error.message || "Lichtquelle konnte nicht platziert werden.", true);
+            }
+        }
+
+        async _placeWall(start, end) {
+            try {
+                await this.api.createWall(this.campaignId, this.sessionId, {
+                    x0: Math.round(start.x), y0: Math.round(start.y),
+                    x1: Math.round(end.x), y1: Math.round(end.y),
+                });
+                await this._loadVisionGeometry();
+            } catch (error) {
+                this._showMessage(error.message || "Wand konnte nicht platziert werden.", true);
+            }
+        }
+
+        _findWall(wallId) {
+            return this._walls.find((wall) => Number(wall.id) === Number(wallId)) || null;
+        }
+
+        _findLight(lightId) {
+            return this._lights.find((light) => Number(light.id) === Number(lightId)) || null;
+        }
+
+        _openWallEditPopover(wallId, event) {
+            const wall = this._findWall(wallId);
+            const popover = document.getElementById("wallEditPopover");
+            if (!wall || !popover) return;
+            this._closeLightEditPopover();
+            this._openWallEditId = wallId;
+            document.getElementById("wallEditSight").value = wall.sight;
+            document.getElementById("wallEditLight").value = wall.light;
+            popover.hidden = false;
+            popover.style.left = `${Math.max(8, event.clientX)}px`;
+            popover.style.top = `${Math.max(8, event.clientY)}px`;
+        }
+
+        _closeWallEditPopover() {
+            const popover = document.getElementById("wallEditPopover");
+            if (popover) popover.hidden = true;
+            this._openWallEditId = null;
+        }
+
+        async _saveWallEdit() {
+            if (!this._openWallEditId) return;
+            const sight = document.getElementById("wallEditSight").value;
+            const light = document.getElementById("wallEditLight").value;
+            try {
+                await this.api.updateWall(this.campaignId, this.sessionId, this._openWallEditId, { sight, light });
+            } catch (error) {
+                this._showMessage(error.message || "Wand konnte nicht aktualisiert werden.", true);
+            }
+        }
+
+        async _deleteSelectedWall() {
+            if (!this._openWallEditId) return;
+            if (!window.confirm("Diese Wand wirklich löschen?")) return;
+            try {
+                await this.api.deleteWall(this.campaignId, this.sessionId, this._openWallEditId);
+                this._closeWallEditPopover();
+            } catch (error) {
+                this._showMessage(error.message || "Wand konnte nicht gelöscht werden.", true);
+            }
+        }
+
+        _openLightEditPopover(lightId, event) {
+            const light = this._findLight(lightId);
+            const popover = document.getElementById("lightEditPopover");
+            if (!light || !popover) return;
+            this._closeWallEditPopover();
+            this._openLightEditId = lightId;
+            document.getElementById("lightEditType").value = light.light_type;
+            document.getElementById("lightEditBright").value = light.bright_radius;
+            document.getElementById("lightEditDim").value = light.dim_radius;
+            document.getElementById("lightEditProvidesVision").checked = Boolean(light.provides_vision);
+            popover.hidden = false;
+            popover.style.left = `${Math.max(8, event.clientX)}px`;
+            popover.style.top = `${Math.max(8, event.clientY)}px`;
+        }
+
+        _closeLightEditPopover() {
+            const popover = document.getElementById("lightEditPopover");
+            if (popover) popover.hidden = true;
+            this._openLightEditId = null;
+        }
+
+        async _saveLightEdit() {
+            if (!this._openLightEditId) return;
+            const lightType = document.getElementById("lightEditType").value;
+            const brightRadius = Number(document.getElementById("lightEditBright").value) || 0;
+            const dimRadius = Number(document.getElementById("lightEditDim").value) || 0;
+            const providesVision = document.getElementById("lightEditProvidesVision").checked;
+            try {
+                await this.api.updateLight(this.campaignId, this.sessionId, this._openLightEditId, {
+                    light_type: lightType, bright_radius: brightRadius, dim_radius: dimRadius,
+                    provides_vision: providesVision,
+                });
+            } catch (error) {
+                this._showMessage(error.message || "Licht konnte nicht aktualisiert werden.", true);
+            }
+        }
+
+        async _deleteSelectedLight() {
+            if (!this._openLightEditId) return;
+            if (!window.confirm("Diese Lichtquelle wirklich löschen?")) return;
+            try {
+                await this.api.deleteLight(this.campaignId, this.sessionId, this._openLightEditId);
+                this._closeLightEditPopover();
+            } catch (error) {
+                this._showMessage(error.message || "Licht konnte nicht gelöscht werden.", true);
+            }
+        }
+
+        async _setSelectedTokenSightRange() {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            const input = document.getElementById("tokenSightRange");
+            const raw = (input?.value || "").trim();
+            const sightRange = raw === "" ? null : Number(raw);
+            if (raw !== "" && (!Number.isFinite(sightRange) || sightRange < 0)) {
+                this._showMessage("Sichtweite muss eine positive Zahl sein oder leer (unbegrenzt).", true);
+                return;
+            }
+            try {
+                if (this.socket && this.socket.isConnected) {
+                    this.socket.updateToken(token.id, Number(token.version || 1), { sight_range: sightRange });
+                } else {
+                    await this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), { sight_range: sightRange });
+                    await this.loadBootstrap();
+                }
+            } catch (error) {
+                this._showMessage(error.message || "Sichtweite konnte nicht gesetzt werden.", true);
+            }
+        }
+
+        async _showVisibleTokensForSelected() {
+            const token = this._findStateToken(this.selectedTokenId);
+            const popover = document.getElementById("visibleTokensPopover");
+            const list = document.getElementById("visibleTokensList");
+            if (!token || !popover || !list) return;
+            popover.hidden = false;
+            list.innerHTML = `<div class="muted" style="padding:0.4rem 0.5rem;">Lädt...</div>`;
+            try {
+                const response = await this.api.getVisibleTokens(this.campaignId, this.sessionId, token.id);
+                const visible = Array.isArray(response?.visible_tokens) ? response.visible_tokens : [];
+                list.innerHTML = visible.length
+                    ? visible.map((entry) => `<div style="padding:0.2rem 0.5rem;">${escapeHtml(entry.name)}</div>`).join("")
+                    : `<div class="muted" style="padding:0.4rem 0.5rem;">Keine sichtbaren Tokens.</div>`;
+            } catch (error) {
+                list.innerHTML = "";
+                this._showMessage(error.message || "Sichtbare Tokens konnten nicht geladen werden.", true);
+            }
+        }
+
+        async _toggleFogEnabled() {
+            const activeMap = this.bootstrap?.state_payload?.active_map;
+            if (!activeMap) return;
+            try {
+                await this.api.setMapFogEnabled(this.campaignId, activeMap.id, !activeMap.fog_enabled);
+                await this.loadBootstrap();
+            } catch (error) {
+                this._showMessage(error.message || "Nebel des Krieges konnte nicht umgeschaltet werden.", true);
+            }
+        }
+
+        async _resetFogOfWar() {
+            // Destructive-action acceptance: names the consequence, not a
+            // bare "really reset?" -- same convention S05's clear-all-
+            // conditions confirmation already established.
+            if (!window.confirm("Die Aufklärung (Fog of War) für ALLE Spieler zurücksetzen? Das kann nicht rückgängig gemacht werden.")) return;
+            try {
+                await this.api.resetFog(this.campaignId, this.sessionId);
+                this._showMessage("Nebel des Krieges zurückgesetzt.");
+            } catch (error) {
+                this._showMessage(error.message || "Nebel des Krieges konnte nicht zurückgesetzt werden.", true);
+            }
+        }
+
+        _bindVisionControls() {
+            const visionToggle = document.getElementById("btnVisionToggle");
+            if (visionToggle) {
+                visionToggle.addEventListener("click", () => {
+                    const svg = document.getElementById("visionLayer");
+                    if (!svg) return;
+                    svg.hidden = !svg.hidden;
+                    visionToggle.classList.toggle("active", !svg.hidden);
+                    visionToggle.setAttribute("aria-pressed", String(!svg.hidden));
+                });
+            }
+
+            const wallEditPopover = document.getElementById("wallEditPopover");
+            document.getElementById("btnWallEditClose")?.addEventListener("click", () => this._closeWallEditPopover());
+            document.getElementById("wallEditSight")?.addEventListener("change", () => this._saveWallEdit());
+            document.getElementById("wallEditLight")?.addEventListener("change", () => this._saveWallEdit());
+            document.getElementById("btnWallDelete")?.addEventListener("click", () => this._deleteSelectedWall());
+            wallEditPopover?.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    this._closeWallEditPopover();
+                }
+            });
+
+            const lightEditPopover = document.getElementById("lightEditPopover");
+            document.getElementById("btnLightEditClose")?.addEventListener("click", () => this._closeLightEditPopover());
+            document.getElementById("lightEditType")?.addEventListener("change", () => this._saveLightEdit());
+            document.getElementById("lightEditBright")?.addEventListener("change", () => this._saveLightEdit());
+            document.getElementById("lightEditDim")?.addEventListener("change", () => this._saveLightEdit());
+            document.getElementById("lightEditProvidesVision")?.addEventListener("change", () => this._saveLightEdit());
+            document.getElementById("btnLightDelete")?.addEventListener("click", () => this._deleteSelectedLight());
+            lightEditPopover?.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    this._closeLightEditPopover();
+                }
+            });
+
+            document.getElementById("btnTokenSightRangeSet")?.addEventListener("click", () => this._setSelectedTokenSightRange());
+
+            const visibleTokensPopover = document.getElementById("visibleTokensPopover");
+            document.getElementById("btnTokenVisible")?.addEventListener("click", () => this._showVisibleTokensForSelected());
+            document.getElementById("btnVisibleTokensClose")?.addEventListener("click", () => { if (visibleTokensPopover) visibleTokensPopover.hidden = true; });
+            visibleTokensPopover?.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    visibleTokensPopover.hidden = true;
+                }
+            });
+
+            document.getElementById("btnFogEnabledToggle")?.addEventListener("click", () => this._toggleFogEnabled());
+            document.getElementById("btnFogReset")?.addEventListener("click", () => this._resetFogOfWar());
+        }
+
         // S07: personal action hotbar. A pure UI trigger layer over the
         // already-existing, already-fully-permission-checked
         // execute_action seam -- no cooldown tracking, no drag/drop, no
@@ -2230,6 +2610,7 @@
             if (nameBtn) nameBtn.addEventListener("click", () => this._setSelectedTokenName());
             this._bindConditionsPopover();
             this._bindLootPopover();
+            this._bindVisionControls();
 
             // Token art: one picker on the create panel (image applied when
             // the token is placed) and one on the selected-token detail
@@ -3381,6 +3762,8 @@
                     if (hpMax) hpMax.value = selectedToken.hp_max ?? "";
                     const nameInput = document.getElementById("tokenNameInput");
                     if (nameInput) nameInput.value = selectedToken.name ?? "";
+                    const sightRangeInput = document.getElementById("tokenSightRange");
+                    if (sightRangeInput) sightRangeInput.value = selectedToken.sight_range ?? "";
                 }
                 // S04 acceptance: "Player + unowned (observed) token shows
                 // name/type/HP/status icons but no edit controls" -- a
@@ -3439,6 +3822,16 @@
                 this._closeLootPopover?.({ returnFocus: false });
             }
 
+            // S10: DM-only verification tool, gated on operator alone (not
+            // canEditSelected -- this reads a token's perspective, it
+            // doesn't mutate it, so ownership is irrelevant).
+            const tokenVisibleRow = document.getElementById("tokenVisibleRow");
+            if (tokenVisibleRow) tokenVisibleRow.hidden = !operator || !selectedToken;
+            const visibleTokensPopoverEl = document.getElementById("visibleTokensPopover");
+            if (visibleTokensPopoverEl && !visibleTokensPopoverEl.hidden && !selectedToken) {
+                visibleTokensPopoverEl.hidden = true;
+            }
+
             // DM-only table controls: map upload and initiative rolling.
             const layerAddRow = document.getElementById("layerAddRow");
             if (layerAddRow) layerAddRow.hidden = !operator || this.readOnly;
@@ -3448,6 +3841,22 @@
             }
             const initiativeControls = document.getElementById("initiativeControls");
             if (initiativeControls) initiativeControls.hidden = !operator || this.readOnly;
+
+            // S10: wall/light placement tools and session-wide vision
+            // controls (fog toggle, destructive reset) -- all DM-only,
+            // same gate as the table controls above.
+            const toolWall = document.getElementById("toolWall");
+            if (toolWall) toolWall.hidden = !operator || this.readOnly;
+            const toolLight = document.getElementById("toolLight");
+            if (toolLight) toolLight.hidden = !operator || this.readOnly;
+            const visionControls = document.getElementById("visionControls");
+            if (visionControls) visionControls.hidden = !operator || this.readOnly;
+            const fogEnabledToggle = document.getElementById("btnFogEnabledToggle");
+            if (fogEnabledToggle) {
+                const fogEnabled = Boolean(activeMap?.fog_enabled);
+                fogEnabledToggle.textContent = fogEnabled ? "Nebel des Krieges: an" : "Nebel des Krieges: aus";
+                fogEnabledToggle.setAttribute("aria-pressed", String(fogEnabled));
+            }
             const combatActive = this._combatActive();
             const startCombatBtn = document.getElementById("btnStartCombat");
             if (startCombatBtn) startCombatBtn.hidden = combatActive;
@@ -3547,6 +3956,13 @@
             if (activeMapId !== null && activeMapId !== this.autoFitMapId) {
                 this.autoFitMapId = activeMapId;
                 this._zoomFit();
+            }
+            // S10: wall/light geometry belongs to the map, not the
+            // session -- (re)load whenever the active map actually
+            // changes, not on every state render (walls/lights are
+            // fetched separately, not carried in state_payload).
+            if (activeMapId !== this._visionGeometryLoadedForMapId) {
+                this._loadVisionGeometry();
             }
 
             this.tokenIndex = new Map(allTokens.map((token) => [Number(token.id), token]));
