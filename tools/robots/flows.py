@@ -418,6 +418,182 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _scene_directory_flow(stack, workdir: Path) -> list[str]:
+    """S01, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_01_SCENES_2026-08-27.md,
+    Apply-approved): the scene/page directory (#layersWidget) gets a
+    client-side search filter, a duplicate action, a lock/unlock visibility
+    toggle (reintroduced with a NON-eye icon after 8e856de removed an
+    earlier eye-glyph version for colliding with the activate button --
+    this flow's own duplicate-icon check guards that regression class), and
+    roving-tabindex keyboard navigation. Reuses _map_token_table_flow's real
+    file-chooser map upload to get one real layer, then drives every new
+    control through the actual UI."""
+    import struct
+    import zlib
+
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    def _make_png(width, height, rgb):
+        def chunk(tag, data):
+            piece = struct.pack(">I", len(data)) + tag + data
+            return piece + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+        raw = b""
+        row = bytes(rgb) * width
+        for _ in range(height):
+            raw += b"\x00" + row
+        ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr)
+                + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="szenen_dm", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="szenen_dm_bot",
+                email="szenen_dm_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Szenenkampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Szenensitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_file = workdir / "robot_scene_map.png"
+        map_file.write_bytes(_make_png(500, 350, (60, 90, 130)))
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_function("() => window.RollDraufTable", timeout=15_000)
+            page.wait_for_timeout(1_000)
+            if "collapsed" in (page.locator("#layersWidget").get_attribute("class") or "").split():
+                page.click('#layersWidget .widget-toggle')
+            page.click("#layerAddBtn")
+            page.wait_for_selector("#layerAddChoice", state="visible", timeout=15_000)
+            with page.expect_file_chooser(timeout=10_000) as chooser_info:
+                page.click("#layerAddUpload")
+            chooser_info.value.set_files(str(map_file))
+            page.wait_for_function(
+                "() => (document.getElementById('activePageName')?.textContent || '')"
+                ".includes('robot_scene_map')", timeout=20_000)
+        except Exception as error:
+            findings.append(f"[setup] real map upload for the scene-directory flow "
+                            f"failed: {type(error).__name__}: {str(error)[:200]}")
+            browser.close()
+            return findings
+
+        try:
+            first_row = page.locator("#layerList .layer-row").first
+            first_label = first_row.locator(".layer-label-input").input_value().strip()
+            if not first_label:
+                findings.append("[setup] first layer has no readable label to duplicate/search for")
+
+            # Duplicate: reuses POST .../layers with allow_copy=true, no new
+            # backend route -- proves the client wiring actually calls it.
+            page.click('#layerList .layer-row [data-act="duplicate"]')
+            page.wait_for_function(
+                "() => document.querySelectorAll('#layerList .layer-row').length >= 2",
+                timeout=10_000)
+            row_count = page.locator("#layerList .layer-row").count()
+            if row_count < 2:
+                findings.append(f"[duplicate] expected >=2 layer rows after duplicate, found {row_count}")
+
+            # Search/filter: client-side only, no network request needed --
+            # typing the first layer's own label must not filter it out,
+            # and a nonsense needle must hide every row.
+            page.fill("#layerSearchInput", first_label[:4] if len(first_label) >= 4 else first_label)
+            page.wait_for_timeout(200)
+            visible_after_match = page.locator("#layerList .layer-row").count()
+            if visible_after_match < 1:
+                findings.append("[search] filtering by the layer's own label text hid every row")
+            page.fill("#layerSearchInput", "zzz_kein_treffer_zzz")
+            page.wait_for_timeout(200)
+            if not page.locator("#layerList >> text=Keine Seite passt zur Suche").count():
+                findings.append("[search] a non-matching filter shows no empty-state message")
+            page.fill("#layerSearchInput", "")
+            page.wait_for_timeout(200)
+            restored_count = page.locator("#layerList .layer-row").count()
+            if restored_count != row_count:
+                findings.append(f"[search] clearing the filter did not restore all {row_count} rows (got {restored_count})")
+
+            # Visibility toggle: must NOT reuse the activate button's eye
+            # glyph (the exact regression 8e856de fixed once already).
+            visibility_button = page.locator('#layerList .layer-row').first.locator('[data-act="visibility"]')
+            title_before = visibility_button.get_attribute("title") or ""
+            activate_icon_text = page.locator('#layerList .layer-row').first.locator('[data-act="activate"]').inner_text()
+            visibility_icon_text = visibility_button.inner_text()
+            if activate_icon_text and visibility_icon_text and activate_icon_text == visibility_icon_text:
+                findings.append("[visibility] the visibility toggle reuses the activate button's icon glyph - "
+                                "the exact ambiguity 8e856de removed once already")
+            visibility_button.click()
+            page.wait_for_timeout(400)
+            title_after = page.locator('#layerList .layer-row').first.locator('[data-act="visibility"]').get_attribute("title") or ""
+            if title_after == title_before:
+                findings.append("[visibility] clicking the lock/unlock toggle did not change its title/state")
+
+            # Keyboard: roving tabindex moves with ArrowDown; the destination
+            # row actually receives DOM focus (not just an attribute flip).
+            rows_locator = page.locator("#layerList .layer-row")
+            rows_locator.first.focus()
+            page.keyboard.press("ArrowDown")
+            focused_layer_id = page.evaluate(
+                "() => document.activeElement?.closest('.layer-row')?.dataset.layerId || null")
+            if not focused_layer_id:
+                findings.append("[keyboard] ArrowDown from the first row did not move DOM focus to a layer row")
+            elif page.locator(f'#layerList .layer-row[data-layer-id="{focused_layer_id}"]').get_attribute("tabindex") != "0":
+                findings.append("[keyboard] focused row does not carry the roving tabindex=0")
+
+            # Delete confirmation: names the layer, doesn't silently delete.
+            dialog_messages = []
+            page.on("dialog", lambda dialog: (dialog_messages.append(dialog.message), dialog.dismiss()))
+            page.locator('#layerList .layer-row').first.locator('[data-act="delete"]').click()
+            page.wait_for_timeout(300)
+            if not dialog_messages:
+                findings.append("[delete] no confirmation dialog appeared for a destructive delete")
+            elif first_label and first_label not in dialog_messages[0]:
+                findings.append(f"[delete] confirmation dialog did not name the layer being deleted: {dialog_messages[0]!r}")
+            after_dismiss_count = page.locator("#layerList .layer-row").count()
+            if after_dismiss_count != row_count:
+                findings.append("[delete] dismissing the confirmation dialog still removed a row")
+
+        except Exception as error:
+            findings.append(f"[scene-directory] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "scene-directory-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _campaign_hub_click_flow(stack, workdir: Path) -> list[str]:
     """Desktop-Audit F1 (2026-08-26): every "Hub öffnen"/"Hub und
     Vorbereitung" click on the campaigns book page used to hard-navigate
@@ -783,6 +959,7 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
 FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
+    "scene_directory": _scene_directory_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,
 }

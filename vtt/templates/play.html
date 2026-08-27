@@ -785,6 +785,21 @@
         }
         .layer-icon-btn:hover { background: rgba(92, 144, 227, 0.3); }
         .layer-icon-btn.danger:hover { background: rgba(191, 75, 75, 0.4); }
+        .layer-icon-btn.active-toggle { background: rgba(84, 142, 238, 0.35); border-color: var(--line-strong); }
+        .layer-search-input {
+            width: 100%;
+            padding: 0.3rem 0.5rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.78rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            color: inherit;
+        }
+        .layer-row[tabindex]:focus-visible {
+            outline: 2px solid var(--line-strong);
+            outline-offset: 1px;
+        }
         .layer-add-row {
             display: flex;
             gap: 0.35rem;
@@ -1464,6 +1479,16 @@
                 top: auto;
                 bottom: calc(172px + env(safe-area-inset-bottom, 0px));
             }
+            /* S01 acceptance: rows and their action buttons stay tappable
+               at a real thumb size once the panel lives in the mobile
+               sheet -- the 22px desktop icon-button size is a mouse-only
+               target. */
+            #layersWidget .layer-row { min-height: 44px; }
+            #layersWidget .layer-icon-btn {
+                width: 44px;
+                min-height: 44px;
+            }
+            #layersWidget .layer-search-input { min-height: 44px; }
             #tokenWidget {
                 bottom: calc(64px + env(safe-area-inset-bottom, 0px));
             }
@@ -1651,7 +1676,8 @@
                          sind bereits Seiten" existiert nicht mehr. -->
                     <input id="mapUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                     <div id="mapUploadStatus" class="muted" style="font-size:0.74rem;margin-top:0.3rem;" hidden></div>
-                    <div id="layerList"></div>
+                    <input id="layerSearchInput" class="layer-search-input" type="text" placeholder="Seiten durchsuchen..." aria-label="Seiten durchsuchen" autocomplete="off">
+                    <div id="layerList" role="listbox" aria-label="Seiten (Kartenebenen)"></div>
                     <div id="layerAddRow" class="layer-add-row">
                         <input id="layerAddName" type="text" maxlength="120" placeholder="Name der neuen Seite..." style="flex:1;min-width:0;padding:0.25rem 0.4rem;">
                         <button id="layerAddBtn" class="mini-btn" type="button" title="Neue Seite anlegen: Karte hochladen oder vorhandene übernehmen">Hinzufügen</button>

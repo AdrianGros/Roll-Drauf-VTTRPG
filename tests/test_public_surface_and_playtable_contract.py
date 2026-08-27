@@ -154,14 +154,23 @@ def test_playtable_keeps_session_title_in_header_and_tools_under_map():
 
 
 def test_playtable_eye_control_activates_pages_without_a_second_activate_row():
+    """8e856de removed an earlier visibility toggle specifically because it
+    reused the same eye glyph (&#128065;) as the activate button -- two
+    look-alike eye icons on one row, ambiguous which did what. S01 brought
+    the visibility toggle back (Apply decision: needed for the "view-only"
+    actions-menu item), but on a lock/unlock icon that shares no glyph with
+    activateIcon. The actual invariant this test protects is "no second
+    control reuses the activate icon", not "visibility can never return".
+    """
     script = PLAY_UI.read_text(encoding="utf-8")
 
-    assert 'data-act="visibility"' not in script
     assert 'title="Seite aktivieren"' in script
     assert 'aria-label="Seite aktivieren"' in script
     assert 'Aktivieren</button>' not in script
-    assert 'container.querySelectorAll(\'[data-act="visibility"]\')' not in script
     assert '_activateLayer(Number(button.dataset.layerId))' in script
+    activate_icon_uses = script.count('const activateIcon = "&#128065;"')
+    assert activate_icon_uses == 1
+    assert 'const visibleIcon = layer.is_player_visible ? "&#128275;" : "&#128274;"' in script
 
 
 def test_playtable_floating_widgets_are_draggable_by_their_header():
@@ -221,6 +230,38 @@ def test_playtable_floating_widgets_are_draggable_by_their_header():
     # A drag must not also fire the existing collapse/expand click handler
     # on the same header -- the two features have to coexist.
     assert "suppressToggle" in script
+
+
+def test_playtable_scene_directory_has_search_duplicate_and_keyboard_nav():
+    """S01 (Apply-approved slice, docs/PLAYTABLE_FEATURE_RESEARCH_01_SCENES_2026-08-27.md):
+    client-side search/filter, a duplicate action reusing the existing
+    add-layer-with-allow_copy endpoint (no new backend route), roving
+    tabindex + arrow/Home/End keyboard navigation per the W3C APG listbox
+    pattern, and reopening the directory scrolls the active layer into view.
+    Cheap contract test in this file's style -- substring assertions against
+    the raw template/JS source.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    assert 'id="layerSearchInput"' in template
+    assert 'role="listbox"' in template
+    assert 'this._layerFilterText = searchInput.value' in script
+
+    assert 'data-act="duplicate"' in template or 'data-act="duplicate"' in script
+    assert '_duplicateLayer(layerId)' in script
+    assert 'this.api.addLayer(this.campaignId, this.sessionId, layer.campaign_map_id' in script
+
+    assert 'role="option"' in script
+    assert '_handleLayerListKeydown(event)' in script
+    for key in ('"ArrowDown"', '"ArrowUp"', '"Home"', '"End"'):
+        assert key in script
+
+    assert 'layer-row.active-row' in script
+    assert 'scrollIntoView' in script
+
+    assert '#layersWidget .layer-icon-btn' in template
+    assert '#layersWidget .layer-row { min-height: 44px; }' in template
 
 
 def test_playtable_selecting_a_token_surfaces_its_controls():

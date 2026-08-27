@@ -66,6 +66,10 @@
             this.currentTool = "select";
             this.zoomLevel = 100;
             this.activeSidebarTab = "tools";
+            // S01: client-side-only filter over the already-loaded layer
+            // list, and the roving-tabindex id for keyboard row navigation.
+            this._layerFilterText = "";
+            this._layerFocusId = null;
             // Auto-fit runs once per activated map so the DM's manual zoom
             // choice survives snapshots/re-renders of the same map.
             this.autoFitMapId = null;
@@ -805,6 +809,7 @@
             this._bindWidgetToggles();
             this._setupTableSheet();
             this._bindWidgetDragging();
+            this._bindLayersDirectoryControls();
 
             const sendChat = () => {
                 const input = document.getElementById("chatInput");
@@ -1237,10 +1242,20 @@
                     // not also collapse/expand it -- _bindWidgetDragging
                     // sets this for the duration of the resulting click.
                     if (header.dataset.suppressToggle === "1") return;
-                    const widget = document.getElementById(header.getAttribute("data-widget"));
+                    const widgetId = header.getAttribute("data-widget");
+                    const widget = document.getElementById(widgetId);
                     if (!widget) return;
                     const collapsed = widget.classList.toggle("collapsed");
                     header.setAttribute("aria-expanded", String(!collapsed));
+                    // S01 acceptance: reopening the directory scrolls the
+                    // active layer back into view instead of always
+                    // resetting to the top of a long list.
+                    if (!collapsed && widgetId === "layersWidget") {
+                        window.requestAnimationFrame(() => {
+                            document.querySelector("#layerList .layer-row.active-row")
+                                ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                        });
+                    }
                 };
                 header.addEventListener("click", toggle);
                 header.addEventListener("keydown", (event) => {
@@ -2034,7 +2049,7 @@
         async _renderLayers() {
             const stack = this.bootstrap?.scene_stack;
             const container = document.getElementById("layerList");
-            const layers = (stack && Array.isArray(stack.layers)) ? stack.layers.slice().sort((a, b) => a.order_index - b.order_index) : [];
+            const allLayers = (stack && Array.isArray(stack.layers)) ? stack.layers.slice().sort((a, b) => a.order_index - b.order_index) : [];
             // Desktop-Audit D18: ein interaktiver PLAYER hat read_only=false
             // (er darf ja Tokens ziehen), bekam aber bislang dieselben
             // Rename-/Auf-Ab-/Aktivieren-/Löschen-Knöpfe wie
@@ -2045,10 +2060,26 @@
             const operator = isOperatorRole(this.bootstrap?.session_role || "");
             const canEdit = operator && !this.readOnly;
 
-            if (!layers.length) {
+            // S01: client-side name/map-name filter over the already-loaded
+            // list -- no server roundtrip, matches the "smallest design"
+            // decision for this slice. Filtering never hides the active
+            // layer's own effect on the map, only this directory listing.
+            const needle = this._layerFilterText.trim().toLowerCase();
+            const layers = needle
+                ? allLayers.filter((layer) => {
+                    const label = String(layer.label || "").toLowerCase();
+                    const mapName = String(layer.campaign_map?.name || "").toLowerCase();
+                    return label.includes(needle) || mapName.includes(needle);
+                })
+                : allLayers;
+
+            if (!allLayers.length) {
                 container.innerHTML = "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufügen.</div>";
+            } else if (!layers.length) {
+                container.innerHTML = "<div class='muted'>Keine Seite passt zur Suche.</div>";
             } else {
-                container.innerHTML = layers.map((layer, index) => {
+                container.innerHTML = layers.map((layer) => {
+                    const index = allLayers.indexOf(layer);
                     const isActive = Number(layer.id) === Number(stack.active_layer_id);
                     const mapName = escapeHtml(layer.campaign_map?.name || `Map ${layer.campaign_map_id}`);
                     const thumb = this._thumbUrl(layer.campaign_map);
@@ -2059,16 +2090,27 @@
                     const labelField = canEdit
                         ? `<input class="layer-label-input" data-act="rename" data-layer-id="${layer.id}" value="${escapeHtml(layer.label)}">`
                         : `<div class="layer-label-input" style="cursor:default;">${escapeHtml(layer.label)}</div>`;
+                    // 8e856de deliberately removed an earlier visibility
+                    // toggle because it reused the SAME eye glyph as the
+                    // activate button -- two look-alike eye icons on one
+                    // row, ambiguous which did what. Reusing that icon here
+                    // would reintroduce the exact confusion; a lock/unlock
+                    // pair reads unambiguously as "hidden from players" and
+                    // shares no glyph with activateIcon.
+                    const visibleIcon = layer.is_player_visible ? "&#128275;" : "&#128274;";
+                    const visibleTitle = layer.is_player_visible ? "Für Spieler sichtbar - klicken um sie vor Spielern zu verbergen" : "Nur für DM sichtbar - klicken um sie für Spieler freizugeben";
                     const actionsRow = canEdit ? `
                                 <div class="layer-actions-row">
                                     <button data-act="up" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach oben" ${index === 0 ? "disabled" : ""}>&uarr;</button>
-                                    <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach unten" ${index === layers.length - 1 ? "disabled" : ""}>&darr;</button>
+                                    <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach unten" ${index === allLayers.length - 1 ? "disabled" : ""}>&darr;</button>
+                                    <button data-act="visibility" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn ${layer.is_player_visible ? "active-toggle" : ""}" title="${visibleTitle}" aria-pressed="${layer.is_player_visible ? "true" : "false"}">${visibleIcon}</button>
+                                    <button data-act="duplicate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Seite duplizieren">&#10697;</button>
                                     <button data-act="activate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Seite aktivieren" aria-label="Seite aktivieren">${activateIcon}</button>
                                     <button data-act="delete" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn danger" title="Seite entfernen">&times;</button>
                                 </div>
                     ` : "";
                     return `
-                        <div class="layer-row ${isActive ? "active-row" : ""}" data-layer-id="${layer.id}">
+                        <div class="layer-row ${isActive ? "active-row" : ""}" data-layer-id="${layer.id}" role="option" aria-selected="${isActive ? "true" : "false"}" tabindex="-1">
                             ${thumb ? `<img class="layer-thumb" src="${thumb}" alt="">` : `<div class="layer-thumb"></div>`}
                             <div class="layer-info">
                                 ${labelField}
@@ -2081,6 +2123,22 @@
                     `;
                 }).join("");
 
+                // Roving tabindex (W3C APG listbox pattern): exactly one row
+                // is a tab stop -- the last-focused one, the active one, or
+                // simply the first visible row. Arrow/Home/End move it.
+                const rows = Array.from(container.querySelectorAll(".layer-row"));
+                const focusCandidate = rows.find((row) => Number(row.dataset.layerId) === this._layerFocusId)
+                    || rows.find((row) => row.classList.contains("active-row"))
+                    || rows[0];
+                rows.forEach((row) => row.setAttribute("tabindex", row === focusCandidate ? "0" : "-1"));
+                rows.forEach((row) => {
+                    row.addEventListener("click", (event) => {
+                        if (event.target.closest("button, input")) return;
+                        if (!canEdit) return;
+                        this._activateLayer(Number(row.dataset.layerId));
+                    });
+                });
+
                 if (canEdit) {
                     container.querySelectorAll('[data-act="activate"]').forEach((button) => {
                         button.addEventListener("click", () => this._activateLayer(Number(button.dataset.layerId)));
@@ -2089,7 +2147,10 @@
                         input.addEventListener("change", () => this._renameLayer(Number(input.dataset.layerId), input.value));
                     });
                     container.querySelectorAll('[data-act="delete"]').forEach((button) => {
-                        button.addEventListener("click", () => this._deleteLayer(Number(button.dataset.layerId)));
+                        button.addEventListener("click", () => {
+                            const layer = allLayers.find((l) => l.id === Number(button.dataset.layerId));
+                            this._deleteLayer(Number(button.dataset.layerId), layer?.label || "");
+                        });
                     });
                     container.querySelectorAll('[data-act="up"]:not(:disabled)').forEach((button) => {
                         button.addEventListener("click", () => this._moveLayer(Number(button.dataset.layerId), -1));
@@ -2097,11 +2158,71 @@
                     container.querySelectorAll('[data-act="down"]:not(:disabled)').forEach((button) => {
                         button.addEventListener("click", () => this._moveLayer(Number(button.dataset.layerId), 1));
                     });
+                    container.querySelectorAll('[data-act="visibility"]').forEach((button) => {
+                        button.addEventListener("click", () => {
+                            const layer = allLayers.find((l) => l.id === Number(button.dataset.layerId));
+                            this._toggleLayerVisibility(Number(button.dataset.layerId), !layer?.is_player_visible);
+                        });
+                    });
+                    container.querySelectorAll('[data-act="duplicate"]').forEach((button) => {
+                        button.addEventListener("click", () => this._duplicateLayer(Number(button.dataset.layerId)));
+                    });
                 }
             }
 
             if (canEdit) {
-                await this._renderLayerAddControl(layers);
+                await this._renderLayerAddControl(allLayers);
+            }
+        }
+
+        // S01 keyboard nav: ArrowUp/ArrowDown move the roving tab stop
+        // between rows, Home/End jump to the ends, Enter/Space activates
+        // the focused row -- the W3C APG listbox pattern. Bound once via
+        // delegation in _bindLayersDirectoryControls, not re-bound per
+        // render, so it survives every _renderLayers() re-render for free.
+        _handleLayerListKeydown(event) {
+            const container = document.getElementById("layerList");
+            if (!container) return;
+            const rows = Array.from(container.querySelectorAll(".layer-row"));
+            if (!rows.length) return;
+            const current = event.target.closest(".layer-row");
+            const currentIndex = current ? rows.indexOf(current) : -1;
+
+            const focusRow = (row) => {
+                rows.forEach((r) => r.setAttribute("tabindex", r === row ? "0" : "-1"));
+                row.focus();
+                this._layerFocusId = Number(row.dataset.layerId);
+            };
+
+            if (event.key === "ArrowDown") {
+                event.preventDefault();
+                focusRow(rows[Math.min(rows.length - 1, Math.max(0, currentIndex) + 1)]);
+            } else if (event.key === "ArrowUp") {
+                event.preventDefault();
+                focusRow(rows[Math.max(0, currentIndex - 1)]);
+            } else if (event.key === "Home") {
+                event.preventDefault();
+                focusRow(rows[0]);
+            } else if (event.key === "End") {
+                event.preventDefault();
+                focusRow(rows[rows.length - 1]);
+            } else if ((event.key === "Enter" || event.key === " ") && current) {
+                event.preventDefault();
+                this._activateLayer(Number(current.dataset.layerId));
+            }
+        }
+
+        _bindLayersDirectoryControls() {
+            const searchInput = document.getElementById("layerSearchInput");
+            if (searchInput) {
+                searchInput.addEventListener("input", () => {
+                    this._layerFilterText = searchInput.value || "";
+                    this._renderLayers();
+                });
+            }
+            const list = document.getElementById("layerList");
+            if (list) {
+                list.addEventListener("keydown", (event) => this._handleLayerListKeydown(event));
             }
         }
 
@@ -2204,14 +2325,28 @@
             }
         }
 
-        async _deleteLayer(layerId) {
-            if (!window.confirm("Diese Seite aus dem Kartenstapel entfernen?")) return;
+        async _deleteLayer(layerId, label) {
+            const name = label ? `"${label}"` : "Diese Seite";
+            if (!window.confirm(`${name} endgültig aus dem Kartenstapel entfernen? Das kann nicht rückgängig gemacht werden.`)) return;
             try {
                 await this.api.deleteLayer(this.campaignId, this.sessionId, layerId);
                 this._showMessage("Seite entfernt.");
                 await this.loadBootstrap();
             } catch (error) {
                 this._showMessage(error.message || "Seite konnte nicht entfernt werden.", true);
+            }
+        }
+
+        async _duplicateLayer(layerId) {
+            const stack = this.bootstrap?.scene_stack;
+            const layer = (stack?.layers || []).find((l) => Number(l.id) === layerId);
+            if (!layer) return;
+            try {
+                await this.api.addLayer(this.campaignId, this.sessionId, layer.campaign_map_id, `${layer.label} (Kopie)`, true);
+                this._showMessage("Seite dupliziert.");
+                await this.loadBootstrap();
+            } catch (error) {
+                this._showMessage(error.message || "Seite konnte nicht dupliziert werden.", true);
             }
         }
 
