@@ -1,8 +1,16 @@
 """Targeted route/runtime checks for M08 non-play ownership cleanup."""
 
+import re
+
 import pytest
 
 from vtt import create_app
+
+
+def _body_tag(html):
+    match = re.search(r"<body[^>]*>", html)
+    assert match is not None, "response has no <body> tag"
+    return match.group(0)
 
 
 @pytest.fixture
@@ -38,7 +46,13 @@ def test_core_book_routes_use_bookscene_as_runtime_owner(client, path, body_clas
     assert '/static/js/book-routes.js' not in html
     assert '/static/js/book-shell.js' not in html
     assert 'BookShell.navigate(' not in html
-    assert 'book-shell-app' not in html
+    # Guards the actual rendered <body> element only (the M08 regression this
+    # pins is the old BookShell runtime being live-active on this route) --
+    # not a bare substring search, since a page may legitimately reference
+    # "book-shell-app" inside a CSS selector for cross-context styling
+    # (e.g. an overlay component also rendered inside the play-table shell)
+    # without that class ever being applied to this route's own body.
+    assert 'book-shell-app' not in _body_tag(html)
 
 
 def test_character_sheet_route_uses_bookscene_focus_template(client):
@@ -57,7 +71,7 @@ def test_character_sheet_route_uses_bookscene_focus_template(client):
     assert '/static/js/book-routes.js' not in html
     assert '/static/js/book-shell.js' not in html
     assert 'BookShell.navigate(' not in html
-    assert 'book-shell-app' not in html
+    assert 'book-shell-app' not in _body_tag(html)
 
 
 def test_login_route_remains_bookscene_owned(client):

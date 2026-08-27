@@ -68,6 +68,42 @@ def test_beyond20_review_page_is_public_and_names_the_supported_contract(client)
     assert "Sessiondaten geschützt" in html
 
 
+def test_beyond20_page_walks_players_through_manual_setup(client):
+    """No automation is possible (Beyond20 declares no externally_connectable
+    origin, so a webpage cannot write into its settings) -- the honest
+    fallback is a correct, copy-pasteable manual tutorial. The exact labels
+    below are the real strings from Beyond20's own options UI, not
+    paraphrased, so a player can actually find them.
+    """
+    response = client.get("/beyond20.html")
+    html = response.get_data(as_text=True)
+
+    assert "https://vtt.roll-drauf.de/*" in html
+    assert "beyond20CopyBtn" in html
+    for real_beyond20_ui_label in (
+        "Advanced Options",
+        "List of custom domains to load Beyond20",
+        "Apply",
+    ):
+        assert real_beyond20_ui_label in html
+
+
+def test_playtable_beyond20_hint_sends_players_to_the_correct_tutorial():
+    """The old inline hint told players to enter the bare domain
+    "vtt.roll-drauf.de" as Beyond20's Custom Domain value -- verified against
+    Beyond20's own source (src/common/settings.js) that field requires a full
+    URL with protocol and a wildcard (e.g. "https://vtt.roll-drauf.de/*") or
+    Beyond20 rejects the entry outright. A player following the old text
+    literally would never receive a single roll. Duplicate-instructions risk
+    is why the panel now links to the one verified tutorial (/beyond20.html)
+    instead of repeating the steps inline.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+
+    assert "/beyond20.html" in template
+    assert "vtt.roll-drauf.de</strong> als Custom Domain eintragen" not in template
+
+
 def test_playtable_add_page_offers_upload_or_copy_never_a_dead_end():
     """'Hinzufügen' is documented (2026-08-25) as the one way to add a page,
     with an explicit rule it must never end in the old dead end this test

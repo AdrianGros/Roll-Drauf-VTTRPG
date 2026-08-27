@@ -25,6 +25,11 @@
         .item { padding:16px; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.035); }
         .item strong { display:block; color:#f4d18f; }
         code { color:#f4d18f; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:.9em; }
+        .steps { margin:14px 0 0; padding-left:22px; display:flex; flex-direction:column; gap:14px; }
+        .steps li { padding-left:4px; }
+        .copyrow { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:10px; padding:10px 12px; border:1px solid var(--line); border-radius:9px; background:rgba(255,255,255,.035); }
+        .copyrow code { flex:1 1 auto; min-width:0; word-break:break-all; }
+        .copyrow .button { min-height:36px; padding:6px 14px; }
         .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
         .button { display:inline-flex; align-items:center; min-height:44px; padding:9px 16px; border:1px solid rgba(244,209,143,.55); border-radius:9px; background:#752f35; color:#fff7e8; text-decoration:none; }
         .button.secondary { background:rgba(255,255,255,.06); color:#f4d18f; }
@@ -42,6 +47,23 @@
             <div class="eyebrow">Öffentliche technische Übersicht</div>
             <h1>Beyond20 ist am Tisch angekommen.</h1>
             <p class="lead">Diese Seite ist ohne Discord-Zugang erreichbar und beschreibt den überprüfbaren Integrationsrand. Die eigentliche Session bleibt geschützt; die öffentliche Produkt- und Integrationsoberfläche bleibt für Maintainer sichtbar.</p>
+
+            <section class="panel" aria-labelledby="setup-title">
+                <h2 id="setup-title">Einrichtung in 4 Schritten</h2>
+                <p>Beyond20 muss einmalig wissen, dass Roll Drauf ein gültiges Ziel für deine Würfe ist. Das trägst du selbst in den Erweiterungs-Einstellungen ein — Roll Drauf kann das aus Sicherheitsgründen nicht automatisch für dich tun (kein Browser erlaubt einer Webseite, die Einstellungen einer fremden Erweiterung zu verändern).</p>
+                <ol class="steps">
+                    <li>Klicke oben im Browser auf das Beyond20-Symbol und dann auf <strong>„More Options"</strong> (bzw. <strong>„Beyond20 Options"</strong>, falls du gerade nicht auf D&amp;D Beyond oder einem VTT bist).</li>
+                    <li>Klicke auf der Optionsseite auf den Knopf <strong>„Advanced Options"</strong> — erst dann erscheint das Feld für eigene VTT-Adressen.</li>
+                    <li>Trage im Feld <strong>„List of custom domains to load Beyond20"</strong> folgende Zeile ein (Protokoll und Sternchen gehören mit dazu):
+                        <div class="copyrow">
+                            <code id="beyond20UrlValue">https://vtt.roll-drauf.de/*</code>
+                            <button type="button" class="button secondary" id="beyond20CopyBtn" data-copy-value="https://vtt.roll-drauf.de/*">Kopieren</button>
+                        </div>
+                    </li>
+                    <li>Klicke auf <strong>„Apply"</strong> und bestätige die Berechtigungsanfrage, die dein Browser danach einblendet — erst dann darf Beyond20 auf dieser Seite aktiv werden.</li>
+                </ol>
+                <p>Danach landet jeder Wurf, den du auf D&amp;D Beyond auslöst, automatisch im Würfel-Log und im Chat deiner Roll-Drauf-Sitzung — ganz ohne die Zahlen von Hand einzutragen.</p>
+            </section>
 
             <section class="panel" aria-labelledby="events-title">
                 <h2 id="events-title">Unterstützte DOM-Ereignisse</h2>
@@ -67,5 +89,35 @@
         </main>
         <footer>Roll-Drauf VTT · Integrationsvertrag öffentlich, Sessiondaten geschützt</footer>
     </div>
+    <script>
+        (function () {
+            "use strict";
+            var btn = document.getElementById("beyond20CopyBtn");
+            if (!btn) { return; }
+            var defaultLabel = btn.textContent;
+            btn.addEventListener("click", function () {
+                var value = btn.getAttribute("data-copy-value") || "";
+                var done = function (ok) {
+                    btn.textContent = ok ? "Kopiert!" : "Bitte manuell markieren";
+                    window.setTimeout(function () { btn.textContent = defaultLabel; }, 2000);
+                };
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(value).then(function () { done(true); }, function () { done(false); });
+                    return;
+                }
+                var field = document.createElement("textarea");
+                field.value = value;
+                field.setAttribute("readonly", "");
+                field.style.position = "fixed";
+                field.style.opacity = "0";
+                document.body.appendChild(field);
+                field.select();
+                var ok = false;
+                try { ok = document.execCommand("copy"); } catch (err) { ok = false; }
+                document.body.removeChild(field);
+                done(ok);
+            });
+        })();
+    </script>
 </body>
 </html>
