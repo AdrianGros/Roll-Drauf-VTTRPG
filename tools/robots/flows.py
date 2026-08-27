@@ -741,6 +741,177 @@ def _token_hud_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _combat_turn_order_flow(stack, workdir: Path) -> list[str]:
+    """S06, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_06_COMBAT_2026-08-27.md,
+    Apply-approved): the combat/turn-order widget. Two tokens with
+    initiative, a real "Kampf starten" click, then: the "Zug m von n"
+    summary format, the live-region announcement, click-to-select
+    bidirectional sync with the map, and turn advance."""
+    import struct
+    import zlib
+
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    def _make_png(width, height, rgb):
+        def chunk(tag, data):
+            piece = struct.pack(">I", len(data)) + tag + data
+            return piece + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+        raw = b""
+        row = bytes(rgb) * width
+        for _ in range(height):
+            raw += b"\x00" + row
+        ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr)
+                + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="kampf_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="kampf_bot",
+                email="kampf_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Kampfkampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Kampfsitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Kampfkarte", "width": 600, "height": 400}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[setup] map create returned HTTP {map_response.status}")
+            browser.close()
+            return findings
+        map_payload = map_response.json()
+        map_id = (map_payload.get("map") or map_payload.get("campaign_map") or map_payload)["id"]
+        init_response = api.post(
+            f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
+            data=json.dumps({"map_ids": [map_id]}), headers=json_headers)
+        if init_response.status != 201:
+            findings.append(f"[setup] scene-stack init returned HTTP {init_response.status}")
+            browser.close()
+            return findings
+
+        for name, initiative, x in (("Held", 18, 100), ("Ork", 9, 300)):
+            token_response = api.post(
+                f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+                data=json.dumps({"name": name, "x": x, "y": 100, "token_type": "npc",
+                                 "initiative": initiative,
+                                 "metadata_json": {"position_mode": "pixel"}}),
+                headers=json_headers)
+            if token_response.status != 201:
+                findings.append(f"[setup] token {name!r} create returned HTTP {token_response.status}")
+                browser.close()
+                return findings
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            if "collapsed" in (page.locator("#turnOrderWidget").get_attribute("class") or "").split():
+                page.click("#turnOrderWidget .widget-toggle")
+            page.wait_for_selector("#btnStartCombat", state="visible", timeout=10_000)
+
+            page.click("#btnStartCombat")
+            page.wait_for_function(
+                "() => (document.getElementById('turnOrderSummary')?.textContent || '').includes('Zug 1 von 2')",
+                timeout=15_000)
+
+            announce_text = (page.locator("#turnOrderAnnounce").text_content() or "").strip()
+            if not announce_text:
+                findings.append("[combat] #turnOrderAnnounce stayed empty after starting combat")
+
+            row_count = page.locator("#turnOrderList .turn-item").count()
+            if row_count != 2:
+                findings.append(f"[combat] expected 2 turn-order rows, found {row_count}")
+
+            # Click-to-select, second (non-active) row: correlated by
+            # data-token-id, not name/position -- "auto" combat start
+            # re-rolls initiative server-side, so which of our two tokens
+            # ends up in which seat is NOT deterministic across runs.
+            second_row = page.locator("#turnOrderList .turn-item").nth(1)
+            second_row_token_id = second_row.get_attribute("data-token-id")
+            second_row.click()
+            page.wait_for_timeout(300)
+            selected_marker_ids = page.evaluate(
+                "() => Array.from(document.querySelectorAll('.token-marker.selected'))"
+                ".map((el) => el.getAttribute('data-token-id'))")
+            if selected_marker_ids != [second_row_token_id]:
+                findings.append(
+                    f"[combat] clicking turn-order row for token {second_row_token_id!r} "
+                    f"did not select the matching map marker (selected markers: {selected_marker_ids!r})")
+            row_selected_class = second_row.get_attribute("class") or ""
+            if "selected" not in row_selected_class:
+                findings.append("[combat] clicked row did not receive the .selected class")
+
+            # Reverse direction: selecting the OTHER token on the map (by
+            # data-token-id, the one NOT already selected) moves the
+            # .selected highlight to ITS row, and only its row.
+            other_marker = page.locator(f".token-marker:not([data-token-id='{second_row_token_id}'])").first
+            other_marker_id = other_marker.get_attribute("data-token-id")
+            other_marker.click()
+            page.wait_for_timeout(300)
+            selected_rows_after = page.evaluate(
+                "() => Array.from(document.querySelectorAll('#turnOrderList .turn-item.selected'))"
+                ".map((el) => el.dataset.tokenId)")
+            if selected_rows_after != [other_marker_id]:
+                findings.append(
+                    f"[combat] selecting token {other_marker_id!r} on the map did not move the "
+                    f".selected highlight to exactly its own turn-order row (selected rows: {selected_rows_after!r})")
+
+            # Advance the turn: summary updates, announcement changes.
+            page.click("#btnNextTurn")
+            page.wait_for_function(
+                "() => (document.getElementById('turnOrderSummary')?.textContent || '').includes('Zug 2 von 2')",
+                timeout=10_000)
+            announce_after_advance = (page.locator("#turnOrderAnnounce").text_content() or "").strip()
+            if announce_after_advance == announce_text:
+                findings.append("[combat] live-region announcement did not change after advancing the turn")
+
+            page.click("#btnEndCombat")
+            page.wait_for_selector("#btnStartCombat:not([hidden])", timeout=10_000)
+
+        except Exception as error:
+            findings.append(f"[combat] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "combat-turn-order-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _conditions_picker_flow(stack, workdir: Path) -> list[str]:
     """S05, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_05_STATUSES_2026-08-27.md,
     Apply-approved): the token conditions/status picker. Places a token
@@ -1590,6 +1761,7 @@ FLOWS = {
     "measure_tool": _measure_tool_flow,
     "token_hud": _token_hud_flow,
     "conditions_picker": _conditions_picker_flow,
+    "combat_turn_order": _combat_turn_order_flow,
     "app_menu": _app_menu_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,

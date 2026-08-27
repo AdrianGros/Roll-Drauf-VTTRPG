@@ -422,6 +422,36 @@ def test_playtable_conditions_picker_merges_metadata_instead_of_overwriting():
     assert "closePopover" in script
 
 
+def test_playtable_turn_order_announces_and_syncs_with_token_selection():
+    """S06 (Apply-approved slice, docs/PLAYTABLE_FEATURE_RESEARCH_06_COMBAT_2026-08-27.md):
+    the combat turn-order widget gets a live-region announcement on turn
+    change (the research doc's own HIGH-severity accessibility risk),
+    "Zug m von n" in the summary, click/keyboard selection that stays in
+    sync bidirectionally with map token selection, and pending-disable on
+    the DM control buttons so a slow network can't double-fire a turn
+    advance. Most of the combat BACKEND (CombatEncounter, version-conflict
+    retry, hidden-participant filtering) already existed before this slice
+    -- current-state check found seven "new DM-only endpoints" the research
+    doc proposed were already built and working.
+    """
+    script = PLAY_UI.read_text(encoding="utf-8")
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+
+    assert 'id="turnOrderAnnounce"' in template
+    assert 'role="status" aria-live="polite"' in template
+    assert "_announceTurnOrderIfChanged" in script
+    assert "this._lastAnnouncedTurnActorId === activeTokenId" in script
+
+    assert "Zug ${activeIndex + 1} von ${order.length}" in script
+
+    assert "_bindTurnItemRow" in script
+    assert 'row.addEventListener("click", () => this._selectToken(tokenId))' in script
+    assert "this._renderTurnOrder();" in script  # called from _selectToken, completes the bidirectional sync
+
+    assert "_withCombatButtonPending" in script
+    assert 'if (button) button.disabled = true;' in script
+
+
 def test_playtable_selecting_a_token_surfaces_its_controls():
     """F4 Gap B: clicking a token on the map already drew a real selection
     ring and updated #tokenSelectionSummary/#tokenSelectionDetail text --

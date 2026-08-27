@@ -195,3 +195,17 @@ A pre-existing test's literal-English assertion ("Poisoned, Prone, Erschöpfung 
 Scenario-first: 7 new unit tests on the isolated catalog module, 1 new contract test, and a new real-browser robot flow (`conditions_picker`) covering the full catalog rendering, badge count, the image_url-survives-a-toggle check (the exact bug a naive whole-metadata_json-overwrite would cause), Escape-restores-focus, and the clear-all confirmation — 0 findings across all 9 registered flows (including the previously-broken `beyond20_bridge`, now fixed). Full suite: 506 passed, 0 failed.
 
 Next: slice 06 (Combat strip and initiative).
+
+## Slice 06 (Combat) — Apply decisions and Deploy status: DONE, 2026-08-27
+
+Current-state check found the combat backend already largely built — the research doc's proposed "seven new DM-only endpoints" (start/end/advance-turn) were already live and working (`combatStart`/`combatAdvanceTurn`/`combatEnd`), including version-conflict retry-on-fetch-fresh-state logic and server-side hidden-participant filtering for the active-encounter render path. The gap was narrower and more surgical: no "Zug m von n" position in the summary, no live-region announcement (the doc's own HIGH-severity risk), no click-to-select sync between turn-order rows and map tokens (rows had zero interaction), no pending-disable on the DM buttons during a request, and undersized mobile touch targets.
+
+Apply decisions: brief live-region text (name + round, not full HP/conditions); flat list, no party/enemy grouping this slice; vertical mobile list, not a carousel; Space-to-advance-turn needed no code at all — it's already native `<button>` focus behavior, matching the "focus-aware, not global" recommended default for free; bidirectional token<->turn-order selection sync built both directions. **Deliberately not built**: a dedicated initiative-edit-with-confirmation-and-audit-log UI — no such editing surface exists today (initiative is set via bulk auto-roll only), and inventing one wasn't clearly in scope versus the slice's actual acceptance criteria; flagged rather than silently developed.
+
+Real bug caught by the new robot flow, not by inspection: `_renderState()` doesn't itself call `_renderTurnOrder()`, so selecting a token via any OTHER path (map click, HUD) never updated the turn-order widget's selection highlight — the "bidirectional" sync would have only worked one direction. Fixed by calling `_renderTurnOrder()` explicitly from `_selectToken()`.
+
+Test-authoring note for next time: `combatStart(..., "auto")` re-rolls initiative server-side regardless of what value a token was created with — a robot flow asserting seat order by name/position will be flaky by construction; correlate by `data-token-id` instead (now added to both turn-order rows and reused from the existing token markers).
+
+Scenario-first: 1 new contract test, new real-browser robot flow (`combat_turn_order`) covering the turn-position summary, the live-region announcement changing across a turn advance, and the full bidirectional selection sync in both directions — 0 findings across all 10 registered flows. Full suite: 507 passed, 0 failed.
+
+Next: slice 07 (Personal action hotbar).

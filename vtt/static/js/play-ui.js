@@ -323,45 +323,65 @@
             this._render();
         }
 
-        async _startCombat() {
+        // S06 acceptance: DM control buttons disable while a request is
+        // in flight and re-enable on success/error -- previously a slow
+        // network let a DM click "Nächster Zug" twice and skip a turn.
+        async _withCombatButtonPending(buttonId, action) {
+            const button = document.getElementById(buttonId);
+            if (button) button.disabled = true;
             try {
-                this._handleCombatState(
-                    await this.api.combatStart(this.campaignId, this.sessionId, "auto"));
-                this._logActivity("Kampf gestartet — Initiative vom Server ausgewürfelt.", "info");
-            } catch (error) {
-                this._showMessage(error.message || "Kampf konnte nicht gestartet werden.", true);
+                await action();
+            } finally {
+                if (button) button.disabled = false;
             }
+        }
+
+        async _startCombat() {
+            await this._withCombatButtonPending("btnStartCombat", async () => {
+                try {
+                    this._handleCombatState(
+                        await this.api.combatStart(this.campaignId, this.sessionId, "auto"));
+                    this._logActivity("Kampf gestartet — Initiative vom Server ausgewürfelt.", "info");
+                } catch (error) {
+                    this._showMessage(error.message || "Kampf konnte nicht gestartet werden.", true);
+                }
+            });
         }
 
         async _advanceCombatTurn(allowRetry = true) {
             const baseVersion = Number(this.combat?.encounter?.version || 0);
-            try {
-                this._handleCombatState(
-                    await this.api.combatAdvanceTurn(this.campaignId, this.sessionId, baseVersion));
-            } catch (error) {
-                // Version conflict (REST response vs. socket event racing the
-                // local merge): fetch the fresh encounter once and retry.
-                if (allowRetry) {
-                    await this._refreshCombatState();
-                    return this._advanceCombatTurn(false);
+            await this._withCombatButtonPending("btnNextTurn", async () => {
+                try {
+                    this._handleCombatState(
+                        await this.api.combatAdvanceTurn(this.campaignId, this.sessionId, baseVersion));
+                } catch (error) {
+                    // Version conflict (REST response vs. socket event racing
+                    // the local merge): fetch the fresh encounter once and
+                    // retry -- the retry runs its own pending-button cycle.
+                    if (allowRetry) {
+                        await this._refreshCombatState();
+                        return this._advanceCombatTurn(false);
+                    }
+                    this._showMessage(error.message || "Zugwechsel fehlgeschlagen.", true);
                 }
-                this._showMessage(error.message || "Zugwechsel fehlgeschlagen.", true);
-            }
+            });
         }
 
         async _endCombat(allowRetry = true) {
             const baseVersion = Number(this.combat?.encounter?.version || 0);
-            try {
-                this._handleCombatState(
-                    await this.api.combatEnd(this.campaignId, this.sessionId, baseVersion));
-                this._logActivity("Kampf beendet.", "info");
-            } catch (error) {
-                if (allowRetry) {
-                    await this._refreshCombatState();
-                    return this._endCombat(false);
+            await this._withCombatButtonPending("btnEndCombat", async () => {
+                try {
+                    this._handleCombatState(
+                        await this.api.combatEnd(this.campaignId, this.sessionId, baseVersion));
+                    this._logActivity("Kampf beendet.", "info");
+                } catch (error) {
+                    if (allowRetry) {
+                        await this._refreshCombatState();
+                        return this._endCombat(false);
+                    }
+                    this._showMessage(error.message || "Kampf konnte nicht beendet werden.", true);
                 }
-                this._showMessage(error.message || "Kampf konnte nicht beendet werden.", true);
-            }
+            });
         }
 
         _handlePresence(payload) {
@@ -3178,6 +3198,32 @@
             this._bindMapInteractions();
         }
 
+        // S06: turn changes MUST announce (research doc's own HIGH-severity
+        // risk) -- but only on a REAL change, not on every combat-state
+        // broadcast (participant HP/version updates re-render this widget
+        // constantly during a fight). Compares against the last-announced
+        // actor, not the last-rendered one.
+        _announceTurnOrderIfChanged(activeTokenId, text) {
+            const announce = document.getElementById("turnOrderAnnounce");
+            if (!announce) return;
+            if (this._lastAnnouncedTurnActorId === activeTokenId) return;
+            this._lastAnnouncedTurnActorId = activeTokenId;
+            announce.textContent = text;
+        }
+
+        _bindTurnItemRow(row, tokenId) {
+            row.tabIndex = 0;
+            row.setAttribute("role", "option");
+            row.dataset.tokenId = String(tokenId);
+            row.addEventListener("click", () => this._selectToken(tokenId));
+            row.addEventListener("keydown", (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    this._selectToken(tokenId);
+                }
+            });
+        }
+
         _renderTurnOrder() {
             const container = document.getElementById("turnOrderList");
             const summary = document.getElementById("turnOrderSummary");
@@ -3194,16 +3240,26 @@
                     .map((tokenId) => byId.get(Number(tokenId)))
                     .filter(Boolean);
                 const active = byId.get(Number(encounter.active_token_id)) || null;
+                const activeIndex = order.findIndex((token) => Number(token.id) === Number(encounter.active_token_id));
                 if (summary) {
-                    summary.textContent = `Runde ${encounter.round_number} · Am Zug: `
+                    const turnPosition = activeIndex >= 0 ? `Zug ${activeIndex + 1} von ${order.length} · ` : "";
+                    summary.textContent = `Runde ${encounter.round_number} · ${turnPosition}Am Zug: `
                         + (active ? active.name : "Verdeckter Akteur");
                 }
                 container.innerHTML = order.length ? order.map((token) => `
-                    <div class="turn-item ${Number(token.id) === Number(encounter.active_token_id) ? "is-active" : ""}">
+                    <div class="turn-item ${Number(token.id) === Number(encounter.active_token_id) ? "is-active" : ""} ${Number(this.selectedTokenId) === Number(token.id) ? "selected" : ""}">
                         <span>${escapeHtml(token.name)}</span>
                         <span class="turn-score">${escapeHtml(token.initiative)}</span>
                     </div>
                 `).join("") : "<div class='muted'>Alle Akteure sind verdeckt.</div>";
+                container.querySelectorAll(".turn-item").forEach((row, index) => {
+                    if (order[index]) this._bindTurnItemRow(row, order[index].id);
+                });
+                this._announceTurnOrderIfChanged(
+                    encounter.active_token_id ?? null,
+                    active
+                        ? `Zug gewechselt: ${active.name}, Runde ${encounter.round_number}.`
+                        : `Zug gewechselt. Runde ${encounter.round_number}.`);
                 return;
             }
 
@@ -3224,12 +3280,15 @@
             container.innerHTML = entries.map((token) => {
                 const isCurrent = token === currentEntry;
                 return `
-                <div class="turn-item ${isCurrent ? "current" : ""}">
+                <div class="turn-item ${isCurrent ? "current" : ""} ${Number(this.selectedTokenId) === Number(token.id) ? "selected" : ""}">
                     <span>${escapeHtml(token.name)}${isCurrent ? " <strong>• aktuell</strong>" : ""}</span>
                     <span class="turn-score">${escapeHtml(token.initiative)}</span>
                 </div>
             `;
             }).join("");
+            container.querySelectorAll(".turn-item").forEach((row, index) => {
+                if (entries[index]) this._bindTurnItemRow(row, entries[index].id);
+            });
         }
 
         _renderChat() {
@@ -3422,6 +3481,11 @@
             }
             this._renderState();
             this._syncTokenMarkerSelection();
+            // S06: completes the bidirectional turn-order<->map selection
+            // sync -- _renderState() does not itself touch the turn-order
+            // widget, so without this a token selected on the map (or from
+            // the HUD) would never highlight its own turn-order row.
+            this._renderTurnOrder();
             if (repaintMap) {
                 this._renderMapCanvas();
             }

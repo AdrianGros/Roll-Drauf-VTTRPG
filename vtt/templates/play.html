@@ -1695,6 +1695,10 @@
                 min-height: 44px;
             }
             #layersWidget .layer-search-input { min-height: 44px; }
+            /* S06 acceptance: combatant rows and DM control buttons stay
+               tappable at 44px once the tracker lives in the mobile sheet. */
+            #turnOrderWidget .turn-item { min-height: 44px; align-items: center; }
+            #turnOrderWidget #initiativeControls .mini-btn { min-height: 44px; }
             #tokenWidget {
                 bottom: calc(64px + env(safe-area-inset-bottom, 0px));
             }
@@ -1913,7 +1917,12 @@
                 <h3 class="widget-toggle" data-widget="turnOrderWidget" role="button" tabindex="0" aria-controls="turnOrderWidgetBody" aria-expanded="false">Turn Order <span class="widget-caret">▾</span></h3>
                 <div id="turnOrderWidgetBody" class="widget-body">
                     <div id="turnOrderSummary" class="turn-state">Noch keine Initiative-Werte.</div>
-                    <div id="turnOrderList" class="muted">Noch keine Initiative-Werte.</div>
+                    <div id="turnOrderList" class="muted" role="listbox" aria-label="Kampfreihenfolge">Noch keine Initiative-Werte.</div>
+                    <!-- S06: HIGH-severity risk in the research doc --
+                         turn changes with no live-region announcement is a
+                         screen-reader accessibility failure, not a nice-to-
+                         have. -->
+                    <div id="turnOrderAnnounce" class="sr-only" role="status" aria-live="polite"></div>
                     <div class="button-row" id="initiativeControls" style="margin:0.45rem 0 0;" hidden>
                         <!-- Playtable-Vordermann 2026-08-25: der Kampf läuft
                              über das getestete Server-Backend (Encounter,
@@ -2224,6 +2233,19 @@
             background: rgba(168, 132, 44, 0.18);
             font-weight: 600;
         }
+        /* S06: bidirectional token<->turn-order selection sync -- a
+           distinct outline so "selected" stays visible even combined with
+           .current/.is-active (current-turn styling uses background, this
+           uses outline so both can be true at once without visual clash). */
+        .turn-item.selected {
+            outline: 2px solid #8cc0ff;
+            outline-offset: 1px;
+        }
+        .turn-item[tabindex]:focus-visible {
+            outline: 2px solid var(--line-strong, #8cc0ff);
+            outline-offset: 1px;
+        }
+        .turn-item { cursor: pointer; }
     </style>
     <script src="/static/js/socket.io.min.js"></script>
     <script src="/static/js/auth.js"></script>
