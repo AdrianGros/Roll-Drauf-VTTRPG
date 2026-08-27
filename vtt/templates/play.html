@@ -2024,6 +2024,41 @@
                         <div class="button-row" style="margin-bottom:0;">
                             <button type="button" id="btnTokenConditions" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="conditionsPopover">Zustände<span id="conditionsCountBadge" class="conditions-count-badge" hidden>0</span></button>
                         </div>
+                        <!-- S09: DM-only, marks a corpse/chest token as
+                             lootable -- distinct from owner-or-DM
+                             (canEditSelected); gated to operator only in
+                             JS, since a player shouldn't be able to flag
+                             their own character token as loot. -->
+                        <div class="button-row" id="tokenLootSourceRow" hidden style="margin-top:0.35rem; margin-bottom:0;">
+                            <button type="button" id="btnTokenLootSourceToggle" class="mini-btn secondary">Beute-Quelle: aus</button>
+                        </div>
+                    </div>
+                    <!-- S09: reachable regardless of owner-or-DM edit
+                         permission -- a corpse/chest is inherently
+                         shared/table-wide, unlike the rest of this panel
+                         which is gated to the owning player or the DM. -->
+                    <div class="button-row" id="tokenLootRow" hidden style="margin-bottom:0.45rem;">
+                        <button type="button" id="btnTokenLoot" class="mini-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lootPopover">Beute</button>
+                    </div>
+                    <div id="lootPopover" class="conditions-popover" role="dialog" aria-label="Beute übertragen" hidden>
+                        <div class="conditions-popover-head">
+                            <strong>Beute</strong>
+                            <button type="button" id="btnLootClose" class="mini-btn secondary" aria-label="Schließen">✕</button>
+                        </div>
+                        <div id="lootItemList" class="conditions-list" style="grid-template-columns:1fr;"></div>
+                        <div id="lootAddRow" class="button-row" hidden style="padding:0 0.5rem;">
+                            <input id="lootAddName" type="text" placeholder="Gegenstand..." style="flex:1;min-width:0;">
+                            <input id="lootAddQuantity" type="number" min="1" value="1" style="width:60px;">
+                            <button type="button" id="btnLootAddItem" class="mini-btn secondary">+</button>
+                        </div>
+                        <div class="button-row" style="padding:0.3rem 0.5rem;">
+                            <label for="lootRecipient" class="sr-only">Empfänger</label>
+                            <select id="lootRecipient" style="flex:1;min-width:0;"></select>
+                        </div>
+                        <div class="conditions-popover-foot">
+                            <button type="button" id="btnLootTransfer" class="mini-btn">Übertragen</button>
+                        </div>
+                        <div id="lootStatus" class="muted" role="status" aria-live="polite" style="padding:0 0.5rem 0.4rem;"></div>
                     </div>
                     <!-- S05: non-modal popover (Apply decision: closes on
                          Escape/outside-click, background stays

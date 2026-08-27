@@ -92,6 +92,24 @@ class PlayClient {
         });
     }
 
+    // S09: loot transfer.
+    getTokenLoot(campaignId, sessionId, tokenId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/loot/${tokenId}`, "GET");
+    }
+
+    addTokenLootItem(campaignId, sessionId, tokenId, item) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/loot/${tokenId}/items`, "POST", item);
+    }
+
+    transferLoot(campaignId, sessionId, idempotencyKey, sourceTokenId, recipientCharacterId, items) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/loot/transfer`, "POST", {
+            idempotency_key: idempotencyKey,
+            source_token_id: sourceTokenId,
+            recipient_character_id: recipientCharacterId,
+            items,
+        });
+    }
+
     createToken(campaignId, sessionId, token) {
         return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/tokens`, "POST", {
             token: token && typeof token === "object" ? token : {},

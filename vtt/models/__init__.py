@@ -35,6 +35,8 @@ from vtt.models.discord_identity_link import DiscordIdentityLink
 from vtt.models.guild import Guild, GuildMembership
 from vtt.models.page_content import PageContent
 from vtt.models.password_reset_token import PasswordResetToken
+from vtt.models.token_loot import TokenLoot  # S09
+from vtt.models.loot_transfer import LootTransfer  # S09
 
 __all__ = [
     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',
@@ -45,5 +47,6 @@ __all__ = [
     'SceneStack', 'SceneLayer', 'SessionSnapshot',
     'RegistrationKey', 'AppThemeSettings',
     'SessionInitiative', 'SessionCharacterAssignment', 'DiscordIdentityLink',
-    'Guild', 'GuildMembership', 'PageContent', 'PasswordResetToken'
+    'Guild', 'GuildMembership', 'PageContent', 'PasswordResetToken',
+    'TokenLoot', 'LootTransfer',
 ]

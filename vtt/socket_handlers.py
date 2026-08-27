@@ -468,7 +468,9 @@ def _parse_token_patch(data: dict, is_dm_member: bool):
         "metadata_json",
     }
     if is_dm_member:
-        allowed.update({"token_type", "owner_user_id", "character_id"})
+        # S09: only the DM may flag a token as a lootable corpse/chest --
+        # a player shouldn't be able to mark their own character as loot.
+        allowed.update({"token_type", "owner_user_id", "character_id", "is_loot_source"})
 
     for key in allowed:
         if key in data:

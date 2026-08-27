@@ -2064,6 +2064,227 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _loot_transfer_flow(stack, workdir: Path) -> list[str]:
+    """S09, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_09_LOOT_2026-08-27.md,
+    Apply-approved): loot transfer. Single DM user, same documented scope
+    split as S08's roll composer -- cross-role permission ENFORCEMENT is
+    covered server-side in tests/test_playtable_loot_transfer.py (idempotent
+    retry, over-quantity rejection, foreign-recipient 403), not duplicated
+    here as a second browser context. This flow proves the real click path
+    the server-side tests cannot: toggle a token into a loot source, stock
+    it, open the popover, transfer an item into a real character, and see
+    the source deplete and an audit line land in chat -- all through actual
+    DOM interaction and a real client -> socket/REST -> server round trip."""
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="beute_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="beute_bot",
+                email="beute_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Beute-Kampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Beute-Sitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Beute-Karte", "width": 600, "height": 400}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[setup] map create returned HTTP {map_response.status}")
+            browser.close()
+            return findings
+        map_payload = map_response.json()
+        map_id = (map_payload.get("map") or map_payload.get("campaign_map") or map_payload)["id"]
+        init_response = api.post(
+            f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
+            data=json.dumps({"map_ids": [map_id]}), headers=json_headers)
+        if init_response.status != 201:
+            findings.append(f"[setup] scene-stack init returned HTTP {init_response.status}")
+            browser.close()
+            return findings
+
+        character_response = api.post(
+            f"{stack.base_url}/api/characters",
+            data=json.dumps({"name": "Beute-Held", "race": "Mensch",
+                             "class": "Fighter", "campaign_id": campaign_id}),
+            headers=json_headers)
+        if character_response.status != 201:
+            findings.append(f"[setup] character create returned HTTP {character_response.status}")
+            browser.close()
+            return findings
+        character_id = character_response.json()["id"]
+
+        token_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Goblin (tot)", "x": 100, "y": 100, "token_type": "npc",
+                             "metadata_json": {"position_mode": "pixel"}}),
+            headers=json_headers)
+        if token_response.status != 201:
+            findings.append(f"[setup] token create returned HTTP {token_response.status}")
+            browser.close()
+            return findings
+
+        # play_transfer_loot 409s unless the session is actually "live".
+        for target_state in ("ready", "in_progress"):
+            transition_response = api.post(
+                f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/transition",
+                data=json.dumps({"target_state": target_state, "ignore_warnings": True}),
+                headers=json_headers)
+            if transition_response.status != 200:
+                findings.append(
+                    f"[setup] session transition to {target_state!r} returned "
+                    f"HTTP {transition_response.status}: {transition_response.text()[:200]}")
+                browser.close()
+                return findings
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.click(".token-marker")
+            page.wait_for_selector("#tokenSelectionDetail:not([hidden])", timeout=10_000)
+
+            # DM-only toggle: starts off, "Beute" stays hidden until flagged.
+            source_row_hidden = page.eval_on_selector(
+                "#tokenLootSourceRow", "el => el.hidden") if page.locator("#tokenLootSourceRow").count() else None
+            if source_row_hidden is not False:
+                findings.append("[loot] tokenLootSourceRow should be visible to the DM once a token is selected")
+            loot_row_hidden = page.eval_on_selector("#tokenLootRow", "el => el.hidden")
+            if loot_row_hidden is not True:
+                findings.append("[loot] tokenLootRow should stay hidden until the token is flagged as a loot source")
+            toggle_text_before = (page.locator("#btnTokenLootSourceToggle").text_content() or "").strip()
+            if "aus" not in toggle_text_before:
+                findings.append(f"[loot] loot-source toggle should start 'aus', shows {toggle_text_before!r}")
+
+            page.click("#btnTokenLootSourceToggle")
+            page.wait_for_function(
+                "() => (document.getElementById('btnTokenLootSourceToggle')?.textContent || '').includes('an')",
+                timeout=10_000)
+            page.wait_for_function(
+                "() => document.getElementById('tokenLootRow')?.hidden === false",
+                timeout=10_000)
+
+            # Reload proves the flag is a real server round trip, not just
+            # optimistic client state.
+            page.reload()
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.click(".token-marker")
+            page.wait_for_selector("#tokenSelectionDetail:not([hidden])", timeout=10_000)
+            toggle_text_after_reload = (page.locator("#btnTokenLootSourceToggle").text_content() or "").strip()
+            if "an" not in toggle_text_after_reload:
+                findings.append(
+                    f"[loot] is_loot_source did not survive a reload -- toggle shows {toggle_text_after_reload!r}")
+
+            page.click("#btnTokenLoot")
+            page.wait_for_selector("#lootPopover:not([hidden])", timeout=10_000)
+            # The popover's own content (item list, recipients, the add
+            # row) loads via an async GET issued after the container
+            # becomes visible -- wait for that fetch to land before
+            # asserting on anything inside it.
+            page.wait_for_function(
+                "() => document.getElementById('lootAddRow')?.hidden === false",
+                timeout=10_000)
+
+            page.fill("#lootAddName", "Heiltrank")
+            page.fill("#lootAddQuantity", "3")
+            page.click("#btnLootAddItem")
+            page.wait_for_function(
+                "() => (document.getElementById('lootItemList')?.textContent || '').includes('Heiltrank')",
+                timeout=10_000)
+
+            recipient_options = page.locator("#lootRecipient option").all_text_contents()
+            if not any("Beute-Held" in option for option in recipient_options):
+                findings.append(f"[loot] recipient dropdown does not list the created character: {recipient_options!r}")
+
+            page.check('#lootItemList input[data-loot-select]')
+            page.select_option("#lootRecipient", str(character_id))
+            page.click("#btnLootTransfer")
+            page.wait_for_function(
+                "() => (document.getElementById('lootStatus')?.textContent || '').includes('Übertragen')",
+                timeout=10_000)
+
+            # Fully-quantity transfer depletes the source row entirely.
+            page.wait_for_function(
+                "() => !(document.getElementById('lootItemList')?.textContent || '').includes('Heiltrank')",
+                timeout=10_000)
+
+            # Close the popover before switching sidebar tabs -- it's
+            # fixed-positioned over the token panel and, left open,
+            # physically overlaps the sidebar tab strip underneath it,
+            # which makes Playwright's actionability check on the chat tab
+            # time out (the click point resolves to the popover, not the
+            # tab button).
+            page.keyboard.press("Escape")
+            page.wait_for_selector("#lootPopover[hidden]", state="attached", timeout=5_000)
+
+            # Audit trail: a chat_type=loot_transfer message lands in the
+            # normal chat log. The right sidebar (where the tab strip and
+            # #chatLog live) is closed by default -- open it first, then
+            # switch tabs (#chatLog sits under #panel-chat, not the
+            # #panel-tools tab active by default), same two-step caveat the
+            # roll composer flow already needed.
+            page.click("#btnSidebarToggle")
+            page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
+            page.click('.sidebar-tab[data-tab="chat"]')
+            page.wait_for_selector("#panel-chat.active", timeout=10_000)
+            page.wait_for_function(
+                "() => (document.getElementById('chatLog')?.textContent || '').includes('Heiltrank')",
+                timeout=10_000)
+            chat_text = page.locator("#chatLog").text_content() or ""
+            if "überträgt" not in chat_text:
+                findings.append(f"[loot] chat audit line missing expected verb 'überträgt': {chat_text!r}")
+
+            # Real server-side effect, not just a client-side list update.
+            character_check = api.get(f"{stack.base_url}/api/characters/{character_id}")
+            if character_check.status != 200:
+                findings.append(f"[loot] character re-fetch returned HTTP {character_check.status}")
+            elif character_check.json().get("inventory_count", 0) < 1:
+                findings.append(
+                    "[loot] recipient character's inventory_count is still 0 after a completed transfer")
+
+        except Exception as error:
+            findings.append(f"[loot] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "loot-transfer-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
@@ -2077,6 +2298,7 @@ FLOWS = {
     "app_menu": _app_menu_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,
+    "loot_transfer": _loot_transfer_flow,
 }
 
 

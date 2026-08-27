@@ -23,6 +23,8 @@ class Character(db.Model):
     # Discoverability: whether this character shows up in a future player-finder /
     # browse surface. No browse surface exists yet; this only stores the flag.
     is_discoverable = db.Column(db.Boolean, nullable=False, default=False)
+    # S09: marks a shared party-inventory recipient for loot transfers.
+    is_party_stash = db.Column(db.Boolean, nullable=False, default=False)
 
     # Combat Stats
     ac = db.Column(db.Integer, default=10)  # Armor Class
@@ -139,6 +141,7 @@ class Character(db.Model):
             'campaign_id': self.campaign_id,
             'level': self.level,
             'is_discoverable': self.is_discoverable,
+            'is_party_stash': self.is_party_stash,
             'hp': f"{self.hp_current}/{self.hp_max}",
             'ac': self.ac,
             'avatar_url': avatar_url,

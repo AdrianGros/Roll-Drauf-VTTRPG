@@ -105,6 +105,11 @@
             this._measurePointerIsTouch = false;
             // S04: reconnecting indicator for the token HUD.
             this._connectionLost = false;
+            // S09: loot popover -- fetched on open (not part of the
+            // bootstrap/state_payload tokens carry), kept live by re-fetching
+            // whenever loot:updated/loot:transferred names the open token.
+            this._lootData = null;
+            this._openLootTokenId = null;
             // Auto-fit runs once per activated map so the DM's manual zoom
             // choice survives snapshots/re-renders of the same map.
             this.autoFitMapId = null;
@@ -438,6 +443,8 @@
                     combatState: (payload) => this._handleCombatState(payload),
                     combatEnded: (payload) => this._handleCombatState(payload),
                     presenceUpdate: (payload) => this._handlePresence(payload),
+                    lootUpdated: (payload) => this._handleLootBroadcast(payload),
+                    lootTransferred: (payload) => this._handleLootBroadcast(payload),
                     tick: () => {},
                     sessionPaused: (payload) => this._handleLifecycleBroadcast("paused", payload),
                     sessionResumed: (payload) => this._handleLifecycleBroadcast("resumed", payload),
@@ -1616,6 +1623,221 @@
             this._closeConditionsPopover = closePopover;
         }
 
+        // S09: loot transfer. The popover's data (items on the token,
+        // eligible recipients) is fetched on open rather than carried in
+        // state_payload -- TokenLoot rows aren't part of TokenState's own
+        // serialize(), unlike conditions which live in metadata_json.
+        async _loadLootPopoverData(tokenId) {
+            try {
+                const response = await this.api.getTokenLoot(this.campaignId, this.sessionId, tokenId);
+                this._lootData = response;
+                this._openLootTokenId = tokenId;
+                this._renderLootPopover();
+            } catch (error) {
+                this._showMessage(error.message || "Beute konnte nicht geladen werden.", true);
+            }
+        }
+
+        _renderLootPopover() {
+            const list = document.getElementById("lootItemList");
+            if (!list) return;
+            const items = Array.isArray(this._lootData?.items) ? this._lootData.items : [];
+            const recipients = Array.isArray(this._lootData?.recipients) ? this._lootData.recipients : [];
+            const operator = isOperatorRole(this.bootstrap?.session_role || "");
+
+            list.innerHTML = items.length
+                ? items.map((item) => `
+                    <div class="loot-item-row" data-token-loot-id="${item.id}" style="display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.5rem;">
+                        <label style="display:flex;align-items:center;gap:0.4rem;flex:1;min-width:0;">
+                            <input type="checkbox" data-loot-select="${item.id}">
+                            <span>${escapeHtml(item.name)} (${item.quantity}x)${item.is_cursed ? " ⚠" : ""}</span>
+                        </label>
+                        <input type="number" min="1" max="${item.quantity}" value="${item.quantity}" data-loot-quantity="${item.id}" style="width:56px;">
+                    </div>
+                `).join("")
+                : `<div class="muted" style="padding:0.4rem 0.5rem;">Keine Gegenstände.</div>`;
+
+            const recipientSelect = document.getElementById("lootRecipient");
+            if (recipientSelect) {
+                const previous = recipientSelect.value;
+                recipientSelect.innerHTML = recipients.length
+                    ? recipients.map((r) => `<option value="${r.id}">${escapeHtml(r.name)}${r.is_party_stash ? " (Gemeinsam)" : ""}</option>`).join("")
+                    : `<option value="">Kein Empfänger verfügbar</option>`;
+                if (recipients.some((r) => String(r.id) === previous)) recipientSelect.value = previous;
+            }
+
+            const addRow = document.getElementById("lootAddRow");
+            if (addRow) addRow.hidden = !operator;
+
+            const transferBtn = document.getElementById("btnLootTransfer");
+            if (transferBtn) transferBtn.disabled = items.length === 0 || recipients.length === 0;
+        }
+
+        async _toggleTokenLootSource() {
+            // DM-only per the socket-patch allowlist carve-out -- a player
+            // shouldn't be able to flag their own character token as loot.
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            const next = !token.is_loot_source;
+            try {
+                if (this.socket && this.socket.isConnected) {
+                    this.socket.updateToken(token.id, Number(token.version || 1), { is_loot_source: next });
+                } else {
+                    await this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), { is_loot_source: next });
+                    await this.loadBootstrap();
+                }
+            } catch (error) {
+                this._showMessage(error.message || "Beute-Quelle konnte nicht geändert werden.", true);
+            }
+        }
+
+        async _addLootItem() {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            const nameInput = document.getElementById("lootAddName");
+            const qtyInput = document.getElementById("lootAddQuantity");
+            const name = (nameInput?.value || "").trim();
+            if (!name) {
+                this._showMessage("Bitte einen Namen für den Gegenstand angeben.", true);
+                return;
+            }
+            const quantity = Math.max(1, parseInt(qtyInput?.value, 10) || 1);
+            try {
+                await this.api.addTokenLootItem(this.campaignId, this.sessionId, token.id, { name, quantity });
+                if (nameInput) nameInput.value = "";
+                if (qtyInput) qtyInput.value = "1";
+                await this._loadLootPopoverData(token.id);
+                // A previously-unflagged token may have just become a loot
+                // source server-side; refresh so the toggle/panel reflect
+                // it without waiting for the next unrelated state tick.
+                await this.loadBootstrap();
+            } catch (error) {
+                this._showMessage(error.message || "Gegenstand konnte nicht hinzugefügt werden.", true);
+            }
+        }
+
+        _makeLootIdempotencyKey() {
+            if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+                return `loot-${crypto.randomUUID()}`;
+            }
+            return `loot-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+        }
+
+        async _transferSelectedLoot() {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            const list = document.getElementById("lootItemList");
+            const recipientSelect = document.getElementById("lootRecipient");
+            const statusEl = document.getElementById("lootStatus");
+            const transferBtn = document.getElementById("btnLootTransfer");
+            if (!list || !recipientSelect) return;
+
+            const recipientCharacterId = Number(recipientSelect.value);
+            if (!Number.isInteger(recipientCharacterId) || recipientCharacterId <= 0) {
+                this._showMessage("Bitte einen Empfänger wählen.", true);
+                return;
+            }
+
+            const items = [];
+            list.querySelectorAll("input[data-loot-select]:checked").forEach((checkbox) => {
+                const tokenLootId = Number(checkbox.dataset.lootSelect);
+                const quantityInput = list.querySelector(`input[data-loot-quantity="${tokenLootId}"]`);
+                const quantity = Math.max(1, parseInt(quantityInput?.value, 10) || 1);
+                items.push({ token_loot_id: tokenLootId, quantity });
+            });
+            if (!items.length) {
+                this._showMessage("Bitte mindestens einen Gegenstand auswählen.", true);
+                return;
+            }
+
+            // One key per submission (regenerated per click, not persisted
+            // across retries): guards the common double-click-before-the-
+            // button-disables case, the actual risk on this table's own
+            // network -- see loot_transfers.idempotency_key server-side for
+            // the durable network-retry guarantee.
+            const idempotencyKey = this._makeLootIdempotencyKey();
+            if (transferBtn) transferBtn.disabled = true;
+            if (statusEl) statusEl.textContent = "Übertrage...";
+            try {
+                await this.api.transferLoot(this.campaignId, this.sessionId, idempotencyKey, token.id, recipientCharacterId, items);
+                if (statusEl) statusEl.textContent = "Übertragen.";
+                await this._loadLootPopoverData(token.id);
+            } catch (error) {
+                if (statusEl) statusEl.textContent = "";
+                this._showMessage(error.message || "Beute konnte nicht übertragen werden.", true);
+            } finally {
+                if (transferBtn) transferBtn.disabled = false;
+            }
+        }
+
+        _handleLootBroadcast(payload) {
+            const tokenId = Number(payload?.token_id ?? payload?.source_token_id ?? payload?.transfer?.source_token_id);
+            if (Number.isInteger(tokenId) && tokenId === this._openLootTokenId) {
+                this._loadLootPopoverData(tokenId);
+            }
+        }
+
+        _bindLootPopover() {
+            const trigger = document.getElementById("btnTokenLoot");
+            const popover = document.getElementById("lootPopover");
+            const closeBtn = document.getElementById("btnLootClose");
+            const toggleBtn = document.getElementById("btnTokenLootSourceToggle");
+            const addBtn = document.getElementById("btnLootAddItem");
+            const transferBtn = document.getElementById("btnLootTransfer");
+            if (!trigger || !popover) return;
+
+            const openPopover = async () => {
+                const token = this._findStateToken(this.selectedTokenId);
+                if (!token) return;
+                popover.hidden = false;
+                trigger.setAttribute("aria-expanded", "true");
+                const rect = trigger.getBoundingClientRect();
+                popover.style.left = `${Math.max(8, rect.left)}px`;
+                popover.style.top = `${Math.max(8, rect.top - 8)}px`;
+                popover.style.transform = "translateY(-100%)";
+                document.addEventListener("click", onOutsideClick, true);
+                document.addEventListener("keydown", onKeydown, true);
+                await this._loadLootPopoverData(token.id);
+            };
+            const closePopover = ({ returnFocus = true } = {}) => {
+                if (popover.hidden) return;
+                popover.hidden = true;
+                trigger.setAttribute("aria-expanded", "false");
+                document.removeEventListener("click", onOutsideClick, true);
+                document.removeEventListener("keydown", onKeydown, true);
+                this._openLootTokenId = null;
+                const status = document.getElementById("lootStatus");
+                if (status) status.textContent = "";
+                if (returnFocus) trigger.focus();
+            };
+            const onOutsideClick = (event) => {
+                if (popover.contains(event.target) || trigger.contains(event.target)) return;
+                closePopover({ returnFocus: false });
+            };
+            // Document-level, not a popover-scoped listener: the transfer
+            // button disables itself while the request is in flight, which
+            // blurs it (a disabled element cannot hold focus) and leaves
+            // Escape with nothing inside the popover to bubble from -- the
+            // exact focus-loss class the S05 conditions picker already had
+            // to account for, just triggered by disabling instead of a
+            // list rebuild.
+            const onKeydown = (event) => {
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    closePopover();
+                }
+            };
+
+            trigger.addEventListener("click", () => (popover.hidden ? openPopover() : closePopover()));
+            if (closeBtn) closeBtn.addEventListener("click", () => closePopover());
+            this._closeLootPopover = closePopover;
+
+            if (toggleBtn) toggleBtn.addEventListener("click", () => this._toggleTokenLootSource());
+            if (addBtn) addBtn.addEventListener("click", () => this._addLootItem());
+            if (transferBtn) transferBtn.addEventListener("click", () => this._transferSelectedLoot());
+        }
+
         // S07: personal action hotbar. A pure UI trigger layer over the
         // already-existing, already-fully-permission-checked
         // execute_action seam -- no cooldown tracking, no drag/drop, no
@@ -2007,6 +2229,7 @@
             const nameBtn = document.getElementById("btnTokenNameSet");
             if (nameBtn) nameBtn.addEventListener("click", () => this._setSelectedTokenName());
             this._bindConditionsPopover();
+            this._bindLootPopover();
 
             // Token art: one picker on the create panel (image applied when
             // the token is placed) and one on the selected-token detail
@@ -3195,6 +3418,26 @@
             this._renderConditionsPopover();
             this._renderActionHotbar();
             this._renderRollVisibilityOptions();
+
+            // S09: DM-only source toggle; the "Beute" button is reachable
+            // for ANY active session member once a token is flagged, unlike
+            // the rest of this panel which is gated to owner-or-DM (a
+            // corpse/chest is inherently shared/table-wide, matching the
+            // server's own permission rule in play_transfer_loot).
+            const isLootSource = Boolean(selectedToken?.is_loot_source);
+            const lootSourceRow = document.getElementById("tokenLootSourceRow");
+            if (lootSourceRow) lootSourceRow.hidden = !operator || !selectedToken;
+            const lootSourceToggleBtn = document.getElementById("btnTokenLootSourceToggle");
+            if (lootSourceToggleBtn) {
+                lootSourceToggleBtn.textContent = isLootSource ? "Beute-Quelle: an" : "Beute-Quelle: aus";
+                lootSourceToggleBtn.setAttribute("aria-pressed", String(isLootSource));
+            }
+            const lootRow = document.getElementById("tokenLootRow");
+            if (lootRow) lootRow.hidden = !isLootSource;
+            const lootPopoverEl = document.getElementById("lootPopover");
+            if (lootPopoverEl && !lootPopoverEl.hidden && !isLootSource) {
+                this._closeLootPopover?.({ returnFocus: false });
+            }
 
             // DM-only table controls: map upload and initiative rolling.
             const layerAddRow = document.getElementById("layerAddRow");

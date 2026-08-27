@@ -31,6 +31,8 @@ class TokenState(db.Model):
     initiative = db.Column(db.Integer)
     visibility = db.Column(db.String(20), default="public", nullable=False)
     metadata_json = db.Column(db.JSON)
+    # S09: flags this token as a lootable corpse/chest (see TokenLoot).
+    is_loot_source = db.Column(db.Boolean, default=False, nullable=False)
 
     version = db.Column(db.Integer, default=1, nullable=False)
     updated_by = db.Column(db.Integer, db.ForeignKey("users.id"), index=True)
@@ -73,6 +75,7 @@ class TokenState(db.Model):
             "initiative": self.initiative,
             "visibility": self.visibility,
             "metadata_json": self.metadata_json or {},
+            "is_loot_source": self.is_loot_source,
             "version": self.version,
             "updated_by": self.updated_by,
             "created_at": self.created_at.isoformat() if self.created_at else None,
