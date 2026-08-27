@@ -493,6 +493,45 @@ def test_playtable_action_hotbar_is_a_pure_ui_trigger_over_the_existing_seam():
     assert "catalog.find((entry) => entry.code === result.action_code)" in script
 
 
+def test_playtable_roll_composer_has_presets_adv_dis_and_visibility():
+    """S08 (Apply-approved slice, docs/PLAYTABLE_FEATURE_RESEARCH_08_ROLL_CHAT_2026-08-27.md):
+    the roll composer over the already-mature ChatMessage model (author,
+    timestamp, content_type, moderation state, dedup -- current-state
+    check found the research doc's "no chat schema at all" claim was
+    wrong; the only genuinely missing piece was a visibility column).
+    Covers: die presets, a real ADV/DIS control (never folded into the
+    formula text), a Public/GM/Blind/Self dropdown with Blind/Self
+    disabled for non-DMs, Shift+Enter-newline vs Enter-submit on a real
+    <textarea>, and native <details> for the roll-breakdown disclosure.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    assert 'data-dice-preset="1d20"' in template
+    assert 'data-dice-preset="1d12"' in template
+    assert 'id="rollMode"' in template
+    assert 'value="advantage"' in template
+    assert 'id="rollVisibility"' in template
+    for value in ("public", "gm_only", "blind", "self"):
+        assert f'value="{value}"' in template
+
+    assert '<textarea id="chatInput"' in template
+    assert 'event.key === "Enter" && !event.shiftKey' in script
+
+    assert '_renderRollVisibilityOptions' in script
+    assert 'option.disabled = !operator' in script
+
+    assert '<details>' in script
+    assert 'chat-roll-breakdown' in script
+
+    # Blind/self rolls arrive as an anonymized placeholder for non-DM
+    # clients -- server-enforced (see tests/test_play_table_chat_and_gating.py
+    # ::TestRollVisibility), this just checks the client renders that
+    # shape correctly rather than crashing on a null result.
+    assert "payload?.hidden" in script
+    assert "Jemand würfelt verdeckt." in script
+
+
 def test_playtable_selecting_a_token_surfaces_its_controls():
     """F4 Gap B: clicking a token on the map already drew a real selection
     ring and updated #tokenSelectionSummary/#tokenSelectionDetail text --

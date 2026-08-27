@@ -2147,12 +2147,16 @@
                 <section id="panel-chat" class="tab-panel">
                     <div class="panel">
                         <h2>Session Chat</h2>
-                        <div id="chatLog" class="muted">Noch keine Chat-Nachrichten.</div>
+                        <div id="chatLog" class="muted" role="log" aria-live="polite" aria-label="Chat-Verlauf">Noch keine Chat-Nachrichten.</div>
                     </div>
                     <div class="panel">
                         <h2>Nachricht senden</h2>
-                        <div class="button-row" style="margin-bottom:0;">
-                            <input id="chatInput" type="text" placeholder="Nachricht an den Tisch...">
+                        <label for="chatInput" class="sr-only">Nachricht an den Tisch</label>
+                        <!-- S08: Enter sends, Shift+Enter inserts a line
+                             break -- needs a real <textarea>, a single-line
+                             <input> can't distinguish the two. -->
+                        <textarea id="chatInput" rows="2" placeholder="Nachricht an den Tisch..." inputmode="text"></textarea>
+                        <div class="button-row" style="margin-top:0.35rem; margin-bottom:0;">
                             <button type="button" id="btnSendChat">Senden</button>
                         </div>
                     </div>
@@ -2173,9 +2177,42 @@
 
                     <div class="panel">
                         <h2>Würfel</h2>
+                        <!-- S08: die presets just set #diceInput's value --
+                             the formula field stays the single source of
+                             truth (Apply decision: a fully separate
+                             modifier stepper synced bidirectionally with
+                             the formula text was scoped out this slice as
+                             a nice-to-have polish item, not a functional
+                             gap -- the doc's own decision on this exact
+                             question was left unresolved with no lean). -->
+                        <div class="button-row dice-presets" role="group" aria-label="Würfel-Vorlagen">
+                            <button type="button" class="mini-btn secondary" data-dice-preset="1d20">d20</button>
+                            <button type="button" class="mini-btn secondary" data-dice-preset="1d20+2">d20+2</button>
+                            <button type="button" class="mini-btn secondary" data-dice-preset="1d4">d4</button>
+                            <button type="button" class="mini-btn secondary" data-dice-preset="1d6">d6</button>
+                            <button type="button" class="mini-btn secondary" data-dice-preset="1d8">d8</button>
+                            <button type="button" class="mini-btn secondary" data-dice-preset="1d10">d10</button>
+                            <button type="button" class="mini-btn secondary" data-dice-preset="1d12">d12</button>
+                        </div>
                         <div class="button-row">
-                            <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5">
+                            <label for="diceInput" class="sr-only">Würfelformel</label>
+                            <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5" inputmode="text">
                             <button type="button" id="btnRoll">Würfeln</button>
+                        </div>
+                        <div class="button-row">
+                            <label for="rollMode">Modus</label>
+                            <select id="rollMode">
+                                <option value="normal">Normal</option>
+                                <option value="advantage">Vorteil</option>
+                                <option value="disadvantage">Nachteil</option>
+                            </select>
+                            <label for="rollVisibility">Sichtbarkeit</label>
+                            <select id="rollVisibility">
+                                <option value="public">Öffentlich</option>
+                                <option value="gm_only">Nur SL</option>
+                                <option value="blind">Verdeckt</option>
+                                <option value="self">Privat</option>
+                            </select>
                         </div>
                         <div id="diceResult" class="muted">Noch kein Wurf.</div>
                         <div id="diceLog" class="muted" style="margin-top:0.45rem;"></div>
@@ -2315,6 +2352,21 @@
             outline-offset: 1px;
         }
         .turn-item { cursor: pointer; }
+
+        /* S08: dice presets + roll expansion. */
+        .dice-presets { flex-wrap: wrap; margin-bottom: 0.4rem; }
+        .dice-presets .mini-btn { padding: 0.2rem 0.5rem; font-size: 0.75rem; }
+        #chatInput { width: 100%; resize: vertical; font: inherit; padding: 0.35rem; }
+        .chat-roll-summary { cursor: pointer; }
+        .chat-roll-breakdown {
+            margin-top: 0.2rem;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.78rem;
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 6px;
+        }
+        .chat-roll-hidden { font-style: italic; color: var(--muted); }
     </style>
     <script src="/static/js/socket.io.min.js"></script>
     <script src="/static/js/auth.js"></script>

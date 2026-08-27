@@ -308,3 +308,185 @@ class TestSocketReadOnlyGating:
         )
         db.session.refresh(token)
         assert (token.x, token.y) == (140, 210)
+
+
+class TestRollVisibility:
+    """S08: roll visibility (public/gm_only/blind/self) is the CRITICAL
+    risk the research doc flagged for this slice -- the server must be the
+    sole source of truth, never a client-supplied claim. These tests hit
+    the real socket handler and real room-scoped broadcast (_emit_scoped_roll),
+    not just the persisted row, since the visibility bug that matters most
+    is "an unauthorized client received the real event over the socket".
+    """
+
+    def test_non_dm_blind_request_is_silently_downgraded_to_public(
+        self, app, dm_user, player_user, dm_client, player_client
+    ):
+        campaign = _create_campaign(dm_user, "Sichtbarkeits-Kampagne")
+        _add_member(campaign, player_user)
+        _, session = _add_map_and_session(campaign, dm_user)
+
+        dm_socket = socketio.test_client(app, flask_test_client=dm_client)
+        player_socket = socketio.test_client(app, flask_test_client=player_client)
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        dm_socket.get_received()
+        player_socket.get_received()
+
+        player_socket.emit(
+            "roll_dice",
+            {"campaign_id": campaign.id, "session_id": session.id, "dice": "1d20",
+             "player": "player", "visibility": "blind"},
+        )
+
+        stored = ChatMessage.query.filter_by(game_session_id=session.id, content_type="dice_roll").first()
+        assert stored is not None
+        assert stored.visibility == "public", "a non-DM blind request must be downgraded, not honored"
+
+        events = [e for e in player_socket.get_received() if e["name"] == "dice_rolled"]
+        assert len(events) == 1
+        assert events[0]["args"][0].get("result", {}).get("total") is not None, \
+            "downgraded-to-public roll must reach the player with a real result, not a placeholder"
+
+    def test_dm_blind_roll_reaches_dm_in_full_and_players_only_as_a_placeholder(
+        self, app, dm_user, player_user, dm_client, player_client
+    ):
+        campaign = _create_campaign(dm_user, "Verdeckte Wuerfe")
+        _add_member(campaign, player_user)
+        _, session = _add_map_and_session(campaign, dm_user)
+
+        dm_socket = socketio.test_client(app, flask_test_client=dm_client)
+        player_socket = socketio.test_client(app, flask_test_client=player_client)
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        dm_socket.get_received()
+        player_socket.get_received()
+
+        dm_socket.emit(
+            "roll_dice",
+            {"campaign_id": campaign.id, "session_id": session.id, "dice": "1d20+3",
+             "player": dm_user.username, "visibility": "blind"},
+        )
+
+        stored = ChatMessage.query.filter_by(game_session_id=session.id, content_type="dice_roll").first()
+        assert stored is not None
+        assert stored.visibility == "blind"
+
+        dm_events = [e for e in dm_socket.get_received() if e["name"] == "dice_rolled"]
+        assert len(dm_events) == 1
+        dm_payload = dm_events[0]["args"][0]
+        assert dm_payload.get("result", {}).get("total") is not None, "DM must always see the real roll"
+        assert dm_payload.get("dice") == "1d20+3"
+
+        player_events = [e for e in player_socket.get_received() if e["name"] == "dice_rolled"]
+        assert len(player_events) == 1, "the player must still learn SOMETHING happened (a placeholder), not silence"
+        player_payload = player_events[0]["args"][0]
+        assert player_payload.get("hidden") is True
+        assert player_payload.get("result") is None, "a blind roll must never leak the total to a non-DM client"
+        assert player_payload.get("dice") is None, "a blind roll must never leak the formula to a non-DM client"
+        assert player_payload.get("player") is None, "a blind roll must never leak who rolled to a non-DM client"
+
+    def test_gm_only_roll_reaches_only_the_dm_room(
+        self, app, dm_user, player_user, dm_client, player_client
+    ):
+        campaign = _create_campaign(dm_user, "Nur-SL Wuerfe")
+        _add_member(campaign, player_user)
+        _, session = _add_map_and_session(campaign, dm_user)
+
+        dm_socket = socketio.test_client(app, flask_test_client=dm_client)
+        player_socket = socketio.test_client(app, flask_test_client=player_client)
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        dm_socket.get_received()
+        player_socket.get_received()
+
+        dm_socket.emit(
+            "roll_dice",
+            {"campaign_id": campaign.id, "session_id": session.id, "dice": "1d20",
+             "player": dm_user.username, "visibility": "gm_only"},
+        )
+
+        dm_events = [e for e in dm_socket.get_received() if e["name"] == "dice_rolled"]
+        assert len(dm_events) == 1
+
+        player_events = [e for e in player_socket.get_received() if e["name"] == "dice_rolled"]
+        assert not player_events, "gm_only must not reach players as a dice_rolled event at all, not even a placeholder"
+
+    def test_public_roll_still_reaches_everyone_in_full(
+        self, app, dm_user, player_user, dm_client, player_client
+    ):
+        """Regression check: the new scoped-broadcast path must not have
+        narrowed the existing, previously-working public-roll behavior."""
+        campaign = _create_campaign(dm_user, "Oeffentliche Wuerfe")
+        _add_member(campaign, player_user)
+        _, session = _add_map_and_session(campaign, dm_user)
+
+        dm_socket = socketio.test_client(app, flask_test_client=dm_client)
+        player_socket = socketio.test_client(app, flask_test_client=player_client)
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        dm_socket.get_received()
+        player_socket.get_received()
+
+        player_socket.emit(
+            "roll_dice",
+            {"campaign_id": campaign.id, "session_id": session.id, "dice": "1d6",
+             "player": player_user.username, "visibility": "public"},
+        )
+
+        for socket_client in (dm_socket, player_socket):
+            events = [e for e in socket_client.get_received() if e["name"] == "dice_rolled"]
+            assert len(events) == 1
+            assert events[0]["args"][0].get("result", {}).get("total") is not None
+
+    def test_advantage_rolls_a_single_d20_twice_and_keeps_the_higher(
+        self, app, dm_user, dm_client
+    ):
+        campaign = _create_campaign(dm_user, "Vorteil-Kampagne")
+        _, session = _add_map_and_session(campaign, dm_user)
+
+        dm_socket = socketio.test_client(app, flask_test_client=dm_client)
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        dm_socket.get_received()
+
+        acks = []
+        for _ in range(20):  # enough tries that a coin-flip discard bug would show up
+            ack = dm_socket.emit(
+                "roll_dice",
+                {"campaign_id": campaign.id, "session_id": session.id, "dice": "1d20",
+                 "player": dm_user.username, "mode": "advantage"},
+                callback=True,
+            )
+            acks.append(ack)
+        dm_socket.get_received()
+
+        assert len(acks) == 20
+        for result in acks:
+            assert result["mode"] == "advantage"
+            assert len(result["rolls"]) == 1
+            assert len(result["discarded_rolls"]) == 1
+            # the kept roll must never be lower than the discarded one
+            assert result["rolls"][0] >= result["discarded_rolls"][0]
+
+    def test_advantage_mode_is_ignored_for_multi_die_formulas(self, app, dm_user, dm_client):
+        """ADV/DIS has no well-defined meaning for "advantage on 3d6" --
+        must fall back to a normal roll rather than error or silently
+        misapply the mechanic."""
+        campaign = _create_campaign(dm_user, "Mehrwuerfel-Kampagne")
+        _, session = _add_map_and_session(campaign, dm_user)
+
+        dm_socket = socketio.test_client(app, flask_test_client=dm_client)
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        dm_socket.get_received()
+
+        ack = dm_socket.emit(
+            "roll_dice",
+            {"campaign_id": campaign.id, "session_id": session.id, "dice": "3d6",
+             "player": dm_user.username, "mode": "advantage"},
+            callback=True,
+        )
+        dm_socket.get_received()
+
+        assert ack["mode"] == "normal"
+        assert len(ack["rolls"]) == 3
+        assert "discarded_rolls" not in ack

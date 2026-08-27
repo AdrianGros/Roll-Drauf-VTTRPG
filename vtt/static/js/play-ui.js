@@ -771,12 +771,21 @@
                 await this._transition("ended", true);
             });
 
+            document.querySelectorAll(".dice-presets [data-dice-preset]").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const input = document.getElementById("diceInput");
+                    if (input) input.value = button.dataset.dicePreset;
+                });
+            });
+
             document.getElementById("btnRoll").addEventListener("click", () => {
                 if (this.readOnly || !this.socket) {
                     this._showMessage("Nur-Lesen aktiv: Würfeln ist gesperrt.", true);
                     return;
                 }
                 const dice = document.getElementById("diceInput").value.trim() || "1d20";
+                const mode = document.getElementById("rollMode")?.value || "normal";
+                const visibility = document.getElementById("rollVisibility")?.value || "public";
                 this.socket.rollDice(dice, this.user?.username || "player", (result) => {
                     const target = document.getElementById("diceResult");
                     if (!result || result.error) {
@@ -785,7 +794,7 @@
                     }
                     const rolls = Array.isArray(result.rolls) ? result.rolls.join(",") : "-";
                     target.textContent = `${dice} -> ${result.total} (${rolls})`;
-                });
+                }, mode, visibility);
             });
 
             const btnClearSelection = document.getElementById("btnClearSelection");
@@ -934,11 +943,33 @@
             const chatInput = document.getElementById("chatInput");
             if (chatInput) {
                 chatInput.addEventListener("keydown", (event) => {
-                    if (event.key === "Enter") {
+                    // S08: Shift+Enter must insert a real line break (the
+                    // textarea's own default behavior -- do NOT
+                    // preventDefault for it), Enter alone submits.
+                    if (event.key === "Enter" && !event.shiftKey) {
                         event.preventDefault();
                         sendChat();
                     }
                 });
+            }
+        }
+
+        // S08: Blind/Self roll visibility are DM-only -- disabled with a
+        // tooltip for everyone else (server also re-validates this on
+        // every roll, per the research doc's own CRITICAL risk; this is
+        // UI guidance only, never the actual enforcement boundary).
+        // Called from _renderState() so a mid-session role promotion
+        // updates the composer without a page reload.
+        _renderRollVisibilityOptions() {
+            const select = document.getElementById("rollVisibility");
+            if (!select) return;
+            const operator = isOperatorRole(this.bootstrap?.session_role || "");
+            select.querySelectorAll('option[value="blind"], option[value="self"]').forEach((option) => {
+                option.disabled = !operator;
+            });
+            select.title = operator ? "" : "Verdeckt/Privat sind nur für die Spielleitung verfügbar.";
+            if (!operator && (select.value === "blind" || select.value === "self")) {
+                select.value = "public";
             }
         }
 
@@ -2460,8 +2491,28 @@
         }
 
         _handleDiceBroadcast(payload) {
+            // S08: blind/self rolls arrive as an anonymized placeholder
+            // for non-DM/non-roller clients (server-enforced in
+            // _emit_scoped_roll -- the payload genuinely contains no
+            // result here, this is not a client-side filter).
+            if (payload?.hidden) {
+                const hiddenText = "Jemand würfelt verdeckt.";
+                const log = document.getElementById("diceLog");
+                if (log) {
+                    const line = document.createElement("div");
+                    line.textContent = hiddenText;
+                    log.prepend(line);
+                    while (log.children.length > 8) log.removeChild(log.lastChild);
+                }
+                this._appendChatMessage({ sender_name: "Tisch", message: hiddenText, rollHidden: true });
+                this._logActivity(hiddenText, "info");
+                return;
+            }
+
             const player = payload.player || "player";
-            const summary = `${player} hat ${payload.dice} gewürfelt: ${payload.result?.total}`;
+            const modeLabel = payload.result?.mode === "advantage" ? " (Vorteil)"
+                : payload.result?.mode === "disadvantage" ? " (Nachteil)" : "";
+            const summary = `${player} hat ${payload.dice} gewürfelt${modeLabel}: ${payload.result?.total}`;
             const log = document.getElementById("diceLog");
             const line = document.createElement("div");
             line.textContent = summary;
@@ -2469,6 +2520,18 @@
             while (log.children.length > 8) {
                 log.removeChild(log.lastChild);
             }
+
+            // S08: expandable breakdown (individual dice, modifier,
+            // discarded ADV/DIS roll) -- the single-line summary stays the
+            // primary, always-visible content per the acceptance criteria
+            // ("total shows first"), detail is opt-in via <details>.
+            const rolls = Array.isArray(payload.result?.rolls) ? payload.result.rolls : [];
+            const modifier = Number(payload.result?.modifier) || 0;
+            const discarded = Array.isArray(payload.result?.discarded_rolls) ? payload.result.discarded_rolls : null;
+            let breakdown = `Würfel: ${rolls.join(", ") || "-"}`;
+            if (modifier) breakdown += `, Modifikator ${modifier >= 0 ? "+" : ""}${modifier}`;
+            if (discarded) breakdown += `, verworfen: ${discarded.join(", ")}`;
+
             // Fullsession robot audit (F3), 2026-08-26: native rolls landed
             // in #diceLog + the Journal activity feed but never in #chatLog
             // the way Beyond20 rolls do (_handleExternalRoll above) -- so
@@ -2477,6 +2540,7 @@
             this._appendChatMessage({
                 sender_name: player,
                 message: summary,
+                rollBreakdown: breakdown,
             });
             this._logActivity(`${player} hat ${payload.dice} gewürfelt.`, "info");
         }
@@ -3130,6 +3194,7 @@
             }
             this._renderConditionsPopover();
             this._renderActionHotbar();
+            this._renderRollVisibilityOptions();
 
             // DM-only table controls: map upload and initiative rolling.
             const layerAddRow = document.getElementById("layerAddRow");
@@ -3398,12 +3463,25 @@
                 container.innerHTML = "Noch keine Chat-Nachrichten.";
                 return;
             }
-            container.innerHTML = this.chatRows.map((entry) => `
+            container.innerHTML = this.chatRows.map((entry, index) => {
+                const text = entry.text || entry.message || "";
+                // S08: roll messages get an expandable breakdown -- native
+                // <details>/<summary> (explicitly allowed by the
+                // acceptance criteria as an alternative to hand-rolled
+                // aria-expanded/aria-controls), so it is keyboard-
+                // accessible with zero extra JS state to manage.
+                const body = entry.rollBreakdown
+                    ? `<details><summary class="chat-roll-summary">${escapeHtml(text)}</summary>
+                        <div class="chat-roll-breakdown" id="chatRollBreakdown-${index}">${escapeHtml(entry.rollBreakdown)}</div>
+                       </details>`
+                    : `<div class="${entry.rollHidden ? "chat-roll-hidden" : ""}">${escapeHtml(text)}</div>`;
+                return `
                 <div class="chat-entry">
                     <div class="chat-meta">[${escapeHtml(entry.time)}] ${escapeHtml(entry.user || entry.sender_name || "player")}</div>
-                    <div>${escapeHtml(entry.text || entry.message || "")}</div>
+                    ${body}
                 </div>
-            `).join("");
+            `;
+            }).join("");
         }
 
         _appendChatMessage(entry) {
@@ -3413,6 +3491,8 @@
                 sender_name: entry?.sender_name || entry?.user || "player",
                 text: entry?.text || entry?.message || "",
                 message: entry?.message || entry?.text || "",
+                rollBreakdown: entry?.rollBreakdown || null,
+                rollHidden: Boolean(entry?.rollHidden),
             };
             this.chatRows.unshift(normalized);
             if (this.chatRows.length > 50) {

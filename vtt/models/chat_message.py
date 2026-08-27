@@ -19,6 +19,10 @@ class ChatMessage(db.Model):
     content_type = db.Column(db.String(20), default="user", nullable=False)
     client_event_id = db.Column(db.String(120), index=True)
     moderation_state = db.Column(db.String(30), default="visible", nullable=False)
+    # S08: public (everyone), gm_only (DM/CO_DM only), blind/self (DM sees
+    # the result, players see a generic placeholder -- server enforces this
+    # on broadcast, never trust a client-supplied visibility claim).
+    visibility = db.Column(db.String(20), default="public", nullable=False)
 
     edited_at = db.Column(db.DateTime)
     deleted_at = db.Column(db.DateTime, index=True)
@@ -53,6 +57,7 @@ class ChatMessage(db.Model):
             "author_username": self.author.username if self.author else None,
             "content": self.content,
             "content_type": self.content_type,
+            "visibility": self.visibility,
             "client_event_id": self.client_event_id,
             "moderation_state": self.moderation_state,
             "edited_at": self.edited_at.isoformat() if self.edited_at else None,

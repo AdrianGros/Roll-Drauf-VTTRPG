@@ -84,6 +84,37 @@ def _emit_session_event(event_name: str, campaign_id: int, session_id: int, payl
     return event_payload
 
 
+def _emit_scoped_roll(campaign_id: int, session_id: int, payload: dict, *, visibility: str):
+    """S08: roll visibility, role-scoped like _emit_token_event already
+    does for tokens. DM room always gets the real event (mirrors "GM sees
+    all rolls" -- and since blind/self are DM-only to request in the first
+    place, the roller themselves is always in this room for those modes,
+    so no separate per-user targeting is needed). Players get: the full
+    roll for "public", nothing for "gm_only" (a seq-bearing no-op tick so
+    gap detection stays quiet), or a generic placeholder for "blind"/
+    "self" that reveals a roll happened without leaking who/what -- same
+    restraint as S06's "Turn advanced" (no name) for hidden combatants.
+    """
+    envelope = build_event_envelope(campaign_id, session_id, payload, advance=True)
+    socketio.emit("dice_rolled", envelope, room=dm_room(campaign_id, session_id))
+
+    room = players_room(campaign_id, session_id)
+    if visibility == "public":
+        socketio.emit("dice_rolled", sibling_envelope(envelope, payload), room=room)
+    elif visibility == "gm_only":
+        socketio.emit("state:tick", sibling_envelope(envelope, {}), room=room)
+    else:
+        placeholder = {
+            "player": None,
+            "dice": None,
+            "result": None,
+            "hidden": True,
+            "message_id": payload.get("message_id"),
+        }
+        socketio.emit("dice_rolled", sibling_envelope(envelope, placeholder), room=room)
+    return envelope
+
+
 def _parse_session_room(room: str) -> tuple[int, int] | None:
     parts = room.split(":")
     if len(parts) == 4 and parts[0] == "campaign" and parts[2] == "session":
@@ -1132,10 +1163,44 @@ def register_socket_handlers(socketio):
         sides = int(match.group(2))
         mod = int(match.group(3)) if match.group(3) else 0
 
-        rolls = [random.randint(1, sides) for _ in range(num)]
+        # S08: ADV/DIS is a distinct roll mechanic (roll twice, take
+        # highest/lowest), never an arithmetic modifier -- kept as its own
+        # "mode" field rather than folded into the dice-string grammar
+        # (Apply decision: separate control, matches the research doc's own
+        # "simpler and less error-prone" reasoning). Only meaningful for a
+        # single-die roll; a multi-die formula ignores it rather than
+        # erroring, since "advantage on 3d6" has no well-defined meaning.
+        roll_mode = str((data or {}).get("mode", "normal")).strip().lower()
+        if roll_mode not in ("normal", "advantage", "disadvantage"):
+            roll_mode = "normal"
+
+        if roll_mode != "normal" and num == 1:
+            first_rolls = [random.randint(1, sides) for _ in range(num)]
+            second_rolls = [random.randint(1, sides) for _ in range(num)]
+            first_total, second_total = sum(first_rolls), sum(second_rolls)
+            chosen = first_rolls if (
+                (roll_mode == "advantage") == (first_total >= second_total)
+            ) else second_rolls
+            rolls = chosen
+            discarded_rolls = second_rolls if chosen is first_rolls else first_rolls
+        else:
+            rolls = [random.randint(1, sides) for _ in range(num)]
+            discarded_rolls = None
+            roll_mode = "normal"
         total = sum(rolls) + mod
 
-        result = {"rolls": rolls, "modifier": mod, "total": total}
+        result = {"rolls": rolls, "modifier": mod, "total": total, "mode": roll_mode}
+        if discarded_rolls is not None:
+            result["discarded_rolls"] = discarded_rolls
+
+        # S08: roll visibility -- CRITICAL per the research doc: the server
+        # is sole authority, a client-supplied claim is never trusted as-is.
+        # Blind/self are DM-only; a non-DM request silently downgrades to
+        # public rather than erroring the whole roll (the roll itself is
+        # still valid, only the requested secrecy wasn't).
+        visibility = str((data or {}).get("visibility", "public")).strip().lower()
+        if visibility not in ("public", "gm_only", "blind", "self"):
+            visibility = "public"
 
         player_tag = (data or {}).get("player", "anonymous")
         campaign_id, campaign_parse_error = _coerce_int((data or {}).get("campaign_id"), "campaign_id")
@@ -1148,6 +1213,9 @@ def register_socket_handlers(socketio):
         if lookup_error or not campaign or not game_session or not _is_active_member(campaign.id, user.id):
             emit("dice_rolled", {"player": player_tag, "dice": dice_str, "result": result}, room=request.sid)
             return result
+
+        if visibility in ("blind", "self") and not _is_dm(campaign.id, user.id):
+            visibility = "public"
 
         # Playtable-Audit 2026-08-25 (P2): internal rolls used to live only
         # in the client's 8-line ring buffer and vanished on reload, while
@@ -1162,16 +1230,17 @@ def register_socket_handlers(socketio):
                 f"{f' {mod:+d}' if mod else ''} = {total}"
             ),
             content_type="dice_roll",
+            visibility=visibility,
         )
         db.session.add(chat_message)
         db.session.commit()
 
-        _emit_session_event(
-            "dice_rolled",
+        _emit_scoped_roll(
             campaign.id,
             game_session.id,
             {"player": player_tag, "dice": dice_str, "result": result,
-             "message_id": chat_message.id},
+             "message_id": chat_message.id, "visibility": visibility},
+            visibility=visibility,
         )
         return result
 

@@ -79,7 +79,7 @@ class PlaySocketRuntime {
         });
     }
 
-    rollDice(dice, player = "player", callback = null) {
+    rollDice(dice, player = "player", callback = null, mode = "normal", visibility = "public") {
         if (!this.socket) return;
         this.socket.emit(
             "roll_dice",
@@ -88,6 +88,8 @@ class PlaySocketRuntime {
                 session_id: this.sessionId,
                 dice,
                 player,
+                mode,
+                visibility,
             },
             callback
         );

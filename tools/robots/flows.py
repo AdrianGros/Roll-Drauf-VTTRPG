@@ -741,6 +741,146 @@ def _token_hud_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _roll_composer_flow(stack, workdir: Path) -> list[str]:
+    """S08, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_08_ROLL_CHAT_2026-08-27.md,
+    Apply-approved): the roll composer. Single DM user -- covers die
+    presets, a real ADV/DIS roll, the expandable roll breakdown, DM-only
+    visibility options staying enabled for a DM, and the chat textarea's
+    Enter-submits/Shift+Enter-newline split. Cross-role visibility
+    ENFORCEMENT itself (a player never receiving a DM's blind roll) is
+    covered server-side in tests/test_play_table_chat_and_gating.py::
+    TestRollVisibility, not duplicated here as a second browser context --
+    documented scope split, not a coverage gap."""
+    import struct
+    import zlib
+
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    def _make_png(width, height, rgb):
+        def chunk(tag, data):
+            piece = struct.pack(">I", len(data)) + tag + data
+            return piece + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+        raw = b""
+        row = bytes(rgb) * width
+        for _ in range(height):
+            raw += b"\x00" + row
+        ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr)
+                + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="composer_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="composer_bot",
+                email="composer_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Wuerfelkampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Wuerfelsitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.click("#btnSidebarToggle")
+            page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
+            page.click('.sidebar-tab[data-tab="tools"]')
+            page.wait_for_selector("#panel-tools.active", timeout=10_000)
+
+            # Die preset sets the formula field.
+            page.click('[data-dice-preset="1d12"]')
+            if page.locator("#diceInput").input_value() != "1d12":
+                findings.append("[composer] clicking the d12 preset did not set #diceInput")
+
+            # DM sees Blind/Self enabled (not disabled/grayed).
+            blind_disabled = page.eval_on_selector(
+                '#rollVisibility option[value="blind"]', "el => el.disabled")
+            self_disabled = page.eval_on_selector(
+                '#rollVisibility option[value="self"]', "el => el.disabled")
+            if blind_disabled or self_disabled:
+                findings.append("[composer] Blind/Self are disabled for a DM -- they should only be disabled for non-DMs")
+
+            # A real advantage roll on a single d20: fires, lands in chat
+            # with an expandable breakdown.
+            page.select_option("#rollMode", "advantage")
+            page.fill("#diceInput", "1d20")
+            page.click("#btnRoll")
+            page.wait_for_function(
+                "() => (document.getElementById('diceLog')?.textContent || '').includes('Vorteil')",
+                timeout=10_000)
+            # #chatLog lives in a different sidebar tab (#panel-chat) than
+            # the dice composer (#panel-tools) -- switch tabs, it's
+            # display:none (genuinely hidden, not a bug) until we do.
+            page.click('.sidebar-tab[data-tab="chat"]')
+            page.wait_for_selector("#panel-chat.active", timeout=10_000)
+            page.wait_for_selector("#chatLog details", timeout=10_000)
+            page.click("#chatLog details summary")
+            breakdown_visible = page.locator("#chatLog details[open] .chat-roll-breakdown").count()
+            if breakdown_visible < 1:
+                findings.append("[composer] clicking the roll summary did not expand the breakdown detail")
+            breakdown_text = page.locator("#chatLog details[open] .chat-roll-breakdown").first.text_content() or ""
+            if "verworfen" not in breakdown_text:
+                findings.append(f"[composer] advantage roll's breakdown does not mention the discarded roll: {breakdown_text!r}")
+
+            # Chat textarea: Shift+Enter must NOT send, Enter alone must.
+            chat_messages_before = page.locator("#chatLog .chat-entry").count()
+            page.click("#chatInput")
+            page.keyboard.type("Zeile eins")
+            page.keyboard.press("Shift+Enter")
+            page.keyboard.type("Zeile zwei")
+            page.wait_for_timeout(200)
+            chat_messages_after_shift_enter = page.locator("#chatLog .chat-entry").count()
+            if chat_messages_after_shift_enter != chat_messages_before:
+                findings.append("[composer] Shift+Enter appears to have sent the message instead of inserting a line break")
+            if "\n" not in page.locator("#chatInput").input_value():
+                findings.append("[composer] Shift+Enter did not insert a newline into the textarea")
+            page.keyboard.press("Enter")
+            page.wait_for_function(
+                f"() => document.querySelectorAll('#chatLog .chat-entry').length > {chat_messages_before}",
+                timeout=10_000)
+            if page.locator("#chatInput").input_value() != "":
+                findings.append("[composer] sending did not clear the composer")
+
+        except Exception as error:
+            findings.append(f"[composer] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "roll-composer-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _action_hotbar_flow(stack, workdir: Path) -> list[str]:
     """S07, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_07_HOTBAR_2026-08-27.md,
     Apply-approved): the personal action hotbar over the already-built
@@ -1933,6 +2073,7 @@ FLOWS = {
     "conditions_picker": _conditions_picker_flow,
     "combat_turn_order": _combat_turn_order_flow,
     "action_hotbar": _action_hotbar_flow,
+    "roll_composer": _roll_composer_flow,
     "app_menu": _app_menu_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,
