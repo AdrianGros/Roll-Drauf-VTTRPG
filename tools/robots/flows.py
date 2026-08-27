@@ -102,6 +102,13 @@ def _dice_roll_flow(stack, workdir: Path) -> list[str]:
             return findings
 
         try:
+            # e834659, 2026-08-25: the tool rail moved into the right-sidebar
+            # drawer, closed by default -- #diceInput/#btnRoll live inside
+            # #panel-tools (already the active tab), but the drawer itself
+            # must be opened first or it's not visible. Same two lines
+            # _map_token_table_flow already uses for this drawer.
+            page.click("#btnSidebarToggle")
+            page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
             page.wait_for_selector("#diceInput", state="visible", timeout=15_000)
             # The socket join (session:join, emitted automatically on
             # connect by play-socket.js) is itself a round trip -- give it
@@ -137,6 +144,17 @@ def _dice_roll_flow(stack, workdir: Path) -> list[str]:
             findings.append(
                 f"[dice] #diceLog updated but #activityLog was not "
                 f"(only one of the two broadcast handlers fired): {activity_text[:200]!r}")
+
+        # F3, 2026-08-26: native rolls used to skip #chatLog entirely --
+        # _handleDiceBroadcast wrote #diceLog + #activityLog but never
+        # called _appendChatMessage, so players only saw the roll after a
+        # reload backfilled chat from the DB. Same live-broadcast check the
+        # Beyond20 flow below already does for #chatLog.
+        chat_text = page.locator("#chatLog").text_content() or ""
+        if "spielleitung_bot" not in chat_text:
+            findings.append(
+                f"[dice] #diceLog updated but native roll missing from "
+                f"#chatLog (live broadcast not reaching chat): {chat_text[:200]!r}")
 
         findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
         browser.close()
@@ -400,6 +418,137 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _campaign_hub_click_flow(stack, workdir: Path) -> list[str]:
+    """Desktop-Audit F1 (2026-08-26): every "Hub öffnen"/"Hub und
+    Vorbereitung" click on the campaigns book page used to hard-navigate
+    to /campaigns?campaign_id=...&classic=1 -- the URL shape that makes
+    campaigns.html fall back to its pre-redesign classic render (dark-navy
+    inline-styled .grid/.campaign-card/.detail-panel markup, a second
+    "Cockpit" nav, none of book-page.css/book-scene.css's actual visual
+    language) instead of staying in the same book UI as every other page.
+
+    tests/test_campaign_hub_session_prep_productization.py cannot catch
+    this class of bug: it Flask-test-client string-matches the raw HTML
+    response, and every one of those strings is still literally present in
+    the served markup (now inert inside campaigns.html's
+    #campaignsClassicTemplate) whether or not a real click into the book UI
+    ever reaches it. This clicks the real button through a real browser and
+    checks what is actually on screen afterward.
+    """
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="hub_klick_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="hub_klick_bot",
+                email="hub_klick_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign_response = api.post(
+            f"{stack.base_url}/api/campaigns",
+            data=json.dumps({"name": "Hub-Klick-Kampagne", "max_players": 6}),
+            headers=json_headers)
+        if campaign_response.status != 201:
+            findings.append(
+                f"[setup] POST /api/campaigns returned HTTP {campaign_response.status}")
+            browser.close()
+            return findings
+        campaign_payload = campaign_response.json()
+        campaign_id = (campaign_payload.get("campaign") or campaign_payload)["id"]
+
+        if not session.goto("/campaigns"):
+            findings.extend(f"[campaigns] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_selector('[data-testid="campaign-ledger-item"]', timeout=15_000)
+        except Exception as error:
+            findings.append(f"[ledger] campaign ledger never rendered: {error}")
+            browser.close()
+            return findings
+
+        hub_button = page.locator(".book-scene-ledger-item button", has_text="Hub")
+        try:
+            hub_button.first.wait_for(state="visible", timeout=15_000)
+            hub_button.first.click()
+        except Exception as error:
+            evidence_finding(
+                findings, page, workdir,
+                f"['Hub öffnen'] button not clickable from the campaigns book "
+                f"page: {type(error).__name__}: {str(error)[:200]}",
+                "finding-campaign-hub-click",
+                [".book-scene-ledger-item"],
+            )
+            browser.close()
+            return findings
+
+        page.wait_for_timeout(800)
+
+        after = page.evaluate(
+            """() => ({
+                url: window.location.pathname + window.location.search,
+                bodyBookScene: document.body.classList.contains('campaigns-route-book-scene'),
+                sceneVisible: Boolean(document.getElementById('book-dashboard-scene')
+                    && document.getElementById('book-dashboard-scene').classList.contains('is-visible')),
+                // The classic page's OWN header only ends up live in the DOM
+                // if campaigns.html promoted #campaignsClassicTemplate - i.e.
+                // exactly the "fell out of the book" failure this guards.
+                classicHeaderLive: Boolean(document.querySelector('body > header .logo')),
+                hubPanelPresent: Boolean(document.getElementById('campaignHubSessionPrep')),
+            })""")
+
+        if not campaign_id:
+            findings.append("[setup] no campaign id from the create-campaign response")
+        if after["classicHeaderLive"]:
+            findings.append(
+                f"[F1] clicking 'Hub öffnen' fell back to the classic page "
+                f"(the classic page's own <header> is live in the DOM); "
+                f"url={after['url']!r}")
+        if not after["bodyBookScene"]:
+            findings.append(
+                f"[F1] body lost the 'campaigns-route-book-scene' class after "
+                f"the hub click; url={after['url']!r}")
+        if not after["sceneVisible"]:
+            findings.append(
+                f"[F1] #book-dashboard-scene is no longer the visible surface "
+                f"after the hub click; url={after['url']!r}")
+        if not after["hubPanelPresent"]:
+            findings.append(
+                "[F1] the hub click did not render a campaign hub / "
+                "session-prep panel (#campaignHubSessionPrep) inside the book scene")
+
+        if findings:
+            try:
+                shot = workdir / "campaign-hub-click-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
     """External-roll compatibility (M-Beyond20): dispatch the exact DOM
     event the Beyond20 extension fires into registered pages
@@ -634,6 +783,7 @@ def _beyond20_bridge_flow(stack, workdir: Path) -> list[str]:
 FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
+    "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,
 }
 

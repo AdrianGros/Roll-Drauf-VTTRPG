@@ -255,9 +255,18 @@ def download_asset(asset_id):
 
 @assets_bp.route('/campaigns/<int:campaign_id>/upload', methods=['POST'])
 @jwt_required()
-@require_campaign_access(can_edit_campaign)
+@require_campaign_access(can_view_campaign)
 def upload_asset(campaign_id):
-    """Upload new asset to campaign."""
+    """Upload new asset to campaign.
+
+    F4: the route itself only requires active membership now (any Player
+    included) -- non-token asset types (map, handout, generic image)
+    still require campaign-editor rights, enforced explicitly below once
+    asset_type is known. This lets a player upload art for a token they
+    own (the play-table "Bild setzen..." control, gated correctly at the
+    socket layer to owner-or-DM per token) without opening up maps or
+    handouts, which stay DM/CO_DM-only exactly as before.
+    """
     campaign = Campaign.query.get(campaign_id)
 
     # Check file presence
@@ -268,6 +277,9 @@ def upload_asset(campaign_id):
     asset_type = str(request.form.get('asset_type', 'image')).strip().lower() or 'image'  # map, token, handout, image
     if asset_type not in LIBRARY_ALLOWED_ASSET_TYPES:
         return jsonify({'error': 'Unsupported asset type'}), 400
+
+    if asset_type != 'token' and not can_edit_campaign(current_user, campaign):
+        return jsonify({'error': 'Forbidden'}), 403
 
     # M20: Validate upload
     try:

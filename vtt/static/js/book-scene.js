@@ -47,6 +47,52 @@
         return `${href.pathname}${href.search}`;
     }
 
+    // Desktop-Audit F1/C1 (interim slice): every link that used to point at
+    // the campaign hub was really pointing at /campaigns?campaign_id=... -
+    // the URL shape that makes campaigns.html fall back to its pre-redesign
+    // classic render (see the inert #campaignsClassicTemplate there). Any
+    // href built with that shape - wherever it comes from, book-scene's own
+    // builders or a server-supplied dashboard snapshot - is recognized here
+    // so bindSceneNavigation() can render the hub in place instead of
+    // navigating into the classic page.
+    function campaignHubDetailKeyForHref(href) {
+        if (!href) {
+            return null;
+        }
+        let url;
+        try {
+            url = new URL(href, window.location.origin);
+        } catch (_error) {
+            return null;
+        }
+        if (url.pathname !== '/campaigns') {
+            return null;
+        }
+        const campaignId = Number(url.searchParams.get('campaign_id'));
+        if (!Number.isInteger(campaignId) || campaignId <= 0) {
+            return null;
+        }
+        return `campaign:${campaignId}`;
+    }
+
+    function findFocusedCampaignSession(sessions) {
+        const list = Array.isArray(sessions) ? sessions : [];
+        const active = list.find((session) => {
+            const status = String(session?.runtime_status || session?.session_state || session?.status || '').trim().toLowerCase();
+            return status === 'in_progress' || status === 'active';
+        });
+        return active || list[0] || null;
+    }
+
+    function buildHubActionButton(label, hubAction, opts = {}) {
+        const classes = ['btn', opts.primary === false ? 'btn-secondary' : 'btn-primary', 'book-scene-action-btn'];
+        const disabled = opts.disabled ? ' disabled' : '';
+        const sessionAttr = Number.isInteger(opts.sessionId) && opts.sessionId > 0
+            ? ` data-hub-session-id="${opts.sessionId}"`
+            : '';
+        return `<button type="button" class="${classes.join(' ')}" data-hub-action="${escapeHtml(hubAction)}"${sessionAttr}${disabled}>${escapeHtml(label)}</button>`;
+    }
+
     function normalizePath(path) {
         if (!path) {
             return '/login';
@@ -671,11 +717,15 @@
                 <div class="book-scene-action-row${className ? ` ${className}` : ''}">
                     ${actions.map((action) => {
                         const isPrimary = Boolean(action.primary);
-                        const directHref = action.href ? ` data-dashboard-href="${escapeHtml(action.href)}"` : '';
+                        // F1/C1: a campaign-hub href stays in the book - see
+                        // campaignHubDetailKeyForHref above.
+                        const detailKey = campaignHubDetailKeyForHref(action.href);
+                        const detailTarget = detailKey ? ` data-dashboard-detail="${escapeHtml(detailKey)}"` : '';
+                        const directHref = !detailKey && action.href ? ` data-dashboard-href="${escapeHtml(action.href)}"` : '';
                         const sceneRoute = action.route ? ` data-dashboard-route="${escapeHtml(action.route)}"` : '';
                         const sectionTarget = action.section ? ` data-dashboard-section="${escapeHtml(action.section)}"` : '';
                         const disabled = action.disabled ? ' disabled' : '';
-                        return `<button type="button" class="btn ${isPrimary ? 'btn-primary' : 'btn-secondary'} book-scene-action-btn"${directHref}${sceneRoute}${sectionTarget}${disabled}>${escapeHtml(action.label || 'Weiter')}</button>`;
+                        return `<button type="button" class="btn ${isPrimary ? 'btn-primary' : 'btn-secondary'} book-scene-action-btn"${directHref}${detailTarget}${sceneRoute}${sectionTarget}${disabled}>${escapeHtml(action.label || 'Weiter')}</button>`;
                     }).join('')}
                 </div>
             `;
@@ -705,10 +755,18 @@
             return `
                 <div class="book-scene-ledger">
                     ${campaigns.slice(0, 6).map((campaign) => {
-                        const hubHref = buildIntentHref('/campaigns', { campaign_id: campaign.id, classic: 1 });
+                        // F1/C1 (interim slice): this used to be a hard
+                        // data-dashboard-href navigation straight into the
+                        // classic /campaigns?campaign_id=...&classic=1
+                        // fallback. campaign_id alone (kept, minus classic=1)
+                        // still resolves there if JS never attaches this
+                        // click handler; data-dashboard-detail is what
+                        // bindSceneNavigation() actually wires up below to
+                        // render the hub in place instead.
+                        const hubHref = buildIntentHref('/campaigns', { campaign_id: campaign.id });
                         const isMember = Boolean(campaign.is_member);
                         const rowAttrs = isMember
-                            ? ` data-dashboard-href="${hubHref}" role="link" tabindex="0" data-testid="campaign-ledger-item"`
+                            ? ` data-dashboard-detail="${campaignHubDetailKeyForHref(hubHref)}" role="link" tabindex="0" data-testid="campaign-ledger-item"`
                             : ' data-testid="campaign-ledger-item"';
                         const actions = isMember
                             ? this.buildActionButtons([
@@ -1063,6 +1121,229 @@
             });
         },
 
+        // F1/C1 (interim slice): the actual campaign hub / session-prep view,
+        // rendered into #book-dashboard-scene with the same primitives as
+        // every other book page (buildStatStrip, buildActionButtons, the
+        // .book-scene-ledger* classes). This is the fix for the confirmed
+        // bug where every "Hub öffnen"/"Hub und Vorbereitung" button fell
+        // through to campaigns.html's pre-redesign classic render instead.
+        //
+        // Scope note: this covers campaign identity (name/status/members)
+        // and a real, data-backed session-prep summary (focused session,
+        // phase, active map, assigned character count, start/resume/create
+        // actions - reusing the same session-phase logic and play handoff
+        // as the existing Play-Launch modal below). It deliberately does not
+        // port the classic page's map-activation dropdown, asset library,
+        // Roll20 copy-workflow, or community/moderation panels - that is
+        // the larger "delete all legacy markup" rebuild (full C1), out of
+        // scope here. Those stay reachable via the classic fallback.
+        buildCampaignHubDetailMarkup(user, data) {
+            const campaign = data?.campaign || {};
+            const members = Array.isArray(data?.members) ? data.members : [];
+            const sessions = Array.isArray(data?.sessions) ? data.sessions : [];
+            const maps = Array.isArray(data?.maps) ? data.maps : [];
+            const characters = Array.isArray(data?.characters) ? data.characters : [];
+            const assignments = Array.isArray(data?.session_character_assignments) ? data.session_character_assignments : [];
+
+            const canManage = Boolean(campaign.is_owner) || campaign.your_role === 'DM' || campaign.your_role === 'CO_DM';
+            const campaignCharacterCount = characters.filter((character) => Number(character.campaign_id) === Number(campaign.id)).length;
+            const focusedSession = findFocusedCampaignSession(sessions);
+            const campaignStatus = campaign.status || 'active';
+            const campaignStatusTone = campaignStatus === 'active' ? 'live' : (campaignStatus === 'paused' ? 'paused' : '');
+
+            const memberRows = members.length
+                ? members.map((member) => `
+                    <div class="book-scene-ledger-item">
+                        <div class="book-scene-ledger-head">
+                            <strong>${escapeHtml(member.username || 'Unbekannt')}</strong>
+                            <span>${escapeHtml(member.campaign_role || 'Spieler')}</span>
+                        </div>
+                        <div class="book-scene-ledger-meta">${escapeHtml(member.status || 'active')}</div>
+                    </div>
+                `).join('')
+                : '<div class="book-scene-ledger-item is-empty">Noch keine Mitglieder.</div>';
+
+            let sessionSummary;
+            let sessionActions;
+            if (!focusedSession) {
+                sessionSummary = `<p class="book-scene-panel-copy">Noch keine Session angelegt. ${canManage ? 'Lege die erste Session an und starte direkt in die Vorbereitung.' : 'Die Spielleitung hat noch keine Session eröffnet.'}</p>`;
+                sessionActions = canManage
+                    ? buildHubActionButton('Session erstellen & zu Play', 'new-session', { primary: true })
+                    : buildHubActionButton('Wartet auf DM', 'noop', { disabled: true, primary: false });
+            } else {
+                const phase = this.getPlayLaunchSessionPhase(focusedSession);
+                const activeMap = maps.find((map) => Number(map.id) === Number(focusedSession.map_id)) || null;
+                const assignedCount = assignments.filter((assignment) => Number(assignment.session_id) === Number(focusedSession.id)).length;
+
+                // buildStatStrip's tiles are sized/typeset for short numbers
+                // (every other caller passes one) - a session name or map
+                // name has no such length guarantee, so this uses the
+                // ledger-head/meta pairing instead (same as buildCampaignLedger
+                // above: title + status pill, then a plain wrapping meta
+                // line), which is already built to hold arbitrary text.
+                sessionSummary = `
+                    <div class="book-scene-ledger-head">
+                        <strong>${escapeHtml(focusedSession.name || 'Session')}</strong>
+                        <span class="play-launch-status-dot is-${escapeHtml(phase.tone)}">${escapeHtml(phase.label)}</span>
+                    </div>
+                    <div class="book-scene-ledger-meta">Aktive Karte: ${escapeHtml(activeMap ? activeMap.name : 'Keine')} · Zugewiesene Helden: ${assignedCount}</div>
+                `;
+
+                if (phase.tone === 'live' || phase.tone === 'paused') {
+                    const label = phase.tone === 'live' ? 'Zu Play' : 'Fortsetzen';
+                    sessionActions = buildHubActionButton(label, 'open-session', { primary: true, sessionId: Number(focusedSession.id) });
+                } else if ((phase.tone === 'scheduled' || phase.tone === 'ready') && canManage) {
+                    sessionActions = buildHubActionButton('Session starten', 'start-session', { primary: true, sessionId: Number(focusedSession.id) });
+                } else if (phase.tone === 'scheduled' || phase.tone === 'ready') {
+                    sessionActions = buildHubActionButton('Wartet auf DM', 'noop', { disabled: true, primary: false });
+                } else if (canManage) {
+                    sessionActions = buildHubActionButton('Nächste Session anlegen', 'new-session', { primary: true });
+                } else {
+                    sessionActions = buildHubActionButton('Abgeschlossen', 'noop', { disabled: true, primary: false });
+                }
+            }
+
+            return this.buildPageShell('campaigns', user, {
+                eyebrow: 'Kapitel II',
+                title: campaign.name || 'Kampagnen-Hub',
+                showRunningHead: false,
+                copy: '',
+                showRightHeader: false,
+                leftPage: `
+                    ${this.buildActionButtons([{ label: 'Zur Kampagnenliste', route: '/campaigns' }])}
+                    ${this.buildStatStrip([
+                        { value: String(members.length), label: 'Mitglieder' },
+                        { value: String(sessions.length), label: 'Sessions' },
+                        { value: String(campaignCharacterCount), label: 'Kampagnen-Helden' },
+                    ])}
+                    <section class="book-scene-panel">
+                        <div class="book-scene-ledger-head">
+                            <span class="book-scene-panel-kicker">Kampagnen-Hub</span>
+                            <span class="play-launch-status-dot${campaignStatusTone ? ` is-${escapeHtml(campaignStatusTone)}` : ''}">${escapeHtml(campaignStatus)}</span>
+                        </div>
+                        <h2 class="book-scene-panel-title">Übersicht</h2>
+                        <p class="book-scene-panel-copy">${escapeHtml(campaign.description || 'Noch keine Beschreibung hinterlegt.')}</p>
+                        <div class="book-scene-ledger">${memberRows}</div>
+                    </section>
+                `,
+                rightPage: `
+                    <section class="book-scene-panel" id="campaignHubSessionPrep">
+                        <span class="book-scene-panel-kicker">Vor dem Spielabend</span>
+                        <h2 class="book-scene-panel-title">Session-Vorbereitung</h2>
+                        ${sessionSummary}
+                        <div class="book-scene-action-row book-scene-action-row--inline">${sessionActions}</div>
+                        <div class="play-launch-status" data-hub-status role="status" hidden></div>
+                    </section>
+                `,
+            });
+        },
+
+        setCampaignHubStatus(message, isError = false) {
+            const node = this.sceneSurface ? this.sceneSurface.querySelector('[data-hub-status]') : null;
+            if (!node) {
+                return;
+            }
+            if (!message) {
+                node.hidden = true;
+                return;
+            }
+            node.hidden = false;
+            node.textContent = message;
+            node.classList.toggle('is-error', Boolean(isError));
+        },
+
+        async startCampaignHubSession(campaignId, sessionId) {
+            this.setCampaignHubStatus('Session wird gestartet …');
+            try {
+                await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
+                this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns' });
+            } catch (error) {
+                this.setCampaignHubStatus(error.message || 'Session konnte nicht gestartet werden.', true);
+            }
+        },
+
+        async createCampaignHubSession(campaignId) {
+            this.setCampaignHubStatus('Neue Session wird angelegt …');
+            try {
+                const session = await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, 'POST', {
+                    name: 'Session ' + new Date().toLocaleDateString('de-DE'),
+                });
+                await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
+                this.enterPlay({ campaignId, sessionId: session.id, sourceRoute: 'campaigns' });
+            } catch (error) {
+                this.setCampaignHubStatus(error.message || 'Session konnte nicht erstellt werden.', true);
+            }
+        },
+
+        bindCampaignHubDetailActions(campaignId) {
+            if (!this.sceneSurface) {
+                return;
+            }
+            this.sceneSurface.querySelectorAll('[data-hub-action="open-session"]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    const sessionId = Number(node.getAttribute('data-hub-session-id'));
+                    this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns' });
+                });
+            });
+            this.sceneSurface.querySelectorAll('[data-hub-action="start-session"]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    const sessionId = Number(node.getAttribute('data-hub-session-id'));
+                    this.startCampaignHubSession(campaignId, sessionId);
+                });
+            });
+            this.sceneSurface.querySelectorAll('[data-hub-action="new-session"]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    this.createCampaignHubSession(campaignId);
+                });
+            });
+        },
+
+        async renderCampaignHubDetail(campaignId) {
+            const id = Number(campaignId);
+            if (!this.sceneSurface || !Number.isInteger(id) || id <= 0) {
+                return;
+            }
+
+            this.currentView = 'campaigns';
+            this.sceneSurface.dataset.bookRoute = 'campaigns';
+            this.sceneSurface.innerHTML = this.buildPageShell('campaigns', this.sceneUser, {
+                eyebrow: 'Kapitel II',
+                title: 'Kampagnen-Hub',
+                showRunningHead: false,
+                copy: '',
+                showRightHeader: false,
+                leftPage: '<p class="book-scene-panel-copy">Hub wird geladen …</p>',
+            });
+            this.bindSceneNavigation();
+
+            if (!window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
+                return;
+            }
+
+            try {
+                const data = await window.Auth.makeAuthRequest(`/api/campaigns/${id}`);
+                if (!data) {
+                    return;
+                }
+                this.sceneSurface.innerHTML = this.buildCampaignHubDetailMarkup(this.sceneUser, data);
+                this.bindSceneNavigation();
+                this.bindCampaignHubDetailActions(id);
+            } catch (error) {
+                this.sceneSurface.innerHTML = this.buildPageShell('campaigns', this.sceneUser, {
+                    eyebrow: 'Kapitel II',
+                    title: 'Kampagnen-Hub',
+                    showRunningHead: false,
+                    copy: '',
+                    showRightHeader: false,
+                    leftPage: `
+                        <p class="book-scene-panel-copy">${escapeHtml(error?.message || 'Kampagnen-Hub konnte nicht geladen werden.')}</p>
+                        ${this.buildActionButtons([{ label: 'Zur Kampagnenliste', route: '/campaigns', primary: true }])}
+                    `,
+                });
+                this.bindSceneNavigation();
+            }
+        },
+
         buildCharactersMarkup(user, snapshot = null) {
             const characters = snapshot?.characters || [];
             const distinctClasses = new Set(characters.map((character) => character.class).filter(Boolean)).size;
@@ -1134,6 +1415,39 @@
                         if (event.key === 'Enter' || event.key === ' ') {
                             event.preventDefault();
                             navigate();
+                        }
+                    });
+                }
+            });
+
+            // F1/C1 (interim slice): renders the campaign hub in place of a
+            // hard navigation into the classic /campaigns?campaign_id=...
+            // fallback (see campaignHubDetailKeyForHref above).
+            this.sceneSurface.querySelectorAll('[data-dashboard-detail]').forEach((node) => {
+                const openDetail = (event) => {
+                    // The ledger row and its own "Hub öffnen" button both
+                    // carry this attribute (row = whole-row click target per
+                    // D02, button = the visible affordance inside it) - stop
+                    // the bubble here so a button click does not also
+                    // re-trigger the ancestor row's identical handler.
+                    if (event) {
+                        event.stopPropagation();
+                    }
+                    const detail = node.getAttribute('data-dashboard-detail');
+                    if (!detail) {
+                        return;
+                    }
+                    const [kind, rawId] = detail.split(':');
+                    if (kind === 'campaign') {
+                        this.renderCampaignHubDetail(Number(rawId));
+                    }
+                };
+                node.addEventListener('click', openDetail);
+                if (node.tagName !== 'BUTTON' && node.tagName !== 'A') {
+                    node.addEventListener('keydown', (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            openDetail();
                         }
                     });
                 }

@@ -692,6 +692,19 @@
             font-size: 0.7rem;
             transition: transform 150ms ease;
         }
+        /* F5: every floating panel's header doubles as a drag handle
+           (desktop only -- play-ui.js's _bindWidgetDragging no-ops below
+           the 1040px "sheet" breakpoint, where these headers go back to
+           being plain static stacked headers). */
+        .floating h3.widget-drag-handle {
+            cursor: grab;
+        }
+        .floating.widget-dragging {
+            user-select: none;
+        }
+        .floating.widget-dragging .widget-drag-handle {
+            cursor: grabbing;
+        }
         #turnOrderWidget {
             left: 1rem;
             bottom: 1rem;
@@ -1693,6 +1706,10 @@
                         <button type="button" id="btnOpenSheet" class="mini-btn">Bogen öffnen</button>
                     </div>
                     <div id="tokenSelectionDetail" hidden style="margin-bottom:0.45rem;">
+                        <div class="button-row" style="margin-bottom:0.35rem;">
+                            <input id="tokenNameInput" type="text" placeholder="Name" style="width:140px;" title="Token-Name" maxlength="80">
+                            <button type="button" id="btnTokenNameSet" class="mini-btn">Umbenennen</button>
+                        </div>
                         <div class="button-row" style="margin-bottom:0.35rem;">
                             <input id="tokenHpCurrent" type="number" placeholder="HP" style="width:70px;" title="Aktuelle HP">
                             <input id="tokenHpMax" type="number" placeholder="Max" style="width:70px;" title="Maximale HP">

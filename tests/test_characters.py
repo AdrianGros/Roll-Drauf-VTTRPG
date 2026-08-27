@@ -173,6 +173,28 @@ class TestCharacterCreate:
         )
         assert response.status_code == 403
 
+    def test_create_character_defaults_to_not_discoverable(self, auth_client):
+        """F2: characters are private (not discoverable) by default when the field is omitted."""
+        response = auth_client.post(
+            "/api/characters",
+            json={"name": "Bilbo Baggins", "race": "Halfling", "class": "Rogue"},
+        )
+
+        assert response.status_code == 201
+        data = response.get_json()
+        assert data["is_discoverable"] is False
+
+    def test_create_character_can_opt_into_discoverable(self, auth_client):
+        """F2: is_discoverable=True in the create payload is honored and stored."""
+        response = auth_client.post(
+            "/api/characters",
+            json={"name": "Legolas", "race": "Elf", "class": "Ranger", "is_discoverable": True},
+        )
+
+        assert response.status_code == 201
+        data = response.get_json()
+        assert data["is_discoverable"] is True
+
 
 class TestCharacterList:
     """Test character listing."""

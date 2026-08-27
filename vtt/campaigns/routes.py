@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
+from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 
 from vtt.combat import service as combat_service
@@ -75,6 +76,7 @@ def _serialize_campaign(campaign: Campaign, user_id: int | None = None):
         "owner_id": campaign.owner_id,
         "status": campaign.status,
         "max_players": campaign.max_players,
+        "is_discoverable": campaign.is_discoverable,
         "member_count": len(active_members),
         "players_count": len(active_members),  # Backward compatibility for older templates.
         "session_count": session_count,
@@ -308,13 +310,32 @@ def _serialize_combat_state(encounter: CombatEncounter | None, state: SessionSta
 @campaigns_bp.route("/campaigns", methods=["GET"])
 @jwt_required()
 def list_campaigns():
-    """List all public campaigns."""
+    """List campaigns visible to the caller when browsing.
+
+    Visibility (this is what makes "private" campaigns actually stay hidden):
+    a campaign is returned only if it is marked discoverable, or the caller
+    owns it, or the caller is already an active member of it. Campaigns that
+    are private and belong to someone else never appear here, even though
+    they still exist and can be joined directly via an invite.
+    """
     user, error = _get_current_user()
     if error:
         return error
 
+    member_campaign_ids = db.session.query(CampaignMember.campaign_id).filter(
+        CampaignMember.user_id == user.id,
+        CampaignMember.status == "active",
+    )
+
     campaigns = (
-        Campaign.query.filter(Campaign.deleted_at.is_(None))
+        Campaign.query.filter(
+            Campaign.deleted_at.is_(None),
+            or_(
+                Campaign.is_discoverable.is_(True),
+                Campaign.owner_id == user.id,
+                Campaign.id.in_(member_campaign_ids),
+            ),
+        )
         .order_by(Campaign.created_at.desc())
         .all()
     )
@@ -334,6 +355,7 @@ def create_campaign():
     name = str(data.get("name", "")).strip()
     description = data.get("description")
     max_players = data.get("max_players", 6)
+    is_discoverable = bool(data.get("is_discoverable", False))
 
     if not name:
         return jsonify({"error": "campaign name required"}), 400
@@ -353,6 +375,7 @@ def create_campaign():
         owner_id=user.id,
         status="active",
         max_players=max_players,
+        is_discoverable=is_discoverable,
     )
     db.session.add(campaign)
     db.session.flush()

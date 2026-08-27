@@ -20,7 +20,10 @@ class Character(db.Model):
     background = db.Column(db.String(100))
     level = db.Column(db.Integer, default=1)
     xp = db.Column(db.Integer, default=0)
-    
+    # Discoverability: whether this character shows up in a future player-finder /
+    # browse surface. No browse surface exists yet; this only stores the flag.
+    is_discoverable = db.Column(db.Boolean, nullable=False, default=False)
+
     # Combat Stats
     ac = db.Column(db.Integer, default=10)  # Armor Class
     hp_current = db.Column(db.Integer, default=10)
@@ -135,6 +138,7 @@ class Character(db.Model):
             'system_id': roll_drauf_light.get('system_id'),
             'campaign_id': self.campaign_id,
             'level': self.level,
+            'is_discoverable': self.is_discoverable,
             'hp': f"{self.hp_current}/{self.hp_max}",
             'ac': self.ac,
             'avatar_url': avatar_url,

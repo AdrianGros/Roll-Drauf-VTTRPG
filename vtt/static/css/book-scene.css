@@ -861,12 +861,16 @@ body.play-workspace-realign main {
     line-height: 1.45;
 }
 
-/* Mitglieder-Zeilen sind seit dem Desktop-Audit (D02) selbst Klickziele. */
-.book-scene-ledger-item[data-dashboard-href] {
+/* Mitglieder-Zeilen sind seit dem Desktop-Audit (D02) selbst Klickziele.
+   data-dashboard-detail ist der F1/C1-Nachfolger von data-dashboard-href
+   für Ziele, die im Buch gerendert werden statt zu navigieren. */
+.book-scene-ledger-item[data-dashboard-href],
+.book-scene-ledger-item[data-dashboard-detail] {
     cursor: pointer;
 }
 
-.book-scene-ledger-item[data-dashboard-href]:focus-visible {
+.book-scene-ledger-item[data-dashboard-href]:focus-visible,
+.book-scene-ledger-item[data-dashboard-detail]:focus-visible {
     outline: 2px solid var(--vtt-accent, #7a2f2f);
     outline-offset: 2px;
 }

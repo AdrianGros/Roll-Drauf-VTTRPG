@@ -548,6 +548,12 @@
         }
 
         function openCampaignHub(id) {
+            // F1/C1 (interim slice): render the hub in the book instead of
+            // hard-navigating into campaigns.html's classic fallback.
+            if (window.BookScene && typeof BookScene.renderCampaignHubDetail === 'function') {
+                BookScene.renderCampaignHubDetail(id);
+                return;
+            }
             goTo(`/campaigns?campaign_id=${id}`);
         }
 

@@ -196,6 +196,24 @@
             resize: vertical;
         }
 
+        .campaign-create-field--checkbox {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+
+        .campaign-create-field--checkbox input[type="checkbox"] {
+            width: auto;
+            flex: 0 0 auto;
+            margin-top: 0.2rem;
+        }
+
+        .campaign-create-checkbox-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
         .campaign-create-actions {
             display: flex;
             flex-wrap: wrap;
@@ -1321,6 +1339,17 @@
 </head>
 <body class="spellbook campaigns-route-book-scene">
     <div id="campaignsSceneStatus" role="status" aria-live="polite">Kampagnen werden vorbereitet …</div>
+    <!-- Desktop-Audit D09/F1/C1 (interim slice): this used to sit directly in
+         the live DOM, merely CSS-hidden while the book render was active -
+         which is exactly what produced the duplicate-ID hazard in D09
+         (getElementById always hit this copy first). Wrapping it in an inert
+         <template> is the same house pattern already used for
+         signup/register/character-sheet's book content
+         (getExternalTemplateId in book-scene.js): nothing inside is part of
+         the live DOM/CSS cascade unless explicitly promoted. That only
+         happens in bootstrapCampaignsScene()'s classic branch below, which
+         is now a true fallback rather than the primary click path. -->
+    <template id="campaignsClassicTemplate">
     <header>
         <div class="logo">roll drauf VTT</div>
         <div class="header-actions">
@@ -1406,6 +1435,13 @@
                                     <span class="campaign-create-label">Nächster Schritt nach dem Anlegen</span>
                                     <div class="campaign-create-help">Nach dem Anlegen öffnet sich der Kampagnen-Hub mit Einladungen, Karten und Session-Vorbereitung.</div>
                                 </div>
+                                <label class="campaign-create-field campaign-create-field--full campaign-create-field--checkbox">
+                                    <input id="campaignCreateDiscoverable" type="checkbox">
+                                    <span class="campaign-create-checkbox-copy">
+                                        <span class="campaign-create-label">Öffentlich sichtbar (Spielersuche)</span>
+                                        <span class="campaign-create-help">Kampagnen sind standardmäßig privat und tauchen nirgends in der Übersicht auf. „Öffentlich" bedeutet nur, dass die Kampagne künftig in der Spielersuche gefunden werden kann — der Beitritt läuft weiterhin ausschließlich über eine Einladung.</span>
+                                    </span>
+                                </label>
                             </div>
 
                             <div id="campaignCreateState" class="campaign-create-state" hidden></div>
@@ -1478,6 +1514,7 @@
     <footer>
         <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
     </footer>
+    </template>
 
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/community.js"></script>
@@ -1495,9 +1532,23 @@
         let sessionPrepAssetStats = {};
         let sessionPrepAssetStatsRequestToken = 0;
 
+        // Desktop-Audit D09/F1/C1 (interim slice): promotes the inert
+        // #campaignsClassicTemplate into the live DOM. Only called from the
+        // classic-fallback branch below - the primary click path never
+        // touches this, so the classic markup/IDs stay out of the live DOM
+        // (and out of getElementById's reach) otherwise.
+        function promoteClassicCampaignsMarkup() {
+            const template = document.getElementById('campaignsClassicTemplate');
+            if (!template) {
+                return;
+            }
+            template.replaceWith(template.content.cloneNode(true));
+        }
+
         async function bootstrapCampaignsScene() {
             const url = new URL(window.location.href);
             if (url.searchParams.has('campaign_id') || url.searchParams.get('classic') === '1') {
+                promoteClassicCampaignsMarkup();
                 document.body.classList.remove('campaigns-route-book-scene');
                 const statusNode = document.getElementById('campaignsSceneStatus');
                 if (statusNode) {
@@ -1763,11 +1814,13 @@
             const nameField = document.getElementById("campaignCreateName");
             const descriptionField = document.getElementById("campaignCreateDescription");
             const maxPlayersField = document.getElementById("campaignCreateMaxPlayers");
+            const discoverableField = document.getElementById("campaignCreateDiscoverable");
 
             const name = nameField ? nameField.value.trim() : "";
             const description = descriptionField ? descriptionField.value.trim() : "";
             const maxPlayersRaw = maxPlayersField ? maxPlayersField.value : "";
             const maxPlayers = Number(maxPlayersRaw);
+            const isDiscoverable = discoverableField ? discoverableField.checked : false;
 
             if (!name) {
                 setCampaignCreationState("Bitte zuerst einen Kampagnennamen eingeben.", "error");
@@ -1789,6 +1842,7 @@
                     name,
                     description,
                     max_players: maxPlayers,
+                    is_discoverable: isDiscoverable,
                 });
                 lastCreatedCampaign = created || null;
                 renderCampaignCreateSuccess();

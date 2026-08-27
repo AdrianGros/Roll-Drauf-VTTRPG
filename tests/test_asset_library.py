@@ -310,3 +310,108 @@ class TestAssetThumbnails:
         response = dm_client.get(f"/api/assets/{asset.id}/thumbnail")
         assert response.status_code == 200
         assert response.data == b"FULLPREVIEWDATA"
+
+
+class TestAssetUploadPermissions:
+    """F4 Gap A: a Player who owns a token could see the play table's
+    "Bild setzen..." control but the server always 403'd the upload,
+    because @require_campaign_access(can_edit_campaign) blocked every
+    Player regardless of what they were uploading or why. Fixed by
+    relaxing the route to membership-only and pushing the DM/CO_DM-only
+    check down to just the non-token asset types (map, handout, generic
+    image) -- those must stay exactly as restricted as before.
+    """
+
+    def _grant_quota(self, user, gb=1):
+        user.storage_quota_gb = gb
+        db.session.commit()
+
+    def test_player_can_upload_token_asset_for_their_own_token(
+        self, app, dm_user, player_user, player_client, tmp_path
+    ):
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        self._grant_quota(player_user)
+
+        response = player_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (io.BytesIO(_make_png_bytes()), "my-token-face.png"),
+                "asset_type": "token",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 201
+        data = response.get_json()
+        assert data["asset_type"] == "token"
+
+        asset = Asset.query.get(data["asset_id"])
+        assert asset.uploaded_by == player_user.id
+        assert asset.campaign_id == campaign.id
+
+    def test_player_cannot_upload_map_asset(self, app, dm_user, player_user, player_client, tmp_path):
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        self._grant_quota(player_user)
+
+        response = player_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (io.BytesIO(_make_png_bytes()), "battle-map.png"),
+                "asset_type": "map",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 403
+
+    def test_player_cannot_upload_handout_asset(self, app, dm_user, player_user, player_client, tmp_path):
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        self._grant_quota(player_user)
+
+        response = player_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (io.BytesIO(b"handout notes"), "handout.txt"),
+                "asset_type": "handout",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 403
+
+    def test_non_member_cannot_upload_token_asset(self, app, dm_user, outsider_client, tmp_path):
+        """The route is membership-only now, not public: someone who was
+        never added to the campaign still gets 403, even for asset_type
+        'token'."""
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+
+        response = outsider_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (io.BytesIO(_make_png_bytes()), "not-my-campaign.png"),
+                "asset_type": "token",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 403
+
+    def test_dm_can_still_upload_map_asset(self, app, dm_user, dm_client, tmp_path):
+        """Unchanged behaviour: the campaign's DM keeps full upload rights
+        for every asset type, not just token."""
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        self._grant_quota(dm_user)
+
+        response = dm_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (io.BytesIO(_make_png_bytes()), "battle-map.png"),
+                "asset_type": "map",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 201

@@ -18,13 +18,14 @@ def _login(client, username, password="Password123!"):
     return response
 
 
-def _create_campaign(owner_user, name="Test Campaign"):
+def _create_campaign(owner_user, name="Test Campaign", is_discoverable=False):
     campaign = Campaign(
         name=name,
         description="A test campaign",
         owner_id=owner_user.id,
         status="active",
         max_players=6,
+        is_discoverable=is_discoverable,
     )
     db.session.add(campaign)
     db.session.flush()
@@ -135,6 +136,26 @@ class TestCampaignCRUD:
         assert response.status_code == 400
         assert response.get_json()["error"] == "max_players must be between 2 and 20"
 
+    def test_create_campaign_defaults_to_not_discoverable(self, dm_client):
+        """F2: campaigns are private (not discoverable) by default when the field is omitted."""
+        response = dm_client.post(
+            "/api/campaigns",
+            json={"name": "Secret Dungeon", "description": "Shh", "max_players": 6},
+        )
+        assert response.status_code == 201
+        data = response.get_json()
+        assert data["is_discoverable"] is False
+
+    def test_create_campaign_can_opt_into_discoverable(self, dm_client):
+        """F2: is_discoverable=True in the create payload is honored and stored."""
+        response = dm_client.post(
+            "/api/campaigns",
+            json={"name": "Open Table", "max_players": 6, "is_discoverable": True},
+        )
+        assert response.status_code == 201
+        data = response.get_json()
+        assert data["is_discoverable"] is True
+
     def test_get_campaign_details_success(self, dm_client, dm_user):
         campaign = _create_campaign(dm_user)
         response = dm_client.get(f"/api/campaigns/{campaign.id}")
@@ -212,6 +233,77 @@ class TestCampaignCRUD:
 
         response = player_client.delete(f"/api/campaigns/{campaign.id}")
         assert response.status_code == 403
+
+
+class TestCampaignListVisibility:
+    """F2: GET /api/campaigns (the 'Alle' browse tab) must not leak private campaigns."""
+
+    def test_private_campaign_from_another_user_is_hidden_from_non_member(
+        self, dm_client, dm_user, other_user
+    ):
+        _create_campaign(other_user, name="Other's Private Game", is_discoverable=False)
+
+        response = dm_client.get("/api/campaigns")
+        assert response.status_code == 200
+        names = [c["name"] for c in response.get_json()]
+        assert "Other's Private Game" not in names
+
+    def test_discoverable_campaign_from_another_user_is_visible(
+        self, dm_client, dm_user, other_user
+    ):
+        _create_campaign(other_user, name="Other's Open Table", is_discoverable=True)
+
+        response = dm_client.get("/api/campaigns")
+        assert response.status_code == 200
+        names = [c["name"] for c in response.get_json()]
+        assert "Other's Open Table" in names
+
+    def test_own_private_campaign_is_always_visible_to_owner(self, dm_client, dm_user):
+        _create_campaign(dm_user, name="My Private Game", is_discoverable=False)
+
+        response = dm_client.get("/api/campaigns")
+        assert response.status_code == 200
+        names = [c["name"] for c in response.get_json()]
+        assert "My Private Game" in names
+
+    def test_joined_private_campaign_is_visible_to_member(
+        self, dm_client, dm_user, player_client, player_user
+    ):
+        campaign = _create_campaign(dm_user, name="Joined Private Game", is_discoverable=False)
+        db.session.add(
+            CampaignMember(
+                campaign_id=campaign.id,
+                user_id=player_user.id,
+                campaign_role="Player",
+                status="active",
+                joined_at=datetime.utcnow(),
+            )
+        )
+        db.session.commit()
+
+        response = player_client.get("/api/campaigns")
+        assert response.status_code == 200
+        names = [c["name"] for c in response.get_json()]
+        assert "Joined Private Game" in names
+
+    def test_invited_but_not_yet_accepted_member_does_not_see_private_campaign(
+        self, dm_client, dm_user, player_client, player_user
+    ):
+        campaign = _create_campaign(dm_user, name="Pending Invite Game", is_discoverable=False)
+        db.session.add(
+            CampaignMember(
+                campaign_id=campaign.id,
+                user_id=player_user.id,
+                campaign_role="Player",
+                status="invited",
+            )
+        )
+        db.session.commit()
+
+        response = player_client.get("/api/campaigns")
+        assert response.status_code == 200
+        names = [c["name"] for c in response.get_json()]
+        assert "Pending Invite Game" not in names
 
 
 class TestCampaignInvites:

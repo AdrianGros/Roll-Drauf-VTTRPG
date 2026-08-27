@@ -8,6 +8,16 @@
     const BOOK_RETURN_PHASES = new Set(["table-exit", "book-route-entry"]);
     const PLAY_RETURN_EXIT_DURATION_MS = 520;
     const BOOK_RETURN_ARRIVAL_DURATION_MS = 680;
+    // F5: the four independent floating panels on the play table
+    // (everything still edge-pinned -- the sidebar tabs and #sheetDrawer --
+    // is explicitly out of scope, see _bindWidgetDragging).
+    const WIDGET_POSITION_STORAGE_PREFIX = "vtt.play.widget-pos.";
+    const DRAGGABLE_WIDGET_IDS = ["layersWidget", "turnOrderWidget", "tokenWidget", "tokenCreatePanel"];
+    const WIDGET_DRAG_MIN_WIDTH_MEDIA = "(min-width: 1040px)";
+    // At least this many px of the panel must stay inside the stage on
+    // every edge -- "clamped" per F5, not "confined": a corner may still
+    // peek past the edge, it just can never be dragged fully out of reach.
+    const WIDGET_DRAG_VISIBLE_MARGIN = 32;
 
     function escapeHtml(value) {
         return String(value ?? "")
@@ -794,6 +804,7 @@
             this._bindViewportNavigation();
             this._bindWidgetToggles();
             this._setupTableSheet();
+            this._bindWidgetDragging();
 
             const sendChat = () => {
                 const input = document.getElementById("chatInput");
@@ -858,7 +869,16 @@
             }
         }
 
-        _openTokenMenu() {
+        // F4: shared "make the token panel visible" step -- expand
+        // #tokenWidget and, on the mobile sheet layout, open #tableSheet if
+        // it is currently closed. Used both when starting to place a new
+        // token (_openTokenMenu, via the ribbon's TOK tool) and when
+        // selecting an existing one on the map (_selectToken) -- before
+        // this, selecting a token updated #tokenSelectionSummary/Detail
+        // text but never actually surfaced the panel those live in, so the
+        // controls stayed invisible on both desktop (panel starts
+        // collapsed) and mobile (panel lives inside a closed sheet).
+        _revealTokenWidget() {
             const tokenWidget = document.getElementById("tokenWidget");
             if (!tokenWidget) return;
 
@@ -874,6 +894,10 @@
             if (tableSheet && tableSheet.hidden && tableSheetButton) {
                 tableSheetButton.click();
             }
+        }
+
+        _openTokenMenu() {
+            this._revealTokenWidget();
 
             const uploadButton = document.getElementById("btnTokenUpload");
             if (uploadButton && !uploadButton.hidden) {
@@ -1132,6 +1156,29 @@
             }
         }
 
+        // F4: rename is the same owner-or-DM operation as the HP setter
+        // above -- "name" is already an unrestricted field in the server's
+        // token patch allow-list (_parse_token_patch in socket_handlers.py),
+        // so this only needed a UI, no new server logic.
+        async _setSelectedTokenName() {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token) return;
+            const nameInput = document.getElementById("tokenNameInput");
+            const nextName = String(nameInput?.value || "").trim();
+            if (!nextName || nextName === token.name) return;
+            try {
+                if (this.socket && this.socket.isConnected) {
+                    this.socket.updateToken(token.id, Number(token.version || 1), { name: nextName });
+                } else {
+                    await this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), { name: nextName });
+                    await this.loadBootstrap();
+                }
+                this._logActivity(`Token umbenannt: ${nextName}.`, "info");
+            } catch (error) {
+                this._showMessage(error.message || "Token konnte nicht umbenannt werden.", true);
+            }
+        }
+
         async _setSelectedTokenHp() {
             const token = this._findStateToken(this.selectedTokenId);
             if (!token) return;
@@ -1186,6 +1233,10 @@
         _bindWidgetToggles() {
             document.querySelectorAll(".widget-toggle[data-widget]").forEach((header) => {
                 const toggle = () => {
+                    // F5: a header drag that actually moved the panel must
+                    // not also collapse/expand it -- _bindWidgetDragging
+                    // sets this for the duration of the resulting click.
+                    if (header.dataset.suppressToggle === "1") return;
                     const widget = document.getElementById(header.getAttribute("data-widget"));
                     if (!widget) return;
                     const collapsed = widget.classList.toggle("collapsed");
@@ -1212,6 +1263,150 @@
             if (tokenWidget) tokenWidget.classList.add("collapsed");
             turnWidget?.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "false");
             tokenWidget?.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "false");
+        }
+
+        // F5: every independent floating panel on the play table (layers,
+        // turn order, tokens, the token-create popup) becomes a freely
+        // movable little window, dragged by its existing header -- desktop
+        // only. Mirrors _bindWidgetToggles' uniform-loop-over-4-ids shape;
+        // the pointer-capture mechanics are the same pattern the token
+        // marker drag on the map canvas already uses (see
+        // _bindMapInteractions), just retargeted at a panel instead of a
+        // token, with no grid-snap and no server sync.
+        //
+        // OUT OF SCOPE (see the F5 ticket): chat/journal/dice-log are tabs
+        // inside the single edge-pinned right-sidebar drawer, and the
+        // character sheet is its own edge-pinned drawer (#sheetDrawer) --
+        // neither is an independent floating panel today, so neither is
+        // touched here.
+        _bindWidgetDragging() {
+            const desktopMedia = window.matchMedia(WIDGET_DRAG_MIN_WIDTH_MEDIA);
+            const stage = document.querySelector(".stage");
+            if (!stage) return;
+
+            let drag = null;
+
+            const restorePosition = (widget, storageKey) => {
+                if (!desktopMedia.matches) return;
+                let stored = null;
+                try {
+                    const raw = window.sessionStorage.getItem(storageKey);
+                    stored = raw ? JSON.parse(raw) : null;
+                } catch (_error) {
+                    stored = null;
+                }
+                if (!stored || !Number.isFinite(stored.left) || !Number.isFinite(stored.top)) return;
+                widget.style.left = `${stored.left}px`;
+                widget.style.top = `${stored.top}px`;
+                widget.style.right = "auto";
+                widget.style.bottom = "auto";
+            };
+
+            DRAGGABLE_WIDGET_IDS.forEach((widgetId) => {
+                const widget = document.getElementById(widgetId);
+                const header = widget?.querySelector("h3");
+                if (!widget || !header) return;
+
+                const storageKey = `${WIDGET_POSITION_STORAGE_PREFIX}${widgetId}`;
+                restorePosition(widget, storageKey);
+                header.classList.add("widget-drag-handle");
+
+                header.addEventListener("pointerdown", (event) => {
+                    // Mobile "sheet" layout (play.html, .table-sheet .floating)
+                    // forces position:static below 1040px -- stay out of its
+                    // way entirely rather than fighting that override.
+                    if (!desktopMedia.matches) return;
+                    if (event.button !== undefined && event.button !== 0) return;
+                    const stageRect = stage.getBoundingClientRect();
+                    const widgetRect = widget.getBoundingClientRect();
+                    // The right sidebar (D14 dodge rule, ~line 630) overlays
+                    // the stage without shrinking it -- reserve the same
+                    // strip here so a dragged widget can never be parked
+                    // where the drawer would later cover it at z 26 (panels
+                    // sit at z 18 and cannot out-rank the drawer by design).
+                    const sidebarW = parseFloat(getComputedStyle(document.documentElement)
+                        .getPropertyValue("--sidebar-w")) || 340;
+                    const remPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+                    drag = {
+                        widget, header, storageKey,
+                        pointerId: event.pointerId,
+                        startClientX: event.clientX,
+                        startClientY: event.clientY,
+                        startLeft: widgetRect.left - stageRect.left,
+                        startTop: widgetRect.top - stageRect.top,
+                        width: widgetRect.width,
+                        height: widgetRect.height,
+                        sidebarReserve: sidebarW + remPx,
+                        moved: false,
+                    };
+                });
+            });
+
+            window.addEventListener("pointermove", (event) => {
+                if (!drag || event.pointerId !== drag.pointerId) return;
+                const deltaX = event.clientX - drag.startClientX;
+                const deltaY = event.clientY - drag.startClientY;
+                if (!drag.moved && Math.hypot(deltaX, deltaY) < 4) return;
+                if (!drag.moved) {
+                    drag.moved = true;
+                    drag.header.dataset.suppressToggle = "1";
+                    drag.widget.classList.add("widget-dragging");
+                    if (drag.header.setPointerCapture) {
+                        try {
+                            drag.header.setPointerCapture(drag.pointerId);
+                        } catch (_error) {
+                            /* ignore pointer capture errors */
+                        }
+                    }
+                }
+                event.preventDefault();
+                const stageRect = stage.getBoundingClientRect();
+                const rawLeft = drag.startLeft + deltaX;
+                const rawTop = drag.startTop + deltaY;
+                // Clamped, not confined: a corner may still peek past an
+                // edge, it just can never be dragged fully out of reach.
+                const minLeft = WIDGET_DRAG_VISIBLE_MARGIN - drag.width;
+                const maxLeft = stageRect.width - WIDGET_DRAG_VISIBLE_MARGIN - drag.sidebarReserve;
+                const minTop = WIDGET_DRAG_VISIBLE_MARGIN - drag.height;
+                const maxTop = stageRect.height - WIDGET_DRAG_VISIBLE_MARGIN;
+                const left = Math.max(minLeft, Math.min(Math.max(minLeft, maxLeft), rawLeft));
+                const top = Math.max(minTop, Math.min(maxTop, rawTop));
+                drag.widget.style.left = `${left}px`;
+                drag.widget.style.top = `${top}px`;
+                drag.widget.style.right = "auto";
+                drag.widget.style.bottom = "auto";
+            });
+
+            window.addEventListener("pointerup", (event) => {
+                if (!drag || event.pointerId !== drag.pointerId) return;
+                const finished = drag;
+                drag = null;
+                finished.widget.classList.remove("widget-dragging");
+                if (finished.header.releasePointerCapture) {
+                    try {
+                        finished.header.releasePointerCapture(finished.pointerId);
+                    } catch (_error) {
+                        /* ignore pointer capture errors */
+                    }
+                }
+                if (!finished.moved) return;
+                try {
+                    window.sessionStorage.setItem(finished.storageKey, JSON.stringify({
+                        left: parseFloat(finished.widget.style.left) || 0,
+                        top: parseFloat(finished.widget.style.top) || 0,
+                    }));
+                } catch (_error) {
+                    /* sessionStorage unavailable (private mode etc.) -- the
+                       position just won't survive a reload. */
+                }
+                // The "click" that a mouse fires right after this pointerup
+                // (mousedown and mouseup on the same element) must not also
+                // toggle the widget -- clear the guard on the next tick, once
+                // that synchronous click has already been dispatched.
+                window.setTimeout(() => {
+                    delete finished.header.dataset.suppressToggle;
+                }, 0);
+            });
         }
 
         _setupTableSheet() {
@@ -1276,6 +1471,8 @@
             if (deleteBtn) deleteBtn.addEventListener("click", () => this._deleteSelectedToken());
             const hpBtn = document.getElementById("btnTokenHpSet");
             if (hpBtn) hpBtn.addEventListener("click", () => this._setSelectedTokenHp());
+            const nameBtn = document.getElementById("btnTokenNameSet");
+            if (nameBtn) nameBtn.addEventListener("click", () => this._setSelectedTokenName());
 
             // Token art: one picker on the create panel (image applied when
             // the token is placed) and one on the selected-token detail
@@ -1733,14 +1930,25 @@
         }
 
         _handleDiceBroadcast(payload) {
+            const player = payload.player || "player";
+            const summary = `${player} hat ${payload.dice} gewürfelt: ${payload.result?.total}`;
             const log = document.getElementById("diceLog");
             const line = document.createElement("div");
-            line.textContent = `${payload.player || "player"} hat ${payload.dice} gewürfelt: ${payload.result?.total}`;
+            line.textContent = summary;
             log.prepend(line);
             while (log.children.length > 8) {
                 log.removeChild(log.lastChild);
             }
-            this._logActivity(`${payload.player || "player"} hat ${payload.dice} gewürfelt.`, "info");
+            // Fullsession robot audit (F3), 2026-08-26: native rolls landed
+            // in #diceLog + the Journal activity feed but never in #chatLog
+            // the way Beyond20 rolls do (_handleExternalRoll above) -- so
+            // players only saw the roll after a reload backfilled chat from
+            // the DB. Same fan-out as the external-roll sibling handler.
+            this._appendChatMessage({
+                sender_name: player,
+                message: summary,
+            });
+            this._logActivity(`${player} hat ${payload.dice} gewürfelt.`, "info");
         }
 
         _render() {
@@ -2100,6 +2308,8 @@
                     const hpMax = document.getElementById("tokenHpMax");
                     if (hpCurrent) hpCurrent.value = selectedToken.hp_current ?? "";
                     if (hpMax) hpMax.value = selectedToken.hp_max ?? "";
+                    const nameInput = document.getElementById("tokenNameInput");
+                    if (nameInput) nameInput.value = selectedToken.name ?? "";
                 }
             }
 
@@ -2499,6 +2709,10 @@
                 this.selectedTokenId = null;
             } else {
                 this.selectedTokenId = searchId;
+                // F4: selecting a token (DM or a player selecting their own)
+                // must surface its controls, not just update text buried in
+                // an already-closed panel -- see _revealTokenWidget.
+                this._revealTokenWidget();
             }
             const token = this._findStateToken(this.selectedTokenId);
             const actorSelect = document.getElementById("actionTokenId");

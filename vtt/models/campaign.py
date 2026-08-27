@@ -15,7 +15,11 @@ class Campaign(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
     status = db.Column(db.String(20), default='active')  # active, paused, archived
     max_players = db.Column(db.Integer, default=6)
-    
+    # Discoverability: whether this campaign shows up when browsing/searching campaigns
+    # the caller does not already own or belong to. Not to be confused with is_public()
+    # below, which means "not soft-deleted" and is unrelated to privacy.
+    is_discoverable = db.Column(db.Boolean, nullable=False, default=False)
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     deleted_at = db.Column(db.DateTime)  # Soft delete for GDPR
@@ -41,6 +45,7 @@ class Campaign(db.Model):
             'owner': self.owner.username,
             'status': self.status,
             'max_players': self.max_players,
+            'is_discoverable': self.is_discoverable,
             'created_at': self.created_at.isoformat()
         }
         if include_members:

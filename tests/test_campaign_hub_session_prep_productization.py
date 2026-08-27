@@ -1,4 +1,21 @@
-"""M17.5 tests: campaign hub and session-prep productization."""
+"""M17.5 tests: campaign hub and session-prep productization.
+
+Scope note (Desktop-Audit F1, 2026-08-26): every assertion here is a
+Flask-test-client string match against the raw HTML `GET /campaigns`
+returns. That HTML always contained this markup - it just used to be the
+page's PRIMARY (book-scene-hidden-via-CSS) render, and after the F1 fix it
+is the classic fallback, now wrapped in an inert
+<template id="campaignsClassicTemplate"> (see campaigns.html). A raw HTML
+string match cannot tell those two states apart: it stayed green the whole
+time "Hub öffnen" was hard-navigating players into this exact markup
+instead of the book UI (the actual bug), and it stays green now that this
+markup is reachable only as a deliberate, rarely-used fallback. These tests
+are still worth keeping - they guard the classic fallback's own content
+from silently regressing - but they prove NOTHING about which render path
+a real click lands on. That is what
+tools/robots/flows.py::_campaign_hub_click_flow (a real Playwright click
+through the campaigns book page) exists to cover; see its docstring.
+"""
 
 import pytest
 

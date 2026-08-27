@@ -317,10 +317,13 @@ def create_character():
         if not member:
             return jsonify({'error': 'Not a member of this campaign'}), 403
 
+    is_discoverable = bool(data.get('is_discoverable', False))
+
     char = Character(
         user_id=user_id,
         campaign_id=campaign_id,
         name=data.get('name'),
+        is_discoverable=is_discoverable,
         race=data.get('race', ''),
         class_name=data.get('class', ''),
         background=data.get('background', ''),

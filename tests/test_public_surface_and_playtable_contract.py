@@ -126,3 +126,122 @@ def test_playtable_eye_control_activates_pages_without_a_second_activate_row():
     assert 'Aktivieren</button>' not in script
     assert 'container.querySelectorAll(\'[data-act="visibility"]\')' not in script
     assert '_activateLayer(Number(button.dataset.layerId))' in script
+
+
+def test_playtable_floating_widgets_are_draggable_by_their_header():
+    """F5: the four independent floating panels (layers, turn order,
+    tokens, the token-create popup) are freely movable little windows,
+    dragged by their existing header/title bar, desktop only.
+
+    Cheap contract test in this file's own style -- substring assertions
+    against the raw template/JS source, not full Playwright geometry. It
+    checks: one shared drag-enable helper exists and is wired in for
+    exactly the four known widget ids, none of the four lost its
+    header/toggle element (the drag handle), and the helper respects the
+    1040px mobile "sheet" breakpoint instead of fighting it.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    # All four panels still exist, each with a header usable as a drag
+    # handle (the three collapsible widgets keep their .widget-toggle;
+    # the token-create popup has no collapse feature but does have a
+    # plain <h3> header).
+    assert '<div id="layersWidget" class="floating">' in template
+    assert '<div id="turnOrderWidget" class="floating">' in template
+    assert '<div id="tokenWidget" class="floating">' in template
+    assert 'id="tokenCreatePanel" class="floating"' in template
+    assert '<h3 class="widget-toggle" data-widget="layersWidget"' in template
+    assert '<h3 class="widget-toggle" data-widget="turnOrderWidget"' in template
+    assert '<h3 class="widget-toggle" data-widget="tokenWidget"' in template
+    assert "<h3>Token platzieren</h3>" in template
+
+    # One shared helper (mirroring _bindWidgetToggles' shape), not four
+    # bespoke drag implementations -- applied uniformly to all four ids.
+    assert "_bindWidgetDragging()" in script
+    widget_ids_literal = (
+        '["layersWidget", "turnOrderWidget", "tokenWidget", "tokenCreatePanel"]'
+    )
+    assert widget_ids_literal in script
+    for widget_id in ("layersWidget", "turnOrderWidget", "tokenWidget", "tokenCreatePanel"):
+        assert widget_id in widget_ids_literal
+
+    # Desktop only: the mobile "sheet" layout forces .floating panels to
+    # position:static below 1040px (see the .table-sheet .floating rule in
+    # play.html) -- the drag helper must guard against that breakpoint
+    # instead of removing or overriding it.
+    assert ".table-sheet .floating" in template
+    assert "position: static !important;" in template
+    assert 'const WIDGET_DRAG_MIN_WIDTH_MEDIA = "(min-width: 1040px)";' in script
+    assert "window.matchMedia(WIDGET_DRAG_MIN_WIDTH_MEDIA)" in script
+    assert "desktopMedia.matches" in script
+
+    # Persisted per widget id in sessionStorage, matching this file's own
+    # naming convention for session-scoped UI state (*_STORAGE_KEY).
+    assert 'const WIDGET_POSITION_STORAGE_PREFIX = "vtt.play.widget-pos.";' in script
+    assert "window.sessionStorage.setItem(" in script
+    assert "window.sessionStorage.getItem(" in script
+
+    # A drag must not also fire the existing collapse/expand click handler
+    # on the same header -- the two features have to coexist.
+    assert "suppressToggle" in script
+
+
+def test_playtable_selecting_a_token_surfaces_its_controls():
+    """F4 Gap B: clicking a token on the map already drew a real selection
+    ring and updated #tokenSelectionSummary/#tokenSelectionDetail text --
+    but never actually opened the #tokenWidget panel those live in, so on
+    both desktop (panel starts collapsed) and mobile (panel lives inside a
+    closed #tableSheet) the controls stayed invisible unless the widget
+    already happened to be open.
+
+    _openTokenMenu already implemented "expand #tokenWidget, and open
+    #tableSheet via #btnTableSheet if hidden" for the toolbar's
+    place-a-token tool button. Fixed by factoring that into a shared
+    _revealTokenWidget() helper and calling it from _selectToken() too, on
+    an actual selection (not a deselection).
+
+    Cheap contract test in this file's own style (see the F5 widget-drag
+    test above) -- substring assertions against the raw template/JS
+    source, not full Playwright geometry.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    # One shared reveal helper, not two copies of the same panel-opening
+    # logic -- both the "place a new token" tool button and selecting an
+    # existing token call it.
+    assert "_revealTokenWidget()" in script
+    assert script.count("_revealTokenWidget()") >= 3  # definition + 2 call sites
+    assert "_openTokenMenu() {\n            this._revealTokenWidget();" in script
+
+    # _selectToken() calls the reveal helper when a token was actually
+    # selected, not on deselection (_selectToken(null) is how the map
+    # click-to-deselect handler clears the selection).
+    select_token_start = script.index("_selectToken(tokenId, repaintMap = false) {")
+    select_token_body = script[select_token_start:select_token_start + 700]
+    assert "this.selectedTokenId = searchId;" in select_token_body
+    assert "this._revealTokenWidget();" in select_token_body
+    # The reveal call must sit in the "found a real id" branch, after the
+    # assignment above and before the function falls through to the
+    # shared find/render tail that also runs for a deselect.
+    assign_index = select_token_body.index("this.selectedTokenId = searchId;")
+    reveal_index = select_token_body.index("this._revealTokenWidget();")
+    assert assign_index < reveal_index
+
+    # A rename control now exists in #tokenSelectionDetail, gated behind
+    # the exact same owner-or-DM condition as the pre-existing image-set
+    # button (both controls live in the same hidden-toggled container).
+    detail_start = template.index('id="tokenSelectionDetail"')
+    image_set_index = template.index('id="btnTokenImageSet"')
+    detail_section = template[detail_start:image_set_index]
+    assert 'id="tokenNameInput"' in detail_section
+    assert 'id="btnTokenNameSet"' in detail_section
+
+    assert "_setSelectedTokenName()" in script
+    assert 'document.getElementById("btnTokenNameSet")' in script
+    assert 'document.getElementById("tokenNameInput")' in script
+    # The rename patch reuses the same server-accepted "name" field the
+    # socket layer already allows any owning player to set (no new server
+    # logic was needed or added for this).
+    assert "{ name: nextName }" in script

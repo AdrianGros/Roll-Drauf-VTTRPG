@@ -468,6 +468,28 @@
             box-shadow: 0 0 10px rgba(74, 158, 255, 0.2);
         }
 
+        .form-group--checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+
+        .form-group--checkbox input[type="checkbox"] {
+            width: auto;
+            flex: 0 0 auto;
+            margin-top: 0.2rem;
+        }
+
+        .form-group--checkbox .form-group-checkbox-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .form-group--checkbox label {
+            margin-bottom: 0;
+        }
+
         .ability-tabs {
             display: flex;
             gap: 0.5rem;
@@ -1044,6 +1066,16 @@
                             Verstand <span id="summaryInt">10</span> | Wahrnehmung <span id="summaryWis">10</span> | Ausstrahlung <span id="summaryCha">10</span>
                         </div>
                     </div>
+
+                    <div class="form-group form-group--checkbox" style="margin-top: 1rem;">
+                        <input type="checkbox" id="charDiscoverable">
+                        <label for="charDiscoverable">
+                            <span class="form-group-checkbox-copy">
+                                <span>Öffentlich sichtbar (Spielersuche)</span>
+                                <span style="color: #a0a0a0; font-weight: 400; font-size: 0.8rem;">Charaktere sind standardmäßig privat. Eine Spielersuche gibt es noch nicht — dieses Flag wird nur für später gespeichert.</span>
+                            </span>
+                        </label>
+                    </div>
                 </div>
 
                 <div id="generalError" class="error-message" style="margin-top: 1rem;"></div>
@@ -1366,6 +1398,7 @@
             document.getElementById('charBackground').value = '';
             document.getElementById('charAC').value = '10';
             document.getElementById('charHP').value = '10';
+            document.getElementById('charDiscoverable').checked = false;
             document.getElementById('generalError').textContent = '';
             updateAbilityDisplay();
             switchAbilityTab('pointBuy');
@@ -1678,7 +1711,8 @@
                 con: abilityScores.con,
                 int: abilityScores.int,
                 wis: abilityScores.wis,
-                cha: abilityScores.cha
+                cha: abilityScores.cha,
+                is_discoverable: document.getElementById('charDiscoverable').checked
             };
 
             try {
