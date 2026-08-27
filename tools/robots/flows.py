@@ -741,6 +741,176 @@ def _token_hud_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _action_hotbar_flow(stack, workdir: Path) -> list[str]:
+    """S07, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_07_HOTBAR_2026-08-27.md,
+    Apply-approved): the personal action hotbar over the already-built
+    execute_action seam. Covers: disabled with no token selected, enabled
+    after selecting one, click-to-fire, numeric-key-to-fire, keyboard
+    shortcuts NOT firing while focus is in #chatInput (the research doc's
+    own HIGH-severity risk), and the upgraded readable chat message."""
+    import struct
+    import zlib
+
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    def _make_png(width, height, rgb):
+        def chunk(tag, data):
+            piece = struct.pack(">I", len(data)) + tag + data
+            return piece + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+        raw = b""
+        row = bytes(rgb) * width
+        for _ in range(height):
+            raw += b"\x00" + row
+        ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr)
+                + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="hotbar_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="hotbar_bot",
+                email="hotbar_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Hotbar-Kampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Hotbar-Sitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Hotbar-Karte", "width": 600, "height": 400}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[setup] map create returned HTTP {map_response.status}")
+            browser.close()
+            return findings
+        map_payload = map_response.json()
+        map_id = (map_payload.get("map") or map_payload.get("campaign_map") or map_payload)["id"]
+        init_response = api.post(
+            f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
+            data=json.dumps({"map_ids": [map_id]}), headers=json_headers)
+        if init_response.status != 201:
+            findings.append(f"[setup] scene-stack init returned HTTP {init_response.status}")
+            browser.close()
+            return findings
+
+        token_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Held", "x": 100, "y": 100, "token_type": "npc",
+                             "metadata_json": {"position_mode": "pixel"}}),
+            headers=json_headers)
+        if token_response.status != 201:
+            findings.append(f"[setup] token create returned HTTP {token_response.status}")
+            browser.close()
+            return findings
+
+        # play_execute_action 409s unless the session is actually "live" --
+        # a session starts "scheduled" and needs two transitions
+        # (scheduled -> ready -> in_progress) before any hotbar action can
+        # fire at all.
+        for target_state in ("ready", "in_progress"):
+            transition_response = api.post(
+                f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/transition",
+                data=json.dumps({"target_state": target_state, "ignore_warnings": True}),
+                headers=json_headers)
+            if transition_response.status != 200:
+                findings.append(
+                    f"[setup] session transition to {target_state!r} returned "
+                    f"HTTP {transition_response.status}: {transition_response.text()[:200]}")
+                browser.close()
+                return findings
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.wait_for_selector("#actionHotbar:not([hidden])", timeout=10_000)
+
+            slot_count = page.locator("#actionHotbar .hotbar-slot").count()
+            if slot_count != 3:
+                findings.append(f"[hotbar] expected 3 slots (matches the 3-action catalog), found {slot_count}")
+
+            if page.locator("#actionHotbar").get_attribute("aria-disabled") != "true":
+                findings.append("[hotbar] hotbar is not disabled with no token selected")
+
+            page.click(".token-marker")
+            page.wait_for_function(
+                "() => document.getElementById('actionHotbar')?.getAttribute('aria-disabled') === 'false'",
+                timeout=10_000)
+
+            # dash_move (slot 2, requires_target: False) fires cleanly via
+            # a real click, lands in chat with a readable message (was a
+            # raw "Aktions-Event: dash_move" toast before this slice).
+            page.click('.hotbar-slot[data-action-code="dash_move"]')
+            page.wait_for_function(
+                "() => (document.getElementById('chatLog')?.textContent || '').includes('Dash')",
+                timeout=10_000)
+            chat_text = page.locator("#chatLog").text_content() or ""
+            if "dash_move" in chat_text:
+                findings.append(f"[hotbar] chat still shows the raw action code, not the readable name: {chat_text[:150]!r}")
+
+            # Keyboard: key "2" is dash_move's slot -- must fire the same
+            # way as the click did.
+            page.click("body")
+            page.keyboard.press("2")
+            page.wait_for_timeout(400)
+
+            # Keyboard shortcuts must NOT fire while focus is in chat input.
+            page.click("#btnSidebarToggle")
+            page.wait_for_selector(".right-sidebar.is-open", timeout=10_000)
+            page.click('.sidebar-tab[data-tab="chat"]')
+            page.fill("#chatInput", "")
+            page.click("#chatInput")
+            chat_message_count_before = page.locator("#chatLog .chat-entry").count()
+            page.keyboard.press("1")  # attack_basic -- requires_target, would 400 loudly if it fired
+            page.wait_for_timeout(400)
+            chat_message_count_after = page.locator("#chatLog .chat-entry").count()
+            if chat_message_count_after != chat_message_count_before:
+                findings.append(
+                    "[hotbar] a numeric keypress while focus was in #chatInput appears to have "
+                    "fired a hotbar action (chat entry count changed)")
+            page.click("#btnSidebarToggle")
+
+        except Exception as error:
+            findings.append(f"[hotbar] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "action-hotbar-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _combat_turn_order_flow(stack, workdir: Path) -> list[str]:
     """S06, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_06_COMBAT_2026-08-27.md,
     Apply-approved): the combat/turn-order widget. Two tokens with
@@ -1762,6 +1932,7 @@ FLOWS = {
     "token_hud": _token_hud_flow,
     "conditions_picker": _conditions_picker_flow,
     "combat_turn_order": _combat_turn_order_flow,
+    "action_hotbar": _action_hotbar_flow,
     "app_menu": _app_menu_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,

@@ -452,6 +452,47 @@ def test_playtable_turn_order_announces_and_syncs_with_token_selection():
     assert 'if (button) button.disabled = true;' in script
 
 
+def test_playtable_action_hotbar_is_a_pure_ui_trigger_over_the_existing_seam():
+    """S07 (Apply-approved slice, docs/PLAYTABLE_FEATURE_RESEARCH_07_HOTBAR_2026-08-27.md):
+    a personal action hotbar over the already-fully-built execute_action
+    seam (vtt/play/actions.py, POST actions/execute) -- the server was
+    already the sole authority on permissions/validity before this slice;
+    the hotbar adds no client-side cooldown tracking, no drag/drop, no
+    paging, no token-specific variants (all explicit non-goals). Renders
+    exactly catalog.length slots (3 today), not a fixed 10 padded with
+    empty placeholders.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    assert 'id="actionHotbar"' in template
+    assert 'role="toolbar"' in template
+    # The existing sidebar "Aktionsleiste" test panel (actor+target+action
+    # selects) must still exist untouched -- the hotbar is additive, not a
+    # replacement, since it deliberately has no target picker of its own.
+    assert 'id="actionTargetTokenId"' in template
+
+    assert "catalog.length" in script
+    assert "bar.childElementCount !== catalog.length" in script
+
+    # Keyboard shortcuts never fire from an input/textarea/select/
+    # contenteditable or while a dialog is open (the research doc's own
+    # HIGH-severity risk).
+    assert 'tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT"' in script
+    assert "target?.isContentEditable" in script
+    assert 'document.querySelector("dialog[open]")' in script
+
+    # No client-side cooldown/optimistic update -- fires only after the
+    # server confirms, disables entirely when read-only or no valid token.
+    assert "await this.api.executeAction(this.campaignId, this.sessionId, token.id, actionCode, null)" in script
+    assert "canAct = !this.readOnly && token && this._canMoveToken(token)" in script
+
+    # _handleAction previously showed a raw developer-facing action CODE
+    # with no actor/target names -- upgraded to use the same catalog the
+    # hotbar renders from.
+    assert "catalog.find((entry) => entry.code === result.action_code)" in script
+
+
 def test_playtable_selecting_a_token_surfaces_its_controls():
     """F4 Gap B: clicking a token on the map already drew a real selection
     ring and updated #tokenSelectionSummary/#tokenSelectionDetail text --

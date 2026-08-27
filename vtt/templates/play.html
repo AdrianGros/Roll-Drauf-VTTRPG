@@ -355,6 +355,64 @@
                Variable statt mit verstreuten 340/280-Kopien. */
             --sidebar-w: 340px;
         }
+        /* S07: personal action hotbar. Deliberately position:fixed, NOT a
+           grid child of .tabletop-shell -- .left-toolbar right below uses
+           explicit grid-row/grid-column placement in that shell's layout,
+           and an unstyled sibling between .stage and .left-toolbar would
+           either fall into unpredictable grid auto-placement or need the
+           whole shell's grid-template understood and touched. Fixed
+           positioning sidesteps that entirely; exact offset may want a
+           visual pass later, this is a reasonable stacked-above-the-
+           toolbar estimate, not a pixel-measured one. */
+        .action-hotbar {
+            position: fixed;
+            left: 50%;
+            bottom: 68px;
+            transform: translateX(-50%);
+            z-index: 30;
+            display: flex;
+            gap: 0.3rem;
+            padding: 0.3rem;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(7, 14, 28, 0.96);
+            box-shadow: 0 -5px 18px rgba(0, 0, 0, 0.24);
+        }
+        .action-hotbar[hidden] { display: none; }
+        .action-hotbar[aria-disabled="true"] { opacity: 0.5; }
+        .hotbar-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.1rem;
+            width: 52px;
+            height: 44px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.05);
+            color: inherit;
+            font-size: 0.68rem;
+        }
+        .hotbar-slot:hover, .hotbar-slot:focus-visible {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .hotbar-slot:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .hotbar-slot-key {
+            font-size: 0.6rem;
+            color: var(--muted);
+        }
+        .hotbar-slot.firing {
+            background: rgba(255, 210, 63, 0.35);
+            border-color: #ffd23f;
+        }
+        @media (max-width: 1040px) {
+            .action-hotbar { bottom: env(safe-area-inset-bottom, 8px); }
+            .hotbar-slot-key { display: none; }
+        }
         .left-toolbar {
             border-right: 1px solid var(--line);
             background: rgba(7, 14, 28, 0.9);
@@ -1994,6 +2052,17 @@
                 </div>
             </div>
         </section>
+
+        <!-- S07: personal action hotbar. A NEW surface, not the existing
+             "Aktionsleiste" sidebar test panel (#actionCode/#actionTokenId/
+             #actionTargetTokenId, Tools tab) -- that panel supports an
+             explicit target picker and firing on any token, which this
+             quick-fire hotbar deliberately does not (Apply decision,
+             matches the research doc's own scope: no target UI, acts on
+             whichever token is currently selected). Both stay; they serve
+             different moments (quick numbered-key fire vs. deliberate
+             actor+target+action selection). -->
+        <div id="actionHotbar" class="action-hotbar" role="toolbar" aria-label="Aktionsleiste (Schnellzugriff)" hidden></div>
 
         <aside class="left-toolbar" aria-label="Werkzeugleiste">
             <!-- MMO-Aktionsleiste: dauerhaft sichtbar und zentral direkt

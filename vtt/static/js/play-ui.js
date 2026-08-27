@@ -907,6 +907,7 @@
             this._bindWidgetDragging();
             this._bindLayersDirectoryControls();
             this._bindAppMenu();
+            this._bindActionHotbar();
 
             const sendChat = () => {
                 const input = document.getElementById("chatInput");
@@ -1584,6 +1585,92 @@
             this._closeConditionsPopover = closePopover;
         }
 
+        // S07: personal action hotbar. A pure UI trigger layer over the
+        // already-existing, already-fully-permission-checked
+        // execute_action seam -- no cooldown tracking, no drag/drop, no
+        // paging, no token-specific variants (all explicit Apply
+        // decisions, matching the research doc's own non-goals). Renders
+        // exactly catalog.length slots rather than a fixed 10 with empty
+        // placeholders -- only 3 actions exist today, and 7 empty grey
+        // slots would be pure clutter for zero functional value.
+        _renderActionHotbar() {
+            const bar = document.getElementById("actionHotbar");
+            if (!bar) return;
+            const catalog = Array.isArray(this.bootstrap?.action_catalog) ? this.bootstrap.action_catalog : [];
+            if (!catalog.length) {
+                bar.hidden = true;
+                return;
+            }
+            bar.hidden = false;
+
+            const token = this._findStateToken(this.selectedTokenId);
+            const canAct = !this.readOnly && token && this._canMoveToken(token);
+            bar.setAttribute("aria-disabled", String(!canAct));
+
+            if (bar.childElementCount !== catalog.length) {
+                bar.innerHTML = catalog.map((action, index) => {
+                    const keyLabel = index === 9 ? "0" : String(index + 1);
+                    return `
+                        <button type="button" class="hotbar-slot" data-action-code="${escapeHtml(action.code)}"
+                            title="${escapeHtml(action.description || action.name)}"
+                            aria-label="Slot ${index + 1}: ${escapeHtml(action.name)} (Taste ${keyLabel})">
+                            <span>${escapeHtml(action.name)}</span>
+                            <span class="hotbar-slot-key">${keyLabel}</span>
+                        </button>
+                    `;
+                }).join("");
+                bar.querySelectorAll(".hotbar-slot[data-action-code]").forEach((button) => {
+                    button.addEventListener("click", () => this._fireHotbarSlot(button.dataset.actionCode));
+                });
+            }
+            bar.querySelectorAll(".hotbar-slot[data-action-code]").forEach((button) => {
+                button.disabled = !canAct;
+            });
+        }
+
+        async _fireHotbarSlot(actionCode) {
+            const token = this._findStateToken(this.selectedTokenId);
+            if (!token || this.readOnly || !this._canMoveToken(token)) return;
+            const button = document.querySelector(`.hotbar-slot[data-action-code="${actionCode}"]`);
+            // Acceptance: brief (~300ms) highlight on execution, only after
+            // the server confirms -- no optimistic pre-response feedback.
+            try {
+                await this.api.executeAction(this.campaignId, this.sessionId, token.id, actionCode, null);
+                if (button) {
+                    button.classList.add("firing");
+                    window.setTimeout(() => button.classList.remove("firing"), 300);
+                }
+            } catch (error) {
+                // Server is sole authority (Apply decision) -- e.g. a
+                // target-required action fired with no target picker on
+                // this quick-fire bar surfaces here as a clear error
+                // rather than a silent no-op or an invented target-picker.
+                this._showMessage(error.message || "Aktion fehlgeschlagen.", true);
+            }
+        }
+
+        _bindActionHotbar() {
+            document.addEventListener("keydown", (event) => {
+                const key = event.key;
+                if (!/^[0-9]$/.test(key)) return;
+                // Acceptance (HIGH risk in the research doc): never fire
+                // while focus is in an input/textarea/select/contenteditable
+                // or a dialog is open -- verified specifically against
+                // #chatInput and the token-rename field.
+                const target = event.target;
+                const tag = target?.tagName;
+                if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target?.isContentEditable) return;
+                if (document.querySelector("dialog[open]")) return;
+                const bar = document.getElementById("actionHotbar");
+                if (!bar || bar.hidden || bar.getAttribute("aria-disabled") === "true") return;
+                const slotIndex = key === "0" ? 9 : Number(key) - 1;
+                const button = bar.querySelectorAll(".hotbar-slot[data-action-code]")[slotIndex];
+                if (!button || button.disabled) return;
+                event.preventDefault();
+                this._fireHotbarSlot(button.dataset.actionCode);
+            });
+        }
+
         async _setSelectedTokenHp() {
             const token = this._findStateToken(this.selectedTokenId);
             if (!token) return;
@@ -2169,8 +2256,20 @@
         _handleAction(payload) {
             const result = payload?.result;
             if (!result) return;
-            this._showMessage(`Aktions-Event: ${result.action_code}`);
-            this._logActivity(`Aktions-Event: ${result.action_code}.`, "info");
+            // S07: was a raw developer-facing "Aktions-Event: attack_basic"
+            // toast with no actor/action name -- upgraded to a readable
+            // message using the same action_catalog the hotbar renders
+            // from, matching the actor/target names already in state.
+            const catalog = Array.isArray(this.bootstrap?.action_catalog) ? this.bootstrap.action_catalog : [];
+            const action = catalog.find((entry) => entry.code === result.action_code);
+            const actionName = action?.name || result.action_code;
+            const actor = this._findStateToken(result.token_id);
+            const target = result.target_token_id ? this._findStateToken(result.target_token_id) : null;
+            const text = target
+                ? `${actor?.name || "Jemand"} setzt ${actionName} gegen ${target.name} ein.`
+                : `${actor?.name || "Jemand"} setzt ${actionName} ein.`;
+            this._appendChatMessage({ sender_name: actor?.name || "Aktion", message: text });
+            this._logActivity(text, "info");
         }
 
         _handleChatBroadcast(payload) {
@@ -3030,6 +3129,7 @@
                 this._closeConditionsPopover?.({ returnFocus: false });
             }
             this._renderConditionsPopover();
+            this._renderActionHotbar();
 
             // DM-only table controls: map upload and initiative rolling.
             const layerAddRow = document.getElementById("layerAddRow");
