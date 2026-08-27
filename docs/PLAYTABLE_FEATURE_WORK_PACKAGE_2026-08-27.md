@@ -163,3 +163,19 @@ Next: slice 04 (Selected-token HUD and character/creature focus).
 - Each Apply handoff defines data contracts, permission boundaries, responsive behavior, and acceptance criteria.
 - Each Deploy slice has targeted tests/proofs and leaves unrelated work untouched.
 - Each Monitor pass records residual risk before the next feature begins.
+
+## Slice 04 (Token HUD) — Apply decisions and Deploy status: DONE, 2026-08-27
+
+The research doc's fuller ambition (dynamically anchoring a floating HUD to the token marker's exact on-map position, re-anchoring on every scroll/zoom/resize without flicker) was **deliberately not built**. This app already has an established, working convention for `#tokenWidget` as a user-positioned, draggable floating panel (F5/S01, earlier the same day); continuously re-anchoring a panel to a moving world-space point is a materially larger and jankier undertaking (Risk R1, flagged MEDIUM in the doc itself) than reusing that existing pattern. Documented as an explicit Apply-phase deviation from the literal acceptance criteria wording, not a silent cut — `#tokenWidget` already auto-opens on selection (earlier F4 work, same session) and is already draggable.
+
+Current-state check found most of the "editable" HUD already built (from earlier same-session F4 work, before this slice-by-slice pass even started): name/HP/image/delete controls, owner-or-DM permission gating, and a delete confirmation that already names the token. The real, concrete gap was narrower: an unowned/observed token showed nothing at all beyond a one-line "Ausgewählt: NAME" summary — no HP, no indication it wasn't the viewer's. Fixed with a read-only counterpart view. Also added: a reconnecting indicator (this app had zero connect/disconnect handling anywhere before this), and an enhanced delete-confirmation message stating the blast radius.
+
+Status-icon rendering (depends on S05's schema, not yet built), combat/initiative display (depends on S06, not yet built), and multi-select (depends on S09, not yet built) are explicitly deferred. Real bug caught mid-implementation: a naive truthiness check would have silently rendered "HP unbekannt" for a token at exactly 0 HP (0 is falsy) — fixed to an explicit != null check.
+
+Verification found a real API-routing gotcha, not a feature bug: play_bp is mounted at /api/play, not /api. Also: token x/y default to grid-cell coordinates, not pixels — needs metadata_json.position_mode = "pixel" for pixel placement.
+
+Deliberately incomplete robot coverage, stated rather than silent: the cross-user read-only view is NOT covered by the new token_hud robot flow (would need a second browser context plus a full invite/join dance) — covered instead by a direct contract-test assertion.
+
+Scenario-first: extended tests/test_public_surface_and_playtable_contract.py; new real-browser robot flow (token_hud) — 0 findings across all 8 registered flows. Full suite: 498 passed, 0 failed.
+
+Next: slice 05 (Conditions/status picker).

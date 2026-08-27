@@ -358,6 +358,39 @@ def test_playtable_measure_tool_is_available_read_only_and_clears_on_switch():
     assert "Math.max(0, Math.min(width," in script
 
 
+def test_playtable_observed_token_gets_a_readonly_summary_not_nothing():
+    """S04 (Apply-approved slice, docs/PLAYTABLE_FEATURE_RESEARCH_04_TOKEN_HUD_2026-08-27.md):
+    a player selecting a token they don't own and can't edit used to see
+    NOTHING beyond the one-line "Ausgewählt: NAME" summary -- no HP, no
+    indication it isn't theirs. Full HUD repositioning-to-the-token-marker
+    (the doc's fuller ambition) was deliberately deferred: this app already
+    has an established draggable-floating-panel convention for #tokenWidget
+    (F5/S01), and continuously re-anchoring a panel to a moving/zooming
+    world-space point is a materially larger, jankier undertaking than
+    reusing that existing pattern -- documented as an Apply-phase deviation
+    from the research doc's literal "anchored near the marker" wording,
+    not a silent scope cut.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    assert 'id="tokenSelectionReadonly"' in template
+    assert 'id="tokenConnectionNotice"' in template
+    assert "showReadonly = Boolean(selectedToken) && !canEditSelected" in script
+    # 0 HP must still render as real data, not fall through to "unbekannt"
+    # via a truthiness check that treats 0 as missing.
+    assert "hasHpData = selectedToken.hp_current != null || selectedToken.hp_max != null" in script
+    assert "nicht dein Charakter" in script
+
+    # Delete confirmation states what it affects, not just "really delete?".
+    assert "entfernt ihn für alle am Tisch" in script
+
+    # Reconnecting indicator: this app had NO connect/disconnect handling
+    # anywhere before this slice.
+    assert 'connect: () => { this._connectionLost = false;' in script
+    assert 'disconnect: () => { this._connectionLost = true;' in script
+
+
 def test_playtable_selecting_a_token_surfaces_its_controls():
     """F4 Gap B: clicking a token on the map already drew a real selection
     ring and updated #tokenSelectionSummary/#tokenSelectionDetail text --

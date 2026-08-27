@@ -1890,6 +1890,13 @@
                             <button type="button" id="btnTokenDelete" class="mini-btn danger">Token löschen</button>
                         </div>
                     </div>
+                    <!-- S04: a selected token that isn't yours and isn't
+                         the DM's to edit used to render NOTHING beyond the
+                         one-line summary above -- no HP, no indication
+                         this is someone else's character. This is the
+                         read-only counterpart to #tokenSelectionDetail. -->
+                    <div id="tokenSelectionReadonly" hidden class="muted" style="margin-bottom:0.45rem; font-size:0.82rem;"></div>
+                    <div id="tokenConnectionNotice" hidden class="muted" role="status" aria-live="polite" style="margin-bottom:0.45rem; color:#e8b23f;">Verbindung wird wiederhergestellt…</div>
                     <div id="tokenList"></div>
                 </div>
             </div>

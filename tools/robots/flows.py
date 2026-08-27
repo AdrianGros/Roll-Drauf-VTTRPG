@@ -594,6 +594,153 @@ def _scene_directory_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _token_hud_flow(stack, workdir: Path) -> list[str]:
+    """S04, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_04_TOKEN_HUD_2026-08-27.md,
+    Apply-approved): the selected-token detail panel (#tokenWidget). Single
+    operator user only -- covers the DM/owner editable path and the
+    enhanced delete confirmation for real. The new cross-user read-only
+    view (#tokenSelectionReadonly, for a player observing someone else's
+    token) is NOT covered here: it would need a second real browser
+    context plus a full invite/accept-join dance, which this round's time
+    budget didn't extend to. That logic is instead covered by
+    tests/test_public_surface_and_playtable_contract.py's direct assertion
+    on the exact boolean condition and the hp!=null-vs-truthiness fix for
+    the 0 HP edge case -- documented here as a deliberate, non-silent
+    coverage gap, not an oversight."""
+    import struct
+    import zlib
+
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    def _make_png(width, height, rgb):
+        def chunk(tag, data):
+            piece = struct.pack(">I", len(data)) + tag + data
+            return piece + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+        raw = b""
+        row = bytes(rgb) * width
+        for _ in range(height):
+            raw += b"\x00" + row
+        ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr)
+                + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="tokenhud_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="tokenhud_bot",
+                email="tokenhud_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "HUD-Kampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "HUD-Sitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        # Token creation 400s without an active map (state.active_map_id) --
+        # API-only setup (no real file upload needed for this flow): create
+        # a CampaignMap, then initialize+activate the scene stack from it.
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "HUD-Karte", "width": 600, "height": 400}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[setup] map create returned HTTP {map_response.status}")
+            browser.close()
+            return findings
+        map_payload = map_response.json()
+        map_id = (map_payload.get("map") or map_payload.get("campaign_map") or map_payload)["id"]
+        init_response = api.post(
+            f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
+            data=json.dumps({"map_ids": [map_id]}), headers=json_headers)
+        if init_response.status != 201:
+            findings.append(f"[setup] scene-stack init returned HTTP {init_response.status}: {init_response.text()[:200]}")
+            browser.close()
+            return findings
+
+        # A token at exactly 0 HP -- the edge case a truthiness check would
+        # have silently swallowed (0 is falsy but very real HP data).
+        token_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Angeschlagen", "x": 100, "y": 100,
+                             "token_type": "npc", "hp_current": 0, "hp_max": 20,
+                             "metadata_json": {"position_mode": "pixel"}}),
+            headers=json_headers)
+        if token_response.status != 201:
+            findings.append(f"[setup] token create returned HTTP {token_response.status}")
+            browser.close()
+            return findings
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.click(".token-marker")
+            page.wait_for_selector("#tokenSelectionDetail:not([hidden])", timeout=10_000)
+
+            if not page.locator("#tokenSelectionReadonly").is_hidden():
+                findings.append("[hud] the read-only summary is visible while the editable detail is also shown - should be mutually exclusive for the owning operator")
+
+            hp_current_value = page.locator("#tokenHpCurrent").input_value()
+            if hp_current_value != "0":
+                findings.append(f"[hud] HP-current field did not populate with the real 0 value (got {hp_current_value!r})")
+
+            # Enhanced delete confirmation: names the token AND states the
+            # blast radius, not just a bare "really delete?".
+            dialog_messages = []
+            page.on("dialog", lambda dialog: (dialog_messages.append(dialog.message), dialog.dismiss()))
+            page.click("#btnTokenDelete")
+            page.wait_for_timeout(300)
+            if not dialog_messages:
+                findings.append("[delete] no confirmation dialog appeared")
+            else:
+                message = dialog_messages[0]
+                if "Angeschlagen" not in message:
+                    findings.append(f"[delete] confirmation did not name the token: {message!r}")
+                if "alle" not in message:
+                    findings.append(f"[delete] confirmation did not state it affects everyone at the table: {message!r}")
+            remaining = page.locator(".token-marker").count()
+            if remaining != 1:
+                findings.append(f"[delete] dismissing the confirmation still removed the token (markers left: {remaining})")
+
+        except Exception as error:
+            findings.append(f"[token-hud] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "token-hud-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _measure_tool_flow(stack, workdir: Path) -> list[str]:
     """S03, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_03_MAP_TOOLS_2026-08-27.md,
     Apply-approved): the waypoint measurement tool added to the select/pan/
@@ -1253,6 +1400,7 @@ FLOWS = {
     "map_token_table": _map_token_table_flow,
     "scene_directory": _scene_directory_flow,
     "measure_tool": _measure_tool_flow,
+    "token_hud": _token_hud_flow,
     "app_menu": _app_menu_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,

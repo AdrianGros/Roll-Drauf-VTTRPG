@@ -77,6 +77,8 @@
             this._measurePreviewPoint = null;
             this.measureSnapEnabled = true;
             this._measurePointerIsTouch = false;
+            // S04: reconnecting indicator for the token HUD.
+            this._connectionLost = false;
             // Auto-fit runs once per activated map so the DM's manual zoom
             // choice survives snapshots/re-renders of the same map.
             this.autoFitMapId = null;
@@ -403,6 +405,12 @@
                             "info"
                         ),
                     error: (payload) => this._showMessage(payload?.message || "Socket error", true),
+                    // S04 acceptance: the token HUD shows a "reconnecting"
+                    // indicator instead of silently going stale while the
+                    // socket is down. No other part of this app surfaced
+                    // connect/disconnect at all before this.
+                    connect: () => { this._connectionLost = false; this._renderState(); },
+                    disconnect: () => { this._connectionLost = true; this._renderState(); },
                 },
             });
             this.socket.connect();
@@ -1341,7 +1349,7 @@
         async _deleteSelectedToken() {
             const token = this._findStateToken(this.selectedTokenId);
             if (!token) return;
-            if (!window.confirm(`Token "${token.name}" wirklich löschen?`)) return;
+            if (!window.confirm(`Token "${token.name}" wirklich löschen? Das entfernt ihn für alle am Tisch und kann nicht rückgängig gemacht werden.`)) return;
             try {
                 if (this.socket && this.socket.isConnected) {
                     this.socket.deleteToken(token.id, Number(token.version || 1));
@@ -2781,7 +2789,29 @@
                     const nameInput = document.getElementById("tokenNameInput");
                     if (nameInput) nameInput.value = selectedToken.name ?? "";
                 }
+                // S04 acceptance: "Player + unowned (observed) token shows
+                // name/type/HP/status icons but no edit controls" -- a
+                // read-only summary instead of nothing at all.
+                const readonlyBox = document.getElementById("tokenSelectionReadonly");
+                if (readonlyBox) {
+                    const showReadonly = Boolean(selectedToken) && !canEditSelected;
+                    readonlyBox.hidden = !showReadonly;
+                    if (showReadonly) {
+                        // Deliberately != null, not a truthiness check --
+                        // 0 HP is real and meaningful, must still render
+                        // as "HP 0 / X", not fall through to "unbekannt".
+                        const hasHpData = selectedToken.hp_current != null || selectedToken.hp_max != null;
+                        const hpText = hasHpData
+                            ? `HP ${selectedToken.hp_current ?? "?"} / ${selectedToken.hp_max ?? "?"}`
+                            : "HP unbekannt";
+                        readonlyBox.textContent = selectedToken.character_id
+                            ? `${hpText} — nicht dein Charakter, nur ansehen.`
+                            : `${hpText} — kein verknüpfter Charakter.`;
+                    }
+                }
             }
+            const connectionNotice = document.getElementById("tokenConnectionNotice");
+            if (connectionNotice) connectionNotice.hidden = !this._connectionLost;
 
             // DM-only table controls: map upload and initiative rolling.
             const layerAddRow = document.getElementById("layerAddRow");
