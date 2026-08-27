@@ -801,6 +801,47 @@
             outline-offset: 1px;
         }
 
+        /* S03: waypoint measurement tool. The overlay lives inside
+           #mapWorld (not the viewport), so it pans/zooms with the map for
+           free -- same trick #mapTokenLayer already uses for tokens. */
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        #measureLayer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: visible;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .measure-line {
+            stroke: #ffd23f;
+            stroke-width: 2;
+            stroke-dasharray: 6 4;
+        }
+        .measure-point {
+            fill: #ffd23f;
+            stroke: #241a12;
+            stroke-width: 1.5;
+        }
+        .measure-label {
+            font-size: 12px;
+            font-weight: 600;
+            fill: #241a12;
+            paint-order: stroke;
+            stroke: #ffd23f;
+            stroke-width: 3px;
+            stroke-linejoin: round;
+        }
+        #btnMeasureSnap[hidden] { display: none; }
+
         /* S02: application command menu, anchored to the action-dock's
            evolved btnBack trigger. #sheetDrawer (the highest floating
            surface today) sits at z-index:340 -- this sits above it so the
@@ -1733,8 +1774,10 @@
                         <img id="mapImage" alt="Aktive Karte">
                         <div class="map-grid-layer" id="mapGridLayer"></div>
                         <div id="mapTokenLayer"></div>
+                        <svg id="measureLayer" aria-hidden="true"></svg>
                     </div>
                 </div>
+                <div id="measureAnnounce" class="sr-only" role="status" aria-live="polite"></div>
             </div>
 
             <div id="tokenCreatePanel" class="floating" hidden style="width: 250px;">
@@ -1858,6 +1901,8 @@
             <button type="button" class="tool-btn active" data-tool="select" title="Auswählen"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label">Wählen</span></button>
             <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label">Bewegen</span></button>
             <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label">Token</span></button>
+            <button type="button" class="tool-btn" data-tool="measure" title="Entfernung messen: klicken für Wegpunkte, Esc entfernt den letzten, nochmal Esc bricht ab" aria-label="Entfernung messen"><span class="tool-ico" aria-hidden="true">📏</span><span class="tool-label">Messen</span></button>
+            <button type="button" id="btnMeasureSnap" class="tool-btn active" title="Rastereinrasten für Messungen an/aus" aria-pressed="true" hidden><span class="tool-ico" aria-hidden="true">▦</span><span class="tool-label">Raster</span></button>
             <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
                  used to sit here as silent no-ops (the handler only toggled
                  a CSS class). Removed until the tools actually exist -- a

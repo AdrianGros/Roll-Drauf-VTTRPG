@@ -313,6 +313,51 @@ def test_playtable_app_menu_exists_and_is_distinct_from_the_sidebar_toggle():
     assert "z-index: 350;" in template
 
 
+def test_playtable_measure_tool_is_available_read_only_and_clears_on_switch():
+    """S03 (Apply-approved slice, docs/PLAYTABLE_FEATURE_RESEARCH_03_MAP_TOOLS_2026-08-27.md):
+    a waypoint measurement tool reusing the existing tool-rail/world-coordinate
+    machinery, client-only and transient (no server mutation, no persistence,
+    no broadcast to other clients -- Apply decision, doc section 9's own
+    permission contract). Must stay available to read-only users, unlike
+    the token tool right next to it which the same file already correctly
+    hides for that role.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    assert 'data-tool="measure"' in template
+    assert 'aria-label="Entfernung messen"' in template
+    assert 'id="btnMeasureSnap"' in template
+    assert 'id="measureLayer"' in template
+    assert 'id="measureAnnounce"' in template
+    assert 'role="status" aria-live="polite"' in template
+
+    # The measurement interaction handlers must never gate on this.readOnly
+    # -- that's the token-placement tool's job, not this one's.
+    measure_section_start = script.index("S03 measurement tool")
+    measure_section_end = script.index("_renderMeasurement() {", measure_section_start)
+    measure_section_end = script.index("}\n", script.index("announce.textContent", measure_section_end)) + 2
+    measure_section = script[measure_section_start:measure_section_end]
+    assert "this.readOnly" not in measure_section
+
+    assert "_cancelMeasurement()" in script
+    assert 'if (toolName !== "measure") {' in script
+
+    # Nested Escape/Ctrl+Z pop the last waypoint; gridless scenes disable
+    # snapping instead of snapping to zero.
+    assert "_removeLastWaypoint()" in script
+    assert '!gridSize) return point;' in script
+    assert 'event.ctrlKey || event.metaKey' in script
+
+    # Touch requires an actual long-press, not a tap -- distinguished from
+    # mouse so panning/scrolling on a tablet doesn't drop stray waypoints.
+    assert 'this._measurePointerIsTouch = event.pointerType === "touch"' in script
+    assert "550)" in script  # the long-press timer duration
+
+    # Waypoints outside the map are clamped to its edge, not dropped.
+    assert "Math.max(0, Math.min(width," in script
+
+
 def test_playtable_selecting_a_token_surfaces_its_controls():
     """F4 Gap B: clicking a token on the map already drew a real selection
     ring and updated #tokenSelectionSummary/#tokenSelectionDetail text --

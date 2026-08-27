@@ -70,6 +70,13 @@
             // list, and the roving-tabindex id for keyboard row navigation.
             this._layerFilterText = "";
             this._layerFocusId = null;
+            // S03: waypoint measurement tool -- client-local, transient,
+            // single-active-measurement state (Apply decision: not
+            // persisted, not broadcast to other clients).
+            this.measurement = { waypoints: [] };
+            this._measurePreviewPoint = null;
+            this.measureSnapEnabled = true;
+            this._measurePointerIsTouch = false;
             // Auto-fit runs once per activated map so the DM's manual zoom
             // choice survives snapshots/re-renders of the same map.
             this.autoFitMapId = null;
@@ -795,6 +802,15 @@
                 });
             });
 
+            const measureSnapBtn = document.getElementById("btnMeasureSnap");
+            if (measureSnapBtn) {
+                measureSnapBtn.addEventListener("click", () => {
+                    this.measureSnapEnabled = !this.measureSnapEnabled;
+                    measureSnapBtn.classList.toggle("active", this.measureSnapEnabled);
+                    measureSnapBtn.setAttribute("aria-pressed", String(this.measureSnapEnabled));
+                });
+            }
+
             const zoomOut = document.getElementById("btnZoomOut");
             const zoomIn = document.getElementById("btnZoomIn");
             const zoomReset = document.getElementById("btnZoomReset");
@@ -868,6 +884,13 @@
             if (toolName !== "token") {
                 this._cancelTokenPlacement();
             }
+            // S03 acceptance: switching away from the measure tool clears
+            // an in-progress measurement silently, no confirmation (the
+            // doc's own Acceptance Criteria section, not the conflicting
+            // risk-mitigation toast+undo proposal -- Apply decision).
+            if (toolName !== "measure") {
+                this._cancelMeasurement();
+            }
             this.currentTool = toolName;
             document.querySelectorAll(".tool-btn[data-tool]").forEach((button) => {
                 const isActive = button.getAttribute("data-tool") === toolName;
@@ -878,6 +901,8 @@
                 viewport.classList.toggle("tool-pan", toolName === "pan");
                 viewport.classList.toggle("tool-token", toolName === "token");
             }
+            const snapBtn = document.getElementById("btnMeasureSnap");
+            if (snapBtn) snapBtn.hidden = toolName !== "measure";
         }
 
         // F4: shared "make the token panel visible" step -- expand
@@ -1040,6 +1065,168 @@
                 if (worldX < 0 || worldY < 0 || worldX > width || worldY > height) return;
                 this._openTokenCreatePanel(worldX, worldY, event);
             });
+
+            // S03 measurement tool. Available to read-only users too (no
+            // server mutation, client-only state) -- unlike token placement
+            // above, none of what follows may gate on the read-only flag.
+            // Touch needs a real long-press (not a tap) so it doesn't fire
+            // on every pan/scroll gesture; mouse places on click. The same
+            // pointerdown pass also records which kind of pointer this is,
+            // so the click handler below can tell a touch-tap-after-hold
+            // apart from a genuine mouse click and not double-place.
+            viewport.addEventListener("pointerdown", (event) => {
+                if (this.currentTool !== "measure") return;
+                this._measurePointerIsTouch = event.pointerType === "touch";
+                if (event.target.closest?.(".floating, .stage-topbar")) return;
+                if (!this._measurePointerIsTouch) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                const startX = event.clientX;
+                const startY = event.clientY;
+                let longPressTimer = window.setTimeout(() => {
+                    longPressTimer = null;
+                    this._addMeasureWaypoint(this._snapWorldPoint(point));
+                }, 550);
+                const cancelIfMoved = (moveEvent) => {
+                    if (Math.hypot(moveEvent.clientX - startX, moveEvent.clientY - startY) > 12 && longPressTimer) {
+                        window.clearTimeout(longPressTimer);
+                        longPressTimer = null;
+                    }
+                };
+                const clearOnUp = () => {
+                    if (longPressTimer) window.clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                    window.removeEventListener("pointermove", cancelIfMoved);
+                    window.removeEventListener("pointerup", clearOnUp);
+                };
+                window.addEventListener("pointermove", cancelIfMoved);
+                window.addEventListener("pointerup", clearOnUp);
+            });
+            viewport.addEventListener("click", (event) => {
+                if (this.currentTool !== "measure") return;
+                if (this._measurePointerIsTouch) return;
+                if (event.target.closest?.(".floating, .stage-topbar")) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                this._addMeasureWaypoint(this._snapWorldPoint(point));
+            });
+            viewport.addEventListener("pointermove", (event) => {
+                if (this.currentTool !== "measure" || !this.measurement.waypoints.length) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                this._measurePreviewPoint = this._snapWorldPoint(point);
+                this._renderMeasurement();
+            });
+            viewport.addEventListener("contextmenu", (event) => {
+                if (this.currentTool !== "measure") return;
+                event.preventDefault();
+                this._removeLastWaypoint();
+            });
+        }
+
+        _worldPointFromEvent(event) {
+            const world = document.getElementById("mapWorld");
+            const worldRect = world?.getBoundingClientRect();
+            if (!worldRect) return null;
+            const scale = this.zoomLevel / 100;
+            const { width, height } = this._worldSize();
+            // Errors/edge-cases acceptance: waypoints outside the map are
+            // clamped to its edge, not silently dropped.
+            const x = Math.max(0, Math.min(width, (event.clientX - worldRect.left) / scale));
+            const y = Math.max(0, Math.min(height, (event.clientY - worldRect.top) / scale));
+            return { x, y };
+        }
+
+        _measureGridSize() {
+            const activeMap = this.bootstrap?.state_payload?.active_map;
+            return Number(activeMap?.grid_size) || 0;
+        }
+
+        _snapWorldPoint(point) {
+            const gridSize = this._measureGridSize();
+            // Acceptance: snapping disables automatically on a gridless
+            // scene (grid size 0/undefined) rather than snapping to 0.
+            if (!this.measureSnapEnabled || !gridSize) return point;
+            return {
+                x: Math.round(point.x / gridSize) * gridSize,
+                y: Math.round(point.y / gridSize) * gridSize,
+            };
+        }
+
+        _measureDistanceSquares(a, b) {
+            const gridSize = this._measureGridSize() || 70;
+            const dx = Math.abs(a.x - b.x) / gridSize;
+            const dy = Math.abs(a.y - b.y) / gridSize;
+            // Grid-snapped: diagonal costs the same as orthogonal (5e's
+            // simplified default). Freehand: real Euclidean distance.
+            // Matches the good_examples' grid-vs-freehand distinction.
+            return this.measureSnapEnabled ? Math.max(dx, dy) : Math.sqrt(dx * dx + dy * dy);
+        }
+
+        _formatMeasureDistance(squares) {
+            // FEET_PER_SQUARE is a client-only placeholder (S03 Apply
+            // decision, marked non-reversible in the research doc): no
+            // per-map/campaign real-world-unit field exists in this
+            // codebase yet -- CampaignMap.grid_size is *pixels* per
+            // square, not feet -- so a real configurable unit is deferred
+            // to a future slice rather than adding new backend schema
+            // just for this one label.
+            const FEET_PER_SQUARE = 5;
+            return `${Math.round(squares * FEET_PER_SQUARE)} ft`;
+        }
+
+        _addMeasureWaypoint(point) {
+            this.measurement.waypoints.push(point);
+            this._renderMeasurement();
+        }
+
+        _removeLastWaypoint() {
+            if (!this.measurement.waypoints.length) return;
+            this.measurement.waypoints.pop();
+            this._measurePreviewPoint = null;
+            this._renderMeasurement();
+        }
+
+        _cancelMeasurement() {
+            this.measurement = { waypoints: [] };
+            this._measurePreviewPoint = null;
+            this._renderMeasurement();
+        }
+
+        _renderMeasurement() {
+            const svg = document.getElementById("measureLayer");
+            const announce = document.getElementById("measureAnnounce");
+            if (!svg) return;
+            const waypoints = this.measurement.waypoints || [];
+            const points = waypoints.slice();
+            if (this._measurePreviewPoint && this.currentTool === "measure" && waypoints.length) {
+                points.push(this._measurePreviewPoint);
+            }
+            if (!points.length) {
+                svg.innerHTML = "";
+                if (announce) announce.textContent = "";
+                return;
+            }
+            const parts = [];
+            let cumulative = 0;
+            for (let i = 0; i < points.length; i += 1) {
+                const point = points[i];
+                if (i > 0) {
+                    const segment = this._measureDistanceSquares(points[i - 1], point);
+                    cumulative += segment;
+                    const midX = (points[i - 1].x + point.x) / 2;
+                    const midY = (points[i - 1].y + point.y) / 2;
+                    parts.push(`<line class="measure-line" x1="${points[i - 1].x}" y1="${points[i - 1].y}" x2="${point.x}" y2="${point.y}"></line>`);
+                    parts.push(`<text class="measure-label" x="${midX}" y="${midY - 6}">${this._formatMeasureDistance(segment)}</text>`);
+                }
+                parts.push(`<circle class="measure-point" cx="${point.x}" cy="${point.y}" r="5"></circle>`);
+            }
+            const last = points[points.length - 1];
+            parts.push(`<text class="measure-label" x="${last.x + 10}" y="${last.y - 10}">Gesamt: ${this._formatMeasureDistance(cumulative)}</text>`);
+            svg.innerHTML = parts.join("");
+            if (announce) {
+                announce.textContent = `Messwerkzeug aktiv: ${waypoints.length} Wegpunkt(e), Gesamtstrecke ${this._formatMeasureDistance(cumulative)}.`;
+            }
         }
 
         _openTokenCreatePanel(worldX, worldY, clickEvent) {
@@ -1594,6 +1781,21 @@
             if (closeSheetBtn) closeSheetBtn.addEventListener("click", () => this._closeSheet());
             document.addEventListener("keydown", (event) => {
                 if (event.key === "Escape") this._closeSheet();
+            });
+            // S03: Escape pops the last waypoint (repeated presses walk the
+            // measurement back to nothing, which IS the "second Escape
+            // cancels the whole thing" acceptance criterion when there were
+            // only two). Ctrl/Cmd+Z does the same pop, per the doc's own
+            // proposed contract.
+            document.addEventListener("keydown", (event) => {
+                if (this.currentTool !== "measure") return;
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    this._removeLastWaypoint();
+                } else if (event.key.toLowerCase() === "z" && (event.ctrlKey || event.metaKey)) {
+                    event.preventDefault();
+                    this._removeLastWaypoint();
+                }
             });
 
             this._bindMapUpload();

@@ -143,6 +143,18 @@ Verification: extended `tests/test_public_surface_and_playtable_contract.py`; ne
 
 Next: slice 03 (Map tool rail and measurement).
 
+## Slice 03 (Map Tools) — Apply decisions and Deploy status: DONE, 2026-08-27
+
+A 4th tool button (`data-tool="measure"`) joins select/pan/token, reusing the same world-coordinate math token placement already uses. Fully client-local per the doc's own permission contract (section 9): no persistence, no broadcast, single active measurement, cleared silently on tool switch.
+
+Apply decisions on the open questions: grid-snap defaults ON (matches the primary D&D-grid use case), diagonal distance uses the simplified same-cost-as-orthogonal rule when snapped (5e's own default) and true Euclidean when freehand; **unit-per-square is a hardcoded client constant (5 ft/square)** — `CampaignMap.grid_size` turned out to only track *pixels* per square, not a real-world unit, and no such field exists anywhere in the schema yet, so a real configurable unit is deferred rather than adding new backend schema just for this one label (flagged as a known placeholder, not silently assumed permanent); nested Escape (nothing more to add — nothing else scoped for this slice); silent discard on tool-switch (the doc's own Acceptance Criteria section, not its conflicting risk-mitigation toast+undo proposal); single-active-measurement only; AoE templates and walls/LOS explicitly out of scope, as the doc itself scoped them.
+
+Verification found two bugs in the verification code itself, not the feature — worth noting since they'll recur: Playwright's `wait_for_selector` defaults to waiting for "visible", so asserting an element *becomes* `[hidden]` needs `state="attached"` explicitly (bit S02's app-menu flow too); and SVG `<text>` isn't an `HTMLElement`, so `.inner_text()` throws on it — `.text_content()` works on any node type. Both are now the pattern to reuse for any future SVG-overlay or hide/show flow work.
+
+Scenario-first: extended `tests/test_public_surface_and_playtable_contract.py` (including a check that the read-only flag is never referenced anywhere in the measurement interaction code, since — unlike the token tool right next to it — this one must stay usable in read-only mode); new real-browser robot flow `measure_tool` covering waypoint placement, the game-unit distance label, right-click undo, nested-Escape-to-empty, and clears-on-tool-switch — 0 findings across all 7 registered flows. Full suite: 497 passed, 0 failed.
+
+Next: slice 04 (Selected-token HUD and character/creature focus).
+
 ## Definition of done for this work package
 
 - Every feature has a separate cited research note before implementation.

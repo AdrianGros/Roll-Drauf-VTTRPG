@@ -594,6 +594,168 @@ def _scene_directory_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _measure_tool_flow(stack, workdir: Path) -> list[str]:
+    """S03, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_03_MAP_TOOLS_2026-08-27.md,
+    Apply-approved): the waypoint measurement tool added to the select/pan/
+    token rail. Places two real waypoints via real clicks, checks the
+    distance label shows a game unit (not a bare square count), checks
+    right-click undo and switching tools away both clear the overlay."""
+    import struct
+    import zlib
+
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    def _make_png(width, height, rgb):
+        def chunk(tag, data):
+            piece = struct.pack(">I", len(data)) + tag + data
+            return piece + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+        raw = b""
+        row = bytes(rgb) * width
+        for _ in range(height):
+            raw += b"\x00" + row
+        ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr)
+                + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="messer_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="messer_bot",
+                email="messer_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Messkampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Messsitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_file = workdir / "robot_measure_map.png"
+        map_file.write_bytes(_make_png(600, 400, (90, 90, 70)))
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_function("() => window.RollDraufTable", timeout=15_000)
+            page.wait_for_timeout(1_000)
+            if "collapsed" in (page.locator("#layersWidget").get_attribute("class") or "").split():
+                page.click('#layersWidget .widget-toggle')
+            page.click("#layerAddBtn")
+            page.wait_for_selector("#layerAddChoice", state="visible", timeout=15_000)
+            with page.expect_file_chooser(timeout=10_000) as chooser_info:
+                page.click("#layerAddUpload")
+            chooser_info.value.set_files(str(map_file))
+            page.wait_for_function(
+                "() => (document.getElementById('activePageName')?.textContent || '')"
+                ".includes('robot_measure_map')", timeout=20_000)
+        except Exception as error:
+            findings.append(f"[setup] real map upload for the measure-tool flow "
+                            f"failed: {type(error).__name__}: {str(error)[:200]}")
+            browser.close()
+            return findings
+
+        try:
+            page.click('.tool-btn[data-tool="measure"]')
+            if "active" not in (page.locator('.tool-btn[data-tool="measure"]').get_attribute("class") or ""):
+                findings.append("[tool] clicking the measure tool did not mark it .active")
+            if page.locator("#btnMeasureSnap").is_hidden():
+                findings.append("[tool] the grid-snap toggle stayed hidden after activating the measure tool")
+
+            world = page.locator("#mapWorld")
+            box = world.bounding_box()
+            if not box:
+                findings.append("[measure] #mapWorld has no bounding box, cannot click on the map")
+            else:
+                p1 = {"x": box["x"] + box["width"] * 0.25, "y": box["y"] + box["height"] * 0.25}
+                p2 = {"x": box["x"] + box["width"] * 0.75, "y": box["y"] + box["height"] * 0.75}
+                page.mouse.click(p1["x"], p1["y"])
+                page.wait_for_timeout(150)
+                page.mouse.move(p2["x"], p2["y"])
+                page.wait_for_timeout(150)
+                waypoint_count = page.locator("#measureLayer circle.measure-point").count()
+                if waypoint_count < 1:
+                    findings.append(f"[measure] expected >=1 waypoint circle after one click, found {waypoint_count}")
+                # SVG <text> is not an HTMLElement -- inner_text() throws on
+                # it, text_content() works on any node type.
+                label_text = page.locator("#measureLayer text.measure-label").first.text_content() or ""
+                if "ft" not in label_text:
+                    findings.append(f"[measure] distance label does not show a game unit: {label_text!r}")
+
+                page.mouse.click(p2["x"], p2["y"])
+                page.wait_for_timeout(150)
+                two_waypoints = page.locator("#measureLayer circle.measure-point").count()
+                if two_waypoints < 2:
+                    findings.append(f"[measure] expected 2 waypoint circles after a second click, found {two_waypoints}")
+
+                announce_text = page.locator("#measureAnnounce").inner_text()
+                if "Wegpunkt" not in announce_text:
+                    findings.append(f"[a11y] #measureAnnounce did not announce waypoint state: {announce_text!r}")
+
+                # Right-click removes the last waypoint.
+                page.mouse.click(p2["x"], p2["y"], button="right")
+                page.wait_for_timeout(150)
+                after_undo = page.locator("#measureLayer circle.measure-point").count()
+                if after_undo != 1:
+                    findings.append(f"[measure] right-click did not remove exactly one waypoint (count now {after_undo})")
+
+                # Escape removes the remaining waypoint -> overlay empties.
+                page.keyboard.press("Escape")
+                page.wait_for_timeout(150)
+                after_escape = page.locator("#measureLayer circle.measure-point").count()
+                if after_escape != 0:
+                    findings.append(f"[measure] Escape did not clear the last waypoint (count now {after_escape})")
+
+                # Placing waypoints again, then switching tools must clear
+                # silently (no dialog, no leftover overlay).
+                page.mouse.click(p1["x"], p1["y"])
+                page.mouse.click(p2["x"], p2["y"])
+                page.wait_for_timeout(150)
+                page.click('.tool-btn[data-tool="select"]')
+                page.wait_for_timeout(150)
+                after_switch = page.locator("#measureLayer circle.measure-point").count()
+                if after_switch != 0:
+                    findings.append(f"[measure] switching tools away from measure did not clear the overlay (count now {after_switch})")
+                if not page.locator("#btnMeasureSnap").is_hidden():
+                    findings.append("[tool] the grid-snap toggle stayed visible after switching away from the measure tool")
+
+        except Exception as error:
+            findings.append(f"[measure] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "measure-tool-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _app_menu_flow(stack, workdir: Path) -> list[str]:
     """S02, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_02_APP_MENU_2026-08-27.md,
     Apply-approved): the application command menu (Return to Campaign /
@@ -1090,6 +1252,7 @@ FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
     "scene_directory": _scene_directory_flow,
+    "measure_tool": _measure_tool_flow,
     "app_menu": _app_menu_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,
