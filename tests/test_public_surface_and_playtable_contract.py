@@ -264,6 +264,55 @@ def test_playtable_scene_directory_has_search_duplicate_and_keyboard_nav():
     assert '#layersWidget .layer-row { min-height: 44px; }' in template
 
 
+def test_playtable_app_menu_exists_and_is_distinct_from_the_sidebar_toggle():
+    """S02 (Apply-approved slice, docs/PLAYTABLE_FEATURE_RESEARCH_02_APP_MENU_2026-08-27.md):
+    the application command menu (Return to Campaign / Leave Session / Help)
+    is a genuinely separate surface from #btnSidebarToggle, which already
+    exposes Journal/Chat/Tools/Session WORKSPACE CONTENT under its own
+    "Menü" label + hamburger icon -- reusing that label/icon for the new
+    menu would recreate exactly the label-collision class this session
+    already fixed once for icons (the S01 eye/lock mixup). Also checks the
+    two destructive/informational actions use native <dialog> (the
+    good_examples' explicit recommendation) rather than a hand-rolled modal.
+    """
+    template = PLAY_TEMPLATE.read_text(encoding="utf-8")
+    script = PLAY_UI.read_text(encoding="utf-8")
+
+    assert 'id="appMenu"' in template
+    assert 'role="menu"' in template
+    assert 'id="appMenuReturn"' in template
+    assert 'id="appMenuHelp"' in template
+    assert 'id="appMenuLeave"' in template
+
+    # btnBack keeps its own label ("Zurück") -- it must NOT say "Menü",
+    # which #btnSidebarToggle already owns for a different surface.
+    back_button_start = template.index('id="btnBack"')
+    back_button_markup = template[back_button_start:template.index("</button>", back_button_start)]
+    assert "Menü" not in back_button_markup
+    assert 'aria-haspopup="true"' in back_button_markup
+    assert 'aria-controls="appMenu"' in back_button_markup
+
+    assert '<dialog id="appMenuLeaveDialog"' in template
+    assert '<dialog id="appMenuHelpDialog"' in template
+
+    assert '_bindAppMenu()' in script
+    assert 'this._toggleAppMenu' in script
+    for key in ('"ArrowDown"', '"ArrowUp"', '"Home"', '"End"', '"Escape"'):
+        assert key in script
+
+    # Closes the sidebar rather than stacking overlays (acceptance
+    # criterion), and disables Leave (not hides it) in read-only mode with
+    # an explanatory tooltip -- resolves the research doc's own internal
+    # contradiction (Apply-handoff recommendation vs Acceptance Criteria)
+    # in favor of the stricter, already-established read-only convention.
+    assert '.right-sidebar")?.classList.remove("is-open")' in script
+    assert "leaveItem.disabled = this.readOnly" in script
+
+    # Sits above #sheetDrawer (the previous highest floating layer, z-index
+    # 340) so the menu is always reachable.
+    assert "z-index: 350;" in template
+
+
 def test_playtable_selecting_a_token_surfaces_its_controls():
     """F4 Gap B: clicking a token on the map already drew a real selection
     ring and updated #tokenSelectionSummary/#tokenSelectionDetail text --

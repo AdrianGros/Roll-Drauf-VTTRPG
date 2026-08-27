@@ -127,6 +127,22 @@ Verification: contract tests in `tests/test_public_surface_and_playtable_contrac
 
 Next: slice 02 (Application Escape/Menu surface) per the iteration order below, same per-slice Apply-then-Deploy gate.
 
+## Slice 02 (App Menu) — Apply decisions and Deploy status: DONE, 2026-08-27
+
+Current-state check (per the Slice 01 lesson: always verify before trusting the research doc's gap list) found far more already built than the doc assumed:
+- Pause/Resume/End already have working dedicated UI (`#btnPause`/`#btnEnd`/etc. calling the existing `POST .../transition` endpoint) — NOT duplicated into the new menu, since that would be a second, redundant control surface for the same action.
+- `session:state_changed` + `play:mode` already exist and are already wired client-side — this **is** the "does a status-changed event already exist" open question, just under a different name than the doc guessed (`session:status_changed`). Reused as-is, no new event.
+- `presence:update` (roster chip "Am Tisch: …") already broadcasts to everyone when a connection drops, including on the existing `session:leave` socket event that `play-socket.js`'s `disconnect()` already emits on any navigation-away. So "notify other players when someone leaves" was **already fully solved** — no `session:player_left` event was needed either.
+- Net effect: Leave Session needed **zero new backend surface**. It's `returnToBook()` (the same navigation `btnBack` already did) behind a confirmation dialog; the disconnect this triggers already tears down presence and updates everyone's roster for free.
+
+Apply decisions: menu button reuses the existing `btnBack` (bottom action-dock, not the research doc's suggested top-right — this app's own established chrome convention beat a generic recommendation); flat menu with a divider, no submenu; status line inside the menu; Escape is dismiss-only and scoped with `stopPropagation()` so it can never leak to token-deselect; Leave copy is a plain German sentence, no "don't ask again" checkbox; **read-only disables Leave with a tooltip** (resolving the research doc's own internal contradiction — Apply-handoff text said "enable it," Acceptance Criteria said "disable it" — in favor of the stricter, already-established "read-only means no mutations" rule used everywhere else in this app); mobile menu becomes a full-width bottom sheet; native `<dialog>` for both Leave-confirmation and Help (first use of `<dialog>` in this codebase — sidesteps hand-rolled focus-trap/z-index risk entirely). Settings and Manage Players were **not** added — no such pages exist yet, and a menu item that links nowhere is a dead button, the exact anti-pattern this codebase already has a house rule against (§2, cited in existing code comments).
+
+Real near-miss caught during Apply review: `#btnSidebarToggle` (Journal/Chat/Tools/Session workspace drawer) already uses the label "Menü" with a ☰ icon. The new app-menu trigger deliberately does NOT reuse that label/icon — doing so would recreate the exact same-label/same-icon ambiguity as the S01 eye-icon near-miss, just for text instead of a glyph. A contract test pins this (`back_button_markup` must not contain "Menü").
+
+Verification: extended `tests/test_public_surface_and_playtable_contract.py`; new real-browser robot flow `app_menu` in `tools/robots/flows.py` (open/close, keyboard nav focus assertions, sidebar-closes-on-open, native-`<dialog>` checks for Help, Leave-cancelled-stays-in-session, Return-navigates) — 0 findings across all 6 registered flows. Full suite: 496 passed, 0 failed.
+
+Next: slice 03 (Map tool rail and measurement).
+
 ## Definition of done for this work package
 
 - Every feature has a separate cited research note before implementation.

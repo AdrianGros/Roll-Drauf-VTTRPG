@@ -800,6 +800,106 @@
             outline: 2px solid var(--line-strong);
             outline-offset: 1px;
         }
+
+        /* S02: application command menu, anchored to the action-dock's
+           evolved btnBack trigger. #sheetDrawer (the highest floating
+           surface today) sits at z-index:340 -- this sits above it so the
+           menu is always reachable even with the character sheet open. */
+        .tool-caret { margin-left: 0.15rem; font-size: 0.65em; opacity: 0.75; }
+        .app-menu {
+            position: fixed;
+            left: 0.75rem;
+            bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+            z-index: 350;
+            display: flex;
+            flex-direction: column;
+            min-width: 220px;
+            padding: 0.4rem;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: rgba(12, 9, 22, 0.96);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+        }
+        .app-menu[hidden] { display: none; }
+        .app-menu-status {
+            padding: 0.3rem 0.5rem;
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+        .app-menu-item {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.5rem 0.6rem;
+            min-height: 44px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: inherit;
+            font-size: 0.85rem;
+        }
+        .app-menu-item:hover, .app-menu-item:focus-visible {
+            background: rgba(255, 255, 255, 0.08);
+            outline: none;
+        }
+        .app-menu-item--danger { color: #ff9b9b; }
+        .app-menu-item--danger:hover, .app-menu-item--danger:focus-visible {
+            background: rgba(191, 75, 75, 0.25);
+        }
+        .app-menu-item:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+        .app-menu-item:disabled:hover, .app-menu-item:disabled:focus-visible {
+            background: transparent;
+        }
+        .app-menu-divider {
+            margin: 0.3rem 0.2rem;
+            border: none;
+            border-top: 1px solid var(--line);
+        }
+        .app-dialog {
+            margin: auto;
+            padding: 1.1rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: var(--book-paper, #f3ead8);
+            color: #241a12;
+            max-width: min(420px, 90vw);
+        }
+        .app-dialog::backdrop { background: rgba(6, 4, 12, 0.6); }
+        .app-dialog h3 { margin: 0 0 0.5rem; }
+        .app-dialog p { margin: 0 0 0.9rem; font-size: 0.88rem; }
+        .app-dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+        .app-help-list {
+            margin: 0 0 0.9rem;
+            padding-left: 1.1rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .app-help-list kbd {
+            padding: 0.05rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.06);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 0.82em;
+        }
+        @media (max-width: 1040px) {
+            /* Mobile acceptance: bottom sheet / full-width popover, not a
+               float over the map; large touch targets throughout. */
+            .app-menu {
+                left: 0.5rem;
+                right: 0.5rem;
+                bottom: env(safe-area-inset-bottom, 0px);
+                min-width: 0;
+            }
+            .app-menu-item { min-height: 48px; font-size: 0.9rem; }
+        }
         .layer-add-row {
             display: flex;
             gap: 0.35rem;
@@ -1765,9 +1865,49 @@
             <div class="spacer">
                 <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
                 <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
-                <button type="button" id="btnBack" class="tool-btn" title="Zur Kampagne"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span></button>
+                <button type="button" id="btnBack" class="tool-btn" title="Sitzungsmenü: Kampagne, Hilfe, Sitzung verlassen" aria-haspopup="true" aria-expanded="false" aria-controls="appMenu"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span><span class="tool-caret" aria-hidden="true">▾</span></button>
             </div>
         </aside>
+
+        <!-- S02: the application-level command menu, distinct from
+             #btnSidebarToggle (which exposes Journal/Chat/Tools/Session
+             WORKSPACE CONTENT, not system commands -- the two were already
+             both labelled/iconed as "menu"-ish before this slice; keeping
+             them functionally separate matters more than picking a new
+             label, since renaming the sidebar toggle is out of scope here). -->
+        <div id="appMenu" class="app-menu" role="menu" aria-label="Sitzungsmenü" hidden>
+            <div id="appMenuStatus" class="app-menu-status" role="none"></div>
+            <button type="button" id="appMenuReturn" class="app-menu-item" role="menuitem">Zur Kampagne zurückkehren</button>
+            <button type="button" id="appMenuHelp" class="app-menu-item" role="menuitem">Hilfe &amp; Tastenkürzel</button>
+            <hr class="app-menu-divider">
+            <button type="button" id="appMenuLeave" class="app-menu-item app-menu-item--danger" role="menuitem">Sitzung verlassen</button>
+        </div>
+
+        <dialog id="appMenuLeaveDialog" class="app-dialog">
+            <form method="dialog">
+                <h3>Sitzung verlassen?</h3>
+                <p>Du kehrst zur Kampagne zurück. Andere am Tisch sehen sofort, dass du gegangen bist.</p>
+                <div class="app-dialog-actions">
+                    <button type="button" id="appMenuLeaveCancel" class="mini-btn secondary" autofocus>Abbrechen</button>
+                    <button type="button" id="appMenuLeaveConfirm" class="mini-btn danger">Sitzung verlassen</button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog id="appMenuHelpDialog" class="app-dialog">
+            <form method="dialog">
+                <h3>Hilfe &amp; Tastenkürzel</h3>
+                <ul class="app-help-list">
+                    <li><kbd>Esc</kbd> — Menü, Dialog oder Seitenleiste schließen</li>
+                    <li><kbd>Enter</kbd> / <kbd>Leertaste</kbd> — Fokussiertes Element aktivieren</li>
+                    <li><kbd>↑</kbd> / <kbd>↓</kbd> — In Listen (z. B. Seiten) navigieren</li>
+                    <li><kbd>Pos1</kbd> / <kbd>Ende</kbd> — Zum ersten/letzten Eintrag springen</li>
+                </ul>
+                <div class="app-dialog-actions">
+                    <button type="button" id="appMenuHelpClose" class="mini-btn secondary" autofocus>Schließen</button>
+                </div>
+            </form>
+        </dialog>
 
         <aside class="right-sidebar">
             <div class="sidebar-tabs">

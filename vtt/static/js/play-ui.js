@@ -627,8 +627,13 @@
         }
 
         _bindControls() {
+            // S02: btnBack no longer navigates directly on click -- it opens
+            // the app menu, whose first item ("Zur Kampagne zurückkehren")
+            // is the old one-click behavior, kept unconfirmed and fast.
+            // "Sitzung verlassen" is the new, explicitly confirmed sibling
+            // action good_examples asked for (D&D Beyond's two-step exit).
             document.getElementById("btnBack").addEventListener("click", () => {
-                this.returnToBook(`/campaigns?campaign_id=${this.campaignId}`);
+                this._toggleAppMenu();
             });
 
             document.querySelectorAll("[data-book-return-target]").forEach((node) => {
@@ -810,6 +815,7 @@
             this._setupTableSheet();
             this._bindWidgetDragging();
             this._bindLayersDirectoryControls();
+            this._bindAppMenu();
 
             const sendChat = () => {
                 const input = document.getElementById("chatInput");
@@ -1997,6 +2003,7 @@
             if (statusPill) {
                 statusPill.textContent = String(this.bootstrap?.session?.runtime_status || this.bootstrap?.session?.status || "-");
             }
+            this._renderAppMenuStatus();
 
             const notice = document.getElementById("readOnlyNotice");
             if (this.readOnly) {
@@ -2223,6 +2230,132 @@
             const list = document.getElementById("layerList");
             if (list) {
                 list.addEventListener("keydown", (event) => this._handleLayerListKeydown(event));
+            }
+        }
+
+        // S02: the application command menu. A plain popover (not a native
+        // <dialog>) because it's dismissible/non-modal by design -- clicking
+        // outside just closes it, per the acceptance criteria. The two
+        // destructive/informational actions it opens (Leave confirmation,
+        // Help) DO use native <dialog> for their built-in modal/focus-trap
+        // behavior, matching the good_examples' "native <dialog> patterns"
+        // guidance.
+        _bindAppMenu() {
+            const trigger = document.getElementById("btnBack");
+            const menu = document.getElementById("appMenu");
+            const leaveDialog = document.getElementById("appMenuLeaveDialog");
+            const helpDialog = document.getElementById("appMenuHelpDialog");
+            if (!trigger || !menu) return;
+
+            const items = () => Array.from(menu.querySelectorAll(".app-menu-item"));
+
+            const openMenu = () => {
+                // Acceptance: opening the menu closes the sidebar rather
+                // than stacking overlays.
+                document.querySelector(".right-sidebar")?.classList.remove("is-open");
+                menu.hidden = false;
+                trigger.setAttribute("aria-expanded", "true");
+                items()[0]?.focus();
+                document.addEventListener("click", onOutsideClick, true);
+            };
+            const closeMenu = ({ returnFocus = true } = {}) => {
+                if (menu.hidden) return;
+                menu.hidden = true;
+                trigger.setAttribute("aria-expanded", "false");
+                document.removeEventListener("click", onOutsideClick, true);
+                if (returnFocus) trigger.focus();
+            };
+            const onOutsideClick = (event) => {
+                if (menu.contains(event.target) || trigger.contains(event.target)) return;
+                closeMenu({ returnFocus: false });
+            };
+            this._toggleAppMenu = () => (menu.hidden ? openMenu() : closeMenu());
+
+            menu.addEventListener("keydown", (event) => {
+                const rows = items();
+                const currentIndex = rows.indexOf(document.activeElement);
+                if (event.key === "ArrowDown") {
+                    event.preventDefault();
+                    rows[Math.min(rows.length - 1, currentIndex + 1)]?.focus();
+                } else if (event.key === "ArrowUp") {
+                    event.preventDefault();
+                    rows[Math.max(0, currentIndex - 1)]?.focus();
+                } else if (event.key === "Home") {
+                    event.preventDefault();
+                    rows[0]?.focus();
+                } else if (event.key === "End") {
+                    event.preventDefault();
+                    rows[rows.length - 1]?.focus();
+                } else if (event.key === "Escape") {
+                    // Contained here so it can never also deselect a token
+                    // or close the session -- the exact HIGH risk the
+                    // research doc flagged about Escape propagation.
+                    event.preventDefault();
+                    event.stopPropagation();
+                    closeMenu();
+                }
+            });
+            trigger.addEventListener("keydown", (event) => {
+                // A second Escape while focus sits on the trigger itself
+                // must do nothing (acceptance criterion) -- only handle
+                // Escape here while the menu is actually open.
+                if (event.key === "Escape" && !menu.hidden) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    closeMenu();
+                }
+            });
+
+            document.getElementById("appMenuReturn")?.addEventListener("click", () => {
+                closeMenu({ returnFocus: false });
+                this.returnToBook(`/campaigns?campaign_id=${this.campaignId}`);
+            });
+
+            document.getElementById("appMenuHelp")?.addEventListener("click", () => {
+                closeMenu({ returnFocus: false });
+                helpDialog?.showModal();
+            });
+            document.getElementById("appMenuHelpClose")?.addEventListener("click", () => helpDialog?.close());
+
+            const leaveTrigger = document.getElementById("appMenuLeave");
+            leaveTrigger?.addEventListener("click", () => {
+                if (leaveTrigger.disabled) return;
+                closeMenu({ returnFocus: false });
+                leaveDialog?.showModal();
+            });
+            document.getElementById("appMenuLeaveCancel")?.addEventListener("click", () => leaveDialog?.close());
+            document.getElementById("appMenuLeaveConfirm")?.addEventListener("click", () => {
+                leaveDialog?.close();
+                // The socket's own disconnect handler already emits
+                // session:leave (play-socket.js: disconnect()) and the
+                // server already broadcasts the updated presence roster
+                // (_drop_presence -> presence:update) to everyone still at
+                // the table -- returnToBook()'s navigation triggers exactly
+                // that teardown, so no new backend event was needed here.
+                this.returnToBook(`/campaigns?campaign_id=${this.campaignId}`);
+            });
+        }
+
+        _renderAppMenuStatus() {
+            const box = document.getElementById("appMenuStatus");
+            const leaveItem = document.getElementById("appMenuLeave");
+            if (!box) return;
+            const status = String(this.bootstrap?.session?.runtime_status || this.bootstrap?.session?.status || "scheduled");
+            const labels = {
+                scheduled: "Geplant", ready: "Bereit", in_progress: "Live",
+                paused: "Pausiert", ended: "Beendet",
+            };
+            box.textContent = `Status: ${labels[status] || status}`;
+            if (leaveItem) {
+                // Acceptance: read-only mode disables Leave with a tooltip
+                // rather than the Apply-handoff's other option (enable it) --
+                // the doc's own Acceptance Criteria section is more
+                // conservative and read-only already means "no mutating
+                // actions" everywhere else in this app, so this stays
+                // consistent with that existing rule rather than carving
+                // out an exception.
+                leaveItem.disabled = this.readOnly;
+                leaveItem.title = this.readOnly ? "Im Nur-Lesen-Modus nicht verfügbar." : "";
             }
         }
 

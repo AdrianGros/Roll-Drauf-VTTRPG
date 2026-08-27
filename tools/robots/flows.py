@@ -594,6 +594,136 @@ def _scene_directory_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _app_menu_flow(stack, workdir: Path) -> list[str]:
+    """S02, 2026-08-27 (docs/PLAYTABLE_FEATURE_RESEARCH_02_APP_MENU_2026-08-27.md,
+    Apply-approved): the application command menu (Return to Campaign /
+    Leave Session / Help), evolved from the old single-click btnBack. Drives
+    the actual UI: open/close, keyboard nav, sidebar-closes-on-open,
+    Leave's confirmation dialog (cancelled, not confirmed -- this flow must
+    not actually end the robot's own session), and Help's native <dialog>."""
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="appmenu_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="appmenu_bot",
+                email="appmenu_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Menükampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Menüsitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            page.wait_for_function("() => window.RollDraufTable", timeout=15_000)
+            page.wait_for_timeout(1_000)
+
+            # Opening the menu must close an already-open sidebar rather
+            # than stacking overlays (acceptance criterion).
+            page.click("#btnSidebarToggle")
+            page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
+            page.click("#btnBack")
+            page.wait_for_selector("#appMenu:not([hidden])", timeout=10_000)
+            if page.locator(".right-sidebar.is-open").count():
+                findings.append("[menu] opening the app menu did not close the already-open sidebar")
+
+            # Keyboard: focus starts on the first item; ArrowDown moves it;
+            # Escape closes and returns focus to the trigger, and a SECOND
+            # Escape on the trigger must not do anything destructive.
+            focused_id = page.evaluate("() => document.activeElement?.id || null")
+            if focused_id != "appMenuReturn":
+                findings.append(f"[keyboard] opening the menu did not focus the first item (focused: {focused_id!r})")
+            page.keyboard.press("ArrowDown")
+            focused_id = page.evaluate("() => document.activeElement?.id || null")
+            if focused_id != "appMenuHelp":
+                findings.append(f"[keyboard] ArrowDown from the first item did not move to the second (focused: {focused_id!r})")
+            page.keyboard.press("Escape")
+            # default wait_for_selector state is "visible" -- an element
+            # becoming [hidden] is never "visible", so this needs the
+            # "attached" state explicitly or it always times out waiting
+            # for a state that can't happen.
+            page.wait_for_selector("#appMenu[hidden]", state="attached", timeout=5_000)
+            focused_id = page.evaluate("() => document.activeElement?.id || null")
+            if focused_id != "btnBack":
+                findings.append(f"[keyboard] Escape did not return focus to the trigger button (focused: {focused_id!r})")
+
+            # Help: a real native <dialog>, opened via showModal (has a
+            # backdrop / is in the top layer), not a hand-rolled overlay.
+            page.click("#btnBack")
+            page.wait_for_selector("#appMenu:not([hidden])", timeout=10_000)
+            page.click("#appMenuHelp")
+            page.wait_for_selector("#appMenuHelpDialog[open]", timeout=10_000)
+            is_native_modal = page.evaluate(
+                "() => document.getElementById('appMenuHelpDialog').tagName === 'DIALOG'"
+                " && document.getElementById('appMenuHelpDialog').open")
+            if not is_native_modal:
+                findings.append("[help] appMenuHelpDialog did not open as a real <dialog>")
+            page.click("#appMenuHelpClose")
+            page.wait_for_timeout(200)
+            if page.evaluate("() => document.getElementById('appMenuHelpDialog').open"):
+                findings.append("[help] closing the help dialog did not actually close it")
+
+            # Leave: confirmation dialog, then CANCEL (must not navigate
+            # away or end the robot's own session).
+            page.click("#btnBack")
+            page.wait_for_selector("#appMenu:not([hidden])", timeout=10_000)
+            page.click("#appMenuLeave")
+            page.wait_for_selector("#appMenuLeaveDialog[open]", timeout=10_000)
+            page.click("#appMenuLeaveCancel")
+            page.wait_for_timeout(300)
+            if page.evaluate("() => document.getElementById('appMenuLeaveDialog').open"):
+                findings.append("[leave] cancelling the leave dialog did not close it")
+            if "/play" not in page.url:
+                findings.append(f"[leave] cancelling the leave dialog navigated away anyway (url: {page.url})")
+
+            # Return to Campaign: no confirmation, real navigation.
+            page.click("#btnBack")
+            page.wait_for_selector("#appMenu:not([hidden])", timeout=10_000)
+            page.click("#appMenuReturn")
+            page.wait_for_url("**/campaigns**", timeout=15_000)
+
+        except Exception as error:
+            findings.append(f"[app-menu] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "app-menu-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 def _campaign_hub_click_flow(stack, workdir: Path) -> list[str]:
     """Desktop-Audit F1 (2026-08-26): every "Hub öffnen"/"Hub und
     Vorbereitung" click on the campaigns book page used to hard-navigate
@@ -960,6 +1090,7 @@ FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
     "scene_directory": _scene_directory_flow,
+    "app_menu": _app_menu_flow,
     "campaign_hub_click": _campaign_hub_click_flow,
     "beyond20_bridge": _beyond20_bridge_flow,
 }
