@@ -717,14 +717,37 @@
             border-radius: 10px;
             padding: 0.55rem;
             z-index: 18;
-            max-height: 40%;
-            overflow: auto;
+            max-height: 50%;
             width: 280px;
+            /* S11.1 fix: overflow used to live here directly, which made
+               THIS element (header included) the scroll container -- once
+               content grew past max-height, scrolling to reach it also
+               scrolled the "Tokens"/"Turn Order" title and collapse
+               toggle out of view. Flex layout below keeps the header
+               pinned; only .widget-body scrolls. */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        /* S11.1 fix regression guard: [hidden] and .floating are equal
+           specificity (0,0,1,0) -- without this, source order alone would
+           decide the tie, and .floating's own display:flex silently wins
+           over the browser's UA-stylesheet [hidden]{display:none} rule,
+           making any hidden .floating panel (e.g. #tokenCreatePanel)
+           render anyway. Combining class+attribute here (0,0,2,0) beats
+           both unconditionally regardless of source order. Caught by
+           screenshot during this same fix, not by any existing test --
+           robot flows only ever check .hidden/[hidden] as a DOM property
+           assertion, never that the element is ACTUALLY invisible on
+           screen. */
+        .floating[hidden] {
+            display: none;
         }
         .floating h3 {
             margin: 0 0 0.5rem 0;
             font-size: 0.88rem;
             color: #bad6ff;
+            flex: 0 0 auto;
         }
         /* Table refactor, 2026-08-23: the three floating widgets used to sit
            permanently expanded on top of the map (the layer panel alone
@@ -739,6 +762,42 @@
             align-items: center;
             gap: 0.4rem;
         }
+        /* S11.1 fix: every slice from S05 on kept appending rows to these
+           same two widgets without anyone revisiting the original
+           max-height budget -- by S10/S11 real controls (Fog of War
+           toggle+reset, Sichtweite, Beute, Sichtbare Tokens) were sitting
+           below the fold with literally no visual hint more content
+           existed. The scroll-shadow gradient below is the standard
+           CSS-only "fades out at an overflowing edge, disappears when
+           there's nothing more to scroll" technique -- two opaque-to-
+           transparent covers that scroll WITH the content (background-
+           attachment:local) hide the shadow layers underneath (attachment:
+           scroll) except right at a genuinely overflowing edge. */
+        .widget-body {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            min-height: 0;
+            /* No separate background-color here on purpose: --panel is
+               translucent (alpha 0.86), and .floating already paints
+               background: var(--panel) once behind this whole box. An
+               additional flat background-color: var(--panel) layer here
+               would alpha-composite on top of that (0.86 twice ≈ 0.98),
+               making the body area visibly more opaque than the header
+               right above it -- caught during this same fix, not a
+               pre-existing artifact. The gradients' own var(--panel) stop
+               already provides one single (non-doubled) layer of cover at
+               the scrollable edges; the rest of the box needs no
+               background of its own, .floating's shows through exactly
+               like it does behind the header. */
+            background:
+                linear-gradient(var(--panel) 30%, rgba(0, 0, 0, 0)) center top,
+                linear-gradient(rgba(0, 0, 0, 0), var(--panel) 70%) center bottom,
+                radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0)) center top,
+                radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0)) center bottom;
+            background-repeat: no-repeat;
+            background-size: 100% 22px, 100% 22px, 100% 10px, 100% 10px;
+            background-attachment: local, local, scroll, scroll;
+        }
         .floating.collapsed {
             width: auto;
             min-width: 0;
@@ -749,6 +808,19 @@
         .widget-caret {
             font-size: 0.7rem;
             transition: transform 150ms ease;
+        }
+        /* S11.1: a labeled break between two logically distinct control
+           groups stacked in the same widget body (e.g. Combat, then
+           Vision & Fog) -- so a partial scroll still orients the user
+           instead of surfacing anonymous buttons with no context. */
+        .widget-subheading {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--muted);
+            border-top: 1px solid var(--line);
+            padding-top: 0.4rem;
+            margin-bottom: 0.35rem;
         }
         /* F5: every floating panel's header doubles as a drag handle
            (desktop only -- play-ui.js's _bindWidgetDragging no-ops below
@@ -946,30 +1018,67 @@
                glow. Only the small center dot is a click target. */
             pointer-events: none;
         }
+        /* S11.1 fix: the original fill opacities (0.10/0.18) against this
+           app's very dark navy map background (--bg-a: #0c1426) rendered
+           as a barely-there grey smudge, not a "light" -- confirmed by
+           screenshot, not just theorized. This is the actual bug behind
+           "placing a light does nothing": it DID work, the confirmation
+           was just imperceptible. Roughly doubled fill opacity, brighter/
+           thicker strokes, and a genuine glow via drop-shadow on the
+           center dot so there's an unmistakable bright point regardless
+           of how faint the wide translucent rings read at a glance. */
         .vision-light-marker .vision-light-dim {
-            fill: rgba(255, 210, 100, 0.10);
-            stroke: rgba(255, 210, 100, 0.35);
-            stroke-width: 1;
+            fill: rgba(255, 200, 90, 0.22);
+            stroke: rgba(255, 200, 90, 0.6);
+            stroke-width: 1.5;
         }
         .vision-light-marker .vision-light-bright {
-            fill: rgba(255, 210, 100, 0.18);
-            stroke: rgba(255, 210, 100, 0.55);
-            stroke-width: 1;
+            fill: rgba(255, 200, 90, 0.36);
+            stroke: rgba(255, 210, 110, 0.85);
+            stroke-width: 1.5;
         }
-        .vision-light-marker.darkness .vision-light-dim,
+        .vision-light-marker.darkness .vision-light-dim {
+            fill: rgba(120, 80, 200, 0.24);
+            stroke: rgba(120, 80, 200, 0.6);
+        }
         .vision-light-marker.darkness .vision-light-bright {
-            fill: rgba(90, 60, 160, 0.16);
-            stroke: rgba(90, 60, 160, 0.5);
+            fill: rgba(120, 80, 200, 0.38);
+            stroke: rgba(140, 100, 220, 0.85);
         }
         .vision-light-marker .vision-light-dot {
             fill: #ffd23f;
             stroke: #241a12;
-            stroke-width: 1.5;
+            stroke-width: 2;
             cursor: pointer;
             pointer-events: fill;
+            filter: drop-shadow(0 0 6px rgba(255, 210, 80, 0.9));
         }
         .vision-light-marker.darkness .vision-light-dot {
-            fill: #5a3ca0;
+            fill: #a375f0;
+            filter: drop-shadow(0 0 6px rgba(140, 100, 220, 0.9));
+        }
+        /* One-shot placement confirmation: play-ui.js adds this class to a
+           marker right after creating it and removes it after the
+           animation ends -- an unmissable "yes, that landed" flash
+           instead of relying on the viewer noticing a new, possibly
+           subtle shape appear among others already on the map. Opacity/
+           stroke-width only (no transform) -- SVG shapes need an explicit
+           transform-box: fill-box to scale sanely from their own center,
+           an easy cross-browser footgun not worth taking for a one-shot
+           polish detail. Collapses to a single frame under prefers-
+           reduced-motion via the global animation-duration override
+           already in this file. */
+        @keyframes vision-marker-placed-flash {
+            0% { opacity: 0.15; }
+            35% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+        .vision-light-marker.just-placed .vision-light-dot {
+            animation: vision-marker-placed-flash 420ms ease-out;
+        }
+        .vision-wall-line.just-placed {
+            animation: vision-marker-placed-flash 420ms ease-out;
+            stroke-width: 5;
         }
         .vision-geom-popover {
             position: fixed;
@@ -1285,11 +1394,26 @@
             flex: 1;
             overflow: hidden;
         }
+        /* S11.1 fix (broader sweep): a sidebar tab whose content
+           genuinely outgrows the sidebar height (e.g. Tools, once dice
+           presets + roll composer + the D&D Beyond/Beyond20 setup
+           section stack up) scrolled with an effectively invisible
+           scrollbar and nothing else marking it as scrollable -- same
+           gradient technique as the two fixes above, same sidebar
+           background color as the log fix. */
         .tab-panel {
             display: none;
             height: 100%;
             overflow: auto;
             padding: 0.7rem;
+            background:
+                linear-gradient(rgba(5, 11, 22, 0.96) 30%, rgba(0, 0, 0, 0)) center top,
+                linear-gradient(rgba(0, 0, 0, 0), rgba(5, 11, 22, 0.96) 70%) center bottom,
+                radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)) center top,
+                radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)) center bottom;
+            background-repeat: no-repeat;
+            background-size: 100% 24px, 100% 24px, 100% 10px, 100% 10px;
+            background-attachment: local, local, scroll, scroll;
         }
         .tab-panel.active { display: block; }
         .panel {
@@ -1433,10 +1557,26 @@
             padding: 0.4rem 0.52rem;
             width: 100%;
         }
+        /* S11.1 fix (broader sweep, same bug pattern as the widget-body
+           fix above): these three logs already had their own internal
+           scroll, they just never had any visual indication of it --
+           after ~4 chat messages or dice rolls, older history vanished
+           below a hard, unmarked edge. Same scroll-shadow gradient
+           technique, colored against .right-sidebar's own background
+           (rgba(5,11,22,0.96), not --panel -- these logs live directly
+           in the sidebar, not inside a .floating panel). */
         #diceLog, #activityLog, #chatLog {
             max-height: 230px;
             overflow-y: auto;
             font-size: 0.83rem;
+            background:
+                linear-gradient(rgba(5, 11, 22, 0.96) 30%, rgba(0, 0, 0, 0)) center top,
+                linear-gradient(rgba(0, 0, 0, 0), rgba(5, 11, 22, 0.96) 70%) center bottom,
+                radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0)) center top,
+                radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0)) center bottom;
+            background-repeat: no-repeat;
+            background-size: 100% 20px, 100% 20px, 100% 9px, 100% 9px;
+            background-attachment: local, local, scroll, scroll;
         }
         /* Rich cards for external rolls (Beyond20 etc.) in the dice log. */
         .ext-roll-card {
@@ -1593,7 +1733,7 @@
                 padding: 0.3rem;
             }
             .floating {
-                max-height: 34%;
+                max-height: 42%;
             }
             .left-toolbar {
                 padding: 0.35rem 0.24rem;
@@ -1615,7 +1755,7 @@
                 width: 68px;
             }
             .floating {
-                max-height: 30%;
+                max-height: 38%;
                 padding: 0.45rem;
             }
             .tabletop-shell {
@@ -1733,9 +1873,28 @@
                 max-height: 62svh;
                 overflow-y: auto;
                 padding: 10px 10px calc(10px + env(safe-area-inset-bottom, 0px));
-                background: rgba(7, 14, 28, 0.98);
                 border-top: 2px solid var(--line-strong);
                 box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.5);
+                /* S11.1 fix (mobile sweep): the desktop widget-body fix
+                   doesn't carry over here -- on this breakpoint the
+                   widgets lose their own max-height (see .table-sheet
+                   .floating above, max-height:none) and THIS element
+                   becomes the real scroll container instead. With all
+                   three widgets expanded it commonly overflows well past
+                   62svh with nothing marking Sichtweite/Beute-Quelle/
+                   Sichtbare Tokens as reachable further down. Same
+                   gradient technique, colored against this element's own
+                   background (replaces the flat background line above --
+                   see the .widget-body fix for why a separate flat
+                   background-color here would double-composite). */
+                background:
+                    linear-gradient(rgba(7, 14, 28, 0.98) 20%, rgba(0, 0, 0, 0)) center top,
+                    linear-gradient(rgba(0, 0, 0, 0), rgba(7, 14, 28, 0.98) 80%) center bottom,
+                    radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)) center top,
+                    radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)) center bottom;
+                background-repeat: no-repeat;
+                background-size: 100% 28px, 100% 28px, 100% 12px, 100% 12px;
+                background-attachment: local, local, scroll, scroll;
             }
             .table-sheet[hidden] { display: none; }
             /* Inside the sheet the widgets are plain stacked blocks — every
@@ -1828,7 +1987,7 @@
                 left: 0.4rem !important;
                 right: 0.4rem !important;
                 width: auto !important;
-                max-height: 42svh;
+                max-height: 48svh;
             }
             /* Bottom-stacked with the other widgets (2026-08-25): anchored
                at top:3rem it floated OVER the map's first ~200px — on
@@ -2094,9 +2253,20 @@
                 </div>
             </div>
 
+            <!-- S11.1 fix: this is the only .floating panel whose content
+                 wasn't wrapped in .widget-body -- when .floating moved
+                 from self-scrolling (overflow:auto on the whole panel) to
+                 only .widget-body scrolling, this one silently LOST its
+                 scroll mechanism entirely (worse than the bug being
+                 fixed: on a short mobile viewport where this panel is
+                 capped at 48% height, its form fields plus Platzieren/
+                 Abbrechen could clip with no way to reach them at all).
+                 Reusing .widget-body here needs no toggle/collapse
+                 behavior to apply -- that only activates via the parent's
+                 .collapsed class, which this panel never gets. -->
             <div id="tokenCreatePanel" class="floating" hidden style="width: 250px;">
                 <h3>Token platzieren</h3>
-                <div style="display:flex; flex-direction:column; gap:0.4rem;">
+                <div class="widget-body" style="display:flex; flex-direction:column; gap:0.4rem;">
                     <input id="tokenCreateName" type="text" placeholder="Name" maxlength="120">
                     <select id="tokenCreateType">
                         <option value="npc">NPC</option>
@@ -2185,9 +2355,19 @@
                          walls/lights can still be placed and previewed via
                          "Sichtbare Tokens" either way. Reset is
                          destructive and asks for explicit confirmation. -->
-                    <div class="button-row" id="visionControls" style="margin:0.45rem 0 0;" hidden>
-                        <button type="button" id="btnFogEnabledToggle" class="mini-btn secondary">Nebel des Krieges: aus</button>
-                        <button type="button" id="btnFogReset" class="mini-btn danger">Nebel zurücksetzen</button>
+                    <!-- S11.1 fix: this whole section used to be two
+                         unlabeled buttons appended after the combat row --
+                         reachable only by scrolling this widget with zero
+                         indication anything but combat controls lived
+                         here. A labeled sub-heading means even a user who
+                         only scrolls partway sees "Sicht & Nebel", not two
+                         mystery buttons floating after "Kampf beenden". -->
+                    <div id="visionControls" style="margin:0.45rem 0 0;" hidden>
+                        <div class="widget-subheading">Sicht &amp; Nebel</div>
+                        <div class="button-row">
+                            <button type="button" id="btnFogEnabledToggle" class="mini-btn secondary">Nebel des Krieges: aus</button>
+                            <button type="button" id="btnFogReset" class="mini-btn danger">Nebel zurücksetzen</button>
+                        </div>
                     </div>
                 </div>
             </div>

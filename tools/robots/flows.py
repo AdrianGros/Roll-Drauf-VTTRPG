@@ -18,6 +18,7 @@ build on top of.
 from __future__ import annotations
 
 import json
+import re
 import sys
 import tempfile
 from pathlib import Path
@@ -2676,6 +2677,251 @@ def _quality_flow(stack, workdir: Path) -> list[str]:
     return findings
 
 
+def _widget_discoverability_flow(stack, workdir: Path) -> list[str]:
+    """S11.1, 2026-08-28: regression guard for the widget-overflow fix.
+    Every slice from S05 on kept appending rows to the Tokens/Turn Order
+    floating panels without anyone revisiting their original max-height
+    budget; by S09-S11 real DM/player controls (Fog of War toggle+reset,
+    Sichtweite, Beute, Beute-Quelle, Sichtbare Tokens) sat below the fold
+    with zero visual indication anything but the first few rows existed --
+    a real user-reported bug ("most of them dont have a place in the ui"),
+    not a hypothetical one. The fix restructured .floating to keep the
+    h3 header pinned while only .widget-body scrolls (previously the
+    WHOLE panel, header included, was the scroll container -- scrolling
+    to reach new content scrolled the title/collapse-toggle out of view
+    too), added a labeled "Sicht & Nebel" sub-heading, and bumped the
+    height budget. This flow proves the actual failure mode is gone: every
+    one of those controls is reachable after a real scroll, the header
+    survives the scroll, and the fix's own display:flex didn't
+    inadvertently un-hide anything that's supposed to stay hidden (a real
+    regression caught by screenshot while building this same fix --
+    .floating and [hidden] are equal CSS specificity, and .floating's
+    display:flex silently won the tie against the browser's own
+    [hidden]{display:none} rule for #tokenCreatePanel)."""
+    from playwright.sync_api import sync_playwright
+    from tools.robots.session import RobotSession
+
+    findings: list[str] = []
+    keys = mint_registration_keys(stack.database_url, count=1)
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        session = RobotSession(context, base_url=stack.base_url,
+                               robot_name="entdeckbarkeit_bot", artifacts_dir=workdir)
+        session.open()
+        if not session.register(
+                username="entdeckbarkeit_bot",
+                email="entdeckbarkeit_bot@robots.roll-drauf.de",
+                password="Ro8ot-Test-Passw0rd!", registration_key=keys[0]):
+            findings.extend(f"[setup] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        page = session.page
+        api = context.request
+        csrf_token = next((c["value"] for c in context.cookies()
+                           if c["name"] == "csrf_access_token"), None)
+        json_headers = {"Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf_token}
+
+        campaign = api.post(f"{stack.base_url}/api/campaigns",
+                            data=json.dumps({"name": "Entdeckbarkeits-Kampagne", "max_players": 6}),
+                            headers=json_headers).json()
+        campaign_id = (campaign.get("campaign") or campaign)["id"]
+        game_session = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions",
+            data=json.dumps({"name": "Entdeckbarkeits-Sitzung"}), headers=json_headers).json()
+        session_id = (game_session.get("session") or game_session)["id"]
+
+        map_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/maps",
+            data=json.dumps({"name": "Entdeckbarkeits-Karte", "width": 1600, "height": 1200}),
+            headers=json_headers)
+        if map_response.status != 201:
+            findings.append(f"[setup] map create returned HTTP {map_response.status}")
+            browser.close()
+            return findings
+        map_payload = map_response.json()
+        map_id = (map_payload.get("map") or map_payload.get("campaign_map") or map_payload)["id"]
+        init_response = api.post(
+            f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
+            data=json.dumps({"map_ids": [map_id]}), headers=json_headers)
+        if init_response.status != 201:
+            findings.append(f"[setup] scene-stack init returned HTTP {init_response.status}")
+            browser.close()
+            return findings
+        for target_state in ("ready", "in_progress"):
+            transition_response = api.post(
+                f"{stack.base_url}/api/play/campaigns/{campaign_id}/sessions/{session_id}/transition",
+                data=json.dumps({"target_state": target_state, "ignore_warnings": True}),
+                headers=json_headers)
+            if transition_response.status != 200:
+                findings.append(f"[setup] session transition to {target_state!r} returned HTTP {transition_response.status}")
+                browser.close()
+                return findings
+        token_response = api.post(
+            f"{stack.base_url}/api/campaigns/{campaign_id}/sessions/{session_id}/tokens",
+            data=json.dumps({"name": "Wache", "x": 200, "y": 200, "token_type": "npc",
+                             "metadata_json": {"position_mode": "pixel"}}),
+            headers=json_headers)
+        if token_response.status != 201:
+            findings.append(f"[setup] token create returned HTTP {token_response.status}")
+            browser.close()
+            return findings
+
+        if not session.goto(f"/play?campaign_id={campaign_id}&session_id={session_id}"):
+            findings.extend(f"[play] {f.detail}" for f in session.findings)
+            browser.close()
+            return findings
+
+        try:
+            # Regression guard: a hidden .floating panel must render as
+            # nothing, not just carry the attribute.
+            create_panel_visible = page.locator("#tokenCreatePanel").is_visible()
+            if create_panel_visible:
+                findings.append(
+                    "[discoverability] #tokenCreatePanel (hidden by default) is visibly rendered -- "
+                    ".floating's display:flex is winning over [hidden]{display:none}")
+
+            page.wait_for_selector(".token-marker", state="visible", timeout=15_000)
+            page.click(".token-marker")
+            page.wait_for_selector("#tokenSelectionDetail:not([hidden])", timeout=10_000)
+            for widget_id in ("tokenWidget", "turnOrderWidget"):
+                if "collapsed" in (page.locator(f"#{widget_id}").get_attribute("class") or ""):
+                    page.click(f"#{widget_id} .widget-toggle")
+            page.wait_for_timeout(300)
+
+            header_top_before = page.eval_on_selector("#tokenWidget h3", "el => el.getBoundingClientRect().top")
+
+            # Scroll each widget's body (not the whole panel) to its end.
+            page.eval_on_selector("#tokenWidgetBody", "el => el.scrollTop = el.scrollHeight")
+            page.eval_on_selector("#turnOrderWidgetBody", "el => el.scrollTop = el.scrollHeight")
+            page.wait_for_timeout(300)
+
+            header_top_after = page.eval_on_selector("#tokenWidget h3", "el => el.getBoundingClientRect().top")
+            header_visible_after = page.eval_on_selector(
+                "#tokenWidget h3", "el => { const r = el.getBoundingClientRect(); return r.top >= 0 && r.bottom > r.top; }")
+            if not header_visible_after:
+                findings.append(
+                    f"[discoverability] Tokens widget header left the viewport after scrolling its body "
+                    f"(top before={header_top_before:.0f} after={header_top_after:.0f}) -- the header must stay pinned")
+
+            # Every one of the S09-S11 controls previously below the fold
+            # must now actually be reachable (real bounding-box check
+            # against the browser viewport, not a DOM hidden-attribute
+            # check -- that already lied about visibility before this fix).
+            for selector, label in (
+                ("#tokenSightRange", "Sichtweite field"),
+                ("#btnTokenLootSourceToggle", "Beute-Quelle toggle"),
+                ("#btnTokenLoot", "Beute button"),
+                ("#btnTokenVisible", "Sichtbare Tokens button"),
+            ):
+                if not page.locator(selector).count():
+                    findings.append(f"[discoverability] {label} ({selector}) not in DOM at all")
+                    continue
+                box = page.eval_on_selector(selector, "el => { const r = el.getBoundingClientRect(); return {top: r.top, bottom: r.bottom}; }")
+                if not (0 <= box["top"] < 900 and box["bottom"] <= 900):
+                    findings.append(
+                        f"[discoverability] {label} ({selector}) still not reachable after scrolling "
+                        f"(top={box['top']:.0f} bottom={box['bottom']:.0f})")
+
+            # S11.1 fix, round 2 (surfaced by an adversarial verification
+            # workflow, not by inspection): #visibleTokensPopover never
+            # positioned itself at all -- being reachable in the DOM
+            # (checked above) says nothing about whether clicking it
+            # actually opens something ON SCREEN. It used to render
+            # 170-700px below the viewport, a DM-facing tool that visibly
+            # did nothing when clicked. Real bounding-box check, and a
+            # real click on its own close button (which times out if the
+            # popover is off-screen, unlike a DOM-presence assertion).
+            page.click("#btnTokenVisible")
+            page.wait_for_selector("#visibleTokensPopover:not([hidden])", timeout=10_000)
+            page.wait_for_timeout(200)
+            popover_box = page.eval_on_selector(
+                "#visibleTokensPopover",
+                "el => { const r = el.getBoundingClientRect(); return {top: r.top, bottom: r.bottom, left: r.left, right: r.right}; }")
+            if not (0 <= popover_box["top"] and popover_box["bottom"] <= 900
+                    and 0 <= popover_box["left"] and popover_box["right"] <= 1440):
+                findings.append(
+                    f"[discoverability] #visibleTokensPopover rendered outside the viewport: {popover_box}")
+            page.click("#btnVisibleTokensClose", timeout=5_000)
+
+            subheading_text = page.locator("#turnOrderWidgetBody .widget-subheading").text_content() or ""
+            if "Sicht" not in subheading_text or "Nebel" not in subheading_text:
+                findings.append(f"[discoverability] Vision/Fog sub-heading missing or unexpected text: {subheading_text!r}")
+            for selector, label in (
+                ("#btnFogEnabledToggle", "Fog toggle"),
+                ("#btnFogReset", "Fog reset"),
+            ):
+                box = page.eval_on_selector(selector, "el => { const r = el.getBoundingClientRect(); return {top: r.top, bottom: r.bottom}; }")
+                if not (0 <= box["top"] < 900 and box["bottom"] <= 900):
+                    findings.append(f"[discoverability] {label} ({selector}) still not reachable after scrolling")
+
+            # Light marker visual prominence: place one, confirm both the
+            # toast AND a real color check on the rendered fill -- the
+            # original bug ("light triggers no response") was that the
+            # marker technically existed but was visually indistinguishable
+            # from the dark map background. Sampling the actual pixel
+            # proves this is genuinely fixed, not just "no exception was
+            # thrown".
+            page.click('.tool-btn[data-tool="light"]')
+            page.click("#mapWorld", position={"x": 400, "y": 300})
+            page.wait_for_selector("#msg.success", state="visible", timeout=10_000)
+            toast_text = page.locator("#msg").text_content() or ""
+            if "platziert" not in toast_text:
+                findings.append(f"[discoverability] light placement toast text unexpected: {toast_text!r}")
+            page.wait_for_selector("#visionLayer .vision-light-marker", timeout=10_000)
+            # The dot was never the actual bug (always had a real color,
+            # just tiny) -- the wide translucent bright/dim RINGS were
+            # what read as a dark smudge against the map background at
+            # 0.10/0.18 fill-alpha. Check the real computed alpha channel
+            # roughly doubled, not just that some color is present.
+            bright_fill = page.eval_on_selector("#visionLayer .vision-light-bright", "el => getComputedStyle(el).fill")
+            match = re.search(r"rgba?\(([^)]+)\)", bright_fill or "")
+            alpha = float(match.group(1).split(",")[-1].strip()) if match and "," in match.group(1) else None
+            if alpha is None or alpha < 0.3:
+                findings.append(
+                    f"[discoverability] .vision-light-bright fill alpha should be well above the original "
+                    f"0.18 (visually a dark smudge, the actual bug behind 'light triggers no response'), "
+                    f"got {bright_fill!r}")
+            dot_radius = page.eval_on_selector("#visionLayer .vision-light-dot", "el => el.getAttribute('r')")
+            if dot_radius != "8":
+                findings.append(f"[discoverability] light center dot radius should be 8 (was 5), got {dot_radius!r}")
+
+            # Regression guard: #tokenCreatePanel is the one .floating
+            # panel whose content wasn't wrapped in .widget-body -- when
+            # .floating moved from self-scrolling to only .widget-body
+            # scrolling, this panel silently lost its scroll mechanism
+            # entirely (worse than the bug being fixed: on mobile its
+            # capped height could clip the Platzieren/Abbrechen buttons
+            # with no way to reach them at all).
+            page.click('.tool-btn[data-tool="token"]')
+            page.click("#mapWorld", position={"x": 300, "y": 250})
+            page.wait_for_selector("#tokenCreatePanel:not([hidden])", timeout=10_000)
+            create_panel_overflow = page.eval_on_selector(
+                "#tokenCreatePanel .widget-body",
+                "el => el ? getComputedStyle(el).overflowY : null")
+            if create_panel_overflow != "auto":
+                findings.append(
+                    f"[discoverability] #tokenCreatePanel's content is not wrapped in a scrollable .widget-body "
+                    f"(computed overflow-y={create_panel_overflow!r}) -- content can clip with no way to reach it")
+            page.click("#btnTokenCreateCancel")
+
+        except Exception as error:
+            findings.append(f"[discoverability] interaction failed: {type(error).__name__}: {str(error)[:200]}")
+            try:
+                shot = workdir / "widget-discoverability-flow.png"
+                page.screenshot(path=str(shot))
+                findings.append(f"[debug] screenshot: {shot.name}")
+            except Exception:
+                pass
+
+        findings.extend(f"[{f.kind}] {f.detail}" for f in session.findings)
+        browser.close()
+    return findings
+
+
 FLOWS = {
     "dice_roll_realtime": _dice_roll_flow,
     "map_token_table": _map_token_table_flow,
@@ -2692,6 +2938,7 @@ FLOWS = {
     "loot_transfer": _loot_transfer_flow,
     "vision_fog": _vision_fog_flow,
     "quality": _quality_flow,
+    "widget_discoverability": _widget_discoverability_flow,
 }
 
 

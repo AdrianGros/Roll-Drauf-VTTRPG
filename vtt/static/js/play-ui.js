@@ -124,6 +124,9 @@
             this._wallDraftStart = null;
             this._openWallEditId = null;
             this._openLightEditId = null;
+            // S11.1: {type: "light"|"wall", id} of the marker to flash
+            // once right after placement -- see _flashJustPlacedGeometry.
+            this._justPlacedGeomKey = null;
             // Auto-fit runs once per activated map so the DM's manual zoom
             // choice survives snapshots/re-renders of the same map.
             this.autoFitMapId = null;
@@ -1664,9 +1667,7 @@
                 // Anchored just above the trigger button, matching the
                 // app-menu's fixed-position popover convention (S02).
                 const rect = trigger.getBoundingClientRect();
-                popover.style.left = `${Math.max(8, rect.left)}px`;
-                popover.style.top = `${Math.max(8, rect.top - 8)}px`;
-                popover.style.transform = "translateY(-100%)";
+                this._positionPopoverNear(popover, rect.left, rect.top, { anchorAbove: true });
                 popover.querySelector("input[type=checkbox]:not(:disabled)")?.focus();
                 document.addEventListener("click", onOutsideClick, true);
             };
@@ -1865,12 +1866,14 @@
                 popover.hidden = false;
                 trigger.setAttribute("aria-expanded", "true");
                 const rect = trigger.getBoundingClientRect();
-                popover.style.left = `${Math.max(8, rect.left)}px`;
-                popover.style.top = `${Math.max(8, rect.top - 8)}px`;
-                popover.style.transform = "translateY(-100%)";
+                this._positionPopoverNear(popover, rect.left, rect.top, { anchorAbove: true });
                 document.addEventListener("click", onOutsideClick, true);
                 document.addEventListener("keydown", onKeydown, true);
                 await this._loadLootPopoverData(token.id);
+                // Re-clamp: the popover's height changes once the item/
+                // recipient list actually renders (was just "Lädt..." at
+                // the first positioning pass above).
+                this._positionPopoverNear(popover, rect.left, rect.top, { anchorAbove: true });
             };
             const closePopover = ({ returnFocus = true } = {}) => {
                 if (popover.hidden) return;
@@ -1949,7 +1952,8 @@
 
             for (const wall of this._walls) {
                 const blockingClass = wall.sight === "none" ? " sight-none" : "";
-                parts.push(`<line class="vision-wall-line${blockingClass}" data-wall-id="${wall.id}" x1="${wall.x0}" y1="${wall.y0}" x2="${wall.x1}" y2="${wall.y1}"></line>`);
+                const placedClass = this._justPlacedGeomKey?.type === "wall" && this._justPlacedGeomKey.id === wall.id ? " just-placed" : "";
+                parts.push(`<line class="vision-wall-line${blockingClass}${placedClass}" data-wall-id="${wall.id}" x1="${wall.x0}" y1="${wall.y0}" x2="${wall.x1}" y2="${wall.y1}"></line>`);
             }
             if (this._wallDraftStart) {
                 const end = this._wallDraftPreviewPoint || this._wallDraftStart;
@@ -1958,12 +1962,13 @@
 
             for (const light of this._lights) {
                 const darkClass = light.light_type === "darkness" ? " darkness" : "";
+                const placedClass = this._justPlacedGeomKey?.type === "light" && this._justPlacedGeomKey.id === light.id ? " just-placed" : "";
                 const outer = Math.max(light.bright_radius || 0, light.dim_radius || 0);
                 const inner = Math.min(light.bright_radius || 0, light.dim_radius || 0);
-                parts.push(`<g class="vision-light-marker${darkClass}" data-light-id="${light.id}">`
+                parts.push(`<g class="vision-light-marker${darkClass}${placedClass}" data-light-id="${light.id}">`
                     + (outer > 0 ? `<circle class="vision-light-dim" cx="${light.x}" cy="${light.y}" r="${outer}"></circle>` : "")
                     + (inner > 0 ? `<circle class="vision-light-bright" cx="${light.x}" cy="${light.y}" r="${inner}"></circle>` : "")
-                    + `<circle class="vision-light-dot" cx="${light.x}" cy="${light.y}" r="5"></circle></g>`);
+                    + `<circle class="vision-light-dot" cx="${light.x}" cy="${light.y}" r="8"></circle></g>`);
             }
 
             svg.innerHTML = parts.join("");
@@ -1981,12 +1986,34 @@
             });
         }
 
+        // S11.1 fix: placing a light/wall used to give the user NOTHING
+        // beyond a new shape appearing on the map -- easy to miss among
+        // existing markers, and the marker itself used to be so faint
+        // against this app's dark theme it read as "nothing happened"
+        // even when looked right at (the actual bug behind "light
+        // triggers no response"). A toast (now a real body-level toast
+        // since the S11 #msg relocation, not buried in one sidebar tab)
+        // plus a one-shot flash on the new marker itself gives two
+        // independent, unmissable confirmations.
+        _flashJustPlacedGeometry(type, id) {
+            this._justPlacedGeomKey = { type, id };
+            this._renderVisionLayer();
+            window.setTimeout(() => {
+                if (this._justPlacedGeomKey?.type === type && this._justPlacedGeomKey.id === id) {
+                    this._justPlacedGeomKey = null;
+                    this._renderVisionLayer();
+                }
+            }, 500);
+        }
+
         async _placeLight(x, y) {
             try {
-                await this.api.createLight(this.campaignId, this.sessionId, {
+                const response = await this.api.createLight(this.campaignId, this.sessionId, {
                     x: Math.round(x), y: Math.round(y), bright_radius: 100, dim_radius: 200,
                 });
                 await this._loadVisionGeometry();
+                if (response?.light?.id != null) this._flashJustPlacedGeometry("light", response.light.id);
+                this._showMessage("Lichtquelle platziert.");
             } catch (error) {
                 this._showMessage(error.message || "Lichtquelle konnte nicht platziert werden.", true);
             }
@@ -1994,11 +2021,13 @@
 
         async _placeWall(start, end) {
             try {
-                await this.api.createWall(this.campaignId, this.sessionId, {
+                const response = await this.api.createWall(this.campaignId, this.sessionId, {
                     x0: Math.round(start.x), y0: Math.round(start.y),
                     x1: Math.round(end.x), y1: Math.round(end.y),
                 });
                 await this._loadVisionGeometry();
+                if (response?.wall?.id != null) this._flashJustPlacedGeometry("wall", response.wall.id);
+                this._showMessage("Wand platziert.");
             } catch (error) {
                 this._showMessage(error.message || "Wand konnte nicht platziert werden.", true);
             }
@@ -2021,8 +2050,7 @@
             document.getElementById("wallEditSight").value = wall.sight;
             document.getElementById("wallEditLight").value = wall.light;
             popover.hidden = false;
-            popover.style.left = `${Math.max(8, event.clientX)}px`;
-            popover.style.top = `${Math.max(8, event.clientY)}px`;
+            this._positionPopoverNear(popover, event.clientX, event.clientY);
         }
 
         _closeWallEditPopover() {
@@ -2064,8 +2092,7 @@
             document.getElementById("lightEditDim").value = light.dim_radius;
             document.getElementById("lightEditProvidesVision").checked = Boolean(light.provides_vision);
             popover.hidden = false;
-            popover.style.left = `${Math.max(8, event.clientX)}px`;
-            popover.style.top = `${Math.max(8, event.clientY)}px`;
+            this._positionPopoverNear(popover, event.clientX, event.clientY);
         }
 
         _closeLightEditPopover() {
@@ -2125,10 +2152,20 @@
 
         async _showVisibleTokensForSelected() {
             const token = this._findStateToken(this.selectedTokenId);
+            const trigger = document.getElementById("btnTokenVisible");
             const popover = document.getElementById("visibleTokensPopover");
             const list = document.getElementById("visibleTokensList");
-            if (!token || !popover || !list) return;
+            if (!token || !trigger || !popover || !list) return;
             popover.hidden = false;
+            // S11.1 fix: this never positioned itself at all -- unlike
+            // every other popover here, it relied on wherever it happened
+            // to sit in the scrolled widget tree. Being position:fixed
+            // (see .conditions-popover) but nested deep inside a scrolled
+            // ancestor, its static-flow position landed 170-700px below
+            // the actual viewport on both desktop and mobile: a DM-facing
+            // tool that visibly did nothing when clicked.
+            const rect = trigger.getBoundingClientRect();
+            this._positionPopoverNear(popover, rect.left, rect.top, { anchorAbove: true });
             list.innerHTML = `<div class="muted" style="padding:0.4rem 0.5rem;">Lädt...</div>`;
             try {
                 const response = await this.api.getVisibleTokens(this.campaignId, this.sessionId, token.id);
@@ -2140,6 +2177,9 @@
                 list.innerHTML = "";
                 this._showMessage(error.message || "Sichtbare Tokens konnten nicht geladen werden.", true);
             }
+            // Re-clamp now that the list has real content (same reasoning
+            // as the loot popover's second pass above).
+            this._positionPopoverNear(popover, rect.left, rect.top, { anchorAbove: true });
         }
 
         async _toggleFogEnabled() {
@@ -4563,6 +4603,75 @@
                     first.focus();
                 }
             });
+        }
+
+        // S11.1 fix: every fixed-position popover in this file positioned
+        // itself with only a LOWER-bound clamp (Math.max(8, rect.left/top))
+        // and relied on a CSS transform:translateY(-100%) to grow upward --
+        // never checked the right/bottom edge against the actual viewport
+        // at all. On desktop that clipped ~34px off #conditionsPopover's
+        // right edge; on a short mobile viewport, a trigger near the top
+        // pushed the whole popover (up to 70vh tall) above y=0, entirely
+        // unreachable including its own close button. #visibleTokensPopover
+        // had it worse: it never called any positioning code at all, so it
+        // rendered wherever it happened to sit in the scrolled widget tree
+        // -- 170-700px below the viewport, functionally dead on both
+        // desktop and mobile. One shared, fully-clamped routine now backs
+        // every popover open() instead of five near-copies of the same
+        // incomplete math. Call this AFTER `popover.hidden = false` (it
+        // needs the popover's real rendered size) and BEFORE focusing
+        // anything inside it.
+        // S11.1 fix, round 3 (root cause behind why round 2's clamping
+        // still put #visibleTokensPopover off-screen): a position:fixed
+        // element's containing block is normally the viewport -- UNLESS
+        // some ancestor sets a transform/perspective/filter or
+        // will-change:transform, which silently re-anchors it instead.
+        // This app's book-page-flip shell (.book-dashboard-camera /
+        // .book-dashboard-page, see vtt/static/css/book-scene.css) sets
+        // will-change:transform on both for the page-turn animation, so
+        // EVERY position:fixed popover in /play (not just this one --
+        // this is almost certainly why the adversarial sweep also found
+        // #conditionsPopover clipping off the desktop right edge and
+        // rendering above the mobile viewport's top) has actually been
+        // positioned relative to that shell's box, not window.inner
+        // Width/Height, this whole time. Confirmed empirically: a
+        // computed left:1092px rendered at an actual left:1121px --
+        // exactly the shell's own 29px left offset from the true
+        // viewport in the reproduction that surfaced this.
+        _findFixedPositionContainingBlock(el) {
+            let node = el.parentElement;
+            while (node && node !== document.body) {
+                const style = getComputedStyle(node);
+                if ((style.transform && style.transform !== "none")
+                    || (style.willChange && style.willChange.includes("transform"))
+                    || (style.perspective && style.perspective !== "none")
+                    || (style.filter && style.filter !== "none")) {
+                    return node;
+                }
+                node = node.parentElement;
+            }
+            return null;
+        }
+
+        _positionPopoverNear(popover, x, y, { anchorAbove = false } = {}) {
+            if (!popover) return;
+            const margin = 8;
+            popover.style.transform = "";
+            const width = popover.offsetWidth;
+            const height = popover.offsetHeight;
+            const containingBlock = this._findFixedPositionContainingBlock(popover);
+            const bounds = containingBlock
+                ? containingBlock.getBoundingClientRect()
+                : { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
+            // x/y arrive as viewport-relative coordinates (getBoundingClientRect
+            // of a trigger button, or a raw clientX/clientY) -- convert into
+            // the actual containing block's coordinate space before clamping.
+            let left = x - bounds.left;
+            let top = (anchorAbove ? y - height - 8 : y) - bounds.top;
+            left = Math.max(margin, Math.min(left, bounds.width - width - margin));
+            top = Math.max(margin, Math.min(top, bounds.height - height - margin));
+            popover.style.left = `${left}px`;
+            popover.style.top = `${top}px`;
         }
 
         _showMessage(text, isError = false) {
