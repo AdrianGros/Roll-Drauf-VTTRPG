@@ -8,6 +8,7 @@ from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 
 from vtt.combat import service as combat_service
+from vtt.combat.traps import trigger_schabernacks_traps
 from vtt.play import service as scene_service
 from vtt.socket_handlers import _emit_token_event
 from vtt.campaigns import campaigns_bp
@@ -1418,6 +1419,9 @@ def update_token(campaign_id, session_id, token_id):
     token.map_id = state.active_map_id or token.map_id
     token.version += 1
     token.updated_by = user.id
+    trap_results = []
+    if {"x", "y"} & set(patch):
+        trap_results = trigger_schabernacks_traps(token, user.id)
     state.bump_version()
     _refresh_state_snapshot(state)
     db.session.commit()
@@ -1428,6 +1432,41 @@ def update_token(campaign_id, session_id, token_id):
          "state_version": state.version, "client_event_id": None},
         visibility=token.visibility, owner_user_id=token.owner_user_id,
         old_visibility=old_visibility, old_owner_user_id=old_owner_user_id)
+
+    affected_target_ids = {
+        target_id
+        for trap_result in trap_results
+        for target_id in trap_result.get("target_token_ids", [])
+        if target_id != token.id
+    }
+    for target_id in affected_target_ids:
+        target = db.session.get(TokenState, target_id)
+        if not target or target.deleted_at is not None:
+            continue
+        _emit_token_event(
+            "updated", campaign.id, game_session.id,
+            {"token": target.serialize(), "version": target.version,
+             "state_version": state.version, "client_event_id": None},
+            visibility=target.visibility, owner_user_id=target.owner_user_id,
+        )
+
+    for trap_result in trap_results:
+        trap = db.session.get(TokenState, trap_result["trap_id"])
+        if not trap:
+            continue
+        _emit_token_event(
+            "deleted", campaign.id, game_session.id,
+            {"token_id": trap.id, "version": trap.version,
+             "state_version": state.version, "client_event_id": None},
+            visibility=trap.visibility, owner_user_id=trap.owner_user_id,
+        )
+
+    if trap_results:
+        socketio.emit(
+            "trap:triggered",
+            build_event_envelope(campaign.id, game_session.id, {"traps": trap_results}),
+            room=_room_name(campaign.id, game_session.id),
+        )
 
     # S10: REST fallback path for the same recalculation the socket
     # handler does (vtt/socket_handlers.py::handle_token_update) -- used
@@ -1442,7 +1481,13 @@ def update_token(campaign_id, session_id, token_id):
                 room=user_room(campaign.id, game_session.id, token.owner_user_id),
             )
 
-    return jsonify({"token": token.serialize(), "state_version": state.version}), 200
+    return jsonify(
+        {
+            "token": token.serialize(),
+            "state_version": state.version,
+            "trap_results": trap_results,
+        }
+    ), 200
 
 
 @campaigns_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/tokens/<int:token_id>", methods=["DELETE"])

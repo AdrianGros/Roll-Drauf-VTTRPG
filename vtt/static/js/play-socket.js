@@ -50,6 +50,7 @@ class PlaySocketRuntime {
         this.socket.on("token:updated", (payload) => this._handleSequencedEvent("token:updated", payload, "tokenUpdated"));
         this.socket.on("token:deleted", (payload) => this._handleSequencedEvent("token:deleted", payload, "tokenDeleted"));
         this.socket.on("token:batch_moved", (payload) => this._handleSequencedEvent("token:batch_moved", payload, "tokenBatchMoved"));
+        this.socket.on("trap:triggered", (payload) => this._handleSequencedEvent("trap:triggered", payload, "trapTriggered"));
         this.socket.on("initiative:updated", (payload) => this._handleSequencedEvent("initiative:updated", payload, "initiativeUpdated"));
         this.socket.on("initiative:turn_changed", (payload) => this._handleSequencedEvent("initiative:turn_changed", payload, "initiativeTurnChanged"));
         // Playtable-Vordermann 2026-08-25: combat backend wired to the table.

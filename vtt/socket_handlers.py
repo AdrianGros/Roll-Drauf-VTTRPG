@@ -8,6 +8,7 @@ from flask_jwt_extended import decode_token
 from flask_socketio import emit, join_room, leave_room
 
 from vtt.combat import service as combat_service
+from vtt.combat.traps import trigger_schabernacks_traps
 from vtt.extensions import db, socketio
 from vtt.play.service import (
     filter_combat_payload,
@@ -1021,6 +1022,9 @@ def register_socket_handlers(socketio):
         token.map_id = state.active_map_id or token.map_id
         token.version += 1
         token.updated_by = user.id
+        trap_results = []
+        if {"x", "y"} & set(parsed_patch):
+            trap_results = trigger_schabernacks_traps(token, user.id)
         state.bump_version()
         _refresh_state_snapshot(state)
         db.session.commit()
@@ -1040,6 +1044,56 @@ def register_socket_handlers(socketio):
             old_visibility=old_visibility,
             old_owner_user_id=old_owner_user_id,
         )
+
+        affected_target_ids = {
+            target_id
+            for trap_result in trap_results
+            for target_id in trap_result.get("target_token_ids", [])
+            if target_id != token.id
+        }
+        for target_id in affected_target_ids:
+            target = db.session.get(TokenState, target_id)
+            if not target or target.deleted_at is not None:
+                continue
+            _emit_token_event(
+                "updated",
+                campaign.id,
+                game_session.id,
+                {
+                    "token": target.serialize(),
+                    "version": target.version,
+                    "state_version": state.version,
+                    "client_event_id": None,
+                },
+                visibility=target.visibility,
+                owner_user_id=target.owner_user_id,
+            )
+
+        for trap_result in trap_results:
+            trap = db.session.get(TokenState, trap_result["trap_id"])
+            if not trap:
+                continue
+            _emit_token_event(
+                "deleted",
+                campaign.id,
+                game_session.id,
+                {
+                    "token_id": trap.id,
+                    "version": trap.version,
+                    "state_version": state.version,
+                    "client_event_id": None,
+                },
+                visibility=trap.visibility,
+                owner_user_id=trap.owner_user_id,
+            )
+
+        if trap_results:
+            _emit_session_event(
+                "trap:triggered",
+                campaign.id,
+                game_session.id,
+                {"traps": trap_results},
+            )
 
         # S10: a moved token (or a changed sight_range) can change what its
         # owner can see. Recompute + broadcast to that owner ONLY -- fog is

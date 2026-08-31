@@ -455,6 +455,7 @@
                     tokenUpdated: (payload) => this._handleTokenUpdated(payload),
                     tokenDeleted: (payload) => this._handleTokenDeleted(payload),
                     tokenBatchMoved: (payload) => this._handleTokenBatchMoved(payload),
+                    trapTriggered: (payload) => this._handleTrapTriggered(payload),
                     initiativeUpdated: (payload) => this._handleInitiativeUpdated(payload),
                     initiativeTurnChanged: (payload) => this._handleInitiativeTurnChanged(payload),
                     combatState: (payload) => this._handleCombatState(payload),
@@ -3014,6 +3015,17 @@
             this._renderState();
             this._renderTokenSelectors();
             this._logActivity(`Tokenbewegung synchronisiert (${moves.length}).`, "info");
+        }
+
+        _handleTrapTriggered(payload) {
+            const traps = Array.isArray(payload?.traps) ? payload.traps : [];
+            for (const trap of traps) {
+                const volleyCount = Array.isArray(trap?.volleys) ? trap.volleys.length : 0;
+                const targetCount = Array.isArray(trap?.target_token_ids) ? trap.target_token_ids.length : 0;
+                const text = `${trap?.trap_name || "Schabernacks Falle"} feuert ${volleyCount} Salven Giftpfeile auf ${targetCount} Gegner.`;
+                this._appendChatMessage({ sender_name: "Falle", message: text });
+                this._logActivity(text, "info");
+            }
         }
 
         _handleInitiativeUpdated(payload) {
