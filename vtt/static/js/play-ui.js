@@ -464,7 +464,12 @@
                     lootUpdated: (payload) => this._handleLootBroadcast(payload),
                     lootTransferred: (payload) => this._handleLootBroadcast(payload),
                     visionGeometryChanged: () => this._loadVisionGeometry(),
-                    fogUpdated: (payload) => { this._fog = payload?.fog || null; },
+                    // Roll20-parity work packet, 2026-09-03: used to only
+                    // store the payload -- nothing ever repainted, since
+                    // no fog-mask renderer existed yet. Now it must also
+                    // re-render, or fog stays stale until some UNRELATED
+                    // vision-layer trigger happens to fire next.
+                    fogUpdated: (payload) => { this._fog = payload?.fog || null; this._renderVisionLayer(); },
                     fogReset: () => this._logActivity("Die Spielleitung hat die Aufklärung zurückgesetzt.", "info"),
                     tick: () => {},
                     sessionPaused: (payload) => this._handleLifecycleBroadcast("paused", payload),
@@ -1959,10 +1964,51 @@
             }
         }
 
+        // Roll20-parity work packet, 2026-09-03: the fog-of-war MASK.
+        // Server-side vision (vtt/play/vision.py) and per-user persistence
+        // (FogOfWarState) have existed since S10 (2026-08-27); this is the
+        // first slice that actually paints them. Never rendered for a DM/
+        // CO-DM (an operator already sees the whole map unconditionally,
+        // same rule as every other secrecy boundary in this app) -- fog is
+        // a Player-only concept. One <rect> per grid cell rather than a
+        // single big shape with a cutout: FogOfWarState's own cells are
+        // grid coordinates, not a bitmap (its own docstring), and a
+        // typical map's cell count (dozens to a few hundred) is nowhere
+        // near where per-cell DOM nodes would become a real cost for a
+        // turn-based table. A visible cell gets no rect at all (fully
+        // clear); only hidden/explored cells draw anything.
+        _fogCellMarkup() {
+            if (isOperatorRole(this.bootstrap?.session_role || "")) return [];
+            const activeMap = this.bootstrap?.state_payload?.active_map;
+            const gridSize = this._measureGridSize();
+            if (!activeMap || !gridSize || !this._fog) return [];
+
+            const cols = Math.max(0, Math.ceil((Number(activeMap.width) || 0) / gridSize));
+            const rows = Math.max(0, Math.ceil((Number(activeMap.height) || 0) / gridSize));
+            if (!cols || !rows) return [];
+
+            const key = (col, row) => `${col},${row}`;
+            const exploredKeys = new Set((this._fog.explored_cells || []).map(([c, r]) => key(c, r)));
+            const visibleKeys = new Set((this._fog.visible_cells || []).map(([c, r]) => key(c, r)));
+
+            const parts = [];
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const cellKey = key(col, row);
+                    if (visibleKeys.has(cellKey)) continue;
+                    const cls = exploredKeys.has(cellKey) ? "fog-cell fog-explored" : "fog-cell fog-hidden";
+                    parts.push(`<rect class="${cls}" x="${col * gridSize}" y="${row * gridSize}" width="${gridSize}" height="${gridSize}"></rect>`);
+                }
+            }
+            return parts;
+        }
+
         _renderVisionLayer() {
             const svg = document.getElementById("visionLayer");
             if (!svg) return;
             const parts = [];
+
+            parts.push(...this._fogCellMarkup());
 
             for (const wall of this._walls) {
                 const blockingClass = wall.sight === "none" ? " sight-none" : "";

@@ -992,6 +992,25 @@
             z-index: 4;
         }
         #visionLayer[hidden] { display: none; }
+        /* Roll20-parity work packet, 2026-09-03: fog-of-war MASK
+           rendering -- the raycasting/persistence backend has existed
+           since S10 (2026-08-27), this is the first slice that actually
+           paints it. Cell rects share #visionLayer with wall/light
+           markers (mutually exclusive by role: markers are DM/CO-DM-only,
+           fog only ever renders for a non-operator, see
+           _renderVisionLayer's own fog block) rather than a second SVG,
+           since #visionLayer's explicit z-index already sits above a
+           resting (non-dragging) token -- no new stacking context needed. */
+        .fog-cell {
+            pointer-events: none;
+        }
+        .fog-cell.fog-hidden {
+            fill: #05070d;
+        }
+        .fog-cell.fog-explored {
+            fill: #05070d;
+            opacity: 0.55;
+        }
         .vision-wall-line {
             stroke: #ff5d73;
             stroke-width: 3;
