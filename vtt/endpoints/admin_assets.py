@@ -10,6 +10,7 @@ from flask import Blueprint, request, jsonify, send_file
 from functools import wraps
 from datetime import datetime
 
+from vtt.permissions import has_platform_role
 from vtt.services.asset_downloader import AssetDownloader, download_game_icons_batch
 from vtt.services.asset_organizer import AssetOrganizer
 
@@ -20,15 +21,15 @@ admin_assets_bp = Blueprint('admin_assets', __name__, url_prefix='/api/admin/ass
 # Global job tracker (in production, use Celery or database)
 _jobs = {}
 
-
-def admin_required(f):
-    """Decorator to require admin role"""
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        # Check if user is authenticated and admin
-        # This is a placeholder - integrate with your auth system
-        return f(*args, **kwargs)
-    return decorated_function
+# Fixed 2026-09-03 (adversarial audit): this used to be a literal
+# no-op ("This is a placeholder - integrate with your auth system") on
+# every route below -- the whole /api/admin/assets/* surface (including
+# file-write operations in asset_organizer.py/asset_downloader.py) was
+# reachable by ANY unauthenticated request. vtt/permissions.py's
+# has_platform_role is this app's single source of truth for platform
+# (staff) role checks; reused directly rather than re-implementing it
+# here, so this stays correct if that policy ever changes.
+admin_required = has_platform_role('admin', 'owner')
 
 
 # =========================================================================
@@ -487,6 +488,7 @@ def list_assets_endpoint():
 
 
 @admin_assets_bp.route('/status/<job_id>', methods=['GET'])
+@admin_required
 def job_status_endpoint(job_id):
     """
     Get job status

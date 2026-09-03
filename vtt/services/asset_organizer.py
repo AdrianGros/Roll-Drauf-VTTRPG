@@ -14,6 +14,25 @@ from xml.etree import ElementTree as ET
 logger = logging.getLogger(__name__)
 
 
+def _require_within(base: str, candidate: str, field_name: str) -> str:
+    """Fixed 2026-09-03 (adversarial audit, defense-in-depth alongside
+    the admin_assets.py auth fix): every write-capable method below
+    (organize_files' target_dir, batch_colorize_svgs/batch_compress_pngs/
+    verify_assets' directory) is documented as operating "relative to
+    vtt/static/" or with vtt/static/... examples -- none of them ever
+    intended to reach outside that tree. `target_dir="/etc/cron.d"` used
+    to reach os.path.join(STATIC_DIR, target_dir), and os.path.join
+    silently DISCARDS the base entirely once a later argument is
+    absolute -- not just a traversal risk, a direct one-argument
+    redirect to any path on disk. Resolves both sides and requires the
+    candidate to actually be a descendant of base."""
+    base_real = os.path.realpath(base)
+    candidate_real = os.path.realpath(candidate)
+    if candidate_real != base_real and not candidate_real.startswith(base_real + os.sep):
+        raise ValueError(f"{field_name} must stay within {base!r}: {candidate!r}")
+    return candidate_real
+
+
 class AssetOrganizer:
     """Organize and batch-process downloaded assets"""
 
@@ -61,7 +80,11 @@ class AssetOrganizer:
             "skipped": 0
         }
 
-        target_path = os.path.join(self.STATIC_DIR, target_dir)
+        try:
+            target_path = _require_within(self.STATIC_DIR, os.path.join(self.STATIC_DIR, target_dir), "target_dir")
+        except ValueError as exc:
+            results["errors"].append(str(exc))
+            return results
         os.makedirs(target_path, exist_ok=True)
 
         try:
@@ -278,6 +301,12 @@ class AssetOrganizer:
         """
         results = {"colorized": 0, "errors": []}
 
+        try:
+            _require_within(self.STATIC_DIR, directory, "directory")
+        except ValueError as exc:
+            results["errors"].append(str(exc))
+            return results
+
         if not os.path.isdir(directory):
             results["errors"].append(f"Directory not found: {directory}")
             return results
@@ -361,6 +390,12 @@ class AssetOrganizer:
         """
         results = {"compressed": 0, "errors": []}
 
+        try:
+            _require_within(self.STATIC_DIR, directory, "directory")
+        except ValueError as exc:
+            results["errors"].append(str(exc))
+            return results
+
         if not os.path.isdir(directory):
             results["errors"].append(f"Directory not found: {directory}")
             return results
@@ -412,6 +447,12 @@ class AssetOrganizer:
             "errors": [],
             "warnings": []
         }
+
+        try:
+            _require_within(self.STATIC_DIR, directory, "directory")
+        except ValueError as exc:
+            results["errors"].append(str(exc))
+            return results
 
         if not os.path.isdir(directory):
             results["errors"].append(f"Directory not found: {directory}")

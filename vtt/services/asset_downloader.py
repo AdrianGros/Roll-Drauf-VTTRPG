@@ -4,6 +4,7 @@ Handles downloading assets from various sources (Game-Icons, Pixabay, AmbientCG,
 """
 
 import os
+import re
 import requests
 import logging
 from typing import List, Dict, Optional
@@ -11,6 +12,19 @@ from urllib.parse import urljoin, quote
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
+
+# Fixed 2026-09-03 (adversarial audit, defense-in-depth alongside the
+# admin_assets.py auth fix): category/icon_name/texture_id/resolution
+# are meant to be simple identifiers embedded into an output filename,
+# never path fragments -- "../../../etc/cron.d/x" as a category used to
+# reach os.path.join(self.ICONS_DIR, f"icon-{category}-...") uncontested.
+_SAFE_IDENTIFIER_RE = re.compile(r"^[A-Za-z0-9_-]+$")
+
+
+def _safe_identifier(value: str, field_name: str) -> str:
+    if not value or not _SAFE_IDENTIFIER_RE.match(value):
+        raise ValueError(f"{field_name} must match {_SAFE_IDENTIFIER_RE.pattern}: {value!r}")
+    return value
 
 
 class AssetDownloader:
@@ -90,16 +104,29 @@ class AssetDownloader:
         results = {}
         base_url = "https://game-icons.net/icons/ffffff/000000/1x1"
 
+        try:
+            safe_category = _safe_identifier(category, "category")
+        except ValueError as exc:
+            logger.error(f"Rejected game-icons download: {exc}")
+            return {name: False for name in icon_names}
+
         for icon_name in icon_names:
+            try:
+                safe_icon_name = _safe_identifier(icon_name.lower(), "icon_name")
+            except ValueError as exc:
+                logger.warning(f"Rejected icon name: {exc}")
+                results[icon_name] = False
+                continue
+
             # Try to find icon in different author collections
             authors = ["lorc", "delapouite", "john-colborne"]
             downloaded = False
 
             for author in authors:
-                url = f"{base_url}/{author}/{icon_name.lower()}.svg"
+                url = f"{base_url}/{author}/{safe_icon_name}.svg"
                 output_path = os.path.join(
                     self.ICONS_DIR,
-                    f"icon-{category}-{icon_name.lower()}.svg"
+                    f"icon-{safe_category}-{safe_icon_name}.svg"
                 )
 
                 if self.download_file(url, output_path):
@@ -178,11 +205,14 @@ class AssetDownloader:
             downloader.download_ambientcg_texture("fabric_003", "4K")
         """
         try:
+            safe_texture_id = _safe_identifier(texture_id, "texture_id")
+            safe_resolution = _safe_identifier(resolution, "resolution")
+
             # AmbientCG CDN structure
-            url = f"https://cdn.ambientcg.com/{texture_id}_{resolution}/files/{texture_id}_{resolution}-png.zip"
+            url = f"https://cdn.ambientcg.com/{safe_texture_id}_{safe_resolution}/files/{safe_texture_id}_{safe_resolution}-png.zip"
             output_path = os.path.join(
                 self.DOWNLOAD_DIR,
-                f"{texture_id}_{resolution}.zip"
+                f"{safe_texture_id}_{safe_resolution}.zip"
             )
 
             return self.download_file(url, output_path)
