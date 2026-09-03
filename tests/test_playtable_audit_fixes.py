@@ -246,6 +246,34 @@ class TestSecretFilteringRest:
             "Wirt", "Versteckter Drache", "Eigener Marker", "Fremder Marker"}
         assert _layer_labels(payload["scene_stack"]) == {"Sichtbar", "DM-Notizkarte"}
 
+    def test_legacy_state_endpoint_also_hides_dm_secrets_from_a_player(
+        self, app, dm_user, player_user, player_client
+    ):
+        """Fixed 2026-09-02: GET /campaigns/.../sessions/.../state
+        (vtt/campaigns/routes.py, distinct from the /play/.../bootstrap
+        route above) used its own local, unfiltered serializer and
+        returned every token -- dm_only and other players' owner_only
+        included -- to any active campaign member. It now delegates to
+        the same serialize_state_payload the bootstrap route already
+        used correctly, so this pins the same filtering behavior here."""
+        campaign, session, *_ = _arrange_secrets(dm_user, player_user)
+        response = player_client.get(
+            f"/api/campaigns/{campaign.id}/sessions/{session.id}/state")
+        assert response.status_code == 200
+        payload = response.get_json()
+        assert _token_names(payload) == {"Wirt", "Eigener Marker"}
+
+    def test_legacy_state_endpoint_keeps_everything_for_the_dm(
+        self, app, dm_user, player_user, dm_client
+    ):
+        campaign, session, *_ = _arrange_secrets(dm_user, player_user)
+        response = dm_client.get(
+            f"/api/campaigns/{campaign.id}/sessions/{session.id}/state")
+        assert response.status_code == 200
+        payload = response.get_json()
+        assert _token_names(payload) == {
+            "Wirt", "Versteckter Drache", "Eigener Marker", "Fremder Marker"}
+
 
 class TestSecretFilteringSocket:
     def _join(self, app, flask_client, campaign, session):

@@ -220,6 +220,118 @@ class TestAssetLibrary:
         assert response.data == b"PNGDATA"
 
 
+class TestHandoutVisibilityLeak:
+    """Fixed 2026-09-02: uploading a handout already required DM/CO-DM
+    rights, but every read path (list, library, preview, thumbnail,
+    download) only checked campaign membership -- any Player could see
+    and download a DM-only handout the instant it was uploaded. is_public
+    (stored on every Asset since long before this fix, default False,
+    but never actually read anywhere) is now the reveal switch."""
+
+    def _hidden_handout(self, campaign, dm_user, filename="secret-plot.txt", is_public=False):
+        asset = Asset(
+            campaign_id=campaign.id,
+            uploaded_by=dm_user.id,
+            filename=filename,
+            mime_type="text/plain",
+            size_bytes=64,
+            checksum_md5="1234567890abcdef1234567890abcdef",
+            storage_key=f"campaigns/{campaign.id}/assets/{filename}",
+            storage_provider="local",
+            asset_type="handout",
+            scope="campaign",
+            is_public=is_public,
+        )
+        db.session.add(asset)
+        db.session.commit()
+        return asset
+
+    def test_player_does_not_see_a_hidden_handout_in_the_grouped_list(
+        self, dm_user, player_user, dm_client, player_client
+    ):
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        self._hidden_handout(campaign, dm_user)
+
+        as_player = player_client.get(f"/api/assets/campaigns/{campaign.id}/list")
+        assert as_player.status_code == 200
+        assert as_player.get_json()["assets"]["handouts"] == []
+
+        as_dm = dm_client.get(f"/api/assets/campaigns/{campaign.id}/list")
+        assert len(as_dm.get_json()["assets"]["handouts"]) == 1
+
+    def test_player_does_not_see_a_hidden_handout_in_the_paginated_library(
+        self, dm_user, player_user, dm_client, player_client
+    ):
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        self._hidden_handout(campaign, dm_user)
+
+        as_player = player_client.get(f"/api/assets/campaigns/{campaign.id}/library?asset_type=handout")
+        assert as_player.status_code == 200
+        data = as_player.get_json()
+        assert data["total"] == 0
+        assert data["assets"] == []
+
+        as_dm = dm_client.get(f"/api/assets/campaigns/{campaign.id}/library?asset_type=handout")
+        assert as_dm.get_json()["total"] == 1
+
+    def test_a_public_handout_is_visible_to_a_player(self, dm_user, player_user, player_client):
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        self._hidden_handout(campaign, dm_user, is_public=True)
+
+        response = player_client.get(f"/api/assets/campaigns/{campaign.id}/list")
+        assert len(response.get_json()["assets"]["handouts"]) == 1
+
+    def test_player_cannot_preview_or_download_a_hidden_handout_directly_by_id(
+        self, dm_user, player_user, player_client, monkeypatch
+    ):
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        asset = self._hidden_handout(campaign, dm_user)
+
+        monkeypatch.setattr(
+            "vtt.endpoints.assets.get_storage_adapter",
+            lambda: type("Storage", (), {"download": staticmethod(lambda _key: b"SECRET")})(),
+        )
+
+        preview = player_client.get(f"/api/assets/{asset.id}/preview")
+        assert preview.status_code == 403
+        download = player_client.get(f"/api/assets/{asset.id}/download")
+        assert download.status_code == 403
+        thumbnail = player_client.get(f"/api/assets/{asset.id}/thumbnail")
+        assert thumbnail.status_code == 403
+
+    def test_dm_can_reveal_a_handout_and_the_player_can_then_see_it(
+        self, dm_user, player_user, dm_client, player_client
+    ):
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        asset = self._hidden_handout(campaign, dm_user)
+
+        before = player_client.get(f"/api/assets/campaigns/{campaign.id}/list")
+        assert before.get_json()["assets"]["handouts"] == []
+
+        reveal = dm_client.patch(f"/api/assets/{asset.id}/visibility", json={"is_public": True})
+        assert reveal.status_code == 200
+        assert reveal.get_json()["is_public"] is True
+
+        after = player_client.get(f"/api/assets/campaigns/{campaign.id}/list")
+        assert len(after.get_json()["assets"]["handouts"]) == 1
+
+    def test_player_cannot_reveal_a_handout_themselves(
+        self, dm_user, player_user, player_client
+    ):
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        asset = self._hidden_handout(campaign, dm_user)
+
+        response = player_client.patch(f"/api/assets/{asset.id}/visibility", json={"is_public": True})
+        assert response.status_code == 403
+        assert Asset.query.get(asset.id).is_public is False
+
+
 def _make_png_bytes(size=(64, 48), color=(200, 50, 50)):
     buffer = io.BytesIO()
     Image.new("RGB", size, color).save(buffer, format="PNG")

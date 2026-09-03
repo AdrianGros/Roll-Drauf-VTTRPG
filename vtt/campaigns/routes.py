@@ -232,26 +232,6 @@ def _ensure_session_state(campaign: Campaign, game_session: GameSession):
     return state
 
 
-def _serialize_state_payload(game_session: GameSession, state: SessionState):
-    active_map = None
-    if state.active_map_id:
-        active_map = CampaignMap.query.filter_by(id=state.active_map_id).first()
-
-    tokens = (
-        TokenState.query.filter_by(session_state_id=state.id)
-        .filter(TokenState.deleted_at.is_(None))
-        .order_by(TokenState.id.asc())
-        .all()
-    )
-
-    return {
-        "session": game_session.serialize(),
-        "state": state.serialize(),
-        "active_map": active_map.serialize() if active_map else None,
-        "tokens": [token.serialize() for token in tokens],
-    }
-
-
 def _refresh_state_snapshot(state: SessionState):
     active_tokens = (
         TokenState.query.filter_by(session_state_id=state.id)
@@ -1047,7 +1027,17 @@ def archive_map(campaign_id, map_id):
 @campaigns_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/state", methods=["GET"])
 @jwt_required()
 def get_session_state(campaign_id, session_id):
-    """Return persisted session state + active map + tokens."""
+    """Return persisted session state + active map + tokens.
+
+    Fixed 2026-09-02: this route used to call the local
+    _serialize_state_payload (removed), which returned every token with
+    no visibility filter -- a Player calling this route directly got
+    every dm_only token and every other player's owner_only token (full
+    position/HP/metadata). vtt.play.service.serialize_state_payload is
+    the SAME serializer's already-fixed sibling (Playtable-Audit
+    2026-08-25 P0) -- this route was simply never switched over to it,
+    so the leak survived here alone. Delegating instead of re-patching
+    the duplicate removes the chance of the two drifting again."""
     user, error = _get_current_user()
     if error:
         return error
@@ -1063,7 +1053,9 @@ def get_session_state(campaign_id, session_id):
         return error
 
     state = _ensure_session_state(campaign, game_session)
-    return jsonify(_serialize_state_payload(game_session, state)), 200
+    role = scene_service.get_session_role(campaign, user.id)
+    return jsonify(scene_service.serialize_state_payload(
+        game_session, state, role=role, viewer_id=user.id)), 200
 
 
 @campaigns_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/maps/activate", methods=["POST"])

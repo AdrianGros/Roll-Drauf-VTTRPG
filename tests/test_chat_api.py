@@ -6,7 +6,7 @@ import pytest
 
 from vtt import create_app
 from vtt.extensions import db
-from vtt.models import Campaign, CampaignMap, CampaignMember, GameSession, Role, User
+from vtt.models import Campaign, CampaignMap, CampaignMember, ChatMessage, GameSession, Role, User
 
 
 def _login(client, username, password="Password123!"):
@@ -180,3 +180,76 @@ class TestChatApi:
             f"/api/campaigns/{campaign.id}/sessions/{game_session.id}/chat/messages"
         )
         assert response.status_code == 403
+
+
+class TestChatVisibilityLeak:
+    """Fixed 2026-09-02: a gm_only/blind/self dice roll's ChatMessage row
+    used to be returned to every campaign member unfiltered -- the live
+    socket broadcast for the same roll already hid it correctly
+    (vtt.socket_handlers._emit_scoped_roll), but paging through chat
+    history bypassed that entirely. These pin the fix in place."""
+
+    def _post_secret_roll(self, campaign, game_session, author_user, visibility):
+        message = ChatMessage(
+            campaign_id=campaign.id,
+            game_session_id=game_session.id,
+            author_user_id=author_user.id,
+            content="würfelt 1d20: 17 = 17",
+            content_type="dice_roll",
+            visibility=visibility,
+        )
+        db.session.add(message)
+        db.session.commit()
+        return message
+
+    def test_player_never_sees_a_gm_only_roll_in_history(self, dm_user, player_user, dm_client, player_client):
+        campaign, game_session = _create_campaign_with_session(dm_user)
+        _add_member(campaign, player_user)
+        self._post_secret_roll(campaign, game_session, dm_user, "gm_only")
+
+        as_player = player_client.get(
+            f"/api/campaigns/{campaign.id}/sessions/{game_session.id}/chat/messages"
+        )
+        assert as_player.status_code == 200
+        assert as_player.get_json()["messages"] == []
+
+        as_dm = dm_client.get(
+            f"/api/campaigns/{campaign.id}/sessions/{game_session.id}/chat/messages"
+        )
+        assert as_dm.status_code == 200
+        dm_messages = as_dm.get_json()["messages"]
+        assert len(dm_messages) == 1
+        assert dm_messages[0]["content"] == "würfelt 1d20: 17 = 17"
+
+    def test_player_sees_a_redacted_placeholder_for_a_blind_roll(self, dm_user, player_user, dm_client, player_client):
+        campaign, game_session = _create_campaign_with_session(dm_user)
+        _add_member(campaign, player_user)
+        self._post_secret_roll(campaign, game_session, dm_user, "blind")
+
+        as_player = player_client.get(
+            f"/api/campaigns/{campaign.id}/sessions/{game_session.id}/chat/messages"
+        )
+        assert as_player.status_code == 200
+        player_messages = as_player.get_json()["messages"]
+        assert len(player_messages) == 1
+        assert player_messages[0]["content"] is None
+        assert player_messages[0]["author_user_id"] is None
+        assert player_messages[0].get("hidden") is True
+
+        as_dm = dm_client.get(
+            f"/api/campaigns/{campaign.id}/sessions/{game_session.id}/chat/messages"
+        )
+        dm_messages = as_dm.get_json()["messages"]
+        assert dm_messages[0]["content"] == "würfelt 1d20: 17 = 17"
+
+    def test_public_rolls_are_unaffected(self, dm_user, player_user, player_client):
+        campaign, game_session = _create_campaign_with_session(dm_user)
+        _add_member(campaign, player_user)
+        self._post_secret_roll(campaign, game_session, dm_user, "public")
+
+        response = player_client.get(
+            f"/api/campaigns/{campaign.id}/sessions/{game_session.id}/chat/messages"
+        )
+        messages = response.get_json()["messages"]
+        assert len(messages) == 1
+        assert messages[0]["content"] == "würfelt 1d20: 17 = 17"

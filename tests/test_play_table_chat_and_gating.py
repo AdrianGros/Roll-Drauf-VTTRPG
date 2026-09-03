@@ -225,6 +225,57 @@ class TestTableChat:
         assert history[0]["message"] == "Alte Nachricht"
         assert history[0]["sender_name"] == dm_user.username
 
+    def test_bootstrap_chat_history_never_leaks_a_gm_only_roll_to_a_player(
+        self, app, dm_user, player_user, dm_client, player_client
+    ):
+        """Fixed 2026-09-02: bootstrap's chat_history used to return
+        row.content unconditionally, ignoring ChatMessage.visibility --
+        a Player who loaded/reloaded the page saw the full text of every
+        gm_only/blind/self roll, even though the live socket broadcast
+        for that exact roll (test_gm_only_roll_reaches_only_the_dm_room,
+        test_dm_blind_roll_reaches_dm_in_full_and_players_only_as_a_
+        placeholder, below) already hid it correctly."""
+        campaign = _create_campaign(dm_user, "Secret History Campaign")
+        _add_member(campaign, player_user)
+        _, session = _add_map_and_session(campaign, dm_user)
+        db.session.add(
+            ChatMessage(
+                campaign_id=campaign.id,
+                game_session_id=session.id,
+                author_user_id=dm_user.id,
+                content="würfelt 1d20: 4 = 4",
+                content_type="dice_roll",
+                visibility="gm_only",
+            )
+        )
+        db.session.add(
+            ChatMessage(
+                campaign_id=campaign.id,
+                game_session_id=session.id,
+                author_user_id=dm_user.id,
+                content="würfelt 1d20: 19 = 19",
+                content_type="dice_roll",
+                visibility="blind",
+            )
+        )
+        db.session.commit()
+
+        as_player = player_client.get(f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/bootstrap")
+        assert as_player.status_code == 200
+        player_history = as_player.get_json()["chat_history"]
+        # gm_only is dropped entirely (matches the live path's silent
+        # no-op); blind shows as a redacted placeholder, matching the
+        # live path's own hidden-roll placeholder.
+        assert len(player_history) == 1
+        assert player_history[0]["message"] is None
+        assert player_history[0]["sender_id"] is None
+        assert player_history[0].get("hidden") is True
+
+        as_dm = dm_client.get(f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/bootstrap")
+        dm_history = as_dm.get_json()["chat_history"]
+        assert len(dm_history) == 2
+        assert {row["message"] for row in dm_history} == {"würfelt 1d20: 4 = 4", "würfelt 1d20: 19 = 19"}
+
 
 class TestSocketReadOnlyGating:
     def test_player_cannot_create_token_in_scheduled_session(self, app, dm_user, player_user, dm_client, player_client):

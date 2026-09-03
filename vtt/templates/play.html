@@ -2514,9 +2514,11 @@
                  a CSS class). Removed until the tools actually exist -- a
                  button that does nothing reads as "broken", not "planned".
                  S10 builds the real thing: wall/light placement (DM-only,
-                 hidden for players via JS) and a vision-overlay toggle
-                 (all roles, incl. read-only -- client-only, mutates
-                 nothing, same as Messen). -->
+                 hidden for players via JS) and a vision-overlay toggle.
+                 Fixed 2026-09-02: the toggle used to be all-roles; the
+                 underlying geometry endpoints were leaking full wall/
+                 light layout to Players. Both are DM/CO-DM-only now,
+                 client and server. -->
             <button type="button" id="toolWall" class="tool-btn" data-tool="wall" title="Wand setzen: zwei Punkte anklicken" hidden><span class="tool-ico" aria-hidden="true">🧱</span><span class="tool-label">Wand</span></button>
             <button type="button" id="toolLight" class="tool-btn" data-tool="light" title="Lichtquelle platzieren: auf die Karte klicken" hidden><span class="tool-ico" aria-hidden="true">💡</span><span class="tool-label">Licht</span></button>
             <button type="button" id="btnVisionToggle" class="tool-btn active" title="Wand-/Licht-Markierungen ein-/ausblenden" aria-pressed="true"><span class="tool-ico" aria-hidden="true">👁</span><span class="tool-label">Sicht</span></button>

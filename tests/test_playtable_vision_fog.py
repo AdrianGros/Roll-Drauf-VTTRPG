@@ -145,7 +145,7 @@ class TestWallPermissions:
         assert response.status_code == 403
         assert SceneWall.query.count() == 0
 
-    def test_dm_creates_a_wall_and_any_member_can_read_it(self, app, dm_user, player_user, dm_client, player_client):
+    def test_dm_creates_a_wall_and_the_dm_can_read_it(self, app, dm_user, player_user, dm_client, player_client):
         campaign = _create_campaign(dm_user, "Wand-Kampagne 2")
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
@@ -155,9 +155,26 @@ class TestWallPermissions:
                                 json={"x0": 0, "y0": 0, "x1": 100, "y1": 0, "sight": "normal"})
         assert create.status_code == 201, create.get_json()
 
-        listing = player_client.get(_vision_url(campaign, session, "walls"))
+        listing = dm_client.get(_vision_url(campaign, session, "walls"))
         assert listing.status_code == 200
         assert len(listing.get_json()["walls"]) == 1
+
+    def test_player_cannot_read_wall_geometry(self, app, dm_user, player_user, dm_client, player_client):
+        """Fixed 2026-09-02: full wall geometry reveals room/corridor
+        shapes and secret-door locations -- exactly what fog-of-war
+        exists to hide. Player reads must be blocked the same as
+        Player writes already were."""
+        campaign = _create_campaign(dm_user, "Wand-Kampagne 3")
+        _add_member(campaign, player_user)
+        campaign_map, session = _add_map_and_live_session(campaign, dm_user)
+        _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+
+        create = dm_client.post(_vision_url(campaign, session, "walls"),
+                                json={"x0": 0, "y0": 0, "x1": 100, "y1": 0, "sight": "normal"})
+        assert create.status_code == 201, create.get_json()
+
+        listing = player_client.get(_vision_url(campaign, session, "walls"))
+        assert listing.status_code == 403
 
     def test_zero_length_wall_is_rejected(self, app, dm_user, dm_client):
         campaign = _create_campaign(dm_user, "Nullwand-Kampagne")
@@ -196,6 +213,21 @@ class TestLightPermissions:
                                 json={"light_type": "darkness"})
         assert patch.status_code == 200
         assert patch.get_json()["light"]["light_type"] == "darkness"
+
+    def test_player_cannot_read_light_geometry(self, app, dm_user, player_user, dm_client, player_client):
+        """Fixed 2026-09-02 -- same reasoning as
+        test_player_cannot_read_wall_geometry above."""
+        campaign = _create_campaign(dm_user, "Licht-Kampagne 3")
+        _add_member(campaign, player_user)
+        campaign_map, session = _add_map_and_live_session(campaign, dm_user)
+        _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+
+        create = dm_client.post(_vision_url(campaign, session, "lights"),
+                                json={"x": 10, "y": 10, "bright_radius": 50, "dim_radius": 100})
+        assert create.status_code == 201, create.get_json()
+
+        listing = player_client.get(_vision_url(campaign, session, "lights"))
+        assert listing.status_code == 403
 
 
 class TestFogPersistenceAndIsolation:

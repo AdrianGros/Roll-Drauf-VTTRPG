@@ -143,6 +143,37 @@ def _get_context(campaign_id: int, session_id: int):
     return user, campaign, game_session, session_role
 
 
+def _chat_row_for_role(row, session_role: str | None):
+    """Fixed 2026-09-02: apply ChatMessage.visibility to a history row the
+    same way _emit_scoped_roll (vtt/socket_handlers.py) already applies it
+    to the live broadcast -- an operator (DM/CO-DM) always sees the real
+    row; a non-operator sees the real row only for "public", a generic
+    "a hidden roll happened" placeholder for "blind"/"self" (matching the
+    live placeholder's own no-name/no-dice/no-result shape), and nothing
+    at all for "gm_only" (returns None, dropped by the caller) -- also
+    matching the live path's silent no-op for that mode."""
+    if is_operator_role(session_role) or row.visibility == "public":
+        return {
+            "message_id": row.id,
+            "message": row.content,
+            "sender_id": row.author_user_id,
+            "sender_name": row.author.username if row.author else "player",
+            "timestamp": row.created_at.isoformat() if row.created_at else None,
+            "created_at": row.created_at.isoformat() if row.created_at else None,
+        }
+    if row.visibility == "gm_only":
+        return None
+    return {
+        "message_id": row.id,
+        "message": None,
+        "sender_id": None,
+        "sender_name": None,
+        "hidden": True,
+        "timestamp": row.created_at.isoformat() if row.created_at else None,
+        "created_at": row.created_at.isoformat() if row.created_at else None,
+    }
+
+
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/bootstrap", methods=["GET"])
 @jwt_required()
 def bootstrap_play_runtime(campaign_id, session_id):
@@ -178,23 +209,26 @@ def bootstrap_play_runtime(campaign_id, session_id):
         # Last 30 visible chat messages, newest first (same shape the live
         # "chat:message_sent" broadcast uses), so a page reload no longer
         # wipes the table conversation (robot audit 2026-08-23).
+        # Fixed 2026-09-02: this used to return row.content unconditionally,
+        # ignoring ChatMessage.visibility entirely -- a gm_only/blind/self
+        # roll (the live socket broadcast already correctly hides these,
+        # see _emit_scoped_roll) was fully readable by any Player on page
+        # load or reload. _chat_row_for_role now applies the exact same
+        # secrecy rule the live path already enforces.
         "chat_history": [
-            {
-                "message_id": row.id,
-                "message": row.content,
-                "sender_id": row.author_user_id,
-                "sender_name": row.author.username if row.author else "player",
-                "timestamp": row.created_at.isoformat() if row.created_at else None,
-                "created_at": row.created_at.isoformat() if row.created_at else None,
-            }
-            for row in ChatMessage.query.filter_by(
-                game_session_id=game_session.id,
-                deleted_at=None,
+            row_payload
+            for row_payload in (
+                _chat_row_for_role(row, session_role)
+                for row in ChatMessage.query.filter_by(
+                    game_session_id=game_session.id,
+                    deleted_at=None,
+                )
+                .filter(ChatMessage.moderation_state == "visible")
+                .order_by(ChatMessage.created_at.desc())
+                .limit(30)
+                .all()
             )
-            .filter(ChatMessage.moderation_state == "visible")
-            .order_by(ChatMessage.created_at.desc())
-            .limit(30)
-            .all()
+            if row_payload is not None
         ],
         "server_time": utcnow().isoformat(),
     }
@@ -892,9 +926,13 @@ def _get_active_map_or_404(campaign, game_session):
 
 
 def _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_map):
-    """Walls/lights are not secret (unlike hidden tokens) -- every client
-    gets the geometry change so it can re-render wall/light markers, plus
-    each owner with a token on the map gets their own recomputed fog."""
+    """Fixed 2026-09-02: walls/lights ARE DM-only now (see play_list_
+    walls' own comment) -- this event still goes to every client since
+    the payload here carries no geometry, only a "something changed,
+    refetch if you're allowed to" signal (a non-operator client's own
+    _loadVisionGeometry now skips the now-403'd fetch instead of
+    following it). Each owner with a token on the map also gets their
+    own recomputed fog, which was never part of this leak."""
     room = _room_name(campaign.id, game_session.id)
     socketio.emit(
         "vision:geometry_changed",
@@ -960,11 +998,20 @@ def play_create_wall(campaign_id, session_id):
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/walls", methods=["GET"])
 @jwt_required()
 def play_list_walls(campaign_id, session_id):
-    """Walls are geometry, not a DM secret -- any active member can read
-    the list (used by every client's marker rendering, not just the DM)."""
+    """DM-only (fixed 2026-09-02): full wall geometry reveals room/corridor
+    shapes, secret-door locations, and trap-adjacent layout -- exactly the
+    map information fog-of-war exists to hide. The prior "walls aren't a
+    DM secret" framing here contradicted every sibling write endpoint on
+    this same route (all DM-gated) and this project's own vision-design
+    doc, which names server-side per-user filtering as the correct
+    pattern. A future pass may reveal wall segments a player's fog has
+    actually explored; until that exists, full geometry stays DM/CO-DM
+    only, matching how the write endpoints already behaved."""
     _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
     if isinstance(session_role, tuple):
         return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
     _state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
     if error:
         return error
@@ -1088,9 +1135,13 @@ def play_create_light(campaign_id, session_id):
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/lights", methods=["GET"])
 @jwt_required()
 def play_list_lights(campaign_id, session_id):
+    """DM-only (fixed 2026-09-02) -- see play_list_walls' own comment;
+    the same reasoning applies to light-source placement."""
     _user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
     if isinstance(session_role, tuple):
         return session_role
+    if not is_operator_role(session_role):
+        return jsonify({"error": "forbidden"}), 403
     _state, campaign_map, error = _get_active_map_or_404(campaign, game_session)
     if error:
         return error

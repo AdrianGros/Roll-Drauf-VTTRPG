@@ -6,6 +6,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from vtt.community import community_bp, policy, service
 from vtt.extensions import db, limiter, socketio
 from vtt.models import Campaign, ChatMessage, GameSession, ModerationAction, ModerationReport, User
+from vtt.play.service import get_session_role, is_operator_role
 from vtt.utils.time import utcnow
 
 
@@ -83,11 +84,25 @@ def list_chat_messages(campaign_id, session_id):
     rows_desc = query.limit(limit).all()
     rows = list(reversed(rows_desc))
     viewer_is_mod = policy.can_moderate_campaign(campaign, user)
+    # Fixed 2026-09-02: viewer_is_mod (platform-admin-or-campaign-owner/DM,
+    # missing CO_DM) is a moderation concept, not the same question as
+    # "may this viewer see a gm_only/blind/self dice roll." Use the same
+    # DM/CO_DM operator role every other secrecy check in this codebase
+    # keys off (vtt.play.service.is_operator_role).
+    viewer_is_operator = is_operator_role(get_session_role(campaign, user.id))
 
     next_before_id = rows_desc[-1].id if rows_desc else None
+    messages = [
+        payload
+        for payload in (
+            service.message_for_viewer(message, user.id, viewer_is_mod, viewer_is_operator)
+            for message in rows
+        )
+        if payload is not None
+    ]
     return jsonify(
         {
-            "messages": [service.message_for_viewer(message, user.id, viewer_is_mod) for message in rows],
+            "messages": messages,
             "next_before_id": next_before_id,
         }
     ), 200

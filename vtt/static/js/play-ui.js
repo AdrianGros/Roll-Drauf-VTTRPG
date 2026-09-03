@@ -1932,6 +1932,19 @@
                 this._renderVisionLayer();
                 return;
             }
+            // Fixed 2026-09-02: /vision/walls and /vision/lights are now
+            // DM/CO-DM-only server-side (full geometry was leaking the
+            // map layout to Players). Skip the fetch entirely for a
+            // non-operator instead of hitting the new 403 on every load
+            // and reconnect -- that would just spam an error toast with
+            // nothing useful for a player to do about it.
+            if (!isOperatorRole(this.bootstrap?.session_role || "")) {
+                this._walls = [];
+                this._lights = [];
+                this._visionGeometryLoadedForMapId = activeMap.id;
+                this._renderVisionLayer();
+                return;
+            }
             try {
                 const [wallsResponse, lightsResponse] = await Promise.all([
                     this.api.listWalls(this.campaignId, this.sessionId),
@@ -3907,6 +3920,13 @@
             if (toolWall) toolWall.hidden = !operator || this.readOnly;
             const toolLight = document.getElementById("toolLight");
             if (toolLight) toolLight.hidden = !operator || this.readOnly;
+            // Fixed 2026-09-02: /vision/walls and /vision/lights became
+            // DM/CO-DM-only server-side (see _loadVisionGeometry's own
+            // comment), so the toggle has nothing to show a Player
+            // anymore -- hide it rather than leave a button that always
+            // renders an empty layer.
+            const visionToggle = document.getElementById("btnVisionToggle");
+            if (visionToggle) visionToggle.hidden = !operator;
             const visionControls = document.getElementById("visionControls");
             if (visionControls) visionControls.hidden = !operator || this.readOnly;
             const fogEnabledToggle = document.getElementById("btnFogEnabledToggle");

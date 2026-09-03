@@ -257,7 +257,31 @@ def revoke_action(action: ModerationAction, actor_user_id: int) -> None:
     action.revoked_by_user_id = actor_user_id
 
 
-def message_for_viewer(message: ChatMessage, viewer_user_id: int, viewer_is_moderator: bool) -> dict:
+def message_for_viewer(message: ChatMessage, viewer_user_id: int, viewer_is_moderator: bool,
+                       viewer_is_operator: bool = True) -> dict | None:
+    """Fixed 2026-09-02: this used to return message.serialize() (full
+    `content`, unredacted) for every row regardless of `visibility` --
+    a gm_only/blind/self dice roll was fully readable by any Player who
+    paged through chat history, even though the LIVE socket broadcast
+    for the exact same roll already correctly hides it
+    (vtt.socket_handlers._emit_scoped_roll). viewer_is_operator now
+    applies the same rule here: DM/CO-DM always see the real row; a
+    non-operator sees "public" as-is, gets a redacted placeholder for
+    "blind"/"self" (mirrors the live placeholder's no-name/no-result
+    shape), and gets None (dropped by the caller) for "gm_only" (mirrors
+    the live path's silent no-op). Defaults to True so any OTHER caller
+    of this function that hasn't been updated to pass a real value stays
+    exactly as permissive as before -- only the two callers that were
+    actually leaking dice-roll secrets pass a real per-viewer value."""
+    if not viewer_is_operator and message.visibility != "public":
+        if message.visibility == "gm_only":
+            return None
+        payload = message.serialize()
+        payload["content"] = None
+        payload["author_user_id"] = None
+        payload["author_username"] = None
+        payload["hidden"] = True
+        return payload
     payload = message.serialize()
     if message.deleted_at and not viewer_is_moderator:
         payload["content"] = "[message removed]"

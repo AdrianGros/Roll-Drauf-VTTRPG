@@ -4,6 +4,7 @@ import io
 import logging
 from flask import Blueprint, request, jsonify, send_file, current_app
 from flask_jwt_extended import jwt_required
+from sqlalchemy import or_
 from vtt.extensions import db
 from vtt.models import Asset, Campaign, CampaignMember, GameSession, User
 from vtt.permissions import has_platform_role, can_view_campaign, can_edit_campaign, require_campaign_access
@@ -35,6 +36,24 @@ def _can_access_library(campaign, user):
     ).first() is not None
 
 
+def _handout_visible_to(asset, campaign, user) -> bool:
+    """Fixed 2026-09-02: uploading a handout already required DM/CO-DM
+    rights (see upload_asset's own comment, "handouts... stay DM/CO_DM-
+    only exactly as before"), but every READ path here only checked
+    campaign membership -- any Player could list, preview, and download
+    a DM-only handout the moment it was uploaded. is_public (stored on
+    every Asset, default False, but never actually read anywhere before
+    this fix) is now the reveal switch: a handout is visible to a
+    non-editor once its DM/CO-DM flips it public. Every other asset_type
+    (map/token/image) is unaffected -- those were never reported as
+    secret and this only tightens handout reads."""
+    if asset.asset_type != 'handout':
+        return True
+    if asset.is_public:
+        return True
+    return can_edit_campaign(user, campaign)
+
+
 # ===== M19: List & Download =====
 
 @assets_bp.route('/campaigns/<int:campaign_id>/list', methods=['GET'])
@@ -47,6 +66,10 @@ def list_campaign_assets(campaign_id):
 
     # Get grouped assets
     grouped = Asset.get_campaign_assets_by_type(campaign_id, include_deleted=False)
+    grouped = {
+        key: [a for a in assets if _handout_visible_to(a, campaign, current_user)]
+        for key, assets in grouped.items()
+    }
 
     return jsonify({
         'campaign_id': campaign_id,
@@ -98,6 +121,11 @@ def get_campaign_asset_library(campaign_id):
         search=search,
         include_deleted=False,
     )
+    # Fixed 2026-09-02: query-level filter (not a post-fetch filter) so
+    # page/per_page/total/has_more stay correct -- see _handout_visible_to.
+    if not can_edit_campaign(current_user, campaign):
+        base_query = base_query.filter(
+            or_(Asset.asset_type != 'handout', Asset.is_public.is_(True)))
 
     total = base_query.count()
     assets = base_query.offset((page - 1) * per_page).limit(per_page).all()
@@ -144,6 +172,8 @@ def preview_asset(asset_id):
     campaign = asset.campaign
     if not _can_access_library(campaign, current_user):
         return jsonify({'error': 'Forbidden'}), 403
+    if not _handout_visible_to(asset, campaign, current_user):
+        return jsonify({'error': 'Forbidden'}), 403
 
     if not asset.is_previewable():
         return jsonify({'error': 'Preview not supported for this asset type'}), 400
@@ -176,6 +206,8 @@ def get_asset_thumbnail(asset_id):
 
     campaign = asset.campaign
     if not _can_access_library(campaign, current_user):
+        return jsonify({'error': 'Forbidden'}), 403
+    if not _handout_visible_to(asset, campaign, current_user):
         return jsonify({'error': 'Forbidden'}), 403
 
     storage = get_storage_adapter()
@@ -225,6 +257,8 @@ def download_asset(asset_id):
     # Check permission
     campaign = asset.campaign
     if not _can_access_library(campaign, current_user):
+        return jsonify({'error': 'Forbidden'}), 403
+    if not _handout_visible_to(asset, campaign, current_user):
         return jsonify({'error': 'Forbidden'}), 403
 
     # Get from storage
@@ -432,6 +466,49 @@ def rollback_asset(asset_id, version_number):
         'new_version': new_asset.asset_version,
         'message': f'Rolled back to version {version_number}',
     }), 200
+
+
+# ===== Visibility (reveal/hide a handout) =====
+
+@assets_bp.route('/<int:asset_id>/visibility', methods=['PATCH'])
+@jwt_required()
+def set_asset_visibility(asset_id):
+    """Fixed 2026-09-02: is_public existed on every Asset (default False)
+    but nothing ever set it after upload -- there was no way for a DM to
+    actually reveal a handout once it was hidden. This is the missing
+    write side of _handout_visible_to's read-side gate.
+
+    Note: NOT @require_campaign_access(can_edit_campaign) -- that
+    decorator resolves campaign_id from the route's own URL kwargs
+    (vtt/permissions.py), which this asset_id-only route never has; it
+    would silently 404 every call. Every other asset_id-keyed route in
+    this file (preview/thumbnail/download/delete) already works around
+    this the same way: look the asset up first, check permission
+    against asset.campaign manually."""
+    asset = Asset.query.get(asset_id)
+    if not asset or asset.is_soft_deleted():
+        return jsonify({'error': 'Asset not found'}), 404
+
+    campaign = asset.campaign
+    if not can_edit_campaign(current_user, campaign):
+        return jsonify({'error': 'Forbidden'}), 403
+
+    data = request.get_json(silent=True) or {}
+    if 'is_public' not in data or not isinstance(data['is_public'], bool):
+        return jsonify({'error': 'is_public (boolean) is required'}), 400
+
+    asset.is_public = data['is_public']
+    db.session.commit()
+
+    log_audit(
+        action='asset_visibility_changed',
+        resource_type='asset',
+        resource_id=asset.id,
+        details={'filename': asset.filename, 'is_public': asset.is_public},
+        performed_by=current_user
+    )
+
+    return jsonify({'asset_id': asset.id, 'is_public': asset.is_public}), 200
 
 
 # ===== M19: Delete (soft) =====
