@@ -1,14 +1,42 @@
 """Operational readiness and metrics endpoints."""
 
+import hmac
 import os
 
-from flask import Response, current_app, jsonify
+from flask import Response, current_app, jsonify, request
+from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
 from sqlalchemy import text
 
 from vtt.extensions import db
 from vtt.extensions import limiter
+from vtt.models import User
 from vtt.ops import ops_bp
 from vtt.utils.time import utcnow
+
+
+def _ops_access_allowed() -> bool:
+    """Fixed 2026-09-04 (adversarial audit): /health/ready,
+    /health/release, and /metrics used to have no access check at all.
+    Two legitimate callers exist and neither is a normal browser
+    session by default: a platform admin checking these manually (real
+    JWT session), and infra/monitoring/release_gate_evidence.py (a
+    plain script, no user session, authenticates via the shared
+    OPS_ACCESS_TOKEN instead). Either is sufficient."""
+    configured_token = current_app.config.get("OPS_ACCESS_TOKEN") or ""
+    if configured_token:
+        supplied = request.headers.get("X-Ops-Token") or request.args.get("ops_token") or ""
+        if hmac.compare_digest(str(supplied), str(configured_token)):
+            return True
+
+    try:
+        verify_jwt_in_request()
+    except Exception:
+        return False
+    user_id = get_jwt_identity()
+    if not user_id:
+        return False
+    user = db.session.get(User, int(user_id))
+    return bool(user and user.platform_role in ("admin", "owner"))
 
 
 def _iso(ts):
@@ -107,6 +135,8 @@ def health_live():
 @limiter.exempt
 def health_ready():
     """Readiness probe endpoint with dependency checks."""
+    if not _ops_access_allowed():
+        return jsonify({"error": "forbidden"}), 403
     db_ok, db_message = _check_database()
     redis_ok, redis_message = _check_redis()
 
@@ -126,6 +156,8 @@ def health_ready():
 @limiter.exempt
 def health_release():
     """Go/no-go release gate based on operational thresholds."""
+    if not _ops_access_allowed():
+        return jsonify({"error": "forbidden"}), 403
     db_ok, db_message = _check_database()
     redis_ok, redis_message = _check_redis()
     dependencies_ok = db_ok and redis_ok
@@ -226,6 +258,8 @@ def health_release():
 @limiter.exempt
 def metrics():
     """Minimal Prometheus-style metrics endpoint."""
+    if not _ops_access_allowed():
+        return Response("forbidden\n", status=403, mimetype="text/plain; version=0.0.4")
     if not current_app.config.get("METRICS_ENABLED", True):
         return Response("metrics_disabled 1\n", mimetype="text/plain; version=0.0.4")
 

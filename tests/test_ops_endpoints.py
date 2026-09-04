@@ -1,10 +1,30 @@
-"""M8 tests: operational health and metrics endpoints."""
+"""M8 tests: operational health and metrics endpoints.
+
+Fixed 2026-09-04 (adversarial audit): /health/ready, /health/release,
+and /metrics were fully unauthenticated, leaking internal hostnames
+(raw DB/Redis exception text), exact request/error-rate metrics, and
+deploy-gate thresholds to anyone. All three now require either the
+shared OPS_ACCESS_TOKEN header or a logged-in admin/owner session
+(vtt.ops.routes._ops_access_allowed). /health/live stays open on
+purpose -- it's the only one infra/scripts/deploy_live.sh actually
+polls, and carries no sensitive detail.
+"""
+
+from datetime import datetime
 
 import pytest
 
 from vtt import create_app
 from vtt.extensions import db
-from vtt.models import Role
+from vtt.models import Role, User
+
+OPS_HEADERS = {"X-Ops-Token": "test-ops-token"}  # matches TestingConfig.OPS_ACCESS_TOKEN
+
+
+def _login(client, username, password="Password123!"):
+    response = client.post("/api/auth/login", json={"username": username, "password": password})
+    assert response.status_code == 200
+    return response
 
 
 @pytest.fixture
@@ -23,6 +43,57 @@ def app():
 @pytest.fixture
 def client(app):
     return app.test_client()
+
+
+@pytest.fixture
+def admin_client(app):
+    user = User(username="ops_admin", email="ops_admin@test.com", role_id=3, platform_role="admin")
+    user.set_password("Password123!")
+    db.session.add(user)
+    db.session.commit()
+    client = app.test_client()
+    _login(client, "ops_admin")
+    return client
+
+
+@pytest.fixture
+def player_client(app):
+    user = User(username="ops_player", email="ops_player@test.com", role_id=1)
+    user.set_password("Password123!")
+    db.session.add(user)
+    db.session.commit()
+    client = app.test_client()
+    _login(client, "ops_player")
+    return client
+
+
+class TestOpsAccessGate:
+    def test_health_ready_rejects_anonymous(self, client):
+        assert client.get("/health/ready").status_code == 403
+
+    def test_health_release_rejects_anonymous(self, client):
+        assert client.get("/health/release").status_code == 403
+
+    def test_metrics_rejects_anonymous(self, client):
+        assert client.get("/metrics").status_code == 403
+
+    def test_health_ready_rejects_a_regular_player_session(self, player_client):
+        assert player_client.get("/health/ready").status_code == 403
+
+    def test_wrong_token_is_rejected(self, client):
+        response = client.get("/health/ready", headers={"X-Ops-Token": "not-the-real-token"})
+        assert response.status_code == 403
+
+    def test_correct_token_is_accepted(self, client):
+        assert client.get("/health/ready", headers=OPS_HEADERS).status_code == 200
+
+    def test_admin_session_is_accepted_with_no_token(self, admin_client):
+        assert admin_client.get("/health/ready").status_code == 200
+
+    def test_health_live_stays_open_to_anyone(self, client):
+        """The one endpoint deploy_live.sh actually polls -- must never
+        require auth, or the deploy healthcheck loop breaks."""
+        assert client.get("/health/live").status_code == 200
 
 
 class TestOpsEndpoints:
@@ -44,7 +115,7 @@ class TestOpsEndpoints:
         assert "started_at" in payload
 
     def test_health_ready(self, client):
-        response = client.get("/health/ready")
+        response = client.get("/health/ready", headers=OPS_HEADERS)
         assert response.status_code == 200
         payload = response.get_json()
         assert payload["status"] in {"ready", "degraded"}
@@ -52,7 +123,7 @@ class TestOpsEndpoints:
         assert "database" in payload["dependencies"]
 
     def test_health_release(self, client):
-        response = client.get("/health/release")
+        response = client.get("/health/release", headers=OPS_HEADERS)
         assert response.status_code == 200
         payload = response.get_json()
         assert payload["status"] == "go"
@@ -70,7 +141,7 @@ class TestOpsEndpoints:
             app.config["RELEASE_GATE_MIN_REQUESTS"] = 0
             app.config["RELEASE_GATE_REQUIRE_RUNBOOKS"] = False
 
-        response = client.get("/health/release")
+        response = client.get("/health/release", headers=OPS_HEADERS)
         assert response.status_code == 503
         payload = response.get_json()
         assert payload["status"] == "no-go"
@@ -91,7 +162,7 @@ class TestOpsEndpoints:
                 "ops/runbooks/this_file_does_not_exist.md",
             )
 
-        response = client.get("/health/release")
+        response = client.get("/health/release", headers=OPS_HEADERS)
         assert response.status_code == 503
         payload = response.get_json()
         assert payload["status"] == "no-go"
@@ -100,10 +171,10 @@ class TestOpsEndpoints:
 
     def test_metrics_plain_text(self, client):
         client.get("/health/live")
-        client.get("/health/ready")
-        client.get("/health/release")
+        client.get("/health/ready", headers=OPS_HEADERS)
+        client.get("/health/release", headers=OPS_HEADERS)
         client.get("/api/auth/check")
-        response = client.get("/metrics")
+        response = client.get("/metrics", headers=OPS_HEADERS)
         assert response.status_code == 200
         text = response.get_data(as_text=True)
         assert "vtt_requests_total" in text

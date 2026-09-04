@@ -116,6 +116,22 @@ class Config:
     # changes.
     MAX_CONTENT_LENGTH = 64 * 1024 * 1024
 
+    # Fixed 2026-09-04 (adversarial audit): /health/ready, /health/release,
+    # and /metrics were fully unauthenticated, leaking internal hostnames
+    # (raw DB/Redis exception text), exact request-count/error-rate
+    # metrics, and deploy-gate thresholds/runbook paths to anyone.
+    # /health/live stays open on purpose -- it's the only one
+    # infra/scripts/deploy_live.sh actually polls, and "is the process up
+    # at all" carries no sensitive detail. The other three now require
+    # EITHER a logged-in admin/owner session OR this shared token (set by
+    # whoever runs infra/monitoring/release_gate_evidence.py, which has
+    # no user session to authenticate with). Empty by default -- unset
+    # means the token path is simply never available, not "any token
+    # works"; the admin-session path still applies unconditionally
+    # either way, so this is strictly more locked down than before with
+    # zero configuration required.
+    OPS_ACCESS_TOKEN = os.getenv("OPS_ACCESS_TOKEN", "")
+
     # Bcrypt
     BCRYPT_LOG_ROUNDS = 12
 
@@ -223,6 +239,7 @@ class TestingConfig(Config):
     RELEASE_GATE_MAX_SOCKET_RESYNC_RATE = 1.0
     RELEASE_GATE_MAX_SOCKET_CONFLICT_RATE = 1.0
     RELEASE_GATE_REQUIRE_RUNBOOKS = False
+    OPS_ACCESS_TOKEN = "test-ops-token"
 
 
 class ProductionConfig(Config):

@@ -12,8 +12,18 @@ from urllib import error, request
 
 def _fetch(base_url: str, path: str):
     url = f"{base_url.rstrip('/')}{path}"
+    # Fixed 2026-09-04: /health/ready, /health/release, and /metrics now
+    # require either a logged-in admin session or this shared token
+    # (vtt/ops/routes.py's _ops_access_allowed) -- this script has no
+    # user session, so it authenticates via OPS_ACCESS_TOKEN, the same
+    # env var the server reads. Unset on both sides = still open only to
+    # an admin session, same as before this env var existed.
+    req = request.Request(url)
+    ops_token = os.getenv("OPS_ACCESS_TOKEN")
+    if ops_token:
+        req.add_header("X-Ops-Token", ops_token)
     try:
-        with request.urlopen(url, timeout=10) as response:
+        with request.urlopen(req, timeout=10) as response:
             body = response.read().decode("utf-8", errors="replace")
             return response.status, body, None
     except error.HTTPError as exc:
