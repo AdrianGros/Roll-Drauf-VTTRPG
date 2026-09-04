@@ -8,6 +8,7 @@ This is the single source of truth for who can do what.
 from functools import wraps
 from flask import abort, request, jsonify
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
+from vtt.extensions import db
 from vtt.models import Campaign, User
 from vtt.config import PLATFORM_ROLES, PROFILE_TIERS
 from vtt.security import current_user
@@ -258,6 +259,68 @@ def can_upload_asset(user, size_mb):
         return False, f"Storage quota exceeded. Available: {available:.2f}GB, Required: {required:.2f}GB"
 
     return True, "OK"
+
+
+def try_reserve_storage(user, size_bytes: int) -> bool:
+    """Fixed 2026-09-04 (adversarial audit): the actual quota
+    enforcement used to be a plain read-modify-write in the upload
+    route (`current_user.storage_used_gb += ...; db.session.commit()`)
+    -- can_upload_asset's own check above reads the value fresh per
+    request, so N concurrent uploads under the cap could all pass the
+    advisory check, all write to storage, and the LAST commit silently
+    clobbers the others' increments, permanently bypassing the quota.
+
+    This does the check AND the increment as one atomic conditional
+    UPDATE -- the WHERE clause re-evaluates against whatever the
+    CURRENT row value actually is at UPDATE time, and Postgres's own
+    row-level locking serializes concurrent updates to the same row, so
+    two callers racing each other can never both succeed past the cap.
+    Call this BEFORE writing to storage (not after, unlike the old
+    increment's position) so a losing race costs nothing to unwind --
+    no orphaned file, no Asset row to delete."""
+    if user.platform_role in ('admin', 'owner'):
+        return True
+
+    size_gb = size_bytes / 1024 / 1024 / 1024
+    result = db.session.execute(
+        db.update(User)
+        .where(
+            User.id == user.id,
+            User.storage_quota_gb.isnot(None),
+            User.storage_quota_gb > 0,
+            (db.func.coalesce(User.storage_used_gb, 0.0) + size_gb) <= User.storage_quota_gb,
+        )
+        .values(storage_used_gb=db.func.coalesce(User.storage_used_gb, 0.0) + size_gb)
+    )
+    db.session.commit()
+    if result.rowcount > 0:
+        db.session.refresh(user)
+        return True
+    return False
+
+
+def release_storage(user, size_bytes: int) -> None:
+    """Counterpart to try_reserve_storage: releases a reservation whose
+    upload failed AFTER the quota was already reserved (e.g. the actual
+    storage.upload() call itself failing) -- without this, a failed
+    upload would permanently consume quota for a file that doesn't
+    exist. No-op for platform staff, who were never actually charged.
+
+    Uses a portable CASE floor instead of GREATEST() -- Postgres (prod)
+    has it, but sqlite:///:memory: (TestingConfig) does not, and this
+    needs to actually run under both."""
+    if user.platform_role in ('admin', 'owner'):
+        return
+    size_gb = size_bytes / 1024 / 1024 / 1024
+    remaining = db.func.coalesce(User.storage_used_gb, 0.0) - size_gb
+    floored = db.case((remaining < 0.0, 0.0), else_=remaining)
+    db.session.execute(
+        db.update(User)
+        .where(User.id == user.id)
+        .values(storage_used_gb=floored)
+    )
+    db.session.commit()
+    db.session.refresh(user)
 
 
 # ============= DECORATORS FOR ROUTES =============

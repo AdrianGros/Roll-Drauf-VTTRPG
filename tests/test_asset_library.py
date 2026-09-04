@@ -527,3 +527,33 @@ class TestAssetUploadPermissions:
             content_type="multipart/form-data",
         )
         assert response.status_code == 201
+
+    def test_upload_over_quota_is_rejected_and_does_not_reserve(
+        self, app, dm_user, dm_client, tmp_path
+    ):
+        """Fixed 2026-09-04 (adversarial audit): end-to-end check that
+        a real HTTP upload against an exhausted quota fails with no
+        storage charged. 400 here, not try_reserve_storage's own 507 --
+        validate_upload's advisory can_upload_asset check (unchanged)
+        still fires first and catches the straightforward case; the
+        atomic check in the route only becomes the deciding factor
+        under an actual race, which this single-request test can't
+        exercise (see TestStorageReservationIsAtomic in
+        test_permissions_m17.py for that check, at the function level)."""
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        self._grant_quota(dm_user, gb=1)
+        dm_user.storage_used_gb = 1.0  # already at cap
+        db.session.commit()
+
+        response = dm_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (io.BytesIO(_make_png_bytes()), "over-quota.png"),
+                "asset_type": "map",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 400
+        db.session.refresh(dm_user)
+        assert dm_user.storage_used_gb == 1.0, "a rejected upload must not consume any quota"

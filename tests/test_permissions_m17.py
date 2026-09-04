@@ -275,6 +275,81 @@ class TestQuotaSystem:
         assert allowed == True
 
 
+class TestStorageReservationIsAtomic:
+    """Fixed 2026-09-04 (adversarial audit): the OLD quota enforcement
+    was a plain read-modify-write in the upload route -- N concurrent
+    uploads under the cap could all read the same starting value, all
+    pass, and the last commit clobbers the others' increments,
+    permanently bypassing the quota. try_reserve_storage/release_storage
+    replace that with a single atomic conditional UPDATE."""
+
+    def test_reserve_succeeds_within_quota_and_increments(self, app_context):
+        from vtt.permissions import try_reserve_storage
+        user = _create_user('reserve_ok', profile_tier='dm', storage_quota=1)
+        db.session.commit()
+
+        one_gb_in_bytes = 1024 * 1024 * 1024
+        assert try_reserve_storage(user, int(0.5 * one_gb_in_bytes)) is True
+        assert user.storage_used_gb == pytest.approx(0.5, abs=1e-6)
+
+    def test_reserve_fails_over_quota_and_does_not_increment(self, app_context):
+        from vtt.permissions import try_reserve_storage
+        user = _create_user('reserve_over', profile_tier='dm', storage_quota=1)
+        user.storage_used_gb = 0.9
+        db.session.commit()
+
+        one_gb_in_bytes = 1024 * 1024 * 1024
+        assert try_reserve_storage(user, int(0.5 * one_gb_in_bytes)) is False
+        assert user.storage_used_gb == pytest.approx(0.9, abs=1e-6)
+
+    def test_admin_reserve_bypasses_quota_and_never_charges(self, app_context):
+        from vtt.permissions import try_reserve_storage
+        admin = _create_user('reserve_admin', platform_role='admin')
+        db.session.commit()
+
+        one_gb_in_bytes = 1024 * 1024 * 1024
+        assert try_reserve_storage(admin, 999 * one_gb_in_bytes) is True
+        assert admin.storage_used_gb in (0.0, None)
+
+    def test_release_gives_back_a_failed_uploads_reservation(self, app_context):
+        from vtt.permissions import try_reserve_storage, release_storage
+        user = _create_user('release_ok', profile_tier='dm', storage_quota=1)
+        db.session.commit()
+
+        one_gb_in_bytes = 1024 * 1024 * 1024
+        size = int(0.5 * one_gb_in_bytes)
+        assert try_reserve_storage(user, size) is True
+        assert user.storage_used_gb == pytest.approx(0.5, abs=1e-6)
+
+        release_storage(user, size)
+        assert user.storage_used_gb == pytest.approx(0.0, abs=1e-6)
+
+    def test_release_never_goes_negative(self, app_context):
+        """A defensive floor, not a real-world path -- release should
+        never leave storage_used_gb below zero even if called twice."""
+        from vtt.permissions import try_reserve_storage, release_storage
+        user = _create_user('release_floor', profile_tier='dm', storage_quota=1)
+        db.session.commit()
+
+        one_gb_in_bytes = 1024 * 1024 * 1024
+        size = int(0.2 * one_gb_in_bytes)
+        assert try_reserve_storage(user, size) is True
+        release_storage(user, size)
+        release_storage(user, size)  # double release
+        assert user.storage_used_gb == pytest.approx(0.0, abs=1e-6)
+
+    # No literal multi-threaded race test here: this suite runs against
+    # sqlite:///:memory: (TestingConfig), which has neither Postgres's
+    # row-level locking nor reliable cross-thread visibility for an
+    # in-memory DB -- a threaded test against it would be flaky (or
+    # silently meaningless) rather than actually proving anything about
+    # production behavior. The atomicity guarantee comes from
+    # try_reserve_storage being a single conditional UPDATE statement
+    # (well-understood, correct-by-construction on any real MVCC
+    # database), which the sequential tests above pin the exact
+    # WHERE/SET shape of.
+
+
 # ===== TESTS: USER SUSPENSION =====
 
 class TestUserSuspension:

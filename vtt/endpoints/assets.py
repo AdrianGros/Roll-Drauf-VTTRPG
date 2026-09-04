@@ -7,7 +7,7 @@ from flask_jwt_extended import jwt_required
 from sqlalchemy import or_
 from vtt.extensions import db
 from vtt.models import Asset, Campaign, CampaignMember, GameSession, User
-from vtt.permissions import has_platform_role, can_view_campaign, can_edit_campaign, require_campaign_access
+from vtt.permissions import has_platform_role, can_view_campaign, can_edit_campaign, require_campaign_access, try_reserve_storage, release_storage
 from vtt.upload_security import validate_upload, UploadError
 from vtt.storage import get_storage_adapter
 from vtt.utils.audit import log_audit
@@ -321,6 +321,17 @@ def upload_asset(campaign_id):
     except UploadError as e:
         return jsonify({'error': str(e)}), 400
 
+    # Fixed 2026-09-04 (adversarial audit): the OLD quota enforcement was
+    # a plain read-modify-write AFTER storage.upload() below -- N
+    # concurrent uploads under the cap could all pass validate_upload's
+    # own advisory can_upload_asset check, all write to storage, and the
+    # last commit clobbers the others' increments (permanent quota
+    # bypass). try_reserve_storage is the real, atomic enforcement, and
+    # runs BEFORE the storage write so a losing race costs nothing to
+    # unwind -- no orphaned file, no Asset row to clean up.
+    if not try_reserve_storage(current_user, validation['size_bytes']):
+        return jsonify({'error': 'Storage quota exceeded'}), 507
+
     # M21: Upload to storage
     storage = get_storage_adapter()
     file_key = f'campaigns/{campaign_id}/assets/{validation["checksum_md5"][:8]}-{validation["filename"]}'
@@ -328,6 +339,7 @@ def upload_asset(campaign_id):
     try:
         storage.upload(file_key, validation['content'])
     except Exception as e:
+        release_storage(current_user, validation['size_bytes'])
         return jsonify({'error': f'Storage upload failed: {str(e)}'}), 500
 
     # M4: Generate and store a thumbnail for image uploads. Best-effort -
@@ -366,9 +378,9 @@ def upload_asset(campaign_id):
     db.session.add(asset)
     db.session.commit()
 
-    # Update user's storage usage (M17)
-    current_user.storage_used_gb += validation['size_bytes'] / 1024 / 1024 / 1024
-    db.session.commit()
+    # Storage usage was already atomically reserved by try_reserve_storage
+    # above, before the file was even written -- no separate increment
+    # needed (or safe to do) here anymore.
 
     # Log
     log_audit(
