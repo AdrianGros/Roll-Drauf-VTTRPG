@@ -103,6 +103,19 @@ class Config:
     RATELIMIT_STORAGE_URI = RATELIMIT_STORAGE_URL
     RATELIMIT_SWALLOW_ERRORS = _parse_bool(os.getenv("RATELIMIT_SWALLOW_ERRORS"), default=True)
 
+    # Fixed 2026-09-04 (adversarial audit): nothing set this before, so
+    # Werkzeug accepted a request body of ANY size, and
+    # upload_security.py's own 50MB cap (MAX_FILE_SIZE_MB) only checked
+    # AFTER the whole body was already read into memory -- a few
+    # concurrent large uploads could exhaust RAM/disk before that check
+    # ever ran. This makes Werkzeug reject an oversized body at the WSGI
+    # layer, before Flask even calls the view. 64MB (not 50MB) is
+    # deliberate headroom above upload_security's own per-file cap for
+    # multipart overhead (boundary markers, headers, other form fields
+    # in the same request) -- keep both numbers in sync if either
+    # changes.
+    MAX_CONTENT_LENGTH = 64 * 1024 * 1024
+
     # Bcrypt
     BCRYPT_LOG_ROUNDS = 12
 

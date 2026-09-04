@@ -557,3 +557,33 @@ class TestAssetUploadPermissions:
         assert response.status_code == 400
         db.session.refresh(dm_user)
         assert dm_user.storage_used_gb == 1.0, "a rejected upload must not consume any quota"
+
+    def test_oversized_body_rejects_without_reading_the_file_into_memory(
+        self, app, dm_user, dm_client, tmp_path
+    ):
+        """Fixed 2026-09-04 (adversarial audit): nothing used to set
+        MAX_CONTENT_LENGTH, so Werkzeug accepted a body of any size and
+        upload_security.py's own 50MB cap only checked AFTER reading the
+        whole thing into memory -- a few concurrent oversized uploads
+        could exhaust RAM/disk before that check ever ran. Werkzeug now
+        enforces the cap the moment the route touches request.files
+        (413) -- a couple of unrelated DB lookups earlier in the view
+        still run, but the file body itself is never read/buffered, and
+        no storage write or Asset row happens."""
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        self._grant_quota(dm_user, gb=10)
+
+        oversized = io.BytesIO(b"\x00" * (app.config["MAX_CONTENT_LENGTH"] + 1))
+        response = dm_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (oversized, "huge.png"),
+                "asset_type": "map",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 413
+        assert Asset.query.count() == 0
+        db.session.refresh(dm_user)
+        assert dm_user.storage_used_gb == 0.0
