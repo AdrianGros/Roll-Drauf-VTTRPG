@@ -238,5 +238,97 @@ class TestCsrfProtection:
         assert 'provisioning_uri' in data
 
 
+class TestMfaBackupCodeLogin:
+    """Fixed 2026-09-04 (adversarial audit): MFABackupCode.verify_code/
+    use_code existed and codes were issued at MFA setup, but nothing
+    ever called them at login -- a user who lost their authenticator
+    app had no way to actually get back into their account."""
+
+    def _register_login_and_enable_mfa(self, client):
+        import pyotp
+
+        _issue_registration_key("SPELL-MFA-ABCD-EFGH")
+        client.post('/api/auth/register', json={
+            'username': 'mfa_user',
+            'email': 'mfa_user@example.com',
+            'password': 'SecurePass123!',
+            'registration_key': 'SPELL-MFA-ABCD-EFGH',
+        })
+        login = client.post('/api/auth/login', json={
+            'username': 'mfa_user',
+            'password': 'SecurePass123!',
+        })
+        assert login.status_code == 200
+
+        setup = client.post('/api/auth/mfa/setup')
+        assert setup.status_code == 200
+        backup_codes = setup.get_json()['backup_codes']
+
+        user = User.query.filter_by(username='mfa_user').first()
+        totp = pyotp.TOTP(user.mfa_secret)
+        verify = client.post('/api/auth/mfa/verify', json={'otp': totp.now()})
+        assert verify.status_code == 200
+        assert verify.get_json()['mfa_enabled'] is True
+
+        return backup_codes
+
+    def test_login_requires_otp_once_mfa_is_enabled(self, client):
+        self._register_login_and_enable_mfa(client)
+        response = client.post('/api/auth/login', json={
+            'username': 'mfa_user',
+            'password': 'SecurePass123!',
+        })
+        assert response.status_code == 401
+        assert response.get_json()['mfa_required'] is True
+
+    def test_a_real_backup_code_logs_the_user_in(self, client):
+        backup_codes = self._register_login_and_enable_mfa(client)
+        response = client.post('/api/auth/login', json={
+            'username': 'mfa_user',
+            'password': 'SecurePass123!',
+            'otp': backup_codes[0],
+        })
+        assert response.status_code == 200
+        set_cookie_values = response.headers.getlist('Set-Cookie')
+        assert any('access_token_cookie=' in cookie for cookie in set_cookie_values)
+
+    def test_a_backup_code_is_single_use(self, client):
+        backup_codes = self._register_login_and_enable_mfa(client)
+        first = client.post('/api/auth/login', json={
+            'username': 'mfa_user',
+            'password': 'SecurePass123!',
+            'otp': backup_codes[0],
+        })
+        assert first.status_code == 200
+
+        second = client.post('/api/auth/login', json={
+            'username': 'mfa_user',
+            'password': 'SecurePass123!',
+            'otp': backup_codes[0],
+        })
+        assert second.status_code == 401
+        assert second.get_json()['error'] == 'invalid MFA code'
+
+    def test_an_unknown_code_is_rejected(self, client):
+        self._register_login_and_enable_mfa(client)
+        response = client.post('/api/auth/login', json={
+            'username': 'mfa_user',
+            'password': 'SecurePass123!',
+            'otp': 'NOTAREALCODE',
+        })
+        assert response.status_code == 401
+        assert response.get_json()['error'] == 'invalid MFA code'
+
+    def test_a_second_distinct_backup_code_still_works_after_the_first_is_used(self, client):
+        backup_codes = self._register_login_and_enable_mfa(client)
+        client.post('/api/auth/login', json={
+            'username': 'mfa_user', 'password': 'SecurePass123!', 'otp': backup_codes[0],
+        })
+        response = client.post('/api/auth/login', json={
+            'username': 'mfa_user', 'password': 'SecurePass123!', 'otp': backup_codes[1],
+        })
+        assert response.status_code == 200
+
+
 if __name__ == '__main__':
     pytest.main([__file__, '-v'])

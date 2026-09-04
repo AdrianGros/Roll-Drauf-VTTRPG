@@ -113,6 +113,26 @@ class User(db.Model):
         totp = self.get_mfa_totp()
         return totp.verify(otp, valid_window=1)  # Allow 30s window
 
+    def verify_mfa_code_or_backup_code(self, otp: str) -> bool:
+        """Fixed 2026-09-04 (adversarial audit): MFABackupCode.verify_code/
+        use_code existed and codes were issued at MFA setup, but nothing
+        anywhere ever called them -- a user who lost their authenticator
+        app had no way to actually use a backup code to log back in,
+        even though the UI/API implied one existed. Tries TOTP first
+        (unchanged, cheap); only iterates backup codes if that fails AND
+        a code was actually supplied, marking the FIRST matching unused
+        code used (single-use, per MFABackupCode's own contract) rather
+        than just checking without consuming it."""
+        if self.verify_mfa_code(otp):
+            return True
+        if not otp:
+            return False
+        for backup_code in self.mfa_backup_codes:
+            if backup_code.is_unused() and backup_code.verify_code(otp):
+                backup_code.use_code()
+                return True
+        return False
+
     def serialize(self, include_email=False):
         """Return JSON-safe dictionary for API responses."""
         return {

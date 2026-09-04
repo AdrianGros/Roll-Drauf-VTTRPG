@@ -424,7 +424,7 @@ def login():
     if not user.is_usable():
         return jsonify({"error": "account is inactive"}), 401
 
-    if user.mfa_enabled and not user.verify_mfa_code(otp):
+    if user.mfa_enabled and not user.verify_mfa_code_or_backup_code(otp):
         if not otp:
             return jsonify({"mfa_required": True}), 401
         return jsonify({"error": "invalid MFA code"}), 401
