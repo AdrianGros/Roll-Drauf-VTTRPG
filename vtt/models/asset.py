@@ -45,7 +45,19 @@ class Asset(db.Model):
     campaign = db.relationship('Campaign', backref='assets', lazy=True)
     session = db.relationship('GameSession', backref='assets', lazy=True)  # M44
     uploader = db.relationship('User', backref='uploaded_assets', lazy=True)
-    versions = db.relationship('Asset', remote_side=[id], backref=db.backref('version_history', remote_side=[parent_asset_id]), lazy=True)
+    # Fixed 2026-09-04: `remote_side=[id]` was on `versions` itself, which
+    # makes IT the scalar/single "my parent" side (matching self.id to
+    # some other row's parent_asset_id) -- backwards from what
+    # get_version_history() below actually needs (`self.versions` as a
+    # LIST of child version rows). A parentless asset's own `.versions`
+    # was silently `None` (scalar-with-no-match), not `[]`, so
+    # `[self] + self.versions` crashed with a TypeError the moment
+    # anything actually called get_version_history() on a fresh asset --
+    # discovered while testing the rollback_asset permission fix, since
+    # this is the only real caller anywhere in the codebase. `remote_side`
+    # now sits on the backref (`parent`) instead, making `versions` the
+    # natural one-to-many collection side.
+    versions = db.relationship('Asset', backref=db.backref('parent', remote_side=[id]), lazy=True)
 
     def __repr__(self):
         return f'<Asset {self.id} {self.filename} type={self.asset_type}>'

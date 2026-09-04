@@ -432,12 +432,22 @@ def get_asset_versions(asset_id):
 
 @assets_bp.route('/<int:asset_id>/rollback/<int:version_number>', methods=['POST'])
 @jwt_required()
-@require_campaign_access(can_edit_campaign)
 def rollback_asset(asset_id, version_number):
-    """Rollback asset to previous version."""
+    """Rollback asset to previous version.
+
+    Fixed 2026-09-04 (adversarial audit): @require_campaign_access
+    resolves campaign_id from the route's own URL kwargs
+    (vtt/permissions.py) -- this route only ever has asset_id, so that
+    always evaluated to None, Campaign.query.get(None) always failed,
+    and this endpoint 404'd unconditionally for EVERY caller, DM
+    included. Not exploitable (fails closed), just permanently dead.
+    Same manual look-up-then-check pattern set_asset_visibility already
+    uses for the same reason."""
     asset = Asset.query.get(asset_id)
     if not asset:
         return jsonify({'error': 'Asset not found'}), 404
+    if not can_edit_campaign(current_user, asset.campaign):
+        return jsonify({'error': 'Forbidden'}), 403
 
     versions = asset.get_version_history()
     target_version = next((v for v in versions if v.asset_version == version_number), None)
@@ -527,12 +537,19 @@ def set_asset_visibility(asset_id):
 
 @assets_bp.route('/<int:asset_id>/delete', methods=['DELETE'])
 @jwt_required()
-@require_campaign_access(can_edit_campaign)
 def delete_asset(asset_id):
-    """Soft-delete asset (kept for retention, can be restored)."""
+    """Soft-delete asset (kept for retention, can be restored).
+
+    Fixed 2026-09-04 (adversarial audit): same @require_campaign_access
+    footgun as rollback_asset above -- this route also only ever has
+    asset_id, so the decorator's campaign_id resolution always failed
+    and this 404'd unconditionally for every caller. Dead, not
+    exploitable."""
     asset = Asset.query.get(asset_id)
     if not asset or asset.is_soft_deleted():
         return jsonify({'error': 'Asset not found'}), 404
+    if not can_edit_campaign(current_user, asset.campaign):
+        return jsonify({'error': 'Forbidden'}), 403
 
     asset.deleted_at = db.func.current_timestamp()
     db.session.commit()

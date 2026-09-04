@@ -15,6 +15,22 @@ ALLOWED_MIME_TYPES = {
     'text/plain',
 }
 
+# Fixed 2026-09-04 (adversarial audit): validate_mime_type only ever
+# checked the CLIENT-SUPPLIED Content-Type header/filename extension --
+# an attacker could label arbitrary bytes "image/png" and they'd sail
+# straight through. Real-world impact was already reduced by this app's
+# global X-Content-Type-Options: nosniff header and is_previewable()
+# only allowing inline rendering for images/PDF (everything else forces
+# as_attachment=True) -- but the check itself was still fake. Maps a
+# claimed image/* MIME type to the actual format string Pillow's own
+# decoder reports for the real bytes.
+_IMAGE_MIME_TO_PIL_FORMAT = {
+    'image/jpeg': 'JPEG',
+    'image/png': 'PNG',
+    'image/webp': 'WEBP',
+    'image/gif': 'GIF',
+}
+
 MAX_FILE_SIZE_MB = 50
 MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
 
@@ -62,6 +78,35 @@ def validate_file_size(file_content):
     return True
 
 
+def verify_content_matches_mime_type(file_content, mime_type):
+    """Fixed 2026-09-04 (adversarial audit): the real content-vs-claim
+    check, not just the header. Only enforced for the types that ever
+    get INLINE rendering (images, PDF) -- text/plain and
+    application/json are always served as_attachment=True regardless of
+    content, so there's no rendering-context mismatch to exploit there,
+    and "is this valid text" isn't a meaningful question anyway. Returns
+    {'width': int, 'height': int} for a verified image (replaces the
+    old separate, silently-swallowed-on-failure Image.open() call that
+    used to run again later just for dimensions), or {} otherwise.
+    Raises UploadError the same way every other validate_* function
+    here does, so callers don't need a second exception type."""
+    if mime_type in _IMAGE_MIME_TO_PIL_FORMAT:
+        try:
+            with Image.open(io.BytesIO(file_content)) as img:
+                if img.format != _IMAGE_MIME_TO_PIL_FORMAT[mime_type]:
+                    raise UploadError(
+                        f'File content does not match claimed type {mime_type} '
+                        f'(detected {img.format})'
+                    )
+                return {'width': img.size[0], 'height': img.size[1]}
+        except UnidentifiedImageError:
+            raise UploadError(f'File content is not a valid image (claimed {mime_type})')
+    elif mime_type == 'application/pdf':
+        if not file_content.startswith(b'%PDF-'):
+            raise UploadError('File content is not a valid PDF (missing %PDF- header)')
+    return {}
+
+
 def compute_checksum_md5(file_content):
     """Compute MD5 checksum for integrity checks."""
     return hashlib.md5(file_content).hexdigest()
@@ -96,7 +141,13 @@ def validate_upload(file_obj, user, check_quota=True):
     file_content = file_obj.read()
     validate_file_size(file_content)
 
-    # 4. Check storage quota (M17 integration)
+    # 4. Verify the actual bytes match the claimed MIME type (2026-09-04
+    # fix) -- also extracts image dimensions in the same pass instead of
+    # a separate, silently-swallowed-on-failure Image.open() call this
+    # used to do later just for width/height.
+    content_metadata = verify_content_matches_mime_type(file_content, mime_type)
+
+    # 5. Check storage quota (M17 integration)
     if check_quota:
         from vtt.permissions import can_upload_asset
         size_mb = len(file_content) / 1024 / 1024
@@ -104,7 +155,7 @@ def validate_upload(file_obj, user, check_quota=True):
         if not allowed:
             raise UploadError(f'Storage quota exceeded: {msg}')
 
-    # 5. Compute checksum
+    # 6. Compute checksum
     checksum = compute_checksum_md5(file_content)
 
     result = {
@@ -113,15 +164,7 @@ def validate_upload(file_obj, user, check_quota=True):
         'size_bytes': len(file_content),
         'checksum_md5': checksum,
         'content': file_content,
+        **content_metadata,
     }
-
-    # 6. Detect natural pixel dimensions for images (used to size CampaignMap
-    # at native resolution instead of a guessed default).
-    if mime_type.startswith('image/'):
-        try:
-            with Image.open(io.BytesIO(file_content)) as img:
-                result['width'], result['height'] = img.size
-        except UnidentifiedImageError:
-            pass
 
     return result

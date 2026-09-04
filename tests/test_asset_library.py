@@ -587,3 +587,92 @@ class TestAssetUploadPermissions:
         assert Asset.query.count() == 0
         db.session.refresh(dm_user)
         assert dm_user.storage_used_gb == 0.0
+
+    def test_content_spoofed_as_an_image_is_rejected(self, app, dm_user, dm_client, tmp_path):
+        """Fixed 2026-09-04 (adversarial audit): validate_mime_type only
+        ever checked the client-supplied Content-Type header -- HTML/JS
+        bytes uploaded with a fake image/png header used to sail
+        straight through to storage."""
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        self._grant_quota(dm_user)
+
+        fake_png = io.BytesIO(b"<html><script>alert(1)</script></html>")
+        response = dm_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={
+                "file": (fake_png, "totally-a-real.png", "image/png"),
+                "asset_type": "map",
+            },
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 400
+        assert Asset.query.count() == 0
+
+
+class TestAssetRollbackAndDelete:
+    """Fixed 2026-09-04 (adversarial audit): both routes used
+    @require_campaign_access(can_edit_campaign), which resolves
+    campaign_id from the route's own URL kwargs -- neither route has
+    one (only asset_id), so the decorator's lookup always failed and
+    both 404'd unconditionally for every caller, DM included. Not
+    exploitable (fails closed), just permanently dead until now."""
+
+    def _grant_quota(self, user, gb=1):
+        user.storage_quota_gb = gb
+        db.session.commit()
+
+    def _upload_map(self, dm_client, campaign, filename="map.png"):
+        response = dm_client.post(
+            f"/api/assets/campaigns/{campaign.id}/upload",
+            data={"file": (io.BytesIO(_make_png_bytes()), filename), "asset_type": "map"},
+            content_type="multipart/form-data",
+        )
+        assert response.status_code == 201
+        return response.get_json()["asset_id"]
+
+    def test_dm_can_delete_an_asset(self, app, dm_user, dm_client, tmp_path):
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        self._grant_quota(dm_user)
+        asset_id = self._upload_map(dm_client, campaign)
+
+        response = dm_client.delete(f"/api/assets/{asset_id}/delete")
+        assert response.status_code == 200
+        assert Asset.query.get(asset_id).deleted_at is not None
+
+    def test_non_editor_cannot_delete_an_asset(
+        self, app, dm_user, player_user, dm_client, player_client, tmp_path
+    ):
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        self._grant_quota(dm_user)
+        asset_id = self._upload_map(dm_client, campaign)
+
+        response = player_client.delete(f"/api/assets/{asset_id}/delete")
+        assert response.status_code == 403
+        assert Asset.query.get(asset_id).deleted_at is None
+
+    # No "DM successfully rolls back" test here: reaching the real
+    # rollback logic surfaces a SEPARATE, pre-existing bug (it reuses
+    # the target version's exact storage_key for the new row, violating
+    # a unique constraint) that's a real feature/design question, not a
+    # security issue -- flagged to Adrian, not silently fixed here.
+    # test_non_editor_cannot_rollback_an_asset below already proves the
+    # actual security property (permission-based rejection, not the old
+    # blanket 404 for every caller): a blanket-404 route couldn't
+    # discriminate a non-editor with 403 specifically.
+
+    def test_non_editor_cannot_rollback_an_asset(
+        self, app, dm_user, player_user, dm_client, player_client, tmp_path
+    ):
+        app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+        campaign = _create_campaign(dm_user)
+        _add_member(campaign, player_user, "Player")
+        self._grant_quota(dm_user)
+        asset_id = self._upload_map(dm_client, campaign)
+        current_version = Asset.query.get(asset_id).asset_version
+
+        response = player_client.post(f"/api/assets/{asset_id}/rollback/{current_version}")
+        assert response.status_code == 403
