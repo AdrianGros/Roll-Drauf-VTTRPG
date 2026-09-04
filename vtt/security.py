@@ -1,7 +1,7 @@
 """Security utilities - provides current_user context for Flask-JWT-Extended."""
 
 from functools import wraps
-from flask import _app_ctx_stack, has_request_context
+from flask import has_request_context
 from flask_jwt_extended import get_jwt_identity
 from vtt.models import User
 
