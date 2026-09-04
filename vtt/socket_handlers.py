@@ -49,6 +49,50 @@ _room_presence: dict[str, dict[str, dict]] = defaultdict(dict)
 _DEDUPE_TTL_SECONDS = 120.0
 _DEDUPE_MAX_PER_SCOPE = 512
 
+# Fixed 2026-09-04 (adversarial audit): no throttle existed on any
+# Socket.IO event -- a raw/scripted client could flood the highest-
+# frequency handlers (movement, dice, chat) to spam every peer in a
+# room and hammer the DB with a db.session.commit() on every single
+# event, with zero backpressure. Sliding-window per-(sid, event) counts,
+# same monotonic()/defaultdict style as the dedup state above. Limits
+# are generous for real interactive use (smooth dragging sends
+# token:update often) and cheap to check -- this is a flood/DoS
+# backstop, not a UX-facing throttle.
+_recent_event_times: dict[tuple[str, str], list[float]] = defaultdict(list)
+_RATE_LIMIT_WINDOW_SECONDS = 5.0
+_RATE_LIMITS = {
+    "token:update": 40,
+    # 30, not 15: a legitimate burst (rolling a whole attack/ability
+    # sequence back to back) can easily land 20 rolls inside 5s -- see
+    # test_advantage_rolls_a_single_d20_twice_and_keeps_the_higher's own
+    # 20-roll burst, deliberately sized to catch a coin-flip discard bug
+    # statistically. This is still comfortably below what a scripted
+    # flood would actually send.
+    "roll_dice": 30,
+    "chat:message_sent": 15,
+}
+
+
+def _is_rate_limited(event_name: str) -> bool:
+    limit = _RATE_LIMITS.get(event_name)
+    if limit is None:
+        return False
+    now = monotonic()
+    key = (request.sid, event_name)
+    times = _recent_event_times[key]
+    cutoff = now - _RATE_LIMIT_WINDOW_SECONDS
+    while times and times[0] < cutoff:
+        times.pop(0)
+    if len(times) >= limit:
+        return True
+    times.append(now)
+    return False
+
+
+def _clear_rate_limit_state(sid: str) -> None:
+    for key in [key for key in _recent_event_times if key[0] == sid]:
+        _recent_event_times.pop(key, None)
+
 
 def _room_name(campaign_id: int, session_id: int) -> str:
     return f"campaign:{campaign_id}:session:{session_id}"
@@ -56,6 +100,33 @@ def _room_name(campaign_id: int, session_id: int) -> str:
 
 def _mod_room_name(campaign_id: int) -> str:
     return f"campaign:{campaign_id}:mods"
+
+
+def _room_matches_base(candidate_room: str, base_room: str) -> bool:
+    """Fixed 2026-09-04 (adversarial audit): _room_name has no delimiter
+    after the trailing session id, and the join/leave cleanup below used
+    to do a raw candidate_room.startswith(base_room) -- session id 2 is
+    a plain STRING prefix of 22, 234, etc, so joining session 2 could
+    fail to leave an old session 22 room (both "start with"
+    "campaign:1:session:2"), and leaving session 2 could also tear down
+    an unrelated session 22/234's rooms. Every real sub-room is joined
+    to its base by a literal ":" (":dm", ":players", ":user:5"), so
+    matching on that boundary (or exact equality for the base room
+    itself) is the actual intended semantics."""
+    return candidate_room == base_room or candidate_room.startswith(base_room + ":")
+
+
+def _normalize_payload(data) -> dict:
+    """Fixed 2026-09-04 (adversarial audit): every handler used to do
+    `data or {}` then call .get(...) on the result -- that only
+    substitutes {} for a FALSY data (None, {}, ""), so a scripted client
+    emitting a truthy non-dict payload (a list, a bare string/number)
+    sailed straight through into an uncaught AttributeError on the
+    first .get() call, with no on_error/on_error_default registered
+    anywhere in this file. A malformed-payload flood was a cheap
+    crash-loop vector. This is the one place every handler now goes
+    through instead."""
+    return data if isinstance(data, dict) else {}
 
 
 def _coerce_int(raw_value, field_name: str):
@@ -145,6 +216,31 @@ def _drop_presence(sid: str, room: str) -> None:
         return
     if _room_presence.get(room, {}).pop(sid, None) is not None:
         _broadcast_presence(*ids)
+
+
+def disconnect_user_from_campaign(campaign_id: int, user_id: int) -> None:
+    """Fixed 2026-09-04 (adversarial audit): kicking/banning a member
+    used to only set CampaignMember.status -- every WRITE path re-checks
+    active membership (_is_active_member) so a kicked user can no longer
+    act, but their existing socket connection was never actually
+    disconnected, so they kept silently RECEIVING every live broadcast
+    (chat, rolls, token moves) for that campaign's sessions indefinitely.
+    Called from the kick/ban path in vtt/community/service.py by way of
+    the moderation-action route -- finds every connected socket that has
+    this user's presence entry in any of this campaign's session rooms
+    and force-disconnects it outright (not just a room leave) so a
+    reconnect attempt has to go through session:join's own membership
+    check again, which now correctly rejects them."""
+    campaign_session_prefix = f"campaign:{campaign_id}:session:"
+    sids_to_disconnect = set()
+    for room, sid_map in _room_presence.items():
+        if not room.startswith(campaign_session_prefix):
+            continue
+        for sid, info in sid_map.items():
+            if info.get("user_id") == user_id:
+                sids_to_disconnect.add(sid)
+    for sid in sids_to_disconnect:
+        socketio.server.disconnect(sid)
 
 
 def _token_player_audience(visibility: str, owner_user_id: int | None,
@@ -542,6 +638,7 @@ def register_socket_handlers(socketio):
             leave_room(room)
             _drop_presence(request.sid, room)
         _connected_rooms.pop(request.sid, None)
+        _clear_rate_limit_state(request.sid)
 
     @socketio.on("session:join")
     def handle_session_join(data):
@@ -551,11 +648,11 @@ def register_socket_handlers(socketio):
             _emit_error(error["code"], error["message"])
             return
 
-        campaign_id, parse_error = _coerce_int((data or {}).get("campaign_id"), "campaign_id")
+        campaign_id, parse_error = _coerce_int(_normalize_payload(data).get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
             return
-        session_id, parse_error = _coerce_int((data or {}).get("session_id"), "session_id")
+        session_id, parse_error = _coerce_int(_normalize_payload(data).get("session_id"), "session_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
             return
@@ -571,7 +668,7 @@ def register_socket_handlers(socketio):
         room = _room_name(campaign.id, game_session.id)
         existing_rooms = list(_connected_rooms.get(request.sid, set()))
         for existing_room in existing_rooms:
-            if _is_session_room(existing_room) and not existing_room.startswith(room):
+            if _is_session_room(existing_room) and not _room_matches_base(existing_room, room):
                 leave_room(existing_room)
                 _connected_rooms[request.sid].discard(existing_room)
                 _drop_presence(request.sid, existing_room)
@@ -631,18 +728,18 @@ def register_socket_handlers(socketio):
     @socketio.on("session:leave")
     def handle_session_leave(data):
         _track_socket_event("session:leave")
-        campaign_id, parse_error = _coerce_int((data or {}).get("campaign_id"), "campaign_id")
+        campaign_id, parse_error = _coerce_int(_normalize_payload(data).get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
             return
-        session_id, parse_error = _coerce_int((data or {}).get("session_id"), "session_id")
+        session_id, parse_error = _coerce_int(_normalize_payload(data).get("session_id"), "session_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
             return
 
         room = _room_name(campaign_id, session_id)
         for tracked_room in list(_connected_rooms.get(request.sid, set())):
-            if tracked_room.startswith(room):
+            if _room_matches_base(tracked_room, room):
                 leave_room(tracked_room)
                 _connected_rooms[request.sid].discard(tracked_room)
         _drop_presence(request.sid, room)
@@ -656,7 +753,7 @@ def register_socket_handlers(socketio):
             _emit_error(error["code"], error["message"])
             return
 
-        campaign_id, parse_error = _coerce_int((data or {}).get("campaign_id"), "campaign_id")
+        campaign_id, parse_error = _coerce_int(_normalize_payload(data).get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
             return
@@ -678,7 +775,7 @@ def register_socket_handlers(socketio):
     @socketio.on("mod:leave")
     def handle_mod_leave(data):
         _track_socket_event("mod:leave")
-        campaign_id, parse_error = _coerce_int((data or {}).get("campaign_id"), "campaign_id")
+        campaign_id, parse_error = _coerce_int(_normalize_payload(data).get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
             return
@@ -697,7 +794,7 @@ def register_socket_handlers(socketio):
             _emit_error(error["code"], error["message"])
             return
 
-        payload = data or {}
+        payload = _normalize_payload(data)
         campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
@@ -730,7 +827,7 @@ def register_socket_handlers(socketio):
             _emit_error(error["code"], error["message"])
             return
 
-        payload = data or {}
+        payload = _normalize_payload(data)
         campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
@@ -779,7 +876,7 @@ def register_socket_handlers(socketio):
             _emit_error(error["code"], error["message"])
             return
 
-        payload = data or {}
+        payload = _normalize_payload(data)
         campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
@@ -934,12 +1031,15 @@ def register_socket_handlers(socketio):
     @socketio.on("token:update")
     def handle_token_update(data):
         _track_socket_event("token:update")
+        if _is_rate_limited("token:update"):
+            _emit_error("rate_limited", "too many token updates, slow down")
+            return
         user, error = _parse_authenticated_user()
         if error:
             _emit_error(error["code"], error["message"])
             return
 
-        payload = data or {}
+        payload = _normalize_payload(data)
         campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
@@ -1117,7 +1217,7 @@ def register_socket_handlers(socketio):
             _emit_error(error["code"], error["message"])
             return
 
-        payload = data or {}
+        payload = _normalize_payload(data)
         campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
@@ -1219,6 +1319,8 @@ def register_socket_handlers(socketio):
         values are the actual ack mechanism.
         """
         _track_socket_event("roll_dice")
+        if _is_rate_limited("roll_dice"):
+            return {"error": "too many rolls, slow down"}
         import random
         import re
 
@@ -1226,7 +1328,7 @@ def register_socket_handlers(socketio):
         if error:
             return {"error": error["message"]}
 
-        dice_str = (data or {}).get("dice", "1d20")
+        dice_str = _normalize_payload(data).get("dice", "1d20")
         match = re.match(r"(\d+)d(\d+)([+-]\d+)?", dice_str)
         if not match:
             return {"error": "Invalid dice format"}
@@ -1242,7 +1344,7 @@ def register_socket_handlers(socketio):
         # "simpler and less error-prone" reasoning). Only meaningful for a
         # single-die roll; a multi-die formula ignores it rather than
         # erroring, since "advantage on 3d6" has no well-defined meaning.
-        roll_mode = str((data or {}).get("mode", "normal")).strip().lower()
+        roll_mode = str(_normalize_payload(data).get("mode", "normal")).strip().lower()
         if roll_mode not in ("normal", "advantage", "disadvantage"):
             roll_mode = "normal"
 
@@ -1270,13 +1372,13 @@ def register_socket_handlers(socketio):
         # Blind/self are DM-only; a non-DM request silently downgrades to
         # public rather than erroring the whole roll (the roll itself is
         # still valid, only the requested secrecy wasn't).
-        visibility = str((data or {}).get("visibility", "public")).strip().lower()
+        visibility = str(_normalize_payload(data).get("visibility", "public")).strip().lower()
         if visibility not in ("public", "gm_only", "blind", "self"):
             visibility = "public"
 
-        player_tag = (data or {}).get("player", "anonymous")
-        campaign_id, campaign_parse_error = _coerce_int((data or {}).get("campaign_id"), "campaign_id")
-        session_id, session_parse_error = _coerce_int((data or {}).get("session_id"), "session_id")
+        player_tag = _normalize_payload(data).get("player", "anonymous")
+        campaign_id, campaign_parse_error = _coerce_int(_normalize_payload(data).get("campaign_id"), "campaign_id")
+        session_id, session_parse_error = _coerce_int(_normalize_payload(data).get("session_id"), "session_id")
         if campaign_parse_error or session_parse_error:
             emit("dice_rolled", {"player": player_tag, "dice": dice_str, "result": result}, room=request.sid)
             return result
@@ -1329,12 +1431,15 @@ def register_socket_handlers(socketio):
         see one shared history.
         """
         _track_socket_event("chat:message_sent")
+        if _is_rate_limited("chat:message_sent"):
+            _emit_error("rate_limited", "too many messages, slow down")
+            return
         user, error = _parse_authenticated_user()
         if error:
             _emit_error(error["code"], error["message"])
             return
 
-        payload = data or {}
+        payload = _normalize_payload(data)
         campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])
@@ -1413,7 +1518,7 @@ def register_socket_handlers(socketio):
             _emit_error(error["code"], error["message"])
             return
 
-        payload = data or {}
+        payload = _normalize_payload(data)
         campaign_id, parse_error = _coerce_int(payload.get("campaign_id"), "campaign_id")
         if parse_error:
             _emit_error(parse_error["code"], parse_error["message"])

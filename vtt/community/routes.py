@@ -3,6 +3,7 @@
 from flask import current_app, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
+from vtt import socket_handlers
 from vtt.community import community_bp, policy, service
 from vtt.extensions import db, limiter, socketio
 from vtt.models import Campaign, ChatMessage, GameSession, ModerationAction, ModerationReport, User
@@ -493,6 +494,15 @@ def create_moderation_action(campaign_id):
         return jsonify({"error": action_error}), 400
 
     db.session.commit()
+
+    # Fixed 2026-09-04 (adversarial audit): a kicked/banned member's
+    # DB status was already correct and blocks every future write, but
+    # their EXISTING socket connection kept silently receiving live
+    # broadcasts until they happened to disconnect on their own -- force
+    # it closed now so a reconnect has to pass session:join's
+    # membership check again.
+    if action.action_type in ("kick", "ban") and subject_user_id:
+        socket_handlers.disconnect_user_from_campaign(campaign.id, subject_user_id)
 
     action_payload = {"action": action.serialize(), "report_id": source_report_id}
     _emit_mod_event(campaign.id, "moderation:action_applied", action_payload)
