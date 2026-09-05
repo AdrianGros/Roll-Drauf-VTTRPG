@@ -643,11 +643,19 @@
             font-size: 0.72rem;
             color: #ffb3a0;
         }
+        /* Barrierefreiheit-Audit (2026-09-05): centered across the whole
+           viewport (inset:0 + align-items:center) this text ran directly
+           through the action hotbar and the Tokens panel, both of which
+           sit at z-index 30 over the map's z-index 0 -- confirmed via
+           screenshot on a fresh campaign with no map yet (a new DM's
+           literal first screen). Anchoring near the top instead keeps it
+           clear of every bottom-anchored floating panel/hotbar without
+           having to reason about their exact heights. */
         .map-empty-state {
             position: absolute;
             inset: 0;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             z-index: 0;
             pointer-events: none;
@@ -656,6 +664,7 @@
             letter-spacing: 0.02em;
             text-align: center;
             padding: 2rem;
+            padding-top: 4.5rem;
         }
         .stage-topbar {
             position: absolute;
@@ -1880,13 +1889,27 @@
                 border-top: 1px solid var(--line);
                 background: rgba(7, 14, 28, 0.96);
                 z-index: 40;
-                overflow: visible;
+                overflow-x: auto;
+                overflow-y: visible;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
             }
+            /* Barrierefreiheit-Audit (2026-09-05): the comment below ("all
+               five buttons") only holds for a Player. A DM also gets
+               Wand/Licht/Sicht (see _updateToolbarForRole's operator gate
+               in play-ui.js), which is 9-10 buttons -- with the old
+               flex:1 1 0 equal-share layout those never actually shrank
+               past min-width:56px, they just silently overflowed past the
+               screen edge with overflow:visible, making Menü/Zurück
+               unreachable on a phone for exactly the DM who most needs
+               the session menu. flex:0 0 auto + overflow-x:auto keeps
+               every button at its natural touch-friendly size and makes
+               the overflow a normal horizontal swipe instead of a dead end. */
             .tabletop-shell > .left-toolbar .tool-btn {
                 width: auto;
                 min-width: 56px;
                 height: 48px;
-                flex: 1 1 0;
+                flex: 0 0 auto;
             }
             /* The desktop rail's spacer is layout poison in a flat ribbon:
                its auto-margin ejected Menü/Zurück out of the bar. On the
@@ -2606,6 +2629,14 @@
                     <li><kbd>Enter</kbd> / <kbd>Leertaste</kbd> — Fokussiertes Element aktivieren</li>
                     <li><kbd>↑</kbd> / <kbd>↓</kbd> — In Listen (z. B. Seiten) navigieren</li>
                     <li><kbd>Pos1</kbd> / <kbd>Ende</kbd> — Zum ersten/letzten Eintrag springen</li>
+                    <!-- Barrierefreiheit-Audit (2026-09-05): diese beiden
+                         Kürzel existieren und funktionieren (siehe
+                         play-ui.js _bindActionHotbar / measure-Escape-
+                         Handler), standen aber nirgendwo -- die einzige
+                         Stelle, an der eine neue Spielleitung nach
+                         "Tastenkürzel" sucht, dokumentierte sie nicht. -->
+                    <li><kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd> — Aktion aus der Schnellleiste auslösen (wenn sichtbar)</li>
+                    <li><kbd>Esc</kbd> / <kbd>Strg</kbd>+<kbd>Z</kbd> (im Werkzeug „Messen“) — letzten Wegpunkt entfernen; erneut bricht die Messung ganz ab</li>
                 </ul>
                 <div class="app-dialog-actions">
                     <button type="button" id="appMenuHelpClose" class="mini-btn secondary" autofocus>Schließen</button>
