@@ -441,10 +441,32 @@
             overflow: visible;
             box-shadow: 0 -5px 18px rgba(0, 0, 0, 0.24);
         }
+        /* Barrierefreiheit-Audit (2026-09-05): der Rail war icon-only,
+           title= als einzige Erklaerung -- hover-only tooltips sind fuer
+           Touch/Tastatur unerreichbar und die meisten dieser Icons (v.a.
+           🖐/🗂/↩) sind fuer eine neue Spielleitung nicht selbsterklaerend.
+           Das Label existiert im Markup laengst (siehe .tool-label unten),
+           es war nur per CSS ausgeblendet. Fallback overflow-x:auto, falls
+           auf schmaleren Desktop-Fenstern (<~1024px) nicht alle Buttons
+           mit Label nebeneinander passen. */
+        .tabletop-shell > .left-toolbar {
+            overflow-x: auto;
+            overflow-y: visible;
+            max-width: min(calc(100% - 1rem), 100vw);
+        }
         .tabletop-shell > .left-toolbar .tool-btn {
-            width: 34px;
+            width: auto;
             height: 34px;
-            flex: 0 0 34px;
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.32rem;
+            padding: 0 0.55rem;
+        }
+        .tabletop-shell > .left-toolbar .tool-btn .tool-label {
+            display: inline;
+            font-size: 0.68rem;
+            white-space: nowrap;
         }
         .tabletop-shell > .left-toolbar .spacer {
             display: flex;
@@ -706,8 +728,11 @@
         .stage-zoom-cluster { display: contents; }
         #btnTableSheet { display: none; }
         .table-sheet, .table-sheet-backdrop { display: none; }
-        /* Desktop rail: icon only (the title attribute explains); the label
-           is the phone ribbon's job. */
+        /* Base default stays icon-only (hover title=); the desktop rail
+           (.tabletop-shell > .left-toolbar) and the phone ribbon below
+           both override .tool-label back to visible -- see their own
+           rules for why. Nothing currently renders a .tool-btn outside
+           those two contexts, but keep a sane fallback if that changes. */
         .tool-btn .tool-ico { display: block; font-size: 0.95rem; line-height: 1.2; }
         .tool-btn .tool-label { display: none; }
         .floating {
