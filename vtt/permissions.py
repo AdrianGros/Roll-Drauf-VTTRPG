@@ -293,10 +293,17 @@ def try_reserve_storage(user, size_bytes: int) -> bool:
         .values(storage_used_gb=db.func.coalesce(User.storage_used_gb, 0.0) + size_gb)
     )
     db.session.commit()
-    if result.rowcount > 0:
-        db.session.refresh(user)
-        return True
-    return False
+    # No db.session.refresh(user) here: callers pass vtt.security.current_user,
+    # a proxy that re-resolves a fresh User row on every attribute access
+    # (see CurrentUserProxy.__getattr__) rather than a persistent ORM
+    # instance -- refresh() requires the latter and raised
+    # sqlalchemy.exc.InvalidRequestError ("not persistent within this
+    # Session") on every real upload request in production (bug report
+    # 2026-09-08). Nothing downstream reads user.storage_used_gb from this
+    # in-memory reference anyway; the commit above already persisted it,
+    # and the proxy's own fresh-query-per-access behavior means the next
+    # read sees the current value regardless.
+    return result.rowcount > 0
 
 
 def release_storage(user, size_bytes: int) -> None:
@@ -320,7 +327,9 @@ def release_storage(user, size_bytes: int) -> None:
         .values(storage_used_gb=floored)
     )
     db.session.commit()
-    db.session.refresh(user)
+    # See try_reserve_storage's comment above -- no refresh(user) here for
+    # the same reason (user may be the current_user proxy, not a
+    # persistent ORM instance).
 
 
 # ============= DECORATORS FOR ROUTES =============

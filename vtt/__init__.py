@@ -3,6 +3,7 @@ roll drauf vtt - A D&D Virtual Tabletop for Discord Sessions
 App Factory for modular Flask application with Socket.IO, JWT Auth, and Database persistence.
 """
 
+import json
 import logging
 import os
 import time
@@ -32,7 +33,18 @@ class _JsonFormatter(logging.Formatter):
             field_value = getattr(record, field_name, None)
             if field_value is not None:
                 payload[field_name] = field_value
-        return str(payload).replace("'", '"')
+        # Bug report 2026-09-08: an unhandled exception (Flask's own
+        # "Exception on <path> [<method>]" log call, made with
+        # exc_info=True) used to produce a log line with no traceback at
+        # all -- this formatter never looked at record.exc_info, so a real
+        # 500's actual cause was invisible in `docker logs` and had to be
+        # reproduced by hand to diagnose. The naive str(dict).replace("'",
+        # '"') below also isn't real JSON and would have mangled a
+        # traceback's quotes/newlines/backslashes anyway -- switched to
+        # json.dumps, which handles arbitrary text safely.
+        if record.exc_info:
+            payload["exception"] = self.formatException(record.exc_info)
+        return json.dumps(payload)
 
 
 def _configure_logging(app: Flask):
