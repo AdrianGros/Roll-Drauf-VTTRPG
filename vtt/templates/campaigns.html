@@ -2957,6 +2957,23 @@
             `).join("");
         }
 
+        const MAP_UPLOAD_ALLOWED_MIME_TYPES = ["image/png", "image/jpeg", "image/webp"];
+        const MAP_UPLOAD_ALLOWED_EXTENSIONS = /\.(png|jpe?g|webp)$/i;
+
+        function isAllowedMapImageFile(file) {
+            // Bug report 2026-09-08: JPEG map uploads silently rejected in
+            // Firefox. file.type is filled in by the browser/OS MIME
+            // database, which for some Firefox+OS combos reports an empty
+            // string for perfectly valid .jpeg files (most reliably seen
+            // with the .jpeg extension, less so .jpg) -- Chrome ships its
+            // own extension table and doesn't have this gap. The server
+            // (vtt/upload_security.py) re-validates the actual file bytes
+            // with Pillow regardless, so this client check only needs to
+            // catch obviously wrong files, not be the source of truth.
+            if (MAP_UPLOAD_ALLOWED_MIME_TYPES.includes(file.type)) return true;
+            return MAP_UPLOAD_ALLOWED_EXTENSIONS.test(file.name || "");
+        }
+
         async function uploadStandaloneMap(campaignId) {
             const nameField = document.getElementById(`newMapName_${campaignId}`);
             const fileField = document.getElementById(`newMapFile_${campaignId}`);
@@ -2973,7 +2990,7 @@
                 showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswählen.", true);
                 return;
             }
-            if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+            if (!isAllowedMapImageFile(file)) {
                 showMessage("Bitte nur PNG, JPEG oder WebP verwenden.", true);
                 return;
             }
@@ -4108,7 +4125,7 @@
                 showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswählen.", true);
                 return;
             }
-            if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+            if (!isAllowedMapImageFile(file)) {
                 showMessage("Bitte nur PNG, JPEG oder WebP verwenden.", true);
                 return;
             }
