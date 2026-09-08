@@ -409,6 +409,48 @@ def upload_asset(campaign_id):
     return jsonify(response), 201
 
 
+@assets_bp.route('/upload-failed', methods=['POST'])
+@jwt_required()
+def report_upload_failure():
+    """Best-effort client-side telemetry for a failed asset upload.
+
+    Bug report 2026-09-08: a map upload that fails before or outside the
+    normal upload_asset() request (browser-side rejection, or -- the actual
+    root cause that time -- nginx's own client_max_body_size returning 413
+    before Flask ever sees the request) left zero trace in this app's own
+    logs, which made the report very slow to diagnose. This endpoint gives
+    the frontend a place to phone that failure home to, so it shows up here
+    (searchable, structured) instead of only in the host's raw nginx access
+    log. Never raises past validation -- a broken telemetry call must not
+    also break the page reporting a message.
+    """
+    body = request.get_json(silent=True) or {}
+
+    def _str(key, max_len=200):
+        value = body.get(key)
+        return str(value)[:max_len] if value is not None else None
+
+    def _int(key):
+        value = body.get(key)
+        try:
+            return int(value) if value is not None else None
+        except (TypeError, ValueError):
+            return None
+
+    logger.warning(
+        "Client-side upload failure: context=%s filename=%s mime_type=%s "
+        "size_bytes=%s http_status=%s error=%s user_id=%s",
+        _str('context', 50),
+        _str('filename'),
+        _str('mime_type', 100),
+        _int('size_bytes'),
+        _int('http_status'),
+        _str('error', 500),
+        current_user.id if current_user else None,
+    )
+    return jsonify({'logged': True}), 202
+
+
 # ===== M19: Version History =====
 
 @assets_bp.route('/<int:asset_id>/versions', methods=['GET'])

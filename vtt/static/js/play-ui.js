@@ -2869,9 +2869,38 @@
             });
             const body = await response.json().catch(() => ({}));
             if (!response.ok) {
-                throw new Error(body.error || `Upload fehlgeschlagen (HTTP ${response.status})`);
+                const message = body.error
+                    || (response.status === 413 ? "Datei ist zu gross für den Server." : `Upload fehlgeschlagen (HTTP ${response.status})`);
+                const error = new Error(message);
+                error.status = response.status;
+                throw error;
             }
             return body;
+        }
+
+        // Bug report 2026-09-08: an upload failure between the browser and
+        // the app (that time: nginx's client_max_body_size 413, returned
+        // before Flask ever saw the request) left no trace in any log this
+        // app writes. Best effort, fire-and-forget -- must never mask the
+        // original error shown to the user.
+        _reportUploadFailure(context, file, error) {
+            try {
+                fetch("/api/assets/upload-failed", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: { "Content-Type": "application/json", ...Auth.buildHeaders("POST", false) },
+                    body: JSON.stringify({
+                        context,
+                        filename: file?.name,
+                        mime_type: file?.type,
+                        size_bytes: file?.size,
+                        http_status: error?.status,
+                        error: error?.message || String(error),
+                    }),
+                }).catch(() => {});
+            } catch (_ignored) {
+                // Telemetry is best-effort only.
+            }
         }
 
         async _uploadMapFromTable(file) {
@@ -2924,6 +2953,7 @@
                 await this.loadBootstrap();
             } catch (error) {
                 setStatus("");
+                this._reportUploadFailure("_uploadMapFromTable", file, error);
                 this._showMessage(error.message || "Karten-Upload fehlgeschlagen.", true);
             }
         }
