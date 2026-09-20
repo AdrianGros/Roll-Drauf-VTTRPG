@@ -58,8 +58,8 @@ Usage in Templates:
 </div>
 
 Templates to Update:
-- vtt_app/templates/play.html (Hero Section)
-- vtt_app/templates/campaigns.html (DM Lobby)
+- vtt/templates/play.html (Hero Section)
+- vtt/templates/campaigns.html (DM Lobby)
 ```
 
 #### 1.2 Parchment Textures
@@ -83,8 +83,8 @@ Usage in CSS:
 }
 
 Files to Update:
-- vtt_app/static/css/spellbook-theme.css (add texture rules)
-- vtt_app/static/css/theme.css (add variables)
+- vtt/static/css/spellbook-theme.css (add texture rules)
+- vtt/static/css/theme.css (add variables)
 ```
 
 ---
@@ -94,7 +94,7 @@ Files to Update:
 #### 2.1 Game-Icons.net SVG Icons (PRIMARY)
 ```
 File Organization:
-vtt_app/static/icons/
+vtt/static/icons/
 ├── Campaign Category:
 │   ├── icon-campaign-book.svg
 │   ├── icon-campaign-scroll.svg
@@ -143,15 +143,15 @@ CSS:
 }
 
 Templates to Update:
-- vtt_app/templates/campaigns.html (navigation, action buttons)
-- vtt_app/templates/play.html (session controls)
-- vtt_app/templates/register.html (form decorations)
+- vtt/templates/campaigns.html (navigation, action buttons)
+- vtt/templates/play.html (session controls)
+- vtt/templates/register.html (form decorations)
 ```
 
 #### 2.2 Kenney Assets Fantasy Icons (BACKUP/CONSISTENCY)
 ```
 Location (after extraction):
-vtt_app/static/icons/kenney-fantasy-*.png
+vtt/static/icons/kenney-fantasy-*.png
 
 Purpose:
 - Consistent UI icon set
@@ -173,7 +173,7 @@ Templates to Update:
 #### 3.1 Borders & Frames (Kenney Fantasy UI)
 ```
 Files:
-vtt_app/static/images/ornaments/
+vtt/static/images/ornaments/
 ├── border-corner-tl.png (top-left)
 ├── border-corner-tr.png (top-right)
 ├── border-corner-bl.png (bottom-left)
@@ -208,15 +208,15 @@ CSS Integration:
 }
 
 Templates to Update:
-- vtt_app/templates/campaigns.html (session cards)
-- vtt_app/templates/play.html (panels)
+- vtt/templates/campaigns.html (session cards)
+- vtt/templates/play.html (panels)
 - Custom component templates
 ```
 
 #### 3.2 Dividers & Separators
 ```
 Files:
-vtt_app/static/images/ornaments/
+vtt/static/images/ornaments/
 ├── divider-h-gold-thin.svg
 ├── divider-h-gold-thick.svg
 ├── divider-h-purple-thin.svg
@@ -240,7 +240,7 @@ Templates:
 #### 3.3 Wax Seals & Stamps
 ```
 Files:
-vtt_app/static/icons/
+vtt/static/icons/
 ├── seal-campaign.svg
 ├── seal-session.svg
 ├── seal-combat.svg
@@ -263,7 +263,7 @@ CSS:
 #### 3.4 Ribbons & Bookmarks
 ```
 Files:
-vtt_app/static/images/ornaments/
+vtt/static/images/ornaments/
 ├── ribbon-gold-01.svg
 ├── ribbon-purple-01.svg
 └── ribbon-bookmark.svg
@@ -291,7 +291,7 @@ CSS:
 #### 4.1 Open Book Frame
 ```
 Files:
-vtt_app/static/images/frames/
+vtt/static/images/frames/
 ├── frame-book-open-01.svg
 └── frame-book-open-02.svg
 
@@ -311,13 +311,13 @@ CSS:
 }
 
 Templates:
-- vtt_app/templates/campaigns.html (main campaign display)
+- vtt/templates/campaigns.html (main campaign display)
 ```
 
 #### 4.2 Page Edge/Curl Effects
 ```
 Files:
-vtt_app/static/images/frames/
+vtt/static/images/frames/
 ├── page-edge-curl.svg
 ├── page-corner-fold.svg
 └── page-shadow.svg
@@ -340,7 +340,7 @@ CSS:
 #### 5.1 Google Fonts (WOFF2)
 ```
 Files:
-vtt_app/static/fonts/
+vtt/static/fonts/
 ├── cinzel-regular.woff2
 ├── cinzel-bold.woff2
 ├── badscript-regular.woff2
@@ -468,12 +468,12 @@ After downloading all assets:
 
 After optimization:
 
-- [ ] Update `vtt_app/static/css/theme.css` with new variables
-- [ ] Update `vtt_app/static/css/spellbook-theme.css` with asset usage
-- [ ] Create `vtt_app/static/css/fonts.css` with @font-face definitions
-- [ ] Update `vtt_app/templates/campaigns.html` with new classes
-- [ ] Update `vtt_app/templates/play.html` with new classes
-- [ ] Update `vtt_app/templates/register.html` with icon usage
+- [ ] Update `vtt/static/css/theme.css` with new variables
+- [ ] Update `vtt/static/css/spellbook-theme.css` with asset usage
+- [ ] Create `vtt/static/css/fonts.css` with @font-face definitions
+- [ ] Update `vtt/templates/campaigns.html` with new classes
+- [ ] Update `vtt/templates/play.html` with new classes
+- [ ] Update `vtt/templates/register.html` with icon usage
 - [ ] Test in Chrome, Firefox, Safari (desktop & mobile)
 - [ ] Test dark mode toggle
 - [ ] Test on mobile viewport (320px, 768px, 1024px, 1440px+)
@@ -519,21 +519,21 @@ TOTAL TIME: 2-3 hours
 ## 📚 FILES TO UPDATE
 
 **CSS Files:**
-1. `vtt_app/static/css/theme.css` - Add variables
-2. `vtt_app/static/css/spellbook-theme.css` - Add asset usage
-3. `vtt_app/static/css/fonts.css` - NEW file with @font-face
+1. `vtt/static/css/theme.css` - Add variables
+2. `vtt/static/css/spellbook-theme.css` - Add asset usage
+3. `vtt/static/css/fonts.css` - NEW file with @font-face
 
 **Template Files:**
-1. `vtt_app/templates/campaigns.html` - Update icons/classes
-2. `vtt_app/templates/play.html` - Update icons/classes
-3. `vtt_app/templates/register.html` - Update styling
+1. `vtt/templates/campaigns.html` - Update icons/classes
+2. `vtt/templates/play.html` - Update icons/classes
+3. `vtt/templates/register.html` - Update styling
 
 **Asset Directories:**
-1. `vtt_app/static/images/textures/` - Backgrounds
-2. `vtt_app/static/images/ornaments/` - Borders, dividers
-3. `vtt_app/static/images/frames/` - Book structures
-4. `vtt_app/static/icons/` - All icon SVGs
-5. `vtt_app/static/fonts/` - WOFF2 fonts
+1. `vtt/static/images/textures/` - Backgrounds
+2. `vtt/static/images/ornaments/` - Borders, dividers
+3. `vtt/static/images/frames/` - Book structures
+4. `vtt/static/icons/` - All icon SVGs
+5. `vtt/static/fonts/` - WOFF2 fonts
 
 ---
 

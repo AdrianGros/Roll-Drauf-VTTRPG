@@ -34,7 +34,7 @@
 3. **Extract:**
    ```bash
    unzip ~/Downloads/fantasy-game-assets-8.0.zip \
-     -d vtt_app/static/downloads/kenney-assets/
+     -d vtt/static/downloads/kenney-assets/
    ```
 
 4. **Organize (automated):**
@@ -50,7 +50,7 @@
 ### Files Organization (Auto-Done)
 ```
 After organize_kenney_assets.sh:
-vtt_app/static/
+vtt/static/
 ├── images/ornaments/      ← Borders, UI elements
 ├── icons/kenney-*.png     ← UI icons (backup set)
 └── images/                ← Fantasy sprites
@@ -75,7 +75,7 @@ vtt_app/static/
    - Click the icon when found
    - Click "Download" button
    - **Select SVG format**
-   - Save to: `vtt_app/static/icons/`
+   - Save to: `vtt/static/icons/`
    - **Rename file to match pattern: `icon-{category}-{name}.svg`**
 
 ### Priority Icons to Download
@@ -153,7 +153,7 @@ If Game-Icons.net offers bulk download (check their account features):
 1. Create free account on game-icons.net
 2. Add all icons to collection
 3. Download bulk ZIP (if available)
-4. Extract to `vtt_app/static/icons/`
+4. Extract to `vtt/static/icons/`
 
 ---
 
@@ -184,7 +184,7 @@ If Game-Icons.net offers bulk download (check their account features):
    - Click image to open
    - Click "Download" button
    - **Select PNG format** (not JPG)
-   - Save to: `vtt_app/static/images/textures/`
+   - Save to: `vtt/static/images/textures/`
 
 4. **Rename files:**
    ```
@@ -221,7 +221,7 @@ After completing all manual downloads, verify:
 
 ```bash
 # Check structure
-find vtt_app/static -type f | wc -l
+find vtt/static -type f | wc -l
 
 # Should have approximately:
 # - 4 WOFF2 fonts ✓ (already done)
@@ -235,16 +235,16 @@ find vtt_app/static -type f | wc -l
 
 ```bash
 # Fonts (should have 4 files)
-ls -l vtt_app/static/fonts/*.woff2
+ls -l vtt/static/fonts/*.woff2
 
 # Icons (should have 35+ files)
-ls -l vtt_app/static/icons/icon-*.svg | wc -l
+ls -l vtt/static/icons/icon-*.svg | wc -l
 
 # Textures/Backgrounds (should have 5-7)
-ls -l vtt_app/static/images/textures/bg-galaxy-*.png | wc -l
+ls -l vtt/static/images/textures/bg-galaxy-*.png | wc -l
 
 # Ornaments (from Kenney, should have 10+ files)
-ls -l vtt_app/static/images/ornaments/*.png | wc -l
+ls -l vtt/static/images/ornaments/*.png | wc -l
 ```
 
 ---
@@ -255,17 +255,17 @@ Use this checklist to track progress:
 
 ### Kenney Assets
 - [ ] Download ZIP from kenney.nl/assets
-- [ ] Extract to: `vtt_app/static/downloads/kenney-assets/`
+- [ ] Extract to: `vtt/static/downloads/kenney-assets/`
 - [ ] Run: `bash organize_kenney_assets.sh`
-- [ ] Verify: `ls vtt_app/static/images/ornaments/` has files
+- [ ] Verify: `ls vtt/static/images/ornaments/` has files
 
 ### Game-Icons
-- [ ] Campaign icons (4) → Save to: `vtt_app/static/icons/`
-- [ ] Session icons (5) → Save to: `vtt_app/static/icons/`
-- [ ] Combat icons (5) → Save to: `vtt_app/static/icons/`
-- [ ] Spell icons (15) → Save to: `vtt_app/static/icons/`
-- [ ] Inventory icons (8) → Save to: `vtt_app/static/icons/`
-- [ ] Status icons (5) → Save to: `vtt_app/static/icons/`
+- [ ] Campaign icons (4) → Save to: `vtt/static/icons/`
+- [ ] Session icons (5) → Save to: `vtt/static/icons/`
+- [ ] Combat icons (5) → Save to: `vtt/static/icons/`
+- [ ] Spell icons (15) → Save to: `vtt/static/icons/`
+- [ ] Inventory icons (8) → Save to: `vtt/static/icons/`
+- [ ] Status icons (5) → Save to: `vtt/static/icons/`
 - [ ] Total: 32+ icon SVGs downloaded
 
 ### Pixabay Backgrounds
@@ -273,7 +273,7 @@ Use this checklist to track progress:
 - [ ] Search "nebula space" → Download 2 images
 - [ ] Search "cosmic purple" → Download 1-2 images
 - [ ] Search "space galaxy" → Download 1-2 images
-- [ ] Total: 5-7 PNG images to: `vtt_app/static/images/textures/`
+- [ ] Total: 5-7 PNG images to: `vtt/static/images/textures/`
 
 ### Verification
 - [ ] All files in correct directories
@@ -294,7 +294,7 @@ Once you've downloaded all assets:
 
 2. **Verify Structure:**
    ```bash
-   find vtt_app/static -type f | wc -l
+   find vtt/static -type f | wc -l
    ```
 
 3. **Next Phase - CSS Integration:**
@@ -327,8 +327,8 @@ Once you've downloaded all assets:
 
 ### File permissions?
 ```bash
-chmod 644 vtt_app/static/icons/*.svg
-chmod 644 vtt_app/static/images/textures/*.png
+chmod 644 vtt/static/icons/*.svg
+chmod 644 vtt/static/images/textures/*.png
 ```
 
 ### Need more icons or textures?

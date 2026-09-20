@@ -76,7 +76,7 @@ License: OFL (free to use, embed)
 
 ## FOLDER STRUCTURE
 
-vtt_app/static/assets/
+vtt/static/assets/
   tokens/
     characters/
       human/ (male, female variants)

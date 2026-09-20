@@ -62,8 +62,8 @@ export DATABASE_URL='sqlite:///instance/vtt_staging.db'
 # Run Flask initialization script
 python3 << 'INIT_SCRIPT'
 import os
-from vtt_app import create_app
-from vtt_app.extensions import db
+from vtt import create_app
+from vtt.extensions import db
 
 app = create_app('development')
 app.config['AUTO_CREATE_SCHEMA'] = True
@@ -166,7 +166,7 @@ pytest tests/ -v --tb=short -x  # Stop on first failure
 
 ### Generate Coverage Report
 ```bash
-pytest tests/ --cov=vtt_app --cov-report=html
+pytest tests/ --cov=vtt --cov-report=html
 # Coverage report in htmlcov/index.html
 ```
 
@@ -179,13 +179,13 @@ pytest tests/ --cov=vtt_app --cov-report=html
 # Set environment
 export FLASK_ENV=staging
 export DATABASE_URL='sqlite:///instance/vtt_staging.db'
-export FLASK_APP='vtt_app:create_app'
+export FLASK_APP='vtt:create_app'
 
 # Run development server
 flask run --host=0.0.0.0 --port=5000
 
 # Or use gunicorn for production-like behavior
-gunicorn -w 4 -b 0.0.0.0:5000 "vtt_app:create_app()"
+gunicorn -w 4 -b 0.0.0.0:5000 "vtt:create_app()"
 ```
 
 ### Verify Application Started
@@ -349,8 +349,8 @@ mkdir -p instance
 export FLASK_ENV=staging
 export DATABASE_URL='sqlite:///instance/vtt_staging.db'
 python3 -c "
-from vtt_app import create_app
-from vtt_app.extensions import db
+from vtt import create_app
+from vtt.extensions import db
 app = create_app('development')
 app.config['AUTO_CREATE_SCHEMA'] = True
 with app.app_context():
@@ -450,7 +450,7 @@ pytest tests/ -v --tb=short
 # (printed to console)
 
 # Production logs (if using gunicorn)
-gunicorn -w 4 "vtt_app:create_app()" --log-level debug
+gunicorn -w 4 "vtt:create_app()" --log-level debug
 ```
 
 ### Monitor Database Size

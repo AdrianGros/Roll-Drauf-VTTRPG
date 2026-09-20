@@ -45,7 +45,7 @@
 1. Check asset exists: `SELECT * FROM assets WHERE id = ?`
 2. Check file in storage: `test -f /tmp/vtt-assets/{key}`
 3. Check permissions: `can_download_asset(user, asset)`
-4. Check storage adapter working: `python -c "from vtt_app.storage import get_storage_adapter; get_storage_adapter().exists(key)"`
+4. Check storage adapter working: `python -c "from vtt.storage import get_storage_adapter; get_storage_adapter().exists(key)"`
 
 ---
 
@@ -236,7 +236,7 @@ POST /api/admin/users/{user_id}/restore
 ├── backups/               # Daily backups
 │   ├── db-2026-03-27.sql.gz
 │   └── assets-2026-03-27.json
-├── vtt_app/
+├── vtt/
 │   ├── models/            # All database models
 │   ├── endpoints/         # All API endpoints
 │   ├── permissions.py     # Permission checks

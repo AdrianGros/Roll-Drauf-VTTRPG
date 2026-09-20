@@ -1,7 +1,7 @@
 # Spellbook Premium Asset Pack - Download List
 
 **Status:** Phase 1 - Download & Organize
-**Target Directory:** `/vtt_app/static/`
+**Target Directory:** `/vtt/static/`
 **Total Assets:** ~150+ (across all categories)
 **Estimated Download Time:** 30-45 minutes
 **Total Disk Space:** ~200-300 MB
@@ -22,7 +22,7 @@ Quantity: 5-7 images
 **Direct Download Strategy:**
 - Visit: https://pixabay.com/search/galaxy%20background/
 - Filter: Type = "Photo", Color = "Purple"
-- Download top 5-7 in PNG format to: `vtt_app/static/images/textures/bg-galaxy-*.png`
+- Download top 5-7 in PNG format to: `vtt/static/images/textures/bg-galaxy-*.png`
 
 ### 1.2 Parchment/Paper Texture (AmbientCG)
 ```
@@ -36,7 +36,7 @@ Quantity: 3-5 textures
 **Direct Download Strategy:**
 - Visit: https://ambientcg.com/
 - Search: "Canvas" or "Paper"
-- Download 3x PNG files (Albedo) to: `vtt_app/static/images/textures/texture-parchment-*.png`
+- Download 3x PNG files (Albedo) to: `vtt/static/images/textures/texture-parchment-*.png`
 
 ### 1.3 Old Paper/Book Texture (OpenGameArt)
 ```
@@ -50,7 +50,7 @@ License: CC0/CC-BY
 **Direct Download Strategy:**
 - Visit: https://opengameart.org/textures/all
 - Search: "paper" OR "parchment"
-- Download to: `vtt_app/static/images/textures/texture-pages-*.png`
+- Download to: `vtt/static/images/textures/texture-pages-*.png`
 
 ---
 
@@ -81,7 +81,7 @@ For EACH icon:
   1. Search icon name
   2. Click download button
   3. Select SVG format
-  4. Save to: vtt_app/static/icons/icon-{category}-{name}.svg
+  4. Save to: vtt/static/icons/icon-{category}-{name}.svg
 ```
 
 **Bulk Alternative (if available):**
@@ -99,7 +99,7 @@ License: CC0 (no attribution required)
 **Direct Download Strategy:**
 - Visit: https://kenney.nl/assets
 - Download: "Fantasy Game Assets 8.0" (includes icons + borders)
-- Extract to: `vtt_app/static/`
+- Extract to: `vtt/static/`
 - Organize subdirectories
 
 ### 2.3 Elf_Merchant Fantasy Icons Pack
@@ -113,7 +113,7 @@ License: Commercial OK
 **Download Strategy:**
 - Visit: https://elf-merchant.itch.io/fantasy-icons-pack
 - Click "Download" button
-- Extract ZIP to: `vtt_app/static/icons/fantasy-pack-*/`
+- Extract ZIP to: `vtt/static/icons/fantasy-pack-*/`
 
 ---
 
@@ -144,7 +144,7 @@ License: Free for commercial use
 - Visit: https://www.freepik.com/
 - Search: "medieval ornament corner"
 - Filter: Type = Vector (for SVG)
-- Download top 10-15 to: `vtt_app/static/images/ornaments/ornament-*.svg`
+- Download top 10-15 to: `vtt/static/images/ornaments/ornament-*.svg`
 
 ### 3.3 Page Dividers/Separators (OpenGameArt)
 ```
@@ -158,7 +158,7 @@ License: CC0/CC-BY
 **Download Strategy:**
 - Visit: https://opengameart.org/
 - Search: "divider" OR "separator"
-- Download to: `vtt_app/static/images/ornaments/divider-*.png`
+- Download to: `vtt/static/images/ornaments/divider-*.png`
 
 ### 3.4 Wax Seals & Stamps (Game-Icons.net)
 ```
@@ -171,7 +171,7 @@ Quantity: 5-8 seal designs
 **Download Strategy:**
 - Visit: https://game-icons.net/
 - Search each term individually
-- Download SVGs to: `vtt_app/static/icons/seal-*.svg`
+- Download SVGs to: `vtt/static/icons/seal-*.svg`
 
 ### 3.5 Ribbons/Bookmarks (Vecteezy)
 ```
@@ -184,7 +184,7 @@ License: Royalty-free
 
 **Download Strategy:**
 - Visit: https://www.vecteezy.com/free-vector/ribbon
-- Download 5-8 ribbons (SVG) to: `vtt_app/static/images/ornaments/ribbon-*.svg`
+- Download 5-8 ribbons (SVG) to: `vtt/static/images/ornaments/ribbon-*.svg`
 
 ---
 
@@ -200,7 +200,7 @@ Quantity: 2-3 variations
 
 **Download Strategy:**
 - Visit: https://www.vecteezy.com/free-vector/book
-- Download 2-3 open book designs (SVG) to: `vtt_app/static/images/frames/frame-book-*.svg`
+- Download 2-3 open book designs (SVG) to: `vtt/static/images/frames/frame-book-*.svg`
 
 ### 4.2 Page Edge/Curl Effects (Game-Icons.net + Custom)
 ```
@@ -213,7 +213,7 @@ Quantity: 3-5
 
 **Download Strategy:**
 - Combine Game-Icons results with Public Domain Vectors search
-- Save to: `vtt_app/static/images/frames/page-edge-*.svg`
+- Save to: `vtt/static/images/frames/page-edge-*.svg`
 
 ### 4.3 Leather Binding Texture (AmbientCG or Pixabay)
 ```
@@ -226,7 +226,7 @@ Quantity: 2-3 variations
 **Download Strategy:**
 - AmbientCG: https://ambientcg.com/ → search "leather"
 - OR Pixabay: https://pixabay.com/search/leather/
-- Download to: `vtt_app/static/images/textures/leather-*.png`
+- Download to: `vtt/static/images/textures/leather-*.png`
 
 ---
 
@@ -244,7 +244,7 @@ License: Open Font License (OFL) - Commercial OK
 **Download Strategy:**
 - Click "+ Select this style"
 - Download WOFF2 files
-- Save to: `vtt_app/static/fonts/cinzel-*.woff2`
+- Save to: `vtt/static/fonts/cinzel-*.woff2`
 
 ### 5.2 Medieval Sharp (Gothic Medieval)
 ```
@@ -258,7 +258,7 @@ License: Free (verify commercial use)
 - Visit FontSpace URL
 - Download TTF file
 - Convert to WOFF2 using online tool: https://font-converter.com/
-- Save to: `vtt_app/static/fonts/medievalsharp-*.woff2`
+- Save to: `vtt/static/fonts/medievalsharp-*.woff2`
 
 ### 5.3 Bad Script (Handwritten Medieval)
 ```
@@ -271,7 +271,7 @@ License: OFL (Commercial OK)
 **Download Strategy:**
 - Click "+ Select this style"
 - Download WOFF2
-- Save to: `vtt_app/static/fonts/badscript-*.woff2`
+- Save to: `vtt/static/fonts/badscript-*.woff2`
 
 ### 5.4 Pirata One (Fantasy Decorative)
 ```
@@ -284,14 +284,14 @@ License: OFL (Commercial OK)
 **Download Strategy:**
 - Click "+ Select this style"
 - Download WOFF2
-- Save to: `vtt_app/static/fonts/piratione-*.woff2`
+- Save to: `vtt/static/fonts/piratione-*.woff2`
 
 ---
 
 ## DIRECTORY STRUCTURE (After Downloads)
 
 ```
-vtt_app/static/
+vtt/static/
 ├── images/
 │   ├── textures/
 │   │   ├── bg-galaxy-dark.png
