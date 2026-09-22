@@ -896,6 +896,30 @@ body.play-workspace-realign main {
     color: inherit;
 }
 
+/* Einladen-Affordance im Kampagnen-Hub für die DM (Buch-UI-Parität zur
+   Klassik-Seite - siehe buildCampaignHubDetailMarkup). Gleiches Layout wie
+   .book-scene-join-row, eigener Klassenname statt geteiltem Selector, damit
+   Beitreten- und Einladen-Zeilen unabhängig bleiben. */
+.book-scene-invite-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+    margin-top: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.book-scene-invite-row input[type="text"] {
+    flex: 1 1 12rem;
+    min-width: 0;
+    font: inherit;
+    font-size: max(1rem, 16px);
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid rgba(130, 89, 52, 0.3);
+    background: rgba(255, 255, 255, 0.65);
+    color: inherit;
+}
+
 .book-scene-ledger-head {
     display: flex;
     align-items: baseline;

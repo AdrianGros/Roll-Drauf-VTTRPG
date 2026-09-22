@@ -618,6 +618,56 @@ def invite_player(campaign_id):
     ), 201
 
 
+@campaigns_bp.route("/campaigns/<int:campaign_id>/invites", methods=["GET"])
+@limiter.limit("120 per hour")
+@jwt_required()
+def list_campaign_invites(campaign_id):
+    """List this campaign's still-open invites (DM only) - the still-valid
+    token for each member stuck in status="invited". Lets the hub redisplay
+    a previously generated link after a reload instead of forcing a new one
+    (invite_player already refuses a second invite while one is pending, so
+    there is at most one live token per pending member to surface here)."""
+    user, error = _get_current_user()
+    if error:
+        return error
+
+    campaign, error = _get_campaign_or_404(campaign_id)
+    if error:
+        return error
+
+    if not _is_dm(campaign, user.id):
+        return jsonify({"error": "forbidden"}), 403
+
+    pending_members = CampaignMember.query.filter_by(
+        campaign_id=campaign.id, status="invited"
+    ).all()
+
+    invites = []
+    for member in pending_members:
+        invited_user = db.session.get(User, member.user_id)
+        if not invited_user:
+            continue
+        token = (
+            InviteToken.query.filter_by(
+                campaign_id=campaign.id,
+                invited_user_email=invited_user.email,
+            )
+            .order_by(InviteToken.created_at.desc())
+            .first()
+        )
+        if not token or not token.is_valid():
+            continue
+        invites.append(
+            {
+                "invite_token": token.token,
+                "invited_user": invited_user.username,
+                "expires_at": token.expires_at.isoformat() if token.expires_at else None,
+            }
+        )
+
+    return jsonify({"invites": invites}), 200
+
+
 @campaigns_bp.route("/campaigns/<int:campaign_id>/accept-invite", methods=["POST"])
 @limiter.limit("30 per hour")
 @jwt_required()

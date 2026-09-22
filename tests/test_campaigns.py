@@ -365,6 +365,53 @@ class TestCampaignInvites:
         )
         assert response.status_code == 400
 
+    def test_list_invites_returns_pending(self, dm_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user)
+        invite_response = dm_client.post(
+            f"/api/campaigns/{campaign.id}/invite",
+            json={"player_username": "player_test"},
+        )
+        token = invite_response.get_json()["invite_token"]
+
+        response = dm_client.get(f"/api/campaigns/{campaign.id}/invites")
+        assert response.status_code == 200
+        invites = response.get_json()["invites"]
+        assert len(invites) == 1
+        assert invites[0]["invite_token"] == token
+        assert invites[0]["invited_user"] == "player_test"
+
+    def test_list_invites_excludes_accepted(self, dm_client, player_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user)
+        invite_response = dm_client.post(
+            f"/api/campaigns/{campaign.id}/invite",
+            json={"player_username": "player_test"},
+        )
+        token = invite_response.get_json()["invite_token"]
+        player_client.post(
+            f"/api/campaigns/{campaign.id}/accept-invite",
+            json={"token": token},
+        )
+
+        response = dm_client.get(f"/api/campaigns/{campaign.id}/invites")
+        assert response.status_code == 200
+        assert response.get_json()["invites"] == []
+
+    def test_list_invites_forbidden_for_non_dm(self, dm_client, player_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user)
+        db.session.add(
+            CampaignMember(
+                campaign_id=campaign.id,
+                user_id=player_user.id,
+                campaign_role="Player",
+                status="active",
+                joined_at=datetime.utcnow(),
+            )
+        )
+        db.session.commit()
+
+        response = player_client.get(f"/api/campaigns/{campaign.id}/invites")
+        assert response.status_code == 403
+
     def test_members_endpoint(self, dm_client, dm_user, player_user):
         campaign = _create_campaign(dm_user)
         db.session.add(
