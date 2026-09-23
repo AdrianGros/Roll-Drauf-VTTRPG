@@ -69,6 +69,14 @@ def _serialize_campaign(campaign: Campaign, user_id: int | None = None):
 
     your_role = "DM" if is_owner else (active_membership.campaign_role if active_membership else None)
 
+    # DM-only: surfaced on the campaign list card so a pending join
+    # request via the multi-use invite link is noticed without having to
+    # open the hub first. campaign.members is already loaded above for
+    # active_members, so this is a Python filter, not another query.
+    pending_join_request_count = None
+    if is_owner or str(your_role or "").upper() in {"DM", "CO_DM", "CODM"}:
+        pending_join_request_count = sum(1 for member in campaign.members if member.status == "pending")
+
     return {
         "id": campaign.id,
         "name": campaign.name,
@@ -84,6 +92,7 @@ def _serialize_campaign(campaign: Campaign, user_id: int | None = None):
         "is_owner": is_owner,
         "is_member": bool(is_owner or active_membership),
         "your_role": your_role,
+        "pending_join_request_count": pending_join_request_count,
         "created_at": campaign.created_at.isoformat() if campaign.created_at else None,
         "updated_at": campaign.updated_at.isoformat() if campaign.updated_at else None,
     }
@@ -546,7 +555,16 @@ def delete_campaign(campaign_id):
 @limiter.limit("40 per hour")
 @jwt_required()
 def invite_player(campaign_id):
-    """Invite player by username and generate invite token (DM only)."""
+    """Get or create this campaign's shareable invite link (DM only).
+
+    No player_username anymore (Adrian, 2026-09-22: naming a specific
+    player up front for every single invite was the actual friction).
+    One generic link per campaign, good for up to max_uses redemptions
+    before it needs regenerating; each redemption files a pending join
+    request instead of granting membership outright (see accept_invite,
+    approve_join_request, deny_join_request below). Returns the existing
+    link unchanged if one is still open, so repeat clicks don't mint a
+    pile of separate live links."""
     user, error = _get_current_user()
     if error:
         return error
@@ -558,61 +576,30 @@ def invite_player(campaign_id):
     if not _is_dm(campaign, user.id):
         return jsonify({"error": "forbidden"}), 403
 
-    data = request.get_json() or {}
-    username = str(data.get("player_username", "")).strip()
-    if not username:
-        return jsonify({"error": "player_username required"}), 400
-
-    invited_user = User.query.filter_by(username=username).first()
-    if not invited_user:
-        return jsonify({"error": "user not found"}), 404
-
-    member = CampaignMember.query.filter_by(
-        campaign_id=campaign.id,
-        user_id=invited_user.id,
-    ).first()
-
-    if member and member.status in {"active", "invited"}:
-        return jsonify({"error": "user is already a member or invited"}), 409
-
-    now = utcnow()
-    if member:
-        member.status = "invited"
-        member.campaign_role = "Player"
-        member.invited_by = user.id
-        member.invited_at = now
-        member.accepted_at = None
-        member.joined_at = None
-    else:
-        member = CampaignMember(
-            campaign_id=campaign.id,
-            user_id=invited_user.id,
-            campaign_role="Player",
-            status="invited",
-            invited_by=user.id,
-            invited_at=now,
-        )
-        db.session.add(member)
-
-    token = InviteToken(
-        campaign_id=campaign.id,
-        token=InviteToken.generate_token(),
-        invited_user_email=invited_user.email,
-        created_by=user.id,
+    token = (
+        InviteToken.query.filter_by(campaign_id=campaign.id, invited_user_email=None)
+        .order_by(InviteToken.created_at.desc())
+        .first()
     )
-    db.session.add(token)
-
-    try:
-        db.session.commit()
-    except IntegrityError:
-        db.session.rollback()
-        return jsonify({"error": "invite could not be created"}), 409
+    if not token or not token.is_valid():
+        token = InviteToken(
+            campaign_id=campaign.id,
+            token=InviteToken.generate_token(),
+            created_by=user.id,
+        )
+        db.session.add(token)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            return jsonify({"error": "invite could not be created"}), 409
 
     return jsonify(
         {
             "invite_token": token.token,
             "campaign_id": campaign.id,
-            "invited_user": invited_user.username,
+            "use_count": token.use_count,
+            "max_uses": token.max_uses,
             "expires_at": token.expires_at.isoformat() if token.expires_at else None,
         }
     ), 201
@@ -622,11 +609,9 @@ def invite_player(campaign_id):
 @limiter.limit("120 per hour")
 @jwt_required()
 def list_campaign_invites(campaign_id):
-    """List this campaign's still-open invites (DM only) - the still-valid
-    token for each member stuck in status="invited". Lets the hub redisplay
-    a previously generated link after a reload instead of forcing a new one
-    (invite_player already refuses a second invite while one is pending, so
-    there is at most one live token per pending member to surface here)."""
+    """Return this campaign's current, still-open invite link (DM only),
+    or null if none is live - lets the hub redisplay it after a reload
+    instead of forcing a fresh one every time."""
     user, error = _get_current_user()
     if error:
         return error
@@ -638,41 +623,41 @@ def list_campaign_invites(campaign_id):
     if not _is_dm(campaign, user.id):
         return jsonify({"error": "forbidden"}), 403
 
-    pending_members = CampaignMember.query.filter_by(
-        campaign_id=campaign.id, status="invited"
-    ).all()
+    token = (
+        InviteToken.query.filter_by(campaign_id=campaign.id, invited_user_email=None)
+        .order_by(InviteToken.created_at.desc())
+        .first()
+    )
+    invite_link = None
+    if token and token.is_valid():
+        invite_link = {
+            "invite_token": token.token,
+            "use_count": token.use_count,
+            "max_uses": token.max_uses,
+            "expires_at": token.expires_at.isoformat() if token.expires_at else None,
+        }
 
-    invites = []
-    for member in pending_members:
-        invited_user = db.session.get(User, member.user_id)
-        if not invited_user:
-            continue
-        token = (
-            InviteToken.query.filter_by(
-                campaign_id=campaign.id,
-                invited_user_email=invited_user.email,
-            )
-            .order_by(InviteToken.created_at.desc())
-            .first()
-        )
-        if not token or not token.is_valid():
-            continue
-        invites.append(
-            {
-                "invite_token": token.token,
-                "invited_user": invited_user.username,
-                "expires_at": token.expires_at.isoformat() if token.expires_at else None,
-            }
-        )
-
-    return jsonify({"invites": invites}), 200
+    return jsonify({"invite_link": invite_link}), 200
 
 
 @campaigns_bp.route("/campaigns/<int:campaign_id>/accept-invite", methods=["POST"])
 @limiter.limit("30 per hour")
 @jwt_required()
 def accept_invite(campaign_id):
-    """Accept a campaign invite token."""
+    """Redeem a campaign invite token.
+
+    Two shapes, told apart by whether the token names a specific invitee:
+      * Legacy per-user token (invited_user_email set): the matching
+        CampaignMember row already exists with status="invited" from the
+        old invite_player flow - accepting activates it immediately, same
+        behavior these tokens have always had.
+      * Generic link (invited_user_email is None, the current flow): no
+        pre-existing member row. Redeeming it files a "pending" join
+        request and consumes one of the link's max_uses - the DM decides
+        via approve_join_request/deny_join_request. _is_active_member and
+        every socket/permission check already require status="active", so
+        a pending row grants no access on its own.
+    """
     user, error = _get_current_user()
     if error:
         return error
@@ -692,20 +677,97 @@ def accept_invite(campaign_id):
     if not token.is_valid():
         return jsonify({"error": "invite token expired or already used"}), 400
 
+    if token.invited_user_email:
+        member = CampaignMember.query.filter_by(
+            campaign_id=campaign.id,
+            user_id=user.id,
+        ).first()
+        if not member:
+            return jsonify({"error": "no invitation found for this user"}), 403
+        if member.status == "active":
+            return jsonify({"error": "already a campaign member"}), 409
+        if member.status != "invited":
+            return jsonify({"error": "invitation is no longer valid"}), 403
+        if token.invited_user_email.lower() != user.email.lower():
+            return jsonify({"error": "invite token does not belong to this user"}), 403
+        if not campaign.can_add_player():
+            return jsonify({"error": "campaign is full"}), 409
+
+        now = utcnow()
+        member.status = "active"
+        member.joined_at = now
+        member.accepted_at = now
+        token.use()
+        db.session.commit()
+
+        return jsonify(
+            {
+                "message": "invite accepted",
+                "status": "active",
+                "campaign": _serialize_campaign(campaign, user.id),
+            }
+        ), 200
+
     member = CampaignMember.query.filter_by(
         campaign_id=campaign.id,
         user_id=user.id,
     ).first()
-    if not member:
-        return jsonify({"error": "no invitation found for this user"}), 403
-    if member.status == "active":
+    if member and member.status == "active":
         return jsonify({"error": "already a campaign member"}), 409
-    if member.status != "invited":
-        return jsonify({"error": "invitation is no longer valid"}), 403
+    if member and member.status == "pending":
+        return jsonify({"error": "join request already pending"}), 409
 
-    if token.invited_user_email and token.invited_user_email.lower() != user.email.lower():
-        return jsonify({"error": "invite token does not belong to this user"}), 403
+    now = utcnow()
+    if member:
+        member.status = "pending"
+        member.campaign_role = "Player"
+        member.invited_by = None
+        member.invited_at = now
+        member.accepted_at = None
+        member.joined_at = None
+    else:
+        member = CampaignMember(
+            campaign_id=campaign.id,
+            user_id=user.id,
+            campaign_role="Player",
+            status="pending",
+            invited_at=now,
+        )
+        db.session.add(member)
 
+    token.record_use()
+    db.session.commit()
+
+    return jsonify(
+        {
+            "message": "join request sent",
+            "status": "pending",
+            "campaign": _serialize_campaign(campaign, user.id),
+        }
+    ), 202
+
+
+@campaigns_bp.route("/campaigns/<int:campaign_id>/join-requests/<int:user_id>/approve", methods=["POST"])
+@limiter.limit("60 per hour")
+@jwt_required()
+def approve_join_request(campaign_id, user_id):
+    """Approve a pending join request (DM only)."""
+    user, error = _get_current_user()
+    if error:
+        return error
+
+    campaign, error = _get_campaign_or_404(campaign_id)
+    if error:
+        return error
+
+    if not _is_dm(campaign, user.id):
+        return jsonify({"error": "forbidden"}), 403
+
+    member = CampaignMember.query.filter_by(
+        campaign_id=campaign.id, user_id=user_id, status="pending"
+    ).first()
+    if not member:
+        return jsonify({"error": "no pending join request for this user"}), 404
     if not campaign.can_add_player():
         return jsonify({"error": "campaign is full"}), 409
 
@@ -713,15 +775,39 @@ def accept_invite(campaign_id):
     member.status = "active"
     member.joined_at = now
     member.accepted_at = now
-    token.used_at = now
     db.session.commit()
 
-    return jsonify(
-        {
-            "message": "invite accepted",
-            "campaign": _serialize_campaign(campaign, user.id),
-        }
-    ), 200
+    return jsonify({"message": "join request approved", "member": member.serialize()}), 200
+
+
+@campaigns_bp.route("/campaigns/<int:campaign_id>/join-requests/<int:user_id>/deny", methods=["POST"])
+@limiter.limit("60 per hour")
+@jwt_required()
+def deny_join_request(campaign_id, user_id):
+    """Deny (and remove) a pending join request (DM only). The requester
+    can try again later - denying doesn't burn any of the link's
+    remaining uses beyond the one the original request already spent."""
+    user, error = _get_current_user()
+    if error:
+        return error
+
+    campaign, error = _get_campaign_or_404(campaign_id)
+    if error:
+        return error
+
+    if not _is_dm(campaign, user.id):
+        return jsonify({"error": "forbidden"}), 403
+
+    member = CampaignMember.query.filter_by(
+        campaign_id=campaign.id, user_id=user_id, status="pending"
+    ).first()
+    if not member:
+        return jsonify({"error": "no pending join request for this user"}), 404
+
+    db.session.delete(member)
+    db.session.commit()
+
+    return jsonify({"message": "join request denied"}), 200
 
 
 @campaigns_bp.route("/invites/<token_value>", methods=["GET"])

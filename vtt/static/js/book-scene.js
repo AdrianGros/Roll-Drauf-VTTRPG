@@ -793,6 +793,9 @@
                                 <span>${escapeHtml(campaign.status || 'active')}</span>
                             </div>
                             <div class="book-scene-ledger-meta">${Number(campaign.member_count || 0)} Mitglieder · ${campaign.is_owner ? 'Eigene Kampagne' : 'Geteilte Kampagne'}</div>
+                            ${Number(campaign.pending_join_request_count || 0) > 0 ? `
+                                <div class="book-scene-ledger-meta"><strong>${Number(campaign.pending_join_request_count)} Beitrittsanfrage${Number(campaign.pending_join_request_count) === 1 ? '' : 'n'}</strong> ${Number(campaign.pending_join_request_count) === 1 ? 'wartet' : 'warten'} auf Bestätigung</div>
+                            ` : ''}
                             <div class="book-scene-ledger-copy">${escapeHtml(campaign.description || 'Bereit für Vorbereitung, Charaktere und Karte vor dem Spielabend.')}</div>
                             ${actions}
                         </div>
@@ -1151,8 +1154,13 @@
             const campaignStatus = campaign.status || 'active';
             const campaignStatusTone = campaignStatus === 'active' ? 'live' : (campaignStatus === 'paused' ? 'paused' : '');
 
-            const memberRows = members.length
-                ? members.map((member) => `
+            // Pending join requests get their own review panel below, not
+            // the general member ledger - they aren't members yet.
+            const settledMembers = members.filter((member) => member.status !== 'pending');
+            const pendingMembers = members.filter((member) => member.status === 'pending');
+
+            const memberRows = settledMembers.length
+                ? settledMembers.map((member) => `
                     <div class="book-scene-ledger-item">
                         <div class="book-scene-ledger-head">
                             <strong>${escapeHtml(member.username || 'Unbekannt')}</strong>
@@ -1207,14 +1215,34 @@
                 <section class="book-scene-panel" id="campaignHubInvite">
                     <span class="book-scene-panel-kicker">Spieler einladen</span>
                     <h2 class="book-scene-panel-title">Einladen</h2>
-                    <p class="book-scene-panel-copy">Spielername eingeben und einen Einladungslink erzeugen, den du an die Person schickst (z. B. per Discord).</p>
-                    <div class="book-scene-invite-row">
-                        <input type="text" data-hub-invite-username placeholder="Spielername" aria-label="Spielername" data-testid="hub-invite-username">
-                        <button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="generate-invite" data-testid="hub-invite-create">Einladung erzeugen</button>
+                    <p class="book-scene-panel-copy">Ein Link für bis zu 5 Beitritte - schick ihn an alle, die mitspielen sollen. Jede Anfrage darüber musst du unten bestätigen, bevor die Person Zugriff bekommt.</p>
+                    <div class="book-scene-action-row book-scene-action-row--inline">
+                        <button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="generate-invite" data-testid="hub-invite-create">Einladungslink erzeugen</button>
                     </div>
                     <div class="play-launch-status" data-hub-invite-status role="status" hidden></div>
-                    <div class="book-scene-ledger" data-hub-invite-list data-testid="hub-invite-list">
+                    <div data-hub-invite-link-box data-testid="hub-invite-link-box">
                         <div class="book-scene-ledger-item is-empty">Lädt …</div>
+                    </div>
+                </section>
+
+                <section class="book-scene-panel" id="campaignHubJoinRequests">
+                    <span class="book-scene-panel-kicker">Beitrittsanfragen</span>
+                    <h2 class="book-scene-panel-title">Warten auf Bestätigung</h2>
+                    <div class="book-scene-ledger" data-hub-join-requests data-testid="hub-join-requests">
+                        ${pendingMembers.length
+                            ? pendingMembers.map((member) => `
+                                <div class="book-scene-ledger-item" data-join-request data-user-id="${Number(member.user_id)}">
+                                    <div class="book-scene-ledger-head">
+                                        <strong>${escapeHtml(member.username || 'Unbekannt')}</strong>
+                                        <span>wartet</span>
+                                    </div>
+                                    <div class="book-scene-action-row book-scene-action-row--inline">
+                                        <button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="approve-join-request" data-testid="hub-join-request-approve">Annehmen</button>
+                                        <button type="button" class="btn btn-secondary book-scene-action-btn" data-hub-action="deny-join-request" data-testid="hub-join-request-deny">Ablehnen</button>
+                                    </div>
+                                </div>
+                            `).join('')
+                            : '<div class="book-scene-ledger-item is-empty">Keine offenen Beitrittsanfragen.</div>'}
                     </div>
                 </section>
             ` : '';
@@ -1303,62 +1331,62 @@
         },
 
         async generateCampaignHubInvite(campaignId) {
-            const section = this.sceneSurface ? this.sceneSurface.querySelector('#campaignHubInvite') : null;
-            const usernameField = section ? section.querySelector('[data-hub-invite-username]') : null;
-            const username = usernameField ? usernameField.value.trim() : '';
-            if (!username) {
-                this.setCampaignHubInviteStatus('Bitte zuerst einen Spielernamen eingeben.', true);
-                if (usernameField) {
-                    usernameField.focus();
-                }
-                return;
-            }
-            this.setCampaignHubInviteStatus('Einladung wird erzeugt …');
+            this.setCampaignHubInviteStatus('Einladungslink wird erzeugt …');
             try {
-                await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/invite`, 'POST', {
-                    player_username: username,
-                });
-                if (usernameField) {
-                    usernameField.value = '';
-                }
+                await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/invite`, 'POST', {});
                 this.setCampaignHubInviteStatus('');
                 await this.loadCampaignHubInvites(campaignId);
             } catch (error) {
-                this.setCampaignHubInviteStatus(error.message || 'Einladung fehlgeschlagen.', true);
+                this.setCampaignHubInviteStatus(error.message || 'Einladungslink konnte nicht erzeugt werden.', true);
             }
         },
 
-        // Fetches this campaign's still-open invite links (GET /invites)
-        // and (re)renders the list - called once when the hub opens, so a
-        // link generated before a reload is still there, and again after
+        // Fetches this campaign's current invite link (GET /invites) and
+        // (re)renders it - called once when the hub opens, so a link
+        // generated before a reload is still there, and again after
         // generating a new one instead of only flashing it transiently.
         async loadCampaignHubInvites(campaignId) {
             const section = this.sceneSurface ? this.sceneSurface.querySelector('#campaignHubInvite') : null;
-            const listNode = section ? section.querySelector('[data-hub-invite-list]') : null;
-            if (!listNode || !window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
+            const box = section ? section.querySelector('[data-hub-invite-link-box]') : null;
+            if (!box || !window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
                 return;
             }
             try {
                 const data = await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/invites`);
-                const invites = Array.isArray(data?.invites) ? data.invites : [];
-                listNode.innerHTML = invites.length
-                    ? invites.map((invite) => `
+                const link = data?.invite_link || null;
+                box.innerHTML = link
+                    ? `
                         <div class="book-scene-ledger-item">
                             <div class="book-scene-ledger-head">
-                                <strong>${escapeHtml(invite.invited_user || 'Unbekannt')}</strong>
-                                <span>offen</span>
+                                <strong>Einladungslink</strong>
+                                <span>${Number(link.use_count)}/${Number(link.max_uses)} genutzt</span>
                             </div>
                             <div class="book-scene-invite-row">
                                 <input type="text" readonly data-hub-invite-link-field
-                                    aria-label="Einladungslink für ${escapeHtml(invite.invited_user || '')}"
-                                    value="${escapeHtml(`${window.location.origin}/invite/${invite.invite_token}`)}">
+                                    aria-label="Einladungslink"
+                                    value="${escapeHtml(`${window.location.origin}/invite/${link.invite_token}`)}">
                                 <button type="button" class="btn btn-secondary book-scene-action-btn" data-hub-action="copy-invite-link">Kopieren</button>
                             </div>
                         </div>
-                    `).join('')
-                    : '<div class="book-scene-ledger-item is-empty">Keine offenen Einladungen.</div>';
+                    `
+                    : '<div class="book-scene-ledger-item is-empty">Noch kein Einladungslink erzeugt.</div>';
             } catch (error) {
-                listNode.innerHTML = '<div class="book-scene-ledger-item is-empty">Offene Einladungen konnten nicht geladen werden.</div>';
+                box.innerHTML = '<div class="book-scene-ledger-item is-empty">Einladungslink konnte nicht geladen werden.</div>';
+            }
+        },
+
+        async decideCampaignHubJoinRequest(campaignId, userId, decision) {
+            this.setCampaignHubInviteStatus(decision === 'approve' ? 'Anfrage wird angenommen …' : 'Anfrage wird abgelehnt …');
+            try {
+                await window.Auth.makeAuthRequest(
+                    `/api/campaigns/${campaignId}/join-requests/${userId}/${decision}`, 'POST');
+                // Membership, member count, and the invite link's use count
+                // all shift together - a full hub reload keeps them in sync
+                // instead of patching each piece by hand (and replaces this
+                // status message along with everything else).
+                await this.renderCampaignHubDetail(campaignId);
+            } catch (error) {
+                this.setCampaignHubInviteStatus(error.message || 'Aktion fehlgeschlagen.', true);
             }
         },
 
@@ -1408,10 +1436,10 @@
                     this.generateCampaignHubInvite(campaignId);
                 });
             });
-            // Invite rows render async (loadCampaignHubInvites), so their
-            // copy buttons don't exist yet at bind time - delegate from the
-            // static list container instead of binding each row directly.
-            this.sceneSurface.querySelectorAll('[data-hub-invite-list]').forEach((node) => {
+            // The invite link box renders async (loadCampaignHubInvites), so
+            // its copy button doesn't exist yet at bind time - delegate from
+            // the static box container instead of binding it directly.
+            this.sceneSurface.querySelectorAll('[data-hub-invite-link-box]').forEach((node) => {
                 node.addEventListener('click', (event) => {
                     const button = event.target.closest('[data-hub-action="copy-invite-link"]');
                     if (!button) {
@@ -1420,6 +1448,17 @@
                     const row = button.closest('.book-scene-ledger-item');
                     const field = row ? row.querySelector('[data-hub-invite-link-field]') : null;
                     this.copyInviteLinkField(field, button);
+                });
+            });
+            this.sceneSurface.querySelectorAll('[data-hub-action="approve-join-request"], [data-hub-action="deny-join-request"]').forEach((node) => {
+                node.addEventListener('click', () => {
+                    const row = node.closest('[data-join-request]');
+                    const userId = row ? Number(row.getAttribute('data-user-id')) : null;
+                    if (!userId) {
+                        return;
+                    }
+                    const decision = node.getAttribute('data-hub-action') === 'approve-join-request' ? 'approve' : 'deny';
+                    this.decideCampaignHubJoinRequest(campaignId, userId, decision);
                 });
             });
         },
@@ -1605,13 +1644,22 @@
                     }
                     node.disabled = true;
                     try {
-                        await window.Auth.makeAuthRequest(
+                        const result = await window.Auth.makeAuthRequest(
                             `/api/campaigns/${campaignId}/accept-invite`,
                             'POST',
                             { token: code },
                         );
-                        say('Beigetreten! Der Kampagnen-Hub öffnet sich …');
-                        window.location.href = `/campaigns?campaign_id=${campaignId}`;
+                        if (result && result.status === 'pending') {
+                            // Generic multi-use link (2026-09-22): redeeming it
+                            // files a join request, not instant membership - the
+                            // DM approves it from the hub, so there is no hub to
+                            // open yet. Don't navigate anywhere.
+                            say('Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.');
+                            node.disabled = false;
+                        } else {
+                            say('Beigetreten! Der Kampagnen-Hub öffnet sich …');
+                            window.location.href = `/campaigns?campaign_id=${campaignId}`;
+                        }
                     } catch (error) {
                         node.disabled = false;
                         say(error.message || 'Beitritt fehlgeschlagen. Bitte prüfe den Code.');

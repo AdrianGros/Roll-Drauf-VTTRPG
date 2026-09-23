@@ -14,7 +14,7 @@ class CampaignMember(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
     
     campaign_role = db.Column(db.String(20), nullable=False)  # Player, DM, CO_DM, Observer
-    status = db.Column(db.String(20), default='active')  # invited, active, left, kicked
+    status = db.Column(db.String(20), default='active')  # invited, pending, active, left, kicked
     
     joined_at = db.Column(db.DateTime)
     invited_at = db.Column(db.DateTime, default=utcnow)

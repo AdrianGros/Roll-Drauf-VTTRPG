@@ -110,8 +110,8 @@
                 return;
             }
             if (info.status === "used") {
-                el("inviteTitle").textContent = "Einladung bereits eingelöst";
-                state("Dieser Link wurde schon benutzt. Wenn du das warst: deine Kampagne wartet.", false);
+                el("inviteTitle").textContent = "Einladung aufgebraucht";
+                state("Dieser Link hat sein Beitritts-Limit erreicht. Bitte die Spielleitung um einen neuen Einladungslink.", false);
                 show("linkCampaigns");
                 return;
             }
@@ -135,11 +135,20 @@
             el("btnAcceptInvite").addEventListener("click", async () => {
                 el("btnAcceptInvite").disabled = true;
                 try {
-                    await Auth.makeAuthRequest(
+                    const result = await Auth.makeAuthRequest(
                         `/api/campaigns/${info.campaign_id}/accept-invite`,
                         "POST",
                         { token }
                     );
+                    if (result && result.status === "pending") {
+                        // Generic multi-use link (2026-09-22): this files a
+                        // join request, not instant membership - the DM has
+                        // to approve it before there is a campaign to open.
+                        el("inviteTitle").textContent = "Beitrittsanfrage gesendet";
+                        state("Die Spielleitung muss deine Anfrage noch bestätigen. Du bekommst Zugriff, sobald sie das tut.");
+                        show("linkCampaigns");
+                        return;
+                    }
                     state("Beigetreten! Du wirst zur Kampagne gebracht …");
                     // Clean URL after accept: the token must not linger in the
                     // address bar (fix research §1, OWASP referrer/log notes).
@@ -152,6 +161,7 @@
                         "invite token does not belong to this user":
                             "Diese Einladung ist an ein anderes Konto gerichtet. Melde dich mit dem eingeladenen Konto an.",
                         "already a campaign member": "Du bist bereits Mitglied dieser Kampagne.",
+                        "join request already pending": "Deine Beitrittsanfrage wartet schon auf Bestätigung durch die Spielleitung.",
                         "campaign is full": "Die Kampagne ist bereits voll besetzt.",
                         "invite token expired or already used":
                             "Dieser Link ist abgelaufen oder wurde schon benutzt.",

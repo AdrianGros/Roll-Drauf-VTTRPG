@@ -5,6 +5,7 @@ import re
 import pytest
 
 from vtt import create_app
+from vtt.auth.mailer import MailDeliveryError
 from vtt.extensions import db
 from vtt.models import PasswordResetToken, Role, Session, User
 
@@ -99,3 +100,46 @@ def test_reset_is_single_use_and_revokes_sessions(client, app, monkeypatch):
         json={"email": "reset@example.com", "password": "NewSecurePass123!"},
     )
     assert login.status_code == 200
+
+
+def test_reset_request_stays_privacy_safe_when_mail_transport_is_down(client, app, monkeypatch):
+    """Regression for the unconfigured-MAIL_SERVER incident: a transport
+    failure must not leak account existence via status code, and must not
+    strand an unusable token that blocks a later real reset."""
+
+    def raise_delivery_error(*, recipient, reset_url):
+        raise MailDeliveryError("password reset mail transport is not configured")
+
+    monkeypatch.setattr("vtt.auth.routes.send_password_reset_email", raise_delivery_error)
+    _register(client)
+
+    known = client.post(
+        "/api/auth/password-reset/request",
+        json={"email": "reset@example.com"},
+    )
+    unknown = client.post(
+        "/api/auth/password-reset/request",
+        json={"email": "missing@example.com"},
+    )
+
+    assert known.status_code == unknown.status_code == 202
+    assert known.get_json() == unknown.get_json()
+    with app.app_context():
+        assert PasswordResetToken.query.count() == 0
+
+    sent = {}
+    monkeypatch.setattr(
+        "vtt.auth.routes.send_password_reset_email",
+        lambda *, recipient, reset_url: sent.update(reset_url=reset_url),
+    )
+    retry = client.post(
+        "/api/auth/password-reset/request",
+        json={"email": "reset@example.com"},
+    )
+    assert retry.status_code == 202
+    token = sent["reset_url"].split("token=", 1)[1]
+    confirm = client.post(
+        "/api/auth/password-reset/confirm",
+        json={"token": token, "password": "NewSecurePass123!"},
+    )
+    assert confirm.status_code == 200

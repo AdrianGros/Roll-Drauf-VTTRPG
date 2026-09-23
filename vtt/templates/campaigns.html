@@ -1868,12 +1868,19 @@
             if (!token || !token.trim()) return;
 
             try {
-                await auth.makeAuthRequest(`/api/campaigns/${campaignId}/accept-invite`, "POST", {
+                const result = await auth.makeAuthRequest(`/api/campaigns/${campaignId}/accept-invite`, "POST", {
                     token: token.trim()
                 });
-                showMessage("Du bist der Kampagne beigetreten.");
                 await loadCampaigns();
-                await viewCampaign(campaignId);
+                if (result && result.status === "pending") {
+                    // Generic multi-use link (2026-09-22): a redemption files a
+                    // join request, not instant membership - the DM has to
+                    // approve it first, so there is no hub to open yet.
+                    showMessage("Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.");
+                } else {
+                    showMessage("Du bist der Kampagne beigetreten.");
+                    await viewCampaign(campaignId);
+                }
             } catch (error) {
                 showMessage(error.message || "Beitritt fehlgeschlagen.", true);
             }

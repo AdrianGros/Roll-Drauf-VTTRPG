@@ -18,13 +18,13 @@ def _login(client, username, password="Password123!"):
     return response
 
 
-def _create_campaign(owner_user, name="Test Campaign", is_discoverable=False):
+def _create_campaign(owner_user, name="Test Campaign", is_discoverable=False, max_players=6):
     campaign = Campaign(
         name=name,
         description="A test campaign",
         owner_id=owner_user.id,
         status="active",
-        max_players=6,
+        max_players=max_players,
         is_discoverable=is_discoverable,
     )
     db.session.add(campaign)
@@ -307,55 +307,60 @@ class TestCampaignListVisibility:
 
 
 class TestCampaignInvites:
-    def test_invite_player(self, dm_client, dm_user, player_user):
+    def test_get_invite_link_no_username_required(self, dm_client, dm_user):
         campaign = _create_campaign(dm_user)
 
-        response = dm_client.post(
-            f"/api/campaigns/{campaign.id}/invite",
-            json={"player_username": "player_test"},
-        )
+        response = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={})
         assert response.status_code == 201
         data = response.get_json()
         assert "invite_token" in data
-        assert data["invited_user"] == "player_test"
+        assert data["use_count"] == 0
+        assert data["max_uses"] == 5
 
-    def test_duplicate_invite_returns_409(self, dm_client, dm_user, player_user):
+    def test_get_invite_link_reuses_existing_link(self, dm_client, dm_user):
         campaign = _create_campaign(dm_user)
 
-        first = dm_client.post(
-            f"/api/campaigns/{campaign.id}/invite",
-            json={"player_username": "player_test"},
-        )
-        second = dm_client.post(
-            f"/api/campaigns/{campaign.id}/invite",
-            json={"player_username": "player_test"},
-        )
+        first = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={})
+        second = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={})
 
         assert first.status_code == 201
-        assert second.status_code == 409
+        assert second.status_code == 201
+        assert first.get_json()["invite_token"] == second.get_json()["invite_token"]
 
-    def test_accept_invite_success(self, dm_client, player_client, dm_user, player_user):
+    def test_get_invite_link_forbidden_for_non_dm(self, player_client, dm_user):
         campaign = _create_campaign(dm_user)
-        invite_response = dm_client.post(
-            f"/api/campaigns/{campaign.id}/invite",
-            json={"player_username": "player_test"},
-        )
+        response = player_client.post(f"/api/campaigns/{campaign.id}/invite", json={})
+        assert response.status_code == 403
+
+    def test_accept_invite_files_pending_request(self, dm_client, player_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user)
+        invite_response = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={})
         token = invite_response.get_json()["invite_token"]
 
         response = player_client.post(
             f"/api/campaigns/{campaign.id}/accept-invite",
             json={"token": token},
         )
-        assert response.status_code == 200
+        assert response.status_code == 202
+        assert response.get_json()["status"] == "pending"
 
         member = CampaignMember.query.filter_by(campaign_id=campaign.id, user_id=player_user.id).first()
         assert member is not None
-        assert member.status == "active"
-        assert member.accepted_at is not None
+        assert member.status == "pending"
+        assert member.accepted_at is None
 
         invite = InviteToken.query.filter_by(campaign_id=campaign.id, token=token).first()
-        assert invite is not None
-        assert invite.used_at is not None
+        assert invite.use_count == 1
+        assert invite.used_at is None  # still 4 uses left
+
+    def test_accept_invite_twice_conflicts(self, dm_client, player_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user)
+        token = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={}).get_json()["invite_token"]
+
+        player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token})
+        second = player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token})
+
+        assert second.status_code == 409
 
     def test_accept_invite_invalid_token(self, player_client, dm_user):
         campaign = _create_campaign(dm_user)
@@ -365,51 +370,92 @@ class TestCampaignInvites:
         )
         assert response.status_code == 400
 
-    def test_list_invites_returns_pending(self, dm_client, dm_user, player_user):
+    def test_link_expires_after_max_uses(self, dm_client, player_client, dm_user, player_user):
         campaign = _create_campaign(dm_user)
-        invite_response = dm_client.post(
-            f"/api/campaigns/{campaign.id}/invite",
-            json={"player_username": "player_test"},
-        )
-        token = invite_response.get_json()["invite_token"]
+        token_value = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={}).get_json()["invite_token"]
+        token = InviteToken.query.filter_by(campaign_id=campaign.id, token=token_value).first()
+        token.max_uses = 1
+        db.session.commit()
+
+        first = player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token_value})
+        assert first.status_code == 202
+
+        db.session.refresh(token)
+        assert token.use_count == 1
+        assert token.is_valid() is False
+
+        response = dm_client.get(f"/api/campaigns/{campaign.id}/invites")
+        assert response.get_json()["invite_link"] is None
+
+    def test_list_invites_reflects_use_count(self, dm_client, player_client, dm_user):
+        campaign = _create_campaign(dm_user)
+        token = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={}).get_json()["invite_token"]
+        player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token})
 
         response = dm_client.get(f"/api/campaigns/{campaign.id}/invites")
         assert response.status_code == 200
-        invites = response.get_json()["invites"]
-        assert len(invites) == 1
-        assert invites[0]["invite_token"] == token
-        assert invites[0]["invited_user"] == "player_test"
-
-    def test_list_invites_excludes_accepted(self, dm_client, player_client, dm_user, player_user):
-        campaign = _create_campaign(dm_user)
-        invite_response = dm_client.post(
-            f"/api/campaigns/{campaign.id}/invite",
-            json={"player_username": "player_test"},
-        )
-        token = invite_response.get_json()["invite_token"]
-        player_client.post(
-            f"/api/campaigns/{campaign.id}/accept-invite",
-            json={"token": token},
-        )
-
-        response = dm_client.get(f"/api/campaigns/{campaign.id}/invites")
-        assert response.status_code == 200
-        assert response.get_json()["invites"] == []
+        invite_link = response.get_json()["invite_link"]
+        assert invite_link["invite_token"] == token
+        assert invite_link["use_count"] == 1
 
     def test_list_invites_forbidden_for_non_dm(self, dm_client, player_client, dm_user, player_user):
         campaign = _create_campaign(dm_user)
-        db.session.add(
-            CampaignMember(
-                campaign_id=campaign.id,
-                user_id=player_user.id,
-                campaign_role="Player",
-                status="active",
-                joined_at=datetime.utcnow(),
-            )
-        )
-        db.session.commit()
-
         response = player_client.get(f"/api/campaigns/{campaign.id}/invites")
+        assert response.status_code == 403
+
+    def test_approve_join_request(self, dm_client, player_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user)
+        token = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={}).get_json()["invite_token"]
+        player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token})
+
+        response = dm_client.post(f"/api/campaigns/{campaign.id}/join-requests/{player_user.id}/approve")
+        assert response.status_code == 200
+
+        member = CampaignMember.query.filter_by(campaign_id=campaign.id, user_id=player_user.id).first()
+        assert member.status == "active"
+        assert member.joined_at is not None
+
+    def test_approve_join_request_no_pending_request(self, dm_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user)
+        response = dm_client.post(f"/api/campaigns/{campaign.id}/join-requests/{player_user.id}/approve")
+        assert response.status_code == 404
+
+    def test_approve_join_request_campaign_full(self, dm_client, player_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user, max_players=1)  # DM alone already fills it
+        token = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={}).get_json()["invite_token"]
+        player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token})
+
+        response = dm_client.post(f"/api/campaigns/{campaign.id}/join-requests/{player_user.id}/approve")
+        assert response.status_code == 409
+
+    def test_deny_join_request_removes_it(self, dm_client, player_client, dm_user, player_user):
+        campaign = _create_campaign(dm_user)
+        token = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={}).get_json()["invite_token"]
+        player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token})
+
+        response = dm_client.post(f"/api/campaigns/{campaign.id}/join-requests/{player_user.id}/deny")
+        assert response.status_code == 200
+
+        member = CampaignMember.query.filter_by(campaign_id=campaign.id, user_id=player_user.id).first()
+        assert member is None
+
+    def test_join_requests_forbidden_for_non_dm(self, dm_client, player_client, other_client, dm_user, player_user, other_user):
+        campaign = _create_campaign(dm_user)
+        token = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={}).get_json()["invite_token"]
+        player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token})
+
+        response = other_client.post(f"/api/campaigns/{campaign.id}/join-requests/{player_user.id}/approve")
+        assert response.status_code == 403
+
+    def test_pending_member_has_no_campaign_access(self, dm_client, player_client, dm_user, player_user):
+        """A pending join request must not grant any access before the DM
+        approves it - _is_active_member (and everything gated on it) only
+        ever recognizes status="active"."""
+        campaign = _create_campaign(dm_user)
+        token = dm_client.post(f"/api/campaigns/{campaign.id}/invite", json={}).get_json()["invite_token"]
+        player_client.post(f"/api/campaigns/{campaign.id}/accept-invite", json={"token": token})
+
+        response = player_client.get(f"/api/campaigns/{campaign.id}")
         assert response.status_code == 403
 
     def test_members_endpoint(self, dm_client, dm_user, player_user):

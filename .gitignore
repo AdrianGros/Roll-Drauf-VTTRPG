@@ -2,6 +2,8 @@
 .env
 .env.local
 .env.*.local
+.env.*
+!.env*.example
 .env.vtt.roll-drauf.de
 .env.vtt.roll-drauf-de
 # Any dated/backup copy of an env file, wherever it lands (2026-08-22:
