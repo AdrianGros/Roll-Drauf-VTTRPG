@@ -234,6 +234,16 @@ def can_delete_user(user, target_user):
 
 # ============= QUOTA CHECKS =============
 
+def has_unlimited_storage_tier(user) -> bool:
+    """The headmaster tier is assigned storage_quota_gb=None, meaning
+    UNLIMITED (see _apply_profile_tier_quota in vtt/auth/routes.py). The
+    quota checks below used to read that NULL as "no quota at all" and
+    rejected every upload from headmaster accounts (bug report
+    2026-09-23: legendaryrock could not upload a single token). A NULL
+    quota on any other tier still means no storage."""
+    return user.profile_tier == 'headmaster' and user.storage_quota_gb is None
+
+
 def can_upload_asset(user, size_mb):
     """
     Check if user can upload asset (storage quota check).
@@ -248,11 +258,14 @@ def can_upload_asset(user, size_mb):
     if user.platform_role in ['admin', 'owner']:
         return True, "Platform staff unlimited"
 
+    if has_unlimited_storage_tier(user):
+        return True, "Unlimited storage tier"
+
     # Check quota
     if not user.storage_quota_gb:
         return False, "No storage quota"
 
-    available = user.storage_quota_gb - user.storage_used_gb
+    available = user.storage_quota_gb - (user.storage_used_gb or 0.0)
     required = size_mb / 1024  # Convert MB to GB
 
     if required > available:
@@ -282,6 +295,17 @@ def try_reserve_storage(user, size_bytes: int) -> bool:
         return True
 
     size_gb = size_bytes / 1024 / 1024 / 1024
+    if has_unlimited_storage_tier(user):
+        # Nothing to enforce, but keep usage accounting in step so
+        # release_storage (which does decrement these users) stays sane.
+        db.session.execute(
+            db.update(User)
+            .where(User.id == user.id)
+            .values(storage_used_gb=db.func.coalesce(User.storage_used_gb, 0.0) + size_gb)
+        )
+        db.session.commit()
+        return True
+
     result = db.session.execute(
         db.update(User)
         .where(

@@ -10,6 +10,7 @@ from vtt.models import SessionInitiative, Asset
 from vtt.upload_security import validate_upload, UploadError
 from vtt.storage import get_storage_adapter
 import logging
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -336,7 +337,9 @@ def upload_session_asset(session_id):
         return jsonify({'error': 'Unsupported asset type'}), 400
 
     storage = get_storage_adapter()
-    file_key = f"sessions/{session_id}/assets/{validation['checksum_md5'][:8]}-{validation['filename']}"
+    # Random segment: md5[:8]-filename alone collided on re-upload of the
+    # same file (assets.storage_key is UNIQUE) -> 500. See upload_asset.
+    file_key = f"sessions/{session_id}/assets/{validation['checksum_md5'][:8]}-{uuid.uuid4().hex[:8]}-{validation['filename']}"
 
     try:
         storage.upload(file_key, validation['content'])

@@ -2,6 +2,7 @@
 
 import io
 import logging
+import uuid
 from flask import Blueprint, request, jsonify, send_file, current_app
 from flask_jwt_extended import jwt_required
 from sqlalchemy import or_
@@ -333,8 +334,14 @@ def upload_asset(campaign_id):
         return jsonify({'error': 'Storage quota exceeded'}), 507
 
     # M21: Upload to storage
+    # Bug report 2026-09-23: the key used to be only md5[:8]-filename, so
+    # uploading the same file into the same campaign twice (by anyone)
+    # hit the assets.storage_key UNIQUE constraint on commit -> HTTP 500,
+    # with the quota reservation above leaked. The random segment makes
+    # every upload its own object.
     storage = get_storage_adapter()
-    file_key = f'campaigns/{campaign_id}/assets/{validation["checksum_md5"][:8]}-{validation["filename"]}'
+    upload_id = uuid.uuid4().hex[:8]
+    file_key = f'campaigns/{campaign_id}/assets/{validation["checksum_md5"][:8]}-{upload_id}-{validation["filename"]}'
 
     try:
         storage.upload(file_key, validation['content'])
@@ -350,7 +357,7 @@ def upload_asset(campaign_id):
             thumbnail_bytes = generate_thumbnail(validation['content'])
             thumbnail_key = (
                 f'campaigns/{campaign_id}/assets/thumbs/'
-                f'{validation["checksum_md5"][:8]}-{validation["filename"]}.jpg'
+                f'{validation["checksum_md5"][:8]}-{upload_id}-{validation["filename"]}.jpg'
             )
             storage.upload(thumbnail_key, thumbnail_bytes)
         except Exception as e:
@@ -376,7 +383,19 @@ def upload_asset(campaign_id):
         thumbnail_key=thumbnail_key,
     )
     db.session.add(asset)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        logger.exception('Asset row commit failed for upload %s', validation['filename'])
+        release_storage(current_user, validation['size_bytes'])
+        for key in (file_key, thumbnail_key):
+            if key:
+                try:
+                    storage.delete(key)
+                except Exception:
+                    pass
+        return jsonify({'error': 'Upload failed'}), 500
 
     # Storage usage was already atomically reserved by try_reserve_storage
     # above, before the file was even written -- no separate increment
