@@ -73,3 +73,26 @@ def test_same_file_uploaded_repeatedly_by_two_users_all_succeed(
     assert [r.status_code for r in responses] == [201, 201, 201]
     keys = {Asset.query.get(r.get_json()["asset_id"]).storage_key for r in responses}
     assert len(keys) == 3
+
+
+def test_jpeg_saved_as_png_uploads_and_is_stored_as_jpeg(app, dm_user, player_user, player_client, tmp_path):
+    """Follow-up the same day: with the quota fixed, legendaryrock's
+    upload still got 400 "File content does not match claimed type" --
+    real image bytes under the wrong image extension."""
+    from PIL import Image
+
+    app.config["LOCAL_STORAGE_PATH"] = str(tmp_path / "asset-storage")
+    campaign = _create_campaign(dm_user)
+    _add_member(campaign, player_user, "Player")
+    player_user.storage_quota_gb = 1
+    db.session.commit()
+    buffer = io.BytesIO()
+    Image.new("RGB", (32, 32), (10, 20, 30)).save(buffer, format="JPEG")
+
+    response = player_client.post(
+        f"/api/assets/campaigns/{campaign.id}/upload",
+        data={"file": (io.BytesIO(buffer.getvalue()), "token.png", "image/png"), "asset_type": "token"},
+        content_type="multipart/form-data",
+    )
+    assert response.status_code == 201
+    assert Asset.query.get(response.get_json()["asset_id"]).mime_type == "image/jpeg"

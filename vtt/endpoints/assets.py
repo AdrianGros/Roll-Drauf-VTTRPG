@@ -320,6 +320,12 @@ def upload_asset(campaign_id):
     try:
         validation = validate_upload(file_obj, current_user)
     except UploadError as e:
+        # Bug report 2026-09-23: rejections used to leave only a bare 400
+        # in the log -- say who and why.
+        logger.warning(
+            'Upload rejected: user=%s campaign=%s file=%r claimed_type=%s: %s',
+            current_user.id, campaign_id, file_obj.filename, file_obj.content_type, e,
+        )
         return jsonify({'error': str(e)}), 400
 
     # Fixed 2026-09-04 (adversarial audit): the OLD quota enforcement was

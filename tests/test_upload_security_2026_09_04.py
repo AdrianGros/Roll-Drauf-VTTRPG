@@ -28,7 +28,7 @@ def _real_jpeg_bytes():
 class TestImageContentVerification:
     def test_a_real_png_claiming_png_passes_and_returns_dimensions(self):
         result = verify_content_matches_mime_type(_real_png_bytes(), "image/png")
-        assert result == {"width": 16, "height": 12}
+        assert result == {"width": 16, "height": 12, "mime_type": "image/png"}
 
     def test_html_disguised_as_png_is_rejected(self):
         """The actual attack: upload a file with Content-Type: image/png
@@ -38,11 +38,26 @@ class TestImageContentVerification:
         with pytest.raises(UploadError):
             verify_content_matches_mime_type(fake, "image/png")
 
-    def test_a_real_jpeg_claiming_png_is_rejected(self):
-        """Real image data, but the wrong format claimed -- Pillow can
-        open it, the detected format just doesn't match."""
+    def test_a_real_jpeg_claiming_png_is_accepted_as_jpeg(self):
+        """Changed 2026-09-23: real image data under the wrong image
+        label (a .png that is really a JPEG) is harmless and common --
+        accepted, stored under the DETECTED type."""
+        result = verify_content_matches_mime_type(_real_jpeg_bytes(), "image/png")
+        assert result["mime_type"] == "image/jpeg"
+
+    def test_a_multi_picture_jpeg_is_accepted_as_jpeg(self):
+        """Camera JPEGs with an MPF segment open as format 'MPO'."""
+        buffer = io.BytesIO()
+        frames = [Image.new("RGB", (16, 12), c) for c in ((1, 2, 3), (4, 5, 6))]
+        frames[0].save(buffer, format="MPO", save_all=True, append_images=frames[1:])
+        result = verify_content_matches_mime_type(buffer.getvalue(), "image/jpeg")
+        assert result["mime_type"] == "image/jpeg"
+
+    def test_an_unsupported_real_image_format_is_rejected(self):
+        buffer = io.BytesIO()
+        Image.new("RGB", (16, 12)).save(buffer, format="BMP")
         with pytest.raises(UploadError):
-            verify_content_matches_mime_type(_real_jpeg_bytes(), "image/png")
+            verify_content_matches_mime_type(buffer.getvalue(), "image/png")
 
     def test_a_real_jpeg_claiming_jpeg_passes(self):
         result = verify_content_matches_mime_type(_real_jpeg_bytes(), "image/jpeg")

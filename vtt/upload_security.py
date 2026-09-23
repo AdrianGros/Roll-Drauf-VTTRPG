@@ -31,6 +31,20 @@ _IMAGE_MIME_TO_PIL_FORMAT = {
     'image/gif': 'GIF',
 }
 
+# Bug report 2026-09-23: a claimed-vs-detected mismatch BETWEEN two
+# allowed image formats used to be rejected too -- which blocked every
+# .png that is really a JPEG/WEBP (very common for token art saved from
+# the web) and every camera JPEG Pillow reports as MPO (multi-picture
+# JPEG). Those are harmless: the bytes ARE an allowed image, it's just
+# the label that's wrong. The asset is stored under the DETECTED type.
+_PIL_FORMAT_TO_IMAGE_MIME = {
+    'JPEG': 'image/jpeg',
+    'MPO': 'image/jpeg',
+    'PNG': 'image/png',
+    'WEBP': 'image/webp',
+    'GIF': 'image/gif',
+}
+
 MAX_FILE_SIZE_MB = 50
 MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
 
@@ -93,12 +107,13 @@ def verify_content_matches_mime_type(file_content, mime_type):
     if mime_type in _IMAGE_MIME_TO_PIL_FORMAT:
         try:
             with Image.open(io.BytesIO(file_content)) as img:
-                if img.format != _IMAGE_MIME_TO_PIL_FORMAT[mime_type]:
+                detected_mime = _PIL_FORMAT_TO_IMAGE_MIME.get(img.format)
+                if detected_mime is None:
                     raise UploadError(
-                        f'File content does not match claimed type {mime_type} '
-                        f'(detected {img.format})'
+                        f'Unsupported image format {img.format} (claimed {mime_type}). '
+                        'Allowed: PNG, JPEG, WEBP, GIF'
                     )
-                return {'width': img.size[0], 'height': img.size[1]}
+                return {'width': img.size[0], 'height': img.size[1], 'mime_type': detected_mime}
         except UnidentifiedImageError:
             raise UploadError(f'File content is not a valid image (claimed {mime_type})')
     elif mime_type == 'application/pdf':
@@ -146,6 +161,8 @@ def validate_upload(file_obj, user, check_quota=True):
     # a separate, silently-swallowed-on-failure Image.open() call this
     # used to do later just for width/height.
     content_metadata = verify_content_matches_mime_type(file_content, mime_type)
+    # (its 'mime_type', when present, is the DETECTED image type and
+    # overrides the claimed one via **content_metadata below)
 
     # 5. Check storage quota (M17 integration)
     if check_quota:
