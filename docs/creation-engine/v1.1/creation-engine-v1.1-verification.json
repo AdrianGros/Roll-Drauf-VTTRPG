@@ -1,0 +1,35 @@
+{
+  "scope": "Document packaging and schema syntax/shape checks only; not engine implementation tests.",
+  "draft_2020_12_schema_valid": true,
+  "positive_command_examples": 1,
+  "negative_shape_checks": [
+    {
+      "case": "spoofed_principal_field",
+      "rejected": true
+    },
+    {
+      "case": "missing_epoch",
+      "rejected": true
+    },
+    {
+      "case": "unknown_operation",
+      "rejected": true
+    },
+    {
+      "case": "malformed_hash",
+      "rejected": true
+    },
+    {
+      "case": "unknown_payload_field",
+      "rejected": true
+    }
+  ],
+  "acceptance_scenarios": 46,
+  "requirement_ids": 18,
+  "spec_words": 12795,
+  "spec_sha256": "70b7d3ce0d823ab5a45f9d8bf3b88d3a7cec2c3721f89bbd80680251df44c5ad",
+  "pdf_pages": 30,
+  "acceptance_ids_present_in_pdf": 46,
+  "pdf_words_outside_page": [],
+  "visual_review": "Sampled specification pages 3 and 25; no observed clipping/overlap."
+}

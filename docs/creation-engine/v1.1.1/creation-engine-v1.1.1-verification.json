@@ -1,0 +1,55 @@
+{
+ "scope": "Document packaging and schema syntax/shape checks for v1.1.1 only; not engine implementation tests.",
+ "draft_2020_12_schema_valid": true,
+ "valid_command": true,
+ "valid_resolve_decision": true,
+ "public_receipt_valid": true,
+ "public_receipt_with_outcome_digest_rejected_G0_01": true,
+ "negative_shape_checks": [
+  {
+   "case": "spoofed_principal_field",
+   "rejected": true
+  },
+  {
+   "case": "missing_epoch",
+   "rejected": true
+  },
+  {
+   "case": "unknown_operation",
+   "rejected": true
+  },
+  {
+   "case": "malformed_hash",
+   "rejected": true
+  },
+  {
+   "case": "unknown_payload_field",
+   "rejected": true
+  },
+  {
+   "case": "old_contract_version",
+   "rejected": true
+  },
+  {
+   "case": "bare_actor_id_G0_03",
+   "rejected": true
+  },
+  {
+   "case": "missing_source_occurrence_G0_03",
+   "rejected": true
+  },
+  {
+   "case": "legacy_contextDigest_field_G0_01",
+   "rejected": true
+  },
+  {
+   "case": "unkeyed_digest_as_token_G0_01",
+   "rejected": true
+  }
+ ],
+ "acceptance_scenarios": 49,
+ "acceptance_json_matches_spec_table": true,
+ "tids_without_gate": [],
+ "tids_without_requirement": [],
+ "spec_words": 13335
+}

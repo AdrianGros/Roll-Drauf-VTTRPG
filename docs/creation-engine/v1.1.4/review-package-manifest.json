@@ -1,0 +1,62 @@
+{
+ "package": "Roll Drauf Creation Engine v1.1.4 \u2014 v1.1 plus G0 errata E1\u2013E4; G0 passed",
+ "date": "2026-09-24",
+ "status": "normative; G0 passed; G1 Deploy authorized",
+ "wire_contract": "urn:rolldrauf:creation-engine:contracts:1.1.3",
+ "supersedes": [
+  "../v1.1.3/",
+  "../v1.1.2/",
+  "../v1.1.1/",
+  "../v1.1/ (historical audit candidate)"
+ ],
+ "scope": "Theoretical specification. No engine implementation/conformance claims.",
+ "files": [
+  {
+   "name": "creation-engine-v1.1.4.md",
+   "bytes": 107814,
+   "sha256": "ed6596e7172979dbbcb6c976317f0819cab2d437b8e3c9e6aae3674d90b44982"
+  },
+  {
+   "name": "creation-engine-v1.1.4-errata.md",
+   "bytes": 2271,
+   "sha256": "83144d7824a3919b2413128bc244da6f8472ba93a92cc2ac0309f864f7d9be25"
+  },
+  {
+   "name": "creation-engine-v1.1.4-acceptance.json",
+   "bytes": 13171,
+   "sha256": "549ea745d192a0085f6b8382977a2a0e34ba14d7bc3856bca1ea0bc647901a12"
+  },
+  {
+   "name": "creation-engine-v1.1.4-verification.json",
+   "bytes": 688,
+   "sha256": "7df323a52797aae3fe36b3e748ba1d5a8522756541834c01b43a7b63946b78da"
+  }
+ ],
+ "companions": [
+  {
+   "path": "../v1.1.3/creation-engine-v1.1.3-contracts.schema.json",
+   "bytes": 26089,
+   "sha256": "bbb1f91fa4d0f3da241e28d1608ad7369081344ed4c5f375359abc12c277dbe3"
+  },
+  {
+   "path": "../v1.1.3/creation-engine-v1.1.3-wire-examples.json",
+   "bytes": 1040,
+   "sha256": "b0b593b2f903b612e5854dee29f5662d4255014788709b447e8b97a3c6650163"
+  },
+  {
+   "path": "../addenda/creation-engine-v1.1-registry-addendum-a1.md",
+   "bytes": 23479,
+   "sha256": "a5532d9ae7bcdd3cfcae4fd493175bc94b6e876633e46e1c53bc7ede9be17f91"
+  },
+  {
+   "path": "../addenda/creation-engine-v1.1-registry-a1.schema.json",
+   "bytes": 25491,
+   "sha256": "dc4811b8852ad9c0859643e955356cf6d8428bdc1ba334257f15af7268539735"
+  },
+  {
+   "path": "../addenda/creation-engine-v1.1-registry-a1-verification.json",
+   "bytes": 17457,
+   "sha256": "c0fed186056d7523f8b2bbbe8de31887d545ae654de9033b556719605b465760"
+  }
+ ]
+}

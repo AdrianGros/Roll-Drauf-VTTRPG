@@ -1,0 +1,30 @@
+{
+  "notice": "Synthetic schema examples; zero hashes are placeholders, not usable execution locks.",
+  "valid_command": {
+    "contractVersion": "1.1",
+    "commandId": "cmd:demo-1",
+    "idempotencyKey": "idem:demo-1",
+    "scopeId": "campaign:demo",
+    "expectedScopeVersion": 40,
+    "authorityEpoch": 1,
+    "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "operation": "InvokeActivity",
+    "payload": {
+      "actorInstanceId": "actor:demo",
+      "activityRevisionRef": {
+        "kind": "revision",
+        "id": "revision:flame-1",
+        "definitionId": "item:flame",
+        "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "activityId": "activity:attack",
+      "targets": [
+        {
+          "kind": "instance",
+          "id": "actor:target",
+          "scopeId": "campaign:demo"
+        }
+      ]
+    }
+  }
+}

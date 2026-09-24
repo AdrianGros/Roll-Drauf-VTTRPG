@@ -1,0 +1,18 @@
+{
+ "scope": "Document and schema checks for v1.1.4 only; not engine implementation tests. Wire contract unchanged (1.1.3).",
+ "wire_contract": "urn:rolldrauf:creation-engine:contracts:1.1.3",
+ "wire_contract_schema_valid": true,
+ "wire_contract_checks_inherited_from_v1.1.3": {
+  "draft_2020_12_schema_valid": true,
+  "public_receipt_valid": true,
+  "public_receipt_with_outcome_digest_rejected_G0_01": true
+ },
+ "wire_contract_negatives_all_rejected_v1.1.3": true,
+ "registry_addendum_a1_examples_valid": true,
+ "acceptance_scenarios": 56,
+ "acceptance_json_matches_spec_table": true,
+ "tids_without_gate": [],
+ "tids_without_requirement": [],
+ "requirements": 20,
+ "spec_words": 14776
+}

@@ -1,0 +1,39 @@
+{
+ "package": "Roll Drauf Creation Engine v1.1.1 \u2014 v1.1 Audit Candidate 1 plus G0 errata E1",
+ "date": "2026-09-24",
+ "status": "errata_E1_approved; G0 medium findings pending acceptance",
+ "supersedes_normative_text_of": "../v1.1/ (retained unchanged as historical audit candidate)",
+ "scope": "Theoretical specification. No engine implementation/conformance claims.",
+ "files": [
+  {
+   "name": "creation-engine-v1.1.1.md",
+   "bytes": 98467,
+   "sha256": "872056479bdfbbfc135a94e143a78a98a3ddcb4b06454e7b10a342507b95aa44"
+  },
+  {
+   "name": "creation-engine-v1.1.1-errata.md",
+   "bytes": 4356,
+   "sha256": "df508442ad8defb3de78ea3f832da17a5c3090f90a36842bdc3efc2b25a6a862"
+  },
+  {
+   "name": "creation-engine-v1.1.1-contracts.schema.json",
+   "bytes": 22504,
+   "sha256": "b27ced311b64773b90fe9737eb4d71f9e4dd5d4e547b60c94b85c6799cc092a0"
+  },
+  {
+   "name": "creation-engine-v1.1.1-acceptance.json",
+   "bytes": 10978,
+   "sha256": "606f9f87127f5bfee6c6951d5ede42fcb0db244b9853a164527d66317cc95b17"
+  },
+  {
+   "name": "creation-engine-v1.1.1-wire-examples.json",
+   "bytes": 1040,
+   "sha256": "6720c42fd71dca28d58fdcad7b245bcf48b01283eb8034c423652f288bffec13"
+  },
+  {
+   "name": "creation-engine-v1.1.1-verification.json",
+   "bytes": 1145,
+   "sha256": "a94b43b267a72aad6654461afd79080268e9636a5f1fe5258534e7ee6fc64724"
+  }
+ ]
+}

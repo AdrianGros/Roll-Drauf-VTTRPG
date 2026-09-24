@@ -1,0 +1,1171 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "urn:rolldrauf:creation-engine:contracts:1.1.1",
+ "title": "Creation Engine v1.1.1 selected core wire contracts",
+ "$comment": "Documentation schema, not a complete feature registry or implementation. Select a $defs entry for its contract; root validates the three specified runtime commands. Semantic rules in the specification remain mandatory.",
+ "$ref": "#/$defs/Command",
+ "$defs": {
+  "Id": {
+   "type": "string",
+   "minLength": 1,
+   "maxLength": 128,
+   "pattern": "^[A-Za-z0-9._:-]+$"
+  },
+  "Digest": {
+   "type": "string",
+   "pattern": "^sha256:[a-f0-9]{64}$"
+  },
+  "SafeInteger": {
+   "type": "integer",
+   "minimum": -9007199254740991,
+   "maximum": 9007199254740991
+  },
+  "Version": {
+   "type": "integer",
+   "minimum": 0,
+   "maximum": 9007199254740991
+  },
+  "Timestamp": {
+   "type": "string",
+   "format": "date-time",
+   "maxLength": 40
+  },
+  "Rational": {
+   "type": "object",
+   "properties": {
+    "numerator": {
+     "$ref": "#/$defs/SafeInteger"
+    },
+    "denominator": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 9007199254740991
+    }
+   },
+   "required": [
+    "numerator",
+    "denominator"
+   ],
+   "additionalProperties": false,
+   "description": "Reduced exact fraction; gcd=1 and zero=0/1 are semantic constraints."
+  },
+  "Quantity": {
+   "type": "object",
+   "properties": {
+    "value": {
+     "$ref": "#/$defs/Rational"
+    },
+    "unit": {
+     "$ref": "#/$defs/Id"
+    }
+   },
+   "required": [
+    "value",
+    "unit"
+   ],
+   "additionalProperties": false
+  },
+  "DefinitionRef": {
+   "type": "object",
+   "properties": {
+    "kind": {
+     "const": "definition"
+    },
+    "id": {
+     "$ref": "#/$defs/Id"
+    }
+   },
+   "required": [
+    "kind",
+    "id"
+   ],
+   "additionalProperties": false
+  },
+  "RevisionRef": {
+   "type": "object",
+   "properties": {
+    "kind": {
+     "const": "revision"
+    },
+    "id": {
+     "$ref": "#/$defs/Id"
+    },
+    "definitionId": {
+     "$ref": "#/$defs/Id"
+    },
+    "digest": {
+     "$ref": "#/$defs/Digest"
+    }
+   },
+   "required": [
+    "kind",
+    "id",
+    "definitionId",
+    "digest"
+   ],
+   "additionalProperties": false
+  },
+  "InstanceRef": {
+   "type": "object",
+   "properties": {
+    "kind": {
+     "const": "instance"
+    },
+    "id": {
+     "$ref": "#/$defs/Id"
+    },
+    "scopeId": {
+     "$ref": "#/$defs/Id"
+    }
+   },
+   "required": [
+    "kind",
+    "id",
+    "scopeId"
+   ],
+   "additionalProperties": false
+  },
+  "WorldRef": {
+   "type": "object",
+   "properties": {
+    "kind": {
+     "const": "world"
+    },
+    "id": {
+     "$ref": "#/$defs/Id"
+    },
+    "scopeId": {
+     "$ref": "#/$defs/Id"
+    }
+   },
+   "required": [
+    "kind",
+    "id",
+    "scopeId"
+   ],
+   "additionalProperties": false
+  },
+  "Reference": {
+   "oneOf": [
+    {
+     "$ref": "#/$defs/DefinitionRef"
+    },
+    {
+     "$ref": "#/$defs/RevisionRef"
+    },
+    {
+     "$ref": "#/$defs/InstanceRef"
+    },
+    {
+     "$ref": "#/$defs/WorldRef"
+    }
+   ]
+  },
+  "Formula": {
+   "oneOf": [
+    {
+     "type": "object",
+     "properties": {
+      "node": {
+       "const": "literal"
+      },
+      "value": {
+       "$ref": "#/$defs/Quantity"
+      }
+     },
+     "required": [
+      "node",
+      "value"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "node": {
+       "const": "read"
+      },
+      "bindingId": {
+       "$ref": "#/$defs/Id"
+      },
+      "stage": {
+       "enum": [
+        "base",
+        "set",
+        "add",
+        "multiply",
+        "clamp",
+        "final"
+       ]
+      }
+     },
+     "required": [
+      "node",
+      "bindingId",
+      "stage"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "node": {
+       "const": "call"
+      },
+      "functionId": {
+       "$ref": "#/$defs/Id"
+      },
+      "args": {
+       "type": "array",
+       "items": {
+        "$ref": "#/$defs/Formula"
+       },
+       "minItems": 0,
+       "maxItems": 32
+      }
+     },
+     "required": [
+      "node",
+      "functionId",
+      "args"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "node": {
+       "const": "if"
+      },
+      "conditionBindingId": {
+       "$ref": "#/$defs/Id"
+      },
+      "then": {
+       "$ref": "#/$defs/Formula"
+      },
+      "else": {
+       "$ref": "#/$defs/Formula"
+      }
+     },
+     "required": [
+      "node",
+      "conditionBindingId",
+      "then",
+      "else"
+     ],
+     "additionalProperties": false
+    }
+   ],
+   "description": "Typed numeric AST. Registered boolean predicate bindings select branches. Depth, total nodes, typing, acyclicity, purity and function fuel are semantic validation requirements."
+  },
+  "Duration": {
+   "oneOf": [
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "permanent"
+      }
+     },
+     "required": [
+      "kind"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "ticks"
+      },
+      "clockId": {
+       "$ref": "#/$defs/Id"
+      },
+      "anchorRef": {
+       "$ref": "#/$defs/InstanceRef"
+      },
+      "count": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 9007199254740991
+      },
+      "boundary": {
+       "enum": [
+        "start",
+        "end"
+       ]
+      },
+      "firstBoundary": {
+       "const": "strictly_after_application"
+      }
+     },
+     "required": [
+      "kind",
+      "clockId",
+      "anchorRef",
+      "count",
+      "boundary",
+      "firstBoundary"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "event"
+      },
+      "matcherId": {
+       "$ref": "#/$defs/Id"
+      },
+      "count": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 9007199254740991
+      }
+     },
+     "required": [
+      "kind",
+      "matcherId",
+      "count"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "window"
+      },
+      "windowId": {
+       "$ref": "#/$defs/Id"
+      }
+     },
+     "required": [
+      "kind",
+      "windowId"
+     ],
+     "additionalProperties": false
+    }
+   ]
+  },
+  "Cadence": {
+   "type": "object",
+   "properties": {
+    "bucket": {
+     "enum": [
+      "each_turn_occurrence",
+      "source_turn_interval",
+      "round_occurrence",
+      "encounter",
+      "next_matching_action",
+      "next_matching_roll"
+     ]
+    },
+    "clockId": {
+     "$ref": "#/$defs/Id"
+    },
+    "sharedFeatureKey": {
+     "$ref": "#/$defs/Id"
+    },
+    "perTarget": {
+     "type": "boolean"
+    },
+    "limit": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 4096
+    },
+    "consumeWindowId": {
+     "$ref": "#/$defs/Id"
+    },
+    "outsideClockPolicy": {
+     "enum": [
+      "unavailable",
+      "manual"
+     ]
+    }
+   },
+   "required": [
+    "bucket",
+    "clockId",
+    "sharedFeatureKey",
+    "perTarget",
+    "limit",
+    "consumeWindowId",
+    "outsideClockPolicy"
+   ],
+   "additionalProperties": false
+  },
+  "NumericEffectChange": {
+   "type": "object",
+   "properties": {
+    "targetBindingId": {
+     "$ref": "#/$defs/Id"
+    },
+    "operator": {
+     "enum": [
+      "SET",
+      "ADD",
+      "MULTIPLY",
+      "LOWER_BOUND",
+      "UPPER_BOUND"
+     ]
+    },
+    "value": {
+     "$ref": "#/$defs/Formula"
+    }
+   },
+   "required": [
+    "targetBindingId",
+    "operator",
+    "value"
+   ],
+   "additionalProperties": false
+  },
+  "EffectApplication": {
+   "type": "object",
+   "properties": {
+    "applicationId": {
+     "$ref": "#/$defs/Id"
+    },
+    "sourceInstance": {
+     "$ref": "#/$defs/InstanceRef"
+    },
+    "sourceRevision": {
+     "$ref": "#/$defs/RevisionRef"
+    },
+    "originId": {
+     "$ref": "#/$defs/Id"
+    },
+    "target": {
+     "$ref": "#/$defs/InstanceRef"
+    },
+    "stackGroupId": {
+     "$ref": "#/$defs/Id"
+    },
+    "stackPolicy": {
+     "enum": [
+      "all",
+      "unique_by_source",
+      "highest",
+      "exclusive"
+     ]
+    },
+    "sourceFeatureKey": {
+     "$ref": "#/$defs/Id"
+    },
+    "priority": {
+     "$ref": "#/$defs/SafeInteger"
+    },
+    "duration": {
+     "$ref": "#/$defs/Duration"
+    },
+    "cadence": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/Cadence"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "changes": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/NumericEffectChange"
+     },
+     "minItems": 1,
+     "maxItems": 128
+    },
+    "policyId": {
+     "$ref": "#/$defs/Id"
+    }
+   },
+   "required": [
+    "applicationId",
+    "sourceInstance",
+    "sourceRevision",
+    "originId",
+    "target",
+    "stackGroupId",
+    "stackPolicy",
+    "sourceFeatureKey",
+    "priority",
+    "duration",
+    "cadence",
+    "changes",
+    "policyId"
+   ],
+   "additionalProperties": false,
+   "description": "Numeric effect contract. Changes resolve into fixed operator stages; priority selects SET winners, never reorders stages. Stack compatibility and per-stage grouping require semantic validation."
+  },
+  "DecisionAnswer": {
+   "oneOf": [
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "boolean"
+      },
+      "value": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "kind",
+      "value"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "quantity"
+      },
+      "value": {
+       "$ref": "#/$defs/Quantity"
+      }
+     },
+     "required": [
+      "kind",
+      "value"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "text"
+      },
+      "value": {
+       "type": "string",
+       "maxLength": 8192
+      }
+     },
+     "required": [
+      "kind",
+      "value"
+     ],
+     "additionalProperties": false
+    },
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "selection"
+      },
+      "value": {
+       "type": "array",
+       "items": {
+        "$ref": "#/$defs/Reference"
+       },
+       "minItems": 0,
+       "maxItems": 64,
+       "uniqueItems": true
+      }
+     },
+     "required": [
+      "kind",
+      "value"
+     ],
+     "additionalProperties": false
+    }
+   ],
+   "description": "A decision's exact registered answer schema further narrows this union; no type coercion/defaulting is permitted."
+  },
+  "InvokeActivityPayload": {
+   "type": "object",
+   "properties": {
+    "actorInstance": {
+     "$ref": "#/$defs/InstanceRef"
+    },
+    "sourceInstance": {
+     "$ref": "#/$defs/InstanceRef"
+    },
+    "activityRevisionRef": {
+     "$ref": "#/$defs/RevisionRef"
+    },
+    "activityId": {
+     "$ref": "#/$defs/Id"
+    },
+    "targets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/InstanceRef"
+     },
+     "minItems": 0,
+     "maxItems": 64,
+     "uniqueItems": true
+    }
+   },
+   "required": [
+    "actorInstance",
+    "sourceInstance",
+    "activityRevisionRef",
+    "activityId",
+    "targets"
+   ],
+   "additionalProperties": false
+  },
+  "ResolveDecisionPayload": {
+   "type": "object",
+   "properties": {
+    "actionId": {
+     "$ref": "#/$defs/Id"
+    },
+    "decisionId": {
+     "$ref": "#/$defs/Id"
+    },
+    "expectedDecisionVersion": {
+     "$ref": "#/$defs/Version"
+    },
+    "contextToken": {
+     "$ref": "#/$defs/ContextToken"
+    },
+    "answer": {
+     "$ref": "#/$defs/DecisionAnswer"
+    }
+   },
+   "required": [
+    "actionId",
+    "decisionId",
+    "expectedDecisionVersion",
+    "contextToken",
+    "answer"
+   ],
+   "additionalProperties": false
+  },
+  "AdjustResourcePayload": {
+   "type": "object",
+   "properties": {
+    "instance": {
+     "$ref": "#/$defs/InstanceRef"
+    },
+    "resourceId": {
+     "$ref": "#/$defs/Id"
+    },
+    "delta": {
+     "$ref": "#/$defs/Quantity"
+    },
+    "reason": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 1024
+    }
+   },
+   "required": [
+    "instance",
+    "resourceId",
+    "delta",
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "InvokeActivityCommand": {
+   "type": "object",
+   "properties": {
+    "contractVersion": {
+     "const": "1.1.1"
+    },
+    "commandId": {
+     "$ref": "#/$defs/Id"
+    },
+    "idempotencyKey": {
+     "$ref": "#/$defs/Id"
+    },
+    "scopeId": {
+     "$ref": "#/$defs/Id"
+    },
+    "expectedScopeVersion": {
+     "$ref": "#/$defs/Version"
+    },
+    "authorityEpoch": {
+     "$ref": "#/$defs/Version"
+    },
+    "executionLockDigest": {
+     "$ref": "#/$defs/Digest"
+    },
+    "operation": {
+     "const": "InvokeActivity"
+    },
+    "payload": {
+     "$ref": "#/$defs/InvokeActivityPayload"
+    }
+   },
+   "required": [
+    "contractVersion",
+    "commandId",
+    "idempotencyKey",
+    "scopeId",
+    "expectedScopeVersion",
+    "authorityEpoch",
+    "executionLockDigest",
+    "operation",
+    "payload"
+   ],
+   "additionalProperties": false,
+   "description": "Authenticated principal comes from server context. actorInstance selects the actor; sourceInstance names the occurrence that owns the activity and pays its costs. Every InstanceRef scopeId must equal the envelope scopeId; policy/lock/version conflicts require semantic rejection."
+  },
+  "ResolveDecisionCommand": {
+   "type": "object",
+   "properties": {
+    "contractVersion": {
+     "const": "1.1.1"
+    },
+    "commandId": {
+     "$ref": "#/$defs/Id"
+    },
+    "idempotencyKey": {
+     "$ref": "#/$defs/Id"
+    },
+    "scopeId": {
+     "$ref": "#/$defs/Id"
+    },
+    "expectedScopeVersion": {
+     "$ref": "#/$defs/Version"
+    },
+    "authorityEpoch": {
+     "$ref": "#/$defs/Version"
+    },
+    "executionLockDigest": {
+     "$ref": "#/$defs/Digest"
+    },
+    "operation": {
+     "const": "ResolveDecision"
+    },
+    "payload": {
+     "$ref": "#/$defs/ResolveDecisionPayload"
+    }
+   },
+   "required": [
+    "contractVersion",
+    "commandId",
+    "idempotencyKey",
+    "scopeId",
+    "expectedScopeVersion",
+    "authorityEpoch",
+    "executionLockDigest",
+    "operation",
+    "payload"
+   ],
+   "additionalProperties": false,
+   "description": "Authenticated principal comes from server context. Cross-scope targets and policy/lock/version conflicts require semantic rejection."
+  },
+  "AdjustResourceCommand": {
+   "type": "object",
+   "properties": {
+    "contractVersion": {
+     "const": "1.1.1"
+    },
+    "commandId": {
+     "$ref": "#/$defs/Id"
+    },
+    "idempotencyKey": {
+     "$ref": "#/$defs/Id"
+    },
+    "scopeId": {
+     "$ref": "#/$defs/Id"
+    },
+    "expectedScopeVersion": {
+     "$ref": "#/$defs/Version"
+    },
+    "authorityEpoch": {
+     "$ref": "#/$defs/Version"
+    },
+    "executionLockDigest": {
+     "$ref": "#/$defs/Digest"
+    },
+    "operation": {
+     "const": "AdjustResource"
+    },
+    "payload": {
+     "$ref": "#/$defs/AdjustResourcePayload"
+    }
+   },
+   "required": [
+    "contractVersion",
+    "commandId",
+    "idempotencyKey",
+    "scopeId",
+    "expectedScopeVersion",
+    "authorityEpoch",
+    "executionLockDigest",
+    "operation",
+    "payload"
+   ],
+   "additionalProperties": false,
+   "description": "Authenticated principal comes from server context. Cross-scope targets and policy/lock/version conflicts require semantic rejection."
+  },
+  "Command": {
+   "oneOf": [
+    {
+     "$ref": "#/$defs/InvokeActivityCommand"
+    },
+    {
+     "$ref": "#/$defs/ResolveDecisionCommand"
+    },
+    {
+     "$ref": "#/$defs/AdjustResourceCommand"
+    }
+   ]
+  },
+  "PendingDecision": {
+   "type": "object",
+   "properties": {
+    "decisionId": {
+     "$ref": "#/$defs/Id"
+    },
+    "actionId": {
+     "$ref": "#/$defs/Id"
+    },
+    "checkpointId": {
+     "$ref": "#/$defs/Id"
+    },
+    "questionId": {
+     "$ref": "#/$defs/Id"
+    },
+    "questionVersion": {
+     "$ref": "#/$defs/Version"
+    },
+    "answerSchemaDigest": {
+     "$ref": "#/$defs/Digest"
+    },
+    "contextToken": {
+     "$ref": "#/$defs/ContextToken"
+    },
+    "decisionVersion": {
+     "$ref": "#/$defs/Version"
+    },
+    "responderRuleId": {
+     "$ref": "#/$defs/Id"
+    },
+    "targets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/InstanceRef"
+     },
+     "minItems": 0,
+     "maxItems": 64,
+     "uniqueItems": true
+    },
+    "createdAt": {
+     "$ref": "#/$defs/Timestamp"
+    },
+    "deadline": {
+     "$ref": "#/$defs/Timestamp"
+    },
+    "windowId": {
+     "$ref": "#/$defs/Id"
+    },
+    "timeoutPolicy": {
+     "enum": [
+      "decline_optional",
+      "suspend_mandatory"
+     ]
+    },
+    "status": {
+     "enum": [
+      "open",
+      "answered",
+      "expired",
+      "invalidated"
+     ]
+    },
+    "policyId": {
+     "$ref": "#/$defs/Id"
+    }
+   },
+   "required": [
+    "decisionId",
+    "actionId",
+    "checkpointId",
+    "questionId",
+    "questionVersion",
+    "answerSchemaDigest",
+    "contextToken",
+    "decisionVersion",
+    "responderRuleId",
+    "targets",
+    "createdAt",
+    "deadline",
+    "windowId",
+    "timeoutPolicy",
+    "status",
+    "policyId"
+   ],
+   "additionalProperties": false
+  },
+  "LockedArtifact": {
+   "type": "object",
+   "properties": {
+    "kind": {
+     "$ref": "#/$defs/Id"
+    },
+    "id": {
+     "$ref": "#/$defs/Id"
+    },
+    "version": {
+     "$ref": "#/$defs/Id"
+    },
+    "digest": {
+     "$ref": "#/$defs/Digest"
+    }
+   },
+   "required": [
+    "kind",
+    "id",
+    "version",
+    "digest"
+   ],
+   "additionalProperties": false
+  },
+  "ExecutionLock": {
+   "type": "object",
+   "properties": {
+    "lockId": {
+     "$ref": "#/$defs/Id"
+    },
+    "profileId": {
+     "const": "core-safe-1"
+    },
+    "ruleset": {
+     "$ref": "#/$defs/LockedArtifact"
+    },
+    "schemaBundle": {
+     "$ref": "#/$defs/LockedArtifact"
+    },
+    "evaluator": {
+     "$ref": "#/$defs/LockedArtifact"
+    },
+    "configurationDigest": {
+     "$ref": "#/$defs/Digest"
+    },
+    "unitTableDigest": {
+     "$ref": "#/$defs/Digest"
+    },
+    "packages": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/LockedArtifact"
+     },
+     "minItems": 0,
+     "maxItems": 1024,
+     "uniqueItems": true
+    },
+    "revisions": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/RevisionRef"
+     },
+     "minItems": 0,
+     "maxItems": 100000,
+     "uniqueItems": true
+    },
+    "assets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/LockedArtifact"
+     },
+     "minItems": 0,
+     "maxItems": 5000,
+     "uniqueItems": true
+    }
+   },
+   "required": [
+    "lockId",
+    "profileId",
+    "ruleset",
+    "schemaBundle",
+    "evaluator",
+    "configurationDigest",
+    "unitTableDigest",
+    "packages",
+    "revisions",
+    "assets"
+   ],
+   "additionalProperties": false,
+   "description": "Hash the lock object externally; no self-referential digest field. Complete transitive closure, namespace uniqueness, retention and signature trust are semantic obligations."
+  },
+  "ActionState": {
+   "enum": [
+    "PROPOSED",
+    "WAITING_PRECOMMIT",
+    "ACTIVE",
+    "WAITING_DECISION",
+    "SUSPENDED",
+    "COMPLETED",
+    "CANCELLED",
+    "FAILED_PRECOMMIT"
+   ]
+  },
+  "Receipt": {
+   "type": "object",
+   "properties": {
+    "commandId": {
+     "$ref": "#/$defs/Id"
+    },
+    "operationId": {
+     "$ref": "#/$defs/Id"
+    },
+    "requestDigest": {
+     "$ref": "#/$defs/Digest"
+    },
+    "status": {
+     "enum": [
+      "accepted",
+      "committed",
+      "rejected",
+      "suspended"
+     ]
+    },
+    "scopeId": {
+     "$ref": "#/$defs/Id"
+    },
+    "stateVersion": {
+     "$ref": "#/$defs/Version"
+    },
+    "authorityEpoch": {
+     "$ref": "#/$defs/Version"
+    },
+    "checkpointId": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/Id"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "outcomeDigest": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/Digest"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "errorCode": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/Id"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "eventIds": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/Id"
+     },
+     "minItems": 0,
+     "maxItems": 4096,
+     "uniqueItems": true
+    }
+   },
+   "required": [
+    "commandId",
+    "operationId",
+    "requestDigest",
+    "status",
+    "scopeId",
+    "stateVersion",
+    "authorityEpoch",
+    "checkpointId",
+    "outcomeDigest",
+    "errorCode",
+    "eventIds"
+   ],
+   "additionalProperties": false,
+   "description": "Internal durable receipt; never delivered to a client as-is (spec §8). Clients receive PublicReceipt. Committed checkpoint and rejection field consistency is a semantic invariant."
+  },
+  "ContextToken": {
+   "type": "string",
+   "pattern": "^ctx:[A-Za-z0-9_-]{43}$",
+   "description": "Opaque context token (spec §6): HMAC-SHA-256 under a per-scope secret, or a random 256-bit nonce, base64url without padding. Never an unkeyed digest."
+  },
+  "PublicReceipt": {
+   "type": "object",
+   "properties": {
+    "commandId": {
+     "$ref": "#/$defs/Id"
+    },
+    "operationId": {
+     "$ref": "#/$defs/Id"
+    },
+    "requestDigest": {
+     "$ref": "#/$defs/Digest"
+    },
+    "status": {
+     "enum": [
+      "accepted",
+      "committed",
+      "rejected",
+      "suspended"
+     ]
+    },
+    "scopeId": {
+     "$ref": "#/$defs/Id"
+    },
+    "stateVersion": {
+     "$ref": "#/$defs/Version"
+    },
+    "authorityEpoch": {
+     "$ref": "#/$defs/Version"
+    },
+    "checkpointId": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/Id"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "errorCode": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/Id"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "eventIds": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/Id"
+     },
+     "minItems": 0,
+     "maxItems": 4096,
+     "uniqueItems": true,
+     "description": "Only event IDs the recipient may read; the omitted count is never revealed."
+    }
+   },
+   "required": [
+    "commandId",
+    "operationId",
+    "requestDigest",
+    "status",
+    "scopeId",
+    "stateVersion",
+    "authorityEpoch",
+    "checkpointId",
+    "errorCode",
+    "eventIds"
+   ],
+   "additionalProperties": false,
+   "description": "Client-facing receipt projection (spec §8, G0-01): no outcome digest; event IDs filtered under current read permissions."
+  }
+ }
+}
