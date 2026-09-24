@@ -1,0 +1,1217 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "urn:rolldrauf:creation-engine:registry:a1",
+ "title": "Creation Engine registry addendum A1 — G1 command payloads (wire contract 1.1.3)",
+ "$comment": "Approved 2026-09-24 (product owner, non-author review; closes G0-11). Extends contracts 1.1.3 per spec §17. Semantic, authorization and transaction rules in the addendum text remain mandatory.",
+ "$ref": "#/$defs/RegistryCommand",
+ "$defs": {
+  "Locale": {
+   "enum": [
+    "de",
+    "en",
+    "fr"
+   ],
+   "description": "Authoring/prompt locales for G1 (decision D8). German is canonical."
+  },
+  "Reason": {
+   "type": "string",
+   "minLength": 1,
+   "maxLength": 1024
+  },
+  "SchemaTypeRef": {
+   "type": "object",
+   "properties": {
+    "typeId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "version": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    }
+   },
+   "required": [
+    "typeId",
+    "version"
+   ],
+   "additionalProperties": false
+  },
+  "QuestionRef": {
+   "type": "object",
+   "properties": {
+    "questionId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "questionVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    }
+   },
+   "required": [
+    "questionId",
+    "questionVersion"
+   ],
+   "additionalProperties": false
+  },
+  "PresetRef": {
+   "type": "object",
+   "properties": {
+    "presetId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "version": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    }
+   },
+   "required": [
+    "presetId",
+    "version"
+   ],
+   "additionalProperties": false
+  },
+  "LegacyCharacterRef": {
+   "type": "object",
+   "properties": {
+    "sourceType": {
+     "const": "vtt.character"
+    },
+    "sourceId": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 9007199254740991
+    }
+   },
+   "required": [
+    "sourceType",
+    "sourceId"
+   ],
+   "additionalProperties": false
+  },
+  "MechanicalQuality": {
+   "enum": [
+    "lore_only",
+    "sheet_ready",
+    "runtime_ready",
+    "automation_complete"
+   ]
+  },
+  "DraftAnswer": {
+   "oneOf": [
+    {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/DecisionAnswer"
+    },
+    {
+     "type": "object",
+     "properties": {
+      "kind": {
+       "const": "structured"
+      },
+      "schemaType": {
+       "$ref": "#/$defs/SchemaTypeRef"
+      },
+      "value": {}
+     },
+     "required": [
+      "kind",
+      "schemaType",
+      "value"
+     ],
+     "additionalProperties": false
+    }
+   ],
+   "description": "Core DecisionAnswer kinds plus a structured value validated semantically against the question's registered answer schema. No coercion or defaulting."
+  },
+  "ResourceAdjustment": {
+   "type": "object",
+   "properties": {
+    "instance": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/InstanceRef"
+    },
+    "resourceId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "delta": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Quantity"
+    }
+   },
+   "required": [
+    "instance",
+    "resourceId",
+    "delta"
+   ],
+   "additionalProperties": false
+  },
+  "WorkspaceEnvelope": {
+   "type": "object",
+   "properties": {
+    "contractVersion": {
+     "const": "1.1.3"
+    },
+    "commandId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "idempotencyKey": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "workspaceId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "authorityEpoch": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "operation": {
+     "type": "string"
+    },
+    "payload": {
+     "type": "object"
+    }
+   },
+   "required": [
+    "contractVersion",
+    "commandId",
+    "idempotencyKey",
+    "workspaceId",
+    "authorityEpoch",
+    "operation",
+    "payload"
+   ]
+  },
+  "DraftEnvelope": {
+   "type": "object",
+   "properties": {
+    "contractVersion": {
+     "const": "1.1.3"
+    },
+    "commandId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "idempotencyKey": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "workspaceId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "draftId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "expectedDraftVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "authorityEpoch": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "operation": {
+     "type": "string"
+    },
+    "payload": {
+     "type": "object"
+    }
+   },
+   "required": [
+    "contractVersion",
+    "commandId",
+    "idempotencyKey",
+    "workspaceId",
+    "draftId",
+    "expectedDraftVersion",
+    "authorityEpoch",
+    "operation",
+    "payload"
+   ]
+  },
+  "MechanicalEnvelope": {
+   "type": "object",
+   "properties": {
+    "contractVersion": {
+     "const": "1.1.3"
+    },
+    "commandId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "idempotencyKey": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "scopeId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "expectedScopeVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "authorityEpoch": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "executionLockDigest": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Digest"
+    },
+    "operation": {
+     "type": "string"
+    },
+    "payload": {
+     "type": "object"
+    }
+   },
+   "required": [
+    "contractVersion",
+    "commandId",
+    "idempotencyKey",
+    "scopeId",
+    "expectedScopeVersion",
+    "authorityEpoch",
+    "executionLockDigest",
+    "operation",
+    "payload"
+   ]
+  },
+  "ScopeEnvelope": {
+   "type": "object",
+   "properties": {
+    "contractVersion": {
+     "const": "1.1.3"
+    },
+    "commandId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "idempotencyKey": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "scopeId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "expectedScopeVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "authorityEpoch": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "operation": {
+     "type": "string"
+    },
+    "payload": {
+     "type": "object"
+    }
+   },
+   "required": [
+    "contractVersion",
+    "commandId",
+    "idempotencyKey",
+    "scopeId",
+    "expectedScopeVersion",
+    "authorityEpoch",
+    "operation",
+    "payload"
+   ]
+  },
+  "CreateDraftPayload": {
+   "type": "object",
+   "properties": {
+    "schemaType": {
+     "$ref": "#/$defs/SchemaTypeRef"
+    },
+    "authoringLocale": {
+     "$ref": "#/$defs/Locale"
+    }
+   },
+   "required": [
+    "schemaType",
+    "authoringLocale"
+   ],
+   "additionalProperties": false
+  },
+  "CreateDraftCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/WorkspaceEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "CreateDraft"
+    },
+    "payload": {
+     "$ref": "#/$defs/CreateDraftPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "CreateSandboxScopePayload": {
+   "type": "object",
+   "properties": {
+    "ruleset": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/LockedArtifact"
+    },
+    "revisions": {
+     "type": "array",
+     "items": {
+      "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/RevisionRef"
+     },
+     "minItems": 1,
+     "maxItems": 64,
+     "uniqueItems": true
+    }
+   },
+   "required": [
+    "ruleset",
+    "revisions"
+   ],
+   "additionalProperties": false
+  },
+  "CreateSandboxScopeCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/WorkspaceEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "CreateSandboxScope"
+    },
+    "payload": {
+     "$ref": "#/$defs/CreateSandboxScopePayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "OpenLegacyCampaignScopePayload": {
+   "type": "object",
+   "properties": {
+    "legacyCampaignId": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 9007199254740991
+    }
+   },
+   "required": [
+    "legacyCampaignId"
+   ],
+   "additionalProperties": false
+  },
+  "OpenLegacyCampaignScopeCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/WorkspaceEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "OpenLegacyCampaignScope"
+    },
+    "payload": {
+     "$ref": "#/$defs/OpenLegacyCampaignScopePayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "RecordDraftDecisionPayload": {
+   "type": "object",
+   "properties": {
+    "question": {
+     "$ref": "#/$defs/QuestionRef"
+    },
+    "answer": {
+     "$ref": "#/$defs/DraftAnswer"
+    },
+    "promptLocale": {
+     "$ref": "#/$defs/Locale"
+    }
+   },
+   "required": [
+    "question",
+    "answer",
+    "promptLocale"
+   ],
+   "additionalProperties": false
+  },
+  "RecordDraftDecisionCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/DraftEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "RecordDraftDecision"
+    },
+    "payload": {
+     "$ref": "#/$defs/RecordDraftDecisionPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "SkipDraftQuestionPayload": {
+   "type": "object",
+   "properties": {
+    "question": {
+     "$ref": "#/$defs/QuestionRef"
+    }
+   },
+   "required": [
+    "question"
+   ],
+   "additionalProperties": false
+  },
+  "SkipDraftQuestionCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/DraftEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "SkipDraftQuestion"
+    },
+    "payload": {
+     "$ref": "#/$defs/SkipDraftQuestionPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "RetractDraftDecisionPayload": {
+   "type": "object",
+   "properties": {
+    "question": {
+     "$ref": "#/$defs/QuestionRef"
+    }
+   },
+   "required": [
+    "question"
+   ],
+   "additionalProperties": false
+  },
+  "RetractDraftDecisionCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/DraftEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "RetractDraftDecision"
+    },
+    "payload": {
+     "$ref": "#/$defs/RetractDraftDecisionPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "ApplyDraftPresetPayload": {
+   "type": "object",
+   "properties": {
+    "preset": {
+     "$ref": "#/$defs/PresetRef"
+    },
+    "previewDigest": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Digest"
+    }
+   },
+   "required": [
+    "preset",
+    "previewDigest"
+   ],
+   "additionalProperties": false
+  },
+  "ApplyDraftPresetCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/DraftEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "ApplyDraftPreset"
+    },
+    "payload": {
+     "$ref": "#/$defs/ApplyDraftPresetPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "RevertDraftPayload": {
+   "type": "object",
+   "properties": {
+    "toDraftVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    }
+   },
+   "required": [
+    "toDraftVersion"
+   ],
+   "additionalProperties": false
+  },
+  "RevertDraftCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/DraftEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "RevertDraft"
+    },
+    "payload": {
+     "$ref": "#/$defs/RevertDraftPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "CommitDraftRevisionPayload": {
+   "type": "object",
+   "properties": {
+    "declaredQuality": {
+     "$ref": "#/$defs/MechanicalQuality"
+    },
+    "definition": {
+     "oneOf": [
+      {
+       "type": "object",
+       "properties": {
+        "kind": {
+         "const": "new"
+        }
+       },
+       "required": [
+        "kind"
+       ],
+       "additionalProperties": false
+      },
+      {
+       "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/DefinitionRef"
+      }
+     ]
+    }
+   },
+   "required": [
+    "declaredQuality",
+    "definition"
+   ],
+   "additionalProperties": false
+  },
+  "CommitDraftRevisionCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/DraftEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "CommitDraftRevision"
+    },
+    "payload": {
+     "$ref": "#/$defs/CommitDraftRevisionPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "InstantiateRevisionPayload": {
+   "type": "object",
+   "properties": {
+    "revision": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/RevisionRef"
+    },
+    "holder": {
+     "oneOf": [
+      {
+       "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/InstanceRef"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "reason": {
+     "$ref": "#/$defs/Reason"
+    }
+   },
+   "required": [
+    "revision",
+    "holder",
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "InstantiateRevisionCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "InstantiateRevision"
+    },
+    "payload": {
+     "$ref": "#/$defs/InstantiateRevisionPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "SetItemEquippedPayload": {
+   "type": "object",
+   "properties": {
+    "item": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/InstanceRef"
+    },
+    "equipped": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "item",
+    "equipped"
+   ],
+   "additionalProperties": false
+  },
+  "SetItemEquippedCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "SetItemEquipped"
+    },
+    "payload": {
+     "$ref": "#/$defs/SetItemEquippedPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "SetValueOverridePayload": {
+   "type": "object",
+   "properties": {
+    "instance": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/InstanceRef"
+    },
+    "bindingId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "value": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Quantity"
+    },
+    "reason": {
+     "$ref": "#/$defs/Reason"
+    }
+   },
+   "required": [
+    "instance",
+    "bindingId",
+    "value",
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "SetValueOverrideCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "SetValueOverride"
+    },
+    "payload": {
+     "$ref": "#/$defs/SetValueOverridePayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "ClearValueOverridePayload": {
+   "type": "object",
+   "properties": {
+    "instance": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/InstanceRef"
+    },
+    "bindingId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "reason": {
+     "$ref": "#/$defs/Reason"
+    }
+   },
+   "required": [
+    "instance",
+    "bindingId",
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "ClearValueOverrideCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "ClearValueOverride"
+    },
+    "payload": {
+     "$ref": "#/$defs/ClearValueOverridePayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "SetBaseValuePayload": {
+   "type": "object",
+   "properties": {
+    "instance": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/InstanceRef"
+    },
+    "bindingId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "value": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Quantity"
+    },
+    "reason": {
+     "$ref": "#/$defs/Reason"
+    }
+   },
+   "required": [
+    "instance",
+    "bindingId",
+    "value",
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "SetBaseValueCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "SetBaseValue"
+    },
+    "payload": {
+     "$ref": "#/$defs/SetBaseValuePayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "ReissueDecisionPayload": {
+   "type": "object",
+   "properties": {
+    "actionId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "decisionId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "expectedDecisionVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "deadlineSeconds": {
+     "type": "integer",
+     "minimum": 30,
+     "maximum": 600
+    }
+   },
+   "required": [
+    "actionId",
+    "decisionId",
+    "expectedDecisionVersion",
+    "deadlineSeconds"
+   ],
+   "additionalProperties": false
+  },
+  "ReissueDecisionCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "ReissueDecision"
+    },
+    "payload": {
+     "$ref": "#/$defs/ReissueDecisionPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "ReassignDecisionResponderPayload": {
+   "type": "object",
+   "properties": {
+    "actionId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "decisionId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "expectedDecisionVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "responderRuleId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    }
+   },
+   "required": [
+    "actionId",
+    "decisionId",
+    "expectedDecisionVersion",
+    "responderRuleId"
+   ],
+   "additionalProperties": false
+  },
+  "ReassignDecisionResponderCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "ReassignDecisionResponder"
+    },
+    "payload": {
+     "$ref": "#/$defs/ReassignDecisionResponderPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "ResumeSuspendedActionPayload": {
+   "type": "object",
+   "properties": {
+    "actionId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "expectedActionVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    }
+   },
+   "required": [
+    "actionId",
+    "expectedActionVersion"
+   ],
+   "additionalProperties": false
+  },
+  "ResumeSuspendedActionCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "ResumeSuspendedAction"
+    },
+    "payload": {
+     "$ref": "#/$defs/ResumeSuspendedActionPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "ResolveActionManuallyPayload": {
+   "type": "object",
+   "properties": {
+    "actionId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "expectedActionVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    },
+    "adjustments": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/ResourceAdjustment"
+     },
+     "minItems": 0,
+     "maxItems": 128
+    },
+    "outcomeNote": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 2048
+    },
+    "reason": {
+     "$ref": "#/$defs/Reason"
+    }
+   },
+   "required": [
+    "actionId",
+    "expectedActionVersion",
+    "adjustments",
+    "outcomeNote",
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "ResolveActionManuallyCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/MechanicalEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "ResolveActionManually"
+    },
+    "payload": {
+     "$ref": "#/$defs/ResolveActionManuallyPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "MapLegacyCharacterPayload": {
+   "type": "object",
+   "properties": {
+    "source": {
+     "$ref": "#/$defs/LegacyCharacterRef"
+    },
+    "migrationVersion": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Version"
+    }
+   },
+   "required": [
+    "source",
+    "migrationVersion"
+   ],
+   "additionalProperties": false
+  },
+  "MapLegacyCharacterCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/ScopeEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "MapLegacyCharacter"
+    },
+    "payload": {
+     "$ref": "#/$defs/MapLegacyCharacterPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "BeginScopeShadowPayload": {
+   "type": "object",
+   "properties": {
+    "ruleset": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/LockedArtifact"
+    }
+   },
+   "required": [
+    "ruleset"
+   ],
+   "additionalProperties": false
+  },
+  "BeginScopeShadowCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/ScopeEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "BeginScopeShadow"
+    },
+    "payload": {
+     "$ref": "#/$defs/BeginScopeShadowPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "ApproveParityDifferencePayload": {
+   "type": "object",
+   "properties": {
+    "discrepancyId": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Id"
+    },
+    "resolution": {
+     "enum": [
+      "adopt_engine_value",
+      "keep_legacy_override"
+     ]
+    },
+    "reason": {
+     "$ref": "#/$defs/Reason"
+    }
+   },
+   "required": [
+    "discrepancyId",
+    "resolution",
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "ApproveParityDifferenceCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/ScopeEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "ApproveParityDifference"
+    },
+    "payload": {
+     "$ref": "#/$defs/ApproveParityDifferencePayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "FreezeScopeForCutoverPayload": {
+   "type": "object",
+   "properties": {
+    "reason": {
+     "$ref": "#/$defs/Reason"
+    }
+   },
+   "required": [
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "FreezeScopeForCutoverCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/ScopeEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "FreezeScopeForCutover"
+    },
+    "payload": {
+     "$ref": "#/$defs/FreezeScopeForCutoverPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "CommitScopeCutoverPayload": {
+   "type": "object",
+   "properties": {
+    "parityReportDigest": {
+     "$ref": "urn:rolldrauf:creation-engine:contracts:1.1.3#/$defs/Digest"
+    }
+   },
+   "required": [
+    "parityReportDigest"
+   ],
+   "additionalProperties": false
+  },
+  "CommitScopeCutoverCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/ScopeEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "CommitScopeCutover"
+    },
+    "payload": {
+     "$ref": "#/$defs/CommitScopeCutoverPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "AbortScopeCutoverPayload": {
+   "type": "object",
+   "properties": {
+    "reason": {
+     "$ref": "#/$defs/Reason"
+    }
+   },
+   "required": [
+    "reason"
+   ],
+   "additionalProperties": false
+  },
+  "AbortScopeCutoverCommand": {
+   "allOf": [
+    {
+     "$ref": "#/$defs/ScopeEnvelope"
+    }
+   ],
+   "properties": {
+    "operation": {
+     "const": "AbortScopeCutover"
+    },
+    "payload": {
+     "$ref": "#/$defs/AbortScopeCutoverPayload"
+    }
+   },
+   "unevaluatedProperties": false
+  },
+  "RegistryCommand": {
+   "oneOf": [
+    {
+     "$ref": "#/$defs/CreateDraftCommand"
+    },
+    {
+     "$ref": "#/$defs/CreateSandboxScopeCommand"
+    },
+    {
+     "$ref": "#/$defs/OpenLegacyCampaignScopeCommand"
+    },
+    {
+     "$ref": "#/$defs/RecordDraftDecisionCommand"
+    },
+    {
+     "$ref": "#/$defs/SkipDraftQuestionCommand"
+    },
+    {
+     "$ref": "#/$defs/RetractDraftDecisionCommand"
+    },
+    {
+     "$ref": "#/$defs/ApplyDraftPresetCommand"
+    },
+    {
+     "$ref": "#/$defs/RevertDraftCommand"
+    },
+    {
+     "$ref": "#/$defs/CommitDraftRevisionCommand"
+    },
+    {
+     "$ref": "#/$defs/InstantiateRevisionCommand"
+    },
+    {
+     "$ref": "#/$defs/SetItemEquippedCommand"
+    },
+    {
+     "$ref": "#/$defs/SetValueOverrideCommand"
+    },
+    {
+     "$ref": "#/$defs/ClearValueOverrideCommand"
+    },
+    {
+     "$ref": "#/$defs/SetBaseValueCommand"
+    },
+    {
+     "$ref": "#/$defs/ReissueDecisionCommand"
+    },
+    {
+     "$ref": "#/$defs/ReassignDecisionResponderCommand"
+    },
+    {
+     "$ref": "#/$defs/ResumeSuspendedActionCommand"
+    },
+    {
+     "$ref": "#/$defs/ResolveActionManuallyCommand"
+    },
+    {
+     "$ref": "#/$defs/MapLegacyCharacterCommand"
+    },
+    {
+     "$ref": "#/$defs/BeginScopeShadowCommand"
+    },
+    {
+     "$ref": "#/$defs/ApproveParityDifferenceCommand"
+    },
+    {
+     "$ref": "#/$defs/FreezeScopeForCutoverCommand"
+    },
+    {
+     "$ref": "#/$defs/CommitScopeCutoverCommand"
+    },
+    {
+     "$ref": "#/$defs/AbortScopeCutoverCommand"
+    }
+   ]
+  }
+ }
+}

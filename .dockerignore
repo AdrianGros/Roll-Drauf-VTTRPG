@@ -13,3 +13,5 @@ infra/mailserver/docker-data/
 # Ebenfalls nie ins Image: Robot-Artefakte und Screenshot-Baselines.
 artifacts/
 tools/robots/snapshots/
+# Hypothesis-Beispieldatenbank der Property-Tests (Creation Engine WP1).
+.hypothesis/

@@ -55,3 +55,32 @@ must not be prerequisites or primary content on the VTT overview.
 **Guild** is a Discord/community metadata concept, not a VTT workspace
 resource. Guild data may remain available to the optional integration boundary,
 but it is not shown, ranked, or created by the VTT overview.
+
+## Creation Engine
+
+Normative source: `docs/creation-engine/v1.1.4/` (spec §4 defines these records).
+
+**Definition** is the stable logical identity of authored content within a
+workspace or publisher; its name is a mutable label.
+
+**Revision** is immutable authored content with a canonical content digest.
+New content is a new revision, never an edit of a published one.
+
+**Draft** is the author's editable proposal with a monotonically increasing
+draft version and a log of the decisions that shaped it.
+
+**Occurrence** (spec: EntityInstance) is one runtime appearance of content in
+exactly one runtime scope. Its resources belong to it, not to its tokens.
+
+**Representation** is a token, sheet or map pin showing an occurrence. Moving
+a token changes representation state, not the occurrence's resources.
+
+**Runtime scope** is a campaign's authoritative mechanical state, or a
+personal sandbox. Migration state and the action gate belong to the scope.
+
+**Execution lock** pins the exact content, ruleset, schemas and evaluator a
+scope executes; nothing floats.
+
+**Content digest** (`sha256:` over RFC 8785 canonical bytes) identifies exact
+bytes and may only reach principals who may read all hashed content. A
+**context token** is the opaque, server-keyed value a client echoes back.
