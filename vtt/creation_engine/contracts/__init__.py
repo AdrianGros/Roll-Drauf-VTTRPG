@@ -44,6 +44,11 @@ def _registry() -> Registry:
     return Registry().with_resources((sid, Resource.from_contents(_schema(sid))) for sid in SCHEMA_FILES)
 
 
+def contract_registry() -> Registry:
+    """The approved wire contracts as a referencing registry, for schemas that $ref their definitions."""
+    return _registry()
+
+
 @cache
 def _validator(schema_id: str, definition: str | None) -> Draft202012Validator:
     schema = _schema(schema_id)

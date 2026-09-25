@@ -196,9 +196,10 @@ argument are insufficient"):
 
 ## 7. Schema / migration diff (additive only)
 
-All tables are new. G1 changes no legacy table or column. They are created through models
-(`AUTO_CREATE_SCHEMA`) plus a documented `migrations/migration_m73_creation_engine_g1.sql`, following
-the repo convention in §2.6.
+All tables are new. G1 changes no legacy table or column. Content tables are defined by the WP3 models and
+`migrations/migration_m73_creation_engine_content.sql`; later work packages add their own
+migrations. `AUTO_CREATE_SCHEMA` alone does not install append-only triggers. The SQL migration
+is required before activating the engine, following the repo convention in §2.6.
 
 | Table | Spec | Key contents and constraints |
 | --- | --- | --- |
@@ -393,9 +394,9 @@ app, and it touches no legacy path.
 - **Hygiene:** `CONTEXT.md` gains the Creation Engine vocabulary. `.hypothesis/` is added to
   `.gitignore` and `.dockerignore`.
 
-**Implementation-level choice to confirm in WP3.** The unit table's canonical JSON shape
+**Implementation-level choice adopted by WP3.** The unit table's canonical JSON shape
 (`{"units":[{"id","dimension","toBase"}]}`, sorted by ID) is not in the wire contract. It exists so
-the `unitTableDigest` is computable. WP3 (ruleset packaging) must adopt it or register a replacement.
+the `unitTableDigest` is computable. WP3 adopts this shape unchanged.
 
 **Files changed.**
 
@@ -403,7 +404,7 @@ the `unitTableDigest` is computable. WP3 (ruleset packaging) must adopt it or re
   `vtt/creation_engine/contracts/{__init__.py,core-contracts-1.1.3.schema.json,registry-a1.schema.json}`.
 - New tests: `tests/creation_engine/test_ce_{canonical,rational,types_units,contracts,boundaries}.py`.
 - Edited: `CONTEXT.md`, `.gitignore`, `.dockerignore`, `requirements.txt`.
-- Not committed.
+- Committed as `e17ae9c`.
 
 **Proofs.**
 
@@ -472,8 +473,8 @@ fixed stages, stacking, budgets), then WP3.
 - **`errors.py`:** gains `EFFECT_CONFLICT`. **`units.py`:** gains `base_unit()`, `is_dimensionless()`
   and the core dimension `dimension:dimensionless`.
 
-**Interpretations to confirm.** These are implementation-level readings of spec text. None changes
-a contract.
+**Interpretations confirmed (2026-09-24).** The user approved these readings and continuation
+into WP3 in the prior implementation session. None changes a contract.
 
 1. **Dimensionless dimension.** Pure numbers use the core dimension `dimension:dimensionless`. A
    unit table must register its base unit before MULTIPLY factors or ratios can be used.
@@ -509,7 +510,7 @@ a contract.
   `tests/creation_engine/test_ce_evaluator.py`, `tests/creation_engine/test_ce_evaluator_properties.py`.
 - Edited: `vtt/creation_engine/{errors,units,canonical}.py`. `canonical.py` gains recursion guards:
   pathological nesting becomes `BUDGET_EXCEEDED` instead of a crash.
-- Not committed.
+- Committed as `825b8ad`.
 
 **Proofs.**
 
@@ -544,10 +545,104 @@ a contract.
 
 **Residual risks.**
 
-- Interpretations 1–9 above should be confirmed or corrected before WP3 content depends on them.
 - Duration and cadence are carried but not interpreted. Deciding which applications are active is
   the G2 time ledger's job; G1 callers pass only active applications.
 
 **Next step.** WP3: definitions, revisions, drafts and execution locks (G1 subset), plus personal
 workspaces. That includes the RDL G1-subset ruleset package (D3) that supplies the real bindings,
 units and rounding.
+
+
+### WP3 — content store, drafts, locks and RDL G1 subset (2026-09-25)
+
+**Input / status.** Continued the approved G1 plan from WP2 commit `825b8ad` and the prior
+session's unfinished WP3 files. That session stopped at its usage limit during PostgreSQL
+verification; the working tree already contained the DBAPI migration-execution fix. WP3
+implementation and verification are complete.
+
+**Implementation summary / files.**
+
+- `vtt/creation_engine/content/`: schema registry, definitions/revisions, versioned drafts,
+  ruleset declarations and execution-lock resolution. The registry snapshots schema inputs;
+  callers cannot mutate a validator through the schema accessor. Revisions are validated before
+  publication and retain canonical bytes and provenance. Lock resolution checks the entire
+  referenced revision closure, actual byte digests, identities, schema support and evaluator
+  compatibility before producing a content-addressed lock.
+- `vtt/creation_engine/store/`: seven additive SQLAlchemy tables and a transaction-neutral
+  repository. Workspaces belong to local accounts. Definitions can be renamed/tombstoned;
+  their revisions remain immutable. Drafts retain their authoring schema bundle, locale and
+  type/version. Undo appends a snapshot instead of erasing history. Decision logs reference
+  existing snapshots and retain typed answers and question versions.
+- `migrations/migration_m73_creation_engine_content.sql`: PostgreSQL byte storage, foreign
+  keys, uniqueness and append-only triggers for revisions, snapshots, answers and locks.
+  Version columns are BIGINT, preserving the approved wire contract's full safe-integer range.
+- `vtt/creation_engine/evaluator/identity.py`: versioned evaluator artifact covering the
+  profile descriptor and implementation bytes, including arithmetic and contract dependencies.
+- `content/rdl_g1.py`: **Roll Drauf Light G1 subset 1.0.0** (`rules.roll-drauf-light-g1`).
+  Declares six attributes, defense, HP maximum, Fokus maximum, training bonus, HP/Fokus
+  resources and the existing three class-signature selection sets. All numeric bindings
+  explicitly round down; score, HP and Fokus dimensions are distinct. Resource adjustments
+  use `clamp_report_delta`. This policy concerns commands, not maximum-change migrations.
+  Base edits and overrides are eligible, subject to later command authorization. No base value
+  or signature selection is inferred. Signature IDs have no implicit effect; imported totals
+  and described bonuses still require WP7's explicit reconciliation. Other mechanics remain manual.
+- `tests/creation_engine/test_ce_{content,content_store,rdl_g1}.py`,
+  `tools/ce_test_postgres.py` and the `postgres` pytest marker provide pure, SQLite and actual
+  PostgreSQL verification. The harness uses a disposable PostgreSQL 16 container on localhost.
+  `contracts/__init__.py` exports the approved reference registry; `errors.py` adds the existing
+  A1 `DRAFT_VERSION_CONFLICT` code.
+
+**Recovered defects / proofs.**
+
+- Regression cases exposed accepted digest claims that disagreed with stored bytes, mutable
+  registered schemas, concurrent first-insert failures, and invalid draft JSON leaving partial
+  heads if the caller caught the error and committed. These cases now pass.
+- PostgreSQL tests exercise competing transactions for draft saves and workspace/lock creation;
+  exactly one competing draft save wins, while both identical first-use requests may commit.
+- All eight UPDATE/DELETE combinations on the four append-only tables are rejected by database
+  triggers. Migration columns/types, primary keys and foreign keys match the models; rerunning
+  the migration preserves saved content.
+- Ruleset/evaluator digests are pinned in tests. An implementation-byte change alters the
+  evaluator digest even when its descriptor is unchanged. The real evaluator leaves missing
+  RDL bases unresolved and applies the package's declared rounding.
+- Targeted verification: **378 passed**, including PostgreSQL, before the final three evaluator
+  compatibility cases were added.
+- Full repository verification: **1,017 passed, 0 failed, 0 skipped** in **518.88 s**
+  (381 Creation Engine tests plus 636 existing tests), with PostgreSQL enabled. There were
+  3,933 warnings, primarily existing deprecations and legacy SQLAlchemy relationship warnings.
+  No production paths import the new engine package; the import guard also passes.
+
+Reproduction (from the repository, with its `venv/`):
+
+```bash
+venv/bin/python tools/ce_test_postgres.py start
+export CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55432/ce_test
+venv/bin/python -m pytest tests/creation_engine -q
+venv/bin/python -m pytest -q
+venv/bin/python tools/ce_test_postgres.py stop
+```
+
+**Acceptance checklist (WP3).**
+
+- [x] Personal workspace creation is idempotent under concurrency.
+- [x] Immutable revision bytes/digests; schema validation; retained definition identity.
+- [x] Draft optimistic concurrency, monotonic undo, preserved authoring bundle and answer history.
+- [x] Deterministic locks pin the supported G1 closure and reject missing/ambiguous/tampered content.
+- [x] Separately versioned RDL subset supplies explicit units, bindings, rounding and resource policy.
+- [x] PostgreSQL enforces append-only history independently of repository methods.
+- [x] Full repository regression verification complete: 1,017 passed.
+
+**Retention / residual scope.** The handoff backup and raw verification logs are retained in the
+Codex task workspace under `creation-engine/` (`full-regression.log` holds the final run);
+the disposable PostgreSQL container was stopped after verification. The tests and this record are the repository
+artifacts. No production migration or live cutover was performed. The runtime app does not
+import these tables yet. SQLite is a fast functional fixture; PostgreSQL is required for the
+immutability and concurrent-write guarantees. The repository assumes a trusted command caller;
+workspace authorization, admission/idempotent receipts, transaction boundaries and transports
+arrive in WP4/WP6. Semantic validator code changes require a schema-bundle version bump;
+evaluator dependencies outside this package remain pinned by the deployment environment.
+Package distribution, asset retention, updates and full progression remain later-gate work.
+
+**Next step.** WP4: command admission, receipts, scope gate, action/checkpoint state, recorded
+randomness, transactional outbox and fencing, using this store inside the kernel's transaction.
+The G1 milestone remains in progress; WP3 completion is not G1 exit or a live rollout.
