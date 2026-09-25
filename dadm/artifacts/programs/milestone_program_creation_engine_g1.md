@@ -646,3 +646,124 @@ Package distribution, asset retention, updates and full progression remain later
 **Next step.** WP4: command admission, receipts, scope gate, action/checkpoint state, recorded
 randomness, transactional outbox and fencing, using this store inside the kernel's transaction.
 The G1 milestone remains in progress; WP3 completion is not G1 exit or a live rollout.
+
+
+### WP4 — command/checkpoint kernel (2026-09-25)
+
+**Input / status.** Continued from WP3 commit `d7a8fd0` under the existing G1 authorization.
+The backend kernel and PostgreSQL adapter are implemented and verified. Public transport and current-audience projection remain disabled
+until WP6; this entry does not claim completion of the overall G1 acceptance catalogue.
+
+**Implementation summary / files.**
+
+- `vtt/creation_engine/kernel/records.py`: command parsing, canonical request identity excluding
+  only `commandId`, internal receipts, the specified action transitions and cumulative root budgets.
+- `kernel/activity.py`: typed internal plans with explicit ordered windows, cost owners/spend
+  windows, dice, work bounds and declared child activity IDs. These are trusted registry/compiler
+  inputs, not a new public wire contract. Admission freezes the exact plan into the action.
+- `kernel/service.py`: shared admission and execution for `InvokeActivity` and `AdjustResource`;
+  deferred proposals, cancellation/expiry, worker continuation, declared child dispatch and lease
+  acquisition. Later work packages register their remaining semantic commands; unknown operations
+  are rejected. Every admission/continuation rechecks usable-account status and the required
+  current-policy port. Duplicates also recheck access before returning their retained receipt.
+- `store/runtime.py`: PostgreSQL unit of work. Every mechanical writer takes the scope row lock,
+  giving a committed order across processes. Account status uses shared row locks. Authorization
+  implementations must read current grants through this transaction, and policy writers must
+  coordinate on the same scope row. No SQLite runtime fallback is offered.
+- `store/runtime_models.py` and `migrations/migration_m74_creation_engine_kernel.sql`: twelve
+  additive runtime tables for scopes, occurrences, resources, actions, checkpoints, receipts,
+  resource entries, random records, effect applications, events, outbox delivery and consumer
+  deduplication. M74 requires M73. PostgreSQL triggers protect checkpoint/effect/roll/event history,
+  retain terminal receipts, and enforce exact rational resource bounds independently of the caller.
+- `tests/creation_engine/test_ce_kernel.py`: actual competing processes, abrupt process exits,
+  controlled clocks, replay, resource/effect integrity, scope isolation, limits and database guards.
+
+**Interfaces / implementation choices within the approved design.**
+
+- `Kernel.submit(principal, raw, defer=False)` takes an authenticated **server** principal, never
+  an identity from the envelope. A duplicate with another command ID returns the first admitted
+  command ID. Changed payload/version/lock under the same key is `IDEMPOTENCY_KEY_REUSE`.
+- `Kernel` requires the installed ruleset, schema registry, configuration and three trusted ports:
+  authorization, immutable-revision activity resolution, and bounded checkpoint preparation.
+  Installed artifacts must match the lock. Native resolver/preparer registrations must themselves
+  be versioned in the pinned configuration before production registration (WP7/WP8); there is no
+  content-supplied executable callback and no permissive default authorization.
+- Kernel preparation returns typed resource adjustments, effect applications and an internal
+  result. Every cost/adjustment/effect is validated before writing. A savepoint additionally rolls
+  back late validation failures. The outer transaction commits receipt, checkpoint, ledger changes,
+  effects, CSPRNG outcomes, events and outbox together. No delivery occurs inside that transaction.
+- Each successful checkpoint increments the scope version once. The initial invocation receipt
+  retains its first committed checkpoint; subsequent checkpoints have their own immutable records.
+  Later failures preserve those records and suspend the action while retaining the durable gate.
+- `advance(scope, action, window_index, fence)` and `spawn_child(...)` are internal worker APIs.
+  They are not extra client envelope fields. Children must be declared by a committed parent,
+  retain the actor, respect depth/source re-entry limits, and charge the root's cumulative budget.
+- Lease reassignment increments an internal fence, never the authority epoch. Fence/expiry and
+  proposal deadline are rechecked at the transaction's commit boundary using the shared database
+  clock and a nondecreasing scope watermark. Lease expiry does not release the action gate.
+- `dispatch` is at least once to **trusted internal consumers**. `consume_once` commits a consumer's
+  database mutation and deduplication record together. A lost ACK redelivers the same event ID;
+  consumer failure rolls back both. Internal snapshots are consistent under the scope lock.
+  WP6 must project these records and replace internal sequence numbers with audience-bound cursors.
+- Limits: 20 open proposals per principal, 100 per scope, 64 targets, 128 affected occurrences,
+  16 child levels, 256 child frames, 1,024 triggers, 4,096 generated events, 100,000 primitive
+  operations/checkpoint and 1,000,000/root. The transport byte limit is explicitly configurable
+  (default 1 MiB); malformed/oversized traffic is checked before persistence. Proposal timeout
+  is an explicit server policy within 30–600 seconds, copied at admission.
+- Effect application storage is immutable and bounded at 2,000 retained applications/occurrence
+  for this G1 adapter. Selecting/removing active contributions and cadence/time expiry belongs to
+  the adapter/time work; this package does not silently execute an expiry policy.
+
+**Proofs / verification.**
+
+- Full repository regression: **1,067 passed, 0 failed, 0 skipped** in **501.49 s**, with
+  PostgreSQL enabled (3,934 warnings from legacy deprecations/relationships and table sorting).
+- Final Creation Engine run after the added schema/configuration and malformed-wire guards:
+  **435 passed, 0 failed, 0 skipped** in **57.88 s** (8 legacy ORM/table-sorting warnings).
+  This includes the import guard and 50 kernel scenarios. The final additions were restricted to
+  the kernel and its tests; the existing application code had no changes after the full run.
+- T04: competing processes spend one charge once; matching simultaneous duplicates get the same
+  receipt. Refreshing and trying a second new command cannot overdraw the resource.
+- T05/T06: process death after a draw, after SQL writes but before commit, and after commit;
+  restart on another worker produces one checkpoint, one debit, one stored roll and one effect.
+- T07/T49: changed request under the same key is rejected; two occurrences of the same item
+  revision do not share a charge pool; only the selected source pays.
+- T08 kernel/consumer portion: lost-ACK redelivery is deduplicated with a real transactional
+  consumer write, and snapshot recovery agrees with committed state. Client projection is WP6.
+- T12/T13: post-roll cancellation cannot refund/reroll; depth/cycle/root-work overruns retain
+  earlier checkpoints and suspend; a parent cannot advance past an unfinished child.
+- T52: withdrawal and expiration cancel proposals with no checkpoint/cost; counts are released.
+  An expired retry retains the first command ID; activation crossing its deadline cannot commit.
+- T53 kernel portion: body/structural admission limits leave nothing persisted; runtime budget
+  faults produce failed activation or suspension with the last committed checkpoint retained.
+  Public HTTP/Socket.IO envelope testing remains with transport wiring.
+
+Reproduction uses the WP3 disposable database command, then:
+
+```bash
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55432/ce_test venv/bin/python -m pytest tests/creation_engine -q
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55432/ce_test venv/bin/python -m pytest -q
+```
+
+**Acceptance checklist (WP4 backend).**
+
+- [x] Principal/scope/key deduplication with retained receipt identity and current authorization.
+- [x] Durable scope gate, explicit action states, atomic checkpoints and recorded randomness.
+- [x] Before/after-commit crash proof with two real worker processes.
+- [x] Source occurrence isolation; resource bounds; atomic, unique effect applications.
+- [x] Lease fences distinct from authority epochs; stale/expired workers cannot commit.
+- [x] Persistent outbox, consumer deduplication and consistent internal snapshot recovery.
+- [x] Precommit limits/cancellation and deterministic action-tree budgets.
+- [x] Full regression plus final focused verification recorded: 1,067 and 435 passed, respectively.
+
+**Retention / residual work.** Code, migration and fixtures are repository artifacts. Raw logs
+are retained under the Codex task workspace's `creation-engine/wp4/` (`full-regression.log`,
+`engine-final.log`). The disposable PostgreSQL container was stopped after verification. No production schema was
+changed and no running app imports the new runtime adapter. Public receipt projection, permissions
+on each transport, subscriptions and audience-bound recovery are WP6. Registered RDL/authoring
+compilers and the remaining mutation adapters are WP7/WP8. The three host ports remain mandatory
+integration contracts; the tests supply explicit fixture implementations. Live cutover remains
+excluded. G1 exit still requires the later packages and human acceptance study.
+
+**Next step.** WP5: persisted pending decisions, deadlines/clock anomalies, responder revocation,
+operator intervention and manual-resolution provenance, attached to these action/checkpoint records.
