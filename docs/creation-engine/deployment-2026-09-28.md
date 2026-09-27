@@ -24,7 +24,10 @@ human study, manual-task depth decision and remaining browser/accessibility work
    files, credentials and machine state from entering the release image.
 4. Build an image tagged and labelled with the exact Git revision. Run targeted legacy and
    compiler checks inside that image on Python 3.12 using isolated test data, plus factory,
-   asset and packaging checks. Reuse existing PostgreSQL/browser evidence for unchanged code.
+   asset and packaging checks. Before replacing the live app, start the image with its
+   default Gunicorn command, production configuration and disposable PostgreSQL/Redis
+   containers. Require HTTP liveness and authenticated readiness. Factory tests using
+   SQLite do not establish production startup. Reuse existing browser evidence for unchanged code.
 5. Use the canonical Compose project `roll-drauf-vtt` and live compose file, with a release
    override selecting the pinned image. Replace only `app` with `--no-deps --no-build`.
    Keep database, Redis, mailserver, network and persistent asset volume intact.
@@ -36,6 +39,19 @@ The exact commands, commit/image identities, protected backup metadata, logs and
 post-deployment results are retained in the task workspace's `deployment-2026-09-28/`.
 This document defines the release boundary; executed results are recorded in its
 `release-result.json`, not inferred from this procedure.
+
+## First rollout and dependency correction
+
+The initial `52760c4` image passed 104 selected tests and the factory/package checks,
+but failed production startup on 28 September (Berlin time). Its unpinned transitive
+SQLAlchemy dependency resolved to 2.1.1; the live `postgresql://` URL selected `psycopg`,
+while the installed driver was `psycopg2-binary`. The rollout automatically restored the
+previous image and verified HTTPS liveness at 01:53:44 CEST. Database, Redis and mailserver
+containers were preserved; no database restore was needed.
+
+The correction pins SQLAlchemy to the previous production image's 2.0.52 and adds an
+installed-driver regression check. The retry must also pass the production startup check
+above. Retain the failed attempt's evidence separately from the successful retry.
 
 ## Rollback
 
