@@ -2,6 +2,13 @@ ops/certbot/
 ops/certbot/conf/
 ops/certbot/www/
 .git/
+# Inject deployment configuration at runtime; never bake local credentials into images.
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!.env.vtt.roll-drauf.de.example
 .pytest_cache/
 __pycache__/
 venv/

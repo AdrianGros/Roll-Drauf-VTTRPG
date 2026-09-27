@@ -239,6 +239,10 @@ def _can_read_character(user_id, char):
 
 
 def _serialize_character_sheet(char):
+    from vtt.ce_compat import character_projection
+    projected = character_projection(char)
+    if projected is not None:
+        return {"character": projected, "items": projected["items"]}
     character_payload = char.serialize(include_details=True)
     character_payload.update(
         {
@@ -561,6 +565,10 @@ def level_up_character(char_id):
 
 def _build_export_payload(char):
     """Build a versioned, portable export dict for a canonical RDL character."""
+    from vtt.ce_compat import character_projection
+    projected = character_projection(char, operation="export")
+    if projected is not None:
+        return {"export_kind": "creation_engine_legacy_compat", "export_version": 1, "character": projected}
     char_data = char.character_data or {}
     rdl = char_data.get('roll_drauf_light', {})
     avatar_url = char.avatar_url or (

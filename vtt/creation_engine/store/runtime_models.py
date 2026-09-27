@@ -11,6 +11,8 @@ from vtt.extensions import db
 class CeRuntimeScope(db.Model):
     __tablename__ = "ce_runtime_scopes"
     __table_args__ = (
+        db.CheckConstraint("decision_timeout_seconds BETWEEN 30 AND 600 AND clock_tolerance_seconds BETWEEN 0 AND 600",
+                           name="ce_decision_time_policy"),
         db.CheckConstraint("kind IN ('sandbox', 'campaign')", name="ce_scope_kind"),
         db.CheckConstraint("migration_state IN ('LEGACY','SHADOW','FROZEN_FOR_CUTOVER','ENGINE','ROLLBACK_REVIEW')",
                            name="ce_scope_authority_state"),
@@ -33,6 +35,9 @@ class CeRuntimeScope(db.Model):
     lease_owner = db.Column(db.String(128))
     lease_expires_at = db.Column(db.DateTime(timezone=True))
     time_watermark = db.Column(db.DateTime(timezone=True), nullable=False)
+    decision_timeout_seconds = db.Column(db.Integer, nullable=False, default=120, server_default="120")
+    clock_tolerance_seconds = db.Column(db.Integer, nullable=False, default=30, server_default="30")
+    decision_heartbeat_at = db.Column(db.DateTime(timezone=True))
     deleted = db.Column(db.Boolean, nullable=False, default=False)
 
 
@@ -156,5 +161,31 @@ class CeEventConsumption(db.Model):
     event_id = db.Column(db.String(128), db.ForeignKey("ce_domain_events.id"), primary_key=True)
 
 
+class CePendingDecision(db.Model):
+    __tablename__ = "ce_pending_decisions"
+    __table_args__ = (
+        db.CheckConstraint("version BETWEEN 0 AND 9007199254740991 AND created_scope_version BETWEEN 0 AND 9007199254740991",
+                           name="ce_decision_versions"),
+        db.CheckConstraint("timeout_seconds BETWEEN 30 AND 600", name="ce_decision_timeout"),
+        db.CheckConstraint("status IN ('open','answered','expired','invalidated')", name="ce_decision_status"),
+        db.CheckConstraint("(status = 'open') = (closed_at IS NULL)", name="ce_decision_closed"),
+        db.Index("ce_one_open_decision_per_action", "action_id", unique=True, postgresql_where=db.text("status = 'open'")),
+    )
+    id = db.Column(db.String(128), primary_key=True)
+    version = db.Column(db.BigInteger, primary_key=True)
+    scope_id = db.Column(db.String(128), db.ForeignKey("ce_runtime_scopes.id"), nullable=False, index=True)
+    action_id = db.Column(db.String(128), db.ForeignKey("ce_actions.id"), nullable=False)
+    checkpoint_id = db.Column(db.String(128), db.ForeignKey("ce_checkpoints.id"), nullable=False)
+    status = db.Column(db.String(16), nullable=False)
+    canonical = db.Column(db.LargeBinary, nullable=False)
+    context_digest = db.Column(db.String(71), nullable=False)
+    created_scope_version = db.Column(db.BigInteger, nullable=False)
+    question = db.Column(db.LargeBinary, nullable=False)
+    timeout_seconds = db.Column(db.Integer, nullable=False)
+    answer = db.Column(db.LargeBinary)
+    responder_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    closed_at = db.Column(db.DateTime(timezone=True))
+
+
 RUNTIME_TABLES = tuple(cls.__table__ for cls in (CeRuntimeScope, CeInstance, CeResourceLedger, CeAction, CeCheckpoint,
-                       CeReceipt, CeResourceEntry, CeRandomRecord, CeEffectApplication, CeDomainEvent, CeOutbox, CeEventConsumption))
+                       CeReceipt, CeResourceEntry, CeRandomRecord, CeEffectApplication, CeDomainEvent, CeOutbox, CeEventConsumption, CePendingDecision))

@@ -1,0 +1,46 @@
+{
+  "manifestVersion": 1,
+  "status": "prepared_not_executed",
+  "scheduledDate": "2026-09-29",
+  "timezone": "Europe/Berlin",
+  "sessionTime": null,
+  "studyLead": null,
+  "acceptanceOwner": null,
+  "participants": [],
+  "devices": [],
+  "candidateBuildEvidence": "study-candidate-build-2026-09-27.json",
+  "testedSessionBuild": null,
+  "testEnvironmentProvisioned": false,
+  "participantAccountsProvisioned": false,
+  "taskScopeDecision": {
+    "status": "acceptance_owner_review_required",
+    "manualConditionalAndChoiceAcceptedForT45": null,
+    "reason": null,
+    "decidedBy": null,
+    "decidedAt": null
+  },
+  "tasks": [
+    {"id": "T45-item", "profile": "g1.authored-magic-item", "execution": "bounded_flame_runtime"},
+    {"id": "T45-conditional", "profile": "g1.authored-manual-conditional", "execution": "manual_only"},
+    {"id": "T45-choice", "profile": "g1.authored-manual-choice", "execution": "manual_only"},
+    {"id": "T45-lore", "profile": "g1.authored-lore", "execution": "descriptive_only"}
+  ],
+  "humanResults": "study-results-template.csv",
+  "humanResultsRecorded": 0,
+  "acceptance": {
+    "minimumParticipants": 8,
+    "requiredExperienceGroups": ["novice", "experienced"],
+    "coreTasksPerParticipant": 4,
+    "minimumUnassistedCompletionRate": 0.8,
+    "maximumUnnoticedCreativeDefaults": 0,
+    "recurrentConfusionRequiresResolution": true,
+    "passed": false
+  },
+  "openItems": [
+    "Confirm session time, study lead, acceptance owner and roster",
+    "Record the task-scope decision before scoring",
+    "Provision the isolated session environment/accounts and verify the installed build",
+    "Record real browser/device coverage and remaining accessibility limits",
+    "Conduct deferred sessions and record actual results"
+  ]
+}

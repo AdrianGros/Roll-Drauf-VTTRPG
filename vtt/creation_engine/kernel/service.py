@@ -23,6 +23,7 @@ from vtt.creation_engine.evaluator.fuel import Fuel
 from vtt.creation_engine.evaluator.effects import EffectApplication
 from vtt.creation_engine.evaluator.identity import evaluator_artifact
 from vtt.creation_engine.kernel.activity import Activity, Window
+from vtt.creation_engine.kernel.decision_service import DecisionCommands, DECISION_OPERATIONS
 from vtt.creation_engine.kernel.records import (Action, ActionState, Command, KernelError, PRECOMMIT,
                                                 charge_root, receipt, refuse)
 from vtt.creation_engine.rational import Rational
@@ -39,19 +40,32 @@ class Adjustment:
 
 
 @dataclass(frozen=True)
+class RollAdjustment:
+    """A trusted, bounded sum of a declared roll; no new draw or content callback."""
+    instance_id: str
+    resource_id: str
+    roll_id: str
+    multiplier: Quantity
+    reason: str
+
+
+@dataclass(frozen=True)
 class Prepared:
     result: object
     adjustments: tuple[Adjustment, ...] = ()
     effects: tuple[dict, ...] = ()
+    roll_adjustments: tuple[RollAdjustment, ...] = ()
 
 
-class Kernel:
+class Kernel(DecisionCommands):
     def __init__(self, store, *, ruleset, schema_registry, configuration, authorize, resolve_activity, prepare, worker_id,
-                 random=None, fault=None, precommit_seconds=120, max_request_bytes=1024 * 1024):
+                 random=None, fault=None, precommit_seconds=120, max_request_bytes=1024 * 1024,
+                 responders=None, decision_facts=None, authorize_operator=None):
         self.store, self.ruleset = store, ruleset
         self.schema_registry = schema_registry
         self.configuration_digest = content_digest(configuration)
         self.authorize, self.resolve_activity, self.prepare = authorize, resolve_activity, prepare
+        self.responders, self.decision_facts, self.authorize_operator = responders, decision_facts, authorize_operator
         self.worker_id = parse_id(worker_id)
         self.random = random or secrets.SystemRandom()
         self.random_algorithm = getattr(self.random, "algorithm_id", "python.secrets.SystemRandom")
@@ -65,7 +79,7 @@ class Kernel:
         if self.authorize(tx, principal, command.wire) is not True:
             refuse("OPERATION_FORBIDDEN")
 
-    def _authority(self, tx, command, *, check_version):
+    def _authority(self, tx, command, *, check_version, manual=False):
         w, scope = command.wire, tx.scope
         if w["authorityEpoch"] != scope.authority_epoch:
             refuse("AUTHORITY_EPOCH_MISMATCH")
@@ -73,7 +87,7 @@ class Kernel:
             refuse("SCOPE_VERSION_CONFLICT")
         if w["executionLockDigest"] != tx.lock.digest:
             refuse("EXECUTION_LOCK_MISMATCH")
-        if tx.lock.wire["evaluator"] != evaluator_artifact() or tx.lock.wire["ruleset"] != self.ruleset.artifact():
+        if (not manual and tx.lock.wire["evaluator"] != evaluator_artifact()) or tx.lock.wire["ruleset"] != self.ruleset.artifact():
             refuse("SEMANTIC_INVALID", "locked evaluator/ruleset is unavailable")
         if (tx.lock.wire["schemaBundle"] != self.schema_registry.artifact()
                 or tx.lock.wire["configurationDigest"] != self.configuration_digest
@@ -104,16 +118,19 @@ class Kernel:
         # Roundtrip both validates the typed plan and disconnects mutable caller data.
         return Activity.restore(plan.canonical())
 
-    def submit(self, principal, raw, *, defer=False):
-        return self._submit(principal, raw, defer=defer)
+    def submit(self, principal, raw, *, defer=False, record_request=None):
+        """record_request is an optional trusted DB-only admission port, never client wire."""
+        return self._submit(principal, raw, defer=defer, record_request=record_request)
 
     def spawn_child(self, principal, raw, *, parent_action_id, checkpoint_id):
         """Server-only declared child dispatch; there are no parent IDs on client wire."""
         return self._submit(principal, raw, parent=(parent_action_id, checkpoint_id))
 
-    def _submit(self, principal, raw, *, defer=False, parent=None):
+    def _submit(self, principal, raw, *, defer=False, parent=None, record_request=None):
         command = Command.parse(raw, max_bytes=self.max_request_bytes)
         w = command.wire
+        if w["operation"] in DECISION_OPERATIONS and parent is None and not defer:
+            return self._decision_submit(principal, command, record_request=record_request)
         if w["operation"] not in {"InvokeActivity", "AdjustResource"}:
             refuse("SEMANTIC_INVALID", "operation is not implemented by this kernel package")
         with self.store.transaction(w["scopeId"]) as tx:
@@ -125,6 +142,8 @@ class Kernel:
             if existing is not None:
                 if existing["requestDigest"] != command.digest:
                     refuse("IDEMPOTENCY_KEY_REUSE")
+                if record_request is not None:
+                    record_request(tx, principal, command)
                 if existing["status"] == "accepted":
                     previous = tx.action(existing["operationId"])
                     if previous.state in PRECOMMIT and tx.now >= previous.deadline:
@@ -133,6 +152,11 @@ class Kernel:
                 return existing
             self._authority(tx, command, check_version=True)
             if not defer and parent is None and tx.scope.active_action_id is not None:
+                if w["operation"] == "AdjustResource":
+                    result = self._adjust_active(tx, principal, command)
+                    if record_request is not None:
+                        record_request(tx, principal, command)
+                    return result
                 refuse("SCOPE_BUSY")
             plan = self._invocation(tx, command) if w["operation"] == "InvokeActivity" else Activity(
                 "manual.adjust", (Window("adjust", (), (), 1),))
@@ -176,6 +200,8 @@ class Kernel:
             tx.save_action(action)
             accepted = receipt(command, action.id, tx.scope, status="accepted")
             tx.save_receipt(principal, w["idempotencyKey"], accepted)
+            if record_request is not None:
+                record_request(tx, principal, command)
             if not defer:
                 self._activate(tx, action, command)
             result = tx.receipt(principal, w["idempotencyKey"])
@@ -269,9 +295,16 @@ class Kernel:
                 raise BudgetExceeded("occurrence exceeds the G1 effect application limit")
             effects.append(parse_strict_json(canonical_bytes(value)))
         root = action if action.root_id == action.id else tx.action(action.root_id)
+        for adjustment in prepared.roll_adjustments:
+            fuel.charge()
+            if (not isinstance(adjustment, RollAdjustment) or adjustment.instance_id not in self._involved(command)
+                    or adjustment.roll_id not in {d.id for d in window.dice}):
+                refuse("SEMANTIC_INVALID", "roll adjustment must reference a declared target and roll")
+            resource = tx.resource(adjustment.instance_id, adjustment.resource_id)
+            self.ruleset.units.convert(adjustment.multiplier, resource["unit"])
         # Charge random work before drawing; a declared overrun exposes no draw.
         fuel.charge(sum(d.count for d in window.dice))
-        charge_root(root, operations=fuel.used, events=1,
+        charge_root(root, operations=fuel.used, events=2 if window.question else 1,
                     instances=[c["instanceId"] for c in changes] + self._involved(command))
         canonical_bytes(prepared.result)
         checkpoint_id = new_id("checkpoint")
@@ -279,6 +312,11 @@ class Kernel:
                   "raw": [self.random.randrange(1, d.sides + 1) for _ in range(d.count)],
                   "algorithm": self.random_algorithm, "checkpointId": checkpoint_id,
                   "executionLockDigest": tx.lock.digest} for d in window.dice]
+        totals = {roll["id"]: sum(roll["raw"]) for roll in rolls}
+        for adjustment in prepared.roll_adjustments:
+            changes.append(self._change(tx, resources, adjustment.instance_id, adjustment.resource_id,
+                Quantity(adjustment.multiplier.value * Rational.of(totals[adjustment.roll_id]), adjustment.multiplier.unit),
+                adjustment.reason))
         outcome = {"result": prepared.result, "changes": changes, "rolls": rolls, "effects": effects, "windowId": window.id}
         canonical_bytes(outcome)
         self.fault("after_draw")
@@ -300,6 +338,11 @@ class Kernel:
         if root.id != action.id:
             tx.save_action(root)
         event_id = tx.event(action, "checkpoint_committed", checkpoint_id)
+        if window.question:
+            self._issue(tx, action, window.id, window.question)
+            # Human waits need heartbeat renewal, not a lease that expires at
+            # the exact instant the first 30-second heartbeat is due.
+            tx.claim_lease(self.worker_id, seconds=60)
         old_receipt = tx.receipt(action.principal_id, command.wire["idempotencyKey"])
         if old_receipt["status"] == "accepted":
             tx.save_receipt(action.principal_id, command.wire["idempotencyKey"],

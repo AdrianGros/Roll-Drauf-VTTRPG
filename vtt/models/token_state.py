@@ -61,7 +61,7 @@ class TokenState(db.Model):
         return self.deleted_at is not None
 
     def serialize(self):
-        return {
+        result = {
             "id": self.id,
             "session_state_id": self.session_state_id,
             "campaign_id": self.campaign_id,
@@ -88,3 +88,11 @@ class TokenState(db.Model):
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
             "deleted_at": self.deleted_at.isoformat() if self.deleted_at else None,
         }
+        from vtt.ce_compat import token_reference
+        reference = token_reference(self)
+        if reference is not None:
+            # Legacy room broadcasts have no single audience. Engine values are
+            # fetched through the audience-checked representation endpoint.
+            result["hp_current"] = result["hp_max"] = None
+            result["engine"] = reference
+        return result

@@ -1,0 +1,975 @@
+{
+  "spec_version": "1.2",
+  "status": "design_acceptance_catalogue",
+  "execution_claim": "No engine conformance test was executed by this documentation task. Schema/packaging checks are separate; no verdict is made on concurrent implementation work.",
+  "requirements": [
+    {
+      "id": "CE-IDENTITY-01",
+      "contract": "Scoped typed identities; \u00a74",
+      "acceptance_ids": [
+        "T03",
+        "T27",
+        "T40",
+        "T46"
+      ]
+    },
+    {
+      "id": "CE-MIGRATE-01",
+      "contract": "Sole authority and fenced migration; \u00a75",
+      "acceptance_ids": [
+        "T01",
+        "T02",
+        "T03",
+        "T21",
+        "T42"
+      ]
+    },
+    {
+      "id": "CE-TYPE-01",
+      "contract": "Canonical types and bounded AST; \u00a76",
+      "acceptance_ids": [
+        "T14",
+        "T15",
+        "T16",
+        "T26",
+        "T43"
+      ]
+    },
+    {
+      "id": "CE-EFFECT-01",
+      "contract": "Fixed stages, explicit stacking; \u00a77",
+      "acceptance_ids": [
+        "T14",
+        "T15",
+        "T16",
+        "T28"
+      ]
+    },
+    {
+      "id": "CE-COMMAND-01",
+      "contract": "Authentication/durable idempotency; \u00a78",
+      "acceptance_ids": [
+        "T04",
+        "T05",
+        "T06",
+        "T07",
+        "T25"
+      ]
+    },
+    {
+      "id": "CE-ACTION-01",
+      "contract": "Atomic checkpoints, explicit cost identity and random records; \u00a7\u00a77\u20139",
+      "acceptance_ids": [
+        "T04",
+        "T05",
+        "T06",
+        "T12",
+        "T13",
+        "T47",
+        "T48",
+        "T59"
+      ]
+    },
+    {
+      "id": "CE-DECISION-01",
+      "contract": "Bound authorized decisions; \u00a710",
+      "acceptance_ids": [
+        "T09",
+        "T10",
+        "T11",
+        "T12",
+        "T32"
+      ]
+    },
+    {
+      "id": "CE-EVENT-01",
+      "contract": "Durable order/outbox/recovery; \u00a7\u00a78\u201310",
+      "acceptance_ids": [
+        "T06",
+        "T08",
+        "T42"
+      ]
+    },
+    {
+      "id": "CE-TIME-01",
+      "contract": "Logical clocks/cadence; \u00a711",
+      "acceptance_ids": [
+        "T17",
+        "T18"
+      ]
+    },
+    {
+      "id": "CE-VERSION-01",
+      "contract": "Exact closure, geometry and migration; \u00a712",
+      "acceptance_ids": [
+        "T19",
+        "T20",
+        "T21",
+        "T42",
+        "T44",
+        "T46",
+        "T52",
+        "T55"
+      ]
+    },
+    {
+      "id": "CE-GRANT-01",
+      "contract": "Sourced multiplicity/compensation; \u00a713",
+      "acceptance_ids": [
+        "T28",
+        "T29",
+        "T30"
+      ]
+    },
+    {
+      "id": "CE-POLICY-01",
+      "contract": "Policy on all commands/outputs and spatial perception; \u00a714",
+      "acceptance_ids": [
+        "T09",
+        "T22",
+        "T23",
+        "T24",
+        "T25",
+        "T36",
+        "T37",
+        "T53",
+        "T58"
+      ]
+    },
+    {
+      "id": "CE-GUIDE-01",
+      "contract": "Bounded interview/no creative defaults; \u00a715",
+      "acceptance_ids": [
+        "T31",
+        "T32",
+        "T33",
+        "T34",
+        "T35",
+        "T45",
+        "T51"
+      ]
+    },
+    {
+      "id": "CE-WORLD-01",
+      "contract": "Scoped graph/geometry; \u00a716",
+      "acceptance_ids": [
+        "T27",
+        "T39",
+        "T40"
+      ]
+    },
+    {
+      "id": "CE-INTEROP-01",
+      "contract": "Authorized import/honest export; \u00a717",
+      "acceptance_ids": [
+        "T07",
+        "T36",
+        "T37",
+        "T38"
+      ]
+    },
+    {
+      "id": "CE-BUDGET-01",
+      "contract": "Logical/operational bounds and measured workload; \u00a718",
+      "acceptance_ids": [
+        "T13",
+        "T26",
+        "T41",
+        "T54",
+        "T64"
+      ]
+    },
+    {
+      "id": "CE-RENDER-01",
+      "contract": "Safe presentation/artifact identities; \u00a719",
+      "acceptance_ids": [
+        "T22",
+        "T23",
+        "T24",
+        "T39",
+        "T44"
+      ]
+    },
+    {
+      "id": "CE-AUDIT-01",
+      "contract": "Linked provenance/restricted telemetry; \u00a720",
+      "acceptance_ids": [
+        "T06",
+        "T22",
+        "T25",
+        "T42"
+      ]
+    },
+    {
+      "id": "CE-PRESENCE-01",
+      "contract": "Occurrence-owned single presence and explicit transitions; \u00a7\u00a74\u20135, 14, 16",
+      "acceptance_ids": [
+        "T03",
+        "T49",
+        "T56",
+        "T57",
+        "T58",
+        "T59",
+        "T60",
+        "T61"
+      ]
+    },
+    {
+      "id": "CE-PROVENANCE-01",
+      "contract": "Deterministic contribution identity/order and pure projection; \u00a7\u00a76\u20137, 13",
+      "acceptance_ids": [
+        "T14",
+        "T15",
+        "T16",
+        "T28",
+        "T50",
+        "T55",
+        "T64"
+      ]
+    },
+    {
+      "id": "CE-RETRY-01",
+      "contract": "Separate semantic fuel and bounded operational recovery; \u00a7\u00a78\u20139, 18",
+      "acceptance_ids": [
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T42",
+        "T54",
+        "T56",
+        "T64"
+      ]
+    },
+    {
+      "id": "CE-ARCH-01",
+      "contract": "Domain dependencies, types and side-effect boundaries; \u00a726",
+      "acceptance_ids": [
+        "T48",
+        "T50",
+        "T51",
+        "T62",
+        "T63"
+      ]
+    },
+    {
+      "id": "CE-PERSIST-01",
+      "contract": "Whole-checkpoint ownership and selected-backend proof; \u00a7\u00a75, 8\u20139, 26",
+      "acceptance_ids": [
+        "T04",
+        "T05",
+        "T06",
+        "T40",
+        "T48",
+        "T51",
+        "T57"
+      ]
+    },
+    {
+      "id": "CE-TEST-01",
+      "contract": "Independent, backend, adapter and policy acceptance evidence; \u00a7\u00a721\u201322, 26",
+      "acceptance_ids": [
+        "T16",
+        "T22",
+        "T23",
+        "T24",
+        "T25",
+        "T26",
+        "T41",
+        "T42",
+        "T47",
+        "T48",
+        "T49",
+        "T50",
+        "T51",
+        "T52",
+        "T53",
+        "T54",
+        "T55",
+        "T56",
+        "T57",
+        "T58",
+        "T59",
+        "T60",
+        "T61",
+        "T62",
+        "T63",
+        "T64"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "T01",
+      "scenario": "Migrate legacy AC with unknown contributions",
+      "required_result": "Preserve labelled legacy baseline/override; no invented provenance or double application",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-MIGRATE-01"
+      ]
+    },
+    {
+      "id": "T02",
+      "scenario": "Old client writes calculated field after cutover",
+      "required_result": "Translate to allowed command or reject; no second authoritative write",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-MIGRATE-01"
+      ]
+    },
+    {
+      "id": "T03",
+      "scenario": "Two representations and two independent campaign occurrences",
+      "required_result": "Shared resources and at most one authoritative presence within an occurrence; separate state across campaigns",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-IDENTITY-01",
+        "CE-MIGRATE-01",
+        "CE-PRESENCE-01"
+      ]
+    },
+    {
+      "id": "T04",
+      "scenario": "Two commands spend last shared charge",
+      "required_result": "One succeeds; current never negative",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-COMMAND-01",
+        "CE-ACTION-01",
+        "CE-PERSIST-01"
+      ]
+    },
+    {
+      "id": "T05",
+      "scenario": "Crash before checkpoint commit, then retry",
+      "required_result": "No partial change or exposed uncommitted roll; one eventual outcome",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-COMMAND-01",
+        "CE-ACTION-01",
+        "CE-RETRY-01",
+        "CE-PERSIST-01"
+      ]
+    },
+    {
+      "id": "T06",
+      "scenario": "Crash after commit before response; retry on another worker",
+      "required_result": "Same receipt, roll and debit; no extra effect",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-COMMAND-01",
+        "CE-ACTION-01",
+        "CE-EVENT-01",
+        "CE-AUDIT-01",
+        "CE-RETRY-01",
+        "CE-PERSIST-01"
+      ]
+    },
+    {
+      "id": "T07",
+      "scenario": "Reuse idempotency key with altered target/amount",
+      "required_result": "IDEMPOTENCY_KEY_REUSE; no second execution",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-COMMAND-01",
+        "CE-INTEROP-01",
+        "CE-RETRY-01"
+      ]
+    },
+    {
+      "id": "T08",
+      "scenario": "Duplicate outbox delivery and lost socket delta",
+      "required_result": "Apply event once; recover permitted consistent snapshot",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-EVENT-01",
+        "CE-RETRY-01"
+      ]
+    },
+    {
+      "id": "T09",
+      "scenario": "Revoke responder access while prompt is open",
+      "required_result": "Reject old answer; no secret result; suspend/reassign as specified",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-DECISION-01",
+        "CE-POLICY-01"
+      ]
+    },
+    {
+      "id": "T10",
+      "scenario": "Operator changes relevant mechanical context",
+      "required_result": "Invalidate prompt; stale digest cannot authorize effects",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-DECISION-01"
+      ]
+    },
+    {
+      "id": "T11",
+      "scenario": "Optional versus mandatory decision times out",
+      "required_result": "Declared optional decline or mandatory suspension; no invented answer",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-DECISION-01"
+      ]
+    },
+    {
+      "id": "T12",
+      "scenario": "Cancel after committed roll and retry",
+      "required_result": "Preserve roll; no precommit cancellation or free reroll",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-ACTION-01",
+        "CE-DECISION-01"
+      ]
+    },
+    {
+      "id": "T13",
+      "scenario": "Reaction chain exceeds depth or cycles",
+      "required_result": "Bounded checkpoint failure; retain earlier commits and suspend",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-ACTION-01",
+        "CE-BUDGET-01"
+      ]
+    },
+    {
+      "id": "T14",
+      "scenario": "Permute base 10, ADD 2, MULTIPLY 2 serialization",
+      "required_result": "Result 24 and equivalent provenance under core-safe-1",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-TYPE-01",
+        "CE-EFFECT-01",
+        "CE-PROVENANCE-01"
+      ]
+    },
+    {
+      "id": "T15",
+      "scenario": "Different SET values at equal highest priority",
+      "required_result": "EFFECT_CONFLICT; arrival order cannot select winner",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-TYPE-01",
+        "CE-EFFECT-01",
+        "CE-PROVENANCE-01"
+      ]
+    },
+    {
+      "id": "T16",
+      "scenario": "Compare incremental with full evaluation across generated fixtures",
+      "required_result": "Equal values, unresolved markers and source contributions",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-TYPE-01",
+        "CE-EFFECT-01",
+        "CE-PROVENANCE-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T17",
+      "scenario": "Reorder initiative; duplicate turn/recovery events",
+      "required_result": "Stable occurrence IDs; no repeated cadence/recovery",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-TIME-01"
+      ]
+    },
+    {
+      "id": "T18",
+      "scenario": "Source-turn versus each-turn cadence",
+      "required_result": "Distinct explicit clock buckets; per-target identity uses InstanceRef; no reset from scene/view changes",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-TIME-01"
+      ]
+    },
+    {
+      "id": "T19",
+      "scenario": "Restore pinned campaign after package/evaluator release",
+      "required_result": "Replay exact lock and recorded outcomes or explicit unavailable state",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-VERSION-01"
+      ]
+    },
+    {
+      "id": "T20",
+      "scenario": "Max charges decreases from 3 to 1; current is 2",
+      "required_result": "Block until explicit conversion; record approved exact delta",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-VERSION-01"
+      ]
+    },
+    {
+      "id": "T21",
+      "scenario": "Roll back package update after new gameplay",
+      "required_result": "Evaluate current state; no stale snapshot overwrite",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-MIGRATE-01",
+        "CE-VERSION-01"
+      ]
+    },
+    {
+      "id": "T22",
+      "scenario": "Player explains/exports value influenced by hidden curse",
+      "required_result": "Only approved declassified result; private metadata absent",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-POLICY-01",
+        "CE-RENDER-01",
+        "CE-AUDIT-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T23",
+      "scenario": "GM warms cache; player/other campaign requests same IDs",
+      "required_result": "No audience/policy/scope cache crossover",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-POLICY-01",
+        "CE-RENDER-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T24",
+      "scenario": "View As requests owner-private field and mutation",
+      "required_result": "No extra private rights; refuse mutation",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-POLICY-01",
+        "CE-RENDER-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T25",
+      "scenario": "Revoke membership mid-subscription; retry old receipt",
+      "required_result": "Use current policy; no stale privileged payload",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-COMMAND-01",
+        "CE-POLICY-01",
+        "CE-AUDIT-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T26",
+      "scenario": "Huge valid graph, trigger loop, archive bomb or external asset",
+      "required_result": "Enforce declared budgets/isolation; no partial current checkpoint",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-TYPE-01",
+        "CE-BUDGET-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T27",
+      "scenario": "Same NPC installed in two campaigns; one changes allegiance",
+      "required_result": "Independent state; definition/other campaign unchanged",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-IDENTITY-01",
+        "CE-WORLD-01"
+      ]
+    },
+    {
+      "id": "T28",
+      "scenario": "Two sources grant proficiency; revoke one",
+      "required_result": "Surviving source preserves proficiency",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-EFFECT-01",
+        "CE-GRANT-01",
+        "CE-PROVENANCE-01"
+      ]
+    },
+    {
+      "id": "T29",
+      "scenario": "Remove level after granted item was transferred/consumed",
+      "required_result": "Conflict or accepted compensation; no blind deletion/recreation",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-GRANT-01"
+      ]
+    },
+    {
+      "id": "T30",
+      "scenario": "Undo after later action changes affected resource",
+      "required_result": "UNDO_CONFLICT or declared compensation; preserve later work",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-GRANT-01"
+      ]
+    },
+    {
+      "id": "T31",
+      "scenario": "Harmless flames; change an earlier interview answer",
+      "required_result": "No damage invented; invalidate dependent answers/effects visibly",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-GUIDE-01"
+      ]
+    },
+    {
+      "id": "T32",
+      "scenario": "Guided -> Advanced -> Guided, locale/schema change",
+      "required_result": "Retain valid decisions; ask new ambiguities instead of defaulting",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-DECISION-01",
+        "CE-GUIDE-01"
+      ]
+    },
+    {
+      "id": "T33",
+      "scenario": "Contradictory/cyclic interview constraints",
+      "required_result": "Finite GUIDE_DEAD_END and recovery; no infinite loop",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-GUIDE-01"
+      ]
+    },
+    {
+      "id": "T34",
+      "scenario": "Progress-clock/success-pool ruleset fixture",
+      "required_result": "Use declared contracts without core rest/turn hardcoding",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-GUIDE-01"
+      ]
+    },
+    {
+      "id": "T35",
+      "scenario": "Publish lore-only content; falsely claim automation with human-only predicate",
+      "required_result": "Allow valid lore publication; reject false automation claim",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-GUIDE-01"
+      ]
+    },
+    {
+      "id": "T36",
+      "scenario": "Import forged owner, existing instance ID and grants",
+      "required_result": "Inert preview and authorized remap; no authority takeover",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-POLICY-01",
+        "CE-INTEROP-01"
+      ]
+    },
+    {
+      "id": "T37",
+      "scenario": "Required export dependency is not redistributable",
+      "required_result": "Explicit external-reference report or failure; no false self-contained export",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-POLICY-01",
+        "CE-INTEROP-01"
+      ]
+    },
+    {
+      "id": "T38",
+      "scenario": "Adapter loses resource cost or visibility",
+      "required_result": "Disclose loss and accept or block; no preserved automation claim",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-INTEROP-01"
+      ]
+    },
+    {
+      "id": "T39",
+      "scenario": "Transclusion cycle, private endpoint, teleport through region",
+      "required_result": "Bounded authorized rendering; specified endpoint transitions only",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-WORLD-01",
+        "CE-RENDER-01"
+      ]
+    },
+    {
+      "id": "T40",
+      "scenario": "Concurrent edges exceed relationship cardinality",
+      "required_result": "One consistent accepted state; reject conflicting edit",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-IDENTITY-01",
+        "CE-WORLD-01",
+        "CE-PERSIST-01"
+      ]
+    },
+    {
+      "id": "T41",
+      "scenario": "Reference workload with simulations/exports",
+      "required_result": "Report p95/p99/errors; no live starvation; correct limits",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-BUDGET-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T42",
+      "scenario": "Restore pending prompt, dedupe records and outbox",
+      "required_result": "Consistent fenced authority; no repeated roll/spend or unauthorized delivery",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-MIGRATE-01",
+        "CE-EVENT-01",
+        "CE-VERSION-01",
+        "CE-AUDIT-01",
+        "CE-RETRY-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T43",
+      "scenario": "Rounding plus unknown/divide-by-zero input",
+      "required_result": "Explicit rounding; fail invalid checkpoint without NaN/partial writes",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-TYPE-01"
+      ]
+    },
+    {
+      "id": "T44",
+      "scenario": "Regenerate publication under newer renderer/theme",
+      "required_result": "New artifact ID; old promised artifact retained/verifiable",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-VERSION-01",
+        "CE-RENDER-01"
+      ]
+    },
+    {
+      "id": "T45",
+      "scenario": "Novices author item, conditional effect, choice and lore",
+      "required_result": "Report completion/errors/abandonment; no hidden creative defaults",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-GUIDE-01"
+      ]
+    },
+    {
+      "id": "T46",
+      "scenario": "Reference deleted entity or withdrawn package",
+      "required_result": "Tombstone/retained lock or explicit unavailable result; never substitute by name",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-IDENTITY-01",
+        "CE-VERSION-01"
+      ]
+    },
+    {
+      "id": "T47",
+      "scenario": "One activity has ammunition and charge costs; retry through another transport; also two legitimate costs against one pool",
+      "required_result": "Each declared logical cost applies once; distinct cost IDs remain distinct; aggregate availability is checked and the original receipt is recovered",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-ACTION-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA01"
+    },
+    {
+      "id": "T48",
+      "scenario": "Fault after a legacy adapter prepares a resource change but before the full receipt/outbox unit commits",
+      "required_result": "No partial checkpoint persists; helpers cannot commit independently; postcommit retry recovers the full prior outcome",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-ACTION-01",
+        "CE-ARCH-01",
+        "CE-PERSIST-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA02"
+    },
+    {
+      "id": "T49",
+      "scenario": "One occurrence has a live dungeon view and conflicting reference views on other scenes; compare independent copies",
+      "required_result": "Only the canonical presence establishes geometry/events/vision; references do not toggle conditions; independent occurrences retain independent state",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-PRESENCE-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA03"
+    },
+    {
+      "id": "T50",
+      "scenario": "Transform, equip, and rebuild repeatedly; permute unordered contributors and compare full/incremental results",
+      "required_result": "No derived value is reapplied as a base; values, unknowns, conflicts and canonical provenance match without persistent projection side effects",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-PROVENANCE-01",
+        "CE-ARCH-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA04"
+    },
+    {
+      "id": "T51",
+      "scenario": "Edit a nested draft answer, commit and reload in a new session; repeat with precommit failure",
+      "required_result": "Answer and descendant invalidation persist together on success; neither persists on failure",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-GUIDE-01",
+        "CE-ARCH-01",
+        "CE-PERSIST-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA05"
+    },
+    {
+      "id": "T52",
+      "scenario": "Similar content names under distinct rules editions/evaluators; restore with an exact required artifact missing",
+      "required_result": "Use the selected exact closure or report unavailable; no edition/name/latest fallback; migration reconciliation remains explicit",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-VERSION-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA06"
+    },
+    {
+      "id": "T53",
+      "scenario": "Request a private contribution through every output surface, warm another audience cache, then revoke access",
+      "required_result": "Only declared declassification is exposed; old receipts/delayed jobs use current policy; no private names, IDs, links, or omitted counts escape",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-POLICY-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA07"
+    },
+    {
+      "id": "T54",
+      "scenario": "Compound function and child actions approach root fuel limits; force aborts, worker restart, and five automatic attempts",
+      "required_result": "Internal work and committed root charges persist correctly; operational retries do not refill episodes or change logical fuel; exhaustion has no partial game effect",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-BUDGET-01",
+        "CE-RETRY-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA08"
+    },
+    {
+      "id": "T55",
+      "scenario": "Canonicalize Unicode-key and numeric-boundary vectors across runtimes; parse duplicate-key source bytes",
+      "required_result": "Identical valid canonical bytes/hashes; reject duplicate keys before collapse and invalid mechanical values; zero/false/missing/unknown stay distinct",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-VERSION-01",
+        "CE-PROVENANCE-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA09"
+    },
+    {
+      "id": "T56",
+      "scenario": "Restart a pending spatial decision; expire worker lease; accept one valid answer then deliver late/stale/revoked responses",
+      "required_result": "Same action and committed rolls; only one eligible current-context answer; stale worker fence and old presence contexts cannot commit",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-PRESENCE-01",
+        "CE-RETRY-01",
+        "CE-TEST-01"
+      ],
+      "research_origin": "RA10"
+    },
+    {
+      "id": "T57",
+      "scenario": "Concurrent placement, move or transfer commands use the same scope and presence version",
+      "required_result": "At most one conflicting new transition commits; no second presence or lost update; duplicates return their receipt",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-PRESENCE-01",
+        "CE-PERSIST-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T58",
+      "scenario": "Move, hide, delete or select a reference/live display; open another browser scene",
+      "required_result": "No unintended relocation, invisibility, aura, vision or cadence change; deleting a view preserves its occurrence and presence",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-POLICY-01",
+        "CE-PRESENCE-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T59",
+      "scenario": "Transfer between scenes across regions with a pre-departure decision, post-arrival reaction, and lost response",
+      "required_result": "Old presence remains until relocation commit; departure/arrival reconcile once; later suspension preserves destination and prior state; active unrelated transfer is busy",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-ACTION-01",
+        "CE-PRESENCE-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T60",
+      "scenario": "Unplace and re-place a poisoned occurrence with spent resource and cadence; attempt spatial action while unplaced",
+      "required_result": "Explicit authority and exit/entry rules; poison/spend/cadence persist; required geometry is unresolved and returns spatial guidance or authorized manual resolution",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-PRESENCE-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T61",
+      "scenario": "Two live views of one occurrence and two independent occurrences of one definition overlap the same region",
+      "required_result": "Deduplicate views by InstanceRef; independent targets retain distinct per-target cadence; scene transfer never resets logical buckets",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-PRESENCE-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T62",
+      "scenario": "Introduce a framework/ORM/network import or ambient randomness/commit into the domain boundary",
+      "required_result": "Automated architecture/purity checks reject the violation; pure domain fixtures run without application or database startup",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-ARCH-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T63",
+      "scenario": "Equivalent authorized semantic commands arrive via REST, sockets and legacy adapter with transport differences",
+      "required_result": "Same semantic handler, digest identity, costs and current-policy outcome; transport-specific payload cannot bypass the command boundary",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-ARCH-01",
+        "CE-TEST-01"
+      ]
+    },
+    {
+      "id": "T64",
+      "scenario": "Evaluate the same snapshot with cold cache, warm cache and incremental optimization at logical fuel boundaries",
+      "required_result": "Same reference charge and acceptance/result/provenance; actual CPU may differ; operational interruption is not misreported as deterministic budget exhaustion",
+      "status": "specified_not_executed",
+      "requirements": [
+        "CE-BUDGET-01",
+        "CE-PROVENANCE-01",
+        "CE-RETRY-01",
+        "CE-TEST-01"
+      ]
+    }
+  ]
+}

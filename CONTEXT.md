@@ -59,6 +59,9 @@ but it is not shown, ranked, or created by the VTT overview.
 ## Creation Engine
 
 Normative source: `docs/creation-engine/v1.1.4/` (spec §4 defines these records).
+Start with `docs/creation-engine/README.md` for active authority and milestone status.
+Core wire remains 1.1.3 plus approved registry A1. The reconciled v1.2 reading
+edition preserves that baseline; its research proposals do not reopen G0 or expand G1.
 
 **Definition** is the stable logical identity of authored content within a
 workspace or publisher; its name is a mutable label.

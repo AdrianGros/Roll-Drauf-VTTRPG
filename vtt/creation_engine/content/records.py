@@ -81,7 +81,9 @@ class Revision:
                 if node.get("kind") == "revision":
                     found.add(parse_reference(node, accept=(RevisionRef,)))
                 else:
-                    pending.extend(node.values())
+                    # §5's declared inert legacy container is not a reference
+                    # source, even when imported keys resemble tagged wire refs.
+                    pending.extend(value for key, value in node.items() if key != "legacyMetadata")
             elif isinstance(node, list):
                 pending.extend(node)
         return tuple(sorted(found, key=lambda ref: (ref.definition_id, ref.id)))

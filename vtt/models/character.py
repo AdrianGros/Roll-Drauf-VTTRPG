@@ -108,6 +108,10 @@ class Character(db.Model):
     
     def serialize(self, include_details=False):
         """Return JSON-safe dict."""
+        from vtt.ce_compat import character_projection
+        projected = character_projection(self)
+        if projected is not None:
+            return projected
         avatar_url = self.avatar_url or (
             f'/api/characters/{self.id}/identity/avatar' if self.avatar_storage_key else None
         )

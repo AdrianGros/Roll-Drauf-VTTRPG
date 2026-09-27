@@ -1,0 +1,24 @@
+{
+  "phase": "G1 Deploy",
+  "g0": "passed 2026-09-24",
+  "authority_change_requires_recorded_decision": true,
+  "approval_record": "../../dadm/artifacts/approvals/approval_creation_engine_g1_2026-09-24.md",
+  "implementation_program": "../../dadm/artifacts/programs/milestone_program_creation_engine_g1.md",
+  "research_reading_edition": "v1.2/creation-engine-v1.2.md",
+  "research_is_not_protocol_upgrade": true,
+  "specification": {
+    "version": "1.1.4",
+    "path": "v1.1.4/creation-engine-v1.1.4.md",
+    "sha256": "ed6596e7172979dbbcb6c976317f0819cab2d437b8e3c9e6aae3674d90b44982"
+  },
+  "core_wire": {
+    "version": "1.1.3",
+    "path": "v1.1.3/creation-engine-v1.1.3-contracts.schema.json",
+    "sha256": "bbb1f91fa4d0f3da241e28d1608ad7369081344ed4c5f375359abc12c277dbe3"
+  },
+  "registry": {
+    "version": "A1",
+    "path": "addenda/creation-engine-v1.1-registry-a1.schema.json",
+    "sha256": "dc4811b8852ad9c0859643e955356cf6d8428bdc1ba334257f15af7268539735"
+  }
+}

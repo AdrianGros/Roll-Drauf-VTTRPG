@@ -1,4 +1,4 @@
-# DAD-M Program: Creation Engine — G1 pre-authorization plan
+# DAD-M Program: Creation Engine — approved G1 implementation program
 
 version: 1
 status: approved — G0 passed 2026-09-24 (v1.1.4, errata E1–E4); G1 in Deploy
@@ -25,7 +25,7 @@ Two spec rules govern whether implementation may start:
   chosen phase's concrete schema/migration/API diff, dependency choices, executable fixture
   plan, rollback boundary and acceptance owner." Sections 7–13 below are that package for G1.
 
-Nothing here was implemented or executed. No acceptance scenario has run.
+Historical planning context: sections 1–15 retain the pre-implementation design and decisions. Implementation progress and executed evidence are recorded in §16; the original planning premise is not the current project status. The 25 September document reconciliation preserves G0 approval, G1 authorization and the active v1.1.4/core 1.1.3/A1 contract. See `docs/creation-engine/README.md`; proposed research deltas do not expand this program.
 
 ## 1. Input summary
 
@@ -767,3 +767,654 @@ excluded. G1 exit still requires the later packages and human acceptance study.
 
 **Next step.** WP5: persisted pending decisions, deadlines/clock anomalies, responder revocation,
 operator intervention and manual-resolution provenance, attached to these action/checkpoint records.
+
+
+### WP5 — persisted decisions and operator recovery (2026-09-26)
+
+**Input / status.** Continued from WP4 commit `66b6fc4` and the existing WP5 working changes,
+under the approved v1.1.4 specification, core wire 1.1.3 and registry A1. This is G1 Deploy;
+the reconciled v1.2 reading edition supplies no additional implementation requirements.
+The backend decision and recovery implementation is complete and verified in the working tree. Verification below
+tracks this checkout, not a new commit or completion of the G1 milestone.
+
+**Implementation summary / files.**
+
+- `kernel/decisions.py` and `kernel/activity.py`: explicit question contracts attached to frozen
+  activity windows, exact registered answer schemas, optional declared declines and retained
+  decision versions. A waiting window cannot omit its question contract.
+- `kernel/decision_service.py` and `kernel/service.py`: once-only decision responses;
+  `ReissueDecision`, `ReassignDecisionResponder`, `ResumeSuspendedAction` and
+  `ResolveActionManually`; operator adjustments within the held action frame. Responder,
+  context-fact and operator-authority registrations fail closed when absent.
+- `store/runtime.py`, `store/runtime_models.py` and
+  `migrations/migration_m75_creation_engine_decisions.sql`: durable pending decisions,
+  immutable closed versions, retained answers, scope timeout/heartbeat policy and commit-time
+  deadline checks under the scope row lock. M75 is additive after M74 and repeatable.
+- `tests/creation_engine/test_ce_decisions.py` and `test_ce_kernel.py`: PostgreSQL acceptance
+  scenarios, distinct worker processes, abrupt process exits, controlled clocks and database
+  history guards. The kernel fixture now applies M75 after M74.
+
+**Behavior and integration contracts.**
+
+- A response binds the action/checkpoint, question/schema version, opaque context nonce,
+  current eligible responder and current mechanical context. Matching retries retain the
+  original receipt and recheck authorization before returning it. Accepted answers feed
+  subsequent checkpoints without repeating earlier resource costs or random draws.
+- Human commands serialize on the scope row lock. They do not acquire the execution worker's
+  lease: another request worker can accept a response or operator intervention while the
+  execution worker retains its lease and fence. Worker continuation and heartbeat remain fenced.
+- Timeout policy is copied into each decision (120 seconds by default, within 30–600).
+  Mandatory expiry suspends the action and retains the gate; an optional expiry records only
+  its explicitly declared decline. Acceptance checks the shared clock at the commit boundary.
+- A heartbeat gap past a deadline invalidates the question and suspends for operator review,
+  without expiring it or inventing an answer. A gap ending before the deadline leaves a valid
+  question usable. The persisted time watermark prevents a backward step reopening history.
+- Reissue creates a fresh version, nonce and explicit deadline. Reassignment rotates the
+  version and nonce but preserves the deadline; it cannot revive an expired window.
+  Accepted outcomes cannot be rewritten. Resume cannot bypass an unresolved question.
+- Policy writers call `policy_changed` in the same scope-locked transaction as grant or
+  membership revocation; this bypasses the mechanical gate and invalidates pending questions.
+  Operator resource changes are checkpoints in the active frame and invalidate old prompts.
+- Manual completion records adjudicator, reason, outcome note, execution lock and explicit
+  manual provenance. Each resource adjustment still needs its own authorization. It can
+  recover an action whose pinned evaluator is unavailable without executing that evaluator.
+- The host must register the three trusted ports and schedule the lease holder's heartbeat
+  every 30 seconds while decisions are open. Public projections, transport authorization,
+  subscription revocation and visible manual labels remain WP6 integration obligations.
+
+**Proofs / verification.**
+
+- Decision suite: **48 passed, 0 failed, 0 skipped** in **24.59 s**, using PostgreSQL 16
+  (7 existing ORM/table-sorting warnings).
+- Complete Creation Engine suite: **485 passed, 0 failed, 0 skipped** in **70.25 s**
+  (9 existing ORM/table-sorting warnings), including the package import guard.
+- Full repository regression: **1,121 passed, 0 failed, 0 skipped** in **533.76 s** with
+  PostgreSQL enabled (3,935 deprecation, ORM and table-sorting warnings). No implementation
+  files changed after these successful runs.
+- Active specification, core schema and A1 schema SHA-256 values still match
+  `docs/creation-engine/active-contract.json`; `git diff --check` passes.
+- T09 backend: revocation invalidates the prompt while the gate remains held; revoked or
+  unusable accounts cannot answer or retrieve a previously accepted response receipt.
+- T10: operator adjustments invalidate the question in the same transaction; an unannounced
+  mechanical-context change also prevents the old token authorizing effects.
+- T11/T54: mandatory and optional deadlines, commit-time acceptance, copied timeout policy,
+  forward gaps, backward time and explicit reissue are covered with controlled authority time.
+- T50 backend: manual provenance is durable and operator status cannot grant control of
+  another principal's resource. Verification of every public projection belongs to WP6.
+- Different worker processes racing with matching or distinct keys accept one outcome.
+  Process death immediately before commit leaves no accepted answer; death after commit
+  retains one answer, checkpoint and receipt for recovery on another worker.
+- Five added regression cases failed before the worker-lease and pre-deadline clock-gap fixes,
+  then passed. Two further tests exercise actual process death at the commit boundaries.
+
+Verification commands (repository `venv/`, separate disposable `ce_test` database on 55435):
+
+```bash
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55435/ce_test venv/bin/python -m pytest tests/creation_engine/test_ce_decisions.py -q
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55435/ce_test venv/bin/python -m pytest tests/creation_engine -q
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55435/ce_test venv/bin/python -m pytest -q
+```
+
+**Acceptance checklist (WP5 backend).**
+
+- [x] Persisted, typed, context-bound decisions and once-only authorized acceptance.
+- [x] Current responder checks, policy invalidation and active-frame operator intervention.
+- [x] Declared optional decline, mandatory suspension, clock-gap review and monotonic time.
+- [x] Versioned reissue/reassignment and recovery without rewriting retained outcomes.
+- [x] Durable manual provenance with per-resource authorization.
+- [x] Competing-worker and before/after-commit process-death verification.
+- [x] Complete engine and repository regression verification: 485 and 1,121 passed.
+
+**Retention / residual scope.** Code, migration, tests and this record are repository artifacts.
+Raw logs and the pre-edit backup are retained in the Codex task workspace under
+`creation-engine/wp5/`; the final runs use `decisions-final.log`, `engine-final.log` and
+`full-regression.log`. `gap-reproduction.log` captures the intended failing reproduction;
+`decisions-after-fixes.log` is a superseded intermediate failure, not final evidence.
+The tests used a separate disposable PostgreSQL container on port 55435, stopped after
+verification. `verification.json` in that workspace directory records the final source and
+log hashes. No production
+migration or cutover is part of this package. Public access remains disabled. **Integration
+assumption (medium):** WP6 must wire current policy reads, coordinated policy writes,
+heartbeat scheduling and audience projection before exposing this runtime to clients.
+Sequential reaction-slot ordering remains G2; this entry does not claim T51 completion.
+
+**Next step.** WP6: policy projection, public receipts and events, transport authorization,
+subscription revocation and audience-bound recovery. Continue against v1.1.4/core 1.1.3/A1;
+WP7–WP9 and G1 acceptance remain open.
+
+
+### WP6 — policy projection and public transport (2026-09-26)
+
+**Input / status.** Continued from the verified WP5 working tree at HEAD `66b6fc4`, under
+specification v1.1.4, core wire 1.1.3 and registry A1. This is G1 Deploy. Implementation,
+focused verification and the full repository regression are complete. This entry
+tracks uncommitted working changes, not a new contract, production deployment or G1 exit.
+
+**Implementation summary / files.**
+
+- `policy/rules.py`, `projection.py` and `public_errors.py`: pure policy checks, labelled
+  field/source projection, reviewed declassification, audience-specific cache identity,
+  public receipt allowlisting and stable sanitized errors.
+- `store/policy.py`, `policy_models.py` and
+  `migrations/migration_m76_creation_engine_policy.sql`: versioned policies, entitlement
+  epochs, View As sessions, subscriptions, opaque cursors, public request records and
+  append-only security history. M76 follows M75 and is repeatable.
+- `store/public.py`: one gateway for current authorization, projected objects/search/outcomes,
+  decisions, receipts and subscription recovery. `store/maintenance.py` supplies the periodic
+  heartbeat/expiry worker for scopes whose pinned registrations match the worker.
+- `kernel/service.py` and `decision_service.py`: a trusted database-only request-recording
+  port, committed atomically with the receipt so public recovery survives a lost response.
+- `transports/common.py`, `http.py` and `sockets.py`, with registration in `vtt/__init__.py`
+  and default-off flags in `vtt/config.py`: authenticated REST and a dedicated Socket.IO
+  namespace using the same gateway and strict command parser.
+- `tests/creation_engine/test_ce_policy.py`, `test_ce_public.py`, `test_ce_transports.py`
+  and the configuration extension to `test_ce_kernel.py`: pure policy, PostgreSQL,
+  competing-process and authenticated transport verification.
+- `docs/creation-engine/runtime-integration.md`: trusted builder, writer-lock, worker and
+  transport contracts for the WP7 host integration.
+
+**Behavior and integration contracts.**
+
+- Every policy ancestor must grant access; explicit denies win. Owner-private fields require
+  the owner's own access or explicit owner grants, including for campaign operators. Platform
+  roles and token ownership grant no additional rights. Personal sandbox delegation is explicit.
+- Derived fields require the intersection of their labelled inputs, unless a reviewed rule
+  in the execution lock's configuration authorizes that exact field/category/audience.
+  Private source names, content hashes, URLs and omitted counts remain hidden. Read, explain,
+  export, search, snapshots and events share projection; search filters before ranking/counting.
+- Cache identity binds the current audience, entitlement state, policy epoch, scope, state,
+  execution lock and representation version. Access and expiry are checked again at delivery,
+  including cache hits. Configuration mismatches fail closed before projection.
+- View As intersects operator and member rights, expires after 15 minutes and audits entry,
+  exit and expiry. It cannot mutate or obtain another member's response token. Rejected expired
+  reads retain observed authority time so a backward clock step cannot reopen the session.
+- Coordinated policy changes invalidate open decisions, subscriptions and View As in the same
+  scope-locked transaction while retaining the mechanical gate. Every delivery also rereads
+  current membership/account/entitlements; cached data cannot bypass a legacy revocation.
+- Public receipts follow the approved schema and omit internal outcome digests. Retrieval and
+  matching retries reauthorize the originating command. Eligible responders receive opaque
+  nonces, never context digests; manual outcomes and their event/export projections are labelled.
+- REST and Socket.IO use authenticated local identity and CSRF checks. Socket commands carry
+  raw JSON envelope text so duplicate keys and invalid numbers reach the strict parser.
+  Subscriptions bind scope, principal, connection and current authority. Cursors are random
+  identifiers, not event sequences; stale cursors recover a permitted snapshot.
+- Delivery is requested through `ce:poll` on `/creation-engine`, filtered and enqueued only to
+  that connection under current authorization. Lost acknowledgments can replay permitted
+  event IDs without repeating mutations. Delivery callbacks must enqueue without waiting for
+  remote acknowledgments while the transaction's authorization locks are held.
+- CE_RUNTIME, CE_AUTHORING and CE_SHADOW default off. Enabling a surface without an explicitly
+  installed host gateway returns ENGINE_UNAVAILABLE. No production gateway or worker is started.
+
+**Proofs / verification.**
+
+- Focused policy/database/transport review: **81 passed** in **23.97 s** (112 warnings).
+- Subsequent complete Creation Engine run: **572 passed, 0 failed, 0 skipped** in **98.76 s**
+  (119 warnings), including the added clock-rollback and pinned-worker maintenance cases.
+- Final sandbox-delegation regression: **1 passed, 33 deselected** in **4.49 s** (7 warnings).
+  This final change is included in the full repository run below.
+- Final full repository regression: **1,209 passed, 0 failed, 0 skipped** in **531.67 s**
+  with PostgreSQL enabled (4,045 deprecation, ORM and table-sorting warnings). No implementation
+  files changed after this run. The earlier engine/focused counts above precede the last added cases.
+- Active specification, core schema and A1 SHA-256 values still match
+  `docs/creation-engine/active-contract.json`; `git diff --check` passes.
+- T22–T24: the real F-CURSE evaluator yields defense 12 from 13 minus a private 1; all public
+  output modes disclose only the reviewed result. The variant without a reviewed rule withholds
+  it. GM-warmed caches, other scopes, owner-private fields and View As cannot widen access.
+- T25: separate processes race delivery with revocation under database locks; prompt, receipt,
+  subscription and View As checks observe current authority. A failed policy transaction leaves
+  the earlier prompt, epoch and subscription intact.
+- T47: response nonces and public receipts do not expose context/outcome content digests;
+  another member cannot retrieve them. Public receipt authorization survives a crash injected
+  after the kernel commit, and neither record survives a failure before commit.
+- The receipt recovery regression first reproduced the missing authorization record after
+  commit (one expected failure), then passed after the atomic recording fix.
+- T08 transport portion: permitted event replay, private-event omission, connection-bound
+  cursors and stale-cursor snapshot recovery. T50 public portion: manual labels on outcomes,
+  exports and events. Transport admission tests cover size, identity spoofing and malformed JSON.
+
+Verification commands (repository `venv/`, disposable PostgreSQL 16 database on 55436):
+
+```bash
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55436/ce_test venv/bin/python -m pytest tests/creation_engine/test_ce_policy.py tests/creation_engine/test_ce_public.py tests/creation_engine/test_ce_transports.py -q
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55436/ce_test venv/bin/python -m pytest tests/creation_engine -q
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55436/ce_test venv/bin/python -m pytest tests/creation_engine/test_ce_public.py -q -k personal_sandbox_delegation
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55436/ce_test venv/bin/python -m pytest -q
+```
+
+**Acceptance checklist (WP6 backend/transport).**
+
+- [x] Field/source policy intersection, reviewed declassification and owner-private rules.
+- [x] Current-audience cache identity, read-only View As, expiry and audit history.
+- [x] Atomic policy invalidation, current delivery checks and competing-process revocation proof.
+- [x] Public receipt filtering/recovery, opaque decision tokens and manual output labels.
+- [x] Authenticated REST/Socket.IO, audience-bound cursors and permitted snapshot recovery.
+- [x] Final full repository regression: 1,209 passed; retained verification manifest.
+
+**Retention / residual scope.** Repository artifacts contain the implementation, M76, tests
+and integration guide. Raw logs and pre-edit backups are retained in the Codex task workspace
+under `creation-engine/wp6/`. `focused-final.log`, `engine-verified.log`, `delegation-final.log`
+and `full-regression.log` retain the runs above; earlier logs are superseded. The intentional
+before-fix failure is in `receipt-gap-reproduction.log`.
+The workspace's `verification.json` records commands, exact results, source/log hashes and
+cleanup. The disposable WP6 PostgreSQL container on port 55436 was stopped and removed after
+verification; the preexisting test database on port 55432 was preserved.
+
+**Integration obligation (medium):** WP7 must supply legacy document/control mappings and
+connect membership/account/entitlement writers to the coordinated scope-lock protocol when
+installing the gateway. Current-read denial does not replace atomic writer-side prompt/epoch
+invalidation. WP7 must also install the matching worker's 30-second maintenance schedule.
+WP8 supplies authoring registrations and UI bindings. No production schema migration, live
+cutover, human acceptance study or G1 exit is claimed by this package.
+
+**Next step.** WP7: legacy RDL mapping, migration ledger, SHADOW parity, fixture-only ENGINE
+cutover and legacy-write translation, including sheet/token agreement. Continue against the
+approved v1.1.4/core 1.1.3/A1 contract; WP8–WP9 and G1 acceptance remain open.
+
+
+### WP7 — legacy RDL migration and compatibility (2026-09-26; evidence finalized 2026-09-27)
+
+**Input / status.** Continued from the verified WP6 working tree at HEAD `66b6fc4`, under
+specification v1.1.4, core wire 1.1.3 and registry A1. This is G1 Deploy. The implementation
+and full repository verification are complete. WP5–WP7 remain
+uncommitted. This package does not change the active contract or enable a production surface.
+
+**Implementation summary / files.**
+
+- `adapter/mapping.py`: pure RDL mapping and closed content schemas. Numeric columns become
+  labelled legacy inputs; recognized signatures become explicit imported selections without
+  applying their descriptive effects. Unknown content stays in inert `legacyMetadata`.
+- `store/migration_models.py` and `migrations/migration_m77_creation_engine_legacy.sql`:
+  bijective source/version ledger, scope links, parity reports/approvals, imported grants,
+  runtime inputs, representations and workspace-command deduplication. M77 is additive and
+  repeatable; source identities, reports, approvals and representation links are append-only.
+- `store/legacy/migration.py` and `snapshots.py`: authenticated campaign provisioning,
+  scope-wide mapping/SHADOW/freeze/cutover/abort, current dual-capacity approvals and atomic
+  installation of revisions, execution lock, occurrences, resources and authority epoch.
+- `store/legacy/inputs.py`: `SetBaseValue`, `SetValueOverride`, `ClearValueOverride` and
+  `SetItemEquipped`, using existing checkpoints, receipts, scope gate and lease checks.
+- `store/legacy/guards.py`, `compatibility.py` and `projections.py`: one authority guard for
+  ORM writers, coordinated policy invalidation, legacy-write translation, labelled projection
+  and shared occurrence resources across token/sheet representations.
+- `transports/legacy_host.py` and `legacy_http.py`, plus existing transport adapters:
+  explicit host installation, legacy route interception, migration preview, token projection,
+  SHADOW-only command admission and the `flask ce-maintain` worker entry point.
+- `vtt/ce_compat.py`, character/token serializers, character and campaign routes, socket
+  handlers and traps: small host lookups connecting existing paths to the adapter. App/config
+  wiring adds CE_LEGACY_ADAPTER, off by default alongside the existing flags.
+- `content/records.py`: dependency discovery ignores the declared inert legacy container,
+  including imported JSON that resembles tagged engine references. Public errors include an
+  authorized-refresh instruction on authority-epoch mismatch.
+- `test_ce_migration.py` and `test_ce_legacy_transports.py`: real legacy database rows,
+  authenticated existing routes, scope-fence concurrency and authority/projection regressions.
+
+**Behavior and integration contracts.**
+
+- F-RDL-CONFLICT variants preserve AC 12 and 13 respectively. Neither “Defensiver Stil” nor
+  imported armor adds another bonus to a total whose history is unknown. Original JSON,
+  quantities, descriptions and unsupported mechanics remain available as inert metadata;
+  imported item capabilities are labelled manual.
+- SHADOW enumerates every active character in a scope and reports mapped fields, discrepancies
+  and unsupported behavior. It changes no legacy table or live resource ledger. Current HP
+  outside bounds and divergent token copies require explicit reconciliation by both current
+  controller and operator. A stale source snapshot invalidates earlier report approvals.
+- Freeze and legacy writers acquire the same runtime scope row lock. Cutover rechecks the
+  exact reviewed report, all current source rows, quiescence and approvals, then installs every
+  occurrence atomically. A per-character authority switch is unavailable. Every legacy cutover
+  requires a trusted fixture flag; the public command cannot set it.
+- ENGINE resource edits translate to the shared resource ledger. Calculated values and base
+  attributes translate to the registered input commands; equipment toggles require control
+  of the holder. A maximum cannot silently discard current resources. Unsupported/mixed edits
+  are rejected before any partial change; progression and item transfer remain later work.
+- Compatibility requests need explicit authority/version/idempotency context. Matching absolute
+  resource retries recover their original delta and receipt even after the value changes.
+  Workspace creation keys and runtime command keys are distinct namespaces.
+- Sheet and export reads use current engine policy. Unknown imported metadata is owner-private
+  by default. Token projection checks representation visibility as well as engine policy and
+  View As. Legacy room broadcasts carry a reference instead of audience-specific engine HP.
+- New token representations ignore incoming HP. Position changes remain presentation state.
+  Traps refuse ENGINE targets before drawing damage dice. ENGINE character transfer is rejected
+  with SCOPE_TRANSFER_UNSUPPORTED. No legacy column becomes a second authoritative writer.
+- ORM model helpers and bulk writers acquire scope locks before mutation. Membership/account/
+  campaign policy changes invalidate prompts, subscriptions and View As in the same transaction.
+  Background policy writers supply an authenticated audit actor explicitly; rollback clears
+  queued invalidations. Entitlement issuers use the existing PolicyStore.changed contract.
+- The installed host provides a distinct worker identity and `flask ce-maintain` for the
+  existing 30-second maintenance loop. Installation starts no worker thread. Native activity
+  registrations and authored sandbox/item creation are the WP8 integration boundary.
+
+**Proofs / verification.**
+
+- Initial migration/guard/transport package run: **37 passed** in **51.21 s** (375 warnings),
+  before the final combat, visibility, strict-JSON and registration cases.
+- Creation Engine verification: **615 passed, 0 failed, 0 skipped** in **157.51 s**
+  (528 warnings). This run includes the final source-layout and workspace-key corrections.
+- Final pinned-worker regression: **1 passed, 26 deselected** in **6.33 s** (13 warnings).
+  Its registration check and added case are included in the full repository run below.
+- Full repository regression: **1,252 passed, 0 failed, 0 skipped** in **604.59 s**
+  (4,460 warnings), including the final pinned-worker regression. The retained pytest log
+  contains the completed passing summary; the original shell session expired before its
+  exit status could be retrieved after resumption, so no separate process-exit claim is made.
+  All 48 files in `full-run-source.json` still match their hashes from the running test session.
+- T01: both existing-character conflict variants, inert tagged-looking JSON, recognized manual
+  selections, shadow snapshots and explicit resource-bound reconciliation.
+- T02: authenticated sheet, equipment, combat and Socket.IO translation; retries, missing epoch,
+  unsupported/mixed writes, direct ORM/bulk bypass attempts and maximum-reduction refusal.
+- T03: two tokens in different sessions share their character occurrence's HP; a second campaign
+  remains independent. New representations cannot seed a separate HP pool.
+- T48: partial campaign mapping fails; an active engine frame blocks a legacy calculated edit;
+  a real separate process holds the legacy-write fence while cutover waits. Freeze then captures
+  its committed value, and a subsequent worker cannot write through the frozen scope.
+- Failures injected before/after the cutover commit leave either the original frozen scope with
+  no installed occurrences or the entire new ENGINE scope with one increased authority epoch.
+- All legacy tables are snapshotted before and after SHADOW and compared unchanged. Policy-write
+  rollback preserves current subscriptions, and current membership/account revocation closes them.
+- The first broad run found seven import-boundary failures in the new I/O file placement.
+  These files were moved into store/transports; the existing boundary test was not relaxed.
+  Its focused rerun passed all **34** checks; the final engine run above includes them.
+- Specification, core schema and A1 hashes still match `active-contract.json`; `git diff --check`
+  passes. The frozen v1.2 research/reconciliation artifacts were not regenerated.
+
+Verification commands (repository `venv/`, disposable PostgreSQL 16 database on 55437):
+
+```bash
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55437/ce_test venv/bin/python -m pytest tests/creation_engine/test_ce_migration.py tests/creation_engine/test_ce_legacy_transports.py -q
+venv/bin/python -m pytest tests/creation_engine/test_ce_boundaries.py -q
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55437/ce_test venv/bin/python -m pytest tests/creation_engine -q
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55437/ce_test venv/bin/python -m pytest tests/creation_engine/test_ce_migration.py -q -k wrong_migration_worker
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55437/ce_test venv/bin/python -m pytest -q
+```
+
+**Acceptance checklist (WP7 backend/compatibility).**
+
+- [x] Labelled legacy baselines, inert metadata and imported selections without double application.
+- [x] Bijective mapping, complete scope SHADOW reports and current dual-capacity discrepancy approval.
+- [x] Quiescent fixture-only cutover, authority fencing and atomic failure-boundary verification.
+- [x] Shared token/sheet resources, input-command translation and no second legacy writer.
+- [x] Current-policy compatibility reads, coordinated revocation and explicit host/worker installation.
+- [x] Real competing-process fence test and unchanged pure-core import guard.
+- [x] Final repository regression and retained verification manifest.
+
+**Retention / residual scope.** Implementation, migration, tests and the updated runtime integration
+guide are repository artifacts. The Codex task workspace retains pre-edit backups and logs under
+`creation-engine/wp7/`. The recorded runs use `wp7-review.log`, `boundaries-final.log`,
+`engine-final.log`, `registration-final.log` and `full-regression.log`; earlier runs are superseded.
+The first `engine-review.log` records the seven corrected source-placement failures.
+`verification.json` records the final counts, source and artifact hashes, and cleanup evidence.
+The disposable WP7 PostgreSQL container was stopped and removed; the preexisting test database
+and production containers were preserved.
+
+**Integration boundary (medium, assigned to WP8):** authored activities, new authored sandbox/item
+creation and Guided/Structured/Advanced client bindings remain to be connected. Existing legacy
+capabilities are not automatically executable. Bulk migration jobs, post-mutation semantic rollback
+and transfer belong to their later contracts. Raw administrative SQL is not a supported gameplay
+write path. All engine/adapter flags remain off; production schema and data were not changed.
+G1 exit still requires WP8–WP9 and the human acceptance study.
+
+**Next step.** WP8: the flame-sword authoring slice across Guided, Structured and Advanced modes,
+including registered activity execution and German/English/French question identity. Continue the
+approved v1.1.4/core 1.1.3/A1 contract; no renewed specification phase is needed.
+
+### WP8 — guided authoring, durable drafts and native sandbox execution (2026-09-27)
+
+**Status.** Implemented and verified in the working tree. The active authority remains approved
+v1.1.4, core wire 1.1.3 and registry A1; no specification, wire schema, approval or frozen reading
+edition was changed. WP1–WP4 remain committed at HEAD `66b6fc4`; WP5–WP8 remain uncommitted.
+
+**Implementation.** The new pure compiler supplies stable question/version/path ownership,
+typed schemas, deterministic ordering, explicit dependencies/invalidation, de/en/fr prompts,
+reviewed opt-in presets and mechanical quality gates. Guided, Structured and Advanced use the
+same RecordDraftDecision operation. Free prose creates no mechanics. Required questions cannot
+be skipped; optional questions can. Changing a decision removes active descendant values while
+retaining stale answers and append-only history. A dependency dead end exposes Structured
+recovery; an unreviewed registry/compiler change is refused.
+
+M78 adds immutable compiler snapshots, draft receipts and workspace results. Its only change
+to M77 is allowing a workspace creation command without a runtime scope; all workspace commands
+still share the same principal/workspace/key namespace. Draft content, answers, snapshots,
+immutable revisions and receipts commit together, with current owner/account checks and an
+expected draft version. Revert creates a new version. Commit validates the declared quality and
+records the registry, compiler and question provenance. Preset digests seal the reviewed values
+and displayed language; replay cannot substitute another preview or silently reinterpret a
+revision under a different compiler.
+
+The authenticated editor at `/api/ce/authoring` provides all three modes, localized questions,
+readable previews, quality gates, preset review, stale-answer notices, revision saves and history.
+REST and Socket.IO share the same strict command dispatch. Views/locale changes are reads;
+unsaved inputs are protected and uncertain network outcomes retain the exact retry command.
+The closed PublicReceipt shape is unchanged; owner-only result reads expose created references.
+
+The native host profile separately pins RDL G1 **1.1.0**, the native schema bundle and `g1.flames:1`
+configuration. Existing 1.0.0 artifacts and scopes are not upgraded. CreateSandboxScope resolves
+exact authorized revisions; InstantiateRevision requires lock membership and gives each copy
+independent resource ledgers. Held items start unequipped. Harmless activation cannot draw damage.
+The optional flame child follows a committed, explicitly attested hit: accepting spends charges,
+records the authored dice and adjusts the same target's HP in one checkpoint; declining or a
+timely timeout preserves the hit without spending or rolling. Recovery is an explicit attestation
+of the author's chosen event. A failed child preserves committed parent history and suspends for
+operator resolution. Exact child requests and the fenced maintenance continuation survive a lost
+reply/restart without duplicating a committed cost or roll.
+
+Native calculations require explicit engine-compute grants. Fixture campaign instantiation also
+requires operator authority and a separate, default-denied deploy capability. Native event
+projections require every involved object's current read grant, private outcomes retain source
+labels, decision tokens are restricted to eligible responders, and summary errors use the public
+allowlist. No native activity, grant or callback can be supplied by ordinary content.
+
+**Files.** Added `compiler/{interview,flame,catalog,runtime}.py`, authoring/native store adapters and
+models, the M78 migration, authoring routes, the editor template/JS/CSS, and four focused test
+modules. Integrated the existing host/transport dispatch, policy projection, maintenance worker
+and kernel's bounded declared-roll adjustment port. Updated the runtime integration guide and
+status entry point. Pure engine modules still pass the existing framework-import guard.
+No external runtime dependency was added.
+
+**Verification.** PostgreSQL 16 used only the disposable `ce_test` database at localhost:55438;
+browser cases used authenticated Flask routes and installed Chromium through Playwright.
+
+| Run | Observed result |
+| --- | --- |
+| Compiler and boundary review | 64 passed |
+| Authoring/store review | 86 passed |
+| Engine regression before native integration | 676 passed; completed pytest summary retained |
+| Native/browser/policy/boundary review | 84 passed, exit 0 |
+| Explicit compute/deploy authority checks | 2 passed, 9 deselected, exit 0 |
+| Full repository regression | 1,325 passed, 1 failed, 4,467 warnings in 648.39s; exit 1 |
+| Existing browser-icon contract after fix | 2 passed, exit 0 |
+| Final follow-up over authoring, compiler, native runtime, browser, boundaries and icon | **113 passed**, 13 warnings in 76.39s; exit 0 |
+| JavaScript syntax and whitespace checks | Passed |
+| Active specification/core/registry hash checks | All three unchanged |
+
+The full run's sole failure was the new template's missing shared browser icon. The icon was
+added and its existing contract tests passed. Subsequent review strengthened immutable revision
+provenance, sandbox error sanitization and translated-preset audit locale. The final follow-up
+exercises every changed implementation/template path; there was **no second full-suite run**.
+Do not describe the initial full run itself as all green. Its source snapshot and all later
+source changes are retained so these two verification stages remain distinguishable.
+
+Exact primary commands (CE_TEST_DATABASE_URL pointed to the disposable database):
+
+```text
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55438/ce_test venv/bin/python -m pytest -q
+CE_TEST_DATABASE_URL=postgresql://postgres:ce_test@127.0.0.1:55438/ce_test venv/bin/python -m pytest tests/creation_engine/test_ce_native.py tests/creation_engine/test_ce_authoring.py tests/creation_engine/test_ce_authoring_transports.py tests/creation_engine/test_ce_compiler.py tests/creation_engine/test_ce_boundaries.py tests/test_browser_icon_contract.py -q
+node --check vtt/static/js/creation-engine.js
+git diff --check
+```
+
+**Acceptance checklist (WP8).**
+
+- [x] T31: harmless flames have no invented damage; earlier answers invalidate descendants visibly.
+- [x] T32: Guided/Structured/Advanced and de/en/fr retain valid decisions; upgrades require review.
+- [x] Atomic draft history, current authorization, competing saves, exact retry and rollback proof.
+- [x] Immutable revision quality/provenance checks and reviewed preset application.
+- [x] Exact-lock private sandbox creation, independent copies, equip state and charge use/recovery.
+- [x] Optional post-hit damage child; decline/timeout and failure-boundary recovery preserve the hit.
+- [x] Real browser authoring-to-execution flow; current-policy output and compute/deploy checks.
+- [x] Regression failure fixed and final changed paths reverified; evidence retained.
+
+**Retention and limits.** The task workspace retains `creation-engine/wp8/` backups, logs, exit
+codes, source hashes, screenshot and `verification.json`. `full-initial-regression.log` and
+`full-initial-run-source.json` identify the initial full run; `post-full-changes.json`,
+`followup-source.json` and `final-followup.log` identify final verification. M78 was never applied
+to production. The task's disposable PostgreSQL container is removed after verification; the
+preexisting test and production containers are preserved. All engine flags remain off by default.
+
+This bounded native profile explicitly attests hits/recovery and supports activation/hit-window
+durations. It does not claim complete attack/resistance/calendar automation or manufacture missing
+character statistics. Existing scopes require their original registered worker; switching a host
+profile is not a lock migration. Automated browser checks are not the formative user study.
+
+**Next step.** WP9: consolidate G1 acceptance evidence, execute the required ≥8-target-user study
+and assess the milestone exit against §22. G1 remains open; no production cutover is authorized.
+
+### WP9 — evidence preparation and scheduled WP8 product test (2026-09-27)
+
+**Status.** Preparation documented; user-study execution is pending. The user reports that the
+WP8 test is scheduled for **Tuesday, 29 September 2026**, Europe/Berlin. Its exact time and
+participant roster have not been supplied. This records the user's schedule, not an agent-created
+calendar event. Per the user's instruction, no participant/usability testing takes place before
+that date; design, automated checks, source review and isolated fixture preparation can continue.
+
+WP8 names the implemented authoring slice being tested; WP9 owns its acceptance evidence.
+The scheduled session does not waive the existing §22 requirement of at least eight target users,
+the four T45 tasks, the completion threshold, zero unnoticed creative defaults or resolution of
+recurrent confusion. G1 remains in Deploy and its exit remains open. No spec, wire, registry,
+approval record, production data or engine flag was changed by this documentation work.
+
+**Design package and backlog.** The user authorized the bounded VTT design follow-up described
+in the 27 September discovery. The Apply package is retained in:
+
+- `docs/vtt-design/README.md` — entry point and distinct design/engine status;
+- `docs/vtt-design/authoring-sandbox-design-v0.1.md` — source reconciliation, shared-theme and
+  navigation integration, authoring/sandbox states, interfaces, tradeoffs and implementation handoff;
+- `docs/vtt-design/authoring-sandbox-contracts-v0.1.md` — 16 specified observable contracts,
+  `VD-C01`–`VD-C16`, without renumbering engine acceptance IDs;
+- `docs/vtt-design/test-backlog-2026-09-29.md` — 16 engineering cases, seven deferred human
+  scenarios, fixtures, planned coverage, priorities, responsibility roles and evidence/scoring rules;
+- `docs/vtt-design/study-results-template.csv` — empty observation register; no invented results.
+
+**Acceptance gap (medium, open).** WP8 supplies magic-item authoring and a bounded post-hit flame
+path. It does not establish a general conditional-effect or authored-choice UI. An existing
+yes/no runtime response is not proof of authoring a choice. Lore-only item prose is a candidate
+bounded lore task whose fit must be recorded before the study. Backlog VD-T01 and VD-H02–VD-H04
+keep these gaps visible. Unsupported tasks cannot be replaced by moderator-created content,
+silently removed from the scoring denominator or recorded as passes. A partial Tuesday session
+can yield useful WP8 feedback while leaving the complete G1 study obligation open.
+
+**Design conformance gaps (medium, open).** The current editor uses a separate dark palette and
+dashboard backlink, and its automated browser fixture is Chromium at 1280×960. Shared VTT
+navigation/theme integration, distinct same-named-copy labels, responsive/zoom coverage and
+complete keyboard/focus/permission-state evidence remain backlog work. The new contracts are
+specified targets; this package makes no claim that they are already implemented or accepted.
+
+**Verification and retention.** This is documentation-only work. Local references, contract/test
+ID coverage, operation names against the active schemas, the empty CSV template, date and source
+identity are checked. The active authority pins and the 92 source hashes retained for WP8 are
+unchanged. No runtime suite or participant session was executed for this package. The task
+workspace retains before-document snapshots and the document verification record under
+`vtt-design-2026-09-27/`; earlier WP8 run artifacts remain historical evidence, not new design
+verification. The project status entry point links the schedule and backlog.
+
+**Next step.** Prepare the selected test build/fixtures and complete the bounded technical/design
+backlog as appropriate. Record Tuesday's actual build, participants, supported task scope and
+results, then consolidate WP9 evidence and unresolved findings. Do not close G1 merely because
+the session date arrives or because automation passes.
+
+### VTT design follow-up — slice 1 implementation (2026-09-27)
+
+**Authorization/status.** The user instructed “go ahead and continue” after receiving the bounded
+design/contracts/backlog package. Its first UI integration slice is implemented and verified in
+the working tree. This is a design implementation follow-up to WP8, not a new engine specification
+phase or G1 exit. Human testing remains deferred until Tuesday, 29 September; time and attendance
+are still unrecorded here. No new architecture, dependency or engine protocol was introduced.
+
+**Implementation.** The real BookScene dashboard renders a contextual authoring entry using
+private server-provided availability metadata. The helper checks the installed authoring host,
+feature flag and usable account, excludes View As, and creates no workspace/draft during a
+dashboard read. Existing primary session/preparation actions retain priority. The editor uses
+the shared theme/fonts/navigation styles with scoped feature CSS, localizes its orientation in
+de/en/fr, and uses a single column below 1200 CSS px. Native links preserve existing VTT targets;
+dirty/pending navigation is guarded and a lost response retains the exact retry command. The
+current saved draft name/version is visible. Domain operations and current authorization remain
+server-owned and unchanged.
+
+**Files/evidence.** `docs/vtt-design/deploy-slice1-2026-09-27.md` records the six implementation
+files, `tests/creation_engine/test_ce_design.py`, exact commands, source/evidence retention,
+acceptance boundaries and rollback. The design README, test backlog and engine status entry point
+are updated. Logs, before snapshots, screenshots and the verification manifest are retained under
+the task workspace's `vtt-design-slice1-2026-09-27/`; historical WP8 artifacts were preserved.
+
+**Verification.** Initial design review: 11 passed, exit 0. Final selected regression: **111 passed,
+20 warnings in 56.91s, exit 0**, including the final 12 design cases plus authoring/store/browser,
+dashboard/book/navigation/icon and pure-core boundary checks. JavaScript syntax and whitespace
+checks pass; active specification/core/registry hashes are unchanged. Eighteen Chromium layout
+cells (six widths × de/en/fr, height 960, reduced motion) show no horizontal overflow/clipped
+controls and the correct column boundary. Six sampled text contrast ratios are 5.07:1–13.92:1.
+Guided/Structured desktop and phone-sized screenshots were inspected. This is not a fresh full
+repository regression, complete accessibility acceptance or human-study evidence.
+
+**Limits/next step.** Shared theme and entry gaps are implemented; the backlog records partial
+coverage without declaring all 16 contracts accepted. Remaining work includes draft conflict/focus
+and error handling, distinct same-named-copy identification, in-page revocation races, actual zoom,
+Firefox/WebKit, screen-reader/device coverage and the unresolved T45 authoring scope. The task
+database container is removed after verification; preexisting containers are preserved. All flags
+remain default-off, changes uncommitted, and no production migration/activation/deployment occurred.
+
+
+### VTT design follow-up — slice 2 implementation (2026-09-27)
+
+**Authorization/scope.** The user's “Ok go” accepted slice 1's next bounded conflict/focus/copy-identity work. Deploy continues against engine specification 1.1.4 / core 1.1.3 / registry A1; no G0 reopening, engine redesign or production cutover. Human testing remains deferred until Tuesday 2026-09-29, Europe/Berlin.
+
+**Implemented.** Draft conflicts retain exact local control values, provide read-only refresh/comparison, and permit explicit restoration/resaving only for a compatible visible/ready question. Guided recovery opens Structured view; JSON remains JSON. New saves use the reviewed version and a new key, while unknown-response retries keep the original envelope. Repeated conflicts and failed refreshes retain input; rejected presets are never automatically applied. Focus is applied after controls are enabled, field errors preserve and identify input, and sandbox copies/actors have consistent distinct references in selectors and resource lists. Short-reference collisions expand to full authorized IDs.
+
+**Files/evidence.** `docs/vtt-design/deploy-slice2-2026-09-27.md` records the three UI files, `tests/creation_engine/test_ce_editor_states.py`, commands, limits, rollback and evidence. The design index, technical backlog and engine status index are updated. Task-workspace `vtt-design-slice2-2026-09-27/` retains before snapshots, development logs, final source hashes, environment details, screenshots and verification. WP8 and slice 1 evidence are preserved.
+
+**Verification.** Dedicated browser run: **11 passed, 7 warnings in 55.57s**, exit 0. Final selected regression: **96 passed, 24 warnings in 168.58s**, exit 0, including the final UI wording and all new cases plus the real dashboard/editor/native sandbox and existing navigation/layout/icon workflows. Development failures and their test-fixture/mid-run-edit causes are retained in the slice report; the final implementation/test hashes stayed fixed throughout the accepted regression. JavaScript syntax, whitespace, local links and authority/reconciliation checks pass. Rerun layout coverage includes 18 reduced-motion width/locale cells and six sampled text contrast ratios (5.07:1–13.92:1); conflict/copy phone-sized screenshots were inspected. This is selected automated coverage, not a fresh full repository run, complete accessibility acceptance or human evidence.
+
+**Limits/next step.** The backlog retains open-page revocation/delayed-response races, hard-tab-loss behavior, uninterrupted full keyboard traversal, actual zoom, Firefox/WebKit, screen-reader and physical-device coverage. T45's missing general conditional-effect/choice authoring capability and ≥8-person/four-task human gate remain open. Continue with those bounded technical gaps and prepare the scheduled WP9 observations. The task database container was removed after verification and preexisting containers preserved. Work remains uncommitted and flags default-off; no production migration, activation or deployment occurred.
+
+
+### VTT design follow-up — slice 3 implementation (2026-09-27)
+
+**Authorization/scope.** The user's “Continue” accepted the next bounded open-page revocation/accessibility work. G1 remains in Deploy against specification 1.1.4 / core 1.1.3 / registry A1. No server API, policy, schema, migration, dependency or engine operation changes. Human testing remains deferred until Tuesday 2026-09-29, Europe/Berlin.
+
+**Implemented.** Confirmed denial/unavailable responses and changed workspace identities clear protected DOM/client state, disable mutation and focus a localized unavailable/recheck surface. Request generations plus cancellation prevent late responses from restoring an old access state; sandbox/catalog read sequence checks prevent older projections from replacing newer ones. Rechecks use existing GETs, never replay a previous command, and preserve input/exact pending envelopes through transient connection failure. The page checks on visible return/focus and every 15 seconds while visible, with a 10-second timeout per probe request. Runtime availability, revision choices, objects and decisions follow the current projected responses; valid selections persist. Deselection clears hidden scope details. Keyboard recovery and removed-decision focus are covered.
+
+**Files/evidence.** `docs/vtt-design/deploy-slice3-2026-09-27.md` records the JavaScript/template changes, `tests/creation_engine/test_ce_access_states.py`, exact commands, limits and rollback. Design/engine indexes and the technical backlog are updated. Task-workspace `vtt-design-slice3-2026-09-27/` retains the before snapshots, bounded implementation note, development/final logs and exit codes, fixed-source hashes, environment, screenshots and verification manifest. Earlier evidence is preserved.
+
+**Verification.** Initial access run: **12 passed, 7 warnings in 50.71s**, exit 0. Development browser follow-ups recorded 29 passes/2 test-sequencing failures and 31 passes/1 programmatic-focus assumption; the report preserves their corrections. Final fixed-source selected regression: **139 passed, 126 warnings in 236.94s, exit 0**, including all **14 new access-state cases** plus previous conflict/retry/dashboard/editor/native, public-policy and HTTP/socket authorization cases. Existing ORM/table-cycle/UTC warnings remain. Syntax, whitespace, local links and authority/reconciliation checks pass. Eighteen width/locale/reduced-motion layout cells and six sampled text contrasts reran; unavailable-state English/French phone captures were inspected. This is not a full repository run or human/accessibility acceptance.
+
+**Limits/next step.** Detection depends on an actual authorization response, lifecycle signal or completed periodic check; no instantaneous push revocation or offline authorization is promised. Real browser-cache restoration/hard-tab-loss tests, the complete keyboard/assistive-technology/browser/zoom/device matrix and remaining suspended/timeout/receipt-state UI evidence stay open. The T45 capability gaps and ≥8-person/four-task study gate remain unchanged. The task database is removed after verification and preexisting containers preserved. Changes remain uncommitted and flags default-off; no production deployment, activation or migration occurred.
+
+
+### Task-readiness follow-up — manual authoring and lifecycle evidence (2026-09-27)
+
+**Authorization/scope.** The user's “Ok let's do that” accepted resolving study-task gaps and
+continuing technical checks. The bounded Apply revision is `docs/vtt-design/authoring-task-readiness-v0.1.md`.
+G1 remains in Deploy; specification 1.1.4 / core 1.1.3 / A1 remain authoritative. The working
+assumption is manual authoring first, keeping G2 runtime choices/grants separate. This is not
+a decision that manual tasks satisfy T45; acceptance-owner review remains explicit.
+
+**Implemented.** The existing A1 draft/revision path now supports manual conditional-effect
+and choice cards plus standalone lore. New profiles have separate versioned registries;
+original flame registry bytes, old drafts, native revisions and locks are unchanged. No
+creative defaults, executable prose, migration or dependency was introduced. Complete manual
+cards can be Sheet-ready; lore requires title/prose. Unsupported runtime/automation quality,
+executable sandbox admission and cross-profile flame presets are refused. UI explains these
+boundaries in de/en/fr and retains the shared mode/recovery/access handling.
+
+**Evidence.** `docs/vtt-design/deploy-task-readiness-2026-09-27.md` records the scoped changes,
+commands, compatibility proof, nine profile/locale browser journeys and five lifecycle cases.
+Combined regression: **198 passed, one outdated keyboard-sequence assertion failed, one
+optional WebKit test skipped; 128 warnings in 372.88s**. After correcting that test to include
+the new content selector, the focused editor-state follow-up passed **11 tests, seven warnings
+in 45.13s**. There are **199 distinct passing selected cases, including 33 new ones**. Application
+sources were unchanged across the combined run and follow-up. WebKit was attempted but could
+not launch on missing host libraries; Firefox is not installed. No full-repository or complete
+accessibility result is claimed. Source hashes, before snapshots, diffs, logs and screenshots
+are retained under task-workspace `authoring-task-readiness-2026-09-27/`.
+
+**Study preparation/limits.** Task cards, reset protocol, a 299-file candidate source identity
+and unfilled session manifest are in `docs/vtt-design/`. The T45 manual-depth ruling, actual
+Tuesday time/roster/devices, installed isolated study environment/accounts, remaining browser/
+assistive-technology/result-state checks and WP9 human evidence remain open. Human testing
+is deferred until 2026-09-29. Changes remain uncommitted and production flags off; no live
+deployment, migration or activation occurred.

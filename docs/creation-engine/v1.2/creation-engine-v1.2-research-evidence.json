@@ -1,0 +1,319 @@
+{
+  "date": "2026-09-24",
+  "baseline_inputs": [
+    {
+      "path": "/root/Documents/Codex/2026-09-23-okay-there-is-a-roll-drauf/creation-engine-v1.1.md",
+      "sha256": "70b7d3ce0d823ab5a45f9d8bf3b88d3a7cec2c3721f89bbd80680251df44c5ad"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-23-okay-there-is-a-roll-drauf/creation-engine-v1.1-contracts.schema.json",
+      "sha256": "53e6ba0c0e9921dfdfd177ba0152b6a0b99af896175122a246ec0f136cfb8d35"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-23-okay-there-is-a-roll-drauf/creation-engine-v1.1-acceptance.json",
+      "sha256": "70aaf2dca01c2221e9c43330d8fdfdf59365b410e1cc8fa97f62a64bad84f5af"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-23-okay-there-is-a-roll-drauf/creation-engine-v1.1-change-report.md",
+      "sha256": "8e5052c53b91e769968e9f02da1843c6637be53bbc006622ada609d766b00be5"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-23-okay-there-is-a-roll-drauf/creation-engine-v1.0-audit-team.md",
+      "sha256": "be157e2f2bdcd377e781f53b8c3d26ef674aa1db754485eaafec6d6d2d0b1ad3"
+    }
+  ],
+  "local_repository": {
+    "path": "/home/admin/projects/roll-drauf-vtt",
+    "head": "87ff37f61fa186d251001bbe42b2e3534318cd0b",
+    "status_before_and_after": [
+      "?? docs/BUGFIX_ACTION_PLAN_2026-09-18.md",
+      "?? docs/DADM_APPLY_ROLL20_SHEET_ACTION_MANIFEST_2026-08-31.md",
+      "?? docs/MERCH_TSHIRT_RESEARCH_2026-08-26.md",
+      "?? docs/ROLL20_GITHUB_VTT_TRANSLATION_RESEARCH_2026-08-31.md"
+    ],
+    "deployed_state_verified": false,
+    "inspection_scope": "Selected integration seams, not exhaustive writer inventory; no application imports or execution."
+  },
+  "local_files": [
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/AGENTS.md",
+      "sha256": "497fd8b66eb884bd093cc38a4ba706419e9c064b6dfced568dd8c0740bb413f6",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/CONTEXT.md",
+      "sha256": "b785e8b71ce542442d383b29033fa5be6e650538a8d9cbc265edb3ab46bfd3b2",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/requirements.txt",
+      "sha256": "76ad5ff377ad3dba92e78a3a63af02efb3c3cce38bc81ef421bf5aa79cd9d58e",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/vtt/characters/routes.py",
+      "sha256": "533bd3d67a9c2b6ba1cb735c0c1b45f004c252b22967e302683da39251ab76e8",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/vtt/models/character.py",
+      "sha256": "2e1cea9d90268a002d0cfbbb0bf7eae432dae7c0978ed82f51664f72a1ea58eb",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/vtt/models/token_state.py",
+      "sha256": "89bef03870495257c6def5cb060fbd5ff9a3d59e7a2f6578f1652b9edc2aad9f",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/vtt/combat/service.py",
+      "sha256": "b3584b2f4409ade37173645bfc7f010c5bd34f1fe97809e2cc7f1b680adbc8de",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/vtt/socket_handlers.py",
+      "sha256": "eda87ef89e54b6226265d543433dce50346e83b38894ebb6fc9789fe94b8b6ff",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/vtt/utils/realtime.py",
+      "sha256": "9b9724ccfec9a878f8d7983eb54c88b5b01172139b9c47a65a5e2fe0483c743f",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/vtt/config.py",
+      "sha256": "bf15c93b9338b70445cb2e82d074d60521f330912daca032d8196c867c12597a",
+      "inspection": "Selected relevant sections; static read-only observation"
+    },
+    {
+      "path": "/home/admin/projects/roll-drauf-vtt/dadm/skills/dadm-discover/SKILL.md",
+      "sha256": "3d23040b903e00e0887b49259884bcd3c727e8bb67ce7fd93d3da68778b2aab6",
+      "inspection": "Selected relevant sections; static read-only observation"
+    }
+  ],
+  "external_sources": [
+    {
+      "id": "S01",
+      "url": "https://github.com/foundryvtt/dnd5e/wiki/Activities",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Activities are a distinct documented system concept.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S02",
+      "url": "https://github.com/foundryvtt/dnd5e/wiki/Advancement",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Character advancement has a distinct documented model.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S03",
+      "url": "https://github.com/foundryvtt/pf2e/wiki/Quickstart-guide-for-rule-elements",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "JSON rule elements, selectors, ChoiceSet, GrantItem timing, reevaluation, and deletion semantics are documented.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S04",
+      "url": "https://github.com/Orcpub/orcpub",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Original-author architecture describes hierarchical choices and derived attributes through modifiers/dependencies.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S05",
+      "url": "https://github.com/ThaumRystra/DiceCloud",
+      "accessed": "2026-09-24",
+      "evidence": "product_primary",
+      "supports": "README describes value provenance and equipment-dependent recalculation; internal graph algorithm not inspected.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S06",
+      "url": "https://docs.kanka.io/en/latest/guides/testing-permissions.html",
+      "accessed": "2026-09-24",
+      "evidence": "product_primary",
+      "supports": "Member-view workflow hides self visibility and documents logged edits; differs from Roll Drauf read-only policy.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S07",
+      "url": "https://github.com/naturalcrit/homebrewery/blob/master/changelog.md",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Historical v3.0.0 notes distinguish Legacy/V3 syntax and warn of evolving render output.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S08",
+      "url": "https://docs.temporal.io/develop/safe-deployments",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Workflow determinism, versioning/patching, and replay testing for deployment compatibility.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S09",
+      "url": "https://cel.dev/",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "CEL is non-Turing-complete and accesses only host-provided data.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S10",
+      "url": "https://github.com/cel-expr/cel-spec/blob/master/doc/langdef.md",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Language cost semantics cover expensive constructs and extension complexity obligations.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S11",
+      "url": "https://github.com/foundryvtt/dnd5e/issues/1239",
+      "accessed": "2026-09-24",
+      "evidence": "issue_report",
+      "supports": "Historical first-hand report of duplicated ammunition consumption when charges and ammunition coexist; not reproduced here.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S12",
+      "url": "https://socket.io/docs/v4/delivery-guarantees/",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Ordering differs from default at-most-once arrival; stronger persistence/recovery requires application behavior.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S13",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Outbox coordinates database updates and notifications; duplicate deliveries require idempotent consumers.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S14",
+      "url": "https://docs.sqlalchemy.org/en/20/orm/session_basics.html",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Session transaction framing and commit affect the unit of work; sessions are concurrency-sensitive.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S15",
+      "url": "https://github.com/foundryvtt/dnd5e/issues/7470",
+      "accessed": "2026-09-24",
+      "evidence": "issue_report",
+      "supports": "Linked-token falling conflict reproduction across positions/scenes; page closed when checked; not locally reproduced.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S16",
+      "url": "https://github.com/foundryvtt/dnd5e/issues/7483",
+      "accessed": "2026-09-24",
+      "evidence": "issue_report",
+      "supports": "Reported per-turn region conflation of unlinked creatures; closed as not planned when checked; claimed cause unconfirmed.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S17",
+      "url": "https://github.com/foundryvtt/dnd5e/releases/tag/release-5.1.0",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Maintainer-recorded fixes: #5785 transformed max HP, #5787 rules-version defaults, #5840 inaccessible journal links.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S18",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Deny by default and check permission on every request.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S19",
+      "url": "https://docs.sqlalchemy.org/en/20/core/type_basics.html",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Ordinary in-place JSON mutation is not detected automatically; replacement triggers change tracking.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S20",
+      "url": "https://www.rfc-editor.org/info/rfc8785/",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "JSON Canonicalization Scheme defines exact serialization, key ordering, and input constraints.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S21",
+      "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Isolation levels differ; serializable/repeatable-read conflicts can require whole-transaction retry. Page served PostgreSQL 18 when checked.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S22",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Output-context encoding and HTML sanitization address different rendering cases.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S23",
+      "url": "https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Original architecture article defines inward source dependencies and simple boundary data.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S24",
+      "url": "https://alistair.cockburn.us/hexagonal-architecture",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Original ports-and-adapters article separates application behavior from external interfaces.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S25",
+      "url": "https://hypothesis.readthedocs.io/en/latest/stateful.html",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Stateful property testing can generate sequences and compare a system with a model.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S26",
+      "url": "https://import-linter.readthedocs.io/en/stable/",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Dependency contracts can be declared and checked; optional tool candidate only.",
+      "limitations": "Supports only the stated narrow claim; no competitor conformance or comparative defect frequency inferred."
+    },
+    {
+      "id": "S27",
+      "url": "https://foundryvtt.com/article/tokens/",
+      "accessed": "2026-09-24",
+      "evidence": "technical_primary",
+      "supports": "Tokens are scene-specific representations; linked actor data shares resource changes across linked tokens/scenes.",
+      "limitations": "Does not establish the Roll Drauf single-presence contract."
+    }
+  ],
+  "method_limitations": [
+    "Targeted qualitative sample, not frequency-ranked defect census.",
+    "Primary issue reports were not reproduced; status checked at access time only.",
+    "Tool/dependency choices remain proposals.",
+    "No implementation, deployment, migration, performance, or runtime security testing."
+  ],
+  "reuse_notice": "Evidence reused for v1.2; original research inspection limits and dates retained. Added S27 from the spatial-options discussion."
+}

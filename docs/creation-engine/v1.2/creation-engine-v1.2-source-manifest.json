@@ -1,0 +1,102 @@
+{
+  "date": "2026-09-25",
+  "documentation_revision": "1.2-reconciled",
+  "approved_spec_version": "1.1.4",
+  "approved_wire_version": "1.1.3",
+  "approved_registry": "A1",
+  "phase": "G1 Deploy remains authorized",
+  "inputs": [
+    {
+      "path": "inputs/approved-spec-v1.1.4.md",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/v1.1.4/creation-engine-v1.1.4.md",
+      "sha256": "ed6596e7172979dbbcb6c976317f0819cab2d437b8e3c9e6aae3674d90b44982"
+    },
+    {
+      "path": "inputs/approved-acceptance-v1.1.4.json",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/v1.1.4/creation-engine-v1.1.4-acceptance.json",
+      "sha256": "549ea745d192a0085f6b8382977a2a0e34ba14d7bc3856bca1ea0bc647901a12"
+    },
+    {
+      "path": "inputs/approved-core-1.1.3.schema.json",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/v1.1.3/creation-engine-v1.1.3-contracts.schema.json",
+      "sha256": "bbb1f91fa4d0f3da241e28d1608ad7369081344ed4c5f375359abc12c277dbe3"
+    },
+    {
+      "path": "inputs/approved-core-examples-1.1.3.json",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/v1.1.3/creation-engine-v1.1.3-wire-examples.json",
+      "sha256": "b0b593b2f903b612e5854dee29f5662d4255014788709b447e8b97a3c6650163"
+    },
+    {
+      "path": "inputs/approved-registry-a1.schema.json",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/addenda/creation-engine-v1.1-registry-a1.schema.json",
+      "sha256": "dc4811b8852ad9c0859643e955356cf6d8428bdc1ba334257f15af7268539735"
+    },
+    {
+      "path": "inputs/approved-registry-a1.md",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/addenda/creation-engine-v1.1-registry-addendum-a1.md",
+      "sha256": "a5532d9ae7bcdd3cfcae4fd493175bc94b6e876633e46e1c53bc7ede9be17f91"
+    },
+    {
+      "path": "inputs/approved-registry-a1-verification.json",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/addenda/creation-engine-v1.1-registry-a1-verification.json",
+      "sha256": "c0fed186056d7523f8b2bbbe8de31887d545ae654de9033b556719605b465760"
+    },
+    {
+      "path": "inputs/approved-errata-e1-e3.md",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/v1.1.3/creation-engine-v1.1.3-errata.md",
+      "sha256": "d43a16ad51e01569e9ce6c40782b837dccc139eaf12809073c6c3f2f21f1c4ae"
+    },
+    {
+      "path": "inputs/approved-errata-e4.md",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/v1.1.4/creation-engine-v1.1.4-errata.md",
+      "sha256": "83144d7824a3919b2413128bc244da6f8472ba93a92cc2ac0309f864f7d9be25"
+    },
+    {
+      "path": "inputs/approval-record-2026-09-24.md",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/dadm/artifacts/approvals/approval_creation_engine_g1_2026-09-24.md",
+      "sha256": "12dd3798834c3fb71bc234fab86edc7ef10fc59140b1c28c5d3c677f4acc55c5"
+    },
+    {
+      "path": "inputs/implementation-plan-snapshot.md",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/dadm/artifacts/programs/milestone_program_creation_engine_g1.md",
+      "sha256": "4e03c4be5b140241b37bc9b136d2a276ae40eee881c3ad039c2bc9109d67d39b"
+    },
+    {
+      "path": "inputs/context-snapshot.md",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/CONTEXT.md",
+      "sha256": "638ef26d160565213f4c7819e61dc1712a32f5bd689e0460d0d21bd49a56783d"
+    },
+    {
+      "path": "inputs/withdrawn-v1.2.md",
+      "source_path": "/root/Documents/Codex/2026-09-24-okay-we-ve-got-a-v/history/v1.2-before-reconciliation-2026-09-25/creation-engine-v1.2.md",
+      "sha256": "017ddc373f1fd173cdde8bc32d881936d192fb575f8a55ace0b0719503c1dd5a",
+      "status": "withdrawn_not_authoritative"
+    },
+    {
+      "path": "inputs/withdrawn-v1.2-acceptance.json",
+      "source_path": "/root/Documents/Codex/2026-09-24-okay-we-ve-got-a-v/history/v1.2-before-reconciliation-2026-09-25/creation-engine-v1.2-acceptance.json",
+      "sha256": "e82fc2923316f79ac295f72a0de095188c7f0f3b1f7e1a86fdce766db835dc49",
+      "status": "withdrawn_not_authoritative"
+    },
+    {
+      "path": "inputs/withdrawn-v1.2-contracts.schema.json",
+      "source_path": "/root/Documents/Codex/2026-09-24-okay-we-ve-got-a-v/history/v1.2-before-reconciliation-2026-09-25/creation-engine-v1.2-contracts.schema.json",
+      "sha256": "54f2adc792171eaecc8045f65ca5df03008e6c2cf76437859103d6974b6e47d7",
+      "status": "withdrawn_not_authoritative"
+    },
+    {
+      "path": "inputs/withdrawn-v1.2-source-manifest.json",
+      "source_path": "/root/Documents/Codex/2026-09-24-okay-we-ve-got-a-v/history/v1.2-before-reconciliation-2026-09-25/creation-engine-v1.2-source-manifest.json",
+      "sha256": "fea1702d8efe587fb339add04c4e71465e8bed8682b1f9e9c6d73db751ac5215",
+      "status": "withdrawn_not_authoritative"
+    },
+    {
+      "path": "inputs/active-contract-snapshot.json",
+      "source_path": "/home/admin/projects/roll-drauf-vtt/docs/creation-engine/active-contract.json",
+      "sha256": "e12382267d0edbd65f25973263716d721b16628e914269494544aedea5b8f502"
+    }
+  ],
+  "withdrawn_package_archive": "/root/Documents/Codex/2026-09-24-okay-we-ve-got-a-v/history/v1.2-before-reconciliation-2026-09-25",
+  "withdrawn_package_sha256": "54f7571f2b0b95a180ceca3e7cfb4369c78299d1626169e0a0330d442b914aa8",
+  "reconciliation_head": "66b6fc447c5bf5b15886aeec559961a2b68e30b9"
+}

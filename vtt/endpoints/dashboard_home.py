@@ -7,6 +7,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from sqlalchemy import and_, func, or_
 
 from vtt.extensions import db
+from vtt.creation_engine.transports.common import authoring_available
 from vtt.models import (
     Campaign,
     CampaignMember,
@@ -219,6 +220,7 @@ def _build_home_snapshot(user: User):
     live_session_count = sum(1 for session in session_summaries if session["runtime_status"] in {"in_progress", "active", "live"})
 
     home_state = {
+        "authoring_available": authoring_available(user),
         "campaign_count": len(campaigns),
         "character_count": len(characters),
         "session_count": len(session_summaries),
@@ -264,4 +266,7 @@ def get_dashboard_home():
     if error:
         return error
 
-    return jsonify(_build_home_snapshot(user)), 200
+    response = jsonify(_build_home_snapshot(user))
+    response.headers["Cache-Control"] = "private, no-store"
+    response.headers["Vary"] = "Cookie, Authorization, X-CE-View-As"
+    return response, 200

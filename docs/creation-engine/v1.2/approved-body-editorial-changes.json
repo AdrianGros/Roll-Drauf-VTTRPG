@@ -1,0 +1,14 @@
+[
+  {
+    "before": "This document chooses proposed defaults so the next audit can challenge concrete decisions. Those choices are design proposals within the user's request, not evidence that the team has approved implementation, production risk, or a public launch. Persistence vendor, deployment topology, and UI toolkit are intentionally outside this contract. Their selection MUST satisfy the observable semantics here. No choice of database is allowed to weaken atomicity or authorization.",
+    "after": "Current authority: G0 passed for v1.1.4 and G1 implementation was authorized on 24 September 2026. The approved G1 plan supplies the concrete dependency, persistence and integration choices for that slice. Approval does not imply a production cutover or public launch. Choices for other slices remain subject to their own handoff. Their selection MUST satisfy the observable semantics here. No choice of database is allowed to weaken atomicity or authorization."
+  },
+  {
+    "before": "The current VTT observations were gathered from a local working tree at HEAD `94ff1b9e9c07e048151469195f262fda1d80536b` with existing uncommitted changes. They are integration constraints to verify again before implementation, not a production inventory.",
+    "after": "The historical VTT observations below were gathered at HEAD `94ff1b9e9c07e048151469195f262fda1d80536b`. The approved G1 plan subsequently refreshed the integration inventory, and \u00a730 records the implementation snapshot at reconciliation. These are dated integration observations, not a current production inventory."
+  },
+  {
+    "before": "The second adversarial audit (G0) ran on 24 September 2026; v1.1.1 to v1.1.4 adopt all of its closures, and G0 passed on 24 September 2026. Implementation and conformance proof remain subsequent work.",
+    "after": "The second adversarial audit (G0) ran on 24 September 2026; v1.1.1 to v1.1.4 adopt all of its closures, and G0 passed that day. G1 implementation is underway; its recorded evidence and remaining work are summarized in \u00a730. This reading edition does not repeat the G0 gate."
+  }
+]

@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from vtt.creation_engine.canonical import canonical_bytes, parse_strict_json
 from vtt.creation_engine.errors import BudgetExceeded
 from vtt.creation_engine.kernel.records import refuse
+from vtt.creation_engine.kernel.decisions import Question
 from vtt.creation_engine.types import parse_id
 from vtt.creation_engine.units import Quantity
 
@@ -40,11 +41,13 @@ class Window:
     dice: tuple[Dice, ...]
     primitive_bound: int
     wait_for_decision: bool = False
+    question: Question | None = None
 
     def wire(self):
         return {"id": self.id, "costs": [c.wire() for c in self.costs],
                 "dice": [{"id": d.id, "count": d.count, "sides": d.sides} for d in self.dice],
-                "primitiveBound": self.primitive_bound, "waitForDecision": self.wait_for_decision}
+                "primitiveBound": self.primitive_bound, "waitForDecision": self.wait_for_decision,
+                "question": self.question.wire() if self.question else None}
 
 
 @dataclass(frozen=True)
@@ -57,9 +60,14 @@ class Activity:
         parse_id(self.id)
         if not self.windows or len({w.id for w in self.windows}) != len(self.windows):
             refuse("SEMANTIC_INVALID", "activity needs distinct ordered windows")
+        question_ids = [w.question.id for w in self.windows if w.question]
+        if len(question_ids) != len(set(question_ids)):
+            refuse("SEMANTIC_INVALID", "question IDs must be distinct within a frame")
         total = 0
         for window in self.windows:
             parse_id(window.id)
+            if window.wait_for_decision != (window.question is not None):
+                refuse("SEMANTIC_INVALID", "a waiting window must declare its exact question contract")
             if type(window.primitive_bound) is not int or window.primitive_bound < 0:
                 refuse("SEMANTIC_INVALID", "window needs an explicit nonnegative work bound")
             minimum = len(window.costs)
@@ -94,4 +102,5 @@ class Activity:
         return cls(value["id"], tuple(Window(w["id"],
                    tuple(Cost(c["owner"], c["resourceId"], Quantity.from_wire(c["amount"])) for c in w["costs"]),
                    tuple(Dice(d["id"], d["count"], d["sides"]) for d in w["dice"]),
-                   w["primitiveBound"], w["waitForDecision"]) for w in value["windows"]), tuple(value["childActivityIds"]))
+                   w["primitiveBound"], w["waitForDecision"],
+                   Question.restore(w["question"]) if w.get("question") else None) for w in value["windows"]), tuple(value["childActivityIds"]))

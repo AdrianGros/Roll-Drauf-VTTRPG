@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="de" class="ce-authoring-root">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gegenstand erschaffen · Roll Drauf</title>
+  <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/spellbook-theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/book-scene.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/creation-engine.css') }}">
+  <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/creation-engine.js') }}" defer></script>
+</head>
+<body class="ce-authoring">
+  <div class="ce-page">
+  <a class="ce-skip" href="#main" data-i18n="skipToEditor">Zum Inhalt</a>
+  <header>
+    <div class="book-dashboard-topbar">
+      <nav class="book-dashboard-ribbon" aria-label="Buchnavigation" data-i18n-label="navigation">
+        <a class="book-dashboard-ribbon-btn" href="/dashboard" data-ce-nav data-i18n="overview">Übersicht</a>
+        <a class="book-dashboard-ribbon-btn" href="/campaigns" data-ce-nav data-i18n="campaigns">Kampagnen</a>
+        <a class="book-dashboard-ribbon-btn" href="/characters" data-ce-nav data-i18n="characters">Charaktere</a>
+      </nav>
+    </div>
+    <p class="ce-eyebrow" data-i18n="location">Inhalte · Gegenstand</p>
+    <h1 data-i18n="title">Gegenstand erschaffen</h1>
+    <p data-i18n="intro">Erschaffe einen magischen Gegenstand. Jede Regel ist deine Entscheidung.</p></header>
+  <main id="main" tabindex="-1">
+    <section class="toolbar" aria-label="Entwurf und Ansicht" data-i18n-label="toolbar">
+      <label><span data-i18n="language">Sprache</span><select id="locale"><option value="de">Deutsch</option><option value="en">English</option><option value="fr">Français</option></select></label>
+      <label><span data-i18n="mode">Ansicht</span><select id="mode"><option value="guided" data-i18n="guided">Geführt</option><option value="structured" data-i18n="structured">Strukturiert</option><option value="advanced" data-i18n="advanced">Erweitert</option></select></label>
+      <label><span data-i18n="drafts">Entwürfe</span><select id="drafts"></select></label>
+      <label><span data-i18n="newType">Neuer Inhalt</span><select id="new-type"></select></label>
+      <button id="new" data-i18n="newItem">Neuer Gegenstand</button>
+      <button id="reload" data-i18n="reload">Neu laden</button>
+    </section>
+    <p id="status" role="status" aria-live="polite" tabindex="-1"></p>
+    <section id="access-notice" class="notice" aria-labelledby="access-heading" hidden>
+      <h2 id="access-heading" tabindex="-1" data-i18n="accessUnavailable">Inhalt nicht verfügbar</h2>
+      <p id="access-explanation" data-i18n="accessCleared">Der Inhalt dieses Tabs wurde entfernt. Prüfe deine Anmeldung und lade den aktuellen Stand erneut.</p>
+      <p id="access-outcome" hidden data-i18n="accessOutcome">Eine laufende Anfrage kann abgeschlossen worden sein. Prüfe den gespeicherten Stand, bevor du sie erneut ausführst.</p>
+      <button id="check-access" data-i18n="checkAccess">Zugriff erneut prüfen</button>
+      <a href="/login.html" data-ce-nav data-i18n="signIn">Anmelden</a>
+    </section>
+    <button id="retry" hidden data-i18n="retry">Gleiche Anfrage erneut senden</button>
+    <button id="discard" hidden data-i18n="discard">Ungespeicherte Eingabe verwerfen</button>
+    <section id="conflict" class="notice" aria-labelledby="conflict-heading" hidden>
+      <h2 id="conflict-heading" tabindex="-1" data-i18n="conflictTitle">Geänderter Entwurf</h2>
+      <p data-i18n="conflictHelp">Deine Eingabe bleibt hier erhalten. Lade den aktuellen Stand und vergleiche ihn vor einem neuen Speichern.</p>
+      <h3 id="conflict-local-label" data-i18n="retainedAnswer">Deine aufbewahrte Eingabe</h3>
+      <pre id="conflict-local" tabindex="0" aria-labelledby="conflict-local-label"></pre>
+      <h3 id="conflict-current-label" data-i18n="currentAnswer">Aktuell gespeicherter Stand</h3>
+      <pre id="conflict-current" tabindex="0" aria-labelledby="conflict-current-label"></pre>
+      <p id="conflict-note"></p>
+      <button id="conflict-refresh" data-i18n="refreshConflict">Aktuellen Stand zum Vergleichen laden</button>
+      <button id="conflict-edit" hidden data-i18n="editRetained">Aufbewahrte Antwort bearbeiten</button>
+      <button id="conflict-discard" data-i18n="discardRetained">Aufbewahrte Eingabe verwerfen</button>
+    </section>
+    <p class="help" data-i18n="tabMemory">Ungespeicherte Eingaben bleiben nur in diesem geöffneten Tab erhalten.</p>
+    <div id="editor" hidden>
+      <p id="draft-info"></p><p id="stale" class="notice" hidden></p>
+      <p id="profile-notice" class="notice" hidden></p>
+      <div class="columns"><section><h2 id="decisions-heading" tabindex="-1" data-i18n="decisions">Deine Entscheidungen</h2><div id="questions"></div></section>
+      <aside><h2 data-i18n="preview">Vorschau</h2><div id="content"></div>
+        <h2 data-i18n="quality">Verwendbarkeit</h2><div id="quality"></div>
+        <label><span data-i18n="claim">Revision speichern als</span><select id="claim">
+          <option value="lore_only" data-i18n="lore_only">Beschreibung</option><option value="sheet_ready" data-i18n="sheet_ready">Datenblatt</option>
+          <option value="runtime_ready" data-i18n="runtime_ready">Ausführbar</option><option value="automation_complete" data-i18n="automation_complete">Vollständig automatisiert</option>
+        </select></label><button id="commit" data-i18n="commit">Unveränderliche Revision speichern</button>
+        <p id="revision" role="status"></p>
+      </aside></div>
+      <section id="presets-section"><h2 data-i18n="presets">Vorlagen prüfen</h2><p data-i18n="presetHelp">Die Vorschau zeigt alle vorgegebenen Antworten. Erst beim Anwenden werden sie übernommen.</p>
+        <button id="visual-preset" data-i18n="visualPreset">Harmlose Flammen ansehen</button><button id="damage-preset" data-i18n="damagePreset">Zusatzschaden ansehen</button>
+        <div id="preset" hidden><div id="preset-values"></div><button id="apply-preset" data-i18n="applyPreset">Diese Antworten übernehmen</button></div>
+      </section>
+      <section><h2 data-i18n="history">Verlauf</h2><label><span data-i18n="restoreVersion">Version wiederherstellen</span><select id="versions"></select></label>
+        <button id="revert" data-i18n="revert">Als neue Version wiederherstellen</button><ol id="history"></ol>
+      </section>
+      <section id="sandbox" hidden><h2 data-i18n="sandboxTitle">Privater Sandbox-Test</h2>
+        <p data-i18n="sandboxHelp">Wähle die gespeicherten Revisionen für diesen Test. Jede Kopie hat eigene Ressourcen. Ein Treffer und ein Erholungsereignis werden ausdrücklich bestätigt.</p>
+        <p id="sb-disabled" data-i18n="sandboxDisabled" hidden>Sandbox-Ausführung ist in dieser Umgebung nicht verfügbar.</p>
+        <fieldset><legend data-i18n="sandboxRevisions">Revisionen für eine neue Sandbox</legend><div id="sb-revisions"></div><button id="sb-create" data-i18n="sandboxCreate">Sandbox mit dieser Auswahl erstellen</button></fieldset>
+        <label><span data-i18n="sandboxChoose">Vorhandene Sandbox</span><select id="sb-select"></select></label><button id="sb-refresh" data-i18n="reload">Neu laden</button>
+        <div id="sb-scope" hidden>
+          <p id="sb-state" role="status" tabindex="-1"></p><ul id="sb-instances"></ul>
+          <fieldset><legend data-i18n="sandboxCopy">Neue Kopie</legend>
+            <label><span data-i18n="sandboxRevision">Gesperrte Revision</span><select id="sb-revision"></select></label>
+            <label><span data-i18n="sandboxHolder">Träger (nur für Gegenstände)</span><select id="sb-holder"></select></label>
+            <label><span data-i18n="sandboxReason">Grund</span><input id="sb-reason" maxlength="2048"></label>
+            <button id="sb-instantiate" data-i18n="sandboxInstantiate">Diese Kopie erstellen</button>
+          </fieldset>
+          <fieldset><legend data-i18n="sandboxUse">Gegenstand testen</legend>
+            <label><span data-i18n="sandboxItem">Gegenstandskopie</span><select id="sb-item"></select></label>
+            <button id="sb-equip" data-i18n="sandboxEquip">Ausrüstungszustand wechseln</button>
+            <button id="sb-activate" data-i18n="sandboxActivate">Harmlose Flammen aktivieren</button>
+            <label><span data-i18n="sandboxTarget">Ziel eines bestätigten Treffers</span><select id="sb-target"></select></label>
+            <button id="sb-hit" data-i18n="sandboxHit">Treffer bestätigen und Flammen anbieten</button>
+            <p data-i18n="sandboxActorHelp">Für Schaden werden importierte Charakterrevisionen als Träger und Ziel benötigt. Die Sandbox erfindet keine Charakterwerte.</p>
+            <button id="sb-recover" data-i18n="sandboxRecover">Angegebenes Erholungsereignis bestätigen</button><span id="sb-recovery"></span>
+          </fieldset>
+          <div id="sb-decisions"></div>
+          <fieldset id="sb-manual" hidden><legend data-i18n="sandboxManual">Unterbrochenen Ablauf manuell abschließen</legend>
+            <label><span data-i18n="sandboxOutcome">Festgehaltenes Ergebnis</span><textarea id="sb-outcome" maxlength="2048"></textarea></label>
+            <label><span data-i18n="sandboxReason">Grund</span><input id="sb-manual-reason" maxlength="2048"></label>
+            <button id="sb-resolve" data-i18n="sandboxResolve">Ohne weitere Ressourcenänderung abschließen</button>
+          </fieldset>
+        </div>
+      </section>
+    </div>
+  </main>
+  </div>
+</body>
+</html>

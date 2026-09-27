@@ -290,6 +290,13 @@ def create_app(config_name=None):
     from vtt.socket_handlers import register_socket_handlers
     register_socket_handlers(socketio)
 
+    if any(app.config.get(flag, False) for flag in ("CE_RUNTIME", "CE_AUTHORING", "CE_SHADOW")):
+        from vtt.creation_engine.transports import register as register_creation_engine
+        register_creation_engine(app, socketio)
+        if app.config.get("CE_LEGACY_ADAPTER", False):
+            from vtt.creation_engine.transports.legacy_host import install as install_creation_engine_host
+            install_creation_engine_host(app)
+
     # REST endpoints for static files
     @app.route('/')
     def index():

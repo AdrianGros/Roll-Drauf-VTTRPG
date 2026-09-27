@@ -45,6 +45,13 @@ def _parse_csv(raw_value, fallback):
 class Config:
     """Base configuration."""
 
+    # Creation Engine G1 surfaces remain opt-in; the host installs ce_gateway
+    # only after additive migrations and pinned registrations are available.
+    CE_RUNTIME = _parse_bool(os.getenv("CE_RUNTIME"), default=False)
+    CE_AUTHORING = _parse_bool(os.getenv("CE_AUTHORING"), default=False)
+    CE_SHADOW = _parse_bool(os.getenv("CE_SHADOW"), default=False)
+    CE_LEGACY_ADAPTER = _parse_bool(os.getenv("CE_LEGACY_ADAPTER"), default=False)
+
     # Database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False

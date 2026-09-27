@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-25",
+  "inputs": [
+    {
+      "path": "/root/Documents/Codex/2026-09-23-okay-there-is-a-roll-drauf/creation-engine-v1.1.md",
+      "sha256": "70b7d3ce0d823ab5a45f9d8bf3b88d3a7cec2c3721f89bbd80680251df44c5ad"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-23-okay-there-is-a-roll-drauf/creation-engine-v1.1-contracts.schema.json",
+      "sha256": "53e6ba0c0e9921dfdfd177ba0152b6a0b99af896175122a246ec0f136cfb8d35"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-23-okay-there-is-a-roll-drauf/creation-engine-v1.1-acceptance.json",
+      "sha256": "70aaf2dca01c2221e9c43330d8fdfdf59365b410e1cc8fa97f62a64bad84f5af"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-24-okay-we-ve-got-a-v/creation-engine-v1.1-research.md",
+      "sha256": "205c3b22821b4b30cdeb4a400add21520069d931f11ceda78324f5295c134785"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-24-okay-we-ve-got-a-v/research-evidence.json",
+      "sha256": "2206a58c69806e4faf1a837e441db44b9ed2bb248d6ef37b2ca79009d544caf3"
+    },
+    {
+      "path": "/root/Documents/Codex/2026-09-24-okay-we-ve-got-a-v/research-acceptance-proposals.json",
+      "sha256": "074854f96d15a3c42054743bb7aa14155f1cbefa481963beba9a39b040411ccd"
+    }
+  ],
+  "user_accepted_decision": "One authoritative spatial presence per occurrence per runtime scope; extra representations are views or reference markers.",
+  "scope": "Full specification rewrite and companion documentation; no application implementation.",
+  "research_cutoff": "2026-09-24",
+  "repository_resumption": {
+    "date": "2026-09-25",
+    "path": "/home/admin/projects/roll-drauf-vtt",
+    "research_head": "87ff37f61fa186d251001bbe42b2e3534318cd0b",
+    "resumption_head": "66b6fc447c5bf5b15886aeec559961a2b68e30b9",
+    "status_observed": [
+      " M tests/creation_engine/test_ce_kernel.py",
+      " M vtt/creation_engine/kernel/activity.py",
+      " M vtt/creation_engine/kernel/service.py",
+      " M vtt/creation_engine/store/runtime.py",
+      " M vtt/creation_engine/store/runtime_models.py",
+      "?? docs/BUGFIX_ACTION_PLAN_2026-09-18.md",
+      "?? docs/DADM_APPLY_ROLL20_SHEET_ACTION_MANIFEST_2026-08-31.md",
+      "?? docs/MERCH_TSHIRT_RESEARCH_2026-08-26.md",
+      "?? docs/ROLL20_GITHUB_VTT_TRANSLATION_RESEARCH_2026-08-31.md",
+      "?? tests/creation_engine/test_ce_decisions.py",
+      "?? vtt/creation_engine/kernel/decision_service.py",
+      "?? vtt/creation_engine/kernel/decisions.py"
+    ],
+    "selected_files": [
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/AGENTS.md",
+        "research_sha256": "497fd8b66eb884bd093cc38a4ba706419e9c064b6dfced568dd8c0740bb413f6",
+        "resumption_sha256": "497fd8b66eb884bd093cc38a4ba706419e9c064b6dfced568dd8c0740bb413f6",
+        "matches_research": true
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/CONTEXT.md",
+        "research_sha256": "b785e8b71ce542442d383b29033fa5be6e650538a8d9cbc265edb3ab46bfd3b2",
+        "resumption_sha256": "638ef26d160565213f4c7819e61dc1712a32f5bd689e0460d0d21bd49a56783d",
+        "matches_research": false
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/requirements.txt",
+        "research_sha256": "76ad5ff377ad3dba92e78a3a63af02efb3c3cce38bc81ef421bf5aa79cd9d58e",
+        "resumption_sha256": "2cc006d4e57b5b8d9b668a9d323c7974f379ae11aa58f86712556a6e91be02d3",
+        "matches_research": false
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/vtt/characters/routes.py",
+        "research_sha256": "533bd3d67a9c2b6ba1cb735c0c1b45f004c252b22967e302683da39251ab76e8",
+        "resumption_sha256": "533bd3d67a9c2b6ba1cb735c0c1b45f004c252b22967e302683da39251ab76e8",
+        "matches_research": true
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/vtt/models/character.py",
+        "research_sha256": "2e1cea9d90268a002d0cfbbb0bf7eae432dae7c0978ed82f51664f72a1ea58eb",
+        "resumption_sha256": "2e1cea9d90268a002d0cfbbb0bf7eae432dae7c0978ed82f51664f72a1ea58eb",
+        "matches_research": true
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/vtt/models/token_state.py",
+        "research_sha256": "89bef03870495257c6def5cb060fbd5ff9a3d59e7a2f6578f1652b9edc2aad9f",
+        "resumption_sha256": "89bef03870495257c6def5cb060fbd5ff9a3d59e7a2f6578f1652b9edc2aad9f",
+        "matches_research": true
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/vtt/combat/service.py",
+        "research_sha256": "b3584b2f4409ade37173645bfc7f010c5bd34f1fe97809e2cc7f1b680adbc8de",
+        "resumption_sha256": "b3584b2f4409ade37173645bfc7f010c5bd34f1fe97809e2cc7f1b680adbc8de",
+        "matches_research": true
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/vtt/socket_handlers.py",
+        "research_sha256": "eda87ef89e54b6226265d543433dce50346e83b38894ebb6fc9789fe94b8b6ff",
+        "resumption_sha256": "eda87ef89e54b6226265d543433dce50346e83b38894ebb6fc9789fe94b8b6ff",
+        "matches_research": true
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/vtt/utils/realtime.py",
+        "research_sha256": "9b9724ccfec9a878f8d7983eb54c88b5b01172139b9c47a65a5e2fe0483c743f",
+        "resumption_sha256": "9b9724ccfec9a878f8d7983eb54c88b5b01172139b9c47a65a5e2fe0483c743f",
+        "matches_research": true
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/vtt/config.py",
+        "research_sha256": "bf15c93b9338b70445cb2e82d074d60521f330912daca032d8196c867c12597a",
+        "resumption_sha256": "bf15c93b9338b70445cb2e82d074d60521f330912daca032d8196c867c12597a",
+        "matches_research": true
+      },
+      {
+        "path": "/home/admin/projects/roll-drauf-vtt/dadm/skills/dadm-discover/SKILL.md",
+        "research_sha256": "3d23040b903e00e0887b49259884bcd3c727e8bb67ce7fd93d3da68778b2aab6",
+        "resumption_sha256": "3d23040b903e00e0887b49259884bcd3c727e8bb67ce7fd93d3da68778b2aab6",
+        "matches_research": true
+      }
+    ],
+    "interpretation": "Concurrent implementation has advanced. Original static observations retain their research date; newer engine code was not audited or modified by this documentation task."
+  },
+  "acceptance_status_scope": "Not executed by this documentation task; no conformance verdict on concurrent application implementation."
+}

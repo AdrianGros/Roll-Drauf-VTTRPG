@@ -921,6 +921,12 @@
                         </a>
                     `).join('')}
                 </nav>
+                ${homeState.authoring_available === true ? `
+                    <div class="book-scene-panel">
+                        <a class="btn btn-secondary book-scene-action-btn" href="/api/ce/authoring" data-testid="authoring-entry">${escapeHtml(this.content('home.create_content', 'Inhalte erstellen'))}</a>
+                        <p>${escapeHtml(this.content('home.create_content_help', 'Eigene Gegenstände entwerfen und privat ausprobieren.'))}</p>
+                    </div>
+                ` : ''}
             `;
         },
 

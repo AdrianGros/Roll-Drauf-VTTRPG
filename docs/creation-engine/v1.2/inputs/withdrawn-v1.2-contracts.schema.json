@@ -1,0 +1,1659 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:rolldrauf:creation-engine:contracts:1.2",
+  "title": "Creation Engine v1.2 selected core wire contracts",
+  "$comment": "Root validates seven selected commands. Other record contracts are in $defs. This is documentation, not an implementation or full feature registry. Passing it does not prove semantic or transaction conformance.",
+  "$ref": "#/$defs/Command",
+  "$defs": {
+    "Id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "Digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "SafeInteger": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "Version": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 40
+    },
+    "Rational": {
+      "type": "object",
+      "properties": {
+        "numerator": {
+          "$ref": "#/$defs/SafeInteger"
+        },
+        "denominator": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "additionalProperties": false,
+      "description": "Reduced exact fraction; gcd=1 and zero=0/1 are semantic constraints."
+    },
+    "Quantity": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/Rational"
+        },
+        "unit": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "DefinitionRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "definition"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "RevisionRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "revision"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "definitionId": {
+          "$ref": "#/$defs/Id"
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "definitionId",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "InstanceRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "instance"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "scopeId"
+      ],
+      "additionalProperties": false
+    },
+    "WorldRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "world"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "scopeId"
+      ],
+      "additionalProperties": false
+    },
+    "Reference": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/DefinitionRef"
+        },
+        {
+          "$ref": "#/$defs/RevisionRef"
+        },
+        {
+          "$ref": "#/$defs/InstanceRef"
+        },
+        {
+          "$ref": "#/$defs/WorldRef"
+        },
+        {
+          "$ref": "#/$defs/SceneRef"
+        },
+        {
+          "$ref": "#/$defs/RepresentationRef"
+        }
+      ]
+    },
+    "Formula": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "node": {
+              "const": "literal"
+            },
+            "value": {
+              "$ref": "#/$defs/Quantity"
+            }
+          },
+          "required": [
+            "node",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "node": {
+              "const": "read"
+            },
+            "bindingId": {
+              "$ref": "#/$defs/Id"
+            },
+            "stage": {
+              "enum": [
+                "base",
+                "set",
+                "add",
+                "multiply",
+                "clamp",
+                "final"
+              ]
+            }
+          },
+          "required": [
+            "node",
+            "bindingId",
+            "stage"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "node": {
+              "const": "call"
+            },
+            "functionId": {
+              "$ref": "#/$defs/Id"
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Formula"
+              },
+              "minItems": 0,
+              "maxItems": 32
+            }
+          },
+          "required": [
+            "node",
+            "functionId",
+            "args"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "node": {
+              "const": "if"
+            },
+            "conditionBindingId": {
+              "$ref": "#/$defs/Id"
+            },
+            "then": {
+              "$ref": "#/$defs/Formula"
+            },
+            "else": {
+              "$ref": "#/$defs/Formula"
+            }
+          },
+          "required": [
+            "node",
+            "conditionBindingId",
+            "then",
+            "else"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Typed numeric AST. Registered boolean predicate bindings select branches. Depth, total nodes, typing, acyclicity, purity and function fuel are semantic validation requirements."
+    },
+    "Duration": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "permanent"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "ticks"
+            },
+            "clockId": {
+              "$ref": "#/$defs/Id"
+            },
+            "anchorRef": {
+              "$ref": "#/$defs/InstanceRef"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "boundary": {
+              "enum": [
+                "start",
+                "end"
+              ]
+            },
+            "firstBoundary": {
+              "const": "strictly_after_application"
+            }
+          },
+          "required": [
+            "kind",
+            "clockId",
+            "anchorRef",
+            "count",
+            "boundary",
+            "firstBoundary"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "event"
+            },
+            "matcherId": {
+              "$ref": "#/$defs/Id"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "kind",
+            "matcherId",
+            "count"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "window"
+            },
+            "windowId": {
+              "$ref": "#/$defs/Id"
+            }
+          },
+          "required": [
+            "kind",
+            "windowId"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Cadence": {
+      "type": "object",
+      "properties": {
+        "bucket": {
+          "enum": [
+            "each_turn_occurrence",
+            "source_turn_interval",
+            "round_occurrence",
+            "encounter",
+            "next_matching_action",
+            "next_matching_roll"
+          ]
+        },
+        "clockId": {
+          "$ref": "#/$defs/Id"
+        },
+        "sharedFeatureKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "perTarget": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "consumeWindowId": {
+          "$ref": "#/$defs/Id"
+        },
+        "outsideClockPolicy": {
+          "enum": [
+            "unavailable",
+            "manual"
+          ]
+        }
+      },
+      "required": [
+        "bucket",
+        "clockId",
+        "sharedFeatureKey",
+        "perTarget",
+        "limit",
+        "consumeWindowId",
+        "outsideClockPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "NumericEffectChange": {
+      "type": "object",
+      "properties": {
+        "targetBindingId": {
+          "$ref": "#/$defs/Id"
+        },
+        "operator": {
+          "enum": [
+            "SET",
+            "ADD",
+            "MULTIPLY",
+            "LOWER_BOUND",
+            "UPPER_BOUND"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/Formula"
+        }
+      },
+      "required": [
+        "targetBindingId",
+        "operator",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "EffectApplication": {
+      "type": "object",
+      "properties": {
+        "applicationId": {
+          "$ref": "#/$defs/Id"
+        },
+        "sourceInstance": {
+          "$ref": "#/$defs/InstanceRef"
+        },
+        "sourceRevision": {
+          "$ref": "#/$defs/RevisionRef"
+        },
+        "originId": {
+          "$ref": "#/$defs/Id"
+        },
+        "target": {
+          "$ref": "#/$defs/InstanceRef"
+        },
+        "stackGroupId": {
+          "$ref": "#/$defs/Id"
+        },
+        "stackPolicy": {
+          "enum": [
+            "all",
+            "unique_by_source",
+            "highest",
+            "exclusive"
+          ]
+        },
+        "sourceFeatureKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "priority": {
+          "$ref": "#/$defs/SafeInteger"
+        },
+        "duration": {
+          "$ref": "#/$defs/Duration"
+        },
+        "cadence": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Cadence"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NumericEffectChange"
+          },
+          "minItems": 1,
+          "maxItems": 128
+        },
+        "policyId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "applicationId",
+        "sourceInstance",
+        "sourceRevision",
+        "originId",
+        "target",
+        "stackGroupId",
+        "stackPolicy",
+        "sourceFeatureKey",
+        "priority",
+        "duration",
+        "cadence",
+        "changes",
+        "policyId"
+      ],
+      "additionalProperties": false,
+      "description": "Numeric effect contract. Changes resolve into fixed operator stages; priority selects SET winners, never reorders stages. Stack compatibility and per-stage grouping require semantic validation."
+    },
+    "DecisionAnswer": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "boolean"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "quantity"
+            },
+            "value": {
+              "$ref": "#/$defs/Quantity"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "text"
+            },
+            "value": {
+              "type": "string",
+              "maxLength": 8192
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "selection"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Reference"
+              },
+              "minItems": 0,
+              "maxItems": 64,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "A decision's exact registered answer schema further narrows this union; no type coercion/defaulting is permitted."
+    },
+    "InvokeActivityPayload": {
+      "type": "object",
+      "properties": {
+        "actorInstanceId": {
+          "$ref": "#/$defs/Id"
+        },
+        "activityRevisionRef": {
+          "$ref": "#/$defs/RevisionRef"
+        },
+        "activityId": {
+          "$ref": "#/$defs/Id"
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InstanceRef"
+          },
+          "minItems": 0,
+          "maxItems": 64,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "actorInstanceId",
+        "activityRevisionRef",
+        "activityId",
+        "targets"
+      ],
+      "additionalProperties": false
+    },
+    "ResolveDecisionPayload": {
+      "type": "object",
+      "properties": {
+        "actionId": {
+          "$ref": "#/$defs/Id"
+        },
+        "decisionId": {
+          "$ref": "#/$defs/Id"
+        },
+        "expectedDecisionVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "contextDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "answer": {
+          "$ref": "#/$defs/DecisionAnswer"
+        }
+      },
+      "required": [
+        "actionId",
+        "decisionId",
+        "expectedDecisionVersion",
+        "contextDigest",
+        "answer"
+      ],
+      "additionalProperties": false
+    },
+    "AdjustResourcePayload": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "$ref": "#/$defs/Id"
+        },
+        "resourceId": {
+          "$ref": "#/$defs/Id"
+        },
+        "delta": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "instanceId",
+        "resourceId",
+        "delta",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "InvokeActivityCommand": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "1.2"
+        },
+        "commandId": {
+          "$ref": "#/$defs/Id"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        },
+        "expectedScopeVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "authorityEpoch": {
+          "$ref": "#/$defs/Version"
+        },
+        "executionLockDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "operation": {
+          "const": "InvokeActivity"
+        },
+        "payload": {
+          "$ref": "#/$defs/InvokeActivityPayload"
+        }
+      },
+      "required": [
+        "contractVersion",
+        "commandId",
+        "idempotencyKey",
+        "scopeId",
+        "expectedScopeVersion",
+        "authorityEpoch",
+        "executionLockDigest",
+        "operation",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "description": "Principal is server-authenticated. Reference-scope equality, policy, gate, versions, state, rule identity, resources and lock are semantic obligations. Receipt lookup precedes new-execution version checks."
+    },
+    "ResolveDecisionCommand": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "1.2"
+        },
+        "commandId": {
+          "$ref": "#/$defs/Id"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        },
+        "expectedScopeVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "authorityEpoch": {
+          "$ref": "#/$defs/Version"
+        },
+        "executionLockDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "operation": {
+          "const": "ResolveDecision"
+        },
+        "payload": {
+          "$ref": "#/$defs/ResolveDecisionPayload"
+        }
+      },
+      "required": [
+        "contractVersion",
+        "commandId",
+        "idempotencyKey",
+        "scopeId",
+        "expectedScopeVersion",
+        "authorityEpoch",
+        "executionLockDigest",
+        "operation",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "description": "Principal is server-authenticated. Reference-scope equality, policy, gate, versions, state, rule identity, resources and lock are semantic obligations. Receipt lookup precedes new-execution version checks."
+    },
+    "AdjustResourceCommand": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "1.2"
+        },
+        "commandId": {
+          "$ref": "#/$defs/Id"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        },
+        "expectedScopeVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "authorityEpoch": {
+          "$ref": "#/$defs/Version"
+        },
+        "executionLockDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "operation": {
+          "const": "AdjustResource"
+        },
+        "payload": {
+          "$ref": "#/$defs/AdjustResourcePayload"
+        }
+      },
+      "required": [
+        "contractVersion",
+        "commandId",
+        "idempotencyKey",
+        "scopeId",
+        "expectedScopeVersion",
+        "authorityEpoch",
+        "executionLockDigest",
+        "operation",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "description": "Principal is server-authenticated. Reference-scope equality, policy, gate, versions, state, rule identity, resources and lock are semantic obligations. Receipt lookup precedes new-execution version checks."
+    },
+    "Command": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/InvokeActivityCommand"
+        },
+        {
+          "$ref": "#/$defs/ResolveDecisionCommand"
+        },
+        {
+          "$ref": "#/$defs/AdjustResourceCommand"
+        },
+        {
+          "$ref": "#/$defs/PlacePresenceCommand"
+        },
+        {
+          "$ref": "#/$defs/MovePresenceCommand"
+        },
+        {
+          "$ref": "#/$defs/TransferPresenceCommand"
+        },
+        {
+          "$ref": "#/$defs/UnplacePresenceCommand"
+        }
+      ]
+    },
+    "PendingDecision": {
+      "type": "object",
+      "properties": {
+        "decisionId": {
+          "$ref": "#/$defs/Id"
+        },
+        "actionId": {
+          "$ref": "#/$defs/Id"
+        },
+        "checkpointId": {
+          "$ref": "#/$defs/Id"
+        },
+        "questionId": {
+          "$ref": "#/$defs/Id"
+        },
+        "questionVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "answerSchemaDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "contextDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "decisionVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "responderRuleId": {
+          "$ref": "#/$defs/Id"
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InstanceRef"
+          },
+          "minItems": 0,
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "deadline": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "windowId": {
+          "$ref": "#/$defs/Id"
+        },
+        "timeoutPolicy": {
+          "enum": [
+            "decline_optional",
+            "suspend_mandatory"
+          ]
+        },
+        "status": {
+          "enum": [
+            "open",
+            "answered",
+            "expired",
+            "invalidated"
+          ]
+        },
+        "policyId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "decisionId",
+        "actionId",
+        "checkpointId",
+        "questionId",
+        "questionVersion",
+        "answerSchemaDigest",
+        "contextDigest",
+        "decisionVersion",
+        "responderRuleId",
+        "targets",
+        "createdAt",
+        "deadline",
+        "windowId",
+        "timeoutPolicy",
+        "status",
+        "policyId"
+      ],
+      "additionalProperties": false
+    },
+    "LockedArtifact": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/Id"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "version": {
+          "$ref": "#/$defs/Id"
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "version",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "ExecutionLock": {
+      "type": "object",
+      "properties": {
+        "lockId": {
+          "$ref": "#/$defs/Id"
+        },
+        "profileId": {
+          "const": "core-safe-1"
+        },
+        "ruleset": {
+          "$ref": "#/$defs/LockedArtifact"
+        },
+        "schemaBundle": {
+          "$ref": "#/$defs/LockedArtifact"
+        },
+        "evaluator": {
+          "$ref": "#/$defs/LockedArtifact"
+        },
+        "configurationDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "unitTableDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LockedArtifact"
+          },
+          "minItems": 0,
+          "maxItems": 1024,
+          "uniqueItems": true
+        },
+        "revisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RevisionRef"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LockedArtifact"
+          },
+          "minItems": 0,
+          "maxItems": 5000,
+          "uniqueItems": true
+        },
+        "contractVersion": {
+          "const": "1.2"
+        },
+        "geometryProfile": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LockedArtifact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "lockId",
+        "profileId",
+        "ruleset",
+        "schemaBundle",
+        "evaluator",
+        "configurationDigest",
+        "unitTableDigest",
+        "packages",
+        "revisions",
+        "assets",
+        "contractVersion",
+        "geometryProfile"
+      ],
+      "additionalProperties": false,
+      "description": "Exact v1.2 closure, including reference logical fuel and canonical provenance in evaluator/configuration. Null geometry means spatial automation unavailable. Hash externally, without a self-referential digest. Transitive closure, signature trust, retention and geometry/presence compatibility require semantic checks."
+    },
+    "ActionState": {
+      "enum": [
+        "PROPOSED",
+        "WAITING_PRECOMMIT",
+        "ACTIVE",
+        "WAITING_DECISION",
+        "SUSPENDED",
+        "COMPLETED",
+        "CANCELLED",
+        "FAILED_PRECOMMIT"
+      ]
+    },
+    "Receipt": {
+      "type": "object",
+      "properties": {
+        "commandId": {
+          "$ref": "#/$defs/Id"
+        },
+        "operationId": {
+          "$ref": "#/$defs/Id"
+        },
+        "requestDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "committed",
+            "rejected",
+            "suspended"
+          ]
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        },
+        "stateVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "authorityEpoch": {
+          "$ref": "#/$defs/Version"
+        },
+        "checkpointId": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcomeDigest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "errorCode": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eventIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          },
+          "minItems": 0,
+          "maxItems": 4096,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "commandId",
+        "operationId",
+        "requestDigest",
+        "status",
+        "scopeId",
+        "stateVersion",
+        "authorityEpoch",
+        "checkpointId",
+        "outcomeDigest",
+        "errorCode",
+        "eventIds"
+      ],
+      "additionalProperties": false,
+      "description": "Internal durable receipt. Public projection may omit restricted identifiers; replay is authorized under current policy. Committed checkpoint and rejection field consistency is a semantic invariant."
+    },
+    "SceneRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "scene"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "scopeId"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "representation"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "scopeId"
+      ],
+      "additionalProperties": false
+    },
+    "Point2": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "$ref": "#/$defs/Rational"
+        },
+        "y": {
+          "$ref": "#/$defs/Rational"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "description": "Exact coordinates in the explicitly named registered frame's units."
+    },
+    "PositiveRational": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/Rational"
+        },
+        {
+          "properties": {
+            "numerator": {
+              "minimum": 1
+            }
+          }
+        }
+      ]
+    },
+    "Footprint": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "circle"
+            },
+            "radius": {
+              "$ref": "#/$defs/PositiveRational"
+            }
+          },
+          "required": [
+            "kind",
+            "radius"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "polygon"
+            },
+            "vertices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Point2"
+              },
+              "minItems": 3,
+              "maxItems": 64,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "kind",
+            "vertices"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Local offsets from presence position. Polygon closure is implicit: do not repeat the first vertex. Nonzero area, no self-intersection, and exact geometry are semantic checks."
+    },
+    "ScenePosition": {
+      "type": "object",
+      "properties": {
+        "sceneRef": {
+          "$ref": "#/$defs/SceneRef"
+        },
+        "coordinateFrameId": {
+          "$ref": "#/$defs/Id"
+        },
+        "position": {
+          "$ref": "#/$defs/Point2"
+        }
+      },
+      "required": [
+        "sceneRef",
+        "coordinateFrameId",
+        "position"
+      ],
+      "additionalProperties": false
+    },
+    "PlacedPresence": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "placed"
+        },
+        "sceneRef": {
+          "$ref": "#/$defs/SceneRef"
+        },
+        "coordinateFrameId": {
+          "$ref": "#/$defs/Id"
+        },
+        "position": {
+          "$ref": "#/$defs/Point2"
+        },
+        "footprint": {
+          "$ref": "#/$defs/Footprint"
+        },
+        "geometryProfileDigest": {
+          "$ref": "#/$defs/Digest"
+        }
+      },
+      "required": [
+        "kind",
+        "sceneRef",
+        "coordinateFrameId",
+        "position",
+        "footprint",
+        "geometryProfileDigest"
+      ],
+      "additionalProperties": false,
+      "description": "Server-resolved mechanical location; commands cannot supply footprint or geometry identity."
+    },
+    "Placement": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "unplaced"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/PlacedPresence"
+        }
+      ]
+    },
+    "SpatialPresence": {
+      "type": "object",
+      "properties": {
+        "instanceRef": {
+          "$ref": "#/$defs/InstanceRef"
+        },
+        "version": {
+          "$ref": "#/$defs/Version"
+        },
+        "placement": {
+          "$ref": "#/$defs/Placement"
+        }
+      },
+      "required": [
+        "instanceRef",
+        "version",
+        "placement"
+      ],
+      "additionalProperties": false,
+      "description": "One persistent versioned record per occurrence. Scope equality, uniqueness, state transitions, placement authority and lock/frame validity require semantic/transaction checks."
+    },
+    "PlacePresencePayload": {
+      "type": "object",
+      "properties": {
+        "instanceRef": {
+          "$ref": "#/$defs/InstanceRef"
+        },
+        "expectedPresenceVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "destination": {
+          "$ref": "#/$defs/ScenePosition"
+        },
+        "placementRuleId": {
+          "$ref": "#/$defs/Id"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "instanceRef",
+        "expectedPresenceVersion",
+        "destination",
+        "placementRuleId",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "MovePresencePayload": {
+      "type": "object",
+      "properties": {
+        "instanceRef": {
+          "$ref": "#/$defs/InstanceRef"
+        },
+        "expectedPresenceVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "sceneRef": {
+          "$ref": "#/$defs/SceneRef"
+        },
+        "coordinateFrameId": {
+          "$ref": "#/$defs/Id"
+        },
+        "mode": {
+          "enum": [
+            "continuous",
+            "teleport"
+          ]
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Point2"
+          },
+          "minItems": 2,
+          "maxItems": 256
+        },
+        "movementRuleId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "instanceRef",
+        "expectedPresenceVersion",
+        "sceneRef",
+        "coordinateFrameId",
+        "mode",
+        "path",
+        "movementRuleId"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "teleport"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "path": {
+                "maxItems": 2
+              }
+            }
+          }
+        }
+      ],
+      "description": "Current scene/frame and path start must match authoritative presence. Teleport needs explicit authority. Continuous mode may use registered intermediate checkpoints."
+    },
+    "TransferPresencePayload": {
+      "type": "object",
+      "properties": {
+        "instanceRef": {
+          "$ref": "#/$defs/InstanceRef"
+        },
+        "expectedPresenceVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "destination": {
+          "$ref": "#/$defs/ScenePosition"
+        },
+        "transitionRuleId": {
+          "$ref": "#/$defs/Id"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "instanceRef",
+        "expectedPresenceVersion",
+        "destination",
+        "transitionRuleId",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnplacePresencePayload": {
+      "type": "object",
+      "properties": {
+        "instanceRef": {
+          "$ref": "#/$defs/InstanceRef"
+        },
+        "expectedPresenceVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "transitionRuleId": {
+          "$ref": "#/$defs/Id"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "instanceRef",
+        "expectedPresenceVersion",
+        "transitionRuleId",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "PlacePresenceCommand": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "1.2"
+        },
+        "commandId": {
+          "$ref": "#/$defs/Id"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        },
+        "expectedScopeVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "authorityEpoch": {
+          "$ref": "#/$defs/Version"
+        },
+        "executionLockDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "operation": {
+          "const": "PlacePresence"
+        },
+        "payload": {
+          "$ref": "#/$defs/PlacePresencePayload"
+        }
+      },
+      "required": [
+        "contractVersion",
+        "commandId",
+        "idempotencyKey",
+        "scopeId",
+        "expectedScopeVersion",
+        "authorityEpoch",
+        "executionLockDigest",
+        "operation",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "description": "Principal is server-authenticated. Reference-scope equality, policy, gate, versions, state, rule identity, resources and lock are semantic obligations. Receipt lookup precedes new-execution version checks."
+    },
+    "MovePresenceCommand": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "1.2"
+        },
+        "commandId": {
+          "$ref": "#/$defs/Id"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        },
+        "expectedScopeVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "authorityEpoch": {
+          "$ref": "#/$defs/Version"
+        },
+        "executionLockDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "operation": {
+          "const": "MovePresence"
+        },
+        "payload": {
+          "$ref": "#/$defs/MovePresencePayload"
+        }
+      },
+      "required": [
+        "contractVersion",
+        "commandId",
+        "idempotencyKey",
+        "scopeId",
+        "expectedScopeVersion",
+        "authorityEpoch",
+        "executionLockDigest",
+        "operation",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "description": "Principal is server-authenticated. Reference-scope equality, policy, gate, versions, state, rule identity, resources and lock are semantic obligations. Receipt lookup precedes new-execution version checks."
+    },
+    "TransferPresenceCommand": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "1.2"
+        },
+        "commandId": {
+          "$ref": "#/$defs/Id"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        },
+        "expectedScopeVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "authorityEpoch": {
+          "$ref": "#/$defs/Version"
+        },
+        "executionLockDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "operation": {
+          "const": "TransferPresence"
+        },
+        "payload": {
+          "$ref": "#/$defs/TransferPresencePayload"
+        }
+      },
+      "required": [
+        "contractVersion",
+        "commandId",
+        "idempotencyKey",
+        "scopeId",
+        "expectedScopeVersion",
+        "authorityEpoch",
+        "executionLockDigest",
+        "operation",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "description": "Principal is server-authenticated. Reference-scope equality, policy, gate, versions, state, rule identity, resources and lock are semantic obligations. Receipt lookup precedes new-execution version checks."
+    },
+    "UnplacePresenceCommand": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "1.2"
+        },
+        "commandId": {
+          "$ref": "#/$defs/Id"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/Id"
+        },
+        "scopeId": {
+          "$ref": "#/$defs/Id"
+        },
+        "expectedScopeVersion": {
+          "$ref": "#/$defs/Version"
+        },
+        "authorityEpoch": {
+          "$ref": "#/$defs/Version"
+        },
+        "executionLockDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "operation": {
+          "const": "UnplacePresence"
+        },
+        "payload": {
+          "$ref": "#/$defs/UnplacePresencePayload"
+        }
+      },
+      "required": [
+        "contractVersion",
+        "commandId",
+        "idempotencyKey",
+        "scopeId",
+        "expectedScopeVersion",
+        "authorityEpoch",
+        "executionLockDigest",
+        "operation",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "description": "Principal is server-authenticated. Reference-scope equality, policy, gate, versions, state, rule identity, resources and lock are semantic obligations. Receipt lookup precedes new-execution version checks."
+    }
+  }
+}

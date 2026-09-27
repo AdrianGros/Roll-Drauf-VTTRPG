@@ -21,11 +21,12 @@ from sqlalchemy.orm import Session
 from vtt.creation_engine.canonical import canonical_bytes, content_digest, parse_strict_json
 from vtt.creation_engine.content import new_id
 from vtt.creation_engine.contracts import validate_definition
+from vtt.creation_engine.kernel.decisions import Decision, Question
 from vtt.creation_engine.kernel.records import Action, PRECOMMIT, TERMINAL, refuse
 from vtt.creation_engine.rational import Rational
 from vtt.creation_engine.store.content import ContentStore
 from vtt.creation_engine.store.runtime_models import (CeRuntimeScope, CeInstance, CeResourceLedger, CeAction,
-    CeCheckpoint, CeReceipt, CeResourceEntry, CeRandomRecord, CeEffectApplication, CeDomainEvent, CeOutbox, CeEventConsumption)
+    CeCheckpoint, CeReceipt, CeResourceEntry, CeRandomRecord, CeEffectApplication, CeDomainEvent, CeOutbox, CeEventConsumption, CePendingDecision)
 from vtt.models.user import User
 
 
@@ -49,6 +50,12 @@ class RuntimeStore:
             session.flush()
             commit_time = max(self.now(session), scope.time_watermark)
             scope.time_watermark = commit_time
+            tx.now = commit_time
+            # Decision acceptance/expiry uses this single boundary-time reading.
+            # Hooks execute under the scope lock before the transaction commits.
+            for callback in tx.commit_callbacks:
+                callback()
+            session.flush()
             # The row lock prevents reassignment; expiry is also checked at the
             # durable-write boundary so a slow old worker cannot finish late.
             if tx.required_fence is not None:
@@ -116,6 +123,7 @@ class RuntimeTransaction:
         self.required_fence = None
         self.release_lease = False
         self.activation_deadline = None
+        self.commit_callbacks = []
         self.content = ContentStore(session)
         self.lock = self.content.lock(scope.lock_id)
         if self.lock is None:
@@ -167,8 +175,13 @@ class RuntimeTransaction:
     def checkpoint_boundary(self):
         # The outer transaction retains admission/status; the savepoint rolls
         # back every mechanical write if validation fails late in a checkpoint.
-        with self.session.begin_nested():
-            yield
+        callbacks = len(self.commit_callbacks)
+        try:
+            with self.session.begin_nested():
+                yield
+        except Exception:
+            del self.commit_callbacks[callbacks:]
+            raise
 
     def receipt(self, principal, key):
         row = self.session.get(CeReceipt, (self.scope.id, principal, key))
@@ -222,9 +235,9 @@ class RuntimeTransaction:
         return self.session.scalar(select(func.count()).select_from(CeEffectApplication)
                                    .where(CeEffectApplication.target_id == target_id))
 
-    def save_checkpoint(self, action, checkpoint_id, outcome, changes, rolls, effects):
+    def save_checkpoint(self, action, checkpoint_id, outcome, changes, rolls, effects, *, index=None):
         self.session.add(CeCheckpoint(id=checkpoint_id, scope_id=self.scope.id, action_id=action.id,
-                         window_index=action.next_window, state_version=self.scope.state_version,
+                         window_index=action.next_window if index is None else index, state_version=self.scope.state_version,
                          outcome=canonical_bytes(outcome), outcome_digest=content_digest(outcome), created_at=self.now))
         self.session.flush()
         for change in changes:
@@ -235,13 +248,14 @@ class RuntimeTransaction:
             self.session.add(CeEffectApplication(id=effect["applicationId"], scope_id=self.scope.id,
                              checkpoint_id=checkpoint_id, target_id=effect["target"]["id"], canonical=canonical_bytes(effect)))
 
-    def event(self, action, kind, checkpoint_id=None):
+    def event(self, action, kind, checkpoint_id=None, *, details=None):
         self.scope.event_sequence += 1
         event_id = new_id("event")
         event = {"eventId": event_id, "scopeId": self.scope.id, "sequence": self.scope.event_sequence,
                  "stateVersion": self.scope.state_version, "authorityEpoch": self.scope.authority_epoch,
                  "actionId": action.id, "checkpointId": checkpoint_id, "kind": kind,
-                 "audience": "engine-internal"}
+                 "executionLockDigest": self.lock.digest, "policyVersion": self.scope.policy_version,
+                 "audience": "engine-internal", "details": details}
         self.session.add(CeDomainEvent(id=event_id, scope_id=self.scope.id, sequence=self.scope.event_sequence,
                          action_id=action.id, checkpoint_id=checkpoint_id, canonical=canonical_bytes(event)))
         self.session.flush()
@@ -263,3 +277,69 @@ class RuntimeTransaction:
         if s.fence_epoch != fence or s.lease_expires_at is None or (now or self.now) >= s.lease_expires_at:
             refuse("WORKER_FENCED", "worker lease expired or was reassigned")
         self.required_fence = fence
+
+
+    def decision(self, decision_id, version=None):
+        query = select(CePendingDecision).where(CePendingDecision.scope_id == self.scope.id,
+                                               CePendingDecision.id == decision_id)
+        if version is not None:
+            query = query.where(CePendingDecision.version == version)
+        row = self.session.scalar(query.order_by(CePendingDecision.version.desc()).limit(1))
+        if row is None:
+            refuse("DECISION_STALE" if version is not None else "NOT_FOUND")
+        return Decision(parse_strict_json(row.canonical), row.context_digest, row.created_scope_version,
+                        Question.restore(parse_strict_json(row.question)), row.timeout_seconds,
+                        parse_strict_json(row.answer) if row.answer is not None else None, row.responder_id, row.closed_at)
+
+    def save_decision(self, decision):
+        w = decision.wire
+        validate_definition("PendingDecision", w)
+        row = self.session.get(CePendingDecision, (decision.id, decision.version))
+        if row is None:
+            row = CePendingDecision(id=decision.id, version=decision.version, scope_id=self.scope.id,
+                                    action_id=w["actionId"], checkpoint_id=w["checkpointId"],
+                                    context_digest=decision.context_digest, created_scope_version=decision.created_scope_version,
+                                    question=canonical_bytes(decision.question.wire()), timeout_seconds=decision.timeout_seconds)
+            self.session.add(row)
+        row.status, row.canonical = w["status"], canonical_bytes(w)
+        row.answer = canonical_bytes(decision.answer) if decision.answer is not None else None
+        row.responder_id, row.closed_at = decision.responder_id, decision.closed_at
+        self.session.flush()
+
+    def open_decisions(self, action_id=None):
+        query = select(CePendingDecision.id).where(CePendingDecision.scope_id == self.scope.id,
+                                                 CePendingDecision.status == "open")
+        if action_id is not None:
+            query = query.where(CePendingDecision.action_id == action_id)
+        return [self.decision(i) for i in self.session.scalars(query.order_by(CePendingDecision.id))]
+
+    def decisions_for(self, action_id):
+        ids = self.session.scalars(select(CePendingDecision.id).where(CePendingDecision.scope_id == self.scope.id,
+                                        CePendingDecision.action_id == action_id).distinct())
+        return [self.decision(i) for i in ids]
+
+    def answers(self, action_id):
+        """Retained typed inputs for the trusted checkpoint preparer, never client output."""
+        return {d.wire["questionId"]: d.answer for d in self.decisions_for(action_id) if d.answer is not None}
+
+    def intervention_index(self, action_id):
+        # Activity indexes stay stable across operator/decision checkpoints.
+        smallest = self.session.scalar(select(func.min(CeCheckpoint.window_index))
+                                       .where(CeCheckpoint.action_id == action_id))
+        return min(0, smallest or 0) - 1
+
+    def decision_snapshot(self):
+        """Conservative full mechanical read set; no raw digest is published."""
+        instances = list(self.session.scalars(select(CeInstance).where(CeInstance.scope_id == self.scope.id)
+                                              .order_by(CeInstance.id)))
+        resources = self.session.scalars(select(CeResourceLedger).join(CeInstance)
+                                        .where(CeInstance.scope_id == self.scope.id)
+                                        .order_by(CeResourceLedger.instance_id, CeResourceLedger.resource_id))
+        effects = self.session.scalars(select(CeEffectApplication).where(CeEffectApplication.scope_id == self.scope.id)
+                                      .order_by(CeEffectApplication.id))
+        return {"instances": [{"id": i.id, "revision": i.revision_id, "holder": i.holder_id,
+                               "controller": i.controller_user_id} for i in instances],
+                "resources": [{"instanceId": r.instance_id, "resourceId": r.resource_id, "unit": r.unit,
+                               "current": parse_strict_json(r.current), "maximum": parse_strict_json(r.maximum),
+                               "boundPolicy": r.adjust_bound_policy} for r in resources],
+                "effects": [parse_strict_json(e.canonical) for e in effects]}

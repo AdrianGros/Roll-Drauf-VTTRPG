@@ -44,21 +44,22 @@ def kernel_engine(postgres_engine):
     with postgres_engine.begin() as connection:
         with connection.connection.cursor() as cursor:
             cursor.execute(M74.read_text())
+            cursor.execute(M74.with_name('migration_m75_creation_engine_decisions.sql').read_text())
         connection.execute(text("UPDATE users SET is_active=true, is_suspended=false, account_state='active' WHERE id=1"))
         connection.execute(text('CREATE TABLE ce_test_consumer_counts (consumer TEXT PRIMARY KEY, hits INTEGER NOT NULL)'))
     return postgres_engine
 
 
-def make_world(engine, plans=(STRIKE,)):
+def make_world(engine, plans=(STRIKE,), *, registry=REGISTRY, configuration=None):
     with Session(engine) as session, session.begin():
         store = ContentStore(session)
         workspace = store.workspace_for(1, now=NOW)
         definition = store.add_definition(workspace.id, 'Kernel fixture', TYPE.type_id, now=NOW)
         revision = create_revision(definition.id, TYPE, {'plans': [parse_strict_json(p.canonical()) for p in plans]},
-                                   registry=REGISTRY, author_user_id=1, provenance={}, now=NOW)
+                                   registry=registry, author_user_id=1, provenance={}, now=NOW)
         store.append_revision(revision)
-        lock = resolve_lock([revision.ref()], fetch=store.revision, ruleset=RULESET, registry=REGISTRY,
-                            evaluator=evaluator_artifact(), configuration={})
+        lock = resolve_lock([revision.ref()], fetch=store.revision, ruleset=RULESET, registry=registry,
+                            evaluator=evaluator_artifact(), configuration=configuration or {})
         store.save_lock(lock, now=NOW)
         scope = CeRuntimeScope(id=new_id('scope'), kind='sandbox', owner_user_id=1, fixture=True,
                                migration_state='ENGINE', lock_id=lock.lock_id, time_watermark=NOW)
@@ -424,6 +425,7 @@ def test_m74_matches_model_columns_and_reapplies(kernel_engine):
     with kernel_engine.begin() as connection:
         with connection.connection.cursor() as cursor:
             cursor.execute(M74.read_text())
+            cursor.execute(M74.with_name('migration_m75_creation_engine_decisions.sql').read_text())
 
 
 @pytest.mark.parametrize('table', ['ce_checkpoints', 'ce_random_records', 'ce_resource_entries', 'ce_domain_events', 'ce_receipts'])

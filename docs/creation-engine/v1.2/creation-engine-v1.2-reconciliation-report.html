@@ -1,0 +1,294 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Roll Drauf Creation Engine v1.2 — reconciliation report</title><style>
+@page {
+  size: A4; margin: 18mm 17mm 19mm;
+  @top-left { content: 'ROLL DRAUF  /  CREATION ENGINE'; color: #607581;
+    font: 8pt 'DejaVu Sans', sans-serif; }
+  @top-right { content: 'v1.2 · RECONCILED'; color: #607581;
+    font: 8pt 'DejaVu Sans', sans-serif; }
+  @bottom-left { content: 'Approved baseline + scoped research · 25 September 2026'; color: #607581;
+    font: 8pt 'DejaVu Sans', sans-serif; }
+  @bottom-right { content: counter(page) ' / ' counter(pages); color: #607581;
+    font: 8pt 'DejaVu Sans', sans-serif; }
+}
+body { font: 9.6pt/1.43 'DejaVu Sans', sans-serif; color: #22313d; }
+h1 { font-size: 25pt; line-height: 1.15; color: #163c4d; margin: 5mm 0; }
+h2 { font-size: 14pt; line-height: 1.3; color: #163c4d; margin: 7mm 0 3mm;
+     border-bottom: 1pt solid #d4e4e8; padding-bottom: 2mm; }
+h3 { font-size: 11.3pt; line-height: 1.3; color: #225d6a; margin: 5mm 0 2mm; }
+h1,h2,h3,h4 { break-after: avoid; }
+p { margin: 2.3mm 0; orphans: 3; widows: 3; }
+a { color: #176477; text-decoration: none; overflow-wrap: anywhere; }
+strong { color: #143343; }
+li { margin: 1.2mm 0; }
+ul,ol { padding-left: 5.5mm; }
+code { font: 8pt 'DejaVu Sans Mono', monospace; overflow-wrap: anywhere; }
+pre { white-space: pre-wrap; padding: 3mm; background: #f1f5f7; }
+table { border-collapse: collapse; width: 100%; table-layout: fixed;
+        margin: 3mm 0; font-size: 8.4pt; line-height: 1.38; }
+th { background: #e8f1f3; color: #163c4d; font-weight: bold; text-align: left; }
+th,td { padding: 1.9mm 2mm; border-bottom: .5pt solid #d5dee3;
+        vertical-align: top; overflow-wrap: anywhere; }
+th:first-child,td:first-child { width: 24%; }
+table.acceptance th:first-child,table.acceptance td:first-child { width: 7%; }
+table.findings th:first-child,table.findings td:first-child { width: 9%; }
+table code { font-size: 7.6pt; }
+tr { break-inside: avoid; }
+thead { display: table-header-group; }
+h4 { font-size: 10.2pt; color: #225d6a; margin: 4mm 0 2mm; }
+.contents { break-before: page; break-after: page; font-size: 9.5pt; }
+.toc ul { list-style: none; padding: 0; }
+.toc li { margin: 2.2mm 0; }
+.toc a::after { content: leader('.') target-counter(attr(href), page); }
+@media screen {
+  body { max-width: 1000px; margin: 28px auto; padding: 24px; }
+  h1 { font-size: 34px; }
+  .toc { background: #f1f5f7; padding: 18px; }
+  .toc a::after { content: ''; }
+}
+</style></head><body><h1 id="creation-engine-contract-reconciliation-and-cause-analysis">Creation Engine contract reconciliation and cause analysis</h1>
+<p><strong>Date:</strong> 25 September 2026. <strong>Status:</strong> documentation divergence corrected; G1 remains in Deploy. <strong>Input:</strong> approved v1.1.4, E1–E4, core wire 1.1.3, registry A1, approval D1–D8, the implementation program, and the withdrawn research rewrite. <strong>Boundary:</strong> documents, schemas and their verification; no application implementation, database migration or change to the current milestone authorization.</p>
+<h2 id="outcome">Outcome</h2>
+<p>The reconciled v1.2 is a reading edition of the approved contract plus a scoped research change register. It does not become a new implementation baseline merely because its document version is higher. The approved body, 20 requirements, T01–T56, core schema and A1 are preserved. The earlier v1.2 rewrite and its seven-command wire 1.2 schema are withdrawn from authority and archived.</p>
+<p>The project did not need to return to specification discovery. G0 had passed and G1 implementation had been authorized. WP1–WP4 remain completed for their recorded backend scope; WP5 remains the next implementation work. Finishing this documentation reconciliation does not require re-approving those decisions or rerunning all their tests. New research changes are reviewed only where they affect a later package or gate.</p>
+<h2 id="why-the-documents-diverged">Why the documents diverged</h2>
+<p>The immediate error was using a stale contract as the rewrite base. I selected the earlier task workspace's v1.1 specification/schema/acceptance files, then treated the repository's newer implementation as outside the rewrite. That separation was appropriate for avoiding application edits, but wrong for discovering the authoritative specification. I should have followed the repository's updated CONTEXT.md pointer, approval record and G1 plan before writing any supersession language.</p>
+<p>There were four compounding errors:</p>
+<ol>
+<li><strong>Wrong input boundary.</strong> The v1.2 source manifest pinned v1.1 and the research companion, not the approved v1.1.4 contract, E1–E4, A1 or the deployment authorization. Research freshness was mistaken for contract freshness.</li>
+<li><strong>Detected drift was not acted on.</strong> On 25 September I recorded HEAD <code>66b6fc4</code> and that CONTEXT.md had changed. I still used the old inputs. The newer contract was discoverable; this was not an unavoidable absence of information.</li>
+<li><strong>Validation checked the wrong baseline.</strong> The draft preserved T01–T46 and checked its own schemas, references and PDFs. It did not compare against the approved 56 cases, 20 requirements or the implemented wire 1.1.3 contract. Its T47–T56 therefore reused IDs already assigned by the audit, and a syntactically valid new schema discarded approved privacy and source-occurrence protections.</li>
+<li><strong>Phase and authority were conflated.</strong> A request to rewrite documentation was described as a new specification candidate awaiting implementation handoff. It should have been a reconciliation within a project already in G1 Deploy. That wording suggested a project reset even though the existing approval and code remained in place.</li>
+</ol>
+<p>Contributing documentation ambiguity also existed: the evolving G1 program still contained its original “nothing implemented” planning sentence, and the immutable approval record starts with its pre-authorization context before recording approval at the end. Those are historical statements, not the current status. The updated entry point and program annotation make that distinction explicit. They do not excuse the missed contract lookup.</p>
+<p>There is no evidence in the inspected checkout that implementation was rolled back or that the withdrawn schema was adopted by the engine. The source of the apparent move “back into spec” was my parallel rewrite and status framing. I take responsibility for that error.</p>
+<h2 id="evidence-and-chronology">Evidence and chronology</h2>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Evidence</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Research sampled the earlier application state</td>
+<td>Withdrawn manifest: research HEAD <code>87ff37f</code>, v1.1 input hashes</td>
+<td>A valid historical sample, not the later approved contract</td>
+</tr>
+<tr>
+<td>G0 closures and G1 authorization recorded on 24 September</td>
+<td>Approval record's final G0/Deploy rows; E4 errata</td>
+<td>v1.1.4 approved; core remains 1.1.3; A1 approved; G1 authorized</td>
+</tr>
+<tr>
+<td>Approved packet and plan present in repository history</td>
+<td>Commit <code>646e4e4</code>, recorded author date 24 September</td>
+<td>Contract and approval available in the implementation checkout</td>
+</tr>
+<tr>
+<td>Backend implementation proceeded</td>
+<td>WP1 <code>e17ae9c</code>, WP2 <code>825b8ad</code>, WP3 <code>d7a8fd0</code>, WP4 <code>66b6fc4</code></td>
+<td>The project had moved beyond theory</td>
+</tr>
+<tr>
+<td>Rewrite resumed on 25 September</td>
+<td>Withdrawn source manifest records HEAD <code>66b6fc4</code>, changed CONTEXT.md and WP5 files</td>
+<td>Drift was visible but the contract source was not refreshed</td>
+</tr>
+<tr>
+<td>Incorrect v1.2 package delivered</td>
+<td>Archived spec/schema/catalogue and their hashes</td>
+<td>It reverted wire protections, reused acceptance IDs and overstated supersession</td>
+</tr>
+<tr>
+<td>Status check found divergence</td>
+<td>Current CONTEXT.md, v1.1.4 errata and G1 program</td>
+<td>Prompted this correction rather than an implementation restart</td>
+</tr>
+</tbody>
+</table>
+<p>The approval record is the source for decision dates; identical commit author timestamps do not establish the precise order of conversations. This analysis uses repository artifacts and this conversation, not an inferred account of other contributors' intentions.</p>
+<h2 id="approved-corrections-restored">Approved corrections restored</h2>
+<p>The complete approved body is preserved in §§1–25 of the reading edition, with only three enumerated editorial status/provenance updates. The full G0-01…G0-20 closure table remains in §23. Notable protections that the withdrawn rewrite omitted or weakened are:</p>
+<table>
+<thead>
+<tr>
+<th>Approved contract</th>
+<th>Correct reconciled behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G0-01 privacy</td>
+<td>Opaque <code>contextToken</code>; separate <code>PublicReceipt</code>; no public outcome digest or omitted-event count; audience-bound delivery</td>
+</tr>
+<tr>
+<td>G0-02 migration</td>
+<td>Migration authority belongs to the whole runtime scope; no mixed per-character cutover</td>
+</tr>
+<tr>
+<td>G0-03 source identity</td>
+<td>Tagged <code>actorInstance</code> and <code>sourceInstance</code>; costs resolve to the exact source occurrence; tagged resource target</td>
+</tr>
+<tr>
+<td>G0-04 / G0-06 decisions</td>
+<td>Suspension at the mandatory deadline; decision-specific expected-version/context-token admission</td>
+</tr>
+<tr>
+<td>G0-07 fencing</td>
+<td>Internal worker fences remain distinct from the authority epoch; restore advances the authority epoch</td>
+</tr>
+<tr>
+<td>G0-08 / G0-09 authority and bounds</td>
+<td>Explicit controller/operator relationships and resource adjustment-bound policy</td>
+</tr>
+<tr>
+<td>G0-10 / G0-12 typed data</td>
+<td>Approved numeric core functions, Predicate schema and inert legacyMetadata</td>
+</tr>
+<tr>
+<td>G0-14 / G0-19 requirement identity</td>
+<td>CE-MANUAL-01 and CE-RULESET-01 retained, including original case mappings</td>
+</tr>
+<tr>
+<td>G0-15 / G0-18 decision timing</td>
+<td>Fixed candidate order per reaction slot and explicit forward-clock-anomaly handling</td>
+</tr>
+<tr>
+<td>G0-16 / G0-17 / G0-20 edge cases</td>
+<td>Precommit cancellation; distinct capacity/budget responses; schema-aligned fields and UTC timestamps</td>
+</tr>
+<tr>
+<td>G0-11 registry</td>
+<td>All 24 A1 operations and their four envelope families retained with immutable IDs</td>
+</tr>
+<tr>
+<td>G0-13 / E4 map behavior</td>
+<td>Ordinary-map movement remains ungated representation state; declared spatial mechanics obey the action gate</td>
+</tr>
+<tr>
+<td>D1–D8 implementation decisions</td>
+<td>Approval, applicability rulings, RDL subset, dependencies, flame sword/private curse fixture and German/English/French locales retained</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-the-research-is-retained-without-changing-the-current-contract">How the research is retained without changing the current contract</h2>
+<p>The accepted single-presence direction remains the target for spatial mechanics. Ordinary map markers are nonmechanical reference representations; moving one does not move a future authoritative presence. That interpretation preserves E4 and the current G1 adapter behavior. Detailed presence storage, four spatial commands, geometry/lock changes and migration fixtures stay assigned to the spatial design, principally G5.</p>
+<p>Cost identities, a canonical provenance tuple, cache-independent logical fuel and a five-attempt recovery episode are concrete refinements. They are not facts about the existing pinned engine and were not approved by the earlier G1 decision. They remain scoped change proposals with compatibility and evidence obligations. Existing architectural boundaries are retained as adopted design; extra verification suggestions do not silently enlarge the G1 exit gate.</p>
+<p>The active command schemas are exact copies of approved core 1.1.3 plus A1: <strong>27 approved command shapes</strong>, not the withdrawn set of seven. The document's v1.2 label is not a protocol upgrade. No new spatial operation is registered by the reconciliation.</p>
+<h2 id="acceptance-identity-repair">Acceptance identity repair</h2>
+<p>T01–T56 and all 20 approved requirement rows remain unchanged. The withdrawn draft's 18 research cases are reassigned to T57–T74. RA01–RA10 map to T57–T66. The six research requirements are marked proposed, leaving 20 approved plus six proposed requirements. There are 56 approved plus 18 proposed scenarios; this is not a claim of 74 executed tests.</p>
+<table>
+<thead>
+<tr>
+<th>Withdrawn draft</th>
+<th>Correct research ID</th>
+<th>Existing approved meaning retained</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T47 → cost deduplication</td>
+<td>T57</td>
+<td>Approved T47 remains privacy against hidden-value enumeration</td>
+</tr>
+<tr>
+<td>T48 → helper commit</td>
+<td>T58</td>
+<td>Approved T48 remains scope-level migration authority</td>
+</tr>
+<tr>
+<td>T49 → spatial presence</td>
+<td>T59</td>
+<td>Approved T49 remains source-occurrence resource isolation</td>
+</tr>
+<tr>
+<td>T50 → recomputation</td>
+<td>T60</td>
+<td>Approved T50 remains labelled manual adjudication</td>
+</tr>
+<tr>
+<td>T51 → JSON persistence</td>
+<td>T61</td>
+<td>Approved T51 remains reaction ordering</td>
+</tr>
+<tr>
+<td>T52 → lock artifacts</td>
+<td>T62</td>
+<td>Approved T52 remains precommit cancellation</td>
+</tr>
+<tr>
+<td>T53 → output policy</td>
+<td>T63</td>
+<td>Approved T53 remains capacity/budget behavior</td>
+</tr>
+<tr>
+<td>T54 → work budgets</td>
+<td>T64</td>
+<td>Approved T54 remains clock anomalies</td>
+</tr>
+<tr>
+<td>T55 → canonical JSON</td>
+<td>T65</td>
+<td>Approved T55 remains ungated ordinary-map movement</td>
+</tr>
+<tr>
+<td>T56 → spatial decision recovery</td>
+<td>T66</td>
+<td>Approved T56 remains gated mechanical-map movement</td>
+</tr>
+<tr>
+<td>T57–T64 → additional spatial/architecture cases</td>
+<td>T67–T74</td>
+<td>No approved case overwritten</td>
+</tr>
+</tbody>
+</table>
+<p>The machine-readable catalogue includes a qualified <code>withdrawn-v1.2:Txx</code> translation map. An unqualified test ID in existing implementation evidence keeps its approved meaning.</p>
+<h2 id="prevention-and-remaining-risks">Prevention and remaining risks</h2>
+<table class="findings">
+<thead>
+<tr>
+<th>Finding</th>
+<th>Severity / disposition</th>
+<th>Prevention or boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Approved security clauses missing in a competing draft</td>
+<td>High documentation regression; corrected</td>
+<td>Restore approved body and exact schema bytes; reject the withdrawn public digest and missing-source command shapes</td>
+</tr>
+<tr>
+<td>Acceptance ID collisions</td>
+<td>High traceability defect; corrected</td>
+<td>Preserve approved case text; append new IDs; qualify historical mappings</td>
+</tr>
+<tr>
+<td>G1 phase presented as unapproved design</td>
+<td>Medium process defect; corrected</td>
+<td>Repository entry point and program status annotation; approval record remains authoritative</td>
+</tr>
+<tr>
+<td>Baseline drifts during future document work</td>
+<td>Medium recurrence risk; guarded</td>
+<td>Pin the active contract in source manifest; verifier fails if local approved source/schema hashes change</td>
+</tr>
+<tr>
+<td>Research proposals mistaken for adopted behavior</td>
+<td>Medium scope risk; bounded</td>
+<td>Separate approved/proposed catalogue entries; explicit affected gates; no automatic wire or exit-gate change</td>
+</tr>
+<tr>
+<td>Current WP5 changes not verified here</td>
+<td>Scope limitation</td>
+<td>Preserve application files; finish WP5 under its existing implementation authorization and test plan</td>
+</tr>
+</tbody>
+</table>
+<p>The verifier checks approved-body preservation, original case/requirement identity, G0 closure retention, active wire version and A1 resolution, source hashes, privacy/source-identity negative examples, remapped proposal IDs, and rendered outputs. It checks all 24 A1 examples and rejects spoofed principals, extra payload keys, missing epochs and the withdrawn wire version. These checks establish document compatibility, not runtime conformance.</p>
+<h2 id="next-action">Next action</h2>
+<p>Continue the approved G1 program at WP5. Review and finish pending decisions, deadlines, revocation, interventions and manual resolution against v1.1.4/core 1.1.3/A1. Then proceed through WP6–WP9. Do not stop that work for a fresh G0 or for future spatial/retry design. When a research proposal becomes relevant, assess its narrow contract/fixture/lock impact and record the decision before implementing it.</p>
+<p>Artifacts are retained in the repository's <code>docs/creation-engine/v1.2/</code>. The old package is archived in the research workspace and its original hash is recorded in the new source manifest. The approved historical packets and approval record remain untouched.</p></body></html>

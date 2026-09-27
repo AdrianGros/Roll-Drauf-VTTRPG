@@ -1,0 +1,685 @@
+{
+ "scope": "Schema syntax/shape checks for registry addendum A1 only; not engine tests.",
+ "draft_2020_12_schema_valid": true,
+ "resolves_core_refs": "urn:rolldrauf:creation-engine:contracts:1.1.3",
+ "operations": 24,
+ "per_operation": [
+  {
+   "operation": "CreateDraft",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "CreateSandboxScope",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "OpenLegacyCampaignScope",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "RecordDraftDecision",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "SkipDraftQuestion",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "RetractDraftDecision",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "ApplyDraftPreset",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "RevertDraft",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "CommitDraftRevision",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "InstantiateRevision",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "SetItemEquipped",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "SetValueOverride",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "ClearValueOverride",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "SetBaseValue",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "ReissueDecision",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "ReassignDecisionResponder",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "ResumeSuspendedAction",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "ResolveActionManually",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "MapLegacyCharacter",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "BeginScopeShadow",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "ApproveParityDifference",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "FreezeScopeForCutover",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "CommitScopeCutover",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  },
+  {
+   "operation": "AbortScopeCutover",
+   "valid_example": true,
+   "negatives_rejected": {
+    "unknown_payload_field": true,
+    "spoofed_principal_field": true,
+    "missing_epoch": true,
+    "superseded_contract_version": true
+   }
+  }
+ ],
+ "cross_checks": {
+  "cross_family_rejected": true,
+  "unsupported_locale_rejected": true,
+  "type_coercion_rejected": true,
+  "bare_instance_id_rejected": true
+ },
+ "examples": {
+  "CreateDraft": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "operation": "CreateDraft",
+   "payload": {
+    "schemaType": {
+     "typeId": "rdl.equipment",
+     "version": 1
+    },
+    "authoringLocale": "de"
+   }
+  },
+  "CreateSandboxScope": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "operation": "CreateSandboxScope",
+   "payload": {
+    "ruleset": {
+     "kind": "ruleset",
+     "id": "rdl-g1",
+     "version": "0.1.0",
+     "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "revisions": [
+     {
+      "kind": "revision",
+      "id": "rev:flame-1",
+      "definitionId": "def:flame-sword",
+      "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+     }
+    ]
+   }
+  },
+  "OpenLegacyCampaignScope": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "operation": "OpenLegacyCampaignScope",
+   "payload": {
+    "legacyCampaignId": 7
+   }
+  },
+  "RecordDraftDecision": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "draftId": "draft:1",
+   "expectedDraftVersion": 3,
+   "operation": "RecordDraftDecision",
+   "payload": {
+    "question": {
+     "questionId": "q:equipment.flames.effect",
+     "questionVersion": 1
+    },
+    "answer": {
+     "kind": "selection",
+     "value": [
+      {
+       "kind": "definition",
+       "id": "opt:flames.visual_light"
+      }
+     ]
+    },
+    "promptLocale": "fr"
+   }
+  },
+  "SkipDraftQuestion": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "draftId": "draft:1",
+   "expectedDraftVersion": 3,
+   "operation": "SkipDraftQuestion",
+   "payload": {
+    "question": {
+     "questionId": "q:equipment.flames.effect",
+     "questionVersion": 1
+    }
+   }
+  },
+  "RetractDraftDecision": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "draftId": "draft:1",
+   "expectedDraftVersion": 3,
+   "operation": "RetractDraftDecision",
+   "payload": {
+    "question": {
+     "questionId": "q:equipment.flames.effect",
+     "questionVersion": 1
+    }
+   }
+  },
+  "ApplyDraftPreset": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "draftId": "draft:1",
+   "expectedDraftVersion": 3,
+   "operation": "ApplyDraftPreset",
+   "payload": {
+    "preset": {
+     "presetId": "preset:three-charges-dawn",
+     "version": 1
+    },
+    "previewDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+   }
+  },
+  "RevertDraft": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "draftId": "draft:1",
+   "expectedDraftVersion": 3,
+   "operation": "RevertDraft",
+   "payload": {
+    "toDraftVersion": 2
+   }
+  },
+  "CommitDraftRevision": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "workspaceId": "ws:adrian",
+   "draftId": "draft:1",
+   "expectedDraftVersion": 3,
+   "operation": "CommitDraftRevision",
+   "payload": {
+    "declaredQuality": "runtime_ready",
+    "definition": {
+     "kind": "new"
+    }
+   }
+  },
+  "InstantiateRevision": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "InstantiateRevision",
+   "payload": {
+    "revision": {
+     "kind": "revision",
+     "id": "rev:flame-1",
+     "definitionId": "def:flame-sword",
+     "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "holder": {
+     "kind": "instance",
+     "id": "actor:fixture-kaempfer",
+     "scopeId": "scope:sandbox-1"
+    },
+    "reason": "Sandbox test"
+   }
+  },
+  "SetItemEquipped": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "SetItemEquipped",
+   "payload": {
+    "item": {
+     "kind": "instance",
+     "id": "item:sword-2",
+     "scopeId": "scope:sandbox-1"
+    },
+    "equipped": true
+   }
+  },
+  "SetValueOverride": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "SetValueOverride",
+   "payload": {
+    "instance": {
+     "kind": "instance",
+     "id": "actor:k",
+     "scopeId": "scope:sandbox-1"
+    },
+    "bindingId": "rdl.defense",
+    "value": {
+     "value": {
+      "numerator": 13,
+      "denominator": 1
+     },
+     "unit": "unit:dimensionless"
+    },
+    "reason": "Legacy AC edit"
+   }
+  },
+  "ClearValueOverride": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "ClearValueOverride",
+   "payload": {
+    "instance": {
+     "kind": "instance",
+     "id": "actor:k",
+     "scopeId": "scope:sandbox-1"
+    },
+    "bindingId": "rdl.defense",
+    "reason": "Reconciled"
+   }
+  },
+  "SetBaseValue": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "SetBaseValue",
+   "payload": {
+    "instance": {
+     "kind": "instance",
+     "id": "actor:k",
+     "scopeId": "scope:sandbox-1"
+    },
+    "bindingId": "rdl.attr.str",
+    "value": {
+     "value": {
+      "numerator": 14,
+      "denominator": 1
+     },
+     "unit": "unit:dimensionless"
+    },
+    "reason": "Legacy sheet edit"
+   }
+  },
+  "ReissueDecision": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "ReissueDecision",
+   "payload": {
+    "actionId": "act:9",
+    "decisionId": "dec:4",
+    "expectedDecisionVersion": 2,
+    "deadlineSeconds": 120
+   }
+  },
+  "ReassignDecisionResponder": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "ReassignDecisionResponder",
+   "payload": {
+    "actionId": "act:9",
+    "decisionId": "dec:4",
+    "expectedDecisionVersion": 2,
+    "responderRuleId": "rule:operator"
+   }
+  },
+  "ResumeSuspendedAction": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "ResumeSuspendedAction",
+   "payload": {
+    "actionId": "act:9",
+    "expectedActionVersion": 5
+   }
+  },
+  "ResolveActionManually": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:sandbox-1",
+   "expectedScopeVersion": 40,
+   "executionLockDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+   "operation": "ResolveActionManually",
+   "payload": {
+    "actionId": "act:9",
+    "expectedActionVersion": 5,
+    "adjustments": [
+     {
+      "instance": {
+       "kind": "instance",
+       "id": "actor:ogre",
+       "scopeId": "scope:sandbox-1"
+      },
+      "resourceId": "rdl.hp",
+      "delta": {
+       "value": {
+        "numerator": -7,
+        "denominator": 1
+       },
+       "unit": "unit:hp"
+      }
+     }
+    ],
+    "outcomeNote": "GM ruling: flames hit",
+    "reason": "Responder unavailable"
+   }
+  },
+  "MapLegacyCharacter": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:campaign-7",
+   "expectedScopeVersion": 12,
+   "operation": "MapLegacyCharacter",
+   "payload": {
+    "source": {
+     "sourceType": "vtt.character",
+     "sourceId": 42
+    },
+    "migrationVersion": 1
+   }
+  },
+  "BeginScopeShadow": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:campaign-7",
+   "expectedScopeVersion": 12,
+   "operation": "BeginScopeShadow",
+   "payload": {
+    "ruleset": {
+     "kind": "ruleset",
+     "id": "rdl-g1",
+     "version": "0.1.0",
+     "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+   }
+  },
+  "ApproveParityDifference": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:campaign-7",
+   "expectedScopeVersion": 12,
+   "operation": "ApproveParityDifference",
+   "payload": {
+    "discrepancyId": "disc:ac-42",
+    "resolution": "keep_legacy_override",
+    "reason": "Manual +1 from Defensiver Stil"
+   }
+  },
+  "FreezeScopeForCutover": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:campaign-7",
+   "expectedScopeVersion": 12,
+   "operation": "FreezeScopeForCutover",
+   "payload": {
+    "reason": "Fixture cutover T02"
+   }
+  },
+  "CommitScopeCutover": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:campaign-7",
+   "expectedScopeVersion": 12,
+   "operation": "CommitScopeCutover",
+   "payload": {
+    "parityReportDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+   }
+  },
+  "AbortScopeCutover": {
+   "contractVersion": "1.1.3",
+   "commandId": "cmd:1",
+   "idempotencyKey": "idem:1",
+   "authorityEpoch": 1,
+   "scopeId": "scope:campaign-7",
+   "expectedScopeVersion": 12,
+   "operation": "AbortScopeCutover",
+   "payload": {
+    "reason": "Parity regression"
+   }
+  }
+ }
+}
