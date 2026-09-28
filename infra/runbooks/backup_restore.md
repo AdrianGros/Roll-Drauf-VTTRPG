@@ -15,7 +15,7 @@ This runbook defines the baseline procedure for PostgreSQL backup and restore in
 1. Export `DATABASE_URL` and target path.
 2. Run:
    ```powershell
-   ./ops/scripts/backup_db.ps1 -DatabaseUrl $env:DATABASE_URL -OutputPath "./backups/prod"
+   ./infra/scripts/backup_db.ps1 -DatabaseUrl $env:DATABASE_URL -OutputPath "./backups/prod"
    ```
 3. Upload backup artifact to object storage.
 4. Record checksum and timestamp in release/ops log.
@@ -25,7 +25,7 @@ This runbook defines the baseline procedure for PostgreSQL backup and restore in
 1. Identify backup file and checksum.
 2. Restore into staging first:
    ```powershell
-   ./ops/scripts/restore_db.ps1 -DatabaseUrl $env:STAGING_DATABASE_URL -BackupFile "./backups/prod/<file>.sql.gz"
+   ./infra/scripts/restore_db.ps1 -DatabaseUrl $env:STAGING_DATABASE_URL -BackupFile "./backups/prod/<file>.sql.gz"
    ```
 3. Run smoke checks against staging.
 4. If validated, execute restore/failover procedure for production.

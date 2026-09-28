@@ -53,6 +53,15 @@ The correction pins SQLAlchemy to the previous production image's 2.0.52 and add
 installed-driver regression check. The retry must also pass the production startup check
 above. Retain the failed attempt's evidence separately from the successful retry.
 
+The `9a0e698` retry passed 105 image tests, default-command production startup,
+authenticated readiness and the live source/HTTPS checks. The broader release gate
+exposed a pre-existing path mismatch: all five required operational files were under
+`infra/`, but the gate still searched `ops/`. The final correction updates those paths,
+the backup runbook's script references and the gate's regression coverage. The gate's
+300-second observation window and 200-request minimum remain in force. Any HTTP smoke
+traffic used during that window is synthetic deployment verification, not user testing
+or representative production load evidence.
+
 ## Rollback
 
 Set the app image to `roll-drauf-vtt-app:rollback-20260928` through the retained rollback

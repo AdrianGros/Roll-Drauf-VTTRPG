@@ -190,11 +190,11 @@ class Config:
     RELEASE_GATE_MAX_SOCKET_CONFLICT_RATE = 0.30
     RELEASE_GATE_REQUIRE_RUNBOOKS = False
     RELEASE_GATE_REQUIRED_FILES = (
-        "ops/runbooks/backup_restore.md",
-        "ops/runbooks/failover.md",
-        "ops/scripts/backup_db.ps1",
-        "ops/scripts/restore_db.ps1",
-        "ops/scripts/migrate_db.ps1",
+        "infra/runbooks/backup_restore.md",
+        "infra/runbooks/failover.md",
+        "infra/scripts/backup_db.ps1",
+        "infra/scripts/restore_db.ps1",
+        "infra/scripts/migrate_db.ps1",
     )
 
 

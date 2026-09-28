@@ -169,6 +169,18 @@ class TestOpsEndpoints:
         assert payload["checks"]["rollback_runbooks"]["ok"] is False
         assert "ops/runbooks/this_file_does_not_exist.md" in payload["checks"]["rollback_runbooks"]["missing_files"]
 
+    def test_health_release_finds_required_repository_runbooks(self, app, client):
+        app.config["RELEASE_GATE_REQUIRE_RUNBOOKS"] = True
+
+        response = client.get("/health/release", headers=OPS_HEADERS)
+
+        assert response.status_code == 200
+        runbooks = response.get_json()["checks"]["rollback_runbooks"]
+        assert runbooks["required"] is True
+        assert runbooks["ok"] is True
+        assert runbooks["missing_files"] == []
+        assert len(runbooks["checked_files"]) == 5
+
     def test_metrics_plain_text(self, client):
         client.get("/health/live")
         client.get("/health/ready", headers=OPS_HEADERS)
