@@ -92,6 +92,55 @@
             border-top: 1px solid rgba(130, 89, 52, 0.12);
         }
 
+        .sheet-pane[hidden] {
+            display: none !important;
+        }
+
+        .homebrew-origin-profile,
+        .homebrew-origin-traits {
+            display: grid;
+            gap: 0.75rem;
+            min-width: 0;
+        }
+
+        .homebrew-origin-facts {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.7rem;
+        }
+
+        .homebrew-origin-facts dt {
+            color: #8e6b52;
+            font-size: 0.78rem;
+        }
+
+        .homebrew-origin-facts dd {
+            color: #2f1638;
+            margin-top: 0.2rem;
+        }
+
+        .homebrew-origin-copy {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            line-height: 1.5;
+        }
+
+        .homebrew-origin-trait {
+            padding: 0.85rem;
+            border: 1px solid rgba(130, 89, 52, 0.18);
+            border-radius: 12px;
+            background: rgba(255, 252, 246, 0.68);
+            display: grid;
+            gap: 0.55rem;
+            min-width: 0;
+        }
+
+        .homebrew-origin-trait h3,
+        .homebrew-origin-profile h3 {
+            overflow-wrap: anywhere;
+            color: #2f1638;
+        }
+
         .sheet-pane-header {
             display: flex;
             justify-content: space-between;
@@ -205,6 +254,10 @@
         body[data-sheet-empty="true"] .sheet-focus-page .book-shell-frame-header,
         body[data-sheet-empty="true"] .sheet-focus-page .book-shell-ribbon {
             display: none;
+        }
+
+        #sheetEmptyState[hidden] {
+            display: none !important;
         }
 
         .sheet-empty-state h2,
@@ -718,6 +771,7 @@
                         <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
                         <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
                         <button type="button" class="book-dashboard-ribbon-btn is-active" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
+                        <a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0" title="Creation Engine wird geprüft">Creation Engine · wird geprüft</a>
                         <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
                     </div>
                     <div class="book-dashboard-crest" id="sheetReaderBadge" aria-label="Aktuelle Person">Bogenfokus</div>
@@ -818,6 +872,7 @@
                             <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()">Bogen bearbeiten</button>
                             <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden>Kampagnen-Kontext</button>
                             <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goBack()">Zurück zum Archiv</button>
+                            <a class="btn btn-secondary" data-creation-engine-nav aria-disabled="true" tabindex="0" title="Creation Engine wird geprüft">Creation Engine · wird geprüft</a>
                         </div>
                         <!-- Robot audit, 2026-08-23, Arc 0.7: a second,
                              static "next step" element (id=sheetNextStepNote,
@@ -832,6 +887,20 @@
                              wiring it up would just duplicate this one. -->
                         <div id="sheetNextHint" class="sheet-next-hint" hidden></div>
                     </div>
+
+                    <section class="sheet-pane" id="homebrewOriginSection" aria-labelledby="homebrewOriginHeading" hidden>
+                        <div class="sheet-pane-header">
+                            <h2 class="sheet-pane-title" id="homebrewOriginHeading">D&amp;D 5e · Homebrew-Rasse</h2>
+                        </div>
+                        <div id="homebrewOriginProfile" class="homebrew-origin-profile"></div>
+                        <p class="sheet-mode-note">Merkmale und Features sind Regeltexte. Effekte, Auswahlentscheidungen und begrenzte Nutzungen werden am Tisch manuell angewendet und nachgehalten.</p>
+                    </section>
+
+                    <section class="sheet-pane" id="dndExportSection" aria-labelledby="dndExportHeading" hidden>
+                        <h2 class="sheet-pane-title" id="dndExportHeading">D&amp;D-Portabilität</h2>
+                        <p class="sheet-pane-copy">Speichere Werte, Ausrüstung und Homebrew-Regeln als VTT-JSON. Im Charakterarchiv kannst du daraus eine neue Kopie importieren.</p>
+                        <div><button type="button" class="rdl-export-btn" onclick="exportCharacter()">↓ Charakter exportieren</button></div>
+                    </section>
 
                     <div class="sheet-pane" id="rdlProfileSection">
                         <div class="sheet-pane-header">
@@ -948,6 +1017,13 @@
                             </div>
                         </div>
 
+                        <section class="sheet-pane" id="homebrewOriginTraitsSection" aria-labelledby="homebrewOriginTraitsHeading" hidden>
+                            <div class="sheet-pane-header">
+                                <h2 class="sheet-pane-title" id="homebrewOriginTraitsHeading">Rassenmerkmale &amp; Features</h2>
+                            </div>
+                            <div id="homebrewOriginTraits" class="homebrew-origin-traits"></div>
+                        </section>
+
                         <div class="sheet-pane" id="rdlFeaturesSection">
                             <div class="sheet-pane-header">
                                 <div class="sheet-pane-title">Klassenfeatures</div>
@@ -1039,6 +1115,7 @@
     <input id="sheetIdentityFilePicker" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
 
     <script src="/static/js/auth.js"></script>
+    <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>
         const auth = new Auth();
@@ -1121,6 +1198,13 @@
             if (!window.BookScene || typeof BookScene.bootstrapProtectedRoute !== 'function') {
                 window.location.href = '/login.html';
                 return;
+            }
+
+            if (Number.isInteger(characterId) && characterId > 0) {
+                document.getElementById('characterSheetSceneTemplate').content
+                    .querySelectorAll('[data-creation-engine-nav]').forEach((link) => {
+                        link.dataset.creationEngineCharacterId = String(characterId);
+                    });
             }
 
             await BookScene.bootstrapProtectedRoute({
@@ -1346,6 +1430,71 @@
                     ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteInventoryItem(${item.id})">Delete</button>` : ''}
                 </div>
             `).join('');
+        }
+
+        function renderHomebrewOrigin(character) {
+            const origin = character.homebrew_origin;
+            // An attached immutable race is changed through the reviewed engine handoff.
+            document.getElementById('charRace').disabled = !editable || Boolean(origin);
+            const isDnd = ['dnd5e', 'dnd5e_2014', 'dnd5e_2024'].includes(character.system_id);
+            const hasOrigin = isDnd && origin && typeof origin === 'object';
+            document.getElementById('dndExportSection').hidden = !isDnd;
+            document.getElementById('homebrewOriginSection').hidden = !hasOrigin;
+            document.getElementById('homebrewOriginTraitsSection').hidden = !hasOrigin;
+            ['rdlProfileSection', 'rdlProgressionSection', 'rdlFeaturesSection'].forEach((id) => {
+                document.getElementById(id).hidden = isDnd;
+            });
+            const profile = document.getElementById('homebrewOriginProfile');
+            const traits = document.getElementById('homebrewOriginTraits');
+            profile.replaceChildren();
+            traits.replaceChildren();
+            if (!hasOrigin) return;
+
+            // Authored rule text is always text, including strings that resemble HTML.
+            function appendText(parent, tag, text, className = '') {
+                const node = document.createElement(tag);
+                node.textContent = String(text ?? '');
+                if (className) node.className = className;
+                parent.append(node);
+                return node;
+            }
+
+            function appendRule(parent, label, value) {
+                if (!value) return;
+                const rule = appendText(parent, 'div', '', 'homebrew-origin-copy');
+                appendText(rule, 'strong', `${label}: `);
+                appendText(rule, 'span', value);
+            }
+
+            appendText(profile, 'h3', origin.name);
+            const facts = appendText(profile, 'dl', '', 'homebrew-origin-facts');
+            const editions = { dnd5e_2014: 'D&D 5e (2014)', dnd5e_2024: 'D&D 5e (2024)' };
+            const sizes = { tiny: 'Winzig', small: 'Klein', medium: 'Mittelgroß', large: 'Groß',
+                huge: 'Riesig', gargantuan: 'Gigantisch', small_or_medium: 'Klein oder mittelgroß (Auswahl)' };
+            [
+                ['Regelwerk', editions[origin.edition] || origin.edition],
+                ['Kreaturentyp', origin.creatureType],
+                ['Größe', sizes[origin.size] || origin.size],
+                ['Bewegungsrate', `${origin.speed} ft`],
+            ].forEach(([label, value]) => {
+                const fact = appendText(facts, 'div', '', 'homebrew-origin-copy');
+                appendText(fact, 'dt', label);
+                appendText(fact, 'dd', value);
+            });
+            appendRule(profile, 'Sprachen', origin.languages);
+            appendRule(profile, 'Attributsregeln', origin.abilityScoreRules);
+            if (origin.prose) appendText(profile, 'p', origin.prose, 'homebrew-origin-copy');
+            for (const trait of origin.traits || []) {
+                const card = document.createElement('article');
+                card.className = 'homebrew-origin-trait';
+                appendText(card, 'div', trait.kind === 'feature' ? 'Feature' : 'Merkmal', 'sheet-pane-title');
+                appendText(card, 'h3', trait.name);
+                appendText(card, 'p', trait.description, 'homebrew-origin-copy');
+                appendRule(card, 'Nutzung', trait.usage);
+                appendRule(card, 'Auswahl', trait.choices);
+                appendRule(card, 'Voraussetzungen', trait.prerequisites);
+                traits.append(card);
+            }
         }
 
         function renderRollDraufContent(character) {
@@ -1675,8 +1824,11 @@
 
         function renderSheet() {
             if (!sheet) return;
+            document.getElementById('sheetEmptyState').hidden = true;
+            document.getElementById('sheetSpread').hidden = false;
             renderCore(sheet.character);
             renderIdentity(sheet.character);
+            renderHomebrewOrigin(sheet.character);
             renderRollDraufContent(sheet.character);
             renderClassFeatures(sheet.character);
             renderProgressionLadder(sheet.character);

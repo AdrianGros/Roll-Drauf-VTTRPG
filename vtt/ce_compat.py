@@ -27,3 +27,27 @@ def character_projection(character, *, operation="read"):
 def token_reference(token):
     service = adapter()
     return service.representation("vtt.token", token.id) if service is not None else None
+
+
+def homebrew_origin(character):
+    """Public pinned race rules survive editor flags and mutable legacy metadata."""
+    if not has_app_context():
+        return None
+    from sqlalchemy import inspect
+    if current_app.extensions.get("sqlalchemy") is not None:
+        from vtt.extensions import db
+        # Ordinary deployments without M79 never query Creation Engine tables.
+        if not inspect(db.session.connection()).has_table("ce_character_origins"):
+            return None
+        from vtt.creation_engine.store.content import ContentStore
+        from vtt.creation_engine.store.race_sheets import sheet_content
+        from vtt.creation_engine.store.sheet_models import CeCharacterOrigin
+        origin = db.session.get(CeCharacterOrigin, character.id)
+        return sheet_content(ContentStore(db.session).revision(origin.revision_id)) if origin else None
+    # Lightweight CE hosts do not install Flask-SQLAlchemy themselves.
+    host = current_app.extensions.get("ce_gateway")
+    authoring = getattr(host, "authoring", None)
+    if authoring is None or not inspect(authoring.store.engine).has_table("ce_character_origins"):
+        return None
+    from vtt.creation_engine.store.race_sheets import RaceSheetService
+    return RaceSheetService(authoring).projection(character)

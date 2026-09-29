@@ -86,7 +86,7 @@ def test_browser_dashboard_entry_and_keyboard_return_preserve_unsaved_input(brow
     page.wait_for_url('**/api/ce/authoring')
     page.locator('#draft-info').get_by_text('Version 1').wait_for()
     assert page.get_by_role('navigation', name='Buchnavigation').count() == 1
-    assert page.locator('[aria-current="page"]').count() == 0
+    assert page.locator('[aria-current="page"]').count() == 1
     page.locator('#mode').select_option('structured')
     field = page.locator('form[data-question="item.name"] textarea')
     field.fill('Mein eigener Gegenstand')

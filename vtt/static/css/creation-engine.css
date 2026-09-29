@@ -102,3 +102,7 @@ body.ce-authoring {
 @media (prefers-reduced-motion: reduce) {
   .ce-authoring *, .ce-authoring *::before, .ce-authoring *::after { animation: none !important; transition: none !important; }
 }
+
+.ce-authoring .ce-core-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr)); gap: .75rem; }
+.ce-authoring #sheet-confirm + span { display: inline; }
+.ce-authoring .book-dashboard-ribbon { flex-wrap: wrap; }

@@ -141,7 +141,7 @@ class Character(db.Model):
             'class_slug': class_data.get('slug'),
             'background': background_name,
             'background_slug': background.get('slug'),
-            'system_id': roll_drauf_light.get('system_id'),
+            'system_id': roll_drauf_light.get('system_id') or character_data.get('system_id'),
             'campaign_id': self.campaign_id,
             'level': self.level,
             'is_discoverable': self.is_discoverable,
@@ -173,4 +173,9 @@ class Character(db.Model):
                 'progression': progression or None,
                 'content': content or None,
             })
+            from vtt.ce_compat import homebrew_origin
+            origin = homebrew_origin(self)
+            if origin is not None:
+                data.update(homebrew_origin=origin, system_id="dnd5e", system_version=origin["edition"],
+                            race=origin["name"], species=origin["name"])
         return data

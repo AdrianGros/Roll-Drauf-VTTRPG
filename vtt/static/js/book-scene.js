@@ -649,6 +649,7 @@
                 const active = routeKeyForPath(route.href) === activeRouteKey ? ' is-active' : '';
                 return `<button type="button" class="book-dashboard-ribbon-btn${active}" data-dashboard-route="${route.href}">${escapeHtml(route.label)}</button>`;
             }).join('')
+                + '<a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>'
                 + `<button type="button" class="book-dashboard-ribbon-btn book-dashboard-ribbon-btn--play" data-dashboard-action="play-launch">${escapeHtml(this.content('ribbon.play_button', '▶ Spieltisch'))}</button>`
                 + `<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">${escapeHtml(this.content('ribbon.logout_button', 'Abmelden'))}</button>`;
         },
@@ -920,11 +921,12 @@
                             <span class="book-toc-count">${escapeHtml(row.countLabel || String(row.count))}</span>
                         </a>
                     `).join('')}
+                    <a class="book-toc-row" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
                 </nav>
                 ${homeState.authoring_available === true ? `
                     <div class="book-scene-panel">
                         <a class="btn btn-secondary book-scene-action-btn" href="/api/ce/authoring" data-testid="authoring-entry">${escapeHtml(this.content('home.create_content', 'Inhalte erstellen'))}</a>
-                        <p>${escapeHtml(this.content('home.create_content_help', 'Eigene Gegenstände entwerfen und privat ausprobieren.'))}</p>
+                        <p>${escapeHtml(this.content('home.create_content_help', 'Eigene Völker, Merkmale und weitere Inhalte entwerfen und privat ausprobieren.'))}</p>
                     </div>
                 ` : ''}
             `;
@@ -1530,6 +1532,15 @@
                 rightTitle: 'Helden vorbereiten',
                 rightCopy: '',
                 chips: [`${characters.length} Helden`, `${distinctClasses} Klassen`, `Höchstes Level ${highestLevel}`],
+                rightPage: `
+                    <section class="book-scene-panel">
+                        <p>Übernimm einen exportierten Roll-Drauf-Light- oder D&amp;D-5e-Charakter in dein Archiv.</p>
+                        ${this.buildActionButtons([
+                            { label: 'Charakter importieren', href: buildIntentHref('/characters', { intent: 'import' }), primary: true },
+                        ])}
+                        <p class="book-form-banner is-success" data-character-import-status role="status" aria-live="polite" hidden></p>
+                    </section>
+                `,
                 leftPage: `
                     ${this.buildStatStrip([
                         { value: String(characters.length), label: 'Charaktere' },
@@ -1559,6 +1570,8 @@
             if (!this.sceneSurface) {
                 return;
             }
+
+            window.CreationEngineNavigation?.hydrate(this.sceneSurface);
 
             this.sceneSurface.querySelectorAll('[data-dashboard-route]').forEach((node) => {
                 node.addEventListener('click', () => {

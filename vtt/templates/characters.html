@@ -1212,6 +1212,7 @@
         <div class="header-actions">
             <button class="btn btn-primary" type="button" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
             <button class="btn btn-secondary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
+            <a class="btn btn-secondary" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
             <button class="btn btn-secondary" onclick="logout()">Abmelden</button>
         </div>
     </header>
@@ -1223,6 +1224,7 @@
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
                     <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
+                    <a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
                     <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
                 </div>
                 <div class="book-dashboard-crest" aria-label="Current chapter">Personae</div>
@@ -1582,6 +1584,7 @@
     </footer>
 
     <script src="/static/js/auth.js"></script>
+    <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>
         const auth = new Auth();
@@ -1640,10 +1643,14 @@
         async function bootstrapCharactersScene() {
             const url = new URL(window.location.href);
             const shouldOpenCreator = url.searchParams.get('intent') === 'create';
+            const shouldOpenImporter = url.searchParams.get('intent') === 'import';
             if (shouldOpenCreator) {
                 consumeCharacterIntent('create');
             }
-            if (url.searchParams.get('classic') === '1' && !shouldOpenCreator) {
+            if (shouldOpenImporter) {
+                consumeCharacterIntent('import');
+            }
+            if (url.searchParams.get('classic') === '1' && !shouldOpenCreator && !shouldOpenImporter) {
                 document.body.classList.remove('characters-route-book-scene');
                 const statusNode = document.getElementById('charactersSceneStatus');
                 if (statusNode) {
@@ -1666,6 +1673,9 @@
             });
             if (sceneReady && shouldOpenCreator) {
                 openCharModal();
+            }
+            if (sceneReady && shouldOpenImporter) {
+                openImportModal();
             }
         }
 
@@ -2369,6 +2379,7 @@
             document.getElementById('importPayload').value = '';
             document.getElementById('importError').textContent = '';
             document.getElementById('importSubmitBtn').disabled = false;
+            document.getElementById('importPayload').focus();
         }
 
         function closeImportModal() {
@@ -2395,8 +2406,16 @@
             try {
                 const resp = await auth.makeAuthRequest('/api/characters/import', 'POST', payload);
                 closeImportModal();
-                await loadCharacters();
-                showCharactersMessage(`Charakter "${resp.character.name}" importiert.`);
+                const message = `Charakter "${resp.character.name}" importiert.`;
+                if (window.BookScene?.currentView === 'characters' && document.body.classList.contains('characters-route-book-scene')) {
+                    const snapshot = await BookScene.loadSceneSnapshot();
+                    BookScene.renderSceneRoute('characters', snapshot.user, snapshot);
+                    const status = BookScene.sceneSurface.querySelector('[data-character-import-status]');
+                    if (status) { status.textContent = message; status.hidden = false; }
+                } else {
+                    await loadCharacters();
+                    showCharactersMessage(message);
+                }
             } catch (error) {
                 errEl.textContent = error.message || 'Import fehlgeschlagen.';
                 btn.disabled = false;
@@ -2413,15 +2432,15 @@
     </script>
 
     <!-- M27: Character Import Modal -->
-    <div id="importModal" class="modal-overlay" style="display:none">
+    <div id="importModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="importModalTitle" style="display:none">
         <div class="modal-box">
             <div class="modal-header">
-                <h2>Charakter importieren</h2>
+                <h2 id="importModalTitle">Charakter importieren</h2>
                 <button class="close-btn" onclick="closeImportModal()">×</button>
             </div>
             <div class="modal-steps">
                 <p style="color:#d6d2cb;font-size:0.9rem;margin-bottom:1rem;line-height:1.5;">
-                    Füge das exportierte JSON deines Charakters ein. Ein neuer Charakter wird erstellt — Avatar und Kampagne werden nicht übertragen.
+                    Füge einen VTT-Export für Roll Drauf Light oder D&amp;D 5e ein. Ein neuer Charakter wird erstellt; Avatar und Kampagne werden nicht übertragen. Direkte Exporte von D&amp;D Beyond oder Roll20 benötigen eine Formatumwandlung.
                 </p>
                 <div class="form-group">
                     <label for="importPayload">Export-JSON</label>

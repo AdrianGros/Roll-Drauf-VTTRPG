@@ -682,7 +682,7 @@ def _validate_import_payload(payload):
 @characters_bp.route('/characters/<int:char_id>/export', methods=['GET'])
 @jwt_required()
 def export_character(char_id):
-    """Export a canonical Roll-Drauf-Light character as a portable JSON payload."""
+    """Export an RDL or explicitly versioned D&D character as portable JSON."""
     user, error = _get_current_user()
     if error:
         return error
@@ -695,7 +695,11 @@ def export_character(char_id):
 
     rdl = _extract_roll_drauf_light(char.character_data)
     if not rdl or rdl.get('system_id') != 'roll_drauf_light':
-        return jsonify({'error': 'Not a canonical Roll-Drauf-Light character'}), 422
+        from vtt.characters.dnd5e_portable import PortableError, export_payload
+        try:
+            return jsonify(export_payload(char)), 200
+        except PortableError as exc:
+            return jsonify({'error': str(exc)}), exc.status
 
     payload = _build_export_payload(char)
     return jsonify(payload), 200
@@ -705,12 +709,22 @@ def export_character(char_id):
 @limiter.limit('20 per hour')
 @jwt_required()
 def import_character():
-    """Create a new character from a portable Roll-Drauf-Light export payload."""
+    """Create an owned character from a supported RDL or D&D portable export."""
     user, error = _get_current_user()
     if error:
         return error
 
     raw = request.get_json() or {}
+    if isinstance(raw, dict) and raw.get('export_kind') == 'dnd5e_character':
+        from vtt.characters.dnd5e_portable import PortableError, import_payload
+        try:
+            char = import_payload(raw, user)
+        except PortableError as exc:
+            return jsonify({'error': str(exc)}), exc.status
+        return jsonify({
+            'message': f'Charakter "{char.name}" erfolgreich importiert.',
+            'character': char.serialize(include_details=True),
+        }), 201
     validated, error = _validate_import_payload(raw)
     if error:
         return error

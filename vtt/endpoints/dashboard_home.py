@@ -270,3 +270,16 @@ def get_dashboard_home():
     response.headers["Cache-Control"] = "private, no-store"
     response.headers["Vary"] = "Cookie, Authorization, X-CE-View-As"
     return response, 200
+
+
+@dashboard_home_bp.get("/capabilities")
+@jwt_required()
+def get_navigation_capabilities():
+    """Read navigation availability without loading or creating user content."""
+    user, error = _get_current_user()
+    if error:
+        return error
+    response = jsonify({"authoring_available": authoring_available(user)})
+    response.headers["Cache-Control"] = "private, no-store"
+    response.headers["Vary"] = "Cookie, Authorization, X-CE-View-As"
+    return response, 200

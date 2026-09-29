@@ -603,6 +603,11 @@ body.play-workspace-realign main {
 }
 
 .book-dashboard-ribbon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
     /* 48px leaves room for the book transition transform while preserving
        the 44px minimum interaction target from the mobile audit. */
     min-height: 48px;
@@ -2906,5 +2911,27 @@ body.is-book-scene-transition .book-shell-page-stack {
     body.book-login-open .book-dashboard-page,
     body.is-book-scene-dashboard .book-dashboard-page {
         transform-style: flat;
+    }
+}
+
+
+/* More navigation entries and long account names must share real space.
+   The former symmetric side tracks could collapse under a wide ribbon,
+   leaving the account badge painted over the final navigation controls. */
+@media (min-width: 1200px) {
+    .book-dashboard-page:not(.book-workspace-page) .book-dashboard-topbar {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .book-dashboard-page:not(.book-workspace-page) .book-dashboard-ribbon {
+        grid-column: 1;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+    }
+    .book-dashboard-page:not(.book-workspace-page) .book-dashboard-crest {
+        grid-column: 2;
+        max-width: 22ch;
+        overflow-wrap: anywhere;
     }
 }

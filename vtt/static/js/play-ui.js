@@ -624,6 +624,8 @@
                 routeKey = "campaigns";
             } else if (path === "/characters" || path === "/characters.html") {
                 routeKey = "characters";
+            } else if (path === "/api/ce/authoring") {
+                routeKey = "creation-engine";
             } else if (path === "/character-sheet" || path === "/character-sheet.html") {
                 routeKey = "character-sheet";
             }
@@ -751,8 +753,11 @@
                 this._toggleAppMenu();
             });
 
+            window.CreationEngineNavigation?.hydrate(document);
             document.querySelectorAll("[data-book-return-target]").forEach((node) => {
-                node.addEventListener("click", () => {
+                node.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    if (node.getAttribute("aria-disabled") === "true") return;
                     const target = node.getAttribute("data-book-return-target");
                     if (!target) {
                         return;

@@ -1,5 +1,32 @@
 # Creation Engine — active contract and project status
 
+**Advanced studio, 29 September:** the user authorized a power-user interface on
+the class/race/spell backend before expanding Guided. The
+[studio implementation record](advanced-studio-2026-09-29.md) covers complete
+document editing, atomic saves, revision/history controls and the private test
+bench at `/api/ce/authoring/advanced`. Production activation and human acceptance
+remain separate from automated implementation evidence.
+
+**Backend expansion, 29 September:** the user requires classes, races and spells
+before inviting homebrew testers and has authorized backend-first implementation.
+The [implementation boundary](homebrew-backend-2026-09-29.md) and
+[private backend API](homebrew-backend-api.md) cover typed class/race/spell
+authoring, character composition and executable spell outcomes in isolated
+persisted test scopes. Existing manual race and G1 native contracts remain pinned.
+The new backend needs M80; its Advanced browser integration is described above.
+Human acceptance and production activation are not established by automated
+item/race or backend evidence.
+
+**Current work, 28 September:** the implemented end-to-end journey is:
+D&D 5e homebrew race with features/traits → existing/imported character or a new
+character sheet, with visible Creation Engine navigation throughout the VTT.
+The test target is now **Wednesday, 30 September 2026** (Europe/Berlin), superseding
+Tuesday's schedule below. See the [bounded scope and verification record](race-to-sheet-2026-09-28.md).
+The real desktop/mobile browser journeys pass. This extends sheet authoring and
+integration; it does not claim full D&D runtime
+automation, change the frozen engine protocol, or close WP9. Live flags remain off
+until a tested release is activated. The dated entries below are historical.
+
 **Release instruction, 28 September:** the user requested committing and deploying the current engine work. The [release boundary](deployment-2026-09-28.md) preserves the active contract and current disabled live flags; deployment does not close WP9 or activate campaign cutover. Dated implementation entries below retain their original evidence.
 
 

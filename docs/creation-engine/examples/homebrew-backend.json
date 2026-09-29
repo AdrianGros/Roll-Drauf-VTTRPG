@@ -1,0 +1,957 @@
+{
+  "contractVersion": "homebrew-sandbox:1",
+  "runtime": "dnd5e.homebrew-test:1",
+  "notice": "Explicit test examples, not authoring defaults. Replace fixture IDs with saved revision IDs.",
+  "content": [
+    {
+      "schemaType": {
+        "typeId": "dnd5e.authored-class",
+        "version": 1
+      },
+      "content": {
+        "name": "Lantern keeper",
+        "class": {
+          "edition": "dnd5e_2024",
+          "hitDie": 8,
+          "levels": [
+            {
+              "level": 1,
+              "hpGain": 8,
+              "features": [
+                {
+                  "id": "spark",
+                  "name": "Spark",
+                  "description": "An explicitly authored test feature.",
+                  "grants": {
+                    "modifiers": {},
+                    "proficiencies": [
+                      "arcana",
+                      "save.con"
+                    ],
+                    "resistances": [],
+                    "resources": [
+                      {
+                        "id": "mana",
+                        "maximum": 10,
+                        "recovery": "long_rest"
+                      }
+                    ],
+                    "spells": [
+                      "ember",
+                      "mend",
+                      "ward"
+                    ]
+                  },
+                  "choices": []
+                }
+              ]
+            },
+            {
+              "level": 2,
+              "hpGain": 5,
+              "features": [
+                {
+                  "id": "reservoir",
+                  "name": "Reservoir",
+                  "description": "An explicitly authored test feature.",
+                  "grants": {
+                    "modifiers": {
+                      "ac": 1
+                    },
+                    "proficiencies": [],
+                    "resistances": [],
+                    "resources": [
+                      {
+                        "id": "mana",
+                        "maximum": 5,
+                        "recovery": "long_rest"
+                      }
+                    ],
+                    "spells": []
+                  },
+                  "choices": []
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "schemaType": {
+        "typeId": "dnd5e.runtime-race",
+        "version": 1
+      },
+      "content": {
+        "name": "Echo folk",
+        "race": {
+          "edition": "dnd5e_2024",
+          "creatureType": "Humanoid",
+          "size": "medium",
+          "speed": 30,
+          "features": [
+            {
+              "id": "echo",
+              "name": "Echo",
+              "description": "An explicitly authored test feature.",
+              "grants": {
+                "modifiers": {
+                  "dex": 1
+                },
+                "proficiencies": [
+                  "arcana"
+                ],
+                "resistances": [
+                  "cold"
+                ],
+                "resources": [],
+                "spells": []
+              },
+              "choices": [
+                {
+                  "id": "training",
+                  "name": "Training",
+                  "count": 1,
+                  "options": [
+                    {
+                      "id": "mind",
+                      "name": "Mind",
+                      "grants": {
+                        "modifiers": {
+                          "int": 2
+                        },
+                        "proficiencies": [
+                          "arcana"
+                        ],
+                        "resistances": [],
+                        "resources": [],
+                        "spells": []
+                      }
+                    },
+                    {
+                      "id": "body",
+                      "name": "Body",
+                      "grants": {
+                        "modifiers": {
+                          "con": 2
+                        },
+                        "proficiencies": [],
+                        "resistances": [],
+                        "resources": [],
+                        "spells": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "schemaType": {
+        "typeId": "dnd5e.authored-spell",
+        "version": 1
+      },
+      "content": {
+        "name": "Ember thread",
+        "spell": {
+          "edition": "dnd5e_2024",
+          "key": "ember",
+          "level": 1,
+          "school": "Evocation",
+          "castingTime": "action",
+          "components": "V, S",
+          "target": "single",
+          "rangeFeet": 60,
+          "cost": {
+            "resource": "mana",
+            "amount": 2
+          },
+          "resolution": {
+            "kind": "automatic"
+          },
+          "effect": {
+            "kind": "damage",
+            "dice": {
+              "count": 2,
+              "sides": 6,
+              "bonus": 1
+            },
+            "damageType": "fire"
+          },
+          "durationRounds": 0,
+          "concentration": false,
+          "upcast": {
+            "dicePerLevel": 1,
+            "costPerLevel": 1
+          }
+        }
+      }
+    },
+    {
+      "schemaType": {
+        "typeId": "dnd5e.authored-spell",
+        "version": 1
+      },
+      "content": {
+        "name": "Mending light",
+        "spell": {
+          "edition": "dnd5e_2024",
+          "key": "mend",
+          "level": 1,
+          "school": "Evocation",
+          "castingTime": "action",
+          "components": "V, S",
+          "target": "single",
+          "rangeFeet": 60,
+          "cost": {
+            "resource": "mana",
+            "amount": 2
+          },
+          "resolution": {
+            "kind": "automatic"
+          },
+          "effect": {
+            "kind": "healing",
+            "dice": {
+              "count": 1,
+              "sides": 6,
+              "bonus": 2
+            }
+          },
+          "durationRounds": 0,
+          "concentration": false,
+          "upcast": {
+            "dicePerLevel": 1,
+            "costPerLevel": 1
+          }
+        }
+      }
+    },
+    {
+      "schemaType": {
+        "typeId": "dnd5e.authored-spell",
+        "version": 1
+      },
+      "content": {
+        "name": "Lantern ward",
+        "spell": {
+          "edition": "dnd5e_2024",
+          "key": "ward",
+          "level": 1,
+          "school": "Evocation",
+          "castingTime": "action",
+          "components": "V, S",
+          "target": "self",
+          "rangeFeet": 0,
+          "cost": {
+            "resource": "mana",
+            "amount": 2
+          },
+          "resolution": {
+            "kind": "automatic"
+          },
+          "effect": {
+            "kind": "modifier",
+            "stat": "ac",
+            "amount": 3
+          },
+          "durationRounds": 2,
+          "concentration": true,
+          "upcast": {
+            "dicePerLevel": 0,
+            "costPerLevel": 0
+          }
+        }
+      }
+    }
+  ],
+  "build": {
+    "name": "Test hero",
+    "classRevision": "class:fixture",
+    "raceRevision": "race:fixture",
+    "level": 1,
+    "baseScores": {
+      "str": 10,
+      "dex": 12,
+      "con": 12,
+      "int": 14,
+      "wis": 10,
+      "cha": 10
+    },
+    "baseAc": 12,
+    "baseHp": 10,
+    "choices": {
+      "race/echo/training": [
+        "mind"
+      ]
+    }
+  },
+  "commands": {
+    "CreateSandbox": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "homebrew-sandbox:1"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "operation": {
+          "const": "CreateSandbox"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "edition": {
+              "enum": [
+                "dnd5e_2014",
+                "dnd5e_2024"
+              ]
+            },
+            "revisions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "revision"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                  },
+                  "definitionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                  },
+                  "digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id",
+                  "definitionId",
+                  "digest"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 3,
+              "maxItems": 64
+            }
+          },
+          "required": [
+            "edition",
+            "revisions"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "contractVersion",
+        "idempotencyKey",
+        "operation",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "BuildCharacter": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "homebrew-sandbox:1"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "operation": {
+          "const": "BuildCharacter"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "pattern": "\\S"
+            },
+            "classRevision": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "raceRevision": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "level": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "baseScores": {
+              "type": "object",
+              "properties": {
+                "str": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                },
+                "dex": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                },
+                "con": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                },
+                "int": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                },
+                "wis": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                },
+                "cha": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                }
+              },
+              "required": [
+                "str",
+                "dex",
+                "con",
+                "int",
+                "wis",
+                "cha"
+              ],
+              "additionalProperties": false
+            },
+            "baseAc": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "baseHp": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "choices": {
+              "type": "object",
+              "maxProperties": 200,
+              "propertyNames": {
+                "pattern": "^(class|race)/[a-z][a-z0-9_.-]{0,63}/[a-z][a-z0-9_.-]{0,63}$"
+              },
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_.-]{0,63}$"
+                },
+                "minItems": 0,
+                "maxItems": 10
+              }
+            }
+          },
+          "required": [
+            "name",
+            "classRevision",
+            "raceRevision",
+            "level",
+            "baseScores",
+            "baseAc",
+            "baseHp",
+            "choices"
+          ],
+          "additionalProperties": false
+        },
+        "sandboxId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "expectedVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "contractVersion",
+        "idempotencyKey",
+        "operation",
+        "payload",
+        "sandboxId",
+        "expectedVersion"
+      ],
+      "additionalProperties": false
+    },
+    "RebuildCharacter": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "homebrew-sandbox:1"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "operation": {
+          "const": "RebuildCharacter"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "characterId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "build": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200,
+                  "pattern": "\\S"
+                },
+                "classRevision": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "raceRevision": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "level": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                },
+                "baseScores": {
+                  "type": "object",
+                  "properties": {
+                    "str": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    },
+                    "dex": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    },
+                    "con": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    },
+                    "int": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    },
+                    "wis": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    },
+                    "cha": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    }
+                  },
+                  "required": [
+                    "str",
+                    "dex",
+                    "con",
+                    "int",
+                    "wis",
+                    "cha"
+                  ],
+                  "additionalProperties": false
+                },
+                "baseAc": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "baseHp": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "choices": {
+                  "type": "object",
+                  "maxProperties": 200,
+                  "propertyNames": {
+                    "pattern": "^(class|race)/[a-z][a-z0-9_.-]{0,63}/[a-z][a-z0-9_.-]{0,63}$"
+                  },
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_.-]{0,63}$"
+                    },
+                    "minItems": 0,
+                    "maxItems": 10
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "classRevision",
+                "raceRevision",
+                "level",
+                "baseScores",
+                "baseAc",
+                "baseHp",
+                "choices"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "characterId",
+            "build"
+          ],
+          "additionalProperties": false
+        },
+        "sandboxId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "expectedVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "contractVersion",
+        "idempotencyKey",
+        "operation",
+        "payload",
+        "sandboxId",
+        "expectedVersion"
+      ],
+      "additionalProperties": false
+    },
+    "CastSpell": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "homebrew-sandbox:1"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "operation": {
+          "const": "CastSpell"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "casterId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "targetId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "spellKey": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_.-]{0,63}$"
+            },
+            "castLevel": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9
+            },
+            "distanceFeet": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10000
+            },
+            "adjudication": {
+              "type": "object",
+              "properties": {
+                "timingSatisfied": {
+                  "const": true
+                },
+                "componentsSatisfied": {
+                  "const": true
+                }
+              },
+              "required": [
+                "timingSatisfied",
+                "componentsSatisfied"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "casterId",
+            "targetId",
+            "spellKey",
+            "castLevel",
+            "distanceFeet",
+            "adjudication"
+          ],
+          "additionalProperties": false
+        },
+        "sandboxId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "expectedVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "contractVersion",
+        "idempotencyKey",
+        "operation",
+        "payload",
+        "sandboxId",
+        "expectedVersion"
+      ],
+      "additionalProperties": false
+    },
+    "AdvanceRounds": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "homebrew-sandbox:1"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "operation": {
+          "const": "AdvanceRounds"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "rounds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          },
+          "required": [
+            "rounds"
+          ],
+          "additionalProperties": false
+        },
+        "sandboxId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "expectedVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "contractVersion",
+        "idempotencyKey",
+        "operation",
+        "payload",
+        "sandboxId",
+        "expectedVersion"
+      ],
+      "additionalProperties": false
+    },
+    "RecoverResources": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "homebrew-sandbox:1"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "operation": {
+          "const": "RecoverResources"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "characterId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "event": {
+              "enum": [
+                "short_rest",
+                "long_rest",
+                "manual"
+              ]
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "characterId",
+            "event",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        "sandboxId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "expectedVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "contractVersion",
+        "idempotencyKey",
+        "operation",
+        "payload",
+        "sandboxId",
+        "expectedVersion"
+      ],
+      "additionalProperties": false
+    },
+    "EndConcentration": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "homebrew-sandbox:1"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "operation": {
+          "const": "EndConcentration"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "characterId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "characterId",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        "sandboxId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "expectedVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "contractVersion",
+        "idempotencyKey",
+        "operation",
+        "payload",
+        "sandboxId",
+        "expectedVersion"
+      ],
+      "additionalProperties": false
+    },
+    "ResolveConcentration": {
+      "type": "object",
+      "properties": {
+        "contractVersion": {
+          "const": "homebrew-sandbox:1"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "operation": {
+          "const": "ResolveConcentration"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "characterId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "maintained": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "characterId",
+            "maintained",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        "sandboxId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        },
+        "expectedVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "contractVersion",
+        "idempotencyKey",
+        "operation",
+        "payload",
+        "sandboxId",
+        "expectedVersion"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

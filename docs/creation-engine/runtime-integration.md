@@ -6,7 +6,7 @@ v1.1.4, core wire 1.1.3 and registry A1. The active authority is
 
 ## Installation boundary
 
-Apply migrations M73, M74, M75, M76 and M77 in order; authoring additionally requires M78. Creating ORM tables alone does not install
+Apply migrations M73, M74, M75, M76 and M77 in order; authoring additionally requires M78; the race-to-sheet adapter also requires M79. Creating ORM tables alone does not install
 the append-only history triggers. The default flags remain off: CE_RUNTIME, CE_AUTHORING
 and CE_SHADOW. An enabled surface without a configured gateway returns ENGINE_UNAVAILABLE.
 
@@ -354,3 +354,37 @@ See the [design contracts](../vtt-design/authoring-task-readiness-v0.1.md) and
 [implementation evidence](../vtt-design/deploy-task-readiness-2026-09-27.md). The T45
 acceptance owner still needs to assess the manual task depth; this addition does not
 claim the G2 choice/grant runtime, world graph or completed human acceptance.
+
+
+## D&D race-to-sheet adapter (28 September follow-up)
+
+`dnd5e.authored-race@1` is a fifth, separately pinned authoring profile. It records
+an explicit 2014/2024 edition, creature type, size, walking speed in feet, language
+rules and up to 20 named features/traits. Optional ability rules, choices and
+prerequisites remain manual instructions. Existing profile registry hashes stay
+unchanged. The race profile cannot claim executable quality or join the native
+flame runtime catalogue.
+
+Apply M79 after M73–M78 before enabling this UI. It adds only
+`ce_character_origins` and append-only `ce_sheet_commands`; no legacy character
+column or campaign scope is migrated. With the installed host and CE_AUTHORING,
+GET/POST `/api/ce/authoring/workspaces/<workspace_id>/sheets` implement the separate
+`race-sheet:1` sheet adapter contract. The POST carries a pinned revision and an
+idempotency key plus either explicitly supplied new character values or a reviewed
+existing character ID/state digest. CSRF, current active account, workspace/source
+ownership, target ownership and edition compatibility are enforced server-side.
+ENGINE-authoritative targets are refused even for an otherwise idempotent race
+replacement. The adapter does not extend the frozen A1 command vocabulary.
+
+A saved race is explicitly shared with the selected character's existing sheet
+readers. Only its public rules appear in `homebrew_origin`; draft IDs, revision IDs,
+workspace identity and authoring history remain private. The separate association
+pins an immutable revision. Existing stats, equipment and unrelated import metadata
+are retained, and repeat application cannot stack racial bonuses. Bonuses and
+choices are shown for manual resolution. New character values are explicit input;
+the D&D proficiency bonus follows the selected level.
+
+All book/table navigation shows Creation Engine availability. Disabled live flags
+keep entries visibly unavailable; adding links alone does not activate the editor.
+See the [journey and acceptance record](race-to-sheet-2026-09-28.md) and
+[portable D&D format](dnd5e-import-format.md).

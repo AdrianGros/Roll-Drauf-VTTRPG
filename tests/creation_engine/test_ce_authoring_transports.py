@@ -122,7 +122,7 @@ def wait_version(page, version):
 
 def test_browser_modes_locales_stale_answers_and_revision(browser, tmp_path):
     page, author = browser
-    assert page.locator('form').get_attribute('data-question') == 'flame.behavior'
+    assert page.locator('#questions form').get_attribute('data-question') == 'flame.behavior'
     page.locator('#damage-preset').click()
     page.locator('#preset').wait_for(state='visible')
     assert len(page.locator('#preset-values pre').all()) == 11

@@ -1,5 +1,7 @@
 # VTT design — authoring and sandbox
 
+**28 September update:** the current test target is **Wednesday, 30 September 2026**, following the user’s latest instruction. The [race-to-sheet journey](../creation-engine/race-to-sheet-2026-09-28.md) adds D&D homebrew race authoring, character handoff and visible navigation. Earlier Tuesday plans and results below remain historical evidence.
+
 **Status, 27 September 2026:** design v0.1 is in implementation following the user's instruction to continue. **Slices 1–3 are implemented and verified in the working tree**. Slice 1 covers the dashboard entry, shared editor theme/navigation and responsive/guarded navigation. Slice 2 adds draft-conflict recovery, deliberate focus/error handling and distinct sandbox-copy references. Slice 3 adds open-page access-loss handling, delayed-response protection, current sandbox projections and keyboard access recovery. The slice 3 selected regression passed **139 tests**, including 14 new access-state cases; work remains uncommitted. Human testing stays deferred until the scheduled **Tuesday, 29 September 2026** session (Europe/Berlin; time and attendance not supplied).
 
 | Artifact | Purpose and authority |

@@ -22,6 +22,9 @@
         <a class="book-dashboard-ribbon-btn" href="/dashboard" data-ce-nav data-i18n="overview">Übersicht</a>
         <a class="book-dashboard-ribbon-btn" href="/campaigns" data-ce-nav data-i18n="campaigns">Kampagnen</a>
         <a class="book-dashboard-ribbon-btn" href="/characters" data-ce-nav data-i18n="characters">Charaktere</a>
+        <span class="book-dashboard-ribbon-btn" aria-current="page">Creation Engine</span>
+        <a class="book-dashboard-ribbon-btn" href="/api/ce/authoring/advanced" data-ce-nav>Advanced studio</a>
+        <a id="return-character" class="book-dashboard-ribbon-btn" data-ce-nav hidden data-i18n="returnCharacter">Zum Charakterbogen</a>
       </nav>
     </div>
     <p class="ce-eyebrow" data-i18n="location">Inhalte · Gegenstand</p>
@@ -77,6 +80,25 @@
       </section>
       <section><h2 data-i18n="history">Verlauf</h2><label><span data-i18n="restoreVersion">Version wiederherstellen</span><select id="versions"></select></label>
         <button id="revert" data-i18n="revert">Als neue Version wiederherstellen</button><ol id="history"></ol>
+      </section>
+      <section id="sheet-handoff" hidden aria-labelledby="sheet-handoff-title">
+        <h2 id="sheet-handoff-title" data-i18n="sheetHandoffTitle">Volk im Charakterbogen verwenden</h2>
+        <p data-i18n="sheetHandoffHelp">Speichere eine Revision als Datenblatt. Prüfe danach, welchen Charakter du damit erstellst oder ergänzt.</p>
+        <p id="sheet-save-first" class="notice" data-i18n="sheetSaveFirst">Speichere zuerst eine vollständige Revision als Datenblatt.</p>
+        <form id="sheet-form" hidden>
+          <label><span data-i18n="sheetRevision">Gespeicherte Revision</span><select id="sheet-revision" required></select></label>
+          <label><span data-i18n="sheetDestination">Verwendung</span><select id="sheet-destination" required>
+            <option value="existing" data-i18n="sheetExisting">Vorhandenen oder importierten Charakter ergänzen</option>
+            <option value="new" data-i18n="sheetNew">Neuen D&amp;D-Charakter erstellen</option>
+          </select></label>
+          <label id="sheet-target-label"><span data-i18n="sheetCharacter">Dein Charakter</span><select id="sheet-character"></select></label>
+          <fieldset id="sheet-new-fields" hidden><legend data-i18n="sheetCoreValues">Charakterwerte ausdrücklich festlegen</legend><div id="sheet-core-fields" class="ce-core-fields"></div></fieldset>
+          <div id="sheet-review" class="notice" aria-live="polite"></div>
+          <p data-i18n="sheetManual">Merkmale, Eigenschaften und ihre Regeln erscheinen im Bogen. Boni, Auswahlentscheidungen und andere regelabhängige Änderungen werden manuell angewendet. Vorhandene Werte und Ausrüstung bleiben erhalten.</p>
+          <label><input id="sheet-confirm" type="checkbox" required><span data-i18n="sheetConfirm">Ich habe die Auswahl geprüft. Der Inhalt des Volks wird für alle sichtbar, die diesen Charakterbogen sehen dürfen.</span></label>
+          <button id="sheet-apply" type="submit" data-i18n="sheetApply">Im Charakterbogen übernehmen</button>
+        </form>
+        <p id="sheet-result" role="status"></p><a id="sheet-open" data-ce-nav hidden data-i18n="sheetOpen">Charakterbogen öffnen</a>
       </section>
       <section id="sandbox" hidden><h2 data-i18n="sandboxTitle">Privater Sandbox-Test</h2>
         <p data-i18n="sandboxHelp">Wähle die gespeicherten Revisionen für diesen Test. Jede Kopie hat eigene Ressourcen. Ein Treffer und ein Erholungsereignis werden ausdrücklich bestätigt.</p>

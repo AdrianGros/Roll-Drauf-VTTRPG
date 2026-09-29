@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" class="ce-authoring-root">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Advanced studio · Roll Drauf</title>
+  <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/spellbook-theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/book-scene.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/creation-engine.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/creation-advanced.css') }}">
+  <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/creation-advanced.js') }}" defer></script>
+</head>
+<body class="ce-authoring ce-advanced">
+<div class="ce-page">
+  <a class="ce-skip" href="#source" data-text="skip">Skip to document</a>
+  <header>
+    <nav class="book-dashboard-ribbon" aria-label="Navigation">
+      <a class="book-dashboard-ribbon-btn" href="/dashboard" data-nav data-text="dashboard">Dashboard</a>
+      <a class="book-dashboard-ribbon-btn" href="/api/ce/authoring" data-nav data-text="creator">Creation Engine</a>
+      <span class="book-dashboard-ribbon-btn" aria-current="page" data-text="title">Advanced studio</span>
+    </nav>
+    <div class="studio-heading"><div><p class="ce-eyebrow" data-text="eyebrow">HOMEBREW / ADVANCED</p>
+      <h1 data-text="title">Advanced studio</h1><p data-text="intro">Your rules, in full. Edit a definition, save a revision, then put it to the test.</p></div>
+      <label><span data-text="language">Language</span><select id="language"><option value="en">English</option><option value="de">Deutsch</option><option value="fr">Français</option></select></label>
+    </div>
+  </header>
+  <p id="status" role="status" tabindex="-1" aria-live="polite"></p>
+  <section id="access" class="notice" hidden><h2 data-text="accessTitle">Access paused</h2><p id="access-message"></p><button id="recheck" data-text="recheck">Check access</button></section>
+  <section id="pending" class="notice" hidden><p data-text="pendingHelp">The outcome of your last request is unknown. Retry the same request to recover its original result.</p><button id="retry" data-text="retry">Retry exact request</button></section>
+  <section id="conflict" class="notice" hidden aria-labelledby="conflict-heading"><h2 id="conflict-heading" tabindex="-1" data-text="conflictTitle">The saved draft changed</h2>
+    <p data-text="conflictHelp">Your document is preserved. Compare the latest saved content before choosing what to save.</p>
+    <button id="compare" data-text="compare">Load latest for comparison</button><button id="accept-base" hidden data-text="acceptBase">Keep my document against this version</button>
+    <pre id="remote-content" tabindex="0"></pre>
+  </section>
+  <main id="studio">
+    <div class="studio-tabs" role="tablist" aria-label="Workspace">
+      <button id="author-tab" role="tab" aria-selected="true" aria-controls="author-panel" data-text="author">01 / Author</button>
+      <button id="test-tab" role="tab" aria-selected="false" aria-controls="test-panel" tabindex="-1" data-text="test">02 / Test bench</button>
+    </div>
+    <section id="author-panel" role="tabpanel" aria-labelledby="author-tab">
+      <div class="studio-toolbar">
+        <label class="draft-picker"><span data-text="draft">Draft</span><select id="drafts"></select></label>
+        <label><span data-text="newType">New definition</span><select id="new-type"></select></label>
+        <button id="create" data-text="create">Create draft</button><button id="reload" data-text="reload">Reload</button>
+      </div>
+      <p id="empty" class="notice" data-text="empty">Choose a definition type and create your first draft. No rules are preselected.</p>
+      <div id="editing" hidden>
+        <div class="document-meta"><strong id="document-title"></strong><span id="document-version"></span><span id="save-state" aria-live="polite"></span></div>
+        <div class="studio-grid">
+          <section class="source-pane" aria-labelledby="source-heading">
+            <div class="pane-heading"><h2 id="source-heading" data-text="document">Definition</h2><span class="format-tag">JSON</span></div>
+            <div class="document-actions">
+              <button id="format" data-text="format">Format</button><button id="import" data-text="import">Import JSON</button>
+              <input id="file" type="file" accept="application/json,.json" hidden>
+              <button id="download" data-text="download">Download</button><button id="discard" data-text="discard">Discard edits</button>
+            </div>
+            <label class="sr-only" for="source" data-text="document">Definition</label>
+            <div class="source-wrap"><pre id="line-numbers" aria-hidden="true">1</pre><textarea id="source" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="editor-help" wrap="off"></textarea></div>
+            <p id="editor-help" class="help" data-text="shortcuts">Ctrl/⌘ S saves the draft · Ctrl/⌘ Enter validates · Tab moves to the next control.</p>
+            <div class="save-bar"><button id="validate" data-text="validate">Validate</button><button id="save" class="primary" data-text="save">Save draft</button></div>
+            <section aria-labelledby="issues-heading"><h3 id="issues-heading" data-text="validation">Validation</h3><ul id="issues" aria-live="polite"></ul></section>
+            <details id="diff-panel"><summary data-text="changes">Changes since last save</summary><div id="diff"></div></details>
+          </section>
+          <aside class="inspector">
+            <h2 data-text="reference">Field reference</h2>
+            <label><span data-text="findField">Find a field</span><input id="field-filter" type="search" autocomplete="off"></label><div id="fields"></div>
+            <details><summary data-text="fullSchema">Full document schema</summary><pre id="schema" tabindex="0"></pre></details>
+            <h2 data-text="revision">Save a revision</h2><p class="help" data-text="revisionHelp">A saved revision is a fixed snapshot. Existing tests keep their original revisions.</p>
+            <label><span data-text="quality">Intended use</span><select id="quality"><option value="lore_only" data-text="lore">Description</option><option value="sheet_ready" data-text="sheet">Sheet ready</option><option value="runtime_ready" data-text="runtime">Executable</option></select></label>
+            <ul id="gates"></ul><button id="commit" class="primary" data-text="commit">Save revision</button><p id="revision-result" role="status"></p>
+            <details><summary data-text="history">Draft history</summary><ol id="history"></ol><label><span data-text="restoreVersion">Restore version</span><select id="restore-version"></select></label><button id="restore" data-text="restore">Restore as new version</button></details>
+          </aside>
+        </div>
+      </div>
+    </section>
+    <section id="test-panel" role="tabpanel" aria-labelledby="test-tab" hidden>
+      <p class="notice" data-text="testHelp">Private test characters only. Choose saved class, race and spell revisions; the test uses those exact rules.</p>
+      <div class="studio-grid">
+        <section>
+          <h2 data-text="newSandbox">New test</h2><label><span data-text="edition">Edition</span><select id="edition"><option value="" data-text="choose">Choose…</option><option value="dnd5e_2014">D&D 5e · 2014</option><option value="dnd5e_2024">D&D 5e · 2024</option></select></label>
+          <fieldset><legend data-text="pinRevisions">Revisions to include</legend><div id="revision-list"></div></fieldset><button id="create-sandbox" data-text="createSandbox">Create private test</button>
+          <label><span data-text="openSandbox">Open test</span><select id="sandboxes"></select></label><button id="refresh-test" data-text="refreshTest">Refresh tests</button>
+          <div id="test-controls" hidden>
+            <h2 data-text="testAction">Test action</h2><p id="scope-version"></p>
+            <label><span data-text="operation">Action</span><select id="operation"></select></label>
+            <div id="build-selectors"><label><span data-text="class">Class revision</span><select id="build-class"></select></label><label><span data-text="race">Race revision</span><select id="build-race"></select></label></div>
+            <div id="actor-selectors"><label><span data-text="character">Character / caster</span><select id="actor"></select></label><label id="target-label"><span data-text="target">Target</span><select id="target"></select></label><label id="spell-label"><span data-text="spell">Known spell</span><select id="spell"></select></label></div>
+            <button id="prepare" data-text="prepare">Prepare action</button><p id="action-help" class="help"></p>
+            <label for="action-source" data-text="actionDocument">Action values</label><textarea id="action-source" spellcheck="false" wrap="off"></textarea>
+            <details><summary data-text="actionSchema">Action schema</summary><pre id="action-schema" tabindex="0"></pre></details>
+            <button id="execute" class="primary" data-text="execute">Run action</button>
+          </div>
+        </section>
+        <aside>
+          <h2 data-text="characters">Characters & resources</h2><div id="actors"></div><div id="concentration" class="notice" hidden></div>
+          <h2 data-text="outcome">Last outcome</h2><pre id="outcome" tabindex="0"></pre>
+          <details><summary data-text="state">Complete test state</summary><pre id="test-state" tabindex="0"></pre></details>
+          <details><summary data-text="testHistory">Recorded actions & dice</summary><ol id="test-history"></ol><button id="more-history" hidden data-text="moreHistory">Load more history</button></details>
+        </aside>
+      </div>
+    </section>
+  </main>
+</div>
+</body></html>

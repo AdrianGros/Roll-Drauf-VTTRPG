@@ -1355,6 +1355,7 @@
         <div class="header-actions">
             <button class="btn btn-primary" type="button" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
             <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
+            <a class="btn btn-secondary" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
             <button class="btn btn-secondary" onclick="logout()">Abmelden</button>
         </div>
     </header>
@@ -1366,6 +1367,7 @@
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
                     <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
                     <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
+                    <a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
                     <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
                 </div>
                 <div class="book-dashboard-crest" aria-label="Aktuelles Kapitel">Chroniken</div>
@@ -1517,6 +1519,7 @@
     </template>
 
     <script src="/static/js/auth.js"></script>
+    <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/community.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>
@@ -1543,6 +1546,7 @@
                 return;
             }
             template.replaceWith(template.content.cloneNode(true));
+            window.CreationEngineNavigation?.hydrate(document);
         }
 
         async function bootstrapCampaignsScene() {

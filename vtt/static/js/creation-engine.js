@@ -188,11 +188,41 @@
     MANUAL_PROFILE_ONLY: 'Ce contenu est résolu uniquement manuellement', DESCRIPTIVE_ONLY: 'Ce contenu est uniquement descriptif',
     CHOICE_COUNT_EXCEEDED: 'Le nombre de sélections dépasse le nombre d’alternatives', CHOICE_LABEL_DUPLICATE: 'Chaque alternative nécessite un nom distinct'
   });
+  Object.assign(words.de, {
+    raceCard: 'D&D 5e · eigenes Volk', raceTitle: 'Eigenes D&D-Volk erschaffen', raceLocation: 'Creation Engine · D&D 5e',
+    raceIntro: 'Lege Edition, Volksmerkmale und Eigenschaften fest und verwende das gespeicherte Volk im Charakterbogen.',
+    raceNotice: 'Volk für D&D 5e: Merkmale und Regeln werden im Charakterbogen angezeigt. Ihre spielmechanischen Folgen werden manuell aufgelöst.',
+    dnd5e_2014: 'D&D 5e (2014)', dnd5e_2024: 'D&D 5e (2024)', tiny: 'Winzig', small: 'Klein', medium: 'Mittelgroß', large: 'Groß', huge: 'Riesig', gargantuan: 'Gigantisch', small_or_medium: 'Klein oder mittelgroß (Auswahl)',
+    trait: 'Eigenschaft', feature: 'Merkmal', traitName: 'Name', traitKind: 'Art', traitDescription: 'Regelbeschreibung', traitUsage: 'Nutzung und Erholung', traitChoices: 'Auswahlmöglichkeiten (optional)', traitPrerequisites: 'Voraussetzungen / Stufen (optional)', addTrait: 'Merkmal oder Eigenschaft hinzufügen', removeTrait: 'Diesen Eintrag entfernen',
+    TRAIT_NAME_DUPLICATE: 'Jedes Merkmal benötigt einen eindeutigen Namen', returnCharacter: 'Zum Charakterbogen',
+    sheetHandoffTitle: 'Volk im Charakterbogen verwenden', sheetHandoffHelp: 'Speichere eine Revision als Datenblatt. Prüfe danach, welchen Charakter du damit erstellst oder ergänzt.',
+    sheetSaveFirst: 'Speichere zuerst eine vollständige Revision als Datenblatt.', sheetRevision: 'Gespeicherte Revision', sheetDestination: 'Verwendung', sheetExisting: 'Vorhandenen oder importierten Charakter ergänzen', sheetNew: 'Neuen D&D-Charakter erstellen', sheetCharacter: 'Dein Charakter', sheetCoreValues: 'Charakterwerte ausdrücklich festlegen',
+    sheetManual: 'Merkmale, Eigenschaften und ihre Regeln erscheinen im Bogen. Boni, Auswahlentscheidungen und andere regelabhängige Änderungen werden manuell angewendet. Vorhandene Werte und Ausrüstung bleiben erhalten.',
+    sheetConfirm: 'Ich habe die Auswahl geprüft. Der Inhalt des Volks wird für alle sichtbar, die diesen Charakterbogen sehen dürfen.', sheetApply: 'Im Charakterbogen übernehmen', sheetOpen: 'Charakterbogen öffnen', sheetApplied: 'Volk übernommen. Dein Charakterbogen ist bereit.', sheetNoCharacter: 'Kein passender Charakter vorhanden. Wähle „Neuen D&D-Charakter erstellen“.', sheetReplaces: 'Ersetzt das bisherige Volk', sheetUnassigned: 'Edition wird ausdrücklich diesem Charakter zugeordnet',
+    name: 'Name', class: 'Klasse', background: 'Hintergrund', level: 'Stufe', ac: 'Rüstungsklasse', hp_max: 'Maximale Trefferpunkte', str: 'Stärke', dex: 'Geschicklichkeit', con: 'Konstitution', int: 'Intelligenz', wis: 'Weisheit', cha: 'Charisma',
+    CHARACTER_STATE_CONFLICT: 'Der Charakter wurde geändert. Lade die Liste neu und prüfe die Auswahl erneut.', CHARACTER_SYSTEM_MISMATCH: 'Die Edition oder das Spielsystem dieses Charakters passt nicht zum Volk.', RACE_REVISION_REQUIRED: 'Eine vollständige, als Datenblatt gespeicherte Volksrevision wird benötigt.', LEGACY_FIELD_READ_ONLY: 'Dieser Charakter wird bereits vom Laufzeitsystem verwaltet und kann hier nicht geändert werden.'
+  });
+  Object.assign(words.en, {
+    raceCard: 'D&D 5e · homebrew race', raceTitle: 'Create a D&D homebrew race', raceLocation: 'Creation Engine · D&D 5e', raceIntro: 'Choose the edition, author features and traits, then use the saved race on a character sheet.', raceNotice: 'D&D 5e race: features and rules appear on the character sheet. Their mechanical consequences are resolved manually.',
+    dnd5e_2014: 'D&D 5e (2014)', dnd5e_2024: 'D&D 5e (2024)', tiny: 'Tiny', small: 'Small', medium: 'Medium', large: 'Large', huge: 'Huge', gargantuan: 'Gargantuan', small_or_medium: 'Small or Medium (choice)',
+    trait: 'Trait', feature: 'Feature', traitName: 'Name', traitKind: 'Kind', traitDescription: 'Rules description', traitUsage: 'Usage and recovery', traitChoices: 'Choices (optional)', traitPrerequisites: 'Prerequisites / levels (optional)', addTrait: 'Add a feature or trait', removeTrait: 'Remove this entry', TRAIT_NAME_DUPLICATE: 'Each feature needs a distinct name', returnCharacter: 'Return to character sheet',
+    sheetHandoffTitle: 'Use this race on a character sheet', sheetHandoffHelp: 'Save a Sheet-ready revision, then review which character to create or update.', sheetSaveFirst: 'First save a complete Sheet-ready revision.', sheetRevision: 'Saved revision', sheetDestination: 'Use on', sheetExisting: 'An existing or imported character', sheetNew: 'Create a new D&D character', sheetCharacter: 'Your character', sheetCoreValues: 'Choose the character values explicitly',
+    sheetManual: 'Features, traits and their rules appear on the sheet. Bonuses, choices and other rules-dependent changes are applied manually. Existing values and equipment are preserved.', sheetConfirm: 'I reviewed this selection. Race content will be visible to everyone allowed to view this character sheet.', sheetApply: 'Apply to character sheet', sheetOpen: 'Open character sheet', sheetApplied: 'Race applied. Your character sheet is ready.', sheetNoCharacter: 'No compatible character. Choose “Create a new D&D character”.', sheetReplaces: 'Replaces the previous race', sheetUnassigned: 'The edition will be explicitly assigned to this character',
+    name: 'Name', class: 'Class', background: 'Background', level: 'Level', ac: 'Armor class', hp_max: 'Maximum hit points', str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma',
+    CHARACTER_STATE_CONFLICT: 'The character changed. Reload the list and review the selection again.', CHARACTER_SYSTEM_MISMATCH: 'The character edition or system does not match this race.', RACE_REVISION_REQUIRED: 'A complete Sheet-ready race revision is required.', LEGACY_FIELD_READ_ONLY: 'This character is already managed by the runtime and cannot be changed here.'
+  });
+  Object.assign(words.fr, {
+    raceCard: 'D&D 5e · peuple personnalisé', raceTitle: 'Créer un peuple D&D', raceLocation: 'Creation Engine · D&D 5e', raceIntro: 'Choisissez l’édition, définissez les aptitudes et traits, puis utilisez le peuple enregistré sur une fiche de personnage.', raceNotice: 'Peuple D&D 5e : les aptitudes et règles apparaissent sur la fiche. Leurs conséquences mécaniques sont résolues manuellement.',
+    dnd5e_2014: 'D&D 5e (2014)', dnd5e_2024: 'D&D 5e (2024)', tiny: 'Très petite', small: 'Petite', medium: 'Moyenne', large: 'Grande', huge: 'Très grande', gargantuan: 'Gigantesque', small_or_medium: 'Petite ou moyenne (choix)', trait: 'Trait', feature: 'Aptitude', traitName: 'Nom', traitKind: 'Type', traitDescription: 'Description des règles', traitUsage: 'Utilisation et récupération', traitChoices: 'Choix (facultatif)', traitPrerequisites: 'Prérequis / niveaux (facultatif)', addTrait: 'Ajouter une aptitude ou un trait', removeTrait: 'Supprimer cette entrée', TRAIT_NAME_DUPLICATE: 'Chaque aptitude doit avoir un nom distinct', returnCharacter: 'Revenir à la fiche',
+    sheetHandoffTitle: 'Utiliser ce peuple sur une fiche', sheetHandoffHelp: 'Enregistrez une révision Fiche prête, puis vérifiez le personnage à créer ou à modifier.', sheetSaveFirst: 'Enregistrez d’abord une révision complète Fiche prête.', sheetRevision: 'Révision enregistrée', sheetDestination: 'Utilisation', sheetExisting: 'Personnage existant ou importé', sheetNew: 'Créer un personnage D&D', sheetCharacter: 'Votre personnage', sheetCoreValues: 'Choisir explicitement les valeurs du personnage', sheetManual: 'Les aptitudes, traits et règles apparaissent sur la fiche. Les bonus, choix et autres conséquences sont appliqués manuellement. Les valeurs et équipements existants sont conservés.', sheetConfirm: 'J’ai vérifié la sélection. Le peuple sera visible par toute personne autorisée à consulter cette fiche.', sheetApply: 'Appliquer à la fiche', sheetOpen: 'Ouvrir la fiche', sheetApplied: 'Peuple appliqué. Votre fiche est prête.', sheetNoCharacter: 'Aucun personnage compatible. Choisissez de créer un personnage D&D.', sheetReplaces: 'Remplace le peuple précédent', sheetUnassigned: 'L’édition sera explicitement attribuée au personnage', name: 'Nom', class: 'Classe', background: 'Historique', level: 'Niveau', ac: 'Classe d’armure', hp_max: 'Points de vie maximum', str: 'Force', dex: 'Dextérité', con: 'Constitution', int: 'Intelligence', wis: 'Sagesse', cha: 'Charisme', CHARACTER_STATE_CONFLICT: 'Le personnage a changé. Rechargez et vérifiez à nouveau la sélection.', CHARACTER_SYSTEM_MISMATCH: 'L’édition ou le système du personnage ne correspond pas.', RACE_REVISION_REQUIRED: 'Une révision complète Fiche prête est requise.', LEGACY_FIELD_READ_ONLY: 'Ce personnage est déjà géré par le moteur et ne peut pas être modifié ici.'
+  });
   const profileLabels = {'g1.authored-magic-item': 'magicItem', 'g1.authored-manual-conditional': 'conditionalCard',
-    'g1.authored-manual-choice': 'choiceCard', 'g1.authored-lore': 'loreCard'};
+    'g1.authored-manual-choice': 'choiceCard', 'g1.authored-lore': 'loreCard', 'dnd5e.authored-race': 'raceCard'};
   const $ = id => document.getElementById(id);
   let workspace, draft, preview, pending, dirtyForm, conflict, runtimeCatalog, sandboxState, busy = false, focusTarget;
   let accessEpoch = 0, accessDenied = false, accessPaused = false, checkingAccess = false, sandboxRead = 0, catalogRead = 0;
+  let sheetCatalog = null, sheetRead = 0;
+  const characterContext = new URLSearchParams(location.search).get("character_id");
   const requests = new Set();
   class ObsoleteResponse extends Error {}
   const t = key => words[$('locale').value][key];
@@ -208,9 +238,9 @@
     [...$('new-type').options].forEach(option => { option.textContent = t(profileLabels[option.value]); });
     updateCreateLabel();
     if (draft && draft.schemaType.typeId !== 'g1.authored-magic-item') {
-      document.title = `${t('contentTitle')} · Roll Drauf`;
+      document.title = `${t(draft.schemaType.typeId === 'dnd5e.authored-race' ? 'raceTitle' : 'contentTitle')} · Roll Drauf`;
       for (const [key, replacement] of [['title', 'contentTitle'], ['location', 'contentLocation'], ['intro', 'contentIntro']]) {
-        document.querySelector(`[data-i18n="${key}"]`).textContent = t(replacement);
+        document.querySelector(`[data-i18n="${key}"]`).textContent = t(draft.schemaType.typeId === 'dnd5e.authored-race' ? ({title: 'raceTitle', location: 'raceLocation', intro: 'raceIntro'})[key] : replacement);
       }
     }
   }
@@ -250,7 +280,9 @@
     $('claim').value = 'lore_only';
     $('editor').querySelectorAll('[data-unavailable]').forEach(control => { control.dataset.unavailable = 'true'; });
     $('editor').hidden = $('conflict').hidden = $('preset').hidden = true;
-    clearSandbox();
+    clearSandbox(); sheetCatalog = null; sheetRead++;
+    $('sheet-handoff').hidden = true; $('sheet-core-fields').replaceChildren(); $('sheet-review').replaceChildren();
+    $('sheet-character').replaceChildren(); $('sheet-revision').replaceChildren(); $('sheet-result').textContent = ''; $('sheet-open').hidden = true;
   }
   function denyAccess() {
     if (accessDenied) return;
@@ -324,6 +356,7 @@
   }
   function displayValue(question, value) {
     if (question?.schema.enum) return t(value);
+    if (question?.questionId === 'race.traits') return value.map(trait => `${trait.name} (${t(trait.kind)})\n${trait.description}\n${trait.usage}${trait.choices ? '\n' + trait.choices : ''}${trait.prerequisites ? '\n' + trait.prerequisites : ''}`).join('\n\n');
     if (question?.questionId === 'flame.damage') return `${value.count}d${value.sides}`;
     if (question?.questionId === 'flame.duration' && value.kind === 'window') {
       if (value.windowId === 'g1.flame.activation') return t('activationWindow');
@@ -352,6 +385,7 @@
       const el = input(question.label + ' (JSON)', 'textarea', value === undefined ? '' : JSON.stringify(value, null, 2));
       return () => JSON.parse(el.value);
     }
+    if (question.questionId === 'race.traits') return traitControls(question, form);
     if (question.schema.enum) { const el = choice(question.schema.enum.map(k => [k, t(k)]), value); return () => el.value; }
     if (question.questionId === 'flame.duration') {
       const activation = 'g1.flame.activation', hit = 'g1.flame.hit';
@@ -381,7 +415,7 @@
     $('presets-section').hidden = !flameProfile;
     ['visual-preset', 'damage-preset', 'apply-preset'].forEach(id => { $(id).dataset.unavailable = String(!flameProfile); });
     $('profile-notice').hidden = flameProfile;
-    $('profile-notice').textContent = flameProfile ? '' : t(draft.schemaType.typeId === 'g1.authored-lore' ? 'loreNotice' : 'manualNotice');
+    $('profile-notice').textContent = flameProfile ? '' : t(draft.schemaType.typeId === 'dnd5e.authored-race' ? 'raceNotice' : draft.schemaType.typeId === 'g1.authored-lore' ? 'loreNotice' : 'manualNotice');
     $('draft-info').textContent = `${draft.content.name || t('untitled')} · ${t('version')} ${draft.draftVersion}`;
     const selectedDraft = [...$('drafts').options].find(option => option.value === draft.draftId);
     if (selectedDraft) selectedDraft.textContent = $('draft-info').textContent;
@@ -453,6 +487,7 @@
     lock();
   }
   async function loadDraft(id) {
+    if (draft?.draftId !== id) { $('sheet-result').textContent = ''; $('sheet-open').hidden = true; $('sheet-open').removeAttribute('href'); }
     const base = `${root()}/drafts/${encodeURIComponent(id)}`;
     const current = await api(`${base}?locale=${$('locale').value}&mode=${$('mode').value}`);
     const history = await api(base + '/history');
@@ -463,6 +498,7 @@
     history.forEach(entry => node('li', `${t('version')} ${entry.draftVersion}: ${t(entry.operation)}`, $('history')));
     $('revision').textContent = '';
     $('drafts').value = id; preview = null; $('preset').hidden = true; dirtyForm = null; render();
+    await loadSheetCatalog();
   }
   async function loadWorkspace(preferred) {
     workspace = await api('/api/ce/authoring/workspace'); $('drafts').replaceChildren();
@@ -486,6 +522,7 @@
   }
   async function sendPending() {
     const command = pending;
+    if (command.adapter === 'race-sheet:1') { await sendSheetPending(command); return; }
     status(t('saving'));
     try {
       const receipt = await api('/api/ce/commands', 'POST', command);
@@ -502,7 +539,13 @@
       await loadWorkspace(result.draftId);
       focusTarget = focusEditor;
       status(t('saved'));
-      if (result.revision) $('revision').textContent = t('revision') + result.revision.id;
+      if (result.revision) {
+        $('revision').textContent = t('revision') + result.revision.id;
+        if (draft.schemaType.typeId === 'dnd5e.authored-race') {
+          $('sheet-revision').value = result.revision.id; $('sheet-confirm').checked = false;
+          $('sheet-result').textContent = ''; $('sheet-open').hidden = true; updateSheetTargets();
+        }
+      }
     } catch (error) {
       if (error instanceof ObsoleteResponse) throw error;
       if (error.status && error.status < 500 && error.status !== 429) pending = null;
@@ -549,11 +592,11 @@
     const question = retainedQuestion();
     if (!question) return;
     const retained = conflict;
-    $('mode').value = retained.mode === 'advanced' ? 'advanced' : 'structured';
+    $('mode').value = retained.mode === 'advanced' || question.questionId === 'race.traits' ? 'advanced' : 'structured';
     conflict = null; $('conflict').hidden = true; render();
     const form = questionForm(question.questionId);
     form.querySelectorAll('input, textarea, select').forEach((control, index) => {
-      control.value = retained.inputs[index];
+      control.value = question.questionId === 'race.traits' ? JSON.stringify(retained.command.payload.answer.value, null, 2) : retained.inputs[index];
       if (control.tagName === 'SELECT') control.dispatchEvent(new Event('change'));
     });
     dirtyForm = form; status(t('restoredInput')); lock(); firstField(form)?.focus();
@@ -574,7 +617,7 @@
     status(''); translate(); if (draft) await loadDraft(draft.draftId); else render(); await loadRuntimeCatalog();
     focusTarget = () => $(id);
   });
-  $('discard').onclick = () => { const id = dirtyForm?.dataset.question; dirtyForm = null; render(); status(''); (firstField(questionForm(id)) || focusEditor()).focus(); };
+  $('discard').onclick = () => { const id = dirtyForm?.dataset.question; const sheetDirty = dirtyForm?.id === 'sheet-form'; dirtyForm = null; if (sheetDirty) { $('sheet-form').reset(); renderSheetHandoff(); } render(); status(''); (firstField(questionForm(id)) || focusEditor()).focus(); };
   $('conflict-refresh').onclick = () => run(refreshConflict);
   $('conflict-edit').onclick = editRetained;
   $('conflict-discard').onclick = () => run(async () => {
@@ -600,6 +643,130 @@
   $('damage-preset').onclick = () => run(() => showPreset('g1.post-hit-flames'));
   $('apply-preset').onclick = () => run(() => mutate('ApplyDraftPreset', {preset: {presetId: preview.presetId, version: preview.version}, previewDigest: preview.previewDigest}));
   $('revert').onclick = () => run(() => mutate('RevertDraft', {toDraftVersion: Number($('versions').value)}));
+  function traitControls(question, form) {
+    const rows = node('div', undefined, form);
+    const add = node('button', t('addTrait'), form); add.type = 'button';
+    const changed = () => { add.dataset.unavailable = String(rows.children.length >= 20); form.dispatchEvent(new Event('input', {bubbles: true})); };
+    function append(value = {}) {
+      const row = node('fieldset', undefined, rows); row.dataset.trait = '';
+      node('legend', t('trait'), row);
+      for (const [key, label] of [['name', 'traitName'], ['kind', 'traitKind'], ['description', 'traitDescription'], ['usage', 'traitUsage'], ['choices', 'traitChoices'], ['prerequisites', 'traitPrerequisites']]) {
+        const wrapper = node('label', undefined, row); node('span', t(label), wrapper);
+        const input = node(key === 'kind' ? 'select' : key === 'name' ? 'input' : 'textarea', undefined, wrapper);
+        input.dataset.traitField = key; input.required = !['choices', 'prerequisites'].includes(key);
+        if (key === 'kind') {
+          for (const optionValue of ['', 'trait', 'feature']) { const option = node('option', t(optionValue || 'choose'), input); option.value = optionValue; }
+        } else input.maxLength = key === 'name' ? 200 : 2048;
+        input.value = value[key] || '';
+      }
+      const remove = node('button', t('removeTrait'), row); remove.type = 'button';
+      remove.onclick = () => { row.remove(); changed(); add.focus(); };
+    }
+    (question.answer?.value || []).forEach(append);
+    add.dataset.unavailable = String(rows.children.length >= 20);
+    add.onclick = () => { if (rows.children.length < 20) { append(); changed(); rows.lastElementChild.querySelector('input').focus(); } };
+    return () => [...rows.children].map(row => Object.fromEntries([...row.querySelectorAll('[data-trait-field]')]
+      .filter(input => input.required || input.value.trim()).map(input => [input.dataset.traitField, input.value])));
+  }
+  async function loadSheetCatalog() {
+    const serial = ++sheetRead;
+    $('sheet-handoff').hidden = draft?.schemaType.typeId !== 'dnd5e.authored-race';
+    if ($('sheet-handoff').hidden) { sheetCatalog = null; return; }
+    const catalog = await api(`${root()}/sheets`);
+    if (serial !== sheetRead) return;
+    sheetCatalog = catalog; renderSheetHandoff();
+  }
+  function renderSheetHandoff() {
+    if (!sheetCatalog || !draft) return;
+    const revisions = sheetCatalog.revisions.filter(row => row.revision.definitionId === draft.definitionId);
+    const previousRevision = $('sheet-revision').value;
+    selectOptions('sheet-revision', revisions.map((row, index) => [row.revision.id, `${row.content.name} · ${t('version')} ${index + 1} · ${t(row.content.edition)}`]));
+    if (revisions.length && !revisions.some(row => row.revision.id === previousRevision)) $('sheet-revision').value = revisions.at(-1).revision.id;
+    $('sheet-form').hidden = !revisions.length; $('sheet-save-first').hidden = Boolean(revisions.length);
+    $('sheet-core-fields').replaceChildren();
+    for (const [key, min, max] of [['name', null, 100], ['class', null, 50], ['background', null, 100], ['level', 1, 20], ['ac', 0, 100], ['hp_max', 1, 10000], ...['str', 'dex', 'con', 'int', 'wis', 'cha'].map(key => [key, 1, 30])]) {
+      const label = node('label', undefined, $('sheet-core-fields')); node('span', t(key), label);
+      const input = node('input', undefined, label); input.dataset.characterField = key; input.id = 'sheet-new-' + key;
+      input.type = min === null ? 'text' : 'number';
+      if (min === null) input.maxLength = max; else { input.min = min; input.max = max; input.step = '1'; }
+    }
+    $('sheet-confirm').checked = false; updateSheetTargets();
+  }
+  function selectedSheetRevision() { return sheetCatalog?.revisions.find(row => row.revision.id === $('sheet-revision').value); }
+  function updateSheetTargets() {
+    const selected = selectedSheetRevision();
+    const targets = sheetCatalog?.characters.filter(character => ['unassigned', selected?.content.edition].includes(character.edition)) || [];
+    selectOptions('sheet-character', targets.map(character => [String(character.id), `${character.name}${character.race ? ' · ' + character.race : ''}`]));
+    if (!$('sheet-character').value && targets.some(character => String(character.id) === characterContext)) $('sheet-character').value = characterContext;
+    updateSheetReview();
+  }
+  function updateSheetReview() {
+    const fresh = $('sheet-destination').value === 'new';
+    $('sheet-new-fields').hidden = !fresh; $('sheet-target-label').hidden = fresh;
+    $('sheet-character').required = !fresh; $('sheet-character').dataset.unavailable = String(fresh);
+    $('sheet-core-fields').querySelectorAll('input').forEach(input => { input.required = fresh; input.dataset.unavailable = String(!fresh); });
+    const row = selectedSheetRevision(), target = sheetCatalog?.characters.find(character => String(character.id) === $('sheet-character').value);
+    $('sheet-review').replaceChildren();
+    if (row) {
+      node('strong', `${row.content.name} · ${t(row.content.edition)}`, $('sheet-review'));
+      node('p', row.content.traits.map(trait => trait.name).join(' · '), $('sheet-review'));
+      if (fresh) node('p', t('sheetNew'), $('sheet-review'));
+      else if (target) {
+        node('p', `${target.name} · ${t('sheetReplaces')}: ${target.race || '—'}`, $('sheet-review'));
+        if (target.edition === 'unassigned') node('p', t('sheetUnassigned'), $('sheet-review'));
+      } else node('p', t('sheetNoCharacter'), $('sheet-review'));
+    }
+    $('sheet-apply').dataset.unavailable = String(!row || !fresh && !target); lock();
+  }
+  $('sheet-form').addEventListener('input', () => { dirtyForm = $('sheet-form'); status(t('unsaved')); lock(); });
+  for (const id of ['sheet-revision', 'sheet-character', 'sheet-destination']) $(id).addEventListener('change', () => {
+    $('sheet-confirm').checked = false;
+    if (id === 'sheet-revision') updateSheetTargets(); else updateSheetReview();
+  });
+  $('sheet-form').addEventListener('submit', event => {
+    event.preventDefault();
+    if (!$('sheet-form').reportValidity()) return;
+    const revision = selectedSheetRevision(); if (!revision) return;
+    const request = {contractVersion: 'race-sheet:1', idempotencyKey: crypto.randomUUID(), revision: revision.revision};
+    if ($('sheet-destination').value === 'new') request.character = Object.fromEntries([...$('sheet-core-fields').querySelectorAll('input')]
+      .map(input => [input.dataset.characterField, input.type === 'number' ? Number(input.value) : input.value]));
+    else {
+      const target = sheetCatalog.characters.find(character => String(character.id) === $('sheet-character').value);
+      if (!target) return;
+      request.target = {characterId: target.id, expectedState: target.expectedState};
+    }
+    run(async () => { pending = {adapter: 'race-sheet:1', request}; await sendPending(); });
+  });
+  async function sendSheetPending(command) {
+    status(t('saving'));
+    let result;
+    try {
+      result = await api(`${root()}/sheets`, 'POST', command.request);
+    } catch (error) {
+      if (error instanceof ObsoleteResponse) throw error;
+      if (error.status && error.status < 500 && error.status !== 429) {
+        pending = null;
+        if (error.message === 'CHARACTER_STATE_CONFLICT') {
+          dirtyForm = null; await loadSheetCatalog(); $('sheet-confirm').checked = false;
+        }
+      } else focusTarget = () => $('retry');
+      throw error;
+    }
+    pending = null; dirtyForm = null;
+    // A confirmed result must survive a failed optional catalogue refresh.
+    $('sheet-form').reset(); updateSheetReview();
+    $('sheet-open').href = result.href; $('sheet-open').hidden = false;
+    $('sheet-result').textContent = t('sheetApplied'); status(t('sheetApplied'));
+    focusTarget = () => $('sheet-open');
+    try { await loadSheetCatalog(); }
+    catch (error) {
+      if (error instanceof ObsoleteResponse) throw error;
+      status(t('sheetApplied') + ' ' + t('loadFailed'));
+    }
+  }
+  if (/^[1-9][0-9]*$/.test(characterContext || '')) {
+    $('return-character').href = '/character-sheet?id=' + characterContext; $('return-character').hidden = false;
+  }
   function selectOptions(id, values, placeholder = 'choose') {
     const select = $(id), before = select.value;
     select.replaceChildren(); const empty = node('option', t(placeholder), select); empty.value = '';
