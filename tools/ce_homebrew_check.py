@@ -2,6 +2,7 @@
 
     venv/bin/python tools/ce_homebrew_check.py
     venv/bin/python tools/ce_homebrew_check.py --advanced
+    venv/bin/python tools/ce_homebrew_check.py --guided
 
 Requires Docker and the repository's existing test dependencies. Never reads the
 application environment or a production database URL. Removes its own container
@@ -21,6 +22,7 @@ import uuid
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--advanced', action='store_true', help='Also verify atomic document editing and real Chromium studio journeys')
+    parser.add_argument('--guided', action='store_true', help='Include Advanced plus Guided form authoring journeys')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     name = "ce-homebrew-check-" + uuid.uuid4().hex[:12]
@@ -49,8 +51,10 @@ def main():
         tests = [
             "tests/creation_engine/test_ce_homebrew_runtime.py",
             "tests/creation_engine/test_ce_homebrew_backend.py"]
-        if args.advanced:
+        if args.advanced or args.guided:
             tests += ["tests/creation_engine/test_ce_advanced.py", "tests/creation_engine/test_ce_advanced_browser.py"]
+        if args.guided:
+            tests += ["tests/creation_engine/test_ce_guided_homebrew.py"]
         result = subprocess.run([sys.executable, "-m", "pytest", "-q", *tests], cwd=root, env=env)
         return result.returncode
     finally:

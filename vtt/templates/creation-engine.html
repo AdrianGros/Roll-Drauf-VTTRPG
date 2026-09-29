@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/book-scene.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/creation-engine.css') }}">
   <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/ce-schema-form.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/creation-engine.js') }}" defer></script>
 </head>
 <body class="ce-authoring">
@@ -65,6 +66,8 @@
     <div id="editor" hidden>
       <p id="draft-info"></p><p id="stale" class="notice" hidden></p>
       <p id="profile-notice" class="notice" hidden></p>
+      <section id="guided-progress" hidden aria-label="Creation progress"></section>
+      <p id="homebrew-test-link" hidden><a href="/api/ce/authoring/advanced" data-ce-nav data-i18n="homebrewTest">Open private test bench</a></p>
       <div class="columns"><section><h2 id="decisions-heading" tabindex="-1" data-i18n="decisions">Deine Entscheidungen</h2><div id="questions"></div></section>
       <aside><h2 data-i18n="preview">Vorschau</h2><div id="content"></div>
         <h2 data-i18n="quality">Verwendbarkeit</h2><div id="quality"></div>

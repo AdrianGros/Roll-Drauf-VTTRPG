@@ -1,5 +1,15 @@
 # Creation Engine — active contract and project status
 
+**Shared development deployment, 29 September:** the user clarified that the
+hosted VTT is the go-to development environment. The backend and Advanced studio
+are deployed and authoring/private tests are enabled at
+`https://vtt.roll-drauf.de/api/ce/authoring/advanced`. M73–M80 were applied and the
+release observation passed. [Release evidence](deployment-2026-09-29.md) records
+the exact boundary. [Guided creation](guided-creation-2026-09-29.md) now provides
+verified class/race/spell forms on the same API and saved drafts; its release
+record identifies the follow-up rollout. No campaign cutover or human acceptance
+is claimed.
+
 **Advanced studio, 29 September:** the user authorized a power-user interface on
 the class/race/spell backend before expanding Guided. The
 [studio implementation record](advanced-studio-2026-09-29.md) covers complete

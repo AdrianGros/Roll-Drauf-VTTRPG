@@ -216,8 +216,17 @@
     dnd5e_2014: 'D&D 5e (2014)', dnd5e_2024: 'D&D 5e (2024)', tiny: 'Très petite', small: 'Petite', medium: 'Moyenne', large: 'Grande', huge: 'Très grande', gargantuan: 'Gigantesque', small_or_medium: 'Petite ou moyenne (choix)', trait: 'Trait', feature: 'Aptitude', traitName: 'Nom', traitKind: 'Type', traitDescription: 'Description des règles', traitUsage: 'Utilisation et récupération', traitChoices: 'Choix (facultatif)', traitPrerequisites: 'Prérequis / niveaux (facultatif)', addTrait: 'Ajouter une aptitude ou un trait', removeTrait: 'Supprimer cette entrée', TRAIT_NAME_DUPLICATE: 'Chaque aptitude doit avoir un nom distinct', returnCharacter: 'Revenir à la fiche',
     sheetHandoffTitle: 'Utiliser ce peuple sur une fiche', sheetHandoffHelp: 'Enregistrez une révision Fiche prête, puis vérifiez le personnage à créer ou à modifier.', sheetSaveFirst: 'Enregistrez d’abord une révision complète Fiche prête.', sheetRevision: 'Révision enregistrée', sheetDestination: 'Utilisation', sheetExisting: 'Personnage existant ou importé', sheetNew: 'Créer un personnage D&D', sheetCharacter: 'Votre personnage', sheetCoreValues: 'Choisir explicitement les valeurs du personnage', sheetManual: 'Les aptitudes, traits et règles apparaissent sur la fiche. Les bonus, choix et autres conséquences sont appliqués manuellement. Les valeurs et équipements existants sont conservés.', sheetConfirm: 'J’ai vérifié la sélection. Le peuple sera visible par toute personne autorisée à consulter cette fiche.', sheetApply: 'Appliquer à la fiche', sheetOpen: 'Ouvrir la fiche', sheetApplied: 'Peuple appliqué. Votre fiche est prête.', sheetNoCharacter: 'Aucun personnage compatible. Choisissez de créer un personnage D&D.', sheetReplaces: 'Remplace le peuple précédent', sheetUnassigned: 'L’édition sera explicitement attribuée au personnage', name: 'Nom', class: 'Classe', background: 'Historique', level: 'Niveau', ac: 'Classe d’armure', hp_max: 'Points de vie maximum', str: 'Force', dex: 'Dextérité', con: 'Constitution', int: 'Intelligence', wis: 'Sagesse', cha: 'Charisme', CHARACTER_STATE_CONFLICT: 'Le personnage a changé. Rechargez et vérifiez à nouveau la sélection.', CHARACTER_SYSTEM_MISMATCH: 'L’édition ou le système du personnage ne correspond pas.', RACE_REVISION_REQUIRED: 'Une révision complète Fiche prête est requise.', LEGACY_FIELD_READ_ONLY: 'Ce personnage est déjà géré par le moteur et ne peut pas être modifié ici.'
   });
+  Object.assign(words.en,{classCard:'D&D class',runtimeRaceCard:'D&D race · executable',spellCard:'D&D spell',homebrewNotice:'Choose each rule explicitly. Save a complete Executable revision, then test it with your class, race and spells in the private test bench.',homebrewTest:'Open Advanced studio and private test bench',progress:'Required answers',continueGuide:'Continue to the next question',reviewAnswer:'Review',nestedInvalid:'Complete the highlighted fields.',guidedNone:'None'});
+  Object.assign(words.de,{classCard:'D&D-Klasse',runtimeRaceCard:'D&D-Volk · ausführbar',spellCard:'D&D-Zauber',homebrewNotice:'Lege jede Regel ausdrücklich fest. Speichere eine vollständige ausführbare Revision und teste Klasse, Volk und Zauber im privaten Testbereich.',homebrewTest:'Erweiterte Werkstatt und privaten Testbereich öffnen',progress:'Pflichtantworten',continueGuide:'Zur nächsten Frage',reviewAnswer:'Prüfen',nestedInvalid:'Fülle die markierten Felder aus.',guidedNone:'Keine'});
+  Object.assign(words.fr,{classCard:'Classe D&D',runtimeRaceCard:'Peuple D&D · exécutable',spellCard:'Sort D&D',homebrewNotice:'Choisissez chaque règle explicitement. Enregistrez une révision exécutable complète, puis testez classe, peuple et sorts dans le banc de test privé.',homebrewTest:'Ouvrir l’atelier avancé et le banc de test privé',progress:'Réponses obligatoires',continueGuide:'Passer à la prochaine question',reviewAnswer:'Vérifier',nestedInvalid:'Complétez les champs indiqués.',guidedNone:'Aucun'});
+  Object.assign(words.en,{CLASS_LEVEL_SEQUENCE_INVALID:'Define consecutive levels beginning at 1.',FEATURE_ID_DUPLICATE:'Each feature needs a distinct identifier.',CHOICE_INVALID:'Check choice identifiers, options and the selection count.',GRANT_DUPLICATE:'Remove duplicate entries within a grant.',RESOURCE_RECOVERY_CONFLICT:'Contributions to the same resource must use the same recovery event.',SPELL_COST_INVALID:'Choose a resource for a positive cost, or choose no resource and zero cost.',SPELL_DURATION_INVALID:'Temporary modifiers need a duration greater than zero. Instant effects use zero duration and no concentration.',SPELL_RESOLUTION_INVALID:'Healing and modifiers use automatic resolution.',SPELL_TARGET_INVALID:'A self-targeted spell must have zero range.',SPELL_SCALING_INVALID:'Check extra dice and costs against the effect and resource.',HUMAN_EVENT_ATTESTATION_REQUIRED:'Timing, components and concentration still need explicit human decisions.'});
+  Object.assign(words.de,{CLASS_LEVEL_SEQUENCE_INVALID:'Definiere aufeinanderfolgende Stufen ab 1.',FEATURE_ID_DUPLICATE:'Jedes Merkmal braucht eine eindeutige Kennung.',CHOICE_INVALID:'Prüfe Kennungen, Optionen und die Auswahlzahl.',GRANT_DUPLICATE:'Entferne doppelte Einträge innerhalb einer Gewährung.',RESOURCE_RECOVERY_CONFLICT:'Beiträge derselben Ressource brauchen dasselbe Erholungsereignis.',SPELL_COST_INVALID:'Positive Kosten benötigen eine Ressource; ohne Ressource sind die Kosten null.',SPELL_DURATION_INVALID:'Vorübergehende Wertänderungen brauchen eine positive Dauer. Sofortwirkungen haben Dauer null und keine Konzentration.',SPELL_RESOLUTION_INVALID:'Heilung und Wertänderungen werden automatisch aufgelöst.',SPELL_TARGET_INVALID:'Ein Zauber auf dich selbst braucht Reichweite null.',SPELL_SCALING_INVALID:'Prüfe Zusatzwürfel und Kosten anhand von Wirkung und Ressource.',HUMAN_EVENT_ATTESTATION_REQUIRED:'Zeitpunkt, Komponenten und Konzentration brauchen weiterhin ausdrückliche Entscheidungen.'});
+  Object.assign(words.fr,{CLASS_LEVEL_SEQUENCE_INVALID:'Définissez des niveaux consécutifs à partir de 1.',FEATURE_ID_DUPLICATE:'Chaque capacité exige un identifiant distinct.',CHOICE_INVALID:'Vérifiez les identifiants, options et le nombre de sélections.',GRANT_DUPLICATE:'Retirez les entrées en double dans une règle accordée.',RESOURCE_RECOVERY_CONFLICT:'Une même ressource exige le même événement de récupération.',SPELL_COST_INVALID:'Un coût positif exige une ressource ; sans ressource, le coût est nul.',SPELL_DURATION_INVALID:'Les modificateurs temporaires exigent une durée positive. Les effets instantanés ont une durée nulle et aucune concentration.',SPELL_RESOLUTION_INVALID:'Soins et modificateurs utilisent une résolution automatique.',SPELL_TARGET_INVALID:'Un sort ciblant soi-même exige une portée nulle.',SPELL_SCALING_INVALID:'Vérifiez les dés et coûts supplémentaires selon l’effet et la ressource.',HUMAN_EVENT_ATTESTATION_REQUIRED:'Le moment, les composantes et la concentration exigent des décisions explicites.'});
   const profileLabels = {'g1.authored-magic-item': 'magicItem', 'g1.authored-manual-conditional': 'conditionalCard',
-    'g1.authored-manual-choice': 'choiceCard', 'g1.authored-lore': 'loreCard', 'dnd5e.authored-race': 'raceCard'};
+    'g1.authored-manual-choice': 'choiceCard', 'g1.authored-lore': 'loreCard', 'dnd5e.authored-race': 'raceCard',
+    'dnd5e.authored-class':'classCard','dnd5e.runtime-race':'runtimeRaceCard','dnd5e.authored-spell':'spellCard'};
+  const mechanical = () => ['dnd5e.authored-class','dnd5e.runtime-race','dnd5e.authored-spell'].includes(draft?.schemaType.typeId);
+  let guidedQuestion=null, formRestoration=null;
   const $ = id => document.getElementById(id);
   let workspace, draft, preview, pending, dirtyForm, conflict, runtimeCatalog, sandboxState, busy = false, focusTarget;
   let accessEpoch = 0, accessDenied = false, accessPaused = false, checkingAccess = false, sandboxRead = 0, catalogRead = 0;
@@ -225,7 +234,7 @@
   const characterContext = new URLSearchParams(location.search).get("character_id");
   const requests = new Set();
   class ObsoleteResponse extends Error {}
-  const t = key => words[$('locale').value][key];
+  const t = key => words[$('locale').value][key] ?? key;
   const root = () => `/api/ce/authoring/workspaces/${encodeURIComponent(workspace.workspaceId)}`;
   const draftPath = () => `${root()}/drafts/${encodeURIComponent(draft.draftId)}`;
   const status = text => { if (!accessDenied) $('status').textContent = text; };
@@ -255,7 +264,7 @@
       else if (accessPaused) n.disabled = true;
       else if (n.id === 'retry') n.disabled = busy;
       else if (n.closest('#conflict')) n.disabled = busy || Boolean(pending) || n.dataset.unavailable === 'true';
-      else n.disabled = busy || Boolean(pending || conflict) || Boolean(dirtyForm && !dirtyForm.contains(n)) || n.dataset.unavailable === 'true';
+      else n.disabled = busy || Boolean(pending || conflict) || Boolean(dirtyForm && !dirtyForm.contains(n)) || n.dataset.unavailable === 'true' || Boolean(n.closest('[data-ce-inactive]'));
     });
     $('retry').hidden = !pending; $('discard').hidden = !dirtyForm || Boolean(conflict);
     document.querySelectorAll('[data-ce-nav]').forEach(n => {
@@ -276,6 +285,7 @@
   }
   function clearProtected() {
     workspace = draft = preview = pending = dirtyForm = conflict = null; focusTarget = null;
+    guidedQuestion=formRestoration=null;$('guided-progress').replaceChildren();$('guided-progress').hidden=$('homebrew-test-link').hidden=true;
     for (const id of ['drafts', 'new-type', 'draft-info', 'profile-notice', 'stale', 'questions', 'content', 'quality', 'revision', 'preset-values', 'versions', 'history', 'conflict-local', 'conflict-current', 'conflict-note']) $(id).replaceChildren();
     $('claim').value = 'lore_only';
     $('editor').querySelectorAll('[data-unavailable]').forEach(control => { control.dataset.unavailable = 'true'; });
@@ -365,7 +375,7 @@
     return typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);
   }
   function controls(question, form) {
-    const value = question.answer?.value;
+    const value = formRestoration?.questionId===question.questionId?formRestoration.value:question.answer?.value;
     function input(label, type, initial) {
       const l = node('label', undefined, form); node('span', label, l);
       const el = node(type === 'textarea' ? 'textarea' : 'input', undefined, l);
@@ -385,6 +395,7 @@
       const el = input(question.label + ' (JSON)', 'textarea', value === undefined ? '' : JSON.stringify(value, null, 2));
       return () => JSON.parse(el.value);
     }
+    if (mechanical()) return CESchemaForm.mount(form,question.schema,value,{locale:$('locale').value,label:question.label,path:question.path.join('/')});
     if (question.questionId === 'race.traits') return traitControls(question, form);
     if (question.schema.enum) { const el = choice(question.schema.enum.map(k => [k, t(k)]), value); return () => el.value; }
     if (question.questionId === 'flame.duration') {
@@ -415,7 +426,17 @@
     $('presets-section').hidden = !flameProfile;
     ['visual-preset', 'damage-preset', 'apply-preset'].forEach(id => { $(id).dataset.unavailable = String(!flameProfile); });
     $('profile-notice').hidden = flameProfile;
-    $('profile-notice').textContent = flameProfile ? '' : t(draft.schemaType.typeId === 'dnd5e.authored-race' ? 'raceNotice' : draft.schemaType.typeId === 'g1.authored-lore' ? 'loreNotice' : 'manualNotice');
+    $('profile-notice').textContent = flameProfile ? '' : t(mechanical()?'homebrewNotice':draft.schemaType.typeId === 'dnd5e.authored-race' ? 'raceNotice' : draft.schemaType.typeId === 'g1.authored-lore' ? 'loreNotice' : 'manualNotice');
+    $('homebrew-test-link').hidden=!mechanical();
+    $('guided-progress').replaceChildren();$('guided-progress').hidden=!mechanical()||$('mode').value!=='guided';
+    if(!$('guided-progress').hidden){
+      const required=draft.questions.filter(q=>q.required&&q.visible),answered=required.filter(q=>q.answer).length;
+      node('p',`${t('progress')}: ${answered} / ${required.length}`,$('guided-progress'));
+      const bar=node('progress',undefined,$('guided-progress'));bar.max=required.length;bar.value=answered;bar.setAttribute('aria-label',t('progress'));
+      const review=node('details',undefined,$('guided-progress'));node('summary',t('reviewAnswer'),review);
+      draft.questions.filter(q=>q.visible&&q.ready&&(q.answer||q.questionId===draft.nextQuestionId)).forEach(q=>{const b=node('button',q.label,review);b.type='button';b.dataset.review=q.questionId;b.onclick=()=>{guidedQuestion=q.questionId;render();firstField(questionForm(q.questionId))?.focus();};});
+      if(guidedQuestion){const b=node('button',t('continueGuide'),$('guided-progress'));b.type='button';b.onclick=()=>{guidedQuestion=null;render();focusEditor()?.focus();};}
+    }
     $('draft-info').textContent = `${draft.content.name || t('untitled')} · ${t('version')} ${draft.draftVersion}`;
     const selectedDraft = [...$('drafts').options].find(option => option.value === draft.draftId);
     if (selectedDraft) selectedDraft.textContent = $('draft-info').textContent;
@@ -424,14 +445,14 @@
     else {
       const list = node('dl', undefined, $('content'));
       draft.questions.filter(q => q.answer && q.visible).forEach(q => {
-        node('dt', q.label, list); node('dd', displayValue(q, q.answer.value), list);
+        node('dt', q.label, list);const value=node('dd',undefined,list);if(mechanical())CESchemaForm.preview(value,q.answer.value,$('locale').value);else value.textContent=displayValue(q,q.answer.value);
       });
     }
     const stale = draft.questions.filter(q => q.stale).map(q => q.label);
     $('stale').hidden = stale.length === 0; $('stale').textContent = t('stale') + stale.join(' · ');
     $('questions').replaceChildren();
-    const visible = draft.questions.filter(q => q.visible && ($('mode').value !== 'guided' || q.questionId === draft.nextQuestionId));
-    if (!draft.nextQuestionId) {
+    const visible = draft.questions.filter(q => q.visible && ($('mode').value !== 'guided' || q.questionId === (guidedQuestion||draft.nextQuestionId)));
+    if (!draft.nextQuestionId&&!guidedQuestion) {
       const heading = node('h3', t('completeTitle'), $('questions')); heading.id = 'questions-complete'; heading.tabIndex = -1;
       node('p', t('complete'), $('questions'));
     }
@@ -455,9 +476,10 @@
         const invalid = [...form.querySelectorAll('input, textarea, select')].find(control => !control.checkValidity());
         if (invalid) { fieldError(form, invalid.validationMessage, invalid); status(t('invalid')); return; }
         let value;
-        try { value = getValue(); } catch {
-          fieldError(form, t('invalidJSON'), [...form.querySelectorAll('textarea')].find(control => control.getClientRects().length));
-          status(t('invalidJSON')); return;
+        try { value = getValue(); } catch (error) {
+          const nested=mechanical()&&$('mode').value!=='advanced';
+          fieldError(form,nested?error.message:t('invalidJSON'),nested?error.field:[...form.querySelectorAll('textarea')].find(control => control.getClientRects().length));
+          status(t(nested?'nestedInvalid':'invalidJSON')); return;
         }
         const answer = {kind: question.answerKind, value};
         if (question.answerType) answer.schemaType = question.answerType;
@@ -487,6 +509,7 @@
     lock();
   }
   async function loadDraft(id) {
+    guidedQuestion=null;
     if (draft?.draftId !== id) { $('sheet-result').textContent = ''; $('sheet-open').hidden = true; $('sheet-open').removeAttribute('href'); }
     const base = `${root()}/drafts/${encodeURIComponent(id)}`;
     const current = await api(`${base}?locale=${$('locale').value}&mode=${$('mode').value}`);
@@ -592,6 +615,12 @@
     const question = retainedQuestion();
     if (!question) return;
     const retained = conflict;
+    if(mechanical()&&retained.mode!=='advanced'){
+      $('mode').value=retained.mode;guidedQuestion=question.questionId;
+      formRestoration={questionId:question.questionId,value:retained.command.payload.answer.value};
+      conflict=null;$('conflict').hidden=true;render();formRestoration=null;
+      dirtyForm=questionForm(question.questionId);status(t('restoredInput'));lock();firstField(dirtyForm)?.focus();return;
+    }
     $('mode').value = retained.mode === 'advanced' || question.questionId === 'race.traits' ? 'advanced' : 'structured';
     conflict = null; $('conflict').hidden = true; render();
     const form = questionForm(question.questionId);

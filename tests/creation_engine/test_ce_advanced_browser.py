@@ -19,7 +19,7 @@ pytestmark = pytest.mark.postgres
 
 
 def studio(page):
-    page.locator('a[href="/api/ce/authoring/advanced"]').click()
+    page.locator('nav a[href="/api/ce/authoring/advanced"]').click()
     expect(page.locator('#source')).to_be_enabled()
     return page
 

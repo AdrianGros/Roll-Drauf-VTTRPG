@@ -106,3 +106,12 @@ body.ce-authoring {
 .ce-authoring .ce-core-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr)); gap: .75rem; }
 .ce-authoring #sheet-confirm + span { display: inline; }
 .ce-authoring .book-dashboard-ribbon { flex-wrap: wrap; }
+
+.ce-authoring .ce-schema-node { min-width: 0; }
+.ce-authoring .ce-schema-node :is(h4,h5) { margin: .8rem 0 .4rem; }
+.ce-authoring .ce-schema-node :is(input,select,textarea) { width: 100%; }
+.ce-authoring .ce-schema-entry { border-left: 3px solid var(--vtt-field-border-strong); padding: .4rem 0 .7rem .7rem; margin: .8rem 0; }
+.ce-authoring .ce-schema-property { margin-bottom: .5rem; }
+.ce-authoring #guided-progress { padding: .75rem; background: var(--vtt-paper-card); border-radius: .3rem; margin-bottom: 1rem; }
+.ce-authoring #guided-progress progress { width: 100%; accent-color: var(--vtt-rubric); }
+.ce-authoring #content :is(dl,ol) { padding-left: .7rem; }
