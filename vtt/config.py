@@ -52,6 +52,9 @@ class Config:
     CE_SHADOW = _parse_bool(os.getenv("CE_SHADOW"), default=False)
     CE_LEGACY_ADAPTER = _parse_bool(os.getenv("CE_LEGACY_ADAPTER"), default=False)
 
+    # Reverse proxies whose X-Forwarded-For hop is trusted for the client IP.
+    TRUSTED_PROXY_HOPS = _parse_int(os.getenv("TRUSTED_PROXY_HOPS"), 0)
+
     # Database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
@@ -263,6 +266,8 @@ class ProductionConfig(Config):
     SOCKETIO_MESSAGE_QUEUE = os.getenv("SOCKETIO_MESSAGE_QUEUE", REDIS_URL)
     RATELIMIT_STORAGE_URL = os.getenv("RATELIMIT_STORAGE_URL")
     RATELIMIT_STORAGE_URI = RATELIMIT_STORAGE_URL
+    # Host nginx is the only hop; the app container publishes no port.
+    TRUSTED_PROXY_HOPS = _parse_int(os.getenv("TRUSTED_PROXY_HOPS"), 1)
     CORS_ORIGINS = _parse_origins(os.getenv("CORS_ORIGINS"), [])
     AUTO_CREATE_SCHEMA = _parse_bool(os.getenv("AUTO_CREATE_SCHEMA"), default=False)
     VOICE_ENABLED = _parse_bool(os.getenv("VOICE_ENABLED"), default=False)

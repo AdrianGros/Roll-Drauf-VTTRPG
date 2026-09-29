@@ -10,6 +10,7 @@ import time
 import uuid
 from flask import Flask, g, request
 from flask_cors import CORS
+from werkzeug.middleware.proxy_fix import ProxyFix
 from vtt.extensions import db, jwt, limiter, migrate, socketio
 from vtt.config import config_by_name
 from vtt.utils.time import utcnow
@@ -189,6 +190,9 @@ def create_app(config_name=None):
         cors_allowed_origins=app.config['CORS_ORIGINS'],
         message_queue=app.config.get("SOCKETIO_MESSAGE_QUEUE") or None,
     )
+    # Outermost, so rate limits (and Socket.IO) see the client, not the proxy.
+    if app.config['TRUSTED_PROXY_HOPS']:
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_for=app.config['TRUSTED_PROXY_HOPS'])
 
     # CORS configuration
     CORS(
