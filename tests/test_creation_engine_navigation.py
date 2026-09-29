@@ -123,6 +123,24 @@ def test_contents_and_in_book_page_turn_keep_engine_available(navigation_browser
     expect(page).to_have_url(origin + '/api/ce/authoring')
 
 
+@pytest.mark.parametrize('path', ['/login.html', '/signup.html', '/register.html'])
+def test_logged_out_capability_check_never_navigates(navigation_browser, path):
+    # Regression: the capability probe used makeAuthRequest, whose 401 path
+    # redirects to /login.html, so every logged-out book page reloaded itself.
+    page, origin, _ = navigation_browser
+    page.context.clear_cookies()
+    # Count document loads, not framenavigated: BookScene's replaceState on
+    # signup/register is a same-document navigation, not a reload.
+    document_loads = []
+    page.on('request', lambda request: request.is_navigation_request()
+            and request.frame == page.main_frame and document_loads.append(request.url))
+    with page.expect_response('**/api/dashboard/capabilities') as capability:
+        page.goto(origin + path)
+    assert capability.value.status == 401
+    page.wait_for_timeout(1500)
+    assert document_loads == [origin + path]
+
+
 def test_disabled_engine_stays_visible_and_explained(navigation_browser, navigation_app):
     from playwright.sync_api import expect
     page, origin, _ = navigation_browser

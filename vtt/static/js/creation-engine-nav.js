@@ -4,11 +4,22 @@
 
     let capability;
 
+    // Never redirect on 401: logged-out pages (login, signup) pre-render this
+    // entry, and makeAuthRequest's redirect to /login.html reloads them forever.
+    async function fetchCapabilities() {
+        const request = () => fetch('/api/dashboard/capabilities', { credentials: 'include' });
+        let response = await request();
+        if (response.status === 401 && await window.Auth.refreshAccessToken()) {
+            response = await request();
+        }
+        return response.ok ? response.json() : null;
+    }
+
     async function available() {
         if (!capability) {
             capability = (async () => {
                 try {
-                    const result = await window.Auth.makeAuthRequest('/api/dashboard/capabilities');
+                    const result = await fetchCapabilities();
                     return result?.authoring_available === true;
                 } catch (_) {
                     return false;
