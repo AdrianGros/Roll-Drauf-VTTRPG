@@ -830,8 +830,7 @@
                         target.textContent = `Fehler: ${result?.error || "keine Antwort vom Server"}`;
                         return;
                     }
-                    const rolls = Array.isArray(result.rolls) ? result.rolls.join(",") : "-";
-                    target.textContent = `${dice} -> ${result.total} (${rolls})`;
+                    target.textContent = `${dice} → ${result.total} · ${this._formatDiceBreakdown(result)}`;
                 }, mode, visibility);
             });
 
@@ -3246,6 +3245,16 @@
             return card;
         }
 
+        _formatDiceBreakdown(result) {
+            const rolls = Array.isArray(result?.rolls) ? result.rolls : [];
+            const modifier = Number(result?.modifier) || 0;
+            const discarded = Array.isArray(result?.discarded_rolls) ? result.discarded_rolls : [];
+            let breakdown = `Würfel: ${rolls.join(" + ") || "-"}`;
+            if (modifier) breakdown += ` · Modifikator: ${modifier > 0 ? "+" : ""}${modifier}`;
+            if (discarded.length) breakdown += ` · verworfen: ${discarded.join(", ")}`;
+            return breakdown;
+        }
+
         _handleDiceBroadcast(payload) {
             // S08: blind/self rolls arrive as an anonymized placeholder
             // for non-DM/non-roller clients (server-enforced in
@@ -3269,24 +3278,18 @@
             const modeLabel = payload.result?.mode === "advantage" ? " (Vorteil)"
                 : payload.result?.mode === "disadvantage" ? " (Nachteil)" : "";
             const summary = `${player} hat ${payload.dice} gewürfelt${modeLabel}: ${payload.result?.total}`;
+            const breakdown = this._formatDiceBreakdown(payload.result);
             const log = document.getElementById("diceLog");
             const line = document.createElement("div");
             line.textContent = summary;
+            const detail = document.createElement("div");
+            detail.className = "chat-roll-breakdown";
+            detail.textContent = breakdown;
+            line.appendChild(detail);
             log.prepend(line);
             while (log.children.length > 8) {
                 log.removeChild(log.lastChild);
             }
-
-            // S08: expandable breakdown (individual dice, modifier,
-            // discarded ADV/DIS roll) -- the single-line summary stays the
-            // primary, always-visible content per the acceptance criteria
-            // ("total shows first"), detail is opt-in via <details>.
-            const rolls = Array.isArray(payload.result?.rolls) ? payload.result.rolls : [];
-            const modifier = Number(payload.result?.modifier) || 0;
-            const discarded = Array.isArray(payload.result?.discarded_rolls) ? payload.result.discarded_rolls : null;
-            let breakdown = `Würfel: ${rolls.join(", ") || "-"}`;
-            if (modifier) breakdown += `, Modifikator ${modifier >= 0 ? "+" : ""}${modifier}`;
-            if (discarded) breakdown += `, verworfen: ${discarded.join(", ")}`;
 
             // Fullsession robot audit (F3), 2026-08-26: native rolls landed
             // in #diceLog + the Journal activity feed but never in #chatLog
@@ -4283,15 +4286,11 @@
             }
             container.innerHTML = this.chatRows.map((entry, index) => {
                 const text = entry.text || entry.message || "";
-                // S08: roll messages get an expandable breakdown -- native
-                // <details>/<summary> (explicitly allowed by the
-                // acceptance criteria as an alternative to hand-rolled
-                // aria-expanded/aria-controls), so it is keyboard-
-                // accessible with zero extra JS state to manage.
+                // Keep each die visible alongside the total, including
+                // when another chat message causes the log to re-render.
                 const body = entry.rollBreakdown
-                    ? `<details><summary class="chat-roll-summary">${escapeHtml(text)}</summary>
-                        <div class="chat-roll-breakdown" id="chatRollBreakdown-${index}">${escapeHtml(entry.rollBreakdown)}</div>
-                       </details>`
+                    ? `<div class="chat-roll-summary">${escapeHtml(text)}</div>
+                       <div class="chat-roll-breakdown" id="chatRollBreakdown-${index}">${escapeHtml(entry.rollBreakdown)}</div>`
                     : `<div class="${entry.rollHidden ? "chat-roll-hidden" : ""}">${escapeHtml(text)}</div>`;
                 return `
                 <div class="chat-entry">

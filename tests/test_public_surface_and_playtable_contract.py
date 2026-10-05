@@ -502,7 +502,7 @@ def test_playtable_roll_composer_has_presets_adv_dis_and_visibility():
     Covers: die presets, a real ADV/DIS control (never folded into the
     formula text), a Public/GM/Blind/Self dropdown with Blind/Self
     disabled for non-DMs, Shift+Enter-newline vs Enter-submit on a real
-    <textarea>, and native <details> for the roll-breakdown disclosure.
+    <textarea>, and visible individual dice results alongside the total.
     """
     template = PLAY_TEMPLATE.read_text(encoding="utf-8")
     script = PLAY_UI.read_text(encoding="utf-8")
@@ -521,8 +521,8 @@ def test_playtable_roll_composer_has_presets_adv_dis_and_visibility():
     assert '_renderRollVisibilityOptions' in script
     assert 'option.disabled = !operator' in script
 
-    assert '<details>' in script
     assert 'chat-roll-breakdown' in script
+    assert 'role="status" aria-live="polite"' in template
 
     # Blind/self rolls arrive as an anonymized placeholder for non-DM
     # clients -- server-enforced (see tests/test_play_table_chat_and_gating.py

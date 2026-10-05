@@ -2737,7 +2737,7 @@
                                 <option value="self">Privat</option>
                             </select>
                         </div>
-                        <div id="diceResult" class="muted">Noch kein Wurf.</div>
+                        <div id="diceResult" class="muted" role="status" aria-live="polite" aria-atomic="true">Noch kein Wurf.</div>
                         <div id="diceLog" class="muted" style="margin-top:0.45rem;"></div>
                     </div>
 
@@ -2885,11 +2885,14 @@
         }
         .turn-item { cursor: pointer; }
 
-        /* S08: dice presets + roll expansion. */
+        /* Dice presets and always-visible individual results. */
         .dice-presets { flex-wrap: wrap; margin-bottom: 0.4rem; }
         .dice-presets .mini-btn { padding: 0.2rem 0.5rem; font-size: 0.75rem; }
         #chatInput { width: 100%; resize: vertical; font: inherit; padding: 0.35rem; }
-        .chat-roll-summary { cursor: pointer; }
+        #diceResult, #diceLog, .chat-roll-summary, .chat-roll-breakdown { overflow-wrap: anywhere; }
+        /* Override the book theme's dark .muted text on these dark panels. */
+        #diceResult, #diceLog { color: var(--text) !important; }
+        .chat-roll-summary { color: var(--text); }
         .chat-roll-breakdown {
             margin-top: 0.2rem;
             padding: 0.3rem 0.5rem;
