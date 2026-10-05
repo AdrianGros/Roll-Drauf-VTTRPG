@@ -26,13 +26,16 @@ def test_characters_template_exposes_clear_archive_to_sheet_and_campaign_actions
     content = _read(CHARACTERS_TEMPLATE)
 
     assert "Bogen öffnen" in content
-    assert "Edit Sheet" in content
+    runtime = _read(REPO_ROOT / "vtt/static/js/book-scene.js")
+    assert "Bogen öffnen" in runtime
+    assert "buildIntentHref('/character-sheet', { id: character.id })" in runtime
+    assert 'function renderCharacters(' not in content
     assert "Campaign Context" in content
     assert "openCharacterIdentityPicker" in content
     assert "charactersJourneyNote" in content
     assert "openCharacterSheet(id, viewMode = 'view')" in content
     assert "goToCampaignContext(campaignId)" in content
-    assert "Character created" in content
+    assert "Charakter erstellt" in content
     assert "Open Campaign Context" in content
     assert "consumeCharacterIntent('create')" in content
 

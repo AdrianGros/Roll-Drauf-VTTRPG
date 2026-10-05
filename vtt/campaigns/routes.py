@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from vtt.combat import service as combat_service
 from vtt.combat.traps import trigger_schabernacks_traps
 from vtt.play import service as scene_service
-from vtt.socket_handlers import _emit_token_event
+from vtt.socket_handlers import _emit_token_event, disconnect_user_from_campaign
 from vtt.campaigns import campaigns_bp
 from vtt.extensions import db, limiter, socketio
 from vtt.models import (
@@ -68,6 +68,8 @@ def _serialize_campaign(campaign: Campaign, user_id: int | None = None):
         )
 
     your_role = "DM" if is_owner else (active_membership.campaign_role if active_membership else None)
+    your_membership = next((member for member in campaign.members if member.user_id == user_id), None)
+    your_status = 'active' if is_owner else (your_membership.status if your_membership else None)
 
     # DM-only: surfaced on the campaign list card so a pending join
     # request via the multi-use invite link is noticed without having to
@@ -92,6 +94,10 @@ def _serialize_campaign(campaign: Campaign, user_id: int | None = None):
         "is_owner": is_owner,
         "is_member": bool(is_owner or active_membership),
         "your_role": your_role,
+        "your_membership_status": your_status,
+        "can_request_join": bool(campaign.is_discoverable and campaign.status == 'active'
+                                 and your_status not in {'active', 'pending', 'kicked'}
+                                 and len(active_members) < campaign.max_players),
         "pending_join_request_count": pending_join_request_count,
         "created_at": campaign.created_at.isoformat() if campaign.created_at else None,
         "updated_at": campaign.updated_at.isoformat() if campaign.updated_at else None,
@@ -404,7 +410,7 @@ def get_campaign(campaign_id):
     members = (
         CampaignMember.query.filter(
             CampaignMember.campaign_id == campaign.id,
-            CampaignMember.status != "kicked",
+            CampaignMember.status.notin_(["kicked", "left"]),
         )
         .order_by(CampaignMember.invited_at.desc())
         .all()
@@ -747,6 +753,45 @@ def accept_invite(campaign_id):
     ), 202
 
 
+@campaigns_bp.route("/campaigns/<int:campaign_id>/join-requests", methods=["POST"])
+@limiter.limit("30 per hour")
+@jwt_required()
+def request_campaign_join(campaign_id):
+    """Request DM approval for a campaign advertised in player search."""
+    user, error = _get_current_user()
+    if error:
+        return error
+    campaign, error = _get_campaign_or_404(campaign_id)
+    if error:
+        return error
+    if not campaign.is_discoverable:
+        return jsonify({'error': 'Invitation required for this campaign'}), 403
+    member = CampaignMember.query.filter_by(campaign_id=campaign.id, user_id=user.id).first()
+    if _is_active_member(campaign, user.id):
+        return jsonify({'error': 'Already a campaign member'}), 409
+    if member and member.status == 'kicked':
+        return jsonify({'error': 'Campaign membership has been revoked'}), 403
+    if member and member.status == 'pending':
+        return jsonify({'status': 'pending', 'campaign': _serialize_campaign(campaign, user.id)}), 202
+    if campaign.status != 'active' or not campaign.can_add_player():
+        return jsonify({'error': 'Diese Kampagne nimmt gerade keine weiteren Spieler auf.'}), 409
+    if member is None:
+        member = CampaignMember(campaign_id=campaign.id, user_id=user.id)
+        db.session.add(member)
+    member.status = 'pending'
+    member.campaign_role = 'Player'
+    member.invited_by = None
+    member.invited_at = utcnow()
+    member.accepted_at = None
+    member.joined_at = None
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({'error': 'Anfrage bereits vorhanden. Bitte lade die Übersicht neu.'}), 409
+    return jsonify({'status': 'pending', 'campaign': _serialize_campaign(campaign, user.id)}), 202
+
+
 @campaigns_bp.route("/campaigns/<int:campaign_id>/join-requests/<int:user_id>/approve", methods=["POST"])
 @limiter.limit("60 per hour")
 @jwt_required()
@@ -846,6 +891,30 @@ def invite_info(token_value):
     ), 200
 
 
+@campaigns_bp.route("/campaigns/<int:campaign_id>/leave", methods=["POST"])
+@limiter.limit("30 per hour")
+@jwt_required()
+def leave_campaign(campaign_id):
+    """End the caller's membership without deleting their characters."""
+    user, error = _get_current_user()
+    if error:
+        return error
+    campaign, error = _get_campaign_or_404(campaign_id)
+    if error:
+        return error
+    if campaign.owner_id == user.id:
+        return jsonify({"error": "Die Spielleitung kann ihre eigene Kampagne nicht verlassen."}), 409
+    member = CampaignMember.query.filter_by(
+        campaign_id=campaign.id, user_id=user.id, status="active"
+    ).first()
+    if not member:
+        return jsonify({"error": "Active campaign membership required"}), 403
+    member.status = "left"
+    db.session.commit()
+    disconnect_user_from_campaign(campaign.id, user.id)
+    return jsonify({"message": "Kampagne verlassen", "status": "left"}), 200
+
+
 @campaigns_bp.route("/campaigns/<int:campaign_id>/members", methods=["GET"])
 @jwt_required()
 def list_campaign_members(campaign_id):
@@ -864,7 +933,7 @@ def list_campaign_members(campaign_id):
     members = (
         CampaignMember.query.filter(
             CampaignMember.campaign_id == campaign.id,
-            CampaignMember.status != "kicked",
+            CampaignMember.status.notin_(["kicked", "left"]),
         )
         .order_by(CampaignMember.invited_at.desc())
         .all()

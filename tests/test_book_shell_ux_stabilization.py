@@ -21,12 +21,14 @@ def test_dashboard_recent_item_actions_are_real_routes_not_fake_live_alerts():
 
     assert "alert('Campaign '" not in content
     assert "alert('Character '" not in content
-    assert "function openCampaignHub(id)" in content
-    assert "function openCharacterSheet(id)" in content
-    assert "Hub öffnen" in content
-    assert "Bogen öffnen" in content
-    assert "goTo(`/campaigns?campaign_id=${id}`);" in content
-    assert "goTo(`/character-sheet?id=${id}`);" in content
+    runtime = _read(BOOK_SCENE_JS)
+    assert 'data-dashboard-detail' in runtime
+    assert "Hub öffnen" in runtime
+    assert "Bogen öffnen" in runtime
+    assert "buildIntentHref('/campaigns', { campaign_id: campaign.id })" in runtime
+    assert "buildIntentHref('/character-sheet', { id: character.id })" in runtime
+    assert 'function loadCampaignsGrid' not in content
+    assert 'function loadCharactersGrid' not in content
 
 
 def test_shared_placeholder_styles_exist_in_book_scene_css():
@@ -51,8 +53,8 @@ def test_book_scene_routes_use_production_copy_and_real_feature_entry_points():
     assert "Held anlegen" in content
     assert "Hub und Vorbereitung" in content
     assert "data-dashboard-href" in content
-    assert "buildIntentHref('/campaigns', { classic: 1, intent: 'create' })" in content
-    assert "buildIntentHref('/characters', { classic: 1, intent: 'create' })" in content
+    assert "buildIntentHref('/campaigns', { intent: 'create' })" in content
+    assert "buildIntentHref('/characters', { intent: 'create' })" in content
 
 
 def test_campaigns_template_exposes_only_ready_creation_and_map_surfaces():
@@ -78,8 +80,9 @@ def test_character_surfaces_expose_identity_surfaces_consistently():
 
     assert 'id="identityFilePicker"' in characters
     assert "openCharacterIdentityPicker" in characters
-    assert "Avatar First" in characters
-    assert "Token Ready" in characters
+    runtime = _read(BOOK_SCENE_JS)
+    assert "buildIntentHref('/character-sheet', { id: character.id })" in runtime
+    assert 'function renderCharacters(' not in characters
 
     assert "Identität" in sheet
     assert 'id="sheetIdentityFilePicker"' in sheet

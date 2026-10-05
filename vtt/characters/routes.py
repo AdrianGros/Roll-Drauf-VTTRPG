@@ -8,6 +8,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from werkzeug.utils import secure_filename
 
 from sqlalchemy.orm.attributes import flag_modified
+from sqlalchemy import or_
 
 from vtt.characters import characters_bp
 from vtt.extensions import db, limiter
@@ -17,6 +18,8 @@ from vtt.models import (
     Character,
     Equipment,
     InventoryItem,
+    SessionCharacterAssignment,
+    TokenState,
     Spell,
     User,
 )
@@ -197,7 +200,7 @@ def _get_current_user():
         return None, (jsonify({'error': 'Authentication required'}), 401)
 
     user = db.session.get(User, int(user_id))
-    if not user:
+    if not user or not user.is_usable():
         return None, (jsonify({'error': 'User not found'}), 404)
     return user, None
 
@@ -220,7 +223,9 @@ def _is_active_campaign_member(user_id, campaign_id):
     if not campaign_id:
         return False
     campaign = db.session.get(Campaign, campaign_id)
-    if campaign and campaign.owner_id == user_id:
+    if not campaign or campaign.deleted_at:
+        return False
+    if campaign.owner_id == user_id:
         return True
     member = CampaignMember.query.filter_by(
         user_id=user_id,
@@ -228,6 +233,19 @@ def _is_active_campaign_member(user_id, campaign_id):
         status='active',
     ).first()
     return member is not None
+
+
+def _validate_character_campaign(user_id, campaign_id):
+    if campaign_id is None:
+        return None
+    if type(campaign_id) is not int or campaign_id <= 0:
+        return jsonify({'error': 'campaign_id must be a positive integer or null'}), 400
+    campaign = db.session.get(Campaign, campaign_id)
+    if not campaign or campaign.deleted_at:
+        return jsonify({'error': 'Campaign not found'}), 404
+    if not _is_active_campaign_member(user_id, campaign_id):
+        return jsonify({'error': 'Active campaign membership required'}), 403
+    return None
 
 
 def _can_read_character(user_id, char):
@@ -310,16 +328,9 @@ def create_character():
 
     # Optional: attach to campaign if campaign_id provided
     campaign_id = data.get('campaign_id')
-    if campaign_id:
-        campaign = db.session.get(Campaign, campaign_id)
-        if not campaign:
-            return jsonify({'error': 'Campaign not found'}), 404
-        # Check if user is member of campaign
-        member = CampaignMember.query.filter_by(
-            user_id=user_id, campaign_id=campaign_id
-        ).first()
-        if not member:
-            return jsonify({'error': 'Not a member of this campaign'}), 403
+    error = _validate_character_campaign(user_id, campaign_id)
+    if error:
+        return error
 
     is_discoverable = bool(data.get('is_discoverable', False))
 
@@ -362,6 +373,61 @@ def list_my_characters():
 
     chars = Character.query.filter_by(user_id=user.id, deleted_at=None).all()
     return jsonify([c.serialize() for c in chars]), 200
+
+
+@characters_bp.route('/characters/shared', methods=['GET'])
+@limiter.limit('600 per hour')
+@jwt_required()
+def list_shared_characters():
+    """Characters explicitly assigned to the caller's active campaigns."""
+    user, error = _get_current_user()
+    if error:
+        return error
+    memberships = db.session.query(CampaignMember.campaign_id).filter_by(
+        user_id=user.id, status='active')
+    rows = (db.session.query(Character, Campaign).join(
+        Campaign, Character.campaign_id == Campaign.id).filter(
+        Character.deleted_at.is_(None), Character.user_id != user.id,
+        Campaign.deleted_at.is_(None),
+        or_(Campaign.owner_id == user.id, Campaign.id.in_(memberships)),
+    ).order_by(Campaign.name, Character.name).all())
+    return jsonify([
+        {**char.serialize(), 'campaign_name': campaign.name,
+         'owner_username': char.user.username}
+        for char, campaign in rows
+    ]), 200
+
+
+@characters_bp.route('/characters/<int:char_id>/campaign', methods=['PUT'])
+@limiter.limit('60 per hour')
+@jwt_required()
+def assign_character_campaign(char_id):
+    """Let the owner share a character with one of their campaign groups."""
+    user, error = _get_current_user()
+    if error:
+        return error
+    char, error = _get_character_or_404(char_id)
+    if error:
+        return error
+    if char.user_id != user.id:
+        return jsonify({'error': 'Unauthorized'}), 403
+    data = request.get_json() or {}
+    if 'campaign_id' not in data:
+        return jsonify({'error': 'campaign_id required'}), 400
+    campaign_id = data['campaign_id']
+    error = _validate_character_campaign(user.id, campaign_id)
+    if error:
+        return error
+    if char.campaign_id != campaign_id:
+        if char.is_party_stash:
+            return jsonify({'error': 'Der gemeinsame Vorrat bleibt seiner Kampagne zugeordnet.'}), 409
+        assigned = SessionCharacterAssignment.query.filter_by(character_id=char.id).first()
+        token = TokenState.query.filter_by(character_id=char.id, deleted_at=None).first()
+        if assigned or token:
+            return jsonify({'error': 'Entferne zuerst die Sitzungszuweisungen und Tokens dieses Charakters in der bisherigen Kampagne.'}), 409
+        char.campaign_id = campaign_id
+        db.session.commit()
+    return jsonify(char.serialize()), 200
 
 
 @characters_bp.route('/characters/<int:char_id>', methods=['GET'])

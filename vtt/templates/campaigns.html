@@ -16,19 +16,6 @@
             flex-direction: column;
         }
 
-        /* Nur der Seiten-Header (body > header) -- der nackte
-           Element-Selektor hat jeden <header> im Buch grau eingefaerbt,
-           inklusive der Kapitelkoepfe (die "grauen Kacheln" des Audits;
-           Laufzeit-Diagnose 2026-08-24). Relikt aus der Prae-Buch-Aera,
-           siehe blauer Border. */
-        body > header {
-            background: rgba(0,0,0,0.3);
-            padding: 1rem 2rem;
-            border-bottom: 2px solid #4a9eff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
 
         .logo {
             font-size: 1.5rem;
@@ -1282,20 +1269,6 @@
             }
         }
 
-        /* Dark mode surface styling */
-        .card, .campaign-card, .empty-state {
-            background: var(--vtt-surface-card, #201530) !important;
-            border: 1px solid rgba(212, 175, 55, 0.15) !important;
-            color: var(--vtt-text-primary, #e8d5b7);
-        }
-        .card-title { color: var(--vtt-accent); }
-        .card-meta, .campaign-info, .empty-state p { color: var(--vtt-text-secondary, #9e8fa0); }
-        input, textarea, select {
-            background: var(--vtt-surface-input, #141420) !important;
-            color: var(--vtt-text-primary, #e8d5b7) !important;
-            border-color: var(--vtt-border-subtle, rgba(255,255,255,0.10)) !important;
-        }
-        input::placeholder { color: rgba(232, 213, 183, 0.5); }
     </style>
     <!-- Spellbook Theme -->
     <link rel="stylesheet" href="/static/css/fonts.css">
@@ -1312,11 +1285,6 @@
             overflow-y: auto;
         }
 
-        body.campaigns-route-book-scene > header,
-        body.campaigns-route-book-scene > main,
-        body.campaigns-route-book-scene > footer {
-            display: none;
-        }
 
         #campaignsSceneStatus {
             position: fixed;
@@ -1335,84 +1303,74 @@
         #campaignsSceneStatus[hidden] {
             display: none;
         }
+
+        /* Campaign forms and preparation share the book's paper/ink palette. */
+        #book-dashboard-scene :is(.book-dashboard-page, .book-spread-shell,
+            .book-spread-page, .book-spread-page-body) {
+            min-width: 0;
+            max-width: 100%;
+        }
+        #book-dashboard-scene :is([class^="campaign-create-"], [class^="hub-"],
+            [class^="session-prep-"], [class^="asset-"], [class^="workflow-"],
+            [class^="quickstart-"], .detail-box, .list-item, .muted, .session-action-status) {
+            color: var(--vtt-ink, #2a1a12);
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+        #book-dashboard-scene :is(.campaign-create-panel, .hub-hero, .hub-primary,
+            .hub-card, .hub-stat, .hub-step, .hub-map-item, .hub-callout, .hub-session-note,
+            .hub-surface-link, .session-prep-surface, .session-prep-next, .session-prep-card,
+            .asset-library-upload, .asset-card, .asset-empty-state, .hub-quickstart,
+            .detail-box, .workflow-copy-box, .workflow-step, .list-item, .quickstart-panel,
+            .chat-feed, .mod-queue) {
+            background: rgba(255, 255, 255, 0.45);
+            border-color: rgba(130, 89, 52, 0.24);
+            box-shadow: none;
+        }
+        #book-dashboard-scene :is(.hub-badge, .hub-pill, .hub-step-state, .state-done, .state-todo) {
+            background: rgba(130, 89, 52, 0.10);
+            color: var(--vtt-ink, #2a1a12);
+        }
+        #book-dashboard-scene :is(input, textarea, select) {
+            min-width: 0;
+            max-width: 100%;
+            background: var(--vtt-paper, #fffaf0);
+            color: var(--vtt-ink, #2a1a12);
+            border-color: rgba(130, 89, 52, 0.35);
+            font: inherit;
+        }
+        #book-dashboard-scene input::placeholder,
+        #book-dashboard-scene textarea::placeholder { color: #6e5745; }
+        #book-dashboard-scene :is(.hub-hero, .hub-grid, .session-prep-hero,
+            .session-prep-grid, .detail-columns, .community-shell, .hub-link-grid,
+            .asset-library-toolbar, .asset-library-upload, .asset-library-grid) {
+            grid-template-columns: minmax(0, 1fr);
+        }
+        #book-dashboard-scene :is(.hub-card-topline, .list-item-top,
+            .session-prep-toolbar, .asset-card-actions) { flex-wrap: wrap; }
+        #book-dashboard-scene :is(.inline-controls input, .inline-controls select) {
+            flex: 1 1 10rem;
+            width: 100%;
+        }
+        #book-dashboard-scene .campaign-create-state.is-error,
+        #book-dashboard-scene .message.error { color: #842222; }
+        #book-dashboard-scene .campaign-create-state.is-success,
+        #book-dashboard-scene .message.success { color: #24552c; }
+        @media (max-width: 700px) {
+            #book-dashboard-scene .campaign-create-grid { grid-template-columns: minmax(0, 1fr); }
+            #book-dashboard-scene .btn { white-space: normal; overflow-wrap: anywhere; }
+        }
     </style>
 </head>
 <body class="spellbook campaigns-route-book-scene">
     <div id="campaignsSceneStatus" role="status" aria-live="polite">Kampagnen werden vorbereitet …</div>
-    <!-- Desktop-Audit D09/F1/C1 (interim slice): this used to sit directly in
-         the live DOM, merely CSS-hidden while the book render was active -
-         which is exactly what produced the duplicate-ID hazard in D09
-         (getElementById always hit this copy first). Wrapping it in an inert
-         <template> is the same house pattern already used for
-         signup/register/character-sheet's book content
-         (getExternalTemplateId in book-scene.js): nothing inside is part of
-         the live DOM/CSS cascade unless explicitly promoted. That only
-         happens in bootstrapCampaignsScene()'s classic branch below, which
-         is now a true fallback rather than the primary click path. -->
-    <template id="campaignsClassicTemplate">
-    <header>
-        <div class="logo">roll drauf VTT</div>
-        <div class="header-actions">
-            <button class="btn btn-primary" type="button" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
-            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
-            <a class="btn btn-secondary" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
-            <button class="btn btn-secondary" onclick="logout()">Abmelden</button>
-        </div>
-    </header>
-
-    <main>
-        <div class="book-shell-frame">
-            <div class="book-dashboard-topbar">
-                <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
-                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
-                    <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
-                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
-                    <a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
-                    <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
-                </div>
-                <div class="book-dashboard-crest" aria-label="Aktuelles Kapitel">Chroniken</div>
-            </div>
-            <div class="book-shell-ribbon">Chroniken</div>
-
-            <div class="book-shell-frame-header">
-                <div>
-                    <p class="book-frame-eyebrow">Kampagnen-Atlas</p>
-                    <h1 class="book-page-title" data-book-field="section">Kampagnen</h1>
-                    <p class="book-frame-copy">
-                        Diese Doppelseite trennt Orientierung von Verwaltung: linke Seite für Ablauf und Steuerung, rechte Seite für die eigentliche Kampagnenliste und Detailansicht.
-                    </p>
-                </div>
-                <div class="book-frame-meta">
-                    <span class="book-chip">Kapitel <span data-book-field="chapter">Chroniken</span></span>
-                    <span class="book-chip">Liste + Detail</span>
-                    <span class="book-chip">Einsatzbereit</span>
-                </div>
-            </div>
-
-            <div class="book-spread">
-                <section class="book-page book-page--index">
-                    <div class="page-header">
-                        <h1>Kampagnen</h1>
-                        <button id="campaignCreateToggle" class="btn btn-primary" type="button" aria-expanded="false" onclick="createCampaign()">+ Kampagne anlegen</button>
-                    </div>
-
-                    <p class="book-page-lede">Organisiere deine aktiven Welten, halte Beitritte im Blick und nutze diese Seite als verlässlichen Weg von Kampagne zu Session und weiter nach Play.</p>
-
-                    <div class="book-page-note">
-                        Die Kampagnenerstellung lebt jetzt direkt auf dieser Buchseite: Name, kurze Beschreibung und Spielerzahl reichen für den Start, danach führt derselbe Weg weiter in den Kampagnen-Hub und zur Session-Vorbereitung.
-                    </div>
-
-                    <div id="messageBox" class="message"></div>
-
+    <template id="campaignCreateTemplate">
                     <section class="campaign-create-panel" aria-labelledby="campaignCreateTitle">
                         <div class="campaign-create-topline">
                             <div>
                                 <div id="campaignCreateTitle" class="campaign-create-title">Neue Kampagne im Buch anlegen</div>
                                 <div class="campaign-create-copy">Die Erstellung bleibt bewusst schlank: erst den Kern erfassen, dann im Hub die nächsten Schritte wie Einladungen, Karte oder erste Session vorbereiten.</div>
                                 <div class="campaign-create-meta">Pflicht: Kampagnenname. Optional: Kurzbeschreibung und maximale Spielerzahl.</div>
-                            </div>
-                            <div class="campaign-create-actions">
-                                <button class="btn btn-secondary" type="button" onclick="openCampaignCreationPanel()">Formular öffnen</button>
                             </div>
                         </div>
 
@@ -1441,7 +1399,7 @@
                                     <input id="campaignCreateDiscoverable" type="checkbox">
                                     <span class="campaign-create-checkbox-copy">
                                         <span class="campaign-create-label">Öffentlich sichtbar (Spielersuche)</span>
-                                        <span class="campaign-create-help">Kampagnen sind standardmäßig privat und tauchen nirgends in der Übersicht auf. „Öffentlich" bedeutet nur, dass die Kampagne künftig in der Spielersuche gefunden werden kann — der Beitritt läuft weiterhin ausschließlich über eine Einladung.</span>
+                                        <span class="campaign-create-help">Private Kampagnen sehen nur ihre Mitglieder. Öffentliche Kampagnen erscheinen in der Kampagnenübersicht; interessierte Spieler können dort den Beitritt anfragen. Die Spielleitung bestätigt jede Anfrage. Einladungslinks funktionieren weiterhin.</span>
                                     </span>
                                 </label>
                             </div>
@@ -1457,65 +1415,6 @@
 
                         <div id="campaignCreateSuccess" class="campaign-create-success" hidden></div>
                     </section>
-
-                    <div class="tabs">
-                        <button class="tab active" onclick="switchTab('my', this)">Meine Kampagnen</button>
-                        <button class="tab" onclick="switchTab('joined', this)">Beigetreten</button>
-                        <button class="tab" onclick="switchTab('browse', this)">Alle</button>
-                    </div>
-
-                    <div class="book-page-section">
-                        <h2 class="book-page-section-title">Lesefluss</h2>
-                        <div class="book-guide-list">
-                            <div class="book-guide-item">
-                                <div class="book-guide-title">Kampagnen-Hub</div>
-                                <div class="book-guide-copy">Hier beginnt der Hauptweg zum Tisch: Kampagne öffnen, Session vorbereiten oder fortsetzen, dann nach Play wechseln.</div>
-                            </div>
-                            <div class="book-guide-item">
-                                <div class="book-guide-title">Beigetreten</div>
-                                <div class="book-guide-copy">Spieler sehen hier ihre Kampagnen und folgen derselben Route über Session-Hub weiter nach Play.</div>
-                            </div>
-                            <div class="book-guide-item">
-                                <div class="book-guide-title">Alle</div>
-                                <div class="book-guide-copy">Erweitert den Blick auf browse-orientierte Flows, ohne den Lesefluss aus derselben Buchlogik zu verlieren.</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-page-note">
-                        Der kürzeste Weg an den Tisch bleibt bewusst sichtbar: Kampagne öffnen, Session starten oder fortsetzen, dann über denselben Buchrahmen nach Play wechseln.
-                    </div>
-
-                    <div class="book-page-folio" data-book-folio="left">3</div>
-                </section>
-
-                <section class="book-page book-page--content">
-                    <div class="grid" id="campaignsGrid">
-                        <div class="empty-state">
-                            <p>Kampagnen werden geladen...</p>
-                        </div>
-                    </div>
-
-                    <section class="detail-panel hidden" id="campaignDetail">
-                        <div class="detail-header">
-                            <h2 id="detailTitle">Kampagnen-Details</h2>
-                            <div style="display:flex; gap:0.5rem;">
-                                <button class="btn btn-secondary btn-sm" id="refreshDetailBtn">Aktualisieren</button>
-                                <button class="btn btn-secondary btn-sm" onclick="closeCampaignDetail()">Schließen</button>
-                            </div>
-                        </div>
-                        <div id="detailBody"></div>
-                    </section>
-
-                    <div class="book-page-folio" data-book-folio="right">4</div>
-                </section>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
-    </footer>
     </template>
 
     <script src="/static/js/auth.js"></script>
@@ -1535,44 +1434,49 @@
         let sessionPrepAssetStats = {};
         let sessionPrepAssetStatsRequestToken = 0;
 
-        // Desktop-Audit D09/F1/C1 (interim slice): promotes the inert
-        // #campaignsClassicTemplate into the live DOM. Only called from the
-        // classic-fallback branch below - the primary click path never
-        // touches this, so the classic markup/IDs stay out of the live DOM
-        // (and out of getElementById's reach) otherwise.
-        function promoteClassicCampaignsMarkup() {
-            const template = document.getElementById('campaignsClassicTemplate');
-            if (!template) {
-                return;
-            }
-            template.replaceWith(template.content.cloneNode(true));
-            window.CreationEngineNavigation?.hydrate(document);
-        }
-
         async function bootstrapCampaignsScene() {
             const url = new URL(window.location.href);
-            if (url.searchParams.has('campaign_id') || url.searchParams.get('classic') === '1') {
-                promoteClassicCampaignsMarkup();
-                document.body.classList.remove('campaigns-route-book-scene');
-                const statusNode = document.getElementById('campaignsSceneStatus');
-                if (statusNode) {
-                    statusNode.hidden = true;
-                }
-                loadCampaigns();
-                return;
-            }
-
             if (!window.BookScene || typeof BookScene.bootstrapProtectedRoute !== 'function') {
                 window.location.href = '/login.html';
                 return;
             }
 
-            await BookScene.bootstrapProtectedRoute({
+            const sceneReady = await BookScene.bootstrapProtectedRoute({
                 routeKey: 'campaigns',
                 auth,
                 statusElementId: 'campaignsSceneStatus',
                 statusMessage: 'Kampagnen werden vorbereitet …',
             });
+            if (!sceneReady) return;
+            currentUser = BookScene.sceneUser;
+            const campaignId = Number(url.searchParams.get('campaign_id'));
+            if (url.searchParams.get('intent') === 'create') {
+                showCampaignCreationScene();
+            } else if (Number.isInteger(campaignId) && campaignId > 0) {
+                if (url.searchParams.get('workspace') === '1') {
+                    await viewCampaign(campaignId);
+                } else {
+                    await BookScene.renderCampaignHubDetail(campaignId);
+                }
+            }
+        }
+
+        function showCampaignCreationScene() {
+            // Reuse the existing form and its validation/submission handlers,
+            // inside the same BookScene shell as the campaign hub.
+            const panel = document.getElementById('campaignCreateTemplate')
+                ?.content.querySelector('.campaign-create-panel');
+            if (!panel) return;
+            BookScene.sceneSurface.innerHTML = BookScene.buildPageShell('campaigns', currentUser, {
+                title: 'Kampagne anlegen',
+                showRunningHead: false,
+                showRightHeader: false,
+                leftPage: `<section data-campaign-create><div id="messageBox" class="message"></div>${panel.outerHTML}</section>`,
+                rightPage: BookScene.buildActionButtons([{label: 'Zur Kampagnenliste', route: '/campaigns'}]),
+            });
+            BookScene.bindSceneNavigation();
+            window.history.replaceState({book_scene: 'campaigns'}, '', '/campaigns?intent=create');
+            openCampaignCreationPanel();
         }
 
         function showMessage(text, isError = false) {
@@ -1651,6 +1555,10 @@
         }
 
         function closeCampaignCreationPanel() {
+            if (document.querySelector('[data-campaign-create]')) {
+                BookScene.pageTurn('/campaigns', currentUser);
+                return;
+            }
             const form = document.getElementById("campaignCreateForm");
             const toggle = document.getElementById("campaignCreateToggle");
             if (!form) return;
@@ -1716,94 +1624,9 @@
         }
 
         async function loadCampaigns() {
-            try {
-                currentUser = await auth.requireAuth("/login.html");
-                if (!currentUser) return;
-
-                campaigns = await auth.makeAuthRequest("/api/campaigns");
-                const activeTabButton = document.querySelector(`.tab[onclick*="'${currentTab}'"]`);
-                switchTab(currentTab, activeTabButton);
-
-                const queryCampaignId = Number(new URLSearchParams(window.location.search).get("campaign_id"));
-                if (Number.isInteger(queryCampaignId) && queryCampaignId > 0) {
-                    await viewCampaign(queryCampaignId, false);
-                }
-
-                if (consumeCampaignIntent("create")) {
-                    openCampaignCreationPanel();
-                }
-            } catch (error) {
-                document.getElementById("campaignsGrid").innerHTML = `
-                    <div class="empty-state">
-                        <p>Kampagnen konnten nicht geladen werden.</p>
-                    </div>
-                `;
-                showMessage(error.message || "Kampagnen konnten nicht geladen werden.", true);
-            }
-        }
-
-        function switchTab(tab, element) {
-            currentTab = tab;
-            document.querySelectorAll(".tab").forEach(tabButton => tabButton.classList.remove("active"));
-            if (element) {
-                element.classList.add("active");
-            } else {
-                const fallback = document.querySelector(`.tab[onclick*="'${tab}'"]`);
-                if (fallback) fallback.classList.add("active");
-            }
-
-            let filtered = campaigns;
-            if (tab === "my") {
-                filtered = campaigns.filter(campaign => campaign.is_owner);
-            } else if (tab === "joined") {
-                filtered = campaigns.filter(campaign => campaign.is_member && !campaign.is_owner);
-            }
-
-            renderCampaigns(filtered);
-        }
-
-        function renderCampaigns(campaignList) {
-            const grid = document.getElementById("campaignsGrid");
-            if (!campaignList || campaignList.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <p>In diesem Bereich gibt es noch keine Kampagnen.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = campaignList.map(campaign => {
-                const statusClass = `status-${campaign.status}`;
-                const primaryAction = campaign.is_member
-                    ? `<button class="btn btn-primary" onclick="viewCampaign(${campaign.id})">Hub öffnen</button>`
-                    : `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">Beitreten</button>`;
-
-                return `
-                    <div class="campaign-card">
-                        <div class="campaign-banner"></div>
-                        <div class="campaign-info">
-                            <div class="campaign-name">${escapeHtml(campaign.name)}</div>
-                            <div class="campaign-status ${statusClass}">${escapeHtml(campaign.status)}</div>
-                            <div class="muted">Spielleitung: ${escapeHtml(campaign.owner)}</div>
-                            <div class="campaign-meta">
-                                <div class="meta-item">
-                                    <div class="meta-label">Mitglieder</div>
-                                    <div class="meta-value">${campaign.member_count || 0} / ${campaign.max_players || 6}</div>
-                                </div>
-                                <div class="meta-item">
-                                    <div class="meta-label">Sessions</div>
-                                    <div class="meta-value">${campaign.session_count || 0}</div>
-                                </div>
-                            </div>
-                            <div class="campaign-actions">
-                                ${primaryAction}
-                                ${campaign.is_owner ? `<button class="btn btn-danger" onclick="deleteCampaign(${campaign.id})">Löschen</button>` : ""}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join("");
+            const snapshot = await BookScene.loadSceneSnapshot(currentUser);
+            campaigns = snapshot.campaigns || [];
+            BookScene.renderSceneRoute('campaigns', currentUser, snapshot);
         }
 
         function createCampaign() {
@@ -1849,6 +1672,10 @@
                     is_discoverable: isDiscoverable,
                 });
                 lastCreatedCampaign = created || null;
+                if (document.querySelector('[data-campaign-create]') && created?.id) {
+                    await BookScene.renderCampaignHubDetail(created.id);
+                    return;
+                }
                 renderCampaignCreateSuccess();
                 showMessage("Kampagne erstellt.");
                 setCampaignCreationState("Kampagne erstellt. Öffne jetzt den Hub oder lege direkt die nächste Kampagne an.", "success");
@@ -3971,8 +3798,6 @@
         }
 
         function renderCampaignDetail(data) {
-            const detail = document.getElementById("campaignDetail");
-            const detailBody = document.getElementById("detailBody");
             const campaign = data.campaign;
             const members = data.members || [];
             const sessions = data.sessions || [];
@@ -3981,21 +3806,34 @@
             const assignments = data.session_character_assignments || [];
             const canManage = campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
             currentDetailCampaign = campaign;
-            document.getElementById("detailTitle").textContent = campaign.name;
+            BookScene.currentView = 'campaigns';
+            BookScene.currentPage = 'campaigns';
+            BookScene.sceneSurface.innerHTML = BookScene.buildPageShell('campaigns', currentUser, {
+                title: 'Kampagne vorbereiten',
+                showRunningHead: false,
+                showRightHeader: false,
+                leftPage: `
+                    <section class="book-scene-panel" id="campaignPrep">
+                        <h2>${escapeHtml(campaign.name)}</h2>
+                        <div id="messageBox" class="message" role="status"></div>
+                        <div class="book-scene-action-row">
+                            <button class="btn btn-secondary" id="refreshDetailBtn" type="button">Aktualisieren</button>
+                            <button class="btn btn-secondary" type="button" data-dashboard-detail="campaign:${Number(campaign.id)}">Zum Kampagnen-Hub</button>
+                        </div>
+                        ${buildRoll20CopyWorkflow(campaign, sessions, maps, characters, assignments)}
+                        ${buildSessionPrepSurface(campaign, members, sessions, maps, characters, assignments)}
+                    </section>`,
+                rightPage: `
+                    ${buildAssetLibraryPanel(campaign, sessions, canManage)}
+                    <section class="book-scene-panel">
+                        <h2>Mitglieder</h2>
+                        <div class="list">${buildMembersList(members)}</div>
+                    </section>
+                    ${buildCommunityPanel(campaign, sessions)}`,
+            });
+            BookScene.bindSceneNavigation();
             document.getElementById("refreshDetailBtn").onclick = () => viewCampaign(campaign.id, false);
-
-            detailBody.innerHTML = `
-                ${buildRoll20CopyWorkflow(campaign, sessions, maps, characters, assignments)}
-                ${buildSessionPrepSurface(campaign, members, sessions, maps, characters, assignments)}
-                ${buildAssetLibraryPanel(campaign, sessions, canManage)}
-                <div class="detail-box" style="margin-top:1rem;">
-                    <h3>Mitglieder</h3>
-                    <div class="list">${buildMembersList(members)}</div>
-                </div>
-                ${buildCommunityPanel(campaign, sessions)}
-            `;
-
-            detail.classList.remove("hidden");
+            window.history.replaceState({book_scene: 'campaigns'}, '', `/campaigns?campaign_id=${campaign.id}&workspace=1`);
             if (sessions.length > 0) {
                 loadCommunityPanel(campaign.id);
                 if (canModerateCampaign(campaign)) {
@@ -4008,15 +3846,14 @@
                 renderSessionPrepAssetStats(focusedPrepSession.id);
                 refreshSessionPrepAssetStats(campaign.id, focusedPrepSession.id);
             }
-            detail.scrollIntoView({ behavior: "smooth", block: "start" });
+
         }
 
         function closeCampaignDetail() {
             selectedCampaignId = null;
             selectedPrepSessionId = null;
             currentDetailCampaign = null;
-            document.getElementById("campaignDetail").classList.add("hidden");
-            updateUrlCampaignId(null);
+            BookScene.pageTurn('/campaigns', currentUser);
         }
 
         async function invitePlayer(campaignId) {

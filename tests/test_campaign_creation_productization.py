@@ -43,7 +43,9 @@ def test_campaign_creation_no_longer_uses_prompt_chain_as_primary_path(client):
     assert 'window.prompt("Maximale Spielerzahl (2-20):", "6")' not in html
     assert "openCampaignCreationPanel()" in html
     assert "async function submitCampaignCreationForm(event)" in html
-    assert "consumeCampaignIntent(\"create\")" in html
+    assert "url.searchParams.get('intent') === 'create'" in html
+    assert "showCampaignCreationScene()" in html
+    assert 'campaignsClassicTemplate' not in html
 
 
 def test_campaign_creation_success_copy_points_into_hub_and_session_prep(client):

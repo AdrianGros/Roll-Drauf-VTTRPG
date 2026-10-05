@@ -41,6 +41,7 @@ from vtt.models import (
 )
 
 _connected_rooms = defaultdict(set)
+_connected_users: dict[str, int] = {}
 _seen_client_events = defaultdict(dict)
 # Playtable-Vordermann 2026-08-25 (P2 Presence): who sits at which table.
 # room -> sid -> {user_id, username, role}; broadcast as presence:update.
@@ -219,26 +220,19 @@ def _drop_presence(sid: str, room: str) -> None:
 
 
 def disconnect_user_from_campaign(campaign_id: int, user_id: int) -> None:
-    """Fixed 2026-09-04 (adversarial audit): kicking/banning a member
-    used to only set CampaignMember.status -- every WRITE path re-checks
-    active membership (_is_active_member) so a kicked user can no longer
-    act, but their existing socket connection was never actually
-    disconnected, so they kept silently RECEIVING every live broadcast
-    (chat, rolls, token moves) for that campaign's sessions indefinitely.
-    Called from the kick/ban path in vtt/community/service.py by way of
-    the moderation-action route -- finds every connected socket that has
-    this user's presence entry in any of this campaign's session rooms
-    and force-disconnects it outright (not just a room leave) so a
-    reconnect attempt has to go through session:join's own membership
-    check again, which now correctly rejects them."""
-    campaign_session_prefix = f"campaign:{campaign_id}:session:"
-    sids_to_disconnect = set()
-    for room, sid_map in _room_presence.items():
-        if not room.startswith(campaign_session_prefix):
-            continue
-        for sid, info in sid_map.items():
-            if info.get("user_id") == user_id:
-                sids_to_disconnect.add(sid)
+    """Revoke existing table and moderation subscriptions after leave/kick.
+
+    Disconnect every affected tab so a reconnect must pass the current
+    campaign membership check before it can receive further broadcasts.
+    """
+    # Include moderator-only subscriptions, which have no table presence.
+    # The trailing colon keeps campaign 2 distinct from campaign 20.
+    campaign_prefix = f"campaign:{campaign_id}:"
+    sids_to_disconnect = {
+        sid for sid, rooms in _connected_rooms.items()
+        if _connected_users.get(sid) == user_id
+        and any(room.startswith(campaign_prefix) for room in rooms)
+    }
     for sid in sids_to_disconnect:
         socketio.server.disconnect(sid)
 
@@ -629,6 +623,7 @@ def register_socket_handlers(socketio):
         user, error = _parse_authenticated_user()
         if error:
             return False
+        _connected_users[request.sid] = user.id
         emit("connection_response", {"data": "Connected to server", "user_id": user.id}, room=request.sid)
 
     @socketio.on("disconnect")
@@ -638,6 +633,7 @@ def register_socket_handlers(socketio):
             leave_room(room)
             _drop_presence(request.sid, room)
         _connected_rooms.pop(request.sid, None)
+        _connected_users.pop(request.sid, None)
         _clear_rate_limit_state(request.sid)
 
     @socketio.on("session:join")

@@ -1637,6 +1637,11 @@ body.is-book-scene-dashboard #book {
     pointer-events: none;
 }
 
+/* The welcome page is decorative, but its community links are interactive. */
+#login-content .login-book-page--right a {
+    pointer-events: auto;
+}
+
 #login-content .login-book-paper {
     position: relative;
     width: 100%;

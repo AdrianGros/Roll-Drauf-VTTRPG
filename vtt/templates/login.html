@@ -657,6 +657,23 @@
         // checkpoint is meaningful and never captures an in-flight animation.
         let bookInitStarted = false;
 
+        function loginReturnPath() {
+            const fallback = '/dashboard';
+            const value = new URL(window.location.href).searchParams.get('next');
+            if (!value || !value.startsWith('/') || value.startsWith('//')) return fallback;
+            try {
+                const decoded = decodeURIComponent(value);
+                if (decoded.startsWith('//') || /[\\\x00-\x20\x7f]/.test(decoded)) return fallback;
+                const target = new URL(value, window.location.origin);
+                if (target.origin !== window.location.origin) return fallback;
+                if (target.pathname.startsWith('//')) return fallback;
+                if (/^\/(?:login|signup|register)(?:\.html)?\/?$/.test(decodeURIComponent(target.pathname))) return fallback;
+                return target.pathname + target.search + target.hash;
+            } catch (error) {
+                return fallback;
+            }
+        }
+
         function initBook() {
             console.log('[Login] Initializing book');
 
@@ -674,6 +691,11 @@
 
             // Keep authenticated users inside the same book object.
             Auth.getCurrentUser().then((user) => {
+                const destination = loginReturnPath();
+                if (user && destination !== '/dashboard') {
+                    window.location.replace(destination);
+                    return null;
+                }
                 if (user && window.BookScene && typeof BookScene.transitionToDashboard === 'function') {
                     return BookScene.transitionToDashboard(user, { instant: true });
                 }
@@ -763,7 +785,7 @@
             // only controls whether the optional button is shown.
             showPasswordLoginForm();
             const currentUrl = new URL(window.location.href);
-            const nextPath = currentUrl.searchParams.get('next') || '/dashboard';
+            const nextPath = loginReturnPath();
             const discordFailure = currentUrl.searchParams.get('discord_error');
 
             if (discordFailure) {
@@ -860,10 +882,10 @@
                         return;
                     }
 
-                    statusEl.textContent = 'Anmeldung bestätigt. Übersicht wird geöffnet.';
+                    statusEl.textContent = 'Anmeldung bestätigt. Du wirst weitergeleitet.';
                     statusEl.hidden = false;
                     submitBtn.textContent = 'Anmeldung bestätigt';
-                    window.location.href = '/dashboard';
+                    window.location.replace(loginReturnPath());
                 } catch (error) {
                     errorEl.textContent = 'Der Zugang konnte gerade nicht geprüft werden. Bitte versuche es erneut.';
                     usernameEl.setAttribute('aria-invalid', 'true');

@@ -167,7 +167,8 @@ def test_dashboard_assets_expose_home_ia_and_keep_social_separate_from_session_c
     assert "book-home-guild-panel" not in css
     assert "book-home-context-grid" not in css
     assert "Übersicht wird vorbereitet" in dashboard_template
-    assert ">Übersicht</button>" in dashboard_template
+    assert "label: this.content('ribbon.nav_dashboard', 'Übersicht')" in js
+    assert '<main>' not in dashboard_template
     assert "Neuigkeiten und Hinweise" not in dashboard_home
     assert "/api/dashboard/chat" not in dashboard_home
     assert "/campaigns/<int:campaign_id>/sessions/<int:session_id>/chat/messages" in community_routes

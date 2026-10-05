@@ -16,19 +16,6 @@
             flex-direction: column;
         }
 
-        /* Nur der Seiten-Header (body > header) -- der nackte
-           Element-Selektor hat jeden <header> im Buch grau eingefaerbt,
-           inklusive der Kapitelkoepfe (die "grauen Kacheln" des Audits;
-           Laufzeit-Diagnose 2026-08-24). Relikt aus der Prae-Buch-Aera,
-           siehe blauer Border. */
-        body > header {
-            background: rgba(0,0,0,0.3);
-            padding: 1rem 2rem;
-            border-bottom: 2px solid #4a9eff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
 
         .logo {
             font-size: 1.5rem;
@@ -709,11 +696,6 @@
             overflow-y: auto;
         }
 
-        body.characters-route-book-scene > header,
-        body.characters-route-book-scene > main,
-        body.characters-route-book-scene > footer {
-            display: none;
-        }
 
         #charactersSceneStatus {
             position: fixed;
@@ -734,12 +716,13 @@
         }
 
         /* Character creation is a focused chapter in the book, not a legacy
-           dark overlay. The same surface also owns the classic fallback so
+           dark overlay. The creation surface owns its form styling so
            direct links remain usable while their content is rebuilt. */
         .character-create-overlay {
             position: fixed !important;
             inset: 0;
-            z-index: 2000;
+            /* BookScene owns layer 9000; the active dialog must sit above it. */
+            z-index: 10000;
             align-items: center;
             padding: 1rem;
             overflow-y: auto;
@@ -750,7 +733,7 @@
         }
 
         body.book-shell-app .character-create-overlay {
-            z-index: 2000;
+            z-index: 10000;
         }
 
         .character-create-modal {
@@ -1207,119 +1190,6 @@
 </head>
 <body class="spellbook characters-route-book-scene">
     <div id="charactersSceneStatus" role="status" aria-live="polite">Charaktere werden vorbereitet …</div>
-    <header>
-        <div class="logo">roll drauf VTT</div>
-        <div class="header-actions">
-            <button class="btn btn-primary" type="button" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
-            <button class="btn btn-secondary" type="button" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
-            <a class="btn btn-secondary" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
-            <button class="btn btn-secondary" onclick="logout()">Abmelden</button>
-        </div>
-    </header>
-
-    <main>
-        <div class="book-shell-frame">
-            <div class="book-dashboard-topbar">
-                <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
-                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
-                    <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
-                    <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
-                    <a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
-                    <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
-                </div>
-                <div class="book-dashboard-crest" aria-label="Current chapter">Personae</div>
-            </div>
-            <div class="book-shell-ribbon">Personae</div>
-
-            <div class="book-shell-frame-header">
-                <div>
-                    <p class="book-frame-eyebrow">Character Archive</p>
-                    <h1 class="book-page-title" data-book-field="section">Characters</h1>
-                    <p class="book-frame-copy">
-                        The shell keeps creation and discovery readable first, while the roster itself gets the larger parchment surface on the facing page.
-                    </p>
-                </div>
-                <div class="book-frame-meta">
-                    <span class="book-chip">Kapitel <span data-book-field="chapter">Helden</span></span>
-                    <span class="book-chip">Archive Spread</span>
-                    <span class="book-chip">Modal Preserved</span>
-                </div>
-            </div>
-
-            <div class="book-spread">
-                <section class="book-page book-page--index">
-                    <div class="page-header">
-                        <h1>Characters</h1>
-                        <div style="display:flex;gap:0.5rem;">
-                            <button class="btn btn-secondary" onclick="openImportModal()">↓ Import</button>
-                            <button class="btn btn-primary" onclick="createCharacter()">+ New Character</button>
-                        </div>
-                    </div>
-
-                    <p class="book-page-lede">Browse, filter, and create heroes from a stable archive spread, then move into the sheet as the next focused step before they enter session context.</p>
-
-                    <div id="charactersMessageBox" class="book-form-banner" hidden aria-live="polite"></div>
-                    <div id="charactersJourneyNote" class="journey-note" hidden aria-live="polite"></div>
-
-                    <div class="filter-bar">
-                        <input type="text" id="searchInput" placeholder="Charaktere durchsuchen …" onkeyup="filterCharacters()">
-                        <select id="classFilter" onchange="filterCharacters()">
-                            <option value="">All Classes</option>
-                            <option value="Kämpfer">Kämpfer</option>
-                            <option value="Magier">Magier</option>
-                            <option value="Schurke">Schurke</option>
-                        </select>
-                    </div>
-
-                    <div class="book-page-section">
-                        <h2 class="book-page-section-title">Archivregeln</h2>
-                        <div class="book-guide-list">
-                            <div class="book-guide-item">
-                                <div class="book-guide-title">Browse First</div>
-                                <div class="book-guide-copy">Filters and search stay visible on the index page so the right page can stay focused on the roster itself.</div>
-                            </div>
-                            <div class="book-guide-item">
-                                <div class="book-guide-title">Create Then Focus</div>
-                                <div class="book-guide-copy">Creation starts here in place, while denser edits continue on the character sheet instead of fragmenting into a separate tool.</div>
-                            </div>
-                            <div class="book-guide-item">
-                                <div class="book-guide-title">Route Into Play</div>
-                                <div class="book-guide-copy">The character journey now reads as archive to sheet to campaign context, so heroes stay connected to the same book-world path into play.</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-page-section">
-                        <h2 class="book-page-section-title">Identity Surface</h2>
-                        <div class="book-guide-list">
-                            <div class="book-guide-item">
-                                <div class="book-guide-title">Avatar First</div>
-                                <div class="book-guide-copy">The archive now supports direct avatar uploads so each hero can read clearly before the sheet zooms in.</div>
-                            </div>
-                            <div class="book-guide-item">
-                                <div class="book-guide-title">Token Ready</div>
-                                <div class="book-guide-copy">Token art can now be uploaded and replaced from the same journey, keeping future campaign and table context aligned to one character identity.</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-page-folio" data-book-folio="left">5</div>
-                </section>
-
-                <section class="book-page book-page--content">
-                    <div class="grid" id="charactersGrid">
-                        <div class="empty-state">
-                            <div class="empty-state-icon">🧙</div>
-                            <p>Charaktere werden geladen …</p>
-                        </div>
-                    </div>
-
-                    <div class="book-page-folio" data-book-folio="right">6</div>
-                </section>
-            </div>
-        </div>
-    </main>
-
     <input id="identityFilePicker" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
 
     <!-- Character Creation Modal -->
@@ -1557,15 +1427,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group form-group--checkbox" style="margin-top: 1rem;">
-                        <input type="checkbox" id="charDiscoverable">
-                        <label for="charDiscoverable">
-                            <span class="form-group-checkbox-copy">
-                                <span>Öffentlich sichtbar (Spielersuche)</span>
-                                <span>Charaktere sind standardmäßig privat. Eine Spielersuche gibt es noch nicht — dieses Flag wird nur für später gespeichert.</span>
-                            </span>
-                        </label>
-                    </div>
+                    <p class="form-group-checkbox-copy">Dein Charakter bleibt in deinem Archiv. Nach dem Erstellen kannst du ihn dort mit einer deiner Kampagnen teilen.</p>
                 </div>
 
                 <div id="generalError" class="error-message" style="margin-top: 1rem;"></div>
@@ -1578,10 +1440,6 @@
             </div>
         </div>
     </div>
-
-    <footer>
-        <p>roll drauf VTT - D&D Virtual Tabletop for Discord | v1.0</p>
-    </footer>
 
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/creation-engine-nav.js"></script>
@@ -1650,16 +1508,6 @@
             if (shouldOpenImporter) {
                 consumeCharacterIntent('import');
             }
-            if (url.searchParams.get('classic') === '1' && !shouldOpenCreator && !shouldOpenImporter) {
-                document.body.classList.remove('characters-route-book-scene');
-                const statusNode = document.getElementById('charactersSceneStatus');
-                if (statusNode) {
-                    statusNode.hidden = true;
-                }
-                loadCharacters();
-                return;
-            }
-
             if (!window.BookScene || typeof BookScene.bootstrapProtectedRoute !== 'function') {
                 window.location.href = '/login.html';
                 return;
@@ -1688,18 +1536,20 @@
                 }
 
                 allCharacters = await auth.makeAuthRequest('/api/characters/mine');
-                renderCharacters(allCharacters);
+                if (document.body.classList.contains('characters-route-book-scene')
+                        && window.BookScene?.currentView === 'characters') {
+                    BookScene.renderSceneRoute('characters', user, {
+                        ...BookScene.sceneSnapshot,
+                        characters: allCharacters,
+                    });
+                    renderJourneyNote();
+                }
                 if (consumeCharacterIntent('create')) {
                     openCharModal();
                 }
             } catch (error) {
                 console.error('Failed to load characters:', error);
-                document.getElementById('charactersGrid').innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">❌</div>
-                        <p>Failed to load characters</p>
-                    </div>
-                `;
+                showCharactersMessage('Charaktere konnten nicht geladen werden.', 'error');
             }
         }
 
@@ -1711,124 +1561,6 @@
             url.searchParams.delete('intent');
             window.history.replaceState({}, '', url.toString());
             return true;
-        }
-
-        function renderIdentityPreview(url, label, fallback) {
-            if (url) {
-                return `<img src="${escapeHtml(url)}" alt="${escapeHtml(label)}">`;
-            }
-            return `<div class="char-identity-preview-fallback">${escapeHtml(fallback)}</div>`;
-        }
-
-        function renderIdentityCard(character, kind) {
-            const isAvatar = kind === 'avatar';
-            const label = isAvatar ? 'Avatar' : 'Token';
-            const url = isAvatar ? character.avatar_url : character.token_url;
-            const uploadLabel = url ? `Replace ${label}` : `Upload ${label}`;
-            const removeButton = url
-                ? `<button class="btn btn-danger" type="button" onclick="removeCharacterIdentity(${character.id}, '${kind}')">Remove ${label}</button>`
-                : '';
-
-            return `
-                <div class="char-identity-card">
-                    <div class="char-identity-head">
-                        <span>${label}</span>
-                        <span>${url ? 'Live' : 'Open Slot'}</span>
-                    </div>
-                    <div class="char-identity-preview">
-                        ${renderIdentityPreview(url, `${character.name} ${label}`, isAvatar ? '🙂' : '🛡️')}
-                    </div>
-                    <div class="char-identity-copy">
-                        ${url
-                            ? `${label} is stored and will stay with this hero across archive, sheet, and later play context.`
-                            : `${label} is still empty. Upload one here or continue in the sheet.`}
-                    </div>
-                    <div class="char-identity-actions">
-                        <button class="btn btn-secondary" type="button" onclick="openCharacterIdentityPicker(${character.id}, '${kind}')">${uploadLabel}</button>
-                        ${removeButton}
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderCharacterPortrait(character) {
-            const previewUrl = character.avatar_url || character.token_url;
-            if (previewUrl) {
-                return `<img src="${escapeHtml(previewUrl)}" alt="${escapeHtml(character.name)} portrait">`;
-            }
-            return `<div class="char-portrait-fallback">${character.token_url ? '🎨' : '🧙'}</div>`;
-        }
-
-        function renderCharacters(characters) {
-            const grid = document.getElementById('charactersGrid');
-
-            if (characters.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🧙</div>
-                        <p>No characters yet. Create your first character to begin!</p>
-                        <button class="btn btn-primary" style="margin-top: 1rem;" onclick="createCharacter()">Create Character</button>
-                    </div>
-                `;
-                renderJourneyNote();
-                return;
-            }
-
-            grid.innerHTML = characters.map(c => `
-                <div class="char-card">
-                    <div class="char-portrait">${renderCharacterPortrait(c)}</div>
-                    <div class="char-info">
-                        <div class="char-name">${escapeHtml(c.name)}</div>
-                <div class="char-class">${escapeHtml(c.class || 'Nicht angegeben')}</div>
-                <div class="char-race">${escapeHtml(c.species || c.race || 'Nicht angegeben')}${c.faction ? ` • ${escapeHtml(c.faction)}` : ''} • Level ${escapeHtml(c.level)}</div>
-                        ${c.campaign_id ? `<div class="char-context-badge">Campaign Context Linked</div>` : ''}
-                        <div class="char-next-step">${c.campaign_id ? 'Next: open the sheet for final review, then return to campaign prep to assign the hero to a session.' : 'Next: finish the sheet and identity here, then continue into campaigns to place the hero in prep context.'}</div>
-
-                        <div class="char-stats">
-                            <div class="stat">
-                                <div class="stat-label">HP</div>
-                                <div class="stat-value">${c.hp}</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-label">AC</div>
-                                <div class="stat-value">${c.ac}</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-label">XP</div>
-                                <div class="stat-value">${c.xp || 0}</div>
-                            </div>
-                        </div>
-
-                        <div class="char-actions">
-                            <button class="btn btn-primary" onclick="openCharacterSheet(${c.id}, 'view')">Bogen öffnen</button>
-                            <button class="btn btn-secondary" onclick="openCharacterSheet(${c.id}, 'edit')">Edit Sheet</button>
-                            <button class="btn btn-secondary" onclick="goToCampaignContext(${c.campaign_id || 0})">${c.campaign_id ? 'Campaign Context' : 'Campaigns Hub'}</button>
-                            <button class="btn btn-danger" onclick="deleteCharacter(${c.id})">Delete</button>
-                        </div>
-
-                        <div class="char-identity-toolbar">
-                            <div class="char-identity-grid">
-                                ${renderIdentityCard(c, 'avatar')}
-                                ${renderIdentityCard(c, 'token')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            renderJourneyNote();
-        }
-
-        function filterCharacters() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const classFilter = document.getElementById('classFilter').value;
-
-            const filtered = allCharacters.filter(c => {
-                const nameMatch = c.name.toLowerCase().includes(search);
-                const classMatch = !classFilter || c.class === classFilter;
-                return nameMatch && classMatch;
-            });
-
-            renderCharacters(filtered);
         }
 
         // Character Creation Modal Variables
@@ -1905,7 +1637,6 @@
             document.getElementById('charBackground').value = '';
             document.getElementById('charAC').value = '10';
             document.getElementById('charHP').value = '10';
-            document.getElementById('charDiscoverable').checked = false;
             document.getElementById('generalError').textContent = '';
             updateAbilityDisplay();
             switchAbilityTab('pointBuy');
@@ -2227,15 +1958,14 @@
                 con: abilityScores.con,
                 int: abilityScores.int,
                 wis: abilityScores.wis,
-                cha: abilityScores.cha,
-                is_discoverable: document.getElementById('charDiscoverable').checked
+                cha: abilityScores.cha
             };
 
             try {
                 const createdCharacter = await auth.makeAuthRequest('/api/characters', 'POST', charData);
                 journeyNoteState = {
-                    title: 'Character created',
-                    message: 'The next dependable step is to open the sheet, review the core stats, add avatar and token identity, and then return to campaign context to place the hero into session prep.',
+                    title: 'Charakter erstellt',
+                    message: 'Öffne den Bogen für Werte und Bilder. Über die Kampagnen-Zuordnung im Archiv teilst du deinen Helden mit deiner Runde und machst ihn für die Sitzungsvorbereitung verfügbar.',
                     characterId: createdCharacter.id,
                     campaignId: createdCharacter.campaign_id || null,
                 };

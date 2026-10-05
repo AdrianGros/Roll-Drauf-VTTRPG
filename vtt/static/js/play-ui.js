@@ -4826,6 +4826,12 @@
         }
     }
 
+    // beforeunload disconnects the socket. A BFCache-restored table must
+    // bootstrap again rather than retain a disconnected, transitioning UI.
+    window.addEventListener("pageshow", (event) => {
+        if (event.persisted) window.location.reload();
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
         const ui = new PlayRuntimeUI();
         ui.init();

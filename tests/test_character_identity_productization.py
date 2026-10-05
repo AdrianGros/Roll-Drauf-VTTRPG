@@ -160,9 +160,9 @@ def test_character_templates_expose_real_identity_surfaces():
 
     assert 'id="identityFilePicker"' in characters
     assert "openCharacterIdentityPicker" in characters
-    assert "Identity Surface" in characters
-    assert "Avatar First" in characters
-    assert "Token Ready" in characters
+    runtime = _read(REPO_ROOT / "vtt/static/js/book-scene.js")
+    assert "buildIntentHref('/character-sheet', { id: character.id })" in runtime
+    assert 'function renderCharacters(' not in characters
 
     assert 'id="sheetIdentityFilePicker"' in sheet
     assert 'id="sheetIdentityGrid"' in sheet

@@ -47,14 +47,8 @@
         return `${href.pathname}${href.search}`;
     }
 
-    // Desktop-Audit F1/C1 (interim slice): every link that used to point at
-    // the campaign hub was really pointing at /campaigns?campaign_id=... -
-    // the URL shape that makes campaigns.html fall back to its pre-redesign
-    // classic render (see the inert #campaignsClassicTemplate there). Any
-    // href built with that shape - wherever it comes from, book-scene's own
-    // builders or a server-supplied dashboard snapshot - is recognized here
-    // so bindSceneNavigation() can render the hub in place instead of
-    // navigating into the classic page.
+    // Campaign details render in the book. Preparation opens its dedicated
+    // BookScene document so its map, asset and roster handlers are present.
     function campaignHubDetailKeyForHref(href) {
         if (!href) {
             return null;
@@ -65,7 +59,7 @@
         } catch (_error) {
             return null;
         }
-        if (url.pathname !== '/campaigns') {
+        if (url.pathname !== '/campaigns' || url.searchParams.get('workspace') === '1') {
             return null;
         }
         const campaignId = Number(url.searchParams.get('campaign_id'));
@@ -740,7 +734,7 @@
                         ${this.buildActionButtons([
                             {
                                 label: 'Erste Kampagne anlegen',
-                                href: buildIntentHref('/campaigns', { classic: 1, intent: 'create' }),
+                                href: buildIntentHref('/campaigns', { intent: 'create' }),
                                 primary: true,
                             },
                         ], 'book-scene-action-row--inline')}
@@ -755,15 +749,9 @@
             // 403-Hub-Link für Nicht-Mitglieder (D07/B1) entfällt damit.
             return `
                 <div class="book-scene-ledger">
-                    ${campaigns.slice(0, 6).map((campaign) => {
+                    ${campaigns.map((campaign) => {
                         // F1/C1 (interim slice): this used to be a hard
                         // data-dashboard-href navigation straight into the
-                        // classic /campaigns?campaign_id=...&classic=1
-                        // fallback. campaign_id alone (kept, minus classic=1)
-                        // still resolves there if JS never attaches this
-                        // click handler; data-dashboard-detail is what
-                        // bindSceneNavigation() actually wires up below to
-                        // render the hub in place instead.
                         const hubHref = buildIntentHref('/campaigns', { campaign_id: campaign.id });
                         const isMember = Boolean(campaign.is_member);
                         const rowAttrs = isMember
@@ -779,6 +767,12 @@
                             ], 'book-scene-action-row--inline')
                             : `
                                 <div class="book-scene-join" data-campaign-id="${Number(campaign.id)}">
+                                    ${campaign.your_membership_status === 'pending'
+                                        ? '<p role="status">Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.</p>'
+                                        : campaign.can_request_join ? `
+                                            <p>Diese Runde sucht Spieler. Die Spielleitung bestätigt deinen Beitritt.</p>
+                                            <button type="button" class="btn btn-primary book-scene-action-btn" data-dashboard-action="request-campaign-join">Beitritt anfragen</button>
+                                        ` : '<p>Für diese Runde ist derzeit keine neue öffentliche Beitrittsanfrage möglich.</p>'}
                                     <div class="book-scene-ledger-meta">Einladung von der Spielleitung? Öffne ihren Einladungslink — oder löse den Code hier ein:</div>
                                     <div class="book-scene-join-row">
                                         <input type="text" data-join-input placeholder="Einladungscode" aria-label="Einladungscode" data-testid="join-code-input">
@@ -806,31 +800,25 @@
             `;
         },
 
-        buildCharacterLedger(characters) {
+        buildCharacterLedger(characters, campaigns = null) {
             if (!Array.isArray(characters) || characters.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
                         <div>Noch kein Held im Archiv. Lege hier den ersten Charakter an und führe ihn danach über Bogen und Kampagne in die Vorbereitung.</div>
-                        ${this.buildActionButtons([
-                            {
-                                label: 'Held anlegen',
-                                href: buildIntentHref('/characters', { classic: 1, intent: 'create' }),
-                                primary: true,
-                            },
-                        ], 'book-scene-action-row--inline')}
                     </div>
                 `;
             }
 
             return `
                 <div class="book-scene-ledger">
-                    ${characters.slice(0, 6).map((character) => `
+                    ${characters.map((character) => `
                         <div class="book-scene-ledger-item">
                             <div class="book-scene-ledger-head">
                                 <strong>${escapeHtml(character.name || 'Unbekannt')}</strong>
                                 <span>Stufe ${Number(character.level || 1)}</span>
                             </div>
                             <div class="book-scene-ledger-meta">${escapeHtml(character.class || 'Abenteurer')} · ${escapeHtml(character.race || 'Volk offen')}</div>
+                            ${character.owner_username ? `<div class="book-scene-ledger-meta">${escapeHtml(character.owner_username)} · ${escapeHtml(character.campaign_name || '')}</div>` : ''}
                             <div class="book-scene-ledger-copy">${escapeHtml(character.background || 'Bereit für Bogen, Identität und die spätere Zuweisung in eine Runde.')}</div>
                             ${this.buildActionButtons([
                                 {
@@ -841,13 +829,27 @@
                                 character.campaign_id
                                     ? {
                                         label: 'Kampagnen-Kontext',
-                                        href: buildIntentHref('/campaigns', { campaign_id: character.campaign_id, classic: 1 }),
+                                        href: buildIntentHref('/campaigns', { campaign_id: character.campaign_id }),
                                     }
                                     : {
                                         label: 'Kampagnen öffnen',
-                                        href: buildIntentHref('/campaigns', { classic: 1 }),
+                                        href: buildIntentHref('/campaigns', {}),
                                     },
                             ], 'book-scene-action-row--inline')}
+                            ${Array.isArray(campaigns) && !character.is_party_stash ? `
+                                <form data-character-campaign="${Number(character.id)}" class="book-scene-panel">
+                                    <label for="characterCampaign_${Number(character.id)}">Mit einer Kampagne teilen</label>
+                                    <select id="characterCampaign_${Number(character.id)}" aria-label="Kampagne für ${escapeHtml(character.name)}" style="width:100%;min-width:0">
+                                        <option value="">Nur für mich</option>
+                                        ${character.campaign_id && !campaigns.some(c => Number(c.id) === Number(character.campaign_id))
+                                            ? `<option value="${Number(character.campaign_id)}" selected>Bisherige Kampagne (kein aktiver Zugang)</option>` : ''}
+                                        ${campaigns.map(c => `<option value="${Number(c.id)}"${Number(c.id) === Number(character.campaign_id) ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}
+                                    </select>
+                                    <p>Mitglieder der gewählten Kampagne können diesen Charakter im Archiv, im Bogen und in der Vorbereitung sehen.</p>
+                                    <button class="btn btn-secondary" type="submit">Zuordnung speichern</button>
+                                    <p data-character-campaign-status role="status" hidden></p>
+                                </form>
+                            ` : ''}
                         </div>
                     `).join('')}
                 </div>
@@ -858,11 +860,11 @@
             const homeState = snapshot?.home_state || {};
             const primaryAction = snapshot?.primary_action || {
                 label: 'Kampagnen öffnen',
-                href: '/campaigns?classic=1',
+                href: '/campaigns',
             };
             const secondaryAction = snapshot?.secondary_action || {
                 label: 'Charaktere öffnen',
-                href: '/characters?classic=1',
+                href: '/characters',
             };
             const overviewScopeNote = snapshot?.overview_scope?.note
                 || this.content('home.overview_scope_default', 'Diese Übersicht zeigt deinen VTT-Stand: Kampagnen, Charaktere, Sitzungen und Vorbereitung.');
@@ -876,12 +878,12 @@
                     ${this.buildActionButtons([
                         {
                             label: primaryAction.label || 'Weiter',
-                            href: primaryAction.href || '/campaigns?classic=1',
+                            href: primaryAction.href || '/campaigns',
                             primary: true,
                         },
                         {
                             label: secondaryAction.label || 'Charaktere öffnen',
-                            href: secondaryAction.href || '/characters?classic=1',
+                            href: secondaryAction.href || '/characters',
                         },
                     ], 'book-scene-action-row--inline')}
                     <div class="book-home-hero-note">
@@ -1093,7 +1095,7 @@
                         ${this.buildActionButtons([
                             {
                                 label: 'Neue Kampagne anlegen',
-                                href: buildIntentHref('/campaigns', { classic: 1, intent: 'create' }),
+                                href: buildIntentHref('/campaigns', { intent: 'create' }),
                                 primary: true,
                             },
                         ])}
@@ -1132,22 +1134,8 @@
             });
         },
 
-        // F1/C1 (interim slice): the actual campaign hub / session-prep view,
-        // rendered into #book-dashboard-scene with the same primitives as
-        // every other book page (buildStatStrip, buildActionButtons, the
-        // .book-scene-ledger* classes). This is the fix for the confirmed
-        // bug where every "Hub öffnen"/"Hub und Vorbereitung" button fell
-        // through to campaigns.html's pre-redesign classic render instead.
-        //
-        // Scope note: this covers campaign identity (name/status/members)
-        // and a real, data-backed session-prep summary (focused session,
-        // phase, active map, assigned character count, start/resume/create
-        // actions - reusing the same session-phase logic and play handoff
-        // as the existing Play-Launch modal below). It deliberately does not
-        // port the classic page's map-activation dropdown, asset library,
-        // Roll20 copy-workflow, or community/moderation panels - that is
-        // the larger "delete all legacy markup" rebuild (full C1), out of
-        // scope here. Those stay reachable via the classic fallback.
+        // Campaign overview and session entry use the shared book shell.
+        // Detailed preparation is another book page with the same navigation.
         buildCampaignHubDetailMarkup(user, data) {
             const campaign = data?.campaign || {};
             const members = Array.isArray(data?.members) ? data.members : [];
@@ -1157,6 +1145,9 @@
             const assignments = Array.isArray(data?.session_character_assignments) ? data.session_character_assignments : [];
 
             const canManage = Boolean(campaign.is_owner) || campaign.your_role === 'DM' || campaign.your_role === 'CO_DM';
+            // Keep the existing moderation policy: campaign owner or DM.
+            const canKick = Boolean(campaign.is_owner) || campaign.your_role === 'DM';
+            const canLeave = Boolean(campaign.is_member) && !campaign.is_owner;
             const campaignCharacterCount = characters.filter((character) => Number(character.campaign_id) === Number(campaign.id)).length;
             const focusedSession = findFocusedCampaignSession(sessions);
             const campaignStatus = campaign.status || 'active';
@@ -1164,17 +1155,22 @@
 
             // Pending join requests get their own review panel below, not
             // the general member ledger - they aren't members yet.
-            const settledMembers = members.filter((member) => member.status !== 'pending');
+            const settledMembers = members.filter((member) => ['active', 'invited'].includes(member.status));
             const pendingMembers = members.filter((member) => member.status === 'pending');
 
             const memberRows = settledMembers.length
                 ? settledMembers.map((member) => `
-                    <div class="book-scene-ledger-item">
+                    <div class="book-scene-ledger-item" data-campaign-member="${Number(member.user_id)}">
                         <div class="book-scene-ledger-head">
                             <strong>${escapeHtml(member.username || 'Unbekannt')}</strong>
                             <span>${escapeHtml(member.campaign_role || 'Spieler')}</span>
                         </div>
                         <div class="book-scene-ledger-meta">${escapeHtml(member.status || 'active')}</div>
+                        ${canKick && member.status === 'active'
+                            && Number(member.user_id) !== Number(campaign.owner_id)
+                            && Number(member.user_id) !== Number(user?.id)
+                            && ['PLAYER', 'OBSERVER'].includes(String(member.campaign_role || '').toUpperCase())
+                            ? `<button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="kick-player" data-member-id="${Number(member.user_id)}" data-member-name="${escapeHtml(member.username || 'Spieler')}">Spieler entfernen</button>` : ''}
                     </div>
                 `).join('')
                 : '<div class="book-scene-ledger-item is-empty">Noch keine Mitglieder.</div>';
@@ -1277,6 +1273,8 @@
                         <h2 class="book-scene-panel-title">Übersicht</h2>
                         <p class="book-scene-panel-copy">${escapeHtml(campaign.description || 'Noch keine Beschreibung hinterlegt.')}</p>
                         <div class="book-scene-ledger">${memberRows}</div>
+                        ${canLeave ? '<div class="book-scene-action-row"><button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="leave-campaign">Kampagne verlassen</button></div>' : ''}
+                        <p data-hub-membership-status role="status" aria-live="polite" hidden></p>
                     </section>
                 `,
                 rightPage: `
@@ -1286,6 +1284,10 @@
                         ${sessionSummary}
                         <div class="book-scene-action-row book-scene-action-row--inline">${sessionActions}</div>
                         <div class="play-launch-status" data-hub-status role="status" hidden></div>
+                        ${canManage ? this.buildActionButtons([{
+                            label: 'Karten und Besetzung vorbereiten',
+                            href: buildIntentHref('/campaigns', { campaign_id: campaign.id, workspace: 1 }),
+                        }]) : ''}
                     </section>
                 `,
             });
@@ -1398,6 +1400,39 @@
             }
         },
 
+        async changeCampaignMembership(campaignId, button) {
+            const leave = button.dataset.hubAction === 'leave-campaign';
+            const name = button.dataset.memberName || 'Spieler';
+            const prompt = leave
+                ? 'Diese Kampagne wirklich verlassen? Dein Zugang zur Runde endet sofort.'
+                : `${name} wirklich aus dieser Kampagne entfernen? Der Zugang zur Runde endet sofort.`;
+            if (!window.confirm(prompt)) return;
+            const status = this.sceneSurface.querySelector('[data-hub-membership-status]');
+            const say = (message) => {
+                if (status) { status.hidden = false; status.textContent = message; }
+            };
+            button.disabled = true;
+            say(leave ? 'Kampagne wird verlassen …' : 'Spieler wird entfernt …');
+            try {
+                if (leave) {
+                    await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/leave`, 'POST');
+                    // Load a fresh document so no departed campaign state stays open.
+                    window.location.href = '/campaigns';
+                } else {
+                    await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/moderation/actions`, 'POST', {
+                        action_type: 'kick', subject_user_id: Number(button.dataset.memberId),
+                    });
+                    if (!button.isConnected) return;
+                    await this.renderCampaignHubDetail(campaignId);
+                    const updated = this.sceneSurface.querySelector('[data-hub-membership-status]');
+                    if (updated) { updated.hidden = false; updated.textContent = `${name} wurde aus der Kampagne entfernt.`; }
+                }
+            } catch (error) {
+                say(error.message || 'Aktion fehlgeschlagen. Bitte versuche es erneut.');
+                button.disabled = false;
+            }
+        },
+
         async copyInviteLinkField(field, button) {
             if (!field || !field.value) {
                 return;
@@ -1422,6 +1457,9 @@
             if (!this.sceneSurface) {
                 return;
             }
+            this.sceneSurface.querySelectorAll('[data-hub-action="leave-campaign"], [data-hub-action="kick-player"]').forEach((button) => {
+                button.addEventListener('click', () => this.changeCampaignMembership(campaignId, button));
+            });
             this.sceneSurface.querySelectorAll('[data-hub-action="open-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const sessionId = Number(node.getAttribute('data-hub-session-id'));
@@ -1477,7 +1515,13 @@
                 return;
             }
 
+            const renderVersion = this.sceneRenderVersion = (this.sceneRenderVersion || 0) + 1;
+
             this.currentView = 'campaigns';
+            this.currentPage = 'campaigns';
+            document.body.dataset.bookSceneRoute = 'campaigns';
+            this.updateBookmarkPosition('/campaigns');
+            window.history.replaceState({ book_scene: 'campaigns' }, '', `/campaigns?campaign_id=${id}`);
             this.sceneSurface.dataset.bookRoute = 'campaigns';
             this.sceneSurface.innerHTML = this.buildPageShell('campaigns', this.sceneUser, {
                 eyebrow: 'Kapitel II',
@@ -1495,7 +1539,7 @@
 
             try {
                 const data = await window.Auth.makeAuthRequest(`/api/campaigns/${id}`);
-                if (!data) {
+                if (!data || this.sceneRenderVersion !== renderVersion) {
                     return;
                 }
                 this.sceneSurface.innerHTML = this.buildCampaignHubDetailMarkup(this.sceneUser, data);
@@ -1503,6 +1547,7 @@
                 this.bindCampaignHubDetailActions(id);
                 this.loadCampaignHubInvites(id);
             } catch (error) {
+                if (this.sceneRenderVersion !== renderVersion) return;
                 this.sceneSurface.innerHTML = this.buildPageShell('campaigns', this.sceneUser, {
                     eyebrow: 'Kapitel II',
                     title: 'Kampagnen-Hub',
@@ -1520,6 +1565,8 @@
 
         buildCharactersMarkup(user, snapshot = null) {
             const characters = snapshot?.characters || [];
+            const campaigns = (snapshot?.campaigns || []).filter(campaign => campaign.is_member);
+            const sharedCharacters = snapshot?.shared_characters || [];
             const distinctClasses = new Set(characters.map((character) => character.class).filter(Boolean)).size;
             const highestLevel = characters.reduce((highest, character) => Math.max(highest, Number(character.level || 1)), 1);
 
@@ -1533,12 +1580,21 @@
                 rightCopy: '',
                 chips: [`${characters.length} Helden`, `${distinctClasses} Klassen`, `Höchstes Level ${highestLevel}`],
                 rightPage: `
+                    <div id="charactersMessageBox" class="book-scene-note" role="status" hidden></div>
+                    <div id="charactersJourneyNote" class="book-scene-note" hidden></div>
                     <section class="book-scene-panel">
                         <p>Übernimm einen exportierten Roll-Drauf-Light- oder D&amp;D-5e-Charakter in dein Archiv.</p>
                         ${this.buildActionButtons([
                             { label: 'Charakter importieren', href: buildIntentHref('/characters', { intent: 'import' }), primary: true },
                         ])}
                         <p class="book-form-banner is-success" data-character-import-status role="status" aria-live="polite" hidden></p>
+                    </section>
+                    <section class="book-scene-panel" data-shared-characters>
+                        <h2 class="book-scene-panel-title">Charaktere deiner Runden</h2>
+                        ${snapshot?.shared_characters_error
+                            ? '<p role="status">Geteilte Charaktere konnten nicht geladen werden. Bitte lade die Seite erneut.</p>'
+                            : sharedCharacters.length ? this.buildCharacterLedger(sharedCharacters)
+                            : '<p>Noch keine geteilten Charaktere. Andere Mitglieder können ihre Helden über die Kampagnen-Zuordnung in ihrem Archiv mit deiner Runde teilen.</p>'}
                     </section>
                 `,
                 leftPage: `
@@ -1550,7 +1606,10 @@
                     <section class="book-scene-panel">
                         <span class="book-scene-panel-kicker">Archiv</span>
                         <h2 class="book-scene-panel-title">Heldenarchiv</h2>
-                        ${this.buildCharacterLedger(characters)}
+                        ${this.buildActionButtons([
+                            { label: 'Held anlegen', href: buildIntentHref('/characters', { intent: 'create' }), primary: true },
+                        ])}
+                        ${this.buildCharacterLedger(characters, campaigns)}
                     </section>
                 `,
             });
@@ -1605,9 +1664,6 @@
                 }
             });
 
-            // F1/C1 (interim slice): renders the campaign hub in place of a
-            // hard navigation into the classic /campaigns?campaign_id=...
-            // fallback (see campaignHubDetailKeyForHref above).
             this.sceneSurface.querySelectorAll('[data-dashboard-detail]').forEach((node) => {
                 const openDetail = (event) => {
                     // The ledger row and its own "Hub öffnen" button both
@@ -1636,6 +1692,52 @@
                         }
                     });
                 }
+            });
+
+            this.sceneSurface.querySelectorAll('[data-character-campaign]').forEach((form) => {
+                form.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    const button = form.querySelector('button');
+                    const status = form.querySelector('[role="status"]');
+                    const value = form.querySelector('select').value;
+                    button.disabled = true;
+                    status.hidden = false;
+                    status.textContent = 'Zuordnung wird gespeichert …';
+                    try {
+                        const character = await window.Auth.makeAuthRequest(
+                            `/api/characters/${Number(form.dataset.characterCampaign)}/campaign`,
+                            'PUT', { campaign_id: value ? Number(value) : null });
+                        if (!form.isConnected) return;
+                        const snapshot = this.sceneSnapshot;
+                        snapshot.characters = snapshot.characters.map(c => Number(c.id) === Number(character.id) ? character : c);
+                        this.renderSceneRoute('characters', this.sceneUser, snapshot);
+                        const message = this.sceneSurface.querySelector('#charactersMessageBox');
+                        message.hidden = false;
+                        message.textContent = character.campaign_id ? 'Charakter mit der Kampagne geteilt.' : 'Charakter ist nur für dich sichtbar.';
+                    } catch (error) {
+                        status.textContent = error.message || 'Zuordnung konnte nicht gespeichert werden.';
+                    } finally {
+                        button.disabled = false;
+                    }
+                });
+            });
+
+            this.sceneSurface.querySelectorAll('[data-dashboard-action="request-campaign-join"]').forEach((node) => {
+                node.addEventListener('click', async () => {
+                    const box = node.closest('[data-campaign-id]');
+                    const status = box.querySelector('[data-join-status]');
+                    node.disabled = true;
+                    status.hidden = false;
+                    status.textContent = 'Anfrage wird gesendet …';
+                    try {
+                        await window.Auth.makeAuthRequest(`/api/campaigns/${Number(box.dataset.campaignId)}/join-requests`, 'POST');
+                        status.textContent = 'Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.';
+                        node.textContent = 'Anfrage gesendet';
+                    } catch (error) {
+                        status.textContent = error.message || 'Anfrage konnte nicht gesendet werden.';
+                        node.disabled = false;
+                    }
+                });
             });
 
             this.sceneSurface.querySelectorAll('[data-dashboard-action="join-campaign"]').forEach((node) => {
@@ -2072,15 +2174,17 @@
                 user: resolvedUser || null,
                 campaigns: [],
                 characters: [],
+                shared_characters: [],
             };
 
             if (!window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
                 return snapshot;
             }
 
-            const [campaignsResult, charactersResult] = await Promise.allSettled([
+            const [campaignsResult, charactersResult, sharedResult] = await Promise.allSettled([
                 window.Auth.makeAuthRequest('/api/campaigns'),
                 window.Auth.makeAuthRequest('/api/characters/mine'),
+                window.Auth.makeAuthRequest('/api/characters/shared'),
             ]);
 
             if (campaignsResult.status === 'fulfilled' && Array.isArray(campaignsResult.value)) {
@@ -2089,6 +2193,11 @@
 
             if (charactersResult.status === 'fulfilled' && Array.isArray(charactersResult.value)) {
                 snapshot.characters = charactersResult.value;
+            }
+            if (sharedResult.status === 'fulfilled' && Array.isArray(sharedResult.value)) {
+                snapshot.shared_characters = sharedResult.value;
+            } else {
+                snapshot.shared_characters_error = true;
             }
 
             return snapshot;
@@ -2115,6 +2224,7 @@
             if (!this.sceneSurface) {
                 return;
             }
+            this.sceneRenderVersion = (this.sceneRenderVersion || 0) + 1;
 
             // content() reads this.currentView to pick the right page's
             // content map - set it here since this is the one place every
@@ -2505,57 +2615,60 @@
 
             this.transitionInFlight = true;
 
-            const snapshot = await this.loadSceneSnapshot(user);
-            this.sceneSnapshot = snapshot;
-            this.sceneUser = snapshot.user || user || this.sceneUser;
-            await this.loadPageContent(routeKey);
+            try {
+                const snapshot = await this.loadSceneSnapshot(user);
+                this.sceneSnapshot = snapshot;
+                this.sceneUser = snapshot.user || user || this.sceneUser;
+                await this.loadPageContent(routeKey);
 
-            const currentRoute = this.currentView || this.currentPage || 'login';
-            const render = () => {
-                this.setSceneState('transition');
-                this.renderSceneRoute(routeKey, this.sceneUser, snapshot);
-                this.hideLoginContent();
-                this.hideTurnLeaf();
-                if (this.sceneSurface) {
-                    this.sceneSurface.hidden = false;
-                    this.sceneSurface.setAttribute('aria-hidden', 'false');
-                    this.sceneSurface.classList.add('is-visible');
-                    const camera = this.sceneSurface.querySelector('.book-dashboard-camera');
-                    if (camera) {
-                        camera.style.opacity = '1';
-                        camera.style.transform = 'none';
-                        camera.style.filter = 'none';
+                const currentRoute = this.currentView || this.currentPage || 'login';
+                const render = () => {
+                    this.setSceneState('transition');
+                    this.renderSceneRoute(routeKey, this.sceneUser, snapshot);
+                    this.hideLoginContent();
+                    this.hideTurnLeaf();
+                    if (this.sceneSurface) {
+                        this.sceneSurface.hidden = false;
+                        this.sceneSurface.setAttribute('aria-hidden', 'false');
+                        this.sceneSurface.classList.add('is-visible');
+                        const camera = this.sceneSurface.querySelector('.book-dashboard-camera');
+                        if (camera) {
+                            camera.style.opacity = '1';
+                            camera.style.transform = 'none';
+                            camera.style.filter = 'none';
+                        }
                     }
-                }
-                this.currentView = routeKey;
-                this.currentPage = routeKey;
-                this.applyOpenedBookState();
-                this.setSceneState('dashboard');
-                document.body.dataset.bookSceneRoute = routeKey;
-                this.updateBookmarkPosition(routePathForKey(routeKey));
-                window.history.replaceState({ book_scene: routeKey }, '', historyHrefForRoute(routeKey));
-            };
+                    this.currentView = routeKey;
+                    this.currentPage = routeKey;
+                    this.applyOpenedBookState();
+                    this.setSceneState('dashboard');
+                    document.body.dataset.bookSceneRoute = routeKey;
+                    this.updateBookmarkPosition(routePathForKey(routeKey));
+                    window.history.replaceState({ book_scene: routeKey }, '', historyHrefForRoute(routeKey));
+                };
 
-            const useNativeTransition = !options.instant
-                && !reducedMotion.matches
-                && typeof document.startViewTransition === 'function'
-                && currentRoute !== routeKey;
+                const useNativeTransition = !options.instant
+                    && !reducedMotion.matches
+                    && typeof document.startViewTransition === 'function'
+                    && currentRoute !== routeKey;
 
-            if (useNativeTransition) {
-                try {
-                    const transition = document.startViewTransition({
-                        update: render,
-                        types: ['book-route', `book-route-${routeKey}`],
-                    });
-                    await transition.finished.catch(() => undefined);
-                } catch (error) {
-                    // A failed enhancement must never strand the route.
+                if (useNativeTransition) {
+                    try {
+                        const transition = document.startViewTransition({
+                            update: render,
+                            types: ['book-route', `book-route-${routeKey}`],
+                        });
+                        await transition.finished.catch(() => undefined);
+                    } catch (error) {
+                        // A failed enhancement must never strand the route.
+                        render();
+                    }
+                } else {
                     render();
                 }
-            } else {
-                render();
+            } finally {
+                this.transitionInFlight = false;
             }
-            this.transitionInFlight = false;
         },
 
         async transitionToDashboard(user = null, options = {}) {
@@ -2576,6 +2689,20 @@
         pageTurn(url, user = null) {
             const target = normalizePath(url);
             const routeKey = routeKeyForPath(target);
+            const destination = new URL(url, window.location.origin);
+            const templateId = this.getExternalTemplateId(routeKey);
+            // Query-driven forms and sheets need their document's handlers.
+            // Rendering a missing external template used to leave a blank page.
+            if (destination.searchParams.has('intent') || destination.searchParams.has('workspace')
+                    || (templateId && !document.getElementById(templateId))
+                    || routeKey === 'character-sheet') {
+                window.location.href = `${destination.pathname}${destination.search}`;
+                return;
+            }
+            const campaignId = Number(destination.searchParams.get('campaign_id'));
+            if (routeKey === 'campaigns' && Number.isInteger(campaignId) && campaignId > 0) {
+                return this.renderCampaignHubDetail(campaignId);
+            }
             if (routeKey === 'login') {
                 window.location.href = routeHref(target);
                 return;
@@ -2620,4 +2747,10 @@
     };
 
     window.BookScene.updateCurrentPage();
+
+    // A cached document retains enterPlay's transition lock and hidden book.
+    // Rebuild it on restoration, including fresh auth and campaign state.
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) window.location.reload();
+    });
 }());

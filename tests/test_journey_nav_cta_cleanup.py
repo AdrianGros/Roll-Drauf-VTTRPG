@@ -31,14 +31,27 @@ def test_non_play_routes_share_primary_spellbook_nav(path, active_label, client)
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert 'book-dashboard-topbar' in html
-    assert 'book-dashboard-ribbon' in html
-    assert 'aria-label="Buchnavigation"' in html
-    assert '>Übersicht<' in html
-    assert '>Kampagnen<' in html
-    assert '>Charaktere<' in html
-    assert 'aria-current="page"' in html or 'book-dashboard-ribbon-btn is-active' in html
-    assert f'>{active_label}<' in html
+    if path.startswith('/character-sheet'):
+        assert 'book-dashboard-topbar' in html
+        assert 'book-dashboard-ribbon' in html
+        assert 'aria-label="Buchnavigation"' in html
+        assert '>Übersicht<' in html
+        assert '>Kampagnen<' in html
+        assert '>Charaktere<' in html
+        assert 'aria-current="page"' in html or 'book-dashboard-ribbon-btn is-active' in html
+        assert f'>{active_label}<' in html
+    else:
+        # The real navigation is rendered once by BookScene. Legacy copies
+        # in the response used to make these checks pass despite a broken UI.
+        runtime = client.get('/static/js/book-scene.js').get_data(as_text=True)
+        assert 'BookScene.bootstrapProtectedRoute({' in html
+        assert '<main>' not in html
+        assert '<header>' not in html
+        assert 'buildRibbon(routeKey)' in runtime
+        assert 'aria-label="Buchnavigation"' in runtime
+        assert f"'{active_label}'" in runtime
+        for route in ('/dashboard', '/campaigns', '/characters'):
+            assert f"href: '{route}'" in runtime
 
 
 def test_campaigns_route_surfaces_clearer_play_path_language(client):

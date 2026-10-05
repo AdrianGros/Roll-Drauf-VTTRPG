@@ -147,44 +147,44 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
     if live_session:
         primary = {
             "label": "Zur Live-Session",
-            "href": f"/campaigns?campaign_id={live_session['campaign_id']}&classic=1",
+            "href": f"/campaigns?campaign_id={live_session['campaign_id']}",
             "note": "Öffnet die aktive Runde und ihre nächsten Schritte.",
         }
     elif prep_session:
         primary = {
             "label": "Session-Prep fortsetzen",
-            "href": f"/campaigns?campaign_id={prep_session['campaign_id']}&classic=1",
+            "href": f"/campaigns?campaign_id={prep_session['campaign_id']}",
             "note": "Karte oder Charaktere fehlen noch für den nächsten Spielabend.",
         }
     elif campaigns:
         primary = {
             "label": "Meine Kampagne öffnen" if is_player else "Kampagnen-Hub öffnen",
-            "href": f"/campaigns?campaign_id={campaigns[0]['id']}&classic=1",
+            "href": f"/campaigns?campaign_id={campaigns[0]['id']}",
             "note": "Öffnet deine nächste Runde und den aktuellen Vorbereitungsstand.",
         }
     else:
         primary = {
             "label": "Charakter anlegen" if is_player else "Erste Kampagne anlegen",
-            "href": "/characters?classic=1&intent=create" if is_player else "/campaigns?classic=1&intent=create",
+            "href": "/characters?intent=create" if is_player else "/campaigns?intent=create",
             "note": "Lege deinen ersten eigenen Einstieg an." if is_player else "Lege die erste Runde an und beginne die Vorbereitung.",
         }
 
     if characters:
         secondary = {
             "label": "Charakterarchiv öffnen",
-            "href": "/characters?classic=1",
+            "href": "/characters",
             "note": "Bögen, Identität und der Rückweg in die Vorbereitung bleiben hier gebündelt.",
         }
     elif campaigns:
         secondary = {
             "label": "Held anlegen",
-            "href": "/characters?classic=1&intent=create",
+            "href": "/characters?intent=create",
             "note": "Lege den ersten Helden an und führe ihn danach in die Vorbereitung.",
         }
     else:
         secondary = {
             "label": "Kampagnen öffnen",
-            "href": "/campaigns?classic=1",
+            "href": "/campaigns",
             "note": "Sieh dir bestehende Runden an oder tritt einer Kampagne bei.",
         }
 
@@ -201,7 +201,7 @@ def _build_active_campaign_feed(campaigns: list[dict]) -> list[dict]:
             "meta": f"{campaign['member_count']} Mitglieder · {campaign['session_count']} Sitzungen",
             "copy": campaign.get("description") or "Öffne den Hub, um Vorbereitung und den nächsten Spielabend weiterzuführen.",
             "action_label": "Hub öffnen",
-            "action_href": f"/campaigns?campaign_id={campaign['id']}&classic=1",
+            "action_href": f"/campaigns?campaign_id={campaign['id']}",
         }
         for campaign in campaigns
         if str(campaign.get("status") or "").strip().lower() == "active"
