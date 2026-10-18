@@ -14,7 +14,7 @@ from .validator import CONTENT_ROOT, ValidationReport, validate_package
 
 
 DEFAULT_PACKAGE = CONTENT_ROOT / "srd-5.2.1-de"
-GENERATED_FILENAMES = ("navigation.json", "search-index.json", "coverage.json", "compendium.json")
+GENERATED_FILENAMES = ("navigation.json", "search-index.json", "coverage.json", "compendium.json", "creator-data.json")
 _SOURCE_VERSION = re.compile(r"\b(\d+\.\d+(?:\.\d+)?)\b")
 
 
@@ -166,10 +166,13 @@ def _search_index(manifest: dict, documents: list[dict], report: ValidationRepor
 
 def generate_artifacts(package_dir: str | Path = DEFAULT_PACKAGE) -> dict[str, dict]:
     from .compendium import build_compendium
+    from .creator_data import build_creator_data
 
     manifest, documents, report = load_validated_package(package_dir)
     compendium = build_compendium(manifest, documents)
     compendium["packageDigest"] = report.package_digest
+    creator_data = build_creator_data(manifest, documents, compendium)
+    creator_data["packageDigest"] = report.package_digest
     coverage = report.coverage.to_wire()
     coverage.update(
         {
@@ -184,6 +187,7 @@ def generate_artifacts(package_dir: str | Path = DEFAULT_PACKAGE) -> dict[str, d
         "search-index.json": _search_index(manifest, documents, report),
         "coverage.json": coverage,
         "compendium.json": compendium,
+        "creator-data.json": creator_data,
     }
 
 
