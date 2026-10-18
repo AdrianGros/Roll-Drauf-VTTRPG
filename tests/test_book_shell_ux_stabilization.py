@@ -54,7 +54,7 @@ def test_book_scene_routes_use_production_copy_and_real_feature_entry_points():
     assert "Hub und Vorbereitung" in content
     assert "data-dashboard-href" in content
     assert "buildIntentHref('/campaigns', { intent: 'create' })" in content
-    assert "buildIntentHref('/characters', { intent: 'create' })" in content
+    assert "{ label: 'Held anlegen', href: '/srd-creator', primary: true }" in content
 
 
 def test_campaigns_template_exposes_only_ready_creation_and_map_surfaces():

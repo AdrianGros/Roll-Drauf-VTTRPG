@@ -119,29 +119,14 @@ class Character(db.Model):
             f'/api/characters/{self.id}/identity/token' if self.token_storage_key else None
         )
         character_data = self.character_data if isinstance(self.character_data, dict) else {}
-        roll_drauf_light = character_data.get('roll_drauf_light') if isinstance(character_data.get('roll_drauf_light'), dict) else {}
-        species = roll_drauf_light.get('species', {}) if isinstance(roll_drauf_light.get('species'), dict) else {}
-        faction = roll_drauf_light.get('faction', {}) if isinstance(roll_drauf_light.get('faction'), dict) else {}
-        class_data = roll_drauf_light.get('class', {}) if isinstance(roll_drauf_light.get('class'), dict) else {}
-        background = roll_drauf_light.get('background', {}) if isinstance(roll_drauf_light.get('background'), dict) else {}
-        species_name = species.get('name') or self.race
-        class_name = class_data.get('name') or self.class_name
-        background_name = background.get('name') or self.background
-        content = roll_drauf_light.get('content') if isinstance(roll_drauf_light.get('content'), dict) else {}
-        progression = roll_drauf_light.get('progression') if isinstance(roll_drauf_light.get('progression'), dict) else {}
         data = {
             'id': self.id,
             'name': self.name,
-            'race': species_name,
-            'species': species_name,
-            'species_slug': species.get('slug'),
-            'faction': faction.get('name'),
-            'faction_slug': faction.get('slug'),
-            'class': class_name,
-            'class_slug': class_data.get('slug'),
-            'background': background_name,
-            'background_slug': background.get('slug'),
-            'system_id': roll_drauf_light.get('system_id') or character_data.get('system_id'),
+            'race': self.race,
+            'species': self.race,
+            'class': self.class_name,
+            'background': self.background,
+            'system_id': character_data.get('system_id'),
             'campaign_id': self.campaign_id,
             'level': self.level,
             'is_discoverable': self.is_discoverable,
@@ -151,10 +136,6 @@ class Character(db.Model):
             'avatar_url': avatar_url,
             'token_url': token_url,
             'created_at': self.created_at.isoformat(),
-            # M24: progression + content summary
-            'training_bonus': content.get('training_bonus'),
-            'progression_level': progression.get('current_level'),
-            'progression_level_cap': progression.get('level_cap'),
         }
         if include_details:
             data.update({
@@ -165,13 +146,9 @@ class Character(db.Model):
                 'wis': self.wis_score,
                 'cha': self.cha_score,
                 'xp': self.xp,
-                'background': background_name,
                 'spells_count': len(self.spells),
                 'equipment_count': len(self.equipment),
                 'inventory_count': len(self.inventory),
-                # M24: full progression + content blocks for sheet/export
-                'progression': progression or None,
-                'content': content or None,
             })
             from vtt.ce_compat import homebrew_origin
             origin = homebrew_origin(self)

@@ -165,7 +165,7 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
     else:
         primary = {
             "label": "Charakter anlegen" if is_player else "Erste Kampagne anlegen",
-            "href": "/characters?intent=create" if is_player else "/campaigns?intent=create",
+            "href": "/srd-creator" if is_player else "/campaigns?intent=create",
             "note": "Lege deinen ersten eigenen Einstieg an." if is_player else "Lege die erste Runde an und beginne die Vorbereitung.",
         }
 
@@ -178,7 +178,7 @@ def _build_primary_and_secondary_actions(campaigns: list[dict], characters: list
     elif campaigns:
         secondary = {
             "label": "Held anlegen",
-            "href": "/characters?intent=create",
+            "href": "/srd-creator",
             "note": "Lege den ersten Helden an und führe ihn danach in die Vorbereitung.",
         }
     else:

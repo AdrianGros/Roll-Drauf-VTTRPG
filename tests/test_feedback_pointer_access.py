@@ -62,29 +62,16 @@ def press(locator, width):
         locator.click()
 
 
-def test_character_creation_and_cancel_receive_pointer_input(pointer_site, pointer_browser):
+def test_character_creation_link_opens_srd_creator_with_pointer_input(pointer_site, pointer_browser):
     from playwright.sync_api import expect
     origin, token = pointer_site
     page, width = pointer_browser
     page.context.add_cookies([{'name': 'access_token_cookie', 'value': token, 'url': origin, 'httpOnly': True}])
     page.goto(origin + '/characters')
+    expect(page.locator('#charModal')).to_have_count(0)
     press(page.get_by_role('button', name='Held anlegen', exact=True), width)
-    expect(page.locator('#charModal')).to_be_visible()
-    press(page.get_by_role('button', name='Held anlegen schließen'), width)
-    expect(page.locator('#charModal')).to_be_hidden()
-    press(page.get_by_role('button', name='Held anlegen', exact=True), width)
-    page.locator('#charName').fill('Pointer hero')
-    for selector in ['#charRace', '#charFaction', '#charClass', '#charBackground']:
-        page.locator(selector).select_option(index=1)
-    press(page.locator('#nextBtn'), width)
-    expect(page.locator('#step2')).to_be_visible()
-    press(page.locator('#nextBtn'), width)
-    expect(page.locator('#step3')).to_be_visible()
-    with page.expect_response(lambda r: r.request.method == 'POST' and r.url.endswith('/api/characters')) as created:
-        press(page.locator('#submitBtn'), width)
-    assert created.value.status == 201
-    expect(page.locator('#charModal')).to_be_hidden()
-    expect(page.get_by_text('Pointer hero', exact=True).and_(page.locator(':visible')).first).to_be_visible()
+    page.wait_for_url('**/srd-creator')
+    expect(page.locator('#scNewGuided')).to_be_visible()
 
 
 def test_discord_community_links_receive_pointer_input(pointer_site, pointer_browser):

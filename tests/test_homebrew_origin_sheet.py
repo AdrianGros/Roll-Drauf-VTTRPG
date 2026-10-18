@@ -93,8 +93,7 @@ def test_sheet_displays_complete_dnd_race_rules_and_manual_usage(page, character
                 expect(cards.nth(index)).to_contain_text(trait[key])
     expect(cards.nth(0)).to_contain_text('Merkmal')
     expect(cards.nth(1)).to_contain_text('Feature')
-    for section in ['rdlProfileSection', 'rdlProgressionSection', 'rdlFeaturesSection']:
-        expect(page.locator('#' + section)).to_be_hidden()
+    expect(page.locator('#srdSheetSection')).to_be_hidden()
     expect(page.locator('#charRace')).to_have_value('Stormkin')
 
 
@@ -123,12 +122,13 @@ def test_refresh_replaces_race_rules_and_legacy_sheet_restores_its_sections(page
     render(page, revised)
     expect(page.locator('#homebrewOriginTraits article')).to_have_count(1)
     expect(page.locator('#homebrewOriginTraits')).not_to_contain_text('Windborn')
-    render(page, {'id': 42, 'name': 'Legacy', 'system_id': 'roll_drauf_light', 'race': 'Mensch'})
+    render(page, {'id': 42, 'name': 'Legacy', 'system_id': None, 'race': 'Mensch'})
     expect(page.locator('#homebrewOriginSection')).to_be_hidden()
     expect(page.locator('#homebrewOriginTraitsSection')).to_be_hidden()
     expect(page.locator('#homebrewOriginTraits article')).to_have_count(0)
-    for section in ['rdlProfileSection', 'rdlProgressionSection', 'rdlFeaturesSection']:
-        expect(page.locator('#' + section)).to_be_visible()
+    expect(page.locator('#srdSheetSection')).to_be_hidden()
+    expect(page.locator('#dndExportSection')).to_be_hidden()
+    expect(page.locator('#charRace')).to_have_value('Mensch')
 
 
 def test_sheet_navigation_carries_character_context_before_book_mount(sheet_browser):
@@ -154,5 +154,5 @@ def test_dnd_size_choice_is_readable_and_plain_import_still_has_export(page, cha
     render(page, {'id': 42, 'name': 'Plain import', 'system_id': 'dnd5e_2014', 'race': 'Human'})
     expect(page.locator('#homebrewOriginSection')).to_be_hidden()
     expect(page.locator('#dndExportSection button')).to_be_visible()
-    expect(page.locator('#rdlProfileSection')).to_be_hidden()
+    expect(page.locator('#srdSheetSection')).to_be_hidden()
     expect(page.locator('#sheetEmptyState')).to_be_hidden()

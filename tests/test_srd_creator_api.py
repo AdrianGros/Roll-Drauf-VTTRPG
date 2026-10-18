@@ -384,7 +384,10 @@ def test_srd_characters_cannot_be_forged_through_the_generic_api(client, data):
     assert client.put(f"/api/characters/{plain['id']}", json={"character_data": {"note": "ok"}}).status_code == 200
 
 
-def test_old_creators_are_unaffected(client):
-    rdl = client.post("/api/characters", json={"name": "Held", "species": "mensch", "faction": "rote-rose", "class": "kaempfer", "background": "soldat"})
-    assert rdl.status_code == 201 and rdl.get_json()["system_id"] == "roll_drauf_light"
-    assert client.put(f"/api/characters/{rdl.get_json()['id']}", json={"ac": 12}).status_code == 200
+def test_generic_creation_is_plain_and_light_free(client):
+    plain = client.post("/api/characters", json={"name": "Held", "species": "Mensch", "class": "Kämpfer", "faction": "rote-rose"})
+    assert plain.status_code == 201
+    body = plain.get_json()
+    assert body["system_id"] is None and "faction" not in body
+    assert client.put(f"/api/characters/{body['id']}", json={"ac": 12}).status_code == 200
+    assert client.post("/api/characters/import", json={"format": "roll_drauf_light"}).status_code == 400

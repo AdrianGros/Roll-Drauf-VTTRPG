@@ -327,213 +327,7 @@
             flex: 1 1 140px;
         }
 
-        /* M25 — Roll-Drauf-Light content display */
-        .rdl-profile-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.55rem;
-        }
-
-        .rdl-profile-field {
-            padding: 0.55rem 0.75rem;
-            border-radius: 10px;
-            background: rgba(255, 252, 246, 0.68);
-            border: 1px solid rgba(130, 89, 52, 0.14);
-        }
-
-        .rdl-profile-label {
-            font-size: 0.75rem;
-            color: #8e6b52;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .rdl-profile-value {
-            margin-top: 0.18rem;
-            color: #2f1638;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .rdl-section-sub {
-            font-size: 0.75rem;
-            color: #8e6b52;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin: 0.55rem 0 0.3rem;
-        }
-
-        .rdl-tags-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.35rem;
-            margin-top: 0.2rem;
-        }
-
-        .rdl-tag {
-            display: inline-block;
-            padding: 0.18rem 0.55rem;
-            border-radius: 999px;
-            background: rgba(143, 102, 155, 0.13);
-            color: #2f1638;
-            font-size: 0.76rem;
-            border: 1px solid rgba(143, 102, 155, 0.2);
-        }
-
-        .rdl-feature-card {
-            padding: 0.7rem 0.85rem;
-            border-radius: 12px;
-            background: rgba(255, 252, 246, 0.68);
-            border: 1px solid rgba(130, 89, 52, 0.14);
-            display: grid;
-            gap: 0.25rem;
-        }
-
-        .rdl-feature-card strong {
-            color: #2f1638;
-            font-size: 0.94rem;
-        }
-
-        /* Progression ladder */
-        .rdl-prog-summary {
-            font-size: 0.86rem;
-            color: #6e5745;
-            margin-bottom: 0.45rem;
-        }
-
-        .rdl-prog-ladder {
-            display: grid;
-            gap: 0.4rem;
-        }
-
-        .rdl-prog-level {
-            padding: 0.6rem 0.8rem;
-            border-radius: 12px;
-            border: 1px solid rgba(130, 89, 52, 0.14);
-            background: rgba(255, 252, 246, 0.42);
-        }
-
-        .rdl-prog-level--complete {
-            background: rgba(76, 175, 80, 0.07);
-            border-color: rgba(76, 175, 80, 0.2);
-        }
-
-        .rdl-prog-level--locked {
-            opacity: 0.65;
-        }
-
-        .rdl-prog-level--current {
-            border-color: rgba(143, 102, 155, 0.42);
-            background: rgba(143, 102, 155, 0.08);
-            opacity: 1;
-        }
-
-        .rdl-prog-level-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .rdl-prog-level-num {
-            font-weight: 700;
-            color: #2f1638;
-            font-size: 0.88rem;
-        }
-
-        .rdl-prog-level-status {
-            font-size: 0.73rem;
-            color: #6e5745;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .rdl-prog-level--current .rdl-prog-level-status {
-            color: #7a3fa0;
-            font-weight: 700;
-        }
-
-        .rdl-prog-level-content {
-            margin-top: 0.32rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.32rem;
-        }
-
-        .rdl-level-feature {
-            display: inline-block;
-            padding: 0.16rem 0.48rem;
-            border-radius: 999px;
-            background: rgba(76, 175, 80, 0.11);
-            color: #2f1638;
-            font-size: 0.76rem;
-            border: 1px solid rgba(76, 175, 80, 0.18);
-        }
-
-        .rdl-level-choice {
-            display: inline-block;
-            padding: 0.16rem 0.48rem;
-            border-radius: 999px;
-            background: rgba(255, 152, 0, 0.09);
-            color: #2f1638;
-            font-size: 0.76rem;
-            border: 1px solid rgba(255, 152, 0, 0.18);
-        }
-
-        .rdl-level-empty {
-            color: #8e6b52;
-            font-size: 0.8rem;
-            font-style: italic;
-        }
-
-        .rdl-level-feature--preview {
-            display: inline-block;
-            padding: 0.16rem 0.48rem;
-            border-radius: 999px;
-            font-size: 0.78rem;
-            background: rgba(130, 89, 52, 0.06);
-            color: #6e5745;
-            border: 1px dashed rgba(130, 89, 52, 0.22);
-            font-style: italic;
-        }
-
-        /* M28 — Progression polish */
-        .rdl-prog-callout {
-            margin-top: 0.6rem;
-            padding: 0.6rem 0.85rem;
-            border-radius: 10px;
-            font-size: 0.86rem;
-            line-height: 1.45;
-        }
-        .rdl-prog-callout--ready {
-            background: rgba(143, 102, 155, 0.1);
-            border: 1px solid rgba(143, 102, 155, 0.3);
-            color: #4a1e5a;
-            font-weight: 600;
-        }
-        .rdl-prog-callout--maxed {
-            background: rgba(76, 175, 80, 0.08);
-            border: 1px solid rgba(76, 175, 80, 0.22);
-            color: #1c4a1e;
-        }
-        .rdl-export-section {
-            margin-top: 1rem;
-            padding-top: 0.85rem;
-            border-top: 1px solid rgba(130, 89, 52, 0.12);
-            display: grid;
-            gap: 0.5rem;
-        }
-        .rdl-export-label {
-            font-size: 0.75rem;
-            color: #8e6b52;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .rdl-export-copy {
-            font-size: 0.83rem;
-            color: #6e5745;
-            line-height: 1.45;
-        }
-        .rdl-export-btn {
+        .sheet-export-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
@@ -547,34 +341,8 @@
             cursor: pointer;
             letter-spacing: 0.02em;
         }
-        .rdl-export-btn:hover {
+        .sheet-export-btn:hover {
             background: rgba(74, 158, 255, 0.16);
-        }
-        .rdl-identity-block {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.45rem;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(130, 89, 52, 0.1);
-        }
-        .rdl-identity-field {
-            padding: 0.45rem 0.65rem;
-            border-radius: 8px;
-            background: rgba(143, 102, 155, 0.06);
-            border: 1px solid rgba(143, 102, 155, 0.15);
-        }
-        .rdl-identity-label {
-            font-size: 0.72rem;
-            color: #8e6b52;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .rdl-identity-value {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #2f1638;
-            margin-top: 0.12rem;
         }
         .sheet-next-hint {
             margin-top: 0.5rem;
@@ -588,102 +356,101 @@
         }
         .sheet-next-hint[hidden] { display: none; }
 
-        /* M26 — Level-Up panel */
-        .rdl-levelup-cta {
-            margin-top: 0.75rem;
-        }
-
-        .rdl-levelup-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.55rem 1.1rem;
-            border-radius: 10px;
-            background: linear-gradient(135deg, rgba(143, 102, 155, 0.18), rgba(143, 102, 155, 0.08));
-            border: 1px solid rgba(143, 102, 155, 0.38);
-            color: #2f1638;
-            font-weight: 700;
-            font-size: 0.88rem;
-            cursor: pointer;
-            letter-spacing: 0.02em;
-        }
-
-        .rdl-levelup-btn:hover {
-            background: linear-gradient(135deg, rgba(143, 102, 155, 0.28), rgba(143, 102, 155, 0.14));
-        }
-
-        .rdl-levelup-panel {
-            margin-top: 0.9rem;
-            padding: 1rem 1.1rem;
-            border-radius: 14px;
-            border: 1px solid rgba(143, 102, 155, 0.3);
-            background: rgba(143, 102, 155, 0.05);
-            display: grid;
-            gap: 0.75rem;
-        }
-
-        .rdl-levelup-panel-title {
-            font-weight: 700;
-            color: #2f1638;
-            font-size: 0.95rem;
-        }
-
-        .rdl-levelup-panel-sub {
-            font-size: 0.84rem;
-            color: #6e5745;
-            line-height: 1.45;
-        }
-
-        .rdl-choice-group {
+        .srd-sheet-facts,
+        .srd-sheet-vitals,
+        .srd-sheet-abilities {
             display: grid;
             gap: 0.45rem;
+            margin-bottom: 0.8rem;
         }
-
-        .rdl-choice-prompt {
-            font-size: 0.82rem;
+        .srd-sheet-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .srd-sheet-vitals { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .srd-sheet-abilities { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .srd-sheet-cell {
+            padding: 0.45rem 0.65rem;
+            border-radius: 8px;
+            background: rgba(143, 102, 155, 0.06);
+            border: 1px solid rgba(143, 102, 155, 0.15);
+            min-width: 0;
+        }
+        .srd-sheet-label {
+            font-size: 0.72rem;
             color: #8e6b52;
             text-transform: uppercase;
             letter-spacing: 0.04em;
         }
-
-        .rdl-choice-option {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.55rem;
-            padding: 0.6rem 0.75rem;
-            border-radius: 10px;
-            border: 1px solid rgba(130, 89, 52, 0.18);
-            background: rgba(255, 252, 246, 0.72);
-            cursor: pointer;
-        }
-
-        .rdl-choice-option input[type="radio"] {
-            margin-top: 0.2rem;
-            flex-shrink: 0;
-        }
-
-        .rdl-choice-option-label {
-            display: grid;
-            gap: 0.18rem;
-        }
-
-        .rdl-choice-option-name {
+        .srd-sheet-value {
+            font-size: 0.95rem;
             font-weight: 700;
             color: #2f1638;
-            font-size: 0.9rem;
+            margin-top: 0.12rem;
+            overflow-wrap: anywhere;
         }
-
-        .rdl-choice-option-desc {
-            font-size: 0.8rem;
+        .srd-sheet-value small {
+            font-weight: 500;
             color: #6e5745;
-            line-height: 1.4;
+        }
+        .srd-sheet-ability-score {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #4b235a;
+        }
+        .srd-sheet-subtitle {
+            margin: 0.9rem 0 0.4rem;
+            font-size: 0.78rem;
+            color: #8e6b52;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .srd-sheet-skills {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.2rem 0.9rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-size: 0.86rem;
+        }
+        .srd-sheet-skills li {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.18rem 0;
+            border-bottom: 1px dotted rgba(130, 89, 52, 0.18);
+        }
+        .srd-sheet-skills .is-proficient { font-weight: 700; color: #4b235a; }
+        .srd-sheet-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .srd-sheet-tag {
+            padding: 0.18rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: rgba(75, 35, 90, 0.08);
+            border: 1px solid rgba(75, 35, 90, 0.2);
+            color: #2f1638;
+        }
+        .srd-sheet-note {
+            margin: 0.6rem 0 0;
+            font-size: 0.83rem;
+            color: #6e5745;
+            line-height: 1.45;
+        }
+        .srd-sheet-link {
+            display: inline-block;
+            margin-top: 0.6rem;
+            font-weight: 700;
+            color: #4b235a;
+        }
+        @media (max-width: 620px) {
+            .srd-sheet-facts,
+            .srd-sheet-skills { grid-template-columns: 1fr; }
+            .srd-sheet-vitals,
+            .srd-sheet-abilities { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
 
-        .rdl-levelup-actions {
-            display: flex;
-            gap: 0.55rem;
-            flex-wrap: wrap;
-        }
 
         @media (max-width: 900px) {
             .sheet-core-grid,
@@ -900,22 +667,15 @@
                     <section class="sheet-pane" id="dndExportSection" aria-labelledby="dndExportHeading" hidden>
                         <h2 class="sheet-pane-title" id="dndExportHeading">D&amp;D-Portabilität</h2>
                         <p class="sheet-pane-copy">Speichere Werte, Ausrüstung und Homebrew-Regeln als VTT-JSON. Im Charakterarchiv kannst du daraus eine neue Kopie importieren.</p>
-                        <div><button type="button" class="rdl-export-btn" onclick="exportCharacter()">↓ Charakter exportieren</button></div>
+                        <div><button type="button" class="sheet-export-btn" onclick="exportCharacter()">↓ Charakter exportieren</button></div>
                     </section>
 
-                    <div class="sheet-pane" id="rdlProfileSection">
+                    <section class="sheet-pane" id="srdSheetSection" aria-labelledby="srdSheetHeading" hidden>
                         <div class="sheet-pane-header">
-                            <div class="sheet-pane-title">Roll-Drauf Profil</div>
+                            <h2 class="sheet-pane-title" id="srdSheetHeading">SRD 5.2.1 · Regelwerk-Bogen</h2>
                         </div>
-                        <div id="rdlContentPane"><div class="sheet-empty">Lade Profildaten…</div></div>
-                    </div>
-
-                    <div class="sheet-pane" id="rdlProgressionSection">
-                        <div class="sheet-pane-header">
-                            <div class="sheet-pane-title">Progression</div>
-                        </div>
-                        <div id="rdlProgressionPane"><div class="sheet-empty">Lade Progression…</div></div>
-                    </div>
+                        <div id="srdSheetBody"><div class="sheet-empty">Lade Regelwerte…</div></div>
+                    </section>
 
                     <div class="sheet-pane">
                         <div class="sheet-pane-header">
@@ -954,10 +714,6 @@
                                 <div class="field">
                                     <label for="charRace">Spezies</label>
                                     <input id="charRace" type="text">
-                                </div>
-                                <div class="field">
-                                    <label for="charFaction">Fraktion</label>
-                                    <input id="charFaction" type="text">
                                 </div>
                                 <div class="field">
                                     <label for="charClass">Klasse</label>
@@ -1024,13 +780,6 @@
                             </div>
                             <div id="homebrewOriginTraits" class="homebrew-origin-traits"></div>
                         </section>
-
-                        <div class="sheet-pane" id="rdlFeaturesSection">
-                            <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Klassenfeatures</div>
-                            </div>
-                            <div id="rdlFeaturesPane"><div class="sheet-empty">Keine Features gefunden.</div></div>
-                        </div>
 
                         <div class="sheet-pane">
                             <div class="sheet-pane-header">
@@ -1229,7 +978,7 @@
             document.getElementById('inventoryForm').style.display = editable ? 'grid' : 'none';
 
             const ids = [
-                'charName', 'charRace', 'charFaction', 'charClass', 'charBackground', 'charLevel', 'charXp',
+                'charName', 'charRace', 'charClass', 'charBackground', 'charLevel', 'charXp',
                 'charAc', 'charHpCurrent', 'charHpMax', 'charStr', 'charDex', 'charCon', 'charInt', 'charWis', 'charCha'
             ];
             ids.forEach((id) => {
@@ -1238,13 +987,7 @@
                     node.disabled = !editable;
                 }
             });
-        }
-
-        const _ATTR_NAMES_DE = { str: 'Kraft', dex: 'Gewandtheit', con: 'Konstitution', int: 'Verstand', wis: 'Wahrnehmung', cha: 'Ausstrahlung' };
-
-        function _prettifySlug(slug) {
-            if (!slug) return '–';
-            return String(slug).replace(/_/g, ' ').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            applySrdManagedState(typeof sheet !== 'undefined' ? sheet?.character : null);
         }
 
         function updateJourneyContext(character) {
@@ -1266,21 +1009,11 @@
             if (!hintEl) return;
 
             // State-based hint: pick the most actionable next step
-            const progression = character?.progression;
-            const currentLevel = progression?.current_level || 1;
-            const levelCap = progression?.level_cap || 5;
-            const isRdl = character?.system_id === 'roll_drauf_light';
             const hasAvatar = !!character?.avatar_url;
             const hasToken = !!character?.token_url;
-            const canLevelUp = isRdl && currentLevel < levelCap;
-            const atMaxLevel = isRdl && currentLevel >= levelCap;
 
             let hint = '';
-            if (canLevelUp) {
-                hint = `Level-Up verfügbar — ${character.name} kann auf Stufe ${currentLevel + 1} aufsteigen.`;
-            } else if (atMaxLevel) {
-                hint = `Maximale Stufe ${levelCap} erreicht. Charakter ist vollständig ausgespielt.`;
-            } else if (!hasAvatar && !hasToken) {
+            if (!hasAvatar && !hasToken) {
                 hint = 'Lade Avatar und Token hoch, um den Charakter visuell zu vervollständigen.';
             } else if (!hasAvatar) {
                 hint = 'Avatar fehlt noch — lade ein Bild hoch, um die Identität zu vervollständigen.';
@@ -1317,7 +1050,6 @@
 
             document.getElementById('charName').value = character.name || '';
             document.getElementById('charRace').value = character.species || character.race || '';
-            document.getElementById('charFaction').value = character.faction || '';
             document.getElementById('charClass').value = character.class || '';
             document.getElementById('charBackground').value = character.background || '';
             document.getElementById('charLevel').value = character.level ?? 1;
@@ -1434,6 +1166,210 @@
             `).join('');
         }
 
+        const SRD_SYSTEM_ID = 'srd_5_2_1_de';
+        const SRD_MANAGED_INPUTS = [
+            'charRace', 'charClass', 'charBackground', 'charLevel', 'charAc', 'charHpMax',
+            'charStr', 'charDex', 'charCon', 'charInt', 'charWis', 'charCha'
+        ];
+        const SRD_ABILITY_ORDER = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+        const SRD_ABILITY_NAMES = { str: 'Stärke', dex: 'Geschicklichkeit', con: 'Konstitution', int: 'Intelligenz', wis: 'Weisheit', cha: 'Charisma' };
+        const SRD_SLOT_ORDINALS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        let srdCreatorData = null;
+        let srdSubclassNames = {};
+        let srdRenderToken = 0;
+
+        function appendText(parent, tag, text, className = '') {
+            const node = document.createElement(tag);
+            node.textContent = String(text ?? '');
+            if (className) node.className = className;
+            parent.append(node);
+            return node;
+        }
+
+        function isSrdCharacter(character) {
+            return character?.system_id === SRD_SYSTEM_ID;
+        }
+
+        function signed(value) {
+            const number = Number(value) || 0;
+            return number >= 0 ? `+${number}` : `−${Math.abs(number)}`;
+        }
+
+        function srdLookup(list, id) {
+            return (list || []).find((entry) => entry.id === id) || null;
+        }
+
+        function srdCell(label, value, extra) {
+            const cell = document.createElement('div');
+            cell.className = 'srd-sheet-cell';
+            appendText(cell, 'div', label, 'srd-sheet-label');
+            const valueNode = appendText(cell, 'div', value, 'srd-sheet-value');
+            if (extra) appendText(valueNode, 'small', ` ${extra}`);
+            return cell;
+        }
+
+        function srdGrid(className, cells) {
+            const grid = document.createElement('div');
+            grid.className = className;
+            cells.forEach((cell) => grid.append(cell));
+            return grid;
+        }
+
+        function srdTags(names) {
+            const wrap = document.createElement('div');
+            wrap.className = 'srd-sheet-tags';
+            names.forEach((name) => appendText(wrap, 'span', name, 'srd-sheet-tag'));
+            return wrap;
+        }
+
+        function applySrdManagedState(character) {
+            const managed = isSrdCharacter(character);
+            SRD_MANAGED_INPUTS.forEach((id) => {
+                const node = document.getElementById(id);
+                if (node && managed) node.disabled = true;
+            });
+        }
+
+        async function renderSrdSheet(character) {
+            const section = document.getElementById('srdSheetSection');
+            const body = document.getElementById('srdSheetBody');
+            const managed = isSrdCharacter(character);
+            section.hidden = !managed;
+            applySrdManagedState(character);
+            if (!managed) {
+                body.replaceChildren();
+                return;
+            }
+            const token = ++srdRenderToken;
+            let detail;
+            try {
+                detail = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}`);
+                if (!srdCreatorData) {
+                    srdCreatorData = await auth.makeAuthRequest('/api/srd-creator/creator-data');
+                    try {
+                        const subclasses = await auth.makeAuthRequest('/api/rulesets/srd-5.2.1-de/compendium?type=subclass&limit=200');
+                        (subclasses.items || []).forEach((entry) => { srdSubclassNames[entry.id] = entry.name; });
+                    } catch (error) { /* names fall back to ids */ }
+                }
+            } catch (error) {
+                if (token === srdRenderToken) {
+                    body.replaceChildren();
+                    appendText(body, 'div', 'Die Regelwerte dieses Charakters konnten nicht geladen werden.', 'sheet-empty');
+                }
+                return;
+            }
+            if (token !== srdRenderToken) return;
+            body.replaceChildren(...buildSrdSheet(character, detail, srdCreatorData));
+        }
+
+        function buildSrdSheet(character, detail, data) {
+            const ev = detail.evaluation || {};
+            const state = detail.srd?.state || {};
+            const nodes = [];
+
+            const species = srdLookup(data.species, state.species?.id);
+            const background = srdLookup(data.backgrounds, state.background?.id);
+            const alignment = srdLookup(data.alignments, state.identity?.alignment);
+            const classText = (ev.classes || []).map((entry) => {
+                const sub = entry.subclass ? ` · ${srdSubclassNames[entry.subclass] || String(entry.subclass).split('subclass-').pop().replace(/-/g, ' ')}` : '';
+                return `${entry.name} ${entry.level}${sub}`;
+            }).join(', ');
+            nodes.push(srdGrid('srd-sheet-facts', [
+                srdCell('Spezies', species?.name || character.race || '–'),
+                srdCell('Hintergrund', background?.name || character.background || '–'),
+                srdCell('Klasse', classText || character.class || '–'),
+                srdCell('Gesinnung', alignment?.name || '–'),
+            ]));
+
+            const hp = ev.hitPoints?.max ?? character.hp_max;
+            const hitDice = Object.entries(ev.hitDice || {}).map(([die, count]) => `${count}×${die}`).join(' + ');
+            nodes.push(srdGrid('srd-sheet-vitals', [
+                srdCell('Rüstungsklasse', String(ev.armorClass?.value ?? character.ac), ev.armorClass?.formula || ''),
+                srdCell('Trefferpunkte', `${character.hp_current ?? hp} / ${hp}`),
+                srdCell('Trefferwürfel', hitDice || '–'),
+                srdCell('Übungsbonus', signed(ev.proficiencyBonus)),
+                srdCell('Initiative', signed(ev.initiative)),
+                srdCell('Bewegung', `${String(ev.speedMeters ?? '–').replace('.', ',')} m`),
+                srdCell('Passive Wahrnehmung', String(ev.passivePerception ?? '–')),
+                srdCell('Stufe', String(ev.level ?? character.level)),
+            ]));
+
+            const abilityCells = SRD_ABILITY_ORDER.map((key) => {
+                const ability = (ev.abilities || {})[key] || {};
+                const save = (ev.saves || {})[key] || {};
+                const cell = document.createElement('div');
+                cell.className = 'srd-sheet-cell';
+                appendText(cell, 'div', SRD_ABILITY_NAMES[key], 'srd-sheet-label');
+                appendText(cell, 'div', `${ability.score ?? '–'} (${signed(ability.modifier)})`, 'srd-sheet-value srd-sheet-ability-score');
+                appendText(cell, 'div', `Rettungswurf ${signed(save.bonus)}${save.proficient ? ' • geübt' : ''}`, 'srd-sheet-label');
+                return cell;
+            });
+            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Attribute' }));
+            nodes.push(srdGrid('srd-sheet-abilities', abilityCells));
+
+            const skillList = document.createElement('ul');
+            skillList.className = 'srd-sheet-skills';
+            Object.values(ev.skills || {}).forEach((skill) => {
+                const row = document.createElement('li');
+                if (skill.proficiency !== 'none') row.className = 'is-proficient';
+                appendText(row, 'span', `${skill.name}${skill.proficiency === 'expertise' ? ' (Expertise)' : ''}`);
+                appendText(row, 'span', signed(skill.bonus));
+                skillList.append(row);
+            });
+            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Fertigkeiten' }));
+            nodes.push(skillList);
+
+            const casting = ev.spellcasting || {};
+            const casterEntries = Object.entries(casting.classes || {});
+            if (casterEntries.length) {
+                nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Zauberwirken' }));
+                const castCells = casterEntries.map(([classKey, info]) => {
+                    const cls = data.classes.find((c) => c.classKey === classKey);
+                    return srdCell(cls?.name || classKey, `SG ${info.saveDc} · Angriff ${signed(info.attackBonus)}`,
+                        `${SRD_ABILITY_NAMES[info.ability] || info.ability}`);
+                });
+                nodes.push(srdGrid('srd-sheet-facts', castCells));
+                const slots = (casting.slots || []).map((count, index) => (count ? `Grad ${SRD_SLOT_ORDINALS[index]}: ${count}` : null)).filter(Boolean);
+                if (casting.pact) slots.push('Paktmagie');
+                if (slots.length) nodes.push(srdTags(slots));
+                Object.entries(state.spells || {}).forEach(([classKey, lists]) => {
+                    const cls = data.classes.find((c) => c.classKey === classKey);
+                    [['cantrips', 'Zaubertricks'], ['spellbook', 'Zauberbuch'], ['known', 'Bekannte Zauber'], ['prepared', 'Vorbereitet']].forEach(([key, label]) => {
+                        const names = (lists?.[key] || []).map((id) => data.spells[id]?.name || id);
+                        if (!names.length) return;
+                        nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: `${cls?.name || classKey} · ${label}` }));
+                        nodes.push(srdTags(names));
+                    });
+                });
+            }
+
+            const featNames = (ev.feats || []).map((id) => srdLookup(data.feats, id)?.name || id);
+            if (featNames.length) {
+                nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Talente' }));
+                nodes.push(srdTags(featNames));
+            }
+
+            const gear = [];
+            const armor = srdLookup(data.equipment?.armor, state.equipment?.armor);
+            if (armor) gear.push(armor.name);
+            if (state.equipment?.shield) gear.push('Schild');
+            if (gear.length) {
+                nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Getragene Rüstung' }));
+                nodes.push(srdTags(gear));
+            }
+
+            const note = document.createElement('p');
+            note.className = 'srd-sheet-note';
+            note.textContent = 'Diese Werte werden aus den SRD-5.2.1-Regeln berechnet. Name, Erfahrung und aktuelle Trefferpunkte änderst du direkt im Bogen, alles andere im Regelwerk-Ersteller.';
+            nodes.push(note);
+            const link = document.createElement('a');
+            link.className = 'srd-sheet-link';
+            link.href = '/srd-creator';
+            link.textContent = 'Zum Regelwerk-Ersteller';
+            nodes.push(link);
+            return nodes;
+        }
+
         function renderHomebrewOrigin(character) {
             const origin = character.homebrew_origin;
             // An attached immutable race is changed through the reviewed engine handoff.
@@ -1443,9 +1379,6 @@
             document.getElementById('dndExportSection').hidden = !isDnd;
             document.getElementById('homebrewOriginSection').hidden = !hasOrigin;
             document.getElementById('homebrewOriginTraitsSection').hidden = !hasOrigin;
-            ['rdlProfileSection', 'rdlProgressionSection', 'rdlFeaturesSection'].forEach((id) => {
-                document.getElementById(id).hidden = isDnd;
-            });
             const profile = document.getElementById('homebrewOriginProfile');
             const traits = document.getElementById('homebrewOriginTraits');
             profile.replaceChildren();
@@ -1453,14 +1386,6 @@
             if (!hasOrigin) return;
 
             // Authored rule text is always text, including strings that resemble HTML.
-            function appendText(parent, tag, text, className = '') {
-                const node = document.createElement(tag);
-                node.textContent = String(text ?? '');
-                if (className) node.className = className;
-                parent.append(node);
-                return node;
-            }
-
             function appendRule(parent, label, value) {
                 if (!value) return;
                 const rule = appendText(parent, 'div', '', 'homebrew-origin-copy');
@@ -1499,311 +1424,6 @@
             }
         }
 
-        function renderRollDraufContent(character) {
-            const container = document.getElementById('rdlContentPane');
-            if (!container) return;
-            const content = character.content;
-            if (!content) {
-                container.innerHTML = '<div class="sheet-empty">Roll-Drauf-Light-Inhalt nicht verfügbar (Altcharakter).</div>';
-                return;
-            }
-            const trainingBonus = content.training_bonus ?? character.training_bonus ?? '–';
-            const speciesTrait = content.species_trait;
-            const backgroundPerk = content.background_perk;
-            const factionTags = content.faction_tags || [];
-            const tagsHtml = factionTags.length
-                ? factionTags.map((t) => `<span class="rdl-tag">${escapeHtml(t)}</span>`).join('')
-                : '<span class="rdl-tag rdl-tag--none">–</span>';
-            const traitHtml = speciesTrait
-                ? `<div class="rdl-feature-card"><strong>${escapeHtml(speciesTrait.name)}</strong><div class="sheet-item-meta">${escapeHtml(speciesTrait.description)}</div></div>`
-                : '<div class="sheet-empty">Kein Spezies-Merkmal</div>';
-            const perkHtml = backgroundPerk
-                ? `<div class="rdl-feature-card"><strong>${escapeHtml(backgroundPerk.name)}</strong><div class="sheet-item-meta">${escapeHtml(backgroundPerk.description)}</div></div>`
-                : '<div class="sheet-empty">Kein Hintergrunds-Perk</div>';
-
-            // Identity block: species / faction / class / background
-            const identityBlock = `
-                <div class="rdl-identity-block">
-                    <div class="rdl-identity-field">
-                        <div class="rdl-identity-label">Spezies</div>
-                        <div class="rdl-identity-value">${escapeHtml(character.species || character.race || '–')}</div>
-                    </div>
-                    <div class="rdl-identity-field">
-                        <div class="rdl-identity-label">Fraktion</div>
-                        <div class="rdl-identity-value">${escapeHtml(character.faction || '–')}</div>
-                    </div>
-                    <div class="rdl-identity-field">
-                        <div class="rdl-identity-label">Klasse</div>
-                        <div class="rdl-identity-value">${escapeHtml(character.class || '–')}</div>
-                    </div>
-                    <div class="rdl-identity-field">
-                        <div class="rdl-identity-label">Hintergrund</div>
-                        <div class="rdl-identity-value">${escapeHtml(character.background || '–')}</div>
-                    </div>
-                </div>`;
-
-            container.innerHTML = `
-                ${identityBlock}
-                <div class="rdl-profile-grid">
-                    <div class="rdl-profile-field">
-                        <div class="rdl-profile-label">Trainingsbonus</div>
-                        <div class="rdl-profile-value">+${escapeHtml(String(trainingBonus))}</div>
-                    </div>
-                    <div class="rdl-profile-field">
-                        <div class="rdl-profile-label">Fraktion-Tags</div>
-                        <div class="rdl-tags-row">${tagsHtml}</div>
-                    </div>
-                </div>
-                <div class="rdl-section-sub">Spezies-Merkmal</div>
-                ${traitHtml}
-                <div class="rdl-section-sub">Hintergrunds-Perk</div>
-                ${perkHtml}
-            `;
-        }
-
-        function renderClassFeatures(character) {
-            const container = document.getElementById('rdlFeaturesPane');
-            if (!container) return;
-            // Update section header dynamically with class + level context
-            const sectionHeader = document.querySelector('#rdlFeaturesSection .sheet-pane-title');
-            if (sectionHeader) {
-                const className = character.class || '';
-                const lvl = character.level || 1;
-                sectionHeader.textContent = className
-                    ? `Klassenfeatures — ${className} (Stufe ${lvl})`
-                    : 'Klassenfeatures';
-            }
-            const classFeatures = (character.content && character.content.class_features) || [];
-            if (!classFeatures.length) {
-                container.innerHTML = '<div class="sheet-empty">Keine Klassenfeatures aktiv.</div>';
-                return;
-            }
-            container.innerHTML = classFeatures.map((f) => `
-                <div class="rdl-feature-card">
-                    <strong>${escapeHtml(f.name)}</strong>
-                    <div class="sheet-item-meta">${escapeHtml(f.description || '')}</div>
-                </div>
-            `).join('');
-        }
-
-        function renderProgressionLadder(character) {
-            const container = document.getElementById('rdlProgressionPane');
-            if (!container) return;
-            const progression = character.progression;
-            if (!progression) {
-                container.innerHTML = '<div class="sheet-empty">Progression nicht verfügbar (Altcharakter).</div>';
-                return;
-            }
-            const currentLevel = progression.current_level || 1;
-            const levelCap = progression.level_cap || 5;
-            const levels = progression.levels || {};
-            const isRdl = character.system_id === 'roll_drauf_light';
-            const canLevelUp = isRdl && currentLevel < levelCap;
-            const atMax = isRdl && currentLevel >= levelCap;
-
-            const levelsHtml = Object.keys(levels)
-                .map(Number)
-                .sort((a, b) => a - b)
-                .map((lvl) => {
-                    const lvlData = levels[String(lvl)];
-                    const isComplete = lvlData.status === 'complete';
-                    const isCurrent = lvl === currentLevel;
-                    const isLocked = !isComplete && !isCurrent;
-                    const feats = lvlData.auto_features || [];
-                    const choicesAvail = lvlData.choices_available || [];
-                    const chosenVals = lvlData.choices || {};
-
-                    // For completed/current levels: show unlocked features + choices made
-                    // For locked levels: show what's coming as dashed preview tags
-                    let innerContent = '';
-                    if (isComplete || isCurrent) {
-                        const featTags = feats.map((f) => `<span class="rdl-level-feature">${escapeHtml(f.name)}</span>`).join('');
-                        const choiceTags = choicesAvail.map((c) => {
-                            const chosenVal = chosenVals[c.slug];
-                            if (chosenVal) {
-                                const readableVal = _ATTR_NAMES_DE[chosenVal] || _prettifySlug(chosenVal);
-                                return `<span class="rdl-level-choice">${escapeHtml(c.prompt || 'Wahl')}: <strong>${escapeHtml(readableVal)}</strong></span>`;
-                            }
-                            return `<span class="rdl-level-choice">${escapeHtml(c.prompt || 'Entscheidung ausstehend')}</span>`;
-                        }).join('');
-                        innerContent = featTags + choiceTags || `<span class="rdl-level-empty">Kein weiterer Inhalt</span>`;
-                    } else {
-                        // Locked: show preview of what's coming
-                        const previewFeats = feats.map((f) => `<span class="rdl-level-feature--preview">${escapeHtml(f.name)}</span>`).join('');
-                        const previewChoices = choicesAvail.map((c) => `<span class="rdl-level-feature--preview">${escapeHtml(c.prompt || 'Entscheidung')}</span>`).join('');
-                        innerContent = previewFeats + previewChoices || `<span class="rdl-level-empty">Freischaltung beim Aufstieg</span>`;
-                    }
-
-                    const statusClass = isComplete ? 'rdl-prog-level--complete' : isLocked ? 'rdl-prog-level--locked' : '';
-                    const currentClass = isCurrent ? 'rdl-prog-level--current' : '';
-                    const statusLabel = isCurrent ? 'Aktuell' : isComplete ? 'Abgeschlossen' : 'Noch gesperrt';
-                    return `
-                        <div class="rdl-prog-level ${statusClass} ${currentClass}">
-                            <div class="rdl-prog-level-header">
-                                <span class="rdl-prog-level-num">Stufe ${lvl}</span>
-                                <span class="rdl-prog-level-status">${statusLabel}</span>
-                            </div>
-                            <div class="rdl-prog-level-content">${innerContent}</div>
-                        </div>`;
-                }).join('');
-
-            // State callout
-            let calloutHtml = '';
-            if (canLevelUp) {
-                calloutHtml = `<div class="rdl-prog-callout rdl-prog-callout--ready">↑ Aufstieg auf Stufe ${currentLevel + 1} ist bereit.</div>`;
-            } else if (atMax) {
-                calloutHtml = `<div class="rdl-prog-callout rdl-prog-callout--maxed">Stufe ${levelCap} erreicht — vollständig ausgespielt.</div>`;
-            }
-
-            // Level-up panel
-            const levelUpHtml = canLevelUp ? `
-                <div class="rdl-levelup-cta">
-                    <button type="button" class="rdl-levelup-btn" onclick="openLevelUpPanel()">
-                        ↑ Auf Stufe ${currentLevel + 1} aufsteigen
-                    </button>
-                </div>
-                <div id="levelUpPanel" hidden></div>
-            ` : '';
-
-            // Export section — separated visually from level-up
-            const exportHtml = isRdl ? `
-                <div class="rdl-export-section">
-                    <div class="rdl-export-label">Portabilität</div>
-                    <div class="rdl-export-copy">Speichere diesen Charakter als JSON-Datei. Importiere ihn später in ein neues Konto oder teile ihn mit der Gruppe.</div>
-                    <div><button type="button" class="rdl-export-btn" onclick="exportCharacter()">↓ Charakter exportieren</button></div>
-                </div>
-            ` : '';
-
-            const summaryText = `Stufe ${currentLevel} von ${levelCap}`;
-            container.innerHTML = `
-                <div class="rdl-prog-summary">${escapeHtml(summaryText)}</div>
-                ${calloutHtml}
-                <div class="rdl-prog-ladder">${levelsHtml}</div>
-                ${levelUpHtml}
-                ${exportHtml}
-            `;
-        }
-
-        function openLevelUpPanel() {
-            const panel = document.getElementById('levelUpPanel');
-            if (!panel) return;
-            if (!sheet || !sheet.character) return;
-
-            const character = sheet.character;
-            const progression = character.progression || {};
-            const currentLevel = progression.current_level || 1;
-            const targetLevel = currentLevel + 1;
-            const levels = progression.levels || {};
-            const targetData = levels[String(targetLevel)] || {};
-            const choicesAvail = targetData.choices_available || [];
-            const autoFeats = targetData.auto_features || [];
-
-            const autoFeatHtml = autoFeats.length
-                ? `<div class="rdl-levelup-panel-sub">
-                    Neue Features bei diesem Aufstieg:
-                    ${autoFeats.map(f => `<span class="rdl-level-feature" style="margin:0 0.2rem 0.2rem 0;display:inline-block;">${escapeHtml(f.name)}</span>`).join('')}
-                   </div>`
-                : '';
-
-            const choiceGroupsHtml = choicesAvail.map((choiceDef) => {
-                const opts = choiceDef.options || [];
-                const isAttribute = choiceDef.choice_type === 'attribute';
-                const optionsHtml = opts.map((opt) => {
-                    const value = isAttribute ? opt : opt.slug;
-                    const displayName = isAttribute
-                        ? (_ATTR_NAMES_DE[opt] || opt.toUpperCase())
-                        : escapeHtml(opt.name || _prettifySlug(opt.slug));
-                    const desc = isAttribute
-                        ? `<div class="rdl-choice-option-desc">Erhöhe ${_ATTR_NAMES_DE[opt] || opt} um 1 Punkt.</div>`
-                        : `<div class="rdl-choice-option-desc">${escapeHtml(opt.description || '')}</div>`;
-                    return `
-                        <label class="rdl-choice-option">
-                            <input type="radio" name="choice_${escapeHtml(choiceDef.slug)}" value="${escapeHtml(value)}" required>
-                            <div class="rdl-choice-option-label">
-                                <div class="rdl-choice-option-name">${displayName}</div>
-                                ${desc}
-                            </div>
-                        </label>`;
-                }).join('');
-                return `
-                    <div class="rdl-choice-group">
-                        <div class="rdl-choice-prompt">${escapeHtml(choiceDef.prompt || 'Wähle eine Option:')}</div>
-                        ${optionsHtml}
-                    </div>`;
-            }).join('');
-
-            const confirmLabel = choicesAvail.length
-                ? 'Entscheidung bestätigen &amp; aufsteigen'
-                : 'Aufstieg bestätigen';
-
-            panel.innerHTML = `
-                <div class="rdl-levelup-panel">
-                    <div class="rdl-levelup-panel-title">Aufstieg auf Stufe ${targetLevel}</div>
-                    <div class="rdl-levelup-panel-sub">Überprüfe die Änderungen. Nach dem Bestätigen wird der Aufstieg sofort gespeichert.</div>
-                    ${autoFeatHtml}
-                    ${choiceGroupsHtml}
-                    <div class="rdl-levelup-actions">
-                        <button type="button" id="levelUpSubmitBtn" class="btn btn-primary" onclick="submitLevelUp(${targetLevel})">
-                            ${confirmLabel}
-                        </button>
-                        <button type="button" class="btn btn-secondary" onclick="closeLevelUpPanel()">Abbrechen</button>
-                    </div>
-                </div>`;
-            panel.hidden = false;
-        }
-
-        function closeLevelUpPanel() {
-            const panel = document.getElementById('levelUpPanel');
-            if (panel) { panel.hidden = true; panel.innerHTML = ''; }
-        }
-
-        async function submitLevelUp(targetLevel) {
-            const panel = document.getElementById('levelUpPanel');
-            const choices = {};
-
-            if (panel) {
-                panel.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
-                    const match = radio.name.match(/^choice_(.+)$/);
-                    if (match) choices[match[1]] = radio.value;
-                });
-
-                // Validate all required choice groups have a selection
-                const allGroups = panel.querySelectorAll('.rdl-choice-group');
-                for (const group of allGroups) {
-                    const radios = group.querySelectorAll('input[type="radio"]');
-                    if (radios.length && !group.querySelector('input[type="radio"]:checked')) {
-                        showMessage('Bitte alle Entscheidungen treffen, bevor du aufsteigst.', true);
-                        return;
-                    }
-                }
-            }
-
-            const submitBtn = document.getElementById('levelUpSubmitBtn');
-            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Aufstieg wird gespeichert …'; }
-
-            try {
-                await auth.makeAuthRequest(
-                    `/api/characters/${characterId}/level-up`,
-                    'POST',
-                    { choices },
-                );
-                closeLevelUpPanel();
-                await loadSheet();
-                const charName = sheet?.character?.name || 'Der Charakter';
-                const progression = sheet?.character?.progression;
-                const newLevel = progression?.current_level || targetLevel;
-                const levelCap = progression?.level_cap || 5;
-                const atMax = newLevel >= levelCap;
-                const nextHint = atMax
-                    ? ' Maximales Level erreicht.'
-                    : ` Nächste Stufe: ${newLevel + 1}.`;
-                showMessage(`${charName} ist jetzt Stufe ${newLevel}!${nextHint}`);
-            } catch (error) {
-                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Aufstieg bestätigen'; }
-                showMessage(error.message || 'Level-Up fehlgeschlagen', true);
-            }
-        }
-
         // M27: Export
         async function exportCharacter() {
             try {
@@ -1831,9 +1451,7 @@
             renderCore(sheet.character);
             renderIdentity(sheet.character);
             renderHomebrewOrigin(sheet.character);
-            renderRollDraufContent(sheet.character);
-            renderClassFeatures(sheet.character);
-            renderProgressionLadder(sheet.character);
+            renderSrdSheet(sheet.character);
             renderSpells(sheet.spells || []);
             renderEquipment(sheet.equipment || []);
             renderInventory(sheet.inventory || []);
@@ -1917,6 +1535,16 @@
         async function saveCore() {
             if (!editable) return;
             try {
+                if (isSrdCharacter(sheet?.character)) {
+                    await auth.makeAuthRequest(`/api/characters/${characterId}`, 'PUT', {
+                        name: document.getElementById('charName').value.trim(),
+                        xp: Number(document.getElementById('charXp').value),
+                        hp_current: Number(document.getElementById('charHpCurrent').value),
+                    });
+                    await loadSheet();
+                    showMessage('Name, Erfahrung und aktuelle Trefferpunkte gespeichert.');
+                    return;
+                }
                 const payload = {
                     name: document.getElementById('charName').value.trim(),
                     race: document.getElementById('charRace').value.trim(),
@@ -1934,11 +1562,6 @@
                     wis: Number(document.getElementById('charWis').value),
                     cha: Number(document.getElementById('charCha').value)
                 };
-                const factionValue = document.getElementById('charFaction').value.trim();
-                if ((sheet?.character?.system_id === 'roll_drauf_light' || factionValue) && payload.race) {
-                    payload.species = payload.race;
-                    payload.faction = factionValue;
-                }
                 await auth.makeAuthRequest(`/api/characters/${characterId}`, 'PUT', payload);
                 await loadSheet();
                 showMessage(sheet?.character?.campaign_id

@@ -1609,7 +1609,7 @@
                         <span class="book-scene-panel-kicker">Archiv</span>
                         <h2 class="book-scene-panel-title">Heldenarchiv</h2>
                         ${this.buildActionButtons([
-                            { label: 'Held anlegen', href: buildIntentHref('/characters', { intent: 'create' }), primary: true },
+                            { label: 'Held anlegen', href: '/srd-creator', primary: true },
                         ])}
                         ${this.buildCharacterLedger(characters, campaigns)}
                     </section>

@@ -12,14 +12,12 @@ def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def test_characters_template_wires_standard_array_end_to_end():
+def test_characters_template_hands_creation_to_srd_creator():
     content = _read(CHARACTERS_TEMPLATE)
 
-    assert "standardArrayAssignments = {}" in content
-    assert "Object.keys(standardArrayAssignments).length !== 6" in content
-    assert "div.onclick = () => assignArrayValue(val);" in content
-    assert "Choose an ability before assigning a Standard Array value" in content
-    assert "Assigned ${assignedCount} of 6 ability scores." in content
+    assert "window.location.replace('/srd-creator')" in content
+    assert "standardArrayAssignments" not in content
+    assert "Roll Drauf Light" not in content
 
 
 def test_characters_template_exposes_clear_archive_to_sheet_and_campaign_actions():
@@ -35,9 +33,8 @@ def test_characters_template_exposes_clear_archive_to_sheet_and_campaign_actions
     assert "charactersJourneyNote" in content
     assert "openCharacterSheet(id, viewMode = 'view')" in content
     assert "goToCampaignContext(campaignId)" in content
-    assert "Charakter erstellt" in content
     assert "Open Campaign Context" in content
-    assert "consumeCharacterIntent('create')" in content
+    assert "get('intent') === 'create'" in content
 
 
 def test_character_sheet_template_links_view_edit_and_campaign_context():

@@ -1,13 +1,11 @@
 """Character and character-sheet endpoints."""
 
-import copy
 from io import BytesIO
 
 from flask import jsonify, request, send_file
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from werkzeug.utils import secure_filename
 
-from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy import or_
 
 from vtt.characters import characters_bp
@@ -26,17 +24,7 @@ from vtt.models import (
 from vtt.storage import get_storage_adapter
 from vtt.upload_security import UploadError, validate_upload
 from vtt.utils.time import utcnow
-from vtt.roll_drauf.catalog import (
-    SPECIES as ROLL_DRAUF_LIGHT_SPECIES,
-    CLASSES as ROLL_DRAUF_LIGHT_CLASSES,
-    BACKGROUNDS as ROLL_DRAUF_LIGHT_BACKGROUNDS,
-    LEVEL_ONE_BASELINES as ROLL_DRAUF_LIGHT_LEVEL_ONE_BASELINES,
-)
-from vtt.roll_drauf.progression import apply_level1_package, apply_level_up
 from vtt.rules_content.creator_drafts import is_srd_character_data
-
-
-ROLL_DRAUF_LIGHT_VERSION = 1
 
 
 IDENTITY_FIELD_MAP = {
@@ -51,17 +39,6 @@ IDENTITY_FIELD_MAP = {
         'mime_type': 'token_mime_type',
     },
 }
-
-# Maps Roll-Drauf attribute choice values to Character ORM field names
-_ATTRIBUTE_STAT_MAP = {
-    'str': 'str_score',
-    'dex': 'dex_score',
-    'con': 'con_score',
-    'int': 'int_score',
-    'wis': 'wis_score',
-    'cha': 'cha_score',
-}
-
 
 # Derived by the SRD creator; the generic character API must not overwrite them.
 SRD_MANAGED_FIELDS = (
@@ -85,138 +62,6 @@ def _srd_write_guard(data, existing=None):
             'message': 'SRD-Charaktere entstehen nur über den Regelwerk-Ersteller.',
         }), 400
     return None
-
-
-def _catalog_lookup(entries, raw_value):
-    if raw_value is None:
-        return None
-
-    normalized = str(raw_value).strip()
-    if not normalized:
-        return None
-
-    needle = normalized.casefold()
-    for entry in entries.values():
-        for candidate in (entry.get('id'), entry.get('slug'), entry.get('name')):
-            if candidate and str(candidate).casefold() == needle:
-                return entry
-    return None
-
-
-def _extract_roll_drauf_light(character_data):
-    if not isinstance(character_data, dict):
-        return {}
-    payload = character_data.get('roll_drauf_light')
-    return payload if isinstance(payload, dict) else {}
-
-
-def _validate_level_up_choices(cat_level, choices):
-    """
-    Validate a choices dict against the catalog level definition.
-
-    Returns (validated_choices_dict, None) on success.
-    Returns (None, (jsonify_response, status_code)) on failure.
-
-    Only the choices_available defined in the catalog are validated;
-    extra keys in `choices` are silently ignored.
-    """
-    choices = choices or {}
-    validated = {}
-
-    for choice_def in cat_level.get('choices_available', []):
-        slug = choice_def['slug']
-        chosen = choices.get(slug)
-        choice_type = choice_def['choice_type']
-
-        if choice_type == 'signature':
-            if not chosen:
-                return None, (jsonify({'error': 'This level requires a signature choice'}), 400)
-            valid_slugs = [o['slug'] for o in choice_def.get('options', [])]
-            if chosen not in valid_slugs:
-                return None, (jsonify({'error': f'Invalid signature choice: {chosen}'}), 400)
-            validated[slug] = chosen
-
-        elif choice_type == 'attribute':
-            if not chosen:
-                return None, (jsonify({'error': 'This level requires an attribute choice'}), 400)
-            if chosen not in _ATTRIBUTE_STAT_MAP:
-                return None, (jsonify({'error': f'Invalid attribute choice: {chosen}'}), 400)
-            validated[slug] = chosen
-
-    return validated, None
-
-
-def _build_roll_drauf_light_payload(data):
-    species_entry = _catalog_lookup(ROLL_DRAUF_LIGHT_SPECIES, data.get('species'))
-    if not species_entry:
-        return None, None
-
-    faction_entry = _catalog_lookup(species_entry['factions'], data.get('faction'))
-    if not faction_entry:
-        return None, (jsonify({'error': 'Faction must match the selected species'}), 400)
-
-    class_entry = _catalog_lookup(ROLL_DRAUF_LIGHT_CLASSES, data.get('class'))
-    if not class_entry:
-        return None, (jsonify({'error': 'Class must be selected from the Roll Drauf Light list'}), 400)
-
-    background_entry = _catalog_lookup(ROLL_DRAUF_LIGHT_BACKGROUNDS, data.get('background'))
-    if not background_entry:
-        return None, (jsonify({'error': 'Background must be selected from the Roll Drauf Light list'}), 400)
-
-    rdl = {
-        'system_id': 'roll_drauf_light',
-        'system_version': ROLL_DRAUF_LIGHT_VERSION,
-        'creator_contract_version': 1,
-        'species': {
-            'id': species_entry['id'],
-            'slug': species_entry['slug'],
-            'name': species_entry['name'],
-        },
-        'faction': {
-            'id': faction_entry['id'],
-            'slug': faction_entry['slug'],
-            'name': faction_entry['name'],
-        },
-        'class': {
-            'id': class_entry['id'],
-            'slug': class_entry['slug'],
-            'name': class_entry['name'],
-        },
-        'background': {
-            'id': background_entry['id'],
-            'slug': background_entry['slug'],
-            'name': background_entry['name'],
-        },
-        'attribute_mode': str(data.get('attribute_mode') or 'point_buy'),
-        'level_cap': 5,
-    }
-    # M24: apply level-1 content packages + progression scaffold
-    apply_level1_package(rdl, species_entry, faction_entry, class_entry, background_entry)
-    return rdl, None
-
-
-def _normalize_character_payload(data, *, existing_character=None):
-    payload = dict(data or {})
-    roll_drauf_light, error = _build_roll_drauf_light_payload(payload)
-    if error:
-        return None, error
-
-    if roll_drauf_light:
-        class_slug = roll_drauf_light['class']['slug']
-        baseline = ROLL_DRAUF_LIGHT_LEVEL_ONE_BASELINES[class_slug]
-        legacy_data = dict(existing_character.character_data or {}) if existing_character else {}
-        legacy_data['roll_drauf_light'] = roll_drauf_light
-
-        payload['race'] = roll_drauf_light['species']['name']
-        payload['class'] = roll_drauf_light['class']['name']
-        payload['background'] = roll_drauf_light['background']['name']
-        payload['character_data'] = legacy_data
-        payload.setdefault('level', 1)
-        payload.setdefault('ac', baseline['ac'])
-        payload.setdefault('hp_max', baseline['hp_max'])
-        payload.setdefault('mana_max', baseline['mana_max'])
-
-    return payload, None
 
 
 def _get_current_user():
@@ -347,9 +192,6 @@ def create_character():
     if not data.get('name'):
         return jsonify({'error': 'Character name required'}), 400
 
-    data, error = _normalize_character_payload(data)
-    if error:
-        return error
     error = _srd_write_guard(data)
     if error:
         return error
@@ -509,9 +351,6 @@ def update_character(char_id):
         return jsonify({'error': 'Unauthorized'}), 403
 
     data = request.get_json() or {}
-    data, error = _normalize_character_payload(data, existing_character=char)
-    if error:
-        return error
     error = _srd_write_guard(data, existing=char)
     if error:
         return error
@@ -521,10 +360,6 @@ def update_character(char_id):
         char.name = data['name']
     if 'race' in data:
         char.race = data['race']
-    if 'faction' in data and not data.get('species'):
-        existing = _extract_roll_drauf_light(char.character_data or {})
-        if not existing:
-            return jsonify({'error': 'Faction requires canonical species data'}), 400
     if 'class' in data:
         char.class_name = data['class']
     if 'background' in data:
@@ -583,203 +418,10 @@ def delete_character(char_id):
     return jsonify({'message': 'Character deleted'}), 200
 
 
-@characters_bp.route('/characters/<int:char_id>/level-up', methods=['POST'])
-@limiter.limit('20 per hour')
-@jwt_required()
-def level_up_character(char_id):
-    """Advance a canonical Roll-Drauf-Light character by exactly one level."""
-    user, error = _get_current_user()
-    if error:
-        return error
-
-    char, error = _get_character_or_404(char_id)
-    if error:
-        return error
-    if char.user_id != user.id:
-        return jsonify({'error': 'Unauthorized'}), 403
-
-    # --- Canonical-character guard ---
-    rdl = _extract_roll_drauf_light(char.character_data)
-    if not rdl or rdl.get('system_id') != 'roll_drauf_light':
-        return jsonify({'error': 'Not a canonical Roll-Drauf-Light character'}), 422
-
-    progression = rdl.get('progression')
-    if not progression:
-        return jsonify({'error': 'Character has no progression data'}), 422
-
-    current_level = progression.get('current_level', 1)
-    level_cap = progression.get('level_cap', 5)
-
-    # --- Level-cap guard ---
-    if current_level >= level_cap:
-        return jsonify({'error': 'Max level reached'}), 422
-
-    target_level = current_level + 1
-
-    # --- One-level-per-request guard: scaffold must exist ---
-    if str(target_level) not in progression.get('levels', {}):
-        return jsonify({'error': f'No progression scaffold for level {target_level}'}), 422
-
-    # --- Class lookup ---
-    class_slug = rdl.get('class', {}).get('slug')
-    class_entry = _catalog_lookup(ROLL_DRAUF_LIGHT_CLASSES, class_slug)
-    if not class_entry:
-        return jsonify({'error': 'Cannot resolve class from catalog'}), 422
-
-    cat_level = class_entry['progression'][target_level]
-
-    # --- Choice validation ---
-    data = request.get_json() or {}
-    raw_choices = data.get('choices', {})
-    validated_choices, error = _validate_level_up_choices(cat_level, raw_choices)
-    if error:
-        return error
-
-    # --- Apply level-up (pure data mutation on a copy) ---
-    char_data = copy.deepcopy(char.character_data or {})
-    rdl_mut = char_data['roll_drauf_light']
-    meta = apply_level_up(rdl_mut, class_entry, target_level, validated_choices)
-
-    # --- Apply stat change for attribute choice ---
-    chosen_attr = meta.get('chosen_attribute')
-    if chosen_attr:
-        stat_field = _ATTRIBUTE_STAT_MAP.get(chosen_attr)
-        if stat_field:
-            setattr(char, stat_field, getattr(char, stat_field, 10) + 1)
-
-    # --- Persist ---
-    char.level = target_level
-    char.character_data = char_data
-    flag_modified(char, 'character_data')
-    db.session.commit()
-
-    return jsonify({
-        'message': f'Level up! {char.name} ist jetzt Level {target_level}.',
-        'level': target_level,
-        'character': char.serialize(include_details=True),
-    }), 200
-
-
-def _build_export_payload(char):
-    """Build a versioned, portable export dict for a canonical RDL character."""
-    from vtt.ce_compat import character_projection
-    projected = character_projection(char, operation="export")
-    if projected is not None:
-        return {"export_kind": "creation_engine_legacy_compat", "export_version": 1, "character": projected}
-    char_data = char.character_data or {}
-    rdl = char_data.get('roll_drauf_light', {})
-    avatar_url = char.avatar_url or (
-        f'/api/characters/{char.id}/identity/avatar' if char.avatar_storage_key else None
-    )
-    token_url = char.token_url or (
-        f'/api/characters/{char.id}/identity/token' if char.token_storage_key else None
-    )
-    return {
-        'export_kind': 'character',
-        'system_id': 'roll_drauf_light',
-        'system_version': ROLL_DRAUF_LIGHT_VERSION,
-        'export_version': 1,
-        'name': char.name,
-        'stats': {
-            'str': char.str_score,
-            'dex': char.dex_score,
-            'con': char.con_score,
-            'int': char.int_score,
-            'wis': char.wis_score,
-            'cha': char.cha_score,
-            'level': char.level,
-            'xp': char.xp,
-            'ac': char.ac,
-            'hp_max': char.hp_max,
-            'mana_max': char.mana_max,
-        },
-        'roll_drauf_light': rdl,
-        'identity_refs': {
-            'avatar_url': avatar_url,
-            'token_url': token_url,
-        },
-    }
-
-
-def _validate_import_payload(payload):
-    """
-    Validate a character import payload against the export contract.
-
-    Returns (validated_dict, None) on success where validated_dict has keys:
-      name, rdl, stats
-    Returns (None, (jsonify_response, status_code)) on failure.
-    """
-    if not isinstance(payload, dict):
-        return None, (jsonify({'error': 'Import payload must be a JSON object'}), 400)
-
-    if payload.get('export_kind') != 'character':
-        return None, (jsonify({'error': 'export_kind must be "character"'}), 400)
-
-    if payload.get('system_id') != 'roll_drauf_light':
-        return None, (jsonify({'error': 'system_id must be "roll_drauf_light"'}), 400)
-
-    if payload.get('system_version') != ROLL_DRAUF_LIGHT_VERSION:
-        return None, (jsonify({
-            'error': f'Unsupported system_version; expected {ROLL_DRAUF_LIGHT_VERSION}',
-        }), 422)
-
-    name = payload.get('name')
-    if not name or not str(name).strip():
-        return None, (jsonify({'error': 'Character name required'}), 400)
-
-    rdl = payload.get('roll_drauf_light')
-    if not isinstance(rdl, dict):
-        return None, (jsonify({'error': 'roll_drauf_light payload required'}), 400)
-
-    # --- Catalog checks ---
-    species_slug = (rdl.get('species') or {}).get('slug')
-    species_entry = _catalog_lookup(ROLL_DRAUF_LIGHT_SPECIES, species_slug)
-    if not species_entry:
-        return None, (jsonify({'error': f'Unknown species: {species_slug}'}), 422)
-
-    faction_slug = (rdl.get('faction') or {}).get('slug')
-    faction_entry = _catalog_lookup(species_entry['factions'], faction_slug)
-    if not faction_entry:
-        return None, (jsonify({'error': f'Unknown faction: {faction_slug}'}), 422)
-
-    class_slug = (rdl.get('class') or {}).get('slug')
-    class_entry = _catalog_lookup(ROLL_DRAUF_LIGHT_CLASSES, class_slug)
-    if not class_entry:
-        return None, (jsonify({'error': f'Unknown class: {class_slug}'}), 422)
-
-    background_slug = (rdl.get('background') or {}).get('slug')
-    background_entry = _catalog_lookup(ROLL_DRAUF_LIGHT_BACKGROUNDS, background_slug)
-    if not background_entry:
-        return None, (jsonify({'error': f'Unknown background: {background_slug}'}), 422)
-
-    # --- Progression consistency ---
-    progression = rdl.get('progression')
-    if not isinstance(progression, dict):
-        return None, (jsonify({'error': 'roll_drauf_light.progression required'}), 422)
-
-    current_level = progression.get('current_level')
-    level_cap = progression.get('level_cap')
-
-    if not isinstance(current_level, int) or current_level < 1:
-        return None, (jsonify({'error': 'progression.current_level must be a positive integer'}), 422)
-
-    if not isinstance(level_cap, int) or level_cap < current_level:
-        return None, (jsonify({'error': 'progression.level_cap must be >= current_level'}), 422)
-
-    levels = progression.get('levels', {})
-    for lvl in range(1, current_level + 1):
-        if str(lvl) not in levels:
-            return None, (jsonify({'error': f'progression.levels is missing level {lvl}'}), 422)
-
-    stats = payload.get('stats') or {}
-
-    return {'name': str(name).strip(), 'rdl': rdl, 'stats': stats}, None
-
-
 @characters_bp.route('/characters/<int:char_id>/export', methods=['GET'])
 @jwt_required()
 def export_character(char_id):
-    """Export an RDL or explicitly versioned D&D character as portable JSON."""
+    """Export an explicitly versioned D&D character as portable JSON."""
     user, error = _get_current_user()
     if error:
         return error
@@ -790,23 +432,18 @@ def export_character(char_id):
     if not _can_read_character(user.id, char):
         return jsonify({'error': 'Unauthorized'}), 403
 
-    rdl = _extract_roll_drauf_light(char.character_data)
-    if not rdl or rdl.get('system_id') != 'roll_drauf_light':
-        from vtt.characters.dnd5e_portable import PortableError, export_payload
-        try:
-            return jsonify(export_payload(char)), 200
-        except PortableError as exc:
-            return jsonify({'error': str(exc)}), exc.status
-
-    payload = _build_export_payload(char)
-    return jsonify(payload), 200
+    from vtt.characters.dnd5e_portable import PortableError, export_payload
+    try:
+        return jsonify(export_payload(char)), 200
+    except PortableError as exc:
+        return jsonify({'error': str(exc)}), exc.status
 
 
 @characters_bp.route('/characters/import', methods=['POST'])
 @limiter.limit('20 per hour')
 @jwt_required()
 def import_character():
-    """Create an owned character from a supported RDL or D&D portable export."""
+    """Create an owned character from a supported D&D portable export."""
     user, error = _get_current_user()
     if error:
         return error
@@ -822,42 +459,9 @@ def import_character():
             'message': f'Charakter "{char.name}" erfolgreich importiert.',
             'character': char.serialize(include_details=True),
         }), 201
-    validated, error = _validate_import_payload(raw)
-    if error:
-        return error
-
-    rdl = validated['rdl']
-    stats = validated['stats']
-
-    char = Character(
-        user_id=user.id,
-        campaign_id=None,
-        name=validated['name'],
-        race=rdl['species']['name'],
-        class_name=rdl['class']['name'],
-        background=rdl['background']['name'],
-        level=stats.get('level', rdl.get('progression', {}).get('current_level', 1)),
-        xp=stats.get('xp', 0),
-        ac=stats.get('ac', 10),
-        hp_max=stats.get('hp_max', 10),
-        hp_current=stats.get('hp_max', 10),
-        mana_max=stats.get('mana_max', 0),
-        mana_current=stats.get('mana_max', 0),
-        str_score=stats.get('str', 10),
-        dex_score=stats.get('dex', 10),
-        con_score=stats.get('con', 10),
-        int_score=stats.get('int', 10),
-        wis_score=stats.get('wis', 10),
-        cha_score=stats.get('cha', 10),
-        character_data={'roll_drauf_light': rdl},
-    )
-    db.session.add(char)
-    db.session.commit()
-
     return jsonify({
-        'message': f'Charakter "{char.name}" erfolgreich importiert.',
-        'character': char.serialize(include_details=True),
-    }), 201
+        'error': 'Unbekanntes Exportformat. Neue Charaktere entstehen im Regelwerk-Ersteller (/srd-creator).',
+    }), 400
 
 
 @characters_bp.route('/characters/<int:char_id>/identity/<identity_kind>', methods=['GET'])

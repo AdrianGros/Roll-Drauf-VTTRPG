@@ -19,11 +19,12 @@ def test_g1_package_pin():
     }
 
 
-def test_signature_ids_match_the_existing_catalogue_without_importing_it_at_runtime():
-    from vtt.roll_drauf.catalog import CLASSES
-    legacy = {choice['slug']: tuple(option['slug'] for option in choice['options'])
-              for character_class in CLASSES.values() for level in character_class['progression'].values()
-              for choice in level['choices_available'] if choice['choice_type'] == 'signature'}
+def test_signature_ids_match_the_pinned_catalogue_snapshot():
+    legacy = {
+        "kaempfer_signature": ("defensiver_stil", "offensiver_stil"),
+        "magier_signature": ("arkane_ruestung", "doppelpuls"),
+        "schurke_signature": ("meuchler", "fluchtexperte"),
+    }
     assert {choice.id: choice.options for choice in rdl_g1_ruleset().choices} == legacy
 
 

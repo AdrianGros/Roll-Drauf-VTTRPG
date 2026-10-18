@@ -176,15 +176,14 @@ def test_player_dm_journey_in_browser(feedback_site, engine, width):
         player.goto(origin+'/characters')
         expect(player.get_by_text('First hero', exact=True)).to_be_visible()
         player.get_by_role('button', name='Held anlegen', exact=True).click()
-        expect(player.locator('#charModal')).to_be_visible()
-        player.locator('#charName').fill('Second hero')
-        for selector in ['#charRace','#charFaction','#charClass','#charBackground']:
-            player.locator(selector).select_option(index=1)
-        player.locator('#nextBtn').click(); player.locator('#nextBtn').click()
-        with player.expect_response(lambda r: r.url.endswith('/api/characters') and r.request.method=='POST') as created:
-            player.locator('#submitBtn').click()
-        assert created.value.status == 201
-        second = created.value.json()['id']
+        player.wait_for_url('**/srd-creator')
+        player.goto(origin+'/characters')
+        created = player.evaluate("""async () => {
+            const res = await auth.makeAuthRequest('/api/characters', 'POST', {name: 'Second hero', race: 'Mensch', class: 'Kämpfer', level: 1});
+            await loadCharacters();
+            return res;
+        }""")
+        second = created['id']
         expect(player.locator('#book-dashboard-scene').get_by_text('Second hero',exact=True)).to_be_visible()
         expect(player.get_by_role('button',name='Held anlegen',exact=True)).to_be_visible()
         expect(player.locator('[data-character-campaign]')).to_have_count(2)
