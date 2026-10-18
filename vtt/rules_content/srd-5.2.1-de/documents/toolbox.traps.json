@@ -1,0 +1,611 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "toolbox.traps",
+  "slug": "fallen",
+  "title": "Fallen",
+  "navigationPath": [
+    "Werkzeugkasten fürs Spiel",
+    "Fallen"
+  ],
+  "order": 960,
+  "sourcePages": [
+    230,
+    231,
+    232,
+    233
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.fallen",
+      "level": 2,
+      "text": "Fallen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallen.text-1",
+      "text": "Fallen sollten sparsam verwendet werden, sonst verlieren sie ihren Reiz. Eine verborgene Fallgrube kann eine spannende Überraschung sein, doch zu viele Fallen in einem Abenteuer können Spieler übermäßig vorsichtig werden lassen und das Spiel bremsen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallen.text-2",
+      "text": "Die besten Fallen sind kurze Ablenkungen, die fähige Charaktere in kurzer Zeit überwinden können – oder tödliche Rätsel, die Geistesgegenwart und Teamarbeit erfordern. Fallen, die nicht entdeckt werden können, aber unausweichlich sind, machen selten Spaß."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.elemente-einer-falle",
+      "level": 3,
+      "text": "Elemente einer Falle"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.elemente-einer-falle.text-1",
+      "text": "Die Beschreibung einer Falle enthält nach ihrem Namen folgende Elemente:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.elemente-einer-falle.text-2",
+      "text": "Grad und Stufen: Eine Falle wird danach eingestuft, ob sie für Charaktere bestimmter Stufen lästig oder tödlich ist. Eine lästige Falle fügt Charakteren der angegebenen Stufen wahrscheinlich keine nennenswerten Schäden zu, wohingegen eine tödliche Falle für Charaktere der angegebenen Stufen eine ernste Bedrohung darstellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.elemente-einer-falle.text-3",
+      "text": "Auslöser: Fallen werden häufig ausgelöst, wenn jemand einen bestimmten Bereich betritt oder einen Gegenstand berührt. Dies könnte zum Beispiel geschehen, wenn eine Druckplatte betreten, ein Stolperdraht berührt, ein Türknauf gedreht oder der falsche Schlüssel in ein Schloss gesteckt wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.elemente-einer-falle.text-4",
+      "text": "Wirkungsdauer: Manche Fallen haben Wirkungsdauern, die in Runden, Minuten oder Stunden ausgedrückt werden. Bei anderen ist angegeben, dass ihre Effekte bestehen bleiben, bis die Fallen zerstört oder gebannt werden. Wenn die Wirkungsdauer einer Falle „unmittelbar“ lautet, wird ihr Effekt sofort angewendet. Wird eine Falle nach ihrem Auslösen zurückgesetzt, so ist dies im Eintrag vermerkt. Anderenfalls ist die Falle inaktiv, nachdem sie einmal ausgelöst wurde."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.elemente-einer-falle.text-5",
+      "text": "Sei vorsichtig, wenn du Charaktere mit niedrigeren Stufen als dem angegebenen Stufenbereich mit der jeweiligen Falle konfrontierst. Eine Falle, die im angegebenen Stufenbereich lästig ist, kann für Charaktere mit niedrigeren Stufen durchaus tödlich sein."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.beispielfallen",
+      "level": 3,
+      "text": "Beispielfallen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.beispielfallen.text-1",
+      "text": "Die Fallen sind in alphabetischer Reihenfolge aufgeführt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.einstuerzende-decke",
+      "level": 4,
+      "text": "Einstürzende Decke"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.einstuerzende-decke.untertitel",
+      "text": "Tödliche Falle (Stufen 1–4)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "toolbox.traps.einstuerzende-decke.eigenschaften",
+      "entries": [
+        {
+          "term": "Auslöser",
+          "definition": "Eine Kreatur löst einen Stolperdraht aus"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.einstuerzende-decke.text-1",
+      "text": "Diese Falle funktioniert mit einem Stolperdraht und lässt einen instabilen Deckenabschnitt einstürzen. Der Stolperdraht verläuft 7,5 Zentimeter über dem Boden und verbindet zwei schwache Stützen, die umkippen, wenn am Draht gezogen wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.einstuerzende-decke.text-2",
+      "text": "Die erste Kreatur, die in den Stolperdraht läuft, lässt die Stützen umkippen, woraufhin der instabile Deckenabschnitt einstürzt. Jede Kreatur unter dem Deckenabschnitt muss einen SG-13-Geschicklichkeitsrettungswurf bestehen. Misslingt der Wurf, so erleidet sie 11 (2W10) Wuchtschaden, anderenfalls die Hälfte. Die Trümmer des Einsturzes machen den Bereich der Falle zu schwierigem Gelände."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.einstuerzende-decke.text-3",
+      "text": "Entdecken und entschärfen: Eine Kreatur kann mit der Suchen-Aktion den Bereich der Falle untersuchen und einen SG-11-Weisheitswurf (Wahrnehmung) ausführen. Bei einem Erfolg entdeckt sie den Stolperdraht und den instabilen Deckenabschnitt. Ein entdeckter Stolperdraht kann problemlos zerschnitten oder umgangen werden (kein Attributswurf erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.einstuerzende-decke.text-4",
+      "text": "Auf höheren Stufen: Du kannst die Falle für höhere Stufen hochskalieren, indem du Schaden und Rettungswurf-SG erhöhst, wie in der folgenden Tabelle dargestellt:"
+    },
+    {
+      "type": "table",
+      "ruleId": "toolbox.traps.einstuerzende-decke.tabelle-hoehere-stufen",
+      "caption": "Einstürzende Decke: Auf höheren Stufen",
+      "columns": [
+        "Stufen",
+        "Wuchtschaden",
+        "Rettungswurf-SG"
+      ],
+      "rows": [
+        [
+          "5–10",
+          "22 (4W10)",
+          "15"
+        ],
+        [
+          "11–16",
+          "55 (10W10)",
+          "17"
+        ],
+        [
+          "17–20",
+          "99 (18W10)",
+          "19"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.fallendes-netz",
+      "level": 4,
+      "text": "Fallendes Netz"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallendes-netz.untertitel",
+      "text": "Lästige Falle (Stufen 1–4)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "toolbox.traps.fallendes-netz.eigenschaften",
+      "entries": [
+        {
+          "term": "Auslöser",
+          "definition": "Eine Kreatur löst einen Stolperdraht aus"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallendes-netz.text-1",
+      "text": "Ein fallendes Netz funktioniert mit einem Stolperdraht. Ein an der Decke befestigtes, mit Gewichten versehenes, neun Quadratmeter großes Netz fällt herab. Der Stolperdraht verläuft 7,5 Zentimeter über dem Boden und verbindet zwei Säulen oder Bäume."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallendes-netz.text-2",
+      "text": "Die erste Kreatur, die in den Stolperdraht läuft, lässt das Netz herabfallen. Das Ziel muss einen SG-10-Geschicklichkeitsrettungswurf bestehen, oder es ist festgesetzt, bis es entkommt. Der Rettungswurf gelingt automatisch, wenn das Ziel von mindestens riesiger Größe ist. Eine Kreatur kann ihre Aktion verwenden, um einen SG-10-Stärkewurf (Athletik) auszuführen. Bei einem Erfolg befreit sie sich selbst oder eine andere Kreatur in Reichweite aus dem Netz."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallendes-netz.text-3",
+      "text": "Entdecken und entschärfen: Eine Kreatur kann mit der Suchen-Aktion den Bereich der Falle untersuchen und einen SG-11-Weisheitswurf (Wahrnehmung) ausführen. Bei einem Erfolg entdeckt sie den Stolperdraht und das aufgehängte Netz. Ein entdeckter Stolperdraht kann problemlos zerschnitten oder umgangen werden (kein Attributswurf erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallendes-netz.text-4",
+      "text": "Das Netz zerstören: Werden die Trefferpunkte des Netzes auf 0 verringert, so wird jede darin gefangene Kreatur befreit (Spielwerte des Netzes siehe „Abenteurerausrüstung“)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallendes-netz.text-5",
+      "text": "Die Falle legen: Eine Kreatur mit Diebeswerkzeug und allen Komponenten der Falle (einschließlich Netz) kann versuchen, diese Falle zu legen, indem sie einen SG-13-Geschicklichkeitswurf (Fingerfertigkeit) besteht. Jeder Versuch, diese Falle zu legen, dauert zehn Minuten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.fallendes-netz.text-6",
+      "text": "Auf höheren Stufen: Du kannst die Falle für höhere Stufen hochskalieren, indem du das Gewicht des Netzes erhöhst. Dadurch erhöhen sich Rettungswurf-SG und SG des Stärkewurfs (Athletik) wie folgt: SG 12 auf den Stufen 5–10, SG 14 auf den Stufen 11–16, SG 16 auf den Stufen 17–20."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.feuerwirkende-statue",
+      "level": 4,
+      "text": "Feuerwirkende Statue"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.feuerwirkende-statue.untertitel",
+      "text": "Tödliche Falle (Stufen 1–4)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "toolbox.traps.feuerwirkende-statue.eigenschaften",
+      "entries": [
+        {
+          "term": "Auslöser",
+          "definition": "Eine Kreatur betritt eine Druckplatte"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar, und die Falle wird zu Beginn des nächsten Zugs zurückgesetzt"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.feuerwirkende-statue.text-1",
+      "text": "Wenn eine Kreatur die Druckplatte dieser Falle in einem Zug erstmals betritt oder den Zug darauf beginnt, atmet eine Statue in der Nähe magische Flammen in einem Kegel von 4,5 Metern aus. Die Statue kann ein beliebiges Erscheinungsbild haben, beispielsweise das eines Drachen oder eines Magiers. Jede Kreatur im Kegel muss einen SG-15-Geschicklichkeitsrettungswurf ausführen. Misslingt der Wurf, so erleidet sie 11 (2W10) Feuerschaden, anderenfalls die Hälfte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.feuerwirkende-statue.text-2",
+      "text": "Entdecken und entschärfen: Der Zauber Magie entdecken offenbart eine Aura von Hervorrufungsmagie um die Statue. Eine Kreatur im Abstand von bis zu 1,5 Metern von der Statue kann diese mit der Suchen-Aktion untersuchen und einen SG-10-Weisheitswurf (Wahrnehmung) ausführen. Bei einem Erfolg entdeckt sie eine winzige Glyphe an der Statue. Wenn die Glyphe gefunden wurde, kann ein Charakter sie mit der Studieren-Aktion untersuchen und einen SG-15-Intelligenzwurf (Arkane Kunde) ausführen. Bei einem Erfolg erkennt er, dass die Glyphe „Feuer“ bedeutet. Ein Charakter kann als Aktion ein scharfes Werkzeug verwenden, um die Glyphe zu entfernen und damit die Falle zu entschärfen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.feuerwirkende-statue.text-3",
+      "text": "Eine Kreatur kann mit der Suchen-Aktion den Bodenabschnitt untersuchen, in dem sich die Druckplatte befindet, und einen SG-15-Weisheitswurf (Wahrnehmung) ausführen. Bei einem Erfolg entdeckt sie die Druckplatte. Wird ein Eisennagel oder ein ähnliches Objekt unter der Druckplatte platziert, so kann sie nicht ausgelöst werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.feuerwirkende-statue.text-4",
+      "text": "Auf höheren Stufen: Du kannst die Falle für höhere Stufen hochskalieren, indem du den Schaden erhöhst und den Wirkungsbereich vergrößerst, wie in der folgenden Tabelle dargestellt:"
+    },
+    {
+      "type": "table",
+      "ruleId": "toolbox.traps.feuerwirkende-statue.tabelle-hoehere-stufen",
+      "caption": "Feuerwirkende Statue: Auf höheren Stufen",
+      "columns": [
+        "Stufen",
+        "Feuerschaden",
+        "Wirkungsbereich"
+      ],
+      "rows": [
+        [
+          "5–10",
+          "22 (4W10)",
+          "9 m (Kegel)"
+        ],
+        [
+          "11–16",
+          "55 (10W10)",
+          "18 m (Kegel)"
+        ],
+        [
+          "17–20",
+          "99 (18W10)",
+          "36 m (Kegel)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.rollender-stein",
+      "level": 4,
+      "text": "Rollender Stein"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.rollender-stein.untertitel",
+      "text": "Tödliche Falle (Stufen 11–16) oder lästige Falle (Stufen 17–20)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "toolbox.traps.rollender-stein.eigenschaften",
+      "entries": [
+        {
+          "term": "Auslöser",
+          "definition": "Eine Kreatur betritt eine Druckplatte"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Bis der Stein nicht mehr rollt"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.rollender-stein.text-1",
+      "text": "Wenn eine Kreatur eine verborgene Druckplatte betritt, wird eine massive Steinkugel mit einem Radius von 1,5 Metern aus einem Geheimfach entlassen und beginnt zu rollen. Der Stein und alle Kreaturen in der Nähe würfeln Initiative aus. Dabei hat der Stein einen Bonus von +8 auf seinen Initiativewurf."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.rollender-stein.text-2",
+      "text": "Der Stein bewegt sich in seinem Zug 18 Meter weit in eine Richtung und ändert den Kurs, wenn er von einem Hindernis umgelenkt wird. Er kann sich durch den Bereich von Kreaturen bewegen und umgekehrt. Der Bereich des Steins gilt als schwieriges Gelände. Wann immer der Stein sich in einem Zug erstmals durch den Bereich einer Kreatur bewegt oder eine Kreatur den Bereich des Steins betritt, während dieser rollt, muss die Kreatur einen SG-15-Geschicklichkeitsrettungswurf bestehen, oder sie erleidet 55 (10W10) Wuchtschaden, wird umgestoßen und hat den Zustand Liegend."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.rollender-stein.text-3",
+      "text": "Der Stein stoppt, wenn er auf eine Wand oder eine ähnliche Barriere trifft. Er kann nicht um Ecken rollen. Findige Baumeister versehen die Gänge ihrer Gewölbe jedoch mit Kurven, sodass der Stein weiterrollen kann."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.rollender-stein.text-4",
+      "text": "Entdecken und entschärfen: Eine Kreatur kann als Studieren-Aktion den Bodenabschnitt mit der Druckplatte untersuchen und einen SG-15-Intelligenzwurf (Nachforschungen) ausführen. Bei einem Erfolg erkennt sie den Zweck der Druckplatte. Wird ein Eisennagel oder ein ähnliches Objekt unter der Druckplatte platziert, so kann sie nicht ausgelöst werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.rollender-stein.text-5",
+      "text": "Den Stein zerstören: Der Stein ist ein großer Gegenstand, besitzt eine RK von 17, 100 Trefferpunkte, einen Schadensschwellenwert von 10 und ist gegen Gift- und psychischen Schaden immun."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.rollender-stein.text-6",
+      "text": "Den Stein verlangsamen: Eine Kreatur kann als Aktion mit einem SG-20-Stärkewurf (Athletik) versuchen, den Stein zu verlangsamen. Bei einem Erfolg wird die Strecke, die der Stein in seinem Zug zurücklegt, um 4,5 Meter verringert. Wenn diese Strecke auf 0 sinkt, stoppt der Stein und stellt keine Bedrohung mehr dar."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.stachelgrube",
+      "level": 4,
+      "text": "Stachelgrube"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.stachelgrube.untertitel",
+      "text": "Tödliche Falle (Stufen 1–4)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "toolbox.traps.stachelgrube.eigenschaften",
+      "entries": [
+        {
+          "term": "Auslöser",
+          "definition": "Eine Kreatur betritt die Abdeckung der Fallgrube"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.stachelgrube.text-1",
+      "text": "Diese Grube ist drei Meter tief und hat eine mit Scharnieren versehene Abdeckung, deren Material identisch mit dem des umgebenden Bodens ist. Wenn eine Kreatur den Deckel betritt, schwingt dieser auf wie eine Falltür, sodass die Kreatur auf den Boden der Grube stürzt, der mit angespitzten Pfählen aus Holz oder Metall versehen ist. Danach bleibt die Abdeckung geöffnet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.stachelgrube.text-2",
+      "text": "Eine Kreatur, die in die Grube stürzt, landet auf dem Boden und erleidet 3 (1W6) Wuchtschaden durch den Sturz plus 9 (2W8) Stichschaden durch die Stacheln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.stachelgrube.text-3",
+      "text": "Entdecken und entschärfen: Eine Kreatur kann als Studieren-Aktion den Bodenabschnitt mit der Abdeckung untersuchen und einen SG-15-Intelligenzwurf (Nachforschungen) ausführen. Bei einem Erfolg entdeckt sie die Fallgrube. Wenn die verborgene Fallgrube entdeckt wurde, kann ein Nagel oder ein ähnliches Objekt zwischen Abdeckung und Boden verkeilt werden, sodass sich die Abdeckung nicht mehr öffnen und daher gefahrlos überquert werden kann. Die Abdeckung kann auch mithilfe des Zaubers Arkanes Schloss oder ähnlicher Magie geschlossen gehalten werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.stachelgrube.text-4",
+      "text": "Entkommen: Eine Kreatur benötigt eine Kletterbewegungsrate, Kletterausrüstung oder Magie wie den Zauber Spinnenklettern, um die glatten Wände der Fallgrube zu erklimmen. Du kannst es einfacher machen, aus der Grube zu entkommen, indem du die Wände mit Rissen versiehst, in denen eine Kreatur Halt mit Händen und Füßen finden kann."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.stachelgrube.text-5",
+      "text": "Auf höheren Stufen: Du kannst die Falle für höhere Stufen hochskalieren, indem du die Grube tiefer machst und den Schaden erhöhst wie in der folgenden Tabelle dargestellt:"
+    },
+    {
+      "type": "table",
+      "ruleId": "toolbox.traps.stachelgrube.tabelle-hoehere-stufen",
+      "caption": "Stachelgrube: Auf höheren Stufen",
+      "columns": [
+        "Stufen",
+        "Grubentiefe",
+        "Schaden"
+      ],
+      "rows": [
+        [
+          "5–10",
+          "9 m",
+          "13 (3W8) Stich plus 10 (3W6) Wucht"
+        ],
+        [
+          "11–16",
+          "18 m",
+          "36 (8W8) Stich plus 21 (6W6) Wucht"
+        ],
+        [
+          "17–20",
+          "36 m",
+          "57 (13W8) Stich plus 42 (12W6) Wucht"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.verborgene-fallgrube",
+      "level": 4,
+      "text": "Verborgene Fallgrube"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.verborgene-fallgrube.untertitel",
+      "text": "Lästige Falle (Stufen 1–4)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "toolbox.traps.verborgene-fallgrube.eigenschaften",
+      "entries": [
+        {
+          "term": "Auslöser",
+          "definition": "Eine Kreatur betritt die Abdeckung der Fallgrube"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.verborgene-fallgrube.text-1",
+      "text": "Diese Grube ist drei Meter tief und hat eine mit Scharnieren versehene Abdeckung, deren Material identisch mit dem des umgebenden Bodens ist. Wenn eine Kreatur die Abdeckung betritt, schwingt diese auf wie eine Falltür, sodass die Kreatur in die Grube stürzt. Danach bleibt die Abdeckung geöffnet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.verborgene-fallgrube.text-2",
+      "text": "Eine Kreatur, die in die Grube stürzt, erleidet 3 (1W6) Wuchtschaden durch den Sturz."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.verborgene-fallgrube.text-3",
+      "text": "Entdecken und entschärfen: Eine Kreatur kann als Studieren-Aktion den Bodenabschnitt mit der Abdeckung untersuchen und einen SG-15-Intelligenzwurf (Nachforschungen) ausführen. Bei einem Erfolg entdeckt sie die Fallgrube. Wenn die Grube entdeckt wurde, kann ein Nagel oder ein ähnliches Objekt zwischen Abdeckung und Boden verkeilt werden, sodass sich die Abdeckung nicht mehr öffnen und daher gefahrlos überquert werden kann. Die Abdeckung kann auch mithilfe des Zaubers Arkanes Schloss oder ähnlicher Magie geschlossen gehalten werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.verborgene-fallgrube.text-4",
+      "text": "Entkommen: Eine Kreatur benötigt eine Kletterbewegungsrate, Kletterausrüstung oder Magie wie den Zauber Spinnenklettern, um die glatten Wände der Fallgrube zu erklimmen. Du kannst es einfacher machen, aus der Grube zu entkommen, indem du die Wände mit Rissen versiehst, in denen eine Kreatur Halt mit Händen und Füßen finden kann."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.verborgene-fallgrube.text-5",
+      "text": "Auf höheren Stufen: Du kannst die Falle für höhere Stufen hochskalieren, indem du die Grube tiefer machst und den Schaden erhöhst wie in der folgenden Tabelle dargestellt:"
+    },
+    {
+      "type": "table",
+      "ruleId": "toolbox.traps.verborgene-fallgrube.tabelle-hoehere-stufen",
+      "caption": "Verborgene Fallgrube: Auf höheren Stufen",
+      "columns": [
+        "Stufen",
+        "Grubentiefe",
+        "Wuchtschaden"
+      ],
+      "rows": [
+        [
+          "5–10",
+          "9 m",
+          "10 (3W6)"
+        ],
+        [
+          "11–16",
+          "18 m",
+          "21 (6W6)"
+        ],
+        [
+          "17–20",
+          "36 m",
+          "42 (12W6)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.vergiftete-nadel",
+      "level": 4,
+      "text": "Vergiftete Nadel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-nadel.untertitel",
+      "text": "Lästige Falle (Stufen 1–4)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "toolbox.traps.vergiftete-nadel.eigenschaften",
+      "entries": [
+        {
+          "term": "Auslöser",
+          "definition": "Eine Kreatur öffnet das Schloss der Falle anders als auf die vorgesehene Art oder kann die Falle nicht entschärfen"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-nadel.text-1",
+      "text": "In einem Schloss ist eine vergiftete Nadel verborgen. Wenn eine Kreatur das Schloss mit einem anderen Gegenstand als dem richtigen Schlüssel öffnet, springt die Nadel hervor und sticht die Kreatur. Die Kreatur führt einen SG-11-Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet die Kreatur 5 (1W10) Giftschaden und ist eine Stunde lang vergiftet. Bei einem erfolgreichen Rettungswurf erleidet die Kreatur nur halb so viel Schaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-nadel.text-2",
+      "text": "Vermeiden: Die Falle wird nicht ausgelöst, wenn das Schloss mit dem Zauber Klopfen oder ähnlicher Magie geöffnet wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-nadel.text-3",
+      "text": "Entdecken und entschärfen: Eine Kreatur kann mit der Suchen-Aktion das mit der Falle versehene Schloss untersuchen und einen SG-15-Weisheitswurf (Wahrnehmung) ausführen. Bei einem Erfolg entdeckt sie die Nadel. Wenn die Falle entdeckt wurde, kann ein Charakter eine Aktion ausführen, um zu versuchen, sie zu entschärfen. Dies gelingt ihm mit einem erfolgreichen SG-15-Geschicklichkeitswurf (Fingerfertigkeit). Misslingt der Wurf, so löst die Kreatur die Falle aus."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-nadel.text-4",
+      "text": "Auf höheren Stufen: Du kannst die Falle für höhere Stufen hochskalieren, indem du Schaden und Rettungswurf-SG erhöhst, wie in der folgenden Tabelle dargestellt:"
+    },
+    {
+      "type": "table",
+      "ruleId": "toolbox.traps.vergiftete-nadel.tabelle-hoehere-stufen",
+      "caption": "Vergiftete Nadel: Auf höheren Stufen",
+      "columns": [
+        "Stufen",
+        "Giftschaden",
+        "Rettungswurf-SG"
+      ],
+      "rows": [
+        [
+          "5–10",
+          "11 (2W10)",
+          "13"
+        ],
+        [
+          "11–16",
+          "22 (4W10)",
+          "15"
+        ],
+        [
+          "17–20",
+          "55 (10W10)",
+          "17"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.traps.vergiftete-wurfpfeile",
+      "level": 4,
+      "text": "Vergiftete Wurfpfeile"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-wurfpfeile.untertitel",
+      "text": "Tödliche Falle (Stufen 1–4)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "toolbox.traps.vergiftete-wurfpfeile.eigenschaften",
+      "entries": [
+        {
+          "term": "Auslöser",
+          "definition": "Eine Kreatur betritt eine Druckplatte"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar, und die Falle wird zu Beginn des nächsten Zugs zurückgesetzt, sofern sie höchstens zweimal aktiviert wurde"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-wurfpfeile.text-1",
+      "text": "Wenn eine Kreatur die Druckplatte dieser Falle in einem Zug erstmals betritt, werden vergiftete Wurfpfeile aus Röhrchen verschossen, die in die umgebenden Wände eingelassen sind. Die Löcher mit diesen Röhrchen sind von Staub oder Spinnweben bedeckt oder geschickt in Reliefs, Wandbildern oder Fresken versteckt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-wurfpfeile.text-2",
+      "text": "Jede Kreatur im Weg der Wurfpfeile muss einen SG-13-Geschicklichkeitsrettungswurf bestehen, oder sie wird von 1W3 Pfeilen getroffen und erleidet 3 (1W6) Giftschaden pro Pfeil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-wurfpfeile.text-3",
+      "text": "Entdecken und entschärfen: Eine Kreatur kann mit der Suchen-Aktion die Wände untersuchen und einen SG-15-Weisheitswurf (Wahrnehmung) ausführen. Bei einem Erfolg entdeckt sie die Löcher. Wenn alle Löcher mit Wachs, Stoff oder Trümmern verstopft werden, können die Wurfpfeile nicht verschossen werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-wurfpfeile.text-4",
+      "text": "Eine Kreatur kann mit der Suchen-Aktion den Bodenabschnitt untersuchen, in dem sich die Druckplatte befindet, und einen SG-15-Weisheitswurf (Wahrnehmung) ausführen. Bei einem Erfolg entdeckt sie die Druckplatte. Wird ein Eisennagel oder ein ähnliches Objekt unter der Druckplatte platziert, so kann sie nicht ausgelöst werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.traps.vergiftete-wurfpfeile.text-5",
+      "text": "Auf höheren Stufen: Du kannst die Falle für höhere Stufen hochskalieren, indem du den Giftschaden jedes Wurfpfeils wie folgt erhöhst: 7 (2W6) auf den Stufen 5–10, 14 (4W6) auf den Stufen 11–16, 24 (7W6) auf den Stufen 17–20."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:c89eb132a2fb4d6d5da82d6d1354ecc1497adb094f6f7fc8e8be78da60f9be1d"
+}

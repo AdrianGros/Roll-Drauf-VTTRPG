@@ -1,0 +1,444 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "spells.casting",
+  "slug": "zauber-wirken",
+  "title": "Zauber wirken",
+  "navigationPath": [
+    "Zauber",
+    "Zauber wirken"
+  ],
+  "order": 705,
+  "sourcePages": [
+    118,
+    119,
+    120,
+    121
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.zauber-wirken",
+      "level": 2,
+      "text": "Zauber wirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauber-wirken.text-1",
+      "text": "Jede Zauberbeschreibung hat mehrere Einträge mit den Details, die zum Wirken des Zaubers erforderlich sind. Die Einträge stehen jeweils hinter dem Namen des Zaubers. Sie werden in den folgenden Abschnitten einzeln erklärt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.zaubergrad",
+      "level": 3,
+      "text": "Zaubergrad"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zaubergrad.text-1",
+      "text": "Jeder Zauber hat einen Grad von 0 bis 9, der in der Zauberbeschreibung verzeichnet ist. Dieser Grad ist ein Hinweis darauf, wie mächtig der Zauber ist. Zaubertricks, also einfache Zauber, die Charaktere mehr oder minder aus dem Ärmel schütteln, haben den 0. Grad. Die Regeln jeder zauberwirkenden Klasse geben an, wann die Mitglieder der Klasse auf Zauber bestimmter Stufen zugreifen können."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.zauberplaetze",
+      "level": 4,
+      "text": "Zauberplätze"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauberplaetze.text-1",
+      "text": "Zauberei ist anstrengend, weshalb ein Zauberwirker nur eine bestimmte Anzahl von Zaubern ab dem 1. Grad wirken kann, bevor er rasten muss. Das magische Potenzial eines Zauberwirkers wird durch seine Zauberplätze repräsentiert. Jede zauberwirkende Klasse hat eine begrenzte Anzahl von Zauberplätzen mit bestimmten Zaubergraden. Beispiel: Ein Magier der 3. Stufe hat vier Zauberplätze des 1. Grades und zwei Zauberplätze des 2. Grades."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauberplaetze.text-2",
+      "text": "Wenn du einen Zauber wirkst, verbrauchst du einen Zauberplatz, dessen Grad mindestens dem des Zaubers entspricht. Du „füllst“ den Platz sozusagen mit dem Zauber. Stell dir einen Zauberplatz als einen Aktenordner einer bestimmten Dicke vor – Zauber des 1. Grades brauchen nicht so einen dicken Aktenordner wie Zauber höherer Grade. Dabei passen Zauber des 1. Grades natürlich auch in einen dickeren Ordner. Zauber des 2. Grades passen hingegen nur in Aktenordner ab dem 2. Grad. Wenn ein Magier der 3. Stufe also Magisches Geschoss wirkt – einen Zauber des 1. Grades –, dann verbraucht er einen seiner vier Zauberplätze des 1. Grades, sodass ihm noch drei verbleiben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauberplaetze.text-3",
+      "text": "Verbrauchte Zauberplätze werden nach einer langen Rast wiederhergestellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.zauber-wirken-ohne-zauberplaetze-zu-verbrauchen",
+      "level": 4,
+      "text": "Zauber wirken, ohne Zauberplätze zu verbrauchen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauber-wirken-ohne-zauberplaetze-zu-verbrauchen.text-1",
+      "text": "Es gibt mehrere Möglichkeiten, einen Zauber zu wirken, ohne einen Zauberplatz zu verbrauchen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauber-wirken-ohne-zauberplaetze-zu-verbrauchen.text-2",
+      "text": "Zaubertricks: Ein Zaubertrick wird gewirkt, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauber-wirken-ohne-zauberplaetze-zu-verbrauchen.text-3",
+      "text": "Rituale: Bestimmte Zauber sind beim Eintrag Zeitaufwand als Rituale gekennzeichnet. Diese Zauber können entweder nach den üblichen Regeln zum Zauberwirken oder als Rituale gewirkt werden. Das Wirken der Ritualversion eines Zaubers dauert zwar zehn Minuten länger als üblich, verbraucht aber keinen Zauberplatz."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauber-wirken-ohne-zauberplaetze-zu-verbrauchen.text-4",
+      "text": "Um einen Zauber als Ritual zu wirken, muss der Zauberwirker ihn vorbereitet haben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauber-wirken-ohne-zauberplaetze-zu-verbrauchen.text-5",
+      "text": "Spezialfähigkeiten: Manche Charaktere und Monster haben Spezialfähigkeiten, die es ihnen erlauben, bestimmte Zauber zu wirken, ohne Zauberplätze verbrauchen zu müssen. Dieses Zauberwirken wird stattdessen anderweitig eingeschränkt, weil du den Zauber zum Beispiel nur begrenzt oft am Tag wirken kannst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauber-wirken-ohne-zauberplaetze-zu-verbrauchen.text-6",
+      "text": "Magische Gegenstände: Zauberschriftrollen und einige andere magische Gegenstände enthalten Zauber, die du wirken kannst, ohne einen Zauberplatz zu verbrauchen. In der Beschreibung solcher Gegenstände ist angegeben, wie oft ein Zauber aus ihnen gewirkt werden kann."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.verwenden-von-zauberplaetzen-hoeheren-grades",
+      "level": 4,
+      "text": "Verwenden von Zauberplätzen höheren Grades"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.verwenden-von-zauberplaetzen-hoeheren-grades.text-1",
+      "text": "Wird ein Zauber mit einem Zauberplatz eines höheren Grades als nötig gewirkt, so nimmt der Zauber den höheren Grad an. Beispiel: Verbraucht ein Magier für Magisches Geschoss einen Zauberplatz des 2. Grades, so hat dieses Magische Geschoss den 2. Grad. Der Zauber nimmt sozusagen den gesamten verfügbaren Zauberplatz ein."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.verwenden-von-zauberplaetzen-hoeheren-grades.text-2",
+      "text": "Manche Zauber, beispielsweise Magisches Geschoss und Wunden heilen, haben mächtigere Effekte, wenn sie auf einem höheren Grad gewirkt werden. Die Effekte sind in der Beschreibung des Zaubers aufgeführt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.schule-der-magie",
+      "level": 3,
+      "text": "Schule der Magie"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.schule-der-magie.text-1",
+      "text": "Jeder Zauber gehört zu einer Schule der Magie. Diese Schulen sind in der gleichnamigen Tabelle aufgeführt. Sie helfen dabei, Zauber zu beschreiben, und haben keine eigenen Regeln. Andere Regeln können sich allerdings auf sie beziehen."
+    },
+    {
+      "type": "table",
+      "ruleId": "spells.casting.schule-der-magie.tabelle-schulen",
+      "caption": "Die Schulen der Magie",
+      "columns": [
+        "Schule",
+        "Typische Effekte"
+      ],
+      "rows": [
+        [
+          "Bannmagie",
+          "Verhindert schädliche Effekte oder kehrt sie um"
+        ],
+        [
+          "Beschwörungsmagie",
+          "Transportiert Kreaturen oder Gegenstände"
+        ],
+        [
+          "Erkenntnismagie",
+          "Enthüllt Informationen"
+        ],
+        [
+          "Hervorrufungsmagie",
+          "Kanalisiert Energie, um Effekte zu erzeugen, die oft zerstörerisch sind"
+        ],
+        [
+          "Illusionsmagie",
+          "Täuscht den Verstand oder die Sinne"
+        ],
+        [
+          "Nekromantie",
+          "Manipuliert Leben und Tod"
+        ],
+        [
+          "Verwandlungsmagie",
+          "Verwandelt Kreaturen oder Gegenstände"
+        ],
+        [
+          "Verzauberungsmagie",
+          "Beeinflusst Gedanken"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.zauberlisten-der-klassen",
+      "level": 3,
+      "text": "Zauberlisten der Klassen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zauberlisten-der-klassen.text-1",
+      "text": "Wenn sich ein Zauber auf der Zauberliste einer Klasse befindet, ist der Name der Klasse in Klammern hinter der Schule der Magie des betreffenden Zaubers aufgeführt. Manche Merkmale fügen einen Zauber sogar dann der Zauberliste eines Charakters hinzu, wenn der Charakter nicht Mitglied der in Klammern genannten Klasse ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.zeitaufwand",
+      "level": 3,
+      "text": "Zeitaufwand"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zeitaufwand.text-1",
+      "text": "Für die meisten Zauber ist nur die magische Aktion erforderlich. Manche Zauber erfordern jedoch eine Bonusaktion, eine Reaktion oder einen Zeitaufwand von mindestens einer Minute. Der Zeitaufwand gibt an, was davon zum Wirken des Zaubers erforderlich ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.ein-zauber-mit-zauberplatz-pro-zug",
+      "level": 4,
+      "text": "Ein Zauber mit Zauberplatz pro Zug"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.ein-zauber-mit-zauberplatz-pro-zug.text-1",
+      "text": "Du kannst in einem Zug nur einen Zauberplatz verbrauchen, um einen Zauber zu wirken. Diese Regel bedeutet beispielsweise, dass es nicht möglich ist, im selben Zug mit der magischen Aktion einen Zauber mit Zauberplatz und mit einer Bonusaktion einen zweiten Zauber mit Zauberplatz zu wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.reaktion-und-bonusaktion-ausloeser",
+      "level": 4,
+      "text": "Reaktion und Bonusaktion: Auslöser"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.reaktion-und-bonusaktion-ausloeser.text-1",
+      "text": "Zauber mit dem Zeitaufwand einer Reaktion werden als Antwort auf einen Auslöser gewirkt, der im Eintrag Zeitaufwand des Zaubers definiert ist. Manche Zauber haben den Zeitaufwand einer Bonusaktion. Auch sie werden als Antwort auf einen Auslöser gewirkt, der beim Zauber definiert ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.hoeherer-zeitaufwand",
+      "level": 4,
+      "text": "Höherer Zeitaufwand"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.hoeherer-zeitaufwand.text-1",
+      "text": "Bestimmte Zauber – beispielsweise solche, die als Ritual gewirkt werden – haben einen höheren Zeitaufwand: Das Wirken dauert mehrere Minuten oder sogar Stunden. Wenn du einen Zauber mit einem Zeitaufwand von mindestens einer Minute wirkst, musst du die magische Aktion in jedem deiner Züge ausführen und dabei deine Konzentration (siehe „Regelglossar“) aufrechterhalten. Wird deine Konzentration unterbrochen, so misslingt der Zauber. In diesem Fall wird der Zauberplatz nicht verbraucht. Um erneut zu versuchen, den Zauber zu wirken, musst du von vorne anfangen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.fernkampfreichweite",
+      "level": 3,
+      "text": "Fernkampfreichweite"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.fernkampfreichweite.text-1",
+      "text": "Die Reichweite eines Zaubers gibt an, wie weit vom Zauberwirker entfernt der Effekt des Zauberspruchs entstehen kann. Die Beschreibung des Zauberspruchs erläutert näher, welcher Teil des Effekts durch die Reichweite begrenzt ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.fernkampfreichweite.text-2",
+      "text": "Die Reichweite hat üblicherweise eine der folgenden Formen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.fernkampfreichweite.text-3",
+      "text": "Entfernung: Die Reichweite ist in Metern angegeben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.fernkampfreichweite.text-4",
+      "text": "Berührung: Die Wirkung des Zaubers entsteht bei etwas, was der Zauberwirker innerhalb seiner Reichweite berühren muss, wie im Zauber beschrieben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.fernkampfreichweite.text-5",
+      "text": "Selbst: Der Zauber wird auf den Zauberwirker gewirkt oder geht von diesem aus, wie beim Zauber angegeben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.fernkampfreichweite.text-6",
+      "text": "Wenn ein Zauber bewegliche Effekte hat, werden diese nicht von seiner Reichweite eingeschränkt, sofern in der Zauberbeschreibung nicht anders angegeben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.komponenten",
+      "level": 3,
+      "text": "Komponenten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.komponenten.text-1",
+      "text": "Die Komponenten eines Zaubers sind die physischen Voraussetzungen, die der Zauberwirker erfüllen muss, um ihn zu wirken. In der Zauberbeschreibung ist jeweils angegeben, ob ein Zauber Verbalkomponenten (V), Gestenkomponenten (G) oder Materialkomponenten (M) hat. Wenn mindestens eine Zauberkomponente nicht verfügbar ist, kann der Zauber nicht gewirkt werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.verbalkomponente-v",
+      "level": 4,
+      "text": "Verbalkomponente (V)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.verbalkomponente-v.text-1",
+      "text": "Eine Verbalkomponente ist der Vortrag geheimer Worte, deren Sinn sich Uneingeweihten nicht erschließt. Die Worte müssen mit normaler Sprechstimme vorgetragen werden. Sie selbst sind nicht die Quelle der Macht eines Zaubers. Vielmehr bringt die Kombination aus Lauten, Betonung und Resonanz die Fäden der Magie zum Schwingen. Eine Kreatur, die geknebelt ist oder sich im Bereich einer magischen Stille befindet, kann keine Zauber mit Verbalkomponenten wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.gestenkomponente-g",
+      "level": 4,
+      "text": "Gestenkomponente (G)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.gestenkomponente-g.text-1",
+      "text": "Eine Gestenkomponente ist eine schwungvolle Geste oder eine komplexe Abfolge von Gesten. Der Zauberwirker muss mindestens eine Hand einsetzen, um diese Bewegungen auszuführen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.materialkomponente-m",
+      "level": 4,
+      "text": "Materialkomponente (M)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.materialkomponente-m.text-1",
+      "text": "Eine Materialkomponente ist ein bestimmtes Material, das zum Wirken eines Zaubers erforderlich ist, wie beim Eintrag „Komponenten“ in Klammern angegeben. Die Materialien werden dabei nicht verbraucht, sofern in der Beschreibung des Zaubers nicht anders angegeben. Der Zauberwirker benötigt mindestens eine freie Hand, um die Materialien zu verwenden. Dies kann jedoch dieselbe Hand sein, mit der er Gesten ausführt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.materialkomponente-m.text-2",
+      "text": "Wenn ein Zauber sein Material nicht verbraucht und keine Kosten für dieses angegeben sind, kann ein Zauberwirker einen Materialkomponentenbeutel (siehe „Ausrüstung“) verwenden, statt das angegebene Material bereitzustellen, oder er kann einen Zauberfokus ersetzen, sofern er über ein Merkmal verfügt, das dies gestattet. Um einen Materialkomponentenbeutel zu verwenden, musst du mindestens eine Hand frei haben, um hineinzugreifen. Zum Verwenden eines Zauberfokus musst du diesen in der Hand halten, sofern in seiner Beschreibung nicht anders angegeben (Beschreibungen siehe „Ausrüstung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.dauer",
+      "level": 3,
+      "text": "Dauer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.dauer.text-1",
+      "text": "Die Wirkungsdauer eines Zaubers gibt an, wie lange dessen Effekt nach dem Wirken anhält. Sie hat üblicherweise eine der folgenden Formen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.dauer.text-2",
+      "text": "Konzentration: Eine Wirkungsdauer, die Konzentration erfordert, folgt den Konzentrationsregeln (siehe „Regelglossar“)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.dauer.text-3",
+      "text": "Unmittelbar: Eine unmittelbare Wirkungsdauer bedeutet, dass die Magie des Zaubers für einen Moment auftritt und dann verschwindet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.dauer.text-4",
+      "text": "Zeitspanne: Eine Wirkungsdauer in Form einer Zeitspanne gibt an, wie lange der Zauber in Runden, Minuten, Stunden oder ähnlich anhält."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.dauer.text-5",
+      "text": "Beispielsweise könnte der Eintrag für die Wirkungsdauer „1 Minute“ lauten. In diesem Fall endet der Zauber, sobald eine Minute vergangen ist. Während ein Zauber mit Zeitspanne andauert, nachdem du ihn gewirkt hast, kannst du ihn verwerfen (keine Aktion erforderlich), sofern du nicht kampfunfähig bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.effekte",
+      "level": 3,
+      "text": "Effekte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.effekte.text-1",
+      "text": "Die Effekte eines Zaubers sind nach seiner Wirkungsdauer aufgeführt. Es ist genau angegeben, was der Zauber tut. Reale Gesetze der Physik werden ignoriert. Alle Ergebnisse über diese Effekte hinaus liegen im Ermessen des SL. Die Effekte haben üblicherweise mit Zielen, Rettungswürfen, Angriffswürfen oder allen drei Elementen zu tun, wie jeweils unten beschrieben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.ziele",
+      "level": 4,
+      "text": "Ziele"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.ziele.text-1",
+      "text": "Bei vielen Zaubern muss der Zauberwirker mindestens ein Ziel auswählen, auf das die Magie des Zaubers wirkt. In der Beschreibung eines Zaubers ist angegeben, ob der Zauber auf Kreaturen, Gegenstände oder etwas anderes zielt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.ziele.text-2",
+      "text": "Freie Sicht auf das Ziel: Ein Zauberwirker muss sein Ziel sehen können – es darf sich also nicht hinter vollständiger Deckung befinden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.ziele.text-3",
+      "text": "Der Zauberwirker als Ziel: Wenn das Ziel eines Zaubers eine Kreatur nach Wahl des Zauberwirkers ist, kann er sich auch selbst als Ziel bestimmen, es sei denn, es muss sich um eine feindlich gesinnte oder ausdrücklich um eine andere Kreatur handeln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.ziele.text-4",
+      "text": "Wirkungsbereiche: Manche Zauber, beispielsweise Donnerwoge, haben einen sogenannten Wirkungsbereich, wie unter „Regelglossar“ definiert. Der Bereich bestimmt, worauf der Zauber zielt. In der Beschreibung eines Zaubers ist angegeben, ob er einen Wirkungsbereich hat, der üblicherweise eine der folgenden Formen hat: Ausströmung, Kegel, Kugel, Linie, Würfel oder Zylinder."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.ziele.text-5",
+      "text": "Bewusstsein dafür, Ziel zu sein: Hat ein Zauber keine wahrnehmbare Wirkung, so weiß eine Kreatur möglicherweise nicht, dass sie sein Ziel war. Effekte wie Blitze sind offensichtlich, doch subtilere Effekte wie der Versuch, Gedanken zu lesen, bleiben üblicherweise unbemerkt, sofern in der Beschreibung nicht anders angegeben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.ziele.text-6",
+      "text": "Ungültige Ziele: Wenn du einen Zauber auf ein Ziel wirkst, das von ihm nicht betroffen sein kann, geschieht nichts. Wurde zum Wirken ein Zauberplatz verbraucht, so ist dieser trotzdem verbraucht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.ziele.text-7",
+      "text": "Wenn der Zauber normalerweise keinen Effekt auf ein Ziel hat, das einen Rettungswurf besteht, wirkt ein ungültiges Ziel, als hätte es seinen Rettungswurf bestanden, auch wenn es keinen Rettungswurf ausgeführt hat (es ist also nicht zu erkennen, dass die Kreatur ein ungültiges Ziel ist). Anderenfalls bemerkt der Zauberwirker, dass sein Zauber beim Ziel nichts ausgerichtet hat."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.rettungswuerfe",
+      "level": 4,
+      "text": "Rettungswürfe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.rettungswuerfe.text-1",
+      "text": "In der Beschreibung vieler Zauber ist angegeben, dass das Ziel einen Rettungswurf ausführt, um den Effekt ganz oder teilweise zu verhindern. Die Beschreibung gibt außerdem an, welches Attribut vom Ziel für den Rettungswurf verwendet wird und was bei einem Erfolg oder Misserfolg geschieht. Der SG deiner Zauber errechnet sich wie folgt:"
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "spells.casting.rettungswuerfe.zauberrettungswurf-sg",
+      "text": "Zauberrettungswurf-SG = 8 + dein Übungsbonus + dein Zauberwirken-Attributsmodifikator"
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.angriffswuerfe",
+      "level": 4,
+      "text": "Angriffswürfe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.angriffswuerfe.text-1",
+      "text": "Bei manchen Zaubersprüchen muss der Wirker einen Angriffswurf ausführen, um festzustellen, ob der Zauber das Ziel trifft. Der Angriffsmodifikator deiner Zauber errechnet sich wie folgt:"
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "spells.casting.angriffswuerfe.zauberangriff-modifikator",
+      "text": "Zauberangriff-Modifikator = dein Übungsbonus + dein Zauberwirken-Attributsmodifikator"
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "spells.casting.angriffswuerfe.zauber-identifizieren",
+      "title": "Einen wirkenden Zauber identifizieren",
+      "text": "Du kannst versuchen, einen nicht unmittelbar wirkenden Zauber während seiner Wirkungsdauer anhand seiner beobachtbaren Effekte zu identifizieren. Dazu musst du die Studieren-Aktion ausführen und einen SG-15-Intelligenzwurf (Arkane Kunde) bestehen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.casting.zaubereffekte-kombinieren",
+      "level": 4,
+      "text": "Zaubereffekte kombinieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.casting.zaubereffekte-kombinieren.text-1",
+      "text": "Die Effekte verschiedener Zauber addieren sich, wenn sich die Wirkungsdauern der Zauber überschneiden. Die Effekte des gleichen Zaubers, der mehrmals gewirkt wird, addieren sich hingegen nicht. Stattdessen wird der stärkste Effekt – beispielsweise der höchste Bonus – der Zauber angewendet, solange sich deren Wirkungsdauern überschneiden. Oder es gilt der neueste Effekt, falls die Effekte gleich stark sind und sich die Wirkungsdauern überschneiden. Wirken beispielsweise zwei Kleriker Segnen auf dasselbe Ziel, so erhält dieses den Vorzug des Zaubers nur einmal. Es erhält keine zwei Bonuswürfel. Der Effekt bleibt jedoch bestehen, bis die Wirkungsdauer des zweiten Zaubers Segnen endet."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:02fe755d6035f42859f93d3af8e1dc4729fefdbba5176f03b95c8fb7ff5d38ae"
+}

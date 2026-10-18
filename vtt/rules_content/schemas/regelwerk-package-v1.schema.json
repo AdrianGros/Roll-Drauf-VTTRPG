@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:rolldrauf:regelwerk:package:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "rulesetId",
+    "rulesetVersion",
+    "edition",
+    "locale",
+    "status",
+    "title",
+    "source",
+    "license",
+    "documents",
+    "coverage"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "regelwerk.package.v1"
+    },
+    "rulesetId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "maxLength": 80
+    },
+    "rulesetVersion": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$",
+      "maxLength": 80
+    },
+    "edition": {
+      "enum": ["2014", "2024"]
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2}(?:-[A-Z]{2})?$",
+      "maxLength": 10
+    },
+    "status": {
+      "enum": ["draft", "review", "preview", "published", "retired"]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "publicationDate", "retrievedAt", "url", "sha256", "pageCount"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "publicationDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "retrievedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 500
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "pageCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "url", "attributionFile", "attributionSha256"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9.-]+$",
+          "maxLength": 50
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 500
+        },
+        "attributionFile": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "maxLength": 100
+        },
+        "attributionSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["documentId", "slug", "title", "digest"],
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$",
+            "maxLength": 160
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "maxLength": 160
+          },
+          "aliases": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 32,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "maxLength": 160
+            }
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requiredPageRanges", "excludedPageRanges", "reviewedPageRanges", "expectedTopLevelSections"],
+      "properties": {
+        "requiredPageRanges": {
+          "$ref": "#/$defs/pageRanges"
+        },
+        "excludedPageRanges": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["first", "last", "reason"],
+            "properties": {
+              "first": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "last": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              }
+            }
+          }
+        },
+        "reviewedPageRanges": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["first", "last"],
+            "properties": {
+              "first": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "last": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "expectedTopLevelSections": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sectionId", "title", "firstPage", "lastPage"],
+            "properties": {
+              "sectionId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$",
+                "maxLength": 160
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "firstPage": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "lastPage": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "pageRanges": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["first", "last"],
+        "properties": {
+          "first": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "last": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "published"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "required": ["publishedAt"]
+      }
+    }
+  ]
+}

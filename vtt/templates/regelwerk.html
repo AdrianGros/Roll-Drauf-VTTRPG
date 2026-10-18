@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regelwerk · Roll Drauf VTT</title>
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/regelwerk.css">
+</head>
+<body class="regelwerk-page">
+    <a class="regelwerk-skip" href="#regelwerkArticle">Zum Regeltext springen</a>
+    <header class="regelwerk-site-header">
+        <nav class="book-dashboard-ribbon regelwerk-ribbon" aria-label="VTT-Hauptnavigation">
+            <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
+            <a class="book-dashboard-ribbon-btn" href="/campaigns">Kampagnen</a>
+            <a class="book-dashboard-ribbon-btn" href="/characters">Charaktere</a>
+            <a class="book-dashboard-ribbon-btn is-active" href="/regelwerk" aria-current="page">Regelwerk · Vorschau</a>
+            <a class="book-dashboard-ribbon-btn" href="/login.html">Anmelden</a>
+        </nav>
+        <div class="regelwerk-titlebar">
+            <div>
+                <p class="regelwerk-kicker">Roll Drauf VTT</p>
+                <h1>Regelwerk</h1>
+            </div>
+            <span class="regelwerk-preview-badge">Vorschau</span>
+        </div>
+        <p class="regelwerk-preview-note" role="note">
+            Diese Vorschau enthält erst einen geprüften Ausschnitt des deutschen SRD 5.2.1.
+            Fehlende Kapitel werden schrittweise ergänzt.
+        </p>
+    </header>
+
+    <main class="regelwerk-layout">
+        <aside class="regelwerk-sidebar" aria-label="Regelwerkzeuge">
+            <form id="regelwerkSearch" class="regelwerk-search" role="search">
+                <label for="regelwerkSearchInput">Im Regelwerk suchen</label>
+                <div class="regelwerk-search-row">
+                    <input id="regelwerkSearchInput" name="q" type="search" maxlength="100" autocomplete="off">
+                    <button type="submit">Suchen</button>
+                </div>
+            </form>
+            <div id="regelwerkSearchStatus" class="regelwerk-status" role="status" aria-live="polite"></div>
+            <div id="regelwerkSearchResults" class="regelwerk-search-results"></div>
+
+            <nav id="regelwerkToc" class="regelwerk-toc" aria-label="Inhaltsverzeichnis">
+                <p class="regelwerk-toc-heading">Inhaltsverzeichnis</p>
+                <p>Lade Kapitel …</p>
+            </nav>
+
+            <div class="regelwerk-sidebar-actions">
+                <a href="/regelwerk/lizenz">Quelle &amp; Lizenz</a>
+                <button id="regelwerkPrint" type="button">Drucken</button>
+            </div>
+        </aside>
+
+        <article id="regelwerkArticle" class="regelwerk-article" tabindex="-1" aria-busy="true">
+            <p id="regelwerkDocumentStatus" class="regelwerk-status" role="status" aria-live="polite">
+                Regeltext wird geladen …
+            </p>
+        </article>
+    </main>
+
+    <footer class="regelwerk-footer">
+        <p>Quelle: Systemreferenzdokument 5.2.1 (Deutsch), Seiten 6–8.</p>
+        <p><a href="/regelwerk/lizenz">CC BY 4.0 · Quellenangabe und Lizenz</a></p>
+    </footer>
+    <script src="/static/js/regelwerk-reader.js"></script>
+</body>
+</html>

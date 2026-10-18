@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/creation-advanced.css') }}">
   <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/creation-advanced.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/regelwerk-navigation.js') }}" defer></script>
 </head>
 <body class="ce-authoring ce-advanced">
 <div class="ce-page">
@@ -21,6 +22,7 @@
       <a class="book-dashboard-ribbon-btn" href="/dashboard" data-nav data-text="dashboard">Dashboard</a>
       <a class="book-dashboard-ribbon-btn" href="/api/ce/authoring" data-nav data-text="creator">Creation Engine</a>
       <span class="book-dashboard-ribbon-btn" aria-current="page" data-text="title">Advanced studio</span>
+      <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
     </nav>
     <div class="studio-heading"><div><p class="ce-eyebrow" data-text="eyebrow">HOMEBREW / ADVANCED</p>
       <h1 data-text="title">Advanced studio</h1><p data-text="intro">Your rules, in full. Edit a definition, save a revision, then put it to the test.</p></div>

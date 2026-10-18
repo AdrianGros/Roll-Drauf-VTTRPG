@@ -1,0 +1,717 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "character-origins.species",
+  "slug": "charakterspezies",
+  "title": "Charakterspezies",
+  "navigationPath": [
+    "Charakterherkunft",
+    "Charakterspezies"
+  ],
+  "order": 410,
+  "sourcePages": [
+    93,
+    94,
+    95,
+    96,
+    97
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.character-species",
+      "level": 2,
+      "text": "Charakterspezies"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.character-species-introduction",
+      "text": "Wenn du die Spezies deines Charakters auswählst, bestimmst du, ob dein Charakter ein Mensch ist oder einer fantastischen Spezies wie Drachenblütigen oder Gnomen angehört."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.character-species-peoples",
+      "text": "Die Völker des Multiversums stammen aus verschiedenen Welten und umfassen zahlreiche Arten intelligenter Lebensformen. Die Spezies des Spielercharakters ist eine Sammlung von Spielmerkmalen, die ein Abenteurer als Vertreter einer dieser Lebensformen hat."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.character-species-origins",
+      "text": "Manche Spezies stammen aus einer bestimmten Welt, einer bestimmten Existenzebene oder von einem bestimmten Gott. Andere sind in mehreren Regionen zugleich entstanden. Woher eine Spezies auch jeweils stammt, ihre Mitglieder haben sich im Multiversum ausgebreitet und tragen zu vielen verschiedenen Kulturen bei."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.character-species-lifespan",
+      "text": "Die Angehörigen der meisten Spezies werden etwa 80 Jahre alt. Ausnahmen sind jeweils im Text der Spezies unter „Charakterherkunft“ vermerkt. Unabhängig von ihrer Lebensspanne erreichen die Mitglieder aller Spezies ihre körperliche Reife etwa im gleichen Alter. Dein Charakter kann ein beliebiges Alter haben, sofern es nicht außerhalb der normalen Lebensspanne der Spezies liegt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.species-elements",
+      "level": 3,
+      "text": "Elemente einer Spezies"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.species-elements-introduction",
+      "text": "Zu einer Spezies gehören folgende Elemente:"
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.species-creature-type",
+      "level": 4,
+      "text": "Kreaturentyp"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.species-creature-type-description",
+      "text": "Die Spezies eines Charakters bestimmt den Kreaturentyp des Charakters. Dieser ist unter „Regelglossar“ beschrieben. Jede Spezies unter „Charakterherkunft“ ist humanoid. Spielbare Spezies, die nicht humanoid sind, erscheinen in anderen Büchern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.species-size",
+      "level": 4,
+      "text": "Größe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.species-size-description",
+      "text": "Die Spezies deines Charakters bestimmt seine Körpergröße. Die Individuen einer Spezies variieren hinsichtlich ihrer Größe – bei manchen Spezies so beträchtlich, dass du auswählen kannst, ob dein Charakter klein oder mittelgroß ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.species-speed",
+      "level": 4,
+      "text": "Bewegungsrate"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.species-speed-description",
+      "text": "Die Spezies deines Charakters bestimmt seine Bewegungsrate."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.species-special-traits",
+      "level": 4,
+      "text": "Besondere Merkmale"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.species-special-traits-description",
+      "text": "Jede Spezies gibt einem Charakter besondere Merkmale – typische Charakteristiken je nach Physiologie oder magischer Natur der Spezies. Wenn du eine Spezies aussuchst, erhält dein Charakter alle besonderen Merkmale, die für sie aufgeführt sind. Bei einigen Merkmalen musst du eine Auswahl aus einer Handvoll von Optionen treffen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.species-descriptions",
+      "level": 3,
+      "text": "Beschreibungen der Spezies"
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.dragonborn",
+      "level": 4,
+      "text": "Drachenblütiger"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.dragonborn-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Mittelgroß (150–210 cm)"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "9 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dragonborn-traits-introduction",
+      "text": "Als Drachenblütiger hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dragonborn-draconic-ancestry",
+      "text": "Drakonische Abstammung: Deine Abstammungslinie geht auf einen Drachenvorfahren zurück. Wähle die Art des Drachen aus der Tabelle „Drakonische Ahnen“ aus. Diese Entscheidung bestimmt deine Odemwaffe, deine Schadensresistenz sowie dein Erscheinungsbild."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-origins.species.dragonborn-draconic-ancestry-table",
+      "caption": "Drakonische Ahnen",
+      "columns": [
+        "Drache",
+        "Schadensart",
+        "Drache",
+        "Schadensart"
+      ],
+      "rows": [
+        [
+          "Blau",
+          "Blitz",
+          "Messing",
+          "Feuer"
+        ],
+        [
+          "Bronze",
+          "Blitz",
+          "Rot",
+          "Feuer"
+        ],
+        [
+          "Gold",
+          "Feuer",
+          "Schwarz",
+          "Säure"
+        ],
+        [
+          "Grün",
+          "Gift",
+          "Silber",
+          "Kälte"
+        ],
+        [
+          "Kupfer",
+          "Säure",
+          "Weiß",
+          "Kälte"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dragonborn-draconic-flight",
+      "text": "Drakonischer Flug: Wenn du die 5. Charakterstufe erreichst, kannst du drakonische Magie kanalisieren, um vorübergehend fliegen zu können. Als Bonusaktion kannst du dir geisterhafte Flügel wachsen lassen, die zehn Minuten lang erhalten bleiben, oder bis du die Flügel verwirfst (keine Aktion erforderlich) oder kampfunfähig wirst. Mit den Flügeln hast du eine Flugbewegungsrate in Höhe deiner Bewegungsrate. Das Erscheinungsbild deiner Flügel entspricht der Energie deiner Odemwaffe. Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dragonborn-darkvision",
+      "text": "Dunkelsicht: Du hast Dunkelsicht mit einer Reichweite von 18 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dragonborn-damage-resistance",
+      "text": "Schadensresistenz: Du bist gegen die Schadensart resistent, die mit deiner drakonischen Abstammung assoziiert ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dragonborn-breath-weapon",
+      "text": "Odemwaffe: Wenn du in deinem Zug die Angriffsaktion ausführst, kannst du einen der Angriffe durch ein Ausatmen magischer Energie ersetzen, die sich entweder in einem Kegel von 4,5 Metern oder in einer neun Meter langen, 1,5 Meter breiten Linie ausbreitet (wähle die Form bei jedem Einsatz aus). Jede Kreatur in diesem Bereich muss einen Geschicklichkeitsrettungswurf (SG 8 plus dein Konstitutionsmodifikator plus dein Übungsbonus) ausführen. Misslingt der Wurf, so erleidet die Kreatur 1W10 Schaden der Art, die deiner drakonischen Abstammung entspricht. Bei einem erfolgreichen Rettungswurf erleidet die Kreatur halb so viel Schaden. Dieser Schaden wird um jeweils 1W10 erhöht, wenn du die 5. (2W10), die 11. (3W10) und die 17. (4W10) Charakterstufe erreichst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dragonborn-breath-weapon-uses",
+      "text": "Die Häufigkeit, mit der du diese Odemwaffe einsetzen kannst, entspricht deinem Übungsbonus. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.elf",
+      "level": 4,
+      "text": "Elf"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.elf-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Mittelgroß (150–180 cm)"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "9 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.elf-traits-introduction",
+      "text": "Als Elf hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.elf-darkvision",
+      "text": "Dunkelsicht: Du hast Dunkelsicht mit einer Reichweite von 18 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.elf-elven-lineage",
+      "text": "Elfische Abstammung: Du bist Teil einer Abstammungslinie, die dir übernatürliche Fähigkeiten gewährt. Wähle eine Abstammung aus der Tabelle „Elfische Abstammungen“ aus. Du erhältst durch diese Linie den Vorzug für die 1. Stufe."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-origins.species.elf-elven-lineage-table",
+      "caption": "Elfische Abstammungen",
+      "columns": [
+        "Abstammung",
+        "1. Stufe",
+        "3. Stufe",
+        "5. Stufe"
+      ],
+      "rows": [
+        [
+          "Drow",
+          "Die Reichweite deiner Dunkelsicht ist auf 36 Meter erhöht. Außerdem kennst du den Zaubertrick Tanzende Lichter.",
+          "Feenfeuer",
+          "Dunkelheit"
+        ],
+        [
+          "Hochelf",
+          "Du kennst den Zaubertrick Taschenspielerei. Wann immer du eine lange Rast beendest, kannst du diesen Zaubertrick durch einen anderen Zaubertrick von der Zauberliste des Magiers ersetzen.",
+          "Magie entdecken",
+          "Nebelschritt"
+        ],
+        [
+          "Waldelf",
+          "Deine Bewegungsrate ist auf zehn Meter erhöht. Außerdem kennst du den Zaubertrick Druidenkunst.",
+          "Lange Schritte",
+          "Spurloses Gehen"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.elf-elven-lineage-spells",
+      "text": "Wenn du die 3. und 5. Charakterstufe erreichst, erlernst du einen Zauber eines höheren Grades wie in der Tabelle angegeben. Du hast diesen Zauber stets vorbereitet. Du kannst ihn einmal wirken, ohne einen Zauberplatz zu verbrauchen. Diese Fähigkeit erhältst du nach einer langen Rast zurück. Du kannst den Zauber auch mit einem beliebigen verfügbaren Zauberplatz des entsprechenden Grades wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.elf-elven-lineage-ability",
+      "text": "Intelligenz, Weisheit oder Charisma ist dein Attribut zum Wirken der Zauber dieser Abstammungslinie (wähle das Attribut aus, wenn du dich für eine Linie entscheidest)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.elf-fey-ancestry",
+      "text": "Feenblut: Du bist bei Rettungswürfen zum Vermeiden oder Beenden des Zustands Bezaubert im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.elf-keen-senses",
+      "text": "Scharfe Sinne: Du bist in einer der Fertigkeiten Motiv erkennen, Überlebenskunst oder Wahrnehmung geübt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.elf-trance",
+      "text": "Trance: Du musst nicht schlafen und kannst nicht magisch zum Einschlafen gebracht werden. Du kannst eine lange Rast in vier Stunden beenden, wenn du diese Stunden in tranceartiger Meditation verbringst. Dabei bleibst du bei Bewusstsein."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.gnome",
+      "level": 4,
+      "text": "Gnom"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.gnome-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Klein (90–120 cm)"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "9 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.gnome-traits-introduction",
+      "text": "Als Gnom hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.gnome-darkvision",
+      "text": "Dunkelsicht: Du hast Dunkelsicht mit einer Reichweite von 18 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.gnome-gnomish-lineage",
+      "text": "Gnomische Abstammung: Du bist Teil einer Abstammungslinie, die dir übernatürliche Fähigkeiten gewährt. Wähle eine der folgenden Optionen aus. Charisma, Intelligenz oder Weisheit ist dein Attribut zum Wirken der Zauber dieser Abstammungslinie (wähle das Attribut aus, wenn du dich für eine Linie entscheidest)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.gnome-rock-gnome",
+      "text": "Felsengnom: Du kennst die Zaubertricks Ausbessern und Taschenspielerei. Außerdem kannst du zehn Minuten mit dem Zaubertrick Taschenspielerei verbringen, um ein winziges Uhrwerkgerät (RK 5, 1 TP) zu bauen, beispielsweise ein Spielzeug, einen Anzünder oder eine Spieluhr. Bestimme die Funktion des Geräts, indem du einen Effekt von Taschenspielerei auswählst. Das Gerät erzeugt den Effekt, wann immer du – oder eine andere Kreatur – eine Bonusaktion ausführst, um es mit einer Berührung zu aktivieren. Wenn der ausgewählte Effekt Optionen aufweist, entscheidest du dich für eine dieser Optionen, wenn du das Gerät baust. Beispiel: Wenn du den Entfachen- und Löschen-Effekt des Zaubers auswählst, entscheidest du, ob das Gerät Feuer entfacht oder löscht – das Gerät tut nicht beides. Du kannst bis zu drei dieser Geräte gleichzeitig verfügbar haben. Jedes Gerät fällt entweder acht Stunden nach seiner Erschaffung oder dann auseinander, wenn du es mit einer Berührung (eine Verwenden-Aktion) zerlegst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.gnome-forest-gnome",
+      "text": "Waldgnom: Du kennst den Zaubertrick Einfache Illusion. Außerdem hast du den Zauber Mit Tieren sprechen stets vorbereitet. Die Anzahl der Male, die du den Zauber ohne Zauberplatz wirken kannst, entspricht deinem Übungsbonus. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück. Du kannst den Zauber auch mit einem verfügbaren Zauberplatz wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.gnome-gnomish-cunning",
+      "text": "Gnomische Gerissenheit: Du bist bei Charisma-, Intelligenz- und Weisheitsrettungswürfen im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.goliath",
+      "level": 4,
+      "text": "Goliath"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.goliath-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Mittelgroß (210–240 cm)"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "10,5 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-traits-introduction",
+      "text": "Als Goliath hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-large-form",
+      "text": "Große Gestalt: Ab die 5. Charakterstufe kannst du deine Größe als Bonusaktion in die Kategorie Groß ändern, sofern du genügend Platz dazu hast. Diese Verwandlung bleibt zehn Minuten lang bestehen, oder bis du sie beendest (keine Aktion erforderlich). Während dieser Dauer bist du bei Stärkewürfen im Vorteil, und deine Bewegungsrate ist um drei Meter erhöht. Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-powerful-build",
+      "text": "Kräftiger Körperbau: Du bist bei allen Attributswürfen zum Beenden des Zustands Gepackt im Vorteil. Außerdem gilt bei deiner Traglast die nächsthöhere Größenkategorie."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-giant-ancestry",
+      "text": "Riesische Abstammung: Du stammst von Riesen ab. Wähle einen der folgenden Vorzüge als übernatürliche Gabe durch deine Abstammung aus. Die Anzahl der möglichen Anwendungen dieses Vorzugs entspricht deinem Übungsbonus. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-giant-ancestry-frost",
+      "text": "Eiseskälte (Frostriese): Wenn du ein Ziel mit einem Angriffswurf triffst und ihm Schaden zufügst, kannst du ihm zusätzlich 1W6 Kälteschaden zufügen und seine Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-giant-ancestry-stone",
+      "text": "Felsenfestigkeit (Steinriese): Wenn du Schaden erleidest, kannst du eine Reaktion ausführen, um mit 1W12 zu würfeln. Füge dem Ergebnis deinen Konstitutionsmodifikator hinzu und ziehe die Summe vom erlittenen Schaden ab."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-giant-ancestry-fire",
+      "text": "Feuersbrunst (Feuerriese): Wenn du ein Ziel mit einem Angriffswurf triffst und ihm Schaden zufügst, kannst du ihm zusätzlich 1W10 Feuerschaden zufügen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-giant-ancestry-hill",
+      "text": "Hügelsturz (Hügelriese): Wenn du eine Kreatur von höchstens großer Größe mit einem Angriffswurf triffst und ihr Schaden zufügst, kannst du sie außerdem umstoßen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-giant-ancestry-storm",
+      "text": "Sturmdonner (Sturmriese): Wenn dir eine Kreatur im Abstand von bis zu 18 Metern von dir Schaden zufügt, kannst du eine Reaktion ausführen, um dieser Kreatur 1W8 Schallschaden zuzufügen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.goliath-giant-ancestry-cloud",
+      "text": "Wolkensprung (Wolkenriese): Als Bonusaktion kannst du dich auf magische Art bis zu neun Meter weit in einen freien Bereich teleportieren, den du sehen kannst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.halfling",
+      "level": 4,
+      "text": "Halbling"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.halfling-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Klein (60–90 cm)"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "9 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.halfling-traits-introduction",
+      "text": "Als Halbling hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.halfling-naturally-stealthy",
+      "text": "Angeborene Verstohlenheit: Du kannst die Verstecken-Aktion auch dann ausführen, wenn du nur von einer Kreatur verdeckt wirst, die mindestens eine Kategorie größer ist als du."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.halfling-halfling-nimbleness",
+      "text": "Halblingsgewandtheit: Du kannst dich durch den Bereich jeder Kreatur bewegen, die mindestens eine Kategorie größer ist als du. Du kannst jedoch nicht in ihrem Bereich anhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.halfling-luck",
+      "text": "Halblingsglück: Wenn du bei einer W20-Prüfung eine 1 würfelst, kannst du erneut würfeln. In diesem Fall musst du das neue Ergebnis verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.halfling-brave",
+      "text": "Tapferkeit: Du bist bei Rettungswürfen zum Vermeiden oder Beenden des Zustands Verängstigt im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.human",
+      "level": 4,
+      "text": "Mensch"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.human-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Mittelgroß (120–210 cm) oder klein (60–120 cm) – lege die Größe fest, wenn du diese Spezies auswählst"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "9 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.human-traits-introduction",
+      "text": "Als Mensch hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.human-resourceful",
+      "text": "Einfallsreich: Du erhältst Heldische Inspiration, wann immer du eine lange Rast beendest."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.human-skillful",
+      "text": "Geschickt: Du bist in einer Fertigkeit deiner Wahl geübt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.human-versatile",
+      "text": "Vielseitig: Du erhältst ein Herkunftstalent deiner Wahl (siehe „Talente“). Begabt wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.orc",
+      "level": 4,
+      "text": "Ork"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.orc-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Mittelgroß (180–210 cm)"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "9 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.orc-traits-introduction",
+      "text": "Als Ork hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.orc-adrenaline-rush",
+      "text": "Adrenalinrausch: Du kannst die Spurt-Aktion als Bonusaktion ausführen. In diesem Fall erhältst du eine Anzahl von temporären Trefferpunkten in Höhe deines Übungsbonus."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.orc-adrenaline-rush-uses",
+      "text": "Die Häufigkeit, mit der du dieses Merkmal einsetzen kannst, entspricht deinem Übungsbonus. Du erhältst alle verbrauchten Anwendungen nach einer kurzen oder langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.orc-darkvision",
+      "text": "Dunkelsicht: Du hast Dunkelsicht mit einer Reichweite von 36 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.orc-relentless-endurance",
+      "text": "Durchhaltevermögen: Wenn deine Trefferpunkte auf 0 sinken, du aber nicht direkt stirbst, behältst du stattdessen 1 Trefferpunkt. Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.tiefling",
+      "level": 4,
+      "text": "Tiefling"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.tiefling-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Mittelgroß (120–210 cm) oder klein (90–120 cm) – lege die Größe fest, wenn du diese Spezies auswählst"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "9 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.tiefling-traits-introduction",
+      "text": "Als Tiefling hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.tiefling-otherworldly-presence",
+      "text": "Außerweltliche Präsenz: Du kennst den Zaubertrick Thaumaturgie. Wenn du ihn mit diesem Merkmal wirkst, verwendest du das gleiche Attribut zum Zauberwirken wie bei deinem Merkmal Unholdisches Erbe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.tiefling-darkvision",
+      "text": "Dunkelsicht: Du hast Dunkelsicht mit einer Reichweite von 18 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.tiefling-fiendish-legacy",
+      "text": "Unholdisches Erbe: Dein Erbe gewährt dir übernatürliche Fähigkeiten. Wähle ein Erbe in der Tabelle „Unholdisches Erbe“ aus. Du erhältst durch dieses Erbe den Vorzug für die 1. Stufe."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-origins.species.tiefling-fiendish-legacy-table",
+      "caption": "Unholdisches Erbe",
+      "columns": [
+        "Erbe:",
+        "1. Stufe",
+        "3. Stufe",
+        "5. Stufe"
+      ],
+      "rows": [
+        [
+          "Abyssisch",
+          "Du bist gegen Giftschaden resistent. Außerdem kennst du den Zaubertrick Gift versprühen.",
+          "Strahl der Übelkeit",
+          "Person festhalten"
+        ],
+        [
+          "Chthonisch",
+          "Du bist gegen nekrotischen Schaden resistent. Außerdem kennst du den Zaubertrick Kalte Hand.",
+          "Falsches Leben",
+          "Schwächestrahl"
+        ],
+        [
+          "Infernalisch",
+          "Du bist gegen Feuerschaden resistent. Außerdem kennst du den Zaubertrick Feuerpfeil.",
+          "Höllischer Tadel",
+          "Dunkelheit"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.tiefling-fiendish-legacy-spells",
+      "text": "Wenn du die 3. und 5. Charakterstufe erreichst, erlernst du einen Zauber eines höheren Grades wie in der Tabelle angegeben. Du hast diesen Zauber stets vorbereitet. Du kannst ihn einmal wirken, ohne einen Zauberplatz zu verbrauchen. Diese Fähigkeit erhältst du nach einer langen Rast zurück. Du kannst den Zauber auch mit einem beliebigen verfügbaren Zauberplatz des entsprechenden Grades wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.tiefling-fiendish-legacy-ability",
+      "text": "Wähle eine der folgenden Optionen aus. Charisma, Intelligenz oder Weisheit ist dein Attribut zum Wirken der Zauber dieser Abstammungslinie (wähle das Attribut aus, wenn du dich für ein Erbe entscheidest)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-origins.species.dwarf",
+      "level": 4,
+      "text": "Zwerg"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-origins.species.dwarf-traits",
+      "entries": [
+        {
+          "term": "Kreaturentyp",
+          "definition": "Humanoide"
+        },
+        {
+          "term": "Größe",
+          "definition": "Mittelgroß (120–150 cm)"
+        },
+        {
+          "term": "Bewegungsrate",
+          "definition": "9 m"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dwarf-traits-introduction",
+      "text": "Als Zwerg hast du diese besonderen Merkmale:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dwarf-darkvision",
+      "text": "Dunkelsicht: Du hast Dunkelsicht mit einer Reichweite von 36 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dwarf-stonecunning",
+      "text": "Steingespür: Als Bonusaktion erhältst du zehn Minuten lang Erschütterungssinn mit einer Reichweite von 18 Metern. Du musst dich auf einer steinernen Oberfläche befinden oder eine solche berühren, um den Erschütterungssinn nutzen zu können. Es kann sich um naturbelassenen oder bearbeiteten Stein handeln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dwarf-stonecunning-uses",
+      "text": "Die Häufigkeit, mit der du diese Bonusaktion ausführen kannst, entspricht deinem Übungsbonus. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dwarf-dwarven-resilience",
+      "text": "Zwergische Unverwüstlichkeit: Du bist gegen Giftschaden resistent. Außerdem bist du bei Rettungswürfen zum Vermeiden oder Beenden des Zustands Vergiftet im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-origins.species.dwarf-dwarven-toughness",
+      "text": "Zwergische Zähigkeit: Dein Trefferpunktemaximum wird um 1 und bei jedem Stufenaufstieg um 1 weiteren Punkt erhöht."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:ee73cb2f2e6b5bd80940486042532b32f38d44dc9c6403d7af1718e1fce7b0bd"
+}

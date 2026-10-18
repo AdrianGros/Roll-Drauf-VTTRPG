@@ -1,0 +1,334 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "core.exploration",
+  "slug": "erkundung",
+  "title": "Erkundung",
+  "navigationPath": [
+    "Die Spielregeln",
+    "Erkundung"
+  ],
+  "order": 60,
+  "sourcePages": [
+    12,
+    13,
+    14
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.exploration",
+      "level": 2,
+      "text": "Erkundung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.exploration-introduction",
+      "text": "Erkundungen finden oft an Orten statt, die so geheimnisvoll wie gefährlich sind. Die Regeln in diesem Abschnitt zeigen einige Möglichkeiten, wie Abenteurer an solchen Orten mit der Umgebung interagieren können."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.adventuring-gear",
+      "level": 3,
+      "text": "Abenteuerausrüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.adventuring-gear-description",
+      "text": "Ausrüstung kann Abenteurern bei Erkundungen auf vielerlei Arten nützlich sein. Hohe Bereiche lassen sich beispielsweise mit Leitern erreichen; an dunklen Orten sind Fackeln und andere Lichtquellen nützlich. Verschlossene Türen und Behälter können mit Diebeswerkzeug geöffnet werden. Verfolger lassen sich mit Krähenfüßen aufhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.adventuring-gear-reference",
+      "text": "Unter „Ausrüstung“ findest du Regeln für viele Gegenstände, die bei Abenteuern nützlich sind. Besonders zweckdienlich sind die Gegenstände, die in den Abschnitten „Werkzeug“ und „Abenteurerausrüstung“ behandelt werden. Auch die Waffen unter „Ausrüstung“ taugen zu mehr als nur zum Kämpfen: Warum nicht den unheilvoll aussehenden Schalter, den man lieber nicht berühren möchte, mit einem Kampfstab bedienen?"
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.light-and-vision",
+      "level": 3,
+      "text": "Lichtverhältnisse und Sicht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.light-and-vision-introduction",
+      "text": "Manche Aufgaben von Abenteurern – Gefahren bemerken, einen Gegner treffen, mit bestimmten Zaubern zielen – erfordern klare Sicht, und Effekte, welche die Sicht verschleiern, können hinderlich sein wie nachstehend erläutert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.obscured-areas",
+      "level": 4,
+      "text": "Verschleierte Bereiche"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.obscured-areas-lightly",
+      "text": "Bereiche können leicht oder komplett verschleiert sein. In leicht verschleierten Bereichen, beispielsweise bei dämmrigem Licht, leichtem Nebel oder in mäßig dichtem Laub, sind Kreaturen bei Weisheitswürfen (Wahrnehmung), die klare Sicht erfordern, im Nachteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.obscured-areas-heavily",
+      "text": "Komplett verschleierte Bereiche – bei Dunkelheit, dichtem Nebel oder in dichtem Laub – sind völlig undurchsichtig. Wenn du versuchst, dort etwas zu erkennen, hast du den Zustand Blind (siehe „Regelglossar“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.light",
+      "level": 4,
+      "text": "Licht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.light-introduction",
+      "text": "Durch die An- oder Abwesenheit von Licht wird die Beleuchtungskategorie eines Bereichs bestimmt, wie nachstehend ausgeführt wird."
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "core.exploration.light-categories",
+      "entries": [
+        {
+          "term": "Helles Licht",
+          "definition": "Bei hellem Licht können die meisten Kreaturen normal sehen. Auch trübe Tage bieten helles Licht, ebenso Fackeln, Laternen, Feuer und ähnliche Lichtquellen (innerhalb einer gewissen Reichweite)."
+        },
+        {
+          "term": "Dämmriges Licht",
+          "definition": "Dämmriges Licht, auch als Schatten bezeichnet, bedeutet einen leicht verschleierten Bereich. Oft stellen Bereiche mit dämmrigem Licht den Übergang zwischen hell erleuchteten und dunklen Bereichen dar. Auch das sanfte Licht der Morgen- oder Abenddämmerung zählt als dämmriges Licht. Ein Vollmond kann die Welt ebenfalls in dämmriges Licht tauchen."
+        },
+        {
+          "term": "Dunkelheit",
+          "definition": "Dunkelheit bedeutet einen komplett verschleierten Bereich. Sie herrscht nachts unter freiem Himmel – auch in den meisten Mondnächten –, in unbeleuchteten Gewölben und in Bereichen magischer Dunkelheit."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.special-senses",
+      "level": 3,
+      "text": "Spezialsinne"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.special-senses-introduction",
+      "text": "Manche Kreaturen verfügen über Spezialsinne, die ihnen in bestimmten Situationen helfen, Dinge wahrzunehmen. Unter „Regelglossar“ sind folgende Spezialsinne definiert:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "core.exploration.special-senses-list",
+      "items": [
+        "Blindsicht",
+        "Dunkelsicht",
+        "Erschütterungssinn",
+        "Wahrer Blick"
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.hiding",
+      "level": 3,
+      "text": "Sich verstecken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.hiding-description",
+      "text": "Abenteurer und Monster verstecken sich gelegentlich, um an Wächtern vorbeizukommen, jemanden auszuspähen oder zu überfallen. Der Spielleiter entscheidet, wann die Umstände zum Verstecken geeignet sind. Wenn du dich zu verstecken versuchst, führst du die Verstecken-Aktion aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.interacting-with-objects",
+      "level": 3,
+      "text": "Mit Gegenständen interagieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.interacting-with-objects-description",
+      "text": "Interaktionen mit Gegenständen sind oft einfach zu bewerkstelligen. Der Spieler erzählt dem SL, was sein Charakter tut: Dieser bedient beispielsweise einen Hebel oder öffnet eine Tür. Der SL beschreibt, was daraufhin geschieht. Manchmal gibt es jedoch Regeln dafür, was sich mit einem Gegenstand anfangen lässt. Diese sind in den folgenden Abschnitten beschrieben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.what-is-an-object",
+      "level": 4,
+      "text": "Was ist ein Gegenstand?"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.what-is-an-object-description",
+      "text": "Im Sinne dieser Regeln sind Gegenstände separate unbelebte Dinge wie Fenster, Türen, Schwerter, Bücher, Tische, Stühle oder Steine. Sie sind keine Dinge wie Gebäude oder Fahrzeuge, die sich aus mehreren verschiedenen Gegenständen zusammensetzen."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.exploration.marching-order",
+      "title": "Marschreihenfolge",
+      "text": "Die Abenteurer sollten beim Reisen eine Marschreihenfolge festlegen – unabhängig davon, ob sie sich drinnen oder draußen bewegen. Die Marschreihenfolge macht es einfacher zu bestimmen, wer von Fallen betroffen ist, wer versteckte Gegner entdeckt und wer diesen Gegnern am nächsten ist, wenn es zum Kampf kommt. Ihr könnt die Marschreihenfolge außerhalb von Kämpfen jederzeit ändern und sie auf beliebige Art festhalten: Ihr könnt sie beispielsweise notieren oder Figuren entsprechend arrangieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.time-limited-interactions",
+      "level": 4,
+      "text": "Zeitlich begrenzte Interaktionen mit Gegenständen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.time-limited-interactions-description",
+      "text": "Wenn die Zeit wie in einem Kampf knapp bemessen ist, sind Interaktionen mit Gegenständen nur begrenzt möglich: Es ist eine Interaktion pro Zug verfügbar. Diese Interaktion muss erfolgen, während die entsprechende Kreatur sich bewegt oder eine Aktion ausführt. Zusätzliche Interaktionen erfordern, dass die Verwenden-Aktion ausgeführt wird, wie unter „Kampf“ weiter hinten unter „Die Spielregeln“ erläutert wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.finding-hidden-objects",
+      "level": 4,
+      "text": "Versteckte Gegenstände finden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.finding-hidden-objects-check",
+      "text": "Wenn dein Charakter nach versteckten Gegenständen wie Geheimtüren oder Fallen sucht, fordert dich der SL wahrscheinlich auf, einen Weisheitswurf (Wahrnehmung) auszuführen. Bei einem Erfolg findest du den Gegenstand, andere wichtige Details oder beides."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.finding-hidden-objects-location",
+      "text": "Wenn du beschreibst, wie dein Charakter anderswo als in der Nähe eines verborgenen Gegenstands sucht, kann ein Weisheitswurf (Wahrnehmung) unabhängig von dessen Ergebnis nicht enthüllen, wo sich der Gegenstand befindet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.carrying-objects",
+      "level": 4,
+      "text": "Gegenstände mit sich führen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.carrying-objects-description",
+      "text": "Du kannst normalerweise deine Ausrüstung und Schätze tragen, ohne dir über das Gewicht dieser Gegenstände Gedanken machen zu müssen. Wenn du allerdings versuchst, einen ungewöhnlich schweren Gegenstand oder eine sehr große Anzahl leichterer Gegenstände zu tragen, könnte der SL verlangen, dass du die Regeln zur Traglast unter „Regelglossar“ einhältst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.destroying-objects",
+      "level": 4,
+      "text": "Gegenstände zerstören"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.destroying-objects-description",
+      "text": "Du kannst als Aktion empfindliche nichtmagische Gegenstände wie Glasgefäße oder Papierbögen automatisch zerstören. Versuchst du, stabilere Gegenstände zu zerstören, so kann der SL die Regeln zum Zerstören von Gegenständen unter „Regelglossar“ anwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.hazards",
+      "level": 3,
+      "text": "Gefahren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.hazards-introduction",
+      "text": "Monster sind die häufigste Bedrohung, mit der Charaktere es zu tun bekommen, aber es gibt noch andere Gefahren. Unter „Regelglossar“ sind folgende Gefahren definiert:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "core.exploration.hazards-list",
+      "items": [
+        "Brand",
+        "Dehydrierung",
+        "Erstickung",
+        "Sturz",
+        "Unterernährung"
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.travel",
+      "level": 3,
+      "text": "Reisen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.travel-introduction",
+      "text": "Während eines Abenteuers können Charaktere weite Strecken zurücklegen, und solche Reisen können Stunden oder Tage dauern. Der SL kann eine Reise zusammenfassen, ohne genaue Distanzen oder Reisezeiten zu berechnen. Er kann euch auch auffordern, die nachstehenden Regeln zur Reisegeschwindigkeit anzuwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.travel-speed-matters",
+      "text": "Wenn es wichtig ist zu wissen, wie schnell du dich bewegen kannst, weil jede Sekunde zählt, sieh dir die Bewegungsregeln unter „Kampf“ weiter hinten unter „Die Spielregeln“ an."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.travel-pace",
+      "level": 4,
+      "text": "Reisegeschwindigkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.travel-pace-description",
+      "text": "Bei Reisen außerhalb von Kämpfen kann eine Gruppe sich mit schnellerer, normaler oder langsamer Geschwindigkeit bewegen, wie in der Tabelle „Reisegeschwindigkeit“ dargestellt. Die Tabelle zeigt, wie weit sich die Abenteurergruppe während einer bestimmten Zeitspanne bewegen kann. Wenn die Gruppe Pferde oder andere Reittiere einsetzt, kann sie eine Stunde lang die doppelte Distanz zurücklegen. Nach dieser Zeit brauchen die Reittiere eine kurze oder lange Rast, ehe sie erneut zur erhöhten Reisegeschwindigkeit fähig sind (unter „Ausrüstung“ findest du eine Auswahl an verfügbaren Reittieren). Der Abschnitt „Werkzeugkasten fürs Spiel“ enthält Regeln, aus denen hervorgeht, welche Geschwindigkeiten auf welchen Geländetypen möglich sind."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.exploration.travel-pace-table",
+      "caption": "Reisegeschwindigkeit",
+      "columns": [
+        "Geschwindigkeit",
+        "Minute",
+        "Stunde",
+        "Tag"
+      ],
+      "rows": [
+        [
+          "Schnell",
+          "120 m",
+          "6,4 km",
+          "48 km"
+        ],
+        [
+          "Normal",
+          "90 m",
+          "4,8 km",
+          "38,4 km"
+        ],
+        [
+          "Langsam",
+          "60 m",
+          "3,2 km",
+          "28,8 km"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.travel-pace-effects-introduction",
+      "text": "Jede Reisegeschwindigkeit hat einen Spieleffekt wie nachfolgend beschrieben."
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "core.exploration.travel-pace-effects",
+      "entries": [
+        {
+          "term": "Schnell",
+          "definition": "Bei schneller Reisegeschwindigkeit sind die Reisenden bei Weisheitswürfen (Überlebenskunst oder Wahrnehmung) und Geschicklichkeitswürfen (Heimlichkeit) im Nachteil."
+        },
+        {
+          "term": "Normal",
+          "definition": "Bei normaler Geschwindigkeit sind die Reisenden bei Geschicklichkeitswürfen (Heimlichkeit) im Nachteil."
+        },
+        {
+          "term": "Langsam",
+          "definition": "Bei langsamer Geschwindigkeit sind die Reisenden bei Weisheitswürfen (Überlebenskunst oder Wahrnehmung) im Vorteil."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.exploration.vehicles",
+      "level": 4,
+      "text": "Fahrzeuge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.exploration.vehicles-description",
+      "text": "Reisende in Wagen, Kutschen oder anderen Landfahrzeugen wählen ihre Reisegeschwindigkeit normalerweise selbst aus. Charaktere in Wasserfahrzeugen sind auf die Geschwindigkeit der Fahrzeuge festgelegt und wählen ihre Reisegeschwindigkeit nicht selbst aus. Schiffe können je nach ihrer Art und Besatzung bis zu 24 Stunden pro Tag unterwegs sein. Der Abschnitt „Ausrüstung“ enthält eine Auswahl von verfügbaren Fahrzeugen."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.actions.actions-table",
+      "label": "Aktionen"
+    }
+  ],
+  "digest": "sha256:e6fbee5e2b715cd456f931cb088731c5fb31a35c9603af1ea7ad9e4d812044f3"
+}

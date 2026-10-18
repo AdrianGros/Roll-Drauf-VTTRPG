@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.activation",
+  "slug": "magischen-gegenstand-aktivieren",
+  "title": "Einen magischen Gegenstand aktivieren",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Einen magischen Gegenstand aktivieren"
+  ],
+  "order": 1030,
+  "sourcePages": [
+    238
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.activation.einen-magischen-gegenstand-aktivieren",
+      "level": 2,
+      "text": "Einen magischen Gegenstand aktivieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.activation.einen-magischen-gegenstand-aktivieren.text-1",
+      "text": "Es erfordert normalerweise eine magische Aktion, einen magischen Gegenstand zu aktivieren. Möglicherweise muss der Anwender des Gegenstands außerdem noch etwas Spezielles tun. In der Beschreibung jeder Gegenstandskategorie oder jedes Gegenstands ist angegeben, wie ein Gegenstand aktiviert wird. Bei bestimmten Gegenständen werden zur Aktivierung die folgenden Regeln verwendet:"
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.activation.befehlswort",
+      "level": 3,
+      "text": "Befehlswort"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.activation.befehlswort.text-1",
+      "text": "Ein Befehlswort – ein Wort oder ein kurzer Satz – muss ausgesprochen werden, damit ein Gegenstand funktioniert. Befehlswörter müssen vernehmlich ausgesprochen werden. Sie funktionieren nicht in Bereichen, in denen alle Geräusche unterdrückt werden, beispielsweise im Bereich des Zaubers Stille."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.activation.verbrauchsgegenstaende",
+      "level": 3,
+      "text": "Verbrauchsgegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.activation.verbrauchsgegenstaende.text-1",
+      "text": "Manche Gegenstände werden verbraucht, wenn sie aktiviert werden. Sie können folglich nur einmal verwendet werden. Heiltränke müssen beispielsweise getrunken werden, und bei Schriftrollen verblasst der Text, sobald sie verlesen wurden. Verbrauchsgegenstände verlieren nach der Verwendung ihre Magie."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.activation.mit-gegenstaenden-gewirkte-zauber",
+      "level": 4,
+      "text": "Mit Gegenständen gewirkte Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.activation.mit-gegenstaenden-gewirkte-zauber.text-1",
+      "text": "Manche magischen Gegenstände erlauben dem Anwender, mit ihnen einen Zauber zu wirken. Der Zauber wird auf dem niedrigstmöglichen Zaubergrad und der niedrigstmöglichen Zauberwirkerstufe gewirkt. Er verbraucht keinen Zauberplatz und erfordert keine Komponenten, sofern in der Beschreibung des Gegenstands nicht anders vermerkt. Der Zauber hat seinen normalen Zeitaufwand, seine normale Reichweite und seine normale Wirkungsdauer. Falls er Konzentration erfordert, muss der Anwender sich konzentrieren. Bei vielen Gegenständen wie Tränken ist es nicht nötig, einen Zauber zu wirken. Die Effekte treten bei Verwendung mit ihrer üblichen Wirkungsdauer in Kraft. Bei bestimmten Gegenständen gelten Ausnahmen, beispielsweise andere Regeln für Zeitaufwand, Wirkungsdauer oder andere Teile des Zaubers."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.activation.mit-gegenstaenden-gewirkte-zauber.text-2",
+      "text": "Ein magischer Gegenstand kann erfordern, dass der Anwender sein eigenes Attribut zum Zauberwirken verwendet, wenn er mit dem Gegenstand einen Zauber wirkt. Hat der Anwender mehrere Attribute zum Zauberwirken, so wählt er selbst aus, welches davon er mit dem Gegenstand verwendet. Hat der Anwender kein Attribut zum Zauberwirken, so beträgt sein Zauberwirken-Attributsmodifikator für den Gegenstand +0, und es gilt sein Übungsbonus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.activation.ladungen",
+      "level": 4,
+      "text": "Ladungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.activation.ladungen.text-1",
+      "text": "Manche magischen Gegenstände haben Ladungen, die verbraucht werden müssen, um die Eigenschaften der Gegenstände zu aktivieren. Die Anzahl von Ladungen, die bei einem Gegenstand verbleiben, kann mit dem Zauber Identifizieren erkannt werden. Eine Kreatur, die auf einen Gegenstand eingestimmt ist, weiß, wie viele Ladungen der Gegenstand hat und wie viele er zurückerhalten kann."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:371d3d8ff3189584376a72456d58ab8d48a2a373a65cee13cafefbfc3817a91e"
+}

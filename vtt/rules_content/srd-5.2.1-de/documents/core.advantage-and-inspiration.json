@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "core.advantage-and-inspiration",
+  "slug": "vorteil-und-nachteil",
+  "title": "Vorteil und Nachteil",
+  "navigationPath": [
+    "Die Spielregeln",
+    "Vorteil und Nachteil"
+  ],
+  "order": 30,
+  "sourcePages": [
+    8,
+    9
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "core.advantage-and-inspiration.advantage-disadvantage",
+      "level": 2,
+      "text": "Vorteil und Nachteil"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.advantage-and-inspiration.advantage-disadvantage-introduction",
+      "text": "Manchmal wird eine W20-Prüfung durch Vorteil oder Nachteil beeinflusst. Vorteil steht für günstige Umstände, unter denen die Prüfung erfolgt, Nachteil für ungünstige Umstände."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.advantage-and-inspiration.advantage-disadvantage-origin",
+      "text": "Vor- oder Nachteile entstehen normalerweise durch Aktionen oder den Einsatz von Spezialfähigkeiten. Auch der SL kann entscheiden, dass die Umstände zum Vorteil oder zum Nachteil gereichen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.advantage-and-inspiration.two-d20",
+      "level": 3,
+      "text": "Mit zwei W20 würfeln"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.advantage-and-inspiration.two-d20-description",
+      "text": "Wenn du bei einem Wurf im Vorteil oder im Nachteil bist, verwendest du dabei zwei W20. Im Vorteil gilt der Würfel mit dem höheren Ergebnis. Im Nachteil gilt der Würfel mit dem niedrigeren Ergebnis. Beispiel: Wenn du im Nachteil bist und eine 18 und eine 3 würfelst, gilt die 3. Bist du hingegen im Vorteil, so gilt die 18."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.advantage-and-inspiration.not-stackable",
+      "level": 3,
+      "text": "Nicht stapelbar"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.advantage-and-inspiration.not-stackable-multiple",
+      "text": "Wenn mehrere Situationen einen Wurf beeinflussen und ihm jeweils einen Vorteil gewähren, würfelst du dennoch mit zwei W20. Dies gilt ebenso, wenn mehrere Situationen einen Nachteil beim Wurf bedeuten würden: Du würfelst dennoch mit zwei W20."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.advantage-and-inspiration.not-stackable-cancel",
+      "text": "Falls die Umstände dazu führen, dass der Wurf sowohl im Vorteil als auch im Nachteil ist, heben Vorteil und Nachteil einander auf, und du würfelst mit nur einem W20. Dies gilt auch dann, wenn mehrere Umstände Nachteil bedeuten und nur einer Vorteil (sowie umgekehrt). In einer solchen Situation bist du weder im Vorteil noch im Nachteil."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.advantage-and-inspiration.heroic-inspiration",
+      "title": "Heldische Inspiration",
+      "text": "Manchmal gibt dir der SL oder eine Regel Heldische Inspiration. Wenn du Heldische Inspiration hast, kannst du sie verbrauchen, um mit einem Würfel sofort nach dem Wurf erneut zu würfeln. In diesem Fall musst du das neue Ergebnis verwenden.\n\nJeweils nur eine Instanz: Du kannst nie mehr als eine Instanz von Heldischer Inspiration haben. Wenn du Heldische Inspiration erhältst, jedoch bereits über Heldische Inspiration verfügst, kannst du die neue Instanz an einen Spielercharakter in deiner Gruppe weitergeben, der keine Heldische Inspiration hat.\n\nHeldische Inspiration erhalten: Dein SL kann dir aus verschiedensten Gründen Heldische Inspiration geben. Üblicherweise wird diese Inspiration vom SL vergeben, wenn ein Charakter etwas besonders Heldenhaftes, Charaktertypisches oder Unterhaltsames tut. Sie dient als Belohnung dafür, das Spiel für alle Beteiligten unterhaltsamer gemacht zu haben.\n\nAndere Regeln könnten es deinem Charakter gestatten, unabhängig von der Entscheidung des SL Heldische Inspiration zu erhalten. Beispiel: Menschliche Charaktere beginnen jeden Tag mit Heldischer Inspiration."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.advantage-and-inspiration.repeated-rolls",
+      "level": 3,
+      "text": "Interaktionen mit wiederholten Würfen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.advantage-and-inspiration.repeated-rolls-description",
+      "text": "Wenn du im Vorteil oder im Nachteil bist und irgendetwas im Spiel ein Wiederholen des Wurfs oder ein Ersetzen des W20 zulässt, darfst du nur einen der Würfel erneut werfen beziehungsweise ersetzen. Du entscheidest, welchen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.advantage-and-inspiration.repeated-rolls-example",
+      "text": "Beispiel: Wenn du über Heldische Inspiration (siehe Textkasten unten) verfügst und bei einem Attributswurf im Vorteil oder im Nachteil 3 und 18 würfelst, kannst du deine Heldische Inspiration verbrauchen, um mit einem dieser Würfel erneut zu würfeln – nicht mit beiden."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    }
+  ],
+  "digest": "sha256:cba97b20451266d0fc3afb8ff22e684ee949e1a62cf78779c75063c979c452bb"
+}

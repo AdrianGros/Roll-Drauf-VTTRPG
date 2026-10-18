@@ -1,0 +1,2378 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "monsters.l-m",
+  "slug": "monster-l-m",
+  "title": "Monster L–M",
+  "navigationPath": [
+    "Monster",
+    "Monster L–M"
+  ],
+  "order": 2140,
+  "sourcePages": [
+    342,
+    343,
+    344,
+    345,
+    346,
+    347,
+    348,
+    349,
+    350,
+    351,
+    352,
+    353
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.monster-von-a-z",
+      "level": 2,
+      "text": "Monster von A–Z (L–M)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.lamia",
+      "level": 3,
+      "text": "Lamia"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.lamia.lamia",
+      "name": "Lamia",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Unhold, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "97 (13W10+26)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Motiv erkennen +4, Täuschen +7"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Lamia führt zwei Klauenangriffe aus. Er kann einen Angriff durch einen Einsatz von Verderbende Berührung ersetzen.\n\nKlauen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Hiebschaden plus 7 (2W6) psychischer Schaden.\n\nVerderbende Berührung: Weisheitsrettungswurf: SG 13; eine Kreatur im Abstand von bis zu 1,5 Metern vom Lamia, die von dem Lamia gesehen werden kann. Misserfolg: 13 (3W8) psychischer Schaden, und das Ziel ist eine Stunde lang verflucht. Bis der Fluch endet, ist das Ziel bezaubert und vergiftet.\n\nZauberwirken: Der Lamia wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 13):\n\nBeliebig oft: Einfache Illusion, Selbstverkleidung (kann als mittelgroßer oder großer Zweibeiner erscheinen)\n\nJe 1-mal täglich: Ausspähung, Geas, Mächtiges Trugbild"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Sprung: Der Lamia springt bis zu neun Meter weit und verbraucht dabei nur drei Meter Bewegung."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.landhai",
+      "level": 3,
+      "text": "Landhai"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.landhai.landhai",
+      "name": "Landhai",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "94 (9W10+45)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Graben 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +6"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m, Erschütterungssinn 36 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Landhai führt zwei Bissangriffe aus.\n\nBiss: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 17 (2W12+4) Stichschaden.\n\nTödlicher Sprung: Der Landhai verbraucht 1,5 Meter Bewegung, um in einen Bereich im Abstand von bis zu 4,5 Metern von sich zu springen, in welchem sich mindestens eine Kreatur von höchstens großer Größe befindet. Geschicklichkeitsrettungswurf: SG 15; jede Kreatur im Zielbereich des Landhais. Misserfolg: 19 (3W12) Wuchtschaden, und das Ziel wird umgestoßen und hat den Zustand Liegend. Erfolg: Halber Schaden, und das Ziel wird 1,5 Meter weit in gerader Linie vom Landhai weggestoßen."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Sprung: Der Landhai springt bis zu neun Meter weit und verbraucht dabei nur drei Meter Bewegung."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.lehmgolem",
+      "level": 3,
+      "text": "Lehmgolem"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.lehmgolem.lehmgolem",
+      "name": "Lehmgolem",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Konstrukt, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "123 (13W10+52)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Psychisch, Säure; Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "9 (EP 5.000; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Berserker: Wann immer der Golem seinen Zug blutig beginnt, würfle mit 1W6. Bei einer 6 gerät der Golem in Kampfrausch. Im Kampfrausch greift der Golem die Kreatur an, die ihm am nächsten ist und die er sehen kann. Wenn sich keine Kreatur in Angriffsreichweite befindet, greift der Golem einen Gegenstand an. Der Kampfrausch hält an, bis der Golem zerstört wird oder nicht mehr blutig ist.\n\nMagieresistenz: Der Golem ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nSäureabsorption: Der Golem erleidet keinen Schaden durch Säure, sondern erhält Trefferpunkte in Höhe des Säureschadens zurück.\n\nUnveränderliche Gestalt: Der Golem kann keine andere Gestalt annehmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Golem führt zwei Hiebangriffe aus. Wenn er in diesem Zug Hast verwendet hat, führt er drei Hiebangriffe aus.\n\nHieb: Nahkampfangriffswurf: +9, Reichweite 4,5 m. Treffer: 10 (1W10+5) Wuchtschaden plus 6 (1W12) Säureschaden, und das Trefferpunktemaximum des Ziels wird um eine Anzahl in Höhe des erlittenen Säureschadens verringert."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Hast (Aufladung 5–6): Der Golem führt die Spurt- und die Rückzugaktion aus."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.lemure",
+      "level": 3,
+      "text": "Lemure"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.lemure.lemure",
+      "name": "Lemure",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Unhold (Teufel), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "9"
+        },
+        {
+          "label": "Initiative",
+          "value": "–3 (7)"
+        },
+        {
+          "label": "TP",
+          "value": "9 (2W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Bezaubert, Verängstigt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m (wird nicht durch magische Dunkelheit beeinträchtigt); Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Infernalisch, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Höllische Genesung: Wenn der Lemure in den Neun Höllen stirbt, ersteht er nach 1W10 Tagen mit allen Trefferpunkten wieder auf, sofern er nicht von einer Kreatur unter den Effekten des Zaubers Segnen getötet wurde oder seine Überreste mit Weihwasser besprenkelt wurden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Böser Schleim: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 2 (1W4) Giftschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.lich",
+      "level": 3,
+      "text": "Lich"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.lich.lich",
+      "name": "Lich",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter (Magier), neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "20"
+        },
+        {
+          "label": "Initiative",
+          "value": "+17 (27)"
+        },
+        {
+          "label": "TP",
+          "value": "315 (42W8+126)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +10)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +10)"
+        },
+        {
+          "label": "Int",
+          "value": "21 (MOD +5, RW +12)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +9)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +19, Geschichte +12, Motiv erkennen +9, Wahrnehmung +9"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Nekrotisch; Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Materialkomponentenbeutel"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 19"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Alle"
+        },
+        {
+          "label": "HG",
+          "value": "21 (EP 33.000 oder 41.000 im Hort; ÜB +7)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Lich bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen.\n\nSeelengefäß: Wenn der Lich zerstört wird, ersteht er nach 1W10 Tagen mit allen Trefferpunkten wieder auf, sofern er ein Seelengefäß hat. Der neue Körper erscheint in einem freien Bereich im Hort des Lichs."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Lich führt drei Angriffe mit Lähmende Berührung oder Mystische Explosion in beliebiger Kombination aus.\n\nLähmende Berührung: Nahkampfangriffswurf: +12, Reichweite 1,5 m. Treffer: 15 (3W6+5) Kälteschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Lichs gelähmt.\n\nMystische Explosion: Nah- oder Fernkampfangriffswurf: +12, Reichweite 1,5 m oder Reichweite 36 m. Treffer: 31 (4W12+5) Energieschaden.\n\nZauberwirken: Der Lich wirkt einen der folgenden Zauber mit Intelligenz als Attribut zum Zauberwirken (Zauberrettungswurf-SG 20):\n\nBeliebig oft: Blitz (Version des 5. Grades), Feuerball (Version des 5. Grades), Gedanken wahrnehmen, Magie bannen, Magie entdecken, Magierhand, Taschenspielerei, Unsichtbarkeit\n\nJe 2-mal täglich: Dimensionstür, Ebenenwechsel, Tote beleben\n\nJe 1-mal täglich: Ausspähung, Finger des Todes, Kettenblitz, Wort der Macht: Tod"
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Schutzmagie: Der Lich wirkt den Zauber Gegenzauber oder Schild als Antwort auf den Auslöser des Zaubers. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Lich eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Lich wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nFurchteinflößender Blick: Der Lich wirkt den Zauber Furcht. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion. Der Lich kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nLebensunterbrechung: Konstitutionsrettungswurf: SG 20; jede Kreatur, die kein Untoter ist und die sich in einer Ausströmung von sechs Metern befindet, die vom Lich ausgeht. Misserfolg: 31 (9W6) nekrotischer Schaden. Erfolg: Halber Schaden. Erfolg oder Misserfolg: Der Lich kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nTödliches Teleportieren: Der Lich teleportiert sich bis zu 18 Meter weit in einen freien Bereich, den er sehen kann, und jede Kreatur im Abstand von bis zu drei Metern vom Bereich, den er verlassen hat, erleidet 11 (2W10) nekrotischen Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.luftelementar",
+      "level": 3,
+      "text": "Luftelementar"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.luftelementar.luftelementar",
+      "name": "Luftelementar",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Elementar, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "TP",
+          "value": "90 (12W10+24)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 27 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Schall; Bewusstlos, Erschöpft, Festgesetzt, Gelähmt, Gepackt, Liegend, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Aural)"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Luftgestalt: Der Elementar kann in den Bereich einer anderen Kreatur eindringen und dort stoppen. Er kann sich durch enge Bereiche von nur 2,5 Zentimetern Durchmesser bewegen, ohne zusätzliche Bewegung aufzuwenden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Elementar führt zwei Donnernder-Hieb-Angriffe aus.\n\nDonnernder Hieb: Nahkampfangriffswurf: +8, Reichweite 3 m. Treffer: 14 (2W8+5) Schallschaden.\n\nWirbelwind (Aufladung 4–6): Stärkerettungswurf: SG 13; eine Kreatur von höchstens mittelgroßer Größe im Bereich des Elementars. Misserfolg: 24 (4W10+2) Schallschaden, und das Ziel wird bis zu sechs Meter weit in gerader Linie vom Elementar weg- und umgestoßen und hat den Zustand Liegend. Erfolg: Nur halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.magier",
+      "level": 3,
+      "text": "Magier"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.magier.magier",
+      "name": "Magier",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide (Magier), neutral"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "81 (18W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "17 (MOD +3, RW +6)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +6, Geschichte +6, Wahrnehmung +4"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Zauberstab"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und drei weitere Sprachen"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Erzmagier führt drei Arkane-Explosion-Angriffe aus.\n\nArkane Explosion: Nah- oder Fernkampfangriffswurf: +6, Reichweite 1,5 m oder Reichweite 36 m. Treffer: 16 (3W8+3) Energieschaden.\n\nZauberwirken: Der Magier wirkt einen der folgenden Zauber mit Intelligenz als Attribut zum Zauberwirken (Zauberrettungswurf-SG 14):\n\nBeliebig oft: Licht, Magie entdecken, Magierhand, Magierrüstung (in RK enthalten), Taschenspielerei\n\nJe 2-mal täglich: Feuerball (Version des 4. Grades), Unsichtbarkeit\n\nJe 1-mal täglich: Fliegen, Kältekegel"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Nebelschritt (3-mal täglich): Der Magier wirkt den Zauber Nebelschritt. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Schutzmagie (3-mal täglich): Der Magier wirkt einen der Zauber Gegenzauber oder Schild als Antwort auf den Auslöser des Zaubers. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.magier.erzmagier",
+      "name": "Erzmagier",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide (Magier), neutral"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "TP",
+          "value": "170 (31W8+31)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "20 (MOD +5, RW +9)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +6)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +13, Geschichte +9, Wahrnehmung +6"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Psychisch; Bezaubert (mit Gedankenleere)"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Zauberstab"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und fünf weitere Sprachen"
+        },
+        {
+          "label": "HG",
+          "value": "12 (EP 8.000; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Magieresistenz: Der Erzmagier ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Erzmagier führt vier Arkane-Explosion-Angriffe aus.\n\nArkane Explosion: Nah- oder Fernkampfangriffswurf: +9, Reichweite 1,5 m oder Reichweite 45 m. Treffer: 27 (4W10+5) Energieschaden.\n\nZauberwirken: Der Erzmagier wirkt einen der folgenden Zauber mit Intelligenz als Attribut zum Zauberwirken (Zauberrettungswurf-SG 17):\n\nBeliebig oft: Gedanken wahrnehmen, Licht, Magie entdecken, Magierhand, Magierrüstung (in RK enthalten), Selbstverkleidung, Taschenspielerei, Unsichtbarkeit\n\nJe 2-mal täglich: Blitz (Version des 7. Grades), Fliegen Je 1-mal täglich: Ausspähung, Gedankenleere (wird vor dem Kampf gewirkt), Kältekegel (Version des 9. Grades), Teleportieren"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Nebelschritt (3-mal täglich): Der Magier wirkt den Zauber Nebelschritt. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Schutzmagie (3-mal täglich): Der Erzmagier wirkt einen der Zauber Gegenzauber oder Schild als Antwort auf den Auslöser des Zaubers. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.magmin",
+      "level": 3,
+      "text": "Magmin"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.magmin.magmin",
+      "name": "Magmin",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner Elementar, chaotisch neutral"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "13 (3W6+3)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Ignal)"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Todesexplosion: Der Magmin explodiert, wenn er stirbt. Geschicklichkeitsrettungswurf: SG 11; jede Kreatur in einer Ausströmung von drei Metern, die vom Magmin ausgeht. Misserfolg: 7 (2W6) Feuerschaden. Erfolg: Halber Schaden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Berührung: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 7 (2W4+2) Feuerschaden. Wenn das Ziel eine Kreatur oder ein brennbarer Gegenstand ist, der nicht getragen oder gehalten wird, fängt es Feuer."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Entflammte Beleuchtung: Der Magmin lässt sich selbst in Flammen aufgehen, oder er löscht seine Flammen. Brennend spendet der Magmin in einem Radius von drei Metern helles Licht und in einem Radius von weiteren drei Metern dämmriges Licht."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.mantikor",
+      "level": 3,
+      "text": "Mantikor"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mantikor.mantikor",
+      "name": "Mantikor",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "68 (8W10+24)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Mantikor führt drei Angriffe mit Zerfetzen oder Schwanzstacheln in beliebiger Kombination aus.\n\nZerfetzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Hiebschaden.\n\nSchwanzstacheln: Fernkampfangriffswurf: +5, Reichweite 30/60 m. Treffer: 7 (1W8+3) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.mantler",
+      "level": 3,
+      "text": "Mantler"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mantler.mantler",
+      "name": "Mantler",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Aberration, chaotisch neutral"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "TP",
+          "value": "91 (14W10+14)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Verängstigt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache der Unterreiche, Tiefensprache"
+        },
+        {
+          "label": "HG",
+          "value": "8 (EP 3.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Lichtempfindlich: Der Mantler ist in hellem Licht bei Angriffswürfen im Nachteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Mantler führt einen Anheften-Angriff und zwei Schwanzangriffe aus.\n\nAnheften: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 13 (3W6+3) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, heftet der Mantler sich an es an. Wenn der Mantler angeheftet ist, ist das Ziel blind, und der Mantler kann keine Anheften-Angriffe gegen andere Ziele ausführen. Außerdem halbiert der Mantler jeden Schaden, den er erleidet (abgerundet), und das Ziel erleidet die gleiche Menge an Schaden.\n\nDer Mantler kann sich lösen, indem er 1,5 Meter Bewegung verbraucht. Das Ziel oder eine Kreatur im Abstand von bis zu 1,5 Metern von ihm kann eine Aktion ausführen und versuchen, den Mantler zu lösen. Dies gelingt mit einem erfolgreichen SG-14-Stärkewurf (Athletik).\n\nSchwanz: Nahkampfangriffswurf: +6, Reichweite 3 m. Treffer: 8 (1W10+3) Hiebschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Phantome (Aufladung nach einer kurzen oder langen Rast): Der Mantler wirkt den Zauber Spiegelbilder mit Weisheit als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen. Der Zauber endet vorzeitig, wenn der Mantler seinen Zug in hellem Licht beginnt oder beendet.\n\nStöhnen: Weisheitsrettungswurf: SG 13; jede Kreatur in einer Ausströmung von 18 Metern, die vom Mantler ausgeht. Misserfolg: Das Ziel ist bis zum Ende des nächsten Zugs des Mantlers verängstigt. Erfolg: Das Ziel ist 24 Stunden lang gegen das Stöhnen dieses Mantlers immun."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.marilith",
+      "level": 3,
+      "text": "Marilith"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.marilith.marilith",
+      "name": "Marilith",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Unhold (Dämon), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "220 (21W10+105)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Klettern 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +9)"
+        },
+        {
+          "label": "Ges",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +10)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +8)"
+        },
+        {
+          "label": "Cha",
+          "value": "20 (MOD +5, RW +10)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +8"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Feuer, Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 18"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "16 (EP 15.000; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Dämonische Genesung: Wenn der Marilith außerhalb des Abyss stirbt, löst sein Körper sich zu einer widerlichen Flüssigkeit auf. Der Marilith erhält sofort einen neuen Körper, der mit allen Trefferpunkten irgendwo im Abyss aufersteht.\n\nMagieresistenz: Der Marilith ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nReaktiv: Der Marilith kann im Kampf in jedem Zug eine Reaktion ausführen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Marilith führt sechs Paktklinge-Angriffe aus und setzt Umschlingen ein.\n\nPaktklinge: Nahkampfangriffswurf: +10, Reichweite 1,5 m. Treffer: 10 (1W10+5) Hiebschaden plus 7 (2W6) nekrotischer Schaden.\n\nUmschlingen: Stärkerettungswurf: SG 17; eine Kreatur von höchstens mittelgroßer Größe im Abstand von bis zu 1,5 Metern vom Marilithen, die er sehen kann. Misserfolg: 15 (2W10+4) Wuchtschaden. Das Ziel wird gepackt (Flucht-SG 14). Solange es gepackt bleibt, ist es außerdem festgesetzt."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Teleportieren (Aufladung 5–6): Der Marilith teleportiert sich bis zu 36 Meter weit in einen freien Bereich, den er sehen kann."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Parieren: Auslöser: Der Marilith wird von einem Nahkampfangriffswurf getroffen, während er eine Waffe hält. Antwort: Der Marilith fügt seiner RK gegen diesen Angriff 5 hinzu, sodass der Angriff möglicherweise misslingt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.medusa",
+      "level": 3,
+      "text": "Medusa"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.medusa.medusa",
+      "name": "Medusa",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroße Monstrosität, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+6 (16)"
+        },
+        {
+          "label": "TP",
+          "value": "127 (17W8+51)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Täuschen +5, Wahrnehmung +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 45 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Medusa führt entweder zwei Klauenangriffe und einen Schlangenhaar-Angriff oder aber drei Giftstrahl-Angriffe aus.\n\nKlauen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 10 (2W6+3) Hiebschaden.\n\nSchlangenhaar: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 5 (1W4+3) Stichschaden plus 14 (4W6) Giftschaden.\n\nGiftstrahl: Fernkampfangriffswurf: +5, Reichweite 45 m. Treffer: 11 (2W8+2) Giftschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Versteinernder Blick (Aufladung 5–6): Konstitutionsrettungswurf: SG 13; jede Kreatur in einem Kegel von neun Metern. Wenn die Medusa im Kegel ihre Reflexion sieht, muss sie selbst den Rettungswurf ausführen. Erster Misserfolg: Das Ziel ist festgesetzt und wiederholt den Rettungswurf am Ende seines nächsten Zugs, sofern es auch dann noch festgesetzt ist. Bei einem Erfolg endet der Effekt bei ihm. Zweiter Misserfolg: Das Ziel ist nicht mehr festgesetzt, sondern versteinert."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.meervolk",
+      "level": 3,
+      "text": "Meervolk"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.meervolk.meervolk-scharmuetzler",
+      "name": "Meervolk-Scharmützler",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Elementar, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W8+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Urtümlich (Aqual)"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Meervolk-Humanoide kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Ozeanischer Speer: Nah- oder Fernkampfangriffswurf: +2, Reichweite 1,5 m oder Reichweite 6/18 m. Treffer: 3 (1W6) Stichschaden plus 2 (1W4) Kälteschaden. Ist das Ziel eine Kreatur, so ist seine Bewegungsrate bis zum Ende seines nächsten Zugs um drei Meter verringert. Treffer oder Fehlschlag: Unmittelbar nach einem Fernkampfangriff kehrt der Speer auf magische Art in die Hand des Meervolk-Humanoiden zurück."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.mephiten",
+      "level": 3,
+      "text": "Mephiten"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mephiten.dampf-mephit",
+      "name": "Dampf-Mephit",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner Elementar, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "17 (5W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Aqual, Ignal)"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Todesexplosion: Der Mephit explodiert, wenn er stirbt. Geschicklichkeitsrettungswurf: SG 10; jede Kreatur in einer Ausströmung von 1,5 Metern, die vom Mephiten ausgeht. Misserfolg: 5 (2W4) Feuerschaden. Erfolg: Halber Schaden.\n\nVerschwommene Gestalt: Angriffswürfe gegen den Mephiten sind im Nachteil, sofern der Mephit nicht kampfunfähig ist."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Klauen: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 2 (1W4) Hiebschaden plus 2 (1W4) Feuerschaden.\n\nDampfodem (Aufladung 6): Konstitutionsrettungswurf: SG 10; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 5 (2W4) Feuerschaden, und die Bewegungsrate des Ziels ist bis zum Ende des nächsten Zugs des Mephiten um drei Meter verringert. Erfolg: Nur halber Schaden. Erfolg oder Misserfolg: Unter Wasser zu sein gewährt keine Resistenz gegen diesen Feuerschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mephiten.eis-mephit",
+      "name": "Eis-Mephit",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner Elementar, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "21 (6W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3, Wahrnehmung +2"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Kälte; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Aqual, Aural)"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Todesexplosion: Der Mephit explodiert, wenn er stirbt. Konstitutionsrettungswurf: SG 10; jede Kreatur in einer Ausströmung von 1,5 Metern, die vom Mephiten ausgeht. Misserfolg: 5 (2W4) Kälteschaden. Erfolg: Halber Schaden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Klauen: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 3 (1W4+1) Hiebschaden plus 2 (1W4) Kälteschaden.\n\nFrostodem (Aufladung 6): Konstitutionsrettungswurf: SG 10; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 7 (3W4) Kälteschaden. Erfolg: Halber Schaden.\n\nNebelwolke (1-mal täglich): Der Mephit wirkt den Zauber Nebelwolke mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mephiten.magma-mephit",
+      "name": "Magma-Mephit",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner Elementar, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "18 (4W6+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Ignal, Terral)"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Todesexplosion: Der Mephit explodiert, wenn er stirbt. Geschicklichkeitsrettungswurf: SG 11; jede Kreatur in einer Ausströmung von 1,5 Metern, die vom Mephiten ausgeht. Misserfolg: 7 (2W6) Feuerschaden. Erfolg: Halber Schaden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Klauen: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 3 (1W4+1) Hiebschaden plus 3 (1W6) Feuerschaden.\n\nFeuerodem (Aufladung 6): Geschicklichkeitsrettungswurf: SG 11; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 7 (2W6) Feuerschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mephiten.staub-mephit",
+      "name": "Staub-Mephit",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner Elementar, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "17 (5W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +2"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Aural, Terral)"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Todesexplosion: Der Mephit explodiert, wenn er stirbt. Geschicklichkeitsrettungswurf: SG 10; jede Kreatur in einer Ausströmung von 1,5 Metern, die vom Mephiten ausgeht. Misserfolg: 5 (2W4) Wuchtschaden. Erfolg: Halber Schaden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Klauen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Hiebschaden.\n\nBlendender Odem (Aufladung 6): Geschicklichkeitsrettungswurf: SG 10; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: Das Ziel ist bis zum Ende des nächsten Zugs des Mephiten blind.\n\nSchlaf (1-mal täglich): Der Mephit wirkt den Zauber Schlaf mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 10)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.messingdrachen",
+      "level": 3,
+      "text": "Messingdrachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.messingdrachen.messingdrachennestling",
+      "name": "Messingdrachennestling",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Drache (metallisch), chaotisch gut"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (4W8+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m, Graben 4,5 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2, Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Zerfetzen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 7 (1W10+2) Hiebschaden.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 11; jede Kreatur in einer sechs Meter langen, 1,5 Meter breiten Linie. Misserfolg: 14 (4W6) Feuerschaden. Erfolg: Halber Schaden.\n\nSchlafodem: Konstitutionsrettungswurf: SG 11; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig. Dann wiederholt es den Rettungswurf. Zweiter Misserfolg: Das Ziel ist eine Minute lang bewusstlos. Dieser Effekt endet beim Ziel, wenn es Schaden erleidet oder eine Kreatur im Abstand von bis zu 1,5 Metern von ihm eine Aktion ausführt, um es zu wecken."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.messingdrachen.junger-messingdrache",
+      "name": "Junger Messingdrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache (metallisch), chaotisch gut"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "110 (13W10+39)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3, Überzeugen +5, Wahrnehmung +6"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m, Dunkelsicht 36 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann zwei Angriffe durch einen Einsatz von Schlafodem ersetzen.\n\nZerfetzen: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 15 (2W10+4) Hiebschaden.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 14; jede Kreatur in einer 12 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 38 (11W6) Feuerschaden. Erfolg: Halber Schaden.\n\nSchlafodem: Konstitutionsrettungswurf: SG 14; jede Kreatur in einem Kegel von neun Metern. Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig. Dann wiederholt es den Rettungswurf. Zweiter Misserfolg: Das Ziel ist eine Minute lang bewusstlos. Dieser Effekt endet beim Ziel, wenn es Schaden erleidet oder eine Kreatur im Abstand von bis zu 1,5 Metern von ihm eine Aktion ausführt, um es zu wecken."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.messingdrachen.ausgewachsener-messingdrache",
+      "name": "Ausgewachsener Messingdrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Drache (metallisch), chaotisch gut"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "172 (15W12+75)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +6)"
+        },
+        {
+          "label": "Cha",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Geschichte +7, Heimlichkeit +5, Überzeugen +8, Wahrnehmung +11"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 21"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "13 (EP 10.000 oder 11.500 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von (A) Schlafodem oder (B) Zauberwirken ersetzen, um den Zauber Sengender Strahl zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +11, Reichweite 3 m. Treffer: 17 (2W10+6) Hiebschaden plus 4 (1W8) Feuerschaden.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 18; jede Kreatur in einer 18 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 45 (10W8) Feuerschaden. Erfolg: Halber Schaden.\n\nSchlafodem: Konstitutionsrettungswurf: SG 18; jede Kreatur in einem Kegel von 18 Metern. Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig. Dann wiederholt es den Rettungswurf. Zweiter Misserfolg: Das Ziel ist zehn Minuten lang bewusstlos. Dieser Effekt endet beim Ziel, wenn es Schaden erleidet oder eine Kreatur im Abstand von bis zu 1,5 Metern von ihm eine Aktion ausführt, um es zu wecken.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 16):\n\nBeliebig oft: Einfache Illusion, Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Magie entdecken, Mit Tieren sprechen, Sengender Strahl\n\nJe 1-mal täglich: Gedanken wahrnehmen, Wetterkontrolle"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nLoderndes Licht: Der Drache setzt Zauberwirken ein, um den Zauber Sengender Strahl zu wirken.\n\nSengende Sande: Geschicklichkeitsrettungswurf: SG 16; eine Kreatur im Abstand von bis zu 36 Metern vom Drachen, die er sehen kann. Misserfolg: 27 (6W8) Feuerschaden, und die Bewegungsrate des Ziels ist bis zum Ende seines nächsten Zugs halbiert. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.messingdrachen.uralter-messingdrache",
+      "name": "Uralter Messingdrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache (metallisch), chaotisch gut"
+        },
+        {
+          "label": "RK",
+          "value": "20"
+        },
+        {
+          "label": "Initiative",
+          "value": "+12 (22)"
+        },
+        {
+          "label": "TP",
+          "value": "332 (19W20+133)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "27 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +8)"
+        },
+        {
+          "label": "Cha",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Geschichte +9, Heimlichkeit +6, Überzeugen +12, Wahrnehmung +14"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 24"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "20 (EP 25.000 oder 33.000 im Hort; ÜB +6)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von (A) Schlafodem oder (B) Zauberwirken ersetzen, um den Zauber Sengender Strahl (Version des 3. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +14, Reichweite 4,5 m. Treffer: 19 (2W10+8) Hiebschaden plus 7 (2W6) Feuerschaden.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 21; jede Kreatur in einer 27 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 58 (13W8) Feuerschaden. Erfolg: Halber Schaden.\n\nSchlafodem: Konstitutionsrettungswurf: SG 21; jede Kreatur in einem Kegel von 27 Metern. Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig. Dann wiederholt es den Rettungswurf. Zweiter Misserfolg: Das Ziel ist zehn Minuten lang bewusstlos. Dieser Effekt endet beim Ziel, wenn es Schaden erleidet oder eine Kreatur im Abstand von bis zu 1,5 Metern von ihm eine Aktion ausführt, um es zu wecken.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 20):\n\nBeliebig oft: Einfache Illusion, Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Magie entdecken, Mit Tieren sprechen, Sengender Strahl (Version des 3. Grades)\n\nJe 1-mal täglich: Gedanken wahrnehmen, Wetterkontrolle"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nLoderndes Licht: Der Drache setzt Zauberwirken ein, um den Zauber Sengender Strahl (Version des 3. Grades) zu wirken.\n\nSengende Sande: Geschicklichkeitsrettungswurf: SG 20; eine Kreatur im Abstand von bis zu 36 Metern vom Drachen, die er sehen kann. Misserfolg: 36 (8W8) Feuerschaden, und die Bewegungsrate des Ziels ist bis zum Ende seines nächsten Zugs halbiert. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.mimik",
+      "level": 3,
+      "text": "Mimik"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mimik.mimik",
+      "name": "Mimik",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroße Monstrosität, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "58 (9W8+18)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Säure; Liegend"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Haftend (nur in Gegenstandgestalt): Der Mimik bleibt an allem haften, was ihn berührt. Bleibt er an einer Kreatur von höchstens riesiger Größe haften, so wird die Kreatur gepackt (Flucht-SG 13). Attributswürfe zum Entkommen aus diesem Haltegriff sind im Nachteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5 (im Vorteil, wenn das Ziel vom Mimik gepackt wurde), Reichweite 1,5 m. Treffer: 7 (1W8+3) Stichschaden – oder 12 (2W8+3) Stichschaden, wenn das Ziel vom Mimik gepackt wurde – plus 4 (1W8) Säureschaden.\n\nScheinfuß: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Wuchtschaden plus 4 (1W8) Säureschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es gepackt (Flucht-SG 13). Attributswürfe zum Entkommen aus diesem Haltegriff sind im Nachteil."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Gestaltwandeln: Der Mimik nimmt die Gestalt eines Gegenstands von kleiner oder mittelgroßer Größe an, wobei er seine Spielwerte beibehält, oder er nimmt wieder seine wahre Gestalt an. Ausrüstung, die er trägt oder hält, wird nicht verwandelt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.minotaurus-von-baphomet",
+      "level": 3,
+      "text": "Minotaurus von Baphomet"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.minotaurus-von-baphomet.minotaurus-von-baphomet",
+      "name": "Minotaurus von Baphomet",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "85 (10W10+30)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Überlebenskunst +7, Wahrnehmung +7"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 17"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Abyssische Glefe: Nahkampfangriffswurf: +6, Reichweite 3 m. Treffer: 10 (1W12+4) Hiebschaden plus 10 (3W6) nekrotischer Schaden.\n\nZerfleischen (Aufladung 5–6): Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 18 (4W6+4) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist und der Minotaurus sich unmittelbar vor dem Treffer mindestens drei Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 10 (3W6) Stichschaden, wird umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.modernder-schlurfer",
+      "level": 3,
+      "text": "Modernder Schlurfer"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.modernder-schlurfer.modernder-schlurfer",
+      "name": "Modernder Schlurfer",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Pflanze, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "110 (13W10+39)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Feuer, Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz; Erschöpft, Taub"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Blitzabsorption: Der modernde Schlurfer erleidet durch Blitze keinen Schaden, sondern erhält Trefferpunkte in Höhe des Blitzschadens zurück."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der modernde Schlurfer führt drei Geladenes-Tentakel-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Einhüllen ersetzen.\n\nGeladenes Tentakel: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 7 (1W6+4) Wuchtschaden plus 5 (2W4) Blitzschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, zieht der modernde Schlurfer es 1,5 Meter weit in gerader Linie auf sich zu.\n\nEinhüllen: Stärkerettungswurf: SG 15; eine Kreatur von höchstens mittelgroßer Größe im Abstand von bis zu 1,5 Metern. Misserfolg: Das Ziel wird in den Bereich des modernden Schlurfers gezogen und gepackt (Flucht-SG 14). Das gepackte Ziel ist blind und festgesetzt und erleidet zu Beginn jedes seiner Züge 10 (3W6) Blitzschaden. Bewegt sich der modernde Schlurfer, so bewegt sich das gepackte Ziel mit ihm. Dies verbraucht keine zusätzliche Bewegung. Der modernde Schlurfer kann mit dieser Aktion nur jeweils eine Kreatur gepackt halten."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.l-m.mumien",
+      "level": 3,
+      "text": "Mumien"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mumien.mumie",
+      "name": "Mumie",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Untoter, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "58 (9W8+18)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Nekrotisch; Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und zwei weitere Sprachen"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Mumie führt zwei Fäulnisfaust-Angriffe aus und setzt Fürchterliches Starren ein.\n\nFäulnisfaust: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 8 (1W10+3) Wuchtschaden plus 10 (3W6) nekrotischer Schaden. Wenn das Ziel eine Kreatur ist, wird es verflucht. Das verfluchte Ziel kann keine Trefferpunkte zurückerhalten. Sein Trefferpunktemaximum normalisiert sich nicht nach einer langen Rast und wird alle 24 Stunden um 10 (3W6) verringert. Wenn die Trefferpunkte einer Kreatur durch diesen Angriff auf 0 sinken, stirbt die Kreatur und zerfällt zu Staub.\n\nFürchterliches Starren: Weisheitsrettungswurf: SG 11; eine Kreatur im Abstand von bis zu 18 Metern von der Mumie, die von der Mumie gesehen werden kann. Misserfolg: Das Ziel ist bis zum Ende des nächsten Zugs der Mumie verängstigt. Erfolg: Das Ziel ist 24 Stunden lang gegen das Fürchterliche Starren dieser Mumie immun."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.l-m.mumien.mumienfuerst",
+      "name": "Mumienfürst",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Untoter (Kleriker), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "187 (25W8+75)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +5)"
+        },
+        {
+          "label": "Wei",
+          "value": "19 (MOD +4, RW +9)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Geschichte +5, Religion +5, Wahrnehmung +9"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Nekrotisch; Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 18 m; Passive Wahrnehmung 19"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und drei weitere Sprachen"
+        },
+        {
+          "label": "HG",
+          "value": "15 (EP 13.000 oder 15.000 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn die Mumie bei einem Rettungswurf scheitert, kann sie beschließen, ihn stattdessen zu bestehen.\n\nMagieresistenz: Die Mumie ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nUntote Genesung: Wenn die Mumie zerstört wird, ihr Herz jedoch noch intakt ist, erhält sie nach 24 Stunden einen neuen Körper, der mit allen Trefferpunkten aufersteht. Der neue Körper erscheint in einem freien Bereich im Hort der Mumie. Das Herz ist ein winziger Gegenstand, besitzt eine RK von 17, 10 Trefferpunkte und ist gegen alle Schadensarten bis auf Feuerschaden immun."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Mumie führt einen Fäulnisfaust- oder einen Negative-Energie-kanalisieren-Angriff aus und setzt Fürchterliches Starren ein.\n\nFäulnisfaust: Nahkampfangriffswurf: +9, Reichweite 1,5 m. Treffer: 15 (2W10+4) Wuchtschaden plus 10 (3W6) nekrotischer Schaden. Wenn das Ziel eine Kreatur ist, wird es verflucht. Das verfluchte Ziel kann keine Trefferpunkte zurückerhalten, es erhält durch eine lange Rast keine Vorzüge, und sein Trefferpunktemaximum wird alle 24 Stunden um 10 (3W6) verringert. Wenn die Trefferpunkte einer Kreatur durch diesen Angriff auf 0 sinken, stirbt die Kreatur und zerfällt zu Staub.\n\nNegative Energie kanalisieren: Fernkampfangriffswurf: +9, Reichweite 18 m. Treffer: 25 (6W6+4) nekrotischer Schaden.\n\nFürchterliches Starren: Weisheitsrettungswurf: SG 17; eine Kreatur im Abstand von bis zu 18 Metern von der Mumie, die von der Mumie gesehen werden kann. Misserfolg: 25 (6W6+4) psychischer Schaden, und das Ziel ist bis zum Beginn des nächsten Zugs der Mumie gelähmt.\n\nZauberwirken: Die Mumie wirkt einen der folgenden Zauber mit Weisheit als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 17, +9 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Magie bannen, Thaumaturgie Je 1-mal täglich: Insektenplage (Version des 7. Grades), Leid, Tote beleben"
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Wirbelwind aus Sand: Auslöser: Die Mumie wird von einem Angriffswurf getroffen. Antwort: Die Mumie fügt ihrer RK gegen diesen Angriff 2 hinzu, sodass der Angriff möglicherweise misslingt, und sie teleportiert sich bis zu 18 Meter weit in einen freien Bereich, den sie sehen kann. Jede Kreatur ihrer Wahl im Abstand von bis zu 1,5 Metern von ihrem Zielbereich, die von ihr gesehen werden kann, ist bis zum Ende des nächsten Zugs der Mumie blind."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann die Mumie eine legendäre Aktion ausführen. Zu Beginn jedes ihrer Züge stehen der Mumie wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nNekrotischer Schlag: Die Mumie führt einen Fäulnisfaust- oder einen Negative-Energie-kanalisieren-Angriff aus.\n\nSchreckensbefehl: Die Mumie wirkt den Zauber Befehl (Version des 2. Grades). Ihr Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion. Die Mumie kann diese Aktion erst nach Beginn ihres nächsten Zugs erneut ausführen.\n\nStarren: Die Mumie setzt Fürchterliches Starren ein. Die Mumie kann diese Aktion erst nach Beginn ihres nächsten Zugs erneut ausführen."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:9805bcea1af9d9c44e0ba751a1bfed10808ecf719a76d4a1a27ba8906137c1d5"
+}

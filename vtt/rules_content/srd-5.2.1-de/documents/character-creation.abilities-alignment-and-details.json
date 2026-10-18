@@ -1,0 +1,553 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "character-creation.abilities-alignment-and-details",
+  "slug": "charaktererstellung-schritte-3-bis-5",
+  "title": "Charaktererstellung: Attributswerte, Gesinnung und Details",
+  "navigationPath": [
+    "Charaktererstellung",
+    "Attributswerte, Gesinnung und Details"
+  ],
+  "order": 110,
+  "sourcePages": [
+    24,
+    25,
+    26
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.step3-ability-scores",
+      "level": 3,
+      "text": "Schritt 3: Attributswerte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.step3-ability-scores-introduction",
+      "text": "Um die Attributswerte deines Charakters zu bestimmen, erzeugst du zuerst anhand der Anleitung unten einen Satz von sechs Zahlen und weist diese dann deinen sechs Attributen zu. Unter „Die Spielregeln“ erfährst du, was die Attribute jeweils bedeuten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.generating-scores",
+      "level": 4,
+      "text": "Deine Werte generieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.generating-scores-introduction",
+      "text": "Bestimme deine Attributswerte mithilfe von einer der folgenden drei Methoden. Möglicherweise bevorzugt dein SL eine der Methoden."
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-creation.abilities-alignment-and-details.generating-scores-methods",
+      "entries": [
+        {
+          "term": "Standardsatz",
+          "definition": "Verwende die folgenden sechs Werte für deine Attribute: 15, 14, 13, 12, 10, 8."
+        },
+        {
+          "term": "Zufallserstellung",
+          "definition": "Würfle mit 4W6 und notiere die Summe der drei höchsten Ergebnisse. Wiederhole dies fünfmal, sodass du sechs Zahlen erhältst."
+        },
+        {
+          "term": "Punktkosten",
+          "definition": "Du hast 27 Punkte, die du für deine Attributswerte verbrauchen kannst. Die Kosten der jeweiligen Werte sind in der Tabelle „Attributswert-Punktkosten“ aufgeführt. Beispiel: Ein Wert von 14 kostet 7 deiner 27 Punkte."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.abilities-alignment-and-details.point-cost-table",
+      "caption": "Attributswert-Punktkosten",
+      "columns": [
+        "Wert",
+        "Kosten",
+        "Wert",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "8",
+          "0",
+          "12",
+          "4"
+        ],
+        [
+          "9",
+          "1",
+          "13",
+          "5"
+        ],
+        [
+          "10",
+          "2",
+          "14",
+          "7"
+        ],
+        [
+          "11",
+          "3",
+          "15",
+          "9"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.assigning-scores",
+      "level": 4,
+      "text": "Attributswerte zuweisen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.assigning-scores-description",
+      "text": "Wenn du sechs Werte generiert hast, weise sie den Attributen Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit und Charisma zu. Berücksichtige dabei das Hauptattribut deiner Klasse entsprechend. Fülle auch die Attributsmodifikatoren aus."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.assigning-scores-standard-set",
+      "text": "Wenn du die Standardsatz-Option verwendest, findest du in der Tabelle „Standardsatz nach Klassen“ Vorschläge, wie du die Werte bei deiner Charakterklasse zuweisen solltest. In der Tabelle werden den Hauptattributen der Klasse die höchsten Werte zugewiesen. Wenn du eine andere Methode zum Generieren der Werte verwendest, kannst du diese Tabelle dennoch verwenden, um zu entscheiden, wie du die höchsten und die niedrigsten Werte zuweist."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.abilities-alignment-and-details.standard-set-by-class-table",
+      "caption": "Standardsatz nach Klassen",
+      "columns": [
+        "Klasse",
+        "Stä.",
+        "Ges.",
+        "Kon.",
+        "Int.",
+        "Wei.",
+        "Cha."
+      ],
+      "rows": [
+        [
+          "Barbar",
+          "15",
+          "13",
+          "14",
+          "10",
+          "12",
+          "8"
+        ],
+        [
+          "Barde",
+          "8",
+          "14",
+          "12",
+          "13",
+          "10",
+          "15"
+        ],
+        [
+          "Druide",
+          "8",
+          "12",
+          "14",
+          "13",
+          "15",
+          "10"
+        ],
+        [
+          "Hexenmeister",
+          "8",
+          "14",
+          "13",
+          "12",
+          "10",
+          "15"
+        ],
+        [
+          "Kämpfer",
+          "15",
+          "14",
+          "13",
+          "8",
+          "10",
+          "12"
+        ],
+        [
+          "Kleriker",
+          "14",
+          "8",
+          "13",
+          "10",
+          "15",
+          "12"
+        ],
+        [
+          "Magier",
+          "8",
+          "12",
+          "13",
+          "15",
+          "14",
+          "10"
+        ],
+        [
+          "Mönch",
+          "12",
+          "15",
+          "13",
+          "10",
+          "14",
+          "8"
+        ],
+        [
+          "Paladin",
+          "15",
+          "10",
+          "13",
+          "8",
+          "12",
+          "14"
+        ],
+        [
+          "Schurke",
+          "12",
+          "15",
+          "13",
+          "14",
+          "10",
+          "8"
+        ],
+        [
+          "Waldläufer",
+          "12",
+          "15",
+          "13",
+          "8",
+          "14",
+          "10"
+        ],
+        [
+          "Zauberer",
+          "10",
+          "13",
+          "14",
+          "8",
+          "12",
+          "15"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.adjusting-scores",
+      "level": 4,
+      "text": "Attributswerte anpassen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.adjusting-scores-description",
+      "text": "Wenn du die Attributswerte zugewiesen hast, passe sie je nach deinem Hintergrund an. In diesem sind drei Attribute aufgeführt. Erhöhe einen dieser Werte um 2 Punkte und einen anderen um 1 Punkt, oder alle drei um je 1 Punkt. Keine dieser Erhöhungen kann zu einem Wert von mehr als 20 führen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.adjusting-scores-preference",
+      "text": "Manche Spieler erhöhen gerne das Hauptattribut ihrer Klasse. Andere ziehen es vor, einen niedrigen Wert zu verbessern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.determining-modifiers",
+      "level": 4,
+      "text": "Attributsmodifikatoren bestimmen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.determining-modifiers-description",
+      "text": "Nachdem du deine Attributswerte festgelegt hast, bestimme nun die Attributsmodifikatoren anhand der Tabelle „Attributswerte und Modifikatoren“. Trage die Modifikatoren neben den Attributswerten ein."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.abilities-alignment-and-details.scores-and-modifiers-table",
+      "caption": "Attributswerte und Modifikatoren",
+      "columns": [
+        "Wert",
+        "Modifikator",
+        "Wert",
+        "Modifikator"
+      ],
+      "rows": [
+        [
+          "3",
+          "−4",
+          "12–13",
+          "+1"
+        ],
+        [
+          "4–5",
+          "−3",
+          "14–15",
+          "+2"
+        ],
+        [
+          "6–7",
+          "−2",
+          "16–17",
+          "+3"
+        ],
+        [
+          "8–9",
+          "−1",
+          "18–19",
+          "+4"
+        ],
+        [
+          "10–11",
+          "+0",
+          "20",
+          "+5"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.step4-alignment",
+      "level": 3,
+      "text": "Schritt 4: Gesinnung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.step4-alignment-description",
+      "text": "Wähle aus den Optionen unten die Gesinnung deines Charakters aus und notiere sie auf deinem Charakterbogen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.step4-alignment-no-evil",
+      "text": "Im Spiel wird davon ausgegangen, dass Spielercharaktere keine böse Gesinnung haben. Besprich dich mit deinem SL, bevor du einen bösen Charakter erstellst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.nine-alignments",
+      "level": 4,
+      "text": "Die neun Gesinnungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.nine-alignments-introduction",
+      "text": "Die Gesinnung einer Kreatur beschreibt ihre grundsätzlichen ethischen Ansichten und Ideale. Sie ist eine Kombination aus zwei Faktoren: der moralischen Haltung (gut, böse, neutral) und der Einstellung zum Gesetz (rechtschaffen, chaotisch, neutral)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.nine-alignments-summary-note",
+      "text": "Folgende Zusammenfassungen skizzieren das typische Verhalten einer Kreatur mit der jeweiligen Gesinnung (individuelle Vertreter können in ihrem Verhalten durchaus abweichen)."
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "character-creation.abilities-alignment-and-details.nine-alignments-list",
+      "entries": [
+        {
+          "term": "Rechtschaffen gut (RG)",
+          "definition": "Rechtschaffen gute Kreaturen bemühen sich, das Richtige zu tun, wie es von der Gesellschaft erwartet wird. Jemand, der gegen Ungerechtigkeit kämpft und Wehrlose ohne zu zögern beschützt, ist wahrscheinlich rechtschaffen gut."
+        },
+        {
+          "term": "Neutral gut (NG)",
+          "definition": "Neutral gute Kreaturen tun nach Kräften das Beste und agieren meist innerhalb der Regeln, fühlen sich aber nicht an sie gebunden. Eine freundliche Person, die anderen je nach deren Bedürfnissen hilft, ist wahrscheinlich neutral gut."
+        },
+        {
+          "term": "Chaotisch gut (CG)",
+          "definition": "Chaotisch gute Kreaturen handeln nur nach den Vorgaben ihres Gewissens und scheren sich kaum um die Erwartungen anderer. Ein Rebell, der die Steuereintreiber eines grausamen Barons überfällt und mit der Beute den Armen hilft, ist wahrscheinlich chaotisch gut."
+        },
+        {
+          "term": "Rechtschaffen neutral (RN)",
+          "definition": "Rechtschaffen neutrale Individuen halten sich an das Gesetz, an Traditionen und ihre eigenen Werte. Wer einen disziplinierten Lebensstil hat und weder den Anliegen Bedürftiger noch den Versuchungen des Bösen nachgibt, ist wahrscheinlich rechtschaffen neutral."
+        },
+        {
+          "term": "Neutral (N)",
+          "definition": "Neutral ist die Gesinnung derer, die moralische Fragen sowie Parteinahmen vermeiden. Sie tun stets das, was sie gerade für das Beste halten. Wer sich bei moralischen Debatten langweilt, der ist wahrscheinlich neutral."
+        },
+        {
+          "term": "Chaotisch neutral (CN)",
+          "definition": "Chaotisch neutrale Kreaturen folgen ihren Launen und stellen ihre persönliche Freiheit über alles andere. Ein Gauner, der durchs Land zieht und von seiner Schläue lebt, ist wahrscheinlich chaotisch neutral."
+        },
+        {
+          "term": "Rechtschaffen böse (RB)",
+          "definition": "Rechtschaffen böse Individuen nehmen sich methodisch, was sie wollen, bleiben dabei jedoch im Rahmen von Traditionen, Loyalität und dem Gesetz. Ein Adeliger, der seine Untertanen ausplündert und nach noch mehr Macht strebt, ist wahrscheinlich rechtschaffen böse."
+        },
+        {
+          "term": "Neutral böse (NB)",
+          "definition": "Neutral böse ist die Gesinnung derer, die sich nicht um das Leid scheren, das sie beim Verfolgen ihrer Wünsche anrichten. Ein Krimineller, der nach Belieben raubt und mordet, ist wahrscheinlich neutral böse."
+        },
+        {
+          "term": "Chaotisch böse (CB)",
+          "definition": "Chaotisch böse Kreaturen handeln mit brutaler Gewalt, die von Hass oder Blutdurst befeuert wird. Ein Bösewicht, der es auf Rache und Zerstörung abgesehen hat, ist wahrscheinlich chaotisch böse."
+        }
+      ]
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "character-creation.abilities-alignment-and-details.alignment-less-creatures",
+      "title": "Gesinnungslose Kreaturen",
+      "text": "Die meisten Kreaturen, denen es an rationalem Denkvermögen fehlt, haben keine Gesinnung. Sie werden als gesinnungslos bezeichnet. Haie sind beispielsweise wilde Raubtiere. Deshalb sind sie jedoch nicht böse, sondern vielmehr gesinnungslos."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.step5-details",
+      "level": 3,
+      "text": "Schritt 5: Details der Charaktererstellung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.step5-details-introduction",
+      "text": "Fülle deinen Charakterbogen nun vollständig aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.noting-class-features",
+      "level": 4,
+      "text": "Klassenmerkmale notieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.noting-class-features-description",
+      "text": "Sieh dir die Tabelle mit den Merkmalen deiner Klasse unter „Klassen“ an und notiere die Merkmale der 1. Stufe. Die Klassenmerkmale sind ebenfalls dort beschrieben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.noting-class-features-choices",
+      "text": "Bei manchen Klassenmerkmalen gibt es eine Wahl. Lies alle deine Merkmale durch und triff die Entscheidungen, die angeboten werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.abilities-alignment-and-details.entering-numbers",
+      "level": 4,
+      "text": "Zahlen eintragen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.entering-numbers-introduction",
+      "text": "Trage diese Zahlen in deinem Charakterbogen ein:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.saving-throws-entry",
+      "text": "Rettungswürfe: Füge bei den Rettungswürfen, in denen du Übung hast, deinen Übungsbonus dem jeweiligen Attributsmodifikator hinzu und notiere die Summe. Manche Spieler notieren auch gerne den Modifikator für Rettungswürfe, in denen sie keine Übung haben – dies ist einfach der relevante Attributsmodifikator."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.skills-entry",
+      "text": "Fertigkeiten: Bei Fertigkeiten, in denen du geübt bist, fügst du dem jeweils assoziierten Attributsmodifikator deinen Übungsbonus hinzu und notierst die Summe. Du könntest außerdem den Modifikator bei Fertigkeiten notieren, in denen du nicht geübt bist – dies ist einfach der relevante Attributsmodifikator."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.passive-perception-entry",
+      "text": "Passive Wahrnehmung: Manchmal ermittelt dein SL, ob dein Charakter etwas bemerkt, ohne dich zu einem Weisheitswurf (Wahrnehmung) aufzufordern. Der SL zieht dann deine Passive Wahrnehmung heran. Passive Wahrnehmung ist ein Wert, der für deine allgemeine Aufmerksamkeit der Umgebung gegenüber steht, ohne dass du aktiv nach etwas suchst. Verwende diese Formel, um deinen Wert für Passive Wahrnehmung zu bestimmen:"
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "character-creation.abilities-alignment-and-details.passive-perception-formula",
+      "title": "Passive Wahrnehmung",
+      "text": "Passive Wahrnehmung = 10 + Weisheitswurf-Modifikator (Wahrnehmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.passive-perception-example",
+      "text": "Schließe alle Modifikatoren ein, die für deine Weisheitswürfe (Wahrnehmung) gelten. Beispiel: Wenn dein Charakter einen Weisheitswert von 15 und Übung in der Wahrnehmungsfertigkeit hat, hast du eine passive Wahrnehmung von 14 (10 + 2 für deinen Weisheitsmodifikator + 2 für Übung)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.hit-points-entry",
+      "text": "Trefferpunkte: Deine Klasse und dein Konstitutionsmodifikator bestimmen dein Trefferpunktemaximum auf der 1. Stufe, wie in der Tabelle „Trefferpunkte auf der 1. Stufe nach Klasse“ dargestellt."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.abilities-alignment-and-details.hit-points-at-level-1-table",
+      "caption": "Trefferpunkte auf der 1. Stufe nach Klasse",
+      "columns": [
+        "Klasse",
+        "Trefferpunktemaximum"
+      ],
+      "rows": [
+        [
+          "Barbar",
+          "12 + KON-Modifikator"
+        ],
+        [
+          "Kämpfer, Paladin oder Waldläufer",
+          "10 + GES-Modifikator"
+        ],
+        [
+          "Barde, Druide, Hexenmeister, Kleriker, Mönch oder Schurke",
+          "8 + KON-Modifikator"
+        ],
+        [
+          "Magier, Zauberer",
+          "6 + KON-Modifikator"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.hit-points-tracking-space",
+      "text": "Auf dem Charakterbogen ist Platz zum Notieren deiner aktuellen Trefferpunkte, wenn du Schaden erleidest, sowie für alle temporären Trefferpunkte, die du vielleicht erhältst. Auch deine Todesrettungswürfe kannst du notieren."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.hit-dice-entry",
+      "text": "Trefferpunktewürfel: In der Beschreibung deiner Klasse erfährst du die Art der Trefferpunktewürfel deines Charakters (kurz „Trefferwürfel“). Notiere die Art auf deinem Charakterbogen. Auf der 1. Stufe hat dein Charakter einen Trefferwürfel. Du kannst während einer kurzen Rast Trefferwürfel verbrauchen, um Trefferpunkte zurückzuerhalten. Auf deinem Charakterbogen ist auch Platz, um zu notieren, wie viele Trefferwürfel du verbraucht hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.initiative-entry",
+      "text": "Initiative: Notiere deinen Geschicklichkeitsmodifikator im Bereich für Initiative auf deinem Charakterbogen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.armor-class-entry",
+      "text": "Rüstungsklasse: Ohne Rüstung und Schild entspricht deine Basis-Rüstungsklasse 10 plus deinem Geschicklichkeitsmodifikator. Wenn zu deiner Anfangsausrüstung eine Rüstung, ein Schild oder beides gehört, berechnest du deine RK anhand der Regeln unter „Ausrüstung“. Ein Klassenmerkmal könnte besagen, dass du deine RK auf andere Art berechnest."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.attacks-entry",
+      "text": "Angriffe: Notiere deine Startwaffen im Abschnitt des Charakterbogens für Waffen und Zaubertricks, die Schaden bewirken. Der Angriffswurf-Bonus einer Waffe, mit der du Übung hast, ist einer der folgenden, sofern bei den Waffeneigenschaften nicht anders angegeben:"
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "character-creation.abilities-alignment-and-details.attack-bonus-formulas",
+      "title": "Angriffsbonus-Formeln",
+      "text": "Nahkampfangriffsbonus = Stärkemodifikator + Übungsbonus\n\nFernkampfangriffsbonus = Geschicklichkeitsmodifikator + Übungsbonus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.attacks-damage-note",
+      "text": "Sieh den Schaden und die Eigenschaften deiner Waffen unter „Ausrüstung“ nach. Du fügst denselben Attributsmodifikator hinzu, den du bei Angriffen mit einer Waffe deinen Schadenswürfen mit dieser Waffe hinzufügst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.spellcasting-entry",
+      "text": "Zauberwirken: Notiere sowohl den Rettungswurf-SG für deine Zauber als auch den Angriffsbonus für Angriffe, die du mit ihnen ausführst. Nutze dazu diese Formeln:"
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "character-creation.abilities-alignment-and-details.spellcasting-formulas",
+      "title": "Zauberwirken-Formeln",
+      "text": "Zauberrettungswurf-SG = 8 + Zauberwirken-Attributsmodifikator + Übungsbonus\n\nZauberangriffsbonus = Zauberwirken-Attributsmodifikator + Übungsbonus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.spellcasting-ability-source",
+      "text": "Dein Zauberwirken-Attributsmodifikator für einen Zauber wird durch das Merkmal bestimmt, das dir das Wirken des Zaubers ermöglicht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.abilities-alignment-and-details.spell-slots-and-prepared-spells",
+      "text": "Zauberplätze, Zaubertricks und vorbereitete Zauber: Wenn deine Klasse dir das Zauberwirken- oder Paktmagie-Merkmal gibt, zeigt dir die Tabelle „Klassenmerkmale“ für deine Klasse die Anzahl von Zauberplätzen, die du verfügbar hast, die Anzahl von Zaubertricks, die du kennst, und die Anzahl von Zaubern, die du vorbereiten kannst. Wähle deine Zaubertricks und vorbereiteten Zauber aus und notiere sie – mit deiner Anzahl von Zauberplätzen – auf deinem Charakterbogen."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.proficiency.bonus-by-level",
+      "label": "Übungsbonus"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.damage-and-healing.death-saving-throws",
+      "label": "Todesrettungswürfe"
+    }
+  ],
+  "digest": "sha256:4e8384330190cd44fe871f0007204800741fb1f996511d3541d216493ae62aff"
+}

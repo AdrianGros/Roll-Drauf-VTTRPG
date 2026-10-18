@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "core.actions",
+  "slug": "uebung-mit-ausruestung-und-aktionen",
+  "title": "Übung im Umgang mit Ausrüstung und Aktionen",
+  "navigationPath": [
+    "Die Spielregeln",
+    "Übung im Umgang mit Ausrüstung und Aktionen"
+  ],
+  "order": 45,
+  "sourcePages": [
+    10,
+    11
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "core.actions.equipment-proficiency",
+      "level": 2,
+      "text": "Übung im Umgang mit Ausrüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.equipment-proficiency-introduction",
+      "text": "Charaktere haben durch ihre Klasse und ihren Hintergrund Übung im Umgang mit verschiedenen Waffen und Werkzeugen. Es gibt zwei Kategorien von Übung im Umgang mit Ausrüstung:"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "core.actions.equipment-proficiency-categories",
+      "entries": [
+        {
+          "term": "Waffen",
+          "definition": "Jeder kann eine Waffe führen, aber Übung bedeutet einen besseren Umgang damit. Wenn du Übung im Umgang mit einer Waffe hast, fügst du Angriffswürfen, die du mit dieser Waffe ausführst, deinen Übungsbonus hinzu."
+        },
+        {
+          "term": "Werkzeug",
+          "definition": "Wenn du Übung im Umgang mit einem Werkzeug hast, kannst du jedem Attributswurf, der dieses Werkzeug verwendet, deinen Übungsbonus hinzufügen. Wenn du in der Fertigkeit geübt bist, die ebenfalls bei diesem Wurf verwendet wird, ist der Wurf außerdem noch im Vorteil. Das bedeutet, dass du im selben Attributswurf sowohl von deiner Übung in der Fertigkeit als auch von deiner Übung im Umgang mit dem Werkzeug profitieren kannst."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.actions.actions",
+      "level": 2,
+      "text": "Aktionen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.actions-introduction",
+      "text": "Wenn du etwas anderes tust als zu kommunizieren oder dich zu bewegen, führst du üblicherweise eine Aktion aus. In der Tabelle „Aktionen“ sind die wichtigsten Aktionen des Spiels aufgeführt. Ihre ausführlichen Definitionen findest du unter „Regelglossar“."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.actions.actions-table",
+      "caption": "Aktionen",
+      "columns": [
+        "Aktion",
+        "Zusammenfassung"
+      ],
+      "rows": [
+        [
+          "Angriff",
+          "Du führst einen Angriff mit einer Waffe oder einen waffenlosen Angriff aus."
+        ],
+        [
+          "Ausweichen",
+          "Bis zum Beginn deines nächsten Zugs sind Angriffswürfe gegen dich im Nachteil, und du bist bei Geschicklichkeitsrettungswürfen im Vorteil. Du verlierst diesen Vorzug, wenn du kampfunfähig bist oder deine Bewegungsrate 0 beträgt."
+        ],
+        [
+          "Beeinflussen",
+          "Du führst einen Charismawurf (Auftreten, Einschüchtern, Täuschen oder Überzeugen) oder einen Weisheitswurf (Mit Tieren umgehen) aus, um die Haltung einer Kreatur zu ändern."
+        ],
+        [
+          "Helfen",
+          "Du unterstützt den Attributswurf oder den Angriffswurf einer anderen Kreatur, oder du leistest Erste Hilfe."
+        ],
+        [
+          "Magie wirken",
+          "Du wirkst einen Zauber, verwendest einen magischen Gegenstand oder setzt ein magisches Merkmal ein."
+        ],
+        [
+          "Rückzug",
+          "Deine Bewegung provoziert im verbleibenden Zug keine Gelegenheitsangriffe."
+        ],
+        [
+          "Spurt",
+          "Für den Rest deines Zugs hast du zusätzliche Bewegung in Höhe deiner Bewegungsrate."
+        ],
+        [
+          "Studieren",
+          "Du führst einen Intelligenzwurf (Arkane Kunde, Geschichte, Nachforschungen, Naturkunde oder Religion) aus."
+        ],
+        [
+          "Suchen",
+          "Du führst einen Weisheitswurf (Heilkunde, Motiv erkennen, Überlebenskunst, Wahrnehmung) aus."
+        ],
+        [
+          "Verstecken",
+          "Du führst einen Geschicklichkeitswurf (Heimlichkeit) aus."
+        ],
+        [
+          "Verwenden",
+          "Du verwendest einen nichtmagischen Gegenstand."
+        ],
+        [
+          "Vorbereiten",
+          "Du bereitest eine Aktion vor, um sie als Antwort auf einen von dir definierten Auslöser auszuführen."
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.actions-improvised",
+      "text": "Spielercharaktere und Monster können auch Handlungen ausführen, die nicht unter diese Aktionen fallen. Viele Klassenmerkmale und andere Fähigkeiten bieten zusätzliche Aktionsoptionen, und du kannst auch andere Aktionen improvisieren. Wenn du eine Aktion beschreibst, die nirgendwo in den Regeln vorkommt, entscheidet der Spielleiter, ob die Aktion möglich ist und ob eine W20-Prüfung erforderlich ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.actions.one-at-a-time",
+      "level": 3,
+      "text": "Eins nach dem anderen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.one-at-a-time-description",
+      "text": "Das Spiel nutzt Aktionen, um zu regeln, wie viel du auf einmal tun kannst. Du kannst nur eine Aktion auf einmal ausführen. Dieses Prinzip ist im Kampf besonders wichtig, wie unter „Kampf“ weiter hinten unter „Die Spielregeln“ erläutert wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.one-at-a-time-example",
+      "text": "Aktionen können auch in anderen Situationen stattfinden: Bei einer sozialen Interaktion kannst du versuchen, eine Kreatur zu beeinflussen, oder die Suchen-Aktion ausführen, um die Körpersprache der Kreatur zu entschlüsseln. Du kannst jedoch nicht beides zugleich tun. Und wenn du ein Gewölbe erkundest, kannst du nicht die Suchen-Aktion ausführen, um nach Fallen zu suchen, und gleichzeitig mit der Helfen-Aktion einen anderen Charakter unterstützen, der mit der Verwenden-Aktion versucht, eine verklemmte Tür zu öffnen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.actions.bonus-actions",
+      "level": 3,
+      "text": "Bonusaktionen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.bonus-actions-description",
+      "text": "Verschiedene Klassenmerkmale, Zauber und andere Fähigkeiten gestatten eine zusätzliche Aktion im Zug, die Bonusaktion genannt wird. Beispiel: Das Merkmal Raffinierte Aktion gewährt dem Schurken eine Bonusaktion. Du kannst nur dann eine Bonusaktion ausführen, wenn eine Spezialfähigkeit, ein Zauber oder ein sonstiges Merkmal des Spiels angibt, dass du etwas als Bonusaktion ausführen kannst. Andernfalls ist keine Bonusaktion verfügbar."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.bonus-actions-limit",
+      "text": "Du kannst in deinem Zug nur eine Bonusaktion ausführen. Falls mehrere zur Verfügung stehen, musst du entscheiden, welche du ausführst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.bonus-actions-timing",
+      "text": "Du entscheidest, wann in deinem Zug du eine Bonusaktion ausführst, sofern kein Zeitrahmen für die Bonusaktion angegeben ist. Wenn dich etwas daran hindert, Aktionen auszuführen, kannst du auch keine Bonusaktion ausführen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.actions.reactions",
+      "level": 3,
+      "text": "Reaktionen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.reactions-description",
+      "text": "Bestimmte Spezialfähigkeiten, Zauber und Situationen gestatten dir, eine besondere Aktion auszuführen, die Reaktion genannt wird. Hierbei handelt es sich um eine sofortige Antwort auf einen bestimmten Auslöser, der in deinem Zug oder dem eines anderen auftreten kann. Der Gelegenheitsangriff ist die häufigste Reaktion. Er ist weiter hinten unter „Die Spielregeln“ beschrieben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.reactions-frequency",
+      "text": "Wenn du eine Reaktion ausgeführt hast, ist dies erst in deinem nächsten Zug erneut möglich. Unterbricht die Reaktion den Zug einer anderen Kreatur, so kann diese ihren Zug direkt nach der Reaktion fortsetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.actions.reactions-timing",
+      "text": "Zeitlich erfolgen Reaktionen sofort nach ihrem Auslöser, sofern in der Beschreibung der jeweiligen Reaktion nicht anders angegeben."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    }
+  ],
+  "digest": "sha256:033eadabb6a842864b7d07c6f3412c12b4050cc83d1b581b9f2c7cb489b3248a"
+}

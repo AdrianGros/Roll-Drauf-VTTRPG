@@ -1,0 +1,451 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "character-creation.overview-and-steps",
+  "slug": "charaktererstellung-schritte-1-und-2",
+  "title": "Charaktererstellung: Übersicht, Klasse und Charakterherkunft",
+  "navigationPath": [
+    "Charaktererstellung",
+    "Übersicht, Klasse und Charakterherkunft"
+  ],
+  "order": 100,
+  "sourcePages": [
+    22,
+    23,
+    24
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.character-creation",
+      "level": 2,
+      "text": "Charaktererstellung"
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.choosing-a-sheet",
+      "level": 3,
+      "text": "Einen Charakterbogen wählen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.choosing-a-sheet-description",
+      "text": "Die wichtigsten Details zu deinem Charakter hältst du auf einem Charakterbogen fest. In diesem Kapitel wird der Begriff „Charakterbogen“ für deine Aufzeichnungen der Details deines Charakters verwendet, ob es sich dabei nun um einen gedruckten Charakterbogen, einen digitalen Charakterbogen oder um eine schlichte beschriebene Papierseite handelt. Nimm einen Bogen deiner Wahl und mach dich an die Charaktererstellung!"
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.creating-your-character",
+      "level": 3,
+      "text": "Deinen Charakter erstellen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.creating-your-character-introduction",
+      "text": "Dies sind die Schritte zum Erstellen eines Charakters – sie werden weiter unten jeweils ausführlich beschrieben:"
+    },
+    {
+      "type": "ordered-list",
+      "ruleId": "character-creation.overview-and-steps.creating-your-character-steps",
+      "items": [
+        "Klasse auswählen: Jeder Abenteurer gehört einer bestimmten Klasse an. Diese Klasse beschreibt allgemein den Beruf, die besonderen Talente und die bevorzugten Taktiken eines Charakters.",
+        "Herkunft bestimmen: Die Herkunft eines Charakters umfasst zwei Elemente: Hintergrund und Spezies. Wie hat der Charakter die Jahre bis zu seinem Abenteurerleben verbracht? Wer sind die Vorfahren des Charakters? Du kannst auch die Sprachen deines Charakters auswählen.",
+        "Attributswerte festlegen: Vieles von dem, was dein Charakter im Spiel tut, hängt von seinen sechs Attributen ab.",
+        "Gesinnung auswählen: Die Gesinnung ist Ausdruck des moralischen Kompasses deines Charakters.",
+        "Details ausarbeiten: Trage auf Basis deiner Entscheidungen die verbleibenden Details ein."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.step1-choosing-a-class",
+      "level": 3,
+      "text": "Schritt 1: Klasse auswählen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.step1-choosing-a-class-description",
+      "text": "Wähle eine Klasse aus und notiere sie auf deinem Charakterbogen. Die Tabelle „Klassenüberblick“ fasst die Klassen zusammen. Mehr Details zu den Klassen findest du unter „Klassen“."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.overview-and-steps.class-overview-table",
+      "caption": "Klassenüberblick",
+      "columns": [
+        "Klasse",
+        "Vorliebe",
+        "Hauptattribut",
+        "Komplexität"
+      ],
+      "rows": [
+        [
+          "Barbar",
+          "Kampf",
+          "Stärke",
+          "Mittel"
+        ],
+        [
+          "Barde",
+          "Auftreten",
+          "Charisma",
+          "Hoch"
+        ],
+        [
+          "Druide",
+          "Naturkunde",
+          "Weisheit",
+          "Hoch"
+        ],
+        [
+          "Hexenmeister",
+          "Okkulte Überlieferungen",
+          "Charisma",
+          "Hoch"
+        ],
+        [
+          "Kämpfer",
+          "Waffen",
+          "Stärke oder Geschicklichkeit",
+          "Niedrig"
+        ],
+        [
+          "Kleriker",
+          "Götter",
+          "Weisheit",
+          "Mittel"
+        ],
+        [
+          "Magier",
+          "Zauberbücher",
+          "Intelligenz",
+          "Mittel"
+        ],
+        [
+          "Mönch",
+          "Waffenloser Kampf",
+          "Geschicklichkeit und Weisheit",
+          "Hoch"
+        ],
+        [
+          "Paladin",
+          "Verteidigung",
+          "Stärke und Charisma",
+          "Mittel"
+        ],
+        [
+          "Schurke",
+          "Heimlichkeit",
+          "Geschicklichkeit",
+          "Niedrig"
+        ],
+        [
+          "Waldläufer",
+          "Überlebenskunst",
+          "Geschicklichkeit und Weisheit",
+          "Mittel"
+        ],
+        [
+          "Zauberer",
+          "Macht",
+          "Charisma",
+          "Hoch"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.noting-your-level",
+      "level": 4,
+      "text": "Deine Stufe notieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.noting-your-level-description",
+      "text": "Notiere die Stufe deines Charakters auf deinem Charakterbogen. Ein Charakter beginnt das Spiel üblicherweise auf der 1. Stufe und steigt dann auf, indem er Abenteuer erlebt und Erfahrungspunkte (EP) sammelt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.noting-your-xp",
+      "text": "Deine EP notieren: Notiere auch deine Erfahrungspunkte. Ein Charakter der 1. Stufe hat 0 EP."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.starting-at-higher-level",
+      "text": "Auf einer höheren Stufe beginnen: Dein SL könnte dich auf einer höheren Stufe beginnen lassen. Wenn du auf der 3. Stufe oder höher beginnst, notiere deine ausgewählte Unterklasse auf deinem Charakterbogen. Weitere Informationen findest du im Abschnitt „Auf höheren Stufen beginnen“ weiter hinten unter „Charaktererstellung“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.noting-armor-proficiency",
+      "level": 4,
+      "text": "Rüstungsvertrautheit notieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.noting-armor-proficiency-description",
+      "text": "Deine Klasse könnte bedeuten, dass du mit bestimmten Rüstungskategorien vertraut bist. Notiere deine Rüstungsvertrautheit auf deinem Charakterbogen. Vertrautheit mit einer Rüstungskategorie bedeutet, dass du solche Rüstungen effektiv tragen und ihre Verteidigungsboni nutzen kannst. Die Rüstungskategorien sind unter „Ausrüstung“ beschrieben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.step2-character-origin",
+      "level": 3,
+      "text": "Schritt 2: Charakterherkunft"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.step2-character-origin-introduction",
+      "text": "Zum Bestimmen der Herkunft deines Charakters gehört die Auswahl eines Hintergrunds, einer Spezies und zweier Sprachen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.step2-character-origin-background-role",
+      "text": "Der Hintergrund eines Charakters repräsentiert den Ort und den Beruf, die besonders prägend für den Charakter waren. Die Kombination von Hintergrund, Spezies und Sprachen bietet deiner Fantasie Nahrung, wenn du dir die frühen Jahre deines Charakters ausmalst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.choosing-a-background",
+      "level": 4,
+      "text": "Einen Hintergrund wählen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.choosing-a-background-description",
+      "text": "Wähle den Hintergrund deines Charakters und notiere ihn auf deinem Charakterbogen. Du kannst einen der Hintergründe auswählen, die unter „Charakterherkunft“ ausgeführt sind. Dein SL kann dir auch zusätzliche Hintergründe als Optionen anbieten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.choosing-a-background-ability-scores",
+      "text": "Der gewählte Hintergrund beeinflusst Schritt 3, in dem du die Attributswerte deines Charakters bestimmst. Wenn dir die Auswahl schwerfällt, findest du in der Tabelle „Attributswerte und Hintergründe“ Informationen dazu, welche Hintergründe welche Attributswerte nützen. Suche dort nach dem Hauptattribut deiner Klasse."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.overview-and-steps.ability-scores-and-backgrounds-table",
+      "caption": "Attributswerte und Hintergründe",
+      "columns": [
+        "Attribut",
+        "Hintergrund"
+      ],
+      "rows": [
+        [
+          "Stärke",
+          "Soldat"
+        ],
+        [
+          "Geschicklichkeit",
+          "Soldat"
+        ],
+        [
+          "Konstitution",
+          "Soldat"
+        ],
+        [
+          "Intelligenz",
+          "Akolyth"
+        ],
+        [
+          "Weisheit",
+          "Akolyth"
+        ],
+        [
+          "Charisma",
+          "Akolyth"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.noting-your-talent",
+      "text": "Dein Talent notieren: Ein Hintergrund gibt dir ein Talent, das deinem Charakter bestimmte Fähigkeiten gewährt. Talente sind unter „Talente“ beschrieben. Notiere das Talent auf deinem Charakterbogen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.noting-proficiency",
+      "text": "Übung notieren: Dein Hintergrund gibt dir Übung in zwei Fertigkeiten sowie im Umgang mit einem Werkzeug. Notiere diese Informationen auf deinem Charakterbogen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.noting-class-proficiency",
+      "text": "Deine Klasse gibt dir ebenfalls Übung. Lies deine Klassenbeschreibung unter „Klassen“ und notiere jede Übung auf deinem Charakterbogen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.proficiency-bonus-reference",
+      "text": "Die Tabelle „Merkmale“ in deiner Klassenbeschreibung zeigt deinen Übungsbonus (siehe „Die Spielregeln“). Bei einem Charakter der 1. Stufe beträgt er +2. Notiere diese Zahl auf deinem Charakterbogen. Die anderen Zahlen im Zusammenhang mit Übung trägst du in Schritt 5 ein."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.choosing-starting-equipment",
+      "level": 4,
+      "text": "Anfangsausrüstung auswählen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.choosing-starting-equipment-description",
+      "text": "Sowohl dein Hintergrund als auch deine Klasse bieten Gegenstände für die Anfangsausrüstung. Für alle Münzen, die du in diesem Schritt erhältst, kannst du sofort Ausrüstung unter „Ausrüstung“ kaufen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.noting-starting-equipment",
+      "text": "Notiere deine ausgewählte Ausrüstung auf deinem Charakterbogen. Die Ausrüstung wird unter „Ausrüstung“ beschrieben. Vorerst kannst du sie einfach notieren und die Einzelheiten später unter „Ausrüstung“ nachsehen. Notiere Münzen, die du nach dem Kauf deiner Ausrüstung übrig hast."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.choosing-a-species",
+      "level": 4,
+      "text": "Eine Spezies auswählen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.choosing-a-species-description",
+      "text": "Wähle eine Spezies für deinen Charakter aus. Folgende Spezies sind unter „Charakterherkunft“ beschrieben: Drachenblütiger, Elf, Gnom, Goliath, Halbling, Mensch, Ork, Tiefling und Zwerg. Wenn du eine Spezies ausgewählt hast, vermerke sie auf deinem Charakterbogen. Notiere dann die Merkmale deiner Spezies."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.species-size-and-speed",
+      "text": "Größe und Bewegungsrate deines Charakters werden von seiner Spezies bestimmt. Notiere diese Werte ebenfalls an den entsprechenden Stellen auf deinem Charakterbogen (bei der Größenkategorie reicht der Anfangsbuchstabe)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.inventing-past-and-present",
+      "level": 4,
+      "text": "Vergangenheit und Gegenwart erfinden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.inventing-past-and-present-introduction",
+      "text": "Lass dich von Hintergrund und Spezies deines Charakters inspirieren, um dir eine Vergangenheit für ihn auszudenken. Diese Vergangenheit des Charakters beeinflusst auch seine Gegenwart. Überlege dir dementsprechend Antworten auf folgende Fragen an deinen Charakter:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "character-creation.overview-and-steps.inventing-past-and-present-questions",
+      "items": [
+        "Wer hat dich aufgezogen?",
+        "Wer war dein liebster Kindheitsfreund?",
+        "Bist du mit einem Haustier aufgewachsen?",
+        "Hast du dich je verliebt? Wenn ja, in wen?",
+        "Bist du je einer Organisation wie einer Gilde oder einer religiösen Gemeinschaft beigetreten? Wenn ja, bist du dort noch Mitglied?",
+        "Welche Elemente deiner Vergangenheit inspirieren dich, jetzt auf Abenteuersuche zu gehen?"
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.overview-and-steps.choosing-languages",
+      "level": 4,
+      "text": "Sprachen auswählen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.choosing-languages-description",
+      "text": "Dein Charakter kennt mindestens drei Sprachen: Die Gemeinsprache plus zwei Sprachen, die du aus der Tabelle „Standardsprachen“ auswählst oder auswürfelst. Eine Sprache zu kennen bedeutet, dass dein Charakter in dieser Sprache kommunizieren, lesen und schreiben kann. Deine Klasse und andere Merkmale könnten ebenfalls Sprachkenntnisse mit sich bringen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.standard-languages-description",
+      "text": "In der Tabelle „Standardsprachen“ sind Sprachen aufgeführt, die in der Kampagnenwelt weit verbreitet sind. Jeder Spielercharakter kennt die Gemeinsprache. Die anderen Standardsprachen stammen von den ersten Mitgliedern der bekanntesten Spezies in der Kampagnenwelt. Sie haben sich seither weit verbreitet."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.overview-and-steps.standard-languages-table",
+      "caption": "Standardsprachen",
+      "columns": [
+        "1W12",
+        "Sprache"
+      ],
+      "rows": [
+        [
+          "–",
+          "Gemeinsprache"
+        ],
+        [
+          "1",
+          "Drakonisch"
+        ],
+        [
+          "2–3",
+          "Elfisch"
+        ],
+        [
+          "4",
+          "Gebärden-Gemeinsprache"
+        ],
+        [
+          "5",
+          "Gnomisch"
+        ],
+        [
+          "6",
+          "Goblinisch"
+        ],
+        [
+          "7–8",
+          "Halblingisch"
+        ],
+        [
+          "9",
+          "Orkisch"
+        ],
+        [
+          "10",
+          "Riesisch"
+        ],
+        [
+          "11–12",
+          "Zwergisch"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.overview-and-steps.rare-languages-description",
+      "text": "In der Tabelle „Seltene Sprachen“ sind Sprachen aufgeführt, die entweder geheim sind oder von anderen Existenzebenen stammen und daher in den Welten der materiellen Ebene weniger bekannt sind. Manche Merkmale lassen einen Charakter eine seltene Sprache erlernen."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.overview-and-steps.rare-languages-table",
+      "caption": "Seltene Sprachen",
+      "columns": [
+        "Sprache"
+      ],
+      "rows": [
+        [
+          "Abyssisch"
+        ],
+        [
+          "Celestisch"
+        ],
+        [
+          "Diebessprache"
+        ],
+        [
+          "Druidisch"
+        ],
+        [
+          "Gemeinsprache der Unterreiche"
+        ],
+        [
+          "Infernalisch"
+        ],
+        [
+          "Sylvanisch"
+        ],
+        [
+          "Tiefensprache"
+        ],
+        [
+          "Urtümlich*"
+        ]
+      ]
+    },
+    {
+      "type": "page-note",
+      "ruleId": "character-creation.overview-and-steps.rare-languages-footnote",
+      "text": "*Urtümlich umfasst die Dialekte Aqual, Aural, Ignal und Terral. Kreaturen, die einen dieser Dialekte sprechen, können mit Kreaturen kommunizieren, die einen anderen sprechen."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.proficiency.bonus-by-level",
+      "label": "Übungsbonus"
+    }
+  ],
+  "digest": "sha256:3b60e8ccde8bfca4d12650dbf9f05ea7a7d6ff0cd862006d46b6fc51da3276bf"
+}

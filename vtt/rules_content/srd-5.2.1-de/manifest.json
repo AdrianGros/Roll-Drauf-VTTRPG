@@ -1,0 +1,731 @@
+{
+  "schemaVersion": "regelwerk.package.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "rulesetVersion": "0.1.0-r1",
+  "edition": "2024",
+  "locale": "de-DE",
+  "status": "preview",
+  "title": "Roll Drauf Regelwerk — SRD 5.2.1 (Deutsch)",
+  "source": {
+    "title": "Systemreferenzdokument 5.2.1",
+    "publicationDate": "2025-12-08",
+    "retrievedAt": "2026-10-15",
+    "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/DE_SRD_CC_v5.2.1.pdf",
+    "sha256": "f06989dcdf98c8e93b52ba5ea9db52d5e1b054d6d87a148ff295138bafe8a65b",
+    "pageCount": 412
+  },
+  "license": {
+    "id": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/legalcode.de",
+    "attributionFile": "attribution.txt",
+    "attributionSha256": "c0bd7a2a58d6ac29c8adbdf3e2750ec6262fcba6ecaed923c8cc2dede2fb87c9"
+  },
+  "documents": [
+    {
+      "documentId": "core.d20-tests",
+      "slug": "w20-pruefungen",
+      "title": "W20-Prüfungen",
+      "digest": "sha256:6aa70284236dae3b5025b68bc975919b7d0dd2c42f9ac00d9f4d0b72cb702e3a"
+    },
+    {
+      "documentId": "core.game-loop-and-abilities",
+      "slug": "spielrhythmus-und-attribute",
+      "title": "Spielrhythmus und die sechs Attribute",
+      "digest": "sha256:6f8dd51e2dc18472b300ee45b20ee9063cbe4ce35489dfe067b827a2f367a058"
+    },
+    {
+      "documentId": "core.advantage-and-inspiration",
+      "slug": "vorteil-und-nachteil",
+      "title": "Vorteil und Nachteil",
+      "digest": "sha256:cba97b20451266d0fc3afb8ff22e684ee949e1a62cf78779c75063c979c452bb"
+    },
+    {
+      "documentId": "core.proficiency",
+      "slug": "uebung",
+      "title": "Übung",
+      "digest": "sha256:f375ac39d2f5b4b12eaad72302e4a007197cab98367afc13a800414b3cdcb992"
+    },
+    {
+      "documentId": "core.actions",
+      "slug": "uebung-mit-ausruestung-und-aktionen",
+      "title": "Übung im Umgang mit Ausrüstung und Aktionen",
+      "digest": "sha256:033eadabb6a842864b7d07c6f3412c12b4050cc83d1b581b9f2c7cb489b3248a"
+    },
+    {
+      "documentId": "core.social-interaction",
+      "slug": "soziale-interaktion",
+      "title": "Soziale Interaktion",
+      "digest": "sha256:7917bfbd4ae26f68e3d65ce7f9902b8a95f8b64281933899df258b1d49d82d1f"
+    },
+    {
+      "documentId": "core.exploration",
+      "slug": "erkundung",
+      "title": "Erkundung",
+      "digest": "sha256:e6fbee5e2b715cd456f931cb088731c5fb31a35c9603af1ea7ad9e4d812044f3"
+    },
+    {
+      "documentId": "core.combat-turns",
+      "slug": "kampf-runden-und-zuege",
+      "title": "Kampf: Rundenablauf, Initiative und Bewegung",
+      "digest": "sha256:0e09cb1c422e146ce27ee7c7d10656bada86071bce29311c2de63a00013f52a2"
+    },
+    {
+      "documentId": "core.combat-attacks",
+      "slug": "kampf-angriffe-und-deckung",
+      "title": "Kampf: Angriffe, Deckung und besondere Gefechtsformen",
+      "digest": "sha256:aff9b10d66115e93f133e09f4ed2760af4f0312ec9c51ede7dd1fb6b706d71d9"
+    },
+    {
+      "documentId": "core.damage-and-healing",
+      "slug": "schaden-und-heilung",
+      "title": "Schaden und Heilung",
+      "digest": "sha256:febdbcc22bece4a9c3dc6c8fb632dcb585a1a37a2f5d5e192b30734bce2a7743"
+    },
+    {
+      "documentId": "character-creation.overview-and-steps",
+      "slug": "charaktererstellung-schritte-1-und-2",
+      "title": "Charaktererstellung: Übersicht, Klasse und Charakterherkunft",
+      "digest": "sha256:3b60e8ccde8bfca4d12650dbf9f05ea7a7d6ff0cd862006d46b6fc51da3276bf"
+    },
+    {
+      "documentId": "character-creation.abilities-alignment-and-details",
+      "slug": "charaktererstellung-schritte-3-bis-5",
+      "title": "Charaktererstellung: Attributswerte, Gesinnung und Details",
+      "digest": "sha256:4e8384330190cd44fe871f0007204800741fb1f996511d3541d216493ae62aff"
+    },
+    {
+      "documentId": "character-creation.advancement-and-multiclassing",
+      "slug": "stufenaufstiege-und-klassenkombinationen",
+      "title": "Stufenaufstiege, höhere Startstufen und Klassenkombinationen",
+      "digest": "sha256:f3cd6349ddd4f8ddc3e73a52c10b74ea64114391765648d08b254cd9c60f8f14"
+    },
+    {
+      "documentId": "character-creation.trinkets",
+      "slug": "requisiten",
+      "title": "Requisiten",
+      "digest": "sha256:e5e2368b785f2995120473c5e5c837b5ad36b739bed5ac19a1ccefa8264feee5"
+    },
+    {
+      "documentId": "classes.barbarian",
+      "slug": "barbar",
+      "title": "Barbar",
+      "digest": "sha256:42356721ad64eea7f88cfc1bfd2e18800a2ed98cdd2aa341bbd10893b4a11b62"
+    },
+    {
+      "documentId": "classes.bard",
+      "slug": "barde",
+      "title": "Barde",
+      "digest": "sha256:6f8a200929be620cb5444640a691fc690fc24c36f8845ba8684a59ad91e7d82d"
+    },
+    {
+      "documentId": "classes.druid",
+      "slug": "druide",
+      "title": "Druide",
+      "digest": "sha256:3e90448e2b999a284214b44eb5d6afd4135c406fbec5af2018c609eb7328d93e"
+    },
+    {
+      "documentId": "classes.warlock",
+      "slug": "hexenmeister",
+      "title": "Hexenmeister",
+      "digest": "sha256:c37391748f5a5e766e50ee4a6cfe1e0469399fbdf9f7056ace551c09642cfba4"
+    },
+    {
+      "documentId": "classes.fighter",
+      "slug": "kaempfer",
+      "title": "Kämpfer",
+      "digest": "sha256:e567dcb08ff657a2e7be39dc70707fe5c7d4e3ffa2144c6fec3ee7fbce3f688c"
+    },
+    {
+      "documentId": "classes.cleric",
+      "slug": "kleriker",
+      "title": "Kleriker",
+      "digest": "sha256:3765aba0bb6f65c944b42c3a75b5b6c788cd5021d3a365fd369a7f1f234efc54"
+    },
+    {
+      "documentId": "classes.wizard",
+      "slug": "magier",
+      "title": "Magier",
+      "digest": "sha256:4859efdb59e9d2960a7a88fcdf68fd19ae17cf4c6e9d2b12494129b3f1408855"
+    },
+    {
+      "documentId": "classes.monk",
+      "slug": "moench",
+      "title": "Mönch",
+      "digest": "sha256:730270d3aa41e47ba0f04d1336eb96ae7031639f3baa9decf8fde3e23be6b401"
+    },
+    {
+      "documentId": "classes.paladin",
+      "slug": "paladin",
+      "title": "Paladin",
+      "digest": "sha256:af0d3a2347e582b233f419614672a5e9b0fefc2aeee3ce6ee12e755168a62336"
+    },
+    {
+      "documentId": "classes.rogue",
+      "slug": "schurke",
+      "title": "Schurke",
+      "digest": "sha256:79ad8e0cf221d926d5ea8d6e8e8351f241f493f6034b21bd16f0dc257abf7a58"
+    },
+    {
+      "documentId": "classes.ranger",
+      "slug": "waldlaeufer",
+      "title": "Waldläufer",
+      "digest": "sha256:8953bc1ec859a2a1e471e717d12ae4e34147cfc3d952a5e205e7f935c23404fa"
+    },
+    {
+      "documentId": "classes.sorcerer",
+      "slug": "zauberer",
+      "title": "Zauberer",
+      "digest": "sha256:d176e2bdb9860734329d73880ad845da52cbca3e1e9be7ef1a6f8572dcdb98a2"
+    },
+    {
+      "documentId": "character-origins.backgrounds",
+      "slug": "charakterhintergruende",
+      "title": "Charakterhintergründe",
+      "digest": "sha256:ad83fb7e14a9172b61a0dd47ed0396a3ee7ab217d2fb559b9ae0e7eec43978a1"
+    },
+    {
+      "documentId": "character-origins.species",
+      "slug": "charakterspezies",
+      "title": "Charakterspezies",
+      "digest": "sha256:ee73cb2f2e6b5bd80940486042532b32f38d44dc9c6403d7af1718e1fce7b0bd"
+    },
+    {
+      "documentId": "feats.descriptions",
+      "slug": "talente",
+      "title": "Talente",
+      "digest": "sha256:01cc8f33fa2b7395fe6cca9c8cc292fe71a28b0c9dd8f7bd10dd032add38aab2"
+    },
+    {
+      "documentId": "equipment.coins-and-weapons",
+      "slug": "muenzen-und-waffen",
+      "title": "Münzen und Waffen",
+      "digest": "sha256:da07c6612b7da5683e8659c8385cbfd8ac138159bdb518a3daeb423cefc656ce"
+    },
+    {
+      "documentId": "equipment.armor",
+      "slug": "ruestung",
+      "title": "Rüstung",
+      "digest": "sha256:d49ee082120f1afa821726c6cb8187399bfb423d88cc8bd5afd103a5297068b4"
+    },
+    {
+      "documentId": "equipment.tools",
+      "slug": "werkzeug",
+      "title": "Werkzeug",
+      "digest": "sha256:ad8745aa6cb1a88ab83cea98214601fa76ac3153bd71d0d686348240e2cb73fd"
+    },
+    {
+      "documentId": "equipment.adventuring-gear",
+      "slug": "abenteurerausruestung",
+      "title": "Abenteurerausrüstung",
+      "digest": "sha256:9b1690d8eaf65d2727fa67a405f070827635b59555dc8f331e33e97d73b6a894"
+    },
+    {
+      "documentId": "equipment.mounts-and-vehicles",
+      "slug": "reittiere-und-fahrzeuge",
+      "title": "Reittiere und Fahrzeuge",
+      "digest": "sha256:6fd0d04a7b5229d9054abe6644c4172076e5593888f7000e6358e1190179099c"
+    },
+    {
+      "documentId": "equipment.expenses-and-services",
+      "slug": "lebenshaltung-und-dienstleistungen",
+      "title": "Lebenshaltung und Dienstleistungen",
+      "digest": "sha256:efea50c6c1dfd941bbfc1fd18cbeaa6f541460c77ebc50f2a5e65f2ee5f647c3"
+    },
+    {
+      "documentId": "equipment.magic-items",
+      "slug": "magische-gegenstaende-ausruestung",
+      "title": "Magische Gegenstände",
+      "digest": "sha256:3a5cb6c5e64151fa2219f48cbe9efd86db8d5466f2ed36435909ade6a0a26233"
+    },
+    {
+      "documentId": "equipment.crafting",
+      "slug": "herstellen",
+      "title": "Gegenstände herstellen",
+      "digest": "sha256:c859b373f9ac951cab1468b0121e0aab35388bcd22aeb4ba69e0827c93327a8e"
+    },
+    {
+      "documentId": "spells.getting-spells",
+      "slug": "zauber-erhalten",
+      "title": "Zauber erhalten",
+      "digest": "sha256:29fe9554086b223d0fe5de184cd1eb8e3241c6ab27bdfb0348b54361c73978b2"
+    },
+    {
+      "documentId": "spells.casting",
+      "slug": "zauber-wirken",
+      "title": "Zauber wirken",
+      "digest": "sha256:02fe755d6035f42859f93d3af8e1dc4729fefdbba5176f03b95c8fb7ff5d38ae"
+    },
+    {
+      "documentId": "spells.a-b",
+      "slug": "zauber-a-b",
+      "title": "Zauber A–B",
+      "digest": "sha256:827e470649eb3e23a9e68aa33bb64758110e71f36955f90b56b1caef12d1add2"
+    },
+    {
+      "documentId": "spells.c-e",
+      "slug": "zauber-c-e",
+      "title": "Zauber C–E",
+      "digest": "sha256:804374557d5d1f8e688898530ad9d559cd709035b91e3c728d8e7b14b621dbe1"
+    },
+    {
+      "documentId": "spells.f-g",
+      "slug": "zauber-f-g",
+      "title": "Zauber F–G",
+      "digest": "sha256:6c027410ab31d99a9dd279c2129eb969ee283664ddf150dd9360679c8f65060a"
+    },
+    {
+      "documentId": "spells.h-l",
+      "slug": "zauber-h-l",
+      "title": "Zauber H–L",
+      "digest": "sha256:b5f7f5f97878e0b49b402c16b9a74c6ef932daef47956dc22c452b452eecb36e"
+    },
+    {
+      "documentId": "spells.m-p",
+      "slug": "zauber-m-p",
+      "title": "Zauber M–P",
+      "digest": "sha256:81ce9e37278adf4b2678d7c042adff60f8e3fd7fdf01d047195b8e3beeb2f6b1"
+    },
+    {
+      "documentId": "spells.r-s",
+      "slug": "zauber-r-s",
+      "title": "Zauber R–S",
+      "digest": "sha256:5e33fe8ed6f5148945b0a48404db08292259aaa13ee8c671d2d8ead5b1c858fe"
+    },
+    {
+      "documentId": "spells.t-v",
+      "slug": "zauber-t-v",
+      "title": "Zauber T–V",
+      "digest": "sha256:d591cf8b175ba3da004c27abb69b59682f8a99d20bf8702c1bfe4de4ea414140"
+    },
+    {
+      "documentId": "spells.w-z",
+      "slug": "zauber-w-z",
+      "title": "Zauber W–Z",
+      "digest": "sha256:5d2f51a961cda39c4c71d83a2e1a98edc9845ed1e773c5d7645ac5eda47be4eb"
+    },
+    {
+      "documentId": "glossary.conventions",
+      "slug": "glossar-konventionen",
+      "title": "Glossar-Konventionen",
+      "digest": "sha256:71ea67b2fd2424716e8a7da336091b490d0f4e936bc71e9665da5fdf8bac1817"
+    },
+    {
+      "documentId": "glossary.a-b",
+      "slug": "regeldefinitionen-a-b",
+      "title": "Regeldefinitionen A–B",
+      "digest": "sha256:eaeb83becfe4429a3b3a273fbedebc5a1cb531b9dbb1012e0a074a7b0fc6fe84"
+    },
+    {
+      "documentId": "glossary.c-f",
+      "slug": "regeldefinitionen-c-f",
+      "title": "Regeldefinitionen C–F",
+      "digest": "sha256:b34746899fb208432ac63cdb87997bba398502162e1f22ea63bc977453969a83"
+    },
+    {
+      "documentId": "glossary.g-h",
+      "slug": "regeldefinitionen-g-h",
+      "title": "Regeldefinitionen G–H",
+      "digest": "sha256:a2d0b86d16c1fc64bb435f2c0dac9a9346dff468c2ebcb4bd56fc3fb12924f5c"
+    },
+    {
+      "documentId": "glossary.i-k",
+      "slug": "regeldefinitionen-i-k",
+      "title": "Regeldefinitionen I–K",
+      "digest": "sha256:98e71b0109218a4f4e9c41e41756ffc725ff5ad0467c92ebe9c5299052fb8311"
+    },
+    {
+      "documentId": "glossary.l-r",
+      "slug": "regeldefinitionen-l-r",
+      "title": "Regeldefinitionen L–R",
+      "digest": "sha256:9dfc1113a530d7d6f096228356aadef6730c0cdb8ceb420b80bfb4babf9e83e0"
+    },
+    {
+      "documentId": "glossary.s",
+      "slug": "regeldefinitionen-s",
+      "title": "Regeldefinitionen S",
+      "digest": "sha256:51cc935bb551601d0dcbe3803e00d1e1be7fcab77f10c7906644a1cdd71eafa8"
+    },
+    {
+      "documentId": "glossary.t-v",
+      "slug": "regeldefinitionen-t-v",
+      "title": "Regeldefinitionen T–V",
+      "digest": "sha256:dd47cf3f68fedbe52988f38456d41a9a52ad1d28144b28cf3024f3b110df51b3"
+    },
+    {
+      "documentId": "glossary.w-z",
+      "slug": "regeldefinitionen-w-z",
+      "title": "Regeldefinitionen W–Z",
+      "digest": "sha256:34fd147f42c39039182b16d3136f3a6dc7a6ad0755207353717f2c59f43ca8c5"
+    },
+    {
+      "documentId": "toolbox.travel",
+      "slug": "reisegeschwindigkeit",
+      "title": "Reisegeschwindigkeit",
+      "digest": "sha256:156c4f1912167a228bb93299306e2fd46f1d688b223f05cd31d16c6e2ded296d"
+    },
+    {
+      "documentId": "toolbox.backgrounds",
+      "slug": "hintergrund-erschaffen",
+      "title": "Einen Hintergrund erschaffen",
+      "digest": "sha256:2019380a5596b4e326fe3184a15e770256aff15867fdba5744ef2edbfc55b78b"
+    },
+    {
+      "documentId": "toolbox.curses-diseases",
+      "slug": "fluche-und-magische-krankheiten",
+      "title": "Flüche und magische Krankheiten",
+      "digest": "sha256:737dd38a9907f32aaf96bf21ed4814e0131f90ddbedff0e07ca88e608ac23a89"
+    },
+    {
+      "documentId": "toolbox.environment",
+      "slug": "umgebungseffekte",
+      "title": "Umgebungseffekte",
+      "digest": "sha256:f4246ac49e83ac6720fd4de2edb134250063c1249b7eed620d4566480200a026"
+    },
+    {
+      "documentId": "toolbox.fear-stress",
+      "slug": "furcht-und-psychischer-stress",
+      "title": "Furcht und psychischer Stress",
+      "digest": "sha256:1a01f5443ac8f4dd9fe6f4e0e6977e120eb789d952cd7c754fc9d3245fe4d9ad"
+    },
+    {
+      "documentId": "toolbox.poison",
+      "slug": "gift",
+      "title": "Gift",
+      "digest": "sha256:5adcda7646a2a261d280601031847c45531f6be26548dd7e2e3b953fd2129f39"
+    },
+    {
+      "documentId": "toolbox.traps",
+      "slug": "fallen",
+      "title": "Fallen",
+      "digest": "sha256:c89eb132a2fb4d6d5da82d6d1354ecc1497adb094f6f7fc8e8be78da60f9be1d"
+    },
+    {
+      "documentId": "toolbox.encounters",
+      "slug": "kampfbegegnungen",
+      "title": "Kampfbegegnungen",
+      "digest": "sha256:8dec9c2d596c7ca44b4a51f1c031a8c5e3a5985a373884c144260d765f058db5"
+    },
+    {
+      "documentId": "magic-items.intro",
+      "slug": "magische-gegenstaende",
+      "title": "Magische Gegenstände",
+      "digest": "sha256:8ed17ebc8e2b31f879922fdc55d3ec0ca98daffce3fb77a12bda0c845e6bab07"
+    },
+    {
+      "documentId": "magic-items.categories",
+      "slug": "kategorien-magischer-gegenstaende",
+      "title": "Kategorien magischer Gegenstände",
+      "digest": "sha256:72275254ca424bc973b483ce7f1114f05d45871b699a07ec57c234c7777c52d6"
+    },
+    {
+      "documentId": "magic-items.rarity",
+      "slug": "seltenheit-magischer-gegenstaende",
+      "title": "Seltenheit magischer Gegenstände",
+      "digest": "sha256:eed89fd7e763a36283d85e76579fe250e0ac0d55139328f36ed5e67bf8dd3ce5"
+    },
+    {
+      "documentId": "magic-items.activation",
+      "slug": "magischen-gegenstand-aktivieren",
+      "title": "Einen magischen Gegenstand aktivieren",
+      "digest": "sha256:371d3d8ff3189584376a72456d58ab8d48a2a373a65cee13cafefbfc3817a91e"
+    },
+    {
+      "documentId": "magic-items.next-dawn",
+      "slug": "naechstes-morgengrauen",
+      "title": "„Nächstes Morgengrauen“",
+      "digest": "sha256:0fa187d424c799ed8bfe9197e9ce2dda8780f5ace21f006d514201787724d7a6"
+    },
+    {
+      "documentId": "magic-items.cursed",
+      "slug": "verfluchte-gegenstaende",
+      "title": "Verfluchte Gegenstände",
+      "digest": "sha256:a8bbbe895e1cd754fc86f3ca7fbdeb7a9da1cf6b7f62641fb0506a9f1356b01b"
+    },
+    {
+      "documentId": "magic-items.durability",
+      "slug": "haltbarkeit-magischer-gegenstaende",
+      "title": "Haltbarkeit magischer Gegenstände",
+      "digest": "sha256:c035ff61f1967d93b90ad4b790ab791f821b8bb1f0fbc741899fc3c4e8890b26"
+    },
+    {
+      "documentId": "magic-items.crafting",
+      "slug": "magische-gegenstaende-herstellen",
+      "title": "Magische Gegenstände herstellen",
+      "digest": "sha256:c416c9edb224a548670a94dd9aeaea63bf6e467bdf773c5aad45d022be227fb3"
+    },
+    {
+      "documentId": "magic-items.sentient",
+      "slug": "intelligente-magische-gegenstaende",
+      "title": "Intelligente magische Gegenstände",
+      "digest": "sha256:2e989056b98d1f81a1635eb0ad6aa4ac4c2b407df7d8843ee82f31f9aef1ad9b"
+    },
+    {
+      "documentId": "magic-items.az-intro",
+      "slug": "magische-gegenstaende-az",
+      "title": "Magische Gegenstände A–Z",
+      "digest": "sha256:fbe2b6307a08ae793cd639c553543a78225a2f92a711b700be571b459edaae58"
+    },
+    {
+      "documentId": "magic-items.a-b",
+      "slug": "magische-gegenstaende-a-b",
+      "title": "Magische Gegenstände A–B",
+      "digest": "sha256:5a9d26ec72670c3615d8fefda61906e935d912e98d6e68b67b2ea941b07557f3"
+    },
+    {
+      "documentId": "magic-items.d-e",
+      "slug": "magische-gegenstaende-d-e",
+      "title": "Magische Gegenstände D–E",
+      "digest": "sha256:c27df6165820f8e987c5fe3e9a93bc3628d8e7c8ffc8e444ec2fabe408de631e"
+    },
+    {
+      "documentId": "magic-items.f-g",
+      "slug": "magische-gegenstaende-f-g",
+      "title": "Magische Gegenstände F–G",
+      "digest": "sha256:c93eb1046cb4a57df3707a3affc604b98393089f1b8988aa5b1667264bbc7155"
+    },
+    {
+      "documentId": "magic-items.h-i",
+      "slug": "magische-gegenstaende-h-i",
+      "title": "Magische Gegenstände H–I",
+      "digest": "sha256:ca7a98a449023f1dd7748afa38954e1ae17d359ae77c566260c436e440bc23dc"
+    },
+    {
+      "documentId": "magic-items.k-m",
+      "slug": "magische-gegenstaende-k-m",
+      "title": "Magische Gegenstände K–M",
+      "digest": "sha256:a2f8defdad6fa204db7187dd868988eebcaf6f6ad27b8d8aab883f2aa8d000dd"
+    },
+    {
+      "documentId": "magic-items.n-p",
+      "slug": "magische-gegenstaende-n-p",
+      "title": "Magische Gegenstände N–P",
+      "digest": "sha256:170a8b466eff5161076fa0d36b3f9ada33a2df4e6dd5e2f94376b4134c550e2d"
+    },
+    {
+      "documentId": "magic-items.r",
+      "slug": "magische-gegenstaende-r",
+      "title": "Magische Gegenstände R",
+      "digest": "sha256:2ccf69086d187d08e2c34a46ca6e0ee738f85f3b9e06636b32ae140a3805e977"
+    },
+    {
+      "documentId": "magic-items.s",
+      "slug": "magische-gegenstaende-s",
+      "title": "Magische Gegenstände S",
+      "digest": "sha256:6060d5ad20a39aadde4ec22e247b0e92e78b8ee1e13669fe703f762468c87afd"
+    },
+    {
+      "documentId": "magic-items.t-u",
+      "slug": "magische-gegenstaende-t-u",
+      "title": "Magische Gegenstände T–U",
+      "digest": "sha256:b38c6bfb3865b666b1b2e8abe699d47d05c05a7540f04433ca638838a465b20b"
+    },
+    {
+      "documentId": "magic-items.v-w",
+      "slug": "magische-gegenstaende-v-w",
+      "title": "Magische Gegenstände V–W",
+      "digest": "sha256:12887d8c47a9bfcd04829e9df88dda0ea7a0fa4f7d8804b0e341828498658804"
+    },
+    {
+      "documentId": "magic-items.z",
+      "slug": "magische-gegenstaende-z",
+      "title": "Magische Gegenstände Z",
+      "digest": "sha256:8f0e7f3d8ea30069c39350866b664a122de7566abcd2bebf1a1be056bd8a884b"
+    },
+    {
+      "documentId": "monsters.stat-block-overview",
+      "slug": "uebersicht-wertekaesten",
+      "title": "Übersicht: Wertekästen",
+      "digest": "sha256:111bf8ae81ab53f60355e1c02ec56896e0d4ceb1d8ac0fbd37d641af7132d53d"
+    },
+    {
+      "documentId": "monsters.stat-block-elements",
+      "slug": "elemente-von-wertekaesten",
+      "title": "Elemente von Wertekästen",
+      "digest": "sha256:93c3635c1316f82e3a3910d00f9b87c645cb74c6ea772082ab5a8776841e52d1"
+    },
+    {
+      "documentId": "monsters.a-b",
+      "slug": "monster-a-b",
+      "title": "Monster A–B",
+      "digest": "sha256:5d5046a1919228a22e66029eb0ebe20df1ba0f4e4b4bd81c687ded984db0715b"
+    },
+    {
+      "documentId": "monsters.c-e",
+      "slug": "monster-c-e",
+      "title": "Monster C–E",
+      "digest": "sha256:ddef66dd361cb784c20f136fc0de6c359bfbf4b14d3c8e24838bb556d40631c0"
+    },
+    {
+      "documentId": "monsters.f-g",
+      "slug": "monster-f-g",
+      "title": "Monster F–G",
+      "digest": "sha256:cfa34952c1241a407b20b6e06a8f023ffdf8e91aa626761a1eae2ff3c321680a"
+    },
+    {
+      "documentId": "monsters.h-k",
+      "slug": "monster-h-k",
+      "title": "Monster H–K",
+      "digest": "sha256:0f68d6f0d1821ba67930fdb960cd23b7eb22aac885c339212b8be594571b1c27"
+    },
+    {
+      "documentId": "monsters.l-m",
+      "slug": "monster-l-m",
+      "title": "Monster L–M",
+      "digest": "sha256:9805bcea1af9d9c44e0ba751a1bfed10808ecf719a76d4a1a27ba8906137c1d5"
+    },
+    {
+      "documentId": "monsters.n-r",
+      "slug": "monster-n-r",
+      "title": "Monster N–R",
+      "digest": "sha256:dec44b28af980711fb33469c95abf35f35e8315bf642b4736deb26aa520b44ce"
+    },
+    {
+      "documentId": "monsters.s",
+      "slug": "monster-s",
+      "title": "Monster S",
+      "digest": "sha256:54693242ace1b1543776ac65b5dc009fb998d08b7307b881c312e49b165fb27c"
+    },
+    {
+      "documentId": "monsters.t-v",
+      "slug": "monster-t-v",
+      "title": "Monster T–V",
+      "digest": "sha256:68996b084c6beeddba53ea49df052328f93bc41fe2ba9a9b0235ef5eecb3159c"
+    },
+    {
+      "documentId": "monsters.w-z",
+      "slug": "monster-w-z",
+      "title": "Monster W–Z",
+      "digest": "sha256:93b3c5105ec0a6786669ab319970bcf4d937a678f9e17d236b9d70251d1a74eb"
+    },
+    {
+      "documentId": "animals.a-e",
+      "slug": "tiere-a-e",
+      "title": "Tiere A–E",
+      "digest": "sha256:523de9d47d18b3f54131f0e05384df72c23098270114852e9bcf2c398d5369ed"
+    },
+    {
+      "documentId": "animals.f-k",
+      "slug": "tiere-f-k",
+      "title": "Tiere F–K",
+      "digest": "sha256:30d607b3379d66a00dc1bb31a3cde123fdea96c688984db21d3acbedf3ce92cf"
+    },
+    {
+      "documentId": "animals.l-q",
+      "slug": "tiere-l-q",
+      "title": "Tiere L–Q",
+      "digest": "sha256:fc6e88c8f029ce9444adbd8697c0b6e3a7b6c7572838f93421af398e2dd6d5da"
+    },
+    {
+      "documentId": "animals.r",
+      "slug": "tiere-r",
+      "title": "Tiere R",
+      "digest": "sha256:62abd21e1f848811130124c76b02d5c6659fb0774bbee081b7c6b8af98f35933"
+    },
+    {
+      "documentId": "animals.s-z",
+      "slug": "tiere-s-z",
+      "title": "Tiere S–Z",
+      "digest": "sha256:92aff345cb53b58e4c9c7ee23803693d1f1a2d3b2a6d6abe47796da3c6231e97"
+    }
+  ],
+  "coverage": {
+    "requiredPageRanges": [
+      {
+        "first": 5,
+        "last": 412
+      }
+    ],
+    "excludedPageRanges": [
+      {
+        "first": 1,
+        "last": 1,
+        "reason": "Rechtliche Informationen; represented by the package attribution and license metadata."
+      },
+      {
+        "first": 2,
+        "last": 4,
+        "reason": "Source table of contents; represented by the generated Regelwerk navigation and coverage inventory."
+      }
+    ],
+    "reviewedPageRanges": [
+      {
+        "first": 5,
+        "last": 412
+      }
+    ],
+    "expectedTopLevelSections": [
+      {
+        "sectionId": "core",
+        "title": "Die Spielregeln",
+        "firstPage": 5,
+        "lastPage": 21
+      },
+      {
+        "sectionId": "character-creation",
+        "title": "Charaktererstellung",
+        "firstPage": 22,
+        "lastPage": 32
+      },
+      {
+        "sectionId": "classes",
+        "title": "Klassen",
+        "firstPage": 33,
+        "lastPage": 92
+      },
+      {
+        "sectionId": "character-origins",
+        "title": "Charakterherkunft",
+        "firstPage": 93,
+        "lastPage": 97
+      },
+      {
+        "sectionId": "feats",
+        "title": "Talente",
+        "firstPage": 98,
+        "lastPage": 100
+      },
+      {
+        "sectionId": "equipment",
+        "title": "Ausrüstung",
+        "firstPage": 101,
+        "lastPage": 117
+      },
+      {
+        "sectionId": "spells",
+        "title": "Zauber",
+        "firstPage": 118,
+        "lastPage": 202
+      },
+      {
+        "sectionId": "rules-glossary",
+        "title": "Regelglossar",
+        "firstPage": 203,
+        "lastPage": 221
+      },
+      {
+        "sectionId": "gameplay-toolbox",
+        "title": "Werkzeugkasten fürs Spiel",
+        "firstPage": 222,
+        "lastPage": 235
+      },
+      {
+        "sectionId": "magic-items",
+        "title": "Magische Gegenstände",
+        "firstPage": 236,
+        "lastPage": 294
+      },
+      {
+        "sectionId": "monsters",
+        "title": "Monster",
+        "firstPage": 295,
+        "lastPage": 391
+      },
+      {
+        "sectionId": "animals",
+        "title": "Tiere",
+        "firstPage": 392,
+        "lastPage": 412
+      }
+    ]
+  }
+}

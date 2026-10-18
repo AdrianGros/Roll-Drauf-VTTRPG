@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "core.combat-attacks",
+  "slug": "kampf-angriffe-und-deckung",
+  "title": "Kampf: Angriffe, Deckung und besondere Gefechtsformen",
+  "navigationPath": [
+    "Die Spielregeln",
+    "Kampf: Angriffe, Deckung und besondere Gefechtsformen"
+  ],
+  "order": 80,
+  "sourcePages": [
+    16,
+    17,
+    18
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.making-an-attack",
+      "level": 3,
+      "text": "Einen Angriff ausführen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.making-an-attack-introduction",
+      "text": "Mit der Angriffsaktion führst du einen Angriff aus. Auch manche anderen Aktionen, Bonusaktionen und Reaktionen lassen dich einen Angriff ausführen. Ob du mit einer Nahkampfwaffe zuschlägst, eine Fernkampfwaffe abfeuerst oder im Rahmen eines Zaubers einen Angriffswurf ausführst – ein Angriff hat die folgende Struktur:"
+    },
+    {
+      "type": "ordered-list",
+      "ruleId": "core.combat-attacks.making-an-attack-steps",
+      "items": [
+        "Wähle ein Ziel aus: Suche dir ein Ziel innerhalb der Reichweite deines Angriffs aus: eine Kreatur, einen Gegenstand oder einen Bereich.",
+        "Lege die Modifikatoren fest: Der SL entscheidet, ob das Ziel von Deckung (siehe nächster Abschnitt) profitiert und ob du beim Angriff im Vorteil oder im Nachteil bist. Außerdem können sich durch Zauber, Spezialfähigkeiten und andere Effekte Boni oder Mali sowie ein Vorteil oder ein Nachteil für deinen Angriffswurf ergeben.",
+        "Führe den Angriff aus: Führe den Angriffswurf aus, wie weiter vorne unter „Die Spielregeln“ beschrieben. Bei einem Treffer würfelst du den Schaden aus, es sei denn, die Art des Angriffs gibt etwas anderes an. Bestimmte Angriffe bewirken zusätzlich zum Schaden oder anstelle des Schadens spezielle Effekte."
+      ]
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.combat-attacks.unseen-attackers-and-targets",
+      "title": "Ungesehene Angreifer und Ziele",
+      "text": "Wenn du ein Ziel angreifst, das du nicht sehen kannst, bist du bei deinem Angriffswurf im Nachteil. Dies gilt auch dann, wenn du die Position des Ziels erahnst oder eine Kreatur auswählst, die du zwar nicht sehen, aber hören kannst. Wenn sich das Ziel nicht am anvisierten Ort befindet, misslingt der Angriff.\n\nWenn eine Kreatur dich nicht sehen kann, bist du bei Angriffswürfen gegen sie im Vorteil.\n\nFalls du versteckt bist, gibst du mit einem Angriffswurf unabhängig von dessen Erfolg deine Anwesenheit und deine Position preis."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.cover",
+      "level": 3,
+      "text": "Deckung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.cover-introduction",
+      "text": "Wände, Bäume, Kreaturen und andere Hindernisse können Deckung bieten und es damit schwieriger machen, ein Ziel zu treffen. Wie in der Tabelle „Deckung“ beschrieben, gibt es drei Deckungsgrade, von denen jeder dem Ziel einen anderen Vorzug verschafft."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.cover-stacking",
+      "text": "Eine Deckung ist nur wirksam, wenn der Angriff oder Effekt von der gegenüberliegenden Seite der Deckung kommt. Befindet sich das Ziel hinter mehreren Deckungen, zählt nur die wirksamste Deckung. Die Deckungen addieren sich nicht. Beispiel: Steht ein Ziel hinter einer Kreatur, die Teildeckung gibt, sowie gleichzeitig hinter einem Baum, der Dreivierteldeckung gibt, so verfügt das Ziel über Dreivierteldeckung."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.combat-attacks.cover-table",
+      "caption": "Deckung",
+      "columns": [
+        "Grad",
+        "Vorzug für das Ziel",
+        "Erhalten durch ..."
+      ],
+      "rows": [
+        [
+          "Teil",
+          "Bonus von +2 auf RK und Geschicklichkeitsrettungswürfe",
+          "... andere Kreatur oder Gegenstand, mindestens die Hälfte des Ziels ist verdeckt"
+        ],
+        [
+          "Drei-viertel",
+          "Bonus von +5 auf RK und Geschicklichkeitsrettungswürfe",
+          "... Gegenstand, mindestens drei Viertel des Ziels sind verdeckt"
+        ],
+        [
+          "Vollständig",
+          "Kann nicht zum direkten Ziel werden",
+          "... Gegenstand, das gesamte Ziel ist verdeckt"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.ranged-attacks",
+      "level": 3,
+      "text": "Fernkampfangriffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.ranged-attacks-description",
+      "text": "Bei einem Fernkampfangriff schießt du mit einem Bogen, wirfst eine Axt oder schickst auf anderem Wege Geschosse in Richtung eines Gegners in einiger Entfernung. Auch viele Zauber enthalten Fernkampfangriffe."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.ranged-attack-range",
+      "level": 4,
+      "text": "Fernkampfreichweite"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.ranged-attack-range-single",
+      "text": "Du kannst Fernkampfangriffe nur gegen Ziele innerhalb einer bestimmten Reichweite ausführen. Wenn ein Fernkampfangriff, beispielsweise mit einem Zauber, nur eine einfache Reichweite hat, kannst du keine Ziele außerhalb dieser Reichweite angreifen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.ranged-attack-range-dual",
+      "text": "Manche Fernkampfangriffe wie die mit Langbogen oder Kurzbogen haben zwei Reichweiten. Die kleinere Zahl ist die Grundreichweite, die größere die Maximalreichweite. Wenn sich dein Ziel außerhalb der Grundreichweite befindet, bist du beim Angriffswurf im Nachteil. Du kannst keine Ziele außerhalb der Maximalreichweite angreifen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.ranged-attacks-in-melee",
+      "level": 4,
+      "text": "Fernkampfangriffe im Nahkampf"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.ranged-attacks-in-melee-description",
+      "text": "Das Zielen bei einem Fernkampfangriff ist schwieriger, wenn sich der Gegner direkt neben dir befindet. Bei Fernkampfangriffen mit Waffen, Zaubern oder anderen Methoden bist du beim Angriffswurf im Nachteil, wenn das Ziel sich im Abstand von bis zu 1,5 Metern befindet, dich sehen kann und nicht kampfunfähig ist (siehe „Regelglossar“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.melee-attacks",
+      "level": 3,
+      "text": "Nahkampfangriffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.melee-attacks-description",
+      "text": "Mit einem Nahkampfangriff kannst du ein Ziel in Reichweite angreifen. Nahkampfangriffe werden üblicherweise mit Handwaffen oder als waffenlose Angriffe ausgeführt. Viele Monster führen Nahkampfangriffe mit Klauen, Zähnen oder anderen Körperteilen aus. Auch einige Zauber enthalten Nahkampfangriffe."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.melee-attack-range",
+      "level": 4,
+      "text": "Nahkampfreichweite"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.melee-attack-range-description",
+      "text": "Eine Kreatur verfügt über eine Reichweite von 1,5 Metern und kann daher Ziele innerhalb dieser Reichweite im Nahkampf angreifen. Manche Kreaturen haben Nahkampfangriffe mit einer höheren Reichweite. Dies ist in ihrer Beschreibung vermerkt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.opportunity-attacks",
+      "level": 3,
+      "text": "Gelegenheitsangriffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.opportunity-attacks-introduction",
+      "text": "Kampfteilnehmer achten darauf, ob der Gegner seine Abwehr vernachlässigt. Wenn du dich unachtsam an deinen Gegnern vorbeibewegst, bringst du dich in Gefahr und provozierst Gelegenheitsangriffe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.opportunity-attacks-avoiding",
+      "text": "Gelegenheitsangriffe vermeiden: Du kannst gegnerische Gelegenheitsangriffe vermeiden, indem du die Rückzug-Aktion ausführst. Auch wenn du dich teleportierst oder bewegt wirst, ohne dass du deine Bewegung, Aktion, Bonusaktion oder Reaktion nutzt, bleiben Gelegenheitsangriffe aus. Beispiel: Du provozierst keine Gelegenheitsangriffe, wenn eine Explosion dich aus der Reichweite des Gegners hinausschleudert oder du an einem Feind vorbeifällst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.opportunity-attacks-making",
+      "text": "Einen Gelegenheitsangriff ausführen: Du kannst einen Gelegenheitsangriff ausführen, wenn eine Kreatur, die du sehen kannst, deine Angriffsreichweite verlässt. Führe dazu eine Reaktion aus, um einen Nahkampfangriff mit einer Waffe oder einen waffenlosen Angriff gegen diese Kreatur auszuführen. Der Angriff erfolgt unmittelbar, bevor die Kreatur deine Reichweite verlässt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.mounted-combat",
+      "level": 3,
+      "text": "Berittener Kampf"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.mounted-combat-introduction",
+      "text": "Eine bereitwillige Kreatur, die um mindestens eine Kategorie größer als der Reiter ist und eine passende Anatomie besitzt, kann als Reittier dienen. Dabei gelten folgende Regeln:"
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.mounting-and-dismounting",
+      "level": 4,
+      "text": "Aufsitzen und Absitzen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.mounting-and-dismounting-description",
+      "text": "Im Zuge deiner Bewegung kannst du auf ein Reittier, das sich im Abstand von bis zu 1,5 Metern von dir befindet, aufsitzen oder von ihm absteigen. Dies kostet dich die Hälfte deiner Bewegungsrate (abgerundet). Besitzt du beispielsweise eine Bewegungsrate von neun Metern, so musst du 4,5 Meter davon verbrauchen, um auf ein Pferd aufzusitzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.controlling-a-mount",
+      "level": 4,
+      "text": "Ein Reittier kontrollieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.controlling-a-mount-requirement",
+      "text": "Du kannst dein Reittier nur dann kontrollieren, wenn es entsprechend abgerichtet wurde. Bei domestizierten Pferden, Maultieren und ähnlichen Kreaturen ist dies der Fall."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.controlling-a-mount-controlled",
+      "text": "Kontrollierst du dein Reittier, so entspricht seine Initiative deiner eigenen, sobald du aufsitzt. Es bewegt sich in deinem Zug, wie du es ihm vorgibst, und hat während des Zugs drei Aktionsmöglichkeiten: Spurt, Rückzug und Ausweichen. Ein von dir kontrolliertes Reittier kann bereits in dem Zug, in dem du aufsitzt, handeln und sich bewegen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.controlling-a-mount-independent",
+      "text": "Ein unabhängiges Reittier – das dich aufsitzen, sich aber nicht kontrollieren lässt – behält hingegen seinen eigenen Platz in der Initiativereihenfolge bei und bewegt sich und handelt nach seinem Willen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.falling-off",
+      "level": 4,
+      "text": "Herunterfallen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.falling-off-description",
+      "text": "Wenn das Reittier, auf dem du sitzt, durch einen Effekt gegen seinen Willen bewegt wird, musst du einen SG-10-Geschicklichkeitsrettungswurf bestehen, damit du nicht herunterfällst. Bei einem Misserfolg landest du liegend (siehe „Regelglossar“) in einem freien Bereich im Abstand von bis zu 1,5 Metern vom Reittier."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.falling-off-shared-save",
+      "text": "Wirst du oder wird dein Reittier umgestoßen, während du reitest, so musst du den gleichen Rettungswurf ausführen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.underwater-combat",
+      "level": 3,
+      "text": "Unterwasserkampf"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.underwater-combat-introduction",
+      "text": "Bei einem Kampf unter Wasser gelten folgende Regeln:"
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.impeded-weapons",
+      "level": 4,
+      "text": "Beeinträchtigte Waffen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.impeded-weapons-melee",
+      "text": "Kreaturen ohne Schwimmbewegungsrate sind bei ihren Nahkampfangriffswürfen mit einer Waffe unter Wasser im Nachteil, sofern die Waffe keinen Stichschaden bewirkt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.impeded-weapons-ranged",
+      "text": "Fernkampfangriffswürfe mit einer Waffe unter Wasser verfehlen das Ziel außerhalb der Grundreichweite der Waffe automatisch, und gegen Ziele innerhalb der Grundreichweite sind sie im Nachteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.combat-attacks.fire-resistance",
+      "level": 4,
+      "text": "Feuerresistenz"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.combat-attacks.fire-resistance-description",
+      "text": "Alles unter Wasser ist gegen Feuerschaden resistent (erläutert unter „Schaden und Heilung“)."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.actions.actions-table",
+      "label": "Aktionen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.combat-turns.creature-size-table",
+      "label": "Kreaturengröße und Bereich"
+    }
+  ],
+  "digest": "sha256:aff9b10d66115e93f133e09f4ed2760af4f0312ec9c51ede7dd1fb6b706d71d9"
+}

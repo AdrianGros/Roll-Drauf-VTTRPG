@@ -1,0 +1,2075 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "spells.w-z",
+  "slug": "zauber-w-z",
+  "title": "Zauber W–Z",
+  "navigationPath": [
+    "Zauber",
+    "Zauber W–Z"
+  ],
+  "order": 780,
+  "sourcePages": [
+    193,
+    194,
+    195,
+    196,
+    197,
+    198,
+    199,
+    200,
+    201,
+    202
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.beschreibungen",
+      "level": 2,
+      "text": "Beschreibungen der Zauber (W–Z)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.waechter-und-hueter",
+      "level": 3,
+      "text": "Wächter und Hüter"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waechter-und-hueter.schule",
+      "text": "Bannzauber 6. Grades (Barde, Magier)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.waechter-und-hueter.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "1 Stunde"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Silberstab im Wert von mindestens 10 GM)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "24 Stunden"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waechter-und-hueter.text-1",
+      "text": "Du erschaffst einen Schutz, der einen Bereich von bis zu 225 Quadratmetern auf dem Boden abdeckt. Der geschützte Bereich kann bis zu sechs Meter hoch sein. Du kannst ihn als Quadrat mit 15 Metern Kantenlänge, als hundert aneinandergrenzende Quadrate mit 1,5 Metern Kantenlänge oder als 25 aneinandergrenzende Quadrate mit drei Metern Kantenlänge formen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waechter-und-hueter.text-2",
+      "text": "Wenn du diesen Zauber wirkst, kannst du Individuen bestimmen, die von seinen Effekten nicht betroffen sind. Du kannst auch ein Kennwort festlegen, das den Sprecher gegen die Effekte immunisiert, wenn es im Abstand von bis zu 1,5 Metern vom geschützten Bereich ausgesprochen wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waechter-und-hueter.text-3",
+      "text": "Der Zauber erzeugt im geschützten Bereich die unten genannten Effekte. Magie bannen hat keinen Effekt auf Wächter und Hüter selbst, aber jeder der folgenden Effekte kann gebannt werden. Werden alle vier Effekte gebannt, so endet Wächter und Hüter. Wenn du den Zauber 365 Tage lang täglich auf denselben Bereich wirkst, bleibt er wirksam, bis seine Effekte aufgelöst werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waechter-und-hueter.text-4",
+      "text": "Korridore: Alle geschützten Korridore sind mit Nebel erfüllt und dadurch komplett verschleiert. Außerdem besteht an jeder Kreuzung oder Abzweigung eine Chance von 50 Prozent, dass eine Kreatur (außer dir selbst) glaubt, in die entgegengesetzte Richtung zu gehen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waechter-und-hueter.text-5",
+      "text": "Treppen: Alle Treppen im geschützten Bereich werden von der Decke bis zum Boden von Spinnennetzen blockiert, so wie beim Zauber Netz. Wenn die Fäden zerstört werden, wachsen sie für die Wirkungsdauer von Wächter und Hüter innerhalb von zehn Minuten nach."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waechter-und-hueter.text-6",
+      "text": "Türen: Alle Türen im geschützten Bereich sind auf magische Art verschlossen, wie durch den Zauber Arkanes Schloss. Außerdem kannst du bis zu zehn Türen mit einer Illusion verbergen, sodass sie als normale Wand erscheinen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waechter-und-hueter.text-7",
+      "text": "Andere Zaubereffekte: Platziere einen der folgenden magischen Effekte im geschützten Bereich:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "spells.w-z.waechter-und-hueter.liste-1",
+      "items": [
+        "Tanzende Lichter in vier Korridoren mit einem einfachen Muster, das die Lichter für die Wirkungsdauer von Wächter und Hüter wiederholen",
+        "Magischer Mund an zwei Orten",
+        "Stinkende Wolke an zwei Orten (solange Wächter und Hüter wirkt, kehren die Dämpfe nach zehn Minuten zurück, wenn sie aufgelöst werden)",
+        "Windstoß in einem Korridor oder Raum (der Wind weht für die Wirkungsdauer kontinuierlich)",
+        "Einflüsterung in einem Würfel mit 1,5 Metern Kantenlänge. Jede Kreatur, die den Würfel betritt, erhält die Einflüsterung mental"
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.waffe-des-glaubens",
+      "level": 3,
+      "text": "Waffe des Glaubens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waffe-des-glaubens.schule",
+      "text": "Hervorrufungszauber 2. Grades (Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.waffe-des-glaubens.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Bonusaktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "18 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Minute"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waffe-des-glaubens.text-1",
+      "text": "Du erzeugst eine schwebende geisterhafte Kraft, die wie eine Waffe deiner Wahl aussieht und für die Wirkungsdauer bestehen bleibt. Die Kraft erscheint in einem Bereich deiner Wahl in Reichweite, und du kannst sofort einen Nahkampf-Zauberangriff gegen eine Kreatur im Abstand von bis zu 1,5 Metern von der Kraft ausführen. Bei einem Treffer erleidet das Ziel Energieschaden in Höhe von 1W8 plus deinem Zauberwirken-Attributsmodifikator."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waffe-des-glaubens.text-2",
+      "text": "In deinen folgenden Zügen kannst du die Waffe als Bonusaktion um bis zu sechs Meter bewegen und einen weiteren Angriff gegen eine Kreatur im Abstand von bis zu 1,5 Metern von ihr ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waffe-des-glaubens.text-3",
+      "text": "Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 2. wird der Schaden um 1W8 erhöht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wahre-auferstehung",
+      "level": 3,
+      "text": "Wahre Auferstehung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-auferstehung.schule",
+      "text": "Nekromantiezauber 9. Grades (Druide, Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wahre-auferstehung.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "1 Stunde"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (Diamanten im Wert von 25.000 GM, die der Zauber verbraucht)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-auferstehung.text-1",
+      "text": "Du berührst eine tote Kreatur. Ihr Tod darf höchstens 200 Jahre zurückliegen, und sie darf nicht an Altersschwäche gestorben sein. Die Kreatur wird mit allen Trefferpunkten wiederbelebt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-auferstehung.text-2",
+      "text": "Dieser Zauber schließt alle Wunden, neutralisiert jedes Gift, heilt alle magischen Krankheiten und bannt sämtliche Flüche, unter denen die Kreatur zum Zeitpunkt ihres Todes gelitten hat. Beschädigte oder fehlende Organe und Gliedmaßen werden ersetzt. Wenn die Kreatur untot war, wird ihre nicht-untote Gestalt wiederhergestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-auferstehung.text-3",
+      "text": "Der Zauber kann einen neuen Körper erschaffen, wenn der ursprüngliche Körper nicht mehr existiert. In diesem Fall musst du den Namen der Kreatur aussprechen. Die Kreatur erscheint dann in einem freien Bereich deiner Wahl im Abstand von bis zu drei Metern von dir."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wahrer-blick",
+      "level": 3,
+      "text": "Wahrer Blick"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahrer-blick.schule",
+      "text": "Erkenntniszauber 6. Grades (Barde, Hexenmeister, Kleriker, Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wahrer-blick.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (Pilzpulver im Wert von mindestens 25 GM, das der Zauber verbraucht)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "1 Stunde"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahrer-blick.text-1",
+      "text": "Für die Wirkungsdauer hat eine bereitwillige Kreatur, die du berührst, Wahrer Blick mit einer Reichweite von 36 Metern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wahre-verwandlung",
+      "level": 3,
+      "text": "Wahre Verwandlung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.schule",
+      "text": "Verwandlungszauber 9. Grades (Barde, Hexenmeister, Magier)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wahre-verwandlung.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "9 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Tropfen Quecksilber, ein Stück Gummiarabikum und eine Rauchschwade)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Stunde"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-1",
+      "text": "Wähle ein Ziel – eine Kreatur oder einen nichtmagischen Gegenstand – in Reichweite aus, das du sehen kannst. Eine Kreatur verwandelt sich in eine andere Kreatur oder einen nichtmagischen Gegenstand. Ein Gegenstand, der weder getragen noch gehalten werden darf, verwandelt sich in eine Kreatur. Die Verwandlung bleibt für die Wirkungsdauer bestehen, sofern das Ziel nicht stirbt oder zerstört wird. Wenn du allerdings deine Konzentration auf diesen Zauber für die gesamte Wirkungsdauer aufrechterhältst, wirkt der Zauber, bis er gebannt wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-2",
+      "text": "Eine nicht bereitwillige Kreatur kann einen Weisheitsrettungswurf ausführen. Bei einem Erfolg ist sie nicht von diesem Zauber betroffen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-3",
+      "text": "Kreatur in Kreatur: Verwandelst du eine Kreatur in eine andere Kreatur, so kannst du eine beliebige Gestalt wählen, deren Herausforderungsgrad nicht höher ist als der Herausforderungsgrad oder die Stufe des Ziels. Die Spielwerte des Ziels werden durch den Wertekasten der neuen Gestalt ersetzt. Das Ziel behält jedoch Trefferpunkte, Trefferpunktewürfel, Gesinnung und Persönlichkeit bei."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-4",
+      "text": "Das Ziel erhält eine Anzahl von temporären Trefferpunkten, die der Anzahl von Trefferpunkten der neuen Gestalt entspricht. Nach der Wirkungsdauer dieses Zaubers verbleibende temporäre Trefferpunkte gehen verloren."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-5",
+      "text": "Das Ziel kann nur Aktionen ausführen, die in seiner neuen Gestalt anatomisch möglich sind. Es kann weder sprechen noch Zauber wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-6",
+      "text": "Die Ausrüstung des Ziels verschmilzt mit seiner neuen Gestalt. Die Kreatur kann die Ausrüstung nicht verwenden oder anderweitig nutzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-7",
+      "text": "Gegenstand in Kreatur: Du kannst einen Gegenstand in eine beliebige Kreatur verwandeln, sofern die Kreatur nicht größer als der Gegenstand ist und ihr Herausforderungsgrad höchstens 9 beträgt. Die Kreatur ist dir und deinen Verbündeten freundlich gesinnt. Im Kampf ist sie unmittelbar nach dir am Zug, und sie gehorcht deinen Befehlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-8",
+      "text": "Wenn der Zauber länger als eine Stunde andauert, kannst du die Kreatur nicht mehr kontrollieren. Sie kann dir freundlich gesinnt bleiben, je nachdem, wie du sie behandelt hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wahre-verwandlung.text-9",
+      "text": "Kreatur in Gegenstand: Verwandelst du eine Kreatur in einen Gegenstand, so verwandelt sie sich mit allem, was sie trägt und in der Hand hält. Der Gegenstand darf nicht größer sein als die Kreatur. Die Spielwerte der Kreatur werden zu denen des Gegenstands. Wenn der Zauber endet und das Ziel wieder seine ursprüngliche Gestalt annimmt, besitzt es keine Erinnerungen an die Zeit, die es als Gegenstand verbracht hat."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.waende-passieren",
+      "level": 3,
+      "text": "Wände passieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waende-passieren.schule",
+      "text": "Verwandlungszauber 5. Grades (Magier)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.waende-passieren.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "9 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (eine Prise Sesamkörner)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "1 Stunde"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waende-passieren.text-1",
+      "text": "An einem Punkt in Reichweite auf einer Oberfläche aus Holz, Gips oder Stein (beispielsweise eine Mauer, eine Decke oder ein Fußboden), den du sehen kannst, erscheint ein Durchgang, der für die Wirkungsdauer bestehen bleibt. Du bestimmst die Ausmaße des Durchgangs: höchstens 1,5 Meter breit, 2,4 Meter hoch und sechs Meter tief. Der Durchgang macht das umgebende Gebäude nicht instabil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.waende-passieren.text-2",
+      "text": "Wenn der Durchgang verschwindet, gelangen sämtliche Kreaturen und Gegenstände, die sich noch darin befinden, in den freien Bereich, der der Oberfläche, auf die der Zauber gewirkt wurde, am nächsten liegt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wasser-atmen",
+      "level": 3,
+      "text": "Wasser atmen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-atmen.schule",
+      "text": "Verwandlungszauber 3. Grades (Druide, Magier, Waldläufer, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wasser-atmen.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion oder Ritual"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "9 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein kurzes Schilfrohr)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "24 Stunden"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-atmen.text-1",
+      "text": "Bis zu zehn bereitwillige Kreaturen deiner Wahl in Reichweite können für die Wirkungsdauer unter Wasser atmen. Betroffene Kreaturen verfügen weiterhin über ihre normale Atmung."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wasser-erschaffen-oder-zerstoeren",
+      "level": 3,
+      "text": "Wasser erschaffen oder zerstören"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-erschaffen-oder-zerstoeren.schule",
+      "text": "Verwandlungszauber 1. Grades (Druide, Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wasser-erschaffen-oder-zerstoeren.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "9 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (eine Mischung aus Wasser und Sand)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-erschaffen-oder-zerstoeren.text-1",
+      "text": "Du führst eine der folgenden Handlungen aus:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-erschaffen-oder-zerstoeren.text-2",
+      "text": "Wasser erschaffen: Du erschaffst bis zu 40 Liter sauberes Wasser in einem offenen Behälter in Reichweite. Alternativ geht das Wasser als Regen in einem Würfel mit neun Metern Kantenlänge in Reichweite nieder und löscht dort offene Flammen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-erschaffen-oder-zerstoeren.text-3",
+      "text": "Wasser zerstören: Du zerstörst bis zu 40 Liter Wasser in einem offenen Behälter in Reichweite."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-erschaffen-oder-zerstoeren.text-4",
+      "text": "Alternativ zerstörst du Nebel in einem Würfel mit neun Metern Kantenlänge in Reichweite."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-erschaffen-oder-zerstoeren.text-5",
+      "text": "Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. kannst du zusätzliche 40 Liter Wasser erschaffen oder zerstören oder die Kantenlänge des Würfels um 1,5 Meter erhöhen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wasser-kontrollieren",
+      "level": 3,
+      "text": "Wasser kontrollieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-kontrollieren.schule",
+      "text": "Verwandlungszauber 4. Grades (Druide, Kleriker, Magier)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wasser-kontrollieren.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "90 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (eine Mischung aus Wasser und Staub)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 10 Minuten"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-kontrollieren.text-1",
+      "text": "Für die Wirkungsdauer kontrollierst du jedes Gewässer in einem Bereich deiner Wahl, der einem Würfel mit bis zu 30 Metern Kantenlänge entspricht, und nutzt dabei einen der folgenden Effekte. Als magische Aktion in deinen folgenden Zügen kannst du den gleichen Effekt wiederholen oder einen anderen auswählen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-kontrollieren.text-2",
+      "text": "Der Wasserspiegel bleibt erhöht, bis der Zauber endet oder du einen anderen Effekt auswählst. Wenn dieser Effekt eine Welle erzeugt, wiederholt sich diese zu Beginn deines nächsten Zugs, solange der Flut-Effekt anhält."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-kontrollieren.text-3",
+      "text": "Fluss umlenken: Du bewirkst, dass sich fließendes Wasser im Bereich in eine Richtung deiner Wahl bewegt, selbst wenn es dafür über Hindernisse, an Wänden empor oder in andere unwahrscheinliche Richtungen strömen muss. Das Wasser im Bereich bewegt sich nach deinen Vorgaben. Sobald es jedoch den Bereich des Zaubers verlässt, fließt es wieder je nach Gelände. Das Wasser strömt in die Richtung deiner Wahl, bis der Zauber endet oder du einen anderen Effekt auswählst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-kontrollieren.text-4",
+      "text": "Flut: Du lässt den Wasserspiegel aller stehenden Gewässer im Bereich um bis zu sechs Meter ansteigen. Wenn du einen Bereich in einem größeren Gewässer auswählst, erschaffst du stattdessen eine sechs Meter hohe Welle, die sich von einer Seite des Bereichs zum anderen bewegt und dann bricht. Alle Fahrzeuge von höchstens riesiger Größe im Weg der Welle werden mit ihr zur anderen Seite bewegt. Wenn ein solches Fahrzeug von der Welle getroffen wird, besteht eine Chance von 25 Prozent, dass es kentert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-kontrollieren.text-5",
+      "text": "Wasser teilen: Du teilst das Wasser im Bereich und erschaffst einen Graben, der sich durch den Wirkungsbereich zieht. Das Wasser ragt auf beiden Seiten wie eine Mauer auf. Der Graben bleibt bestehen, bis der Zauber endet oder du einen anderen Effekt auswählst. Anschließend füllt das Wasser im Verlauf der nächsten Runde langsam den Graben, bis der normale Wasserspiegel wiederhergestellt ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasser-kontrollieren.text-6",
+      "text": "Wasserstrudel: Du erschaffst einen Wasserstrudel in der Mitte eines Bereichs von mindestens 15 mal 15 Metern und einer Tiefe von 7,5 Metern. Der Strudel bleibt bestehen, bis du einen anderen Effekt auswählst oder der Zauber endet. Er ist 7,5 Meter hoch, an der Basis 1,5 Meter breit und an der Spitze bis zu 15 Meter breit. Alle Kreaturen, die sich im Wasser im Abstand von bis zu 7,5 Metern um den Strudel befinden, werden drei Meter weit in seine Richtung gezogen. Wenn eine Kreatur in einem Zug erstmals in den Bereich des Strudels gelangt oder ihren Zug dort beendet, führt sie einen Stärkerettungswurf aus. Misslingt der Wurf, so erleidet die Kreatur 2W8 Wuchtschaden. Bei einem erfolgreichen Rettungswurf erleidet die Kreatur halb so viel Schaden. Eine Kreatur kann nur dann vom Strudel wegschwimmen, wenn sie zunächst eine Aktion ausführt, um sich zu entfernen, und einen Stärkewurf (Athletik) gegen deinen Zauberrettungswurf-SG besteht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wasserwandeln",
+      "level": 3,
+      "text": "Wasserwandeln"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasserwandeln.schule",
+      "text": "Verwandlungszauber 3. Grades (Druide, Kleriker, Waldläufer, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wasserwandeln.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion oder Ritual"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "9 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Stück Kork)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "1 Stunde"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasserwandeln.text-1",
+      "text": "Dieser Zauber verleiht die Fähigkeit, sich über flüssige Oberflächen zu bewegen, darunter Wasser, Säure, Schlamm, Schnee, Treibsand oder Lava, als handele es sich um ungefährlichen, festen Boden (Kreaturen, die sich über geschmolzene Lava bewegen, können jedoch trotzdem Hitzeschaden erleiden). Bis zu zehn bereitwillige Kreaturen deiner Wahl in Reichweite erhalten für die Wirkungsdauer diese Fähigkeit."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wasserwandeln.text-2",
+      "text": "Ein betroffenes Ziel muss eine Bonusaktion ausführen, um von der Oberfläche der Flüssigkeit in die Flüssigkeit zu gelangen und umgekehrt. Wenn das Ziel jedoch in den Bereich fällt, gelangt es automatisch durch die Oberfläche in die Flüssigkeit darunter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.weg-finden",
+      "level": 3,
+      "text": "Weg finden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weg-finden.schule",
+      "text": "Erkenntniszauber 6. Grades (Barde, Druide, Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.weg-finden.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "1 Minute"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Satz Weissagungsgegenstände wie Karten oder Runen im Wert von mindestens 100 GM)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Tag"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weg-finden.text-1",
+      "text": "Du spürst auf magische Art den direktesten physischen Weg zu einem Ort, den du nennst. Der Ort muss dir bekannt sein. Der Zauber misslingt, wenn du ein Ziel auf einer anderen Existenzebene, ein bewegtes Ziel (beispielsweise eine mobile Festung) oder ein unspezifisches Ziel (beispielsweise „Hort eines grünen Drachen“) nennst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weg-finden.text-2",
+      "text": "Während der Wirkungsdauer weißt du, wie weit der Zielort entfernt ist und in welcher Richtung er liegt, sofern du dich auf derselben Existenzebene befindest. Wann immer du unterwegs eine Wahl zwischen verschiedenen Wegen hast, weißt du, welcher Weg der direkteste ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.weihen",
+      "level": 3,
+      "text": "Weihen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.schule",
+      "text": "Bannzauber 5. Grades (Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.weihen.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "24 Stunden"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (Weihrauch im Wert von mindestens 1.000 GM, den der Zauber verbraucht)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Bis der Zauber gebannt wird"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-1",
+      "text": "Du berührst einen Punkt und erfüllst den Bereich um ihn herum mit heiliger oder unheiliger Macht. Der Bereich kann einen Radius von bis zu 18 Metern haben. Wenn dazu ein Bereich gehört, der bereits unter dem Effekt von Weihen steht, misslingt der Zauber. Im betroffenen Bereich wirken folgende Effekte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-2",
+      "text": "Geheiligter Schutz: Wähle beliebige der folgenden Kreaturentypen aus: Aberration, celestisches Wesen, Elementar, Feenwesen, Unhold oder Untoter. Kreaturen des ausgewählten Typs können den Bereich nicht willentlich betreten, und Kreaturen innerhalb des Bereichs, die von solchen Wesen besessen, bezaubert oder verängstigt sind, sind innerhalb des Bereichs nicht von ihnen besessen, bezaubert oder verängstigt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-3",
+      "text": "Zusätzlicher Effekt: Du bindest einen zusätzlichen Effekt aus der folgenden Liste an den Bereich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-4",
+      "text": "Anfälligkeit: Kreaturen der von dir ausgewählten Typen sind anfällig für eine Schadensart deiner Wahl, solange sie sich im Bereich aufhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-5",
+      "text": "Dunkelheit: Dunkelheit erfüllt den Bereich. Weder natürliches noch magisches Licht durch Zauber eines niedrigeren Grades als dem dieses Zaubers kann den Bereich erhellen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-6",
+      "text": "Extradimensionale Interferenz: Kreaturen der von dir ausgewählten Typen können nicht mittels Teleportation oder auf extradimensionale oder interplanare Art in den Bereich oder aus ihm heraus gelangen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-7",
+      "text": "Friedliche Ruhe: Leichen innerhalb des Bereichs können nicht in Untote verwandelt werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-8",
+      "text": "Furcht: Kreaturen der von dir ausgewählten Typen sind verängstigt, solange sie sich im Bereich aufhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-9",
+      "text": "Mut: Kreaturen der von dir ausgewählten Typen können nicht verängstigt werden, solange sie sich im Bereich aufhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-10",
+      "text": "Resistenz: Kreaturen der von dir ausgewählten Typen sind resistent gegen eine Schadensart deiner Wahl, solange sie sich im Bereich aufhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-11",
+      "text": "Stille: Geräusche können weder in den Bereich hinein- noch aus ihm herausdringen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-12",
+      "text": "Tageslicht: Helles Licht erfüllt den Bereich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-13",
+      "text": "Magische Dunkelheit durch Zauber eines niedrigeren Grades als dem dieses Zaubers kann den Bereich nicht verdunkeln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weihen.text-14",
+      "text": "Zungen: Kreaturen der von dir ausgewählten Typen können mit allen anderen Kreaturen im Bereich kommunizieren, auch wenn sie keine gemeinsame Sprache sprechen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.weissagung",
+      "level": 3,
+      "text": "Weissagung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weissagung.schule",
+      "text": "Erkenntniszauber 4. Grades (Druide, Kleriker, Magier)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.weissagung.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion oder Ritual"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (Weihrauch im Wert von mindestens 25 GM, den der Zauber verbraucht)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weissagung.text-1",
+      "text": "Dieser Zauber bringt dich mit einem Gott oder dem Diener eines Gottes in Kontakt. Du stellst eine Frage zu einem bestimmten Ziel, einem Ereignis oder einer Aktivität der kommenden sieben Tage. Der SL antwortet wahrheitsgemäß in Form eines kurzen Satzes oder eines kryptischen Reims. Der Zauber berücksichtigt keinerlei Umstände, die das Ergebnis ändern könnten, beispielsweise das Wirken anderer Zauber."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.weissagung.text-2",
+      "text": "Wenn du den Zauber vor einer langen Rast häufiger als einmal wirkst, erhöht dies das Risiko, keine Antwort zu erhalten, mit jedem Wirken nach dem ersten um jeweils 25 Prozent."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wesen-des-waldes-beschwoeren",
+      "level": 3,
+      "text": "Wesen des Waldes beschwören"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wesen-des-waldes-beschwoeren.schule",
+      "text": "Beschwörungszauber 4. Grades (Druide, Waldläufer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wesen-des-waldes-beschwoeren.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 10 Minuten"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wesen-des-waldes-beschwoeren.text-1",
+      "text": "Du beschwörst Naturgeister, die dich für die Wirkungsdauer in einer Ausströmung von drei Metern umschwirren. Wann immer die Ausströmung in den Bereich einer Kreatur gelangt, die du sehen kannst, und wann immer eine Kreatur, die du sehen kannst, die Ausströmung betritt oder ihren Zug dort beendet, kannst du die Kreatur zu einem Weisheitsrettungswurf zwingen. Misslingt der Wurf, so erleidet die Kreatur 5W8 Energieschaden, anderenfalls die Hälfte. Eine Kreatur kann diesen Rettungswurf nur einmal pro Zug ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wesen-des-waldes-beschwoeren.text-2",
+      "text": "Außerdem kannst du für die Wirkungsdauer des Zaubers die Rückzug-Aktion als Bonusaktion ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wesen-des-waldes-beschwoeren.text-3",
+      "text": "Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 4. wird der Schaden um 1W8 erhöht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wetterkontrolle",
+      "level": 3,
+      "text": "Wetterkontrolle"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wetterkontrolle.schule",
+      "text": "Verwandlungszauber 8. Grades (Druide, Kleriker, Magier)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wetterkontrolle.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "10 Minuten"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (brennender Weihrauch)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 8 Stunden"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wetterkontrolle.text-1",
+      "text": "Für die Wirkungsdauer kontrollierst du das Wetter im Abstand von bis zu acht Kilometern. Du musst dich im Freien befinden, wenn du diesen Zauber wirkst. Der Zauber endet vorzeitig, wenn du nach drinnen gehst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wetterkontrolle.text-2",
+      "text": "Wenn du den Zauber wirkst, änderst du die aktuellen Wetterbedingungen, die vom SL bestimmt werden. Du kannst Niederschlag, Temperatur und Wind beeinflussen. Es dauert 1W4 mal zehn Minuten, bis die neuen Bedingungen in Kraft treten. Danach kannst du die Bedingungen erneut ändern. Wenn der Zauber endet, normalisiert sich das Wetter allmählich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wetterkontrolle.text-3",
+      "text": "Finde zum Ändern des Wetters eine aktuelle Wetterbedingung in der folgenden Tabelle und ändere sie eine Stufe nach oben oder unten. Wenn du den Wind änderst, kannst du auch seine Richtung ändern."
+    },
+    {
+      "type": "table",
+      "ruleId": "spells.w-z.wetterkontrolle.tabelle-niederschlag",
+      "caption": "Niederschlag",
+      "columns": [
+        "Stufe",
+        "Bedingung"
+      ],
+      "rows": [
+        [
+          "1",
+          "Wolkenlos"
+        ],
+        [
+          "2",
+          "Leicht bewölkt"
+        ],
+        [
+          "3",
+          "Bewölkt oder Bodennebel"
+        ],
+        [
+          "4",
+          "Regen, Hagel oder Schnee"
+        ],
+        [
+          "5",
+          "Starkregen, Hagelsturm oder Schneesturm"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "spells.w-z.wetterkontrolle.tabelle-temperatur",
+      "caption": "Temperatur",
+      "columns": [
+        "Stufe",
+        "Bedingung"
+      ],
+      "rows": [
+        [
+          "1",
+          "Extrem heiß"
+        ],
+        [
+          "2",
+          "Heiß"
+        ],
+        [
+          "3",
+          "Warm"
+        ],
+        [
+          "4",
+          "Kühl"
+        ],
+        [
+          "5",
+          "Kalt"
+        ],
+        [
+          "6",
+          "Eisig"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "spells.w-z.wetterkontrolle.tabelle-wind",
+      "caption": "Wind",
+      "columns": [
+        "Stufe",
+        "Bedingung"
+      ],
+      "rows": [
+        [
+          "1",
+          "Flaute"
+        ],
+        [
+          "2",
+          "Mäßiger Wind"
+        ],
+        [
+          "3",
+          "Starker Wind"
+        ],
+        [
+          "4",
+          "Starke Böen"
+        ],
+        [
+          "5",
+          "Sturm"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.widerstand",
+      "level": 3,
+      "text": "Widerstand"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.widerstand.schule",
+      "text": "Zaubertrick des Banns (Druide, Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.widerstand.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Minute"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.widerstand.text-1",
+      "text": "Du berührst eine bereitwillige Kreatur und wählst eine Schadensart aus: Blitz, Feuer, Gift, Gleißend, Hieb, Kälte, Nekrotisch, Säure, Schall, Stich oder Wucht. Wenn die Kreatur während der Wirkungsdauer Schaden des ausgewählten Typs erleidet, verringert sie den erlittenen Gesamtschaden um 1W4. Eine Kreatur kann von diesem Zauber nur einmal pro Zug profitieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wiederbeleben",
+      "level": 3,
+      "text": "Wiederbeleben"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wiederbeleben.schule",
+      "text": "Nekromantiezauber 3. Grades (Druide, Kleriker, Paladin, Waldläufer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wiederbeleben.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Diamant im Wert von mindestens 300 GM, den der Zauber verbraucht)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wiederbeleben.text-1",
+      "text": "Du berührst eine Kreatur, die innerhalb der letzten Minute gestorben ist. Diese Kreatur wird mit 1 Trefferpunkt wiederbelebt. Dieser Zauber kann keine Kreaturen wiederbeleben, die an Altersschwäche gestorben sind, und stellt auch keine fehlenden Körperteile wieder her."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wiedergeburt",
+      "level": 3,
+      "text": "Wiedergeburt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wiedergeburt.schule",
+      "text": "Nekromantiezauber 5. Grades (Druide)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wiedergeburt.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "1 Stunde"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (seltene Öle im Wert von mindestens 1.000 GM, die der Zauber verbraucht)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wiedergeburt.text-1",
+      "text": "Du berührst einen toten Humanoiden oder seine Überreste. Sofern die Kreatur höchstens zehn Tage lang tot war, erschafft der Zauber einen neuen Körper für sie und ruft die Seele in diesen Körper. Würfle mit 1W10 und ermittle die Spezies des Körpers anhand der Tabelle unten, oder der SL wählt eine andere spielbare Spezies aus."
+    },
+    {
+      "type": "table",
+      "ruleId": "spells.w-z.wiedergeburt.tabelle-spezies",
+      "caption": "Spezies",
+      "columns": [
+        "1W10",
+        "Spezies",
+        "1W10",
+        "Spezies"
+      ],
+      "rows": [
+        [
+          "1",
+          "Drachenblütiger",
+          "6",
+          "Halblingisch"
+        ],
+        [
+          "2",
+          "Elf",
+          "7",
+          "Mensch"
+        ],
+        [
+          "3",
+          "Erneut würfeln",
+          "8",
+          "Orkisch"
+        ],
+        [
+          "4",
+          "Gnom",
+          "9",
+          "Tiefling"
+        ],
+        [
+          "5",
+          "Goliath",
+          "10",
+          "Zwerg"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wiedergeburt.text-2",
+      "text": "Die reinkarnierte Kreatur trifft alle Entscheidungen, welche die Beschreibung ihrer Spezies bietet, und erinnert sich an ihr voriges Leben. Sie behält die Fähigkeiten bei, die sie in der ursprünglichen Gestalt hatte, verliert jedoch die Merkmale der bisherigen Spezies und erhält die Merkmale der neuen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.windstoss",
+      "level": 3,
+      "text": "Windstoß"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windstoss.schule",
+      "text": "Hervorrufungszauber 2. Grades (Druide, Magier, Waldläufer, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.windstoss.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Hülsenfruchtsamen)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Minute"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windstoss.text-1",
+      "text": "Für die Wirkungsdauer weht von dir ausgehend ein starker Wind in einer Linie mit 18 Metern Länge und drei Metern Breite in eine Richtung deiner Wahl. Jede Kreatur innerhalb der Linie muss einen Stärkerettungswurf bestehen, oder sie wird entlang der Linie 4,5 Meter weit von dir weggestoßen. Eine Kreatur, die ihren Zug innerhalb der Linie beendet, muss den Rettungswurf ebenfalls ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windstoss.text-2",
+      "text": "Jede Kreatur innerhalb der Linie muss für jeden Meter, den sie sich auf dich zubewegt, zwei Meter ihrer Bewegungsrate verbrauchen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windstoss.text-3",
+      "text": "Der Windstoß zerstreut Gas und Dampf und löscht Kerzen und ähnliche ungeschützte Flammen in seinem Bereich. Geschützte Flammen wie die von Laternen flackern wild. Es besteht eine Chance von 50 Prozent, dass sie gelöscht werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windstoss.text-4",
+      "text": "Für die Wirkungsdauer kannst du als Bonusaktion in deinen folgenden Zügen die Richtung ändern, in die der Wind weht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.windwall",
+      "level": 3,
+      "text": "Windwall"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windwall.schule",
+      "text": "Hervorrufungszauber 3. Grades (Druide, Waldläufer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.windwall.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "36 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Fächer und eine Feder)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Minute"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windwall.text-1",
+      "text": "An einem Punkt deiner Wahl in Reichweite erscheint eine Wand aus starkem Wind. Die Wand kann bis zu 15 Meter lang, 4,5 Meter hoch und 30 Zentimeter dick sein. Du kannst sie beliebig formen, solange sie einem ununterbrochenen Pfad auf dem Boden folgt. Die Wand bleibt für die Wirkungsdauer bestehen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windwall.text-2",
+      "text": "Wenn die Wand erscheint, führt jede Kreatur in ihrem Bereich einen Stärkerettungswurf aus. Misslingt der Wurf, so erleidet die Kreatur 4W8 Wuchtschaden, anderenfalls die Hälfte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windwall.text-3",
+      "text": "Der starke Wind hält Nebel, Rauch und andere Gase auf Abstand. Fliegende Kreaturen und Gegenstände von höchstens kleiner Größe können die Wand nicht durchdringen. Lose, leichte Materialien, die in die Wand gebracht werden, fliegen nach oben. Pfeile, Bolzen und andere gewöhnliche Geschosse, die auf Ziele hinter der Wand geschossen werden, werden nach oben abgelenkt und verfehlen ihr Ziel automatisch. Felsbrocken, die von Riesen oder Belagerungsmaschinen geschleudert werden, und ähnliche Geschosse sind hiervon nicht betroffen. Kreaturen in gasförmiger Gestalt können die Wand nicht passieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.windwandeln",
+      "level": 3,
+      "text": "Windwandeln"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windwandeln.schule",
+      "text": "Verwandlungszauber 6. Grades (Druide)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.windwandeln.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "1 Minute"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "9 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (eine Kerze)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "8 Stunden"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windwandeln.text-1",
+      "text": "Dieser Zauber verwandelt dich und bis zu zehn bereitwillige Kreaturen deiner Wahl in Reichweite für die Wirkungsdauer in gasförmige Gestalten, die als Wolkenschwaden erscheinen. In Wolkengestalt verfügt ein Ziel über eine Flugbewegungsrate von 90 Metern und kann schweben. Es ist gegen den Zustand Liegend immun und gegen Hieb-, Stich- und Wuchtschaden resistent. Die einzigen Aktionen, die ein Ziel in dieser Gestalt ausführen kann, sind die Spurt-Aktion oder eine magische Aktion, um die Rückverwandlung in seine normale Gestalt zu beginnen. Die Rückverwandlung dauert eine Minute, in der das Ziel betäubt ist. Bis der Zauber endet, kann das Ziel zur Wolkengestalt zurückkehren. Auch dies erfordert eine magische Aktion, gefolgt von einer einminütigen Verwandlung."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.windwandeln.text-2",
+      "text": "Befindet sich ein Ziel in Wolkengestalt in der Luft, wenn der Zauber endet, so sinkt es eine Minute lang 18 Meter pro Runde hinab, bis es sicher landet. Wenn es nach einer Minute nicht landen kann, stürzt es die verbleibende Entfernung nach unten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.winzige-huette",
+      "level": 3,
+      "text": "Winzige Hütte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.winzige-huette.schule",
+      "text": "Hervorrufungszauber 3. Grades (Barde, Magier)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.winzige-huette.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "1 Minute oder Ritual"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (eine Kristallperle)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "8 Stunden"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.winzige-huette.text-1",
+      "text": "Um dich herum entsteht eine Ausströmung von drei Metern und bleibt für die Wirkungsdauer ortsfest. Der Zauber misslingt beim Wirken, wenn die Ausströmung nicht groß genug ist, um alle Kreaturen in ihrem Bereich vollständig aufzunehmen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.winzige-huette.text-2",
+      "text": "Kreaturen und Gegenstände, die sich beim Wirken des Zaubers innerhalb der Ausströmung befinden, können sich frei darin bewegen oder bewegt werden. Andere Kreaturen und Gegenstände können sie nicht passieren. Zauber des höchstens 3. Grades können nicht durch die Aura hindurch gewirkt werden, und ihre Effekte können sich nicht bis in die Aura erstrecken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.winzige-huette.text-3",
+      "text": "Die Atmosphäre innerhalb der Ausströmung ist unabhängig vom Wetter außerhalb angenehm und trocken. Für die Wirkungsdauer kannst du befehlen, dass innerhalb der Aura dämmriges Licht oder Dunkelheit herrschen soll (keine Aktion erforderlich). Die Ausströmung ist von außen undurchsichtig und erscheint in einer Farbe deiner Wahl. Von innen ist sie durchsichtig."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.winzige-huette.text-4",
+      "text": "Der Zauber endet vorzeitig, wenn du die Ausströmung verlässt oder den Zauber erneut wirkst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wirrnis",
+      "level": 3,
+      "text": "Wirrnis"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wirrnis.schule",
+      "text": "Verzauberungszauber 8. Grades (Barde, Druide, Hexenmeister, Magier)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wirrnis.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "45 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Schlüsselring ohne Schlüssel)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wirrnis.text-1",
+      "text": "Du attackierst den Verstand einer Kreatur in Reichweite, die du sehen kannst. Das Ziel führt einen Intelligenzrettungswurf aus."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wirrnis.text-2",
+      "text": "Misslingt der Wurf, so erleidet das Ziel 10W12 psychischen Schaden und kann weder Zauber wirken noch die magische Aktion ausführen. Nach jeweils 30 Tagen wiederholt das Ziel den Rettungswurf. Bei einem Erfolg endet der Effekt. Der Effekt kann auch durch die Zauber Heilung, Vollständige Genesung oder Wunsch beendet werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wirrnis.text-3",
+      "text": "Bei einem erfolgreichen Rettungswurf erleidet das Ziel nur halb so viel Schaden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wort-der-macht-betaeubung",
+      "level": 3,
+      "text": "Wort der Macht: Betäubung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-der-macht-betaeubung.schule",
+      "text": "Verzauberungszauber 8. Grades (Barde, Hexenmeister, Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wort-der-macht-betaeubung.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "18 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-der-macht-betaeubung.text-1",
+      "text": "Du überwältigst den Verstand einer Kreatur in Reichweite, die du sehen kannst. Wenn das Ziel höchstens 150 Trefferpunkte hat, wird es betäubt. Anderenfalls beträgt seine Bewegungsrate bis zum Beginn deines nächsten Zugs 0."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-der-macht-betaeubung.text-2",
+      "text": "Das betäubte Ziel führt am Ende jedes seiner Züge einen Konstitutionsrettungswurf aus. Bei einem Erfolg endet der Zustand bei ihm."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wort-der-macht-heilung",
+      "level": 3,
+      "text": "Wort der Macht: Heilung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-der-macht-heilung.schule",
+      "text": "Verzauberungszauber 9. Grades (Barde, Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wort-der-macht-heilung.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "18 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-der-macht-heilung.text-1",
+      "text": "Du sprichst ein Wort der Macht, um eine Kreatur in Reichweite, die du sehen kannst, mit einer Welle heilender Energie zu umhüllen. Das Ziel erhält sämtliche Trefferpunkte zurück. Wenn die Kreatur betäubt, bezaubert, gelähmt, verängstigt oder vergiftet ist, endet dieser Zustand. Wenn die Kreatur den Zustand Liegend hat, kann sie ihre Reaktion verwenden, um aufzustehen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wort-der-macht-tod",
+      "level": 3,
+      "text": "Wort der Macht: Tod"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-der-macht-tod.schule",
+      "text": "Verzauberungszauber 9. Grades (Barde, Hexenmeister, Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wort-der-macht-tod.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "18 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-der-macht-tod.text-1",
+      "text": "Du nötigst eine Kreatur in Reichweite, die du sehen kannst, zum Sterben. Wenn das Ziel maximal 100 Trefferpunkte hat, stirbt es. Anderenfalls erleidet es 12W12 psychischen Schaden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wort-des-rueckrufs",
+      "level": 3,
+      "text": "Wort des Rückrufs"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-des-rueckrufs.schule",
+      "text": "Beschwörungszauber 6. Grades (Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wort-des-rueckrufs.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "1,5 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-des-rueckrufs.text-1",
+      "text": "Dieser Zauber teleportiert dich und bis zu fünf bereitwillige Kreaturen im Abstand von bis zu 1,5 Metern von dir sofort zu einer zuvor festgelegten Zuflucht. Du und alle Kreaturen, die mit dir teleportiert werden, erscheint in einem freien Bereich, der dem von dir als Zuflucht bestimmten Ort am nächsten liegt (siehe unten). Wenn du diesen Zauber wirkst, ohne eine Zuflucht festgelegt zu haben, hat er keinen Effekt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wort-des-rueckrufs.text-2",
+      "text": "Du musst einen Ort, beispielsweise einen Tempel, als Zuflucht benennen, um diesen Zauber dort zu wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wunden-heilen",
+      "level": 3,
+      "text": "Wunden heilen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunden-heilen.schule",
+      "text": "Bannzauber 1. Grades (Barde, Druide, Kleriker, Paladin, Waldläufer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wunden-heilen.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunden-heilen.text-1",
+      "text": "Eine Kreatur, die du berührst, erhält eine Anzahl von Trefferpunkten in Höhe von 2W8 plus deinem Zauberwirken-Attributsmodifikator zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunden-heilen.text-2",
+      "text": "Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. wird die Heilung um 2W8 Trefferpunkte erhöht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wunden-verursachen",
+      "level": 3,
+      "text": "Wunden verursachen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunden-verursachen.schule",
+      "text": "Nekromantiezauber 1. Grades (Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wunden-verursachen.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunden-verursachen.text-1",
+      "text": "Eine Kreatur, die du berührst, führt einen Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet sie 2W10 nekrotischen Schaden, anderenfalls die Hälfte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunden-verursachen.text-2",
+      "text": "Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. wird der Schaden um 1W10 erhöht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.wunsch",
+      "level": 3,
+      "text": "Wunsch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.schule",
+      "text": "Beschwörungszauber 9. Grades (Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.wunsch.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-1",
+      "text": "Wunsch ist der mächtigste Zauber, den ein Sterblicher wirken kann. Durch einfaches Aussprechen kann die Realität selbst verändert werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-2",
+      "text": "Die grundlegende Verwendung dieses Zaubers besteht darin, einen beliebigen anderen Zauber des höchstens 8. Grades zu kopieren. Auf diese Art musst du weder die Voraussetzungen erfüllen, um den Zauber zu wirken, noch teure Materialkomponenten bezahlen. Der Zauber tritt einfach in Kraft."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-3",
+      "text": "Alternativ kannst du einen der folgenden Effekte (nach deiner Wahl) erzeugen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-4",
+      "text": "Gegenstand erschaffen: Du erschaffst einen nichtmagischen Gegenstand im Wert von bis zu 25.000 GM. Dieser darf in keiner Abmessung größer als 90 Meter sein. Er erscheint in einem freien Bereich auf dem Boden, den du sehen kannst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-5",
+      "text": "Sofortige Gesundheit: Du selbst und bis zu zwanzig Kreaturen, die du sehen kannst, erhaltet all eure Trefferpunkte zurück. Du beendest zudem alle auf euch wirkenden Effekte, wie unter dem Zauber Vollständige Genesung beschrieben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-6",
+      "text": "Resistenz: Du gewährst bis zu zehn Kreaturen, die du sehen kannst, Resistenz gegen eine Schadensart deiner Wahl. Diese Resistenz ist dauerhaft."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-7",
+      "text": "Immunität gegen Zauber: Du verleihst bis zu zehn Kreaturen, die du sehen kannst, acht Stunden lang Immunität gegen einen einzelnen Zauber oder magischen Effekt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-8",
+      "text": "Sofortiges Lernen: Du ersetzt eines deiner Talente durch ein anderes Talent, das für dich in Frage kommt. Du verlierst alle Vorzüge des bisherigen Talents und erhältst die Vorzüge des neuen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-9",
+      "text": "Talente, die Voraussetzungen für andere Talente oder Merkmale sind, kannst du nicht ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-10",
+      "text": "Würfelwurf wiederholen: Du machst ein kurz zurückliegendes Ereignis ungeschehen, indem du eine Wiederholung eines beliebigen Würfelwurfs in der letzten Runde erzwingst (einschließlich deines letzten Zugs). Die Realität passt sich an das neue Ergebnis an. Beispiel: Der Zauber Wunsch könnte den misslungenen Rettungswurf eines Verbündeten oder den kritischen Treffer eines Gegners ungeschehen machen. Du kannst erzwingen, dass der neue Wurf im Vorteil oder im Nachteil ist. Zudem hast du die Wahl, ob das ursprüngliche oder das neue Ergebnis gilt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-11",
+      "text": "Realität umformen: Du könntest etwas wünschen, das nicht in den anderen Effekten enthalten ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-12",
+      "text": "Beschreibe dazu dem SL deinen Wunsch so genau wie möglich. Der SL hat einigen Spielraum bei der Entscheidung, was in einem solchen Fall geschieht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-13",
+      "text": "Je größer der Wunsch, desto größer auch das Risiko, dass etwas schiefgeht. Der Zauber könnte schlicht misslingen, der gewünschte Effekt nur zum Teil erfüllt werden, oder du selbst könntest je nach Formulierung des Wunsches unvorhergesehene Nebenwirkungen erleiden. Wenn du dir beispielsweise einen Bösewicht tot wünschst, könntest du in eine Zukunft katapultiert werden, in der er nicht mehr lebt – wodurch du praktisch aus dem Spiel entfernt wirst. Wünschst du dir einen legendären magischen Gegenstand oder ein Artefakt, so könntest du zum aktuellen Besitzer des Gegenstands teleportiert werden. Wenn dein Wunsch gewährt wird und Konsequenzen für eine ganze Gemeinschaft, Region oder Welt hat, ziehst du wahrscheinlich mächtige Gegner an. Wenn dein Wunsch Auswirkungen auf einen Gott hätte, könnten dessen Diener sofort eingreifen, um den Wunsch zu verhindern, oder sie könnten dich ermuntern, ihn auf eine bestimmte Art zu wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-14",
+      "text": "Wenn dein Wunsch das Multiversum zerstören würde, misslingt er."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.wunsch.text-15",
+      "text": "Wirkst du Wunsch, um einen anderen Effekt zu erzielen, als einen Zauber zu kopieren, so belastet dich das sehr. Jedes Mal, wenn du nach dieser Belastung einen Zauber wirkst, erleidest du 1W10 nekrotischen Schaden pro Zaubergrad. Dieser Effekt verschwindet nach einer langen Rast. Der Schaden kann weder verringert noch verhindert werden. Außerdem hast du 2W4 Tage lang einen Stärkewert von 3. In dieser Zeit verringerst du mit jedem Tag, an dem du dich ausruhst oder nur leichten Tätigkeiten nachgehst, die verbleibende Erholungszeit um zwei Tage. Nicht zuletzt besteht ein Risiko von 33 Prozent, dass du den Zauber Wunsch aufgrund dieser Belastung nie wieder wirken kannst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.zeichen-des-jaegers",
+      "level": 3,
+      "text": "Zeichen des Jägers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zeichen-des-jaegers.schule",
+      "text": "Erkenntniszauber 1. Grades (Waldläufer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.zeichen-des-jaegers.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Bonusaktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "27 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Stunde"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zeichen-des-jaegers.text-1",
+      "text": "Du markierst eine Kreatur in Reichweite, die du sehen kannst, auf magische Art als deine Beute. Für die Wirkungsdauer fügst du dem Ziel, wann immer du es mit einem Angriffswurf triffst, zusätzlich 1W6 Energieschaden zu. Außerdem bist du bei allen Weisheitswürfen (Überlebenskunst oder Wahrnehmung) im Vorteil, die du ausführst, um das Ziel zu finden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zeichen-des-jaegers.text-2",
+      "text": "Wenn die Trefferpunkte des Ziels auf 0 sinken, bevor dieser Zauber endet, kannst du eine Bonusaktion ausführen, um das Zeichen auf eine andere Kreatur in Reichweite, die du sehen kannst, zu übertragen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zeichen-des-jaegers.text-3",
+      "text": "Verwenden von Zauberplätzen höheren Grades: Deine Konzentration kann länger andauern: bei einem Zauberplatz des 3. und 4. Grades bis zu acht Stunden und bei einem Zauberplatz ab dem 5. Grad bis zu 24 Stunden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.zeitstopp",
+      "level": 3,
+      "text": "Zeitstopp"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zeitstopp.schule",
+      "text": "Verwandlungszauber 9. Grades (Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.zeitstopp.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zeitstopp.text-1",
+      "text": "Du stoppst kurzzeitig für alle außer dir selbst den Fluss der Zeit. Für andere Kreaturen vergeht keine Zeit, während du 1W4+1 Züge hintereinander bekommst, in denen du wie gewohnt Aktionen ausführen und dich bewegen kannst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zeitstopp.text-2",
+      "text": "Dieser Zauber endet, wenn eine deiner Aktionen oder ein von dir erschaffener Effekt während dieser Zeitspanne eine Kreatur außer dir selbst oder einen Gegenstand beeinflusst, den jemand anders trägt oder hält. Zudem endet der Zauber, wenn du dich um mehr als 300 Meter von dem Ort entfernst, an dem du ihn gewirkt hast."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.zerbersten",
+      "level": 3,
+      "text": "Zerbersten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zerbersten.schule",
+      "text": "Hervorrufungszauber 2. Grades (Barde, Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.zerbersten.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "18 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Glimmersplitter)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zerbersten.text-1",
+      "text": "Von einem Punkt deiner Wahl in Reichweite geht ein lautes Geräusch aus. Jede Kreatur in einer Kugel mit einem Radius von drei Metern um den Punkt führt einen Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet sie 3W8 Schallschaden, anderenfalls die Hälfte. Konstrukte sind beim Rettungswurf im Nachteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zerbersten.text-2",
+      "text": "Nichtmagische Gegenstände im Bereich, die nicht getragen oder gehalten werden, erleiden den gleichen Schaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zerbersten.text-3",
+      "text": "Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 2. wird der Schaden um 1W8 erhöht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.zielsicherer-schlag",
+      "level": 3,
+      "text": "Zielsicherer Schlag"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zielsicherer-schlag.schule",
+      "text": "Zaubertrick der Erkenntnis (Barde, Hexenmeister, Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.zielsicherer-schlag.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "G, M (eine Waffe, mit der du Übung hast, im Wert von mindestens 1 KM)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Unmittelbar"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zielsicherer-schlag.text-1",
+      "text": "Von einem Blitz magischer Einsicht geleitet, führst du einen Angriff mit der Waffe aus, die du zum Wirken des Zaubers verwendet hast. Der Zauber nutzt dein Attribut zum Zauberwirken für den Angriff und Schadenswürfe (statt Stärke oder Geschicklichkeit). Wenn der Angriff Schaden bewirkt, kann dies gleißender Schaden oder die normale Schadensart der Waffe sein (nach deiner Wahl)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zielsicherer-schlag.text-2",
+      "text": "Zaubertrick-Aufwertung: Unabhängig davon, ob du gleißenden Schaden oder die normale Schadensart der Waffe bewirkst, bewirkt der Angriff zusätzlich gleißenden Schaden, wenn du die 5. (1W6), die 11. (2W6) und die 17. (3W6) Stufe erreichst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.zone-der-wahrheit",
+      "level": 3,
+      "text": "Zone der Wahrheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zone-der-wahrheit.schule",
+      "text": "Verzauberungszauber 2. Grades (Barde, Kleriker, Paladin)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.zone-der-wahrheit.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "18 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "10 Minuten"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zone-der-wahrheit.text-1",
+      "text": "Du erschaffst in einer Kugel mit einem Radius von 4,5 Metern um einen Punkt in Reichweite eine magische Zone, die vor Täuschung schützt. Für die Wirkungsdauer führt jede Kreatur, die den Bereich des Zaubers in einem Zug erstmals betritt oder den Zug darin beginnt, einen Charismarettungswurf aus. Misslingt der Wurf, so kann die Kreatur innerhalb des Radius nicht lügen. Du weißt, ob eine Kreatur diesen Rettungswurf bestanden hat."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zone-der-wahrheit.text-2",
+      "text": "Eine betroffene Kreatur ist sich des Zaubers bewusst und kann Antworten auf Fragen vermeiden, auf die sie sonst mit einer Lüge antworten würde. In diesem Fall kann sie ausweichend antworten, muss aber bei der Wahrheit bleiben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.zungen",
+      "level": 3,
+      "text": "Zungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zungen.schule",
+      "text": "Erkenntniszauber 3. Grades (Barde, Hexenmeister, Kleriker, Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.zungen.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, M (eine Miniatur-Zikkurat)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "1 Stunde"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zungen.text-1",
+      "text": "Dieser Zauber gewährt einer von dir berührten Kreatur die Fähigkeit, jede gesprochene Sprache oder Gebärdensprache zu verstehen, die sie hört oder sieht. Wenn das Ziel außerdem durch Sprache oder Gebärden kommuniziert, wird es von jeder Kreatur verstanden, die mindestens eine Sprache versteht und das Ziel hören oder sehen kann."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.zutritt-verwehren",
+      "level": 3,
+      "text": "Zutritt verwehren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zutritt-verwehren.schule",
+      "text": "Bannzauber 6. Grades (Kleriker)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.zutritt-verwehren.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "10 Minuten oder Ritual"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Berührung"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (Rubinstaub im Wert von mindestens 1.000 GM)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "1 Tag"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zutritt-verwehren.text-1",
+      "text": "Du erschaffst einen Schutz gegen magische Reisen, der einen Bereich von bis zu 3.700 Quadratmetern mit einer Höhe von bis zu neun Metern über dem Boden abdeckt. Für die Wirkungsdauer können sich Kreaturen weder in den Bereich teleportieren noch Portale wie durch den Zauber Tor verwenden, um in den Bereich zu gelangen. Der Zauber schützt den Bereich gegen Ebenenreisen und verhindert damit, dass Kreaturen aus der Astralebene, der Ätherebene, der Feenwildnis, dem Schattensaum oder mit dem Zauber Ebenenwechsel in den Bereich gelangen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zutritt-verwehren.text-2",
+      "text": "Außerdem fügt der Zauber Kreaturentypen, die du beim Wirken bestimmst, Schaden zu. Wähle mindestens einen der folgenden Kreaturentypen aus: Aberrationen, celestische Wesen, Feenwesen, Unholde und Untote. Wenn eine Kreatur eines ausgewählten Typs den Bereich des Zaubers in einem Zug erstmals betritt oder ihren Zug darin beendet, erleidet sie 5W10 gleißenden oder nekrotischen Schaden (nach deiner Wahl beim Wirken des Zaubers)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zutritt-verwehren.text-3",
+      "text": "Du kannst ein Kennwort festlegen, wenn du den Zauber wirkst. Spricht eine Kreatur das Kennwort aus, wenn sie den Bereich betritt, so erleidet sie durch den Zauber keinen Schaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zutritt-verwehren.text-4",
+      "text": "Der Bereich des Zaubers kann sich nicht mit dem Bereich eines anderen Zaubers Zutritt verwehren überschneiden. Wenn du Zutritt verwehren 30 Tage lang am selben Ort wirkst, bleibt der Effekt bestehen, bis er gebannt wird. Die Materialkomponenten werden beim letzten Wirken verbraucht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.w-z.zwang",
+      "level": 3,
+      "text": "Zwang"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zwang.schule",
+      "text": "Verzauberungszauber 4. Grades (Barde)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.w-z.zwang.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "9 Meter"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Minute"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zwang.text-1",
+      "text": "Jede Kreatur deiner Wahl in Reichweite, die du sehen kannst, muss einen Weisheitsrettungswurf bestehen, oder sie ist bezaubert, bis der Zauber endet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.w-z.zwang.text-2",
+      "text": "Für die Wirkungsdauer kannst du eine Bonusaktion ausführen, um eine Richtung zu bestimmen, die horizontal von dir verläuft. Jedes bezauberte Ziel muss in seinem nächsten Zug so viel seiner Bewegungsrate wie möglich verwenden, um sich in diese Richtung zu bewegen. Dabei nimmt es die sicherste Route. Nachdem das Ziel sich auf diese Art bewegt hat, wiederholt es seinen Rettungswurf. Bei einem Erfolg endet der Zauber bei ihm."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:5d2f51a961cda39c4c71d83a2e1a98edc9845ed1e773c5d7645ac5eda47be4eb"
+}

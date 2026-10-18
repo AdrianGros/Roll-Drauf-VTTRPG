@@ -1,0 +1,1002 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "monsters.t-v",
+  "slug": "monster-t-v",
+  "title": "Monster T–V",
+  "navigationPath": [
+    "Monster",
+    "Monster T–V"
+  ],
+  "order": 2170,
+  "sourcePages": [
+    378,
+    379,
+    380,
+    381,
+    382,
+    383
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.monster-von-a-z",
+      "level": 2,
+      "text": "Monster von A–Z (T–V)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.tarraske",
+      "level": 3,
+      "text": "Tarraske"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.tarraske.tarraske",
+      "name": "Tarraske",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantische Monstrosität (Titan), gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "25"
+        },
+        {
+          "label": "Initiative",
+          "value": "+18 (28)"
+        },
+        {
+          "label": "TP",
+          "value": "697 (34W20+340)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "18 m, Graben 12 m, Klettern 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "30 (MOD +10, RW +10)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +9)"
+        },
+        {
+          "label": "Kon",
+          "value": "30 (MOD +10, RW +10)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW +5)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +9)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +9)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +9"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Bezaubert, Gelähmt, Taub, Verängstigt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 36 m; Passive Wahrnehmung 19"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "30 (EP 155.000; ÜB +9)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Belagerungsmonster: Die Tarraske fügt Gegenständen und Gebäuden doppelten Schaden zu.\n\nLegendäre Resistenz (6-mal täglich): Wenn die Tarraske bei einem Rettungswurf scheitert, kann sie beschließen, ihn stattdessen zu bestehen.\n\nMagieresistenz: Die Tarraske ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nReflektierender Panzer: Wenn die Tarraske Ziel des Zaubers Magisches Geschoss oder eines Zaubers wird, der einen Fernkampfangriffswurf erfordert, würfle mit 1W6. Bei einer 1–5 ist die Tarraske nicht betroffen. Bei einer 6 ist die Tarraske nicht betroffen und wirft den Zauber zurück, sodass der Zauberwirker zum Ziel wird."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Tarraske führt einen Bissangriff oder drei andere Angriffe aus, wobei sie Klauen oder Schwanz in beliebiger Kombination einsetzt.\n\nBiss: Nahkampfangriffswurf: +19, Reichweite 4,5 m. Treffer: 36 (4W12+10) Stichschaden, und das Ziel wird gepackt (Flucht-SG 20). Das gepackte Ziel ist festgesetzt und kann sich nicht teleportieren.\n\nKlauen: Nahkampfangriffswurf: +19, Reichweite 4,5 m. Treffer: 28 (4W8+10) Hiebschaden.\n\nSchwanz: Nahkampfangriffswurf: +19, Reichweite 9 m. Treffer: 23 (3W8+10) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens riesiger Größe ist, wird es umgestoßen und hat den Zustand Liegend.\n\nDonnerndes Brüllen (Aufladung 5–6): Konstitutionsrettungswurf: SG 27; alle Kreaturen sowie Gegenstände, die nicht getragen oder gehalten werden, in einem Kegel von 45 Metern. Misserfolg: 78 (12W12) Schallschaden, und das Ziel ist bis zum Ende seines nächsten Zugs taub und verängstigt. Erfolg: Nur halber Schaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Verschlucken: Stärkerettungswurf: SG 27; eine Kreatur von höchstens großer Größe, die von der Tarraske gepackt wurde (die Tarraske kann bis zu sechs Kreaturen verschlucken). Misserfolg: Das Ziel wird verschluckt und ist dann nicht mehr gepackt. Eine verschluckte Kreatur ist blind und festgesetzt und kann nicht teleportieren. Sie hat vollständige Deckung gegen Angriffe und andere Effekte von außerhalb der Tarraske und erleidet zu Beginn jedes Zugs der Tarraske 56 (16W6) Säureschaden.\n\nErleidet die Tarraske durch eine verschluckte Kreatur in einem einzigen Zug mindestens 60 Schaden, so muss sie am Ende des Zugs einen SG-20-Konstitutionsrettungswurf bestehen, oder sie würgt alle verschluckten Kreaturen wieder aus. Diese fallen in Bereiche im Abstand von bis zu drei Metern von der Tarraske und haben den Zustand Liegend. Wenn die Tarraske stirbt, sind die verschluckten Kreaturen nicht mehr festgesetzt und können aus dem Kadaver entkommen. Sie verbrauchen dabei sechs Meter Bewegung und haben danach den Zustand Liegend."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3. Unmittelbar nach dem Zug einer anderen Kreatur kann die Tarraske eine legendäre Aktion ausführen. Zu Beginn jedes ihrer Züge stehen der Tarraske wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnsturm: Die Tarraske legt bis zur Hälfte ihrer Bewegungsrate zurück und führt einen Klauen- oder einen Schwanzangriff aus.\n\nWeltenerschütternde Bewegung: Die Tarraske nutzt ihre Bewegungsrate. Am Ende dieser Bewegung erzeugt die Tarraske in einer Ausströmung von 18 Metern, die von ihr ausgeht, eine unmittelbare Schockwelle. Kreaturen in diesem Bereich verlieren die Konzentration, und Kreaturen von höchstens mittelgroßer Größe stürzen, sodass sie den Zustand Liegend haben. Die Tarraske kann diese Aktion erst nach Beginn ihres nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.teufelchen",
+      "level": 3,
+      "text": "Teufelchen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.teufelchen.teufelchen",
+      "name": "Teufelchen",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziger Unhold (Teufel), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "21 (6W4+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Fliegen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Motiv erkennen +3, Täuschen +4"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m (wird nicht durch magische Dunkelheit beeinträchtigt); Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Infernalisch"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Magieresistenz: Das Teufelchen ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Stachel: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Stichschaden plus 7 (2W6) Giftschaden.\n\nGestaltwandeln: Das Teufelchen nimmt die Gestalt eines Raben (6 m, Fliegen 18 m), einer Ratte (Bewegungsrate 6 m), einer Spinne (6 m, Klettern 6 m) oder wieder seine wahre Gestalt an. Seine Spielwerte sind bis auf die Bewegungsrate in allen Formen gleich. Ausrüstung, die er trägt oder hält, wird nicht verwandelt.\n\nUnsichtbarkeit: Das Teufelchen wirkt den Zauber Unsichtbarkeit auf sich selbst mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.todesalb",
+      "level": 3,
+      "text": "Todesalb"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.todesalb.todesalb",
+      "name": "Todesalb",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Untoter, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "67 (9W8+27)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Fliegen 18 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Feuer, Hieb, Kälte, Säure, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Nekrotisch; Bewusstlos, Bezaubert, Erschöpft, Festgesetzt, Gelähmt, Gepackt, Liegend, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und zwei weitere Sprachen"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Empfindlich gegenüber Sonnenlicht: Im Sonnenlicht ist der Todesalb bei Angriffs- und Attributswürfen im Nachteil.\n\nKörperlose Bewegung: Der Todesalb kann sich durch andere Kreaturen und Gegenstände bewegen, als wären sie schwieriges Gelände. Er erleidet 5 (1W10) Energieschaden, wenn er den Zug in einem Gegenstand beendet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Lebensentzug: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 21 (4W8+3) nekrotischer Schaden. Wenn das Ziel eine Kreatur ist, wird sein Trefferpunktemaximum um einen Betrag in Höhe des erlittenen Schadens verringert.\n\nSchreckgespenst erschaffen: Der Todesalb zielt auf einen Humanoiden im Abstand von bis zu drei Metern von ihm, der seit höchstens einer Minute tot ist. Der Geist des Ziels erhebt sich im Bereich seiner Leiche oder im nächsten freien Bereich als Schreckgespenst, Das Schreckgespenst steht unter der Kontrolle des Todesalbs. Der Todesalb kann höchstens sieben Schreckgespenster zugleich unter seiner Kontrolle haben."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.todeshund",
+      "level": 3,
+      "text": "Todeshund"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.todeshund.todeshund",
+      "name": "Todeshund",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroße Monstrosität, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "39 (6W8+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +5"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Betäubt, Bewusstlos, Bezaubert, Blind, Taub, Verängstigt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Todeshund führt zwei Bissangriffe aus.\n\nBiss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Stichschaden. Wenn das Ziel eine Kreatur ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 12. Erster Misserfolg: Das Ziel ist vergiftet. Das Trefferpunktemaximum des vergifteten Ziels normalisiert sich nach einer langen Rast nicht. Das Ziel wiederholt den Rettungswurf nach jeweils 24 Stunden. Bei einem Erfolg endet der Effekt bei ihm. Nachfolgende Misserfolge: Das Trefferpunktemaximum des vergifteten Ziels wird um 5 (1W10) verringert."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.troll",
+      "level": 3,
+      "text": "Troll"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.troll.troll",
+      "name": "Troll",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Riese, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "94 (9W10+45)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Riesisch"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Grässliche Gliedmaßen (4-mal täglich): Wenn der Troll einen Zug blutig beendet und in diesem Zug mindestens 15 Hiebschaden erlitten hat, wird eine seiner Gliedmaßen abgetrennt, fällt in seinen Bereich und wird zu einer Trollgliedmaße. Die Gliedmaße handelt unmittelbar nach dem Zug des Trolls. Der Troll erhält für jede fehlende Gliedmaße eine Erschöpfungsstufe, und ihm wachsen Ersatzgliedmaßen, wenn er das nächste Mal Trefferpunkte zurückerhält.\n\nRegeneration: Der Troll erhält zu Beginn jedes seiner Züge 15 Trefferpunkte zurück. Wenn der Troll Feuer- oder Säureschaden erleidet, wirkt dieses Merkmal in seinem nächsten Zug nicht. Der Troll stirbt nur, wenn er seinen Zug mit 0 Trefferpunkten beginnt und sich nicht regeneriert."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Troll führt drei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 11 (2W6+4) Hiebschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Sturmangriff: Der Troll legt bis zur Hälfte seiner Bewegungsrate zurück und bewegt sich in gerader Linie auf einen Gegner zu, den er sehen kann."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.troll.trollgliedmasse",
+      "name": "Trollgliedmaße",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner Riese, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "14 (4W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Regeneration: Die Gliedmaße erhält zu Beginn jedes ihrer Züge 5 Trefferpunkte zurück. Wenn die Gliedmaße Feuer- oder Säureschaden erleidet, wirkt dieses Merkmal in ihrem nächsten Zug nicht. Die Gliedmaße stirbt nur, wenn sie ihren Zug mit 0 Trefferpunkten beginnt und sich nicht regeneriert.\n\nTrollbrut: Die Gliedmaße hat auf unheimliche Art dieselben Sinne wie der ganze Troll. Wenn sie nicht binnen 24 Stunden zerstört wird, würfle mit 1W12. Bei einer 12 verwandelt die Gliedmaße sich in einen Troll. Anderenfalls verdorrt die Gliedmaße."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Zerfetzen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 9 (2W4+4) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.unsichtbarer-pirscher",
+      "level": 3,
+      "text": "Unsichtbarer Pirscher"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.unsichtbarer-pirscher.unsichtbarer-pirscher",
+      "name": "Unsichtbarer Pirscher",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Elementar, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (22)"
+        },
+        {
+          "label": "TP",
+          "value": "97 (13W10+26)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m, Fliegen 15 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +10, Wahrnehmung +8"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bewusstlos, Erschöpft, Festgesetzt, Gelähmt, Gepackt, Liegend, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 18"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Urtümlich (Aural)"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Luftgestalt: Der Pirscher kann in den Bereich eines Gegners eindringen und dort stoppen. Er kann sich durch enge Bereiche von nur 2,5 Zentimetern Durchmesser bewegen, ohne zusätzliche Bewegung aufzuwenden.\n\nUnsichtbarkeit: Der Pirscher ist unsichtbar."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Pirscher führt drei Windstreich-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Wirbel ersetzen.\n\nWindstreich: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 11 (2W6+4) Energieschaden.\n\nWirbel: Konstitutionsrettungswurf: SG 14; eine Kreatur von höchstens großer Größe im Bereich des Pirschers. Misserfolg: 7 (1W8+3) Schallschaden, und das Ziel wird gepackt (Flucht-SG 13). Das gepackte Ziel kann keine Zauber mit Verbalkomponente wirken und erleidet zu Beginn jedes Zugs des Pirschers 7 (2W6) Schallschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.vampire",
+      "level": 3,
+      "text": "Vampire"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.vampire.vampir-vertrauter",
+      "name": "Vampir-Vertrauter",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "TP",
+          "value": "65 (10W8+30)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Überzeugen +4, Wahrnehmung +4"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Nekrotisch"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Bezaubert (außer durch Vampirmeister)"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Dolche (10)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Vampirische Verbindung: Solange der Vertraute und sein Vampirmeister sich auf derselben Existenzebene befinden, kann der Vampirmeister telepathisch mit dem Vertrauten kommunizieren und durch dessen Sinne wahrnehmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Vertraute führt zwei Schattendolch-Angriffe aus.\n\nSchattendolch: Nah- oder Fernkampfangriffswurf: +5, Reichweite 1,5 m oder Reichweite 6/18 m. Treffer: 5 (1W4+3) Stichschaden plus 7 (3W4) nekrotischer Schaden. Wenn die Trefferpunkte des Ziels durch diesen Angriff auf 0 sinken, bleibt das Ziel stabil, ist jedoch eine Stunde lang vergiftet. Solange es vergiftet ist, ist das Ziel außerdem gelähmt."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Untote Wendigkeit: Der Vertraute führt die Spurt- oder die Rückzug-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.vampire.vampirbrut",
+      "name": "Vampirbrut",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Untoter, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "90 (12W8+36)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Wahrnehmung +3"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Nekrotisch"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Spinnenklettern: Der Vampir kann ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen.\n\nVampirschwächen: Der Vampir hat folgende Schwächen:\n\nZutritt verwehren: Der Vampir kann keine Behausung betreten, ohne von einem der Bewohner eingeladen worden zu sein.\n\nFließendes Wasser: Der Vampir erleidet 20 Säureschaden, wenn er seinen Zug in fließendem Wasser beendet.\n\nHolzpflock ins Herz: Der Vampir wird zerstört, wenn ihm eine Waffe, die Stichschaden bewirkt, ins Herz getrieben wird, während er kampfunfähig ist.\n\nSonnenlicht: Der Vampir erleidet 20 gleißenden Schaden, wenn er seinen Zug im Sonnenlicht beginnt. Im Sonnenlicht ist er bei Angriffs- und Attributswürfen im Nachteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Vampir führt zwei Klauenangriffe aus und setzt Biss ein.\n\nKlauen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 8 (2W4+3) Hiebschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es von einer der beiden Klauen gepackt (Flucht-SG 13).\n\nBiss: Konstitutionsrettungswurf: SG 14; eine Kreatur im Abstand von bis zu 1,5 Metern, die bereitwillig, festgesetzt, gepackt oder kampfunfähig ist. Misserfolg: 5 (1W4+3) Stichschaden plus 10 (3W6) nekrotischer Schaden. Das Trefferpunktemaximum des Ziels wird um eine Anzahl in Höhe des erlittenen nekrotischen Schadens verringert, und der Vampir erhält Trefferpunkte in Höhe dieses Betrags zurück."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Untote Wendigkeit: Der Vampir führt die Spurt- oder die Rückzug-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.vampire.vampir",
+      "name": "Vampir",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Untoter, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+14 (24)"
+        },
+        {
+          "label": "TP",
+          "value": "195 (23W8+92)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Klettern 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "18 (MOD +4, RW +9)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +9)"
+        },
+        {
+          "label": "Int",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +9)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +9, Wahrnehmung +7"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Nekrotisch"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 17"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und zwei weitere Sprachen"
+        },
+        {
+          "label": "HG",
+          "value": "13 (EP 10.000 oder 11.500 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Vampir bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen.\n\nNeblige Flucht: Wenn die Trefferpunkte des Vampirs außerhalb seines Ruheplatzes auf 0 sinken, nutzt der Vampir Gestaltwandeln, um zu Nebel zu werden (keine Aktion erforderlich). Wenn er sich nicht verwandeln kann, wird er zerstört.\n\nMit 0 Trefferpunkten in Nebelgestalt kann er sich nicht in seine Vampirgestalt zurückverwandeln und muss innerhalb der nächsten zwei Stunden seinen Ruheplatz erreichen, oder er wird zerstört. Nach der Rückkehr an seinen Ruheplatz verwandelt er sich in seine Vampirgestalt und ist gelähmt, bis er Trefferpunkte zurückerhält, und nachdem er eine Stunde dort verbracht hat, erhält er 1 Trefferpunkt zurück.\n\nSpinnenklettern: Der Vampir kann ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen.\n\nVampirschwächen: Der Vampir hat folgende Schwächen:\n\nZutritt verwehren: Der Vampir kann keine Behausung betreten, ohne von einem der Bewohner eingeladen worden zu sein.\n\nFließendes Wasser: Der Vampir erleidet 20 Säureschaden, wenn er seinen Zug in fließendem Wasser beendet.\n\nHolzpflock ins Herz: Wird dem Vampir eine Waffe ins Herz getrieben, die Stichschaden bewirkt, während er kampfunfähig ist und sich an seinem Ruheplatz aufhält, ist er gelähmt, bis die Waffe entfernt wird.\n\nSonnenlicht: Der Vampir erleidet 20 gleißenden Schaden, wenn er seinen Zug im Sonnenlicht beginnt. Im Sonnenlicht ist er bei Angriffs- und Attributswürfen im Nachteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff (nur Vampirgestalt): Der Vampir führt zwei Grabesschlag-Angriffe aus und setzt Biss ein.\n\nGrabesschlag (nur Vampirgestalt): Nahkampfangriffswurf: +9, Reichweite 1,5 m. Treffer: 8 (1W8+4) Wuchtschaden plus 7 (2W6) nekrotischer Schaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es von einer der beiden Hände gepackt (Flucht-SG 14).\n\nBiss (nur Fledermaus- oder Vampirgestalt): Konstitutionsrettungswurf: SG 17; eine Kreatur im Abstand von bis zu 1,5 Metern, die bereitwillig, festgesetzt, gepackt oder kampfunfähig ist. Misserfolg: 6 (1W4+4) Stichschaden plus 13 (3W8) nekrotischer Schaden. Das Trefferpunktemaximum des Ziels wird um eine Anzahl in Höhe des erlittenen nekrotischen Schadens verringert, und der Vampir erhält Trefferpunkte in Höhe dieses Betrags zurück. Ein Humanoide, dessen Trefferpunkte durch diesen Schaden auf 0 sinken und der dann begraben wird, erhebt sich beim nächsten Sonnenaufgang als Vampirbrut und untersteht der Kontrolle des Vampirs."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Bezaubern (Aufladung 5–6): Der Vampir wirkt den Zauber Person bezaubern mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 17). Der Zauber wirkt 24 Stunden lang. Das bezauberte Ziel lässt sich bereitwillig vom Vampir beißen, der Schaden beendet denn Zauber nicht. Nach Ende des Zaubers weiß das Ziel, dass es vom Vampir bezaubert wurde.\n\nGestaltwandeln: Wenn der Vampir sich nicht im Sonnenlicht oder in fließendem Wasser befindet, kann er sich in eine winzige Fledermaus (Bewegungsrate 1,5 m, Flugbewegungsrate 9 m) oder eine mittelgroße Nebelwolke (Bewegungsrate 1,5 m, Flugbewegungsrate 6 m (Schweben)) verwandeln oder seine Vampirgestalt annehmen. Alles, was er trägt, verwandelt sich mit ihm.\n\nIn Fledermausgestalt kann der Vampir nicht sprechen. Seine Spielwerte sind abgesehen von Größe und Bewegungsrate unverändert.\n\nIn Nebelgestalt kann der Vampir keine Aktionen ausführen, nicht sprechen und nicht mit Gegenständen interagieren. Er hat kein Gewicht und kann den Bereich eines Feindes betreten und dort stoppen. Sofern Luft durch einen Bereich strömen kann, kann der Nebel diesen Bereich ebenfalls passieren, jedoch keine Flüssigkeiten durchdringen. Er ist gegen alle Schadensarten resistent, abgesehen von durch Sonnenlicht erlittenen Schaden."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Vampir eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Vampir wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nBetören: Der Vampir wirkt den Zauber Befehl mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 17).\n\nDer Vampir kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nUntoter Schlag: Der Vampir legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Grabesschlag-Angriff aus."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.t-v.vrock",
+      "level": 3,
+      "text": "Vrock"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.t-v.vrock.vrock",
+      "name": "Vrock",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Unhold (Dämon), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "152 (16W10+64)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW +2)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Feuer, Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Dämonische Genesung: Wenn der Vrock außerhalb des Abyss stirbt, löst sein Körper sich zu einer widerlichen Flüssigkeit auf. Der Vrock erhält sofort einen neuen Körper, der mit allen Trefferpunkten irgendwo im Abyss aufersteht.\n\nMagieresistenz: Der Vrock ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Vrock führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 10 (2W6+3) Stichschaden plus 10 (3W6) Giftschaden.\n\nBetäubendes Kreischen (1-mal täglich): Konstitutionsrettungswurf: SG 15; jede Kreatur in einer Ausströmung von sechs Metern, die vom Vrock ausgeht (Dämonen bestehen automatisch). Misserfolg: 10 (3W6) Schallschaden, und das Ziel ist bis zum Ende des nächsten Zugs des Vrocks betäubt.\n\nSporen (Aufladung 6): Konstitutionsrettungswurf: SG 15; jede Kreatur in einer Ausströmung von sechs Metern, die vom Vrock ausgeht. Misserfolg: Das Ziel ist vergiftet und wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Während das Ziel vergiftet ist, erleidet es zu Beginn jedes seiner Züge 5 (1W10) Giftschaden. Der Effekt wird frühzeitig durch den Konsum einer Flasche mit Weihwasser beendet."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:68996b084c6beeddba53ea49df052328f93bc41fe2ba9a9b0235ef5eecb3159c"
+}

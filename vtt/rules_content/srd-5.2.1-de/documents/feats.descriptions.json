@@ -1,0 +1,499 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "feats.descriptions",
+  "slug": "talente",
+  "title": "Talente",
+  "navigationPath": [
+    "Talente"
+  ],
+  "order": 500,
+  "sourcePages": [
+    98,
+    99,
+    100
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.feat-descriptions",
+      "level": 2,
+      "text": "Beschreibungen der Talente"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.feat-descriptions-introduction",
+      "text": "Die folgenden Talente sind nach den Kategorien Herkunft, Allgemein, Kampfstil oder Epische Gabe geordnet und innerhalb jeder Kategorie alphabetisch sortiert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.feat-elements",
+      "level": 3,
+      "text": "Elemente eines Talents"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.feat-elements-introduction",
+      "text": "Die Beschreibung eines Talents enthält folgende Elemente, die nach dem Namen des Talents vorgestellt werden:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.feat-elements-category",
+      "text": "Kategorie: Ein Talent gehört zu einer Kategorie, die beim Talent vermerkt ist. Wenn du angewiesen wirst, ein Talent aus einer bestimmten Kategorie auszuwählen, beispielsweise aus der Kategorie Herkunft, muss diese Kategorie unter dem Namen des Talents erscheinen. Wenn du angewiesen wirst, ein Talent auszuwählen, und keine Kategorie angegeben ist, kannst du die Kategorie frei auswählen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.feat-elements-prerequisite",
+      "text": "Voraussetzung: Um ein Talent zu erhalten, musst du alle Voraussetzungen erfüllen, die in seiner Beschreibung angegeben sind, sofern dir kein Merkmal erlaubt, das Talent ohne die Voraussetzung zu erhalten. Wenn zu einer Voraussetzung eine Klasse gehört, benötigst du mindestens eine Stufe in dieser Klasse, um das Talent zu erhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.feat-elements-benefit",
+      "text": "Vorzug: Die Vorzüge eines Talents werden nach den Voraussetzungen aufgeführt. Wenn du ein Talent hast, erhältst du seine Vorzüge."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.feat-elements-repeatable",
+      "text": "Kann wiederholt werden: Ein Talent kann nur einmal angewendet werden, sofern nicht in der Beschreibung im Unterabschnitt „Kann wiederholt werden“ anders vermerkt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.origin-feats",
+      "level": 3,
+      "text": "Herkunftstalente"
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.skilled",
+      "level": 4,
+      "text": "Begabt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.skilled-category",
+      "text": "Herkunftstalent"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.skilled-description",
+      "text": "Du bist in drei Fertigkeiten oder Werkzeugen deiner Wahl in beliebiger Kombination geübt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.skilled-repeatable",
+      "text": "Kann wiederholt werden: Du kannst dieses Talent mehr als einmal verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.magic-initiate",
+      "level": 4,
+      "text": "Eingeweihter der Magie"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.magic-initiate-category",
+      "text": "Herkunftstalent"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.magic-initiate-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.magic-initiate-two-cantrips",
+      "text": "Zwei Zaubertricks: Du beherrschst zwei Zaubertricks deiner Wahl aus der Zauberliste des Druiden, des Klerikers oder des Magiers. Dein Attribut zum Wirken der Zauber dieses Talents ist Intelligenz, Weisheit oder Charisma (wähle aus, wenn du dieses Talent auswählst)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.magic-initiate-level1-spell",
+      "text": "Zauber des 1. Grades: Wähle einen Zauber des 1. Grades von der Liste aus, die du für die Zaubertricks dieses Talents ausgewählt hast. Du hast diesen Zauber stets vorbereitet. Du kannst ihn einmal wirken, ohne einen Zauberplatz zu verbrauchen. Diese Fähigkeit erhältst du nach einer langen Rast zurück. Du kannst den Zauber auch mit einem beliebigen verfügbaren Zauberplatz wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.magic-initiate-spell-change",
+      "text": "Zauberwechsel: Wann immer du eine neue Stufe erhältst, kannst du einen der Zauber, die du für dieses Talent ausgewählt hast, durch einen anderen Zauber des gleichen Grades von der ausgewählten Zauberliste ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.magic-initiate-repeatable",
+      "text": "Kann wiederholt werden: Du kannst dieses Talent mehr als einmal verwenden, aber du musst jedes Mal eine andere Zauberliste auswählen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.alert",
+      "level": 4,
+      "text": "Wachsam"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.alert-category",
+      "text": "Herkunftstalent"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.alert-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.alert-initiative-proficiency",
+      "text": "Initiative-Übung: Wenn du die Initiative auswürfelst, kannst du dem Ergebnis deinen Übungsbonus hinzufügen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.alert-initiative-swap",
+      "text": "Initiativetausch: Sofort nach dem Auswürfeln der Initiative kannst du deine Initiative mit der eines bereitwilligen Verbündeten im selben Kampf tauschen. Der Tausch ist nicht möglich, wenn mindestens einer von euch beiden kampfunfähig ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.savage-attacker",
+      "level": 4,
+      "text": "Wilder Angreifer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.savage-attacker-category",
+      "text": "Herkunftstalent"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.savage-attacker-description",
+      "text": "Du bist darin ausgebildet, besonders schadensintensive Schläge auszuführen. Einmal pro Zug kannst du, wenn du ein Ziel mit einer Waffe triffst, zweimal mit den Schadenswürfeln der Waffe würfeln und dir eins der Ergebnisse aussuchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.general-feats",
+      "level": 3,
+      "text": "Allgemeine Talente"
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.ability-score-improvement",
+      "level": 4,
+      "text": "Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.ability-score-improvement-category",
+      "text": "Allgemeines Talent (Voraussetzung: min. 4. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.ability-score-improvement-description",
+      "text": "Erhöhe einen Attributswert deiner Wahl um 2 Punkte oder zwei Attributswerte deiner Wahl um je 1 Punkt. Kein Attribut kann dadurch einen Wert von 20 überschreiten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.ability-score-improvement-repeatable",
+      "text": "Kann wiederholt werden: Du kannst dieses Talent mehr als einmal verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.grappler",
+      "level": 4,
+      "text": "Ringer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.grappler-category",
+      "text": "Allgemeines Talent (Voraussetzung: min. 4. Stufe, min. Stärke oder Geschicklichkeit 13)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.grappler-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.grappler-ability-score-increase",
+      "text": "Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.grappler-punch-and-grab",
+      "text": "Zuschlagen und packen: Wenn du eine Kreatur als Teil der Angriffsaktion in deinem Zug mit einem waffenlosen Angriff triffst, kannst du sowohl den Schaden bewirken als auch die Packen-Option verwenden. Du kannst diesen Vorzug nur einmal pro Zug anwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.grappler-attack-advantage",
+      "text": "Angriffsvorteil: Du bist bei Angriffswürfen gegen eine Kreatur, die du gepackt hältst, im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.grappler-fast-wrestler",
+      "text": "Flinker Ringer: Du musst keine zusätzliche Bewegung verbrauchen, wenn du eine Kreatur bewegst, die du gepackt hältst, sofern die Kreatur höchstens so groß ist wie du."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.fighting-style-feats",
+      "level": 3,
+      "text": "Kampfstil-Talente"
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.archery",
+      "level": 4,
+      "text": "Bogenschießen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.archery-category",
+      "text": "Kampfstil-Talent (Voraussetzung: Kampfstil-Merkmal)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.archery-description",
+      "text": "Du erhältst einen Bonus von +2 auf alle Angriffswürfe mit Fernkampfwaffen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.great-weapon-fighting",
+      "level": 4,
+      "text": "Kampf mit großen Waffen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.great-weapon-fighting-category",
+      "text": "Kampfstil-Talent (Voraussetzung: Kampfstil-Merkmal)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.great-weapon-fighting-description",
+      "text": "Wenn du den Schaden eines Angriffs mit einer Nahkampfwaffe auswürfelst, die du mit beiden Händen hältst, kannst du alle Ergebnisse des Schadenswürfels von 1 oder 2 als 3 werten. Die Waffe muss die Eigenschaft Zweihändig oder Vielseitig besitzen, damit du diesen Vorzug erhältst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.defense",
+      "level": 4,
+      "text": "Verteidigung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.defense-category",
+      "text": "Kampfstil-Talent (Voraussetzung: Kampfstil-Merkmal)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.defense-description",
+      "text": "Wenn du leichte, mittelschwere oder schwere Rüstung trägst, erhältst du einen Bonus von +1 auf die Rüstungsklasse."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.two-weapon-fighting",
+      "level": 4,
+      "text": "Zwei-Waffen-Kampf"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.two-weapon-fighting-category",
+      "text": "Kampfstil-Talent (Voraussetzung: Kampfstil-Merkmal)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.two-weapon-fighting-description",
+      "text": "Wenn du als Ergebnis der Eigenschaft Leicht einer Waffe einen zusätzlichen Angriff ausführst, kannst du dem Angriffsschaden deinen Attributsmodifikator hinzufügen, sofern du dies nicht ohnehin schon tust."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.epic-boon-feats",
+      "level": 3,
+      "text": "Epische-Gabe-Talente"
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.boon-of-dimensional-travel",
+      "level": 4,
+      "text": "Gabe des Dimensionsreisens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-dimensional-travel-category",
+      "text": "Epische-Gabe-Talent (Voraussetzung: min. 19. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-dimensional-travel-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-dimensional-travel-ability-score-increase",
+      "text": "Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-dimensional-travel-blink-steps",
+      "text": "Flimmerschritte: Sofort, nachdem du die Angriffsaktion oder die magische Aktion ausgeführt hast, kannst du dich bis zu neun Meter weit in einen freien Bereich teleportieren, den du sehen kannst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.boon-of-combat-prowess",
+      "level": 4,
+      "text": "Gabe der Kampffertigkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-combat-prowess-category",
+      "text": "Epische-Gabe-Talent (Voraussetzung: min. 19. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-combat-prowess-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-combat-prowess-ability-score-increase",
+      "text": "Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-combat-prowess-peerless-aim",
+      "text": "Unübertroffenes Zielen: Wenn du bei einem Angriffswurf nicht triffst, kannst du den Wurf in einen Treffer verwandeln. Wenn du diesen Vorzug angewendet hast, ist dies erst nach Beginn deines nächsten Zugs erneut möglich."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.boon-of-the-night-spirit",
+      "level": 4,
+      "text": "Gabe des Nachtgeists"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-the-night-spirit-category",
+      "text": "Epische-Gabe-Talent (Voraussetzung: min. 19. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-the-night-spirit-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-the-night-spirit-ability-score-increase",
+      "text": "Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-the-night-spirit-shadowy-camouflage",
+      "text": "Schattentarnung: In dämmrigem Licht oder Dunkelheit kannst du dich als Bonusaktion unsichtbar machen. Der Zustand endet sofort, nachdem du eine Aktion, eine Bonusaktion oder eine Reaktion ausgeführt hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-the-night-spirit-shadowy-form",
+      "text": "Schattige Gestalt: In dämmrigem Licht oder Dunkelheit bist du gegen alle Schadensarten außer Gleißend und Psychisch resistent."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.boon-of-fate",
+      "level": 4,
+      "text": "Gabe des Schicksals"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-fate-category",
+      "text": "Epische-Gabe-Talent (Voraussetzung: min. 19. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-fate-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-fate-ability-score-increase",
+      "text": "Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-fate-improve-fate",
+      "text": "Schicksal verbessern: Wenn du oder eine andere Kreatur im Abstand von bis zu 18 Metern von dir eine W20-Prüfung ausführt, kannst du mit 2W4 würfeln und der W20-Prüfung das Gesamtergebnis als Bonus oder Malus hinzufügen. Du kannst diesen Vorzug erst nach einem Initiativewurf oder einer kurzen oder langen Rast erneut verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.boon-of-irresistible-offense",
+      "level": 4,
+      "text": "Gabe des Unwiderstehlichen Angriffs"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-irresistible-offense-category",
+      "text": "Epische-Gabe-Talent (Voraussetzung: min. 19. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-irresistible-offense-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-irresistible-offense-ability-score-increase",
+      "text": "Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 30)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-irresistible-offense-overcome-defenses",
+      "text": "Verteidigung überwinden: Jeder Hieb-, Stich- und Wuchtschaden, den du bewirkst, ignoriert entsprechende Resistenzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-irresistible-offense-overwhelming-strike",
+      "text": "Überwältigender Schlag: Wenn du bei einem Angriffswurf mit dem W20 eine 20 würfelst, kannst du dem Ziel zusätzlichen Schaden in Höhe des durch dieses Talent erhöhten Attributswerts zufügen. Der zusätzliche Schaden ist von der gleichen Art wie der Schaden des Angriffs."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.boon-of-truesight",
+      "level": 4,
+      "text": "Gabe des Wahren Blicks"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-truesight-category",
+      "text": "Epische-Gabe-Talent (Voraussetzung: min. 19. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-truesight-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-truesight-ability-score-increase",
+      "text": "Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-truesight-truesight",
+      "text": "Wahrer Blick: Du hast Wahrer Blick mit einer Reichweite von 18 Metern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "feats.descriptions.boon-of-spell-recall",
+      "level": 4,
+      "text": "Gabe der Zaubererinnerung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-spell-recall-category",
+      "text": "Epische-Gabe-Talent (Voraussetzung: min. 19. Stufe, Merkmal Zauberwirken)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-spell-recall-benefits-introduction",
+      "text": "Du erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-spell-recall-ability-score-increase",
+      "text": "Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf maximal 30)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "feats.descriptions.boon-of-spell-recall-free-casting",
+      "text": "Freies Zauberwirken: Wann immer du einen Zauber mit einem Zauberplatz des 1. bis 4. Grades wirkst, würfle mit 1W4. Wenn das Würfelergebnis dem Grad des Zauberplatzes entspricht, so wird dieser nicht verbraucht."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:01cc8f33fa2b7395fe6cca9c8cc292fe71a28b0c9dd8f7bd10dd032add38aab2"
+}

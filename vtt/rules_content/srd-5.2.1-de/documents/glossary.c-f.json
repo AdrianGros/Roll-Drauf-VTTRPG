@@ -1,0 +1,328 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "glossary.c-f",
+  "slug": "regeldefinitionen-c-f",
+  "title": "Regeldefinitionen C–F",
+  "navigationPath": [
+    "Regelglossar",
+    "Regeldefinitionen C–F"
+  ],
+  "order": 820,
+  "sourcePages": [
+    206,
+    207
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.regeldefinitionen",
+      "level": 2,
+      "text": "Regeldefinitionen (C–F)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.charakterbogen",
+      "level": 3,
+      "text": "Charakterbogen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.charakterbogen.text-1",
+      "text": "Ein Charakterbogen ist ein Blatt Papier oder ein digitales Dokument, mit dem du die Daten deines Charakters nachverfolgst. Siehe auch „Charaktererstellung“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.daemmriges-licht",
+      "level": 3,
+      "text": "Dämmriges Licht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.daemmriges-licht.text-1",
+      "text": "Ein Bereich mit dämmrigem Licht ist leicht verschleiert. Siehe auch „Leicht verschleiert“ und „Die Spielregeln“ („Erkundung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.deckung",
+      "level": 3,
+      "text": "Deckung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.deckung.text-1",
+      "text": "Deckung bietet einem Ziel dahinter ein gewisses Maß an Schutz. Es gibt drei Deckungsgrade, von denen jeder dem Ziel einen anderen Vorzug bietet: Teildeckung (Bonus von +2 auf RK und Geschicklichkeitsrettungswürfe), Dreivierteldeckung (Bonus von +5 auf RK und Geschicklichkeitsrettungswürfe) und vollständige Deckung (das Ziel kann nicht direkt anvisiert werden). Für ein Ziel hinter verschiedenen Deckungsgraden gilt nur der Grad, der den höchsten Schutz bietet. Siehe auch „Die Spielregeln“ („Kampf“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.dehydrierung-gefahr",
+      "level": 3,
+      "text": "Dehydrierung (Gefahr)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.dehydrierung-gefahr.text-1",
+      "text": "Kreaturen benötigen täglich eine gewisse Menge von Wasser je nach ihrer Größe, wie in der Tabelle „Täglicher Wasserbedarf“ dargestellt. Eine Kreatur, die weniger als die Hälfte der täglich erforderlichen Wassermenge trinkt, erhält am Ende des Tages eine Erschöpfungsstufe. Erschöpfung durch Dehydrierung kann nicht entfernt werden, ehe die Kreatur nicht die vollständige Tagesmenge an Wasser trinkt. Siehe auch „Erschöpfung“."
+    },
+    {
+      "type": "table",
+      "ruleId": "glossary.c-f.dehydrierung-gefahr.tabelle-wasserbedarf",
+      "caption": "Täglicher Wasserbedarf",
+      "columns": [
+        "Größe",
+        "Wassermenge",
+        "Größe",
+        "Wassermenge"
+      ],
+      "rows": [
+        [
+          "Winzig",
+          "1 Liter",
+          "Groß",
+          "16 Liter"
+        ],
+        [
+          "Klein",
+          "4 Liter",
+          "Riesig",
+          "64 Liter"
+        ],
+        [
+          "Mittel",
+          "4 Liter",
+          "Gigantisch",
+          "256 Liter"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.dunkelheit",
+      "level": 3,
+      "text": "Dunkelheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.dunkelheit.text-1",
+      "text": "Dunkle Bereiche sind komplett verschleiert. Siehe auch „Komplett verschleiert“ und „Die Spielregeln“ („Erkundung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.dunkelsicht",
+      "level": 3,
+      "text": "Dunkelsicht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.dunkelsicht.text-1",
+      "text": "Wenn du Dunkelsicht hast, kannst du auf die angegebene Reichweite bei dämmrigem Licht sehen wie bei hellem Licht und bei Dunkelheit wie bei dämmrigem Licht. Farben nimmst du bei Dunkelheit nur als Graustufen wahr. Siehe auch „Die Spielregeln“ („Erkundung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.einstimmung",
+      "level": 3,
+      "text": "Einstimmung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.einstimmung.text-1",
+      "text": "Manche magischen Gegenstände erfordern, dass eine bestimmte Bindung an sie hergestellt wird, ehe ihre magischen Eigenschaften genutzt werden können: Dies ist die sogenannte Einstimmung. Eine Kreatur kann auf höchstens drei magische Gegenstände zugleich eingestimmt sein. Siehe auch „Ausrüstung“ („Magische Gegenstände“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.erfahrungspunkte",
+      "level": 3,
+      "text": "Erfahrungspunkte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erfahrungspunkte.text-1",
+      "text": "Charaktere verdienen Erfahrungspunkte (EP), wenn sie Herausforderungen meistern und Abenteuer abschließen. Die EP werden vom Spielleiter verliehen. Wenn die EP eines Charakters bestimmte Schwellenwerte erreichen, wird die Stufe des Charakters erhöht. Siehe auch „Stufenaufstiege“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.erschoepfung-zustand",
+      "level": 3,
+      "text": "Erschöpfung (Zustand)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erschoepfung-zustand.text-1",
+      "text": "Wenn du den Zustand Erschöpft hast, wirken folgende Effekte auf dich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erschoepfung-zustand.text-2",
+      "text": "Erschöpfungsstufen: Dieser Zustand ist kumulativ. Wann immer er auf dich wirkt, erhältst du 1 Erschöpfungsstufe hinzu. Wenn du sechs Erschöpfungsstufen hast, stirbst du."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erschoepfung-zustand.text-3",
+      "text": "Beeinträchtigte W20-Prüfungen: Wenn du eine W20-Prüfung ausführst, ist das Ergebnis um einen Betrag in doppelter Höhe deiner Erschöpfungsstufen verringert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erschoepfung-zustand.text-4",
+      "text": "Verringerte Bewegungsrate: Deine Bewegungsrate ist um eine Anzahl von Metern in Höhe des 1,5-Fachen deiner Erschöpfungsstufe verringert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erschoepfung-zustand.text-5",
+      "text": "Erschöpfungsstufen entfernen: Wenn du eine lange Rast abschließt, wird eine deiner Erschöpfungsstufen entfernt. Sobald du keine Erschöpfungsstufen mehr hast, endet der Zustand."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.erschuetterungssinn",
+      "level": 3,
+      "text": "Erschütterungssinn"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erschuetterungssinn.text-1",
+      "text": "Eine Kreatur mit Erschütterungssinn kennt den Ort von Kreaturen und bewegten Gegenständen innerhalb einer bestimmten Reichweite, sofern sie und die erkannten Ziele beide in Kontakt mit derselben Oberfläche (dem Boden, einer Wand, einer Decke) oder derselben Flüssigkeit sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erschuetterungssinn.text-2",
+      "text": "Erschütterungssinn kann keine Kreaturen oder Gegenstände in der Luft erspüren und zählt nicht als Form der Sicht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.erstickung-gefahr",
+      "level": 3,
+      "text": "Erstickung (Gefahr)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.erstickung-gefahr.text-1",
+      "text": "Eine Kreatur kann für eine Zeitspanne die Luft anhalten, die ihrem Konstitutionsmodifikator plus 1 in Minuten entspricht (mindestens 30 Sekunden). Danach setzt die Erstickung ein. Solange eine Kreatur keine Luft bekommt oder erstickt, erhält sie am Ende jedes ihrer Züge eine Erschöpfungsstufe. Sobald sie wieder atmen kann, werden alle Erschöpfungsstufen entfernt, die sie durch die Erstickung erhalten hat."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.expertise",
+      "level": 3,
+      "text": "Expertise"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.expertise.text-1",
+      "text": "Expertise ist ein Merkmal, das deine Anwendung von Fertigkeiten verbessert, in denen du Übung hast. Wenn du einen Attributswurf mit einer Fertigkeit ausführst, in der du Übung und Expertise hast, ist dein Übungsbonus bei diesem Wurf verdoppelt, sofern der Bonus nicht schon durch ein anderes Merkmal verdoppelt wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.expertise.text-2",
+      "text": "Wenn du Expertise erhältst, dann in einer Fertigkeit, in der du Übung hast. Du kannst nur einmal Expertise in einer Fertigkeit haben, in der du Übung hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.expertise.text-3",
+      "text": "Siehe auch „Die Spielregeln“ („Übung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.feindlich-gesinnt-haltung",
+      "level": 3,
+      "text": "Feindlich gesinnt (Haltung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.feindlich-gesinnt-haltung.text-1",
+      "text": "Eine feindlich gesinnte Kreatur steht dir negativ gegenüber. Du bist bei Attributswürfen zum Beeinflussen von Kreaturen, die dir feindlich gesinnt sind, im Nachteil. Siehe auch „Beeinflussen“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.fertigkeit",
+      "level": 3,
+      "text": "Fertigkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.fertigkeit.text-1",
+      "text": "Eine Fertigkeit ist ein Spezialgebiet, das mit einem Attributswurf assoziiert ist. Wenn du Übung in einer Fertigkeit hast und einen Attributswurf ausführst, der mit dieser Fertigkeit assoziiert ist, kannst du dem Ergebnis deinen Übungsbonus hinzufügen. Siehe auch „Die Spielregeln“ („Übung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.festgesetzt-zustand",
+      "level": 3,
+      "text": "Festgesetzt (Zustand)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.festgesetzt-zustand.text-1",
+      "text": "Wenn du den Zustand Festgesetzt hast, wirken folgende Effekte auf dich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.festgesetzt-zustand.text-2",
+      "text": "Keine Bewegungsrate: Deine Bewegungsrate beträgt 0 und kann nicht erhöht werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.festgesetzt-zustand.text-3",
+      "text": "Beeinträchtigte Angriffe: Angriffswürfe gegen dich sind im Vorteil, und deine Angriffswürfe sind im Nachteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.festgesetzt-zustand.text-4",
+      "text": "Beeinträchtigte Rettungswürfe: Du bist bei Geschicklichkeitsrettungswürfen im Nachteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.fliegen",
+      "level": 3,
+      "text": "Fliegen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.fliegen.text-1",
+      "text": "Verschiedene Effekte können eine Kreatur flugfähig machen. Wenn du im Flug einen der Zustände Kampfunfähig oder Liegend erhältst oder deine Flugbewegungsrate auf 0 sinkt, stürzt du ab. Du kannst unter diesen Umständen in der Luft bleiben, sofern du schweben kannst. Siehe auch „Flugbewegungsrate“ und „Stürzen“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.flueche",
+      "level": 3,
+      "text": "Flüche"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.flueche.text-1",
+      "text": "Durch manche Effekte im Spiel wird eine Kreatur oder ein Gegenstand verflucht. Der Effekt, der den Fluch bewirkt, definiert dessen Auswirkungen. Flüche können durch die Zauber Fluch brechen und Vollständige Genesung sowie andere magische Effekte entfernt werden, die ausdrücklich Flüche beenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.flugbewegungsrate",
+      "level": 3,
+      "text": "Flugbewegungsrate"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.flugbewegungsrate.text-1",
+      "text": "Eine Flugbewegungsrate kann verwendet werden, um sich durch die Luft zu bewegen. Mit einer Flugbewegungsrate kannst du in der Luft bleiben, bis du landest, abstürzt oder stirbst. Siehe auch „Bewegungsrate“ und „Fliegen“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.freier-bereich",
+      "level": 3,
+      "text": "Freier Bereich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.freier-bereich.text-1",
+      "text": "Ein Bereich ist frei, wenn sich keine Kreaturen darin aufhalten und er nicht vollständig mit Gegenständen angefüllt ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.c-f.freundlich-gesinnt-haltung",
+      "level": 3,
+      "text": "Freundlich gesinnt (Haltung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.c-f.freundlich-gesinnt-haltung.text-1",
+      "text": "Eine freundlich gesinnte Kreatur steht dir positiv gegenüber. Du bist bei Attributswürfen zum Beeinflussen von Kreaturen, die dir freundlich gesinnt sind, im Vorteil. Siehe auch „Beeinflussen“."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:b34746899fb208432ac63cdb87997bba398502162e1f22ea63bc977453969a83"
+}

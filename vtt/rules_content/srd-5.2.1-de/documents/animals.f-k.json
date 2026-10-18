@@ -1,0 +1,1241 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "animals.f-k",
+  "slug": "tiere-f-k",
+  "title": "Tiere F–K",
+  "navigationPath": [
+    "Tiere",
+    "Tiere F–K"
+  ],
+  "order": 3010,
+  "sourcePages": [
+    395,
+    396,
+    397,
+    398
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "animals.f-k.tiere",
+      "level": 2,
+      "text": "Tiere (F–K)"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.falke",
+      "name": "Falke",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +6"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Krallen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 1 Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.fledermaus",
+      "name": "Fledermaus",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Fliegen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 1 Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.fledermausschwarm",
+      "name": "Fledermausschwarm",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Schwarm winziger Tiere, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W10)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Fliegen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Betäubt, Bezaubert, Festgesetzt, Gelähmt, Gepackt, Liegend, Verängstigt, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Schwarm: Der Schwarm kann den Bereich einer anderen Kreatur besetzen und umgekehrt. Er kann sich durch jede Öffnung bewegen, die groß genug für eine Fledermaus von winziger Größe ist. Der Schwarm kann weder Trefferpunkte zurückerhalten noch temporäre Trefferpunkte erhalten."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Bisse: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (2W4) Stichschaden oder 2 (1W4) Stichschaden, wenn der Schwarm blutig ist."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.fliegende-schlange",
+      "name": "Fliegende Schlange",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winzige Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "5 (2W4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Vorbeifliegen: Die Schlange provoziert keine Gelegenheitsangriffe, wenn sie aus der Reichweite eines Gegners fliegt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 1 Stichschaden plus 5 (2W4) Giftschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.flusspferd",
+      "name": "Flusspferd",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "–2 (8)"
+        },
+        {
+          "label": "TP",
+          "value": "82 (11W10+22)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "21 (MOD +5, RW +7)"
+        },
+        {
+          "label": "Ges",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Atem anhalten: Das Flusspferd kann zehn Minuten lang den Atem anhalten."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Das Flusspferd führt zwei Bissangriffe aus.\n\nBiss: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 16 (2W10+5) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.frosch",
+      "name": "Frosch",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Schwimmen 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3, Wahrnehmung +1"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 9 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Frosch kann Luft und Wasser atmen.\n\nStehender Sprung: Der Frosch kann mit oder ohne Anlauf bis zu drei Meter weit und bis zu 1,5 Meter hoch springen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 1 Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.geier",
+      "name": "Geier",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "5 (1W8+1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Geier ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Schnabel: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 2 (1W4) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.giftschlange",
+      "name": "Giftschlange",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "5 (2W4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Stichschaden plus 3 (1W6) Giftschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.giftschlangenschwarm",
+      "name": "Giftschlangenschwarm",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Schwarm winziger Tiere, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "36 (8W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ges",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Betäubt, Bezaubert, Festgesetzt, Gelähmt, Gepackt, Liegend, Verängstigt, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Schwarm: Der Schwarm kann den Bereich einer anderen Kreatur besetzen und umgekehrt. Er kann sich durch jede Öffnung bewegen, die groß genug für eine Schlange von winziger Größe ist. Der Schwarm kann weder Trefferpunkte zurückerhalten noch temporäre Trefferpunkte erhalten."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Bisse: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 8 (1W8+4) Stichschaden – oder 6 (1W4+4) Stichschaden, wenn der Schwarm blutig ist – plus 10 (3W6) Giftschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.hyaene",
+      "name": "Hyäne",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "5 (1W8+1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Die Hyäne ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens ein Verbündeter der Hyäne, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 3 (1W6) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.insektenschwarm",
+      "name": "Insektenschwarm",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Schwarm winziger Tiere, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "19 (3W8+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Fliegen oder Klettern 6 m (nach Wahl des SL)"
+        },
+        {
+          "label": "Stä",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Betäubt, Bezaubert, Festgesetzt, Gelähmt, Gepackt, Liegend, Verängstigt, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m; Passive Wahrnehmung 8"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Schwarm: Der Schwarm kann den Bereich einer anderen Kreatur besetzen und umgekehrt. Er kann sich durch jede Öffnung bewegen, die groß genug für ein Insekt von winziger Größe ist. Der Schwarm kann weder Trefferpunkte zurückerhalten noch temporäre Trefferpunkte erhalten.\n\nSpinnenklettern: Wenn der Schwarm über eine Kletterbewegungsrate verfügt, kann er ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Bisse: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 6 (2W4+1) Giftschaden oder 3 (1W4+1) Giftschaden, wenn der Schwarm blutig ist."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.jagdhai",
+      "name": "Jagdhai",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "45 (6W10+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Wasser atmen: Der Hai kann nur unter Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +6 (im Vorteil, wenn die Trefferpunkte des Ziels nicht vollständig sind), Reichweite 1,5 m. Treffer: 14 (3W6+4) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.kamel",
+      "name": "Kamel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "17 (2W10+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.katze",
+      "name": "Katze",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "2 (1W4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Klettern 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Springer: Die Sprungdistanz der Katze wird anhand ihrer Geschicklichkeit statt anhand ihrer Stärke bestimmt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Kratzen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 1 Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.krabbe",
+      "name": "Krabbe",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "3 (1W4+1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Schwimmen 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Die Krabbe kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Klauen: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 1 Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.f-k.krokodil",
+      "name": "Krokodil",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "13 (2W10+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Atem anhalten: Das Krokodil kann eine Stunde lang den Atem anhalten."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 6 (1W8+2) Stichschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es gepackt (Flucht-SG 12). Das gepackte Ziel ist außerdem festgesetzt."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:30d607b3379d66a00dc1bb31a3cde123fdea96c688984db21d3acbedf3ce92cf"
+}

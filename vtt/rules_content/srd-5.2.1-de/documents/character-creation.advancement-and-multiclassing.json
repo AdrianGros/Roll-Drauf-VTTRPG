@@ -1,0 +1,770 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "character-creation.advancement-and-multiclassing",
+  "slug": "stufenaufstiege-und-klassenkombinationen",
+  "title": "Stufenaufstiege, höhere Startstufen und Klassenkombinationen",
+  "navigationPath": [
+    "Charaktererstellung",
+    "Stufenaufstiege, höhere Startstufen und Klassenkombinationen"
+  ],
+  "order": 120,
+  "sourcePages": [
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.leveling-up",
+      "level": 2,
+      "text": "Stufenaufstiege"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.leveling-up-introduction",
+      "text": "Im Verlauf der Abenteuer wird dein Charakter Erfahrung sammeln, welche durch Erfahrungspunkte (EP) repräsentiert wird. Erreicht der Charakter eine bestimmte Gesamtzahl an Erfahrungspunkten, so verbessern sich seine Fähigkeiten. Dieser Fortschritt wird als Stufenaufstieg bezeichnet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.leveling-up-table-reference",
+      "text": "In der Charakteraufstiegstabelle ist aufgeführt, wie viele EP für Stufenaufstieg erforderlich sind und welcher Übungsbonus auf einer bestimmten Stufe für den Charakter gilt. Wenn deine EP-Summe eine Zahl in der Spalte „Erfahrungspunkte“ überschreitet, erreichst du die entsprechende Stufe."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.advancement-and-multiclassing.character-advancement-table",
+      "caption": "Charakterentwicklung",
+      "columns": [
+        "Stufe",
+        "Erfahrungspunkte",
+        "Übungsbonus"
+      ],
+      "rows": [
+        [
+          "1",
+          "0",
+          "+2"
+        ],
+        [
+          "2",
+          "300",
+          "+2"
+        ],
+        [
+          "3",
+          "900",
+          "+2"
+        ],
+        [
+          "4",
+          "2.700",
+          "+2"
+        ],
+        [
+          "5",
+          "6.500",
+          "+3"
+        ],
+        [
+          "6",
+          "14.000",
+          "+3"
+        ],
+        [
+          "7",
+          "23.000",
+          "+3"
+        ],
+        [
+          "8",
+          "34.000",
+          "+3"
+        ],
+        [
+          "9",
+          "48.000",
+          "+4"
+        ],
+        [
+          "10",
+          "64.000",
+          "+4"
+        ],
+        [
+          "11",
+          "85.000",
+          "+4"
+        ],
+        [
+          "12",
+          "100.000",
+          "+4"
+        ],
+        [
+          "13",
+          "120.000",
+          "+5"
+        ],
+        [
+          "14",
+          "140.000",
+          "+5"
+        ],
+        [
+          "15",
+          "165.000",
+          "+5"
+        ],
+        [
+          "16",
+          "195.000",
+          "+5"
+        ],
+        [
+          "17",
+          "225.000",
+          "+6"
+        ],
+        [
+          "18",
+          "265.000",
+          "+6"
+        ],
+        [
+          "19",
+          "305.000",
+          "+6"
+        ],
+        [
+          "20",
+          "355.000",
+          "+6"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.level-up-steps",
+      "level": 3,
+      "text": "Stufenaufstieg"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.level-up-steps-introduction",
+      "text": "Wenn du die nächste Stufe erreichst, führe diese Schritte aus:"
+    },
+    {
+      "type": "ordered-list",
+      "ruleId": "character-creation.advancement-and-multiclassing.level-up-steps-list",
+      "items": [
+        "Klasse auswählen: Die meisten Charaktere steigen in derselben Klasse um eine Stufe auf. Du kannst aber auch beschließen, in einer anderen Klasse um eine Stufe aufzusteigen. Verwende dazu die Regeln im Abschnitt „Klassenkombinationen“.",
+        "Trefferpunkte und Trefferpunktewürfel anpassen: Bei jedem Stufenaufstieg erhältst du einen zusätzlichen Trefferwürfel. Würfle mit diesem Würfel, füge dem Ergebnis deinen Konstitutionsmodifikator hinzu und addiere die Summe (mindestens 1) zu deinem Trefferpunktemaximum. Anstatt zu würfeln, kannst du auch den fixen Wert verwenden, den du in der Tabelle „Fixe Trefferpunkte nach Klassen“ findest.",
+        "Neue Klassenmerkmale notieren: Sieh dir die Tabelle mit deinen Klassenmerkmalen unter „Klassen“ an und notiere die Merkmale, die du in dieser Klasse auf der neuen Stufe erhältst. Triff alle Entscheidungen, die dir von neuen Merkmalen eröffnet werden.",
+        "Übungsbonus anpassen: Der Übungsbonus eines Charakters erhöht sich auf bestimmten Stufen, wie in der Charakteraufstiegstabelle und der Tabelle mit deinen Klassenmerkmalen unter „Klassen“ dargestellt. Wenn sich dein Übungsbonus erhöht, erhöhe alle Zahlen auf deinem Charakterbogen, die deinen Übungsbonus enthalten.",
+        "Attributsmodifikatoren anpassen: Wenn du ein Talent auswählst, das mindestens einen deiner Attributswerte erhöht, ändert sich auch dein Attributsmodifikator, sofern der neue Wert eine gerade Zahl ist. Passe in diesem Fall alle Zahlen auf deinem Charakterbogen an, die diesen Attributsmodifikator verwenden. Wenn sich dein Konstitutionsmodifikator um 1 erhöht, so erhöht sich dein Trefferpunktemaximum für jede erreichte Stufe um 1. Beispiel: Wenn ein Charakter die 8. Stufe erreicht und sein Konstitutionswert sich von 17 auf 18 erhöht, dann erhöht sich der Konstitutionsmodifikator auf +4. Das Trefferpunktemaximum des Charakters erhöht sich dann um 8 zuzüglich der Trefferpunkte, die er beim Erreichen der 8. Stufe erhält."
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.advancement-and-multiclassing.fixed-hit-points-table",
+      "caption": "Fixe Trefferpunkte nach Klassen",
+      "columns": [
+        "Klasse",
+        "Trefferpunkte pro Stufe"
+      ],
+      "rows": [
+        [
+          "Barbar",
+          "7 + KON-Modifikator"
+        ],
+        [
+          "Kämpfer, Paladin oder Waldläufer",
+          "6 + KON-Modifikator"
+        ],
+        [
+          "Barde, Druide, Hexenmeister, Kleriker, Mönch oder Schurke",
+          "5 + KON-Modifikator"
+        ],
+        [
+          "Magier, Zauberer",
+          "4 + KON-Modifikator"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.tiers-of-play",
+      "level": 3,
+      "text": "Stufenbereiche"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.tiers-of-play-introduction",
+      "text": "Auf jeder neuen Stufe erlangen Charaktere neue Fähigkeiten, mit denen sie größere Herausforderungen bewältigen können. Im Lauf der Stufenaufstiege ändert sich auch das Spielerlebnis, und die Risiken der Kampagne werden größer. Es ist hilfreich, sich den Entwicklungsbogen eines Charakters (und einer Kampagne) in vier Stufenbereichen vorzustellen, die die Reise eines Charakters von der 1. Stufe als Beginn seiner Abenteurerkarriere bis hin zu den epischen Höhen der 20. Stufe beschreiben. Es sind keine Regeln mit den Stufenbereichen assoziiert, sondern die Bereiche weisen darauf hin, dass das Spielerlebnis sich mit den Charakteren weiterentwickelt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.tier1",
+      "level": 4,
+      "text": "Stufenbereich 1 (1.–4. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.tier1-description",
+      "text": "Im Stufenbereich 1 sind die Charaktere Abenteurerneulinge, auch wenn sie sich dank ihrer außergewöhnlichen Fähigkeiten bereits von der allgemeinen Bevölkerung unterscheiden. Sie erlernen ihre Start-Klassenmerkmale und wählen eine Unterklasse aus. Die Gefahren, mit denen sie konfrontiert werden, stellen in der Regel Bedrohungen für örtliche Bauernhöfe oder Dörfer dar."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.tier2",
+      "level": 4,
+      "text": "Stufenbereich 2 (5.–10. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.tier2-description",
+      "text": "Im Stufenbereich 2 sind die Charaktere zu vollwertigen Abenteurern geworden. Zauberwirker erlangen ikonische Zauber wie Blitz, Feuerball und Tote erwecken. Die meisten waffenbasierten Klassen erlangen die Fähigkeit, in einer Runde mehrere Angriffe auszuführen. Nun sind die Charaktere Gefahren gewachsen, die Städte und Königreiche bedrohen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.tier3",
+      "level": 4,
+      "text": "Stufenbereich 3 (11.–16. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.tier3-description",
+      "text": "Im Stufenbereich 3 haben die Charaktere genügend Macht erworben, um sich auch unter Abenteurern auszuzeichnen. Auf der 11. Stufe erlernen viele Zauberwirker realitätsverändernde Zauber. Andere Charaktere erhalten Merkmale, die ihnen erlauben, mehr Angriffe auszuführen oder beeindruckende Effekte mit ihren Angriffen zu bewirken. Solche Abenteurer bannen oft Gefahren, die ganze Regionen bedrohen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.tier4",
+      "level": 4,
+      "text": "Stufenbereich 4 (17.–20. Stufe)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.tier4-description",
+      "text": "Im Stufenbereich 4 erreichen die Charaktere den Gipfel ihrer Klassenmerkmale und werden zu archetypischen Helden. Bei ihren Abenteuern steht das Schicksal der Welt oder sogar die Ordnung des Multiversums auf dem Spiel."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "character-creation.advancement-and-multiclassing.bonus-feats-at-20",
+      "title": "Bonustalente auf Stufe 20",
+      "text": "Der SL kann Talente als Entwicklungsmöglichkeit verwenden, wenn die Charaktere die 20. Stufe erreicht haben. So können die Charaktere mächtiger werden, obwohl sie keine weiteren Stufen erreichen können. Bei diesem Ansatz erhält jeder Charakter je 30.000 EP, die er über 355.000 EP hinaus verdient, ein Talent seiner Wahl. Epische Gaben eignen sich besonders als Bonustalente, doch ein Spieler kann jedes Talent auswählen, für das sein Charakter der 20. Stufe qualifiziert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.starting-at-higher-levels",
+      "level": 2,
+      "text": "Auf höheren Stufen beginnen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.starting-at-higher-levels-description",
+      "text": "Dein SL könnte die Charaktere deiner Gruppe auf einer höheren Stufe als der ersten beginnen lassen. Es ist beispielsweise empfehlenswert, auf der 3. Stufe zu beginnen, wenn die Gruppe sich aus erfahrenen D&D-Spielern zusammensetzt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.creating-your-character-at-higher-level",
+      "level": 3,
+      "text": "Deinen Charakter erstellen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.creating-your-character-at-higher-level-description",
+      "text": "Wenn du einen Charakter auf höherer Stufe erstellst, nutzt du die Schritte zur Charaktererstellung, die in diesem Kapitel beschrieben sind, und die Regeln für Aufstiege ab der 1. Stufe im Abschnitt „Stufenaufstiege“. Du beginnst mit dem EP-Mindestbetrag, der zum Erreichen deiner Startstufe erforderlich ist. Beispiel: Wenn der SL dich auf der 10. Stufe beginnen lässt, hast du 64.000 EP."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.advancement-and-multiclassing.starting-equipment-by-level-table",
+      "caption": "Anfangsausrüstung auf höheren Stufen",
+      "columns": [
+        "Anfangsstufe",
+        "Ausrüstung und Geld",
+        "Magische Gegenstände"
+      ],
+      "rows": [
+        [
+          "2–4",
+          "Normale Anfangsausrüstung",
+          "1 gewöhnlicher"
+        ],
+        [
+          "5–10",
+          "500 GM plus 1W10 × 25 GM plus normale Anfangsausrüstung",
+          "1 gewöhnlicher, 1 ungewöhnlicher"
+        ],
+        [
+          "11–16",
+          "5.000 GM plus 1W10 × 250 GM plus normale Anfangsausrüstung",
+          "2 gewöhnliche, 3 ungewöhnliche, 1 seltener"
+        ],
+        [
+          "17–20",
+          "20.000 GM plus 1W10 × 250 GM plus normale Anfangsausrüstung",
+          "2 gewöhnliche, 4 ungewöhnliche, 3 seltene, 1 sehr seltener"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.starting-equipment",
+      "level": 3,
+      "text": "Anfangsausrüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.starting-equipment-gm-discretion",
+      "text": "Der SL entscheidet, ob dein Charakter mit mehr als der Standardausrüstung eines Charakters der 1. Stufe beginnt, möglicherweise sogar mit mindestens einem magischen Gegenstand. Die Tabelle „Anfangsausrüstung auf höheren Stufen“ kann dem SL als Orientierung dienen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.starting-equipment-purchasing",
+      "text": "Sprich außerdem mit deinem SL darüber, welche Ausrüstung zum Kauf mit deinem Startgeld verfügbar ist. Beispielsweise sind die unter „Ausrüstung“ beschriebenen Feuerwaffen für Charaktere der 1. Stufe zu teuer, könnten aber zum Kauf verfügbar sein, wenn dein SL sie gestattet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclassing",
+      "level": 2,
+      "text": "Klassenkombinationen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclassing-introduction",
+      "text": "Klassenkombinationen erlauben dir, Stufen in mehreren Klassen zu erlangen. Mit dieser Regel hast du die Möglichkeit, bei jedem Stufenaufstieg in einer neuen Klasse anstatt in deiner aktuellen Klasse aufzusteigen. Auf diese Weise kannst du die Fähigkeiten dieser Klassen verbinden, um ein Charakterkonzept zu verwirklichen, das sich möglicherweise nicht in einer einzigen Klasse widerspiegelt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.prerequisites",
+      "level": 3,
+      "text": "Voraussetzungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.prerequisites-description",
+      "text": "Um dich für eine neue Klasse zu qualifizieren, benötigst du im Hauptattribut der neuen Klasse sowie deiner aktuellen Klassen einen Wert von mindestens 13. Beispiel: Ein Barbar, der sich für eine Kombination mit der Druidenklasse entscheidet, muss Werte für Stärke und Weisheit von mindestens 13 haben, da Stärke das Hauptattribut von Barbaren und Weisheit das Hauptattribut von Druiden ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-experience-points",
+      "level": 3,
+      "text": "Erfahrungspunkte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-experience-points-description",
+      "text": "Die benötigten Erfahrungspunkte für einen Stufenaufstieg basieren auf deiner gesamten Charakterstufe (nicht auf der Stufe einer einzelnen Klasse), wie in der Charakteraufstiegstabelle unter „Charaktererstellung“ angegeben. Wenn du beispielsweise Kleriker der 6. Stufe/Kämpfer der 1. Stufe bist, brauchst du genügend EP, um zur 8. Stufe aufsteigen zu können, um als Kämpfer die 2. Stufe oder als Kleriker die 7. Stufe zu erreichen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-hit-points",
+      "level": 3,
+      "text": "Trefferpunkte und Trefferpunktewürfel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-hit-points-gain",
+      "text": "Du erhältst die Trefferpunkte deiner neuen Klasse, wie es für Stufen über die 1. hinaus angegeben ist. Du erhältst die Trefferpunkte der 1. Stufe einer Klasse nur dann, wenn deine gesamte Charakterstufe 1 ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-hit-dice-combining",
+      "text": "Addiere die Trefferwürfel, die du von all deinen Klassen erhältst, um deine gesamten Trefferwürfel zu ermitteln. Wenn diese Würfel vom selben Typ sind, kannst du sie zusammenfassen. Zum Beispiel besitzen sowohl der Kämpfer als auch der Paladin einen W10 als Trefferwürfel. Wenn du also Paladin der 5. Stufe/Kämpfer der 5. Stufe bist, stehen dir 10W10 zur Verfügung. Wenn dir deine Klassen unterschiedliche Arten von Trefferwürfeln gewähren, notiere sie separat. Als Kleriker der 5. Stufe/Paladin der 5. Stufe hast du beispielsweise 5W10 sowie 5W8 Trefferwürfel."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-proficiency-bonus",
+      "level": 3,
+      "text": "Übungsbonus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-proficiency-bonus-description",
+      "text": "Dein Übungsbonus basiert auf deiner gesamten Charakterstufe wie in der Charakteraufstiegstabelle angegeben, nicht auf der Stufe einer einzelnen Klasse. Beispiel: Wenn du Kämpfer der 3. Stufe/Schurke der 2. Stufe bist, hast du den Übungsbonus eines Charakters der 5. Stufe, nämlich +3."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-training",
+      "level": 3,
+      "text": "Übung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-training-description",
+      "text": "Erreichst du die 1. Stufe in einer Klasse, die nicht deine Anfangsklasse ist, so bist du nur in einigen Bereichen der neuen Klasse geübt, wie in der jeweiligen Klassenbeschreibung unter „Klassen“ angegeben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-class-features",
+      "level": 3,
+      "text": "Klassenmerkmale"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-class-features-description",
+      "text": "Erreichst du in einer Klasse eine neue Stufe, so erhältst du die Klassenmerkmale für die jeweilige Stufe. Für einige Merkmale gelten bei Klassenkombinationen zusätzliche Regeln. Lies die Informationen zu Klassenkombinationen in den Beschreibungen deiner Klassen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-class-features-special-rules",
+      "text": "Es gelten spezielle Regeln für zusätzliche Angriffe, Zauberwirken sowie Merkmale (wie ungerüstete Verteidigung), die dir alternative Möglichkeiten geben, deine Rüstungsklasse zu berechnen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-armor-class",
+      "level": 3,
+      "text": "Rüstungsklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-armor-class-description",
+      "text": "Wenn du mehrere Möglichkeiten hast, deine Rüstungsklasse zu berechnen, kannst du von diesen nur jeweils eine nutzen. Beispiel: Ein Mönch/Zauberer mit dem Merkmal Ungerüstete Verteidigung des Mönchs und dem Merkmal Drakonische Widerstandskraft des Zauberers muss eines dieser Merkmale auswählen, um die Rüstungsklasse zu berechnen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-extra-attack",
+      "level": 3,
+      "text": "Zusätzlicher Angriff"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-extra-attack-no-stacking",
+      "text": "Erhältst du das Merkmal Zusätzlicher Angriff von mehr als einer Klasse, so addieren sich die Merkmale nicht. Du kannst nicht mehr als zwei Angriffe mit diesem Merkmal ausführen, sofern du kein Merkmal hast, das etwas anderes besagt (wie das Merkmal Zwei zusätzliche Angriffe des Kämpfers)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-extra-attack-warlock-example",
+      "text": "Entsprechend bekommst du als Hexenmeister durch die Anrufung Dürstende Klinge, die dir das Merkmal Zusätzlicher Angriff mit deiner Paktwaffe gewährt, keine weiteren Angriffe, wenn du bereits Zusätzlicher Angriff besitzt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spellcasting",
+      "level": 3,
+      "text": "Zauberwirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spellcasting-introduction",
+      "text": "Deine Fähigkeit, Zauber zu wirken, hängt teilweise von den kombinierten Stufen all deiner zauberwirkenden Klassen und teilweise von deren einzelnen Stufen ab. Sobald du das Merkmal Zauberwirken von mehr als einer Klasse erlangst, wendest du die unten aufgeführten Regeln an. Wenn du das Merkmal Zauberwirken in deiner Klassenkombination von nur einer Klasse erhältst, gelten die Regeln dieser Klasse."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-prepared-spells",
+      "text": "Vorbereitete Zauber: Du bestimmst für jede Klasse einzeln, welche Zauber du vorbereiten kannst, als ob du nur Mitglied dieser einen Klasse wärst. Wenn du beispielsweise Waldläufer der 4. Stufe/Zauberer der 3. Stufe bist, kannst du fünf Waldläuferzauber des 1. Grades und sechs Zaubererzauber des 1. oder 2. Grades (sowie vier Zaubererzaubertricks) vorbereiten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-prepared-spells-ability",
+      "text": "Jeder vorbereitete Zauber ist mit einer deiner Klassen assoziiert, und du verwendest jeweils das Attribut zum Zauberwirken der entsprechenden Klasse, wenn du den Zauber wirkst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-cantrips",
+      "text": "Zaubertricks: Wenn einer deiner Zaubertricks auf höheren Charakterstufen mächtiger wird, basiert dieser Zuwachs auf deiner gesamten Charakterstufe, nicht deiner Stufe in einer bestimmten Klasse, sofern nicht beim Zauber anders angegeben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-introduction",
+      "text": "Zauberplätze: Du bestimmst deine verfügbaren Zauberplätze, indem du Folgendes addierst:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-addends",
+      "items": [
+        "All deine Stufen in den Klassen Barde, Druide, Kleriker, Magier und Zauberer,",
+        "die Hälfte deiner Stufen (aufgerundet) in den Klassen Paladin und Waldläufer."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-lookup",
+      "text": "Sieh dann in der Stufenspalte der Tabelle „Klassenkombinationen für Zauberwirker“ nach dieser Stufe. Du verwendest die Zauberplätze dieser Stufe, um Zauber des entsprechenden Grades von jeder Klasse zu wirken, über deren Merkmal Zauberwirken du verfügst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-higher-grade",
+      "text": "Diese Tabelle gibt dir möglicherweise Zauberplätze eines höheren Grades als der Grad der Zauber, die du vorbereitest. Du kannst diese Zauberplätze zwar verwenden, aber nur für Zauber eines entsprechend niedrigeren Grades. Wenn du einen Zauber niedrigeren Grades wirkst, der einen verstärkten Effekt hat, wenn er auf höherem Grad gewirkt wird (beispielsweise Brennende Hände), kannst du den verstärkten Effekt als normal verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-example",
+      "text": "Beispiel: Wenn du Waldläufer der 4. Stufe/Zauberer der 3. Stufe bist, zählst du beim Bestimmen deiner Zauberplätze als Charakter der 5. Stufe: Es werden all deine Zaubererstufen und die Hälfte deiner Waldläuferstufen gezählt. Wie in der Tabelle „Klassenkombinationen für Zauberwirker“ dargestellt, hast du vier Zauberplätze des 1. Grades, drei Zauberplätze des 2. Grades und zwei Zauberplätze des 3. Grades. Du kannst jedoch keine Zauber des 3. Grades und auch keine Waldläuferzauber des 2. Grades vorbereiten. Du kannst die Zauberplätze dieser Grade nutzen, um die vorbereiteten Zauber zu wirken und möglicherweise ihre Effekte zu verstärken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-pact-magic",
+      "text": "Paktmagie: Wenn du das Merkmal Paktmagie der Hexenmeister-Klasse sowie das Merkmal Zauberwirken hast, kannst du die Zauberplätze, die du durch Paktmagie erhältst, auch zum Wirken von Zaubern verwenden, die du durch andere Klassen mit dem Merkmal Zauberwirken erhältst. Zudem kannst du die Zauberplätze des Merkmals Zauberwirken nutzen, um vorbereitete Hexenmeisterzauber zu wirken."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-table",
+      "caption": "Klassenkombinationen für Zauberwirker: Zauberplätze pro Zaubergrad",
+      "columns": [
+        "Stufe",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "rows": [
+        [
+          "1",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "2",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "3",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "4",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "5",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "6",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "7",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "8",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "9",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "10",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "11",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "12",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "13",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "17",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "18",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "19",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "20",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "2",
+          "1",
+          "1"
+        ]
+      ]
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.proficiency.bonus-by-level",
+      "label": "Übungsbonus"
+    }
+  ],
+  "digest": "sha256:f3cd6349ddd4f8ddc3e73a52c10b74ea64114391765648d08b254cd9c60f8f14"
+}

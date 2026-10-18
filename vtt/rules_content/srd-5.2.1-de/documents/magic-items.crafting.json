@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.crafting",
+  "slug": "magische-gegenstaende-herstellen",
+  "title": "Magische Gegenstände herstellen",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Magische Gegenstände herstellen"
+  ],
+  "order": 1070,
+  "sourcePages": [
+    239,
+    240
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.crafting.magische-gegenstaende-herstellen",
+      "level": 2,
+      "text": "Magische Gegenstände herstellen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.magische-gegenstaende-herstellen.text-1",
+      "text": "Unter „Ausrüstung“ finden sich Regeln dazu, wie Heiltränke gebraut und Zauberschriftrollen verfasst werden. Um andere magische Gegenstände herzustellen, befolge die nachstehenden Regeln. In diesen Regeln bezieht „du“ sich auf den Charakter, der den magischen Gegenstand herstellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.crafting.uebung-in-arkaner-kunde",
+      "level": 3,
+      "text": "Übung in Arkaner Kunde"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.uebung-in-arkaner-kunde.text-1",
+      "text": "Zum Herstellen eines magischen Gegenstands benötigst du (sowie etwaige Helfer) Übung in der Fertigkeit Arkane Kunde."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.crafting.werkzeuge",
+      "level": 3,
+      "text": "Werkzeuge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.werkzeuge.text-1",
+      "text": "In der Tabelle „Werkzeug für magische Gegenstände“ ist aufgeführt, welches Werkzeug zum Herstellen von magischen Gegenständen der jeweiligen Kategorie erforderlich ist. Du musst das erforderliche Werkzeug verwenden und Übung im Umgang damit haben, um den Gegenstand herzustellen. Auch etwaige Helfer müssen Übung im Umgang damit haben. Weitere Informationen zu Werkzeugen findest du unter „Ausrüstung“."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.crafting.werkzeuge.tabelle-werkzeug-fuer-magische-gegenstaende",
+      "caption": "Werkzeug für magische Gegenstände",
+      "columns": [
+        "Gegenstandskategorie",
+        "Erforderliches Werkzeug"
+      ],
+      "rows": [
+        [
+          "Ring",
+          "Juwelierwerkzeug"
+        ],
+        [
+          "Rüstung",
+          "Ledererwerkzeug, Schmiedewerkzeug oder Weberwerkzeug je nach Art der Rüstung, wie in den Werkzeugbeschreibungen vermerkt"
+        ],
+        [
+          "Schriftrolle",
+          "Kalligrafiewerkzeug"
+        ],
+        [
+          "Stab",
+          "Holzschnitzwerkzeug"
+        ],
+        [
+          "Trank",
+          "Alchemistenausrüstung oder Kräuterkundeausrüstung"
+        ],
+        [
+          "Waffe",
+          "Ledererwerkzeug, Schmiedewerkzeug oder Holzschnitzwerkzeug je nach Art der Waffe, wie in den Werkzeugbeschreibungen vermerkt"
+        ],
+        [
+          "Wundersamer Gegenstand",
+          "Tüftlerwerkzeug oder das erforderliche Werkzeug zum Herstellen des nichtmagischen Gegenstands, auf dem der magische Gegenstand basiert"
+        ],
+        [
+          "Zauberstab",
+          "Holzschnitzwerkzeug"
+        ],
+        [
+          "Zepter",
+          "Holzschnitzwerkzeug"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.crafting.zauber",
+      "level": 3,
+      "text": "Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.zauber.text-1",
+      "text": "Wenn ein herzustellender magischer Gegenstand das Wirken von Zaubern ermöglicht, musst du all diese Zauber an jedem Herstellungstag vorbereitet haben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.crafting.zeit-und-kosten",
+      "level": 3,
+      "text": "Zeit und Kosten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.zeit-und-kosten.text-1",
+      "text": "Das Herstellen eines magischen Gegenstands kostet je nach Seltenheit des Gegenstands Zeit und Geld, wie in der Tabelle „Herstellen magischer Gegenstände: Dauer und Kosten“ angegeben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.zeit-und-kosten.text-2",
+      "text": "Arbeit pro Tag: An jedem Tag, den das Herstellen dauert, musst du acht Stunden Arbeit verrichten. Wenn es mehrere Tage dauert, einen Gegenstand herzustellen, muss es sich nicht um aufeinanderfolgende Tage handeln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.zeit-und-kosten.text-3",
+      "text": "Helfer: Charaktere können zusammenarbeiten, um die Herstellungszeit zu verkürzen. Teile die zum Herstellen erforderliche Zeit durch die Anzahl von Charakteren, die am Gegenstand arbeiten. Normalerweise kann dir nur ein anderer Charakter helfen, doch der SL gestattet möglicherweise mehr Helfer."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.zeit-und-kosten.text-4",
+      "text": "Rohmaterialien: Die in der Tabelle angegebenen Kosten stellen die Rohmaterialien dar, die zum Herstellen eines magischen Gegenstands benötigt werden. Der SL bestimmt, ob passende Rohmaterialien verfügbar sind. In einer Stadt besteht eine Chance von 75 Prozent, dass entsprechende Rohmaterialien verfügbar sind. In allen anderen Siedlungen beträgt diese Chance 25 Prozent. Sind Materialien nicht verfügbar, so musst du mindestens sieben Tage lang warten, ehe du die Verfügbarkeit erneut überprüfst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.crafting.zeit-und-kosten.text-5",
+      "text": "Wenn zu einem magischen Gegenstand ein Gegenstand gehört, der einen Kaufpreis hat (beispielsweise eine Waffe oder eine Rüstung), musst du die gesamten Kosten zahlen – oder diesen Gegenstand entsprechend den Regeln unter „Ausrüstung“ herstellen. Beispiel: Um eine Rüstung +1 (Ritterrüstung) herzustellen, musst du entweder 3.500 GM zahlen oder aber 2.000 GM zahlen und die Rüstung herstellen."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.crafting.zeit-und-kosten.tabelle-herstellen-magischer-gegenstaende-dauer-und-kosten",
+      "caption": "Herstellen magischer Gegenstände: Dauer und Kosten",
+      "columns": [
+        "Seltenheit des Gegenstands",
+        "Dauer*",
+        "Kosten*"
+      ],
+      "rows": [
+        [
+          "Gewöhnlich",
+          "5 Tage",
+          "50 GM"
+        ],
+        [
+          "Ungewöhnlich",
+          "10 Tage",
+          "200 GM"
+        ],
+        [
+          "Selten",
+          "50 Tage",
+          "2.000 GM"
+        ],
+        [
+          "Sehr selten",
+          "125 Tage",
+          "20.000 GM"
+        ],
+        [
+          "Legendär",
+          "250 Tage",
+          "100.000 GM"
+        ]
+      ]
+    },
+    {
+      "type": "page-note",
+      "ruleId": "magic-items.crafting.zeit-und-kosten.fussnote-1",
+      "text": "*Dauer und Kosten sind bei Verbrauchsgegenständen halbiert. Ausnahme: Zauberschriftrollen. Bei diesen sind Dauer und Kosten unter „Ausrüstung“ angegeben."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:c416c9edb224a548670a94dd9aeaea63bf6e467bdf773c5aad45d022be227fb3"
+}

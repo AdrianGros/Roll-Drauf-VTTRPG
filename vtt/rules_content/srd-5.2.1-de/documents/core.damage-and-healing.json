@@ -1,0 +1,388 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "core.damage-and-healing",
+  "slug": "schaden-und-heilung",
+  "title": "Schaden und Heilung",
+  "navigationPath": [
+    "Die Spielregeln",
+    "Schaden und Heilung"
+  ],
+  "order": 90,
+  "sourcePages": [
+    18,
+    19,
+    20,
+    21
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.damage-and-healing",
+      "level": 2,
+      "text": "Schaden und Heilung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.damage-and-healing-introduction",
+      "text": "In D&D sind Verletzungen und Tod häufige Gefahren, wie folgende Regeln näher darlegen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.hit-points",
+      "level": 3,
+      "text": "Trefferpunkte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.hit-points-description",
+      "text": "Trefferpunkte stehen für Zähigkeit und Überlebenswillen. Kreaturen mit mehr Trefferpunkten sind schwieriger zu töten. Dein Trefferpunktemaximum ist die Anzahl von Trefferpunkten, die du im unverletzten Zustand hast. Deine aktuellen Trefferpunkte können sich irgendwo zwischen dem Maximum und dem geringstmöglichen Wert 0 bewegen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.hit-points-loss",
+      "text": "Wann immer du Schaden erleidest, ziehst du diesen von deinen Trefferpunkten ab. Ein Verlust von Trefferpunkten beeinträchtigt deine Fähigkeiten erst, wenn deine Trefferpunkte auf 0 sinken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.hit-points-bloodied",
+      "text": "Wenn du höchstens die Hälfte deiner Trefferpunkte hast, bist du blutig. Dies hat selbst keinen Effekt im Spiel, löst aber möglicherweise andere Spieleffekte aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.damage-rolls",
+      "level": 3,
+      "text": "Schadenswürfe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.damage-rolls-description",
+      "text": "Bei allen Waffen, Zaubern und entsprechenden Monsterfähigkeiten ist der Schaden angegeben, den sie bewirken. Würfle den Schaden aus, füge alle relevanten Modifikatoren hinzu und wende das Ergebnis auf das Ziel an. Wenn der Schaden einem Malus unterliegt, ist es möglich, 0 Schaden zu bewirken. Der Schaden kann jedoch nicht im negativen Bereich liegen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.damage-rolls-modifiers",
+      "text": "Greifst du mit einer Waffe an, so wird der Attributsmodifikator, den du dem Angriffswurf hinzugefügt hast, auch auf den Schadenswurf angerechnet. Bei einem Zauber ist angegeben, mit welchen Würfeln der Schaden ausgewürfelt wird und ob Modifikatoren hinzugefügt werden. Sofern keine Regel etwas anderes besagt, fügst du deinen Attributsmodifikator nicht hinzu, wenn es sich um feste Schadenswerte handelt, die ohne Würfelwürfe auskommen (beispielsweise der Schaden eines Blasrohrs). Unter „Ausrüstung“ findest du Informationen zu Schadenswürfeln von Waffen, unter „Zauber“ zu Schadenswürfeln von Zaubern."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.damage-and-healing.resting",
+      "title": "Rasten",
+      "text": "Charaktere können nicht rund um die Uhr Abenteuer erleben. Sie müssen rasten. Jede Kreatur kann jederzeit am Tag eine einstündige kurze Rast einlegen oder den Tag mit einer achtstündigen langen Rast beenden. Zu den wichtigsten Vorzügen einer Rast gehört der Umstand, dass Kreaturen Trefferpunkte zurückerhalten. Die Regeln für kurze und lange Rasten findest du unter „Regelglossar“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.critical-hits",
+      "level": 3,
+      "text": "Kritische Treffer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.critical-hits-description",
+      "text": "Wenn du einen kritischen Treffer landest, bewirkst du zusätzlichen Schaden. Würfle zweimal mit den Schadenswürfeln des Angriffs, addiere die Ergebnisse und füge wie üblich alle relevanten Modifikatoren hinzu. Erzielst du beispielsweise einen kritischen Treffer mit einem Dolch, so würfelst du den Schaden mit 2W4 statt 1W4 aus und fügst dann deinen relevanten Attributsmodifikator hinzu. Wenn der Angriff andere Schadenswürfel enthält, beispielsweise bei der Fähigkeit Hinterhältiger Angriff des Schurken, würfelst du auch mit diesen Würfeln zweimal."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.saving-throws-and-damage",
+      "level": 3,
+      "text": "Rettungswürfe und Schaden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.saving-throws-and-damage-description",
+      "text": "Schaden, der mit Rettungswürfen bewirkt wird, richtet sich nach diesen Regeln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.damage-to-multiple-targets",
+      "level": 4,
+      "text": "Schaden bei mehreren Zielen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.damage-to-multiple-targets-description",
+      "text": "Wenn du einen schädlichen Effekt erzeugst, der mindestens zwei Ziele gleichzeitig zu Rettungswürfen dagegen zwingt, würfle den Schaden einmal aus. Er gilt für alle Ziele. Beispiel: Wirkt ein Magier den Zauber Feuerball, so wird der Schaden nur einmal für alle Kreaturen ausgewürfelt, die vom Zauber erfasst werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.half-damage",
+      "level": 4,
+      "text": "Halber Schaden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.half-damage-description",
+      "text": "Viele Effekte von Rettungswürfen halbieren (abgerundet) den Schaden bei einem Ziel, wenn dieses den Rettungswurf besteht. Der halbierte Schaden beträgt die Hälfte des Schadens, den das Ziel erlitten hätte, wenn der Rettungswurf misslungen wäre."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.damage-types",
+      "level": 3,
+      "text": "Schadensarten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.damage-types-description",
+      "text": "Jeder Schaden ist von einer bestimmten Art, beispielsweise Feuer- oder Hiebschaden. Die Schadensarten sind unter „Regelglossar“ aufgeführt. Sie weisen keine eigenen Regeln auf, doch es gibt andere Regeln wie die für Resistenzen, die auf ihnen basieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.resistance-and-vulnerability",
+      "level": 3,
+      "text": "Resistenz und Anfälligkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.resistance-and-vulnerability-description",
+      "text": "Manche Kreaturen und Gegenstände haben Resistenzen gegen oder Anfälligkeiten für bestimmte Schadensarten. Wenn du gegen eine Schadensart resistent bist, ist der Schaden dieser Art gegen dich halbiert (abgerundet). Wenn du anfällig für eine Schadensart bist, ist der Schaden dieser Art gegen dich verdoppelt. Beispiel: Wenn du gegen Kälteschaden resistent bist, ist Kälteschaden gegen dich halbiert, und wenn du anfällig für Feuerschaden bist, ist Feuerschaden gegen dich verdoppelt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.not-stackable-resistance",
+      "level": 4,
+      "text": "Nicht stapelbar"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.not-stackable-resistance-description",
+      "text": "Mehrere Resistenzen oder Anfälligkeiten werden nur als eine einzelne gezählt, wenn sie dieselbe Schadensart betreffen. Beispiel: Wenn du gegen nekrotischen Schaden und außerdem gegen alle Schadensarten resistent bist, wird nekrotischer Schaden gegen dich halbiert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.application-order",
+      "level": 4,
+      "text": "Anwendungsreihenfolge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.application-order-description",
+      "text": "Schadensmodifikatoren werden in folgender Reihenfolge angewendet: zuerst Anpassungen wie Boni, Mali und Multiplikatoren, dann Resistenzen, als Drittes Anfälligkeiten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.application-order-example",
+      "text": "Beispiel: Eine Kreatur ist gegen alle Schadensarten resistent, anfällig für Feuerschaden, und sie befindet sich innerhalb einer magischen Aura, die alle Schadensarten um 5 verringert. Wenn diese Kreatur 28 Feuerschaden erleidet, wird der Schaden zuerst um 5 verringert (auf 23), dann aufgrund der Resistenz halbiert (und auf 11 abgerundet) und zum Schluss aufgrund der Anfälligkeit verdoppelt (auf 22)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.immunity",
+      "level": 3,
+      "text": "Immunität"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.immunity-description",
+      "text": "Manche Kreaturen und Gegenstände sind gegen bestimmte Schadensarten und Zustände immun. Immunität gegen eine Schadensart bedeutet, dass du keinen Schaden dieser Art erleidest. Immunität gegen einen Zustand bedeutet, dass du von diesem Zustand nicht betroffen bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.healing",
+      "level": 3,
+      "text": "Heilung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.healing-sources",
+      "text": "Trefferpunkte können durch Magie wie den Zauber Wunden heilen oder einen Heiltrank, aber auch durch eine kurze oder lange Rast (siehe „Regelglossar“) wiederhergestellt werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.healing-cap",
+      "text": "Wenn du geheilt wirst, fügst du die wiederhergestellten Trefferpunkte deinen aktuellen Trefferpunkten hinzu. Deine Trefferpunkte können dein Trefferpunktemaximum nicht überschreiten. Trefferpunkte, die du über das Maximum hinaus erhältst, gehen verloren. Beispiel: Wenn du bei 14 aktuellen Trefferpunkten und einem Trefferpunktemaximum von 20 durch Heilung 8 Trefferpunkte zurückerhältst, erhältst du 6 Trefferpunkte zurück, nicht 8."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.dropping-to-0",
+      "level": 3,
+      "text": "Auf 0 Trefferpunkte sinken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.dropping-to-0-description",
+      "text": "Wenn die Trefferpunkte einer Kreatur auf 0 sinken, stirbt sie wie nachfolgend erläutert entweder sofort, oder sie wird bewusstlos."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.instant-death",
+      "level": 4,
+      "text": "Sofortiger Tod"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.instant-death-introduction",
+      "text": "Dies sind die häufigsten Gründe, dass eine Kreatur augenblicklich stirbt:"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "core.damage-and-healing.instant-death-causes",
+      "entries": [
+        {
+          "term": "Monstertod",
+          "definition": "Ein Monster stirbt, sobald seine Trefferpunkte auf 0 sinken. Der Spielleiter kann diese Regel im Einzelfall ignorieren und das Monster wie einen Charakter behandeln."
+        },
+        {
+          "term": "Trefferpunktemaximum von 0",
+          "definition": "Eine Kreatur stirbt, wenn ihr Trefferpunktemaximum auf 0 sinkt. Bestimmte Effekte entziehen einer Kreatur Lebensenergie und verringern so ihr Trefferpunktemaximum."
+        },
+        {
+          "term": "Massiver Schaden",
+          "definition": "Sinken die Trefferpunkte eines Charakters durch Schaden auf 0, und es ist noch Schaden übrig, so stirbt der Charakter sofort, falls der verbleibende Schaden mindestens seinem Trefferpunktemaximum entspricht. Beispiel: Wenn dein Charakter aktuell 6 Trefferpunkte bei einem Trefferpunktemaximum von 12 hat und 18 Schadenspunkte erleidet, so sinken seine Trefferpunkte auf 0, aber es verbleiben noch 12 Schadenspunkte. In diesem Fall stirbt der Charakter, da die verbleibenden 12 Schadenspunkte seinem Trefferpunktemaximum entsprechen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.character-death",
+      "level": 4,
+      "text": "Charaktertod"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.character-death-description",
+      "text": "Wenn dein Charakter stirbt, könnten andere magische Methoden wie den Zauber Tote erwecken anwenden, um ihn wiederzubeleben. Alternativ erwägst du mit dem SL, einen neuen Charakter zu erstellen, der zur Gruppe stößt. Unter „Regelglossar“ findest du weitere Information dazu, tot zu sein."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.falling-unconscious",
+      "level": 4,
+      "text": "Das Bewusstsein verlieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.falling-unconscious-description",
+      "text": "Wenn deine Trefferpunkte auf 0 sinken, du aber nicht sofort stirbst, hast du den Zustand Bewusstlos (siehe „Regelglossar“), bis du Trefferpunkte zurückerhältst, und musst nun Todesrettungswürfe (siehe unten) ausführen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.death-saving-throws",
+      "level": 4,
+      "text": "Todesrettungswürfe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.death-saving-throws-description",
+      "text": "Wann immer du deinen Zug mit 0 Trefferpunkten beginnst, musst du einen Todesrettungswurf ausführen, um zu ermitteln, ob du dich dem Tod näherst oder am Leben bleibst. Im Gegensatz zu anderen Rettungswürfen steht dieser mit keinem Attributswert in Verbindung. Du bist nun in den Händen des Schicksals."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.death-saving-throws-successes",
+      "text": "Drei Erfolge/Misserfolge: Würfle mit 1W20. Wenn das Ergebnis mindestens 10 beträgt, ist der Wurf ein Erfolg. Andernfalls ist der Wurf ein Misserfolg. Ein Erfolg oder Misserfolg hat einzeln keinen Effekt. Bei deinem dritten Erfolg wirst du stabilisiert (siehe „Einen Charakter stabilisieren“ unten). Bei deinem dritten Misserfolg stirbst du."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.death-saving-throws-tracking",
+      "text": "Die Erfolge und Misserfolge müssen nicht aufeinanderfolgen. Notiere einfach beide, bis du von einem drei hast. Beide Zahlen werden auf 0 zurückgesetzt, wenn du Trefferpunkte zurückerhältst oder stabilisiert wirst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.death-saving-throws-nat-1-20",
+      "text": "Eine 1 oder eine 20 würfeln: Wenn du bei einem Todesrettungswurf mit dem W20 eine 1 würfelst, erleidest du zwei Misserfolge. Würfelst du dagegen eine 20, so erhältst du 1 Trefferpunkt zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.death-saving-throws-damage-at-zero",
+      "text": "Schaden bei 0 Trefferpunkten: Wenn du mit 0 Trefferpunkten Schaden erleidest, zählt dies als misslungener Todesrettungswurf. Falls der Schaden von einem kritischen Treffer stammt, zählt er als zwei misslungene Rettungswürfe. Wenn der Schaden mindestens deinem Trefferpunktemaximum entspricht, stirbst du."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.stabilizing",
+      "level": 4,
+      "text": "Einen Charakter stabilisieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.stabilizing-action",
+      "text": "Du kannst die Helfen-Aktion ausführen, um eine Kreatur mit 0 Trefferpunkten zu stabilisieren. Dazu ist ein erfolgreicher SG-10-Weisheitswurf (Heilkunde) erforderlich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.stabilizing-effect",
+      "text": "Eine stabile Kreatur muss keine Todesrettungswürfe ausführen, obwohl sie keine Trefferpunkte hat. Sie bleibt allerdings bewusstlos. Wenn die Kreatur Schaden erleidet, ist sie nicht mehr stabil und muss wieder Todesrettungswürfe ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.stabilizing-recovery",
+      "text": "Eine stabile Kreatur, die nicht geheilt wird, erhält nach 1W4 Stunden 1 Trefferpunkt zurück."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.damage-and-healing.knocking-unconscious",
+      "title": "Kreaturen in den Zustand Bewusstlos versetzen",
+      "text": "Wenn du die Trefferpunkte einer Kreatur mit einem Nahkampfangriff auf 0 verringern würdest, kannst du stattdessen entscheiden, ihre Trefferpunkte auf 1 zu verringern und die Kreatur in den Zustand Bewusstlos zu versetzen. Die Kreatur beginnt dann eine kurze Rast, an deren Ende auch dieser Zustand bei ihr endet. Der Zustand endet vorzeitig, wenn die Kreatur Trefferpunkte zurückerhält oder jemand eine Aktion ausführt, um ihr mit einem erfolgreichen SG-10-Weisheitswurf (Heilkunde) Erste Hilfe zu leisten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.temporary-hit-points",
+      "level": 3,
+      "text": "Temporäre Trefferpunkte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-description",
+      "text": "Manche Zauber und andere Effekte verleihen temporäre Trefferpunkte, die als Puffer dienen, um keine regulären Trefferpunkte zu verlieren, wie unten erläutert wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-lost-first",
+      "level": 4,
+      "text": "Temporäre Trefferpunkte gehen zuerst verloren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-lost-first-description",
+      "text": "Wenn du über temporäre Trefferpunkte verfügst und Schaden erleidest, verlierst du zuerst die temporären Trefferpunkte. Verbleibt dann noch Schaden, so wird dieser von deinen regulären Trefferpunkten abgezogen. Beispiel: Du verfügst über 5 temporäre Trefferpunkte und erleidest 7 Schaden. Du verlierst die temporären Trefferpunkte und dann 2 reguläre Trefferpunkte."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-duration",
+      "level": 4,
+      "text": "Dauer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-duration-description",
+      "text": "Temporäre Trefferpunkte bleiben bestehen, bis sie verbraucht sind oder du eine lange Rast beendest (siehe „Regelglossar“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-not-stackable",
+      "level": 4,
+      "text": "Nicht stapelbar"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-not-stackable-description",
+      "text": "Temporäre Trefferpunkte können nicht addiert werden. Wenn du temporäre Trefferpunkte besitzt und weitere erhältst, entscheidest du, ob du die vorhandenen behältst oder die neuen bekommst. Beispiel: Wenn dir ein Zauber 12 temporäre Trefferpunkte verleiht, du aber bereits über 10 verfügst, kannst du 12 oder 10 haben, nicht 22."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-no-stacking-with-healing",
+      "level": 4,
+      "text": "Keine Trefferpunkte und keine Heilung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-not-healing",
+      "text": "Temporäre Trefferpunkte können weder deinen Trefferpunkten hinzugefügt noch wiederhergestellt werden, und der Erhalt temporärer Trefferpunkte zählt nicht als Heilung. Da temporäre Trefferpunkte keine Trefferpunkte sind, können auch Kreaturen mit vollen Trefferpunkten temporäre Trefferpunkte erhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.damage-and-healing.temporary-hit-points-no-waking",
+      "text": "Wenn du keine Trefferpunkte hast und temporäre Trefferpunkte erhältst, erlangst du dadurch nicht das Bewusstsein wieder. Nur eine reguläre Heilung kann dich retten."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.actions.actions-table",
+      "label": "Aktionen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.combat-attacks.fire-resistance",
+      "label": "Feuerresistenz"
+    }
+  ],
+  "digest": "sha256:febdbcc22bece4a9c3dc6c8fb632dcb585a1a37a2f5d5e192b30734bce2a7743"
+}

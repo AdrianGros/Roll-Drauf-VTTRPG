@@ -52,6 +52,10 @@ class Config:
     CE_SHADOW = _parse_bool(os.getenv("CE_SHADOW"), default=False)
     CE_LEGACY_ADAPTER = _parse_bool(os.getenv("CE_LEGACY_ADAPTER"), default=False)
 
+    # The incomplete German SRD reader is deliberately opt-in until R7 makes
+    # a fully reviewed package canonical.
+    REGELWERK_PREVIEW = _parse_bool(os.getenv("REGELWERK_PREVIEW"), default=False)
+
     # Reverse proxies whose X-Forwarded-For hop is trusted for the client IP.
     TRUSTED_PROXY_HOPS = _parse_int(os.getenv("TRUSTED_PROXY_HOPS"), 0)
 

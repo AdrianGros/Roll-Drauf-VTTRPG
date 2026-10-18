@@ -13,6 +13,7 @@
   <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/ce-schema-form.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/creation-engine.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/regelwerk-navigation.js') }}" defer></script>
 </head>
 <body class="ce-authoring">
   <div class="ce-page">
@@ -24,6 +25,7 @@
         <a class="book-dashboard-ribbon-btn" href="/campaigns" data-ce-nav data-i18n="campaigns">Kampagnen</a>
         <a class="book-dashboard-ribbon-btn" href="/characters" data-ce-nav data-i18n="characters">Charaktere</a>
         <span class="book-dashboard-ribbon-btn" aria-current="page">Creation Engine</span>
+        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
         <a class="book-dashboard-ribbon-btn" href="/api/ce/authoring/advanced" data-ce-nav>Advanced studio</a>
         <a id="return-character" class="book-dashboard-ribbon-btn" data-ce-nav hidden data-i18n="returnCharacter">Zum Charakterbogen</a>
       </nav>

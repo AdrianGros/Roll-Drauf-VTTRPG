@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "glossary.conventions",
+  "slug": "glossar-konventionen",
+  "title": "Glossar-Konventionen",
+  "navigationPath": [
+    "Regelglossar",
+    "Glossar-Konventionen"
+  ],
+  "order": 800,
+  "sourcePages": [
+    203
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "glossary.conventions.glossar-konventionen",
+      "level": 2,
+      "text": "Glossar-Konventionen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.conventions.einleitung",
+      "text": "Das Glossar verwendet die folgenden Konventionen:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "glossary.conventions.konventionen",
+      "items": [
+        "Schlagwörter in Klammern: Bei manchen Einträgen steht hinter dem Namen ein Schlagwort in Klammern, beispielsweise „Angriff (Aktion)“. Diese Schlagwörter – Aktion, Gefahr, Haltung, Wirkungsbereich, Zustand – zeigen an, dass eine Regel zu einer Regelfamilie gehört. Auch die Schlagwörter haben Glossareinträge.",
+        "„Du“: In den Spielregeln – in diesem Glossar und an anderen Stellen – ist oft die Rede davon, dass dir in der Spielwelt etwas zustößt. Dieses „Du“ bezieht sich auf die Kreatur oder den Gegenstand, für die oder den die Regel in einem bestimmten Spielmoment gilt. Beispielsweise bezieht sich das „Du“ beim Zustand Liegend auf eine Kreatur, welche diesen Zustand aktuell hat.",
+        "„Siehe auch“: Manche Glossareinträge enthalten einen Zusatz Siehe auch, der auf andere Einträge im Glossar, andere Teile dieses Dokuments oder beides verweist.",
+        "Keine veralteten Begriffe: Das Glossar enthält nur Definitionen von aktuellen Regelbegriffen. Wenn du nach einem Begriff aus einer früheren Version der Regeln der fünften Edition suchst, sieh im Index nach.",
+        "Abkürzungen: Die unten aufgeführten Abkürzungen erscheinen in diesem Glossar und anderswo in den Regeln."
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "glossary.conventions.tabelle-abkuerzungen",
+      "caption": "Abkürzungen",
+      "columns": [
+        "Abkürzung",
+        "Bedeutung"
+      ],
+      "rows": [
+        [
+          "CB",
+          "Chaotisch böse"
+        ],
+        [
+          "CG",
+          "Chaotisch gut"
+        ],
+        [
+          "Cha.",
+          "Charisma"
+        ],
+        [
+          "CN",
+          "Chaotisch neutral"
+        ],
+        [
+          "EM",
+          "Elektrummünze(n)"
+        ],
+        [
+          "EP",
+          "Erfahrungspunkt(e)"
+        ],
+        [
+          "Ges.",
+          "Geschicklichkeit"
+        ],
+        [
+          "GM",
+          "Goldmünze(n)"
+        ],
+        [
+          "G",
+          "Gestenkomponente"
+        ],
+        [
+          "HG",
+          "Herausforderungsgrad"
+        ],
+        [
+          "Int.",
+          "Intelligenz"
+        ],
+        [
+          "KM",
+          "Kupfermünze(n)"
+        ],
+        [
+          "Kon.",
+          "Konstitution"
+        ],
+        [
+          "K",
+          "Konzentration"
+        ],
+        [
+          "M",
+          "Materialkomponente"
+        ],
+        [
+          "NB",
+          "Neutral böse"
+        ],
+        [
+          "NG",
+          "Neutral gut"
+        ],
+        [
+          "NSC",
+          "Nichtspielercharakter(e)"
+        ],
+        [
+          "N",
+          "Neutral"
+        ],
+        [
+          "PM",
+          "Platinmünze(n)"
+        ],
+        [
+          "RB",
+          "Rechtschaffen böse"
+        ],
+        [
+          "RG",
+          "Rechtschaffen gut"
+        ],
+        [
+          "RK",
+          "Rüstungsklasse"
+        ],
+        [
+          "RN",
+          "Rechtschaffen neutral"
+        ],
+        [
+          "R",
+          "Ritual"
+        ],
+        [
+          "SG",
+          "Schwierigkeitsgrad"
+        ],
+        [
+          "SL",
+          "Spielleiter"
+        ],
+        [
+          "SM",
+          "Silbermünze(n)"
+        ],
+        [
+          "Stä.",
+          "Stärke"
+        ],
+        [
+          "TP",
+          "Trefferpunkt(e)"
+        ],
+        [
+          "ÜB",
+          "Übungsbonus"
+        ],
+        [
+          "V",
+          "Verbalkomponente"
+        ],
+        [
+          "Wei.",
+          "Weisheit"
+        ]
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:71ea67b2fd2424716e8a7da336091b490d0f4e936bc71e9665da5fdf8bac1817"
+}

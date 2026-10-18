@@ -1,0 +1,359 @@
+:root {
+    --regelwerk-ink: #2f241c;
+    --regelwerk-muted: #6f6257;
+    --regelwerk-accent: #8e2c24;
+    --regelwerk-gold: #b68a3a;
+    --regelwerk-paper: #f7f0df;
+    --regelwerk-paper-deep: #eadfc5;
+    --regelwerk-border: rgba(86, 59, 35, 0.3);
+}
+
+* { box-sizing: border-box; }
+
+body.regelwerk-page {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--regelwerk-ink);
+    background:
+        radial-gradient(circle at 12% 4%, rgba(255, 255, 255, 0.66), transparent 30rem),
+        linear-gradient(135deg, #251a17, #4a3026 45%, #201614);
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.regelwerk-skip {
+    position: fixed;
+    z-index: 100;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.65rem 0.9rem;
+    color: #fff;
+    background: #15100d;
+    transform: translateY(-180%);
+}
+
+.regelwerk-skip:focus { transform: translateY(0); }
+
+.regelwerk-site-header,
+.regelwerk-layout,
+.regelwerk-footer {
+    width: min(1180px, calc(100% - 2rem));
+    margin-inline: auto;
+}
+
+.regelwerk-site-header {
+    padding-top: 1.25rem;
+}
+
+.regelwerk-ribbon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.regelwerk-ribbon a { text-decoration: none; }
+
+.regelwerk-titlebar {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--regelwerk-border);
+    border-radius: 0.7rem 0.7rem 0 0;
+    background: var(--regelwerk-paper);
+}
+
+.regelwerk-kicker {
+    margin: 0 0 0.2rem;
+    color: var(--regelwerk-muted);
+    font: 700 0.75rem/1.2 system-ui, sans-serif;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.regelwerk-titlebar h1 {
+    margin: 0;
+    color: var(--regelwerk-accent);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1;
+}
+
+.regelwerk-preview-badge {
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--regelwerk-accent);
+    border-radius: 99rem;
+    color: var(--regelwerk-accent);
+    font: 800 0.75rem/1 system-ui, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.regelwerk-preview-note {
+    margin: 0;
+    padding: 0.7rem 1.5rem;
+    border-inline: 1px solid var(--regelwerk-border);
+    border-bottom: 1px solid var(--regelwerk-border);
+    background: #fff6d9;
+    font: 600 0.9rem/1.45 system-ui, sans-serif;
+}
+
+.regelwerk-layout {
+    display: grid;
+    grid-template-columns: minmax(15rem, 18rem) minmax(0, 1fr);
+    align-items: start;
+    gap: 1.2rem;
+    padding-block: 1.2rem;
+}
+
+.regelwerk-sidebar,
+.regelwerk-article {
+    border: 1px solid var(--regelwerk-border);
+    border-radius: 0.6rem;
+    background: var(--regelwerk-paper);
+    box-shadow: 0 1.1rem 2.5rem rgba(12, 7, 5, 0.28);
+}
+
+.regelwerk-sidebar {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    padding: 1rem;
+    font-family: system-ui, sans-serif;
+}
+
+.regelwerk-search label,
+.regelwerk-toc-heading {
+    display: block;
+    margin: 0 0 0.45rem;
+    font-weight: 800;
+}
+
+.regelwerk-search-row { display: flex; gap: 0.4rem; }
+
+.regelwerk-search input {
+    min-width: 0;
+    width: 100%;
+    padding: 0.55rem;
+    border: 1px solid var(--regelwerk-border);
+    border-radius: 0.3rem;
+    background: #fffdf6;
+}
+
+.regelwerk-search button,
+.regelwerk-sidebar-actions button {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid #5b271e;
+    border-radius: 0.3rem;
+    color: #fff;
+    background: var(--regelwerk-accent);
+    cursor: pointer;
+}
+
+.regelwerk-status {
+    color: var(--regelwerk-muted);
+    font-family: system-ui, sans-serif;
+}
+
+.regelwerk-search-results:not(:empty) {
+    margin-block: 0.7rem 1rem;
+    border-top: 1px solid var(--regelwerk-border);
+}
+
+.regelwerk-search-result,
+.regelwerk-toc a {
+    display: block;
+    padding: 0.55rem 0;
+    color: #54231d;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+}
+
+.regelwerk-search-result span {
+    display: block;
+    margin-top: 0.18rem;
+    color: var(--regelwerk-muted);
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+.regelwerk-toc {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--regelwerk-border);
+}
+
+.regelwerk-toc-section {
+    margin: 0.9rem 0 0.15rem;
+    color: var(--regelwerk-muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.regelwerk-sidebar-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--regelwerk-border);
+}
+
+.regelwerk-sidebar-actions a { color: #54231d; }
+
+.regelwerk-article {
+    min-height: 60vh;
+    padding: clamp(1.3rem, 4vw, 3.25rem);
+    overflow: hidden;
+    line-height: 1.58;
+}
+
+.regelwerk-article h2,
+.regelwerk-article h3,
+.regelwerk-article h4,
+.regelwerk-article h5,
+.regelwerk-article h6 {
+    scroll-margin-top: 1rem;
+    color: var(--regelwerk-accent);
+    line-height: 1.15;
+}
+
+.regelwerk-article h2 {
+    margin: 2.4rem 0 0.65rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid rgba(182, 138, 58, 0.7);
+    font-size: clamp(1.65rem, 4vw, 2.4rem);
+}
+
+.regelwerk-article h2:first-of-type { margin-top: 0; }
+.regelwerk-article h3 { margin: 1.7rem 0 0.4rem; font-size: 1.35rem; }
+.regelwerk-article p { margin: 0.4rem 0 1rem; }
+.regelwerk-article li + li { margin-top: 0.45rem; }
+
+.regelwerk-breadcrumbs,
+.regelwerk-document-meta {
+    color: var(--regelwerk-muted);
+    font: 650 0.82rem/1.45 system-ui, sans-serif;
+}
+
+.regelwerk-document-meta { margin-bottom: 1.2rem; }
+
+.regelwerk-table-wrap {
+    max-width: 100%;
+    margin: 1.2rem 0 1.6rem;
+    overflow-x: auto;
+}
+
+.regelwerk-table {
+    width: 100%;
+    min-width: 32rem;
+    border-collapse: collapse;
+    font-family: system-ui, sans-serif;
+}
+
+.regelwerk-table caption {
+    padding: 0 0 0.45rem;
+    text-align: left;
+    font-weight: 800;
+}
+
+.regelwerk-table th,
+.regelwerk-table td {
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid rgba(86, 59, 35, 0.22);
+    text-align: left;
+    vertical-align: top;
+}
+
+.regelwerk-table tbody tr:nth-child(odd) { background: rgba(101, 76, 51, 0.08); }
+
+.regelwerk-callout,
+.regelwerk-original-note,
+.regelwerk-stat-block {
+    margin: 1rem 0;
+    padding: 0.9rem 1rem;
+    border-left: 0.3rem solid var(--regelwerk-gold);
+    background: var(--regelwerk-paper-deep);
+}
+
+.regelwerk-callout-title,
+.regelwerk-stat-title {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--regelwerk-accent);
+    font-weight: 800;
+}
+
+.regelwerk-license-text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+[id^="core."]:target {
+    outline: 0.2rem solid rgba(182, 138, 58, 0.62);
+    outline-offset: 0.35rem;
+}
+
+.regelwerk-footer {
+    padding: 0.4rem 0 2rem;
+    color: #f7ead3;
+    font: 0.85rem/1.4 system-ui, sans-serif;
+}
+
+.regelwerk-footer p { margin: 0.25rem 0; }
+.regelwerk-footer a { color: #ffe2a1; }
+
+:focus-visible { outline: 0.2rem solid #e3ad42; outline-offset: 0.15rem; }
+
+@media (max-width: 760px) {
+    .regelwerk-site-header,
+    .regelwerk-layout,
+    .regelwerk-footer { width: min(100% - 1rem, 44rem); }
+
+    .regelwerk-layout { grid-template-columns: 1fr; }
+    .regelwerk-sidebar { position: static; max-height: none; }
+    .regelwerk-titlebar { align-items: center; }
+    .regelwerk-article { padding: 1.15rem; }
+    .regelwerk-table { min-width: 28rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+@media print {
+    @page { margin: 16mm; }
+
+    body.regelwerk-page { color: #000; background: #fff; }
+    .regelwerk-site-header,
+    .regelwerk-layout,
+    .regelwerk-footer { width: 100%; }
+    .regelwerk-ribbon,
+    .regelwerk-sidebar,
+    .regelwerk-skip { display: none !important; }
+    .regelwerk-site-header { padding: 0; }
+    .regelwerk-titlebar,
+    .regelwerk-preview-note,
+    .regelwerk-article {
+        border-color: #888;
+        border-radius: 0;
+        box-shadow: none;
+        background: #fff;
+    }
+    .regelwerk-layout { display: block; padding: 0; }
+    .regelwerk-article { padding: 1rem 0; overflow: visible; }
+    .regelwerk-table-wrap { overflow: visible; break-inside: avoid; }
+    .regelwerk-table { min-width: 0; font-size: 9pt; }
+    .regelwerk-callout { break-inside: avoid; }
+    .regelwerk-footer { color: #000; }
+    .regelwerk-footer a { color: #000; }
+}

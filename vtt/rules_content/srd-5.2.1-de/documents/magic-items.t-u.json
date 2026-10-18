@@ -1,0 +1,946 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.t-u",
+  "slug": "magische-gegenstaende-t-u",
+  "title": "Magische Gegenstände T–U",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Magische Gegenstände T–U"
+  ],
+  "order": 1180,
+  "sourcePages": [
+    281,
+    282,
+    283,
+    284,
+    285,
+    286
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.beschreibungen",
+      "level": 2,
+      "text": "Beschreibungen der magischen Gegenstände (T–U)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.talisman-des-absolut-boesen",
+      "level": 3,
+      "text": "Talisman des Absolut Bösen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-absolut-boesen.untertitel",
+      "text": "Wundersamer Gegenstand, legendär (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-absolut-boesen.text-1",
+      "text": "Dieser Gegenstand ist das Symbol des reuelosen Bösen. Kreaturen außer Unholden und Untoten, die ihn berühren, erleiden 8W6 nekrotischen Schaden. Solange sie den Talisman tragen oder halten, erleiden sie den Schaden am Ende jedes ihrer Züge erneut."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-absolut-boesen.text-2",
+      "text": "Absolutes Ende: Der Talisman hat sechs Ladungen. Wenn du den Talisman trägst oder hältst, kannst du eine magische Aktion ausführen und eine Ladung verbrauchen, um auf eine Kreatur auf dem Boden im Abstand von bis zu 36 Metern von dir zu zielen, die du sehen kannst. Unter dem Ziel öffnet sich ein feuriger Erdspalt, und das Ziel führt einen SG-20-Geschicklichkeitsrettungswurf aus. Wenn das Ziel ein celestisches Wesen ist, so ist es beim Rettungswurf im Nachteil. Misslingt der Wurf, so fällt das Ziel in den Spalt, wird zerstört und hinterlässt keinerlei Überreste. Bei einem erfolgreichen Rettungswurf stürzt das Ziel nicht in den Spalt, erleidet durch das Martyrium jedoch 4W6 psychischen Schaden. In jedem Fall schließt sich der Spalt danach und hinterlässt seinerseits keine Spuren. Wenn du die letzte Ladung verbraucht hast, löst sich der Talisman in übelriechenden Schleim auf und ist zerstört."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-absolut-boesen.text-3",
+      "text": "Heiliges Symbol: Du kannst den Talisman als heiliges Symbol verwenden. Wenn du ihn trägst oder hältst, erhältst du einen Bonus von +2 auf Zauberangriffswürfe."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.talisman-des-nichts",
+      "level": 3,
+      "text": "Talisman des Nichts"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-nichts.untertitel",
+      "text": "Wundersamer Gegenstand, legendär (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-nichts.text-1",
+      "text": "Wenn du diesen Talisman trägst oder hältst, bist du bei allen Intelligenzwürfen (Arkane Kunde) im Vorteil, die du ausführst, um eine Kugel der Auslöschung zu kontrollieren. Wenn du außerdem zu Beginn deines Zugs eine Kugel der Auslöschung kontrollierst, kannst du eine magische Aktion ausführen und sie um drei Meter plus eine Anzahl von Metern in Höhe des Dreifachen deines Intelligenzmodifikators zu bewegen. Diese Bewegung muss nicht in gerader Linie verlaufen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.talisman-des-reinen-guten",
+      "level": 3,
+      "text": "Talisman des Reinen Guten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-reinen-guten.untertitel",
+      "text": "Wundersamer Gegenstand, legendär (erfordert Einstimmung durch einen Kleriker oder Paladin)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-reinen-guten.text-1",
+      "text": "Dieser Talisman ist ein mächtiges Symbol des Guten. Unholde und Untote, die ihn berühren, erleiden 8W6 gleißenden Schaden. Solange sie den Talisman tragen oder halten, erleiden sie den Schaden am Ende jedes ihrer Züge erneut."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-reinen-guten.text-2",
+      "text": "Heiliges Symbol: Du kannst den Talisman als heiliges Symbol verwenden. Wenn du ihn trägst oder hältst, erhältst du einen Bonus von +2 auf Zauberangriffswürfe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.talisman-des-reinen-guten.text-3",
+      "text": "Reiner Tadel: Der Talisman hat sieben Ladungen. Wenn du den Talisman trägst oder hältst, kannst du eine magische Aktion ausführen und eine Ladung verbrauchen, um auf eine Kreatur auf dem Boden im Abstand von bis zu 36 Metern von dir zu zielen, die du sehen kannst. Unter dem Ziel öffnet sich ein feuriger Erdspalt, und das Ziel führt einen SG-20-Geschicklichkeitsrettungswurf aus. Wenn das Ziel ein Unhold oder ein Untoter ist, so ist es beim Rettungswurf im Nachteil. Misslingt der Wurf, so fällt das Ziel in den Spalt, wird zerstört und hinterlässt keinerlei Überreste. Bei einem erfolgreichen Rettungswurf stürzt das Ziel nicht in den Spalt, erleidet durch das Martyrium jedoch 4W6 psychischen Schaden. In jedem Fall schließt sich der Spalt danach und hinterlässt seinerseits keine Spuren. Wenn du die letzte Ladung verbraucht hast, löst sich der Talisman in goldene Lichtfunken auf und ist zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.tanzendes-schwert",
+      "level": 3,
+      "text": "Tanzendes Schwert"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tanzendes-schwert.untertitel",
+      "text": "Waffe (Krummsäbel, Kurzschwert, Langschwert, Rapier oder Zweihandschwert), sehr selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tanzendes-schwert.text-1",
+      "text": "Du kannst eine Bonusaktion ausführen, um diese magische Waffe in die Luft zu werfen. In diesem Fall beginnt sie zu schweben, fliegt bis zu neun Meter weit und greift eine Kreatur deiner Wahl im Abstand von bis zu 1,5 Metern von sich an. Die Waffe verwendet deinen Angriffswurf und fügt Schadenswürfen deinen Attributsmodifikator hinzu."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tanzendes-schwert.text-2",
+      "text": "Solange die Waffe schwebt, kannst du eine Bonusaktion ausführen, um sie bis zu neun Meter weit an einen anderen Ort im Abstand von bis zu neun Metern von dir fliegen zu lassen. Als Teil derselben Bonusaktion kannst du die Waffe eine Kreatur im Abstand von bis zu 1,5 Metern von sich angreifen lassen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tanzendes-schwert.text-3",
+      "text": "Wenn die schwebende Waffe viermal angegriffen hat, fliegt sie zu dir und versucht, in deine Hand zurückzukehren. Falls du keine Hand frei hast, fällt die Waffe in deinem Bereich zu Boden. Falls die Waffe keinen freien Weg zu dir finden kann, bewegt sie sich so weit wie möglich in deine Richtung und fällt dann zu Boden. Sie hört auch auf zu schweben, wenn du sie ergreifst oder dich weiter als neun Meter von ihr entfernst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.tragbares-loch",
+      "level": 3,
+      "text": "Tragbares Loch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tragbares-loch.untertitel",
+      "text": "Wundersamer Gegenstand, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tragbares-loch.text-1",
+      "text": "Dieses feine schwarze Tuch ist seidenweich und auf die Größe eines Taschentuchs zusammengefaltet. Ausgebreitet ist es ein kreisrund und hat einen Durchmesser von 1,8 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tragbares-loch.text-2",
+      "text": "Du kannst eine magische Aktion ausführen, um das Tragbare Loch zu entfalten und auf oder an einer festen Oberfläche zu platzieren. Daraufhin erzeugt das Tragbare Loch ein drei Meter tiefes extradimensionales Loch. Der zylindrische Raum im Inneren des Lochs befindet sich auf einer anderen Existenzebene. Das Loch kann also nicht dazu verwendet werden, Durchgänge zu öffnen. Eine Kreatur innerhalb eines offenen Tragbaren Lochs kann dieses verlassen, indem sie hinausklettert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tragbares-loch.text-3",
+      "text": "Du kannst eine magische Aktion ausführen und ein Tragbares Loch schließen, indem du das Tuch an den Rändern greifst und zusammenfaltest. Wenn der Stoff gefaltet wird, schließt sich das Loch, und Kreaturen oder Gegenstände darin bleiben im extradimensionalen Raum. Das Loch wiegt unabhängig von seinem Inhalt praktisch nichts."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tragbares-loch.text-4",
+      "text": "Wenn das Loch zusammengefaltet ist, kann eine Kreatur im Inneren des extradimensionalen Raums als Aktion einen SG-10-Stärkewurf (Athletik) ausführen. Bei einem Erfolg verlässt die Kreatur das Tragbare Loch und erscheint im Abstand von bis zu 1,5 Metern außerhalb davon. Ein geschlossenes Tragbares Loch enthält genug Atemluft für eine Stunde (geteilt durch die Anzahl atmender Kreaturen darin)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.tragbares-loch.text-5",
+      "text": "Wenn ein Tragbares Loch in den extradimensionalen Raum eines Nimmervollen Beutels, eines Praktischen Rucksacks oder eines ähnlichen Gegenstands gelangt, zerstört dies sofort beide Gegenstände, und ein Tor in die Astralebene öffnet sich. Das Tor erscheint dort, wo der eine Gegenstand in den anderen gelangt ist. Alle Kreaturen, die sich im Abstand von bis zu drei Metern vom Tor befinden und nicht über vollständige Deckung verfügen, werden hineingezogen und an einen zufälligen Ort auf der Astralebene transportiert. Dann schließt sich das Tor. Das Tor funktioniert nur in eine Richtung und kann nicht wieder geöffnet werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-des-fliegens",
+      "level": 3,
+      "text": "Trank des Fliegens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-fliegens.untertitel",
+      "text": "Trank, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-fliegens.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du eine Stunde lang eine Flugbewegungsrate in Höhe von deiner Bewegungsrate und kannst schweben. Wenn du bei Ende der Wirkung noch in der Luft bist, fällst du zu Boden, sofern du keine anderen Möglichkeiten hast, zu fliegen oder zu schweben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-fliegens.text-2",
+      "text": "Die klare Flüssigkeit dieses Tranks schwebt im oberen Teil seines Gefäßes. Wolkige weiße Unreinheiten treiben darin."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-gasfoermigen-gestalt",
+      "level": 3,
+      "text": "Trank der Gasförmigen Gestalt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-gasfoermigen-gestalt.untertitel",
+      "text": "Trank, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-gasfoermigen-gestalt.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du den Effekt des Zaubers Gasförmige Gestalt (keine Konzentration erforderlich), bis eine Stunde vergangen ist oder du den Effekt als Bonusaktion beendest."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-gasfoermigen-gestalt.text-2",
+      "text": "Der Behälter dieses Tranks scheint mit einem Nebel gefüllt zu sein, der sich wie Wasser ausgießen lässt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-des-gedankenlesens",
+      "level": 3,
+      "text": "Trank des Gedankenlesens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-gedankenlesens.untertitel",
+      "text": "Trank, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-gedankenlesens.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du zehn Minuten lang den Effekt des Zaubers Gedanken wahrnehmen (Rettungswurf-SG 13, keine Konzentration erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-gedankenlesens.text-2",
+      "text": "In dieser zähen violetten Flüssigkeit treibt eine ovale rosafarbene Wolke."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-geschwindigkeit",
+      "level": 3,
+      "text": "Trank der Geschwindigkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-geschwindigkeit.untertitel",
+      "text": "Trank, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-geschwindigkeit.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du eine Minute lang den Effekt des Zaubers Hast (keine Konzentration erforderlich), ohne die Welle der Lethargie zu erleiden, die nach Abklingen des Effekts üblicherweise auftritt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-geschwindigkeit.text-2",
+      "text": "In dieser gelben Flüssigkeit wirbeln schwarze Streifen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-des-gifts",
+      "level": 3,
+      "text": "Trank des Gifts"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-gifts.untertitel",
+      "text": "Trank, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-gifts.text-1",
+      "text": "Dieses Gebräu riecht, schmeckt und sieht wie ein Heiltrank oder ein anderer vorteilhafter Trank aus. Allerdings ist es ein durch Illusionsmagie getarntes Gift. Der Zauber Identifizieren offenbart die wahre Natur des Tranks."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-gifts.text-2",
+      "text": "Wenn du diesen Trank zu dir nimmst, erleidest du 4W6 Giftschaden und musst einen SG-13-Konstitutionsrettungswurf bestehen, oder du bist eine Stunde lang vergiftet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-des-heldenmuts",
+      "level": 3,
+      "text": "Trank des Heldenmuts"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-heldenmuts.untertitel",
+      "text": "Trank, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-heldenmuts.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du eine Stunde lang 10 temporäre Trefferpunkte. Für dieselbe Dauer wirkt der Effekt des Zaubers Segnen auf dich (keine Konzentration erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-heldenmuts.text-2",
+      "text": "Die blaue Flüssigkeit brodelt und dampft, als würde sie kochen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-des-hellsehens",
+      "level": 3,
+      "text": "Trank des Hellsehens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-hellsehens.untertitel",
+      "text": "Trank, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-hellsehens.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du den Effekt des Zaubers Hellsehen (keine Konzentration erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-hellsehens.text-2",
+      "text": "In diesem gelblichen Trank schwimmt ein Augapfel. Er verschwindet jedoch, sobald der Trank geöffnet wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-des-kletterns",
+      "level": 3,
+      "text": "Trank des Kletterns"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-kletterns.untertitel",
+      "text": "Trank, gewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-kletterns.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du eine Stunde lang eine Kletterbewegungsrate in Höhe deiner Bewegungsrate. Während dieser Zeit bist du bei Stärkewürfen (Athletik) im Vorteil, die du zum Klettern ausführst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-kletterns.text-2",
+      "text": "Dieser Trank weist braune, silberne und graue Schichten auf und sieht wie mehrere Schichten von Stein aus. Die Schichten vermischen sich nicht, wenn der Trank geschüttelt wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-langlebigkeit",
+      "level": 3,
+      "text": "Trank der Langlebigkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-langlebigkeit.untertitel",
+      "text": "Trank, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-langlebigkeit.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, wird dein physisches Alter um 1W6+6 Jahre verringert (Minimum: 13 Jahre). Wann immer du anschließend einen weiteren Trank der Langlebigkeit zu dir nimmst, besteht ein kumulatives Risiko von zehn Prozent, dass du stattdessen um 1W6+6 Jahre alterst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-langlebigkeit.text-2",
+      "text": "In dieser bernsteinfarbenen Flüssigkeit treibt ein winziges Herz, das unwahrscheinlicherweise schlägt. Diese Zutat verschwindet, wenn der Trank geöffnet wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-resistenz",
+      "level": 3,
+      "text": "Trank der Resistenz"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-resistenz.untertitel",
+      "text": "Trank, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-resistenz.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, bist du eine Stunde lang gegen eine Schadensart resistent. Der SL wählt die Schadensart aus oder bestimmt sie zufällig, indem er anhand der folgenden Tabelle würfelt:"
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.t-u.trank-der-resistenz.tabelle-trank-der-resistenz",
+      "caption": "Trank der Resistenz",
+      "columns": [
+        "1W10",
+        "Schadensart",
+        "1W10",
+        "Schadensart"
+      ],
+      "rows": [
+        [
+          "1",
+          "Blitz",
+          "6",
+          "Kälte"
+        ],
+        [
+          "2",
+          "Energie",
+          "7",
+          "Nekrotisch"
+        ],
+        [
+          "3",
+          "Feuer",
+          "8",
+          "Psychisch"
+        ],
+        [
+          "4",
+          "Gift",
+          "9",
+          "Säure"
+        ],
+        [
+          "5",
+          "Gleißend",
+          "10",
+          "Schall"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-riesenstaerke",
+      "level": 3,
+      "text": "Trank der Riesenstärke"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-riesenstaerke.untertitel",
+      "text": "Trank, Seltenheit variiert"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-riesenstaerke.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, ist dein Stärkewert eine Stunde lang verändert. Der Wert hängt von der Riesenart ab (siehe Tabelle unten). Der Trank hat keinen Effekt, wenn deine Stärke bereits gleich oder größer als dieser Wert ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-riesenstaerke.text-2",
+      "text": "In dieser durchsichtigen Flüssigkeit treibt ein Lichtsplitter, der an den Fingernagel eines Riesen erinnert."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.t-u.trank-der-riesenstaerke.tabelle-trank-der-riesenstaerke",
+      "caption": "Trank der Riesenstärke",
+      "columns": [
+        "Trank",
+        "Stä.",
+        "Seltenheit"
+      ],
+      "rows": [
+        [
+          "Trank der Riesenstärke (Hügel)",
+          "21",
+          "Ungewöhnlich"
+        ],
+        [
+          "Trank der Riesenstärke (Frost oder Stein)",
+          "23",
+          "Selten"
+        ],
+        [
+          "Trank der Riesenstärke (Feuer)",
+          "25",
+          "Selten"
+        ],
+        [
+          "Trank der Riesenstärke (Wolken)",
+          "27",
+          "Sehr selten"
+        ],
+        [
+          "Trank der Riesenstärke (Sturm)",
+          "29",
+          "Legendär"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-tierfreundschaft",
+      "level": 3,
+      "text": "Trank der Tierfreundschaft"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-tierfreundschaft.untertitel",
+      "text": "Trank, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-tierfreundschaft.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, kannst du den Zauber Tierfreundschaft (Rettungswurf-SG 13) des 3. Grades wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-tierfreundschaft.text-2",
+      "text": "Wird dieser schlammfarbene Trank geschüttelt, so werden kleine Stücke sichtbar: eine Fischschuppe, eine Kolibrifeder, eine Katzenkralle oder ein Eichhörnchenhaar."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-unsichtbarkeit",
+      "level": 3,
+      "text": "Trank der Unsichtbarkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-unsichtbarkeit.untertitel",
+      "text": "Trank, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-unsichtbarkeit.text-1",
+      "text": "Der Behälter für diesen Trank sieht leer aus, fühlt sich aber an, als wäre Flüssigkeit darin. Wenn du diesen Trank zu dir nimmst, bist du eine Stunde lang unsichtbar. Der Effekt endet vorzeitig, wenn du einen Angriffswurf ausführst, Schaden bewirkst oder einen Zauber wirkst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-unverwundbarkeit",
+      "level": 3,
+      "text": "Trank der Unverwundbarkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-unverwundbarkeit.untertitel",
+      "text": "Trank, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-unverwundbarkeit.text-1",
+      "text": "Wenn du diesen Trank trinkst, bist du eine Minute lang gegen alle Schadensarten resistent."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-unverwundbarkeit.text-2",
+      "text": "Diese sirupartige Flüssigkeit sieht wie flüssiges Eisen aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-verkleinerung",
+      "level": 3,
+      "text": "Trank der Verkleinerung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-verkleinerung.untertitel",
+      "text": "Trank, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-verkleinerung.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du 1W4 Stunden lang den Verkleinern-Effekt des Zaubers Vergrößern/Verkleinern (keine Konzentration erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-verkleinerung.text-2",
+      "text": "Das rote Zentrum dieses Tranks zieht sich zu einem winzigen Kern zusammen und dehnt sich dann wieder aus, bis die gesamte sonst klare Flüssigkeit rot wird. Das Pulsieren wird nicht unterbrochen, wenn der Trank geschüttelt wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-vitalitaet",
+      "level": 3,
+      "text": "Trank der Vitalität"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-vitalitaet.untertitel",
+      "text": "Trank, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-vitalitaet.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, werden alle Erschöpfungsstufen entfernt, die du hast, und der Zustand Vergiftet endet. In den nächsten 24 Stunden erhältst du für jeden Trefferpunktewürfel, den du verbrauchst, die höchstmögliche Anzahl von Trefferpunkten zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-vitalitaet.text-2",
+      "text": "In dieser karminroten Flüssigkeit pulsiert ein schwaches Licht wie ein Herzschlag."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-des-wachstums",
+      "level": 3,
+      "text": "Trank des Wachstums"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-wachstums.untertitel",
+      "text": "Trank, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-wachstums.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du zehn Minuten lang den Vergrößern-Effekt des Zaubers Vergrößern/Verkleinern (keine Konzentration erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-des-wachstums.text-2",
+      "text": "Das winzige rote Zentrum dieses Tranks expandiert, bis die gesamte sonst klare Flüssigkeit rot wird, und zieht sich dann wieder zusammen. Das Pulsieren wird nicht unterbrochen, wenn der Trank geschüttelt wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trank-der-wasseratmung",
+      "level": 3,
+      "text": "Trank der Wasseratmung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-wasseratmung.untertitel",
+      "text": "Trank, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-wasseratmung.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, kannst du 24 Stunden lang unter Wasser atmen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trank-der-wasseratmung.text-2",
+      "text": "Diese wolkige grüne Flüssigkeit riecht nach Meer, und es treibt eine quallenförmige Blase darin."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.trickbeutel",
+      "level": 3,
+      "text": "Trickbeutel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trickbeutel.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trickbeutel.text-1",
+      "text": "Dieser Beutel aus beigefarbenem, grauem oder rostfarbenem Stoff scheint leer zu sein. Ein Griff in den Beutel offenbart jedoch einen kleinen flauschigen Gegenstand."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trickbeutel.text-2",
+      "text": "Du kannst eine magische Aktion ausführen, um diesen Gegenstand aus dem Beutel zu ziehen und bis zu sechs Meter weit zu werfen. Wenn der Gegenstand landet, verwandelt er sich in eine Kreatur, die du anhand der Tabelle für die Farbe des Beutels ermittelst. Den Wertekasten der Kreatur findest du unter „Monster“. Die Kreatur verschwindet im nächsten Morgengrauen, oder wenn ihre Trefferpunkte auf 0 sinken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trickbeutel.text-3",
+      "text": "Sie ist dir und deinen Verbündeten freundlich gesinnt und handelt bei deinem Initiativewert unmittelbar nach dir. Du kannst eine Bonusaktion ausführen, um der Kreatur zu befehlen, wie sie sich im nächsten Zug bewegt und welche Aktion sie ausführt (beispielsweise einen Gegner angreifen). Wenn die Kreatur keine Befehle erhält, handelt sie, wie es ihrer Natur entspricht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.trickbeutel.text-4",
+      "text": "Wurden drei flauschige Gegenstände aus dem Beutel gezogen, so kann der Beutel erst ab dem nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.t-u.trickbeutel.tabelle-grauer-trickbeutel",
+      "caption": "Grauer Trickbeutel",
+      "columns": [
+        "1W8",
+        "Kreatur",
+        "1W8",
+        "Kreatur"
+      ],
+      "rows": [
+        [
+          "1",
+          "Wiesel",
+          "5",
+          "Panther"
+        ],
+        [
+          "2",
+          "Riesenratte",
+          "6",
+          "Riesendachs"
+        ],
+        [
+          "3",
+          "Dachs",
+          "7",
+          "Schreckenswolf"
+        ],
+        [
+          "4",
+          "Eber",
+          "8",
+          "Riesenelch"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.t-u.trickbeutel.tabelle-rostfarbener-trickbeutel",
+      "caption": "Rostfarbener Trickbeutel",
+      "columns": [
+        "1W8",
+        "Kreatur",
+        "1W8",
+        "Kreatur"
+      ],
+      "rows": [
+        [
+          "1",
+          "Ratte",
+          "5",
+          "Riesenziege"
+        ],
+        [
+          "2",
+          "Eule",
+          "6",
+          "Rieseneber"
+        ],
+        [
+          "3",
+          "Dogge",
+          "7",
+          "Löwe"
+        ],
+        [
+          "4",
+          "Ziege",
+          "8",
+          "Braunbär"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.t-u.trickbeutel.tabelle-beigefarbener-trickbeutel",
+      "caption": "Beigefarbener Trickbeutel",
+      "columns": [
+        "1W8",
+        "Kreatur",
+        "1W8",
+        "Kreatur"
+      ],
+      "rows": [
+        [
+          "1",
+          "Schakal",
+          "5",
+          "Schwarzbär"
+        ],
+        [
+          "2",
+          "Menschenaffe",
+          "6",
+          "Riesenwiesel"
+        ],
+        [
+          "3",
+          "Pavian",
+          "7",
+          "Riesenhyäne"
+        ],
+        [
+          "4",
+          "Axtschnabel",
+          "8",
+          "Tiger"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.umhang-der-elfen",
+      "level": 3,
+      "text": "Umhang der Elfen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-elfen.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-elfen.text-1",
+      "text": "Wenn du diesen Umhang trägst, sind Weisheitswürfe (Wahrnehmung), die ausgeführt werden, um dich wahrzunehmen, im Nachteil, und du bist bei Geschicklichkeitswürfen (Heimlichkeit) im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.umhang-der-fledermaus",
+      "level": 3,
+      "text": "Umhang der Fledermaus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-fledermaus.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-fledermaus.text-1",
+      "text": "Wenn du diesen Umhang trägst, bist du bei Geschicklichkeitswürfen (Heimlichkeit) im Vorteil. In Bereichen mit dämmrigem Licht oder Dunkelheit kannst du die Säume ergreifen und den Umhang verwenden, um eine Flugbewegungsrate von zwölf Metern zu erhalten. Wenn dir die Säume entgleiten, während du auf diese Weise fliegst, oder wenn du dich nicht mehr in dämmrigem Licht oder in Dunkelheit befindest, verlierst du die Flugbewegungsrate."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-fledermaus.text-2",
+      "text": "Wenn du den Umhang in Bereichen mit dämmrigem Licht oder Dunkelheit trägst, kannst du Verwandlung auf dich selbst wirken und die Gestalt einer Fledermaus annehmen. In dieser Gestalt behältst du deine Werte für Intelligenz, Weisheit und Charisma bei. Wurde der Umhang verwendet, so kann er erst ab dem nächsten Morgengrauen erneut auf diese Weise verwendet werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.umhang-des-mantarochens",
+      "level": 3,
+      "text": "Umhang des Mantarochens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-des-mantarochens.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-des-mantarochens.text-1",
+      "text": "Wenn du diesen Umhang trägst, kannst du unter Wasser atmen und hast eine Schwimmbewegungsrate von 18 Metern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.umhang-des-scharlatans",
+      "level": 3,
+      "text": "Umhang des Scharlatans"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-des-scharlatans.untertitel",
+      "text": "Wundersamer Gegenstand, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-des-scharlatans.text-1",
+      "text": "Dieser Umhang riecht leicht nach Schwefel. Wenn du ihn trägst, kannst du ihn verwenden, um als magische Aktion den Zauber Dimensionstür zu wirken. Diese Eigenschaft kann erst ab dem nächsten Morgengrauen erneut auf diese Weise verwendet werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-des-scharlatans.text-2",
+      "text": "Wenn du dich mit diesem Zauber teleportierst, hinterlässt du eine Rauchwolke. Der Bereich, den du verlassen hast, ist bis zum Ende deines nächsten Zugs durch den Rauch leicht verschleiert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.umhang-des-schutzes",
+      "level": 3,
+      "text": "Umhang des Schutzes"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-des-schutzes.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-des-schutzes.text-1",
+      "text": "Wenn du diesen Umhang trägst, erhältst du einen Bonus von +1 auf deine Rüstungsklasse und deine Rettungswürfe."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.umhang-der-spinnentiere",
+      "level": 3,
+      "text": "Umhang der Spinnentiere"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-spinnentiere.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-spinnentiere.text-1",
+      "text": "Dieser feine Umhang ist aus schwarzer Seide gewoben und mit zarten, silbrig glänzenden Fäden durchwirkt. Wenn du ihn trägst, erhältst du die folgenden Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-spinnentiere.text-2",
+      "text": "Giftresistenz: Du bist gegen Giftschaden resistent."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-spinnentiere.text-3",
+      "text": "Spinnenklettern: Du hast eine Kletterbewegungsrate in Höhe deiner Bewegungsrate und kannst dich in alle Richtungen, über senkrechte Oberflächen sowie an Decken entlang bewegen, wobei du die Hände frei hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-spinnentiere.text-4",
+      "text": "Spinnennetz: Du kannst den Zauber Spinnennetz (Rettungswurf-SG 13) wirken. Das durch den Zauber erzeugte Netz füllt einen Bereich, der doppelt so groß wie der übliche ist. Wurde diese Eigenschaft verwendet, so kann sie erst ab dem nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-spinnentiere.text-5",
+      "text": "Spinnenschritt: Du kannst in keinerlei Netzen gefangen werden und bewegst dich durch Netze, als wären sie schwieriges Gelände."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.umhang-der-unsichtbarkeit",
+      "level": 3,
+      "text": "Umhang der Unsichtbarkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-unsichtbarkeit.untertitel",
+      "text": "Wundersamer Gegenstand, legendär (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-unsichtbarkeit.text-1",
+      "text": "Dieser Umhang hat drei Ladungen und erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück. Wenn du den Umhang trägst, kannst du eine magische Aktion ausführen, um dir die Kapuze über den Kopf zu ziehen, eine Ladung zu verbrauchen und dich eine Stunde lang unsichtbar zu machen. Der Effekt endet vorzeitig, wenn du die Kapuze abnimmst (keine Aktion erforderlich) oder den Umhang ablegst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.umhang-der-verlagerung",
+      "level": 3,
+      "text": "Umhang der Verlagerung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-verlagerung.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.umhang-der-verlagerung.text-1",
+      "text": "Wenn du diesen Umhang trägst, projiziert er auf magische Art eine Illusion, die dich in der Nähe deines eigentlichen Standorts erscheinen lässt. Dadurch sind Kreaturen bei Angriffswürfen gegen dich im Nachteil. Wenn du Schaden erleidest, kannst du diese Eigenschaft erst zu Beginn deines nächsten Zugs erneut verwenden. Diese Eigenschaft wird unterdrückt, solange deine Bewegungsrate 0 beträgt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.unbewegliches-zepter",
+      "level": 3,
+      "text": "Unbewegliches Zepter"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.unbewegliches-zepter.untertitel",
+      "text": "Zepter, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.unbewegliches-zepter.text-1",
+      "text": "Dieses eiserne Zepter hat an einem Ende einen Knopf. Diesen Knopf kannst du mit der Verwenden-Aktion drücken, woraufhin das Zepter magisch fixiert wird. Das Zepter bewegt sich nicht, selbst wenn es dabei der Schwerkraft trotzt, bis der Knopf mit einer weiteren Verwenden-Aktion erneut gedrückt wird. Das Zepter kann bis zu 4.000 Kilogramm Gewicht tragen. Bei noch mehr Gewicht wird das Zepter deaktiviert und fällt zu Boden. Eine Kreatur kann eine Verwenden-Aktion und einen SG-30-Stärkewurf (Athletik) ausführen. Bei einem Erfolg bewegt sich das fixierte Zepter um bis zu drei Meter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.t-u.universelles-loesungsmittel",
+      "level": 3,
+      "text": "Universelles Lösungsmittel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.universelles-loesungsmittel.untertitel",
+      "text": "Wundersamer Gegenstand, legendär"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.universelles-loesungsmittel.text-1",
+      "text": "Dieses Fläschchen enthält eine milchige Flüssigkeit, die stark nach Alkohol riecht. Wenn ein Fläschchen mit universellem Lösungsmittel gefunden wird, enthält es (1W6+1) × 30 Milliliter Lösungsmittel."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.t-u.universelles-loesungsmittel.text-2",
+      "text": "Du kannst als Verwenden-Aktion mindestens 30 Milliliter Lösungsmittel aus dem Fläschchen auf eine Oberfläche in Reichweite gießen. Diese Menge löst auf einem Quadrat mit bis zu 30 Zentimetern Kantenlänge sofort jedes Klebemittel auf, die sie berührt, auch Ewigen Leim."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:b38c6bfb3865b666b1b2e8abe699d47d05c05a7540f04433ca638838a465b20b"
+}

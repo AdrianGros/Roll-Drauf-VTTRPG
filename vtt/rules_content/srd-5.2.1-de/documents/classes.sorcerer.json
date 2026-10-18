@@ -1,0 +1,1856 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.sorcerer",
+  "slug": "zauberer",
+  "title": "Zauberer",
+  "navigationPath": [
+    "Klassen",
+    "Zauberer"
+  ],
+  "order": 310,
+  "sourcePages": [
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.sorcerer",
+      "level": 2,
+      "text": "Zauberer"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.sorcerer.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Charisma"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W6 pro Zaubererstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Konstitution und Charisma"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle zwei aus: Arkane Kunde, Einschüchtern, Motiv erkennen, Religion, Täuschen oder Überzeugen"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Keine"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Speer, zwei Dolche, Arkaner Fokus (Kristall), Gewölbeforscherausrüstung und 28 GM oder (B) 50 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.becoming-a-sorcerer",
+      "level": 3,
+      "text": "Ein Zauberer werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.sorcerer.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Zauberers“.",
+        "Du erhältst die Merkmale der 1. Zaubererstufe, die in der Tabelle „Zauberermerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.sorcerer.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst die Trefferpunktewürfel, die in der Tabelle „Hauptmerkmale des Zauberers“ aufgeführt sind.",
+        "Du erhältst die Merkmale der 1. Zaubererstufe, die in der Tabelle „Zauberermerkmale“ aufgeführt sind. Bestimme deine verfügbaren Zauberplätze anhand der Regeln zu Klassenkombinationen unter „Charaktererstellung“."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Zauberers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.class-features-introduction",
+      "text": "Als Zauberer erhältst du auf den angegebenen Zaubererstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Zauberermerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.progression-table",
+      "caption": "Zauberermerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Zaubereipunkte",
+        "Zaubertricks",
+        "Vorbereitete Zauber",
+        "Grad 1",
+        "Grad 2",
+        "Grad 3",
+        "Grad 4",
+        "Grad 5",
+        "Grad 6",
+        "Grad 7",
+        "Grad 8",
+        "Grad 9"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Zauberwirken, Intuitive Zauberei",
+          "–",
+          "4",
+          "2",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "2",
+          "+2",
+          "Metamagie, Quelle der Magie",
+          "2",
+          "4",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "3",
+          "+2",
+          "Zauberer-Unterklasse",
+          "3",
+          "4",
+          "6",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "4",
+          "5",
+          "7",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "5",
+          "+3",
+          "Zaubereiauffrischung",
+          "5",
+          "5",
+          "9",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "6",
+          "+3",
+          "Unterklassenmerkmal",
+          "6",
+          "5",
+          "10",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "7",
+          "+3",
+          "Zauberei-Inkarnat",
+          "7",
+          "5",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "8",
+          "5",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "9",
+          "+4",
+          "–",
+          "9",
+          "5",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "10",
+          "+4",
+          "Metamagie",
+          "10",
+          "6",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "11",
+          "+4",
+          "–",
+          "11",
+          "6",
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "12",
+          "6",
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "13",
+          "+5",
+          "–",
+          "13",
+          "6",
+          "17",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "14",
+          "+5",
+          "Unterklassenmerkmal",
+          "14",
+          "6",
+          "17",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "15",
+          "+5",
+          "–",
+          "15",
+          "6",
+          "18",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "16",
+          "6",
+          "18",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "17",
+          "+6",
+          "Metamagie",
+          "17",
+          "6",
+          "19",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "18",
+          "+6",
+          "Unterklassenmerkmal",
+          "18",
+          "6",
+          "20",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "19",
+          "6",
+          "21",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "20",
+          "+6",
+          "Arkane Vergöttlichung",
+          "20",
+          "6",
+          "22",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "2",
+          "1",
+          "1"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level1-spellcasting",
+      "level": 4,
+      "text": "1. Stufe: Zauberwirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-introduction",
+      "text": "Mithilfe deiner intuitiven Magie kannst du Zauber wirken. Die Regeln zum Zauberwirken findest du unter „Zauber“. Folgende Informationen erklären, wie du diese Regeln mit den Zaubererzaubern verwendest, die in der Zauberliste des Zauberers weiter hinten in dieser Klassenbeschreibung aufgeführt sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-cantrips",
+      "text": "Zaubertricks: Du kennst vier Zaubererzaubertricks deiner Wahl. Explosion der Zauberei, Licht, Schockgriff und Taschenspielerei werden empfohlen. Wann immer du eine Zaubererstufe erhältst, kannst du einen deiner Zaubertricks dieses Merkmals durch einen anderen Zaubererzaubertrick deiner Wahl ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-cantrips-growth",
+      "text": "Auf der 4. und 10. Zaubererstufe erlernst du jeweils einen weiteren Zaubererzaubertrick deiner Wahl, wie in der Spalte „Zaubertricks“ der Tabelle „Zauberermerkmale“ dargestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-slots",
+      "text": "Zauberplätze: Die Tabelle „Zauberermerkmale“ zeigt, wie viele Zauberplätze dir zum Wirken deiner Zauber ab dem 1. Grad zur Verfügung stehen. Du erhältst alle verbrauchten Zauberplätze nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-prepared",
+      "text": "Vorbereitete Zauber ab dem 1. Grad: Du bereitest die Liste der Zauber ab dem 1. Grad vor, die dir mit diesem Merkmal zur Verfügung stehen. Wähle zu Beginn zwei Zaubererzauber des 1. Grades aus. Brennende Hände und Magie entdecken werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-prepared-growth",
+      "text": "Die Anzahl der Zauber auf deiner Liste erhöht sich, wenn du weitere Zaubererstufen erhältst, wie in der Spalte „Vorbereitete Zauber“ der Tabelle „Zauberermerkmale“ dargestellt. Wann immer sich diese Anzahl erhöht, wählst du zusätzliche Zaubererzauber aus, bis die Anzahl von Zaubern auf deiner Liste der Anzahl in der Tabelle „Zauberermerkmale“ entspricht. Der Grad der ausgewählten Zauber muss dem der verfügbaren Zauberplätze entsprechen. Beispiel: Wenn du ein Zauberer der 3. Stufe bist, kann deine Liste vorbereiteter Zauber sechs Zaubererzauber des 1. und 2. Grades in beliebiger Kombination enthalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-prepared-other-features",
+      "text": "Wenn ein anderes Zauberermerkmal dir Zauber gibt, die du stets vorbereitet hast, zählen diese Zauber nicht bei der Anzahl von Zaubern, die du mit diesem Merkmal vorbereiten kannst. Ansonsten zählen diese Zauber jedoch als Zaubererzauber für dich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-prepared-swap",
+      "text": "Deine vorbereiteten Zauber ändern: Wann immer du eine Zaubererstufe erhältst, kannst du einen der Zauber auf deiner Liste durch einen anderen Zaubererzauber ersetzen, für den du Zauberplätze hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-ability",
+      "text": "Attribut zum Zauberwirken: Dein Attribut zum Wirken der Zaubererzauber ist Charisma."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-spellcasting-focus",
+      "text": "Zauberfokus: Du kannst einen arkanen Fokus als Zauberfokus für deine Zaubererzauber verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level1-innate-sorcery",
+      "level": 4,
+      "text": "1. Stufe: Intuitive Zauberei"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-innate-sorcery-description",
+      "text": "Ein Ereignis in deiner Vergangenheit hat sein unauslöschliches Zeichen hinterlassen und dich mit schwelender Magie erfüllt. Als Bonusaktion kannst du diese Magie eine Minute lang entfesseln. Während dieser Dauer erhältst du die folgenden Vorzüge:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.sorcerer.level1-innate-sorcery-benefits",
+      "items": [
+        "Der Zauberrettungswurf-SG deiner Zaubererzauber wird um 1 erhöht.",
+        "Bei den Angriffswürfen der Zaubererzauber, die du wirkst, bist du im Vorteil."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level1-innate-sorcery-uses",
+      "text": "Du kannst dieses Merkmal zweimal anwenden und erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level2-metamagic",
+      "level": 4,
+      "text": "2. Stufe: Metamagie"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-metamagic-description",
+      "text": "Deine Magie kommt aus deinem Inneren, daher kannst du deine Zauber nach deinen Wünschen ändern. Du erhältst zwei Metamagie-Optionen deiner Wahl unter „Metamagie-Optionen“ weiter hinten in der Beschreibung dieser Klasse. Die ausgewählten Optionen verwendest du, um Zauber, die du wirkst, vorübergehend zu ändern. Zum Verwenden einer Option musst du die jeweils angegebene Anzahl von Zaubereipunkten verbrauchen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-metamagic-one-option",
+      "text": "Du kannst nur eine Metamagie-Option auf einen Zauber anwenden, den du wirkst, sofern bei der jeweiligen Option nicht anders angegeben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-metamagic-swap",
+      "text": "Wann immer du eine Zaubererstufe erhältst, kannst du eine der Metamagie-Optionen durch eine ersetzen, die du noch nicht kennst. Auf der 10. und 17. Zaubererstufe erhältst du jeweils zwei weitere Optionen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level2-font-of-magic",
+      "level": 4,
+      "text": "2. Stufe: Quelle der Magie"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-font-of-magic-description",
+      "text": "Du kannst die Quelle der Magie nutzen, die du in dir trägst. Diese Quelle wird durch Zaubereipunkte repräsentiert, die eine Vielzahl magischer Effekte ermöglichen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-font-of-magic-points",
+      "text": "Du besitzt 2 Zaubereipunkte und erhältst weitere auf höheren Stufen, wie in der Spalte „Zaubereipunkte“ der Tabelle „Zauberermerkmale“ angegeben. Du kannst nicht mehr Zaubereipunkte besitzen, als für deine Stufe in der Tabelle angegeben sind. Du erhältst alle verbrauchten Zaubereipunkte nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-font-of-magic-use",
+      "text": "Du kannst deine Zaubereipunkte verwenden, um die Optionen unten sowie andere Merkmale wie Metamagie einzusetzen, welche diese Punkte nutzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-font-of-magic-converting-spell-slots",
+      "text": "Zauberplätze in Zaubereipunkte umwandeln: Du kannst einen Zauberplatz verbrauchen, um eine Anzahl von Zaubereipunkten in Höhe des Zauberplatzgrades zu erhalten (keine Aktion erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-font-of-magic-creating-spell-slots",
+      "text": "Zauberplätze erschaffen: Als Bonusaktion kannst du in deinem Zug unverbrauchte Zaubereipunkte in einen Zauberplatz umwandeln. In der Tabelle „Zauberplätze erschaffen“ sind die Kosten von Zauberplätzen bestimmter Grade sowie die zum Umwandeln erforderliche Zaubererstufe angegeben. Du kannst Zauberplätze des höchstens 5. Grades erzeugen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level2-font-of-magic-creating-spell-slots-duration",
+      "text": "Alle mit diesem Merkmal erschaffenen Zauberplätze verschwinden nach einer langen Rast."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.level2-creating-spell-slots-table",
+      "caption": "Zauberplätze erschaffen",
+      "columns": [
+        "Zauberplatzgrad",
+        "Zaubereipunktekosten",
+        "Min. Zaubererstufe"
+      ],
+      "rows": [
+        [
+          "1",
+          "2",
+          "2"
+        ],
+        [
+          "2",
+          "3",
+          "3"
+        ],
+        [
+          "3",
+          "5",
+          "5"
+        ],
+        [
+          "4",
+          "6",
+          "7"
+        ],
+        [
+          "5",
+          "7",
+          "9"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Zauberer-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level3-subclass-description",
+      "text": "Du erhältst eine Zauberer-Unterklasse deiner Wahl. Die Unterklasse Drakonische Zauberei wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Zaubererstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Zaubererstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Zaubererstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level5-sorcerous-restoration",
+      "level": 4,
+      "text": "5. Stufe: Zaubereiauffrischung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level5-sorcerous-restoration-description",
+      "text": "Verbrauchte Zaubereipunkte erhältst du nach einer kurzen Rast zurück, jedoch höchstens eine Anzahl in Höhe der Hälfte deiner Zaubererstufe (abgerundet). Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level7-sorcery-incarnate",
+      "level": 4,
+      "text": "7. Stufe: Zauberei-Inkarnat"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level7-sorcery-incarnate-description",
+      "text": "Wenn keine Anwendungen von Intuitive Zauberei mehr übrig sind, kannst du diese dennoch einsetzen. Dazu musst du 2 Zaubereipunkte verbrauchen und zum Aktivieren die Bonusaktion ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level7-sorcery-incarnate-metamagic",
+      "text": "Außerdem kannst du, wenn dein Merkmal Intuitive Zauberei aktiv ist, bei jedem Zauber, den du wirkst, bis zu zwei deiner Metamagie-Optionen verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe des Dimensionsreisens wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.level20-arcane-apotheosis",
+      "level": 4,
+      "text": "20. Stufe: Arkane Vergöttlichung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.level20-arcane-apotheosis-description",
+      "text": "Wenn dein Merkmal Intuitive Zauberei aktiv ist, kannst in jedem deiner Züge eine Metamagie-Option verwenden, ohne Zaubereipunkte zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-options",
+      "level": 3,
+      "text": "Metamagie-Optionen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-options-introduction",
+      "text": "Durch dein Merkmal Metamagie sind folgende Optionen verfügbar. Die Optionen werden in alphabetischer Reihenfolge aufgeführt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-careful-spell",
+      "level": 4,
+      "text": "Bedachter Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-careful-spell-cost",
+      "text": "Kosten: 1 Zaubereipunkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-careful-spell-description",
+      "text": "Wenn du einen Zauber wirkst, der andere Kreaturen zu einem Rettungswurf zwingt, kannst du einige dieser Kreaturen vor der vollen Stärke des Zaubers schützen. Verbrauche dazu einen Zaubereipunkt und wähle eine Anzahl betroffener Kreaturen bis zur Höhe deines Charismamodifikators aus (mindestens eine Kreatur). Eine ausgewählte Kreatur besteht ihren Rettungswurf gegen den Zauber automatisch und erleidet keinen Schaden, wenn sie normalerweise bei einem erfolgreichen Rettungswurf die Hälfte des Schadens erleiden würde."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-quickened-spell",
+      "level": 4,
+      "text": "Beschleunigter Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-quickened-spell-cost",
+      "text": "Kosten: 2 Zaubereipunkte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-quickened-spell-description",
+      "text": "Wirkst du einen Zauber mit einem Zeitaufwand von einer Aktion, so kannst du 2 Zaubereipunkte verbrauchen, um den Zeitaufwand in eine Bonusaktion zu ändern. Du kannst einen Zauber nicht auf diese Art verändern, wenn du im aktuellen Zug bereits einen Zauber des mindestens 1. Grades gewirkt hast. Außerdem kannst du im aktuellen Zug keinen Zauber des mindestens 1. Grades wirken, wenn du bereits einen Zauber auf diese Art verändert hast."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-twinned-spell",
+      "level": 4,
+      "text": "Gespiegelter Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-twinned-spell-cost",
+      "text": "Kosten: 1 Zaubereipunkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-twinned-spell-description",
+      "text": "Wenn du einen Zauber wie Person bezaubern wirkst, der mit einem Zauberplatz eines höheren Grades gewirkt werden kann, um auf eine weitere Kreatur zu zielen, kannst du einen Zaubereipunkt verbrauchen, um den effektiven Grad des Zaubers um 1 zu erhöhen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-heightened-spell",
+      "level": 4,
+      "text": "Konzentrierter Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-heightened-spell-cost",
+      "text": "Kosten: 2 Zaubereipunkte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-heightened-spell-description",
+      "text": "Wenn du einen Zauber wirkst, der Kreaturen zu einem Rettungswurf zwingt, kannst du 2 Zaubereipunkte verbrauchen, damit ein Ziel bei Rettungswürfen gegen den Zauber im Nachteil ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-empowered-spell",
+      "level": 4,
+      "text": "Mächtiger Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-empowered-spell-cost",
+      "text": "Kosten: 1 Zaubereipunkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-empowered-spell-description",
+      "text": "Wenn du den Schaden eines Zaubers auswürfelst, kannst du einen Zaubereipunkt verbrauchen, um mit einer Anzahl von Schadenswürfeln bis zur Höhe deines Charismamodifikators (mindestens einem) erneut zu würfeln. In diesem Fall musst du die neuen Ergebnisse verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-empowered-spell-description-2",
+      "text": "Du kannst Mächtiger Zauber auch dann einsetzen, wenn du beim Wirken des Zaubers schon eine andere Metamagie-Option verwendet hast."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-subtle-spell",
+      "level": 4,
+      "text": "Subtiler Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-subtle-spell-cost",
+      "text": "Kosten: 1 Zaubereipunkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-subtle-spell-description",
+      "text": "Wenn du einen Zauber wirkst, kannst du einen Zaubereipunkt verbrauchen, um den Zauber ohne Verbal-, Gesten- oder Materialkomponenten (außer Materialkomponenten, die vom Zauber verbraucht werden oder beim Zauber angegebene Kosten haben) zu wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-extended-spell",
+      "level": 4,
+      "text": "Verlängerter Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-extended-spell-cost",
+      "text": "Kosten: 1 Zaubereipunkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-extended-spell-description",
+      "text": "Wenn du einen Zauber mit einer Wirkungsdauer von mindestens einer Minute wirkst, kannst du einen Zaubereipunkt verbrauchen, um die Dauer des Zaubers zu verdoppeln (höchstens 24 Stunden)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-extended-spell-description-2",
+      "text": "Wenn dieser Zauber Konzentration erfordert, bist du bei allen Rettungswürfen, die du zum Aufrechterhalten dieser Konzentration ausführst, im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-transmuted-spell",
+      "level": 4,
+      "text": "Verwandelter Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-transmuted-spell-cost",
+      "text": "Kosten: 1 Zaubereipunkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-transmuted-spell-description",
+      "text": "Wenn du einen Zauberspruch mit einer Schadensart aus der folgenden Liste wirkst, kannst du einen Zaubereipunkt verbrauchen, um diese Schadensart in eine der anderen aufgeführten zu ändern: Blitz, Feuer, Gift, Kälte, Säure, Schall."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-distant-spell",
+      "level": 4,
+      "text": "Weitreichender Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-distant-spell-cost",
+      "text": "Kosten: 1 Zaubereipunkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-distant-spell-description",
+      "text": "Wenn du einen Zauber mit einer Reichweite von mindestens 1,5 Metern wirkst, kannst du einen Zaubereipunkt verbrauchen, um die Reichweite des Zaubers zu verdoppeln. Wirkst du einen Zauber mit Berührungsreichweite, so kannst du einen Zaubereipunkt verbrauchen, um die Reichweite auf neun Meter zu erhöhen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.metamagic-seeking-spell",
+      "level": 4,
+      "text": "Zielsuchzauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-seeking-spell-cost",
+      "text": "Kosten: 1 Zaubereipunkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-seeking-spell-description",
+      "text": "Wenn der Angriffswurf eines deiner Zauber misslingt, kannst du einen Zaubereipunkt verbrauchen und erneut mit dem W20 würfeln. In diesem Fall musst du das neue Ergebnis verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.metamagic-seeking-spell-description-2",
+      "text": "Du kannst Zielsuchzauber auch dann einsetzen, wenn du beim Wirken des Zaubers schon eine andere Metamagie-Option verwendet hast."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.spell-list",
+      "level": 3,
+      "text": "Zauberliste des Zauberers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.spell-list-introduction",
+      "text": "In diesem Abschnitt wird die Zauberliste des Zauberers vorgestellt. Die Zauber sind nach Zaubergrad und dann alphabetisch sortiert, und die Schule der Magie der jeweiligen Zauber ist aufgeführt. In der Spalte „Besonderheit“ bedeutet K, dass der Zauber Konzentration erfordert, R bedeutet, dass es sich um ein Ritual handelt, und M bedeutet, dass eine bestimmte Materialkomponente erforderlich ist."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level0",
+      "caption": "Zaubertricks (Zaubererzauber des 0. Grades)",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ausbessern",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Botschaft",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Einfache Illusion",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Elementalismus",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Explosion der Zauberei",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerpfeil",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Gift versprühen",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Kalte Hand",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Kältestrahl",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Licht",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Magierhand",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Säurespritzer",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Schockgriff",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Tanzende Lichter",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Taschenspielerei",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Zielsicherer Schlag",
+          "Erkenntnismagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level1",
+      "caption": "Zaubererzauber des 1. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Brennende Hände",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Chromatische Kugel",
+          "Hervorrufungsmagie",
+          "M"
+        ],
+        [
+          "Donnerwoge",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Eismesser",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Falsches Leben",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Federfall",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Lautloses Trugbild",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Magie entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Magierrüstung",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Magisches Geschoss",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Nebelwolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Person bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Rascher Rückzug",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Schild",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Schlaf",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Schmieren",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Selbstverkleidung",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Sprachen verstehen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Springen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Sprühende Farben",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Strahl der Übelkeit",
+          "Nekromantie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level2",
+      "caption": "Zaubererzauber des 2. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Attribut verbessern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Blindheit/Taubheit",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Drachenodem",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Dunkelheit",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Dunkelsicht",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Einflüsterung",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Flammenklinge",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Flammenkugel",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Gedanken wahrnehmen",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Gestalt verändern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Klopfen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Magische Waffe",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Nebelschritt",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Person festhalten",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Schweben",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Sengender Strahl",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Spiegelbilder",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Spinnenklettern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Spinnennetz",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Unsichtbares sehen",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Unsichtbarkeit",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Vergrößern/Verkleinern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Verschwimmen",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Windstoß",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Zerbersten",
+          "Hervorrufungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level3",
+      "caption": "Zaubererzauber des 3. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Blitz",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerball",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Fliegen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Flimmern",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Furcht",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Gasförmige Gestalt",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Gegenzauber",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Hast",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Hellsehen",
+          "Erkenntnismagie",
+          "K, M"
+        ],
+        [
+          "Hypnotisches Muster",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Mächtiges Trugbild",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Magie bannen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Schneesturm",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Schutz vor Energie",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Stinkende Wolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Tageslicht",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Vampirgriff",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Verlangsamen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Wasser atmen",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Wasserwandeln",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Zungen",
+          "Erkenntnismagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level4",
+      "caption": "Zaubererzauber des 4. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ätzkugel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Dimensionstür",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Dürre",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Eissturm",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerschild",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerwand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Mächtige Unsichtbarkeit",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Monster bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Steinhaut",
+          "Verwandlungsmagie",
+          "K, M"
+        ],
+        [
+          "Tier beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Verbannung",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Verwandlung",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Verwirrung",
+          "Verzauberungsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level5",
+      "caption": "Zaubererzauber des 5. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Arkane Hand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Äußerlichkeiten",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Erschaffung",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Gegenstände beleben",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Insektenplage",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Kältekegel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Kreis der Teleportation",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Monster festhalten",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Person beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Steinwand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Telekinese",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Todeswolke",
+          "Beschwörungsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level6",
+      "caption": "Zaubererzauber des 6. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Auflösung",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Böser Blick",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Erde bewegen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Fleisch zu Stein",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Frostsphäre",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Kettenblitz",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Kugel der Unverwundbarkeit",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Massen-Einflüsterung",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Sonnenstrahl",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Todeskreis",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Wahrer Blick",
+          "Erkenntnismagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level7",
+      "caption": "Zaubererzauber des 7. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ätherische Gestalten",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Ebenenwechsel",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Feuersturm",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Finger des Todes",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Regenbogenspiel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Schwerkraft umkehren",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Spätzündender Feuerball",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Teleportieren",
+          "Beschwörungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level8",
+      "caption": "Zaubererzauber des 8. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Erdbeben",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Flammende Wolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Halbebene",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Monster beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Sonnenfeuer",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Wort der Macht: Betäubung",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.spell-list-level9",
+      "caption": "Zaubererzauber des 9. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Meteoritenschwarm",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Tor",
+          "Beschwörungsmagie",
+          "K, M"
+        ],
+        [
+          "Wort der Macht: Tod",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Wunsch",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Zeitstopp",
+          "Verwandlungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.subclass-draconic",
+      "level": 3,
+      "text": "Zauberer-Unterklasse: Drakonische Zauberei"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-draconic-motto",
+      "text": "Atme die Magie der Drachen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-draconic-introduction",
+      "text": "Deine intuitive Magie ist das Geschenk eines Drachen. Vielleicht hat ein uralter Drache dir oder deinem Vorfahren einen Teil seiner magischen Kräfte übertragen. Du könntest auch die Magie eines Ortes aufgenommen haben, der mit Drachenmacht erfüllt war. Womöglich hast du auch einen Drachenschatz berührt, der von drakonischer Macht durchdrungen war. Oder unter deinen Vorfahren war ein Drache."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.subclass-level3-draconic-resilience",
+      "level": 4,
+      "text": "3. Stufe: Drakonische Widerstandskraft"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level3-draconic-resilience-description",
+      "text": "Die Magie in deinem Körper manifestiert physische Merkmale deiner drakonischen Gabe. Dein Trefferpunktemaximum wird um 3 Punkte und auf jeder höheren Zaubererstufe um 1 weiteren Punkt erhöht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level3-draconic-resilience-scales",
+      "text": "Außerdem sind Teile deines Körpers drachenartig mit Schuppen bedeckt. Solange du keine Rüstung trägst, entspricht deine Basis-Rüstungsklasse 10 plus deinem Geschicklichkeits- plus deinem Charismamodifikator."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.subclass-level3-draconic-spells",
+      "level": 4,
+      "text": "3. Stufe: Drakonische Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level3-draconic-spells-description",
+      "text": "Wenn du eine Zaubererstufe erreichst, die in der Tabelle „Drakonische Zauber“ aufgeführt ist, hast du die aufgeführten Zauber fortan stets vorbereitet."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.sorcerer.subclass-level3-draconic-spells-table",
+      "caption": "Drakonische Zauber",
+      "columns": [
+        "Zaubererstufe",
+        "Zauber"
+      ],
+      "rows": [
+        [
+          "3",
+          "Befehl, Chromatische Kugel, Drachenodem, Gestalt verändern"
+        ],
+        [
+          "5",
+          "Fliegen, Furcht"
+        ],
+        [
+          "7",
+          "Arkanes Auge, Monster bezaubern"
+        ],
+        [
+          "9",
+          "Drachen herbeirufen, Sagenkunde"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.subclass-level6-elemental-affinity",
+      "level": 4,
+      "text": "6. Stufe: Elementare Affinität"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level6-elemental-affinity-description",
+      "text": "Deine drakonische Magie hat eine Affinität mit der Schadensart, die mit Drachen assoziiert ist. Wähle eine der folgenden Arten aus: Blitz, Feuer, Gift, Kälte oder Säure."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level6-elemental-affinity-benefit",
+      "text": "Du bist gegen diese Schadensart resistent, und wenn du einen Zauber wirkst, der Schaden dieser Art bewirkt, kannst du einem Schadenswurf dieses Zaubers deinen Charismamodifikator hinzufügen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.subclass-level14-dragon-wings",
+      "level": 4,
+      "text": "14. Stufe: Drachenflügel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level14-dragon-wings-description",
+      "text": "Als Bonusaktion kannst du drakonische Flügel auf deinem Rücken erscheinen lassen. Sie bleiben eine Stunde lang bestehen, oder bis du sie verwirfst (keine Aktion erforderlich). Für die Wirkungsdauer hast du eine Flugbewegungsrate von 18 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level14-dragon-wings-reuse",
+      "text": "Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst 3 Zaubereipunkte (keine Aktion erforderlich), um die Anwendung wiederherzustellen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.sorcerer.subclass-level18-dragon-companion",
+      "level": 4,
+      "text": "18. Stufe: Drachengefährte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level18-dragon-companion-description",
+      "text": "Du kannst Drachen herbeirufen ohne Materialkomponente wirken. Du kannst den Zauber auch einmal wirken, ohne einen Zauberplatz zu verbrauchen. Diese Fähigkeit erhältst du nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.sorcerer.subclass-level18-dragon-companion-concentration",
+      "text": "Wann immer du beginnst, diesen Zauber zu wirken, kannst du ihn so verändern, dass er keine Konzentration erfordert. In diesem Fall beträgt die Wirkungsdauer des Zaubers eine Minute."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-table",
+      "label": "Klassenkombinationen für Zauberwirker"
+    }
+  ],
+  "digest": "sha256:d176e2bdb9860734329d73880ad845da52cbca3e1e9be7ef1a6f8572dcdb98a2"
+}

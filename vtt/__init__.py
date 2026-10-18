@@ -259,6 +259,7 @@ def create_app(config_name=None):
     from vtt.endpoints.theme import theme_bp  # M46
     from vtt.endpoints.admin_assets import admin_assets_bp  # Asset Manager MCP API
     from vtt.endpoints.page_content import page_content_bp  # M65
+    from vtt.rules import rules_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(campaigns_bp, url_prefix='/api')
     app.register_blueprint(characters_bp, url_prefix='/api')
@@ -275,6 +276,7 @@ def create_app(config_name=None):
     app.register_blueprint(theme_bp)  # M46
     app.register_blueprint(admin_assets_bp)  # Asset Manager MCP API
     app.register_blueprint(page_content_bp)  # M65
+    app.register_blueprint(rules_bp)
 
     # Create database tables
     if app.config.get("AUTO_CREATE_SCHEMA", False):

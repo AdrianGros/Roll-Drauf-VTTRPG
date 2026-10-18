@@ -1,0 +1,3082 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "monsters.f-g",
+  "slug": "monster-f-g",
+  "title": "Monster F–G",
+  "navigationPath": [
+    "Monster",
+    "Monster F–G"
+  ],
+  "order": 2120,
+  "sourcePages": [
+    317,
+    318,
+    319,
+    320,
+    321,
+    322,
+    323,
+    324,
+    325,
+    326,
+    327,
+    328,
+    329,
+    330,
+    331
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.monster-von-a-z",
+      "level": 2,
+      "text": "Monster von A–Z (F–G)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.feengeist",
+      "level": 3,
+      "text": "Feengeist"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.feengeist.feengeist",
+      "name": "Feengeist",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Feenwesen, neutral gut"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "10 (4W4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +8, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Elfisch, Gemeinsprache, Sylvanisch"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Nadelschwert: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 6 (1W4+4) Stichschaden.\n\nBezaubernder Bogen: Fernkampfangriffswurf: +6, Reichweite 12/48 m. Treffer: 1 Stichschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Feengeists bezaubert.\n\nHerzsicht: Charismarettungswurf: SG 10; eine Kreatur im Abstand von bis zu 1,5 Metern vom Feengeist, die er sehen kann (celestische Wesen, Unholde und Unholde scheitern automatisch). Misserfolg: Der Feengeist erkennt die Emotionen und die Gesinnung des Ziels.\n\nUnsichtbarkeit: Der Feengeist wirkt den Zauber Unsichtbarkeit auf sich selbst mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.feuerelementar",
+      "level": 3,
+      "text": "Feuerelementar"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.feuerelementar.feuerelementar",
+      "name": "Feuerelementar",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Elementar, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "93 (11W10+33)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Bewusstlos, Erschöpft, Festgesetzt, Gelähmt, Gepackt, Liegend, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Ignal)"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Beleuchtung: Der Elementar spendet in einem Radius von neun Metern helles Licht und in einem Radius von weiteren neun Metern dämmriges Licht.\n\nFeueraura: Am Ende jedes Zugs des Elementars erleidet jede Kreatur in einer Ausströmung von drei Metern, die vom Elementar ausgeht, 5 (1W10) Feuerschaden. Kreaturen und brennbare Gegenstände in der Ausströmung beginnen zu brennen.\n\nFeuergestalt: Der Elementar kann sich durch enge Bereiche von nur 2,5 Zentimetern Durchmesser bewegen, ohne zusätzliche Bewegung aufzuwenden. Außerdem kann er in den Bereich einer anderen Kreatur eindringen und dort stoppen. Wenn er in einem Zug erstmals in den Bereich einer Kreatur gelangt, erleidet die Kreatur 5 (1W10) Feuerschaden.\n\nWasserempfindlichkeit: Je 1,5 Meter, die der Elementar sich in Wasser bewegt, oder je vier Liter Wasser, die auf ihn gegossen werden, erleidet der Elementar 3 (1W6) Kälteschaden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Elementar führt zwei Brand-Angriffe aus.\n\nBrand: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 10 (2W6+3) Feuerschaden. Wenn das Ziel eine Kreatur oder ein brennbarer Gegenstand ist, beginnt es zu brennen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.feuerriese",
+      "level": 3,
+      "text": "Feuerriese"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.feuerriese.feuerriese",
+      "name": "Feuerriese",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Riese, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "162 (13W12+78)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "23 (MOD +6, RW +10)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "13 (MOD +1, RW +5)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +11, Wahrnehmung +6"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Riesisch"
+        },
+        {
+          "label": "HG",
+          "value": "9 (EP 5.000; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Riese führt zwei Angriffe mit Flammenschwert oder Hammerwurf in beliebiger Kombination aus.\n\nFlammenschwert: Nahkampfangriffswurf: +11, Reichweite 3 m. Treffer: 21 (4W6+7) Hiebschaden plus 10 (3W6) Feuerschaden.\n\nHammerwurf: Fernkampfangriffswurf: +11, Reichweite 18/72 m. Treffer: 23 (3W10+7) Wuchtschaden plus 4 (1W8) Feuerschaden; das Ziel wird bis zu 4,5 Meter weit in gerader Linie vom Riesen weggestoßen und ist beim nächsten Angriffswurf, den es vor Ende seines nächsten Zugs ausführt, im Nachteil."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.fleischgolem",
+      "level": 3,
+      "text": "Fleischgolem"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.fleischgolem.fleischgolem",
+      "name": "Fleischgolem",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Konstrukt, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "9"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "127 (15W8+60)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz, Gift; Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Gemeinsprache und eine weitere Sprache, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Abneigung gegen Feuer: Wenn der Golem Feuerschaden erleidet, ist er bis zum Ende seines nächsten Zugs bei Angriffs- und Attributswürfen im Nachteil.\n\nBerserker: Wann immer der Golem seinen Zug blutig beginnt, würfle mit 1W6. Bei einer 6 gerät der Golem in Kampfrausch. Im Kampfrausch greift der Golem die Kreatur an, die ihm am nächsten ist und die er sehen kann. Wenn sich keine Kreatur in Angriffsreichweite befindet, greift der Golem einen Gegenstand an. Der Kampfrausch hält an, bis der Golem zerstört wird oder nicht mehr blutig ist.\n\nDer Schöpfer des Golems kann versuchen, ihn zu besänftigen, sofern er sich im Abstand von bis zu 18 Metern von ihm befindet. Dazu muss der Schöpfer eine Aktion und einen SG-15-Charismawurf (Überzeugen) ausführen, und der Golem muss seinen Schöpfer hören können. Bei einem Erfolg ist der Golem bis zum Beginn seines nächsten Zugs nicht mehr im Kampfrausch. Wenn er dann noch blutig ist, würfelt er sein Berserker-Merkmal erneut aus.\n\nBlitzabsorption: Der Golem erleidet keinen Schaden durch Blitze, sondern erhält Trefferpunkte in Höhe des Blitzschadens zurück.\n\nMagieresistenz: Der Golem ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nUnveränderliche Gestalt: Der Golem kann keine andere Gestalt annehmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Golem führt zwei Hiebangriffe aus.\n\nHieb: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 13 (2W8+4) Wuchtschaden plus 4 (1W8) Blitzschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.flimmerhund",
+      "level": 3,
+      "text": "Flimmerhund"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.flimmerhund.flimmerhund",
+      "name": "Flimmerhund",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Feenwesen, rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (4W8+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Flimmerhundisch; versteht Elfisch und Sylvanisch, kann sie jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 5 (1W4+3) Stichschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Teleportieren (Aufladung 4–6): Der Hund teleportiert sich bis zu zwölf Meter weit in einen freien Bereich, den er sehen kann."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.frostriese",
+      "level": 3,
+      "text": "Frostriese"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.frostriese.frostriese",
+      "name": "Frostriese",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Riese, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "149 (13W12+65)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +8)"
+        },
+        {
+          "label": "Int",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +9, Wahrnehmung +3"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Riesisch"
+        },
+        {
+          "label": "HG",
+          "value": "8 (EP 3.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Riese führt zwei Angriffe mit Frostaxt oder Großbogen in beliebiger Kombination aus.\n\nFrostaxt: Nahkampfangriffswurf: +9, Reichweite 3 m. Treffer: 19 (2W12+6) Hiebschaden plus 9 (2W8) Kälteschaden.\n\nGroßbogen: Fernkampfangriffswurf: +9, Reichweite 45/180 m. Treffer: 17 (2W10+6) Stichschaden plus 7 (2W6) Kälteschaden, und die Bewegungsrate des Ziels ist bis zum Ende seines nächsten Zugs um drei Meter verringert."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Kriegsschrei (Aufladung 5–6): Der Riese oder eine Kreatur seiner Wahl, die er hören oder sehen kann, erhält 16 (2W10+5) temporäre Trefferpunkte und ist bis zum Beginn des nächsten Zugs des Riesen bei Angriffswürfen im Vorteil."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gallertwuerfel",
+      "level": 3,
+      "text": "Gallertwürfel"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gallertwuerfel.gallertwuerfel",
+      "name": "Gallertwürfel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Schlick, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "6"
+        },
+        {
+          "label": "Initiative",
+          "value": "–4 (6)"
+        },
+        {
+          "label": "TP",
+          "value": "63 (6W10+30)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "4,5 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Säure; Bezaubert, Blind, Erschöpft, Liegend, Taub, Verängstigt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 8"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Durchsichtig: Selbst wenn der Würfel sich in direkter Sichtlinie befindet, muss eine Kreatur einen SG-15-Weisheitswurf (Wahrnehmung) bestehen, um ihn zu bemerken, sofern sie nicht beobachtet hat, dass der Würfel sich bewegt oder anderweitig handelt.\n\nSchlickwürfel: Der Würfel nimmt seinen gesamten Bereich ein und ist durchsichtig. Andere Kreaturen können in diesen Bereich gelangen, werden dabei jedoch vom Würfel eingehüllt und sind beim Rettungswurf im Nachteil.\n\nKreaturen im Würfel haben vollständige Deckung. Der Würfel kann jeweils eine Kreatur von großer Größe oder bis zu vier Kreaturen von kleiner oder mittelgroßer Größe enthalten.\n\nEine Kreatur im Abstand von bis zu 1,5 Metern vom Würfel kann als Aktion eine Kreatur oder einen Gegenstand aus dem Würfel ziehen, sofern sie einen SG-12-Stärkewurf (Athletik) besteht. Die ziehende Kreatur erleidet dabei 10 (3W6) Säureschaden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Scheinfuß: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 12 (3W6+2) Säureschaden.\n\nEinhüllen: Der Würfel nutzt seine Bewegungsrate, ohne Gelegenheitsangriffe zu provozieren. Er kann sich durch die Bereiche bewegen, in denen sich Kreaturen von höchstens großer Größe befinden, sofern der Würfel in sich genügend Platz hat, um diese Kreaturen aufzunehmen (siehe Merkmal Schlickwürfel). Geschicklichkeitsrettungswurf: SG 12; jede Kreatur, in deren Bereich der Würfel während dieser Bewegung erstmals gelangt. Misserfolg: 10 (3W6) Säureschaden, und das Ziel wird eingehüllt. Ein eingehülltes Ziel beginnt zu ersticken, kann keine Zauber mit Verbalkomponente wirken, ist festgesetzt und erleidet zu Beginn jedes Zugs des Würfels 10 (3W6) Säureschaden. Bewegt sich der Würfel, so bewegt sich das eingehüllte Ziel mit ihm. Das eingehüllte Ziel kann sich mit einer Aktion und einem SG-12-Stärkewurf (Athletik) zu befreien versuchen. Bei einem Erfolg entkommt das Ziel und gelangt in den nächsten freien Bereich. Erfolg: Halber Schaden, und das Ziel gelangt in einen freien Bereich im Abstand von bis zu 1,5 Metern vom Würfel. Ist kein freier Bereich verfügbar, so misslingt der Rettungswurf stattdessen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gargyl",
+      "level": 3,
+      "text": "Gargyl"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gargyl.gargyl",
+      "name": "Gargyl",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Elementar, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "67 (9W8+27)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Erschöpft, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Terral)"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Vorbeifliegen: Der Gargyl provoziert keine Gelegenheitsangriffe, wenn er aus der Reichweite eines Gegners fliegt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Gargyl führt zwei Klauenangriffe aus.\n\nKlauen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 7 (2W4+2) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.geist",
+      "level": 3,
+      "text": "Geist"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.geist.geist",
+      "name": "Geist",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "45 (10W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Fliegen 12 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Feuer, Hieb, Kälte, Säure, Schall, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Nekrotisch, Gift; Bezaubert, Erschöpft, Festgesetzt, Gelähmt, Gepackt, Liegend, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Ätherische Sicht: Der Geist kann 18 Meter weit in die Ätherebene blicken, wenn er sich auf der materiellen Ebene befindet.\n\nKörperlose Bewegung: Der Geist kann sich durch andere Kreaturen und Gegenstände bewegen, als wären sie schwieriges Gelände. Er erleidet 5 (1W10) Energieschaden, wenn er den Zug in einem Gegenstand beendet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Geist führt zwei Vernichtende-Berührung-Angriffe aus.\n\nVernichtende Berührung: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 19 (3W10+3) nekrotischer Schaden.\n\nÄtherische Gestalten: Der Geist wirkt den Zauber Körperlosigkeit mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen. Er ist auf der materiellen Ebene sichtbar, solange er sich an der Äthergrenze befindet, sowie umgekehrt, aber er kann weder etwas auf der anderen Ebene beeinflussen noch von etwas auf der anderen Ebene beeinflusst werden.\n\nGrauenhaftes Antlitz: Weisheitsrettungswurf: SG 13; jede Kreatur in einem Kegel von 18 Metern, die den Geist sehen kann und kein Untoter ist. Misserfolg: 10 (2W6+3) psychischer Schaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Geists verängstigt. Erfolg: Das Ziel ist 24 Stunden lang gegen den Zauber Grauenhaftes Antlitz dieses Geists immun.\n\nInbesitznahme (Aufladung 6): Charismarettungswurf: SG 13; ein Humanoide im Abstand von bis zu 1,5 Metern vom Geist, die er sehen kann. Misserfolg: Der Geist verschwindet und ergreift Besitz vom Ziel. Das Ziel ist kampfunfähig und verliert die Kontrolle über seinen Körper. Dieser wird nun vom Geist kontrolliert. Das Ziel behält jedoch sein Bewusstsein. Der Geist kann nicht zum Ziel von Angriffen, Zaubern oder anderen Effekten werden – außer solchen, die ausdrücklich auf Untote zielen. Die Spielwerte des Geists bleiben unverändert mit folgenden Ausnahmen: Der Geist verwendet die Bewegungsrate sowie die Modifikatoren für Stärke, Geschicklichkeit und Konstitution des Ziels.\n\nDie Besessenheit bleibt bestehen, bis die Trefferpunkte des besessenen Körpers auf 0 sinken oder der Geist ihn als Bonusaktion verlässt. Wenn die Besessenheit endet, erscheint der Geist in einem freien Bereich im Abstand von bis zu 1,5 Metern vom Ziel, und das Ziel ist 24 Stunden lang gegen den Zauber Inbesitznahme dieses Geists immun.\n\nErfolg: Das Ziel ist 24 Stunden lang gegen den Zauber Inbesitznahme dieses Geists immun."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.geisternaga",
+      "level": 3,
+      "text": "Geisternaga"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.geisternaga.geisternaga",
+      "name": "Geisternaga",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Unhold, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "135 (18W10+36)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +5)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +6)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bezaubert, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "8 (EP 3.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Unholdische Genesung: Wenn der Naga stirbt, wird er nach 1W6 Tagen wieder lebendig und erhält all seine Trefferpunkte zurück. Nur der Zauber Wunsch kann verhindern, dass dieses Merkmal wirkt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Naga führt drei Angriffe mit Biss oder Nekrotischer Strahl in beliebiger Kombination aus.\n\nBiss: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 7 (1W6+4) Stichschaden plus 14 (4W6) Giftschaden.\n\nNekrotischer Strahl: Fernkampfangriffswurf: +6, Reichweite 18 m. Treffer: 21 (6W6) nekrotischer Schaden.\n\nZauberwirken: Der Naga wirkt einen der folgenden Zauber mit Intelligenz als Attribut zum Zauberwirken, ohne Gesten- oder Materialkomponenten zu benötigen (Zauberrettungswurf-SG 14):\n\nBeliebig oft: Einfache Illusion, Magie entdecken, Magierhand, Wasser atmen\n\nJe 2-mal täglich: Blitz (Version des 4. Grades), Dimensionstür, Gedanken wahrnehmen, Person festhalten (Version des 3. Grades)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gemeiner",
+      "level": 3,
+      "text": "Gemeiner"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gemeiner.gemeiner",
+      "name": "Gemeiner",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "4 (1W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Knüppel"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Ausbildung: Der Gemeine hat Übung in einer Fertigkeit nach Wahl des SL und ist im Vorteil, wann immer er einen Attributswurf mit dieser Fertigkeit ausführt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Knüppel: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 2 (1W4) Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.ghul",
+      "level": 3,
+      "text": "Ghul"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.ghul.ghul",
+      "name": "Ghul",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (5W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bezaubert, Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Ghul führt zwei Bissangriffe aus.\n\nBiss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Stichschaden plus 3 (1W6) nekrotischer Schaden.\n\nKlauen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Hiebschaden. Wenn das Ziel eine Kreatur, jedoch kein Untoter und kein Elf ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 10. Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs gelähmt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.glabrezu",
+      "level": 3,
+      "text": "Glabrezu"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.glabrezu.glabrezu",
+      "name": "Glabrezu",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Unhold (Dämon), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+6 (16)"
+        },
+        {
+          "label": "TP",
+          "value": "189 (18W10+90)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "20 (MOD +5, RW +9)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +9)"
+        },
+        {
+          "label": "Int",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "17 (MOD +3, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +7)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Täuschen +7, Wahrnehmung +7"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Feuer, Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 17"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "9 (EP 5.000; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Dämonische Genesung: Wenn der Glabrezu außerhalb des Abyss stirbt, löst sein Körper sich zu einer widerlichen Flüssigkeit auf. Der Glabrezu erhält sofort einen neuen Körper, der mit allen Trefferpunkten irgendwo im Abyss aufersteht.\n\nMagieresistenz: Der Glabrezu ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Glabrezu führt zwei Zangenangriffe aus und setzt Prügeln oder Zauberwirken ein.\n\nZange: Nahkampfangriffswurf: +9, Reichweite 3 m. Treffer: 16 (2W10+5) Hiebschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es von einem der zwei Zangen gepackt (Flucht-SG 15).\n\nPrügeln: Geschicklichkeitsrettungswurf: SG 17; eine Kreatur, die vom Glabrezu gepackt wurde. Misserfolg: 15 (3W6+5) Wuchtschaden. Erfolg: Halber Schaden.\n\nZauberwirken: Der Glabrezu wirkt einen der folgenden Zauber mit Intelligenz als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 16):\n\nBeliebig oft: Dunkelheit, Magie bannen, Magie entdecken\n\nJe 1-mal täglich: Fliegen, Verwirrung, Wort der Macht: Betäubung"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gladiator",
+      "level": 3,
+      "text": "Gladiator"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gladiator.gladiator",
+      "name": "Gladiator",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "TP",
+          "value": "112 (15W8+45)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +7)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +6)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +10, Auftreten +5"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Beschlagene Lederrüstung, Schild, Speere (3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Gladiator führt drei Speer-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Schildstoß ersetzen.\n\nSpeer: Nah- oder Fernkampfangriffswurf: +7, Reichweite 1,5 m oder Reichweite 6/18 m. Treffer: 11 (2W6+4) Stichschaden.\n\nSchildstoß: Stärkerettungswurf: SG 15; eine Kreatur im Abstand von bis zu 1,5 Metern vom Gladiator, die er sehen kann. Misserfolg: 9 (2W4+4) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Parieren: Auslöser: Die Gladiator wird von einem Nahkampfangriffswurf getroffen, während er eine Waffe hält. Antwort: Der Gladiator fügt seiner RK gegen diesen Angriff 3 hinzu, sodass der Angriff möglicherweise misslingt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gnoll",
+      "level": 3,
+      "text": "Gnoll"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gnoll.gnollkrieger",
+      "name": "Gnollkrieger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Unhold, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "27 (6W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gnollisch"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Zerfetzen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Stichschaden.\n\nKnochenbogen: Fernkampfangriffswurf: +3, Reichweite 45/180 m. Treffer: 6 (1W10+1) Stichschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Wüten (1-mal täglich): Unmittelbar nachdem der Gnoll einer bereits blutigen Kreatur Schaden zugefügt hat, legt er bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.goblins",
+      "level": 3,
+      "text": "Goblins"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.goblins.goblin-scherge",
+      "name": "Goblin-Scherge",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Feenwesen (Goblinoide), chaotisch neutral"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "7 (2W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Dolche (3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Goblinisch"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Dolch: Nah- oder Fernkampfangriffswurf: +4, Reichweite 1,5 m oder Reichweite 6/18 m. Treffer: 4 (1W4+2) Stichschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Behändes Entkommen: Der Goblin führt die Rückzug- oder Verstecken-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.goblins.goblinkrieger",
+      "name": "Goblinkrieger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Feenwesen (Goblinoide), chaotisch neutral"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "10 (3W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Krummsäbel, Kurzbogen, Lederrüstung, Schild"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Goblinisch"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Krummsäbel: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Hiebschaden plus 2 (1W4) Hiebschaden, wenn der Angriffswurf im Vorteil war.\n\nKurzbogen: Fernkampfangriffswurf: +4, Reichweite 24/96 m. Treffer: 5 (1W6+2) Stichschaden plus 2 (1W4) Stichschaden, wenn der Angriffswurf im Vorteil war."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Behändes Entkommen: Der Goblin führt die Rückzug- oder Verstecken-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.goblins.goblin-boss",
+      "name": "Goblin-Boss",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Feenwesen (Goblinoide), chaotisch neutral"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "21 (6W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Kettenhemd, Krummsäbel, Kurzbogen, Schild"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Goblinisch"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Goblin führt zwei Angriffe mit Krummsäbel oder Kurzbogen in beliebiger Kombination aus.\n\nKrummsäbel: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Hiebschaden plus 2 (1W4) Hiebschaden, wenn der Angriffswurf im Vorteil war.\n\nKurzbogen: Fernkampfangriffswurf: +4, Reichweite 24/96 m. Treffer: 5 (1W6+2) Stichschaden plus 2 (1W4) Stichschaden, wenn der Angriffswurf im Vorteil war."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Behändes Entkommen: Der Goblin führt die Rückzug- oder Verstecken-Aktion aus."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Angriff umlenken: Auslöser: Eine Kreatur, die der Goblin sehen kann, führt einen Angriffswurf gegen ihn aus. Antwort: Der Goblin wählt einen Verbündeten von höchstens mittelgroßer Größe im Abstand von bis zu 1,5 Metern von sich aus. Mit diesem tauscht er die Plätze, und der Verbündete wird statt seiner zum Ziel des Angriffs."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.golddrachen",
+      "level": 3,
+      "text": "Golddrachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.golddrachen.golddrachennestling",
+      "name": "Golddrachennestling",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "60 (8W8+24)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "3 (700 EP; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 9 (1W10+4) Hiebschaden.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 13; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 22 (4W10) Feuerschaden. Erfolg: Halber Schaden.\n\nSchwächender Odem: Stärkerettungswurf: SG 13; jede Kreatur in einem Kegel von 4,5 Metern, die derzeit nicht von diesem Odem betroffen ist. Misserfolg: Das Ziel ist bei W20-Prüfungen, die auf Stärke basieren, im Nachteil, und es zieht 2 (1W4) von seinen Schadenswürfen ab. Es wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.golddrachen.junger-golddrache",
+      "name": "Junger Golddrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+6 (16)"
+        },
+        {
+          "label": "TP",
+          "value": "178 (17W10+85)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +5)"
+        },
+        {
+          "label": "Cha",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Motiv erkennen +5, Überzeugen +9, Wahrnehmung +9"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m, Dunkelsicht 36 m; Passive Wahrnehmung 19"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "10 (EP 5.900; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Schwächender Odem ersetzen.\n\nZerfetzen: Nahkampfangriffswurf: +10, Reichweite 3 m. Treffer: 17 (2W10+6) Hiebschaden.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 17; jede Kreatur in einem Kegel von neun Metern. Misserfolg: 55 (10W10) Feuerschaden. Erfolg: Halber Schaden.\n\nSchwächender Odem: Stärkerettungswurf: SG 17; jede Kreatur in einem Kegel von neun Metern, die derzeit nicht von diesem Odem betroffen ist. Misserfolg: Das Ziel ist bei W20-Prüfungen, die auf Stärke basieren, im Nachteil, und es zieht 3 (1W6) von seinen Schadenswürfen ab. Es wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.golddrachen.ausgewachsener-golddrache",
+      "name": "Ausgewachsener Golddrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+14 (24)"
+        },
+        {
+          "label": "TP",
+          "value": "243 (18W12+126)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "27 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +8)"
+        },
+        {
+          "label": "Kon",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +8)"
+        },
+        {
+          "label": "Cha",
+          "value": "24 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +8, Motiv erkennen +8, Überzeugen +13, Wahrnehmung +14"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 24"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "17 (EP 18.000 oder 20.000 im Hort; ÜB +6)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen.\n\nLegendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von (A) Zauberwirken ersetzen, um den Zauber Lenkendes Geschoss (Version des 2. Grades) zu wirken, oder (B) Schwächender Odem ersetzen.\n\nZerfetzen: Nahkampfangriffswurf: +14, Reichweite 3 m. Treffer: 17 (2W8+8) Hiebschaden plus 4 (1W8) Feuerschaden.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 21; jede Kreatur in einem Kegel von 18 Metern. Misserfolg: 66 (12W10) Feuerschaden. Erfolg: Halber Schaden.\n\nSchwächender Odem: Stärkerettungswurf: SG 21; jede Kreatur in einem Kegel von 18 Metern, die derzeit nicht von diesem Odem betroffen ist. Misserfolg: Das Ziel ist bei W20-Prüfungen, die auf Stärke basieren, im Nachteil, und es zieht 3 (1W6) von seinen Schadenswürfen ab. Es wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 21, +13 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Lenkendes Geschoss (Version des 2. Grades), Magie entdecken\n\nJe 1-mal täglich: Flammenschlag, Zone der Wahrheit"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nLenkendes Licht: Der Drache setzt Zauberwirken ein, um den Zauber Lenkendes Geschoss (Version des 2. Grades) zu wirken.\n\nVerbannen: Charismarettungswurf: SG 21; eine Kreatur im Abstand von bis zu 36 Metern, die der Drache sehen kann. Misserfolg: 10 (3W6) Energieschaden, und das Ziel ist kampfunfähig und gelangt auf eine harmlose Halbebene, wo es bis zum Beginn des nächsten Zugs des Drachen verbleibt. Dann erscheint es in einem freien Bereich nach Wahl des Drachen im Abstand von bis zu 36 Metern vom Drachen. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.golddrachen.uralter-golddrache",
+      "name": "Uralter Golddrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "22"
+        },
+        {
+          "label": "Initiative",
+          "value": "+16 (26)"
+        },
+        {
+          "label": "TP",
+          "value": "546 (28W20+252)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "30 (MOD +10, RW +10)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +9)"
+        },
+        {
+          "label": "Kon",
+          "value": "29 (MOD +9, RW +9)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "17 (MOD +3, RW +10)"
+        },
+        {
+          "label": "Cha",
+          "value": "28 (MOD +9, RW +9)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +9, Motiv erkennen +10, Überzeugen +16, Wahrnehmung +17"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 27"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "24 (EP 62.000 oder 75.000 im Hort; ÜB +7)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen.\n\nLegendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von (A) Zauberwirken ersetzen, um den Zauber Lenkendes Geschoss (Version des 4. Grades) zu wirken, oder (B) Schwächender Odem ersetzen.\n\nZerfetzen: Nahkampfangriffswurf: +17 auf Treffer, Reichweite 4,5 m. Treffer: 19 (2W8+10) Hiebschaden plus 9 (2W8) Feuerschaden.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 24; jede Kreatur in einem Kegel von 27 Metern. Misserfolg: 71 (13W10) Feuerschaden. Erfolg: Halber Schaden.\n\nSchwächender Odem: Stärkerettungswurf: SG 24; jede Kreatur in einem Kegel von 27 Metern, die derzeit nicht von diesem Odem betroffen ist. Misserfolg: Das Ziel ist bei W20-Prüfungen, die auf Stärke basieren, im Nachteil, und es zieht 5 (1W10) von seinen Schadenswürfen ab. Es wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 24, +16 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Lenkendes Geschoss (Version des 4. Grades), Magie entdecken\n\nJe 1-mal täglich: Flammenschlag (Version des 6. Grades), Wort des Rückrufs, Zone der Wahrheit"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nLenkendes Licht: Der Drache setzt Zauberwirken ein, um den Zauber Lenkendes Geschoss (Version des 4. Grades) zu wirken.\n\nVerbannen: Charismarettungswurf: SG 24; eine Kreatur im Abstand von bis zu 36 Metern, die der Drache sehen kann. Misserfolg: 24 (7W6) Energieschaden, und das Ziel ist kampfunfähig und gelangt auf eine harmlose Halbebene, wo es bis zum Beginn des nächsten Zugs des Drachen verbleibt. Dann erscheint es in einem freien Bereich nach Wahl des Drachen im Abstand von bis zu 36 Metern vom Drachen. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gorgone",
+      "level": 3,
+      "text": "Gorgone"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gorgone.gorgone",
+      "name": "Gorgone",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Konstrukt, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "114 (12W10+48)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +7"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Erschöpft, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 17"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Zerfleischen: Nahkampfangriffswurf: +8, Reichweite 1,5 m. Treffer: 18 (2W12+5) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist und der Gorgone sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, wird das Ziel umgestoßen und hat den Zustand Liegend.\n\nVersteinernder Odem (Aufladung 5–6): Konstitutionsrettungswurf: SG 15; jede Kreatur in einem Kegel von neun Metern. Erster Misserfolg: Das Ziel ist festgesetzt und wiederholt den Rettungswurf am Ende seines nächsten Zugs, sofern es auch dann noch festgesetzt ist. Bei einem Erfolg endet der Effekt bei ihm. Zweiter Misserfolg: Das Ziel ist nicht mehr festgesetzt, sondern versteinert."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Zertrampeln: Geschicklichkeitsrettungswurf: SG 16; eine Kreatur im Abstand von bis zu 1,5 Metern, die den Zustand Liegend hat. Misserfolg: 16 (2W10+5) Wuchtschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.grauschlick",
+      "level": 3,
+      "text": "Grauschlick"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.grauschlick.grauschlick",
+      "name": "Grauschlick",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Schlick, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "9"
+        },
+        {
+          "label": "Initiative",
+          "value": "–2 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (3W8+9)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Klettern 3 m"
+        },
+        {
+          "label": "Stä",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Cha",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Feuer, Kälte, Säure"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Bezaubert, Blind, Erschöpft, Festgesetzt, Gepackt, Liegend, Taub, Verängstigt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 8"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amorph: Der Schlick kann sich durch enge Bereiche von nur 2,5 Zentimetern Durchmesser bewegen, ohne zusätzliche Bewegung aufzuwenden.\n\nKorrosive Form: Nichtmagische Geschosse werden zerstört, sobald sie den Schlick getroffen und Schaden bewirkt haben. Jede nichtmagische Waffe erleidet einen kumulativen Malus von −1 auf Angriffswürfe, sobald sie dem Schlick Schaden zugefügt hat und in Kontakt mit ihm gekommen ist. Wenn der Malus −5 erreicht, wird die Waffe zerstört. Der Malus kann aufgehoben werden, indem der Zauber Ausbessern auf die Waffe gewirkt wird.\n\nDer Schlick kann sich in einer Runde durch fünf Zentimeter starkes nichtmagisches Holz oder Metall fressen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Scheinfuß: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 10 (2W8+1) Säureschaden. Nichtmagische Rüstung, die vom Ziel getragen wird, erhält einen Malus von −1 auf die RK, die sie bietet. Die Rüstung wird zerstört, wenn der Malus ihre RK auf 10 verringert. Der Malus kann aufgehoben werden, indem der Zauber Ausbessern auf die Rüstung gewirkt wird."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.greif",
+      "level": 3,
+      "text": "Greif"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.greif.greif",
+      "name": "Greif",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "59 (7W10+21)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 24 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Greif führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 8 (1W8+4) Stichschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es von beiden Vorderklauen des Greifs gepackt (Flucht-SG 14)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.grick",
+      "level": 3,
+      "text": "Grick"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.grick.grick",
+      "name": "Grick",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroße Aberration, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "54 (12W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Grick führt einen Schnabelangriff und einen Tentakelangriff aus.\n\nSchnabel: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 9 (2W6+2) Stichschaden.\n\nTentakel: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 7 (1W10+2) Hiebschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es von allen vier Tentakeln gepackt (Flucht-SG 12)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.grimlock",
+      "level": 3,
+      "text": "Grimlock"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.grimlock.grimlock",
+      "name": "Grimlock",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroße Aberration, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W8+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +5, Heimlichkeit +5, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Knochenkeule: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Wuchtschaden plus 2 (1W4) psychischer Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.grottenschrate",
+      "level": 3,
+      "text": "Grottenschrate"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.grottenschrate.grottenschratkrieger",
+      "name": "Grottenschratkrieger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Feenwesen (Goblinoide), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "33 (6W8+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Überlebenskunst +2"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Fellrüstung, Leichte Hämmer (3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Goblinisch"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Entführen: Der Grottenschrat muss keine zusätzliche Bewegung verbrauchen, um eine Kreatur zu bewegen, die er gepackt hält."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Leichter Hammer: Nah- oder Fernkampfangriffswurf: +4 (im Vorteil, wenn das Ziel vom Grottenschrat gepackt wurde), Reichweite 3 m oder Reichweite 6/18 m. Treffer: 9 (3W4+2) Wuchtschaden.\n\nPacken: Nahkampfangriffswurf: +4, Reichweite 3 m. Treffer: 9 (2W6+2) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es gepackt (Flucht-SG 12)."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.grottenschrate.grottenschratpirscher",
+      "name": "Grottenschratpirscher",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Feenwesen (Goblinoide), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "65 (10W8+20)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Überlebenskunst +3"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Kettenhemd, Morgenstern, Wurfspeere (6)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Goblinisch"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Entführen: Der Grottenschrat muss keine zusätzliche Bewegung verbrauchen, um eine Kreatur zu bewegen, die er gepackt hält."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Grottenschrat führt zwei Morgenstern- oder Wurfspeer-Angriffe aus.\n\nMorgenstern: Nahkampfangriffswurf: +5 (im Vorteil, wenn das Ziel vom Grottenschrat gepackt wurde), Reichweite 3 m. Treffer: 12 (2W8+3) Stichschaden.\n\nWurfspeer: Nah- oder Fernkampfangriffswurf: +5, Reichweite 3 m oder Reichweite 9/36 m. Treffer: 13 (3W6+3) Stichschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Schnelles Packen: Geschicklichkeitsrettungswurf: SG 13; eine Kreatur von höchstens mittelgroßer Größe im Abstand von bis zu drei Metern vom Grottenschrat, die er sehen kann. Misserfolg: Das Ziel wird gepackt (Flucht-SG 13)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gruftschrecken",
+      "level": 3,
+      "text": "Gruftschrecken"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gruftschrecken.gruftschrecken",
+      "name": "Gruftschrecken",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "82 (11W8+33)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +3"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Nekrotisch"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Beschlagene Lederrüstung"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Empfindlich gegenüber Sonnenlicht: Im Sonnenlicht ist der Gruftschrecken bei Angriffs- und Attributswürfen im Nachteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Gruftschrecken führt zwei Angriffe mit Nekrotisches Schwert oder Nekrotischer Bogen in beliebiger Kombination aus. Er kann einen Angriff durch einen Einsatz von Lebensentzug ersetzen.\n\nNekrotisches Schwert: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 6 (1W8+2) Hiebschaden plus 4 (1W8) nekrotischer Schaden.\n\nNekrotischer Bogen: Fernkampfangriffswurf: +4, Reichweite 45/180 m. Treffer: 6 (1W8+2) Stichschaden plus 4 (1W8) nekrotischer Schaden.\n\nLebensentzug: Konstitutionsrettungswurf: SG 13; eine Kreatur im Abstand von bis zu 1,5 Metern. Misserfolg: 6 (1W8+2) nekrotischer Schaden, und das Trefferpunktemaximum des Ziels wird um eine Anzahl in Höhe des erlittenen Schadens verringert.\n\nHumanoide, die durch diesen Angriff getötet werden, erheben sich 24 Stunden später als Zombies unter Kontrolle des Gruftschrecken, sofern sie nicht zuvor wiederbelebt oder ihre Leichen zerstört werden. Der Gruftschrecken kann höchstens zwölf Zombies zugleich unter seiner Kontrolle haben."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.grul",
+      "level": 3,
+      "text": "Grul"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.grul.grul",
+      "name": "Grul",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "36 (8W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Nekrotisch"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bezaubert, Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Gestank: Konstitutionsrettungswurf: SG 10; jede Kreatur, die ihren Zug in einer Ausströmung von 1,5 Metern beginnt, die vom Grul ausgeht. Misserfolg: Das Ziel ist bis zum Beginn seines nächsten Zugs vergiftet. Erfolg: Das Ziel ist 24 Stunden lang gegen den Gestank dieses Gruls immun."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Stichschaden plus 9 (2W8) nekrotischer Schaden.\n\nKlauen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 10 (2W6+3) Hiebschaden. Wenn das Ziel kein Untoter ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 10. Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs gelähmt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gruene-drachen",
+      "level": 3,
+      "text": "Grüne Drachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gruene-drachen.gruener-drachennestling",
+      "name": "Grüner Drachennestling",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Drache (chromatisch), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "38 (7W8+7)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3, Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 7 (1W10+2) Hiebschaden plus 3 (1W6) Giftschaden.\n\nGiftodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 11; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 21 (6W6) Giftschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gruene-drachen.junger-gruener-drache",
+      "name": "Junger grüner Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache (chromatisch), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "136 (16W10+48)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Täuschen +5, Wahrnehmung +7"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m, Dunkelsicht 36 m; Passive Wahrnehmung 17"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "8 (EP 3.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 11 (2W6+4) Hiebschaden plus 7 (2W6) Giftschaden.\n\nGiftodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 14; jede Kreatur in einem Kegel von neun Metern. Misserfolg: 42 (12W6) Giftschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gruene-drachen.ausgewachsener-gruener-drache",
+      "name": "Ausgewachsener grüner Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Drache (chromatisch), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+11 (21)"
+        },
+        {
+          "label": "TP",
+          "value": "207 (18W12+90)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Täuschen +9, Überzeugen +9, Wahrnehmung +12"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 22"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "15 (EP 13.000 oder 15.000 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen.\n\nLegendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Zauberwirken ersetzen, um den Zauber Gedankendorn (Version des 3. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +11, Reichweite 3 m. Treffer: 15 (2W8+6) Hiebschaden plus 7 (2W6) Giftschaden.\n\nGiftodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 18; jede Kreatur in einem Kegel von 18 Metern. Misserfolg: 56 (16W6) Giftschaden. Erfolg: Halber Schaden.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 17):\n\nBeliebig oft: Gedankendorn (Version des 3. Grades), Magie entdecken\n\nJe 1-mal täglich: Geas"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nGedankeninvasion: Der Drache setzt Zauberwirken ein, um den Zauber Gedankendorn (Version des 3. Grades) zu wirken.\n\nVergiftendes Miasma: Konstitutionsrettungswurf: SG 17; jede Kreatur in einer Kugel mit einem Radius von sechs Metern um einen Punkt im Abstand von bis zu 27 Metern vom Drachen, den er sehen kann. Misserfolg: 7 (2W6) Giftschaden, und das Ziel erhält bis zum Ende seines nächsten Zugs einen Malus von −2 auf seine RK. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gruene-drachen.uralter-gruener-drache",
+      "name": "Uralter grüner Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache (chromatisch), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "21"
+        },
+        {
+          "label": "Initiative",
+          "value": "+15 (25)"
+        },
+        {
+          "label": "TP",
+          "value": "402 (23W20+161)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "27 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +8)"
+        },
+        {
+          "label": "Kon",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Int",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Wei",
+          "value": "17 (MOD +3, RW +10)"
+        },
+        {
+          "label": "Cha",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +8, Täuschen +13, Überzeugen +13, Wahrnehmung +17"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 27"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "22 (EP 41.000 oder 50.000 im Hort; ÜB +7)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen.\n\nLegendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Zauberwirken ersetzen, um den Zauber Gedankendorn (Version des 5. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +15, Reichweite 4,5 m. Treffer: 17 (2W8+8) Hiebschaden plus 10 (3W6) Giftschaden.\n\nGiftodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 22; jede Kreatur in einem Kegel von 27 Metern.\n\nMisserfolg: 77 (22W6) Giftschaden. Erfolg: Halber Schaden.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 21):\n\nBeliebig oft: Gedankendorn (Version des 5. Grades), Magie entdecken\n\nJe 1-mal täglich: Erinnerung verändern, Geas"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nGedankeninvasion: Der Drache setzt Zauberwirken ein, um den Zauber Gedankendorn (Version des 5. Grades) zu wirken.\n\nVergiftendes Miasma: Konstitutionsrettungswurf: SG 21; jede Kreatur in einer Kugel mit einem Radius von neun Metern um einen Punkt im Abstand von bis zu 27 Metern vom Drachen, den er sehen kann. Misserfolg: 17 (5W6) Giftschaden, und das Ziel erhält bis zum Ende seines nächsten Zugs einen Malus von −2 auf seine RK. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.f-g.gruene-vettel",
+      "level": 3,
+      "text": "Grüne Vettel"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.f-g.gruene-vettel.gruene-vettel",
+      "name": "Grüne Vettel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Feenwesen, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "82 (11W8+33)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +5, Heimlichkeit +3, Täuschen +4, Wahrnehmung +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Elfisch, Gemeinsprache, Sylvanisch"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Die Vettel kann Luft und Wasser atmen.\n\nStimmen nachahmen: Die Vettel kann Tierlaute und menschliche Stimmen nachahmen. Eine Kreatur, die diese Laute hört, erkennt sie nur dann als Imitation, wenn sie einen SG-14-Weisheitswurf (Motiv erkennen) besteht.\n\nZirkelmagie: Wenn die Vettel sich im Abstand von bis zu neun Metern von mindestens zwei Vettel-Verbündeten befindet, kann sie einen der folgenden Zauber mit dem normalen Zeitaufwand und Intelligenz als Attribut zum Zauberwirken wirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 11): Ausspähung, Gegenstand aufspüren, Identifizieren, Unsichtbarer Diener, Vertrauten finden oder Vorahnung. Die Vettel muss eine lange Rast beenden, ehe sie dieses Merkmal erneut verwenden kann, um den Zauber zu wirken."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Vettel führt zwei Klauenangriffe aus.\n\nKlauen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 8 (1W8+4) Hiebschaden plus 3 (1W6) Giftschaden.\n\nZauberwirken: Die Vettel wirkt einen der folgenden Zauber mit Weisheit als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 12, +4 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Einfache Illusion, Selbstverkleidung (Wirkungsdauer: 24 Stunden), Strahl der Übelkeit (Version des 3. Grades), Tanzende Lichter, Unsichtbarkeit (nur auf sich selbst; die Vettel hinterlässt keine Spuren, wenn sie unsichtbar ist)"
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:cfa34952c1241a407b20b6e06a8f023ffdf8e91aa626761a1eae2ff3c321680a"
+}

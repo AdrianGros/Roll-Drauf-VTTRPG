@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "monsters.stat-block-overview",
+  "slug": "uebersicht-wertekaesten",
+  "title": "Übersicht: Wertekästen",
+  "navigationPath": [
+    "Monster",
+    "Übersicht: Wertekästen"
+  ],
+  "order": 2000,
+  "sourcePages": [
+    295
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten",
+      "level": 2,
+      "text": "Übersicht: Wertekästen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-1",
+      "text": "Jedes Monster hat einen Wertekasten mit den Regeln, die zum Verwenden des Monsters im Spiel erforderlich sind. Wertekästen weisen die folgenden Abschnitte auf:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-2",
+      "text": "Name und allgemeine Details: Hier steht der Name des Monsters, gefolgt von seiner Größe, dem Kreaturentyp (gegebenenfalls mit beschreibenden Schlagwörtern) und der Gesinnung."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-3",
+      "text": "Kampfdetails: Hier findest du Rüstungsklasse, Trefferpunkte, Bewegungsrate und Initiative des Monsters."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-4",
+      "text": "Attributswerte: Hier sind Attributswerte, Attributsmodifikatoren und Rettungswürfe des Monsters aufgeführt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-5",
+      "text": "Weitere Details: Die Einträge für Sinne, Sprachen und Herausforderungsgrad des Monsters sind hier aufgelistet. Bei manchen Monstern sind weitere Details wie Fertigkeiten, in denen sie geübt sind, Resistenzen, Immunitäten und Ausrüstung angegeben. Wenn ein Monster solche Details nicht besitzt, kommen die Einträge im Wertekasten nicht vor."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-6",
+      "text": "Merkmale: Hier sind Merkmale des Monsters verzeichnet, die entweder stets oder nur in bestimmten Situationen aktiv sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-7",
+      "text": "Aktionen: Das Monster kann die hier aufgeführten Aktionen zusätzlich zu den in „Die Spielregeln“ beschriebenen ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-8",
+      "text": "Bonusaktionen: In diesem Abschnitt findest du die Bonusaktionen des Monsters, sofern es über solche verfügt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "monsters.stat-block-overview.uebersicht-wertekaesten.text-9",
+      "text": "Reaktionen und legendäre Aktionen: Hier sind die Reaktionen und legendäre Aktionen vermerkt, sofern das Monster über solche verfügt."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:111bf8ae81ab53f60355e1c02ec56896e0d4ceb1d8ac0fbd37d641af7132d53d"
+}

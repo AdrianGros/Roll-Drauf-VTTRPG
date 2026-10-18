@@ -1,0 +1,265 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "toolbox.curses-diseases",
+  "slug": "fluche-und-magische-krankheiten",
+  "title": "Flüche und magische Krankheiten",
+  "navigationPath": [
+    "Werkzeugkasten fürs Spiel",
+    "Flüche und magische Krankheiten"
+  ],
+  "order": 920,
+  "sourcePages": [
+    223,
+    224,
+    225
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.flueche-und-magische-krankheiten",
+      "level": 2,
+      "text": "Flüche und magische Krankheiten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.flueche-und-magische-krankheiten.text-1",
+      "text": "Ein Fluch ist eine magische Bürde, die für eine angegebene Zeit bestehen bleibt, sofern sie nicht auf irgendeine Art beendet wird. Eine magische Krankheit ist ein schädlicher Effekt magischen Ursprungs, der laut Definition ansteckend ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.flueche-und-magische-krankheiten.text-2",
+      "text": "In den folgenden Abschnitten werden Flüche und magische Krankheiten ausführlicher behandelt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.flueche",
+      "level": 3,
+      "text": "Flüche"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.flueche.text-1",
+      "text": "Ein Fluch hat üblicherweise eine der folgenden Formen:"
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.fluch",
+      "level": 4,
+      "text": "Fluch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.fluch.text-1",
+      "text": "Die einfachsten Flüche werden durch den Zauber Fluch erzeugt. Die Effekte solcher Flüche sind begrenzt und können durch den Zauber Fluch brechen entfernt werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.fluch.text-2",
+      "text": "Fluch bietet nützliche Kennwerte, um die Macht anderer Flüche zu beurteilen. Ein Fluch, der eine Minute lang bestehen bleibt, entspricht einem Zauber des 3. Grades. Ein Fluch, der bestehen bleibt, bis er gebannt wird, entspricht einem Zauber des 9. Grades."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.verfluchte-kreaturen",
+      "level": 4,
+      "text": "Verfluchte Kreaturen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.verfluchte-kreaturen.text-1",
+      "text": "Manche Monster sind mit Flüchen assoziiert – ob im Rahmen ihrer Herkunft oder aufgrund ihrer Fähigkeit, Flüche zu verbreiten. Werwölfe sind ein bekanntes Beispiel."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.verfluchte-kreaturen.text-2",
+      "text": "Du entscheidest, auf welche Art ein Zauber wie Fluch brechen auf eine Kreatur mit verfluchter Herkunft wirkt. Beispiel: Du könntest entscheiden, dass durch einen Fluch eine Mumie erschaffen wurde, die nur endgültig zerstört werden kann, indem Fluch brechen auf den Leichnam gewirkt wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.verfluchte-magische-gegenstaende",
+      "level": 4,
+      "text": "Verfluchte magische Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.verfluchte-magische-gegenstaende.text-1",
+      "text": "Verfluchte magische Gegenstände werden entweder absichtlich erschaffen oder entstehen durch übernatürliche Ereignisse. Solche Gegenstände werden unter „Magische Gegenstände“ beschrieben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.erzaehlerische-flueche",
+      "level": 4,
+      "text": "Erzählerische Flüche"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.erzaehlerische-flueche.text-1",
+      "text": "Ein Fluch könnte sich im Verlauf eines Abenteuers dadurch manifestieren, dass eine Kreatur ein Tabu bricht und dadurch eine übernatürliche Strafe auf sich zieht: Sie bricht einen Eid, schändet ein Grab oder ermordet einen Wehrlosen. So ein Fluch kann Effekte deiner Wahl haben oder eine angepasste Version eines anderen Fluchtyps sein, wie in diesem Abschnitt behandelt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.erzaehlerische-flueche.text-2",
+      "text": "Wenn eine Kreatur von einem solchen Fluch getroffen wird, sollte sie erfahren, wofür sie bestraft wurde und wie sie den Fluch brechen kann (vermutlich dadurch, dass sie symbolisch den Schaden behebt, den sie angerichtet hat). Du entscheidest, auf welche Art ein Zauber wie Fluch brechen auf einen Fluch wirkt, der Teil deines Abenteuers ist – vielleicht unterdrückt der Zauber die Effekte des Fluchs nur vorübergehend. Erzählerische Flüche sollten wie seltene mächtige Magie wirken, die in der Geschichte deiner Kampagne wurzelt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.umgebungsflueche",
+      "level": 4,
+      "text": "Umgebungsflüche"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.umgebungsflueche.text-1",
+      "text": "Manche Orte sind so durchdrungen vom Bösen, dass jeder, der sich dort aufhält, verflucht wird. Dämonische Besessenheit ist ein Beispiel für einen solchen Umgebungsfluch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.umgebungsflueche.text-2",
+      "text": "Dämonische Besessenheit: Dämonische Besessenheit entsteht aus dem Chaos und dem Bösen des Abyss und befällt gemeinhin Kreaturen, die mit dämonischen Gegenständen interagieren oder sich an entweihten Orten aufhalten, wo dämonische Geister auf Opfer warten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.umgebungsflueche.text-3",
+      "text": "Wenn eine Kreatur zum Ziel dämonischer Besessenheit wird, muss sie einen SG-15-Charismarettungswurf bestehen, oder eine körperlose dämonische Wesenheit ergreift Besitz von ihr. Wann immer die besessene Kreatur bei einer W20-Prüfung eine 1 würfelt, übernimmt die dämonische Wesenheit die Kontrolle über die Kreatur und bestimmt deren Verhalten. Am Ende jedes folgenden Zugs der besessenen Kreatur führt diese einen SG-15-Charismarettungswurf aus. Bei einem Erfolg erhält sie die Kontrolle über sich zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.umgebungsflueche.text-4",
+      "text": "Nach einer langen Rast führt eine Kreatur mit dämonischer Besessenheit einen SG-15-Charismarettungswurf aus. Bei einem erfolgreichen Rettungswurf endet der Effekt auf die Kreatur. Auch der Zauber Gutes und Böses bannen sowie jede Magie, die Flüche bricht, beendet den Effekt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.magische-krankheiten",
+      "level": 3,
+      "text": "Magische Krankheiten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.magische-krankheiten.text-1",
+      "text": "Meist sind Alchemisten, Trankbrauer und Bereiche mit Wilder Magie der Ursprung magischer Krankheiten. Der Ausbruch einer solchen Krankheit könnte als Basis eines Abenteuers dienen, in dem die Charaktere eine Ausbreitung zu verhindern versuchen und nach einem Heilmittel suchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.rast-und-erholung",
+      "level": 4,
+      "text": "Rast und Erholung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.rast-und-erholung.text-1",
+      "text": "Wenn eine Kreatur, die mit einer magischen Krankheit infiziert ist, drei Tage mit Erholung verbringt – also keine Aktivitäten unternimmt, die eine lange Rast unterbrechen würden –, so führt sie am Ende der Erholungszeit einen SG-15-Konstitutionsrettungswurf aus. Bei einem erfolgreichen Rettungswurf ist die Kreatur für die nächsten 24 Stunden bei Rettungswürfen zum Ankämpfen gegen die magische Krankheit im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.beispiele-fuer-krankheiten",
+      "level": 4,
+      "text": "Beispiele für Krankheiten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.beispiele-fuer-krankheiten.text-1",
+      "text": "Die folgenden Beispiele zeigen, wie magische Krankheiten funktionieren können. Du kannst Rettungswurf-SG, Effekte und sonstige Eigenschaften der Krankheiten an deine Kampagne anpassen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.augenfaeule",
+      "level": 5,
+      "text": "Augenfäule"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.augenfaeule.untertitel",
+      "text": "Magische Krankheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.augenfaeule.text-1",
+      "text": "Alle Humanoiden und Tiere, die mit Augenfäule verseuchtes Wasser trinken, müssen einen SG-15-Konstitutionsrettungswurf bestehen, oder sie sind blind, bis die Krankheit endet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.augenfaeule.text-2",
+      "text": "Die Krankheit bekämpfen: Magie wie die Zauber Heilung oder Schwache Genesung beenden die Krankheit sofort. Ein Charakter, der Übung im Umgang mit Kräuterkundeausrüstung hat, kann diese verwenden, um eine Dosis nichtmagischer Salbe herzustellen. Dies dauert eine Stunde. Wenn die Salbe auf die Augen einer Kreatur mit Augenfäule aufgetragen wird, wird die Krankheit bei dieser Kreatur 24 Stunden lang unterdrückt. Wird die Krankheit insgesamt 72 Stunden lang auf diese Art unterdrückt (wozu drei Dosen und Anwendungen der Salbe erforderlich sind), so endet die Krankheit bei der Kreatur."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.augenfaeule.text-3",
+      "text": "Die Krankheit verbreiten: Jeder Humanoide, der Hautkontakt mit einer Kreatur hat, die mit Augenfäule infiziert ist, muss einen SG-15-Konstitutionsrettungswurf bestehen, oder er wird ebenfalls von der Krankheit infiziert. Bei einem erfolgreichen Rettungswurf kann der Humanoide sich in den nächsten 24 Stunden nicht bei dieser infizierten Kreatur anstecken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.gackerfieber",
+      "level": 5,
+      "text": "Gackerfieber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.gackerfieber.untertitel",
+      "text": "Magische Krankheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.gackerfieber.text-1",
+      "text": "Nachlässig hergestellte Tränke und Elixiere sind manchmal mit Gackerfieber verseucht, das nur Humanoiden befällt (Gnome sind seltsamerweise immun). Eine betroffene Kreatur erleidet folgende Effekte, die nach der Infektion 1W4 Tage lang bestehen bleiben:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.gackerfieber.text-2",
+      "text": "Fieber: Die Kreatur erhält eine Erschöpfungsstufe, die bestehen bleibt, bis die Krankheit bei der Kreatur endet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.gackerfieber.text-3",
+      "text": "Unkontrollierbares Gelächter: Solange die Kreatur den Zustand Erschöpft hat, führt sie einen SG-13-Konstitutionsrettungswurf aus, wann immer sie Schaden erleidet, der kein psychischer Schaden ist. Misslingt der Wurf, so erleidet die Kreatur 5 (1W10) psychischen Schaden und ist kampfunfähig, da sie unkontrollierbar lacht. Die Kreatur wiederholt den Rettungswurf am Ende jedes ihrer Züge. Bei einem Erfolg endet der Effekt bei ihr. Nach einer Minute besteht sie den Rettungswurf automatisch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.gackerfieber.text-4",
+      "text": "Die Krankheit bekämpfen: Nach jeder langen Rast führt eine infizierte Kreatur einen SG-13-Konstitutionsrettungswurf aus. Bei drei Erfolgen endet die Krankheit, und die Kreatur ist ein Jahr lang gegen Gackerfieber immun."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.gackerfieber.text-5",
+      "text": "Die Krankheit verbreiten: Jeder Humanoide (außer Gnome), der seinen Zug innerhalb einer Ausströmung von drei Metern um eine Kreatur beginnt, die mit Gackerfieber infiziert ist, muss einen SG-10-Konstitutionsrettungswurf bestehen, oder er wird ebenfalls mit der Krankheit infiziert. Bei einem erfolgreichen Rettungswurf kann der Humanoide sich in den nächsten 24 Stunden nicht bei dieser infizierten Kreatur anstecken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.curses-diseases.kanalpest",
+      "level": 5,
+      "text": "Kanalpest"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.kanalpest.untertitel",
+      "text": "Magische Krankheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.kanalpest.text-1",
+      "text": "Verdorbene Tränke und alchemistische Abfälle können Kanalpest auslösen. Diese entsteht in Kanalisationen und Abfallhaufen und wird manchmal von Kreaturen übertragen, die in entsprechenden Bereichen leben, beispielsweise Otyugh und Ratten. Wird ein Humanoide von einer Kreatur verwundet, die diese Krankheit in sich trägt, oder kommt er mit kontaminierten Substanzen in Kontakt, so muss er einen SG-11-Konstitutionsrettungswurf bestehen, oder er wird mit Kanalpest infiziert. Eine betroffene Kreatur erleidet folgende Effekte, die nach der Infektion 1W4 Tage lang bestehen bleiben:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.kanalpest.text-2",
+      "text": "Abgeschlagenheit: Die Kreatur erhält eine Erschöpfungsstufe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.kanalpest.text-3",
+      "text": "Schwäche: Solange die Kreatur Erschöpfungsstufen hat, kann sie nur die Hälfte der normalen Trefferpunkte durch Verbrauchen von Trefferpunktewürfeln zurückerhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.kanalpest.text-4",
+      "text": "Rastlosigkeit: Solange die Kreatur Erschöpfungsstufen hat, werden durch eine lange Rast weder verlorene Trefferpunkte wiederhergestellt noch die Erschöpfungsstufen der Kreatur verringert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.curses-diseases.kanalpest.text-5",
+      "text": "Die Krankheit bekämpfen: Eine infizierte Kreatur führt täglich im Morgengrauen einen SG-11-Konstitutionsrettungswurf aus. Misslingt der Wurf, so erhält die Kreatur eine Erschöpfungsstufe, da ihre Abgeschlagenheit zunimmt. Bei einem erfolgreichen Rettungswurf wird die Erschöpfungsstufe der Kreatur um 1 verringert. Wenn die Erschöpfungsstufe der Kreatur auf 0 sinkt, endet die Krankheit bei der Kreatur."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:737dd38a9907f32aaf96bf21ed4814e0131f90ddbedff0e07ca88e608ac23a89"
+}

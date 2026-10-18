@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "spells.getting-spells",
+  "slug": "zauber-erhalten",
+  "title": "Zauber erhalten",
+  "navigationPath": [
+    "Zauber",
+    "Zauber erhalten"
+  ],
+  "order": 700,
+  "sourcePages": [
+    118
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "spells.getting-spells.zauber-erhalten",
+      "level": 2,
+      "text": "Zauber erhalten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.getting-spells.zauber-erhalten.text-1",
+      "text": "Ehe du einen Zauber wirken kannst, musst du ihn geistig vorbereitet haben, oder du brauchst über einen magischen Gegenstand wie eine Zauberschriftrolle Zugriff auf den Zauber. Deine Merkmale und Talente geben an, auf welche Zauber du gegebenenfalls zugreifen kannst, ob du bestimmte Zauber stets vorbereitet hast und ob du die Liste deiner vorbereiteten Zauber ändern kannst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.getting-spells.zauber-vorbereiten",
+      "level": 3,
+      "text": "Zauber vorbereiten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.getting-spells.zauber-vorbereiten.text-1",
+      "text": "Wenn du eine Liste von vorbereiteten Zaubern ab dem 1. Grad hast, gibt dein Merkmal Zauberwirken an, wann du die Liste ändern kannst – und wie viele Zauber du ändern kannst. Dies ist in der Tabelle „Vorbereiten von Zaubern nach Klasse“ zusammengefasst."
+    },
+    {
+      "type": "table",
+      "ruleId": "spells.getting-spells.zauber-vorbereiten.tabelle-vorbereiten",
+      "caption": "Vorbereiten von Zaubern nach Klasse",
+      "columns": [
+        "Klasse",
+        "Ändern beim ...",
+        "Anzahl der Zauber"
+      ],
+      "rows": [
+        [
+          "Barde",
+          "Stufenaufstieg",
+          "Einer"
+        ],
+        [
+          "Druide",
+          "Beenden einer langen Rast",
+          "Alle"
+        ],
+        [
+          "Hexenmeister",
+          "Stufenaufstieg",
+          "Einer"
+        ],
+        [
+          "Kleriker",
+          "Beenden einer langen Rast",
+          "Alle"
+        ],
+        [
+          "Magier",
+          "Beenden einer langen Rast",
+          "Alle"
+        ],
+        [
+          "Paladin",
+          "Beenden einer langen Rast",
+          "Einer"
+        ],
+        [
+          "Waldläufer",
+          "Beenden einer langen Rast",
+          "Einer"
+        ],
+        [
+          "Zauberer",
+          "Stufenaufstieg",
+          "Einer"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.getting-spells.zauber-vorbereiten.text-2",
+      "text": "Die meisten zauberwirkenden Monster ändern ihre Liste vorbereiteter Zauber nicht. Es steht dem SL allerdings frei, die Liste zu ändern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.getting-spells.stets-vorbereitete-zauber",
+      "level": 3,
+      "text": "Stets vorbereitete Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.getting-spells.stets-vorbereitete-zauber.text-1",
+      "text": "Bestimmte Merkmale geben dir möglicherweise einen Zauber, den du stets vorbereitet hast. Wenn du außerdem eine Liste vorbereiteter Zauber hast, die du ändern kannst, wird ein Zauber, den du stets vorbereitet hast, bei der Anzahl von Zaubern auf dieser Liste nicht berücksichtigt."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "spells.getting-spells.stets-vorbereitete-zauber.zaubern-in-ruestung",
+      "title": "Zaubern in Rüstung",
+      "text": "Du benötigst Vertrautheit mit der Rüstung, die du trägst, wenn du einen Zauber wirkst. Anderenfalls schränkt die Rüstung dich zum Zauberwirken zu sehr ein."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:29fe9554086b223d0fe5de184cd1eb8e3241c6ab27bdfb0348b54361c73978b2"
+}

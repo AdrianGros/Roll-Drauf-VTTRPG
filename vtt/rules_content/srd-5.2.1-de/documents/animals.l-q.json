@@ -1,0 +1,1002 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "animals.l-q",
+  "slug": "tiere-l-q",
+  "title": "Tiere L–Q",
+  "navigationPath": [
+    "Tiere",
+    "Tiere L–Q"
+  ],
+  "order": 3020,
+  "sourcePages": [
+    398,
+    399,
+    400,
+    401
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "animals.l-q.tiere",
+      "level": 2,
+      "text": "Tiere (L–Q)"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.loewe",
+      "name": "Löwe",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (4W10)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Löwe ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet.\n\nSprung aus dem Lauf: Nach drei Metern Anlauf kann der Löwe bis zu 7,5 Meter weit springen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Löwe führt zwei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Brüllen ersetzen.\n\nZerfetzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Hiebschaden.\n\nBrüllen: Weisheitsrettungswurf: SG 11; eine Kreatur im Abstand von bis zu 4,5 Metern. Misserfolg: Das Ziel ist bis zum Beginn des nächsten Zugs des Löwen verängstigt."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.mammut",
+      "name": "Mammut",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "126 (11W12+55)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "24 (MOD +7, RW +10)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +8)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Das Mammut führt zwei Zerfleischen-Angriffe aus.\n\nZerfleischen: Nahkampfangriffswurf: +10, Reichweite 3 m. Treffer: 18 (2W10+7) Stichschaden. Wenn das Ziel eine Kreatur von höchstens riesiger Größe ist und das Mammut sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, wird das Ziel umgestoßen und hat den Zustand Liegend."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Zertrampeln: Geschicklichkeitsrettungswurf: SG 18; eine Kreatur im Abstand von bis zu 1,5 Metern, die den Zustand Liegend hat. Misserfolg: 29 (4W10+7) Wuchtschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.maultier",
+      "name": "Maultier",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W8+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Lasttier: Das Maultier gilt hinsichtlich seiner Traglast als eine Größe größer."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Hufe: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.menschenaffe",
+      "name": "Menschenaffe",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "19 (3W8+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +5, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Menschenaffe führt zwei Faustangriffe aus.\n\nFaust: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 5 (1W4+3) Wuchtschaden.\n\nFelsblock (Aufladung 6): Fernkampfangriffswurf: +5, Reichweite 7,5/15 m. Treffer: 10 (2W6+3) Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.nashorn",
+      "name": "Nashorn",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "45 (6W10+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Zerfleischen: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 14 (2W8+5) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist und das Nashorn sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 9 (2W8) Stichschaden, wird umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.oktopus",
+      "name": "Oktopus",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "3 (1W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Wahrnehmung +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 9 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Kompression: Der Oktopus kann sich durch enge Bereiche von nur 2,5 Zentimetern Durchmesser bewegen, ohne zusätzliche Bewegung aufzuwenden.\n\nWasser atmen: Der Oktopus kann nur unter Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Tentakel: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 1 Wuchtschaden."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Tintenwolke (1-mal täglich): Auslöser: Eine Kreatur beendet ihren Zug unter Wasser im Abstand von bis zu 1,5 Metern vom Oktopus. Antwort: Der Oktopus stößt Tinte in einem Würfel von 1,5 Metern Kantenlänge um sich selbst aus und legt dann eine Strecke von bis zu seiner Schwimmbewegungsrate zurück. Der Würfel ist ein komplett verschleierter Bereich, bis eine Minute vergangen ist oder bis eine starke Strömung oder ein ähnlicher Effekt die Tinte verwirbelt."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.panther",
+      "name": "Panther",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "13 (3W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m, Klettern 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Wahrnehmung +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Zerfetzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Hiebschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Behändes Entkommen: Der Panther führt die Rückzug- oder die Verstecken-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.pavian",
+      "name": "Pavian",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "3 (1W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Pavian ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +1, Reichweite 1,5 m. Treffer: 1 (1W4−1) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.piranha",
+      "name": "Piranha",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Cha",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 8"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Wasser atmen: Der Piranha kann nur unter Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5 (im Vorteil, wenn die Trefferpunkte des Ziels nicht vollständig sind), Reichweite 1,5 m. Treffer: 1 Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.piranhaschwarm",
+      "name": "Piranhaschwarm",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Schwarm winziger Tiere, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "28 (8W8–8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Cha",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Betäubt, Bezaubert, Festgesetzt, Gelähmt, Gepackt, Liegend, Verängstigt, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 8"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Schwarm: Der Schwarm kann den Bereich einer anderen Kreatur besetzen und umgekehrt. Er kann sich durch jede Öffnung bewegen, die groß genug für einen Piranha von winziger Größe ist. Der Schwarm kann weder Trefferpunkte zurückerhalten noch temporäre Trefferpunkte erhalten.\n\nWasser atmen: Der Schwarm kann nur unter Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Bisse: Nahkampfangriffswurf: +5 (im Vorteil, wenn die Trefferpunkte des Ziels nicht vollständig sind), Reichweite 1,5 m. Treffer: 8 (2W4+3) Stichschaden oder 5 (1W4+3) Stichschaden, wenn der Schwarm blutig ist."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.plesiosaurus",
+      "name": "Plesiosaurus",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier (Dinosaurier), gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "68 (8W10+24)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Atem anhalten: Der Plesiosaurus kann eine Stunde lang den Atem anhalten."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +6, Reichweite 3 m. Treffer: 11 (2W6+4) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.pony",
+      "name": "Pony",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W8+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Hufe: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.l-q.pteranodon",
+      "name": "Pteranodon",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier (Dinosaurier), gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "13 (3W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +1"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Vorbeifliegen: Der Pteranodon provoziert keine Gelegenheitsangriffe, wenn er aus der Reichweite eines Gegners fliegt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 6 (1W8+2) Stichschaden."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:fc6e88c8f029ce9444adbd8697c0b6e3a7b6c7572838f93421af398e2dd6d5da"
+}

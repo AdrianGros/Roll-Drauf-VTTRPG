@@ -1,0 +1,555 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.a-b",
+  "slug": "magische-gegenstaende-a-b",
+  "title": "Magische Gegenstände A–B",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Magische Gegenstände A–B"
+  ],
+  "order": 1100,
+  "sourcePages": [
+    242,
+    243,
+    244,
+    245
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.beschreibungen",
+      "level": 2,
+      "text": "Beschreibungen der magischen Gegenstände (A–B)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.adamantruestung",
+      "level": 3,
+      "text": "Adamantrüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.adamantruestung.untertitel",
+      "text": "Rüstung (beliebige mittelschwere oder schwere Rüstung außer Fellrüstung), ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.adamantruestung.text-1",
+      "text": "Diese Rüstung ist mit Adamant verstärkt, einem der härtesten Materialien, die es gibt. Wenn du sie trägst, wird jeder kritische Treffer gegen dich zu einem normalen Treffer."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.amulett-der-ebenen",
+      "level": 3,
+      "text": "Amulett der Ebenen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.amulett-der-ebenen.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.amulett-der-ebenen.text-1",
+      "text": "Wenn du dieses Amulett trägst, kannst du eine magische Aktion ausführen, um einen Ort auf einer anderen Existenzebene zu benennen, mit dem du vertraut bist. Führe dann einen SG-15-Intelligenzwurf (Arkane Kunde) aus. Bei einem Erfolg wirkst du den Zauber Ebenenwechsel. Misslingt der Wurf, so gelangst du mit allen Kreaturen und Gegenständen im Abstand von bis zu 4,5 Metern von dir an einen zufälligen Zielort, der mit 1W100 anhand der folgenden Tabelle ermittelt wird:"
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.a-b.amulett-der-ebenen.tabelle-amulett-der-ebenen",
+      "caption": "Amulett der Ebenen",
+      "columns": [
+        "1W100",
+        "Ziel"
+      ],
+      "rows": [
+        [
+          "1–60",
+          "Zufälliger Ort auf der Ebene, die du nennst"
+        ],
+        [
+          "61–70",
+          "Zufälliger Ort auf einer Inneren Ebene, ermittelt durch Würfeln mit 1W6. 1: Ebene der Luft, 2: Ebene der Erde, 3: Ebene des Feuers, 4: Ebene des Wassers, 5: Feenwildnis, 6: Schattensaum"
+        ],
+        [
+          "71–80",
+          "Zufälliger Ort auf einer Äußeren Ebene, ermittelt durch Würfeln mit 1W8. 1: Arborea, 2: Arcadia, 3: Bestienlande, 4: Bytopia, 5: Elysium, 6: Mechanus, 7: Berg Celestia, 8: Ysgard"
+        ],
+        [
+          "81–90",
+          "Zufälliger Ort auf einer Äußeren Ebene, ermittelt durch Würfeln mit 1W8. 1: Abyss, 2: Acheron, 3: Carceri, 4: Gehenna, 5: Hades, 6: Limbus, 7: Neun Höllen, 8: Pandämonium"
+        ],
+        [
+          "91–100",
+          "Zufälliger Ort auf der Astralebene"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.amulett-der-gesundheit",
+      "level": 3,
+      "text": "Amulett der Gesundheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.amulett-der-gesundheit.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.amulett-der-gesundheit.text-1",
+      "text": "Wenn du dieses Amulett trägst, beträgt dein Konstitutionswert 19. Beträgt dein Konstitutionswert ohnehin mindestens 19, so hat es keinen Effekt auf dich."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.amulett-des-schutzes-gegen-ortung-und-ausspaehung",
+      "level": 3,
+      "text": "Amulett des Schutzes gegen Ortung und Ausspähung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.amulett-des-schutzes-gegen-ortung-und-ausspaehung.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.amulett-des-schutzes-gegen-ortung-und-ausspaehung.text-1",
+      "text": "Wenn du dieses Amulett trägst, kannst du weder zum Ziel von Erkenntniszaubern noch durch magische Ausspähungssensoren wahrgenommen werden, sofern du es nicht gestattest."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.anhaenger-der-gesundheit",
+      "level": 3,
+      "text": "Anhänger der Gesundheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-der-gesundheit.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-der-gesundheit.text-1",
+      "text": "Wenn du diesen Anhänger trägst, kannst du eine magische Aktion ausführen, um 2W4+2 Trefferpunkte zurückzuerhalten. Wurde diese Eigenschaft verwendet, so kann sie erst ab dem nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-der-gesundheit.text-2",
+      "text": "Außerdem bist du bei Rettungswürfen zum Vermeiden oder Beenden des Zustands Vergiftet im Vorteil, solange du diesen Anhänger trägst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.anhaenger-des-giftschutzes",
+      "level": 3,
+      "text": "Anhänger des Giftschutzes"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-des-giftschutzes.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-des-giftschutzes.text-1",
+      "text": "An dieser feinen Silberkette hängt ein schwarzer Edelsteinanhänger im Brillantschliff. Solange du ihn trägst, bist du gegen den Zustand Vergiftet sowie gegen Giftschaden immun."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.anhaenger-der-wundheilung",
+      "level": 3,
+      "text": "Anhänger der Wundheilung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-der-wundheilung.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-der-wundheilung.text-1",
+      "text": "Wenn du diesen Anhänger trägst, erhältst du die folgenden Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-der-wundheilung.text-2",
+      "text": "Lebenserhaltung: Wann immer du einen Todesrettungswurf ausführst, kannst du ein Ergebnis von höchstens 9 in eine 10 verwandeln und einen misslungenen Wurf zu einem erfolgreichen machen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.anhaenger-der-wundheilung.text-3",
+      "text": "Natürlicher Heilungsschub: Wann immer du mit einem Trefferpunktewürfel würfelst, um Trefferpunkte zurückzuerhalten, verdoppelst du die Anzahl von Trefferpunkten, die er wiederherstellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.apparat-der-krabbe",
+      "level": 3,
+      "text": "Apparat der Krabbe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.apparat-der-krabbe.untertitel",
+      "text": "Wundersamer Gegenstand, legendär"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.apparat-der-krabbe.text-1",
+      "text": "Dieser Gegenstand scheint zunächst ein versiegeltes Eisenfass zu sein, das 250 Kilogramm wiegt. Das Fass hat einen versteckten Haken, der mit einem erfolgreichen SG-20-Intelligenzwurf (Nachforschungen) gefunden werden kann. Wird der Haken gelöst, so öffnet sich eine Luke am Ende des Fasses, durch die zwei Kreaturen von höchstens mittelgroßer Größe ins Innere kriechen können. Am anderen Ende des Fassinneren befinden sich zehn Hebel in mittlerer Stellung. Sie können nach oben und nach unten bewegt werden. Wenn bestimmte Hebel bewegt werden, verwandelt sich der Apparat in einen Riesenhummer."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.apparat-der-krabbe.text-2",
+      "text": "Der Apparat der Krabbe ist ein großer Gegenstand mit den folgenden Werten: RK 20, 200 TP, Bewegungsrate neun Meter, Schwimmbewegungsrate neun Meter (oder jeweils 0 Meter, wenn die Beine nicht ausgefahren sind), gegen Giftschaden und psychischen Schaden immun."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.apparat-der-krabbe.text-3",
+      "text": "Um als Fahrzeug verwendet zu werden, benötigt der Apparat einen Piloten. Wenn die Luke des Apparats geschlossen ist, ist er luft- und wasserdicht. Der Innenraum enthält genug Atemluft für zehn Stunden (geteilt durch die Anzahl atmender Kreaturen im Apparat)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.apparat-der-krabbe.text-4",
+      "text": "Der Apparat schwimmt auf dem Wasser. Er kann bis auf 270 Meter Tiefe tauchen. In größeren Tiefen erleidet das Fahrzeug durch den Druck 2W6 Wuchtschaden pro Minute."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.apparat-der-krabbe.text-5",
+      "text": "Eine Kreatur im Apparat kann als Verwenden-Aktion bis zu zwei Hebel nach oben oder unten bewegen. Nach jedem Bedienen kehren die Hebel in ihre neutrale Position zurück. Jeder Hebel funktioniert, von links nach rechts gelesen, wie in der Tabelle „Hebel des Apparats der Krabbe“ angegeben."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.a-b.apparat-der-krabbe.tabelle-hebel-des-apparats-der-krabbe",
+      "caption": "Hebel des Apparats der Krabbe",
+      "columns": [
+        "Hebel",
+        "Oben",
+        "Unten"
+      ],
+      "rows": [
+        [
+          "1",
+          "Beine werden ausgefahren – der Apparat kann gehen und schwimmen.",
+          "Beine werden eingefahren – Bewegungsrate und Schwimmbewegungsrate des Apparats sind 0, und er kann keine Boni auf die Bewegungsrate nutzen."
+        ],
+        [
+          "2",
+          "Vorderer Fensterladen öffnet sich.",
+          "Vorderer Fensterladen schließt sich."
+        ],
+        [
+          "3",
+          "Seitliche Fensterläden öffnen sich (zwei pro Seite).",
+          "Seitliche Fensterläden schließen sich (zwei pro Seite)."
+        ],
+        [
+          "4",
+          "Vorne werden zwei Greifscheren ausgefahren.",
+          "Die Greifscheren werden eingefahren."
+        ],
+        [
+          "5",
+          "Jede ausgefahrene Greifschere führt den folgenden Nahkampfangriff aus: +8 auf Treffer, Reichweite 1,5 m. Treffer: 7 (2W6) Wuchtschaden.",
+          "Jede ausgefahrene Greifschere führt den folgenden Nahkampfangriff aus: +8 auf Treffer, Reichweite 1,5 m. Treffer: Das Ziel wird gepackt (Flucht-SG 15)."
+        ],
+        [
+          "6",
+          "Der Apparat bewegt sich gehend oder schwimmend vorwärts, sofern seine Beine ausgefahren sind.",
+          "Der Apparat bewegt sich gehend oder schwimmend rückwärts, sofern seine Beine ausgefahren sind."
+        ],
+        [
+          "7",
+          "Der Apparat dreht sich um 90 Grad gegen den Uhrzeigersinn, sofern seine Beine ausgefahren sind.",
+          "Der Apparat dreht sich um 90 Grad im Uhrzeigersinn, sofern seine Beine ausgefahren sind."
+        ],
+        [
+          "8",
+          "Augenartige Vorrichtungen spenden im Radius von neun Metern helles Licht und im Radius von weiteren neun Metern dämmriges Licht.",
+          "Das Licht erlischt."
+        ],
+        [
+          "9",
+          "Der Apparat sinkt um bis zu sechs Meter, wenn er sich in Flüssigkeit befindet.",
+          "Der Apparat steigt um bis zu sechs Meter, wenn er sich in Flüssigkeit befindet."
+        ],
+        [
+          "10",
+          "Die hintere Luke entriegelt und öffnet sich.",
+          "Die hintere Luke schließt und verriegelt sich."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.armschienen-des-bogenschuetzen",
+      "level": 3,
+      "text": "Armschienen des Bogenschützen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.armschienen-des-bogenschuetzen.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.armschienen-des-bogenschuetzen.text-1",
+      "text": "Wenn du diese Armschienen trägst, hast du Übung im Umgang mit Lang- und Kurzbögen und erhältst einen Bonus von +2 auf Schadenswürfe mit solchen Waffen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.armschienen-der-verteidigung",
+      "level": 3,
+      "text": "Armschienen der Verteidigung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.armschienen-der-verteidigung.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.armschienen-der-verteidigung.text-1",
+      "text": "Wenn du diese Armschienen trägst, erhältst du einen Bonus von +2 auf deine Rüstungsklasse, sofern du keine Rüstung trägst und keinen Schild verwendest."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.augen-des-adlers",
+      "level": 3,
+      "text": "Augen des Adlers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.augen-des-adlers.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.augen-des-adlers.text-1",
+      "text": "Diese Kristallgläser können als Brille getragen werden. Wenn du sie trägst, bist du bei Weisheitswürfen (Wahrnehmung) im Vorteil, die Sicht erfordern. Bei klaren Sichtverhältnissen kannst du Details selbst bei extrem weit entfernten Kreaturen und Gegenständen erkennen, sofern diese mindestens 60 Zentimeter groß sind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.augen-der-bezauberung",
+      "level": 3,
+      "text": "Augen der Bezauberung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.augen-der-bezauberung.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.augen-der-bezauberung.text-1",
+      "text": "Diese Kristallgläser können als Brille getragen werden. Sie haben drei Ladungen. Wenn du sie trägst, kannst du mindestens eine Ladung verbrauchen, um Person bezaubern (Rettungswurf-SG 13) zu wirken. Mit einer Ladung wirkst du den Zauber auf dem 1. Grad. Du kannst den Zaubergrad mit jeder weitere Ladung, die du verbrauchst, um eins erhöhen. Die Gläser erhalten täglich im Morgengrauen alle verbrauchten Ladungen zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.augen-des-praezisen-sehens",
+      "level": 3,
+      "text": "Augen des Präzisen Sehens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.augen-des-praezisen-sehens.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.augen-des-praezisen-sehens.text-1",
+      "text": "Diese Kristallgläser können als Brille getragen werden. Wenn du sie trägst, ist deine Sicht auf eine Reichweite von 30 Zentimetern erheblich verbessert. Du hast Dunkelsicht mit dieser Reichweite und bist bei Intelligenzwürfen (Nachforschungen) zum Untersuchen von etwas innerhalb dieser Reichweite im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.belebter-schild",
+      "level": 3,
+      "text": "Belebter Schild"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.belebter-schild.untertitel",
+      "text": "Rüstung (Schild), sehr selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.belebter-schild.text-1",
+      "text": "Wenn du diesen Schild hältst, du kannst eine Bonusaktion ausführen, um ihn zu beleben. Der Schild springt in die Luft und schwebt in deinem Bereich. Er schützt dich, als würdest du ihn führen, wobei du die Hände frei hast. Der Schild bleibt belebt, bis eine Minute vergangen ist, bis du eine Bonusaktion ausführst, um den Effekt zu beenden, bis du kampfunfähig wirst oder bis du stirbst. Dann fällt der Schild zu Boden oder in deine Hand, falls du eine Hand frei hast."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.berserkeraxt",
+      "level": 3,
+      "text": "Berserkeraxt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.berserkeraxt.untertitel",
+      "text": "Waffe (Hellebarde, Streitaxt oder Zweihandaxt), selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.berserkeraxt.text-1",
+      "text": "Du erhältst einen Bonus von +1 auf Angriffs- und Schadenswürfe, die du mit dieser magischen Waffe ausführst. Wenn du auf diese Waffe eingestimmt bist, wird dein Trefferpunktemaximum außerdem für jede Stufe, die du erreicht hast, um 1 erhöht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.berserkeraxt.text-2",
+      "text": "Fluch: Diese Waffe ist verflucht, und wenn du dich auf sie einstimmst, ergreift der Fluch auch dich. Solange du verflucht bist, bist du nicht bereit, dich von der Waffe zu trennen. Du behältst sie stets in Reichweite. Außerdem bist du bei Angriffswürfen mit anderen Waffen als dieser im Nachteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.berserkeraxt.text-3",
+      "text": "Wann immer eine andere Kreatur dir Schaden zufügt, während du diese Waffe besitzt, musst du einen SG-15-Weisheitsrettungswurf bestehen, oder du wirst rasend. Dieser rasende Zustand endet, wenn du deinen Zug beginnst und sich im Abstand von bis zu 18 Metern von dir keine anderen Kreaturen befinden, die du hören oder sehen kannst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.berserkeraxt.text-4",
+      "text": "Wenn du rasend bist, betrachtest du die Kreatur, die dir am nächsten ist und die du hören oder sehen kannst, als deinen Gegner. Wenn mehrere Kreaturen in Frage kommen, wähle zufällig eine aus. Du musst dich der Kreatur in jedem deiner Züge so weit wie möglich nähern, die Angriffsaktion ausführen und dabei auf die Kreatur zielen. Kommst du der Kreatur nicht nahe genug, um sie mit der Waffe anzugreifen, so endet dein Zug, nachdem du deine gesamte verfügbare Bewegung verbraucht hast. Wenn die Kreatur stirbt oder du sie nicht mehr hören oder sehen kannst, wird die Kreatur, die dir jetzt am nächsten ist und die du hören oder sehen kannst, zu deinem neuen Ziel."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.bohnenbeutel",
+      "level": 3,
+      "text": "Bohnenbeutel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.bohnenbeutel.untertitel",
+      "text": "Wundersamer Gegenstand, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.bohnenbeutel.text-1",
+      "text": "Dieser schwere Stoffbeutel enthält 3W4 getrocknete Bohnen, wenn er gefunden wird. Er wiegt 250 Gramm, unabhängig davon, wie viele Bohnen er enthält. Wenn er keine Bohnen mehr enthält, wird er zu einem nichtmagischen Gegenstand."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.bohnenbeutel.text-2",
+      "text": "Wenn du mindestens eine Bohne aus dem Sack wirfst, explodiert sie in einer Kugel mit einem Radius von drei Metern um sich. Alle geworfenen Bohnen werden bei der Explosion zerstört, und jede Kreatur in der Kugel (dich eingeschlossen) führt einen SG-15-Geschicklichkeitsrettungswurf aus. Misslingt der Wurf, so erleidet sie 5W4 Energieschaden, anderenfalls die Hälfte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.bohnenbeutel.text-3",
+      "text": "Wenn du eine Bohne aus dem Beutel nimmst, in Erde oder Sand einpflanzt und bewässerst, verschwindet die Bohne eine Minute nach dem Pflanzen und bringt an der Stelle, wo sie gepflanzt wurde, einen Effekt hervor. Der SL kann einen Effekt anhand der folgenden Tabelle auswählen oder zufällig bestimmen."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.a-b.bohnenbeutel.tabelle-bohnenbeutel",
+      "caption": "Bohnenbeutel",
+      "columns": [
+        "1W100",
+        "Effekt"
+      ],
+      "rows": [
+        [
+          "1",
+          "5W4 Pilze sprießen. Wenn eine Kreatur einen Pilz isst, würfle mit einem beliebigen Würfel. Bei einem ungeraden Ergebnis muss die Kreatur einen SG-15-Konstitutionsrettungswurf bestehen, oder sie erleidet 5W6 Giftschaden und ist eine Stunde lang vergiftet. Bei einem geraden Ergebnis erhält sie eine Stunde lang 5W6 temporäre Trefferpunkte."
+        ],
+        [
+          "2–10",
+          "Ein Geysir bricht aus und speit 1W4 Minuten lang Wasser, Bier, Mayonnaise, Tee, Essig, Wein oder Öl (nach Wahl des SL) neun Meter hoch in die Luft."
+        ],
+        [
+          "11–20",
+          "Ein Baumhirte sprießt. Würfle mit einem beliebigen Würfel. Bei einem ungeraden Ergebnis ist der Baumhirte chaotisch böse. Bei einem geraden Ergebnis ist der Baumhirte chaotisch gut."
+        ],
+        [
+          "21–30",
+          "Eine belebte, aber unbewegliche Steinstatue in deiner Gestalt erhebt sich und spricht verbale Drohungen gegen dich aus. Wenn du dich von der Statue entfernst und andere sich ihr nähern, beschreibt sie dich als den schlimmsten Schurken und weist die Neuankömmlinge an, dich zu finden und anzugreifen. Wenn du dich auf derselben Existenzebene wie die Statue befindest, weiß sie, wo du bist. Die Statue wird nach 24 Stunden unbelebt."
+        ],
+        [
+          "31–40",
+          "Ein Lagerfeuer mit grünen Flammen erscheint und brennt, bis 24 Stunden vergangen sind oder es gelöscht wird."
+        ],
+        [
+          "41–50",
+          "Drei Kreischerpilze sprießen."
+        ],
+        [
+          "51–60",
+          "1W4+4 hellrosa Kröten entstehen. Wenn eine Kröte berührt wird, verwandelt sie sich in ein Monster nach Wahl des SL von höchstens großer Größe, das entsprechend seiner Gesinnung und Natur handelt. Das Monster existiert eine Minute lang und verschwindet dann in einer hellrosa Rauchwolke."
+        ],
+        [
+          "61–70",
+          "Ein hungriger Landhai gräbt sich an die Oberfläche und greift an."
+        ],
+        [
+          "71–80",
+          "Ein Obstbaum wächst. Er trägt 1W10+20 Früchte, von denen 1W8 wie zufällig ermittelte Tränke wirken. Der Baum verschwindet nach einer Stunde. Gepflückte Früchte bleiben zurück und behalten etwaige Magie 30 Tage lang."
+        ],
+        [
+          "81–90",
+          "Ein Nest mit 1W4+3 regenbogenfarbigen Eiern erscheint. Jede Kreatur, die ein Ei isst, führt einen SG-20-Konstitutionsrettungswurf aus. Bei einem erfolgreichen Rettungswurf wird ihr niedrigster Attributswert dauerhaft um 1 erhöht (zwischen mehreren gleich niedrigen Werten wird zufällig ausgewählt). Misslingt der Wurf, so erleidet die Kreatur 10W6 Energieschaden durch eine innere Explosion."
+        ],
+        [
+          "91–95",
+          "Eine Pyramide mit einem Quadrat von 18 Metern Kantenlänge als Basis bricht aus dem Boden hervor. In ihr befindet sich eine Grabkammer mit einer Mumie, einem Mumienfürsten oder einem anderen Untoten nach Wahl des SL. Der Sarkophag in der Grabkammer enthält Schätze nach Wahl des SL."
+        ],
+        [
+          "96–100",
+          "Eine riesige Bohnenranke sprießt aus dem Boden und wächst auf eine Höhe heran, die der SL bestimmt. Das obere Ende führt an einen Ort nach Wahl des SL, beispielsweise zu einer herrlichen Aussicht, zum Schloss eines Wolkenriesen oder auf eine andere Existenzebene."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.boesartige-waffe",
+      "level": 3,
+      "text": "Bösartige Waffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.boesartige-waffe.untertitel",
+      "text": "Waffe (beliebige einfache Waffe oder Kriegswaffe), selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.boesartige-waffe.text-1",
+      "text": "Diese magische Waffe fügt jeder Kreatur, die sie trifft, zusätzlich 2W6 Schaden zu. Dieser zusätzliche Schaden ist von derselben Art wie der normale Schaden der Waffe."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.brosche-des-abschirmens",
+      "level": 3,
+      "text": "Brosche des Abschirmens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.brosche-des-abschirmens.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.brosche-des-abschirmens.text-1",
+      "text": "Wenn du diese Brosche trägst, bist du gegen Energieschaden resistent und gegen Schaden durch den Zauber Magisches Geschoss immun."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.a-b.brunnen-der-vielen-welten",
+      "level": 3,
+      "text": "Brunnen der Vielen Welten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.brunnen-der-vielen-welten.untertitel",
+      "text": "Wundersamer Gegenstand, legendär"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.brunnen-der-vielen-welten.text-1",
+      "text": "Dieses feine schwarze Tuch ist seidenweich und auf die Größe eines Taschentuchs zusammengefaltet. Ausgebreitet ist es ein kreisrund und hat einen Durchmesser von 1,8 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.brunnen-der-vielen-welten.text-2",
+      "text": "Du kannst eine magische Aktion ausführen, um den Brunnen der Vielen Welten zu entfalten und auf einer festen Oberfläche zu platzieren. Dort bildet er ein rundes Zweiwegeportal mit einem Durchmesser von drei Metern, das in eine andere Welt oder auf eine andere Existenzebene führt. Jedes Mal, wenn mit dem Gegenstand ein Portal geöffnet wird, entscheidet der SL, wohin es führt. Das Portal bleibt geöffnet, bis eine Kreatur im Abstand von bis zu 1,5 Metern von ihm eine magische Aktion ausführt, um es zu schließen, indem sie das Tuch an den Rändern greift und zusammenfaltet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.a-b.brunnen-der-vielen-welten.text-3",
+      "text": "Hat der Brunnen der Vielen Welten ein Portal geöffnet, so kann er dies erst nach 1W8 Stunden erneut tun."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:5a9d26ec72670c3615d8fefda61906e935d912e98d6e68b67b2ea941b07557f3"
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.durability",
+  "slug": "haltbarkeit-magischer-gegenstaende",
+  "title": "Haltbarkeit magischer Gegenstände",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Haltbarkeit magischer Gegenstände"
+  ],
+  "order": 1060,
+  "sourcePages": [
+    239
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.durability.haltbarkeit-magischer-gegenstaende",
+      "level": 2,
+      "text": "Haltbarkeit magischer Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.durability.haltbarkeit-magischer-gegenstaende.text-1",
+      "text": "Ein magischer Gegenstand ist mindestens so haltbar wie ein nichtmagischer Gegenstand derselben Art. Die meisten magischen Gegenstände (mit Ausnahme von Tränken und Schriftrollen) sind gegen alle Schadensarten resistent."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.durability.haltbarkeit-magischer-gegenstaende.text-2",
+      "text": "Artefakte können nur auf besondere Weise zerstört werden. Ansonsten sind sie unempfindlich gegen Schaden. Normalerweise muss geforscht oder eine Mission abgeschlossen werden, um zu erfahren, wie sich ein Artefakt zerstören lässt."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:c035ff61f1967d93b90ad4b790ab791f821b8bb1f0fbc741899fc3c4e8890b26"
+}

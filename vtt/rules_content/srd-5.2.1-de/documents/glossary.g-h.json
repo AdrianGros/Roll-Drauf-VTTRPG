@@ -1,0 +1,429 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "glossary.g-h",
+  "slug": "regeldefinitionen-g-h",
+  "title": "Regeldefinitionen G–H",
+  "navigationPath": [
+    "Regelglossar",
+    "Regeldefinitionen G–H"
+  ],
+  "order": 830,
+  "sourcePages": [
+    207,
+    208,
+    209,
+    210
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.regeldefinitionen",
+      "level": 2,
+      "text": "Regeldefinitionen (G–H)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gefahr",
+      "level": 3,
+      "text": "Gefahr"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gefahr.text-1",
+      "text": "Gefahren resultieren aus der Umgebung. Siehe auch „Brand“, „Dehydrierung“, „Erstickung“, „Sturz“ und „Unterernährung“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gegenstand",
+      "level": 3,
+      "text": "Gegenstand"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gegenstand.text-1",
+      "text": "Ein Gegenstand ist ein unbelebtes, klar abgrenzbares Ding. Zusammengesetzte Dinge wie Gebäude bestehen aus mehr als einem Gegenstand. Siehe auch „Gegenstände zerstören“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren",
+      "level": 3,
+      "text": "Gegenstände zerstören"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren.text-1",
+      "text": "Gegenstände können durch Angriffe und manche Zauber beschädigt werden. Dabei gelten die Regeln unten. Wenn ein Gegenstand besonders empfindlich ist, kann der SL einer Kreatur gestatten, ihn mit der Angriffs- oder Verwenden-Aktion automatisch zu zerstören."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren.text-2",
+      "text": "Rüstungsklasse: In der Tabelle „Rüstungsklasse eines Gegenstands“ findest du RK-Vorschläge für verschiedene Materialien."
+    },
+    {
+      "type": "table",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren.tabelle-gegenstand-rk",
+      "caption": "Rüstungsklasse eines Gegenstands",
+      "columns": [
+        "RK",
+        "Material",
+        "RK",
+        "Material"
+      ],
+      "rows": [
+        [
+          "11",
+          "Papier, Seil, Stoff",
+          "19",
+          "Eisen, Stahl"
+        ],
+        [
+          "13",
+          "Eis, Glas, Kristall",
+          "21",
+          "Mithral"
+        ],
+        [
+          "15",
+          "Holz",
+          "23",
+          "Adamant"
+        ],
+        [
+          "17",
+          "Stein",
+          "–",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren.text-3",
+      "text": "Trefferpunkte: Ein Gegenstand wird zerstört, wenn seine Trefferpunkte auf 0 sinken. In der Tabelle „Trefferpunkte eines Gegenstands“ findest du Vorschläge für die Trefferpunkte zerbrechlicher sowie stabiler Gegenstände von höchstens großer Größe. Wenn du die Trefferpunkte eines riesigen oder gigantischen Gegenstands nachverfolgen willst, unterteile den Gegenstand in Abschnitte von höchstens großer Größe und verfolge deren Trefferpunkte jeweils separat. Der SL bestimmt, ob das Zerstören eines Teils von einem Gegenstand den gesamten Gegenstand einstürzen lässt."
+    },
+    {
+      "type": "table",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren.tabelle-gegenstand-trefferpunkte",
+      "caption": "Trefferpunkte eines Gegenstands",
+      "columns": [
+        "Größe",
+        "Zerbrechlich",
+        "Stabil"
+      ],
+      "rows": [
+        [
+          "Winzig (Flasche, Schloss)",
+          "2 (1W4)",
+          "5 (2W4)"
+        ],
+        [
+          "Klein (Laute, Truhe)",
+          "3 (1W6)",
+          "10 (3W6)"
+        ],
+        [
+          "Mittelgroß (Fass, Kronleuchter)",
+          "4 (1W8)",
+          "18 (4W8)"
+        ],
+        [
+          "Groß (Esstisch, Karren)",
+          "5 (1W10)",
+          "27 (5W10)"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren.text-4",
+      "text": "Schadensarten und Gegenstände: Gegenstände sind immer gegen Gift und psychischen Schaden immun. Der SL könnte entscheiden, dass manche Schadensarten bei einem Gegenstand besonders effektiv oder ineffektiv sind. Beispielsweise eignet sich Wuchtschaden gut, um Gegenstände zu zerschmettern, jedoch schlecht, um etwas zu zerschneiden. Gegenstände aus Papier oder Stoff könnten anfällig für Feuerschaden sein."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren.text-5",
+      "text": "Schadensschwellenwert: Große Gegenstände wie Burgmauern haben oft zusätzliche Widerstandskraft, die von einem Schadensschwellenwert repräsentiert wird. Siehe auch „Schadensschwellenwert“."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gegenstaende-zerstoeren.text-6",
+      "text": "Keine Attributswerte: Gegenstände haben keine Attributswerte, es sei denn, eine Regel weist ihnen solche Werte zu. Ohne Attributswerte kann ein Gegenstand keine Attributswürfe ausführen, und er scheitert bei allen Rettungswürfen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gegner",
+      "level": 3,
+      "text": "Gegner"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gegner.text-1",
+      "text": "Eine Kreatur ist dein Gegner, wenn sie im Kampf gegen dich kämpft, dir aktiv schaden will oder von den Regeln oder vom SL als dein Gegner bestimmt wurde."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gelaehmt-zustand",
+      "level": 3,
+      "text": "Gelähmt (Zustand)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gelaehmt-zustand.text-1",
+      "text": "Wenn du den Zustand Gelähmt hast, wirken folgende Effekte auf dich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gelaehmt-zustand.text-2",
+      "text": "Kampfunfähig: Du hast den Zustand Kampfunfähig."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gelaehmt-zustand.text-3",
+      "text": "Keine Bewegungsrate: Deine Bewegungsrate beträgt 0 und kann nicht erhöht werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gelaehmt-zustand.text-4",
+      "text": "Beeinträchtigte Rettungswürfe: Du scheiterst bei Stärke- und Geschicklichkeitsrettungswürfen automatisch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gelaehmt-zustand.text-5",
+      "text": "Beeinträchtigte Angriffe: Angriffswürfe gegen dich sind im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gelaehmt-zustand.text-6",
+      "text": "Automatische kritische Treffer: Jeder Angriffswurf, der dich trifft, ist ein kritischer Treffer, sofern der Angreifer sich im Abstand von bis zu 1,5 Metern von dir befindet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gelegenheitsangriffe",
+      "level": 3,
+      "text": "Gelegenheitsangriffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gelegenheitsangriffe.text-1",
+      "text": "Wenn eine Kreatur, die du sehen kannst, mithilfe ihrer Aktion, ihrer Bonusaktion, ihrer Reaktion oder einer ihrer Bewegungsraten deine Reichweite verlässt, kannst du einen Gelegenheitsangriff ausführen. Nutze dazu eine Reaktion, um einen Nahkampfangriff mit einer Waffe oder einen waffenlosen Angriff gegen die provozierende Kreatur auszuführen. Der Angriff erfolgt unmittelbar, bevor die Kreatur deine Reichweite verlässt. Siehe auch „Die Spielregeln“ („Kampf“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gepackt-zustand",
+      "level": 3,
+      "text": "Gepackt (Zustand)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gepackt-zustand.text-1",
+      "text": "Wenn du den Zustand Gepackt hast, wirken folgende Effekte auf dich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gepackt-zustand.text-2",
+      "text": "Keine Bewegungsrate: Deine Bewegungsrate beträgt 0 und kann nicht erhöht werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gepackt-zustand.text-3",
+      "text": "Beeinträchtigte Angriffe: Du bist bei Angriffswürfen gegen alle Ziele außer der Kreatur, die dich gepackt hält, im Nachteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gepackt-zustand.text-4",
+      "text": "Beweglich: Die Kreatur, die dich gepackt hält, kann dich ziehen oder tragen, wenn sie sich bewegt. Allerdings kostet sie dies doppelt so viel Bewegung, sofern du nicht winzig oder um mindestens zwei Kategorien kleiner als sie bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gepackt-halten",
+      "level": 3,
+      "text": "Gepackt halten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gepackt-halten.text-1",
+      "text": "Eine Kreatur kann eine andere Kreatur packen und festhalten. Charaktere tun dies üblicherweise im Rahmen eines waffenlosen Angriffs. Viele Monster haben besondere Angriffe, die ihnen gestatten, ihre Beute rasch zu packen. Wird eine Kreatur gepackt, so gelten die nachstehenden Regeln. Siehe auch „Gepackt“ und „Waffenloser Angriff“."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gepackt-halten.text-2",
+      "text": "Zustand Gepackt: Wird eine Kreatur erfolgreich gepackt, so hat sie den Zustand Gepackt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gepackt-halten.text-3",
+      "text": "Eine gepackte Kreatur pro Hand: Eine Kreatur muss eine freie Hand haben, um eine andere Kreatur packen zu können. Manche Wertekästen und Spieleffekte gestatten einer Kreatur, ein Ziel mithilfe eines Tentakels, eines Mauls oder eines anderen Körperteils zu packen. Welchen Körperteil auch immer eine Kreatur einsetzt, sie kann damit nur jeweils eine Kreatur gepackt halten, und sie kann diesen Körperteil nicht verwenden, um auf eine andere Kreatur zu zielen, es sei denn, sie beendet zuvor den Haltegriff."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gepackt-halten.text-4",
+      "text": "Den Zustand Gepackt beenden: Eine gepackte Kreatur kann ihre Aktion verwenden, um einen Stärkewurf (Athletik) oder Geschicklichkeitswurf (Akrobatik) gegen den Flucht-SG des Haltegriffs auszuführen. Bei einem Erfolg endet der Zustand Gepackt. Der Zustand endet ebenfalls, wenn die Kreatur, die eine andere gepackt hält, kampfunfähig wird oder ihr Abstand zum gepackten Ziel die Reichweite des Haltegriffs überschreitet. Außerdem kann die Kreatur, die eine andere gepackt hält, das Ziel jederzeit loslassen (keine Aktion erforderlich)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gesinnung",
+      "level": 3,
+      "text": "Gesinnung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gesinnung.text-1",
+      "text": "Die Gesinnung einer Kreatur beschreibt ihre grundsätzlichen ethischen Ansichten und Ideale. Sie ist eine Kombination aus zwei Faktoren: der moralischen Haltung (gut, böse, neutral) und der Einstellung zum Gesetz (rechtschaffen, chaotisch, neutral). Diese Faktoren erlauben neun mögliche Kombinationen, beispielsweise rechtschaffen gut oder neutral böse. Siehe auch „Charaktererstellung“ („Deinen Charakter erstellen“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gestaltwandeln",
+      "level": 3,
+      "text": "Gestaltwandeln"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gestaltwandeln.text-1",
+      "text": "Wenn ein Effekt dich verwandelt, beispielsweise Tiergestalt oder der Zauber Verwandlung, ist in der Beschreibung des Effekts angegeben, was mit dir geschieht. Sofern in der Beschreibung nicht anders angegeben, werden alle Effekte, die gerade auf dich wirken – Zustände, Zauber, Flüche und dergleichen – von einer Gestalt auf die andere übertragen. Wenn du stirbst, verwandelst du dich in deine wahre Gestalt zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gleichgueltig-haltung",
+      "level": 3,
+      "text": "Gleichgültig (Haltung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gleichgueltig-haltung.text-1",
+      "text": "Wenn eine Kreatur dir gegenüber gleichgültig ist, hat sie kein Interesse daran, dir zu helfen oder dich zu beeinträchtigen. Gleichgültig ist die Standardhaltung von Monstern. Siehe auch „Beeinflussen“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.gleichzeitige-effekte",
+      "level": 3,
+      "text": "Gleichzeitige Effekte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.gleichzeitige-effekte.text-1",
+      "text": "Wenn in einem Zug mehrere Dinge zugleich passieren, entscheidet die Person am Spieltisch, die gerade am Zug ist – Spieler oder SL –, in welcher Reihenfolge diese Dinge geschehen. Beispiel: Wenn zu Beginn des Zugs eines Spielercharakters zwei Effekte auftreten, entscheidet der Spieler, welcher Effekt sich zuerst ereignet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.grabbewegungsrate",
+      "level": 3,
+      "text": "Grabbewegungsrate"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.grabbewegungsrate.text-1",
+      "text": "Kreaturen mit Grabbewegungsrate können ihre Bewegung ganz oder teilweise verwenden, um sich durch Sand, Erde, Schlamm oder Eis zu bewegen. Sie können sich nicht durch massives Gestein graben, sofern sie nicht über ein Merkmal verfügen, das ihnen dies gestattet. Siehe auch „Bewegungsrate“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.groesse",
+      "level": 3,
+      "text": "Größe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.groesse.text-1",
+      "text": "Kreaturen sowie Gegenstände gehören jeweils zu einer Größenkategorie: Winzig, Klein, Mittelgroß, Groß, Riesig oder Gigantisch. Die Größe einer Kreatur bestimmt, wie viel Platz die Kreatur im Kampf einnimmt. Die Größe eines Gegenstands beeinflusst seine Trefferpunkte. Siehe auch „Gegenstände zerstören“ und „Die Spielregeln“ („Kampf“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.haltung",
+      "level": 3,
+      "text": "Haltung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.haltung.text-1",
+      "text": "Monster haben Spielercharakteren gegenüber eine anfängliche Haltung: Sie können ihnen gegenüber freundlich gesinnt, feindlich gesinnt oder gleichgültig sein. Siehe auch „Feindlich gesinnt“, „Freundlich gesinnt“, „Gleichgültig“ und „Beeinflussen“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.heilung",
+      "level": 3,
+      "text": "Heilung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.heilung.text-1",
+      "text": "Heilung besteht darin, dass du Trefferpunkte zurückerhältst. Siehe auch „Die Spielregeln“ („Schaden und Heilung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.heldische-inspiration",
+      "level": 3,
+      "text": "Heldische Inspiration"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.heldische-inspiration.text-1",
+      "text": "Wenn du als Spielercharakter Heldische Inspiration hast, kannst du sie verbrauchen, um mit einem Würfel sofort nach dem Wurf erneut zu würfeln. In diesem Fall musst du das neue Ergebnis verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.heldische-inspiration.text-2",
+      "text": "Verfügst du über Heldische Inspiration und erhältst dann noch weitere, so geht diese verloren, sofern du sie nicht an einen Spielercharakter weitergibst, der keine hat."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.helfen-aktion",
+      "level": 3,
+      "text": "Helfen (Aktion)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.helfen-aktion.text-1",
+      "text": "Wenn du die Helfen-Aktion ausführst, vollziehst du eine der folgenden Handlungen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.helfen-aktion.text-2",
+      "text": "Einen Attributswurf unterstützen: Wähle eine deiner Übungen in einer Fertigkeit oder im Umgang mit Werkzeug sowie einen Verbündeten aus, der dir nahe genug ist, dass du ihn verbal oder physisch unterstützen kannst, wenn er einen Attributswurf ausführt. Der Verbündete ist bei seinem nächsten Attributswurf mit der ausgewählten Fertigkeit oder dem ausgewählten Werkzeug im Vorteil. Dieser Vorzug gilt nur, wenn der Verbündete ihn vor Beginn deines nächsten Zugs einsetzt. Der SL entscheidet, ob deine Hilfe möglich ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.helfen-aktion.text-3",
+      "text": "Einen Angriffswurf unterstützen: Du lenkst einen Gegner im Abstand von bis zu 1,5 Metern von dir vorübergehend ab, sodass der nächste Angriffswurf eines deiner Verbündeten gegen ihn im Vorteil ist. Dieser Vorzug gilt nur, wenn der Verbündete ihn vor Beginn deines nächsten Zugs einsetzt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.helles-licht",
+      "level": 3,
+      "text": "Helles Licht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.helles-licht.text-1",
+      "text": "Eine normale Beleuchtung gilt als helles Licht. Siehe auch „Die Spielregeln“ („Erkundung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.herausforderungsgrad",
+      "level": 3,
+      "text": "Herausforderungsgrad"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.herausforderungsgrad.text-1",
+      "text": "Der Herausforderungsgrad (HG) fasst zusammen, wie gefährlich ein Monster für eine Gruppe von vier Spielercharakteren ist. Vergleiche den HG des Monsters mit der Stufe der Charaktere. Ist der HG höher, so ist das Monster wahrscheinlich eine Bedrohung. Ist der HG niedriger, so ist das Monster wahrscheinlich keine große Bedrohung. Die Umstände und die Anzahl der Spielercharaktere haben erheblichen Einfluss darauf, wie gefährlich ein Monster im Spiel tatsächlich ist. Der Abschnitt „Werkzeugkasten fürs Spiel“ („Kampfbegegnungen“) enthält Ratschläge für den SL, wie der HG beim Planen möglicher Kampfbegegnungen zu verwenden ist. Siehe auch „Wertekasten“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.g-h.hochsprung",
+      "level": 3,
+      "text": "Hochsprung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.hochsprung.text-1",
+      "text": "Bei einem Hochsprung springst du eine Anzahl von Metern empor. Sie entspricht einem Drittel der Summe aus deinem Stärkemodifikator + 3, sofern du unmittelbar vor dem Sprung mindestens drei Meter zurückgelegt hast. Bei einem Hochsprung aus dem Stand kannst du nur halb so hoch springen. In beiden Fällen kostet dich jeder gesprungene Meter einen Meter deiner Bewegungsrate."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.g-h.hochsprung.text-2",
+      "text": "Du kannst deine Arme während eines Sprungs um die Hälfte deiner Größe nach oben strecken. So kannst du mit den Händen eine Höhe erreichen, die deiner Sprunghöhe plus deiner 1,5-fachen Körpergröße entspricht."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:a2d0b86d16c1fc64bb435f2c0dac9a9346dff468c2ebcb4bd56fc3fb12924f5c"
+}

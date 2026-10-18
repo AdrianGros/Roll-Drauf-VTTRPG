@@ -1,0 +1,559 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.fighter",
+  "slug": "kaempfer",
+  "title": "Kämpfer",
+  "navigationPath": [
+    "Klassen",
+    "Kämpfer"
+  ],
+  "order": 240,
+  "sourcePages": [
+    55,
+    56,
+    57
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.fighter",
+      "level": 2,
+      "text": "Kämpfer"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.fighter.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Stärke oder Geschicklichkeit"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W10 pro Kämpferstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Stärke und Konstitution"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle zwei aus: Akrobatik, Athletik, Einschüchtern, Geschichte, Mit Tieren umgehen, Motiv erkennen, Überlebenskunst, Überzeugen oder Wahrnehmung"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen und Kriegswaffen"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Leichte, mittelschwere und schwere Rüstung sowie Schilde"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A, B oder C aus: (A) Kettenpanzer, Zweihandschwert, Flegel, acht Wurfspeere, Gewölbeforscherausrüstung und 4 GM oder (B) Beschlagene Lederrüstung, Krummsäbel, Kurzschwert, Langbogen, 20 Pfeile, Köcher, Gewölbeforscherausrüstung und 11 GM oder (C) 155 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.becoming-a-fighter",
+      "level": 3,
+      "text": "Ein Kämpfer werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.fighter.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Kämpfers“.",
+        "Du erhältst die Merkmale der 1. Kämpferstufe, die in der Tabelle „Kämpfermerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.fighter.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst folgende Merkmale in der Tabelle „Hauptmerkmale des Kämpfers“: Trefferpunktewürfel, Übung im Umgang mit Kriegswaffen, Vertrautheit mit leichter und mittelschwerer Rüstung sowie mit Schilden.",
+        "Du erhältst die Merkmale der 1. Kämpferstufe, die in der Tabelle „Kämpfermerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Kämpfers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.class-features-introduction",
+      "text": "Als Kämpfer erhältst du auf den angegebenen Kämpferstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Kämpfermerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.fighter.progression-table",
+      "caption": "Kämpfermerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Durchschnaufen",
+        "Waffenbeherrschung"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Kampfstil, Durchschnaufen, Waffenbeherrschung",
+          "2",
+          "3"
+        ],
+        [
+          "2",
+          "+2",
+          "Taktisches Verständnis, Tatendrang (einmalig)",
+          "2",
+          "3"
+        ],
+        [
+          "3",
+          "+2",
+          "Kämpfer-Unterklasse",
+          "2",
+          "3"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "3",
+          "4"
+        ],
+        [
+          "5",
+          "+3",
+          "Taktikwechsel, Zusätzlicher Angriff",
+          "3",
+          "4"
+        ],
+        [
+          "6",
+          "+3",
+          "Attributswerterhöhung",
+          "3",
+          "4"
+        ],
+        [
+          "7",
+          "+3",
+          "Unterklassenmerkmal",
+          "3",
+          "4"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "3",
+          "4"
+        ],
+        [
+          "9",
+          "+4",
+          "Taktischer Meister, Unbeugsamkeit (eine Anwendung)",
+          "3",
+          "4"
+        ],
+        [
+          "10",
+          "+4",
+          "Unterklassenmerkmal",
+          "4",
+          "5"
+        ],
+        [
+          "11",
+          "+4",
+          "Zwei zusätzliche Angriffe",
+          "4",
+          "5"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "4",
+          "5"
+        ],
+        [
+          "13",
+          "+5",
+          "Angriffsstudien, Unbeugsamkeit (zwei Anwendungen)",
+          "4",
+          "5"
+        ],
+        [
+          "14",
+          "+5",
+          "Attributswerterhöhung",
+          "4",
+          "5"
+        ],
+        [
+          "15",
+          "+5",
+          "Unterklassenmerkmal",
+          "4",
+          "5"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "4",
+          "6"
+        ],
+        [
+          "17",
+          "+6",
+          "Tatendrang (zwei Anwendungen), Unbeugsamkeit (drei Anwendungen)",
+          "4",
+          "6"
+        ],
+        [
+          "18",
+          "+6",
+          "Unterklassenmerkmal",
+          "4",
+          "6"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "4",
+          "6"
+        ],
+        [
+          "20",
+          "+6",
+          "Drei zusätzliche Angriffe",
+          "4",
+          "6"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level1-second-wind",
+      "level": 4,
+      "text": "1. Stufe: Durchschnaufen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level1-second-wind-description",
+      "text": "Du hast einen gewissen Vorrat an körperlicher und geistiger Ausdauer zur Verfügung. Als Bonusaktion kannst du Trefferpunkte in Höhe von 1W10 plus deiner Kämpferstufe zurückerhalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level1-second-wind-uses",
+      "text": "Du kannst dieses Merkmal zweimal anwenden. Nach einer kurzen Rast erhältst du eine verbrauchte Anwendung zurück. Nach einer langen Rast erhältst du alle verbrauchten Anwendungen zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level1-second-wind-growth",
+      "text": "Wenn du bestimmte Kämpferstufen erreichst, erhältst du mehr Anwendungen dieses Merkmals, wie in der Spalte „Durchschnaufen“ der Tabelle „Kämpfermerkmale“ dargestellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level1-fighting-style",
+      "level": 4,
+      "text": "1. Stufe: Kampfstil"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level1-fighting-style-description",
+      "text": "Du hast deine Kampfkünste verfeinert und erhältst ein Kampfstil-Talent deiner Wahl (siehe „Talente“). Verteidigung wird empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level1-fighting-style-swap",
+      "text": "Wann immer du eine Kämpferstufe erhältst, kannst du das ausgewählte Talent durch ein anderes Kampfstil-Talent ersetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level1-weapon-mastery",
+      "level": 4,
+      "text": "1. Stufe: Waffenbeherrschung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level1-weapon-mastery-description",
+      "text": "Deine Vertrautheit mit Waffen gestattet dir, die Meisterschaftseigenschaften dreier Arten von einfachen Waffen oder Kriegswaffen deiner Wahl zu verwenden. Wann immer du eine lange Rast beendest, kannst du Waffenübungen ausführen und eine dieser Waffenentscheidungen ändern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level1-weapon-mastery-growth",
+      "text": "Wenn du bestimmte Kämpferstufen erreichst, erhältst du das Attribut zum Verwenden der Meisterschaftseigenschaften von mehr Waffenarten, wie in der Spalte „Waffenbeherrschung“ der Tabelle „Kämpfermerkmale“ dargestellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level2-tactical-mind",
+      "level": 4,
+      "text": "2. Stufe: Taktisches Verständnis"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level2-tactical-mind-description",
+      "text": "Du hast auf dem Schlachtfeld sowie anderswo einen ausgeprägten Sinn für Taktik. Wenn du bei einem Attributswurf scheiterst, kannst du eine Anwendung von Durchschnaufen verbrauchen, um einen Erfolg anzustreben. Anstatt Trefferpunkte zurückzuerhalten, würfelst du mit 1W10, fügst das Ergebnis dem Attributswurf hinzu und machst so aus dem Misserfolg möglicherweise einen Erfolg. Misslingt der Wurf dennoch, so wird diese Anwendung von Durchschnaufen nicht verbraucht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level2-action-surge",
+      "level": 4,
+      "text": "2. Stufe: Tatendrang"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level2-action-surge-description",
+      "text": "Du kannst kurzzeitig deine normalen Grenzen überwinden. In deinem Zug kannst du eine zusätzliche Aktion (außer der magischen Aktion) ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level2-action-surge-rest",
+      "text": "Du kannst dieses Merkmal erst nach einer kurzen oder langen Rast erneut verwenden. Ab 17. Stufe kannst du Tatendrang zweimal vor einer Rast, jedoch nur einmal pro Zug einsetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Kämpfer-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level3-subclass-description",
+      "text": "Du erhältst eine Kämpfer-Unterklasse deiner Wahl. Die Unterklasse Champion wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Kämpferstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Kämpferstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 6., 8., 12., 14. und 16. Kämpferstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level5-tactical-shift",
+      "level": 4,
+      "text": "5. Stufe: Taktikwechsel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level5-tactical-shift-description",
+      "text": "Wann immer du Durchschnaufen mit einer Bonusaktion aktivierst, kannst du bis zur Hälfte deiner Bewegungsrate nutzen, ohne Gelegenheitsangriffe zu provozieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level5-extra-attack",
+      "level": 4,
+      "text": "5. Stufe: Zusätzlicher Angriff"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level5-extra-attack-description",
+      "text": "Du kannst jetzt zweimal angreifen, wenn du in deinem Zug eine Angriffsaktion ausführst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level9-tactical-master",
+      "level": 4,
+      "text": "9. Stufe: Taktischer Meister"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level9-tactical-master-description",
+      "text": "Wenn du mit einer Waffe angreifst, deren Meisterschaftseigenschaft du nutzen kannst, so kannst du die Eigenschaft bei diesem Angriff durch eine der Eigenschaften Auslaugen, Stoßen oder Verlangsamen ersetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level9-indomitable",
+      "level": 4,
+      "text": "9. Stufe: Unbeugsamkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level9-indomitable-description",
+      "text": "Wenn du bei einem Rettungswurf scheiterst, kannst du ihn mit einem Bonus in Höhe deiner Kämpferstufe erneut ausführen. In diesem Fall musst du das neue Ergebnis verwenden und kannst das Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level9-indomitable-growth",
+      "text": "Du kannst dieses Merkmal ab der 13. Stufe zweimal vor einer langen Rast und ab der 17. Stufe dreimal vor einer langen Rast anwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level11-extra-attack-2",
+      "level": 4,
+      "text": "11. Stufe: Zwei zusätzliche Angriffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level11-extra-attack-2-description",
+      "text": "Du kannst jetzt dreimal angreifen, wenn du in deinem Zug eine Angriffsaktion ausführst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level13-studied-attacks",
+      "level": 4,
+      "text": "13. Stufe: Angriffsstudien"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level13-studied-attacks-description",
+      "text": "Du studierst deine Gegner und lernst aus jedem Angriff, den du ausführst. Wenn du bei einem Angriffswurf gegen eine Kreatur scheiterst, bist du bei deinem nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe der Kampffertigkeit wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.level20-extra-attack-3",
+      "level": 4,
+      "text": "20. Stufe: Drei zusätzliche Angriffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.level20-extra-attack-3-description",
+      "text": "Du kannst jetzt viermal angreifen, wenn du in deinem Zug eine Angriffsaktion ausführst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.subclass-champion",
+      "level": 3,
+      "text": "Kämpfer-Unterklasse: Champion"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-champion-motto",
+      "text": "Strebe nach körperlicher Höchstleistung im Kampf"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-champion-introduction",
+      "text": "Champions konzentrieren sich auf die Vervollkommnung ihrer Kampfkünste, um unermüdlich auf den Sieg hinzuarbeiten. Sie kombinieren hartes Training mit körperlichen Spitzenleistungen, um vernichtende Hiebe zu landen, Gefahren zu widerstehen und Ruhm zu erringen. Ob bei athletischen Wettbewerben oder in blutigen Schlachten – Champions streben stets nach der Krone des Siegers."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.subclass-level3-remarkable-athlete",
+      "level": 4,
+      "text": "3. Stufe: Bemerkenswerter Athlet"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level3-remarkable-athlete-advantage",
+      "text": "Dank deiner hervorragenden Konstitution bist du bei Initiative- und Stärkewürfen (Athletik) im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level3-remarkable-athlete-movement",
+      "text": "Außerdem kannst du sofort nach Erzielen eines kritischen Treffers bis zur Hälfte deiner Bewegungsrate zurücklegen, ohne Gelegenheitsangriffe zu provozieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.subclass-level3-improved-critical",
+      "level": 4,
+      "text": "3. Stufe: Verbesserter kritischer Treffer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level3-improved-critical-description",
+      "text": "Deine Angriffswürfe mit Waffen und deine waffenlosen Angriffe bewirken kritische Treffer, wenn du mit dem W20 eine 19 oder eine 20 würfelst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.subclass-level7-additional-fighting-style",
+      "level": 4,
+      "text": "7. Stufe: Weiterer Kampfstil"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level7-additional-fighting-style-description",
+      "text": "Du erhältst ein weiteres Kampfstil-Talent deiner Wahl."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.subclass-level10-heroic-warrior",
+      "level": 4,
+      "text": "10. Stufe: Heldenhafter Krieger"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level10-heroic-warrior-description",
+      "text": "Der Nervenkitzel der Schlacht treibt dich zum Sieg. Im Kampf kannst du dir selbst Heldische Inspiration geben, wann immer du deinen Zug ohne diese beginnst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.subclass-level15-superior-critical",
+      "level": 4,
+      "text": "15. Stufe: Überlegener kritischer Treffer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level15-superior-critical-description",
+      "text": "Deine Angriffswürfe mit Waffen und deine waffenlosen Angriffe bewirken ab sofort kritische Treffer, wenn du mit dem W20 ein Ergebnis von 18–20 würfelst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.fighter.subclass-level18-survivor",
+      "level": 4,
+      "text": "18. Stufe: Der Überlebende"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level18-survivor-introduction",
+      "text": "Du erreichst den Gipfel der Zähigkeit im Kampf und erhältst folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level18-survivor-defy-death",
+      "text": "Dem Tode trotzen: Du bist bei Todesrettungswürfen im Vorteil. Außerdem erhältst du, wenn du bei einem Todesrettungswurf ein Ergebnis von 18–20 würfelst, den Vorzug wie bei einem Ergebnis von 20."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.fighter.subclass-level18-survivor-heroic-warcry",
+      "text": "Heldischer Schlachtruf: Zu Beginn jedes deiner Züge erhältst du Trefferpunkte in Höhe von 5 plus deinem Konstitutionsmodifikator zurück, wenn du blutig bist und mindestens 1 Trefferpunkt hast."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    }
+  ],
+  "digest": "sha256:e567dcb08ff657a2e7be39dc70707fe5c7d4e3ffa2144c6fec3ee7fbce3f688c"
+}

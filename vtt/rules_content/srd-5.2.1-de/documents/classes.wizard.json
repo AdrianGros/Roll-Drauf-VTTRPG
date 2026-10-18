@@ -1,0 +1,1948 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.wizard",
+  "slug": "magier",
+  "title": "Magier",
+  "navigationPath": [
+    "Klassen",
+    "Magier"
+  ],
+  "order": 260,
+  "sourcePages": [
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.wizard",
+      "level": 2,
+      "text": "Magier"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.wizard.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Intelligenz"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W6 pro Magierstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Intelligenz und Weisheit"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle zwei aus: Arkane Kunde, Geschichte, Heilkunde, Motiv erkennen, Nachforschungen, Naturkunde oder Religion"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Keine"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Zwei Dolche, Arkaner Fokus (Kampfstab), Robe, Zauberbuch, Gelehrtenausrüstung und 5 GM oder (B) 55 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.becoming-a-wizard",
+      "level": 3,
+      "text": "Ein Magier werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.wizard.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Magiers“.",
+        "Du erhältst die Merkmale der 1. Magierstufe, die in der Tabelle „Magiermerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.wizard.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst die Trefferpunktewürfel, die in der Tabelle „Hauptmerkmale des Magiers“ aufgeführt sind.",
+        "Du erhältst die Merkmale der 1. Magierstufe, die in der Tabelle „Magiermerkmale“ aufgeführt sind. Bestimme deine verfügbaren Zauberplätze anhand der Regeln zu Klassenkombinationen unter „Charaktererstellung“."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Magiers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.class-features-introduction",
+      "text": "Als Magier erhältst du auf den angegebenen Magierstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Magiermerkmale“ aufgeführt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level1-spellcasting",
+      "level": 4,
+      "text": "1. Stufe: Zauberwirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-introduction",
+      "text": "Als Student arkaner Magie hast du gelernt, Zauber zu wirken. Die Regeln zum Zauberwirken findest du unter „Zauber“. Folgende Informationen erklären, wie du diese Regeln mit den Magierzaubern verwendest, die in der Zauberliste des Magiers weiter hinten in dieser Klassenbeschreibung aufgeführt sind."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.progression-table",
+      "caption": "Magiermerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Zaubertricks",
+        "Vorbereitete Zauber",
+        "Grad 1",
+        "Grad 2",
+        "Grad 3",
+        "Grad 4",
+        "Grad 5",
+        "Grad 6",
+        "Grad 7",
+        "Grad 8",
+        "Grad 9"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Zauberwirken, Ritual-Adept, Arkane Erholung",
+          "3",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "2",
+          "+2",
+          "Gelehrter",
+          "3",
+          "5",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "3",
+          "+2",
+          "Magier-Unterklasse",
+          "3",
+          "6",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "4",
+          "7",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "5",
+          "+3",
+          "Zauber auswendig lernen",
+          "4",
+          "9",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "6",
+          "+3",
+          "Unterklassenmerkmal",
+          "4",
+          "10",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "7",
+          "+3",
+          "–",
+          "4",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "4",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "9",
+          "+4",
+          "–",
+          "4",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "10",
+          "+4",
+          "Unterklassenmerkmal",
+          "5",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "11",
+          "+4",
+          "–",
+          "5",
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "5",
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "13",
+          "+5",
+          "–",
+          "5",
+          "17",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "14",
+          "+5",
+          "Unterklassenmerkmal",
+          "5",
+          "18",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "15",
+          "+5",
+          "–",
+          "5",
+          "19",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "5",
+          "21",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "17",
+          "+6",
+          "–",
+          "5",
+          "22",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "18",
+          "+6",
+          "Zaubermeisterschaft",
+          "5",
+          "23",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "5",
+          "24",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "20",
+          "+6",
+          "Lieblingszauber",
+          "5",
+          "25",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "2",
+          "1",
+          "1"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-cantrips",
+      "text": "Zaubertricks: Du kennst drei Magierzaubertricks deiner Wahl. Kältestrahl, Licht und Magierhand werden empfohlen. Wann immer du eine lange Rast beendest, kannst du einen deiner Zaubertricks dieses Merkmals durch einen anderen Magierzaubertrick deiner Wahl ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-cantrips-growth",
+      "text": "Auf der 4. und 10. Magierstufe erlernst du jeweils einen weiteren Magierzaubertrick deiner Wahl, wie in der Spalte „Zaubertricks“ der Tabelle „Magiermerkmale“ dargestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-spellbook",
+      "text": "Zauberbuch: Die Krönung deiner magischen Ausbildung bestand in der Erschaffung eines Buchs – deines Zauberbuchs. Dieses ist ein winziger Gegenstand, der 1,5 Kilogramm wiegt, 100 Seiten enthält und nur von dir oder jemandem, der den Zauber Identifizieren wirkt, gelesen werden kann. Du bestimmst Erscheinungsbild und Materialien des Buchs. Lege fest, ob es sich beispielsweise um einen Folianten mit Blattgold oder eine Sammlung von verzwirnten Pergamentseiten handelt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-spellbook-starting",
+      "text": "Das Buch enthält die Zauber ab dem 1. Grad, die du kennst. Es beginnt mit sechs Magierzaubern des 1. Grades nach deiner Wahl. Donnerwoge, Federfall, Magie entdecken, Magierrüstung, Magisches Geschoss und Schlaf werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-spellbook-growth",
+      "text": "Wann immer du nach der 1. Magierstufe eine weitere erhältst, kannst du deinem Zauberbuch zwei neue Magierzauber nach deiner Wahl hinzufügen. Die Zauber müssen einen Grad aufweisen, für den du Zauberplätze entsprechend der Tabelle „Magiermerkmale“ verfügbar hast. Sie sind der Höhepunkt deiner regelmäßigen arkanen Forschungen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-slots",
+      "text": "Zauberplätze: Die Tabelle „Magiermerkmale“ zeigt, wie viele Zauberplätze dir zum Wirken deiner Zauber ab dem 1. Grad zur Verfügung stehen. Du erhältst alle verbrauchten Zauberplätze nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-prepared",
+      "text": "Vorbereitete Zauber ab dem 1. Grad: Du bereitest die Liste der Zauber ab dem 1. Grad vor, die dir mit diesem Merkmal zur Verfügung stehen. Wähle dazu vier Zauber aus deinem Zauberbuch aus. Der Grad der ausgewählten Zauber muss dem der verfügbaren Zauberplätze entsprechen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-prepared-growth",
+      "text": "Die Anzahl der Zauber auf deiner Liste erhöht sich, wenn du weitere Magierstufen erhältst, wie in der Spalte „Vorbereitete Zauber“ der Tabelle „Magiermerkmale“ dargestellt. Wann immer sich diese Anzahl erhöht, wählst du zusätzliche Magierzauber aus, bis die Anzahl von Zaubern auf deiner Liste der Anzahl in der Tabelle entspricht. Der Grad der ausgewählten Zauber muss dem der verfügbaren Zauberplätze entsprechen. Beispiel: Wenn du ein Magier der 3. Stufe bist, kann deine Liste vorbereiteter Zauber sechs Zauber des 1. und 2. Grades aus deinem Zauberbuch in beliebiger Kombination enthalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-prepared-other-features",
+      "text": "Wenn ein anderes Magiermerkmal dir Zauber gibt, die du stets vorbereitet hast, zählen diese Zauber nicht bei der Anzahl von Zaubern, die du mit diesem Merkmal vorbereiten kannst. Ansonsten zählen diese Zauber jedoch als Magierzauber für dich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-prepared-swap",
+      "text": "Deine vorbereiteten Zauber ändern: Wann immer du eine lange Rast beendest, kannst du deine Liste vorbereiteter Zauber ändern und beliebige Zauber von der Liste mit anderen Zaubern aus deinem Zauberbuch ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-ability",
+      "text": "Attribut zum Zauberwirken: Dein Attribut zum Wirken der Magierzauber ist Intelligenz."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-spellcasting-focus",
+      "text": "Zauberfokus: Du kannst einen arkanen Fokus oder dein Zauberbuch als Zauberfokus für deine Magierzauber verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level1-arcane-recovery",
+      "level": 4,
+      "text": "1. Stufe: Arkane Erholung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-arcane-recovery-description",
+      "text": "Durch das Studium deines Zauberbuchs kannst du einen Teil deiner magischen Energie zurückerhalten. Nach einer kurzen Rast kannst du dir verbrauchte Zauberplätze aussuchen, die du zurückerhältst. Die Zauberplätze dürfen zusammen nur eine Gradzahl besitzen, die höchstens der Hälfte deiner Magierstufe entspricht (aufgerundet), und keiner der Zauberplätze darf den 6. Grad oder höher aufweisen. Beispiel: Wenn du ein Magier der 4. Stufe bist, kannst du Zauberplätze im Wert von zwei Graden zurückerhalten: entweder einen Zauberplatz des 2. oder zwei Zauberplätze des 1. Grades."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-arcane-recovery-rest",
+      "text": "Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "classes.wizard.spellbook-expand-or-replace",
+      "title": "Das Zauberbuch erweitern oder ersetzen",
+      "text": "Die Zauber, die du deinem Zauberbuch bei Stufenaufstiegen hinzufügst, spiegeln deine fortlaufenden magischen Forschungen wider. Du könntest im Verlauf deines Abenteuers aber noch andere Zauber finden, die du dem Buch hinzufügen kannst. Beispielsweise könntest du auf einer Zauberschriftrolle einen Magierzauber entdecken, den du in dein Zauberbuch kopierst.\n\nEinen Zauber ins Buch kopieren: Wenn du einen Magierzauber ab dem 1. Grad findest, kannst du ihn in dein Zauberbuch kopieren, sofern er einen Grad aufweist, den du vorbereiten kannst, und du genügend Zeit zum Kopieren hast. Pro Zaubergrad dauert das Kopieren zwei Stunden und kostet 50 GM. Danach kannst du den Zauber wie alle anderen in deinem Zauberbuch vorbereiten.\n\nDas Buch kopieren: Du kannst Zauber aus deinem Zauberbuch in ein anderes Buch kopieren. Dies funktioniert wie das Kopieren eines neuen Zaubers, jedoch schneller und einfacher, da du diese Zauber bereits kennst. Pro Zaubergrad dauert dieser Vorgang nur eine Stunde und kostet 10 GM.\n\nWenn du dein Zauberbuch verlierst, kannst du die vorbereiteten Magierzauber auf die gleiche Weise in ein neues Zauberbuch übertragen. Zum Ausfüllen des restlichen neuen Buchs musst du neue Zauber finden. Aus diesem Grund halten viele Magier ein Ersatzzauberbuch bereit."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level1-ritual-adept",
+      "level": 4,
+      "text": "1. Stufe: Ritual-Adept"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level1-ritual-adept-description",
+      "text": "Du kannst jeden Zauber als Ritual wirken, sofern er als Ritual gekennzeichnet und in deinem Zauberbuch enthalten ist. Ein solcher Zauber muss nicht vorbereitet sein, doch du musst ihn aus dem Buch lesen, um ihn auf diese Art zu wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level2-scholar",
+      "level": 4,
+      "text": "2. Stufe: Gelehrter"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level2-scholar-description",
+      "text": "Beim Studium der Magie hast du dich noch auf ein weiteres Fachgebiet spezialisiert. Wähle eine der folgenden Fertigkeiten aus, sofern du Übung darin hast: Arkane Kunde, Geschichte, Heilkunde, Nachforschungen, Naturkunde oder Religion. Du hast Expertise in der ausgewählten Fertigkeit."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Magier-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level3-subclass-description",
+      "text": "Du erhältst eine Magier-Unterklasse deiner Wahl. Die Unterklasse Hervorrufer wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Magierstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Magierstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Magierstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level5-memorize-spell",
+      "level": 4,
+      "text": "5. Stufe: Zauber auswendig lernen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level5-memorize-spell-description",
+      "text": "Wann immer du eine kurze Rast beendest, kannst du dein Zauberbuch studieren und einen der Magierzauber ab dem 1. Grad, die du für dein Merkmal Zauberwirken vorbereitet hast, durch einen anderen Zauber ab dem 1. Grad aus dem Buch ersetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level18-spell-mastery",
+      "level": 4,
+      "text": "18. Stufe: Zaubermeisterschaft"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level18-spell-mastery-description",
+      "text": "Du beherrschst bestimmte Zauber derart meisterhaft, dass du sie beliebig oft wirken kannst. Wähle einen Zauber des 1. und einen Zauber des 2. Grades aus deinem Zauberbuch aus, die den Zeitaufwand von einer Aktion haben. Du hast diese Zauber stets vorbereitet und kannst sie auf dem niedrigsten Grad wirken, ohne einen Zauberplatz zu verbrauchen. Um einen der Zauber auf einem höheren Grad zu wirken, musst du einen Zauberplatz verbrauchen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level18-spell-mastery-swap",
+      "text": "Wann immer du eine lange Rast beendest, kannst du dein Zauberbuch studieren und einen dieser Zauber durch einen passenden Zauber des gleichen Grades aus dem Buch ersetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe der Zaubererinnerung wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.level20-signature-spells",
+      "level": 4,
+      "text": "20. Stufe: Lieblingszauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.level20-signature-spells-description",
+      "text": "Wähle zwei Zauber des 3. Grades aus deinem Zauberbuch als Lieblingszauber aus. Du hast diese Zauber stets vorbereitet und kannst sie jeweils einmal auf dem 3. Grad wirken, ohne einen Zauberplatz zu verbrauchen. Du kannst dies erst nach einer kurzen oder langen Rast erneut tun. Um einen der Zauber auf einem höheren Grad zu wirken, musst du einen Zauberplatz verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.spell-list",
+      "level": 3,
+      "text": "Zauberliste des Magiers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.spell-list-introduction",
+      "text": "In diesem Abschnitt wird die Zauberliste des Magiers vorgestellt. Die Zauber sind nach Zaubergrad und dann alphabetisch sortiert, und die Schule der Magie der jeweiligen Zauber ist aufgeführt. In der Spalte „Besonderheit“ bedeutet K, dass der Zauber Konzentration erfordert, R bedeutet, dass es sich um ein Ritual handelt, und M bedeutet, dass eine bestimmte Materialkomponente erforderlich ist."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-cantrips",
+      "caption": "Zaubertricks (Magierzauber des 0. Grades)",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ausbessern",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Botschaft",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Einfache Illusion",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Elementalismus",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Feuerpfeil",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Gift versprühen",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Kalte Hand",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Kältestrahl",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Licht",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Magierhand",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Säurespritzer",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Schockgriff",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Tanzende Lichter",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Taschenspielerei",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Zielsicherer Schlag",
+          "Erkenntnismagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level1",
+      "caption": "Magierzauber des 1. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Alarm",
+          "Bannmagie",
+          "R"
+        ],
+        [
+          "Brennende Hände",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Chromatische Kugel",
+          "Hervorrufungsmagie",
+          "M"
+        ],
+        [
+          "Donnerwoge",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Eismesser",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Falsches Leben",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Federfall",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Fürchterlicher Lachanfall",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Identifizieren",
+          "Erkenntnismagie",
+          "R, M"
+        ],
+        [
+          "Illusionsschrift",
+          "Illusionsmagie",
+          "R, M"
+        ],
+        [
+          "Lange Schritte",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Lautloses Trugbild",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Magie entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Magierrüstung",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Magisches Geschoss",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Nebelwolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Person bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Rascher Rückzug",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Schild",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Schlaf",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Schmieren",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Schutz vor Gut und Böse",
+          "Bannmagie",
+          "K, M"
+        ],
+        [
+          "Schwebende Scheibe",
+          "Beschwörungsmagie",
+          "R"
+        ],
+        [
+          "Selbstverkleidung",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Sprachen verstehen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Springen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Sprühende Farben",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Strahl der Übelkeit",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Unsichtbarer Diener",
+          "Beschwörungsmagie",
+          "R"
+        ],
+        [
+          "Vertrauten finden",
+          "Beschwörungsmagie",
+          "R, M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level2",
+      "caption": "Magierzauber des 2. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Arkanes Schloss",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Attribut verbessern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Blindheit/Taubheit",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Dauerhafte Flamme",
+          "Hervorrufungsmagie",
+          "M"
+        ],
+        [
+          "Drachenodem",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Dunkelheit",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Dunkelsicht",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Einflüsterung",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Flammenkugel",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Gedanken wahrnehmen",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Gedankendorn",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Gegenstand aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Gestalt verändern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Klopfen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Magische Aura des Arkanisten",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Magische Waffe",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Magischer Mund",
+          "Illusionsmagie",
+          "R, M"
+        ],
+        [
+          "Nebelschritt",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Person festhalten",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Sanfte Ruhe",
+          "Nekromantie",
+          "R, M"
+        ],
+        [
+          "Säurepfeil",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Schwächestrahl",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Schweben",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Seiltrick",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Sengender Strahl",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Spiegelbilder",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Spinnenklettern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Spinnennetz",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Unsichtbares sehen",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Unsichtbarkeit",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Vergrößern/Verkleinern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Verschwimmen",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Vorahnung",
+          "Erkenntnismagie",
+          "R, M"
+        ],
+        [
+          "Windstoß",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Zerbersten",
+          "Hervorrufungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level3",
+      "caption": "Magierzauber des 3. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Blitz",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerball",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Fliegen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Flimmern",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Fluch brechen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Fluch",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Furcht",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Gasförmige Gestalt",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Gegenzauber",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Geisterross",
+          "Illusionsmagie",
+          "R"
+        ],
+        [
+          "Glyphe des Schutzes",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Hast",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Hellsehen",
+          "Erkenntnismagie",
+          "K, M"
+        ],
+        [
+          "Hypnotisches Muster",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Mächtiges Trugbild",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Magie bannen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Mit Toten sprechen",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Schneesturm",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Schutz vor Energie",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Schutzkreis",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Stinkende Wolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Tote beleben",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Unauffindbarkeit",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Vampirgriff",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Verlangsamen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Verständigung",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Wasser atmen",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Winzige Hütte",
+          "Hervorrufungsmagie",
+          "R"
+        ],
+        [
+          "Zungen",
+          "Erkenntnismagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level4",
+      "caption": "Magierzauber des 4. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Arkanes Auge",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Ätzkugel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Dimensionstür",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Dürre",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Eissturm",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerschild",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerwand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Geheime Truhe",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Kreatur aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Mächtige Unsichtbarkeit",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Monster bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Privates Heiligtum",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Scheingelände",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Schwache Elementare beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Schwarze Tentakel",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Stein formen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Steinhaut",
+          "Verwandlungsmagie",
+          "K, M"
+        ],
+        [
+          "Tödliches Phantom",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Treuer Hund",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Unverwüstliche Sphäre",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Verarbeitung",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Verbannung",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Verwandlung",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Verwirrung",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Wasser kontrollieren",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Weissagung",
+          "Erkenntnismagie",
+          "R, M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level5",
+      "caption": "Magierzauber des 5. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ablenkung",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Arkane Hand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Äußerlichkeiten",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Ausspähung",
+          "Erkenntnismagie",
+          "K, M"
+        ],
+        [
+          "Bindung der Ebenen",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Drachen herbeirufen",
+          "Beschwörungsmagie",
+          "K, M"
+        ],
+        [
+          "Elementar beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Energiewand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Erinnerung verändern",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Erschaffung",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Geas",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Gegenstände beleben",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Kältekegel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Kontakt zu anderen Ebenen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Kreis der Teleportation",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Monster festhalten",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Person beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Sagenkunde",
+          "Erkenntnismagie",
+          "M"
+        ],
+        [
+          "Steinwand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Telekinese",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Telepathische Bindung",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Todeswolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Traum",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Wände passieren",
+          "Verwandlungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level6",
+      "caption": "Magierzauber des 6. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Auflösung",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Böser Blick",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Eiswand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Erde bewegen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Fleisch zu Stein",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Frostsphäre",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Kettenblitz",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Kugel der Unverwundbarkeit",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Magisches Gefäß",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Massen-Einflüsterung",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Notfall",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Sofortige Beschwörung",
+          "Beschwörungsmagie",
+          "R, M"
+        ],
+        [
+          "Sonnenstrahl",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Todeskreis",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Untote erschaffen",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Unwiderstehlicher Tanz",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Vorbestimmtes Trugbild",
+          "Illusionsmagie",
+          "M"
+        ],
+        [
+          "Wächter und Hüter",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Wahrer Blick",
+          "Erkenntnismagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level7",
+      "caption": "Magierzauber des 7. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Arkane Spiegelung",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Arkanes Schwert",
+          "Hervorrufungsmagie",
+          "K, M"
+        ],
+        [
+          "Ätherische Gestalten",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Ebenenwechsel",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Energiekäfig",
+          "Hervorrufungsmagie",
+          "K, M"
+        ],
+        [
+          "Finger des Todes",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Herrliches Herrenhaus",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Regenbogenspiel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Schwerkraft umkehren",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Simulakrum",
+          "Illusionsmagie",
+          "M"
+        ],
+        [
+          "Spätzündender Feuerball",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Symbol",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Teleportieren",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Trugbild projizieren",
+          "Illusionsmagie",
+          "K, M"
+        ],
+        [
+          "Verbergen",
+          "Verwandlungsmagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level8",
+      "caption": "Magierzauber des 8. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Antimagisches Feld",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Antipathie/Sympathie",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Flammende Wolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Gedankenleere",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Halbebene",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Irrgarten",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Klon",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Monster beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Sonnenfeuer",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Wetterkontrolle",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Wirrnis",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Wort der Macht: Betäubung",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.wizard.spell-list-level9",
+      "caption": "Magierzauber des 9. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Astrale Projektion",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Einkerkerung",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Gestaltwandel",
+          "Verwandlungsmagie",
+          "K, M"
+        ],
+        [
+          "Meteoritenschwarm",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Regenbogenwand",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Tor",
+          "Beschwörungsmagie",
+          "K, M"
+        ],
+        [
+          "Unheimliches Schicksal",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Voraussicht",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Wahre Verwandlung",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Wort der Macht: Tod",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Wunsch",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Zeitstopp",
+          "Verwandlungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.subclass-evoker",
+      "level": 3,
+      "text": "Magier-Unterklasse: Hervorrufer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-evoker-motto",
+      "text": "Erzeuge explosive Elementareffekte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-evoker-introduction",
+      "text": "Deine Studien konzentrieren sich auf Zauber, die mächtige Elementareffekte hervorrufen – wie bittere Kälte, sengende Flammen, grollenden Donner, zuckende Blitze und ätzende Säure. Hervorrufer werden oft in Armeen eingesetzt, um feindliche Truppen schon von Weitem unter Beschuss zu nehmen. Manche nutzen ihre Kräfte auch, um andere zu beschützen – und einige setzen sie zu ihrem eigenen Vorteil ein."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.subclass-level3-evocation-savant",
+      "level": 4,
+      "text": "3. Stufe: Gelehrter der Hervorrufungsmagie"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-level3-evocation-savant-description",
+      "text": "Wähle zwei Magierzauber der Schule der Hervorrufungsmagie des höchstens 2. Grades aus und füge sie gratis deinem Zauberbuch hinzu."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-level3-evocation-savant-growth",
+      "text": "Wann immer außerdem ein neuer Zauberplatzgrad in dieser Klasse verfügbar wird, kannst du deinem Zauberbuch gratis einen Magierzauber der Schule der Hervorrufungsmagie hinzufügen. Der Grad des ausgewählten Zaubers muss dem der verfügbaren Zauberplätze entsprechen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.subclass-level3-potent-cantrip",
+      "level": 4,
+      "text": "3. Stufe: Kraftvoller Zaubertrick"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-level3-potent-cantrip-description",
+      "text": "Deine Schadenszaubertricks wirken auch auf Kreaturen, welche die volle Wucht deiner magischen Angriffe zu vermeiden versuchen. Wenn du einen Zaubertrick auf eine Kreatur wirkst und dein Angriffswurf misslingt, oder wenn das Ziel einen Rettungswurf gegen den Zaubertrick besteht, erleidet das Ziel dennoch die Hälfte des Schadens (sofern der Zaubertrick Schaden bewirkt), jedoch keine zusätzliche Effekte."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.subclass-level6-sculpt-spells",
+      "level": 4,
+      "text": "6. Stufe: Zauber formen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-level6-sculpt-spells-description",
+      "text": "Du kannst innerhalb der Effekte deiner Hervorrufungszauber Bereiche von relativer Sicherheit erzeugen. Wenn du einen Hervorrufungszauber wirkst, der andere Kreaturen betrifft, die du sehen kannst, so kannst du eine Anzahl dieser Kreaturen in Höhe von 1 plus Zaubergrad auswählen. Die ausgewählten Kreaturen bestehen ihren Rettungswurf gegen deinen Zauber automatisch und erleiden keinen Schaden, wenn sie normalerweise die Hälfte des Schadens erleiden würden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.subclass-level10-potent-evocation",
+      "level": 4,
+      "text": "10. Stufe: Mächtige Hervorrufung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-level10-potent-evocation-description",
+      "text": "Wann immer du einen Magierzauber von der Schule der Hervorrufungsmagie wirkst, kannst du dem Schadenswurf des Zaubers deinen Intelligenzmodifikator hinzufügen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.wizard.subclass-level14-overchannel",
+      "level": 4,
+      "text": "14. Stufe: Überladen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-level14-overchannel-description",
+      "text": "Du kannst die Macht deiner Zauber erhöhen. Wenn du einen Magierzauber mit einem Zauberplatz des 1. bis 5. Grades wirkst und der Zauber Schaden bewirkt, kannst du mit diesem Zauber in dem Zug, in dem du ihn wirkst, maximalen Schaden bewirken. Beim ersten Mal hat dies keine nachteiligen Effekte für dich. Wenn du dieses Merkmal jedoch vor Ende einer langen Rast erneut einsetzt, erleidest du sofort danach 2W12 nekrotischen Schaden pro Zauberplatzgrad. Dieser Schaden ignoriert Resistenzen und Immunitäten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.wizard.subclass-level14-overchannel-scaling",
+      "text": "Wann immer du dieses Merkmal vor Ende einer langen Rast erneut verwendest, erhöht sich der nekrotische Schaden um weitere 1W12 pro Zaubergrad."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-table",
+      "label": "Klassenkombinationen für Zauberwirker"
+    }
+  ],
+  "digest": "sha256:4859efdb59e9d2960a7a88fcdf68fd19ae17cf4c6e9d2b12494129b3f1408855"
+}

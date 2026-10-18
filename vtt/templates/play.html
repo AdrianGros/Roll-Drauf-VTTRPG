@@ -2193,6 +2193,7 @@
                         <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/campaigns">Kampagnen</button>
                         <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/characters">Charaktere</button>
                         <a class="book-dashboard-ribbon-btn" data-creation-engine-nav data-book-return-target="/api/ce/authoring" aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
+                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
                         <button type="button" class="book-dashboard-ribbon-btn is-active">Spieltisch</button>
                     </div>
                     <div class="book-dashboard-crest" aria-label="Tischmodus">Am Spieltisch</div>
@@ -2607,6 +2608,7 @@
             <div id="appMenuStatus" class="app-menu-status" role="none"></div>
             <button type="button" id="appMenuReturn" class="app-menu-item" role="menuitem">Zur Kampagne zurückkehren</button>
             <a id="appMenuCreationEngine" class="app-menu-item" role="menuitem" data-creation-engine-nav data-book-return-target="/api/ce/authoring" aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
+            <a class="app-menu-item" role="menuitem" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
             <button type="button" id="appMenuHelp" class="app-menu-item" role="menuitem">Hilfe &amp; Tastenkürzel</button>
             <hr class="app-menu-divider">
             <button type="button" id="appMenuLeave" class="app-menu-item app-menu-item--danger" role="menuitem">Sitzung verlassen</button>
@@ -2906,6 +2908,7 @@
     <script src="/static/js/socket.io.min.js"></script>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/creation-engine-nav.js"></script>
+    <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/book-routes.js"></script>
     <script src="/static/js/book-shell.js"></script>
     <script src="/static/js/play-client.js"></script>

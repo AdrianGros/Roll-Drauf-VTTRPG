@@ -1,0 +1,451 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "glossary.a-b",
+  "slug": "regeldefinitionen-a-b",
+  "title": "Regeldefinitionen A–B",
+  "navigationPath": [
+    "Regelglossar",
+    "Regeldefinitionen A–B"
+  ],
+  "order": 810,
+  "sourcePages": [
+    203,
+    204,
+    205,
+    206
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.regeldefinitionen",
+      "level": 2,
+      "text": "Regeldefinitionen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.regeldefinitionen.text-1",
+      "text": "Es folgen Definitionen verschiedener Regeln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.abenteuer",
+      "level": 3,
+      "text": "Abenteuer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.abenteuer.text-1",
+      "text": "Ein Abenteuer ist eine Serie von Begegnungen. Aus den beim Durchspielen erlebten Geschehnissen entwickelt sich eine Geschichte. Siehe auch „Begegnung“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.abrunden",
+      "level": 3,
+      "text": "Abrunden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.abrunden.text-1",
+      "text": "Wenn eine Zahl im Spiel multipliziert oder geteilt wird, rundest du das Ergebnis gegebenenfalls ab. Selbst bei Dezimalstellen größer als fünf wird abgerundet. Manche Regeln machen eine Ausnahme und besagen, dass du aufrunden sollst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.aktion",
+      "level": 3,
+      "text": "Aktion"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.aktion.text-1",
+      "text": "In deinem Zug kannst du eine Aktion ausführen. Wähle aus, ob du eine der Aktionen unten oder eine der besonderen Aktionen ausführst, die deine Merkmale dir gewähren. Siehe auch „Die Spielregeln“ („Aktionen“). Diese Aktionen sind anderswo in diesem Glossar definiert:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "glossary.a-b.aktion.liste-aktionen",
+      "items": [
+        "Angriff",
+        "Ausweichen",
+        "Beeinflussen",
+        "Helfen",
+        "Magie wirken",
+        "Rückzug",
+        "Spurt",
+        "Studieren",
+        "Suchen",
+        "Verstecken",
+        "Verwenden",
+        "Vorbereiten"
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.anfaelligkeit",
+      "level": 3,
+      "text": "Anfälligkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.anfaelligkeit.text-1",
+      "text": "Wenn du anfällig für eine Schadensart bist, ist der Schaden dieser Art gegen dich verdoppelt. Die Anfälligkeit wird pro Instanz des Schadens nur einmal angewendet. Siehe auch „Die Spielregeln“ („Schaden und Heilung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.angriff-aktion",
+      "level": 3,
+      "text": "Angriff (Aktion)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.angriff-aktion.text-1",
+      "text": "Wenn du die Angriffsaktion ausführst, kannst du einen Angriffswurf mit einer Waffe oder einem waffenlosen Angriff ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.angriff-aktion.text-2",
+      "text": "Waffen an- und ablegen: Wenn du einen Angriff ausführst, kannst du als Teil dieser Aktion eine Waffe an- oder ablegen. Tu dies entweder vor oder nach dem Angriff. Wenn du eine Waffe vor dem Angriff anlegst, musst du sie bei diesem Angriff nicht zwangsläufig verwenden. Zum Anlegen einer Waffe gehört es, sie aus einer Scheide zu ziehen oder sie aufzuheben. Zum Ablegen einer Waffe gehört es, sie in eine Scheide zu stecken, sie zu verstauen oder fallenzulassen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.angriff-aktion.text-3",
+      "text": "Bewegung zwischen Angriffen: Wenn du dich in deinem Zug bewegst und ein Merkmal wie Zusätzlicher Angriff hast, das dir mehr als einen Angriff als Teil der Angriffsaktion gewährt, kannst du die Bewegung teilweise oder ganz nutzen, um dich zwischen deinen Angriffen zu bewegen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.angriffswurf",
+      "level": 3,
+      "text": "Angriffswurf"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.angriffswurf.text-1",
+      "text": "Ein Angriffswurf ist eine W20-Prüfung, die einen Angriff mit einer Waffe, einen waffenlosen Angriff oder einen Zauberangriff repräsentiert. Siehe auch „Die Spielregeln“ („W20-Prüfungen“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.attributswert-und-modifikator",
+      "level": 3,
+      "text": "Attributswert und -modifikator"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.attributswert-und-modifikator.text-1",
+      "text": "Eine Kreatur hat sechs Attributswerte mit entsprechenden Modifikatoren: Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit und Charisma. Füge den Modifikator hinzu, wenn du eine W20-Prüfung mit dem jeweiligen Attribut ausführst oder von einer Regel aufgefordert wirst, ihn hinzuzufügen. Siehe auch „Die Spielregeln“ („Die sechs Attribute“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.attributswurf",
+      "level": 3,
+      "text": "Attributswurf"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.attributswurf.text-1",
+      "text": "Ein Attributswurf ist eine W20-Prüfung, die den Einsatz von einem der sechs Attribute (oder einer bestimmten Fertigkeit, die mit einem Attribut assoziiert ist) repräsentiert, um eine Herausforderung zu überwinden. Siehe auch „Die Spielregeln“ („W20-Prüfungen“ und „Übung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.ausstroemung-wirkungsbereich",
+      "level": 3,
+      "text": "Ausströmung (Wirkungsbereich)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.ausstroemung-wirkungsbereich.text-1",
+      "text": "Eine Ausströmung ist ein Wirkungsbereich, der von einer Kreatur oder einem Gegenstand in geraden Linien in alle Richtungen ausgeht. Der Effekt, der die Ausströmung erzeugt, definiert deren Wirkungsdistanz."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.ausstroemung-wirkungsbereich.text-2",
+      "text": "Eine Ausströmung bewegt sich mit ihrem Ursprung (Kreatur oder Gegenstand), sofern sie kein unmittelbarer oder ortsfester Effekt ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.ausstroemung-wirkungsbereich.text-3",
+      "text": "Der Ursprung ist nicht im Wirkungsbereich enthalten, es sei denn, der Wirker beschließt dies."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.ausweichen-aktion",
+      "level": 3,
+      "text": "Ausweichen (Aktion)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.ausweichen-aktion.text-1",
+      "text": "Die Ausweichaktion bietet dir die folgenden Vorzüge: Bis zum Beginn deines nächsten Zugs ist jeder Angriffswurf gegen dich im Nachteil, sofern du den Angreifer sehen kannst, und du bist bei Geschicklichkeitsrettungswürfen im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.ausweichen-aktion.text-2",
+      "text": "Du verlierst diese Vorzüge, wenn du kampfunfähig bist oder deine Bewegungsrate 0 beträgt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.beeinflussen-aktion",
+      "level": 3,
+      "text": "Beeinflussen (Aktion)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.beeinflussen-aktion.text-1",
+      "text": "Mit der Beeinflussen-Aktion kannst du ein Monster zu etwas drängen. Beschreibe oder stelle rollenspielerisch dar, wie du mit dem Monster kommunizierst. Versuchst du, es zu täuschen, einzuschüchtern, zu amüsieren oder zu überreden? Der SL bestimmt dann, ob das Monster bereitwillig, nicht bereitwillig oder zögerlich auf deine Interaktion reagiert. Daraus ergibt sich, ob ein Attributswurf erforderlich ist, wie unten erläutert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.beeinflussen-aktion.text-2",
+      "text": "Bereitwillig: Wenn deine Beeinflussung mit den Interessen des Monsters übereinstimmt, ist kein Attributswurf erforderlich: Das Monster kommt deinen Wünschen auf seine Art nach."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.beeinflussen-aktion.text-3",
+      "text": "Nicht bereitwillig: Wenn deine Beeinflussung mit den Interessen oder der Gesinnung des Monsters in Konflikt steht, ist kein Attributswurf erforderlich: Das Monster kommt deinen Wünschen nicht nach."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.beeinflussen-aktion.text-4",
+      "text": "Zögerlich: Wenn du das Monster zu etwas bewegen willst, was es nicht unbedingt tun will, musst du einen Attributswurf ausführen, der von der Haltung des Monsters betroffen ist: Gleichgültig, freundlich gesinnt oder feindlich gesinnt, wie jeweils in diesem Glossar definiert. In der Tabelle „Attributswürfe zum Beeinflussen“ findest du Vorschläge, welcher Attributswurf je nach deiner Interaktion mit dem Monster auszuführen ist. Der SL wählt den Attributswurf aus. Dieser hat einen Standard-SG in Höhe von 15 oder dem Intelligenzwert des Monsters, je nachdem, welcher Wert höher ist. Bei einem Erfolg tut das Monster, was du willst. Misslingt der Wurf, so musst du 24 Stunden (oder eine Dauer nach Vorgabe des SL) abwarten, ehe du erneut versuchen kannst, es auf diese Art zu beeinflussen."
+    },
+    {
+      "type": "table",
+      "ruleId": "glossary.a-b.beeinflussen-aktion.tabelle-attributswuerfe-beeinflussen",
+      "caption": "Attributswürfe zum Beeinflussen",
+      "columns": [
+        "Attributswurf",
+        "Interaktion"
+      ],
+      "rows": [
+        [
+          "Charismawurf (Auftreten)",
+          "Ein Monster amüsieren"
+        ],
+        [
+          "Charismawurf (Einschüchtern)",
+          "Ein Monster einschüchtern"
+        ],
+        [
+          "Charismawurf (Täuschen)",
+          "Ein Monster täuschen, das dich versteht"
+        ],
+        [
+          "Charismawurf (Überzeugen)",
+          "Ein Monster überzeugen, das dich versteht"
+        ],
+        [
+          "Weisheitswurf (Mit Tieren umgehen)",
+          "Ein Tier oder eine Monstrosität sanft überreden"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.begegnung",
+      "level": 3,
+      "text": "Begegnung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.begegnung.text-1",
+      "text": "Eine Begegnung ist eine Szene in einem Abenteuer, die Teil von mindestens einer der drei Säulen des Spiels ist: soziale Interaktion, Erkundung oder Kampf. Siehe auch „Die Spielregeln“ („Soziale Interaktion“, „Erkundung“ und „Kampf“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.besessenheit",
+      "level": 3,
+      "text": "Besessenheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.besessenheit.text-1",
+      "text": "Manche Effekte bewirken, dass eine Kreatur von einem anderen Wesen besessen ist. Der Effekt der Inbesitznahme definiert, wie die Besessenheit funktioniert. Besessenheit kann durch den Zauber Schutz vor Gut und Böse verhindert und durch den Zauber Gutes und Böses bannen beendet werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.besetzter-bereich",
+      "level": 3,
+      "text": "Besetzter Bereich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.besetzter-bereich.text-1",
+      "text": "Ein Bereich ist besetzt, wenn sich eine Kreatur darin befindet oder er vollständig mit Gegenständen angefüllt ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.betaeubt-zustand",
+      "level": 3,
+      "text": "Betäubt (Zustand)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.betaeubt-zustand.text-1",
+      "text": "Wenn du den Zustand Betäubt hast, wirken folgende Effekte auf dich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.betaeubt-zustand.text-2",
+      "text": "Kampfunfähig: Du hast den Zustand Kampfunfähig."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.betaeubt-zustand.text-3",
+      "text": "Beeinträchtigte Rettungswürfe: Du scheiterst bei Stärke- und Geschicklichkeitsrettungswürfen automatisch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.betaeubt-zustand.text-4",
+      "text": "Beeinträchtigte Angriffe: Angriffswürfe gegen dich sind im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.bewegungsrate",
+      "level": 3,
+      "text": "Bewegungsrate"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewegungsrate.text-1",
+      "text": "Eine Kreatur hat eine Bewegungsrate. Diese ist die Strecke in Metern, die die Kreatur höchstens zurücklegen kann, wenn sie sich in ihrem Zug bewegt. Siehe auch „Fliegen“, „Klettern“, „Kriechen“, „Schwimmen“, „Springen“ und „Die Spielregeln“ („Kampf“)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewegungsrate.text-2",
+      "text": "Besondere Bewegungsraten: Manche Kreaturen haben besondere Bewegungsraten wie eine Flug-, Grab-, Kletter- oder Schwimmbewegungsrate, wie jeweils in diesem Glossar definiert. Wenn du mehrere Bewegungsraten hast, wähle eine aus, wenn du dich bewegst. Du kannst in deinem Zug zwischen deinen Bewegungsraten wechseln. Ziehe bei jedem Wechsel die Entfernung, die du bereits zurückgelegt hast, von der neuen Bewegungsrate ab. Das Ergebnis bestimmt, wie weit du dich noch bewegen kannst. Ist das Ergebnis 0 oder negativ, so kannst du dich im aktuellen Zug nicht mehr bewegen. Beispiel: Falls du über eine Bewegungsrate von neun Metern und eine Flugbewegungsrate von zwölf Metern verfügst, könntest du drei Meter weit fliegen, drei Meter weit gehen und dich dann wieder in die Luft erheben, um sechs Meter weit zu fliegen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewegungsrate.text-3",
+      "text": "Änderungen deiner Bewegungsraten: Wenn ein Effekt deine Bewegungsrate vorübergehend erhöht oder verringert, werden besondere Bewegungsraten für die gleiche Dauer um den gleichen Betrag erhöht oder verringert. Beispiel: Wenn deine Bewegungsrate auf 0 verringert ist und du eine Kletterbewegungsrate hast, wird diese ebenfalls auf 0 verringert. Wenn deine Bewegungsrate halbiert wird und du über eine Flugbewegungsrate verfügst, wird diese ebenfalls halbiert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.bewusstlos-zustand",
+      "level": 3,
+      "text": "Bewusstlos (Zustand)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewusstlos-zustand.text-1",
+      "text": "Wenn du den Zustand Bewusstlos hast, wirken folgende Effekte auf dich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewusstlos-zustand.text-2",
+      "text": "Inert: Du hast die Zustände Kampfunfähig und Liegend, und du lässt fallen, was immer du gehalten hast. Wenn dieser Zustand endet, bist du weiterhin liegend."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewusstlos-zustand.text-3",
+      "text": "Keine Bewegungsrate: Deine Bewegungsrate beträgt 0 und kann nicht erhöht werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewusstlos-zustand.text-4",
+      "text": "Beeinträchtigte Angriffe: Angriffswürfe gegen dich sind im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewusstlos-zustand.text-5",
+      "text": "Beeinträchtigte Rettungswürfe: Du scheiterst bei Stärke- und Geschicklichkeitsrettungswürfen automatisch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewusstlos-zustand.text-6",
+      "text": "Automatische kritische Treffer: Jeder Angriffswurf, der dich trifft, ist ein kritischer Treffer, sofern der Angreifer sich im Abstand von bis zu 1,5 Metern von dir befindet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bewusstlos-zustand.text-7",
+      "text": "Ohne Bewusstsein: Du nimmst deine Umgebung nicht wahr."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.bezaubert-zustand",
+      "level": 3,
+      "text": "Bezaubert (Zustand)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bezaubert-zustand.text-1",
+      "text": "Wenn du den Zustand Bezaubert hast, wirken folgende Effekte auf dich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bezaubert-zustand.text-2",
+      "text": "Kein Schaden am Zauberwirker: Du kannst den Zauberwirker weder angreifen noch als Ziel schädigender Fähigkeiten und magischer Effekte auswählen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bezaubert-zustand.text-3",
+      "text": "Sozialer Vorteil: Der Zauberwirker ist bei Attributswürfen, die soziale Interaktionen mit dir betreffen, im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.blind-zustand",
+      "level": 3,
+      "text": "Blind (Zustand)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.blind-zustand.text-1",
+      "text": "Wenn du den Zustand Blind hast, wirken folgende Effekte auf dich:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.blind-zustand.text-2",
+      "text": "Nicht sehfähig: Eine blinde Kreatur kann nicht sehen, und jeder Attributswurf, der Sicht erfordert, misslingt automatisch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.blind-zustand.text-3",
+      "text": "Beeinträchtigte Angriffe: Angriffswürfe gegen dich sind im Vorteil, und deine Angriffswürfe sind im Nachteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.blindsicht",
+      "level": 3,
+      "text": "Blindsicht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.blindsicht.text-1",
+      "text": "Blindsicht erlaubt dir, auf eine bestimmte Reichweite zu sehen, ohne physische Sicht zu benötigen. Auf diese Reichweite kannst du auch bei Dunkelheit oder im Zustand Blind alles sehen, was sich nicht in vollständiger Deckung befindet. Du kannst sogar Kreaturen und Gegenstände mit dem Zustand Unsichtbar sehen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.blutig",
+      "level": 3,
+      "text": "Blutig"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.blutig.text-1",
+      "text": "Eine Kreatur ist blutig, solange sie höchstens die Hälfte ihrer Trefferpunkte hat."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.bonusaktion",
+      "level": 3,
+      "text": "Bonusaktion"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.bonusaktion.text-1",
+      "text": "Eine Bonusaktion ist eine besondere Aktion, die du im selben Zug ausführen kannst, in dem du auch eine Aktion ausführst. Du kannst höchstens eine Bonusaktion pro Zug ausführen, und dies nur dann, wenn eine Regel es ausdrücklich besagt. Siehe auch „Die Spielregeln“ („Aktionen“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.a-b.brand-gefahr",
+      "level": 3,
+      "text": "Brand (Gefahr)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.a-b.brand-gefahr.text-1",
+      "text": "Brennende Kreaturen und Gegenstände erleiden zu Beginn jedes ihrer Züge 1W4 Feuerschaden. Du kannst dich als Aktion selbst löschen, indem du dir den Zustand Liegend gibst und dich auf dem Boden rollst. Das Feuer erlischt auch, wenn es erstickt oder durch Wasser gelöscht wird."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:eaeb83becfe4429a3b3a273fbedebc5a1cb531b9dbb1012e0a074a7b0fc6fe84"
+}

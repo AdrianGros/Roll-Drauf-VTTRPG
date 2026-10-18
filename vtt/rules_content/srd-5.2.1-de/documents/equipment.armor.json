@@ -1,0 +1,261 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "equipment.armor",
+  "slug": "ruestung",
+  "title": "Rüstung",
+  "navigationPath": [
+    "Ausrüstung",
+    "Rüstung"
+  ],
+  "order": 610,
+  "sourcePages": [
+    104
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "equipment.armor.armor",
+      "level": 2,
+      "text": "Rüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.armor.armor-introduction",
+      "text": "In der Tabelle „Rüstung“ sind die wichtigsten Rüstungen des Spiels aufgeführt. Dazu sind Kosten und Gewicht der Rüstungen sowie folgende Details enthalten:"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.armor.armor-details",
+      "entries": [
+        {
+          "term": "Kategorie",
+          "definition": "Jede Rüstung gehört zu einer von drei Kategorien: Leicht, Mittelschwer oder Schwer. Die Kategorie bestimmt, wie lange es dauert, die Rüstung an- oder abzulegen (wie in der Tabelle gezeigt)."
+        },
+        {
+          "term": "Rüstungsklasse (RK)",
+          "definition": "Die Spalte „Rüstungsklasse“ der Tabelle verrät dir deine Basis-RK, wenn du einen bestimmten Rüstungstyp trägst. Trägst du beispielsweise eine Lederrüstung, so entspricht deine Basis-RK 11 plus deinem Geschicklichkeitsmodifikator. Trägst du hingegen einen Kettenpanzer, so ist deine Basis-RK 16."
+        },
+        {
+          "term": "Stärke",
+          "definition": "Wenn in der Tabelle in der Spalte „Stärke“ ein Stärkewert für eine Rüstung angegeben ist, verringert die Rüstung die Bewegungsrate des Trägers um drei Meter, es sei denn, der Stärkewert des Trägers entspricht mindestens dem aufgeführten."
+        },
+        {
+          "term": "Heimlichkeit",
+          "definition": "Wenn in der Tabelle in der Spalte „Heimlichkeit“ der Begriff „Nachteil“ aufgeführt ist, so ist der Träger bei Geschicklichkeitswürfen (Heimlichkeit) im Nachteil."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.armor.armor-training",
+      "level": 3,
+      "text": "Rüstungsvertrautheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.armor.armor-training-description",
+      "text": "Jeder kann eine Rüstung tragen oder einen Schild halten. Es bedarf jedoch Vertrautheit, um diese Ausrüstungsgegenstände effektiv zu verwenden. Dies ist unten erläutert. Die Klasse und andere Merkmale eines Charakters bestimmen seine Rüstungsvertrautheit. Monster sind mit allen Rüstungen vertraut, die in ihrem Wertekasten aufgeführt sind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.armor.armor-light-medium-heavy",
+      "level": 4,
+      "text": "Leichte, mittelschwere und schwere Rüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.armor.armor-light-medium-heavy-description",
+      "text": "Wenn du leichte, mittelschwere oder schwere Rüstung trägst, mit der du nicht vertraut bist, so bist du bei jeder W20-Prüfung im Nachteil, die Stärke oder Geschicklichkeit einbezieht, und du kannst keine Zauber wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.armor.armor-shield",
+      "level": 4,
+      "text": "Schild"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.armor.armor-shield-description",
+      "text": "Du erhältst den Vorzug Rüstungsklasse eines Schildes nur dann, wenn du mit dem Schild vertraut bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.armor.armor-one-at-a-time",
+      "level": 4,
+      "text": "Jeweils nur eine Rüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.armor.armor-one-at-a-time-description",
+      "text": "Eine Kreatur kann jeweils nur eine Rüstung und nur einen Schild tragen."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.armor.armor-light",
+      "caption": "Rüstung – Leichte Rüstung (1 Minute zum An- oder Ablegen)",
+      "columns": [
+        "Rüstung",
+        "Rüstungsklasse (RK)",
+        "Stärke",
+        "Heimlichkeit",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Gepolsterte Rüstung",
+          "11 + GES-Modifikator",
+          "–",
+          "Nachteil",
+          "4 kg",
+          "5 GM"
+        ],
+        [
+          "Lederrüstung",
+          "11 + GES-Modifikator",
+          "–",
+          "–",
+          "5 kg",
+          "10 GM"
+        ],
+        [
+          "Beschlagene Lederrüstung",
+          "12 + GES-Modifikator",
+          "–",
+          "–",
+          "6,5 kg",
+          "45 GM"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.armor.armor-medium",
+      "caption": "Rüstung – Mittelschwere Rüstung (5 Minuten zum An- und 1 Minute zum Ablegen)",
+      "columns": [
+        "Rüstung",
+        "Rüstungsklasse (RK)",
+        "Stärke",
+        "Heimlichkeit",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Fellrüstung",
+          "12 + GES-Modifikator (max. 2)",
+          "–",
+          "–",
+          "6 kg",
+          "10 GM"
+        ],
+        [
+          "Kettenhemd",
+          "13 + GES-Modifikator (max. 2)",
+          "–",
+          "–",
+          "10 kg",
+          "50 GM"
+        ],
+        [
+          "Schuppenpanzer",
+          "14 + GES-Modifikator (max. 2)",
+          "–",
+          "Nachteil",
+          "22,5 kg",
+          "50 GM"
+        ],
+        [
+          "Brustplatte",
+          "14 + GES-Modifikator (max. 2)",
+          "–",
+          "–",
+          "10 kg",
+          "400 GM"
+        ],
+        [
+          "Plattenpanzer",
+          "15 + GES-Modifikator (max. 2)",
+          "–",
+          "Nachteil",
+          "20 kg",
+          "750 GM"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.armor.armor-heavy",
+      "caption": "Rüstung – Schwere Rüstung (10 Minuten zum An- und 5 Minuten zum Ablegen)",
+      "columns": [
+        "Rüstung",
+        "Rüstungsklasse (RK)",
+        "Stärke",
+        "Heimlichkeit",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Ringpanzer",
+          "14",
+          "–",
+          "Nachteil",
+          "20 kg",
+          "30 GM"
+        ],
+        [
+          "Kettenpanzer",
+          "16",
+          "Stä. 13",
+          "Nachteil",
+          "27,5 kg",
+          "75 GM"
+        ],
+        [
+          "Schienenpanzer",
+          "17",
+          "Stä. 15",
+          "Nachteil",
+          "30 kg",
+          "200 GM"
+        ],
+        [
+          "Ritterrüstung",
+          "18",
+          "Stä. 15",
+          "Nachteil",
+          "32,5 kg",
+          "1.500 GM"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.armor.armor-shield-table",
+      "caption": "Rüstung – Schild (Verwenden-Aktion zum An- oder Ablegen)",
+      "columns": [
+        "Rüstung",
+        "Rüstungsklasse (RK)",
+        "Stärke",
+        "Heimlichkeit",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Schild",
+          "+2",
+          "–",
+          "–",
+          "3 kg",
+          "10 GM"
+        ]
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:d49ee082120f1afa821726c6cb8187399bfb423d88cc8bd5afd103a5297068b4"
+}

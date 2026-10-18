@@ -1,0 +1,1042 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.ranger",
+  "slug": "waldlaeufer",
+  "title": "Waldläufer",
+  "navigationPath": [
+    "Klassen",
+    "Waldläufer"
+  ],
+  "order": 300,
+  "sourcePages": [
+    82,
+    83,
+    84,
+    85
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.ranger",
+      "level": 2,
+      "text": "Waldläufer"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.ranger.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Geschicklichkeit und Weisheit"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W10 pro Waldläuferstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Stärke und Geschicklichkeit"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle drei aus: Athletik, Heimlichkeit, Mit Tieren umgehen, Motiv erkennen, Nachforschungen, Naturkunde, Überlebenskunst oder Wahrnehmung"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen und Kriegswaffen"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Leichte und mittelschwere Rüstungen und Schilde"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Beschlagene Lederrüstung, Krummsäbel, Kurzschwert, Langbogen, 20 Pfeile, Köcher, Druidischer Fokus (Mistelzweig), Entdeckerausrüstung und 7 GM oder (B) 150 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.becoming-a-ranger",
+      "level": 3,
+      "text": "Ein Waldläufer werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.ranger.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Waldläufers“.",
+        "Du erhältst die Merkmale der 1. Waldläuferstufe, die in der Tabelle „Waldläufermerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.ranger.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst folgende Merkmale in der Tabelle „Hauptmerkmale des Waldläufers“: Trefferpunktewürfel, Übung im Umgang mit Kriegswaffen, Übung in einer Fertigkeit deiner Wahl von der Fertigkeitenliste des Waldläufers, Vertrautheit mit leichter und mittelschwerer Rüstung sowie mit Schilden.",
+        "Du erhältst die Merkmale der 1. Waldläuferstufe, die in der Tabelle „Waldläufermerkmale“ aufgeführt sind. Bestimme deine verfügbaren Zauberplätze anhand der Regeln zu Klassenkombinationen unter „Charaktererstellung“."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Waldläufers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.class-features-introduction",
+      "text": "Als Waldläufer erhältst du auf den angegebenen Waldläuferstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Waldläufermerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.ranger.progression-table",
+      "caption": "Waldläufermerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Erzfeind",
+        "Vorbereitete Zauber",
+        "Grad 1",
+        "Grad 2",
+        "Grad 3",
+        "Grad 4",
+        "Grad 5"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Erzfeind, Waffenbeherrschung, Zauberwirken",
+          "2",
+          "2",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "2",
+          "+2",
+          "Geschickte Erkundung, Kampfstil",
+          "2",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "3",
+          "+2",
+          "Waldläufer-Unterklasse",
+          "2",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "2",
+          "5",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "5",
+          "+3",
+          "Zusätzlicher Angriff",
+          "3",
+          "6",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "6",
+          "+3",
+          "Vagabund",
+          "3",
+          "6",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "7",
+          "+3",
+          "Unterklassenmerkmal",
+          "3",
+          "7",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "3",
+          "7",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "9",
+          "+4",
+          "Expertise",
+          "4",
+          "9",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–"
+        ],
+        [
+          "10",
+          "+4",
+          "Unermüdlichkeit",
+          "4",
+          "9",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–"
+        ],
+        [
+          "11",
+          "+4",
+          "Unterklassenmerkmal",
+          "4",
+          "10",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "4",
+          "10",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–"
+        ],
+        [
+          "13",
+          "+5",
+          "Unermüdlicher Jäger",
+          "5",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–"
+        ],
+        [
+          "14",
+          "+5",
+          "Naturschleier",
+          "5",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–"
+        ],
+        [
+          "15",
+          "+5",
+          "Unterklassenmerkmal",
+          "5",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "5",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–"
+        ],
+        [
+          "17",
+          "+6",
+          "Präziser Jäger",
+          "6",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1"
+        ],
+        [
+          "18",
+          "+6",
+          "Wildes Gespür",
+          "6",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "6",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2"
+        ],
+        [
+          "20",
+          "+6",
+          "Feindestöter",
+          "6",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level1-favored-enemy",
+      "level": 4,
+      "text": "1. Stufe: Erzfeind"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-favored-enemy-description",
+      "text": "Du hast den Zauber Zeichen des Jägers stets vorbereitet. Du kannst ihn zweimal wirken, ohne einen Zauberplatz zu verbrauchen. Du erhältst alle verbrauchten Anwendungen dieser Fähigkeit nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-favored-enemy-growth",
+      "text": "Die Anzahl möglicher Anwendungen ohne Zauberplatz erhöht sich, wenn du bestimmte Waldläuferstufen erreichst, wie in der Spalte „Erzfeind“ der Tabelle „Waldläufermerkmale“ dargestellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level1-weapon-mastery",
+      "level": 4,
+      "text": "1. Stufe: Waffenbeherrschung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-weapon-mastery-description",
+      "text": "Deine Vertrautheit mit Waffen erlaubt dir, die Meisterschaftseigenschaften zweier Waffenarten deiner Wahl zu verwenden, sofern du Übung im Umgang mit diesen hast, beispielsweise Langbögen und Kurzschwerter."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-weapon-mastery-swap",
+      "text": "Wann immer du eine lange Rast beendest, kannst du die Art der ausgewählten Waffen ändern. Beispiel: Du könntest beschließen, die Meisterschaftseigenschaft von Krummsäbeln und Langschwertern zu verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level1-spellcasting",
+      "level": 4,
+      "text": "1. Stufe: Zauberwirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-spellcasting-introduction",
+      "text": "Du hast gelernt, die magische Essenz der Natur zu kanalisieren, um Zauber zu wirken. Die Regeln zum Zauberwirken findest du unter „Zauber“. Folgende Informationen erklären, wie du diese Regeln mit den Waldläuferzaubern verwendest, die in der Zauberliste des Waldläufers weiter hinten in dieser Klassenbeschreibung aufgeführt sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-spellcasting-slots",
+      "text": "Zauberplätze: Die Tabelle „Waldläufermerkmale“ zeigt, wie viele Zauberplätze dir zum Wirken deiner Zauber ab dem 1. Grad zur Verfügung stehen. Du erhältst alle verbrauchten Zauberplätze nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-spellcasting-prepared",
+      "text": "Vorbereitete Zauber ab dem 1. Grad: Du bereitest die Liste der Zauber ab dem 1. Grad vor, die dir mit diesem Merkmal zur Verfügung stehen. Wähle zu Beginn zwei Waldläuferzauber des 1. Grades aus. Fesselnder Schlag und Wunden heilen werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-spellcasting-prepared-growth",
+      "text": "Die Anzahl der Zauber auf deiner Liste erhöht sich, wenn du weitere Waldläuferstufen erhältst, wie in der Spalte „Vorbereitete Zauber“ der Tabelle „Waldläufermerkmale“ dargestellt. Wann immer sich diese Anzahl erhöht, wählst du zusätzliche Waldläuferzauber aus, bis die Anzahl von Zaubern auf deiner Liste der Anzahl in der Tabelle „Waldläufermerkmale“ entspricht. Der Grad der ausgewählten Zauber muss dem der verfügbaren Zauberplätze entsprechen. Beispiel: Wenn du ein Waldläufer der 5. Stufe bist, kann deine Liste vorbereiteter Zauber sechs Waldläuferzauber des 1. und 2. Grades in beliebiger Kombination enthalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-spellcasting-prepared-other-features",
+      "text": "Wenn ein anderes Waldläufermerkmal dir Zauber gibt, die du stets vorbereitet hast, zählen diese Zauber nicht bei der Anzahl von Zaubern, die du mit diesem Merkmal vorbereiten kannst. Ansonsten zählen diese Zauber jedoch als Waldläuferzauber für dich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-spellcasting-prepared-swap",
+      "text": "Deine vorbereiteten Zauber ändern: Wann immer du eine lange Rast beendest, kannst du einen der Zauber auf deiner Liste durch einen anderen Waldläuferzauber ersetzen, für den du Zauberplätze hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-spellcasting-ability",
+      "text": "Attribut zum Zauberwirken: Dein Attribut zum Wirken der Waldläuferzauber ist Weisheit."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level1-spellcasting-focus",
+      "text": "Zauberfokus: Du kannst einen Druidischen Fokus als Zauberfokus für deine Waldläuferzauber verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level2-deft-explorer",
+      "level": 4,
+      "text": "2. Stufe: Geschickte Erkundung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level2-deft-explorer-description",
+      "text": "Dank deiner Reisen erhältst du die folgenden Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level2-deft-explorer-expertise",
+      "text": "Expertise: Wähle eine deiner Fertigkeiten aus, in denen du geübt bist, aber keine Expertise hast. Du erhältst Expertise in dieser Fertigkeit."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level2-deft-explorer-languages",
+      "text": "Sprachen: Du kennst zwei Sprachen deiner Wahl aus den Sprachentabellen unter „Charaktererstellung“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level2-fighting-style",
+      "level": 4,
+      "text": "2. Stufe: Kampfstil"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level2-fighting-style-description",
+      "text": "Du erhältst ein Kampfstil-Talent deiner Wahl (siehe „Talente“). Anstatt eins dieser Talente auszuwählen, kannst du dich auch für die Option unten entscheiden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level2-fighting-style-druidic-warrior",
+      "text": "Druidischer Krieger: Du erlernst zwei Druidenzaubertricks deiner Wahl (siehe Liste der Druidenzauber im Abschnitt zur Druidenklasse). Göttliche Führung und Sternenfunke werden empfohlen. Die ausgewählten Zaubertricks zählen für dich als Waldläuferzauber, und dein Attribut zum Wirken dieser Zauber ist Weisheit. Wann immer du eine Waldläuferstufe erhältst, kannst du einen dieser Zaubertricks durch einen anderen Waldläuferzaubertrick ersetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Waldläufer-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level3-subclass-description",
+      "text": "Du erhältst eine Waldläufer-Unterklasse deiner Wahl. Die Unterklasse Jäger wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Waldläuferstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Waldläuferstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Waldläuferstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level5-extra-attack",
+      "level": 4,
+      "text": "5. Stufe: Zusätzlicher Angriff"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level5-extra-attack-description",
+      "text": "Du kannst jetzt zweimal angreifen, wenn du in deinem Zug eine Angriffsaktion ausführst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level6-roving",
+      "level": 4,
+      "text": "6. Stufe: Vagabund"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level6-roving-description",
+      "text": "Deine Bewegungsrate erhöht sich um drei Meter, sofern du keine schwere Rüstung trägst. Außerdem hast du eine Kletterbewegungsrate und eine Schwimmbewegungsrate in Höhe deiner Bewegungsrate."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level9-expertise",
+      "level": 4,
+      "text": "9. Stufe: Expertise"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level9-expertise-description",
+      "text": "Wähle zwei deiner Fertigkeiten aus, in denen du geübt bist, aber keine Expertise hast. Du erhältst Expertise in diesen Fertigkeiten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level10-tireless",
+      "level": 4,
+      "text": "10. Stufe: Unermüdlichkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level10-tireless-description",
+      "text": "Nun helfen dir Urkräfte bei deinen Reisen und gewähren dir folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level10-tireless-temporary-hit-points",
+      "text": "Temporäre Trefferpunkte: Als magische Aktion kannst du dir eine Anzahl von temporären Trefferpunkten in Höhe von 1W8 plus deinem Weisheitsmodifikator verleihen (mindestens 1). Die Anzahl der möglichen Anwendungen dieser Aktion entspricht deinem Weisheitsmodifikator (mindestens einmal). Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level10-tireless-decrease-exhaustion",
+      "text": "Erschöpfung verringern: Wann immer du eine kurze Rast beendest, wird deine Erschöpfungsstufe (sofern vorhanden) um 1 verringert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level13-relentless-hunter",
+      "level": 4,
+      "text": "13. Stufe: Unermüdlicher Jäger"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level13-relentless-hunter-description",
+      "text": "Deine Konzentration auf den Zauber Zeichen des Jägers wird nicht unterbrochen, wenn du Schaden erleidest."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level14-nature-s-veil",
+      "level": 4,
+      "text": "14. Stufe: Naturschleier"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level14-nature-s-veil-description",
+      "text": "Du beschwörst Geister der Natur, um dich auf magische Art zu verstecken. Als Bonusaktion kannst du dir bis zum Ende deines nächsten Zugs den Zustand Unsichtbar verleihen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level14-nature-s-veil-uses",
+      "text": "Die Anzahl der möglichen Anwendungen dieses Merkmals entspricht deinem Weisheitsmodifikator (mindestens einmal). Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level17-precise-hunter",
+      "level": 4,
+      "text": "17. Stufe: Präziser Jäger"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level17-precise-hunter-description",
+      "text": "Du bist bei Angriffswürfen gegen die Kreatur, die aktuell von deinem Zauber Zeichen des Jägers markiert ist, im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level18-feral-senses",
+      "level": 4,
+      "text": "18. Stufe: Wildes Gespür"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level18-feral-senses-description",
+      "text": "Deine Verbindung mit den Kräften der Natur gewährt dir Blindsicht mit eine Reichweite von neun Metern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe des Dimensionsreisens wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.level20-foe-slayer",
+      "level": 4,
+      "text": "20. Stufe: Feindestöter"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.level20-foe-slayer-description",
+      "text": "Der Schadenswürfel deines Zaubers Zeichen des Jägers ist jetzt ein W10 statt eines W6."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.spell-list",
+      "level": 3,
+      "text": "Zauberliste des Waldläufers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.spell-list-introduction",
+      "text": "In diesem Abschnitt wird die Zauberliste des Waldläufers vorgestellt. Die Zauber sind nach Zaubergrad und dann alphabetisch sortiert, und die Schule der Magie der jeweiligen Zauber ist aufgeführt. In der Spalte „Besonderheit“ bedeutet K, dass der Zauber Konzentration erfordert, R bedeutet, dass es sich um ein Ritual handelt, und M bedeutet, dass eine bestimmte Materialkomponente erforderlich ist."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.ranger.spell-list-level1",
+      "caption": "Waldläuferzauber des 1. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Alarm",
+          "Bannmagie",
+          "R"
+        ],
+        [
+          "Fesselnder Schlag",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Gift und Krankheit entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Gute Beeren",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Lange Schritte",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Magie entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Mit Tieren sprechen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Nebelwolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Springen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Tierfreundschaft",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Verstricken",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Wunden heilen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Zeichen des Jägers",
+          "Erkenntnismagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.ranger.spell-list-level2",
+      "caption": "Waldläuferzauber des 2. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Attribut verbessern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Beistand",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Dornenwuchs",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Dunkelsicht",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Fallen finden",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Gegenstand aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Magische Waffe",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Rindenhaut",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Schutz vor Gift",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Schwache Genesung",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Spurloses Gehen",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Stille",
+          "Illusionsmagie",
+          "K, R"
+        ],
+        [
+          "Tierbote",
+          "Verzauberungsmagie",
+          "R"
+        ],
+        [
+          "Tiere oder Pflanzen aufspüren",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Windstoß",
+          "Hervorrufungsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.ranger.spell-list-level3",
+      "caption": "Waldläuferzauber des 3. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Magie bannen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Mit Pflanzen sprechen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Mit Stein verschmelzen",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Pflanzenwachstum",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Schutz vor Energie",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Tageslicht",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Tiere beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Unauffindbarkeit",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Wasser atmen",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Wasserwandeln",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Wiederbeleben",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Windwall",
+          "Hervorrufungsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.ranger.spell-list-level4",
+      "caption": "Waldläuferzauber des 4. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Bewegungsfreiheit",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Kreatur aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Steinhaut",
+          "Verwandlungsmagie",
+          "K, M"
+        ],
+        [
+          "Tier beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Wesen des Waldes beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.ranger.spell-list-level5",
+      "caption": "Waldläuferzauber des 5. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Baumwandeln",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Einswerden mit der Natur",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Vollständige Genesung",
+          "Bannmagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.subclass-hunter",
+      "level": 3,
+      "text": "Waldläufer-Unterklasse: Jäger"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-hunter-motto",
+      "text": "Beschütze Natur und Personen vor Zerstörung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-hunter-introduction",
+      "text": "Du verfolgst in der Wildnis und anderswo deine Beute und setzt überall deine Fähigkeiten als Jäger ein, um Natur und Leute vor Kräften zu beschützen, die sie zerstören würden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.subclass-level3-hunters-prey",
+      "level": 4,
+      "text": "3. Stufe: Beute des Jägers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level3-hunters-prey-description",
+      "text": "Du erhältst eine der folgenden Merkmal-Optionen nach deiner Wahl. Wann immer du eine kurze oder lange Rast beendest, kannst du die ausgewählte Option durch eine andere ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level3-hunters-prey-horde-breaker",
+      "text": "Hordenbrecher: Einmal in jedem deiner Züge kannst du, wenn du einen Waffenangriff ausführst, einen weiteren Angriff auf eine andere Kreatur im Abstand von bis zu 1,5 Metern vom ursprünglichen Ziel sowie innerhalb der Waffenreichweite ausführen, sofern du die andere Kreatur in diesem Zug noch nicht angegriffen hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level3-hunters-prey-colossus-slayer",
+      "text": "Kolossschlächter: Deine Hartnäckigkeit kann selbst die zähesten Gegner zermürben. Wenn du eine Kreatur mit einer Waffe triffst, bewirkt diese zusätzlich 1W8 Schaden, sofern das Ziel nicht mehr all seine Trefferpunkte hat. Du kannst diesen zusätzlichen Schaden nur einmal pro Zug bewirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.subclass-level3-hunters-lore",
+      "level": 4,
+      "text": "3. Stufe: Jägerkunde"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level3-hunters-lore-description",
+      "text": "Du kannst die Kräfte der Natur beschwören, um bestimmte Stärken und Schwächen deiner Beute zu enthüllen. Wenn eine Kreatur mit deinem Zeichen des Jägers markiert ist, erkennst du, ob diese Kreatur Immunitäten, Resistenzen oder Anfälligkeiten hat, und wenn ja, welche."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.subclass-level7-defensive-tactics",
+      "level": 4,
+      "text": "7. Stufe: Defensive Taktiken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level7-defensive-tactics-description",
+      "text": "Du erhältst eine der folgenden Merkmal-Optionen nach deiner Wahl. Wann immer du eine kurze oder lange Rast beendest, kannst du die ausgewählte Option durch eine andere ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level7-defensive-tactics-escape-the-horde",
+      "text": "Der Horde entkommen: Gelegenheitsangriffe auf dich sind im Nachteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level7-defensive-tactics-multiattack-defense",
+      "text": "Verteidigung gegen Mehrfachangriffe: Wenn eine Kreatur dich mit einem Angriffswurf trifft, ist sie in diesem Zug bei allen anderen Angriffswürfen gegen dich im Nachteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.subclass-level11-superior-hunters-prey",
+      "level": 4,
+      "text": "11. Stufe: Beute des überlegenen Jägers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level11-superior-hunters-prey-description",
+      "text": "Einmal pro Zug kannst du, wenn du einer mit deinem Zeichen des Jägers markierten Kreatur Schaden zufügst, den zusätzlichen Schaden des Zaubers noch einer weiteren Kreatur im Abstand von bis zu neun Metern vom ersten Ziel zufügen, die du sehen kannst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.ranger.subclass-level15-superior-hunters-defense",
+      "level": 4,
+      "text": "15. Stufe: Verteidigung des überlegenen Jägers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.ranger.subclass-level15-superior-hunters-defense-description",
+      "text": "Wenn du Schaden erleidest, kannst du eine Reaktion ausführen, um dir bis zum Ende des aktuellen Zugs Resistenz gegen diesen Schaden und jeden anderen Schaden der gleichen Art zu verleihen."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-table",
+      "label": "Klassenkombinationen für Zauberwirker"
+    }
+  ],
+  "digest": "sha256:8953bc1ec859a2a1e471e717d12ae4e34147cfc3d952a5e205e7f935c23404fa"
+}

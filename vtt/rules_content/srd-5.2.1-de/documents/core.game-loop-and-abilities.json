@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "core.game-loop-and-abilities",
+  "slug": "spielrhythmus-und-attribute",
+  "title": "Spielrhythmus und die sechs Attribute",
+  "navigationPath": [
+    "Die Spielregeln",
+    "Spielrhythmus und die sechs Attribute"
+  ],
+  "order": 10,
+  "sourcePages": [
+    5,
+    6
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "core.game-loop-and-abilities.rhythm",
+      "level": 2,
+      "text": "Spielrhythmus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.game-loop-and-abilities.rhythm-introduction",
+      "text": "Die drei Säulen bei D&D sind soziale Interaktion, Erkundung und Kampf. Was davon auch gerade geschehen mag, das Spiel läuft nach folgendem Grundmuster ab:"
+    },
+    {
+      "type": "ordered-list",
+      "ruleId": "core.game-loop-and-abilities.rhythm-steps",
+      "items": [
+        "Der Spielleiter beschreibt eine Szene: Der Spielleiter (SL) teilt den Spielern mit, wo sich ihre Abenteurer befinden und was sie umgibt – etwa, wie viele Türen aus einem Raum herausführen, was sich auf einem Tisch befindet und so weiter.",
+        "Die Spieler beschreiben, was ihre Charaktere tun: Üblicherweise halten die Charaktere zusammen, während sie durch Gewölbe oder andere Umgebungen reisen. Manchmal handeln die verschiedenen Abenteurer unterschiedlich: Ein Abenteurer könnte eine Schatztruhe durchsuchen, während ein zweiter ein geheimnisvolles Symbol an der Wand entziffert und ein dritter Ausschau nach Monstern hält. Außerhalb von Kämpfen sorgt der SL dafür, dass jeder Charakter die Chance zum Handeln hat, und entscheidet, welche Ergebnisse die Handlungen haben. In Kämpfen handeln die Charaktere rundenbasiert.",
+        "Der SL erzählt, zu welchem Ergebnis die Aktionen der Abenteurer führen: Manche Aufgaben sind einfach zu lösen. Wenn ein Abenteurer durch einen Raum geht und versucht, eine Tür zu öffnen, könnte der SL sagen, dass sich die Tür öffnen lässt, und beschreiben, was dahinter liegt. Die Tür könnte jedoch auch verschlossen sein, im Boden könnte sich eine Falle verbergen, oder ein anderer Umstand könnte es dem Abenteurer erschweren, eine Aufgabe abzuschließen. In diesen Fällen könnte der SL den Spieler auffordern, mithilfe eines Würfelwurfs zu ermitteln, was geschieht. Die Ergebnisse führen häufig zu einem weiteren Entscheidungspunkt, der das Spiel zu Schritt 1 zurückbringt."
+      ]
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.game-loop-and-abilities.rhythm-exceptions-override",
+      "title": "Ausnahmen ersetzen allgemeine Regeln",
+      "text": "Allgemeine Regeln bestimmen jeden Teil des Spiels. Beispielsweise besagen die Kampfregeln, dass Nahkampfangriffe Stärke verwenden und Fernkampfangriffe Geschicklichkeit. Das ist eine allgemeine Regel – und eine allgemeine Regel gilt, solange im Spiel nicht ausdrücklich etwas anderes angegeben wird.\n\nDas Spiel enthält auch Elemente – Klassenmerkmale, Talente, Waffeneigenschaften, Zauber, magische Gegenstände, Monsterfähigkeiten und weitere –, die manchmal einer allgemeinen Regel widersprechen. Wenn eine Ausnahme und eine allgemeine Regel einander widersprechen, gilt die Ausnahme. Wenn beispielsweise ein Merkmal angibt, dass du für Nahkampfangriffe dein Charisma verwenden kannst, dann gilt dies, obwohl es nicht der allgemeinen Regel entspricht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.game-loop-and-abilities.rhythm-every-session",
+      "text": "Dieses Muster gilt bei jeder Spielsitzung (wenn ihr euch zusammensetzt, um D&D zu spielen), ob die Abenteurer nun mit einem Adeligen sprechen, eine Ruine erkunden oder gegen einen Drachen kämpfen. In bestimmten Situationen – vor allem in Kämpfen – ist die Handlung stärker strukturiert, und die Charaktere handeln in Zügen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.game-loop-and-abilities.six-abilities",
+      "level": 2,
+      "text": "Die sechs Attribute"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.game-loop-and-abilities.six-abilities-introduction",
+      "text": "Alle Kreaturen – Charaktere und Monster – haben sechs Attribute, die ihre physischen und mentalen Eigenschaften messen, wie in der Tabelle „Attributsbeschreibungen“ dargestellt."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.game-loop-and-abilities.ability-descriptions",
+      "caption": "Attributsbeschreibungen",
+      "columns": [
+        "Attribut",
+        "Der Wert misst ..."
+      ],
+      "rows": [
+        [
+          "Stärke",
+          "Körperliche Kraft"
+        ],
+        [
+          "Geschicklichkeit",
+          "Beweglichkeit, Reflexe und Gleichgewichtssinn"
+        ],
+        [
+          "Konstitution",
+          "Gesundheit und Ausdauer"
+        ],
+        [
+          "Intelligenz",
+          "Logisches Denken und Erinnerungsvermögen"
+        ],
+        [
+          "Weisheit",
+          "Wahrnehmungsvermögen und Geisteskraft"
+        ],
+        [
+          "Charisma",
+          "Selbstvertrauen, Selbstsicherheit, Charme"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.game-loop-and-abilities.scores",
+      "level": 3,
+      "text": "Attributswerte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.game-loop-and-abilities.scores-introduction",
+      "text": "Jedes Attribut hat einen Wert von 1 bis 20, wobei bei manchen Monstern sogar Werte bis zu 30 möglich sind. Der Wert gibt das Ausmaß eines Attributs an. In der Tabelle „Attributswerte“ ist zusammengefasst, was die Werte bedeuten."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.game-loop-and-abilities.rounding-down",
+      "title": "Abrunden",
+      "text": "Wenn eine Zahl im Spiel multipliziert oder geteilt wird, rundest du das Ergebnis gegebenenfalls ab. Selbst bei Dezimalstellen größer als fünf wird abgerundet. Manche Regeln machen eine Ausnahme und besagen, dass du aufrunden sollst."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.game-loop-and-abilities.score-meanings",
+      "caption": "Attributswerte",
+      "columns": [
+        "Wert",
+        "Bedeutung"
+      ],
+      "rows": [
+        [
+          "1",
+          "Dies ist normalerweise der niedrigstmögliche Wert. Wenn ein Effekt einen Wert auf 0 verringert, erläutert dieser Effekt, was geschieht."
+        ],
+        [
+          "2–9",
+          "Dies entspricht einer schwachen Fähigkeit."
+        ],
+        [
+          "10–11",
+          "Dies entspricht dem menschlichen Durchschnitt."
+        ],
+        [
+          "12–19",
+          "Dies entspricht einer starken Fähigkeit."
+        ],
+        [
+          "20",
+          "Dies ist der höchste Wert, den ein Abenteurer erreichen kann, es sei denn, ein Merkmal besagt etwas anderes."
+        ],
+        [
+          "21–29",
+          "Dies stellt eine außergewöhnlich starke Fähigkeit dar."
+        ],
+        [
+          "30",
+          "Dies ist der höchstmögliche Wert."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.game-loop-and-abilities.modifiers",
+      "level": 3,
+      "text": "Attributsmodifikatoren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.game-loop-and-abilities.modifiers-introduction",
+      "text": "Jedes Attribut hat einen Modifikator, der zum Einsatz kommt, wann immer eine W20-Prüfung mit diesem Attribut ausgeführt wird (erläutert unter „W20-Prüfungen“). Ein Attributsmodifikator leitet sich vom Wert des Attributs ab wie in der Tabelle „Attributsmodifikatoren“ dargestellt."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.game-loop-and-abilities.modifier-table",
+      "caption": "Attributsmodifikatoren",
+      "columns": [
+        "Wert",
+        "Modifikator",
+        "Wert",
+        "Modifikator"
+      ],
+      "rows": [
+        [
+          "1",
+          "−5",
+          "16–17",
+          "+3"
+        ],
+        [
+          "2–3",
+          "−4",
+          "18–19",
+          "+4"
+        ],
+        [
+          "4–5",
+          "−3",
+          "20–21",
+          "+5"
+        ],
+        [
+          "6–7",
+          "−2",
+          "22–23",
+          "+6"
+        ],
+        [
+          "8–9",
+          "−1",
+          "24–25",
+          "+7"
+        ],
+        [
+          "10–11",
+          "+0",
+          "26–27",
+          "+8"
+        ],
+        [
+          "12–13",
+          "+1",
+          "28–29",
+          "+9"
+        ],
+        [
+          "14–15",
+          "+2",
+          "30",
+          "+10"
+        ]
+      ]
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    }
+  ],
+  "digest": "sha256:6f8dd51e2dc18472b300ee45b20ee9063cbe4ce35489dfe067b827a2f367a058"
+}

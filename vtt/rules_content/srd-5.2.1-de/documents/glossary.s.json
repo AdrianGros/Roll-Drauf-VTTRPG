@@ -1,0 +1,357 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "glossary.s",
+  "slug": "regeldefinitionen-s",
+  "title": "Regeldefinitionen S",
+  "navigationPath": [
+    "Regelglossar",
+    "Regeldefinitionen S"
+  ],
+  "order": 860,
+  "sourcePages": [
+    214,
+    215,
+    216
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.regeldefinitionen",
+      "level": 2,
+      "text": "Regeldefinitionen (S)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schaden",
+      "level": 3,
+      "text": "Schaden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schaden.text-1",
+      "text": "Schaden repräsentiert Wirkungen, die eine Kreatur oder einen Gegenstand Trefferpunkte verlieren lassen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schadensarten",
+      "level": 3,
+      "text": "Schadensarten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schadensarten.text-1",
+      "text": "Angriffe und andere schädliche Effekte bewirken unterschiedliche Schadensarten. Die Schadensarten weisen zwar keine eigenen Regeln auf, doch es gibt andere Regeln wie die für Resistenzen, die auf Schadensarten basieren. Die Tabelle „Schadensarten“ bietet Beispiele, um dem SL zu helfen, neuen Effekten passende Schadensarten zuzuweisen."
+    },
+    {
+      "type": "table",
+      "ruleId": "glossary.s.schadensarten.tabelle-schadensarten",
+      "caption": "Schadensarten",
+      "columns": [
+        "Typ",
+        "Beispiele"
+      ],
+      "rows": [
+        [
+          "Blitz",
+          "Elektrizität"
+        ],
+        [
+          "Energie",
+          "Reine magische Energie"
+        ],
+        [
+          "Feuer",
+          "Flammen, unerträgliche Hitze"
+        ],
+        [
+          "Gift",
+          "Gifte, toxische Gase"
+        ],
+        [
+          "Gleißend",
+          "Heilige Energie, sengende Strahlung"
+        ],
+        [
+          "Hieb",
+          "Klauen, schneidende Gegenstände"
+        ],
+        [
+          "Kälte",
+          "Eisexplosionen, gefrierendes Wasser"
+        ],
+        [
+          "Nekrotisch",
+          "Lebenszehrende Energie"
+        ],
+        [
+          "Psychisch",
+          "Bewusstseinsschädigende Energie"
+        ],
+        [
+          "Säure",
+          "Ätzende Flüssigkeiten, Verdauungssäfte"
+        ],
+        [
+          "Schall",
+          "Erschütternde Geräusche"
+        ],
+        [
+          "Stich",
+          "Reißzähne, Stichwaffen"
+        ],
+        [
+          "Wucht",
+          "Stumpfe Gegenstände, Stürze, Umschlingung"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schadensschwellenwert",
+      "level": 3,
+      "text": "Schadensschwellenwert"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schadensschwellenwert.text-1",
+      "text": "Kreaturen und Gegenstände mit Schadensschwellenwert sind gegen alle Schadensarten immun, es sei denn, sie erleiden durch einen einzigen Angriff oder Effekt so viel Schaden, dass der Schadensschwellenwert erreicht oder überschritten wird. In diesem Fall erleiden sie den gesamten entsprechenden Schaden. Jeglicher Schaden, der den Schadensschwellenwert unterschreitet, gilt als oberflächlich und verringert keine Trefferpunkte. Beispiel: Wenn ein Gegenstand einen Schadensschwellenwert von 10 hat, erleidet er keinen Schaden, wenn ihm 9 Schaden zugefügt wird, da dieser Schaden den Schwellenwert nicht erreicht. Erleidet dieser Gegenstand 11 Schaden, so erleidet er diesen gesamten Schaden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schadenswurf",
+      "level": 3,
+      "text": "Schadenswurf"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schadenswurf.text-1",
+      "text": "Ein Schadenswurf ist ein Würfelwurf, der von relevanten Modifikatoren beeinflusst wird und einem Ziel Schaden zufügt. Siehe auch „Die Spielregeln“ („Schaden und Heilung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schweben",
+      "level": 3,
+      "text": "Schweben"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schweben.text-1",
+      "text": "Manche Kreaturen können schweben, wie in ihren Wertekästen vermerkt, und manche Zauber und andere Effekte gewähren die Fähigkeit zu schweben. Während des Flugs zu schweben verhindert, dass du unter bestimmten Umständen abstürzt. Siehe auch „Fliegen“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schwieriges-gelaende",
+      "level": 3,
+      "text": "Schwieriges Gelände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schwieriges-gelaende.text-1",
+      "text": "Wenn ein Bereich schwieriges Gelände ist, kostet jeder Meter Bewegung in diesem Bereich einen zusätzlichen Meter Bewegungsrate. Beispiel: Eine Bewegung von 1,5 Metern in schwierigem Gelände kostet drei Meter Bewegungsrate. Schwieriges Gelände ist nicht kumulativ. Entweder ist ein Bereich schwieriges Gelände, oder er ist es nicht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schwieriges-gelaende.text-2",
+      "text": "Ein Bereich ist schwieriges Gelände, wenn er einen der folgenden Faktoren oder etwas Ähnliches enthält:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "glossary.s.schwieriges-gelaende.liste-1",
+      "items": [
+        "Dickicht, Eis, Schutt oder viel Schnee",
+        "Flüssigkeit, die zwischen knöchel- und hüfthoch steht",
+        "Ein Gefälle von mindestens 20 Grad",
+        "Eine Kreatur, die weder von winziger Größe noch dein Verbündeter ist",
+        "Möbel für Kreaturen von mindestens deiner Größenkategorie",
+        "Eine schmale Öffnung, durch die Kreaturen passen, die eine Größenkategorie kleiner als du sind"
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schwierigkeitsgrad",
+      "level": 3,
+      "text": "Schwierigkeitsgrad"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schwierigkeitsgrad.text-1",
+      "text": "Der Schwierigkeitsgrad (SG) ist der Zielwert für einen Attributswurf oder einen Rettungswurf. Siehe auch „Die Spielregeln“ („W20-Prüfungen“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schwimmbewegungsrate",
+      "level": 3,
+      "text": "Schwimmbewegungsrate"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schwimmbewegungsrate.text-1",
+      "text": "Eine Schwimmbewegungsrate kann verwendet werden, um zu schwimmen, ohne die zusätzliche Bewegung zu benötigen, die dabei normalerweise anfällt. Siehe auch „Bewegungsrate“ und „Schwimmen“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.schwimmen",
+      "level": 3,
+      "text": "Schwimmen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.schwimmen.text-1",
+      "text": "Beim Schwimmen kostet dich jeder Meter, den du zurücklegst, einen zusätzlichen Meter Bewegungsrate (zwei zusätzliche Meter in schwierigem Gelände). Du kannst diese zusätzlichen Kosten ignorieren, wenn du über eine Schwimmbewegungsrate verfügst und sie beim Schwimmen verwendest. Nach Ermessen des SL kann jede Strecke in rauem Gewässer einen erfolgreichen SG-15-Stärkewurf (Athletik) erfordern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.spielercharakter",
+      "level": 3,
+      "text": "Spielercharakter"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.spielercharakter.text-1",
+      "text": "Ein Spielercharakter ist ein Charakter, der von einem Spieler kontrolliert wird. Siehe auch „Charaktererstellung“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.springen",
+      "level": 3,
+      "text": "Springen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.springen.text-1",
+      "text": "Beim Springen kannst du entweder einen Hochsprung (vertikal) oder einen Weitsprung (horizontal) ausführen. Siehe auch „Hochsprung“ und „Weitsprung“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.spurt-aktion",
+      "level": 3,
+      "text": "Spurt (Aktion)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.spurt-aktion.text-1",
+      "text": "Wenn du die Spurt-Aktion ausführst, erhältst du für diesen Zug zusätzliche Bewegung. Dieser Zuwachs entspricht der Höhe deiner Bewegungsrate einschließlich relevanter Modifikatoren. Beispiel: Bei einer Bewegungsrate von neun Metern kannst du dich mit einem Spurt insgesamt bis zu 18 Meter weit bewegen. Wird deine Bewegungsrate von neun Metern auf 4,5 Meter verringert, so kannst du dich mit einem Spurt bis zu neun Meter weit bewegen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.spurt-aktion.text-2",
+      "text": "Wenn du eine besondere Bewegungsrate wie eine Flugbewegungsrate oder eine Schwimmbewegungsrate hast, kannst du diese statt deiner normalen Bewegungsrate bei der Spurt-Aktion verwenden. Du wählst bei jeder Spurt-Aktion aus, welche Bewegungsrate du verwendest. Siehe auch „Bewegungsrate“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.stabil",
+      "level": 3,
+      "text": "Stabil"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.stabil.text-1",
+      "text": "Eine Kreatur ist stabil, wenn sie zwar 0 Trefferpunkte hat, aber keine Todesrettungswürfe ausführen muss. Siehe auch „Die Spielregeln“ („Schaden und Heilung“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.studieren-aktion",
+      "level": 3,
+      "text": "Studieren (Aktion)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.studieren-aktion.text-1",
+      "text": "Wenn du die Studieren-Aktion ausführst, führst du einen Intelligenzwurf aus, um deine Erinnerung, ein Buch, einen Hinweis oder eine andere Wissensquelle zu studieren und Erkenntnisse über wichtige Informationen zu erzielen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.studieren-aktion.text-2",
+      "text": "Die Tabelle „Wissensgebiete“ enthält Vorschläge, welche Fertigkeiten zu den verschiedenen Wissensgebieten passen."
+    },
+    {
+      "type": "table",
+      "ruleId": "glossary.s.studieren-aktion.tabelle-wissensgebiete",
+      "caption": "Wissensgebiete",
+      "columns": [
+        "Fertigkeit",
+        "Gebiete"
+      ],
+      "rows": [
+        [
+          "Arkane Kunde",
+          "Zauber, magische Gegenstände, mystische Symbole, magische Traditionen, Existenzebenen und bestimmte Kreaturen (Aberrationen, Elementare, Feenwesen, Konstrukte und Monstrositäten)"
+        ],
+        [
+          "Geschichte",
+          "Historische Ereignisse und Völker, vergangene Zivilisationen, Kriege und bestimmte Kreaturen (Riesen und Humanoiden)."
+        ],
+        [
+          "Nachforschungen",
+          "Fallen, Geheimschriften, Rätsel und Apparaturen"
+        ],
+        [
+          "Naturkunde",
+          "Gelände, Flora, Wetter und bestimmte Kreaturen (Drachen, Pflanzen, Schlicke, Tiere)"
+        ],
+        [
+          "Religion",
+          "Gottheiten, religiöse Hierarchien und Riten, heilige Symbole, Kulte und bestimmte Kreaturen (celestische Wesen, Unholde und Untote)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.sturz-gefahr",
+      "level": 3,
+      "text": "Sturz (Gefahr)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.sturz-gefahr.text-1",
+      "text": "Am Ende eines Sturzes erleidet eine Kreatur 1W6 Wuchtschaden pro drei Meter, die sie gestürzt ist (höchstens 20W6). Nach dem Sturz hat sie den Zustand Liegend, sofern sie den Schaden durch den Sturz nicht vermeiden konnte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.sturz-gefahr.text-2",
+      "text": "Wenn eine Kreatur in Wasser oder eine andere Flüssigkeit stürzt, kann sie ihre Reaktion verwenden und einen SG-15-Geschicklichkeitswurf (Akrobatik) oder -Stärkewurf (Athletik) ausführen, um mit dem Kopf oder den Füßen voran aufzukommen. Bei einem Erfolg wird der Fallschaden halbiert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "glossary.s.suchen-aktion",
+      "level": 3,
+      "text": "Suchen (Aktion)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "glossary.s.suchen-aktion.text-1",
+      "text": "Wenn du die Suchen-Aktion ausführst, führst du einen Weisheitswurf aus, um etwas zu finden oder zu erfahren, was nicht offenkundig ist. In der Tabelle „Suchen“ findest du Vorschläge, welche Fertigkeiten bei dieser Aktion gelten – je nachdem, was du finden willst."
+    },
+    {
+      "type": "table",
+      "ruleId": "glossary.s.suchen-aktion.tabelle-suchen",
+      "caption": "Suchen",
+      "columns": [
+        "Fertigkeit",
+        "Suche nach ..."
+      ],
+      "rows": [
+        [
+          "Heilkunde",
+          "Krankheit oder Todesursache einer Kreatur"
+        ],
+        [
+          "Motiv erkennen",
+          "Geisteszustand einer Kreatur"
+        ],
+        [
+          "Überlebenskunst",
+          "Spuren oder Nahrung"
+        ],
+        [
+          "Wahrnehmung",
+          "Verborgene Kreatur/verborgener Gegenstand"
+        ]
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:51cc935bb551601d0dcbe3803e00d1e1be7fcab77f10c7906644a1cdd71eafa8"
+}

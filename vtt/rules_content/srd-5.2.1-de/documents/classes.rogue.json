@@ -1,0 +1,625 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.rogue",
+  "slug": "schurke",
+  "title": "Schurke",
+  "navigationPath": [
+    "Klassen",
+    "Schurke"
+  ],
+  "order": 290,
+  "sourcePages": [
+    78,
+    79,
+    80,
+    81
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.rogue",
+      "level": 2,
+      "text": "Schurke"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.rogue.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W8 pro Schurkenstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Geschicklichkeit und Intelligenz"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle vier aus: Akrobatik, Athletik, Einschüchtern, Fingerfertigkeit, Heimlichkeit, Motiv erkennen, Nachforschungen, Täuschen, Überzeugen oder Wahrnehmung"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen und Kriegswaffen mit der Eigenschaft Finesse oder Leicht"
+        },
+        {
+          "term": "Übung im Umgang mit Werkzeug",
+          "definition": "Diebeswerkzeug"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Leichte Rüstung"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Lederrüstung, zwei Dolche, Kurzschwert, Kurzbogen, 20 Pfeile, Köcher, Diebeswerkzeug, Einbrecherausrüstung und 8 GM oder (B) 100 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.becoming-a-rogue",
+      "level": 3,
+      "text": "Ein Schurke werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.rogue.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Schurken“.",
+        "Du erhältst die Merkmale der 1. Schurkenstufe, die in der Tabelle „Schurkenmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.rogue.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst folgende Merkmale in der Tabelle „Hauptmerkmale des Schurken“: Trefferpunktewürfel, Übung in einer Fertigkeit deiner Wahl von der Fertigkeitenliste des Schurken, Übung im Umgang mit Diebeswerkzeug, Vertrautheit mit leichter Rüstung.",
+        "Du erhältst die Merkmale der 1. Schurkenstufe, die in der Tabelle „Schurkenmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Schurken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.class-features-introduction",
+      "text": "Als Schurke erhältst du auf den angegebenen Schurkenstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Schurkenmerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.rogue.progression-table",
+      "caption": "Schurkenmerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Hinterhältiger Angriff"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Diebessprache, Expertise, Hinterhältiger Angriff, Waffenbeherrschung",
+          "1W6"
+        ],
+        [
+          "2",
+          "+2",
+          "Raffinierte Aktion",
+          "1W6"
+        ],
+        [
+          "3",
+          "+2",
+          "Schurken-Unterklasse, Zielsicher",
+          "2W6"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "2W6"
+        ],
+        [
+          "5",
+          "+3",
+          "Raffinierter Schlag, Unglaubliches Ausweichen",
+          "3W6"
+        ],
+        [
+          "6",
+          "+3",
+          "Expertise",
+          "3W6"
+        ],
+        [
+          "7",
+          "+3",
+          "Entrinnen, Verlässliches Talent",
+          "4W6"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "4W6"
+        ],
+        [
+          "9",
+          "+4",
+          "Unterklassenmerkmal",
+          "5W6"
+        ],
+        [
+          "10",
+          "+4",
+          "Attributswerterhöhung",
+          "5W6"
+        ],
+        [
+          "11",
+          "+4",
+          "Verbesserter Raffinierter Schlag",
+          "6W6"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "6W6"
+        ],
+        [
+          "13",
+          "+5",
+          "Unterklassenmerkmal",
+          "7W6"
+        ],
+        [
+          "14",
+          "+5",
+          "Hinterhältige Schläge",
+          "7W6"
+        ],
+        [
+          "15",
+          "+5",
+          "Entschlüpfender Geist",
+          "8W6"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "8W6"
+        ],
+        [
+          "17",
+          "+6",
+          "Unterklassenmerkmal",
+          "9W6"
+        ],
+        [
+          "18",
+          "+6",
+          "Schwer zu fassen",
+          "9W6"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "10W6"
+        ],
+        [
+          "20",
+          "+6",
+          "Glückstreffer",
+          "10W6"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level1-thieves-cant",
+      "level": 4,
+      "text": "1. Stufe: Diebessprache"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level1-thieves-cant-description",
+      "text": "Du hast verschiedene Sprachen in den Gemeinschaften gelernt, in denen du dir deine Schurkentalente zugelegt hast. Du beherrschst die Diebessprache und eine andere Sprache deiner Wahl, die du aus den Sprachentabellen unter „Charaktererstellung“ auswählen kannst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level1-expertise",
+      "level": 4,
+      "text": "1. Stufe: Expertise"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level1-expertise-description",
+      "text": "Du erhältst Expertise in zwei Fertigkeiten deiner Wahl, in denen du geübt bist. Fingerfertigkeit und Heimlichkeit werden empfohlen, wenn du in ihnen geübt bist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level1-expertise-level6",
+      "text": "Auf der 6. Schurkenstufe erhältst du Expertise in zwei weiteren Fertigkeiten deiner Wahl, in denen du geübt bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level1-sneak-attack",
+      "level": 4,
+      "text": "1. Stufe: Hinterhältiger Angriff"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level1-sneak-attack-description",
+      "text": "Du weißt, wie man die Ablenkung eines Gegners ausnutzt und subtil zuschlägt. Einmal pro Zug kannst du einer Kreatur, die du mit einem Angriffswurf triffst, 1W6 zusätzlichen Schaden zufügen, sofern du beim Wurf im Vorteil bist und eine Finesse- oder Fernkampfwaffe einsetzt. Der zusätzliche Schaden ist von der gleichen Art wie der Schaden der Waffe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level1-sneak-attack-ally",
+      "text": "Es ist kein Vorteil beim Angriffswurf erforderlich, wenn mindestens einer deiner Verbündeten sich im Abstand von bis zu 1,5 Metern vom Ziel befindet, sofern der Verbündete nicht kampfunfähig ist und du beim Angriffswurf nicht im Nachteil bist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level1-sneak-attack-growth",
+      "text": "Der zusätzliche Schaden wird erhöht, wenn du weitere Schurkenstufen erhältst, wie in der Spalte „Hinterhältiger Angriff“ der Tabelle „Schurkenmerkmale“ dargestellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level1-weapon-mastery",
+      "level": 4,
+      "text": "1. Stufe: Waffenbeherrschung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level1-weapon-mastery-description",
+      "text": "Deine Vertrautheit mit Waffen erlaubt dir, die Meisterschaftseigenschaften zweier Waffenarten deiner Wahl zu verwenden, sofern du Übung im Umgang mit diesen hast, beispielsweise Dolche und Kurzbögen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level1-weapon-mastery-swap",
+      "text": "Wann immer du eine lange Rast beendest, kannst du die Art der ausgewählten Waffen ändern. Beispiel: Du könntest beschließen, die Meisterschaftseigenschaft von Krummsäbeln und Kurzschwertern zu verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level2-cunning-action",
+      "level": 4,
+      "text": "2. Stufe: Raffinierte Aktion"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level2-cunning-action-description",
+      "text": "Dank deiner Auffassungsgabe und deiner Beweglichkeit kannst du dich besonders schnell bewegen und rasch handeln. In deinem Zug kannst du eine der folgenden Aktionen als Bonusaktion ausführen: Rückzug, Spurt oder Verstecken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Schurken-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level3-subclass-description",
+      "text": "Du erhältst eine Schurken-Unterklasse deiner Wahl. Die Unterklasse Dieb wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Schurkenstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Schurkenstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level3-steady-aim",
+      "level": 4,
+      "text": "3. Stufe: Zielsicher"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level3-steady-aim-description",
+      "text": "Als Bonusaktion bewirkst du, dass dein nächster Angriffswurf im aktuellen Zug im Vorteil ist. Du kannst dieses Merkmal nur anwenden, wenn du dich in diesem Zug noch nicht bewegt hast. Nach der Bonusaktion beträgt deine Bewegungsrate bis zum Ende des Zugs 0."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 10., 12. und 16. Schurkenstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level5-cunning-strike",
+      "level": 4,
+      "text": "5. Stufe: Raffinierter Schlag"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level5-cunning-strike-description",
+      "text": "Du hast raffinierte Methoden entwickelt, deinen Hinterhältigen Angriff einzusetzen. Wenn du mit diesem Schaden bewirkst, kannst du einen der folgenden Effekte von Raffinierter Schlag hinzufügen. Jeder Effekt hat Würfelkosten in Form der Schadenswürfel für Hinterhältiger Angriff, auf die du verzichten musst, um den Effekt hinzuzufügen. Du musst diese Würfel vor dem Wurf entfernen, und der Effekt tritt auf, sobald der Schaden des Angriffs bewirkt wurde. Beispiel: Wenn du den Gift-Effekt hinzufügst, entfernst du 1W6 von den Schadenswürfeln des Hinterhältigen Angriffs, bevor du würfelst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level5-cunning-strike-save-dc",
+      "text": "Wenn ein Effekt von Raffinierter Schlag einen Rettungswurf erfordert, entspricht der SG 8 plus deinem Geschicklichkeitsmodifikator plus deinem Übungsbonus."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level5-cunning-strike-trip",
+      "text": "Fällen (Kosten: 1W6): Wenn das Ziel von höchstens großer Größe ist, muss es einen Geschicklichkeitsrettungswurf bestehen, oder es wird umgestoßen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level5-cunning-strike-poison",
+      "text": "Gift (Kosten: 1W6): Du fügst deinem Schlag ein Toxin hinzu, welches das Ziel zu einem Konstitutionsrettungswurf zwingt. Misslingt der Wurf, so ist die Kreatur eine Minute lang vergiftet. Das vergiftete Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level5-cunning-strike-poison-kit",
+      "text": "Du musst eine Giftmischerausrüstung bei dir haben, um diesen Effekt zu bewirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level5-cunning-strike-withdraw",
+      "text": "Zurückziehen (Kosten: 1W6): Sofort nach dem Angriff nutzt du bis zur Hälfte deiner Bewegungsrate, ohne Gelegenheitsangriffe zu provozieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level5-uncanny-dodge",
+      "level": 4,
+      "text": "5. Stufe: Unglaubliches Ausweichen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level5-uncanny-dodge-description",
+      "text": "Trifft dich ein Angreifer, den du sehen kannst, mit einem Angriffswurf, so kannst du eine Reaktion ausführen, um den Schaden des Angriffs zu halbieren (abgerundet)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level7-evasion",
+      "level": 4,
+      "text": "7. Stufe: Entrinnen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level7-evasion-description",
+      "text": "Du kannst bestimmten Gefahren geschickt ausweichen. Bist du einem Effekt ausgesetzt, der dir einen Geschicklichkeitsrettungswurf erlaubt, um den Schaden zu halbieren, so erleidest du stattdessen bei einem Erfolg gar keinen und bei einem Misserfolg den halben Schaden. Du kannst dieses Merkmal nicht einsetzen, wenn du kampfunfähig bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level7-reliable-talent",
+      "level": 4,
+      "text": "7. Stufe: Verlässliches Talent"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level7-reliable-talent-description",
+      "text": "Wann immer du einen Attributswurf ausführst, der eine deiner Übungen in Fertigkeiten oder im Umgang mit Werkzeug nutzt, kannst du ein W20-Ergebnis von 9 oder darunter als 10 werten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level11-improved-cunning-strike",
+      "level": 4,
+      "text": "11. Stufe: Verbesserter Raffinierter Schlag"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level11-improved-cunning-strike-description",
+      "text": "Wenn du mit Hinterhältiger Angriff Schaden bewirkst, kannst du bis zu zwei der folgenden Effekte von Raffinierter Schlag hinzufügen, sofern du die jeweiligen Würfelkosten bezahlst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level14-devious-strikes",
+      "level": 4,
+      "text": "14. Stufe: Hinterhältige Schläge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level14-devious-strikes-description",
+      "text": "Du hast dich in neuen Methoden geübt, deinen Hinterhältigen Angriff auf besonders verschlagene Art auszuführen. Nun stehen folgende Effekte von Raffinierter Schlag zur Auswahl:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level14-devious-strikes-daze",
+      "text": "Irritieren (Kosten: 2W6): Das Ziel muss einen Konstitutionsrettungswurf bestehen, oder es kann in seinem nächsten Zug nur eine der folgenden Handlungen vollziehen: sich bewegen, eine Aktion ausführen oder eine Bonusaktion ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level14-devious-strikes-knock-out",
+      "text": "Lahmlegen (Kosten: 6W6): Das Ziel muss einen Konstitutionsrettungswurf bestehen, andernfalls ist es eine Minute lang – oder bis es Schaden erleidet – bewusstlos. Das bewusstlose Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level14-devious-strikes-obscure",
+      "text": "Verdunkeln (Kosten: 3W6): Das Ziel muss einen Geschicklichkeitsrettungswurf bestehen, oder es ist bis zum Ende seines nächsten Zugs blind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level15-slippery-mind",
+      "level": 4,
+      "text": "15. Stufe: Entschlüpfender Geist"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level15-slippery-mind-description",
+      "text": "Dein raffinierter Verstand ist außergewöhnlich schwierig zu kontrollieren. Du erhältst Übung in Weisheits- und Charismarettungswürfen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level18-elusive",
+      "level": 4,
+      "text": "18. Stufe: Schwer zu fassen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level18-elusive-description",
+      "text": "Du kannst derart gut ausweichen, dass Angreifer kaum noch die Oberhand gegen dich gewinnen. Kein Angriffswurf gegen dich kann im Vorteil sein, solange du nicht kampfunfähig bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe des Nachtgeists wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.level20-stroke-of-luck",
+      "level": 4,
+      "text": "20. Stufe: Glückstreffer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level20-stroke-of-luck-description",
+      "text": "Du bist beneidenswert gut darin, Erfolg zu haben, wenn es darauf ankommt. Wenn du bei einer W20-Prüfung scheiterst, kannst du das Ergebnis in eine 20 verwandeln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.level20-stroke-of-luck-reuse",
+      "text": "Du kannst dieses Merkmal erst nach einer kurzen oder langen Rast erneut verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.subclass-thief",
+      "level": 3,
+      "text": "Schurken-Unterklasse: Dieb"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-thief-motto",
+      "text": "Geh als klassischer Abenteurer auf Schatzjagd"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-thief-introduction",
+      "text": "Du bist eine Mischung aus Einbrecher, Schatzjäger und Entdecker und damit der Inbegriff des Abenteurers. Du verbesserst nicht nur Beweglichkeit und Heimlichkeit, sondern erhältst auch Attribute, die dir helfen, Ruinen zu erkunden und die magischen Gegenstände, die du dort findest, bestmöglich zu nutzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.subclass-level3-fast-hands",
+      "level": 4,
+      "text": "3. Stufe: Flinke Finger"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level3-fast-hands-description",
+      "text": "Als Bonusaktion kannst du eine der folgenden Optionen ausführen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level3-fast-hands-use-an-object",
+      "text": "Einen Gegenstand verwenden: Führe die Verwenden-Aktion oder die magische Aktion aus, um einen magischen Gegenstand zu verwenden, der diese Aktion erfordert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level3-fast-hands-sleight-of-hand",
+      "text": "Fingerfertigkeit: Führe einen Geschicklichkeitswurf (Fingerfertigkeit) aus, um mit Diebeswerkzeug ein Schloss zu knacken, eine Falle zu entschärfen oder um einen Taschendiebstahl auszuführen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.subclass-level3-second-story-work",
+      "level": 4,
+      "text": "3. Stufe: Kletteraffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level3-second-story-work-description",
+      "text": "Du bist darin ausgebildet, an besonders schwierig zu erreichende Orte zu gelangen, was dir diese Vorzüge gewährt:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level3-second-story-work-climber",
+      "text": "Kletterer: Du erhältst eine Kletterbewegungsrate in Höhe deiner Bewegungsrate."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level3-second-story-work-jumper",
+      "text": "Springer: Du kannst deine Sprungdistanz anhand deiner Geschicklichkeit anstatt deiner Stärke bestimmen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.subclass-level9-supreme-sneak",
+      "level": 4,
+      "text": "9. Stufe: Außerordentliches Schleichen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level9-supreme-sneak-description",
+      "text": "Du erhältst bei Raffinierter Schlag folgende Option:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level9-supreme-sneak-stealth-attack",
+      "text": "Heimlicher Angriff (Kosten: 1W6): Wenn du aufgrund der Verstecken-Aktion unsichtbar bist, wird die Unsichtbarkeit nicht durch diesen Angriff beendet, sofern du den Zug hinter Dreivierteldeckung oder vollständiger Deckung beendest."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.subclass-level13-use-magic-device",
+      "level": 4,
+      "text": "13. Stufe: Magischen Gegenstand verwenden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level13-use-magic-device-description",
+      "text": "Du hast gelernt, magische Gegenstände optimal zu nutzen, was dir folgende Vorzüge gewährt:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level13-use-magic-device-attunement",
+      "text": "Einstimmung: Du kannst dich auf bis zu vier magische Gegenstände auf einmal einstimmen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level13-use-magic-device-charges",
+      "text": "Ladungen: Wann immer du eine Eigenschaft eines magischen Gegenstands verwendest, die Ladungen verbraucht, würfle mit 1W6. Bei einem Ergebnis von 6 verwendest du die Eigenschaft, ohne eine Ladung zu verbrauchen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level13-use-magic-device-scrolls",
+      "text": "Schriftrollen: Du kannst alle Zauberschriftrollen verwenden, und dein Attribut zum Wirken der Zauber ist Intelligenz. Zaubertricks und Zauber des 1. Grades kannst du zuverlässig wirken. Wenn die Schriftrolle einen Zauber höheren Grades enthält, musst du zunächst einen Intelligenzwurf (Arkane Kunde) bestehen (SG 10 plus Zaubergrad). Bei einem Erfolg wirkst du den Zauber von der Schriftrolle. Misslingt der Wurf, so löst die Schriftrolle sich auf."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.rogue.subclass-level17-thiefs-reflexes",
+      "level": 4,
+      "text": "17. Stufe: Reflexe eines Diebes"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.rogue.subclass-level17-thiefs-reflexes-description",
+      "text": "Du bist versiert darin, Hinterhalte zu legen und rasch aus Gefahren zu entkommen. In der ersten Runde jedes Kampfs kannst du zwei Züge ausführen. Du führst den ersten Zug mit deiner normalen Initiative und den zweiten Zug mit deiner Initiative minus 10 aus."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    }
+  ],
+  "digest": "sha256:79ad8e0cf221d926d5ea8d6e8e8351f241f493f6034b21bd16f0dc257abf7a58"
+}

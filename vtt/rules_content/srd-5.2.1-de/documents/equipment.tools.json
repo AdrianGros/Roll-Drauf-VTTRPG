@@ -1,0 +1,775 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "equipment.tools",
+  "slug": "werkzeug",
+  "title": "Werkzeug",
+  "navigationPath": [
+    "Ausrüstung",
+    "Werkzeug"
+  ],
+  "order": 620,
+  "sourcePages": [
+    105,
+    106
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tools",
+      "level": 2,
+      "text": "Werkzeug"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.tools.tools-introduction",
+      "text": "Werkzeug hilft dir, besondere Attributswürfe auszuführen, bestimmte Gegenstände herzustellen oder beides. In der Beschreibung des Werkzeugs sind Kosten, Gewicht sowie folgende Einträge enthalten:"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-entries",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Dieser Eintrag führt die Attribute auf, die verwendet werden, wenn mit diesem Werkzeug ein Attributswurf ausgeführt wird."
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Dieser Eintrag führt auf, was du mit dem Werkzeug tun kannst, wenn du die Verwenden-Aktion ausführst. Mit jeder Verwenden-Aktion kannst du eines dieser Dinge tun. Außerdem ist hier der SG für die Aktion angegeben."
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Dieser Eintrag führt gegebenenfalls auf, was du mit dem Werkzeug herstellen kannst. Die Regeln zum Herstellen findest du unter „Nichtmagische Gegenstände herstellen“, „Heiltränke brauen“ und „Zauberschriftrollen verfassen“ weiter hinten unter „Ausrüstung“."
+        },
+        {
+          "term": "Varianten",
+          "definition": "Dieser Eintrag erscheint, wenn das Werkzeug Varianten hat. In diesem Fall sind die Varianten aufgeführt. Jede Variante erfordert separate Übung."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-proficiency",
+      "level": 3,
+      "text": "Übung im Umgang mit Werkzeug"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.tools.tool-proficiency-description",
+      "text": "Wenn du Übung im Umgang mit einem Werkzeug hast, fügst du jedem Attributswurf, der dieses Werkzeug verwendet, deinen Übungsbonus hinzu. Wenn du in einer Fertigkeit geübt bist, die bei diesem Wurf verwendet wird, ist der Wurf außerdem noch im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.tools.tool-proficiency-features",
+      "text": "Deine Merkmale könnten dir Übung im Umgang mit einem Werkzeug verleihen. Monster haben Übung im Umgang mit allen Werkzeugen, die in ihrem Wertekasten aufgeführt sind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.crafting-tools",
+      "level": 3,
+      "text": "Handwerkszeug"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.tools.crafting-tools-description",
+      "text": "Handwerkszeug ist dazu da, bestimmte Gegenstände im Rahmen eines Handwerks herzustellen. Jedes dieser Werkzeuge erfordert separate Übung."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-alchemistenausruestung",
+      "level": 4,
+      "text": "Alchemistenausrüstung (50 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-alchemistenausruestung-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Intelligenz"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "4 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Eine Substanz identifizieren (SG 15) oder ein Feuer entfachen (SG 15)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Alchemistenfeuer, Materialkomponentenbeutel, Öl, Papier, Parfüm, Säure"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-brauereizubehoer",
+      "level": 4,
+      "text": "Brauereizubehör (20 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-brauereizubehoer-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Intelligenz"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "4,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Ein vergiftetes Getränk erkennen (SG 15) oder Alkohol identifizieren (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Gegengift"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-glasblaeserwerkzeug",
+      "level": 4,
+      "text": "Glasbläserwerkzeug (30 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-glasblaeserwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Intelligenz"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "2,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Bestimmen, was ein Glasbehälter in den letzten 24 Stunden enthalten hat (SG 15)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Fernrohr, Glasflasche, Lupe, Phiole"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-holzschnitzwerkzeug",
+      "level": 4,
+      "text": "Holzschnitzwerkzeug (1 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-holzschnitzwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "2,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Muster in Holz schnitzen (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Fernkampfwaffen (außer Muskete, Pistole und Schleuder), Kampfstab, Knüppel, Zweihandknüppel, Arkaner Fokus, Blasrohrpfeile, Bolzen, Druidischer Fokus, Pfeile, Tintenfüller"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-juwelierwerkzeug",
+      "level": 4,
+      "text": "Juwelierwerkzeug (25 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-juwelierwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Intelligenz"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "1 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Den Wert eines Edelsteins bestimmen (SG 15)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Arkaner Fokus, Heiliges Symbol"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-kalligrafiewerkzeug",
+      "level": 4,
+      "text": "Kalligrafiewerkzeug (10 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-kalligrafiewerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "2,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Ästhetischen und fälschungssicheren Text notieren (SG 15)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Tinte, Zauberschriftrolle"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-kartografenwerkzeug",
+      "level": 4,
+      "text": "Kartografenwerkzeug (15 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-kartografenwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Weisheit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "3 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Die Karte eines kleinen Gebiets zeichnen (SG 15)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Karte"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-kochutensilien",
+      "level": 4,
+      "text": "Kochutensilien (1 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-kochutensilien-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Weisheit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "4 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Geschmack von Nahrung verbessern (SG 10), verdorbene oder vergiftete Nahrung erkennen (SG 15)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Rationen"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-ledererwerkzeug",
+      "level": 4,
+      "text": "Ledererwerkzeug (5 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-ledererwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "2,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Einem Ledergegenstand Verzierungen hinzufügen (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Peitsche, Schleuder, Fellrüstung, beschlagene Lederrüstung, Lederrüstung, Armbrustbolzen-Beutel, Beutel, Karten- oder Schriftrollenbehälter, Köcher, Pergament, Rucksack, Trinkschlauch"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-malutensilien",
+      "level": 4,
+      "text": "Malutensilien (10 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-malutensilien-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Weisheit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "2,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Ein erkennbares Bild von etwas anfertigen, was du gesehen hast (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Druidischer Fokus, Heiliges Symbol"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-maurerwerkzeug",
+      "level": 4,
+      "text": "Maurerwerkzeug (10 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-maurerwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Stärke"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "4 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Einen Stein mit einem Symbol oder einem Loch versehen (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Flaschenzug"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-schmiedewerkzeug",
+      "level": 4,
+      "text": "Schmiedewerkzeug (20 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-schmiedewerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Stärke"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "4 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Eine Tür oder einen Behälter aufbrechen (SG 20)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Jede Nahkampfwaffe (außer Kampfstab, Knüppel, Peitsche und Zweihandknüppel), mittelschwere Rüstung (außer Fellrüstung), schwere Rüstung, Brechstange, Eimer, Eisenstachel, Eisentopf, Enterhaken, Feuerwaffenmunition, Kette, Krähenfüße, Metallkügelchen, Schleudermunition"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-schreinerwerkzeug",
+      "level": 4,
+      "text": "Schreinerwerkzeug (8 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-schreinerwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Stärke"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "3 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Eine Tür oder einen Behälter versiegeln oder aufbrechen (SG 20)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Kampfstab, Knüppel, Zweihandknüppel, Fackel, Fass, Leiter, Stange, tragbarer Rammbock, Truhe"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-schusterwerkzeug",
+      "level": 4,
+      "text": "Schusterwerkzeug (5 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-schusterwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "2,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Schuhe bearbeiten, sodass der nächste Geschicklichkeitswurf (Akrobatik) des Trägers im Vorteil ist (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Kletterausrüstung"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-toepferwerkzeug",
+      "level": 4,
+      "text": "Töpferwerkzeug (10 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-toepferwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Intelligenz"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "1,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Bestimmen, was ein Keramikbehälter in den letzten 24 Stunden enthalten hat (SG 15)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Krug, Lampe"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-tueftlerwerkzeug",
+      "level": 4,
+      "text": "Tüftlerwerkzeug (50 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-tueftlerwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Einen winzigen Gegenstand aus Abfällen herstellen, der nach einer Minute zerfällt (SG 20)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Muskete, Pistole, Glocke, abdeckbare Laterne, Blendlaterne, Flasche, Handschellen, Jagdfalle, Schaufel, Schloss, Signalpfeife, Spiegel, Zunderkästchen"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-weberwerkzeug",
+      "level": 4,
+      "text": "Weberwerkzeug (1 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-weberwerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "2,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Einen Riss in Kleidung flicken (SG 10) oder eine winzige Näharbeit anfertigen (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Gepolsterte Rüstung, feine Kleidung, Decke, Netz, Korb, Reisekleidung, Robe, Sack, Seil, Schlafsack, Schnur, Zelt"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.other-tools",
+      "level": 3,
+      "text": "Anderes Werkzeug"
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-diebeswerkzeug",
+      "level": 4,
+      "text": "Diebeswerkzeug (25 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-diebeswerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "0,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Ein Schloss knacken (SG 15) oder eine Falle entschärfen (SG 15)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-faelscherausruestung",
+      "level": 4,
+      "text": "Fälscherausrüstung (15 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-faelscherausruestung-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Geschicklichkeit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "2,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Höchstens zehn Wörter in der Handschrift eines anderen verfassen (SG 15) oder ein Wachssiegel duplizieren (SG 20)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-giftmischerausruestung",
+      "level": 4,
+      "text": "Giftmischerausrüstung (50 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-giftmischerausruestung-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Intelligenz"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "1 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Einen vergifteten Gegenstand erkennen (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Einfaches Gift"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-kraeuterkundeausruestung",
+      "level": 4,
+      "text": "Kräuterkundeausrüstung (5 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-kraeuterkundeausruestung-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Intelligenz"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "1,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Eine Pflanze identifizieren (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Gegengift, Heilerausrüstung, Heiltrank, Kerze"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-musikinstrument",
+      "level": 4,
+      "text": "Musikinstrument (Preis variiert)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-musikinstrument-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Charisma"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "Variiert"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Eine bekannte Melodie spielen (SG 10) oder eine Melodie improvisieren (SG 15)"
+        },
+        {
+          "term": "Varianten",
+          "definition": "Dudelsack (30 GM, 3 kg), Flöte (2 GM, 0,5 kg), Gambe (30 GM, 0,5 kg), Hackbrett (25 GM, 5 kg), Horn (3 GM, 1 kg), Laute (35 GM, 1 kg), Leier (30 GM, 1 kg), Panflöte (12 GM, 1 kg), Schalmei (2 GM, 0,5 kg), Trommel (6 GM, 1,5 kg)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-navigationswerkzeug",
+      "level": 4,
+      "text": "Navigationswerkzeug (25 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-navigationswerkzeug-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Weisheit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "1 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Einen Kurs festlegen (SG 10) oder die Position durch Sternbeobachtung bestimmen (SG 15)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-spielset",
+      "level": 4,
+      "text": "Spielset (Preis variiert)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-spielset-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Weisheit"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "–"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Bestimmen, ob jemand mogelt (SG 10), oder das Spiel gewinnen (SG 20)"
+        },
+        {
+          "term": "Varianten",
+          "definition": "Drachenschach (1 GM), Drei-Drachen-Ante (1 GM), Spielkarten (5 SM), Würfel (1 SM)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.tools.tool-verkleidungsausruestung",
+      "level": 4,
+      "text": "Verkleidungsausrüstung (25 GM)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "equipment.tools.tool-verkleidungsausruestung-details",
+      "entries": [
+        {
+          "term": "Attribut",
+          "definition": "Charisma"
+        },
+        {
+          "term": "Gewicht",
+          "definition": "1,5 kg"
+        },
+        {
+          "term": "Verwenden",
+          "definition": "Schminke auftragen (SG 10)"
+        },
+        {
+          "term": "Herstellen",
+          "definition": "Kostüm"
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:ad8745aa6cb1a88ab83cea98214601fa76ac3153bd71d0d686348240e2cb73fd"
+}

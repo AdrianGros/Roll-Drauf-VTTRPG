@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.rarity",
+  "slug": "seltenheit-magischer-gegenstaende",
+  "title": "Seltenheit magischer Gegenstände",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Seltenheit magischer Gegenstände"
+  ],
+  "order": 1020,
+  "sourcePages": [
+    238
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.rarity.seltenheit-magischer-gegenstaende",
+      "level": 2,
+      "text": "Seltenheit magischer Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.rarity.seltenheit-magischer-gegenstaende.text-1",
+      "text": "Jeder magische Gegenstand hat eine Seltenheit, die als grobes Maß für seine Macht im Vergleich zu anderen magischen Gegenständen dient. Die Seltenheiten sind in der Tabelle „Seltenheit und Wert magischer Gegenstände“ angegeben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.rarity.seltenheit-magischer-gegenstaende.text-2",
+      "text": "Gewöhnliche magische Gegenstände wie Heiltränke sind am zahlreichsten. Artefakte wie die Kugel der Drachen sind unbezahlbar, einmalig und schwierig zu beschaffen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.rarity.wert-magischer-gegenstaende-nach-seltenheit",
+      "level": 3,
+      "text": "Wert magischer Gegenstände nach Seltenheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.rarity.wert-magischer-gegenstaende-nach-seltenheit.text-1",
+      "text": "Gewöhnliche magische Gegenstände können meist in Dörfern oder Städten gekauft werden. Ungewöhnliche und seltene magische Gegenstände sind normalerweise nur in Städten zu finden. Noch seltenere magische Gegenstände werden vermutlich nur an wundersamen Orten wie einer Stadt auf einer anderen Existenzebene verkauft. Wenn du den Charakteren in deiner Kampagne erlaubst, magische Gegenstände zu kaufen und zu verkaufen, kann die Seltenheit dir helfen, Preise für diese Gegenstände festzulegen. In der Tabelle „Seltenheit und Wert magischer Gegenstände“ sind Werte in Goldmünzen angegeben. Ein Verkäufer könnte stattdessen aber auch einen Dienst als Zahlung verlangen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.rarity.wert-magischer-gegenstaende-nach-seltenheit.text-2",
+      "text": "Wenn zu einem magischen Gegenstand ein Gegenstand gehört, der laut „Ausrüstung“ einen Kaufpreis hat (beispielsweise eine Waffe oder eine Rüstung), füge dem Wert des magischen Gegenstands diese Kosten hinzu. Beispiel: Rüstung +1 (Ritterrüstung) hat einen Wert von 5.500 GM. Dies ist die Summe des Werts eines selten magischen Gegenstands (4.000 GM) und der Kosten für eine Ritterrüstung (1.500 GM)."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.rarity.wert-magischer-gegenstaende-nach-seltenheit.tabelle-seltenheit-und-wert-magischer-gegenstaende",
+      "caption": "Seltenheit und Wert magischer Gegenstände",
+      "columns": [
+        "Seltenheit",
+        "Wert*",
+        "Seltenheit",
+        "Wert*"
+      ],
+      "rows": [
+        [
+          "Gewöhnlich",
+          "100 GM",
+          "Sehr selten",
+          "40.000 GM"
+        ],
+        [
+          "Ungewöhnlich",
+          "400 GM",
+          "Legendär",
+          "200.000 GM"
+        ],
+        [
+          "Selten",
+          "4.000 GM",
+          "Artefakt",
+          "Unbezahlbar"
+        ]
+      ]
+    },
+    {
+      "type": "page-note",
+      "ruleId": "magic-items.rarity.wert-magischer-gegenstaende-nach-seltenheit.fussnote-1",
+      "text": "*Halbiere den Wert für alle Verbrauchsgegenstände außer Zauberschriftrollen. Der Wert einer Zauberschriftrolle ist das Doppelte der Kosten zum Erstellen der Schriftrolle (wie unter „Ausrüstung“ im Abschnitt „Zauberschriftrollen verfassen“ angegeben)."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:eed89fd7e763a36283d85e76579fe250e0ac0d55139328f36ed5e67bf8dd3ce5"
+}

@@ -1,0 +1,2274 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "monsters.a-b",
+  "slug": "monster-a-b",
+  "title": "Monster A–B",
+  "navigationPath": [
+    "Monster",
+    "Monster A–B"
+  ],
+  "order": 2100,
+  "sourcePages": [
+    300,
+    301,
+    302,
+    303,
+    304,
+    305,
+    306,
+    307,
+    308,
+    309
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.monster-von-a-z",
+      "level": 2,
+      "text": "Monster von A–Z (A–B)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.aboleth",
+      "level": 3,
+      "text": "Aboleth"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.aboleth.aboleth",
+      "name": "Aboleth",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Aberration, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "TP",
+          "value": "150 (20W10+40)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +6)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +8)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +6)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Geschichte +12, Wahrnehmung +10"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 20"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Tiefensprache; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "10 (EP 5.900 oder 7.200 im Hort; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Aboleth kann Luft und Wasser atmen.\n\nLegendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Aboleth bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen.\n\nSchauerliche Genesung: Wenn der Aboleth zerstört wird, erhält er nach 5W10 Tagen einen neuen Körper, der mit allen Trefferpunkten im Fernen Reich oder an einem anderen Ort nach Wahl des SL aufersteht.\n\nSchleimwolke: Unter Wasser ist der Aboleth von Schleim umgeben. Konstitutionsrettungswurf: SG 14; jede Kreatur in einer Ausströmung von 1,5 Metern, die am Ende seines Zugs vom Abolethen ausgeht. Misserfolg: Das Ziel wird verflucht. Bis der Fluch endet, ist die Haut des Ziels schleimig, das Ziel kann Luft und Wasser atmen und nur unter Wasser Trefferpunkte zurückerhalten.\n\nWenn die verfluchte Kreatur sich nicht im Wasser befindet, erleidet sie nach jeweils zehn Minuten 6 (1W12) Säureschaden, sofern ihre Haut nicht befeuchtet wird, bevor zehn Minuten vergangen sind.\n\nSondierende Telepathie: Wenn eine Kreatur, die der Aboleth sehen kann, telepathisch mit dem Abolethen kommuniziert, erfährt er die tiefsten Wünsche der Kreatur."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Aboleth führt zwei Tentakelangriffe aus und setzt entweder Erinnerungen verzehren oder Gedanken beherrschen ein, sofern verfügbar.\n\nTentakel: Nahkampfangriffswurf: +9, Reichweite 4,5 m. Treffer: 12 (2W6+5) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es von einem der vier Tentakel gepackt (Flucht-SG 14).\n\nErinnerungen verzehren: Intelligenzrettungswurf: SG 16; eine Kreatur im Abstand von bis zu neun Metern, die vom Abolethen bezaubert ist oder gepackt wurde. Misserfolg: 10 (3W6) psychischer Schaden. Erfolg: Halber Schaden. Erfolg oder Misserfolg: Wenn das Ziel ein Humanoide ist und seine Trefferpunkte durch diese Aktion auf 0 sinken, erhält der Aboleth die Erinnerungen des Ziels.\n\nGedanken beherrschen (2-mal täglich): Weisheitsrettungswurf: SG 16; eine Kreatur im Abstand von bis zu neun Metern vom Abolethen, die er sehen kann. Misserfolg: Das Ziel ist bezaubert, bis der Aboleth stirbt oder sich auf eine andere Existenzebene als das Ziel begibt. Das bezauberte Ziel handelt als Verbündeter des Abolethen und steht unter seiner Kontrolle, sofern es sich im Abstand von bis zu 18 Metern von ihm befindet. Außerdem können der Aboleth und das Ziel auf beliebige Distanz telepathisch miteinander kommunizieren.\n\nDas Ziel wiederholt den Rettungswurf, wann immer es Schaden erleidet, außerdem nach jeweils 24 Stunden, die es mindestens 1,6 Kilometer weit vom Abolethen entfernt verbracht hat. Bei einem Erfolg endet der Effekt bei ihm."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Aboleth eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Aboleth wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nPeitschenhieb: Der Aboleth führt einen Tentakelangriff aus.\n\nPsychische Absaugung: Wenn der Aboleth mindestens eine Kreatur bezaubert hat oder gepackt hält, setzt er Erinnerungen verzehren ein und erhält 5 (1W10) Trefferpunkte zurück."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.adeliger",
+      "level": 3,
+      "text": "Adeliger"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.adeliger.adeliger",
+      "name": "Adeliger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "9 (2W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Motiv erkennen +4, Täuschen +5, Überzeugen +5"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Brustplatte, Rapier"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und zwei weitere Sprachen"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Rapier: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 5 (1W8+4) Stichschaden."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Parieren: Auslöser: Der Adelige wird von einem Nahkampfangriffswurf getroffen, während er eine Waffe hält. Antwort: Der Adelige fügt seiner RK gegen diesen Angriff 2 hinzu, sodass der Angriff möglicherweise misslingt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.ankheg",
+      "level": 3,
+      "text": "Ankheg"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.ankheg.ankheg",
+      "name": "Ankheg",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "45 (6W10+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Graben 3 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m, Erschütterungssinn 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Tunnelbauer: Der Ankheg kann sich mit halber Grabbewegungsrate durch massiven Fels graben. Dabei hinterlässt er einen Tunnel von drei Metern Durchmesser."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5 (im Vorteil, wenn das Ziel vom Ankheg gepackt wurde), Reichweite 1,5 m. Treffer: 10 (2W6+3) Hiebschaden plus 3 (1W6) Säureschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es gepackt (Flucht-SG 13).\n\nSäure versprühen (Aufladung 6): Geschicklichkeitsrettungswurf: SG 12; jede Kreatur in einer neun Meter langen, 1,5 Meter breiten Linie. Misserfolg: 14 (4W6) Säureschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.assassine",
+      "level": 3,
+      "text": "Assassine"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.assassine.assassine",
+      "name": "Assassine",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "97 (15W8+30)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "18 (MOD +4, RW +7)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +6)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Akrobatik +7, Heimlichkeit +10, Wahrnehmung +6"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Gift"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Beschlagene Lederrüstung, Kurzschwert, Leichte Armbrust"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Diebessprache, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "8 (EP 3.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Entrinnen: Wenn ein Effekt auf den Assassinen wirkt, der ihm einen Geschicklichkeitsrettungswurf ermöglicht, damit er nur den halben Schaden erleidet, so erleidet er stattdessen bei einem Erfolg gar keinen Schaden und bei Misserfolg nur den halben Schaden. Sie kann dieses Merkmal nicht verwenden, wenn sie kampfunfähig ist."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Assassine führt drei Angriffe mit dem Kurzschwert oder der leichten Armbrust in beliebiger Kombination aus.\n\nKurzschwert: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 7 (1W6+4) Stichschaden plus 17 (5W6) Giftschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Assassinen vergiftet.\n\nLeichte Armbrust: Fernkampfangriffswurf: +7, Reichweite 24/96 m. Treffer: 8 (1W8+4) Stichschaden plus 21 (6W6) Giftschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Raffinierte Aktion: Der Assassine führt die Rückzug-, die Spurt- oder die Verstecken-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.atterkopp",
+      "level": 3,
+      "text": "Atterkopp"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.atterkopp.atterkopp",
+      "name": "Atterkopp",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroße Monstrosität, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "44 (8W8+8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Überlebenskunst +3, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Netzwandler: Der Atterkopp ignoriert Bewegungseinschränkungen durch Netze und weiß genau, wo sich andere Kreaturen aufhalten, die in Kontakt mit demselben Netz sind.\n\nSpinnenklettern: Der Atterkopp kann ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Atterkopp führt einen Bissangriff und einen Klauenangriff aus.\n\nBiss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Stichschaden plus 2 (1W4) Giftschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Atterkopps vergiftet.\n\nKlauen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 7 (2W4+2) Hiebschaden.\n\nNetzfaden (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 12; eine Kreatur von höchstens großer Größe im Abstand von bis zu neun Metern vom Atterkopp, die er sehen kann. Misserfolg: Das Ziel ist festgesetzt, bis das Netz zerstört wird (RK 10, 5 TP, anfällig für Feuerschaden, gegen Gift-, psychischen und Wuchtschaden immun)."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Einholen: Der Atterkopp zieht eine Kreatur im Abstand von bis zu neun Metern von sich, die von seinem Netzfaden festgesetzt ist, bis zu 7,5 Meter weit in gerader Linie auf sich zu."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.axtschnabel",
+      "level": 3,
+      "text": "Axtschnabel"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.axtschnabel.axtschnabel",
+      "name": "Axtschnabel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "19 (3W10+3)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Schnabel: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 6 (1W8+2) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.azer",
+      "level": 3,
+      "text": "Azer"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.azer.azer-waechter",
+      "name": "Azer-Wächter",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Elementar, rechtschaffen neutral"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "39 (6W8+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Ignal)"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Beleuchtung: Der Azer spendet in einem Radius von drei Metern helles Licht und in einem Radius von weiteren drei Metern dämmriges Licht.\n\nFeueraura: Am Ende jedes Zugs des Azers erleidet jede Kreatur seiner Wahl in einer Ausströmung von 1,5 Metern, die vom Azer ausgeht, 5 (1W10) Feuerschaden, sofern der Azer nicht kampfunfähig ist."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Brennender Hammer: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 8 (1W10+3) Wuchtschaden plus 3 (1W6) Feuerschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.balor",
+      "level": 3,
+      "text": "Balor"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.balor.balor",
+      "name": "Balor",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Unhold (Dämon), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+14 (24)"
+        },
+        {
+          "label": "TP",
+          "value": "287 (23W12+161)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m"
+        },
+        {
+          "label": "Stä",
+          "value": "26 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "22 (MOD +6, RW +12)"
+        },
+        {
+          "label": "Int",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +9)"
+        },
+        {
+          "label": "Cha",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +9"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Bezaubert, Verängstigt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 19"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "19 (EP 22.000; ÜB +6)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Feueraura: Am Ende jedes Zugs des Balors erleidet jede Kreatur in einer Ausströmung von 1,5 Metern, die vom Balor ausgeht, 13 (3W8) Feuerschaden.\n\nLegendäre Resistenz (3-mal täglich): Wenn der Balor bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen.\n\nMagieresistenz: Der Balor ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nTodeszuckungen: Der Balor explodiert, wenn er stirbt. Geschicklichkeitsrettungswurf: SG 20; jede Kreatur in einer Ausströmung von neun Metern, die vom Balor ausgeht. Misserfolg: 31 (9W6) Feuerschaden plus 31 (9W6) Energieschaden. Erfolg: Halber Schaden. Erfolg oder Misserfolg: Wenn der Balor außerhalb des Abyss stirbt, erhält er sofort einen neuen Körper, der mit allen Trefferpunkten irgendwo im Abyss aufersteht."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Balor führt einen Blitzklinge- und einen Flammenpeitsche-Angriff aus.\n\nBlitzklinge: Nahkampfangriffswurf: +14, Reichweite 3 m. Treffer: 21 (3W8+8) Energieschaden plus 22 (4W10)\n\nBlitzschaden, und das Ziel kann bis zum Beginn des nächsten Zugs des Balors keine Reaktionen ausführen.\n\nFlammenpeitsche: Nahkampfangriffswurf: +14, Reichweite 9 m. Treffer: 18 (3W6+8) Energieschaden plus 17 (5W6) Feuerschaden. Wenn das Ziel eine Kreatur von höchstens riesiger Größe ist, zieht der Balor es bis zu 7,5 Meter weit in gerader Linie auf sich zu, und das Ziel wird umgestoßen und hat den Zustand Liegend."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Teleportieren: Der Balor teleportiert sich oder einen bereitwilligen Dämon im Abstand von bis zu drei Metern von sich bis zu 18 Meter weit in einen freien Bereich, den der Balor sehen kann."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.banditen",
+      "level": 3,
+      "text": "Banditen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.banditen.bandit",
+      "name": "Bandit",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W8+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Lederrüstung, Leichte Armbrust, Krummsäbel"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Diebessprache, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Krummsäbel: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 4 (1W6+1) Hiebschaden.\n\nLeichte Armbrust: Fernkampfangriffswurf: +3, Reichweite 24/96 m. Treffer: 5 (1W8+1) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.banditen.banditenhauptmann",
+      "name": "Banditenhauptmann",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "52 (8W8+16)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +4, Täuschen +4"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Beschlagene Lederrüstung, Krummsäbel, Pistole"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Diebessprache, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Bandit führt zwei Angriffe mit Krummsäbel oder Pistole in beliebiger Kombination aus.\n\nKrummsäbel: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Hiebschaden.\n\nPistole: Fernkampfangriffswurf: +5, Reichweite 9/27 m. Treffer: 8 (1W10+3) Stichschaden."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Parieren: Auslöser: Der Bandit wird von einem Nahkampfangriffswurf getroffen, während er eine Waffe hält. Antwort: Der Bandit fügt seiner RK gegen diesen Angriff 2 hinzu, sodass der Angriff möglicherweise misslingt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.bartteufel",
+      "level": 3,
+      "text": "Bartteufel"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.bartteufel.bartteufel",
+      "name": "Bartteufel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Unhold (Teufel), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "58 (9W8+18)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "14 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Verängstigt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m (wird nicht durch magische Dunkelheit beeinträchtigt); Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Infernalisch; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Magieresistenz: Der Teufel ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Teufel führt einen Bartangriff und einen Infernalische-Glefe-Angriff aus.\n\nBart: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Stichschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Teufels vergiftet. Solange das Ziel vergiftet ist, kann es keine Trefferpunkte zurückerhalten.\n\nInfernalische Glefe: Nahkampfangriffswurf: +5, Reichweite 3 m. Treffer: 8 (1W10+3) Hiebschaden. Wenn das Ziel eine Kreatur ist und noch keine infernalische Wunde hat, wirkt bei ihm der folgende Effekt: Konstitutionsrettungswurf: SG 12. Misserfolg: Das Ziel erhält eine infernalische Wunde. Solange das Ziel eine solche Wunde hat, verliert es zu Beginn jedes seiner Züge 5 (1W10) Trefferpunkte. Die Wunde schließt sich, wenn eine Minute vergangen ist, ein Zauber Trefferpunkte beim Ziel wiederherstellt oder wenn das Ziel oder eine Kreatur im Abstand von bis zu 1,5 Metern von ihm eine Aktion ausführt, um die Wunde abzubinden (dies gelingt, wenn die Kreatur einen SG-12-Weisheitswurf (Heilkunde) besteht)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.basilisk",
+      "level": 3,
+      "text": "Basilisk"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.basilisk.basilisk",
+      "name": "Basilisk",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroße Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "52 (8W8+16)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 10 (2W6+3) Stichschaden plus 7 (2W6) Giftschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Versteinernder Blick (Aufladung 4–6): Konstitutionsrettungswurf: SG 12; jede Kreatur in einem Kegel von neun Metern. Wenn der Basilisk im Kegel seine Reflexion sieht, muss er selbst den Rettungswurf ausführen. Erster Misserfolg: Das Ziel ist festgesetzt und wiederholt den Rettungswurf am Ende seines nächsten Zugs, sofern es auch dann noch festgesetzt ist. Bei einem Erfolg endet der Effekt bei ihm. Zweiter Misserfolg: Das Ziel ist nicht mehr festgesetzt, sondern versteinert."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.baumhirte",
+      "level": 3,
+      "text": "Baumhirte"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.baumhirte.baumhirte",
+      "name": "Baumhirte",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesige Pflanze, chaotisch gut"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "138 (12W12+60)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Stich, Wucht"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Druidisch, Elfisch, Gemeinsprache, Sylvanisch"
+        },
+        {
+          "label": "HG",
+          "value": "9 (EP 5.000; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Belagerungsmonster: Der Baumhirte fügt Gegenständen und Gebäuden doppelten Schaden zu."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Baumhirte führt zwei Hiebangriffe aus.\n\nHieb: Nahkampfangriffswurf: +10, Reichweite 1,5 m. Treffer: 16 (3W6+6) Wuchtschaden.\n\nRindenhagel: Fernkampfangriffswurf: +10, Reichweite 54 m. Treffer: 28 (4W10+6) Stichschaden.\n\nBäume beleben (1-mal täglich): Der Baumhirte belebt auf magische Art bis zu zwei Bäume im Abstand von bis zu 18 Metern von sich, die er sehen kann. Jeder Baum verwendet den Wertekasten des Baumhirten, hat allerdings einen Intelligenz- und einen Charismawert von 1, kann nicht sprechen, und diese Aktion steht ihm nicht zur Verfügung. Der Baum ist unmittelbar nach dem Baumhirten beim selben Initiativewert am Zug und gehorcht dem Baumhirten. Ein Baum bleibt belebt, bis ein Tag vergangen ist, bis er stirbt, bis er weiter als 36 Meter vom Baumhirten entfernt ist oder bis der Baumhirte stirbt. In diesem Fall versucht er, sich wieder zu verwurzeln."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.behir",
+      "level": 3,
+      "text": "Behir"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.behir.behir",
+      "name": "Behir",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesige Monstrosität, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "168 (16W12+64)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m, Klettern 15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Wahrnehmung +6"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 27 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "11 (EP 7.200; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Behir führt einen Bissangriff aus und setzt Umschlingen ein.\n\nBiss: Nahkampfangriffswurf: +10, Reichweite 3 m. Treffer: 19 (2W12+6) Stichschaden plus 11 (2W10) Blitzschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 16; jede Kreatur in einer 27 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 66 (12W10) Blitzschaden. Erfolg: Halber Schaden.\n\nUmschlingen: Stärkerettungswurf: SG 18; eine Kreatur von höchstens großer Größe im Abstand von bis zu 1,5 Metern vom Behir, die er sehen kann. Misserfolg: 28 (5W8+6) Wuchtschaden. Das Ziel wird gepackt (Flucht-SG 16). Solange es gepackt bleibt, ist es außerdem festgesetzt."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Verschlucken: Geschicklichkeitsrettungswurf: SG 18; eine Kreatur von höchstens großer Größe, die vom Behir gepackt wurde (der Behir kann nur jeweils eine Kreatur verschlucken). Misserfolg: Der Behir verschluckt das Ziel, das daraufhin nicht mehr gepackt ist.\n\nEine verschluckte Kreatur ist blind und festgesetzt, hat vollständige Deckung gegen Angriffe und andere Effekte von außerhalb des Behirs und erleidet zu Beginn jedes Zugs des Behirs 21 (6W6) Säureschaden.\n\nErleidet der Behir durch die verschluckte Kreatur in einem einzigen Zug mindestens 30 Schaden, so muss er am Ende des Zugs einen SG-14-Konstitutionsrettungswurf bestehen, oder er würgt die verschluckte Kreatur wieder aus. Diese fällt in einen Bereich im Abstand von bis zu drei Metern vom Behir und hat den Zustand Liegend. Wenn der Behir stirbt, ist die verschluckte Kreatur nicht mehr festgesetzt und kann aus dem Kadaver entkommen. Sie verbraucht dabei 4,5 Meter Bewegung und hat danach den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.belebte-gegenstaende",
+      "level": 3,
+      "text": "Belebte Gegenstände"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.belebte-gegenstaende.belebte-ruestung",
+      "name": "Belebte Rüstung",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Konstrukt, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "33 (6W8+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "7,5 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Psychisch; Bezaubert, Erschöpft, Gelähmt, Taub, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 6"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Rüstung führt zwei Hiebangriffe aus.\n\nHieb: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.belebte-gegenstaende.belebtes-fliegendes-schwert",
+      "name": "Belebtes fliegendes Schwert",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Konstrukt, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "14 (4W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Fliegen 15 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Psychisch; Bezaubert, Erschöpft, Gelähmt, Taub, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 7"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Schlitzen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 6 (1W8+2) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.belebte-gegenstaende.belebter-teppich-des-erstickens",
+      "name": "Belebter Teppich des Erstickens",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Konstrukt, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "27 (5W10)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Psychisch; Bezaubert, Erschöpft, Gelähmt, Taub, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 6"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Ersticken: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 10 (2W6+3) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, kann der Teppich es packen (Flucht-SG 13), statt ihm Schaden zuzufügen. Das gepackte Ziel ist blind und festgesetzt. Es beginnt zu ersticken und erleidet zu Beginn jedes seiner Züge 10 (2W6+3) Wuchtschaden. Der Teppich kann nur jeweils eine Kreatur ersticken.\n\nSolange der Teppich ein Ziel gepackt hält, kann er diese Aktion nicht erneut ausführen, halbiert jedoch jeden Schaden, den er erleidet (abgerundet), und das Ziel erleidet die gleiche Menge an Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.berserker",
+      "level": 3,
+      "text": "Berserker"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.berserker.berserker",
+      "name": "Berserker",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "67 (9W8+27)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Fellrüstung, Zweihandaxt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Blutige Raserei: Wenn der Berserker blutig ist, ist er bei Angriffswürfen und Rettungswürfen im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Zweihandaxt: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 9 (1W12+3) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.blaue-drachen",
+      "level": 3,
+      "text": "Blaue Drachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.blaue-drachen.blauer-drachennestling",
+      "name": "Blauer Drachennestling",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Drache (chromatisch), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "65 (10W8+20)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m, Graben 4,5 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2, Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 8 (1W10+3) Hiebschaden plus 3 (1W6) Blitzschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 12; jede Kreatur in einer neun Meter langen, 1,5 Meter breiten Linie. Misserfolg: 21 (6W6) Blitzschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.blaue-drachen.junger-blauer-drache",
+      "name": "Junger blauer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache (chromatisch), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "152 (16W10+64)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +5)"
+        },
+        {
+          "label": "Cha",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +9"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m, Dunkelsicht 36 m; Passive Wahrnehmung 19"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "9 (EP 5.000; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +9, Reichweite 3 m. Treffer: 12 (2W6+5) Hiebschaden plus 5 (1W10) Blitzschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 16; jede Kreatur in einer 18 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 55 (10W10) Blitzschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.blaue-drachen.ausgewachsener-blauer-drache",
+      "name": "Ausgewachsener blauer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Drache (chromatisch), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "212 (17W12+102)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +12"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 22"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "16 (EP 15.000 oder 18.000 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Zauberwirken ersetzen, um den Zauber Zerbersten zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +12, Reichweite 3 m. Treffer: 16 (2W8+7) Hiebschaden plus 5 (1W10) Blitzschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 19; jede Kreatur in einer 27 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 60 (11W10) Blitzschaden. Erfolg: Halber Schaden.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 18):\n\nBeliebig oft: Magie entdecken, Magierhand, Unsichtbarkeit, Zerbersten\n\nJe 1-mal täglich: Ausspähung, Verständigung"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nGetarnter Flug: Der Drache setzt Zauberwirken ein, um den Zauber Unsichtbarkeit auf sich selbst zu wirken, und er kann bis zur Hälfte seiner Flugbewegungsrate verwenden. Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nSchallknall: Der Drache setzt Zauberwirken ein, um den Zauber Zerbersten zu wirken. Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nSchwanzstreich: Der Drache führt einen Zerfetzen-Angriff aus."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.blaue-drachen.uralter-blauer-drache",
+      "name": "Uralter blauer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache (chromatisch), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "22"
+        },
+        {
+          "label": "Initiative",
+          "value": "+14 (24)"
+        },
+        {
+          "label": "TP",
+          "value": "481 (26W20+208)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "29 (MOD +9, RW +9)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +7)"
+        },
+        {
+          "label": "Kon",
+          "value": "27 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "17 (MOD +3, RW +10)"
+        },
+        {
+          "label": "Cha",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Wahrnehmung +17"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 27"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "23 (EP 50.000 oder 62.000 im Hort; ÜB +7)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Zauberwirken ersetzen, um den Zauber Zerbersten (Version des 3. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +16, Reichweite 4,5 m. Treffer: 18 (2W8+9) Hiebschaden plus 11 (2W10) Blitzschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 23; jede Kreatur in einer 36 Meter langen, drei Meter breiten Linie. Misserfolg: 88 (16W10) Blitzschaden. Erfolg: Halber Schaden.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 22):\n\nBeliebig oft: Magie entdecken, Magierhand, Unsichtbarkeit, Zerbersten (Version des 3. Grades)\n\nJe 1-mal täglich: Ausspähung, Verständigung"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nGetarnter Flug: Der Drache setzt Zauberwirken ein, um den Zauber Unsichtbarkeit auf sich selbst zu wirken, und er kann bis zur Hälfte seiner Flugbewegungsrate verwenden. Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nSchallknall: Der Drache setzt Zauberwirken ein, um den Zauber Zerbersten (Version des 3. Grades) zu wirken. Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nSchwanzstreich: Der Drache führt einen Zerfetzen-Angriff aus."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.blutmuecke",
+      "level": 3,
+      "text": "Blutmücke"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.blutmuecke.blutmuecke",
+      "name": "Blutmücke",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winzige Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "5 (2W4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Saugrüssel: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Stichschaden, und die Blutmücke heftet sich an das Ziel an. Die angeheftete Blutmücke kann keine Saugrüsselangriffe ausführen, und das Ziel erleidet zu Beginn jedes Zugs der Blutmücke 5 (2W4) nekrotischen Schaden.\n\nDie Blutmücke kann sich lösen, indem sie 1,5 Meter ihrer Bewegungsrate verbraucht. Das Ziel oder eine Kreatur im Abstand von bis zu 1,5 Metern von ihm kann die Blutmücke als Aktion lösen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.a-b.bronzedrachen",
+      "level": 3,
+      "text": "Bronzedrachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.bronzedrachen.bronzedrachennestling",
+      "name": "Bronzedrachennestling",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "39 (6W8+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2, Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 8 (1W10+3) Hiebschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 12; jede Kreatur in einer 12 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 16 (3W10) Blitzschaden. Erfolg: Halber Schaden.\n\nOdem der Abstoßung: Stärkerettungswurf: SG 12; jede Kreatur in einem Kegel von neun Metern. Misserfolg: Das Ziel wird bis zu neun Meter weit in gerader Linie vom Drachen weg- und umgestoßen, sodass es den Zustand Liegend hat."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.bronzedrachen.junger-bronzedrache",
+      "name": "Junger Bronzedrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "142 (15W10+60)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3, Motiv erkennen +4, Wahrnehmung +7"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m, Dunkelsicht 36 m; Passive Wahrnehmung 17"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "8 (EP 3.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Odem der Abstoßung ersetzen.\n\nZerfetzen: Nahkampfangriffswurf: +8, Reichweite 3 m. Treffer: 16 (2W10+5) Hiebschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 15; jede Kreatur in einer 18 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 49 (9W10) Blitzschaden. Erfolg: Halber Schaden.\n\nOdem der Abstoßung: Stärkerettungswurf: SG 15; jede Kreatur in einem Kegel von neun Metern. Misserfolg: Das Ziel wird bis zu zwölf Meter weit in gerader Linie vom Drachen weg- und umgestoßen, sodass es den Zustand Liegend hat."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.bronzedrachen.ausgewachsener-bronzedrache",
+      "name": "Ausgewachsener Bronzedrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "212 (17W12+102)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Motiv erkennen +7, Wahrnehmung +12"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 22"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "15 (EP 13.000 oder 15.000 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen.\n\nLegendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von (A) Odem der Abstoßung oder (B) Zauberwirken ersetzen, um den Zauber Lenkendes Geschoss (Version des 2. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +12, Reichweite 3 m. Treffer: 16 (2W8+7) Hiebschaden plus 5 (1W10) Blitzschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 19; jede Kreatur in einer 27 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 55 (10W10) Blitzschaden. Erfolg: Halber Schaden.\n\nOdem der Abstoßung: Stärkerettungswurf: SG 19; jede Kreatur in einem Kegel von neun Metern. Misserfolg: Das Ziel wird bis zu 18 Meter weit in gerader Linie vom Drachen weg- und umgestoßen, sodass es den Zustand Liegend hat.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 17, +10 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Lenkendes Geschoss (Version des 2. Grades), Magie entdecken, Mit Tieren sprechen, Thaumaturgie\n\nJe 1-mal täglich: Gedanken wahrnehmen, Wasser atmen"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nDonnerschlag: Konstitutionsrettungswurf: SG 17; jede Kreatur in einer Kugel mit einem Radius von sechs Metern um einen Punkt im Abstand von bis zu 27 Metern vom Drachen, den er sehen kann. Misserfolg: 10 (3W6) Schallschaden, und das Ziel ist bis zum Ende seines nächsten Zugs taub.\n\nLenkendes Licht: Der Drache setzt Zauberwirken ein, um den Zauber Lenkendes Geschoss (Version des 2. Grades) zu wirken."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.a-b.bronzedrachen.uralter-bronzedrache",
+      "name": "Uralter Bronzedrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "22"
+        },
+        {
+          "label": "Initiative",
+          "value": "+14 (24)"
+        },
+        {
+          "label": "TP",
+          "value": "444 (24W20+192)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "29 (MOD +9, RW +9)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +7)"
+        },
+        {
+          "label": "Kon",
+          "value": "27 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "17 (MOD +3, RW +10)"
+        },
+        {
+          "label": "Cha",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Motiv erkennen +10, Wahrnehmung +17"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 27"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "22 (EP 41.000 oder 50.000 im Hort; ÜB +7)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen.\n\nLegendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von (A) Odem der Abstoßung oder (B) Zauberwirken ersetzen, um den Zauber Lenkendes Geschoss (Version des 2. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +16, Reichweite 4,5 m. Treffer: 18 (2W8+9) Hiebschaden plus 9 (2W8) Blitzschaden.\n\nBlitzodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 23; jede Kreatur in einer 36 Meter langen, drei Meter breiten Linie. Misserfolg: 82 (15W10) Blitzschaden. Erfolg: Halber Schaden.\n\nOdem der Abstoßung: Stärkerettungswurf: SG 23; jede Kreatur in einem Kegel von neun Metern. Misserfolg: Das Ziel wird bis zu 18 Meter weit in gerader Linie vom Drachen weg- und umgestoßen, sodass es den Zustand Liegend hat.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 22, +14 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Lenkendes Geschoss (Version des 2. Grades), Magie entdecken, Mit Tieren sprechen, Thaumaturgie\n\nJe 1-mal täglich: Ausspähung, Gedanken wahrnehmen, Wasser atmen, Wasser kontrollieren"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nDonnerschlag: Konstitutionsrettungswurf: SG 22; jede Kreatur in einer Kugel mit einem Radius von sechs Metern um einen Punkt im Abstand von bis zu 36 Metern vom Drachen, den er sehen kann. Misserfolg: 13 (3W8) Schallschaden, und das Ziel ist bis zum Ende seines nächsten Zugs taub.\n\nLenkendes Licht: Der Drache setzt Zauberwirken ein, um den Zauber Lenkendes Geschoss (Version des 2. Grades) zu wirken."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:5d5046a1919228a22e66029eb0ebe20df1ba0f4e4b4bd81c687ded984db0715b"
+}

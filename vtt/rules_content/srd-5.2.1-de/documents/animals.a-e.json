@@ -1,0 +1,1066 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "animals.a-e",
+  "slug": "tiere-a-e",
+  "title": "Tiere A–E",
+  "navigationPath": [
+    "Tiere",
+    "Tiere A–E"
+  ],
+  "order": 3000,
+  "sourcePages": [
+    392,
+    393,
+    394
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "animals.a-e.tiere",
+      "level": 2,
+      "text": "Tiere (A–E)"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.adler",
+      "name": "Adler",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "4 (1W6+1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +6"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Krallen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.allosaurus",
+      "name": "Allosaurus",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier (Dinosaurier), gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "51 (6W10+18)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 15 (2W10+4) Stichschaden.\n\nKlauen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 8 (1W8+4) Hiebschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist und der Allosaurus sich unmittelbar vor dem Treffer mindestens neun Meter weit in gerader Linie auf das Ziel zubewegt hat, wird das Ziel umgestoßen und hat den Zustand Liegend, und der Allosaurus kann einen Bissangriff gegen es ausführen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.ankylosaurus",
+      "name": "Ankylosaurus",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiges Tier (Dinosaurier), gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "68 (8W12+16)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Ankylosaurus führt zwei Schwanzangriffe aus.\n\nSchwanz: Nahkampfangriffswurf: +6, Reichweite 3 m. Treffer: 9 (1W10+4) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens riesiger Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.archelon",
+      "name": "Archelon",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiges Tier (Dinosaurier), gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "90 (12W12+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Schwimmen 24 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "4 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Archelon kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Archelon führt zwei Bissangriffe aus.\n\nBiss: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 14 (3W6+4) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.blutfalke",
+      "name": "Blutfalke",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "7 (2W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +6"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Falke ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Schnabel: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 4 (1W4+2) Stichschaden oder 6 (1W8+2) Stichschaden, wenn das Ziel blutig ist."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.braunbaer",
+      "name": "Braunbär",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (3W10+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Bär führt einen Bissangriff und einen Klauenangriff aus.\n\nBiss: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Stichschaden.\n\nKlauen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 5 (1W4+3) Hiebschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.dachs",
+      "name": "Dachs",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "5 (1W4+3)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Graben 1,5 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +3"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Gift"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 9 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 1 Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.dogge",
+      "name": "Dogge",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "5 (1W8+1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 4 (1W6+2) Stichschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.eber",
+      "name": "Eber",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "13 (2W8+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Blutdurst: Wenn der Eber blutig ist, ist er bei Angriffswürfen im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Zerfleischen: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 4 (1W6+2) Stichschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist und der Eber sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 3 (1W6) Stichschaden, wird umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.eidechse",
+      "name": "Eidechse",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "2 (1W4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Klettern 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 9 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Spinnenklettern: Die Eidechse kann ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 1 Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.eisbaer",
+      "name": "Eisbär",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "42 (5W10+15)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +5"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Bär führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 9 (1W8+5) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.elch",
+      "name": "Elch",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W10)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Rammen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist und der Elch sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 3 (1W6) Wuchtschaden, wird umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.elefant",
+      "name": "Elefant",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "76 (8W12+24)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Elefant führt zwei Zerfleischen-Angriffe aus.\n\nZerfleischen: Nahkampfangriffswurf: +8, Reichweite 1,5 m. Treffer: 15 (2W8+6) Stichschaden. Wenn das Ziel eine Kreatur von höchstens riesiger Größe ist und der Elefant sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, wird das Ziel umgestoßen und hat den Zustand Liegend."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Zertrampeln: Geschicklichkeitsrettungswurf: SG 16; eine Kreatur im Abstand von bis zu 1,5 Metern, die den Zustand Liegend hat. Misserfolg: 17 (2W10+6) Wuchtschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.a-e.eule",
+      "name": "Eule",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Vorbeifliegen: Die Eule provoziert keine Gelegenheitsangriffe, wenn sie aus der Reichweite eines Gegners fliegt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Krallen: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 1 Hiebschaden."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:523de9d47d18b3f54131f0e05384df72c23098270114852e9bcf2c398d5369ed"
+}

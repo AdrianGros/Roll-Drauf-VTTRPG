@@ -1,0 +1,214 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "toolbox.travel",
+  "slug": "reisegeschwindigkeit",
+  "title": "Reisegeschwindigkeit",
+  "navigationPath": [
+    "Werkzeugkasten fürs Spiel",
+    "Reisegeschwindigkeit"
+  ],
+  "order": 900,
+  "sourcePages": [
+    222
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "toolbox.travel.reisegeschwindigkeit",
+      "level": 2,
+      "text": "Reisegeschwindigkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.reisegeschwindigkeit.text-1",
+      "text": "Eine Gruppe von Charakteren kann in normaler, schneller oder langsamer Geschwindigkeit über Land reisen, wie unter „Die Spielregeln“ beschrieben. Bei jeder Etappe einer Reise bestimmt das vorherrschende Gelände die maximale Reisegeschwindigkeit der Charaktere, wie in der Spalte „Max. Geschwindigkeit“ der Tabelle „Reisegelände“ dargestellt. Manche Faktoren können die Reisegeschwindigkeit der Gruppe beeinflussen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.travel.gute-strassen",
+      "level": 3,
+      "text": "Gute Straßen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.gute-strassen.text-1",
+      "text": "Gute Straßen erhöhen die maximale Geschwindigkeit der Gruppe um eine Stufe (von Langsam auf Normal oder von Normal auf Schnell)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.travel.langsamere-mitreisende",
+      "level": 3,
+      "text": "Langsamere Mitreisende"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.langsamere-mitreisende.text-1",
+      "text": "Die Gruppe muss mit langsamer Geschwindigkeit reisen, wenn die Bewegungsrate mindestens eines Gruppenmitglieds um die Hälfte oder mehr verringert ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.travel.laengeres-reisen",
+      "level": 3,
+      "text": "Längeres Reisen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.laengeres-reisen.text-1",
+      "text": "Die Charaktere können mehr als acht Stunden täglich reisen, riskieren dabei jedoch Erschöpfung. Am Ende jeder zusätzlichen Reisestunde über acht Stunden hinaus muss jeder Charakter einen Konstitutionsrettungswurf bestehen, oder er erhält eine Erschöpfungsstufe. Der SG beträgt 10 + 1 für jede Stunde über die achte hinaus."
+    },
+    {
+      "type": "table",
+      "ruleId": "toolbox.travel.laengeres-reisen.tabelle-reisegelaende",
+      "caption": "Reisegelände",
+      "columns": [
+        "Gelände",
+        "Max. Geschwindigkeit",
+        "Sichtungsdistanz",
+        "Nahrungssuche-SG",
+        "Navigations-SG",
+        "Suche-SG"
+      ],
+      "rows": [
+        [
+          "Arktis",
+          "Schnell*",
+          "6W6 × 3 m",
+          "20",
+          "10",
+          "10"
+        ],
+        [
+          "Küste",
+          "Normal",
+          "2W10 × 3 m",
+          "10",
+          "5",
+          "15"
+        ],
+        [
+          "Wüste",
+          "Normal",
+          "6W6 × 3 m",
+          "20",
+          "10",
+          "10"
+        ],
+        [
+          "Wald",
+          "Normal",
+          "2W8 × 3 m",
+          "10",
+          "15",
+          "15"
+        ],
+        [
+          "Grasland",
+          "Schnell",
+          "6W6 × 3 m",
+          "15",
+          "5",
+          "15"
+        ],
+        [
+          "Hügel",
+          "Normal",
+          "2W10 × 3 m",
+          "15",
+          "10",
+          "15"
+        ],
+        [
+          "Berg",
+          "Langsam",
+          "4W10 × 3 m",
+          "20",
+          "15",
+          "20"
+        ],
+        [
+          "Sumpf",
+          "Langsam",
+          "2W8 × 3 m",
+          "10",
+          "15",
+          "20"
+        ],
+        [
+          "Unterreich",
+          "Normal",
+          "2W6 × 3 m",
+          "20",
+          "10",
+          "20"
+        ],
+        [
+          "Stadt",
+          "Normal",
+          "2W6 × 3 m",
+          "20",
+          "15",
+          "15"
+        ],
+        [
+          "Gewässer",
+          "Speziell†",
+          "6W6 × 3 m",
+          "15",
+          "10",
+          "15"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.laengeres-reisen.anmerkung-1",
+      "text": "*Es ist angemessene Ausrüstung (wie Skier) erforderlich, um in arktischem Gelände mit schneller Geschwindigkeit zu reisen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.laengeres-reisen.anmerkung-2",
+      "text": "†Die Reisegeschwindigkeit der Charaktere auf Gewässern hängt vom jeweiligen Fahrzeug ab (siehe „Fahrzeuge“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.travel.besondere-bewegungsarten",
+      "level": 3,
+      "text": "Besondere Bewegungsarten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.besondere-bewegungsarten.text-1",
+      "text": "Wenn eine Abenteurergruppe über längere Zeit mit erhöhter Bewegungsrate reisen kann, etwa mit dem Zauber Windwandeln oder einem magischen Gegenstand wie Fliegender Teppich, übertrage die Bewegungsrate der Gruppe anhand folgender Regeln in Reiseraten:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "toolbox.travel.besondere-bewegungsarten.reiseraten",
+      "items": [
+        "Kilometer pro Stunde = Bewegungsrate ÷ 10",
+        "Kilometer pro Tag (normale Geschwindigkeit) = Kilometer pro Stunde × Anzahl gereister Stunden (üblicherweise 8)",
+        "Hohe Geschwindigkeit = Kilometer pro Tag × 1⅓ (abgerundet)",
+        "Langsame Geschwindigkeit = Kilometer pro Tag × 2/3 (abgerundet)"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.besondere-bewegungsarten.text-2",
+      "text": "Wenn die Charaktere fliegen oder eine besondere Bewegungsart ihnen erlaubt, schwieriges Gelände zu ignorieren, können sie unabhängig vom Gelände mit schneller Geschwindigkeit reisen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.travel.fahrzeuge",
+      "level": 3,
+      "text": "Fahrzeuge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.travel.fahrzeuge.text-1",
+      "text": "Wenn die Charaktere in einem Fahrzeug reisen, nutzen sie dessen Bewegungsrate in Kilometern pro Stunde (siehe „Ausrüstung“), um ihre Reiserate zu ermitteln, und wählen keine Reisegeschwindigkeit aus."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:156c4f1912167a228bb93299306e2fd46f1d688b223f05cd31d16c6e2ded296d"
+}

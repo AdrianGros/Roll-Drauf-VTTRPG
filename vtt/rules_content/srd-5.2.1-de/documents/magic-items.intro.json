@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.intro",
+  "slug": "magische-gegenstaende",
+  "title": "Magische Gegenstände",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Magische Gegenstände"
+  ],
+  "order": 1000,
+  "sourcePages": [
+    236
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.intro.text-1",
+      "text": "Magische Gegenstände sind in den Horten besiegter Monster oder in lange verschollenen Schatzkammern zu finden. Diese Gegenstände verleihen Fähigkeiten, die ein Charakter auf andere Art kaum erlangen könnte, oder ergänzen die Fähigkeiten ihres Besitzers auf wundersame Weise."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:8ed17ebc8e2b31f879922fdc55d3ec0ca98daffce3fb77a12bda0c845e6bab07"
+}

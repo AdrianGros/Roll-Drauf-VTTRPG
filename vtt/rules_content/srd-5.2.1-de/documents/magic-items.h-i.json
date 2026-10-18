@@ -1,0 +1,904 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.h-i",
+  "slug": "magische-gegenstaende-h-i",
+  "title": "Magische Gegenstände H–I",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Magische Gegenstände H–I"
+  ],
+  "order": 1130,
+  "sourcePages": [
+    254,
+    255,
+    256,
+    257,
+    258,
+    259,
+    260
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.beschreibungen",
+      "level": 2,
+      "text": "Beschreibungen der magischen Gegenstände (H–I)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.halskette-der-anpassung",
+      "level": 3,
+      "text": "Halskette der Anpassung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.halskette-der-anpassung.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.halskette-der-anpassung.text-1",
+      "text": "Wenn du diese Halskette trägst, kannst du in jeder Umgebung normal atmen, und du bist bei Rettungswürfen zum Vermeiden oder Beenden des Zustands Vergiftet im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.halskette-der-feuerbaelle",
+      "level": 3,
+      "text": "Halskette der Feuerbälle"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.halskette-der-feuerbaelle.untertitel",
+      "text": "Wundersamer Gegenstand, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.halskette-der-feuerbaelle.text-1",
+      "text": "An dieser Kette hängen 1W6+3 Perlen. Du kannst eine magische Aktion ausführen, um eine Perle abzunehmen und bis zu 18 Meter weit zu werfen. Am Ende ihrer Flugbahn explodiert die Perle wie beim Feuerball des 3. Grades (Rettungswurf-SG 15)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.halskette-der-feuerbaelle.text-2",
+      "text": "Du kannst auch mehrere Perlen oder sogar die ganze Kette auf einmal werfen. In diesem Fall wird der Schaden des Feuerballs für jede Perle nach der ersten um 1W6 erhöht (auf höchstens 12W6)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.halskette-der-gebetsperlen",
+      "level": 3,
+      "text": "Halskette der Gebetsperlen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.halskette-der-gebetsperlen.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung durch einen Druiden, Kleriker oder Paladin)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.halskette-der-gebetsperlen.text-1",
+      "text": "Diese Halskette hat 1W4+2 magische Perlen aus Aquamarin, schwarzen Perlen oder Topas. Außerdem befinden sich auch nichtmagische Perlen aus Bernstein, Blutstein, Citrin, Jade, Koralle, Perle oder Quarz an der Kette. Wenn eine magische Perle von der Halskette entfernt wird, verliert die Perle ihre Magie."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.halskette-der-gebetsperlen.text-2",
+      "text": "Es gibt sechs verschiedene magische Perlentypen. Der SL wählt die Art jeder Perle an der Halskette aus oder bestimmt sie zufällig, indem er anhand der Tabelle unten würfelt. Eine Halskette kann mehr als eine Perle desselben Typs haben. Um eine der Perlen zu verwenden, musst du die Halskette tragen. Jede Perle enthält einen Zauber, den du als Bonusaktion mit ihr wirken kannst (mit deinem Zauberrettungswurf-SG, wenn ein Rettungswurf nötig ist). Wurde der Zauber einer magischen Perle gewirkt, so kann diese Perle erst ab dem nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.h-i.halskette-der-gebetsperlen.tabelle-halskette-der-gebetsperlen",
+      "caption": "Halskette der Gebetsperlen",
+      "columns": [
+        "1W20",
+        "Perle",
+        "Zauber"
+      ],
+      "rows": [
+        [
+          "1",
+          "Perle der Beschwörung",
+          "Hüter des Glaubens"
+        ],
+        [
+          "2–5",
+          "Perle der Gunst",
+          "Vollständige Genesung"
+        ],
+        [
+          "6–11",
+          "Perle des Heilens",
+          "Wunden heilen (Version des 2. Grades)"
+        ],
+        [
+          "12–13",
+          "Perle des Niederstreckens",
+          "Strahlendes Niederstrecken"
+        ],
+        [
+          "14–19",
+          "Perle des Segens",
+          "Segnen"
+        ],
+        [
+          "20",
+          "Perle des Windwandelns",
+          "Windwandeln"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.hammer-des-blitzschlags",
+      "level": 3,
+      "text": "Hammer des Blitzschlags"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hammer-des-blitzschlags.untertitel",
+      "text": "Waffe (Kriegshammer oder Zweihandhammer), legendär (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hammer-des-blitzschlags.text-1",
+      "text": "Du erhältst einen Bonus von +1 auf Angriffs- und Schadenswürfe, die du mit dieser magischen Waffe ausführst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hammer-des-blitzschlags.text-2",
+      "text": "Die Waffe hat fünf Ladungen. Du kannst eine Ladung verbrauchen und einen Fernkampfangriff mit der Waffe ausführen. Dabei wirfst du sie, als wäre sie eine Wurfwaffe mit einer Grundreichweite von sechs Metern und einer Maximalreichweite von 18 Metern. Wenn der Angriff trifft, entfesselt die Waffe einen Donnerschlag, der bis zu 90 Meter weit zu hören ist. Das Ziel und alle Kreaturen im Abstand von bis zu neun Metern von ihm (außer dir) müssen einen SG-17-Konstitutionsrettungswurf bestehen, oder sie sind bis zum Ende deines nächsten Zugs betäubt. Sofort nach dem Angriff fliegt die Waffe zurück in deine Hand. Die Waffe erhält täglich im Morgengrauen 1W4+1 verbrauchte Ladungen zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hammer-des-blitzschlags.text-3",
+      "text": "Verderben der Riesen: Wenn du auf die Waffe eingestimmt bist und entweder einen Gürtel der Riesenstärke oder Panzerhandschuhe der Ogerkraft trägst (und auch auf diese Gegenstände eingestimmt bist), erhältst du die folgenden Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hammer-des-blitzschlags.text-4",
+      "text": "Macht der Riesen: Der Stärkewert-Bonus durch den Gürtel der Riesenstärke oder die Panzerhandschuhe der Ogerkraft wird um 4 erhöht (auf höchstens 30)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hammer-des-blitzschlags.text-5",
+      "text": "Verderben der Riesen: Wenn du bei einem Angriffswurf mit dieser Waffe gegen einen Riesen eine 20 würfelst, muss der Riese einen SG-17-Konstitutionsrettungswurf bestehen, oder er stirbt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.handbuch-der-golems",
+      "level": 3,
+      "text": "Handbuch der Golems"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-der-golems.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-der-golems.text-1",
+      "text": "Dieser Foliant enthält die notwendigen Informationen und Beschwörungsformeln, um einen Golem eines bestimmten Typs zu erschaffen. Der SL wählt die Schadensart aus oder bestimmt sie zufällig, indem er anhand der entsprechenden Tabelle würfelt. Um das Handbuch entziffern und verwenden zu können, musst du ein Zauberwirker sein und über mindestens zwei Zauberplätze des 5. Grades verfügen. Eine Kreatur, die das Handbuch der Golems nicht verwenden kann und es dennoch zu lesen versucht, erleidet 6W6 psychischen Schaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-der-golems.text-2",
+      "text": "Um einen Golem zu erschaffen, benötigst du die in der Tabelle angegebene Zeit. Dabei arbeitest du ohne Unterbrechung genau nach der Anleitung im Handbuch und ruhst dich maximal acht Stunden pro Tag aus. Du musst außerdem die angegebenen Kosten für die Materialien bezahlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-der-golems.text-3",
+      "text": "Sobald der Golem fertiggestellt ist, wird das Buch von mystischen Flammen verschlungen. Der Golem erwacht zum Leben, wenn die Asche des Handbuchs auf ihn gestreut wird. Den Wertekasten des Golems findest du unter „Monster“. Der Golem steht unter deiner Kontrolle, versteht deine Befehle und gehorcht ihnen."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.h-i.handbuch-der-golems.tabelle-handbuch-der-golems",
+      "caption": "Handbuch der Golems",
+      "columns": [
+        "1W20",
+        "Golem",
+        "Zeit",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "1",
+          "Eisengolem",
+          "120 Tage",
+          "100.000 GM"
+        ],
+        [
+          "2–13",
+          "Fleischgolem",
+          "60 Tage",
+          "50.000 GM"
+        ],
+        [
+          "14–18",
+          "Lehmgolem",
+          "30 Tage",
+          "65.000 GM"
+        ],
+        [
+          "19–20",
+          "Steingolem",
+          "90 Tage",
+          "80.000 GM"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.handbuch-der-koerperlichen-ertuechtigung",
+      "level": 3,
+      "text": "Handbuch der Körperlichen Ertüchtigung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-der-koerperlichen-ertuechtigung.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-der-koerperlichen-ertuechtigung.text-1",
+      "text": "Dieses magisch aufgeladene Buch beschreibt Übungen zur körperlichen Ertüchtigung. Wenn innerhalb von maximal sechs Tagen 48 Stunden damit verbringst, den Inhalt des Buchs zu studieren und seine Anleitungen zu befolgen, wird dein Stärkewert um 2 erhöht (auf höchstens 30). Danach verliert das Handbuch seine Magie. Es erhält sie jedoch nach einem Jahrhundert zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.handbuch-der-koerperlichen-gesundheit",
+      "level": 3,
+      "text": "Handbuch der Körperlichen Gesundheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-der-koerperlichen-gesundheit.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-der-koerperlichen-gesundheit.text-1",
+      "text": "Dieses magisch aufgeladene Buch enthält Gesundheits- und Ernährungstipps. Wenn innerhalb von maximal sechs Tagen 48 Stunden damit verbringst, den Inhalt des Buchs zu studieren und seine Anleitungen zu befolgen, wird dein Konstitutionswert um 2 erhöht (auf höchstens 30). Danach verliert das Handbuch seine Magie. Es erhält sie jedoch nach einem Jahrhundert zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.handbuch-des-schnellen-handelns",
+      "level": 3,
+      "text": "Handbuch des Schnellen Handelns"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-des-schnellen-handelns.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handbuch-des-schnellen-handelns.text-1",
+      "text": "Dieses magisch aufgeladene Buch enthält Koordinations- und Balanceübungen. Wenn du innerhalb von maximal sechs Tagen 48 Stunden damit verbringst, den Inhalt des Buchs zu studieren und seine Anleitungen zu befolgen, wird dein Geschicklichkeitswert um 2 erhöht (auf höchstens 30). Danach verliert das Handbuch seine Magie. Es erhält sie jedoch nach einem Jahrhundert zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.handschuhe-des-diebstahls",
+      "level": 3,
+      "text": "Handschuhe des Diebstahls"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handschuhe-des-diebstahls.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handschuhe-des-diebstahls.text-1",
+      "text": "Diese Handschuhe sind beim Tragen nicht spürbar. Wenn du sie trägst, hast du einen Bonus von +5 auf Geschicklichkeitswürfe (Fingerfertigkeit)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.handschuhe-des-geschossfangens",
+      "level": 3,
+      "text": "Handschuhe des Geschossfangens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handschuhe-des-geschossfangens.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handschuhe-des-geschossfangens.text-1",
+      "text": "Wenn du diese Handschuhe trägst und von einem Angriffswurf getroffen wirst, der mit einer Fernkampf- oder einer Wurfwaffe ausgeführt wurde, kannst du eine Reaktion ausführen und den Schaden um 1W10 plus deinen Geschicklichkeitsmodifikator verringern, sofern du eine freie Hand hast. Wenn du den Schaden auf 0 verringerst, fängst du das Geschoss oder die Waffe auf, sofern diese klein genug sind, um in deine Hand zu passen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.handschuhe-des-schwimmens-und-kletterns",
+      "level": 3,
+      "text": "Handschuhe des Schwimmens und Kletterns"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handschuhe-des-schwimmens-und-kletterns.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.handschuhe-des-schwimmens-und-kletterns.text-1",
+      "text": "Wenn du diese Handschuhe trägst, hast du eine Kletterbewegungsrate und eine Schwimmbewegungsrate in Höhe deiner Bewegungsrate sowie einen Bonus von +5 auf Stärkewürfe (Athletik), die du ausführst, um zu klettern oder zu schwimmen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.heiliger-raecher",
+      "level": 3,
+      "text": "Heiliger Rächer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.heiliger-raecher.untertitel",
+      "text": "Waffe (beliebige einfache Waffe oder Kriegswaffe), legendär (erfordert Einstimmung durch einen Paladin)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.heiliger-raecher.text-1",
+      "text": "Du erhältst einen Bonus von +3 auf Angriffs- und Schadenswürfe, die du mit dieser magischen Waffe ausführst. Triffst du einen Unhold oder Untoten damit, so erleidet diese Kreatur zusätzlich 2W10 gleißenden Schaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.heiliger-raecher.text-2",
+      "text": "Wenn du die gezogene Waffe hältst, erzeugt sie eine Ausströmung von drei Metern, die von dir ausgeht. Du und alle verbündeten Kreaturen innerhalb der Ausströmung seid bei Rettungsw ürfen gegen Zauber und andere magische Effekte im Vorteil. Wenn du mindestens 17 Stufen als Paladin hast, erhöht sich die Größe der Ausströmung auf neun Meter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.heiltraenke",
+      "level": 3,
+      "text": "Heiltränke"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.heiltraenke.untertitel",
+      "text": "Trank, Seltenheit variiert"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.heiltraenke.text-1",
+      "text": "Wenn du diesen Trank zu dir nimmst, erhältst du Trefferpunkte zurück. Die Anzahl der wiederhergestellten Trefferpunkte hängt von der Seltenheit des Tranks ab, wie in der nachstehenden Tabelle aufgeführt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.heiltraenke.text-2",
+      "text": "Unabhängig von ihrer Stärke bestehen Heiltränke aus roter Flüssigkeit, die schimmert, wenn sie bewegt wird."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.h-i.heiltraenke.tabelle-heiltraenke",
+      "caption": "Heiltränke",
+      "columns": [
+        "Trank",
+        "Zurückerhaltene TP",
+        "Seltenheit"
+      ],
+      "rows": [
+        [
+          "Heiltrank",
+          "2W4+2",
+          "Gewöhnlich"
+        ],
+        [
+          "Trank der Mächtigen Heilung",
+          "4W4+4",
+          "Ungewöhnlich"
+        ],
+        [
+          "Trank der Überlegenen Heilung",
+          "8W4+8",
+          "Selten"
+        ],
+        [
+          "Trank der Höchsten Heilung",
+          "10W4+20",
+          "Sehr selten"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.helm-der-pracht",
+      "level": 3,
+      "text": "Helm der Pracht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-pracht.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-pracht.text-1",
+      "text": "Dieser Helm ist mit 1W10 Diamanten, 2W10 Rubinen, 3W10 Feueropalen und 4W10 Opalen besetzt. Wenn ein Edelstein herausgebrochen wird, zerfällt er zu Staub. Wenn alle Edelsteine entfernt oder zerstört wurden, verliert der Helm seine Magie."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-pracht.text-2",
+      "text": "Wenn du den Helm trägst, erhältst du die folgenden Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-pracht.text-3",
+      "text": "Diamantlicht: Solange der Helm mindestens einen Diamanten hat, erzeugt er eine Ausströmung von neun Metern. Wenn sich in diesem Bereich mindestens ein Untoter befindet, herrscht dämmriges Licht in der Ausströmung. Untote, die ihren Zug in dem Bereich beginnen, erleiden 1W6 gleißenden Schaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-pracht.text-4",
+      "text": "Feueropal-Flammen: Solange der Helm mindestens einen Feueropal hat, kannst du eine magische Aktion ausführen und eine Waffe, die du hältst, in Flammen aufgehen lassen. Die Flammen spenden in einem Radius von drei Metern helles Licht und in einem Radius von weiteren drei Metern dämmriges Licht. Die Flammen sind für dich und deine Waffe harmlos. Wenn du bei einem Angriff mit der brennenden Waffe triffst, erleidet das Ziel zusätzlich 1W6 Feuerschaden. Die Flammen bleiben bestehen, bis du eine Bonusaktion ausführst, um sie zu löschen, oder bis du die Waffe wegsteckst oder fallen lässt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-pracht.text-5",
+      "text": "Feuerschaden erleiden: Würfle mit 1W20, wenn du den Helm trägst und Feuerschaden erleidest, nachdem dir ein Rettungswurf gegen einen Zauber misslungen ist. Wenn du eine 1 würfelst, gibt der Helm Lichtstrahlen von seinen verbleibenden Edelsteinen ab und wird dann zerstört. Jede Kreatur innerhalb einer Ausströmung von 18 Metern, die von dir ausgeht, muss einen SG-17-Geschicklichkeitsrettungswurf bestehen, oder sie wird von einem Strahl getroffen. Dabei erleidet sie so viel gleißenden Schaden, wie Edelsteine am Helm verbleiben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-pracht.text-6",
+      "text": "Rubin-Resistenz: Solange der Helm mindestens einen Rubin hat, bist du gegen Feuerschaden resistent."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-pracht.text-7",
+      "text": "Zauber: Du kannst einen der folgenden Zauber (Rettungswurf-SG 18) wirken und als Komponente einen Edelstein des Helms vom angegebenen Typ verwenden: Feuerball (Feueropal), Feuerwand (Rubin), Regenbogenspiel (Diamant) oder Tageslicht (Opal). Der Edelstein wird zerstört, wenn der Zauber gewirkt wird, und verschwindet vom Helm."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.helm-der-telepathie",
+      "level": 3,
+      "text": "Helm der Telepathie"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-telepathie.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-telepathie.text-1",
+      "text": "Wenn du diesen Helm trägst, verfügst du über Telepathie mit einer Reichweite von neun Metern, und du kannst die Zauber Gedanken wahrnehmen und Einflüsterung (Rettungswurf-SG 13) mit dem Helm wirken. Wurde einer der Zauber mit dem Helm gewirkt, so kann dieser Zauber erst ab dem nächsten Morgengrauen erneut mit ihm gewirkt werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.helm-der-teleportation",
+      "level": 3,
+      "text": "Helm der Teleportation"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-teleportation.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-der-teleportation.text-1",
+      "text": "Dieser Helm hat drei Ladungen. Wenn du ihn trägst, kannst du eine Ladung verbrauchen, um den Zauber Teleportieren damit zu wirken. Der Helm erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.helm-des-sprachenverstehens",
+      "level": 3,
+      "text": "Helm des Sprachenverstehens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-des-sprachenverstehens.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.helm-des-sprachenverstehens.text-1",
+      "text": "Wenn du diesen Helm trägst, kannst du den Zauber Sprachen verstehen damit wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.henkersschwert",
+      "level": 3,
+      "text": "Henkersschwert"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.henkersschwert.untertitel",
+      "text": "Waffe (Glefe, Krummsäbel, Langschwert oder Zweihandschwert), legendär (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.henkersschwert.text-1",
+      "text": "Du erhältst einen Bonus von +3 auf Angriffs- und Schadenswürfe, die du mit dieser magischen Waffe ausführst. Außerdem ignoriert die Waffe Resistenz gegen Hiebschaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.henkersschwert.text-2",
+      "text": "Wenn du mit dieser Waffe eine Kreatur angreifst, die mindestens einen Kopf hat, und beim Angriffswurf eine 20 würfelst, schlägst du der Kreatur einen Kopf ab. Die Kreatur stirbt, wenn sie ohne den verlorenen Kopf nicht leben kann. Kreaturen sind gegen diesen Effekt immun, wenn sie immun gegen Hiebschaden sind, wenn sie keinen Kopf haben oder brauchen oder wenn der SL entscheidet, dass sie zu groß sind, als dass ihr Kopf mit dieser Waffe abgeschlagen werden könnte. Solche Kreaturen erleiden stattdessen zusätzlich 30 Hiebschaden durch den Treffer. Eine Kreatur mit Legendärer Resistenz kann eine tägliche Anwendung dieses Merkmals verbrauchen, um den Kopfverlust zu vermeiden und stattdessen den zusätzlichen Schaden zu erleiden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.horn-der-sprengung",
+      "level": 3,
+      "text": "Horn der Sprengung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.horn-der-sprengung.untertitel",
+      "text": "Wundersamer Gegenstand, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.horn-der-sprengung.text-1",
+      "text": "Du kannst eine magische Aktion ausführen, um ins Horn zu stoßen. Daraufhin gibt dieses in einem Kegel von neun Metern einen Donnerknall von sich, der bis zu 180 Meter weit zu hören ist. Jede Kreatur im Kegel führt einen SG-15-Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet die Kreatur 5W8 Schallschaden und ist eine Minute lang taub. Bei einem erfolgreichen Rettungswurf erleidet die Kreatur nur halb so viel Schaden. Gegenstände aus Glas oder Kristall im Kegel, die nicht getragen oder gehalten werden, erleiden 10W8 Schallschaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.horn-der-sprengung.text-2",
+      "text": "Wann immer die Magie des Horns verwendet wird, besteht ein Risiko von 20 Prozent, dass das Horn explodiert. Die Explosion fügt dem Hornbläser 10W6 Energieschaden zu und zerstört das Horn."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.horn-von-walhalla",
+      "level": 3,
+      "text": "Horn von Walhalla"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.horn-von-walhalla.untertitel",
+      "text": "Wundersamer Gegenstand, selten (Silber oder Messing), sehr selten (Bronze) oder legendär (Eisen)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.horn-von-walhalla.text-1",
+      "text": "Du kannst eine magische Aktion ausführen, um ins Horn zu stoßen. Daraufhin erscheinen Geisterkrieger von der Ebene Ysgard in freien Bereichen im Abstand von bis zu 18 Metern von dir. Jeder Geist verwendet den Wertekasten des Berserkers und kehrt nach Ysgard zurück, wenn eine Stunde vergangen ist oder wenn seine Trefferpunkte auf 0 sinken. Die Geister sehen wie lebendige, atmende Krieger aus. Sie sind gegen die Zustände Bezaubert und Verängstigt immun. Wenn das Horn verwendet wurde, kann es erst nach sieben Tagen erneut verwendet werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.horn-von-walhalla.text-2",
+      "text": "Es sind vier Arten des Horns von Walhalla bekannt, die jeweils aus einem anderen Metall bestehen. Die Art des Horns bestimmt, wie viele Geister es beschwört und welche Voraussetzung zu seiner Verwendung erfüllt sein muss. Der SL wählt die Art des Horns aus oder bestimmt sie zufällig, indem er anhand der folgenden Tabelle würfelt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.horn-von-walhalla.text-3",
+      "text": "Wenn du in das Horn stößt, ohne dass die Voraussetzung erfüllt ist, greifen die beschworenen Geister dich an. Wenn die Voraussetzung erfüllt ist, sind sie dir und deinen Verbündeten gegenüber freundlich gesinnt und gehorchen deinen Befehlen."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.h-i.horn-von-walhalla.tabelle-horn-von-walhalla",
+      "caption": "Horn von Walhalla",
+      "columns": [
+        "1W100",
+        "Hornart",
+        "Geister",
+        "Voraussetzung"
+      ],
+      "rows": [
+        [
+          "1–40",
+          "Silber",
+          "2",
+          "−"
+        ],
+        [
+          "41–75",
+          "Messing",
+          "3",
+          "Übung im Umgang mit allen einfachen Waffen"
+        ],
+        [
+          "76–90",
+          "Bronze",
+          "4",
+          "Vertrautheit mit allen mittelschweren Rüstungen"
+        ],
+        [
+          "91–100",
+          "Eisen",
+          "5",
+          "Übung im Umgang mit allen Kriegswaffen"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.hufeisen-der-geschwindigkeit",
+      "level": 3,
+      "text": "Hufeisen der Geschwindigkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hufeisen-der-geschwindigkeit.untertitel",
+      "text": "Wundersamer Gegenstand, selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hufeisen-der-geschwindigkeit.text-1",
+      "text": "Diese Hufeisen sind in Vierersätzen zu finden. Du kannst als magische Aktion den Huf eines Pferds oder einer ähnlichen Kreatur mit einem der Hufeisen berühren, woraufhin dieses sich mit dem Huf verbindet. Das Entfernen eines Hufeisens erfordert ebenfalls eine magische Aktion."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hufeisen-der-geschwindigkeit.text-2",
+      "text": "Wenn alle vier Hufeisen an den Hufen derselben Kreatur befestigt sind, ist deren Bewegungsrate um neun Meter erhöht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.hufeisen-des-zephyrs",
+      "level": 3,
+      "text": "Hufeisen des Zephyrs"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hufeisen-des-zephyrs.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hufeisen-des-zephyrs.text-1",
+      "text": "Diese Hufeisen sind in Vierersätzen zu finden. Du kannst als magische Aktion den Huf eines Pferds oder einer ähnlichen Kreatur mit einem der Hufeisen berühren, woraufhin dieses sich mit dem Huf verbindet. Das Entfernen eines Hufeisens erfordert ebenfalls eine magische Aktion."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hufeisen-des-zephyrs.text-2",
+      "text": "Wenn alle vier Hufeisen an den Hufen eines Pferds oder einer ähnlichen Kreatur befestigt sind, schwebt die Kreatur zehn Zentimeter über dem Boden und kann sich dabei normal bewegen. Dieser Effekt erlaubt der Kreatur, flüssige oder instabile Oberflächen wie Wasser oder Lava zu überqueren oder über ihnen zu stehen. Die Kreatur hinterlässt keine Spuren und ignoriert schwieriges Gelände. Außerdem kann sie bis zu zwölf Stunden täglich reisen, ohne Erschöpfungsstufen wegen längerem Reisen zu erhalten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.hut-der-verkleidung",
+      "level": 3,
+      "text": "Hut der Verkleidung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hut-der-verkleidung.untertitel",
+      "text": "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hut-der-verkleidung.text-1",
+      "text": "Wenn du diesen Hut trägst, kannst du den Zauber Selbstverkleidung wirken. Der Zauber endet, wenn der Hut abgesetzt wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.hut-der-vielen-zauber",
+      "level": 3,
+      "text": "Hut der Vielen Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hut-der-vielen-zauber.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten (erfordert Einstimmung durch einen Magier)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hut-der-vielen-zauber.text-1",
+      "text": "Dieser spitze Hut hat die folgenden Eigenschaften:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hut-der-vielen-zauber.text-2",
+      "text": "Zauberfokus: Wenn du den Hut hältst, kannst du ihn als Zauberfokus für deine Magierzauber verwenden. Jeder Zauber, den du mit dem Hut wirkst, hat eine besondere Gestenkomponente: Du musst in den Hut greifen und den Zauber „herausziehen“."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hut-der-vielen-zauber.text-3",
+      "text": "Unbekannter Zauber: Wenn du den Hut hältst, kannst du versuchen, einen Zauber des mindestens 1. Grades zu wirken, den du nicht kennst. Der Zauber muss in der Zauberliste des Magiers enthalten sein. Er muss einen Grad aufweisen, den du wirken kannst, und er darf keine Materialkomponenten haben, die mehr als 1.000 GM kosten. Wenn du einen Zauber ausgewählt hast, musst du einen Zauberplatz verbrauchen, dessen Grad dem des Zaubers entspricht. Führe dann einen Intelligenzwurf (Arkane Kunde) aus (SG 10 plus Zaubergrad), um zu ermitteln, ob du den Zauber wirkst. Bei einem Erfolg wirkst du den Zauber mit dem normalen Zeitaufwand, und du kannst diese Eigenschaft erst erneut verwenden, wenn du eine kurze oder lange Rast beendet hast. Misslingt der Wurf, so misslingt auch der Zauber, und stattdessen tritt ein zufälliger Effekt auf, der durch Würfeln anhand der folgenden Tabelle ermittelt wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.hut-der-vielen-zauber.text-4",
+      "text": "Jeder Zauber, den du mit dem Hut wirkst, verwendet deinen Zauberrettungswurf-SG und deinen Zauberangriffsbonus."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.h-i.hut-der-vielen-zauber.tabelle-hut-der-vielen-zauber",
+      "caption": "Hut der Vielen Zauber",
+      "columns": [
+        "1W100",
+        "Effekt"
+      ],
+      "rows": [
+        [
+          "1–50",
+          "Du wirkst einen zufälligen Zauber, der durch Würfeln mit 1W10 ermittelt wird. 1: Vergrößern/Verkleinern (Vergrößern-Effekt), 2: Vergrößern/Verkleinern (Verkleinern-Effekt), 3: Feenfeuer, 4: Feuerball, 5: Windstoß, 6: Unsichtbarkeit (auf dich gewirkt), 7: Blitz, 8: Macht der Vorstellungskraft, 9: Verwandlung, 10: Stinkende Wolke."
+        ],
+        [
+          "51–55",
+          "Du bist bis zum Ende deines nächsten Zugs betäubt und glaubst, dass soeben etwas Überwältigendes geschehen ist."
+        ],
+        [
+          "56–60",
+          "Ein harmloser Schmetterlingsschwarm füllt einen Würfel mit drei Metern Kantenlänge im Abstand von bis zu neun Metern von dir. Der Schwarm löst sich nach einer Minute auf."
+        ],
+        [
+          "61–65",
+          "Du ziehst einen nichtmagischen Gegenstand aus dem Hut. Würfle mit 1W4, um den Gegenstand zu ermitteln. 1: Phiole mit Säure, 2: Flasche mit Alchemistenfeuer, 3: Brechstange, 4: Brennende Fackel."
+        ],
+        [
+          "66–70",
+          "Du erleidest einen Anfall von „magischer Krankheit“ und bist eine Stunde lang vergiftet."
+        ],
+        [
+          "71–75",
+          "Du bist bis zum Ende deines nächsten Zugs versteinert."
+        ],
+        [
+          "76–80",
+          "Du ziehst einen nichtmagischen Gegenstand aus dem Hut. Würfle mit 1W4, um den Gegenstand zu ermitteln. 1: Dolch, 2: Seil mit Enterhaken an einem Ende, 3: Tasche mit Krähenfüßen, 4: Edelstein im Wert von 50 GM."
+        ],
+        [
+          "81–85",
+          "Eine Kreatur erscheint in einem freien Bereich so nahe wie möglich bei dir. Sie steht nicht unter deiner Kontrolle und handelt, wie sie es normalerweise tun würde. Die Kreatur verschwindet, wenn eine Stunde vergangen ist oder wenn ihre Trefferpunkte auf 0 sinken. Würfle mit 1W4, um die Kreatur zu ermitteln. 1: Kamel, 2: Würgeschlange, 3: Elefant, 4: Maultier."
+        ],
+        [
+          "86–90",
+          "Ein feindlich gesinnter Fledermausschwarm fliegt aus dem Hut, besetzt deinen Bereich und greift dich an."
+        ],
+        [
+          "91–95",
+          "Ein vertikales Zweiwegeportal mit drei Metern Durchmesser zu einer anderen Existenzebene öffnet sich in einem freien Bereich im Abstand von bis zu neun Metern von dir und bleibt bis zum Ende deines nächsten Zugs offen. Der SL bestimmt, wohin es führt."
+        ],
+        [
+          "96–100",
+          "Du ziehst einen magischen Gegenstand aus dem Hut. Würfle mit 1W6, um die Seltenheit des Gegenstands zu ermitteln. 1–3: Gewöhnlich, 4–5: Ungewöhnlich, 6: Selten. Der SL wählt den Gegenstand aus, der nach einer Stunde verschwindet, sofern er bis dahin nicht verbraucht oder zerstört wurde."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.ifrit-flasche",
+      "level": 3,
+      "text": "Ifrit-Flasche"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ifrit-flasche.untertitel",
+      "text": "Wundersamer Gegenstand, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ifrit-flasche.text-1",
+      "text": "Wenn du eine magische Aktion ausführst, um den Stopfen dieser bemalten Messingflasche zu entfernen, entströmt ihr eine dichte Rauchwolke. Am Ende deines Zugs verschwindet der Rauch in einer harmlosen Stichflamme, und in einem freien Bereich im Abstand von bis zu neun Metern von dir erscheint ein Ifrit."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ifrit-flasche.text-2",
+      "text": "Wenn die Flasche erstmals geöffnet wird, würfelt der SL anhand der folgenden Tabelle, um zu ermitteln, was geschieht."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.h-i.ifrit-flasche.tabelle-ifrit-flasche",
+      "caption": "Ifrit-Flasche",
+      "columns": [
+        "1W10",
+        "Effekt"
+      ],
+      "rows": [
+        [
+          "1",
+          "Der Ifrit greift dich an. Nach fünf Kampfrunden verschwindet er, und die Flasche verliert ihre Magie."
+        ],
+        [
+          "2–9",
+          "Der Ifrit versteht deine Sprachen und gehorcht deinen Befehlen eine Stunde lang. Danach kehrt er in die Flasche zurück, die einen neuen Stopfen erhält. Der Stopfen kann 24 Stunden lang nicht entfernt werden. Wenn die Flasche die nächsten zwei Male geöffnet wird, tritt derselbe Effekt auf. Wenn die Flasche ein viertes Mal geöffnet wird, entflieht der Ifrit, und die Flasche verliert ihre Magie."
+        ],
+        [
+          "10",
+          "Der Ifrit versteht deine Sprachen und kann einmal den Zauber Wunsch für dich wirken. Wenn er den Wunsch gewährt hat oder eine Stunde vergangen ist, verschwindet er, und die Flasche verliert ihre Magie."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.h-i.ioun-stein",
+      "level": 3,
+      "text": "Ioun-Stein"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.untertitel",
+      "text": "Wundersamer Gegenstand, Seltenheit variiert (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-1",
+      "text": "Ioun-Steine sind etwa murmelgroß und tragen ihren Namen in Anlehnung an Ioun, Göttin des Wissens und der Prophezeiungen, die in einigen Welten verehrt wird. Es gibt viele Arten von Ioun-Steinen mit jeweils eigenen Kombinationen aus Form und Farbe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-2",
+      "text": "Wenn du eine magische Aktion ausführst, um einen Ioun-Stein in die Luft zu werfen, umkreist der Stein deinen Kopf im Abstand von 1W3 × 0,3 Metern und gewährt dir seinen Vorzug. Es können bis zu drei Ioun-Steine gleichzeitig deinen Kopf umkreisen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-3",
+      "text": "Jeder Ioun-Stein, der deinen Kopf umkreist, gilt als Gegenstand, den du trägst. Der kreisende Stein vermeidet Kontakt mit anderen Kreaturen und Gegenständen. Er kreist so, dass er Kollisionen sowie allen Versuchen anderer Kreaturen ausweicht, ihn anzugreifen oder zu fangen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-4",
+      "text": "Du kannst als Verwenden-Aktion beliebig viele Ioun-Steine, die deinen Kopf umkreisen, ergreifen und verstauen. Wenn deine Einstimmung auf einen Ioun-Stein endet, während der Stein deinen Kopf umkreist, fällt er zu Boden, als hättest du ihn fallengelassen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-5",
+      "text": "Die Art des Steins bestimmt seine Seltenheit und seine Effekte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-6",
+      "text": "Absorption (sehr selten): Wenn dieser blasslilafarbene elliptische Stein deinen Kopf umkreist, kannst du eine Reaktion ausführen und einen Zauber des höchstens 4. Grades aufheben, der von einer Kreatur gewirkt wird, die du sehen kannst. Ein aufgehobener Zauber hat keinen Effekt, und alle Ressourcen, die zum Wirken verwendet wurden, sind vergeudet. Wenn der Stein insgesamt 20 Zaubergrade aufgehoben hat, brennt er aus, wird mattgrau und verliert seine Magie."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-7",
+      "text": "Agilität (sehr selten): Wenn diese tiefrote Kugel deinen Kopf umkreist, ist dein Geschicklichkeitswert um 2 erhöht (auf höchstens 20)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-8",
+      "text": "Erkenntnis (sehr selten): Wenn diese leuchtend blaue Kugel deinen Kopf umkreist, ist dein Weisheitswert um 2 erhöht (auf höchstens 20)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-9",
+      "text": "Ernährung (selten): Wenn dieser farblose spindelförmige Stein deinen Kopf umkreist, musst du weder essen noch trinken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-10",
+      "text": "Führungskraft (sehr selten): Wenn diese rosa und grün marmorierte Kugel deinen Kopf umkreist, ist dein Charismawert um 2 erhöht (auf höchstens 20)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-11",
+      "text": "Höhere Absorption (legendär): Wenn dieser lila und grün marmorierte elliptische Stein deinen Kopf umkreist, kannst du eine Reaktion ausführen und einen Zauber des höchstens 8. Grades aufheben, der von einer Kreatur gewirkt wird, die du sehen kannst. Ein aufgehobener Zauber hat keinen Effekt, und alle Ressourcen, die zum Wirken verwendet wurden, sind vergeudet. Wenn der Stein insgesamt 20 Zaubergrade aufgehoben hat, brennt er aus, wird mattgrau und verliert seine Magie."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-12",
+      "text": "Meisterschaft (legendär): Wenn dieses blassgrüne Prisma deinen Kopf umkreist, ist dein Übungsbonus um 1 erhöht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-13",
+      "text": "Regeneration (legendär): Am Ende jeder Stunde, die dieser perlweiße spindelförmige Stein deinen Kopf umkreist hat, erhältst du 15 Trefferpunkte zurück, sofern du mindestens 1 Trefferpunkt hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-14",
+      "text": "Reserve (selten): Dieses leuchtend violette Prisma speichert Zauber, die in es hineingewirkt werden, sodass du sie später verwenden kannst. Der Stein kann jeweils bis zu vier Zaubergrade aufnehmen. Wenn er gefunden wird, enthält er 1W4 Zaubergrade in Form von Zaubern nach Wahl des SL."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-15",
+      "text": "Jede Kreatur kann einen Zauber des 1. bis 4. Grades in den Stein wirken. Dazu muss sie den Stein berühren, während sie den Zauber wirkt. Der Zauber hat dann keinen Effekt, sondern wird im Stein gespeichert. Wenn der Stein den Zauber nicht aufnehmen kann, wird der Zauber wirkungslos verbraucht. Der beim Wirken verwendete Zaubergrad bestimmt, wie viel Platz der Zauber im Stein verbraucht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-16",
+      "text": "Wenn dieser Stein deinen Kopf umkreist, kannst du einen beliebigen der darin gespeicherten Zauber wirken. Der Zauber verwendet den Zaubergrad, den Zauberrettungswurf-SG, den Zauberangriffsbonus und das Attribut zum Zauberwirken des ursprünglichen Zauberwirkers, wird aber in jeder anderen Form behandelt, als hättest du ihn gewirkt. Danach ist er nicht mehr im Stein gespeichert und gibt seinen Platz frei."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-17",
+      "text": "Stärke (sehr selten): Wenn dieser hellblaue rautenförmige Stein deinen Kopf umkreist, ist dein Stärkewert um 2 erhöht (auf höchstens 20)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-18",
+      "text": "Schutz (selten): Wenn dieses altrosafarbene Prisma deinen Kopf umkreist, erhältst du einen Bonus von +1 auf deine Rüstungsklasse."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-19",
+      "text": "Standhaftigkeit (sehr selten): Wenn dieser rosafarbene rautenförmige Stein deinen Kopf umkreist, ist dein Konstitutionswert um 2 erhöht (auf höchstens 20)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-20",
+      "text": "Verstand (sehr selten): Wenn diese scharlachrot und blau marmorierte Kugel deinen Kopf umkreist, ist dein Intelligenzwert um 2 erhöht (auf höchstens 20)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.h-i.ioun-stein.text-21",
+      "text": "Wahrnehmung (selten): Wenn dieser dunkelblaue rhombenförmige Stein deinen Kopf umkreist, bist du bei Initiativewürfen und bei Weisheitswürfen (Wahrnehmung) im Vorteil."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:ca7a98a449023f1dd7748afa38954e1ae17d359ae77c566260c436e440bc23dc"
+}

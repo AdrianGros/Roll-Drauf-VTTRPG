@@ -1,0 +1,1827 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "monsters.c-e",
+  "slug": "monster-c-e",
+  "title": "Monster C–E",
+  "navigationPath": [
+    "Monster",
+    "Monster C–E"
+  ],
+  "order": 2110,
+  "sourcePages": [
+    309,
+    310,
+    311,
+    312,
+    313,
+    314,
+    315,
+    316,
+    317
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.monster-von-a-z",
+      "level": 2,
+      "text": "Monster von A–Z (C–E)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.chimaere",
+      "level": 3,
+      "text": "Chimäre"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.chimaere.chimaere",
+      "name": "Chimäre",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "114 (12W10+48)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +8"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 18"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Drakonisch, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Chimäre führt einen Bissangriff, einen Klauenangriff und einen Rammen-Angriff aus.\n\nSie kann den Klauenangriff durch einen Einsatz von Feuerodem ersetzen, sofern verfügbar.\n\nBiss: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 11 (2W6+4) Stichschaden oder 18 (4W6+4) Stichschaden, wenn die Chimäre beim Angriffswurf im Vorteil war.\n\nKlauen: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 7 (1W6+4) Hiebschaden.\n\nRammen: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 10 (1W12+4) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es umgestoßen und hat den Zustand Liegend.\n\nFeuerodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 15; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 31 (7W8) Feuerschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.chuul",
+      "level": 3,
+      "text": "Chuul"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.chuul.chuul",
+      "name": "Chuul",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Aberration, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "76 (9W10+27)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Tiefensprache, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Chuul kann Luft und Wasser atmen.\n\nMagie spüren: Der Chuul spürt Magie im Abstand von bis zu 36 Metern von sich. Dieses Merkmal ist selbst nicht magisch, funktioniert aber ansonsten wie der Zauber Magie entdecken."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Chuul führt zwei Zangenangriffe aus und setzt Lähmende Tentakel ein.\n\nZange: Nahkampfangriffswurf: +6, Reichweite 3 m. Treffer: 9 (1W10+4) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es von einer der zwei Zangen gepackt (Flucht-SG 14).\n\nLähmende Tentakel: Konstitutionsrettungswurf: SG 13; eine Kreatur, die vom Chuul gepackt wurde. Misserfolg: Das Ziel ist vergiftet und wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch. Solange das Ziel vergiftet ist, ist es außerdem gelähmt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.couatl",
+      "level": 3,
+      "text": "Couatl"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.couatl.couatl",
+      "name": "Couatl",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes celestisches Wesen, rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "TP",
+          "value": "60 (8W8+24)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 27 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "20 (MOD +5, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Hieb, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gleißend, Psychisch"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Alle; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Abgeschirmter Geist: Die Gedanken des Couatls können mit keinen Methoden gelesen werden, und andere Kreaturen können nur dann telepathisch mit ihm kommunizieren, wenn er es gestattet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 11 (1W12+5) Stichschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Couatls vergiftet.\n\nUmschlingen: Stärkerettungswurf: SG 15; eine Kreatur von höchstens mittelgroßer Größe im Abstand von bis zu 1,5 Metern vom Couatl, die er sehen kann. Misserfolg: 8 (1W6+5) Wuchtschaden. Das Ziel wird gepackt (Flucht-SG 13). Solange es gepackt bleibt, ist es außerdem festgesetzt.\n\nZauberwirken: Der Couatl wirkt einen der folgenden Zauber mit Weisheit als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 15):\n\nBeliebig oft: Gedanken wahrnehmen, Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Gutes und Böses entdecken, Magie entdecken\n\nJe 1-mal täglich: Ausspähung, Nahrung und Wasser erschaffen, Schlaf, Traum, Vollständige Genesung"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Göttlicher Beistand (2-mal täglich): Der Couatl wirkt einen der Zauber Heiligtum, Schwache Genesung oder Segnen, ohne Zauberkomponenten zu benötigen. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.deva",
+      "level": 3,
+      "text": "Deva"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.deva.deva",
+      "name": "Deva",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes celestisches Wesen (Engel), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "229 (27W8+108)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 27 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "20 (MOD +5, RW +9)"
+        },
+        {
+          "label": "Cha",
+          "value": "20 (MOD +5, RW +9)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Motiv erkennen +9, Wahrnehmung +9"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Gleißend"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Bezaubert, Erschöpft, Verängstigt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 19"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Alle; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "10 (EP 5.900; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Erhabene Genesung: Wenn der Deva außerhalb des Bergs Celestia stirbt, verschwindet sein Körper. Der Deva erhält sofort einen neuen Körper, der mit allen Trefferpunkten irgendwo am Berg Celestia aufersteht.\n\nMagieresistenz: Der Deva ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Deva führt zwei Heiliger-Streitkolben-Angriffe aus.\n\nHeiliger Streitkolben: Nahkampfangriffswurf: +8, Reichweite 1,5 m. Treffer: 7 (1W6+4) Wuchtschaden plus 18 (4W8) gleißender Schaden.\n\nZauberwirken: Der Deva wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 17):\n\nBeliebig oft: Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Gutes und Böses entdecken\n\nJe 1-mal täglich: Heiliges Gespräch, Tote erwecken"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Göttlicher Beistand (2-mal täglich): Der Deva wirkt einen der Zauber Fluch brechen, Schwache Genesung oder Wunden heilen. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.doppelgaenger",
+      "level": 3,
+      "text": "Doppelgänger"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.doppelgaenger.doppelgaenger",
+      "name": "Doppelgänger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroße Monstrosität, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "52 (8W8+16)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Motiv erkennen +3, Täuschen +6"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Bezaubert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und drei weitere Sprachen"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Doppelgänger führt zwei Hiebangriffe aus und setzt Verstörendes Antlitz ein, sofern verfügbar.\n\nHieb: Nahkampfangriffswurf: +6 (in der ersten Runde jedes Kampfs im Vorteil), Reichweite 1,5 m. Treffer: 11 (2W6+4) Wuchtschaden.\n\nGedanken lesen: Der Doppelgänger wirkt den Zauber Gedanken wahrnehmen mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 12).\n\nVerstörendes Antlitz (Aufladung 6): Weisheitsrettungswurf: SG 12; jede Kreatur, die den Doppelgänger sehen kann und sich in einer Ausströmung von 4,5 Metern befindet, die vom Doppelgänger ausgeht. Misserfolg: Das Ziel ist verängstigt und wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Gestaltwandeln: Der Doppelgänger nimmt die Gestalt eines Humanoiden von höchstens mittelgroßer Größe oder wieder seine wahre Gestalt an. Seine Spielwerte sind abgesehen von der Größe in jeder Gestalt gleich. Ausrüstung, die er trägt oder hält, wird nicht verwandelt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.drachenschildkroete",
+      "level": 3,
+      "text": "Drachenschildkröte"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.drachenschildkroete.drachenschildkroete",
+      "name": "Drachenschildkröte",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "20"
+        },
+        {
+          "label": "Initiative",
+          "value": "+6 (16)"
+        },
+        {
+          "label": "TP",
+          "value": "356 (23W20+115)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Schwimmen 15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +11)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Urtümlich (Aqual)"
+        },
+        {
+          "label": "HG",
+          "value": "17 (EP 18.000; ÜB +6)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Bissangriffe aus. Er kann einen Angriff durch einen Schwanzangriff ersetzen.\n\nBiss: Nahkampfangriffswurf: +13, Reichweite 4,5 m. Treffer: 23 (3W10+7) Stichschaden plus 7 (2W6) Feuerschaden. Unter Wasser zu sein gewährt keine Resistenz gegen diesen Feuerschaden.\n\nSchwanz: Nahkampfangriffswurf: +13, Reichweite 4,5 m. Treffer: 18 (2W10+7) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens riesiger Größe ist, wird es umgestoßen und hat den Zustand Liegend.\n\nDampfodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 19; jede Kreatur in einem Kegel von 18 Metern. Misserfolg: 56 (16W6) Feuerschaden. Erfolg: Halber Schaden. Erfolg oder Misserfolg: Unter Wasser zu sein gewährt keine Resistenz gegen diesen Feuerschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.dretch",
+      "level": 3,
+      "text": "Dretch"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.dretch.dretch",
+      "name": "Dretch",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner Unhold (Dämon), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "18 (4W6+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Feuer, Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch; Telepathie auf 18 m (nur mit Kreaturen, die Abyssisch verstehen)"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Zerfetzen: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 4 (1W6+1) Hiebschaden.\n\nStinkwolke (1-mal täglich): Konstitutionsrettungswurf: SG 11; jede Kreatur in einer Ausströmung von drei Metern, die vom Dretch ausgeht. Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs vergiftet. Eine vergiftete Kreatur kann keine Reaktionen ausführen. Außerdem kann sie in ihrem Zug entweder eine Aktion oder eine Bonusaktion ausführen, aber nicht beides."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.drinne",
+      "level": 3,
+      "text": "Drinne"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.drinne.drinne",
+      "name": "Drinne",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "123 (13W10+52)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +10, Wahrnehmung +6"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Elfisch, Gemeinsprache der Unterreiche"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Empfindlich gegenüber Sonnenlicht: Im Sonnenlicht ist der Drinne bei Angriffs- und Attributswürfen im Nachteil.\n\nNetzwandler: Der Drinne ignoriert Bewegungseinschränkungen durch Netze und weiß genau, wo sich andere Kreaturen aufhalten, die in Kontakt mit demselben Netz sind.\n\nSpinnenklettern: Der Drinne kann ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drinne führt drei Angriffe mit Vorderbein oder Giftexplosion in beliebiger Kombination aus.\n\nVorderbein: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 13 (2W8+4) Stichschaden.\n\nGiftexplosion: Fernkampfangriffswurf: +6, Reichweite 36 m. Treffer: 13 (3W6+3) Giftschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Magie der Spinnenkönigin (Aufladung 5–6): Der Drinne wirkt einen der Zauber Dunkelheit, Feenfeuer oder Spinnennetz mit Weisheit als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 14)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.druide",
+      "level": 3,
+      "text": "Druide"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.druide.druide",
+      "name": "Druide",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide (Druide), neutral"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "44 (8W8+8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heilkunde +5, Naturkunde +3, Wahrnehmung +5"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Beschlagene Lederrüstung"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Druidisch, Gemeinsprache, Sylvanisch"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Druide führt zwei Angriffe mit Rankenstab oder Grüner Funke in beliebiger Kombination aus.\n\nRankenstab: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Wuchtschaden plus 2 (1W4) Giftschaden.\n\nGrüner Funke: Fernkampfangriffswurf: +5, Reichweite 27 m. Treffer: 10 (3W6) gleißender Schaden.\n\nZauberwirken: Der Druide wirkt einen der folgenden Zauber mit Weisheit als Attribut zum Zauberwirken (Zauberrettungswurf-SG 13):\n\nBeliebig oft: Druidenkunst, Mit Tieren sprechen Je 2-mal täglich: Donnerwoge, Verstricken Je 1-mal täglich: Lange Schritte, Mondstrahl, Tierbote"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.dryade",
+      "level": 3,
+      "text": "Dryade"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.dryade.dryade",
+      "name": "Dryade",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Feenwesen, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (5W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Elfisch, Sylvanisch"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Magieresistenz: Die Dryade ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nMit Tieren und Pflanzen sprechen: Die Dryade kann sich mit Tieren und Pflanzen verständigen, als sprächen sie ihre Sprache."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Dryade führt einen Rankenhieb- oder einen Dornenexplosion-Angriff aus und kann Zauberwirken einsetzen, um den Zauber Monster bezaubern zu wirken.\n\nRankenhieb: Nahkampfangriffswurf: +6, Reichweite 3 m. Treffer: 8 (1W8+4) Hiebschaden.\n\nDornenexplosion: Fernkampfangriffswurf: +6, Reichweite 18 m. Treffer: 7 (1W6+4) Stichschaden.\n\nZauberwirken: Die Dryade wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 14):\n\nBeliebig oft: Druidenkunst, Monster bezaubern (wirkt 24 Stunden lang; endet vorzeitig, wenn die Dryade den Zauber erneut wirkt), Tierfreundschaft\n\nJe 1-mal täglich: Spurloses Gehen, Verstricken"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Baumwandeln: Wenn die Dryade sich im Abstand von bis zu 1,5 Metern von einem Baum von mindestens großer Größe befindet, teleportiert sie sich in einen freien Bereich im Abstand von bis zu 1,5 Metern eines zweiten Baums von mindestens großer Größe, der sich im Abstand von bis zu 18 Metern vom ersten Baum befindet."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.dschinni",
+      "level": 3,
+      "text": "Dschinni"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.dschinni.dschinni",
+      "name": "Dschinni",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Elementar (Dschinn), neutral"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "218 (19W10+114)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 27 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Int",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz, Schall"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Aural)"
+        },
+        {
+          "label": "HG",
+          "value": "11 (EP 7.200; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Elementare Genesung: Wenn der Dschinni außerhalb der Elementarebene der Luft stirbt, löst sein Körper sich in Nebel auf. Der Dschinni erhält nach 1W4 Tagen einen neuen Körper, der mit allen Trefferpunkten irgendwo auf der Elementarebene der Luft aufersteht.\n\nMagieresistenz: Der Dschinni ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nWünsche: Der Dschinni kennt mit 30-prozentiger Wahrscheinlichkeit den Zauber Wunsch. Wenn er ihn kennt, kann er ihn nur für eine Kreatur wirken, die kein Dschinn ist und die einen Wunsch auf eine Weise kommuniziert, die der Dschinni verstehen kann.\n\nWirkt der Dschinni den Zauber für diese Kreatur, so belastet ihn der Zauber in keiner Weise. Wenn er den Zauber dreimal gewirkt hat, kann er dies erst nach 365 Tagen erneut tun."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Dschinni führt drei Angriffe mit Sturmklinge oder Sturmblitz in beliebiger Kombination aus.\n\nSturmklinge: Nahkampfangriffswurf: +9, Reichweite 1,5 m. Treffer: 12 (2W6+5) Hiebschaden plus 7 (2W6) Blitzschaden.\n\nSturmblitz: Fernkampfangriffswurf: +9, Reichweite 36 m. Treffer: 13 (3W8) Schallschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es umgestoßen und hat den Zustand Liegend.\n\nWirbelwind erzeugen: Der Dschinni beschwört einen Wirbelwind an einem Punkt im Abstand von bis zu 36 Metern von sich, den er sehen kann. Der Wirbelwind füllt einen 18 Meter hohen Zylinder mit einem Radius von sechs Metern um diesen Punkt. Er bleibt bestehen, bis die Konzentration des Dschinni auf ihn endet. Der Dschinni kann den Wirbelwind zu Beginn jedes seiner Züge bis zu sechs Meter weit bewegen.\n\nWann immer der Wirbelwind in den Bereich einer Kreatur eindringt oder eine Kreatur in den Wirbelwind gerät, wirkt der folgende Effekt auf die Kreatur: Stärkerettungswurf: SG 17 (eine Kreatur führt diesen Rettungswurf nur einmal pro Zug aus, und der Dschinni ist nicht betroffen). Misserfolg: Solange das Ziel sich im Wirbelwind befindet, ist es festgesetzt und bewegt sich mit dem Wirbelwind. Zu Beginn jedes seiner Züge erleidet das festgesetzte Ziel 21 (6W6) Schallschaden. Das Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt.\n\nZauberwirken: Der Dschinni wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 17):\n\nBeliebig oft: Gutes und Böses entdecken, Magie entdecken\n\nJe 2-mal täglich: Nahrung und Wasser erschaffen (kann Wein statt Wasser erschaffen), Windwandeln, Zungen\n\nJe 1-mal täglich: Ebenenwechsel, Erschaffung, Gasförmige Gestalt, Mächtiges Trugbild, Unsichtbarkeit"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.duestermantel",
+      "level": 3,
+      "text": "Düstermantel"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.duestermantel.duestermantel",
+      "name": "Düstermantel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleine Aberration, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (5W6+5)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Fliegen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Zermalmen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Wuchtschaden, und der Düstermantel heftet sich an das Ziel an. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist und der Düstermantel beim Angriffswurf im Vorteil war, bedeckt der Düstermantel das Ziel. Dieses ist dann blind und beginnt zu ersticken.\n\nWährend der Düstermantel an das Ziel angeheftet ist, kann er nur das Ziel angreifen, ist bei seinen Angriffswürfen jedoch im Vorteil. Seine Bewegungsrate wird zu 0, und Boni auf seine Bewegungsrate bringen ihm keinen Vorzug. Der Düstermantel bewegt sich mit dem Ziel.\n\nDie Kreatur kann eine Aktion ausführen und versuchen, den Düstermantel von sich zu lösen. Dies gelingt mit einem erfolgreichen SG-13-Stärkewurf (Athletik). In seinem Zug kann der Düstermantel sich lösen, indem er 1,5 Meter Bewegung verbraucht.\n\nAura der Dunkelheit (1-mal täglich): Magische Dunkelheit füllt eine Ausströmung von 4,5 Metern, die vom Düstermantel ausgeht. Dieser Effekt bleibt bis zu zehn Minuten lang bestehen, sofern der Düstermantel sich konzentriert. Dunkelsicht kann diesen Bereich nicht durchdringen, und kein Licht kann ihn erhellen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.einhorn",
+      "level": 3,
+      "text": "Einhorn"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.einhorn.einhorn",
+      "name": "Einhorn",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes celestisches Wesen, rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+8 (18)"
+        },
+        {
+          "label": "TP",
+          "value": "97 (13W10+26)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bezaubert, Gelähmt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Celestisch, Elfisch, Sylvanisch; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (3-mal täglich): Wenn das Einhorn bei einem Rettungswurf scheitert, kann es beschließen, ihn stattdessen zu bestehen.\n\nMagieresistenz: Das Einhorn ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Das Einhorn führt einen Gleißendes-Horn-Angriff und einen Hufeangriff aus.\n\nGleißendes Horn: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 9 (1W10+4) gleißender Schaden.\n\nHufe: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 11 (2W6+4) Wuchtschaden.\n\nZauberwirken: Das Einhorn wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 14):\n\nBeliebig oft: Druidenkunst, Gutes und Böses entdecken Je 1-mal täglich: Gefühle besänftigen, Gutes und Böses bannen, Spurloses Gehen, Verstricken, Wort des Rückrufs"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Segen des Einhorns (3-mal täglich): Das Einhorn berührt eine andere Kreatur mit seinem Horn und wirkt einen der Zauber Schwache Genesung oder Wunden heilen auf diese Kreatur. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3. Unmittelbar nach dem Zug einer anderen Kreatur kann das Einhorn eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Einhorn wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nSchimmernder Schild: Das Einhorn zielt auf eine Kreatur im Abstand von bis zu 18 Metern von sich, die es sehen kann. Das Ziel erhält bis zum Ende des nächsten Zugs des Einhorns 10 (3W6) temporäre Trefferpunkte und einen Bonus von +2 auf seine RK. Das Einhorn kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nStürmendes Horn: Das Einhorn nutzt bis zur Hälfte seiner Bewegungsrate, ohne Gelegenheitsangriffe zu provozieren, und führt einen Gleißendes-Horn-Angriff aus."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.eisengolem",
+      "level": 3,
+      "text": "Eisengolem"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.eisengolem.eisengolem",
+      "name": "Eisengolem",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Konstrukt, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "20"
+        },
+        {
+          "label": "Initiative",
+          "value": "+9 (19)"
+        },
+        {
+          "label": "TP",
+          "value": "252 (24W10+120)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "24 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift, Psychisch; Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Gemeinsprache und zwei weitere Sprachen, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "16 (EP 15.000; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Feuerabsorption: Der Golem erleidet durch Feuer keinen Schaden, sondern erhält Trefferpunkte in Höhe des Feuerschadens zurück.\n\nMagieresistenz: Der Golem ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nUnveränderliche Gestalt: Der Golem kann keine andere Gestalt annehmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Golem führt zwei Angriffe mit Klingenarm oder Feuerbolzen in beliebiger Kombination aus.\n\nKlingenarm: Nahkampfangriffswurf: +12, Reichweite 3 m. Treffer: 20 (3W8+7) Hiebschaden plus 10 (3W6) Feuerschaden.\n\nFeuerbolzen: Fernkampfangriffswurf: +10, Reichweite 36 m. Treffer: 36 (8W8) Feuerschaden.\n\nGiftodem (Aufladung 6): Konstitutionsrettungswurf: SG 18; jede Kreatur in einem Kegel von 18 Metern. Misserfolg: 55 (10W10) Giftschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.eisteufel",
+      "level": 3,
+      "text": "Eisteufel"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.eisteufel.eisteufel",
+      "name": "Eisteufel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Unhold (Teufel), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "TP",
+          "value": "228 (24W10+96)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +7)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +9)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +9)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Motiv erkennen +7, Überzeugen +9, Wahrnehmung +7"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift, Kälte; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 36 m; Passive Wahrnehmung 17"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Infernalisch; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "14 (EP 11.500; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Diabolische Genesung: Wenn der Teufel außerhalb der Neun Höllen stirbt, löst sein Körper sich in Schwefeldampf auf. Der Teufel erhält sofort einen neuen Körper, der mit allen Trefferpunkten irgendwo in den Neun Höllen aufersteht.\n\nMagieresistenz: Der Teufel ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Teufel führt drei Eisspeer-Angriffe aus. Er kann einen Angriff durch einen Schwanzangriff ersetzen.\n\nEisspeer: Nah- oder Fernkampfangriffswurf: +10, Reichweite 1,5 m oder Reichweite 9/36 m. Treffer: 14 (2W8+5) Stichschaden plus 10 (3W6) Kälteschaden. Das Ziel kann bis zum Ende seines nächsten Zugs weder Bonusaktionen noch Reaktionen ausführen, und seine Bewegungsrate ist um drei Meter verringert. Außerdem kann es sich in seinem Zug entweder bewegen oder eine Aktion ausführen, aber nicht beides. Treffer oder Fehlschlag: Unmittelbar nach einem Fernkampfangriff kehrt der Speer auf magische Art in die Hand des Teufels zurück.\n\nSchwanz: Nahkampfangriffswurf: +10, Reichweite 3 m. Treffer: 15 (3W6+5) Wuchtschaden plus 18 (4W8) Kälteschaden.\n\nEiswand (Aufladung 6): Der Teufel wirkt den Zauber Eiswand (Version des 8. Grades) mit Intelligenz als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 17)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.erdelementar",
+      "level": 3,
+      "text": "Erdelementar"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.erdelementar.erdelementar",
+      "name": "Erdelementar",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Elementar, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "147 (14W10+70)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Graben 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Schall"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bewusstlos, Erschöpft, Gelähmt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m, Erschütterungssinn 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Terral)"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Belagerungsmonster: Der Elementar fügt Gegenständen und Gebäuden doppelten Schaden zu.\n\nErdgleiten: Der Elementar kann sich durch nichtmagisches, unbearbeitetes Erd- und Steinmaterial graben. Dabei beeinträchtigt er das Material nicht, durch das er sich bewegt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Elementar führt zwei Angriffe mit Hieb oder Steinwurf in beliebiger Kombination aus.\n\nHieb: Nahkampfangriffswurf: +8, Reichweite 3 m. Treffer: 14 (2W8+5) Wuchtschaden.\n\nSteinwurf: Fernkampfangriffswurf: +8, Reichweite 18 m. Treffer: 8 (1W6+5) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.erinnye",
+      "level": 3,
+      "text": "Erinnye"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.erinnye.erinnye",
+      "name": "Erinnye",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Unhold (Teufel), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "TP",
+          "value": "178 (21W8+84)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +7)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +8)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +8)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Überzeugen +8, Wahrnehmung +6"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer, Gift; Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Infernalisch; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "12 (EP 8.400; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Diabolische Genesung: Wenn die Erinnye außerhalb der Neun Höllen stirbt, löst ihr Körper sich in Schwefeldampf auf. Die Erinnye erhält sofort einen neuen Körper, der mit allen Trefferpunkten irgendwo in den Neun Höllen aufersteht.\n\nMagieresistenz: Die Erinnye ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nMagisches Seil: Die Erinnye hat ein magisches Seil. Solange sie es mitführt, kann sie die Fesselndes-Seil-Aktion ausführen. Das Seil besitzt eine RK von 20, 90 Trefferpunkte und ist gegen Gift- und psychischen Schaden immun. Es zerfällt zu Staub, wenn seine Trefferpunkte auf 0 sinken, wenn es mindestens eine Stunde lang weiter als 1,5 Meter von der Erinnye entfernt ist oder wenn die Erinnye stirbt. Wird das Seil beschädigt oder zerstört, so kann die Erinnye es vollständig wiederherstellen, wenn sie eine kurze oder lange Rast beendet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Erinnye führt drei Vernichtendes-Schwert-Angriffe aus und kann Fesselndes Seil einsetzen.\n\nVernichtendes Schwert: Nahkampfangriffswurf: +8, Reichweite 1,5 m. Treffer: 13 (2W8+4) Hiebschaden plus 11 (2W10) nekrotischer Schaden.\n\nFesselndes Seil (erfordert magisches Seil): Stärkerettungswurf: SG 16; eine Kreatur im Abstand von bis zu 36 Metern von der Erinnye, die von der Erinnye gesehen werden kann. Misserfolg: 14 (4W6) Energieschaden, und das Ziel ist festgesetzt, bis das Seil zerstört wird, bis die Erinnye das Ziel mit einer Bonusaktion befreit oder bis die Erinnye Fesselndes Seil erneut einsetzt."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Parieren: Auslöser: Die Erinnye wird von einem Nahkampfangriffswurf getroffen, während sie eine Waffe hält. Antwort: Die Erinnye fügt ihrer RK gegen diesen Angriff 4 hinzu, sodass der Angriff möglicherweise misslingt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.erweckte-pflanzen",
+      "level": 3,
+      "text": "Erweckte Pflanzen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.erweckte-pflanzen.erwachter-baum",
+      "name": "Erwachter Baum",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesige Pflanze, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "–2 (8)"
+        },
+        {
+          "label": "TP",
+          "value": "59 (7W12+14)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Stich, Wucht"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Hieb: Nahkampfangriffswurf: +6, Reichweite 3 m. Treffer: 14 (3W6+4) Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.erweckte-pflanzen.erwachter-busch",
+      "name": "Erwachter Busch",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleine Pflanze, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "9"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "10 (3W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Stich"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Harken: Nahkampfangriffswurf: +1, Reichweite 1,5 m. Treffer: 1 Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.ettin",
+      "level": 3,
+      "text": "Ettin"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.ettin.ettin",
+      "name": "Ettin",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Riese, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "85 (10W10+30)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Betäubt, Bewusstlos, Bezaubert, Blind, Taub, Verängstigt"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Morgenstern, Streitaxt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Riesisch"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Ettin führt einen Morgenstern-Angriff und einen Streitaxt-Angriff aus.\n\nMorgenstern: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 14 (2W8+5) Stichschaden, und das Ziel ist bei seinem nächsten Angriffswurf vor Ende seines nächsten Zugs im Nachteil.\n\nStreitaxt: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 14 (2W8+5) Hiebschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.c-e.eulenbaer",
+      "level": 3,
+      "text": "Eulenbär"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.c-e.eulenbaer.eulenbaer",
+      "name": "Eulenbär",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "59 (7W10+21)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Klettern 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Eulenbär führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 14 (2W8+5) Hiebschaden."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:ddef66dd361cb784c20f136fc0de6c359bfbf4b14d3c8e24838bb556d40631c0"
+}

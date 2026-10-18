@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "toolbox.environment",
+  "slug": "umgebungseffekte",
+  "title": "Umgebungseffekte",
+  "navigationPath": [
+    "Werkzeugkasten fürs Spiel",
+    "Umgebungseffekte"
+  ],
+  "order": 930,
+  "sourcePages": [
+    226
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.umgebungseffekte",
+      "level": 2,
+      "text": "Umgebungseffekte"
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.duennes-eis",
+      "level": 3,
+      "text": "Dünnes Eis"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.duennes-eis.text-1",
+      "text": "Dünnes Eis kann Gewicht von bis zu 3W10 × 5 Kilogramm pro neun Quadratmeter großem Bereich tragen. Wann immer das Gesamtgewicht auf einem Bereich dünnen Eises diese Gewichtstoleranz überschreitet, bricht das Eis. Alle Kreaturen im Bereich fallen durch das Eis. Unter dem Eis befindet sich Eiswasser (siehe „Eiswasser“ oben)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.eiswasser",
+      "level": 3,
+      "text": "Eiswasser"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.eiswasser.text-1",
+      "text": "Eine Kreatur kann einen Anzahl von Minuten in Höhe ihres Konstitutionswerts in Eiswasser ertragen, ohne schädliche Effekte zu erleiden. Jede zusätzliche Minute in Eiswasser erfordert, dass die Kreatur einen SG-10-Konstitutionsrettungswurf besteht. Anderenfalls erhält die Kreatur eine Erschöpfungsstufe. Kreaturen mit Resistenz oder Immunität gegen Kälteschaden sowie solche mit natürlicher Anpassung an Eiswasser bestehen den Rettungswurf automatisch."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.extreme-hitze",
+      "level": 3,
+      "text": "Extreme Hitze"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.extreme-hitze.text-1",
+      "text": "Eine Kreatur, die hohen Temperaturen ab 38 Grad Celsius ausgesetzt ist und kein Trinkwasser zur Verfügung hat, muss nach jeder Stunde einen Konstitutionsrettungswurf bestehen, oder sie erhält eine Erschöpfungsstufe. Der SG beträgt dabei nach der ersten Stunde 5 und wird dann für jede zusätzliche Stunde um 1 erhöht. Kreaturen, die eine mittelschwere oder schwere Rüstung tragen, sind beim Rettungswurf im Nachteil. Kreaturen mit Resistenz oder Immunität gegen Feuerschaden bestehen den Rettungswurf automatisch."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.extreme-kaelte",
+      "level": 3,
+      "text": "Extreme Kälte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.extreme-kaelte.text-1",
+      "text": "Eine Kreatur, die niedrigen Temperaturen von −18 Grad Celsius und darunter ausgesetzt ist, muss nach jeder Stunde einen SG-10-Konstitutionsrettungswurf bestehen, oder sie erhält eine Erschöpfungsstufe. Kreaturen mit Resistenz oder Immunität gegen Kälteschaden bestehen den Rettungswurf automatisch."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.grosse-hoehe",
+      "level": 3,
+      "text": "Große Höhe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.grosse-hoehe.text-1",
+      "text": "Reisen in Höhen ab 3.000 Metern über dem Meeresspiegel sind aufgrund des abnehmenden Luftdrucks und des schlechteren Sauerstoffangebots für die meisten Kreaturen schwierig. Jede Stunde, die eine Kreatur in großer Höhe reist, zählt hinsichtlich der Frage, wie lange die Kreatur reisen kann, als zwei Stunden (siehe „Reisegeschwindigkeit“)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.grosse-hoehe.text-2",
+      "text": "Kreaturen können sich an große Höhe gewöhnen, indem sie mindestens 30 Tage in dieser Höhe verbringen. An Höhen über 6.000 Metern können sie sich jedoch nicht gewöhnen, sofern sie nicht in solchen Höhen heimisch sind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.rutschiges-eis",
+      "level": 3,
+      "text": "Rutschiges Eis"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.rutschiges-eis.text-1",
+      "text": "Rutschiges Eis ist schwieriges Gelände. Eine Kreatur, die rutschiges Eis in einem Zug erstmals betritt oder den Zug darauf beginnt, muss einen SG-10-Geschicklichkeitsrettungswurf bestehen, oder sie rutscht aus und hat den Zustand Liegend."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.starker-niederschlag",
+      "level": 3,
+      "text": "Starker Niederschlag"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.starker-niederschlag.text-1",
+      "text": "Alles im Bereich starken Regens oder Schneefalls ist leicht verschleiert, und Kreaturen in diesem Bereich sind bei allen Weisheitswürfen (Wahrnehmung) im Nachteil. Starker Regen löscht außerdem jedes offene Feuer aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.starker-wind",
+      "level": 3,
+      "text": "Starker Wind"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.starker-wind.text-1",
+      "text": "Starker Wind bedeutet Nachteil bei Fernkampfangriffswürfen mit Waffen. Außerdem löscht er offenes Feuer und vertreibt Nebel. Fliegende Kreaturen in starkem Wind müssen am Ende ihres Zugs landen, oder sie stürzen ab."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.starker-wind.text-2",
+      "text": "Starker Wind in einer Wüste kann einen Sandsturm bewirken. Dieser bedeutet Nachteil bei Weisheitswürfen (Wahrnehmung)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.environment.tiefes-wasser",
+      "level": 3,
+      "text": "Tiefes Wasser"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.environment.tiefes-wasser.text-1",
+      "text": "Schwimmen in tiefem Wasser (ab 30 Meter Tiefe) bedeutet zusätzliche Herausforderungen aufgrund des Wasserdrucks und der niedrigen Temperaturen. Eine Kreatur ohne Schwimmbewegungsrate, die durch tiefes Wasser schwimmt, muss nach jeder Stunde einen SG-10-Konstitutionsrettungswurf bestehen, oder sie erhält eine Erschöpfungsstufe."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:f4246ac49e83ac6720fd4de2edb134250063c1249b7eed620d4566480200a026"
+}

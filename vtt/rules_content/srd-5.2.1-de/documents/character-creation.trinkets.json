@@ -1,0 +1,444 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "character-creation.trinkets",
+  "slug": "requisiten",
+  "title": "Requisiten",
+  "navigationPath": [
+    "Charaktererstellung",
+    "Requisiten"
+  ],
+  "order": 130,
+  "sourcePages": [
+    30,
+    31,
+    32
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "character-creation.trinkets.trinkets",
+      "level": 2,
+      "text": "Requisiten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "character-creation.trinkets.trinkets-introduction",
+      "text": "Wenn du deinen Charakter erstellst, darfst du einmal anhand der Tabelle „Requisiten“ würfeln, um eine winzige Requisite zu erhalten – einen einfachen Gegenstand mit leichter Berührung des Mystischen. Auch der SL kann diese Tabelle verwenden. Sie kann helfen, einen Raum in einem Gewölbe auszustatten oder die Taschen einer Kreatur zu füllen."
+    },
+    {
+      "type": "table",
+      "ruleId": "character-creation.trinkets.trinkets-table",
+      "caption": "Requisiten",
+      "columns": [
+        "1W100",
+        "Requisite"
+      ],
+      "rows": [
+        [
+          "1",
+          "Mumifizierte Hand eines Goblins"
+        ],
+        [
+          "2",
+          "Kristall, der im Mondlicht schwach leuchtet"
+        ],
+        [
+          "3",
+          "Goldmünze, die in einem fremden Land geprägt wurde"
+        ],
+        [
+          "4",
+          "In einer dir unbekannten Sprache verfasstes Tagebuch"
+        ],
+        [
+          "5",
+          "Messingring, der niemals matt wird"
+        ],
+        [
+          "6",
+          "Alte Schachfigur aus Glas"
+        ],
+        [
+          "7",
+          "Zwei Knochenwürfel mit einem Totenschädel anstelle der Sechs"
+        ],
+        [
+          "8",
+          "Kleine Götzenskulptur einer alptraumhaften Kreatur, die dir beunruhigende Träume beschert, wenn du in ihrer Nähe schläfst"
+        ],
+        [
+          "9",
+          "Haarlocke"
+        ],
+        [
+          "10",
+          "Urkunde für ein Grundstück in einem dir unbekannten Land"
+        ],
+        [
+          "11",
+          "Block aus unbekanntem Material, etwa 30 Gramm schwer"
+        ],
+        [
+          "12",
+          "Kleine nadelgespickte Stoffpuppe"
+        ],
+        [
+          "13",
+          "Zahn eines unbekannten Tieres"
+        ],
+        [
+          "14",
+          "Riesige Schuppe, vielleicht von einem Drachen"
+        ],
+        [
+          "15",
+          "Leuchtend grüne Feder"
+        ],
+        [
+          "16",
+          "Alte Wahrsagerkarte, die dein Abbild trägt"
+        ],
+        [
+          "17",
+          "Glaskugel, gefüllt mit wirbelndem Rauch"
+        ],
+        [
+          "18",
+          "Ei mit leuchtend roter Schale, etwa 500 Gramm schwer"
+        ],
+        [
+          "19",
+          "Pfeife, die Seifenblasen entstehen lässt"
+        ],
+        [
+          "20",
+          "Einmachglas mit einem Stück Fleisch in Beize"
+        ],
+        [
+          "21",
+          "Kleine gnomische Spieluhr, die ein Lied spielt, an das du dich vage aus deiner Kindheit erinnerst"
+        ],
+        [
+          "22",
+          "Kleine Holzfigur, die einen selbstgefälligen Halbling darstellt"
+        ],
+        [
+          "23",
+          "Messingkugel, in die seltsame Runen eingraviert sind"
+        ],
+        [
+          "24",
+          "Bunte Steinscheibe"
+        ],
+        [
+          "25",
+          "Winziges silbernes Abbild eines Raben"
+        ],
+        [
+          "26",
+          "Beutel mit 47 Zähnen, einer davon faulig"
+        ],
+        [
+          "27",
+          "Obsidianscherbe, die sich warm anfühlt"
+        ],
+        [
+          "28",
+          "Drachenklaue an einem Lederhalsband"
+        ],
+        [
+          "29",
+          "Ein Paar alte Socken"
+        ],
+        [
+          "30",
+          "Leeres Buch, dessen Seiten weder Tinte, Kreide oder Graphit noch irgendeine andere Substanz aufnehmen"
+        ],
+        [
+          "31",
+          "Silbernes Abzeichen in Form eines fünfzackigen Sterns"
+        ],
+        [
+          "32",
+          "Messer, das einmal einem Verwandten gehört hat"
+        ],
+        [
+          "33",
+          "Glasphiole mit Fingernagelabschnitten"
+        ],
+        [
+          "34",
+          "Rechteckiger Metallapparat mit zwei winzigen Metallschälchen an einem Ende, die Funken sprühen, wenn sie nass werden"
+        ],
+        [
+          "35",
+          "Weißer Handschuh mit Pailletten, passend für einen Menschen"
+        ],
+        [
+          "36",
+          "Weste mit Hunderten von kleinen Taschen"
+        ],
+        [
+          "37",
+          "Gewichtsloser Kiesel"
+        ],
+        [
+          "38",
+          "Skizze eines Goblins"
+        ],
+        [
+          "39",
+          "Leere Glasphiole, die nach Parfüm riecht"
+        ],
+        [
+          "40",
+          "Edelstein, der für jeden außer dir wie ein Stück Kohle aussieht"
+        ],
+        [
+          "41",
+          "Fetzen eines alten Kriegsbanners"
+        ],
+        [
+          "42",
+          "Rangabzeichen eines verschollenen Legionärs"
+        ],
+        [
+          "43",
+          "Silberglöckchen ohne Klöppel"
+        ],
+        [
+          "44",
+          "Mechanischer Kanarienvogel in einer Lampe"
+        ],
+        [
+          "45",
+          "Winzige Truhe, die so geschnitzt ist, als hätte sie unten zahlreiche Füße"
+        ],
+        [
+          "46",
+          "Toter Feengeist in einer farblosen Glasflasche"
+        ],
+        [
+          "47",
+          "Metalldose ohne Öffnung, die klingt, als enthielte sie (nach deiner Wahl) Flüssigkeit, Sand, Spinnen oder Glasscherben"
+        ],
+        [
+          "48",
+          "Glaskugel voll Wasser, in der ein Uhrwerk-Goldfisch schwimmt"
+        ],
+        [
+          "49",
+          "Silberlöffel mit eingraviertem M am Griff"
+        ],
+        [
+          "50",
+          "Pfeife aus goldfarbenem Holz"
+        ],
+        [
+          "51",
+          "Toter Mistkäfer, so groß wie deine Hand"
+        ],
+        [
+          "52",
+          "Zwei Spielzeugsoldaten, einer ohne Kopf"
+        ],
+        [
+          "53",
+          "Schatulle, mit unterschiedlich großen Knöpfen gefüllt"
+        ],
+        [
+          "54",
+          "Kerze, die sich nicht anzünden lässt"
+        ],
+        [
+          "55",
+          "Winziger Käfig ohne Tür"
+        ],
+        [
+          "56",
+          "Alter Schlüssel"
+        ],
+        [
+          "57",
+          "Nicht zu entschlüsselnde Schatzkarte"
+        ],
+        [
+          "58",
+          "Heft eines zerbrochenen Schwertes"
+        ],
+        [
+          "59",
+          "Hasenpfote"
+        ],
+        [
+          "60",
+          "Glasauge"
+        ],
+        [
+          "61",
+          "Kamee, die eine hässliche Person darstellt"
+        ],
+        [
+          "62",
+          "Münzgroßer silberner Totenschädel"
+        ],
+        [
+          "63",
+          "Alabastermaske"
+        ],
+        [
+          "64",
+          "Stinkender Kegel aus klebrigem schwarzen Weihrauch"
+        ],
+        [
+          "65",
+          "Schlafmütze, die dem Träger angenehme Träume beschert"
+        ],
+        [
+          "66",
+          "Einzelner Krähenfuß aus Knochen"
+        ],
+        [
+          "67",
+          "Goldener Monokelrahmen ohne Linse"
+        ],
+        [
+          "68",
+          "Fingerbreiter Würfel, jede Seite andersfarbig"
+        ],
+        [
+          "69",
+          "Kristallener Türknauf"
+        ],
+        [
+          "70",
+          "Päckchen mit rosafarbenem Staub"
+        ],
+        [
+          "71",
+          "Zwei Pergamentseiten mit den Noten eines wundervollen Lieds"
+        ],
+        [
+          "72",
+          "Silberner tropfenförmiger Ohrring, der eine echte Träne enthält"
+        ],
+        [
+          "73",
+          "Schale eines Eis, auf die verstörend detailreiche Szenen des Leids gemalt wurden"
+        ],
+        [
+          "74",
+          "Fächer, der geöffnet eine schlafende Katze zeigt"
+        ],
+        [
+          "75",
+          "Knochenpfeifensatz"
+        ],
+        [
+          "76",
+          "Vierblättriges Kleeblatt, verwahrt in einem Buch über Anstand und Etikette"
+        ],
+        [
+          "77",
+          "Pergamentseite mit der Skizze eines mechanischen Apparats"
+        ],
+        [
+          "78",
+          "Verzierte Scheide, in die keine dir bekannte Klinge passt"
+        ],
+        [
+          "79",
+          "Einladung zu einer Feier, auf der ein Mord verübt wurde"
+        ],
+        [
+          "80",
+          "Fünfeckiger Stern aus Bronze mit eingraviertem Rattenkopf in der Mitte"
+        ],
+        [
+          "81",
+          "Violettes Taschentuch, mit dem Namen eines mächtigen Erzmagiers bestickt"
+        ],
+        [
+          "82",
+          "Halber Grundriss eines Tempels, Schlosses oder anderen Bauwerks"
+        ],
+        [
+          "83",
+          "Stück gefalteter Stoff, das entfaltet zu einer schicken Mütze wird"
+        ],
+        [
+          "84",
+          "Einzahlungsbeleg einer Bank in einer fernen Stadt"
+        ],
+        [
+          "85",
+          "Tagebuch, dem sieben Seiten fehlen"
+        ],
+        [
+          "86",
+          "Leere silberne Schnupftabakdose, in deren Deckel das Wort „Träume“ eingraviert ist"
+        ],
+        [
+          "87",
+          "Eisernes heiliges Symbol, einer unbekannten Gottheit geweiht"
+        ],
+        [
+          "88",
+          "Buch über Aufstieg und Fall eines legendären Helden – das letzte Kapitel fehlt"
+        ],
+        [
+          "89",
+          "Phiole mit Drachenblut"
+        ],
+        [
+          "90",
+          "Uralter Pfeil nach elfischer Art"
+        ],
+        [
+          "91",
+          "Nadel, die sich nicht verbiegen lässt"
+        ],
+        [
+          "92",
+          "Verzierte Brosche nach zwergischer Art"
+        ],
+        [
+          "93",
+          "Leere Weinflasche mit hübschem Etikett, beschriftet mit: „Weinmagiers Winzerei, Roter Drache Spätlese, 331422-W“"
+        ],
+        [
+          "94",
+          "Mosaikfliese mit bunt glasierter Oberfläche"
+        ],
+        [
+          "95",
+          "Versteinerte Maus"
+        ],
+        [
+          "96",
+          "Schwarze Piratenflagge mit Drachenschädel und gekreuzten Knochen"
+        ],
+        [
+          "97",
+          "Winzige mechanische Krabbe oder Spinne, die sich bewegt, wenn man nicht hinsieht"
+        ],
+        [
+          "98",
+          "Einmachglas mit Fett, beschriftet mit „Greifenschmalz“"
+        ],
+        [
+          "99",
+          "Holzschatulle mit Keramikboden, die einen Wurm mit einem Kopf an jedem Körperende enthält"
+        ],
+        [
+          "100",
+          "Metallene Urne mit der Asche eines Helden"
+        ]
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:e5e2368b785f2995120473c5e5c837b5ad36b739bed5ac19a1ccefa8264feee5"
+}

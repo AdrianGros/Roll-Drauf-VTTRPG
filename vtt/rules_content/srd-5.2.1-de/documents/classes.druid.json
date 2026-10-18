@@ -1,0 +1,1711 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.druid",
+  "slug": "druide",
+  "title": "Druide",
+  "navigationPath": [
+    "Klassen",
+    "Druide"
+  ],
+  "order": 220,
+  "sourcePages": [
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.druid",
+      "level": 2,
+      "text": "Druide"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.druid.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Weisheit"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W8 pro Druidenstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Intelligenz und Weisheit"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle zwei aus: Arkane Kunde, Heilkunde, Mit Tieren umgehen, Motiv erkennen, Naturkunde, Religion, Überlebenskunst oder Wahrnehmung"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen"
+        },
+        {
+          "term": "Übung im Umgang mit Werkzeug",
+          "definition": "Kräuterkundeausrüstung"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Leichte Rüstung und Schilde"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Lederrüstung, Schild, Sichel, Druidischer Fokus (Kampfstab), Entdeckerausrüstung, Kräuterkundeausrüstung und 9 GM oder (B) 50 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.becoming-a-druid",
+      "level": 3,
+      "text": "Ein Druide werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.druid.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Druiden“.",
+        "Du erhältst die Merkmale der 1. Druidenstufe, die in der Tabelle „Druidenmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.druid.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst folgende Merkmale in der Tabelle „Hauptmerkmale des Druiden“: Trefferpunktewürfel, Vertrautheit mit leichter Rüstung sowie mit Schilden.",
+        "Du erhältst die Merkmale der 1. Druidenstufe, die in der Tabelle „Druidenmerkmale“ aufgeführt sind. Bestimme deine verfügbaren Zauberplätze anhand der Regeln zu Klassenkombinationen unter „Charaktererstellung“."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Druiden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.class-features-introduction",
+      "text": "Als Druide erhältst du auf den angegebenen Druidenstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Druidenmerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.progression-table",
+      "caption": "Druidenmerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Tiergestalt",
+        "Zaubertricks",
+        "Vorbereitete Zauber",
+        "Grad 1",
+        "Grad 2",
+        "Grad 3",
+        "Grad 4",
+        "Grad 5",
+        "Grad 6",
+        "Grad 7",
+        "Grad 8",
+        "Grad 9"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Zauberwirken, Druidisch, Urtümliche Ordnung",
+          "–",
+          "2",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "2",
+          "+2",
+          "Tiergestalt, Wilder Gefährte",
+          "2",
+          "2",
+          "5",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "3",
+          "+2",
+          "Druiden-Unterklasse",
+          "2",
+          "2",
+          "6",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "2",
+          "3",
+          "7",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "5",
+          "+3",
+          "Wilde Wiederkehr",
+          "2",
+          "3",
+          "9",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "6",
+          "+3",
+          "Unterklassenmerkmal",
+          "3",
+          "3",
+          "10",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "7",
+          "+3",
+          "Elementare Wut",
+          "3",
+          "3",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "3",
+          "3",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "9",
+          "+4",
+          "–",
+          "3",
+          "3",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "10",
+          "+4",
+          "Unterklassenmerkmal",
+          "3",
+          "4",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "11",
+          "+4",
+          "–",
+          "3",
+          "4",
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "3",
+          "4",
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "13",
+          "+5",
+          "–",
+          "3",
+          "4",
+          "17",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "14",
+          "+5",
+          "Unterklassenmerkmal",
+          "3",
+          "4",
+          "17",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "15",
+          "+5",
+          "Verbesserte Elementare Wut",
+          "3",
+          "4",
+          "18",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "3",
+          "4",
+          "18",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "17",
+          "+6",
+          "–",
+          "4",
+          "4",
+          "19",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "18",
+          "+6",
+          "In Tiergestalt zaubern",
+          "4",
+          "4",
+          "20",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "4",
+          "4",
+          "21",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "20",
+          "+6",
+          "Erzdruide",
+          "4",
+          "4",
+          "22",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "2",
+          "1",
+          "1"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level1-spellcasting",
+      "level": 4,
+      "text": "1. Stufe: Zauberwirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-introduction",
+      "text": "Du hast gelernt, Zauber zu wirken, indem du die mystischen Kräfte der Natur studiert hast. Die Regeln zum Zauberwirken findest du unter „Zauber“. Folgende Informationen erklären, wie du diese Regeln mit den Druidenzaubern verwendest, die in der Zauberliste des Druiden weiter hinten in dieser Klassenbeschreibung aufgeführt sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-cantrips",
+      "text": "Zaubertricks: Du beherrschst zwei Zaubertricks deiner Wahl aus der Zauberliste des Druiden. Druidenkunst und Flammen erzeugen werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-cantrips-swap",
+      "text": "Wann immer du eine Druidenstufe erhältst, kannst du einen deiner Zaubertricks mit einem anderen Zaubertrick deiner Wahl aus der Zauberliste des Druiden ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-cantrips-growth",
+      "text": "Wenn du die 4. und 10. Druidenstufe erreichst, erlernst du einen weiteren Zaubertrick deiner Wahl aus der Zauberliste des Druiden, wie in der Spalte „Zaubertricks“ der Tabelle „Druidenmerkmale“ dargestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-slots",
+      "text": "Zauberplätze: Die Tabelle „Druidenmerkmale“ zeigt, wie viele Zauberplätze dir zum Wirken deiner Zauber ab dem 1. Grad zur Verfügung stehen. Du erhältst alle verbrauchten Zauberplätze nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-prepared",
+      "text": "Vorbereitete Zauber ab dem 1. Grad: Du bereitest die Liste der Zauber ab dem 1. Grad vor, die dir mit diesem Merkmal zur Verfügung stehen. Wähle zu Beginn vier Zauber des 1. Grades aus der Zauberliste des Druiden aus. Donnerwoge, Feenfeuer, Tierfreundschaft und Wunden heilen werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-prepared-growth",
+      "text": "Die Anzahl der Zauber auf deiner Liste erhöht sich, wenn du weitere Druidenstufen erhältst, wie in der Spalte „Vorbereitete Zauber“ der Tabelle „Druidenmerkmale“ dargestellt. Wann immer sich diese Anzahl erhöht, wählst du zusätzliche Zauber aus der Zauberliste des Druiden aus, bis die Anzahl von Zaubern auf deiner Liste der Anzahl entspricht, die in der Tabelle aufgeführt ist. Der Grad der ausgewählten Zauber muss dem der verfügbaren Zauberplätze entsprechen. Beispiel: Wenn du ein Druide der 3. Stufe bist, kann deine Liste vorbereiteter Zauber sechs Zauber des 1. und 2. Grades in beliebiger Kombination enthalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-prepared-other-features",
+      "text": "Wenn ein anderes Druidenmerkmal dir Zauber gibt, die du stets vorbereitet hast, zählen diese Zauber nicht bei der Anzahl von Zaubern, die du mit diesem Merkmal vorbereiten kannst. Ansonsten zählen diese Zauber jedoch als Druidenzauber für dich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-prepared-swap",
+      "text": "Deine vorbereiteten Zauber ändern: Wann immer du eine lange Rast beendest, kannst du deine Liste vorbereiteter Zauber ändern und beliebige Zauber von der Liste mit anderen Druidenzaubern ersetzen, für die du Zauberplätze hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-ability",
+      "text": "Attribut zum Zauberwirken: Dein Attribut zum Wirken der Druidenzauber ist Weisheit."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-spellcasting-focus",
+      "text": "Zauberfokus: Du kannst einen Druidischen Fokus als Zauberfokus für deine Druidenzauber verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level1-druidic",
+      "level": 4,
+      "text": "1. Stufe: Druidisch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-druidic-description",
+      "text": "Du beherrschst Druidisch, die Geheimsprache der Druiden. Beim Erlernen dieser uralten Sprache hast du auch die Magie erlangt, mit Tieren zu kommunizieren. Daher hast du den Zauber Mit Tieren sprechen stets vorbereitet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-druidic-messages",
+      "text": "Du kannst Druidisch verwenden, um verborgene Botschaften zu hinterlassen. Jeder, der dieser Sprache mächtig ist, findet eine solche Botschaft automatisch. Andere erkennen sie nur, wenn sie einen SG-15-Intelligenzwurf (Nachforschungen) bestehen, und können den Inhalt nicht ohne magische Hilfe entschlüsseln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level1-primal-order",
+      "level": 4,
+      "text": "1. Stufe: Urtümliche Ordnung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-primal-order-introduction",
+      "text": "Du hast dich nach deiner Wahl einer der folgenden heiligen Rollen verschrieben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-primal-order-magician",
+      "text": "Magier: Du kennst einen zusätzlichen Zaubertrick aus der Zauberliste des Druiden. Außerdem gibt dir deine mystische Verbindung mit der Natur einen Bonus auf deine Intelligenzwürfe (Arkane Kunde oder Naturkunde). Dieser Bonus entspricht deinem Weisheitsmodifikator (mindestens +1)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level1-primal-order-warden",
+      "text": "Wächter: Du wurdest für den Kampf ausgebildet, daher hast du Übung im Umgang mit Kriegswaffen und Vertrautheit mit mittelschwerer Rüstung."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level2-wild-shape",
+      "level": 4,
+      "text": "2. Stufe: Tiergestalt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-description",
+      "text": "Die Mächte der Natur erlauben dir, die Gestalt eines Tieres anzunehmen. Als Bonusaktion nimmst du eine Tiergestalt an, die du für dieses Merkmal erlernt hast (siehe „Bekannte Gestalten“ unten). Du bleibst für eine Anzahl von Stunden in Höhe der Hälfte deiner Druidenstufe in dieser Gestalt, oder bis du Tiergestalt erneut wirkst, kampfunfähig wirst oder stirbst. Du kannst die Gestalt auch als Bonusaktion vorzeitig aufgeben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-uses",
+      "text": "Anzahl der Anwendungen: Du kannst Tiergestalt zweimal einsetzen. Nach einer kurzen Rast erhältst du eine verbrauchte Anwendung zurück. Nach einer langen Rast erhältst du alle verbrauchten Anwendungen zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-uses-growth",
+      "text": "Du erhältst zusätzliche Anwendungen, wenn du bestimmte Druidenstufen erreichst, wie in der Spalte „Tiergestalt“ der Tabelle „Druidenmerkmale“ dargestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-known-forms",
+      "text": "Bekannte Gestalten: Du kennst vier Tiergestalten für dieses Merkmal, ausgewählt aus Tieren, die höchstens einen Herausforderungsgrad von 1/4 und keine Flugbewegungsrate haben (Optionen siehe Wertekästen unter „Tiere“ unter „Monster“). Ratte, Reitpferd, Spinne und Wolf werden empfohlen. Wann immer du eine lange Rast beendest, kannst du eine deiner bekannten Gestalten durch eine andere Gestalt ersetzen, welche die Bedingungen erfüllt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-known-forms-growth",
+      "text": "Wenn du bestimmte Druidenstufen erreichst, werden die Anzahl deiner bekannten Gestalten sowie der maximale Herausforderungsgrad dieser Gestalten erhöht, wie in der Tabelle „Tiergestalten“ dargestellt. Außerdem kannst du ab 8. Stufe Gestalten mit Flugbewegungsrate annehmen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-known-forms-sourcing",
+      "text": "Beim Auswählen deiner bekannten Gestalten kannst du in anderen Quellen nach Tieren suchen, die in Frage kommen, wenn der Spielleiter dir dies gestattet."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.wild-shape-forms-table",
+      "caption": "Tiergestalten",
+      "columns": [
+        "Druidenstufe",
+        "Bekannte Gestalten",
+        "Max. HG",
+        "Flugbewegungsrate"
+      ],
+      "rows": [
+        [
+          "2",
+          "4",
+          "1/4",
+          "Nein"
+        ],
+        [
+          "4",
+          "6",
+          "1/2",
+          "Nein"
+        ],
+        [
+          "8",
+          "8",
+          "1",
+          "Ja"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-rules-introduction",
+      "text": "Regeln bei verwandelter Gestalt: In verwandelter Gestalt behältst du deine Persönlichkeit, deine Erinnerungen und deine Sprechfähigkeit bei, und es gelten folgende Regeln:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-temporary-hp",
+      "text": "Temporäre Trefferpunkte: Wenn du Tiergestalt annimmst, erhältst du eine Anzahl von temporären Trefferpunkten in Höhe deiner Druidenstufe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-game-statistics",
+      "text": "Spielwerte: Deine Spielwerte werden durch den Wertekasten des Tieres ersetzt, aber du behältst deinen Kreaturentyp, deine Trefferpunkte, deine Trefferpunktewürfel, deine Werte für Intelligenz, Weisheit und Charisma, deine Klassenmerkmale, deine Sprachen und deine Talente bei. Außerdem behältst du Übung in Fertigkeiten und Rettungswürfen bei und wendest deinen entsprechenden Übungsbonus an. Übung der Kreatur kommen noch dazu. Wenn ein Fertigkeits- oder Rettungswurfmodifikator im Wertekasten des Tieres höher als deiner ist, verwendest du den im Wertekasten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-no-spellcasting",
+      "text": "Kein Zauberwirken: Du kannst keine Zauber wirken, aber der Gestaltwandel unterbricht nicht deine Konzentration oder beeinträchtigt auf andere Weise einen Zauber, den du bereits gewirkt hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-shape-equipment",
+      "text": "Gegenstände: Deine Fähigkeit, mit Gegenständen zu interagieren, wird von den Gliedmaßen der Tiergestalt bestimmt statt von deinen. Außerdem entscheidest du, ob deine Ausrüstung an Ort und Stelle zu Boden fällt, mit deiner neuen Gestalt verschmilzt oder von ihr getragen wird. Getragene Ausrüstung funktioniert wie gewohnt, aber der SL entscheidet je nach Größe und Gestalt der Kreatur, ob die Ausrüstung ihr etwas nutzt. Deine Ausrüstung verändert weder Größe noch Form, um sich an die neue Gestalt anzupassen. Jede Ausrüstung, die in der neuen Gestalt nicht getragen werden kann, muss entweder zu Boden fallen oder mit der Gestalt verschmelzen. Ausrüstung, die mit der Gestalt verschmilzt, hat keinen Effekt, solange du diese Gestalt beibehältst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level2-wild-companion",
+      "level": 4,
+      "text": "2. Stufe: Wilder Gefährte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-companion-description",
+      "text": "Du kannst einen Naturgeist herbeirufen, der eine Tiergestalt annimmt und dich unterstützt. Als magische Aktion kannst du einen Zauberplatz oder eine Anwendung von Tiergestalt verbrauchen, um den Zauber Vertrauten finden ohne Materialkomponenten zu wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level2-wild-companion-fey",
+      "text": "Wenn du den Zauber auf diese Art wirkst, ist der Vertraute ein Feenwesen und verschwindet nach einer langen Rast."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Druiden-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level3-subclass-description",
+      "text": "Du erhältst eine Druiden-Unterklasse deiner Wahl. Die Unterklasse Zirkel des Landes wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Druidenstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Druidenstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Druidenstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level5-wild-resurgence",
+      "level": 4,
+      "text": "5. Stufe: Wilde Wiederkehr"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level5-wild-resurgence-restore",
+      "text": "Einmal in jedem deiner Züge kannst du, wenn keine Anwendungen von Tiergestalt mehr übrig sind, eine Anwendung wiederherstellen, indem du einen Zauberplatz verbrauchst (keine Aktion erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level5-wild-resurgence-slot",
+      "text": "Außerdem kannst du eine Anwendung von Tiergestalt verbrauchen (keine Aktion erforderlich) um dir einen Zauberplatz des 1. Grades zu geben. Dies kannst du erst nach einer langen Rast wiederholen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level7-elemental-fury",
+      "level": 4,
+      "text": "7. Stufe: Elementare Wut"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level7-elemental-fury-introduction",
+      "text": "Die Macht der Elemente durchfließt dich. Du erhältst eine der folgenden Optionen nach deiner Wahl."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level7-elemental-fury-potent-cantrip",
+      "text": "Verstärkte Zaubertricks: Füge dem Schaden, den du mit Druidenzaubertricks bewirkst, deinen Weisheitsmodifikator hinzu."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level7-elemental-fury-primal-strike",
+      "text": "Urschlag: Einmal in jedem deiner Züge kannst du, wenn du eine Kreatur mit einem Angriffswurf triffst, den du mit einer Waffe oder in Tiergestalt mit dem Angriff des Tieres ausführst, dem Ziel zusätzlich 1W8 Blitz-, Feuer-, Kälte- oder Schallschaden (nach deiner Wahl) zufügen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level15-improved-elemental-fury",
+      "level": 4,
+      "text": "15. Stufe: Verbesserte Elementare Wut"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level15-improved-elemental-fury-introduction",
+      "text": "Die für Elementare Wut ausgewählte Option wird mächtiger, wie unten beschrieben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level15-improved-elemental-fury-potent-cantrip",
+      "text": "Verstärkte Zaubertricks: Wenn du einen Druidenzaubertrick mit eine Reichweite von mindestens drei Metern wirkst, ist die Reichweite des Zaubers um 90 Meter erhöht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level15-improved-elemental-fury-primal-strike",
+      "text": "Urschlag: Der zusätzliche Schaden deines Urschlags erhöht sich auf 2W8."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level18-beast-spells",
+      "level": 4,
+      "text": "18. Stufe: In Tiergestalt zaubern"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level18-beast-spells-description",
+      "text": "Wenn du Tiergestalt verwendest, kannst du in Tiergestalt Zauber wirken, sofern diese weder Materialkomponenten mit angegebenen Kosten erfordern noch Materialkomponenten verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe des Dimensionsreisens wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.level20-archdruid",
+      "level": 4,
+      "text": "20. Stufe: Erzdruide"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level20-archdruid-introduction",
+      "text": "Die Lebenskraft der Natur gedeiht in dir und gewährt dir folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level20-archdruid-tireless-wild-shape",
+      "text": "Ausdauernde Tiergestalt: Wann immer du die Initiative auswürfelst und keine Anwendungen von Tiergestalt übrig hast, erhältst du eine verbrauchte Anwendung zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level20-archdruid-nature-mage",
+      "text": "Naturmagier: Du kannst Anwendungen von Tiergestalt in einen Zauberplatz umwandeln (keine Aktion erforderlich). Wähle eine Anzahl von unverbrauchten Anwendungen von Tiergestalt aus und wandle sie in einen einzigen Zauberplatz um, wobei jede Anwendung zwei Zauberplatzgrade beiträgt. Beispiel: Wenn du zwei Anwendungen von Tiergestalt umwandelst, erhältst du einen Zauberplatz des 4. Grades. Du kannst diesen Vorzug erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.level20-archdruid-longevity",
+      "text": "Langlebigkeit: Die Urmagie, die du wirkst, lässt dich langsamer altern. Wenn zehn Jahre vergehen, altert dein Körper nur um ein Jahr."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.spell-list",
+      "level": 3,
+      "text": "Zauberliste des Druiden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.spell-list-introduction",
+      "text": "In diesem Abschnitt wird die Zauberliste des Druiden vorgestellt. Die Zauber sind nach Zaubergrad und dann alphabetisch sortiert, und die Schule der Magie der jeweiligen Zauber ist aufgeführt. In der Spalte „Besonderheit“ bedeutet K, dass der Zauber Konzentration erfordert, R bedeutet, dass es sich um ein Ritual handelt, und M bedeutet, dass eine bestimmte Materialkomponente erforderlich ist."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-cantrips",
+      "caption": "Zaubertricks (Druidenzauber des 0. Grades)",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ausbessern",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Botschaft",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Druidenkunst",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Elementalismus",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Flammen erzeugen",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Gift versprühen",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Göttliche Führung",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Shillelagh",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Sternenfunke",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Verschonung der Sterbenden",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Widerstand",
+          "Bannmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level1",
+      "caption": "Druidenzauber des 1. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Donnerwoge",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Eismesser",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Feenfeuer",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Gift und Krankheit entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Gute Beeren",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Heilendes Wort",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Lange Schritte",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Magie entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Mit Tieren sprechen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Nahrung und Wasser reinigen",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Nebelwolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Person bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Schutz vor Gut und Böse",
+          "Bannmagie",
+          "K, M"
+        ],
+        [
+          "Springen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Tierfreundschaft",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Verstricken",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Wasser erschaffen oder zerstören",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Wunden heilen",
+          "Bannmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level2",
+      "caption": "Druidenzauber des 2. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Attribut verbessern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Beistand",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Dauerhafte Flamme",
+          "Hervorrufungsmagie",
+          "M"
+        ],
+        [
+          "Dornenwuchs",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Monster bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Rieseninsekt",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Scheingelände",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Schwache Elementare beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Stein formen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Steinhaut",
+          "Verwandlungsmagie",
+          "K, M"
+        ],
+        [
+          "Tier beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Verwandlung",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Verwirrung",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Wasser kontrollieren",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Weissagung",
+          "Erkenntnismagie",
+          "R, M"
+        ],
+        [
+          "Wesen des Waldes beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level3",
+      "caption": "Druidenzauber des 3. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Blitze herbeirufen",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Magie bannen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Mit Pflanzen sprechen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Mit Stein verschmelzen",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Pflanzentor",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Pflanzenwachstum",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Schneesturm",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Schutz vor Energie",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Sonnenstrahl",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Tageslicht",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Tiere beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Wasser atmen",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Wasserwandeln",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Weg finden",
+          "Erkenntnismagie",
+          "K, M"
+        ],
+        [
+          "Wiederbeleben",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Windwall",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Windwandeln",
+          "Verwandlungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level4",
+      "caption": "Druidenzauber des 4. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Bewegungsfreiheit",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Dürre",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Eissturm",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerschild",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Feuerwand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Kreatur aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level5",
+      "caption": "Druidenzauber des 5. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ansteckung",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Ausspähung",
+          "Erkenntnismagie",
+          "K, M"
+        ],
+        [
+          "Baumwandeln",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Bindung der Ebenen",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Einswerden mit der Natur",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Elementar beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Erwecken",
+          "Verwandlungsmagie",
+          "M"
+        ],
+        [
+          "Geas",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Insektenplage",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Kältekegel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Massen-Wunden heilen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Schutzhülle gegen Lebendes",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Steinwand",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Vollständige Genesung",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Wiedergeburt",
+          "Nekromantie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level6",
+      "caption": "Druidenzauber des 6. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Dornenwand",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Erde bewegen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Feenwesen beschwören",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Fleisch zu Stein",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Heilung",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Heldenmahl",
+          "Beschwörungsmagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level7",
+      "caption": "Druidenzauber des 7. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Arkane Spiegelung",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Ebenenwechsel",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Feuersturm",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Regeneration",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Schwerkraft umkehren",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Symbol",
+          "Bannmagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level8",
+      "caption": "Druidenzauber des 8. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Antipathie/Sympathie",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Erdbeben",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Flammende Wolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Sonnenfeuer",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Tierform",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Tsunami",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Wetterkontrolle",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Wirrnis",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.spell-list-level9",
+      "caption": "Druidenzauber des 9. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Gestaltwandel",
+          "Verwandlungsmagie",
+          "K, M"
+        ],
+        [
+          "Sturm der Vergeltung",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Voraussicht",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Wahre Auferstehung",
+          "Nekromantie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.subclass-circle-of-the-land",
+      "level": 3,
+      "text": "Druiden-Unterklasse: Zirkel des Landes"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-circle-of-the-land-motto",
+      "text": "Feiere die Verbindung mit der natürlichen Welt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-circle-of-the-land-introduction",
+      "text": "Dem Zirkel des Landes gehören Mystiker und Weise an, die Wissen und Riten aus uralten Zeiten bewahren. Diese Druiden treffen sich in heiligen Hainen oder Steinkreisen, um auf Druidisch urtümliche Geheimnisse auszutauschen. Die weisesten Mitglieder des Zirkels stehen ihren Gemeinschaften als leitende Priester vor."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.subclass-level3-circle-spells",
+      "level": 4,
+      "text": "3. Stufe: Zirkelzauber des Landes"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-level3-circle-spells-description",
+      "text": "Wann immer du eine lange Rast beendest, wähle ein Art des Landes aus: gemäßigt, polar, trocken oder tropisch. Konsultiere die Tabelle des ausgewählten Typs unten. Die Zauber, die für deine Druidenstufe und darunter aufgeführt sind, hast du vorbereitet."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.subclass-circle-spells-temperate",
+      "caption": "Gemäßigtes Land",
+      "columns": [
+        "Druidenstufe",
+        "Zauber des Zirkels"
+      ],
+      "rows": [
+        [
+          "3",
+          "Nebelschritt, Schlaf, Schockgriff"
+        ],
+        [
+          "5",
+          "Blitz"
+        ],
+        [
+          "7",
+          "Bewegungsfreiheit"
+        ],
+        [
+          "9",
+          "Baumwandeln"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.subclass-circle-spells-arctic",
+      "caption": "Polares Land",
+      "columns": [
+        "Druidenstufe",
+        "Zauber des Zirkels"
+      ],
+      "rows": [
+        [
+          "3",
+          "Kältestrahl, Nebelwolke, Person festhalten"
+        ],
+        [
+          "5",
+          "Schneesturm"
+        ],
+        [
+          "7",
+          "Eissturm"
+        ],
+        [
+          "9",
+          "Kältekegel"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.subclass-circle-spells-desert",
+      "caption": "Trockenes Land",
+      "columns": [
+        "Druidenstufe",
+        "Zauber des Zirkels"
+      ],
+      "rows": [
+        [
+          "3",
+          "Brennende Hände, Feuerpfeil, Verschwimmen"
+        ],
+        [
+          "5",
+          "Feuerball"
+        ],
+        [
+          "7",
+          "Dürre"
+        ],
+        [
+          "9",
+          "Steinwand"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.subclass-circle-spells-tropical",
+      "caption": "Tropisches Land",
+      "columns": [
+        "Druidenstufe",
+        "Zauber des Zirkels"
+      ],
+      "rows": [
+        [
+          "3",
+          "Netz, Säurespritzer, Strahl der Übelkeit"
+        ],
+        [
+          "5",
+          "Stinkende Wolke"
+        ],
+        [
+          "7",
+          "Verwandlung"
+        ],
+        [
+          "9",
+          "Insektenplage"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.subclass-level3-lands-aid",
+      "level": 4,
+      "text": "3. Stufe: Beistand des Landes"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-level3-lands-aid-description",
+      "text": "Als magische Aktion kannst du eine Anwendung von Tiergestalt verbrauchen und einen Punkt im Abstand von bis zu 18 Metern von dir auswählen. Um diesen Punkt erscheinen in einer Kugel mit einem Radius von drei Metern für kurze Zeit Blumen, die Lebenskraft spenden, sowie Dornen, die Lebenskraft entziehen. Jede Kreatur deiner Wahl in der Kugel muss einen Konstitutionsrettungswurf gegen deinen Zauberrettungswurf-SG ausführen. Misslingt der Wurf, so erleidet die Kreatur 2W6 nekrotischen Schaden, anderenfalls die Hälfte. Eine Kreatur deiner Wahl in diesem Bereich erhält 2W6 Trefferpunkte zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-level3-lands-aid-scaling",
+      "text": "Schaden und Heilung werden um jeweils 1W6 erhöht, wenn du die 10. (3W6) und die 14. (4W6) Druidenstufe erreichst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.subclass-level6-natural-recovery",
+      "level": 4,
+      "text": "6. Stufe: Natürliche Erholung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-level6-natural-recovery-cast",
+      "text": "Du kannst einen deiner vorbereiteten Zauber ab dem 1. Grad deines Merkmals Zauber des Zirkels wirken, ohne einen Zauberplatz zu verbrauchen. Du musst eine lange Rast beenden, bevor du dies erneut tun kannst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-level6-natural-recovery-slots",
+      "text": "Außerdem kannst du dir nach einer kurzen Rast verbrauchte Zauberplätze aussuchen, die du zurückerhältst. Die Zauberplätze dürfen zusammen nur eine Gradzahl besitzen, die höchstens der Hälfte deiner Druidenstufe entspricht (aufgerundet), und keiner von ihnen darf den 6. Grad oder höher aufweisen. Beispiel: Wenn du ein Druide der 6. Stufe bist, kannst du Zauberplätze zurückerhalten, deren Grade sich auf bis zu 3 addieren. Du kannst also entweder einen Zauberplatz des 3. Grades, zwei Zauberplätze des 1. und einen Zauberplatz des 2. Grades oder drei Zauberplätze des 1. Grades zurückerhalten. Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.subclass-level10-nature-ward",
+      "level": 4,
+      "text": "10. Stufe: Schutz der Natur"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-level10-nature-ward-description",
+      "text": "Du bist gegen den Zustand Vergiftet immun und bist gegen eine Schadensart resistent, die mit deiner aktuellen Land-Entscheidung beim Merkmal Zauber des Zirkels assoziiert ist, wie in der Tabelle „Schutz der Natur“ dargestellt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.druid.subclass-nature-ward-table",
+      "caption": "Schutz der Natur",
+      "columns": [
+        "Land-Typ",
+        "Resistenz"
+      ],
+      "rows": [
+        [
+          "Gemäßigt",
+          "Blitz"
+        ],
+        [
+          "Polar",
+          "Kälte"
+        ],
+        [
+          "Trocken",
+          "Feuer"
+        ],
+        [
+          "Tropisch",
+          "Gift"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.druid.subclass-level14-natures-sanctuary",
+      "level": 4,
+      "text": "14. Stufe: Heiligtum der Natur"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-level14-natures-sanctuary-description",
+      "text": "Als magische Aktion kannst du eine Anwendung von Tiergestalt verbrauchen und in einem Würfel mit 4,5 Metern Kantenlänge auf dem Boden im Abstand von bis zu 36 Metern von dir geisterhafte Bäume und Ranken erscheinen lassen. Sie bleiben eine Minute lang bestehen, oder bis du kampfunfähig wirst oder stirbst. Du und deine Verbündete habt in diesem Bereich Teildeckung, und deine Verbündeten erhalten die aktuelle Resistenz deines Schutzes der Natur, während sie sich dort befinden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.druid.subclass-level14-natures-sanctuary-move",
+      "text": "Als Bonusaktion kannst du den Würfel um bis zu 18 Meter an einen Punkt auf dem Boden im Abstand von bis zu 36 Metern von dir verschieben."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-table",
+      "label": "Klassenkombinationen für Zauberwirker"
+    }
+  ],
+  "digest": "sha256:3e90448e2b999a284214b44eb5d6afd4135c406fbec5af2018c609eb7328d93e"
+}

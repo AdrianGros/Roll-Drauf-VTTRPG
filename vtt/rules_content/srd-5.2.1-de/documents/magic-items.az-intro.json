@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.az-intro",
+  "slug": "magische-gegenstaende-az",
+  "title": "Magische Gegenstände A–Z",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Magische Gegenstände A–Z"
+  ],
+  "order": 1090,
+  "sourcePages": [
+    242
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.az-intro.magische-gegenstaende-a-z",
+      "level": 2,
+      "text": "Magische Gegenstände A–Z"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.az-intro.magische-gegenstaende-a-z.text-1",
+      "text": "Die magischen Gegenstände sind in alphabetischer Reihenfolge aufgeführt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.az-intro.magische-gegenstaende-a-z.text-2",
+      "text": "Wenn in der Beschreibung eines magischen Gegenstands ein Kreaturenname in Fettdruck erscheint, ist dies ein visueller Hinweis auf den Wertekasten der Kreatur. Dieser befindet sich unter „Monster“, sofern im Text nicht anders angegeben. Wie ein Wertekasten gelesen und verwendet wird, ist unter „Monster“ erläutert."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:fbe2b6307a08ae793cd639c553543a78225a2f92a711b700be571b459edaae58"
+}

@@ -644,6 +644,7 @@
                 return `<button type="button" class="book-dashboard-ribbon-btn${active}" data-dashboard-route="${route.href}">${escapeHtml(route.label)}</button>`;
             }).join('')
                 + '<a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>'
+                + '<a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>'
                 + `<button type="button" class="book-dashboard-ribbon-btn book-dashboard-ribbon-btn--play" data-dashboard-action="play-launch">${escapeHtml(this.content('ribbon.play_button', '▶ Spieltisch'))}</button>`
                 + `<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">${escapeHtml(this.content('ribbon.logout_button', 'Abmelden'))}</button>`;
         },
@@ -924,6 +925,7 @@
                         </a>
                     `).join('')}
                     <a class="book-toc-row" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
+                    <a class="book-toc-row" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
                 </nav>
                 ${homeState.authoring_available === true ? `
                     <div class="book-scene-panel">
@@ -1631,6 +1633,7 @@
             }
 
             window.CreationEngineNavigation?.hydrate(this.sceneSurface);
+            window.RegelwerkNavigation?.hydrate(this.sceneSurface);
 
             this.sceneSurface.querySelectorAll('[data-dashboard-route]').forEach((node) => {
                 node.addEventListener('click', () => {

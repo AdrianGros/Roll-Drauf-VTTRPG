@@ -1,0 +1,1547 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.bard",
+  "slug": "barde",
+  "title": "Barde",
+  "navigationPath": [
+    "Klassen",
+    "Barde"
+  ],
+  "order": 210,
+  "sourcePages": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.bard",
+      "level": 2,
+      "text": "Barde"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.bard.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Charisma"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W8 pro Bardenstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Geschicklichkeit und Charisma"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Drei Fertigkeiten deiner Wahl (siehe „Die Spielregeln“)"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen"
+        },
+        {
+          "term": "Übung im Umgang mit Werkzeug",
+          "definition": "Drei Musikinstrumente deiner Wahl (siehe „Ausrüstung“)"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Leichte Rüstung"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Lederrüstung, zwei Dolche, Musikinstrument deiner Wahl, Unterhaltungskünstler-Ausrüstung und 19 GM oder (B) 90 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.becoming-a-bard",
+      "level": 3,
+      "text": "Ein Barde werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.as-a-level-1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.bard.as-a-level-1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Barden“.",
+        "Du erhältst die Merkmale der 1. Bardenstufe, die in der Tabelle „Bardenmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.bard.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst folgende Merkmale in der Tabelle „Hauptmerkmale des Barden“: Trefferpunktewürfel, Übung in einer Fertigkeit deiner Wahl, Übung im Umgang mit einem Musikinstrument deiner Wahl, Vertrautheit mit leichter Rüstung.",
+        "Du erhältst die Merkmale der 1. Bardenstufe, die in der Tabelle „Bardenmerkmale“ aufgeführt sind. Bestimme deine verfügbaren Zauberplätze anhand der Regeln zu Klassenkombinationen unter „Charaktererstellung“."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Barden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.class-features-introduction",
+      "text": "Als Barde erhältst du auf den angegebenen Bardenstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Bardenmerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.progression-table",
+      "caption": "Bardenmerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Bardenwürfel",
+        "Zaubertricks",
+        "Vorbereitete Zauber",
+        "Grad 1",
+        "Grad 2",
+        "Grad 3",
+        "Grad 4",
+        "Grad 5",
+        "Grad 6",
+        "Grad 7",
+        "Grad 8",
+        "Grad 9"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Bardische Inspiration, Zauberwirken",
+          "W6",
+          "2",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "2",
+          "+2",
+          "Alleskönner, Expertise",
+          "W6",
+          "2",
+          "5",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "3",
+          "+2",
+          "Barden-Unterklasse",
+          "W6",
+          "2",
+          "6",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "W6",
+          "3",
+          "7",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "5",
+          "+3",
+          "Quelle der Inspiration",
+          "W8",
+          "3",
+          "9",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "6",
+          "+3",
+          "Unterklassenmerkmal",
+          "W8",
+          "3",
+          "10",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "7",
+          "+3",
+          "Bannlied",
+          "W8",
+          "3",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "W8",
+          "3",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "9",
+          "+4",
+          "Expertise",
+          "W8",
+          "3",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "10",
+          "+4",
+          "Magische Geheimnisse",
+          "W10",
+          "4",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "11",
+          "+4",
+          "–",
+          "W10",
+          "4",
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "W10",
+          "4",
+          "16",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "13",
+          "+5",
+          "–",
+          "W10",
+          "4",
+          "17",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "14",
+          "+5",
+          "Unterklassenmerkmal",
+          "W10",
+          "4",
+          "17",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "–",
+          "–"
+        ],
+        [
+          "15",
+          "+5",
+          "–",
+          "W12",
+          "4",
+          "18",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "W12",
+          "4",
+          "18",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "–"
+        ],
+        [
+          "17",
+          "+6",
+          "–",
+          "W12",
+          "4",
+          "19",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "18",
+          "+6",
+          "Überlegene Inspiration",
+          "W12",
+          "4",
+          "20",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "W12",
+          "4",
+          "21",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "20",
+          "+6",
+          "Worte der Schöpfung",
+          "W12",
+          "4",
+          "22",
+          "4",
+          "3",
+          "3",
+          "3",
+          "3",
+          "2",
+          "2",
+          "1",
+          "1"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level1-bardic-inspiration",
+      "level": 4,
+      "text": "1. Stufe: Bardische Inspiration"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-bardic-inspiration-introduction",
+      "text": "Du kannst andere durch Worte, Musik oder Tänze übernatürlich stark inspirieren. Diese Inspiration wird durch einen Bardische-Inspiration-Würfel (W6) repräsentiert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-bardic-inspiration-use",
+      "text": "Bardische Inspiration verwenden: Du kannst als Bonusaktion eine andere Kreatur im Abstand von bis zu 18 Metern von dir inspirieren, die dich hören oder sehen kann. Diese Kreatur erhält einen deiner Bardische-Inspiration-Würfel. Eine Kreatur darf immer nur über einen Bardische-Inspiration-Würfel verfügen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-bardic-inspiration-effect",
+      "text": "Einmal innerhalb der nächsten Stunde gilt: Wenn die Kreatur bei einer W20-Prüfung scheitert, kann sie mit dem Bardische-Inspiration-Würfel würfeln, das Ergebnis der Prüfung hinzufügen und so aus dem Misserfolg möglicherweise einen Erfolg machen. Ein Bardische-Inspiration-Würfel wird verbraucht, wenn mit ihm gewürfelt wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-bardic-inspiration-uses",
+      "text": "Anzahl der Anwendungen: Die Anzahl der möglichen Anwendungen deines Bardische-Inspiration-Würfels entspricht deinem Charismamodifikator (mindestens einmal). Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-bardic-inspiration-scaling",
+      "text": "Auf höheren Stufen: Dein Bardische-Inspiration-Würfel verändert sich, wenn du bestimmte Bardenstufen erreichst, wie in der Spalte „Bardenwürfel“ der Tabelle „Bardenmerkmale“ dargestellt. Der Würfel wird auf der 5. Stufe zu W8, auf der 10. Stufe zu W10 und auf der 15. Stufe zu W12."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level1-spellcasting",
+      "level": 4,
+      "text": "1. Stufe: Zauberwirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-introduction",
+      "text": "Du hast gelernt, durch deine bardischen Künste Zauber zu wirken. Die Regeln zum Zauberwirken findest du unter „Zauber“. Folgende Informationen erklären, wie du diese Regeln mit den Bardenzaubern verwendest, die in der Zauberliste des Barden weiter hinten in dieser Klassenbeschreibung aufgeführt sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-cantrips",
+      "text": "Zaubertricks: Du beherrschst zwei Zaubertricks deiner Wahl aus der Zauberliste des Barden. Gehässiger Spott und Tanzende Lichter werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-cantrips-swap",
+      "text": "Wann immer du eine Bardenstufe erhältst, kannst du einen deiner Zaubertricks mit einem anderen Zaubertrick deiner Wahl aus der Zauberliste des Barden ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-cantrips-growth",
+      "text": "Wenn du die 4. und 10. Bardenstufe erreichst, erlernst du einen weiteren Zaubertrick deiner Wahl aus der Zauberliste des Barden, wie in der Spalte „Zaubertricks“ der Tabelle „Bardenmerkmale“ dargestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-slots",
+      "text": "Zauberplätze: Die Tabelle „Bardenmerkmale“ zeigt, wie viele Zauberplätze dir zum Wirken deiner Zauber ab dem 1. Grad zur Verfügung stehen. Du erhältst alle verbrauchten Zauberplätze nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-prepared",
+      "text": "Vorbereitete Zauber ab dem 1. Grad: Du bereitest die Liste der Zauber ab dem 1. Grad vor, die dir mit diesem Merkmal zur Verfügung stehen. Wähle zu Beginn vier Zauber des 1. Grades aus der Zauberliste des Barden aus. Dissonantes Flüstern, Heilendes Wort, Person bezaubern und Sprühende Farben werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-prepared-growth",
+      "text": "Die Anzahl der Zauber auf deiner Liste erhöht sich, wenn du weitere Bardenstufen erhältst, wie in der Spalte „Vorbereitete Zauber“ der Tabelle „Bardenmerkmale“ dargestellt. Wann immer sich diese Anzahl erhöht, wählst du zusätzliche Zauber aus der Zauberliste des Barden aus, bis die Anzahl von Zaubern auf deiner Liste der Anzahl entspricht, die in der Tabelle aufgeführt ist. Der Grad der ausgewählten Zauber muss dem der verfügbaren Zauberplätze entsprechen. Beispiel: Wenn du ein Barde der 3. Stufe bist, kann deine Liste vorbereiteter Zauber sechs Zauber des 1. und 2. Grades in beliebiger Kombination enthalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-prepared-other-features",
+      "text": "Wenn ein anderes Bardenmerkmal dir Zauber gibt, die du stets vorbereitet hast, zählen diese Zauber nicht bei der Anzahl von Zaubern, die du mit diesem Merkmal vorbereiten kannst. Ansonsten zählen diese Zauber jedoch als Bardenzauber für dich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-prepared-swap",
+      "text": "Deine vorbereiteten Zauber ändern: Wann immer du eine Bardenstufe erhältst, kannst du einen der Zauber auf deiner Liste mit einem anderen Bardenzauber ersetzen, für den du Zauberplätze hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-ability",
+      "text": "Attribut zum Zauberwirken: Dein Attribut zum Wirken der Bardenzauber ist Charisma."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level1-spellcasting-focus",
+      "text": "Zauberfokus: Du kannst ein Musikinstrument als Zauberfokus für deine Bardenzauber verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level2-jack-of-all-trades",
+      "level": 4,
+      "text": "2. Stufe: Alleskönner"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level2-jack-of-all-trades-description",
+      "text": "Du kannst die Hälfte deines Übungsbonus (abgerundet) jedem Attributswurf hinzufügen, der eine Fertigkeit verwendet, in der du nicht geübt bist, und der folglich sonst nicht deinen Übungsbonus nutzen würde."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level2-jack-of-all-trades-example",
+      "text": "Beispiel: Wenn du einen Stärkewurf (Athletik) ausführst und in Athletik nicht geübt bist, kannst du dem Ergebnis die Hälfte deines Übungsbonus hinzufügen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level2-expertise",
+      "level": 4,
+      "text": "2. Stufe: Expertise"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level2-expertise-description",
+      "text": "Du erhältst Expertise (siehe „Regelglossar“) in zwei Fertigkeiten deiner Wahl, in denen du geübt bist. Auftreten und Überzeugen werden empfohlen, wenn du in ihnen geübt bist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level2-expertise-growth",
+      "text": "Auf der 9. Stufe erhältst du Expertise in zwei weiteren Fertigkeiten deiner Wahl, in denen du geübt bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Barden-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level3-subclass-description",
+      "text": "Du erhältst eine Barden-Unterklasse deiner Wahl. Die Unterklasse Schule des Wissens wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Bardenstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Bardenstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Bardenstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level5-font-of-inspiration",
+      "level": 4,
+      "text": "5. Stufe: Quelle der Inspiration"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level5-font-of-inspiration-rest",
+      "text": "Du erhältst alle verbrauchten Anwendungen der Bardischen Inspiration nach einer kurzen oder langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level5-font-of-inspiration-slot",
+      "text": "Außerdem kannst du einen Zauberplatz verbrauchen (keine Aktion erforderlich), um eine verbrauchte Anwendung von Bardischer Inspiration zurückzuerhalten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level7-countercharm",
+      "level": 4,
+      "text": "7. Stufe: Bannlied"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level7-countercharm-description",
+      "text": "Du kannst Musiknoten oder Worte der Macht verwenden, um Effekte zu unterbrechen, die den Verstand beeinflussen. Wenn du oder eine Kreatur im Abstand von bis zu neun Metern von dir bei einem Rettungswurf gegen einen Effekt scheitert, der die Zustände Bezaubert oder Verängstigt bewirkt, kannst du eine Reaktion ausführen, um den Rettungswurf erneut auszuführen. Bei diesem neuen Rettungswurf bist du im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level10-magical-secrets",
+      "level": 4,
+      "text": "10. Stufe: Magische Geheimnisse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level10-magical-secrets-description",
+      "text": "Du hast die Geheimnisse verschiedener magischer Traditionen erfahren. Wann immer du eine Bardenstufe (einschließlich dieser Stufe) erreichst und sich die Anzahl vorbereiteter Zauber in der Tabelle „Bardenmerkmale“ erhöht, kannst du beliebige deiner vorbereiteten Zauber von den Zauberlisten des Barden, des Druiden, des Klerikers und des Magiers auswählen. Die ausgewählten Zauber zählen bei dir als Bardenzauber (die Zauberlisten findest du in den Abschnitten der Klassen). Wann immer du außerdem einen für diese Klasse vorbereiteten Zauber ersetzt, kannst du ihn mit einem Zauber von diesen Listen ersetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level18-superior-inspiration",
+      "level": 4,
+      "text": "18. Stufe: Überlegene Inspiration"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level18-superior-inspiration-description",
+      "text": "Wenn du die Initiative auswürfelst, erhältst du verbrauchte Anwendungen Bardischer Inspiration zurück, bis du zwei Anwendungen hast (sofern du weniger als zwei hast)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe der Zaubererinnerung wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.level20-words-of-creation",
+      "level": 4,
+      "text": "20. Stufe: Worte der Schöpfung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.level20-words-of-creation-description",
+      "text": "Du hast zwei der Worte der Schöpfung gemeistert: die Worte von Leben und Tod. Daher hast du die Zauber Wort der Macht: Heilung und Wort der Macht: Tod stets vorbereitet. Wenn du einen der Zauber wirkst, kannst du damit auf eine zweite Kreatur zielen, wenn diese sich im Abstand von bis zu drei Metern vom ersten Ziel befindet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.spell-list",
+      "level": 3,
+      "text": "Zauberliste des Barden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.spell-list-introduction",
+      "text": "In diesem Abschnitt wird die Zauberliste des Barden vorgestellt. Die Zauber sind nach Zaubergrad und dann alphabetisch sortiert, und die Schule der Magie der jeweiligen Zauber ist aufgeführt. In der Spalte „Besonderheit“ bedeutet K, dass der Zauber Konzentration erfordert, R bedeutet, dass es sich um ein Ritual handelt, und M bedeutet, dass eine bestimmte Materialkomponente erforderlich ist."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-cantrips",
+      "caption": "Zaubertricks (Bardenzauber des 0. Grades)",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ausbessern",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Botschaft",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Einfache Illusion",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Gehässiger Spott",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Licht",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Magierhand",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Sternenfunke",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Tanzende Lichter",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Taschenspielerei",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Zielsicherer Schlag",
+          "Erkenntnismagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level1",
+      "caption": "Bardenzauber des 1. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Befehl",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Dissonantes Flüstern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Donnerwoge",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Federfall",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Feenfeuer",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Fürchterlicher Lachanfall",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Heilendes Wort",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Heldenmut",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Identifizieren",
+          "Erkenntnismagie",
+          "R, M"
+        ],
+        [
+          "Illusionsschrift",
+          "Illusionsmagie",
+          "R, M"
+        ],
+        [
+          "Lange Schritte",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Lautloses Trugbild",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Magie entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Mit Tieren sprechen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Person bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Schlaf",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Selbstverkleidung",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Sprachen verstehen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Sprühende Farben",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Tierfreundschaft",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Unsichtbarer Diener",
+          "Beschwörungsmagie",
+          "R"
+        ],
+        [
+          "Verderben",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Wunden heilen",
+          "Bannmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level2",
+      "caption": "Bardenzauber des 2. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Attribut verbessern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Beistand",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Blindheit/Taubheit",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Einflüsterung",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Fesseln",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Gedanken wahrnehmen",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Gefühle besänftigen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Gegenstand aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Klopfen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Magischer Mund",
+          "Illusionsmagie",
+          "R, M"
+        ],
+        [
+          "Metall erhitzen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Person festhalten",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Schwache Genesung",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Spiegelbilder",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Stille",
+          "Illusionsmagie",
+          "K, R"
+        ],
+        [
+          "Tierbote",
+          "Verzauberungsmagie",
+          "R"
+        ],
+        [
+          "Tiere oder Pflanzen aufspüren",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Unsichtbares sehen",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Unsichtbarkeit",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Vergrößern/Verkleinern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Zerbersten",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Zone der Wahrheit",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level3",
+      "caption": "Bardenzauber des 3. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Fluch",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Furcht",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Glyphe des Schutzes",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Hellsehen",
+          "Erkenntnismagie",
+          "K, M"
+        ],
+        [
+          "Hypnotisches Muster",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Mächtiges Trugbild",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Magie bannen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Massen-Heilendes Wort",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Mit Pflanzen sprechen",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Mit Toten sprechen",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Pflanzenwachstum",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Stinkende Wolke",
+          "Beschwörungsmagie",
+          "K"
+        ],
+        [
+          "Unauffindbarkeit",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Verlangsamen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Verständigung",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Winzige Hütte",
+          "Hervorrufungsmagie",
+          "R"
+        ],
+        [
+          "Zungen",
+          "Erkenntnismagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level4",
+      "caption": "Bardenzauber des 4. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Bewegungsfreiheit",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Dimensionstür",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Kreatur aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Mächtige Unsichtbarkeit",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Monster bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Scheingelände",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Tödliches Phantom",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Verwandlung",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Verwirrung",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Zwang",
+          "Verzauberungsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level5",
+      "caption": "Bardenzauber des 5. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ablenkung",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Äußerlichkeiten",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Ausspähung",
+          "Erkenntnismagie",
+          "K, M"
+        ],
+        [
+          "Bindung der Ebenen",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Erinnerung verändern",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Erwecken",
+          "Verwandlungsmagie",
+          "M"
+        ],
+        [
+          "Geas",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Gegenstände beleben",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Kreis der Teleportation",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Massen-Wunden heilen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Monster festhalten",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Person beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Sagenkunde",
+          "Erkenntnismagie",
+          "M"
+        ],
+        [
+          "Telepathische Bindung",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Tote erwecken",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Traum",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Vollständige Genesung",
+          "Bannmagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level6",
+      "caption": "Bardenzauber des 6. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Böser Blick",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Heldenmahl",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Massen-Einflüsterung",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Unwiderstehlicher Tanz",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Vorbestimmtes Trugbild",
+          "Illusionsmagie",
+          "M"
+        ],
+        [
+          "Wächter und Hüter",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Wahrer Blick",
+          "Erkenntnismagie",
+          "M"
+        ],
+        [
+          "Weg finden",
+          "Erkenntnismagie",
+          "K, M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level7",
+      "caption": "Bardenzauber des 7. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Arkane Spiegelung",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Arkanes Schwert",
+          "Hervorrufungsmagie",
+          "K, M"
+        ],
+        [
+          "Ätherische Gestalten",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Auferstehung",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Energiekäfig",
+          "Hervorrufungsmagie",
+          "K, M"
+        ],
+        [
+          "Herrliches Herrenhaus",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Regenbogenspiel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Regeneration",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Symbol",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Teleportieren",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Trugbild projizieren",
+          "Illusionsmagie",
+          "K, M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level8",
+      "caption": "Bardenzauber des 8. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Antipathie/Sympathie",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Gedankenleere",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Monster beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Redegewandtheit",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Wirrnis",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Wort der Macht: Betäubung",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.bard.spell-list-level9",
+      "caption": "Bardenzauber des 9. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Regenbogenwand",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Voraussicht",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Wahre Verwandlung",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Wort der Macht: Heilung",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Wort der Macht: Tod",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.subclass-college-of-lore",
+      "level": 3,
+      "text": "Barden-Unterklasse: Schule des Wissens"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.subclass-college-of-lore-motto",
+      "text": "Tauche in die Tiefen magischen Wissens ein"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.subclass-college-of-lore-introduction",
+      "text": "Barden der Schule des Wissens sammeln Zauber und Geheimnisse aus diversen Quellen wie gelehrsamen Folianten, mystischen Riten und bäuerlichen Erzählungen. Die Mitglieder der Schule treffen sich in Bibliotheken und Universitäten, um ihr Wissen auszutauschen. Außerdem treffen sie sich bei Festen und Staatsakten, wo sie Korruption offenlegen, Lügen aufdecken und sich über wichtig tuerische Autoritätspersonen lustig machen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.subclass-level3-cutting-words",
+      "level": 4,
+      "text": "3. Stufe: Schneidende Worte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.subclass-level3-cutting-words-description",
+      "text": "Du lernst, mit Verstand und Schlagfertigkeit für übernatürliche Ablenkung und Verwirrung zu sorgen oder auf anderen Wegen Einfluss und Selbstsicherheit anderer zu schwächen. Wenn eine Kreatur im Abstand von bis zu 18 Metern von dir, die du sehen kannst, einen Schadenswurf ausführt oder einen Attributs- oder Angriffswurf besteht, kannst du eine Reaktion ausführen, um eine Anwendung deiner Bardischen Inspiration zu verbrauchen. Würfle mit deinem Bardische-Inspiration-Würfel und ziehe das Ergebnis von dem der Kreatur ab, um Schaden zu verringern oder den Erfolg möglicherweise in einen Misserfolg zu verwandeln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.subclass-level3-additional-magical-secrets",
+      "level": 4,
+      "text": "3. Stufe: Zusätzliches Wissen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.subclass-level3-additional-magical-secrets-description",
+      "text": "Du erhältst Übung im Umgang mit drei Fertigkeiten deiner Wahl."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.subclass-level6-magical-discoveries",
+      "level": 4,
+      "text": "6. Stufe: Magische Entdeckungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.subclass-level6-magical-discoveries-description",
+      "text": "Du erlernst zwei Zauber deiner Wahl. Diese Zauber dürfen aus der Zauberliste des Druiden, des Klerikers und des Magiers oder einer Kombination daraus stammen (die Zauberlisten findest du in den Abschnitten der Klassen). Die ausgewählten Zauber müssen Zaubertricks oder Zauber sein, für die du Zauberplätze hast, wie in der Tabelle „Bardenmerkmale“ dargestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.subclass-level6-magical-discoveries-prepared",
+      "text": "Du hast die ausgewählten Zauber stets vorbereitet. Wann immer du eine Bardenstufe erhältst, kannst du einen der Zauber mit einem anderen Zauber ersetzen, der diese Voraussetzungen erfüllt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.bard.subclass-level14-peerless-skill",
+      "level": 4,
+      "text": "14. Stufe: Grenzenlose Begabung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.bard.subclass-level14-peerless-skill-description",
+      "text": "Wenn du bei einem Attributs- oder Angriffswurf scheiterst, kannst du eine Anwendung von Bardische Inspiration verbrauchen, mit dem Bardische-Inspiration-Würfel würfeln, das Ergebnis dem W20 hinzufügen und so aus dem Misserfolg möglicherweise einen Erfolg machen. Misslingt der Wurf, so wird die Bardische Inspiration nicht verbraucht."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-table",
+      "label": "Klassenkombinationen für Zauberwirker"
+    }
+  ],
+  "digest": "sha256:6f8a200929be620cb5444640a691fc690fc24c36f8845ba8684a59ad91e7d82d"
+}

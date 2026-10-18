@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "equipment.crafting",
+  "slug": "herstellen",
+  "title": "Gegenstände herstellen",
+  "navigationPath": [
+    "Ausrüstung",
+    "Gegenstände herstellen"
+  ],
+  "order": 670,
+  "sourcePages": [
+    117
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.crafting-nonmagical",
+      "level": 2,
+      "text": "Nichtmagische Gegenstände herstellen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.crafting-nonmagical-introduction",
+      "text": "Zum Herstellen von nichtmagischen Gegenständen brauchst du Werkzeuge, Rohmaterial und Zeit wie jeweils unten beschrieben. Wenn du die Voraussetzungen erfüllst, stellst du den Gegenstand her und kannst ihn verwenden oder zum normalen Preis verkaufen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.crafting-tools",
+      "level": 3,
+      "text": "Werkzeug"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.crafting-tools-text",
+      "text": "Im Abschnitt „Werkzeug“ unter „Ausrüstung“ ist aufgeführt, welches Werkzeug zum Herstellen bestimmter Gegenstände erforderlich ist. Der SL legt fest, welches Werkzeug für nicht aufgeführte Gegenstände erforderlich sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.crafting-tools-text-2",
+      "text": "Du musst das erforderliche Werkzeug verwenden und Übung im Umgang damit haben, um den Gegenstand herzustellen. Wer dir hilft, muss ebenfalls Übung damit haben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.crafting-raw-materials",
+      "level": 3,
+      "text": "Rohmaterial"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.crafting-raw-materials-text",
+      "text": "Um einen Gegenstand herzustellen, brauchst du Rohmaterial im Wert seines halben Kaufpreises (abgerundet). Beispiel: Du brauchst Rohmaterial im Wert von 750 GM, um eine Ritterrüstung herzustellen, da sie einen Kaufpreis von 1.500 GM hat. Der SL bestimmt, ob passende Rohmaterialien verfügbar sind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.crafting-time",
+      "level": 3,
+      "text": "Zeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.crafting-time-text",
+      "text": "Um zu bestimmen, wie viele Tage (bei einer täglichen Arbeitszeit von acht Stunden) das Herstellen eines Gegenstands dauert, teilst du seinen Kaufpreis in GM durch zehn (runde angebrochene Tage auf). Beispiel: Du brauchst fünf Tage, um eine schwere Armbrust herzustellen, da sie einen Kaufpreis von 50 GM hat."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.crafting-time-text-2",
+      "text": "Wenn es mehrere Tage dauert, einen Gegenstand herzustellen, muss es sich nicht um aufeinanderfolgende Tage handeln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.crafting-time-text-3",
+      "text": "Charaktere können zusammenarbeiten, um die Herstellungszeit zu verkürzen. Teile die zum Herstellen erforderliche Zeit durch die Anzahl von Charakteren, die am Gegenstand arbeiten. Normalerweise kann dir nur jeweils ein anderer Charakter helfen, doch der SL gestattet möglicherweise mehr Helfer."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.brewing-healing-potions",
+      "level": 2,
+      "text": "Heiltränke brauen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.brewing-healing-potions-text",
+      "text": "Ein Charakter, der Übung im Umgang mit der Kräuterkundeausrüstung hat, kann einen Heiltrank herstellen. Dazu braucht er die Ausrüstung, Rohmaterial im Wert von 25 GM und einen Tag (acht Stunden Arbeit)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.scribing-spell-scrolls",
+      "level": 2,
+      "text": "Zauberschriftrollen verfassen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.scribing-spell-scrolls-introduction",
+      "text": "Ein Zauberwirker kann einen Zauber auf eine Schriftrolle übertragen und so anhand der unten beschriebenen Regeln eine Zauberschriftrolle herstellen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.scribing-time-and-cost",
+      "level": 3,
+      "text": "Zeit und Kosten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.scribing-time-and-cost-text",
+      "text": "Das Verfassen einer Zauberschriftrolle kostet Zeit und Geld je nach Grad des Zaubers, wie in der Tabelle „Kosten für Zauberschriftrollen“ aufgeführt. Für jeden Tag, den das Verfassen dauert, musst du acht Stunden Arbeit verrichten. Wenn eine Schriftrolle mehrere Tage erfordert, müssen diese Tage nicht aufeinanderfolgen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.scribing-requirements",
+      "level": 3,
+      "text": "Voraussetzungen für den Verfasser"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.scribing-requirements-text",
+      "text": "Zum Verfassen einer Zauberschriftrolle benötigst du entweder Übung in der Fertigkeit Arkane Kunde oder im Umgang mit Kalligrafiewerkzeug, und du musst den Zauber an jedem Tag des Verfassens vorbereitet haben. Außerdem musst du alle Materialkomponenten verfügbar haben, die für den Zauber erforderlich sind. Wenn der Zauber seine Materialkomponenten verbraucht, geschieht dies erst beim Fertigstellen der Schriftrolle. Der Zauber der Schriftrolle verwendet deinen Zauberrettungswurf-SG und deinen Zauberangriffsbonus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.crafting.scribing-cantrips",
+      "level": 3,
+      "text": "Zaubertricks"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.crafting.scribing-cantrips-text",
+      "text": "Wenn es sich beim verfassten Zauber um einen Zaubertrick handelt, funktioniert die Version auf der Schriftrolle so, als hätte der Zauberwirker deine Stufe."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.crafting.spell-scroll-costs-table",
+      "caption": "Kosten für Zauberschriftrollen",
+      "columns": [
+        "Zaubergrad",
+        "Zeit",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Zaubertrick",
+          "1 Tag",
+          "15 GM"
+        ],
+        [
+          "1",
+          "1 Tag",
+          "25 GM"
+        ],
+        [
+          "2",
+          "3 Tage",
+          "100 GM"
+        ],
+        [
+          "3",
+          "5 Tage",
+          "150 GM"
+        ],
+        [
+          "4",
+          "10 Tage",
+          "1.000 GM"
+        ],
+        [
+          "5",
+          "25 Tage",
+          "1.500 GM"
+        ],
+        [
+          "6",
+          "40 Tage",
+          "10.000 GM"
+        ],
+        [
+          "7",
+          "50 Tage",
+          "12.500 GM"
+        ],
+        [
+          "8",
+          "60 Tage",
+          "15.000 GM"
+        ],
+        [
+          "9",
+          "120 Tage",
+          "50.000 GM"
+        ]
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:c859b373f9ac951cab1468b0121e0aab35388bcd22aeb4ba69e0827c93327a8e"
+}

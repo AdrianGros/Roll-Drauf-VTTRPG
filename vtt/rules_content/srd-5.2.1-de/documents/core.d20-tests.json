@@ -1,0 +1,309 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "core.d20-tests",
+  "slug": "w20-pruefungen",
+  "title": "W20-Prüfungen",
+  "navigationPath": [
+    "Die Spielregeln",
+    "W20-Prüfungen"
+  ],
+  "order": 20,
+  "sourcePages": [
+    6,
+    7,
+    8
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests",
+      "level": 2,
+      "text": "W20-Prüfungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.introduction",
+      "text": "Ist das Ergebnis einer Aktion ungewiss, so wird mit einem W20 über Erfolg oder Misserfolg entschieden. Solche Würfe heißen W20-Prüfungen. Es gibt drei Arten von ihnen: Attributswürfe, Rettungswürfe und Angriffswürfe. Sie werden in drei Schritten ausgeführt:"
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.steps.roll-heading",
+      "level": 3,
+      "text": "1. Würfle mit 1W20"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.steps.roll",
+      "text": "Ziel ist stets ein möglichst hohes Ergebnis. Wenn du beim Wurf im Vorteil oder im Nachteil bist (siehe weiter hinten unter „Die Spielregeln“), würfelst du mit zwei W20, verwendest jedoch nur das Ergebnis von einem der Würfel – das höhere, wenn du im Vorteil bist, und das niedrigere, wenn du im Nachteil bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.steps.modifiers-heading",
+      "level": 3,
+      "text": "2. Füge Modifikatoren hinzu"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.steps.modifiers-introduction",
+      "text": "Füge dem Ergebnis des W20 diese Modifikatoren hinzu:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "core.d20-tests.steps.modifiers",
+      "items": [
+        "Den relevanten Attributsmodifikator: Unter „Die Spielregeln“ und „Regelglossar“ wird erläutert, welche Attributsmodifikatoren bei den verschiedenen W20-Prüfungen zum Einsatz kommen.",
+        "Deinen Übungsbonus, sofern relevant: Jede Kreatur hat einen Übungsbonus – eine Zahl, die einer W20-Prüfung hinzugefügt wird, wenn diese beispielsweise eine Fertigkeit verwendet, in der die Kreatur Übung hat. Siehe „Übung“ weiter hinten unter „Die Spielregeln“.",
+        "Situationsabhängige Boni und Mali: Klassenmerkmale, Zauber und andere Regeln können dem Würfelwurf einen Bonus oder einen Malus verleihen."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.steps.target-heading",
+      "level": 3,
+      "text": "3. Vergleiche das Ergebnis mit einem Zielwert"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.steps.target",
+      "text": "Wenn die Summe von W20-Ergebnis und Modifikatoren dem Zielwert entspricht oder ihn überschreitet, war die W20-Prüfung erfolgreich. Wenn nicht, ist sie misslungen. Der Spielleiter legt die Zielwerte fest und teilt den Spielern mit, ob ihre Würfe erfolgreich waren. Der Zielwert bei Attributs- und Rettungswürfen wird Schwierigkeitsgrad (SG) genannt. Bei Angriffswürfen fungiert die Rüstungsklasse (RK) als Zielwert. Die RK ist auf den Charakterbögen oder in einem Wertekasten vermerkt (siehe „Regelglossar“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.ability-checks",
+      "level": 2,
+      "text": "Attributswürfe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.ability-checks.description",
+      "text": "Ein Attributswurf repräsentiert den Versuch einer Kreatur, mithilfe ihrer Fähigkeiten und Kenntnisse eine Herausforderung zu meistern, beispielsweise eine verklemmte Tür aufzubrechen, ein Schloss zu knacken, ein Publikum zu unterhalten oder eine Geheimschrift zu entschlüsseln. Der SL und die Regeln verlangen meist einen Attributswurf, wenn eine Kreatur einen solchen Versuch unternimmt, sofern dieser Versuch kein Angriff ist, die Möglichkeit des Misserfolgs besteht und ein Misserfolg Folgen hätte. Ist der Ausgang ungewiss und für die Geschichte interessant, so bestimmen die Würfel das Ergebnis."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.ability-checks.modifier",
+      "level": 3,
+      "text": "Attributsmodifikator"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.ability-checks.modifier-description",
+      "text": "Attributswürfe sind nach dem Attribut benannt, dessen Modifikator sie verwenden: Stärkewurf, Intelligenzwurf und so fort. Je nach Situation und relevantem Attribut sind unterschiedliche Attributswürfe erforderlich. In der Tabelle „Beispiele für Attributswürfe“ findest du Anhaltspunkte, wann ein Wurf jeweils eingesetzt wird."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.d20-tests.ability-checks.examples",
+      "caption": "Beispiele für Attributswürfe",
+      "columns": [
+        "Attribut",
+        "Würfeln, um ..."
+      ],
+      "rows": [
+        ["Stärke", "... etwas zu heben, zu schieben, zu ziehen oder zu zerstören"],
+        ["Geschicklichkeit", "... sich geschickt, rasch oder leise zu bewegen"],
+        ["Konstitution", "... die normalen körperlichen Grenzen zu überwinden"],
+        ["Intelligenz", "... zu überlegen oder sich zu erinnern"],
+        ["Weisheit", "... Dinge in der Umgebung oder am Verhalten von Kreaturen zu bemerken"],
+        ["Charisma", "... Kreaturen zu beeinflussen, zu unterhalten oder zu täuschen"]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.ability-checks.proficiency",
+      "level": 3,
+      "text": "Übungsbonus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.ability-checks.proficiency-description",
+      "text": "Füge einem Attributswurf deinen Übungsbonus hinzu, wenn der SL bestimmt, dass Übung in einer Fertigkeit oder im Umgang mit einem Werkzeug relevant für den Wurf ist und du über diese Übung verfügst. Beispiel: Wenn eine Regel einen Stärkewurf (Akrobatik oder Athletik) verlangt, kannst du dem Ergebnis deinen Übungsbonus hinzufügen, wenn du Übung in der Akrobatik- oder der Athletik-Fertigkeit hast. Weitere Informationen zu Übung in Fertigkeiten oder im Umgang mit Werkzeug findest du unter „Übung“ weiter hinten unter „Die Spielregeln“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.ability-checks.difficulty-class",
+      "level": 3,
+      "text": "Schwierigkeitsgrad"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.ability-checks.difficulty-class-description",
+      "text": "Der Schwierigkeitsgrad (SG) eines Attributswurfs repräsentiert die Schwierigkeit der Aufgabe. Je schwieriger die Aufgabe, desto höher der SG. Die Regeln enthalten SG für bestimmte Würfe, doch das letzte Wort hat der SL. In der Tabelle „Typische Schwierigkeitsgrade“ findest du eine Übersicht über die üblichen SG bei Attributswürfen."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.d20-tests.ability-checks.typical-difficulty-classes",
+      "caption": "Typische Schwierigkeitsgrade",
+      "columns": [
+        "Schwierigkeit",
+        "SG",
+        "Schwierigkeit",
+        "SG"
+      ],
+      "rows": [
+        ["Sehr einfach", "5", "Schwer", "20"],
+        ["Einfach", "10", "Sehr schwer", "25"],
+        ["Mittel", "15", "Fast unmöglich", "30"]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.saving-throws",
+      "level": 2,
+      "text": "Rettungswürfe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.saving-throws.description",
+      "text": "Rettungswürfe repräsentieren den Versuch, Gefahren wie feurigen Explosionen, giftigen Gasen oder Zaubern, die in den Verstand eindringen, zu entgehen oder zu widerstehen. Du beschließt normalerweise nicht selbst, einen Rettungswurf auszuführen, sondern bist dazu gezwungen, weil dein Charakter (oder ein Monster, wenn du der SL bist) in Gefahr ist. Das Ergebnis des Rettungswurfs wird beim Effekt beschrieben, der ihn verursacht hat."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.saving-throws.voluntary-failure",
+      "text": "Wenn du dem Effekt nicht widerstehen willst, kannst du den Rettungswurf misslingen lassen, ohne zu würfeln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.saving-throws.modifier",
+      "level": 3,
+      "text": "Attributsmodifikator"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.saving-throws.modifier-description",
+      "text": "Rettungswürfe sind nach dem Attribut benannt, dessen Modifikator sie verwenden: Konstitutionsrettungswurf, Weisheitsrettungswurf und so fort. Es werden verschiedene Rettungswürfe verwendet, um unterschiedlichen Arten von Effekten zu widerstehen. Dies ist in der Tabelle „Beispiele für Rettungswürfe“ dargestellt."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.d20-tests.saving-throws.examples",
+      "caption": "Beispiele für Rettungswürfe",
+      "columns": [
+        "Attribut",
+        "Würfeln, um ..."
+      ],
+      "rows": [
+        ["Stärke", "... direkter Gewalt physisch zu widerstehen"],
+        ["Geschicklichkeit", "... einer Gefahr auszuweichen"],
+        ["Konstitution", "... eine giftige Gefahr zu überstehen"],
+        ["Intelligenz", "... eine Illusion als solche zu erkennen"],
+        ["Weisheit", "... einem mentalen Angriff zu widerstehen"],
+        ["Charisma", "... die eigene Identität zu behaupten"]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.saving-throws.proficiency",
+      "level": 3,
+      "text": "Übungsbonus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.saving-throws.proficiency-description",
+      "text": "Du fügst dem Rettungswurf deinen Übungsbonus hinzu, wenn du in dieser Art des Rettungswurfs geübt bist. Siehe „Übung“ weiter hinten unter „Die Spielregeln“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.saving-throws.difficulty-class",
+      "level": 3,
+      "text": "Schwierigkeitsgrad"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.saving-throws.difficulty-class-description",
+      "text": "Der Schwierigkeitsgrad für einen Rettungswurf wird durch den verursachenden Effekt oder vom SL bestimmt. Beispiel: Wenn ein Zauber dich zwingt, einen Rettungswurf auszuführen, wird der SG vom Attribut zum Zauberwirken sowie vom Übungsbonus des Zauberwirkers bestimmt. Bei Monsterfähigkeiten, die Rettungswürfe erfordern, ist der SG angegeben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.attack-rolls",
+      "level": 2,
+      "text": "Angriffswürfe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.attack-rolls.description",
+      "text": "Angriffswürfe bestimmen, ob ein Angriff sein Ziel trifft. Ein Angriffswurf trifft, wenn das Ergebnis mindestens der Rüstungsklasse des Ziels entspricht. Angriffswürfe kommen meistens in Kämpfen vor, wie unter „Kampf“ weiter hinten unter „Die Spielregeln“ beschrieben. Der SL kann jedoch auch in anderen Situationen Angriffswürfe verlangen, beispielsweise bei einem Wettbewerb im Bogenschießen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.attack-rolls.modifier",
+      "level": 3,
+      "text": "Attributsmodifikator"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.attack-rolls.modifier-description",
+      "text": "In der Tabelle „Angriffswurf-Attribute“ ist dargestellt, welcher Attributsmodifikator bei den jeweiligen Arten von Angriffswürfen verwendet wird."
+    },
+    {
+      "type": "table",
+      "ruleId": "core.d20-tests.attack-rolls.attributes",
+      "caption": "Angriffswurf-Attribute",
+      "columns": [
+        "Attribut",
+        "Angriffsart"
+      ],
+      "rows": [
+        ["Stärke", "Nahkampfangriff mit einer Waffe oder waffenloser Angriff (siehe „Regelglossar“)"] ,
+        ["Geschicklichkeit", "Fernkampfangriff mit einer Waffe"],
+        ["Variiert", "Zauberangriff (das verwendete Attribut wird vom Merkmal Zauberwirken des Zauberwirkers bestimmt, wie unter „Zauber“ erläutert)"]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.attack-rolls.alternate-modifiers",
+      "text": "Bei manchen Merkmalen kannst du andere als die aufgeführten Attributsmodifikatoren verwenden. Beispiel: Die Finesse-Eigenschaft (siehe „Ausrüstung“) erlaubt dir, Stärke oder Geschicklichkeit bei einer Waffe mit dieser Eigenschaft zu verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.attack-rolls.proficiency",
+      "level": 3,
+      "text": "Übungsbonus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.attack-rolls.proficiency-description",
+      "text": "Du fügst dem Angriffswurf deinen Übungsbonus hinzu, wenn du Übung im Umgang mit der entsprechenden Waffe hast oder mit einem Zauber angreifst. Weitere Informationen zu Übung in Fertigkeiten oder im Umgang mit Waffen findest du unter „Übung“ weiter hinten unter „Die Spielregeln“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.attack-rolls.armor-class",
+      "level": 3,
+      "text": "Rüstungsklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.attack-rolls.armor-class-description",
+      "text": "Die Rüstungsklasse einer Kreatur repräsentiert, wie gut die Kreatur Verletzungen im Kampf vermeiden kann. Die RK eines Charakters wird bei der Charaktererstellung (siehe „Charaktererstellung“) festgelegt. Die RK eines Monsters steht in seinem Wertekasten."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.d20-tests.attack-rolls.armor-class-base",
+      "title": "RK berechnen:",
+      "text": "Alle Kreaturen beginnen mit derselben Berechnung der Basis-RK:\n\nBasis-RK = 10 + Geschicklichkeitsmodifikator der Kreatur\n\nDie RK einer Kreatur kann dann von Rüstungen, magischen Gegenständen, Zaubern und weiteren Faktoren beeinflusst werden."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "core.d20-tests.attack-rolls.armor-class-single-base",
+      "title": "Nur eine Basis-RK:",
+      "text": "Manche Zauber und Klassenmerkmale geben Charakteren andere Möglichkeiten, ihre RK zu berechnen. Ein Charakter mit mehreren Merkmalen, die unterschiedliche Möglichkeiten zum Berechnen der RK eröffnen, muss sich entscheiden, welche Möglichkeit er nutzen will. Es kann nur jeweils eine Basisberechnung gelten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "core.d20-tests.attack-rolls.natural-20-and-1",
+      "level": 3,
+      "text": "Eine 20 oder eine 1 würfeln"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.attack-rolls.natural-20",
+      "text": "Wenn du beim W20-Angriffswurf eine 20 würfelst („natürliche 20“), trifft der Angriff unabhängig von etwaigen Modifikatoren und der RK des Ziels. Dies wird als kritischer Treffer bezeichnet (siehe „Kampf“ weiter hinten unter „Die Spielregeln“)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "core.d20-tests.attack-rolls.natural-1",
+      "text": "Wenn du beim W20-Angriffswurf eine 1 würfelst („natürliche 1“), misslingt der Angriff unabhängig von etwaigen Modifikatoren und der RK des Ziels."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:6aa70284236dae3b5025b68bc975919b7d0dd2c42f9ac00d9f4d0b72cb702e3a"
+}

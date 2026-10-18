@@ -1,0 +1,1656 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.warlock",
+  "slug": "hexenmeister",
+  "title": "Hexenmeister",
+  "navigationPath": [
+    "Klassen",
+    "Hexenmeister"
+  ],
+  "order": 230,
+  "sourcePages": [
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.warlock",
+      "level": 2,
+      "text": "Hexenmeister"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.warlock.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Charisma"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W8 pro Hexenmeisterstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Weisheit und Charisma"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle zwei aus: Arkane Kunde, Einschüchtern, Geschichte, Nachforschungen, Naturkunde, Religion oder Täuschen"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Leichte Rüstung"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Lederrüstung, Sichel, zwei Dolche, Arkaner Fokus (Kugel), Buch (okkulte Überlieferungen), Gelehrtenausrüstung und 15 GM oder (B) 100 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.becoming-a-warlock",
+      "level": 3,
+      "text": "Ein Hexenmeister werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.warlock.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Hexenmeisters“.",
+        "Du erhältst die Merkmale der 1. Hexenmeisterstufe, die in der Tabelle „Hexenmeistermerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.warlock.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst folgende Merkmale in der Tabelle „Hauptmerkmale des Hexenmeisters“: Trefferpunktewürfel, Vertrautheit mit leichter Rüstung.",
+        "Du erhältst die Merkmale der 1. Hexenmeisterstufe, die in der Tabelle „Hexenmeistermerkmale“ aufgeführt sind. Bestimme deine verfügbaren Zauberplätze anhand der Regeln zu Klassenkombinationen unter „Charaktererstellung“."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Hexenmeisters"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.class-features-introduction",
+      "text": "Als Hexenmeister erhältst du auf den angegebenen Hexenmeisterstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Hexenmeistermerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.progression-table",
+      "caption": "Hexenmeistermerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Bekannte Anrufungen",
+        "Zaubertricks",
+        "Vorbereitete Zauber",
+        "Grad der Zauberplätze",
+        "Zauberplätze"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Paktmagie, Schauerliche Anrufungen",
+          "1",
+          "2",
+          "2",
+          "1",
+          "1"
+        ],
+        [
+          "2",
+          "+2",
+          "Magische Raffinesse",
+          "3",
+          "2",
+          "3",
+          "2",
+          "1"
+        ],
+        [
+          "3",
+          "+2",
+          "Hexenmeister-Unterklasse",
+          "3",
+          "2",
+          "4",
+          "2",
+          "2"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "3",
+          "3",
+          "5",
+          "2",
+          "2"
+        ],
+        [
+          "5",
+          "+3",
+          "–",
+          "5",
+          "3",
+          "6",
+          "2",
+          "3"
+        ],
+        [
+          "6",
+          "+3",
+          "Unterklassenmerkmal",
+          "5",
+          "3",
+          "7",
+          "2",
+          "3"
+        ],
+        [
+          "7",
+          "+3",
+          "–",
+          "6",
+          "3",
+          "8",
+          "2",
+          "4"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "6",
+          "3",
+          "9",
+          "2",
+          "4"
+        ],
+        [
+          "9",
+          "+4",
+          "Schutzherrn kontaktieren",
+          "7",
+          "3",
+          "10",
+          "2",
+          "5"
+        ],
+        [
+          "10",
+          "+4",
+          "Unterklassenmerkmal",
+          "7",
+          "4",
+          "10",
+          "2",
+          "5"
+        ],
+        [
+          "11",
+          "+4",
+          "Mystisches Arkanum (Zauber des 6. Grades)",
+          "7",
+          "4",
+          "11",
+          "3",
+          "5"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "8",
+          "4",
+          "11",
+          "3",
+          "5"
+        ],
+        [
+          "13",
+          "+5",
+          "Mystisches Arkanum (Zauber des 7. Grades)",
+          "8",
+          "4",
+          "12",
+          "3",
+          "5"
+        ],
+        [
+          "14",
+          "+5",
+          "Unterklassenmerkmal",
+          "8",
+          "4",
+          "12",
+          "3",
+          "5"
+        ],
+        [
+          "15",
+          "+5",
+          "Mystisches Arkanum (Zauber des 8. Grades)",
+          "9",
+          "4",
+          "13",
+          "3",
+          "5"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "9",
+          "4",
+          "13",
+          "3",
+          "5"
+        ],
+        [
+          "17",
+          "+6",
+          "Mystisches Arkanum (Zauber des 9. Grades)",
+          "9",
+          "4",
+          "14",
+          "4",
+          "5"
+        ],
+        [
+          "18",
+          "+6",
+          "–",
+          "10",
+          "4",
+          "14",
+          "4",
+          "5"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "10",
+          "4",
+          "15",
+          "4",
+          "5"
+        ],
+        [
+          "20",
+          "+6",
+          "Mystischer Meister",
+          "10",
+          "4",
+          "15",
+          "4",
+          "5"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level1-pact-magic",
+      "level": 4,
+      "text": "1. Stufe: Paktmagie"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-introduction",
+      "text": "In einer okkulten Zeremonie hast du einen Pakt mit einer mysteriösen Wesenheit geschlossen, um magische Kräfte zu erhalten. Diese Wesenheit ist eine Stimme in den Schatten, ihre Identität ist unklar – doch ihre Gabe für dich ist konkret: die Fähigkeit, Zauber zu wirken. Die Regeln zum Zauberwirken findest du unter „Zauber“. Folgende Informationen erklären, wie du diese Regeln mit den Hexenmeisterzaubern verwendest, die in der Zauberliste des Hexenmeisters weiter hinten in dieser Klassenbeschreibung aufgeführt sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-cantrips",
+      "text": "Zaubertricks: Du kennst zwei Hexenmeisterzaubertricks deiner Wahl. Schauriger Strahl und Taschenspielerei werden empfohlen. Wann immer du eine Hexenmeisterstufe erhältst, kannst du einen deiner Zaubertricks dieses Merkmals durch einen anderen Hexenmeisterzaubertrick deiner Wahl ersetzen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-cantrips-growth",
+      "text": "Auf der 4. und 10. Hexenmeisterstufe erlernst du jeweils einen weiteren Hexenmeisterzaubertrick deiner Wahl, wie in der Spalte „Zaubertricks“ der Tabelle „Hexenmeistermerkmale“ dargestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-slots",
+      "text": "Zauberplätze: Die Tabelle „Hexenmeistermerkmale“ zeigt, wie viele Zauberplätze dir zum Wirken deiner Hexenmeisterzauber des 1. bis 5. Grades zur Verfügung stehen. Sie zeigt außerdem die Grade der Zauberplätze. Du erhältst alle verbrauchten Paktmagie-Zauberplätze nach einer kurzen oder langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-slots-example",
+      "text": "Beispiel: Wenn du ein Hexenmeister der 5. Stufe bist, hast du zwei Zauberplätze des 3. Grades. Um den Zauber des 1. Grades Person bezaubern zu wirken, musst du einen dieser Zauberplätze verbrauchen, und du wirkst den Zauber als Zauber des 3. Grades."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-prepared",
+      "text": "Vorbereitete Zauber ab dem 1. Grad: Du bereitest die Liste der Zauber ab dem 1. Grad vor, die dir mit diesem Merkmal zur Verfügung stehen. Wähle zu Beginn zwei Hexenmeisterzauber des 1. Grades aus. Person bezaubern und Verwünschen werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-prepared-growth",
+      "text": "Die Anzahl der Zauber auf deiner Liste erhöht sich, wenn du weitere Hexenmeisterstufen erhältst, wie in der Spalte „Vorbereitete Zauber“ der Tabelle „Hexenmeistermerkmale“ dargestellt. Wann immer sich diese Anzahl erhöht, wählst du zusätzliche Hexenmeisterzauber aus, bis die Anzahl von Zaubern auf deiner Liste der Anzahl in der Tabelle entspricht. Der Grad der ausgewählten Zauber darf dabei den in der Tabelle angegebenen Grad für deine Stufe nicht überschreiten. Wenn du beispielsweise die 6. Stufe erreichst, erlernst du einen neuen Hexenmeisterzauber, der den 1. bis 3. Grad haben kann."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-prepared-other-features",
+      "text": "Wenn ein anderes Hexenmeistermerkmal dir Zauber gibt, die du stets vorbereitet hast, zählen diese Zauber nicht bei der Anzahl von Zaubern, die du mit diesem Merkmal vorbereiten kannst. Ansonsten zählen diese Zauber jedoch als Hexenmeisterzauber für dich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-prepared-swap",
+      "text": "Deine vorbereiteten Zauber ändern: Wann immer du eine Hexenmeisterstufe erhältst, kannst du einen Zauber auf deiner Liste durch einen anderen Hexenmeisterzauber ersetzen, der einen passenden Grad aufweist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-ability",
+      "text": "Attribut zum Zauberwirken: Dein Attribut zum Wirken der Hexenmeisterzauber ist Charisma."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-pact-magic-focus",
+      "text": "Zauberfokus: Du kannst einen arkanen Fokus als Zauberfokus für deine Hexenmeisterzauber verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level1-eldritch-invocations",
+      "level": 4,
+      "text": "1. Stufe: Schauerliche Anrufungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-eldritch-invocations-introduction",
+      "text": "Du bist auf Schauerliche Anrufungen gestoßen, auf verbotenes Wissen, das dich mit einem dauerhaften magischen Attribut oder anderen Lektionen versehen hat. Du erhältst eine Anrufung deiner Wahl, beispielsweise Pakt des Buches. Die Anrufungen sind im Abschnitt „Schauerliche-Anrufung-Optionen“ weiter hinten in dieser Klassenbeschreibung erläutert."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-eldritch-invocations-prerequisites",
+      "text": "Voraussetzungen: Wenn eine Anrufung eine Voraussetzung hat, musst du diese erfüllen, um die Anrufung zu erlernen. Beispiel: Wenn eine Anrufung erfordert, dass du ein Hexenmeister ab der 5. Stufe bist, kannst du diese Anrufung erst auswählen, wenn du die 5. Hexenmeisterstufe erreicht hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-eldritch-invocations-swap",
+      "text": "Anrufungen erlangen und ersetzen: Wann immer du eine Hexenmeisterstufe erhältst, kannst du eine deiner Anrufungen durch eine andere ersetzen, für die du qualifiziert bist. Du kannst eine Anrufung nicht ersetzen, wenn sie die Voraussetzung für eine andere Anrufung ist, über die du verfügst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-eldritch-invocations-growth",
+      "text": "Wenn du bestimmte Hexenmeisterstufen erreichst, erhältst du weitere Anrufungen deiner Wahl, wie in der Spalte „Bekannte Anrufungen“ in der Tabelle „Hexenmeistermerkmale“ dargestellt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level1-eldritch-invocations-repeat",
+      "text": "Du kannst eine Anrufung nicht mehrfach auswählen, sofern in ihrer Beschreibung nicht anders angegeben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level2-eldritch-mastery",
+      "level": 4,
+      "text": "2. Stufe: Magische Raffinesse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level2-eldritch-mastery-description",
+      "text": "Du kannst eine Minute lang einen esoterischen Ritus ausführen. Danach erhältst du verbrauchte Paktmagie-Zauberplätze zurück, jedoch höchstens eine Anzahl in Höhe der Hälfte deines Maximums (aufgerundet). Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Hexenmeister-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level3-subclass-description",
+      "text": "Du erhältst eine Hexenmeister-Unterklasse deiner Wahl. Die Unterklasse Unhold-Schutzherr wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Hexenmeisterstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Hexenmeisterstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Hexenmeisterstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level9-contact-patron",
+      "level": 4,
+      "text": "9. Stufe: Schutzherrn kontaktieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level9-contact-patron-description",
+      "text": "Bisher hast du deinen Schutzherrn normalerweise durch Mittler angesprochen. Jetzt kannst du direkt mit ihm kommunizieren und hast den Zauber Kontakt zu anderen Ebenen stets vorbereitet. Mit diesem Merkmal kannst du zur Kontaktherstellung den Zauber wirken, ohne einen Zauberplatz zu verbrauchen, und bestehst den Rettungswurf des Zaubers automatisch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level9-contact-patron-rest",
+      "text": "Du kannst den Zauber erst nach einer langen Rast erneut auf diese Art wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level11-mystic-arcanum",
+      "level": 4,
+      "text": "11. Stufe: Mystisches Arkanum"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level11-mystic-arcanum-description",
+      "text": "Dein Schutzherr gewährt dir ein magisches Geheimnis, das Arkanum genannt wird. Wähle einen Hexenmeisterzauber des 6. Grades als dieses Arkanum aus."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level11-mystic-arcanum-cast",
+      "text": "Du kannst diesen Arkanum-Zauber einmal wirken, ohne einen Zauberplatz zu verbrauchen, ihn dann aber erst nach einer langen Rast erneut auf diese Art wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level11-mystic-arcanum-growth",
+      "text": "Wie in der Tabelle „Hexenmeistermerkmale“ dargestellt, erhältst du je einen weiteren Hexenmeisterzauber deiner Wahl, der auf diese Art gewirkt werden kann, wenn du die 13. (Zauber des 7. Grades), die 15. (Zauber des 8. Grades) und die 17. (Zauber des 9. Grades) Hexenmeisterstufe erreichst. Du erhältst alle verbrauchten Anwendungen von Mystisches Arkanum nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level11-mystic-arcanum-swap",
+      "text": "Wann immer du eine Hexenmeisterstufe erhältst, kannst du einen deiner Arkanum-Zauber durch einen anderen Hexenmeisterzauber des gleichen Grades ersetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe des Schicksals wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.level20-eldritch-master",
+      "level": 4,
+      "text": "20. Stufe: Mystischer Meister"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.level20-eldritch-master-description",
+      "text": "Wenn du Magische Raffinesse einsetzt, erhältst du alle verbrauchten Paktmagie-Zauberplätze zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocations",
+      "level": 3,
+      "text": "Schauerliche-Anrufung-Optionen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocations-introduction",
+      "text": "Die Schauerliche-Anrufung-Optionen sind in alphabetischer Reihenfolge aufgeführt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-ascendant-step",
+      "level": 4,
+      "text": "Aufsteigender Schritt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-ascendant-step-prerequisite",
+      "text": "Voraussetzung: Ab 5. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-ascendant-step-description",
+      "text": "Du kannst Schweben auf dich selbst wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-otherworldly-leap",
+      "level": 4,
+      "text": "Außerweltlicher Sprung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-otherworldly-leap-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-otherworldly-leap-description",
+      "text": "Du kannst Springen auf dich selbst wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-thirsting-blade",
+      "level": 4,
+      "text": "Dürstende Klinge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-thirsting-blade-prerequisite",
+      "text": "Voraussetzung: Ab 5. Hexenmeisterstufe, Anrufung Pakt der Klinge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-thirsting-blade-description",
+      "text": "Du erhältst das Merkmal Zusätzlicher Angriff, das nur für deine Paktwaffe gilt. Wenn du in deinem Zug die Angriffsaktion ausführst, kannst du mit dieser Waffe zweimal statt einmal angreifen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-gift-of-the-protectors",
+      "level": 4,
+      "text": "Gabe der Beschützer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gift-of-the-protectors-prerequisite",
+      "text": "Voraussetzung: Ab 9. Hexenmeisterstufe, Anrufung Pakt des Buches"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gift-of-the-protectors-description",
+      "text": "In deinem Buch der Schatten erscheint eine neue Seite, wenn du es beschwörst. Eine Kreatur kann mit deiner Erlaubnis eine Aktion ausführen, um ihren Namen auf diese Seite zu schreiben. Die höchstmögliche Anzahl von Namen auf der Seite entspricht deinem Charismamodifikator (mindestens ein Name)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gift-of-the-protectors-trigger",
+      "text": "Wenn die Trefferpunkte einer Kreatur, deren Name auf der Seite steht, auf 0 sinken, die Kreatur aber noch nicht stirbt, erhält sie auf magische Art einen Trefferpunkt zurück. Wenn diese Magie ausgelöst wurde, kann sie erst nach einer langen Rast erneut verwendet werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gift-of-the-protectors-remove",
+      "text": "Als magische Aktion kannst du einen Namen von der Seite entfernen, indem du ihn berührst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-chains-blessing",
+      "level": 4,
+      "text": "Gabe des Kettenmeisters"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-chains-blessing-prerequisite",
+      "text": "Voraussetzung: Ab 5. Hexenmeisterstufe, Anrufung Pakt der Kette"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-chains-blessing-description",
+      "text": "Wenn du Vertrauten finden wirkst, verleihst du dem beschworenen Vertrauten etwas von deiner schauerlichen Kraft und gewährst ihm damit folgende Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-chains-blessing-flight-swim",
+      "text": "Flugfähig oder aquatisch: Der Vertraute erhält entweder eine Flug- oder eine Schwimmbewegungsrate (nach deiner Wahl) von zwölf Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-chains-blessing-quick-attack",
+      "text": "Schneller Angriff: Als Bonusaktion kannst du deinem Vertrauten befehlen, die Angriffsaktion auszuführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-chains-blessing-damage-type",
+      "text": "Gleißender oder nekrotischer Schaden: Wann immer der Vertraute Hieb-, Stich- oder Wuchtschaden bewirkt, kannst du diesen in gleißenden oder nekrotischen Schaden umwandeln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-chains-blessing-save-dc",
+      "text": "Dein Rettungswurf-SG: Wenn der Vertraute eine Kreatur zu einem Rettungswurf zwingt, gilt dein Zauberrettungswurf-SG."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-chains-blessing-resistance",
+      "text": "Resistenz: Wenn der Vertraute Schaden erleidet, kannst du eine Reaktion ausführen, um ihm Resistenz gegen diese Schadensart zu gewähren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-gift-of-the-depths",
+      "level": 4,
+      "text": "Gabe der Tiefen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gift-of-the-depths-prerequisite",
+      "text": "Voraussetzung: Ab 5. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gift-of-the-depths-description",
+      "text": "Du kannst unter Wasser atmen und erhältst eine Schwimmbewegungsrate in Höhe deiner Bewegungsrate."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gift-of-the-depths-spell",
+      "text": "Außerdem kannst du den Zauber Wasser atmen wirken, ohne einen Zauberplatz zu verbrauchen. Du erhältst die Fähigkeit, ihn auf diese Art zu wirken, nach einer langen Rast zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-mind-sight",
+      "level": 4,
+      "text": "Gedankenblick"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-mind-sight-prerequisite",
+      "text": "Voraussetzung: Ab 5. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-mind-sight-description",
+      "text": "Du kannst eine Bonusaktion verwenden, um eine bereitwillige Kreatur zu berühren und bis zum Ende deines nächsten Zugs ihre Sinne zu nutzen. Solange sich diese Kreatur auf derselben Existenzebene wie du befindet, kannst du in den nächsten Zügen eine Bonusaktion ausführen, um die Verbindung aufrechtzuhalten und die Wirkungsdauer bis zum Ende deines jeweils nächsten Zugs zu verlängern. Die Verbindung endet, wenn sie nicht auf diese Weise aufrechterhalten wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-mind-sight-senses",
+      "text": "Während du die Sinne der anderen Kreatur nutzt, stehen dir auch all ihre Spezialsinne zur Verfügung, und sofern der Abstand zwischen euch höchstens 18 Meter beträgt, kannst du Zauber nach deiner Wahl von deinem Bereich oder von dem der Kreatur aus wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-gravewhispers",
+      "level": 4,
+      "text": "Grabesflüstern"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gravewhispers-prerequisite",
+      "text": "Voraussetzung: Ab 7. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-gravewhispers-description",
+      "text": "Du kannst Mit Toten sprechen wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-witch-sight",
+      "level": 4,
+      "text": "Hexensicht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-witch-sight-prerequisite",
+      "text": "Voraussetzung: Ab 15. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-witch-sight-description",
+      "text": "Du hast Wahrer Blick mit einer Reichweite von neun Metern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-lifedrinker",
+      "level": 4,
+      "text": "Lebenstrinker"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-lifedrinker-prerequisite",
+      "text": "Voraussetzung: Ab 9. Hexenmeisterstufe, Anrufung Pakt der Klinge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-lifedrinker-description",
+      "text": "Einmal pro Zug kannst du, wenn du eine Kreatur mit deiner Paktwaffe triffst, der Kreatur zusätzlich 1W6 gleißenden, nekrotischen oder psychischen Schaden (nach deiner Wahl) zufügen, und du kannst einen deiner Trefferpunktewürfel verbrauchen, mit ihm würfeln und eine Anzahl von Trefferpunkten in Höhe des Ergebnisses plus deines Konstitutionsmodifikators (mindestens 1 Trefferpunkt) zurückerhalten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-lessons-of-the-first-ones",
+      "level": 4,
+      "text": "Lektionen der Ältesten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-lessons-of-the-first-ones-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-lessons-of-the-first-ones-description",
+      "text": "Du hast Wissen von einer Ältesten-Wesenheit des Multiversums erhalten, das dir ein Herkunftstalent deiner Wahl (siehe „Talente“) gewährt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-lessons-of-the-first-ones-repeat",
+      "text": "Kann wiederholt werden: Du kannst diese Anrufung mehr als einmal erhalten. Wähle bei Wiederholung ein anderes Herkunftstalent aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-mask-of-many-faces",
+      "level": 4,
+      "text": "Maske der vielen Gesichter"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-mask-of-many-faces-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-mask-of-many-faces-description",
+      "text": "Du kannst Selbstverkleidung wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-master-of-myriad-forms",
+      "level": 4,
+      "text": "Meister der myriaden Formen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-master-of-myriad-forms-prerequisite",
+      "text": "Voraussetzung: Ab 5. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-master-of-myriad-forms-description",
+      "text": "Du kannst Gestalt verändern wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-one-with-shadows",
+      "level": 4,
+      "text": "Mit den Schatten verschmelzen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-one-with-shadows-prerequisite",
+      "text": "Voraussetzung: Ab 5. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-one-with-shadows-description",
+      "text": "In dämmrigem Licht oder Dunkelheit kannst du Unsichtbarkeit auf dich selbst wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-misty-visions",
+      "level": 4,
+      "text": "Neblige Visionen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-misty-visions-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-misty-visions-description",
+      "text": "Du kannst Lautloses Trugbild wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-book-of-shadows",
+      "level": 4,
+      "text": "Pakt des Buches"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-book-of-shadows-introduction",
+      "text": "Du fügst die Fäden der Schatten zusammen und beschwörst am Ende einer kurzen oder langen Rast ein Buch in deiner Hand. Dieses Buch der Schatten (du bestimmst sein Erscheinungsbild) enthält mystische Magie, die nur dir zur Verfügung steht und dir die unten beschriebenen Vorzüge gewährt. Das Buch verschwindet, wenn du ein weiteres Buch mit diesem Merkmal beschwörst oder wenn du stirbst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-book-of-shadows-cantrips-rituals",
+      "text": "Zaubertricks und Rituale: Wenn das Buch erscheint, wähle drei Zaubertricks und zwei Zauber des 1. Grades aus, die als Rituale gekennzeichnet sind. Die Zauber dürfen aus Zauberlisten aller Klassen stammen. Es muss sich um Zauber handeln, die du nicht schon vorbereitet hast. Solange du das Buch bei dir hast, sind die ausgewählten Zauber vorbereitet und zählen für dich als Hexenmeisterzauber."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-book-of-shadows-focus",
+      "text": "Zauberfokus: Du kannst das Buch als Zauberfokus verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-pact-of-the-chain",
+      "level": 4,
+      "text": "Pakt der Kette"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-pact-of-the-chain-introduction",
+      "text": "Du erlernst den Zauber Vertrauten finden und kannst ihn als magische Aktion wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-pact-of-the-chain-forms",
+      "text": "Wenn du den Zauber wirkst, wählst du für deinen Vertrauten eine der normalen Gestalten oder eine der folgenden besonderen Gestalten aus: Feengeist, Giftschlange, Pseudodrache, Quasit, Skelett, Sphinx des Wunders oder Teufelchen (Wertekasten des Vertrauten siehe „Monster“)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-pact-of-the-chain-reaction-attack",
+      "text": "Wenn du außerdem in deinem Zug die Angriffsaktion ausführst, kannst du auf einen deiner Angriffe verzichten und stattdessen deinen Vertrauten mit seiner Reaktion einen eigenen Angriff ausführen lassen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-pact-of-the-blade",
+      "level": 4,
+      "text": "Pakt der Klinge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-pact-of-the-blade-introduction",
+      "text": "Als Bonusaktion kannst du eine Paktwaffe in deiner Hand beschwören – eine einfache Nahkampfwaffe oder eine Nahkampf-Kriegswaffe deiner Wahl, mit der du eine Bindung herstellst – oder eine Bindung mit einer magischen Waffe herstellen, indem du sie berührst. Du kannst keine Bindung mit einer magischen Waffe herstellen, wenn jemand anders auf sie eingestimmt oder ein anderer Hexenmeister an sie gebunden ist. Bis die Bindung endet, hast du Übung im Umgang mit der Waffe und kannst sie als Zauberfokus verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-pact-of-the-blade-attacks",
+      "text": "Wann immer du einen Angriff mit der Waffe ausführst, an die du gebunden bist, kannst du bei den Angriffs- und Schadenswürfen deinen Charismamodifikator statt Stärke oder Geschicklichkeit verwenden, und du kannst mit der Waffe gleißenden, nekrotischen oder psychischen Schaden oder ihre normale Schadensart bewirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-pact-of-the-blade-ending",
+      "text": "Deine Bindung an die Waffe endet, wenn du die Bonusaktion dieses Merkmals erneut einsetzt, wenn die Waffe länger als eine Minute mehr als 1,5 Meter von dir entfernt ist oder wenn du stirbst. Eine beschworene Waffe verschwindet, wenn die Bindung endet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-agonizing-blast",
+      "level": 4,
+      "text": "Qualvoller Strahl"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-agonizing-blast-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden bewirkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-agonizing-blast-description",
+      "text": "Wähle einen der dir bekannten Hexenmeisterzaubertricks aus, die Schaden bewirken. Du kannst den Schadenswürfen des Zaubers deinen Charismamodifikator hinzufügen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-agonizing-blast-repeat",
+      "text": "Kann wiederholt werden: Du kannst diese Anrufung mehr als einmal erhalten. Wähle bei Wiederholung einen anderen passenden Zaubertrick aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-armor-of-shadows",
+      "level": 4,
+      "text": "Schattenrüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-armor-of-shadows-description",
+      "text": "Du kannst Magierrüstung auf dich selbst wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-eldritch-smite",
+      "level": 4,
+      "text": "Schauerliches Niederstrecken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-eldritch-smite-prerequisite",
+      "text": "Voraussetzung: Ab 5. Hexenmeisterstufe, Anrufung Pakt der Klinge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-eldritch-smite-description",
+      "text": "Einmal pro Zug kannst du, wenn du eine Kreatur mit deiner Paktwaffe triffst, einen Paktmagie-Zauberplatz verbrauchen, um dem Ziel zusätzlich 1W8 Energieschaden sowie 1W8 pro Zauberplatzgrad zuzufügen. Wenn das Ziel von höchstens riesiger Größe ist, kannst du es außerdem umstoßen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-eldritch-mind",
+      "level": 4,
+      "text": "Schauerlicher Verstand"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-eldritch-mind-description",
+      "text": "Du bist bei Konstitutionsrettungswürfen zum Aufrechterhalten der Konzentration im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-devils-sight",
+      "level": 4,
+      "text": "Teufelssicht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-devils-sight-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-devils-sight-description",
+      "text": "Du hast bei dämmrigem Licht und bei Dunkelheit – sowohl magischer als auch nichtmagischer – normale Sicht mit einer Reichweite von 36 Metern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-eldritch-spear",
+      "level": 4,
+      "text": "Unheimlicher Speer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-eldritch-spear-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden bewirkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-eldritch-spear-description",
+      "text": "Wähle einen der dir bekannten Hexenmeisterzaubertricks aus, die Schaden bewirken und eine Reichweite von mindestens drei Metern haben. Wenn du diesen Zauber wirkst, ist seine Reichweite um das Zehnfache deiner Hexenmeisterstufe in Metern erhöht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-eldritch-spear-repeat",
+      "text": "Kann wiederholt werden: Du kannst diese Anrufung mehr als einmal erhalten. Wähle bei Wiederholung einen anderen passenden Zaubertrick aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-fiendish-vigor",
+      "level": 4,
+      "text": "Unholdische Vitalität"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-fiendish-vigor-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-fiendish-vigor-description",
+      "text": "Du kannst Falsches Leben auf dich selbst wirken, ohne einen Zauberplatz zu verbrauchen. Wenn du den Zauber mit diesem Merkmal wirkst, würfelst du nicht, um die temporären Trefferpunkte zu ermitteln, sondern erhältst automatisch das höchste Würfelergebnis."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-improved-pact-weapon",
+      "level": 4,
+      "text": "Verschlingende Klinge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-improved-pact-weapon-prerequisite",
+      "text": "Voraussetzung: Ab 12. Hexenmeisterstufe, Anrufung Dürstende Klinge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-improved-pact-weapon-description",
+      "text": "Der zusätzliche Angriff deiner Anrufung Dürstende Klinge bewirkt jetzt zwei zusätzliche Angriffe statt einem."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-far-scribe",
+      "level": 4,
+      "text": "Visionen von fernen Gefilden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-far-scribe-prerequisite",
+      "text": "Voraussetzung: Ab 9. Hexenmeisterstufe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-far-scribe-description",
+      "text": "Du kannst Arkanes Auge wirken, ohne einen Zauberplatz zu verbrauchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.invocation-repelling-blast",
+      "level": 4,
+      "text": "Zurückdrängender Strahl"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-repelling-blast-prerequisite",
+      "text": "Voraussetzung: Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden über einen Angriffswurf bewirkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-repelling-blast-description",
+      "text": "Wähle einen dir bekannten Hexenmeisterzaubertrick aus, der einen Angriffswurf erfordert. Wenn du eine Kreatur von höchstens großer Größe mit diesem Zaubertrick triffst, kannst du sie um bis zu drei Meter in gerader Linie von dir wegstoßen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.invocation-repelling-blast-repeat",
+      "text": "Kann wiederholt werden: Du kannst diese Anrufung mehr als einmal erhalten. Wähle bei Wiederholung einen anderen passenden Zaubertrick aus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.spell-list",
+      "level": 3,
+      "text": "Zauberliste des Hexenmeisters"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.spell-list-introduction",
+      "text": "In diesem Abschnitt wird die Zauberliste des Hexenmeisters vorgestellt. Die Zauber sind nach Zaubergrad und dann alphabetisch sortiert, und die Schule der Magie der jeweiligen Zauber ist aufgeführt. In der Spalte „Besonderheit“ bedeutet K, dass der Zauber Konzentration erfordert, R bedeutet, dass es sich um ein Ritual handelt, und M bedeutet, dass eine bestimmte Materialkomponente erforderlich ist."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-cantrips",
+      "caption": "Zaubertricks (Hexenmeisterzauber des 0. Grades)",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Einfache Illusion",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Gift versprühen",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Kalte Hand",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Magierhand",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Schauriger Strahl",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Taschenspielerei",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Zielsicherer Schlag",
+          "Erkenntnismagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level1",
+      "caption": "Hexenmeisterzauber des 1. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Fürchterlicher Lachanfall",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Höllischer Tadel",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Illusionsschrift",
+          "Illusionsmagie",
+          "R, M"
+        ],
+        [
+          "Magie entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Mit Tieren sprechen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Person bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Rascher Rückzug",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Schutz vor Gut und Böse",
+          "Bannmagie",
+          "K, M"
+        ],
+        [
+          "Sprachen verstehen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Unsichtbarer Diener",
+          "Beschwörungsmagie",
+          "R"
+        ],
+        [
+          "Verderben",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Verwünschen",
+          "Verzauberungsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level2",
+      "caption": "Hexenmeisterzauber des 2. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Dunkelheit",
+          "Hervorrufungsmagie",
+          "K"
+        ],
+        [
+          "Einflüsterung",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Fesseln",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Gedankendorn",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Nebelschritt",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Person festhalten",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Schwächestrahl",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Spiegelbilder",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Spinnenklettern",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Unsichtbarkeit",
+          "Illusionsmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level3",
+      "caption": "Hexenmeisterzauber des 3. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Fliegen",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Fluch brechen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Furcht",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Gasförmige Gestalt",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Gegenzauber",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Hypnotisches Muster",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Mächtiges Trugbild",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Magie bannen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Schutzkreis",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Vampirgriff",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Zungen",
+          "Erkenntnismagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level4",
+      "caption": "Hexenmeisterzauber des 4. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Dimensionstür",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Dürre",
+          "Nekromantie",
+          "–"
+        ],
+        [
+          "Monster bezaubern",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Scheingelände",
+          "Illusionsmagie",
+          "–"
+        ],
+        [
+          "Verbannung",
+          "Bannmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level5",
+      "caption": "Hexenmeisterzauber des 5. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ablenkung",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Ausspähung",
+          "Erkenntnismagie",
+          "K, M"
+        ],
+        [
+          "Bindung der Ebenen",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Kontakt zu anderen Ebenen",
+          "Erkenntnismagie",
+          "R"
+        ],
+        [
+          "Kreis der Teleportation",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Monster festhalten",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Traum",
+          "Illusionsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level6",
+      "caption": "Hexenmeisterzauber des 6. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Böser Blick",
+          "Nekromantie",
+          "K"
+        ],
+        [
+          "Todeskreis",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Untote erschaffen",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Wahrer Blick",
+          "Erkenntnismagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level7",
+      "caption": "Hexenmeisterzauber des 7. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Ätherische Gestalten",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Ebenenwechsel",
+          "Beschwörungsmagie",
+          "M"
+        ],
+        [
+          "Energiekäfig",
+          "Hervorrufungsmagie",
+          "K, M"
+        ],
+        [
+          "Finger des Todes",
+          "Nekromantie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level8",
+      "caption": "Hexenmeisterzauber des 8. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Halbebene",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Monster beherrschen",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Redegewandtheit",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Wirrnis",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Wort der Macht: Betäubung",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.spell-list-level9",
+      "caption": "Hexenmeisterzauber des 9. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Astrale Projektion",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Einkerkerung",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Tor",
+          "Beschwörungsmagie",
+          "K, M"
+        ],
+        [
+          "Unheimliches Schicksal",
+          "Illusionsmagie",
+          "K"
+        ],
+        [
+          "Voraussicht",
+          "Erkenntnismagie",
+          "–"
+        ],
+        [
+          "Wahre Verwandlung",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Wort der Macht: Tod",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.subclass-fiend-patron",
+      "level": 3,
+      "text": "Hexenmeister-Unterklasse: Unhold-Schutzherr"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-fiend-patron-motto",
+      "text": "Schließe einen Pakt mit den Unteren Ebenen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-fiend-patron-introduction",
+      "text": "Du schließt einen Pakt mit den Unteren Ebenen, den Reichen der Verdammnis. Deren Vertreter könnte ein Dämonenfürst, ein Erzteufel oder ein anderer Unhold sein, der besonders mächtig ist. Diese Schutzherren haben böse Absichten – die Korruption oder Zerstörung von allem, dich eingeschlossen –, und dein Pfad wird dadurch bestimmt, wie stark du dich diesen Absichten widersetzt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.subclass-level3-dark-ones-blessing",
+      "level": 4,
+      "text": "3. Stufe: Segen des Dunklen Meisters"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-level3-dark-ones-blessing-description",
+      "text": "Wenn du die Trefferpunkte eines Gegners auf 0 verringerst, erhältst du temporäre Trefferpunkte in Höhe deines Charismamodifikator plus deiner Hexenmeisterstufe (mindestens 1 temporärer Trefferpunkt). Du erhältst diesen Vorzug ebenfalls, wenn jemand anders die Trefferpunkte eines Gegners im Abstand von bis zu drei Metern von dir auf 0 verringert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.subclass-level3-fiendish-spells",
+      "level": 4,
+      "text": "3. Stufe: Unhold-Zauber"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-level3-fiendish-spells-description",
+      "text": "Die Magie deines Schutzherrn sorgt dafür, dass du bestimmte Zauber stets verfügbar hast. Wenn du eine Hexenmeisterstufe erreichst, die in der Tabelle „Unhold-Zauber“ angegeben ist, hast du die aufgeführten Zauber stets vorbereitet."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.warlock.subclass-fiendish-spells-table",
+      "caption": "Unhold-Zauber",
+      "columns": [
+        "Hexenmeisterstufe",
+        "Zauber"
+      ],
+      "rows": [
+        [
+          "3",
+          "Befehl, Brennende Hände, Einflüsterung, Sengender Strahl"
+        ],
+        [
+          "5",
+          "Feuerball, Stinkende Wolke"
+        ],
+        [
+          "7",
+          "Feuerschild, Feuerwand"
+        ],
+        [
+          "9",
+          "Geas, Insektenplage"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.subclass-level6-dark-ones-own-luck",
+      "level": 4,
+      "text": "6. Stufe: Schicksal des Dunklen Meisters"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-level6-dark-ones-own-luck-description",
+      "text": "Du kannst deinen Unhold-Schutzherrn bitten, das Schicksal zu deinen Gunsten zu ändern. Wenn du einen Attributs- oder Rettungswurf ausführst, kannst du dieses Merkmal anwenden, um dem Wurf 1W10 hinzuzufügen. Dies kannst du tun, nachdem der Wurf ausgeführt wurde, aber bevor die Effekte des Wurfs auftreten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-level6-dark-ones-own-luck-uses",
+      "text": "Die Anzahl der möglichen Anwendungen dieses Merkmals entspricht deinem Charismamodifikator (mindestens einmal), doch du kannst es nicht öfter als einmal pro Würfelwurf anwenden. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.subclass-level10-fiendish-resilience",
+      "level": 4,
+      "text": "10. Stufe: Widerstandskraft des Unholds"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-level10-fiendish-resilience-description",
+      "text": "Wähle eine Schadensart außer Energie aus, wann immer du eine kurze oder lange Rast beendest. Du bist gegen diese Schadensart resistent, bis du mit diesem Merkmal eine andere auswählst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.warlock.subclass-level14-hurl-through-hell",
+      "level": 4,
+      "text": "14. Stufe: Schlund des Wahnsinns"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-level14-hurl-through-hell-description",
+      "text": "Einmal pro Zug kannst du, wenn du eine Kreatur mit einem Angriffswurf triffst, versuchen, das Ziel sofort in die Unteren Ebenen zu schleudern. Das Ziel muss einen Charismarettungswurf gegen deinen Zauberrettungswurf-SG bestehen, oder es verschwindet und trudelt durch eine Albtraumlandschaft. Es erleidet 8W10 psychischen Schaden, sofern es kein Unhold ist, und ist bis zum Ende deines nächsten Zugs kampfunfähig. Dann kehrt es in den Bereich zurück, aus dem es verschwunden ist, oder gelangt in den nächstliegenden freien Bereich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.warlock.subclass-level14-hurl-through-hell-rest",
+      "text": "Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst einen Paktmagie-Zauberplatz (keine Aktion erforderlich), um die Anwendung wiederherzustellen."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-table",
+      "label": "Klassenkombinationen für Zauberwirker"
+    }
+  ],
+  "digest": "sha256:c37391748f5a5e766e50ee4a6cfe1e0469399fbdf9f7056ace551c09642cfba4"
+}

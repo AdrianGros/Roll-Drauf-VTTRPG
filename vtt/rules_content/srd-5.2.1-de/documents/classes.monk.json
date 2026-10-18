@@ -1,0 +1,718 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.monk",
+  "slug": "moench",
+  "title": "Mönch",
+  "navigationPath": [
+    "Klassen",
+    "Mönch"
+  ],
+  "order": 270,
+  "sourcePages": [
+    70,
+    71,
+    72,
+    73
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.monk",
+      "level": 2,
+      "text": "Mönch"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.monk.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Geschicklichkeit und Weisheit"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W8 pro Mönchsstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Stärke und Geschicklichkeit"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle zwei aus: Akrobatik, Athletik, Geschichte, Heimlichkeit, Motiv erkennen oder Religion"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen und Kriegswaffen mit der Eigenschaft Leicht"
+        },
+        {
+          "term": "Übung im Umgang mit Werkzeug",
+          "definition": "Wähle eine Art von Handwerkszeug oder ein Musikinstrument aus (siehe „Ausrüstung“)"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Keine"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Speer, fünf Dolche, Handwerkszeug oder Musikinstrument (im Rahmen von „Übung im Umgang mit Werkzeug“ oben ausgewählt), Entdeckerausrüstung und 11 GM oder (B) 50 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.becoming-a-monk",
+      "level": 3,
+      "text": "Ein Mönch werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.monk.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Mönchs“.",
+        "Du erhältst die Merkmale der 1. Mönchsstufe, die in der Tabelle „Mönchsmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.monk.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst das Merkmal Trefferpunktewürfel aus der Tabelle „Hauptmerkmale des Mönchs“.",
+        "Du erhältst die Merkmale der 1. Mönchsstufe, die in der Tabelle „Mönchsmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Mönchs"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.class-features-introduction",
+      "text": "Als Mönch erhältst du auf den angegebenen Mönchsstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Mönchsmerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.monk.progression-table",
+      "caption": "Mönchsmerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Kampfkünste",
+        "Fokuspunkte",
+        "Ungerüstete Bewegung"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Kampfkünste, Ungerüstete Verteidigung",
+          "1W6",
+          "–",
+          "–"
+        ],
+        [
+          "2",
+          "+2",
+          "Mönchsfokus, Ungerüstete Bewegung, Unglaublicher Stoffwechsel",
+          "1W6",
+          "2",
+          "+3 m"
+        ],
+        [
+          "3",
+          "+2",
+          "Angriffe umleiten, Mönch-Unterklasse",
+          "1W6",
+          "3",
+          "+3 m"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung, Sturz abfedern",
+          "1W6",
+          "4",
+          "+3 m"
+        ],
+        [
+          "5",
+          "+3",
+          "Betäubender Schlag, Zusätzlicher Angriff",
+          "1W8",
+          "5",
+          "+3 m"
+        ],
+        [
+          "6",
+          "+3",
+          "Mächtige Schläge, Unterklassenmerkmal",
+          "1W8",
+          "6",
+          "+4,5 m"
+        ],
+        [
+          "7",
+          "+3",
+          "Entrinnen",
+          "1W8",
+          "7",
+          "+4,5 m"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "1W8",
+          "8",
+          "+4,5 m"
+        ],
+        [
+          "9",
+          "+4",
+          "Akrobatische Bewegung",
+          "1W8",
+          "9",
+          "+4,5 m"
+        ],
+        [
+          "10",
+          "+4",
+          "Erhöhter Fokus, Selbstwiederherstellung",
+          "1W8",
+          "10",
+          "+6 m"
+        ],
+        [
+          "11",
+          "+4",
+          "Unterklassenmerkmal",
+          "1W10",
+          "11",
+          "+6 m"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "1W10",
+          "12",
+          "+6 m"
+        ],
+        [
+          "13",
+          "+5",
+          "Energie umleiten",
+          "1W10",
+          "13",
+          "+6 m"
+        ],
+        [
+          "14",
+          "+5",
+          "Der disziplinierte Überlebende",
+          "1W10",
+          "14",
+          "+7,5 m"
+        ],
+        [
+          "15",
+          "+5",
+          "Perfekter Fokus",
+          "1W10",
+          "15",
+          "+7,5 m"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "1W10",
+          "16",
+          "+7,5 m"
+        ],
+        [
+          "17",
+          "+6",
+          "Unterklassenmerkmal",
+          "1W12",
+          "17",
+          "+7,5 m"
+        ],
+        [
+          "18",
+          "+6",
+          "Überlegene Verteidigung",
+          "1W12",
+          "18",
+          "+9 m"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "1W12",
+          "19",
+          "+9 m"
+        ],
+        [
+          "20",
+          "+6",
+          "Körper und Geist",
+          "1W12",
+          "20",
+          "+9 m"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level1-martial-arts",
+      "level": 4,
+      "text": "1. Stufe: Kampfkünste"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level1-martial-arts-introduction",
+      "text": "Deine Vertrautheit mit Kampfkünsten lässt dich folgende Kampfstile mit waffenlosen Angriffen sowie mit Mönchswaffen beherrschen:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.monk.level1-martial-arts-weapons",
+      "items": [
+        "Einfache Nahkampfwaffen",
+        "Nahkampf-Kriegswaffen mit der Eigenschaft Leicht"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level1-martial-arts-benefits",
+      "text": "Du erhältst folgende Vorzüge, wenn du unbewaffnet bist oder nur Mönchswaffen verwendest und weder Rüstung noch Schild trägst:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level1-martial-arts-bonus-unarmed-strike",
+      "text": "Waffenloser Bonusangriff: Du kannst als Bonusaktion einen waffenlosen Angriff ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level1-martial-arts-die",
+      "text": "Kampfkünste-Würfel: Bei waffenlosen Angriffen oder im Kampf mit Mönchswaffen kannst du mit 1W6 statt mit dem normalen Schadenswürfel würfeln. Dieser Würfel verändert sich auf höheren Mönchsstufen, wie in der Spalte „Kampfkünste“ der Tabelle „Mönchsmerkmale“ aufgeführt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level1-martial-arts-dexterous-attacks",
+      "text": "Geschickte Angriffe: Du kannst für deine Angriffs- und Schadenswürfe mit waffenlosen Angriffen oder Mönchswaffen deinen Geschicklichkeitsmodifikator statt des Stärkemodifikators verwenden. Außerdem kannst du, wenn du die Packen- oder die Stoßen-Option deines waffenlosen Angriffs verwendest, deinen Geschicklichkeitsmodifikator statt des Stärkemodifikators verwenden, um den Rettungswurf-SG zu bestimmen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level1-unarmored-defense",
+      "level": 4,
+      "text": "1. Stufe: Ungerüstete Verteidigung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level1-unarmored-defense-description",
+      "text": "Solange du weder Rüstung noch Schild trägst, entspricht deine Basis-Rüstungsklasse 10 plus deinem Geschicklichkeitsmodifikator plus deinem Weisheitsmodifikator."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level2-monks-focus",
+      "level": 4,
+      "text": "2. Stufe: Mönchsfokus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-monks-focus-description",
+      "text": "Dein Fokus und deine Vertrautheit mit Kampfkünsten gestatten dir, eine Quelle außergewöhnlicher Energie in dir selbst zu nutzen. Diese Energie wird durch Fokuspunkte repräsentiert. Deine Mönchsstufe bestimmt die Anzahl deiner Punkte, die in der Spalte „Fokuspunkte“ der Tabelle „Mönchsmerkmale“ aufgeführt sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-monks-focus-use",
+      "text": "Du kannst diese Punkte verbrauchen, um bestimmte Mönchsmerkmale einzusetzen oder zu verstärken. Zu Beginn kennst du drei solche Merkmale: Geduldige Verteidigung, Schlaghagel und Windschritt (jeweils unten beschrieben)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-monks-focus-regain",
+      "text": "Wenn du einen Fokuspunkt verbrauchst, ist er nicht mehr verfügbar. Du erhältst verbrauchte Fokuspunkte nach einer kurzen oder langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-monks-focus-save-dc",
+      "text": "Manche Merkmale, die Fokuspunkte verwenden, erfordern, dass das Ziel einen Rettungswurf ausführt. Der Rettungswurf-SG entspricht 8 plus deinem Weisheitsmodifikator plus deinem Übungsbonus."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-monks-focus-flurry-of-blows",
+      "text": "Schlaghagel: Du kannst 1 Fokuspunkt verbrauchen, um zwei waffenlose Angriffe als Bonusaktion auszuführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-monks-focus-patient-defense",
+      "text": "Geduldige Verteidigung: Du kannst die Rückzug-Aktion als Bonusaktion ausführen. Alternativ kannst du 1 Fokuspunkt verbrauchen, um sowohl die Rückzug- als auch die Ausweichaktion als Bonusaktion auszuführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-monks-focus-step-of-the-wind",
+      "text": "Windschritt: Du kannst die Spurt-Aktion als Bonusaktion ausführen. Alternativ kannst du 1 Fokuspunkt verbrauchen, um sowohl die Rückzug- als auch die Spurt-Aktion als Bonusaktion auszuführen, und deine Sprungdistanz ist in diesem Zug verdoppelt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level2-unarmored-movement",
+      "level": 4,
+      "text": "2. Stufe: Ungerüstete Bewegung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-unarmored-movement-description",
+      "text": "Deine Bewegungsrate erhöht sich um drei Meter, sofern du weder Rüstung noch Schild trägst. Dieser Bonus erhöht sich, wenn du bestimmte Mönchsstufen erreichst, wie in der Tabelle „Mönchsmerkmale“ angegeben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level2-uncanny-metabolism",
+      "level": 4,
+      "text": "2. Stufe: Unglaublicher Stoffwechsel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-uncanny-metabolism-description",
+      "text": "Wenn du die Initiative auswürfelst, kannst du alle verbrauchten Fokuspunkte zurückerhalten. Würfle dazu mit deinem Kampfkünste-Würfel. Du erhältst eine Anzahl von Trefferpunkten in Höhe deiner Mönchsstufe plus des Ergebnisses zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level2-uncanny-metabolism-rest",
+      "text": "Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level3-deflect-attacks",
+      "level": 4,
+      "text": "3. Stufe: Angriffe umleiten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level3-deflect-attacks-description",
+      "text": "Wenn ein Angriffswurf dich trifft und dir Hieb-, Stich- oder Wuchtschaden zufügt, kannst du eine Reaktion ausführen, um den Gesamtschaden des Angriffs zu verringern. Die Verringerung entspricht 1W10 plus deinem Geschicklichkeitsmodifikator plus deiner Mönchsstufe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level3-deflect-attacks-redirect",
+      "text": "Wird der Schaden auf 0 verringert, so kannst du 1 Fokuspunkt verbrauchen, um einen Teil der Angriffsenergie umzuleiten. Wenn der Angriff ein Nahkampfangriff war, wähle dazu eine Kreatur im Abstand von bis zu 1,5 Metern von dir aus, die du sehen kannst. Wenn der Angriff ein Fernkampfangriff war, wähle eine Kreatur im Abstand von bis zu 18 Metern von dir aus, die du sehen kannst und die nicht über vollständige Deckung verfügt. Diese Kreatur muss einen Geschicklichkeitsrettungswurf bestehen, oder sie erleidet Schaden in Höhe von zwei Würfen mit deinem Kampfkünste-Würfel plus deinem Geschicklichkeitsmodifikator. Die Schadensart entspricht der des Angriffs."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Mönch-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level3-subclass-description",
+      "text": "Du erhältst eine Mönch-Unterklasse deiner Wahl. Die Unterklasse Krieger der Offenen Hand wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Mönchsstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Mönchsstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Mönchsstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level4-slow-fall",
+      "level": 4,
+      "text": "4. Stufe: Sturz abfedern"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level4-slow-fall-description",
+      "text": "Wenn du stürzt, kannst du eine Reaktion ausführen, um den Sturzschaden um einen Betrag in Höhe des Fünffachen deiner Mönchsstufe zu verringern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level5-stunning-strike",
+      "level": 4,
+      "text": "5. Stufe: Betäubender Schlag"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level5-stunning-strike-description",
+      "text": "Einmal pro Zug kannst du, wenn du eine Kreatur mit einer Mönchswaffe oder einem waffenlosen Angriff triffst, 1 Fokuspunkt verbrauchen, um einen Betäubenden Schlag zu versuchen. Das Ziel muss einen Konstitutionsrettungswurf ausführen. Misslingt der Wurf, so ist das Ziel bis zum Beginn deines nächsten Zugs betäubt. Bei einem erfolgreichen Rettungswurf ist die Bewegungsrate des Ziels bis zum Beginn deines nächsten Zugs halbiert, und der nächste Angriffswurf gegen das Ziel während dieser Dauer ist im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level5-extra-attack",
+      "level": 4,
+      "text": "5. Stufe: Zusätzlicher Angriff"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level5-extra-attack-description",
+      "text": "Du kannst jetzt zweimal angreifen, wenn du in deinem Zug eine Angriffsaktion ausführst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level6-empowered-strikes",
+      "level": 4,
+      "text": "6. Stufe: Mächtige Schläge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level6-empowered-strikes-description",
+      "text": "Wann immer du mit deinem waffenlosen Angriff Schaden bewirkst, kannst du damit auch Energieschaden oder die normale Schadensart (nach deiner Wahl) bewirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level7-evasion",
+      "level": 4,
+      "text": "7. Stufe: Entrinnen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level7-evasion-description",
+      "text": "Bist du einem Effekt ausgesetzt, der dir einen Geschicklichkeitsrettungswurf erlaubt, um den Schaden zu halbieren, so erleidest du stattdessen bei einem Erfolg gar keinen und bei einem Misserfolg den halben Schaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level7-evasion-incapacitated",
+      "text": "Du erhältst den Vorzug dieses Merkmals nicht, wenn du kampfunfähig bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level9-acrobatic-movement",
+      "level": 4,
+      "text": "9. Stufe: Akrobatische Bewegung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level9-acrobatic-movement-description",
+      "text": "Sofern du weder Rüstung noch Schild trägst, erhältst du die Fähigkeit, dich in deinem Zug an vertikalen Oberflächen oder auf Flüssigkeiten zu bewegen, ohne zu stürzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level10-heightened-focus",
+      "level": 4,
+      "text": "10. Stufe: Erhöhter Fokus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level10-heightened-focus-introduction",
+      "text": "Geduldige Verteidigung, Schlaghagel und Windschritt erhalten folgende Vorzüge."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level10-heightened-focus-flurry-of-blows",
+      "text": "Schlaghagel: Du kannst 1 Fokuspunkt verbrauchen, um Schlaghagel einzusetzen und damit drei waffenlose Angriffe statt zwei auszuführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level10-heightened-focus-patient-defense",
+      "text": "Geduldige Verteidigung: Wenn du einen Fokuspunkt verbrauchst, um Geduldige Verteidigung einzusetzen, erhältst du eine Anzahl von temporären Trefferpunkten in Höhe von zwei Würfen mit deinem Kampfkünste-Würfel."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level10-heightened-focus-step-of-the-wind",
+      "text": "Windschritt: Wenn du einen Fokuspunkt verbrauchst, um Windschritt einzusetzen, kannst du eine bereitwillige Kreatur im Abstand von bis zu 1,5 Metern von dir und von höchstens großer Größe auswählen. Diese Kreatur bewegt sich bis zum Ende deines Zugs mit dir. Die Bewegung der Kreatur provoziert keine Gelegenheitsangriffe."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level10-self-restoration",
+      "level": 4,
+      "text": "10. Stufe: Selbstwiederherstellung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level10-self-restoration-description",
+      "text": "Durch schiere Willenskraft kannst du am Ende jedes deiner Züge einen der folgenden Zustände von dir selbst entfernen: Bezaubert, Verängstigt oder Vergiftet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level10-self-restoration-exhaustion",
+      "text": "Außerdem erhältst du keine Erschöpfungsstufen, wenn du keine Nahrung und keine Flüssigkeit zu dir nimmst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level13-deflect-energy",
+      "level": 4,
+      "text": "13. Stufe: Energie umleiten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level13-deflect-energy-description",
+      "text": "Du kannst jetzt dein Merkmal Angriffe umleiten auch gegen Angriffe einsetzen, die eine beliebige andere Schadensart als Hieb-, Stich- oder Wuchtschaden bewirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level14-disciplined-survivor",
+      "level": 4,
+      "text": "14. Stufe: Der disziplinierte Überlebende"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level14-disciplined-survivor-description",
+      "text": "Deine körperliche und mentale Disziplin gibt dir Übung in allen Rettungswürfen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level14-disciplined-survivor-reroll",
+      "text": "Außerdem kannst du, wann immer du bei einem Rettungswurf scheiterst, 1 Fokuspunkt verbrauchen, um erneut zu würfeln. In diesem Fall musst du das neue Ergebnis verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level15-perfect-focus",
+      "level": 4,
+      "text": "15. Stufe: Perfekter Fokus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level15-perfect-focus-description",
+      "text": "Wenn du die Initiative auswürfelst und nicht Unglaublicher Stoffwechsel verwendest, erhältst du verbrauchte Fokuspunkte zurück, bis du 4 davon hast, sofern du höchstens 3 Punkte hast."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level18-superior-defense",
+      "level": 4,
+      "text": "18. Stufe: Überlegene Verteidigung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level18-superior-defense-description",
+      "text": "Zu Beginn deines Zugs kannst du 3 Fokuspunkte verbrauchen, um dich eine Minute lang – oder bis du kampfunfähig wirst – vor Schaden zu schützen. In dieser Zeit bist du gegen alle Schadensarten außer Energieschaden resistent."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe des Unwiderstehlichen Angriffs wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.level20-body-and-mind",
+      "level": 4,
+      "text": "20. Stufe: Körper und Geist"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.level20-body-and-mind-description",
+      "text": "Du hast Körper und Geist auf neue Höhen weiterentwickelt. Deine Werte für Geschicklichkeit und Weisheit werden um 4 erhöht (auf höchstens 25)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.subclass-open-hand",
+      "level": 3,
+      "text": "Mönch-Unterklasse: Krieger der Offenen Hand"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-open-hand-motto",
+      "text": "Meistere Techniken des waffenlosen Kampfs"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-open-hand-introduction",
+      "text": "Krieger der Offenen Hand sind Meister des waffenlosen Kampfs. Sie erlernen Techniken, ihre Gegner zu stoßen, stolpern zu lassen und ihre eigenen Energien zu manipulieren, um sich vor Schaden zu schützen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.subclass-level3-open-hand-technique",
+      "level": 4,
+      "text": "3. Stufe: Technik der Offenen Hand"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level3-open-hand-technique-introduction",
+      "text": "Jedes Mal, wenn du eine Kreatur mit einem durch Schlaghagel gewährten Angriff triffst, kannst du einen der folgenden Effekte auf das Ziel wirken:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level3-open-hand-technique-addle",
+      "text": "Verdattern: Das Ziel kann bis zum Beginn seines nächsten Zugs keine Gelegenheitsangriffe ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level3-open-hand-technique-push",
+      "text": "Stoßen: Das Ziel muss einen Stärkerettungswurf bestehen, oder es wird bis zu 4,5 Meter weit von dir weggestoßen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level3-open-hand-technique-topple",
+      "text": "Umstoßen: Das Ziel muss einen Geschicklichkeitsrettungswurf bestehen, oder es wird umgestoßen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.subclass-level6-wholeness-of-body",
+      "level": 4,
+      "text": "6. Stufe: Unversehrtheit des Körpers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level6-wholeness-of-body-description",
+      "text": "Du erhältst die Fähigkeit, dich selbst zu heilen. Als Bonusaktion kannst du mit deinem Kampfkünste-Würfel würfeln. Du erhältst eine Anzahl von Trefferpunkten in Höhe des Ergebnisses plus deines Weisheitsmodifikators zurück (mindestens 1 Trefferpunkt)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level6-wholeness-of-body-uses",
+      "text": "Die Anzahl der möglichen Anwendungen dieses Merkmals entspricht deinem Weisheitsmodifikator (mindestens einmal). Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.subclass-level11-fleet-step",
+      "level": 4,
+      "text": "11. Stufe: Flinker Schritt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level11-fleet-step-description",
+      "text": "Wenn du eine andere Bonusaktion als Windschritt ausführst, kannst du Windschritt sofort nach der Bonusaktion ebenfalls ausführen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.monk.subclass-level17-quivering-palm",
+      "level": 4,
+      "text": "17. Stufe: Vibrierende Handfläche"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level17-quivering-palm-description",
+      "text": "Du erhältst die Fähigkeit, tödliche Vibrationen im Körper einer anderen Kreatur auszulösen. Wenn du eine Kreatur mit einem waffenlosen Angriff triffst, kannst du vier Fokuspunkte verbrauchen, um diese nicht spürbaren Vibrationen zu erzeugen. Sie dauern eine Anzahl von Tagen an, die deiner Mönchsstufe entspricht. Die Vibrationen sind harmlos, solange du keine Aktion ausführst, um sie zu beenden. Wenn du alternativ in deinem Zug die Angriffsaktion ausführst, kannst du auf einen der Angriffe verzichten, um die Vibrationen zu beenden. Dazu musst du dich auf derselben Existenzebene befinden wie das Ziel. Wenn du die Vibrationen beendest, muss das Ziel einen Konstitutionsrettungswurf ausführen. Misslingt der Wurf, so erleidet das Ziel 10W12 Energieschaden, anderenfalls die Hälfte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.monk.subclass-level17-quivering-palm-limits",
+      "text": "Du kannst dieses Merkmal immer nur auf jeweils eine Kreatur wirken. Du kannst die Vibrationen auch harmlos beenden (keine Aktion erforderlich)."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    }
+  ],
+  "digest": "sha256:730270d3aa41e47ba0f04d1336eb96ae7031639f3baa9decf8fde3e23be6b401"
+}

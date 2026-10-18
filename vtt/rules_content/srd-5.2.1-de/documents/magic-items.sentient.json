@@ -1,0 +1,297 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.sentient",
+  "slug": "intelligente-magische-gegenstaende",
+  "title": "Intelligente magische Gegenstände",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Intelligente magische Gegenstände"
+  ],
+  "order": 1080,
+  "sourcePages": [
+    240,
+    241
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.sentient.intelligente-magische-gegenstaende",
+      "level": 2,
+      "text": "Intelligente magische Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.intelligente-magische-gegenstaende.text-1",
+      "text": "Manche magischen Gegenstände verfügen über Intelligenz und eine Persönlichkeit. Solche Gegenstände können besessen sein, den Geist ihres früheren Besitzers beherbergen oder durch die Magie, mit der sie erschaffen worden sind, ein Bewusstsein erlangt haben. Ein intelligenter Gegenstand kann seinem Träger ein wertvoller Verbündeter, aber auch ein ständiger Widersacher sein."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.intelligente-magische-gegenstaende.text-2",
+      "text": "Die meisten intelligenten Gegenstände sind Waffen, doch auch bei anderen Arten von Gegenständen kann sich Intelligenz manifestieren. Verbrauchsgegenstände wie Tränke und Schriftrollen sind niemals intelligent."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.intelligente-magische-gegenstaende.text-3",
+      "text": "Der SL kontrolliert intelligente magische Gegenstände und ihre aktivierten Eigenschaften. Anwender, die mit dem Gegenstand eine gute Beziehung haben, können auf diese Eigenschaften zugreifen. Wenn die Beziehung belastet ist, kann es zu Konflikten kommen (siehe „Konflikte“ unten)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.sentient.merkmale-intelligenter-magischer-gegenstaende",
+      "level": 3,
+      "text": "Merkmale intelligenter magischer Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.merkmale-intelligenter-magischer-gegenstaende.text-1",
+      "text": "Wenn du einen intelligenten magischen Gegenstand erstellst, erschaffst du dessen Persona genau wie die eines NSC − allerdings mit folgenden Ausnahmen:"
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.sentient.faehigkeiten",
+      "level": 4,
+      "text": "Fähigkeiten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.faehigkeiten.text-1",
+      "text": "Ein intelligenter magischer Gegenstand hat Intelligenz-, Weisheits- und Charismawerte. Wähle die Attributswerte des Gegenstands aus oder ermittle sie zufällig wie folgt: Würfle für jedes Attribut mit 4W6, ignoriere den Würfel mit dem niedrigsten Ergebnis und addiere die übrigen drei."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.sentient.gesinnung",
+      "level": 4,
+      "text": "Gesinnung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.gesinnung.text-1",
+      "text": "Ein intelligenter magischer Gegenstand hat eine Gesinnung. Sein Schöpfer oder seine Natur könnten eine Gesinnung nahelegen. Wähle anderenfalls eine Gesinnung aus oder würfle anhand der Tabelle „Gesinnung intelligenter magischer Gegenstände“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.sentient.kommunikation",
+      "level": 4,
+      "text": "Kommunikation"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.kommunikation.text-1",
+      "text": "Ein intelligenter Gegenstand kommuniziert, indem er seine Gefühle übermittelt, seine Gedanken telepathisch überträgt oder aber spricht. Du kannst auswählen, wie er kommuniziert, oder anhand der Tabelle „Kommunikation intelligenter magischer Gegenstände“ würfeln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.sentient.sinne",
+      "level": 4,
+      "text": "Sinne"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.sinne.text-1",
+      "text": "Ein intelligenter Gegenstand kann seine Umgebung innerhalb einer bestimmten Reichweite wahrnehmen. Du kannst seine Sinne auswählen oder anhand der Tabelle „Sinne intelligenter magischer Gegenstände“ würfeln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.sentient.besonderes-ziel",
+      "level": 4,
+      "text": "Besonderes Ziel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.besonderes-ziel.text-1",
+      "text": "Du kannst einem intelligenten Gegenstand ein Ziel geben, das er verfolgt – gegebenenfalls ohne Rücksicht auf Verluste. Solange der Träger des Gegenstands mit ihm dieses besondere Ziel verfolgt, ist der Gegenstand kooperativ. Anderenfalls kann es zu Konflikten zwischen Träger und Gegenstand kommen (siehe „Konflikte“ unten). Du kannst ein besonderes Ziel auswählen oder anhand der Tabelle „Besondere Ziele intelligenter magischer Gegenstände“ würfeln."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.sentient.besonderes-ziel.tabelle-gesinnung-intelligenter-magischer-gegenstaende",
+      "caption": "Gesinnung intelligenter magischer Gegenstände",
+      "columns": [
+        "1W100",
+        "Gesinnung",
+        "1W100",
+        "Gesinnung"
+      ],
+      "rows": [
+        [
+          "1–15",
+          "Rechtschaffen gut",
+          "74–85",
+          "Chaotisch neutral"
+        ],
+        [
+          "16–35",
+          "Neutral gut",
+          "86–89",
+          "Rechtschaffen böse"
+        ],
+        [
+          "36–50",
+          "Chaotisch gut",
+          "90–96",
+          "Neutral böse"
+        ],
+        [
+          "51–63",
+          "Rechtschaffen neutral",
+          "97–100",
+          "Chaotisch böse"
+        ],
+        [
+          "64–73",
+          "Neutral",
+          "–",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.sentient.besonderes-ziel.tabelle-kommunikation-intelligenter-magischer-gegenstaende",
+      "caption": "Kommunikation intelligenter magischer Gegenstände",
+      "columns": [
+        "1W10",
+        "Kommunikation"
+      ],
+      "rows": [
+        [
+          "1–6",
+          "Der Gegenstand kommuniziert, indem er der Kreatur, die ihn trägt oder führt, seine Emotionen übermittelt."
+        ],
+        [
+          "7–9",
+          "Der Gegenstand spricht mindestens eine Sprache."
+        ],
+        [
+          "10",
+          "Der Gegenstand spricht mindestens eine Sprache. Außerdem kann der Gegenstand telepathisch mit jeder Kreatur kommunizieren, die ihn trägt oder führt."
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.sentient.besonderes-ziel.tabelle-sinne-intelligenter-magischer-gegenstaende",
+      "caption": "Sinne intelligenter magischer Gegenstände",
+      "columns": [
+        "1W4",
+        "Sinne"
+      ],
+      "rows": [
+        [
+          "1",
+          "Gehör und Standardsicht auf bis zu 9 Meter"
+        ],
+        [
+          "2",
+          "Gehör und Standardsicht auf bis zu 18 Meter"
+        ],
+        [
+          "3",
+          "Gehör und Standardsicht auf bis zu 36 Meter"
+        ],
+        [
+          "4",
+          "Gehör und Dunkelsicht auf bis zu 36 Meter"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.sentient.besonderes-ziel.tabelle-besondere-ziele-intelligenter-magischer-gegenstaende",
+      "caption": "Besondere Ziele intelligenter magischer Gegenstände",
+      "columns": [
+        "1W10",
+        "Besonderes Ziel"
+      ],
+      "rows": [
+        [
+          "1",
+          "Gesinnung: Der Gegenstand will alle mit entgegengesetzter Gesinnung besiegen oder zerstören. Ein solcher Gegenstand ist niemals neutral."
+        ],
+        [
+          "2",
+          "Verderben: Der Gegenstand will Kreaturen eines bestimmten Typs schaden oder sie zerstören, beispielsweise Konstrukte, Unholde oder Untote."
+        ],
+        [
+          "3",
+          "Schöpfersucher: Der Gegenstand sucht seinen Schöpfer und will begreifen, warum er erschaffen wurde."
+        ],
+        [
+          "4",
+          "Schicksalssucher: Der Gegenstand glaubt, dass sein Träger und er bei künftigen Ereignissen eine Schlüsselrolle spielen."
+        ],
+        [
+          "5",
+          "Zerstörer: Der Gegenstand giert nach Zerstörung und stachelt seinen Träger zu mutwilligen Kämpfen an."
+        ],
+        [
+          "6",
+          "Ruhmsucher: Der Gegenstand will als großartigster magischer Gegenstand der Welt anerkannt werden, damit sein Träger berühmt oder berüchtigt wird."
+        ],
+        [
+          "7",
+          "Wissenssucher: Der Gegenstand giert nach Wissen oder ist entschlossen, ein Rätsel zu lösen, ein Geheimnis zu erfahren oder eine kryptische Prophezeiung zu entschleiern."
+        ],
+        [
+          "8",
+          "Beschützer: Der Gegenstand will eine bestimmte Art von Kreaturen verteidigen, zum Beispiel Elfen oder Werwölfe."
+        ],
+        [
+          "9",
+          "Seelenverwandten-Sucher: Der Gegenstand sucht nach einem anderen intelligenten magischen Gegenstand, vielleicht nach einem, der wie er ist."
+        ],
+        [
+          "10",
+          "Tempelritter: Der Gegenstand will die Diener und Interessen einer bestimmten Gottheit verteidigen."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.sentient.konflikt",
+      "level": 4,
+      "text": "Konflikt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.konflikt.text-1",
+      "text": "Wenn die Handlungen des Trägers der Gesinnung oder dem Ziel des intelligenten Gegenstands widersprechen, kann es zu Konflikten kommen. In diesem Fall führt der Träger einen Charismarettungswurf (SG 12 plus Charismamodifikator des Gegenstands) aus. Misslingt der Wurf, so stellt der Gegenstand mindestens eine der folgenden Forderungen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.konflikt.text-2",
+      "text": "Immer nahe: Der Gegenstand besteht darauf, ständig getragen oder gehalten zu werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.konflikt.text-3",
+      "text": "Träume erfüllen: Der Gegenstand verlangt, dass sein Träger nichts als die Ziele des Gegenstands verfolgt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.konflikt.text-4",
+      "text": "Weg damit: Der Gegenstand verlangt, dass sein Träger alles beseitigt, was der Gegenstand anstößig findet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.konflikt.text-5",
+      "text": "Zeit für Veränderung: Der Gegenstand verlangt, an jemand anderen weitergegeben zu werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.sentient.konflikt.text-6",
+      "text": "Weigert sich der Träger, die Forderungen des Gegenstands zu erfüllen, so hat der Gegenstand die folgenden Möglichkeiten:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "magic-items.sentient.konflikt.liste-1",
+      "items": [
+        "Er macht es seinem Träger unmöglich, sich auf ihn einzustimmen.",
+        "Er unterdrückt mindestens eine seiner aktivierten Eigenschaften.",
+        "Er versucht, die Kontrolle über seinen Träger zu übernehmen, woraufhin dieser einen Charismarettungswurf (SG 12 plus Charismamodifikator des Gegenstands) ausführt. Misslingt der Wurf, so ist der Träger 1W12 Stunden lang bezaubert. Wenn er auf diese Art bezaubert ist, muss er versuchen, die Befehle des Gegenstands auszuführen. Wenn der Träger Schaden erleidet, wiederholt er den Rettungswurf. Bei einem Erfolg endet der Effekt bei ihm. Unabhängig davon, ob der Gegenstand seinen Träger kontrollieren kann oder nicht, kann er diese Kraft erst ab dem nächsten Morgengrauen erneut verwenden."
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:2e989056b98d1f81a1635eb0ad6aa4ac4c2b407df7d8843ee82f31f9aef1ad9b"
+}

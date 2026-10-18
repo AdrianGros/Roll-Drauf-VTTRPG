@@ -1,0 +1,1971 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "monsters.w-z",
+  "slug": "monster-w-z",
+  "title": "Monster W–Z",
+  "navigationPath": [
+    "Monster",
+    "Monster W–Z"
+  ],
+  "order": 2180,
+  "sourcePages": [
+    383,
+    384,
+    385,
+    386,
+    387,
+    388,
+    389,
+    390,
+    391
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.monster-von-a-z",
+      "level": 2,
+      "text": "Monster von A–Z (W–Z)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.wachen",
+      "level": 3,
+      "text": "Wachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.wachen.wache",
+      "name": "Wache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W8+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +2"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Kettenhemd, Schild, Speer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "1/8 (EP 25; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Speer: Nah- oder Fernkampfangriffswurf: +3, Reichweite 1,5 m oder Reichweite 6/18 m. Treffer: 4 (1W6+1) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.wachen.wachanfuehrer",
+      "name": "Wachanführer",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "75 (10W8+30)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +6, Wahrnehmung +4"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Brustplatte, Langschwert, Schild, Wurfspeere (6)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Wache führt zwei Angriffe mit Langschwert oder Wurfspeer in beliebiger Kombination aus.\n\nLangschwert: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 15 (2W10+4) Hiebschaden.\n\nWurfspeer: Nah- oder Fernkampfangriffswurf: +6, Reichweite 1,5 m oder Reichweite 9/36 m. Treffer: 14 (3W6+4) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.waechternaga",
+      "level": 3,
+      "text": "Wächternaga"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.waechternaga.waechternaga",
+      "name": "Wächternaga",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes celestisches Wesen, rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "136 (16W10+48)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Klettern 12 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "18 (MOD +4, RW +8)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +7)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +7)"
+        },
+        {
+          "label": "Wei",
+          "value": "19 (MOD +4, RW +8)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +8)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +11, Geschichte +11, Religion +11"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bezaubert, Festgesetzt, Gelähmt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Celestisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "10 (EP 5.900; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Celestische Genesung: Wenn der Naga stirbt, wird er nach 1W6 Tagen wieder lebendig und erhält all seine Trefferpunkte zurück, sofern nicht der Zauber Gutes und Böses bannen auf seine Überreste gewirkt wird."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Naga führt zwei Bissangriffe aus. Er kann beliebige Angriffe durch einen Einsatz von Giftiger Speichel ersetzen.\n\nBiss: Nahkampfangriffswurf: +8, Reichweite 1,5 m. Treffer: 17 (2W12+4) Stichschaden plus 22 (4W10) Giftschaden.\n\nGiftiger Speichel: Konstitutionsrettungswurf: SG 16; eine Kreatur im Abstand von bis zu 18 Metern vom Naga, die er sehen kann. Misserfolg: 31 (7W8) Giftschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Nagas blind. Erfolg: Nur halber Schaden.\n\nZauberwirken: Der Naga wirkt einen der folgenden Zauber mit Weisheit als Attribut zum Zauberwirken, ohne Gesten- oder Materialkomponenten zu benötigen (Zauberrettungswurf-SG 16):\n\nBeliebig oft: Thaumaturgie Je 1-mal täglich: Flammenschlag (Version des 6. Grades), Geas, Hellsehen, Wahrer Blick, Wunden heilen (Version des 6. Grades)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.wasserelementar",
+      "level": 3,
+      "text": "Wasserelementar"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.wasserelementar.wasserelementar",
+      "name": "Wasserelementar",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Elementar, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "114 (12W10+48)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 27 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Feuer, Säure"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bewusstlos, Erschöpft, Festgesetzt, Gelähmt, Gepackt, Liegend, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Aqual)"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Einfrieren: Wenn der Elementar Kälteschaden erleidet, so ist seine Bewegungsrate bis zum Ende seines nächsten Zugs um sechs Meter verringert.\n\nWassergestalt: Der Elementar kann in den Bereich eines Gegners eindringen und dort stoppen. Er kann sich durch enge Bereiche von nur 2,5 Zentimetern Durchmesser bewegen, ohne zusätzliche Bewegung aufzuwenden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Elementar führt zwei Hiebangriffe aus.\n\nHieb: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 13 (2W8+4) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es umgestoßen und hat den Zustand Liegend.\n\nÜberschutt (Aufladung 4–6): Stärkerettungswurf: SG 15; jede Kreatur im Bereich des Elementars. Misserfolg: 22 (4W8+4) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es gepackt (Flucht-SG 14). Das gepackte Ziel ist festgesetzt. Es beginnt zu ersticken, es sei denn, es kann Wasser atmen, und erleidet zu Beginn jedes Zugs des Elementars 9 (2W8) Wuchtschaden. Der Elementar kann eine große Kreatur oder bis zu zwei höchstens mittelgroße Kreaturen zugleich mit Überschutt gepackt halten. Eine Kreatur im Abstand von bis zu 1,5 Metern vom Elementar kann als Aktion eine Kreatur oder herausziehen, sofern sie einen SG-14-Stärkewurf (Athletik) besteht. Erfolg: Nur halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.weisse-drachen",
+      "level": 3,
+      "text": "Weiße Drachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.weisse-drachen.weisser-drachennestling",
+      "name": "Weißer Drachennestling",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Drache (chromatisch), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "32 (5W8+10)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m, Graben 4,5 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2, Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "2 (450 EP; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Eisschritt: Der Drache kann sich über vereiste Flächen bewegen und sie erklimmen, ohne einen Attributswurf ausführen zu müssen. Außerdem kostet ihn schwieriges Gelände, das aus Eis oder Schnee besteht, keine zusätzliche Bewegung."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 6 (1W8+2) Hiebschaden plus 2 (1W4) Kälteschaden.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 12; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 22 (5W8) Kälteschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.weisse-drachen.junger-weisser-drache",
+      "name": "Junger weißer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache (chromatisch), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "123 (13W10+52)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 6 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW 2)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +3, Wahrnehmung +6"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m, Dunkelsicht 36 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "6 (2.300 EP; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Eisschritt: Der Drache kann sich über vereiste Flächen bewegen und sie erklimmen, ohne einen Attributswurf ausführen zu müssen. Außerdem kostet ihn schwieriges Gelände, das aus Eis oder Schnee besteht, keine zusätzliche Bewegung."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 9 (2W4+4) Hiebschaden plus 2 (1W4) Kälteschaden.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 15; jede Kreatur in einem Kegel von neun Metern. Misserfolg: 40 (9W8) Kälteschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.weisse-drachen.ausgewachsener-weisser-drache",
+      "name": "Ausgewachsener weißer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Drache (chromatisch), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "200 (16W12+96)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 9 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Kon",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Stä",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +6)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +11"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 21"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "13 (EP 10.000 oder 11.500 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Eisschritt: Der Drache kann sich über vereiste Flächen bewegen und sie erklimmen, ohne einen Attributswurf ausführen zu müssen. Außerdem kostet ihn schwieriges Gelände, das aus Eis oder Schnee besteht, keine zusätzliche Bewegung.\n\nLegendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +11, Reichweite 3 m. Treffer: 13 (2W6+6) Hiebschaden plus 4 (1W8) Kälteschaden.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 19; jede Kreatur in einem Kegel von 18 Metern. Misserfolg: 54 (12W8) Kälteschaden. Erfolg: Halber Schaden."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nEisige Explosion: Konstitutionsrettungswurf: SG 14; jede Kreatur in einer Kugel mit einem Radius von neun Metern um einen Punkt im Abstand von bis zu 36 Metern vom Drachen, den er sehen kann. Misserfolg: 7 (2W6) Kälteschaden, und die Bewegungsrate des Ziels beträgt bis zum Ende seines nächsten Zugs 0. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nFurchterregende Präsenz: Der Drache wirkt den Zauber Furcht mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 14). Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.weisse-drachen.uralter-weisser-drache",
+      "name": "Uralter weißer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache (chromatisch), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "20"
+        },
+        {
+          "label": "Initiative",
+          "value": "+12 (22)"
+        },
+        {
+          "label": "TP",
+          "value": "333 (18W20+144)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Graben 12 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "26 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "26 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Wahrnehmung +13"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 23"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "20 (EP 25.000 oder 33.000 im Hort; ÜB +6)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Eisschritt: Der Drache kann sich über vereiste Flächen bewegen und sie erklimmen, ohne einen Attributswurf ausführen zu müssen. Außerdem kostet ihn schwieriges Gelände, das aus Eis oder Schnee besteht, keine zusätzliche Bewegung.\n\nLegendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +14, Reichweite 4,5 m. Treffer: 17 (2W8+8) Hiebschaden plus 7 (2W6) Kälteschaden.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 22; jede Kreatur in einem Kegel von 27 Metern. Misserfolg: 63 (14W8) Kälteschaden. Erfolg: Halber Schaden."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nEisige Explosion: Konstitutionsrettungswurf: SG 20; jede Kreatur in einer Kugel mit einem Radius von neun Metern um einen Punkt im Abstand von bis zu 36 Metern vom Drachen, den er sehen kann. Misserfolg: 14 (4W6) Kälteschaden, und die Bewegungsrate des Ziels beträgt bis zum Ende seines nächsten Zugs 0. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nFurchterregende Präsenz: Der Drache wirkt den Zauber Furcht mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 18). Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.werbaer",
+      "level": 3,
+      "text": "Werbär"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.werbaer.werbaer",
+      "name": "Werbär",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleine oder mittelgroße Monstrosität (Lykanthrop), neutral gut"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "135 (18W8+54)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, 12 m (nur in Bärengestalt), Klettern 9 m (nur in Bärengestalt)"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +7"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Beile (4)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 17"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache (kann in Bärengestalt nicht sprechen)"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Werbär führt zwei Angriffe mit Beil oder Zerfetzen in beliebiger Kombination aus. Er kann einen Angriff durch einen Bissangriff ersetzen.\n\nBeil (nur humanoide oder hybride Gestalt): Nah- oder Fernkampfangriffswurf: +7, Reichweite 1,5 m oder Reichweite 6/18 m. Treffer: 14 (3W6+4) Hiebschaden.\n\nBiss (nur Bären- oder hybride Gestalt): Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 17 (2W12+4) Stichschaden. Wenn das Ziel ein Humanoide ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 14. Misserfolg: Das Ziel wird verflucht. Wenn die Trefferpunkte des verfluchten Ziels auf 0 sinken, wird es stattdessen zu einem Werbären unter der Kontrolle des SL und hat 10 Trefferpunkte. Erfolg: Das Ziel ist 24 Stunden lang gegen den Fluch dieses Werbären immun.\n\nZerfetzen (nur Bären- oder hybride Gestalt): Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 13 (2W8+4) Hiebschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Gestaltwandeln: Der Werbär nimmt die Gestalt eines großen Bär-Humanoiden-Hybriden, eines großen Bären oder wieder seine wahre humanoide Gestalt an. Seine Spielwerte sind abgesehen von der Größe in jeder Gestalt gleich. Ausrüstung, die er trägt oder hält, wird nicht verwandelt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.wereber",
+      "level": 3,
+      "text": "Wereber"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.wereber.wereber",
+      "name": "Wereber",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleine oder mittelgroße Monstrosität (Lykanthrop), neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "97 (15W8+30)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, 12 m (nur in Ebergestalt)"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +2"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Wurfspeere (6)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache (kann in Ebergestalt nicht sprechen)"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Wereber führt zwei Angriffe mit Hauer und Wurfspeer in beliebiger Kombination aus. Er kann einen Angriff durch einen Zerfleischen-Angriff ersetzen.\n\nHauer (nur Eber- oder hybride Gestalt): Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 10 (2W6+3) Stichschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist und der Wereber sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 7 (2W6) Stichschaden, wird umgestoßen und hat den Zustand Liegend.\n\nWurfspeer (nur humanoide oder hybride Gestalt): Nah- oder Fernkampfangriffswurf: +5, Reichweite 1,5 m oder Reichweite 9/36 m. Treffer: 13 (3W6+3) Stichschaden.\n\nZerfleischen (nur Eber- oder hybride Gestalt): Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 12 (2W8+3) Stichschaden. Wenn das Ziel ein Humanoide ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 12. Misserfolg: Das Ziel wird verflucht. Wenn die Trefferpunkte des verfluchten Ziels auf 0 sinken, wird es stattdessen zu einem Wereber unter der Kontrolle des SL und hat 10 Trefferpunkte. Erfolg: Das Ziel ist 24 Stunden lang gegen den Fluch dieses Werebers immun."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Gestaltwandeln: Der Wereber nimmt die Gestalt eines mittelgroßen Eber-Humanoiden-Hybriden, eines kleinen Ebers oder wieder seine wahre humanoide Gestalt an. Seine Spielwerte sind abgesehen von der Größe in jeder Gestalt gleich. Ausrüstung, die er trägt oder hält, wird nicht verwandelt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.werratte",
+      "level": 3,
+      "text": "Werratte"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.werratte.werratte",
+      "name": "Werratte",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleine oder mittelgroße Monstrosität (Lykanthrop), rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "60 (11W8+11)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +4"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Handarmbrust"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache (kann in Rattengestalt nicht sprechen)"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Werratte führt zwei Kratzen- oder Handarmbrust-Angriffe in beliebiger Kombination aus. Sie kann einen Angriff durch einen Bissangriff ersetzen.\n\nBiss (nur Ratten- oder hybride Gestalt): Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 8 (2W4+3) Stichschaden. Wenn das Ziel ein Humanoide ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 11.\n\nMisserfolg: Das Ziel wird verflucht. Wenn die Trefferpunkte des verfluchten Ziels auf 0 sinken, wird es stattdessen zu einer Werratte unter der Kontrolle des SL und hat 10 Trefferpunkte. Erfolg: Das Ziel ist 24 Stunden lang gegen den Fluch dieser Werratte immun.\n\nKratzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Hiebschaden.\n\nHandarmbrust (nur humanoide oder hybride Gestalt): Fernkampfangriffswurf: +5, Reichweite 9/36 m. Treffer: 6 (1W6+3) Stichschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Gestaltwandeln: Die Werratte nimmt die Gestalt eines mittelgroßen Ratte-Humanoiden-Hybriden, einer kleinen Ratte oder wieder ihre wahre humanoide Gestalt an. Ihre Spielwerte sind abgesehen von der Größe in jeder Gestalt gleich. Ausrüstung, die sie trägt oder hält, wird nicht verwandelt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.wertiger",
+      "level": 3,
+      "text": "Wertiger"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.wertiger.wertiger",
+      "name": "Wertiger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleine oder mittelgroße Monstrosität (Lykanthrop), neutral"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "120 (16W8+48)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, 12 m (nur in Tigergestalt)"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +5"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Langbogen"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache (kann in Tigergestalt nicht sprechen)"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Wertiger führt zwei Angriffe mit Kratzen oder Langbogen in beliebiger Kombination aus. Er kann einen Angriff durch einen Bissangriff ersetzen.\n\nBiss (nur Tiger- oder hybride Gestalt): Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 12 (2W8+3) Stichschaden. Wenn das Ziel ein Humanoide ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 13. Misserfolg: Das Ziel wird verflucht. Wenn die Trefferpunkte des verfluchten Ziels auf 0 sinken, wird es stattdessen zu einem Wertiger unter der Kontrolle des SL und hat 10 Trefferpunkte. Erfolg: Das Ziel ist 24 Stunden lang gegen den Fluch dieses Wertigers immun.\n\nKratzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 10 (2W6+3) Hiebschaden.\n\nLangbogen (nur humanoide oder hybride Gestalt): Fernkampfangriffswurf: +4, Reichweite 45/180 m. Treffer: 11 (2W8+2) Stichschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Gestaltwandeln: Der Wertiger nimmt die Gestalt eines großen Tiger-Humanoiden-Hybriden, eines großen Tigers oder wieder seine wahre humanoide Gestalt an. Seine Spielwerte sind abgesehen von der Größe in jeder Gestalt gleich. Ausrüstung, die er trägt oder hält, wird nicht verwandelt.\n\nUmherstreifen (nur Tiger- oder hybride Gestalt): Der Wertiger nutzt seine Bewegungsrate, ohne Gelegenheitsangriffe zu provozieren. Am Ende dieser Bewegung kann der Wertiger die Verstecken-Aktion ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.werwolf",
+      "level": 3,
+      "text": "Werwolf"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.werwolf.werwolf",
+      "name": "Werwolf",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleine oder mittelgroße Monstrosität (Lykanthrop), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "71 (11W8+22)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, 12 m (nur in Wolfsgestalt)"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +4"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Langbogen"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache (kann in Wolfsgestalt nicht sprechen)"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Werwolf ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Werwolf führt zwei Angriffe mit Kratzen oder Langbogen in beliebiger Kombination aus. Er kann einen Angriff durch einen Bissangriff ersetzen.\n\nBiss (nur Wolfs- oder hybride Gestalt): Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 12 (2W8+3) Stichschaden. Wenn das Ziel ein Humanoide ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 12. Misserfolg: Das Ziel wird verflucht. Wenn die Trefferpunkte des verfluchten Ziels auf 0 sinken, wird es stattdessen zu einem Werwolf unter der Kontrolle des SL und hat 10 Trefferpunkte. Erfolg: Das Ziel ist 24 Stunden lang gegen den Fluch dieses Werwolfs immun.\n\nKratzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 10 (2W6+3) Hiebschaden.\n\nLangbogen (nur humanoide oder hybride Gestalt): Fernkampfangriffswurf: +4, Reichweite 45/180 m. Treffer: 11 (2W8+2) Stichschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Gestaltwandeln: Der Werwolf nimmt die Gestalt eines großen Wolf-Humanoiden-Hybriden, eines mittelgroßen Wolfs oder wieder seine wahre humanoide Gestalt an. Seine Spielwerte sind abgesehen von der Größe in jeder Gestalt gleich. Ausrüstung, die er trägt oder hält, wird nicht verwandelt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.winterwolf",
+      "level": 3,
+      "text": "Winterwolf"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.winterwolf.winterwolf",
+      "name": "Winterwolf",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "75 (10W10+20)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +5"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Riesisch"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Wolf ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 11 (2W6+4) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es umgestoßen und hat den Zustand Liegend.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 12; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 18 (4W8) Kälteschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.wolkenriese",
+      "level": 3,
+      "text": "Wolkenriese"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.wolkenriese.wolkenriese",
+      "name": "Wolkenriese",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Riese, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "200 (16W12+96)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 6 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "27 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "22 (MOD +6, RW +10)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Motiv erkennen +7, Wahrnehmung +11"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 21"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Riesisch"
+        },
+        {
+          "label": "HG",
+          "value": "9 (EP 5.000; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Riese führt zwei Angriffe mit Donnernder Streitkolben oder Gewitterwolke in beliebiger Kombination aus. Er kann einen Angriff durch einen Einsatz von Zauberwirken ersetzen, um den Zauber Nebelwolke zu wirken.\n\nDonnernder Streitkolben: Nahkampfangriffswurf: +12, Reichweite 3 m. Treffer: 21 (3W8+8) Wuchtschaden plus 7 (2W6) Schallschaden.\n\nGewitterwolke: Fernkampfangriffswurf: +12, Reichweite 72 m. Treffer: 18 (3W6+8) Schallschaden, und das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig.\n\nZauberwirken: Der Riese wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 15):\n\nBeliebig oft: Licht, Magie entdecken, Nebelwolke Je 1-mal täglich: Gasförmige Gestalt, Telekinese, Wetterkontrolle"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Nebelschritt: Der Riese wirkt den Zauber Nebelschritt. Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.worg",
+      "level": 3,
+      "text": "Worg"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.worg.worg",
+      "name": "Worg",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Feenwesen, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "26 (4W10+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Goblinisch, Worgisch"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 7 (1W8+3) Stichschaden, und der nächste Angriffswurf gegen das Ziel vor Beginn des nächsten Zugs des Worgs ist im Vorteil."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.wyvern",
+      "level": 3,
+      "text": "Wyvern"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.wyvern.wyvern",
+      "name": "Wyvern",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "127 (15W10+45)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 24 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "6 (EP 2.300; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Wyvern führt einen Bissangriff und einen Stachelangriff aus.\n\nBiss: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 13 (2W8+4) Stichschaden.\n\nStachel: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 11 (2W6+4) Stichschaden plus 24 (7W6) Giftschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Wyvern vergiftet."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.xorn",
+      "level": 3,
+      "text": "Xorn"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.xorn.xorn",
+      "name": "Xorn",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Elementar, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "84 (8W8+48)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Graben 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Wahrnehmung +6"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Gelähmt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m, Erschütterungssinn 18 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Terral)"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Erdgleiten: Der Xorn kann sich durch nichtmagisches, unbearbeitetes Erd- und Steinmaterial graben. Dabei beeinträchtigt er das Material nicht, durch das er sich bewegt.\n\nSchatzgespür: Der Xorn kann Edelmetalle und Edelsteine im Abstand von bis zu 18 Metern von ihm lokalisieren."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Xorn führt einen Bissangriff und drei Klauenangriffe aus.\n\nBiss: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 17 (4W6+3) Stichschaden.\n\nKlauen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 8 (1W10+3) Hiebschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Sturmangriff: Der Xorn nutzt seine Bewegungsrate oder Grabbewegungsrate und bewegt sich in gerader Linie auf einen Gegner zu, den er sehen kann"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.zaehe",
+      "level": 3,
+      "text": "Zähe"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.zaehe.zaeher",
+      "name": "Zäher",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "32 (5W8+10)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Lederrüstung, Schwere Armbrust, Streitkolben"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Zähe ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Streitkolben: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Wuchtschaden.\n\nSchwere Armbrust: Fernkampfangriffswurf: +3, Reichweite 30/120 m. Treffer: 6 (1W10+1) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.zaehe.zaeher-boss",
+      "name": "Zäher-Boss",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "82 (11W8+33)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +5)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Kettenpanzer, Kriegshammer, Schwere Armbrust"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Zähe ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Zähe führt zwei Angriffe mit Kriegshammer oder schwerer Armbrust in beliebiger Kombination aus.\n\nKriegshammer: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 12 (2W8+3) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, stößt der Zähe es bis zu drei Meter weit in gerader Linie von sich weg.\n\nSchwere Armbrust: Fernkampfangriffswurf: +4, Reichweite 30/120 m. Treffer: 13 (2W10+2) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.zentaur",
+      "level": 3,
+      "text": "Zentaur"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.zentaur.zentaurensoldat",
+      "name": "Zentaurensoldat",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Feenwesen, neutral gut"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "45 (6W10+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +6, Wahrnehmung +3"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Brustplatte, Langbogen, Pike"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Elfisch, Sylvanisch"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Zentaur führt zwei Angriffe mit Pike oder Langbogen in beliebiger Kombination aus.\n\nPike: Nahkampfangriffswurf: +6, Reichweite 3 m. Treffer: 9 (1W10+4) Stichschaden.\n\nLangbogen: Fernkampfangriffswurf: +4, Reichweite 45/180 m. Treffer: 6 (1W8+2) Stichschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Trampel-Sturmangriff (Aufladung 5–6): Der Zentaur nutzt seine Bewegungsrate, ohne Gelegenheitsangriffe zu provozieren, und kann sich durch die Bereiche von Kreaturen und Gegenständen von höchstens mittelgroßer Größe bewegen. Jede Kreatur, in deren Bereich der Zentaur gelangt, wird einmal zum Ziel des folgenden Effekts: Stärkerettungswurf: SG 14. Misserfolg: 7 (1W6+4) Wuchtschaden, und das Ziel wird umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.w-z.zombies",
+      "level": 3,
+      "text": "Zombies"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.zombies.zombie",
+      "name": "Zombie",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "8"
+        },
+        {
+          "label": "Initiative",
+          "value": "–2 (8)"
+        },
+        {
+          "label": "TP",
+          "value": "15 (2W8+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "6 (MOD –2, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 8"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Gemeinsprache und eine weitere Sprache, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Untote Ausdauer: Wenn seine Trefferpunkte durch Schaden auf 0 sinken, führt der Zombie einen Konstitutionsrettungswurf aus (SG 5 plus der erlittene Schaden), sofern der Schaden nicht gleißend ist oder von einem kritischen Treffer stammt. Bei einem erfolgreichen Rettungswurf behält der Zombie 1 Trefferpunkt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Hieb: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 5 (1W8+1) Wuchtschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.w-z.zombies.ogerzombie",
+      "name": "Ogerzombie",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Untoter, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "8"
+        },
+        {
+          "label": "Initiative",
+          "value": "–2 (8)"
+        },
+        {
+          "label": "TP",
+          "value": "85 (9W10+36)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "6 (MOD –2, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 8"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Gemeinsprache und Riesisch, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Untote Ausdauer: Wenn seine Trefferpunkte durch Schaden auf 0 sinken, führt der Zombie einen Konstitutionsrettungswurf aus (SG 5 plus der erlittene Schaden), sofern der Schaden nicht gleißend ist oder von einem kritischen Treffer stammt. Bei einem erfolgreichen Rettungswurf behält der Zombie 1 Trefferpunkt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Hieb: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 13 (2W8+4) Wuchtschaden."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:93b3c5105ec0a6786669ab319970bcf4d937a678f9e17d236b9d70251d1a74eb"
+}

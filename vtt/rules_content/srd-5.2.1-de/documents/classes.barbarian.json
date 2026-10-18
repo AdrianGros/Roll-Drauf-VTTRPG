@@ -1,0 +1,673 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.barbarian",
+  "slug": "barbar",
+  "title": "Barbar",
+  "navigationPath": [
+    "Klassen",
+    "Barbar"
+  ],
+  "order": 200,
+  "sourcePages": [
+    33,
+    34,
+    35,
+    36
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.barbarian",
+      "level": 2,
+      "text": "Barbar"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.barbarian.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Stärke"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W12 pro Barbarenstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Stärke und Konstitution"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle zwei aus: Athletik, Einschüchtern, Mit Tieren umgehen, Naturkunde, Überlebenskunst oder Wahrnehmung"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen und Kriegswaffen"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Leichte und mittelschwere Rüstungen und Schilde"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Zweihandaxt, vier Beile, Entdeckerausrüstung und 15 GM oder (B) 75 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.becoming-a-barbarian",
+      "level": 3,
+      "text": "Ein Barbar werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.as-a-level-1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.barbarian.as-a-level-1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Barbaren“.",
+        "Du erhältst die Merkmale der 1. Barbarenstufe, die in der Tabelle „Barbarenmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.barbarian.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst folgende Merkmale in der Tabelle „Hauptmerkmale des Barbaren“: Trefferpunktewürfel, Übung im Umgang mit Kriegswaffen, Vertrautheit mit Schilden.",
+        "Du erhältst die Merkmale der 1. Barbarenstufe, die in der Tabelle „Barbarenmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Barbaren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.class-features-introduction",
+      "text": "Als Barbar erhältst du auf den angegebenen Barbarenstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Barbarenmerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.barbarian.progression-table",
+      "caption": "Barbarenmerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Kampfrausch-Anzahl",
+        "Kampfrausch-Schaden",
+        "Waffenbeherrschung"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Kampfrausch, Ungerüstete Verteidigung, Waffenbeherrschung",
+          "2",
+          "+2",
+          "2"
+        ],
+        [
+          "2",
+          "+2",
+          "Gefahrengespür, Rücksichtsloser Angriff",
+          "2",
+          "+2",
+          "2"
+        ],
+        [
+          "3",
+          "+2",
+          "Barbaren-Unterklasse, Urwissen",
+          "3",
+          "+2",
+          "2"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "3",
+          "+2",
+          "3"
+        ],
+        [
+          "5",
+          "+3",
+          "Zusätzlicher Angriff, Schnelle Bewegung",
+          "3",
+          "+2",
+          "3"
+        ],
+        [
+          "6",
+          "+3",
+          "Unterklassenmerkmal",
+          "4",
+          "+2",
+          "3"
+        ],
+        [
+          "7",
+          "+3",
+          "Instinktiver Sprung, Wilder Instinkt",
+          "4",
+          "+2",
+          "3"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "4",
+          "+2",
+          "3"
+        ],
+        [
+          "9",
+          "+4",
+          "Brutaler Hieb",
+          "4",
+          "+3",
+          "3"
+        ],
+        [
+          "10",
+          "+4",
+          "Unterklassenmerkmal",
+          "4",
+          "+3",
+          "4"
+        ],
+        [
+          "11",
+          "+4",
+          "Unerbittlicher Kampfrausch",
+          "4",
+          "+3",
+          "4"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "5",
+          "+3",
+          "4"
+        ],
+        [
+          "13",
+          "+5",
+          "Verbesserter Brutaler Hieb",
+          "5",
+          "+3",
+          "4"
+        ],
+        [
+          "14",
+          "+5",
+          "Unterklassenmerkmal",
+          "5",
+          "+3",
+          "4"
+        ],
+        [
+          "15",
+          "+5",
+          "Anhaltender Kampfrausch",
+          "5",
+          "+3",
+          "4"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "5",
+          "+4",
+          "4"
+        ],
+        [
+          "17",
+          "+6",
+          "Verbesserter Brutaler Hieb",
+          "6",
+          "+4",
+          "4"
+        ],
+        [
+          "18",
+          "+6",
+          "Unbändige Stärke",
+          "6",
+          "+4",
+          "4"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "6",
+          "+4",
+          "4"
+        ],
+        [
+          "20",
+          "+6",
+          "Meister der Wildnis",
+          "6",
+          "+4",
+          "4"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level1-rage",
+      "level": 4,
+      "text": "1. Stufe: Kampfrausch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-introduction",
+      "text": "Eine Urmacht namens Kampfrausch gewährt dir außergewöhnliche Macht und Zähigkeit. Du kannst dich als Bonusaktion in Kampfrausch versetzen, sofern du keine schwere Rüstung trägst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-uses",
+      "text": "Wie oft du dies tun kannst, ist in der Spalte „Kampfrausch“ der Tabelle „Barbarenmerkmale“ nach Barbarenstufe aufgeführt. Nach einer kurzen Rast erhältst du eine verbrauchte Anwendung zurück. Nach einer langen Rast erhältst du alle verbrauchten Anwendungen zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-rules-intro",
+      "text": "Solange dein Kampfrausch aktiv ist, gelten für ihn folgende Regeln:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-damage-resistance",
+      "text": "Schadensresistenz: Du bist gegen Hieb-, Stich- und Wuchtschaden resistent."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-damage-bonus",
+      "text": "Kampfrausch-Schaden: Wenn du einen Angriff ausführst, der Stärke erfordert – entweder mit einer Waffe oder als waffenlosen Angriff –, und dem Ziel Schaden zufügst, erhältst du einen Bonus auf den Schaden, der sich erhöht, wenn du Barbarenstufen hinzugewinnst. Dies ist in der Spalte „Kampfrausch-Schaden“ der Tabelle „Barbarenmerkmale“ aufgeführt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-strength-advantage",
+      "text": "Stärkevorteil: Du bist bei Stärkewürfen und Stärkerettungswürfen im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-no-concentration",
+      "text": "Keine Konzentration und keine Zauber: Du kannst keine Konzentration aufrechterhalten und keine Zauber wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-duration",
+      "text": "Wirkungsdauer: Der Kampfrausch währt bis zum Ende deines nächsten Zugs und endet vorzeitig, wenn du schwere Rüstung anlegst oder kampfunfähig wirst. Wenn dein Kampfrausch in deinem nächsten Zug noch aktiv ist, kannst du ihn um eine weitere Runde verlängern, indem du eine der folgenden Handlungen ausführst:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.barbarian.level1-rage-extend-list",
+      "items": [
+        "Führe einen Angriffswurf gegen einen Gegner aus.",
+        "Zwinge einen Gegner, einen Rettungswurf auszuführen.",
+        "Führe eine Bonusaktion aus, um deinen Kampfrausch zu verlängern."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-rage-extend-note",
+      "text": "Wann immer der Kampfrausch verlängert wird, währt er bis zum Ende deines nächsten Zugs. Du kannst einen Kampfrausch bis zu zehn Minuten lang aufrechterhalten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level1-unarmored-defense",
+      "level": 4,
+      "text": "1. Stufe: Ungerüstete Verteidigung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-unarmored-defense-description",
+      "text": "Wenn du keine Rüstung trägst, entspricht deine Basis-Rüstungsklasse 10 plus deinem Geschicklichkeitsmodifikator plus deinem Konstitutionsmodifikator. Von diesem Vorzug profitierst du auch, wenn du einen Schild verwendest."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level1-weapon-mastery",
+      "level": 4,
+      "text": "1. Stufe: Waffenbeherrschung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-weapon-mastery-description",
+      "text": "Deine Vertrautheit mit Waffen gestattet dir, die Meisterschaftseigenschaften zweier Arten von einfachen Nahkampfwaffen oder Nahkampf-Kriegswaffen deiner Wahl wie Zweihandäxten und Beilen zu verwenden. Wann immer du eine lange Rast beendest, kannst du Waffenübungen ausführen und eine dieser Waffenentscheidungen ändern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level1-weapon-mastery-scaling",
+      "text": "Wenn du bestimmte Barbarenstufen erreichst, erhältst du das Attribut zum Verwenden der Meisterschaftseigenschaften von mehr Waffenarten, wie in der Spalte „Waffenbeherrschung“ der Tabelle „Barbarenmerkmale“ dargestellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level2-danger-sense",
+      "level": 4,
+      "text": "2. Stufe: Gefahrengespür"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level2-danger-sense-description",
+      "text": "Du bekommst du einen untrüglichen Sinn dafür, ob die Dinge so sind, wie sie sein sollten, sodass du Gefahren besser ausweichen kannst. Du bist bei Geschicklichkeitsrettungswürfen im Vorteil, sofern du nicht kampfunfähig bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level2-reckless-attack",
+      "level": 4,
+      "text": "2. Stufe: Rücksichtsloser Angriff"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level2-reckless-attack-description",
+      "text": "Du kannst deine Verteidigung völlig außer Acht lassen und mit noch mehr Wildheit angreifen. Bei deinem ersten Angriffswurf in deinem Zug kannst du beschließen, einen Rücksichtslosen Angriff auszuführen. Damit sind deine Angriffswürfe, die Stärke erfordern, bis zum Beginn deines nächsten Zugs im Vorteil, doch Angriffswürfe gegen dich sind in dieser Zeit ebenfalls im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Barbaren-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level3-subclass-description",
+      "text": "Du erhältst eine Barbaren-Unterklasse deiner Wahl. Die Unterklasse Pfad des Berserkers wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Barbarenstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Barbarenstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level3-primal-knowledge",
+      "level": 4,
+      "text": "3. Stufe: Urwissen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level3-primal-knowledge-skill",
+      "text": "Du erhältst Übung in einer weiteren Fertigkeit deiner Wahl aus der Liste von Fertigkeiten, die für Barbaren auf der 1. Stufe verfügbar sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level3-primal-knowledge-rage-checks",
+      "text": "Außerdem kannst du während deines Kampfrauschs Urmacht kanalisieren, wenn du bestimmte Aufgaben auszuführen versuchst. Wann immer du einen Attributswurf unter Verwendung einer der folgenden Fertigkeiten ausführst, kannst du ihn auch dann als Stärkewurf ausführen, wenn er sonst ein anderes Attribut erfordert: Akrobatik, Einschüchtern, Heimlichkeit, Überlebenskunst oder Wahrnehmung. Wenn du dieses Attribut verwendest, repräsentiert deine Stärke die Urmacht, die in dir kreist, um deine Beweglichkeit, deine Haltung und deine Sinne zu optimieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Barbarenstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level5-fast-movement",
+      "level": 4,
+      "text": "5. Stufe: Schnelle Bewegung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level5-fast-movement-description",
+      "text": "Deine Bewegungsrate erhöht sich um drei Meter, sofern du keine schwere Rüstung trägst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level5-extra-attack",
+      "level": 4,
+      "text": "5. Stufe: Zusätzlicher Angriff"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level5-extra-attack-description",
+      "text": "Du kannst jetzt zweimal angreifen, wenn du in deinem Zug eine Angriffsaktion ausführst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level7-feral-instinct",
+      "level": 4,
+      "text": "7. Stufe: Instinktiver Sprung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level7-feral-instinct-description",
+      "text": "Als Teil der Bonusaktion, mit der du dich in Kampfrausch versetzt, kannst du bis zur Hälfte deiner Bewegungsrate zurücklegen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level7-wild-instincts",
+      "level": 4,
+      "text": "7. Stufe: Wilder Instinkt"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level7-wild-instincts-description",
+      "text": "Deine Instinkte sind derart geschärft, dass du bei Initiativewürfen im Vorteil bist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level9-brutal-strike",
+      "level": 4,
+      "text": "9. Stufe: Brutaler Hieb"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level9-brutal-strike-description",
+      "text": "Wenn du Rücksichtsloser Angriff einsetzt, kannst du in deinem Zug bei einem stärkebasierten Angriffswurf deiner Wahl auf den Vorteil verzichten. Der ausgewählte Angriffswurf darf nicht im Nachteil sein. Wenn der ausgewählte Angriffswurf trifft, erleidet das Ziel zusätzlich 1W10 Schaden des Typs, den auch die Waffe oder der waffenlose Angriff bewirkt, und du kannst einen Effekt des Brutalen Hiebs deiner Wahl bewirken. Folgende Effekte stehen zur Auswahl:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level9-brutal-strike-forceful-blow",
+      "text": "Kraftvoller Hieb: Das Ziel wird in gerader Linie 4,5 Meter weit von dir weggestoßen. Du kannst dich dann um bis zur Hälfte deiner Bewegungsrate in gerader Linie auf das Ziel zubewegen, ohne Gelegenheitsangriffe zu provozieren."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level9-brutal-strike-hamstring-blow",
+      "text": "Schenkelhieb: Die Bewegungsrate des Ziels ist bis zum Beginn deines nächsten Zugs um 4,5 Meter verringert. Es kann immer nur ein Schenkelhieb wirken – jeweils der letzte."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level11-relentless-rage",
+      "level": 4,
+      "text": "11. Stufe: Unerbittlicher Kampfrausch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level11-relentless-rage-description",
+      "text": "Dein Kampfrausch versetzt dich in die Lage, trotz schwerer Verletzungen weiterzukämpfen. Wenn deine Trefferpunkte auf 0 sinken, während du im Kampfrausch bist, stirbst du nicht sofort, sondern führst einen SG-10-Konstitutionsrettungswurf aus. Bei einem Erfolg erhältst du Trefferpunkte in doppelter Höhe deiner Barbarenstufe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level11-relentless-rage-dc-scaling",
+      "text": "Jedes Mal, wenn du dieses Merkmal nutzt, erhöht sich der SG um 5. Nach einer kurzen oder langen Rast sinkt der SG wieder auf 10."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level13-improved-brutal-strike",
+      "level": 4,
+      "text": "13. Stufe: Verbesserter Brutaler Hieb"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level13-improved-brutal-strike-description",
+      "text": "Du hast neue wilde Angriffsmethoden verfeinert. Nun stehen folgende Effekte des Brutalen Hiebs zur Auswahl:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level13-staggering-blow",
+      "text": "Wankendmachender Hieb: Das Ziel ist bei seinem nächsten Rettungswurf im Nachteil und kann bis zum Beginn deines nächsten Zugs keine Gelegenheitsangriffe ausführen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level13-sundering-blow",
+      "text": "Entzweiender Hieb: Vor Beginn deines nächsten Zugs erhält der nächste Angriffswurf, den eine andere Kreatur gegen das Ziel ausführt, einen Bonus von +5. Ein Angriffswurf kann nur jeweils einen Bonus durch Entzweiender Hieb erhalten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level15-persistent-rage",
+      "level": 4,
+      "text": "15. Stufe: Anhaltender Kampfrausch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level15-persistent-rage-recovery",
+      "text": "Wenn du die Initiative auswürfelst, kannst du alle verbrauchten Anwendungen von Kampfrausch zurückerhalten. Gelingt dies, so ist es erst nach einer langen Rast erneut möglich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level15-persistent-rage-duration",
+      "text": "Außerdem ist dein Kampfrausch so wild, dass er nun zehn Minuten lang erhalten bleibt, ohne dass du ihn zwischen den Runden verlängern musst. Deine Kampfrausch endet vorzeitig, wenn du bewusstlos (nicht nur kampfunfähig) wirst oder schwere Rüstung anlegst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level17-improved-brutal-strike",
+      "level": 4,
+      "text": "17. Stufe: Verbesserter Brutaler Hieb"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level17-improved-brutal-strike-description",
+      "text": "Der zusätzliche Schaden deines Brutalen Hiebs wird auf 2W10 erhöht. Außerdem kannst du zwei verschiedene Effekte von Brutaler Hieb verwenden, wann immer du dieses Merkmal einsetzt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level18-indomitable-might",
+      "level": 4,
+      "text": "18. Stufe: Unbändige Stärke"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level18-indomitable-might-description",
+      "text": "Wenn das Gesamtergebnis deines Stärkewurfs oder Stärkerettungswurfs unter deinem Stärkewert liegt, kannst du diesen statt des Gesamtergebnisses verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe des Unwiderstehlichen Angriffs wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.level20-primal-champion",
+      "level": 4,
+      "text": "20. Stufe: Meister der Wildnis"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.level20-primal-champion-description",
+      "text": "Du verkörperst Urmacht. Deine Werte für Stärke und Konstitution werden um 4 erhöht (auf höchstens 25)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.subclass-path-of-the-berserker",
+      "level": 3,
+      "text": "Barbaren-Unterklasse: Pfad des Berserkers"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.subclass-path-of-the-berserker-motto",
+      "text": "Kanalisiere Kampfrausch in Brachiale Wut"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.subclass-path-of-the-berserker-introduction",
+      "text": "Barbaren, die den Pfad des Berserkers beschreiten, nutzen ihren Kampfrausch primär, um Gewalt auszuüben. Sie nutzen ungezügelte Wut und genießen das Chaos der Schlacht, während sie ihrem Kampfrausch gestatten, Besitz von ihnen zu ergreifen und sie zu ermächtigen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.subclass-level3-frenzy",
+      "level": 4,
+      "text": "3. Stufe: Raserei"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.subclass-level3-frenzy-description",
+      "text": "Wenn du im Kampfrausch deinen Rücksichtslosen Angriff einsetzt, fügst du dem ersten Ziel, das du in deinem Zug mit einem stärkebasierten Angriff triffst, zusätzlichen Schaden zu. Ermittle den zusätzlichen Schaden, indem du mit einer Anzahl von W6 in Höhe deines Kampfrausch-Schadensbonus würfelst und ihre Summe hinzufügst. Der Schaden ist vom selben Typ wie jener der Waffe oder des waffenlosen Angriffs, die für den Angriff verwendet wurden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.subclass-level6-mindless-rage",
+      "level": 4,
+      "text": "6. Stufe: Geistloser Kampfrausch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.subclass-level6-mindless-rage-description",
+      "text": "Im Kampfrausch bist du gegen die Zustände Bezaubert und Verängstigt immun. Wenn du zu Beginn des Kampfrauschs bezaubert oder verängstigt bist, endet der Zustand."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.subclass-level10-retaliation",
+      "level": 4,
+      "text": "10. Stufe: Vergeltung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.subclass-level10-retaliation-description",
+      "text": "Wenn du Schaden durch eine Kreatur erleidest, die sich im Abstand von bis zu 1,5 Metern von dir befindet, kannst du als Reaktion einen Nahkampfangriff gegen diese Kreatur ausführen und dazu eine Waffe oder einen waffenlosen Angriff verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.barbarian.subclass-level14-intimidating-presence",
+      "level": 4,
+      "text": "14. Stufe: Einschüchternde Präsenz"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.subclass-level14-intimidating-presence-description",
+      "text": "Als Bonusaktion kannst du andere mit deiner bedrohlichen Präsenz und deiner Urmacht in Panik versetzen. In diesem Fall muss jede Kreatur deiner Wahl in einer Ausströmung von neun Metern, die von dir ausgeht, einen Weisheitsrettungswurf (SG 8 plus dein Stärkemodifikator plus dein Übungsbonus) ausführen. Misslingt der Wurf, so ist die Kreatur eine Minute lang verängstigt. Die verängstigte Kreatur wiederholt den Rettungswurf am Ende jedes ihrer Züge. Bei einem Erfolg endet der Effekt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.barbarian.subclass-level14-intimidating-presence-recharge",
+      "text": "Wenn du dieses Merkmal verwendet hast, kannst du dies erst nach einer langen Rast erneut tun, sofern du nicht eine Anwendung deines Kampfrauschs zum Wiederherstellen verbrauchst (keine Aktion erforderlich)."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.damage-and-healing.death-saving-throws",
+      "label": "Todesrettungswürfe"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.combat-attacks.opportunity-attacks",
+      "label": "Gelegenheitsangriffe"
+    }
+  ],
+  "digest": "sha256:42356721ad64eea7f88cfc1bfd2e18800a2ed98cdd2aa341bbd10893b4a11b62"
+}

@@ -1,0 +1,314 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "toolbox.poison",
+  "slug": "gift",
+  "title": "Gift",
+  "navigationPath": [
+    "Werkzeugkasten fürs Spiel",
+    "Gift"
+  ],
+  "order": 950,
+  "sourcePages": [
+    228,
+    229
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.gift",
+      "level": 2,
+      "text": "Gift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.gift.text-1",
+      "text": "Aufgrund ihrer heimtückischen und tödlichen Natur sind Gifte bei Assassinen und bösen Kreaturen ein beliebtes Werkzeug."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.gift.text-2",
+      "text": "Sie wirken auf die folgenden vier Arten:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.gift.text-3",
+      "text": "Einatmung: Giftige Pulver und Gase wirken, wenn sie eingeatmet werden. Wird das Pulver zerstäubt oder das Gas freigesetzt, so erleiden alle Kreaturen in einem Würfel mit 1,5 Metern Kantenlänge den Effekt. Die entstandene Giftwolke löst sich kurz danach auf. Den Atem anzuhalten hilft nicht gegen diese Gifte, da sie auch über die Nasenschleimhaut, die Tränenkanäle und andere Bereiche des Körpers wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.gift.text-4",
+      "text": "Einnahme: Eine Kreatur muss die gesamte Giftdosis zu sich nehmen, um die Effekte zu erleiden. Die Dosis kann über Nahrung oder Flüssigkeit aufgenommen werden. Du kannst entscheiden, ob eine geringere Dosis einen verringerten Effekt hat, sodass die Kreatur beim Rettungswurf im Vorteil ist oder das Gift bei einem misslungenen Rettungswurf nur halb so viel Schaden bewirkt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.gift.text-5",
+      "text": "Kontakt: Kontaktgift kann auf Gegenstände aufgetragen werden und behält seine Wirksamkeit, bis es berührt oder abgewaschen wird. Eine Kreatur, die Kontaktgift mit bloßer Haut berührt, erleidet seine Effekte."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.gift.text-6",
+      "text": "Verletzung: Gift, das bei Verletzungen wirkt, kann als Bonusaktion auf eine Waffe, ein Geschoss oder einen ähnlichen Gegenstand aufgetragen werden. Es behält seine Wirksamkeit, bis es entweder über eine Wunde aufgenommen oder abgewaschen wird. Wenn eine Kreatur Hieb- oder Stichschaden durch einen Gegenstand erleidet, der mit diesem Gift versehen ist, so erleidet sie auch den Effekt des Gifts."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.gift-kaufen",
+      "level": 3,
+      "text": "Gift kaufen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.gift-kaufen.text-1",
+      "text": "In einigen Kampagnenwelten sind Besitz und Verwendung von Giften gesetzlich verboten. Allerdings könnten illegale Händler oder skrupellose Apotheker über heimliche Vorräte verfügen. Charaktere mit kriminellen Kontakten können vermutlich problemlos Gifte beschaffen. Andere Charaktere müssen vielleicht umfangreiche Nachforschungen anstellen und Schmiergelder zahlen, ehe sie an das gesuchte Gift kommen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.gift-ernten",
+      "level": 3,
+      "text": "Gift ernten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.gift-ernten.text-1",
+      "text": "Ein Charakter kann versuchen, Gift von einer giftigen Kreatur zu ernten, die tot oder kampfunfähig ist. Der Versuch dauert 1W6 Minuten. Danach führt der Charakter einen SG-20-Intelligenzwurf (Naturkunde) aus und verwendet eine Giftmischerausrüstung. Bei einem Erfolg kann der Charakter genügend Gift für eine Dosis ernten. Zusätzliches Gift kann von der betreffenden Kreatur nicht geerntet werden. Misslingt der Wurf, so kann der Charakter kein Gift extrahieren. Wenn der Wurf um mindestens 5 Punkte misslingt, erleidet der Charakter selbst die Effekte des Gifts der Kreatur."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.beispielgifte",
+      "level": 3,
+      "text": "Beispielgifte"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.beispielgifte.text-1",
+      "text": "Nachfolgend sind Beispielgifte in alphabetischer Reihenfolge aufgeführt. Die Beschreibungen der Gifte enthalten den empfohlenen Preis für eine Dosis, die Art (Kontakt, Einnahme, Einatmung oder Verletzung) sowie eine Beschreibung der Effekte des Gifts."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.assassinenblut-150-gm",
+      "level": 4,
+      "text": "Assassinenblut (150 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.assassinenblut-150-gm.untertitel",
+      "text": "Einnahmegift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.assassinenblut-150-gm.text-1",
+      "text": "Eine Kreatur, die Assassinenblut einnimmt, führt einen SG-10-Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet die Kreatur 6 (1W12) Giftschaden und ist 24 Stunden lang vergiftet. Bei einem erfolgreichen Rettungswurf erleidet die Kreatur nur halb so viel Schaden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.aetheressenz-300-gm",
+      "level": 4,
+      "text": "Ätheressenz (300 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.aetheressenz-300-gm.untertitel",
+      "text": "Inhalationsgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.aetheressenz-300-gm.text-1",
+      "text": "Eine Kreatur, die Ätheressenz einatmet, muss einen SG-15-Konstitutionsrettungswurf bestehen, oder sie ist acht Stunden lang vergiftet. Solange die Kreatur auf diese Art vergiftet ist, ist sie außerdem bewusstlos. Die Kreatur erwacht, wenn sie Schaden erleidet oder von einer anderen Kreatur als Aktion wachgerüttelt wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.blasse-tinktur-250-gm",
+      "level": 4,
+      "text": "Blasse Tinktur (250 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.blasse-tinktur-250-gm.untertitel",
+      "text": "Einnahmegift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.blasse-tinktur-250-gm.text-1",
+      "text": "Eine Kreatur, die Blasse Tinktur einnimmt, muss einen SG-16-Konstitutionsrettungswurf bestehen, oder sie erleidet 3 (1W6) Giftschaden und ist vergiftet. Die vergiftete Kreatur wiederholt den Rettungswurf alle 24 Stunden. Misslingt der Wurf, so erleidet sie 3 (1W6) Giftschaden. Der Schaden, den das Gift bewirkt, kann auf keine Weise geheilt werden, solange die Kreatur vergiftet bleibt. Nach sieben erfolgreichen Rettungswürfen gegen das Gift ist die Kreatur nicht mehr vergiftet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.bosheit-250-gm",
+      "level": 4,
+      "text": "Bosheit (250 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.bosheit-250-gm.untertitel",
+      "text": "Inhalationsgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.bosheit-250-gm.text-1",
+      "text": "Eine Kreatur, die das Gift Bosheit einatmet, muss einen SG-15-Konstitutionsrettungswurf bestehen, oder sie ist eine Stunde lang vergiftet. Solange die Kreatur auf diese Art vergiftet ist, ist sie außerdem blind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.erstarrungsgift-600-gm",
+      "level": 4,
+      "text": "Erstarrungsgift (600 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.erstarrungsgift-600-gm.untertitel",
+      "text": "Einnahmegift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.erstarrungsgift-600-gm.text-1",
+      "text": "Eine Kreatur, die Erstarrungsgift einnimmt, muss einen SG-15-Konstitutionsrettungswurf bestehen, oder sie ist 4W6 Stunden lang vergiftet. Während die Kreatur auf diese Art vergiftet ist, ist ihre Bewegungsrate halbiert."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.kriecherschleim-200-gm",
+      "level": 4,
+      "text": "Kriecherschleim (200 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.kriecherschleim-200-gm.untertitel",
+      "text": "Kontaktgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.kriecherschleim-200-gm.text-1",
+      "text": "Eine Kreatur, die Kontakt mit Kriecherschleim hat, muss einen SG-13-Konstitutionsrettungswurf bestehen, oder sie ist eine Minute lang vergiftet. Solange die Kreatur auf diese Art vergiftet ist, ist sie außerdem gelähmt. Sie wiederholt den Rettungswurf am Ende jedes ihrer Züge. Bei einem Erfolg endet der Effekt bei ihr."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.mitternachtstraenen-1-500-gm",
+      "level": 4,
+      "text": "Mitternachtstränen (1.500 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.mitternachtstraenen-1-500-gm.untertitel",
+      "text": "Einnahmegift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.mitternachtstraenen-1-500-gm.text-1",
+      "text": "Eine Kreatur, die Mitternachtstränen einnimmt, erleidet bis zur nächsten Mitternacht keine Effekte. Jeder Effekt, der den Zustand Vergiftet beendet, neutralisiert dieses Gift. Wird das Gift nicht vor Mitternacht neutralisiert, führt die Kreatur einen SG-17-Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet sie 31 (9W6) Giftschaden, anderenfalls die Hälfte."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.purpurwurmgift-2-000-gm",
+      "level": 4,
+      "text": "Purpurwurmgift (2.000 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.purpurwurmgift-2-000-gm.untertitel",
+      "text": "Verletzungsgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.purpurwurmgift-2-000-gm.text-1",
+      "text": "Eine Kreatur, die Purpurwurmgift ausgesetzt ist, führt einen SG-21-Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet sie 35 (10W6) Giftschaden, anderenfalls die Hälfte."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.schlangengift-200-gm",
+      "level": 4,
+      "text": "Schlangengift (200 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.schlangengift-200-gm.untertitel",
+      "text": "Verletzungsgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.schlangengift-200-gm.text-1",
+      "text": "Eine Kreatur, die Schlangengift ausgesetzt ist, führt einen SG-11-Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet sie 10 (3W6) Giftschaden, anderenfalls die Hälfte."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.spinnenstich-200-gp",
+      "level": 4,
+      "text": "Spinnenstich (200 GP)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.spinnenstich-200-gp.untertitel",
+      "text": "Verletzungsgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.spinnenstich-200-gp.text-1",
+      "text": "Eine Kreatur, die Spinnenstich ausgesetzt ist, muss einen SG-13-Konstitutionsrettungswurf bestehen, oder sie ist eine Stunde lang vergiftet. Wenn der Rettungswurf um mindestens 5 Punkte misslingt, ist die Kreatur außerdem bewusstlos, solange sie auf diese Art vergiftet ist. Die Kreatur erwacht, wenn sie Schaden erleidet oder von einer anderen Kreatur als Aktion wachgerüttelt wird."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.taggit-oel-400-gm",
+      "level": 4,
+      "text": "Taggit-Öl (400 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.taggit-oel-400-gm.untertitel",
+      "text": "Kontaktgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.taggit-oel-400-gm.text-1",
+      "text": "Eine Kreatur, die Kontakt mit Taggit-Öl hat, muss einen SG-13-Konstitutionsrettungswurf bestehen, oder sie ist 24 Stunden lang vergiftet. Solange die Kreatur auf diese Art vergiftet ist, ist sie außerdem bewusstlos. Sie erwacht, wenn sie Schaden erleidet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.verbrannte-othurdaempfe-500-gm",
+      "level": 4,
+      "text": "Verbrannte Othurdämpfe (500 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.verbrannte-othurdaempfe-500-gm.untertitel",
+      "text": "Inhalationsgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.verbrannte-othurdaempfe-500-gm.text-1",
+      "text": "Eine Kreatur, die Verbrannte Othurdämpfe einatmet, muss einen SG-13-Konstitutionsrettungswurf bestehen, oder sie erleidet 10 (3W6) Giftschaden und muss den Rettungswurf zu Beginn jedes ihrer Züge wiederholen. Bei jedem aufeinanderfolgenden misslungenen Rettungswurf erleidet die Kreatur 3 (1W6) Giftschaden. Nach drei erfolgreichen Rettungswürfen endet die Wirkung des Gifts."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.wahrheitsserum-150-gm",
+      "level": 4,
+      "text": "Wahrheitsserum (150 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.wahrheitsserum-150-gm.untertitel",
+      "text": "Einnahmegift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.wahrheitsserum-150-gm.text-1",
+      "text": "Eine Kreatur, die Wahrheitsserum einnimmt, muss einen SG-11-Konstitutionsrettungswurf bestehen, oder sie ist eine Stunde lang vergiftet. Solange sie vergiftet ist, kann sie nicht absichtlich lügen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.poison.wyverngift-1-200-gm",
+      "level": 4,
+      "text": "Wyverngift (1.200 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.wyverngift-1-200-gm.untertitel",
+      "text": "Verletzungsgift"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.poison.wyverngift-1-200-gm.text-1",
+      "text": "Eine Kreatur, die Wyverngift ausgesetzt ist, führt einen SG-14-Konstitutionsrettungswurf aus. Misslingt der Wurf, so erleidet sie 24 (7W6) Giftschaden, anderenfalls die Hälfte."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:5adcda7646a2a261d280601031847c45531f6be26548dd7e2e3b953fd2129f39"
+}

@@ -1,0 +1,301 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "equipment.expenses-and-services",
+  "slug": "lebenshaltung-und-dienstleistungen",
+  "title": "Lebenshaltung und Dienstleistungen",
+  "navigationPath": [
+    "Ausrüstung",
+    "Lebenshaltung und Dienstleistungen"
+  ],
+  "order": 650,
+  "sourcePages": [
+    114,
+    115
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.lifestyle-expenses",
+      "level": 2,
+      "text": "Lebenshaltungskosten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-expenses-introduction",
+      "text": "Lebenshaltungskosten sind die Kosten, die für das Dasein in einer Fantasy-Welt anfallen. Sie umfassen Unterbringung, Nahrung, Ausrüstungspflege und andere alltägliche Erfordernisse."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-expenses-introduction-2",
+      "text": "Zu Beginn jeder Woche oder jedes Monats (nach Wahl des SL) wählst du einen der Lebensstile unten aus – Jämmerlich, Ärmlich, Schlecht, Einfach, Komfortabel, Wohlhabend oder Edel – und zahlst den entsprechenden Preis."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-expenses-introduction-3",
+      "text": "Ein Lebensstil hat an sich keine Konsequenzen, doch der SL kann ihn berücksichtigen, wenn er Risiken oder den Eindruck deines Charakters auf andere bestimmt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.lifestyle-wretched",
+      "level": 3,
+      "text": "Jämmerlich (gratis)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-wretched-text",
+      "text": "Du überlebst durch Zufall und Mildtätigkeit. Oft bist du Naturgefahren ausgesetzt, weil du draußen schläfst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.lifestyle-squalid",
+      "level": 3,
+      "text": "Ärmlich (1 SM pro Tag)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-squalid-text",
+      "text": "Du gibst das Minimum für deine grundlegendsten Bedürfnisse aus. Dabei könntest du ungesunden Bedingungen und Gelegenheitsverbrechern ausgesetzt sein."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.lifestyle-poor",
+      "level": 3,
+      "text": "Schlecht (2 SM pro Tag)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-poor-text",
+      "text": "Du kümmerst dich sparsam um deine Bedürfnisse."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.lifestyle-modest",
+      "level": 3,
+      "text": "Einfach (1 GM pro Tag)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-modest-text",
+      "text": "Du leistest dir einen durchschnittlichen Lebensstil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.lifestyle-comfortable",
+      "level": 3,
+      "text": "Komfortabel (2 GM pro Tag)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-comfortable-text",
+      "text": "Du kannst problemlos für dich aufkommen und leistest dir den einen oder anderen Luxus."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.lifestyle-wealthy",
+      "level": 3,
+      "text": "Wohlhabend (4 GM pro Tag)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-wealthy-text",
+      "text": "Du bist an die feineren Seiten des Lebens gewöhnt und hast möglicherweise Bedienstete."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.lifestyle-aristocratic",
+      "level": 3,
+      "text": "Edel (10 GM pro Tag)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.lifestyle-aristocratic-text",
+      "text": "Du zahlst für das Beste und hast wahrscheinlich Personal, das deinen üppigen Lebensstil ermöglicht. Andere bemerken deinen Reichtum und könnten darauf dringen, dass du ihn teilst – auf legale oder andere Weise."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.food-drink-lodging",
+      "level": 2,
+      "text": "Essen, Trinken und Unterkunft"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.food-drink-lodging-introduction",
+      "text": "In der Tabelle „Essen, Trinken und Unterkunft“ sind die Preise von Unterkünften pro Nacht sowie von Nahrungsmitteln aufgeführt. Die Kosten für Unterkunft und Verpflegung sind in deinen Lebenshaltungskosten enthalten."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.expenses-and-services.food-drink-lodging-table",
+      "caption": "Essen, Trinken und Unterkunft",
+      "columns": [
+        "Gegenstand",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Bier (Humpen)",
+          "4 KM"
+        ],
+        [
+          "Brot (Laib)",
+          "2 KM"
+        ],
+        [
+          "Gasthaus (pro Nacht): Ärmlich",
+          "7 KM"
+        ],
+        [
+          "Gasthaus (pro Nacht): Schlecht",
+          "1 SM"
+        ],
+        [
+          "Gasthaus (pro Nacht): Einfach",
+          "5 SM"
+        ],
+        [
+          "Gasthaus (pro Nacht): Komfortabel",
+          "8 SM"
+        ],
+        [
+          "Gasthaus (pro Nacht): Wohlhabend",
+          "2 GM"
+        ],
+        [
+          "Gasthaus (pro Nacht): Edel",
+          "4 GM"
+        ],
+        [
+          "Käse (Ecke)",
+          "1 SM"
+        ],
+        [
+          "Mahlzeit: Ärmlich",
+          "1 KM"
+        ],
+        [
+          "Mahlzeit: Schlecht",
+          "2 KM"
+        ],
+        [
+          "Mahlzeit: Einfach",
+          "1 SM"
+        ],
+        [
+          "Mahlzeit: Komfortabel",
+          "2 SM"
+        ],
+        [
+          "Mahlzeit: Wohlhabend",
+          "3 SM"
+        ],
+        [
+          "Mahlzeit: Edel",
+          "6 SM"
+        ],
+        [
+          "Wein (Flasche): Gemeinsprache",
+          "2 SM"
+        ],
+        [
+          "Wein (Flasche): Fein",
+          "10 GM"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.hirelings",
+      "level": 2,
+      "text": "Mietlinge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.hirelings-text",
+      "text": "Wer angeheuert wird, um eine Aufgabe auszuführen, die Übung im Umgang mit Waffen, Werkzeugen oder Fertigkeiten erfordert, ist ein fachkundiger Mietling. Dazu gehören Söldner, Handwerker, Schreiber und so weiter. Die in der Tabelle „Mietlinge“ aufgeführten Preise sind Mindestpreise – manche Spezialisten verlangen mehr. Mietlinge ohne Fachkunde werden für Arbeiten angeheuert, die keine besonderen Kenntnisse erfordern. Dazu gehören Arbeiter und Gepäckträger."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.expenses-and-services.hirelings-table",
+      "caption": "Mietlinge",
+      "columns": [
+        "Dienstleistung",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Fachkundiger Mietling",
+          "2 GM pro Tag"
+        ],
+        [
+          "Mietling ohne Fachkunde",
+          "2 SM pro Tag"
+        ],
+        [
+          "Bote",
+          "2 KM pro 1,6 km"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.expenses-and-services.spellcasting",
+      "level": 2,
+      "text": "Zauberwirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.expenses-and-services.spellcasting-text",
+      "text": "In den meisten Siedlungen gibt es Personen, die bereit sind, gegen Bezahlung Zauber zu wirken. Wenn ein Zauber teure Komponenten hat, füge die Kosten für diese Komponenten den in der Tabelle „Zauberwirken-Dienstleistungen“ aufgeführten Kosten hinzu. Je höher der Grad des gewünschten Zaubers ist, desto schwieriger ist es, jemanden zu finden, der ihn wirken kann."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.expenses-and-services.spellcasting-services-table",
+      "caption": "Zauberwirken-Dienstleistungen",
+      "columns": [
+        "Zaubergrad",
+        "Verfügbarkeit",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Zaubertrick",
+          "Dorf, Kleinstadt oder Stadt",
+          "30 GM"
+        ],
+        [
+          "1",
+          "Dorf, Kleinstadt oder Stadt",
+          "50 GM"
+        ],
+        [
+          "2",
+          "Dorf, Kleinstadt oder Stadt",
+          "200 GM"
+        ],
+        [
+          "3",
+          "Nur Kleinstadt oder Stadt",
+          "300 GM"
+        ],
+        [
+          "4–5",
+          "Nur Kleinstadt oder Stadt",
+          "2.000 GM"
+        ],
+        [
+          "6–8",
+          "Nur Stadt",
+          "20.000 GM"
+        ],
+        [
+          "9",
+          "Nur Stadt",
+          "100.000 GM"
+        ]
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:efea50c6c1dfd941bbfc1fd18cbeaa6f541460c77ebc50f2a5e65f2ee5f647c3"
+}

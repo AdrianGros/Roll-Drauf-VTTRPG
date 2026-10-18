@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "equipment.magic-items",
+  "slug": "magische-gegenstaende-ausruestung",
+  "title": "Magische Gegenstände",
+  "navigationPath": [
+    "Ausrüstung",
+    "Magische Gegenstände"
+  ],
+  "order": 660,
+  "sourcePages": [
+    115,
+    116
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.magic-items",
+      "level": 2,
+      "text": "Magische Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.magic-items-introduction",
+      "text": "In jedem Abenteuer gibt es möglicherweise – nicht garantiert – magische Gegenstände zu finden. Unter „Magische Gegenstände“ weiter hinten in diesem Dokument werden Hunderte magische Gegenstände beschrieben. Im Folgenden erfährst du, was du über den Umgang mit magischen Gegenständen wissen musst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.identifying",
+      "level": 3,
+      "text": "Einen magischen Gegenstand identifizieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.identifying-text",
+      "text": "Manche magischen Gegenstände sind nicht von ihren nichtmagischen Gegenstücken zu unterscheiden. Andere sind auf den ersten Blick als magisch zu erkennen. Wenn du einen magischen Gegenstand in die Hand nimmst, bemerkst du, dass er außergewöhnlich ist, jedoch erfährst du seine magischen Eigenschaften nicht automatisch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.identifying-text-2",
+      "text": "Der Zauber Identifizieren ist die schnellste Methode, die Eigenschaften eines Gegenstands zu enthüllen. Alternativ kannst du dich bei einer kurzen Rast auf einen magischen Gegenstand konzentrieren, während du physischen Kontakt mit ihm hast. Am Ende der Rast sind dir seine Eigenschaften und deren Verwendung (jedoch keine Flüche, die er möglicherweise trägt) bekannt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.identifying-text-3",
+      "text": "Manchmal trägt ein magischer Gegenstand Hinweise auf seine Eigenschaften. Das Befehlswort zum Aktivieren eines Rings könnte in seine Innenseite graviert sein, oder der Ring ist mit Federmustern geschmückt, um darauf hinzuweisen, dass es sich um einen Ring des Federfalls handelt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.identifying-text-4",
+      "text": "Auch das Tragen eines Gegenstands sowie das Experimentieren damit kann Hinweise auf seine Eigenschaften liefern. Tränke sind ein Sonderfall: Hier genügt eine kleine Geschmacksprobe, um die Wirkung eines Tranks zu erkennen. Mit anderen Gegenständen muss möglicherweise mehr experimentiert werden. Beispiel: Wenn dein Charakter einen Ring des Schwimmens anlegt, könnte der SL sagen: „Deine Bewegungen fühlen sich eigenartig flüssig an.“ Vielleicht springst du nun in einen Fluss, um zu erfahren, was geschieht. Der SL könnte dann anmerken, dass du unerwartet gut schwimmst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.attunement",
+      "level": 3,
+      "text": "Einstimmung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.attunement-text",
+      "text": "Manche magischen Gegenstände erfordern, dass eine bestimmte Bindung an sie hergestellt wird, ehe ihre magischen Eigenschaften genutzt werden können: Dies ist die sogenannte Einstimmung. Ohne Einstimmung auf einen Gegenstand, der Einstimmung erfordert, sind nur dessen nichtmagische Vorzüge verfügbar, sofern in der Beschreibung nicht anders angegeben. Beispielsweise bietet ein magischer Schild, der Einstimmung erfordert, einer nicht eingestimmten Kreatur die Vorzüge eines normalen Schilds, jedoch keine seiner magischen Eigenschaften."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.attuning-during-short-rest",
+      "level": 4,
+      "text": "Einstimmen während einer kurzen Rast"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.attuning-during-short-rest-text",
+      "text": "Zum Einstimmen auf einen Gegenstand musst du eine kurze Rast mit dem Gegenstand verbringen und dich ausschließlich auf ihn konzentrieren, während du in physischem Kontakt mit ihm bist. Die kurze Rast kann nicht dieselbe sein wie die, in der du die Eigenschaften des Gegenstands erfahren hast. Die Konzentration auf den Gegenstand kann bei einer Waffe aus Training, bei einem Zauberstab aus Meditation oder aus einer sonstigen jeweils passenden Aktivität bestehen. Wenn die kurze Rast unterbrochen wird, misslingt die Einstimmung. Anderenfalls bist du am Ende der kurzen Rast auf den magischen Gegenstand eingestimmt und kannst auf all seine magischen Fähigkeiten zugreifen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.attunement-limit",
+      "level": 4,
+      "text": "Höchstens drei Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.attunement-limit-text",
+      "text": "Du kannst auf höchstens drei magische Gegenstände zugleich eingestimmt sein. Jeder Versuch, sich auf einen vierten Gegenstand einzustimmen, misslingt: Du musst zuerst deine Einstimmung auf einen der drei Gegenstände beenden. Außerdem kannst du dich auf höchstens ein Exemplar eines Gegenstands einstimmen. Es ist dir beispielsweise nicht möglich, dich auf jeweils mehr als einen Ring des Schutzes einzustimmen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.ending-attunement",
+      "level": 4,
+      "text": "Einstimmung beenden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.ending-attunement-text",
+      "text": "Deine Einstimmung auf einen Gegenstand endet, wenn du die Voraussetzungen für die Einstimmung nicht mehr erfüllst, wenn der Gegenstand mindestens 24 Stunden lang weiter als 30 Meter von dir entfernt ist, wenn du stirbst oder wenn sich eine andere Kreatur auf den Gegenstand einstimmt. Sofern der Gegenstand nicht verflucht ist, kannst du die Einstimmung auch freiwillig beenden, indem du eine weitere kurze Rast damit verbringst, dich auf den Gegenstand zu konzentrieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.wearing-and-wielding",
+      "level": 3,
+      "text": "Gegenstände tragen und führen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.wearing-and-wielding-text",
+      "text": "Zum Nutzen seiner Eigenschaften muss ein magischer Gegenstand möglicherweise getragen oder geführt werden. Wenn er getragen werden muss, dann muss dies auf die vorgesehene Weise geschehen: Stiefel gehören an die Füße, Handschuhe an die Hände, Hüte und Helme auf den Kopf, Ringe an die Finger. Eine magische Rüstung muss angelegt, ein Schild an den Arm geschnallt, ein Umhang um die Schultern gelegt werden. Eine Waffe muss gehalten werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.wearing-and-wielding-text-2",
+      "text": "Die meisten magischen Gegenstände, die getragen werden sollen, passen unabhängig von Größe und Körperbau zu jeder Kreatur. Magische Kleidungsstücke können beispielsweise problemlos angepasst werden oder tun dies sogar auf magische Art selbst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.multiple-items-of-the-same-kind",
+      "level": 4,
+      "text": "Mehrere gleichartige Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.multiple-items-of-the-same-kind-text",
+      "text": "Von bestimmten magischen Gegenständen kannst du jeweils höchstens einen tragen. Normalerweise kannst du nur ein Paar Schuhe, ein Paar Handschuhe oder Panzerhandschuhe, ein Paar Armschienen, eine Rüstung, eine Kopfbedeckung und einen Umhang tragen. Der SL könnte Ausnahmen machen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.magic-items.paired-items",
+      "level": 4,
+      "text": "Paarweise Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.magic-items.paired-items-text",
+      "text": "Paarweise Gegenstände wie Stiefel, Armschienen, Panzerhandschuhe und Handschuhe gewähren ihre Vorzüge nur dann, wenn beide Teile des Paars getragen werden. Wenn ein Charakter beispielsweise an einem Fuß einen Stiefel des Schreitens und Springens und am anderen einen Stiefel der Elfen trägt, erhält er von keinem einen Vorzug."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:3a5cb6c5e64151fa2219f48cbe9efd86db8d5466f2ed36435909ade6a0a26233"
+}

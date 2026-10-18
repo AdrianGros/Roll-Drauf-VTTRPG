@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.cursed",
+  "slug": "verfluchte-gegenstaende",
+  "title": "Verfluchte Gegenstände",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Verfluchte Gegenstände"
+  ],
+  "order": 1050,
+  "sourcePages": [
+    239
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.cursed.verfluchte-gegenstaende",
+      "level": 2,
+      "text": "Verfluchte Gegenstände"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.cursed.verfluchte-gegenstaende.text-1",
+      "text": "In der Beschreibung eines magischen Gegenstands ist angegeben, ob ein Fluch auf ihm lastet. Die meisten Methoden zum Identifizieren von Gegenständen einschließlich des Zaubers Identifizieren können keine Flüche enthüllen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.cursed.verfluchte-gegenstaende.text-2",
+      "text": "Einstimmung auf einen verfluchten Gegenstand kann erst beendet werden, wenn der Fluch gebrochen wird, beispielsweise mit dem Zauber Fluch brechen."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:a8bbbe895e1cd754fc86f3ca7fbdeb7a9da1cf6b7f62641fb0506a9f1356b01b"
+}

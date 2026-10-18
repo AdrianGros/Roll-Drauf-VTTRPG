@@ -1,0 +1,1065 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "classes.paladin",
+  "slug": "paladin",
+  "title": "Paladin",
+  "navigationPath": [
+    "Klassen",
+    "Paladin"
+  ],
+  "order": 280,
+  "sourcePages": [
+    73,
+    74,
+    75,
+    76,
+    77,
+    78
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.paladin",
+      "level": 2,
+      "text": "Paladin"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "classes.paladin.key-traits",
+      "entries": [
+        {
+          "term": "Hauptattribut",
+          "definition": "Stärke und Charisma"
+        },
+        {
+          "term": "Trefferpunktewürfel",
+          "definition": "1W10 pro Paladinstufe"
+        },
+        {
+          "term": "Rettungswürfe, in denen du geübt bist",
+          "definition": "Weisheit und Charisma"
+        },
+        {
+          "term": "Fertigkeiten, in denen du geübt bist",
+          "definition": "Wähle zwei aus: Athletik, Einschüchtern, Heilkunde, Motiv erkennen, Religion oder Überzeugen"
+        },
+        {
+          "term": "Übung im Umgang mit Waffen",
+          "definition": "Einfache Waffen und Kriegswaffen"
+        },
+        {
+          "term": "Rüstungsvertrautheit",
+          "definition": "Leichte, mittelschwere und schwere Rüstung sowie Schilde"
+        },
+        {
+          "term": "Anfangsausrüstung",
+          "definition": "Wähle A oder B aus: (A) Kettenpanzer, Schild, Langschwert, sechs Wurfspeere, Heiliges Symbol, Priesterausrüstung und 9 GM oder (B) 150 GM"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.becoming-a-paladin",
+      "level": 3,
+      "text": "Ein Paladin werden ..."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.as-a-level1-character",
+      "level": 4,
+      "text": "Als Charakter der 1. Stufe"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.paladin.as-a-level1-character-list",
+      "items": [
+        "Du erhältst alle Merkmale in der Tabelle „Hauptmerkmale des Paladins“.",
+        "Du erhältst die Merkmale der 1. Paladinstufe, die in der Tabelle „Paladinmerkmale“ aufgeführt sind."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.as-a-multiclass-character",
+      "level": 4,
+      "text": "Als Charakter mit Klassenkombination"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.paladin.as-a-multiclass-character-list",
+      "items": [
+        "Du erhältst folgende Merkmale in der Tabelle „Hauptmerkmale des Paladins“: Trefferpunktewürfel, Übung im Umgang mit Kriegswaffen, Vertrautheit mit leichter und mittelschwerer Rüstung sowie mit Schilden.",
+        "Du erhältst die Merkmale der 1. Paladinstufe, die in der Tabelle „Paladinmerkmale“ aufgeführt sind. Bestimme deine verfügbaren Zauberplätze anhand der Regeln zu Klassenkombinationen unter „Charaktererstellung“."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.class-features",
+      "level": 3,
+      "text": "Klassenmerkmale des Paladins"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.class-features-introduction",
+      "text": "Als Paladin erhältst du auf den angegebenen Paladinstufen folgende Klassenmerkmale. Diese Merkmale sind in der Tabelle „Paladinmerkmale“ aufgeführt."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.paladin.progression-table",
+      "caption": "Paladinmerkmale",
+      "columns": [
+        "Stufe",
+        "Übungsbonus",
+        "Klassenmerkmale",
+        "Göttliche Macht fokussieren",
+        "Vorbereitete Zauber",
+        "Grad 1",
+        "Grad 2",
+        "Grad 3",
+        "Grad 4",
+        "Grad 5"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Handauflegen, Waffenbeherrschung, Zauberwirken",
+          "–",
+          "2",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "2",
+          "+2",
+          "Kampfstil, Paladin-Niederstrecken",
+          "–",
+          "3",
+          "2",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "3",
+          "+2",
+          "Göttliche Macht fokussieren, Paladin-Unterklasse",
+          "2",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "4",
+          "+2",
+          "Attributswerterhöhung",
+          "2",
+          "5",
+          "3",
+          "–",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "5",
+          "+3",
+          "Treues Reittier, Zusätzlicher Angriff",
+          "2",
+          "6",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "6",
+          "+3",
+          "Aura des Schutzes",
+          "2",
+          "6",
+          "4",
+          "2",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "7",
+          "+3",
+          "Unterklassenmerkmal",
+          "2",
+          "7",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "8",
+          "+3",
+          "Attributswerterhöhung",
+          "2",
+          "7",
+          "4",
+          "3",
+          "–",
+          "–",
+          "–"
+        ],
+        [
+          "9",
+          "+4",
+          "Gegner verdammen",
+          "2",
+          "9",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–"
+        ],
+        [
+          "10",
+          "+4",
+          "Aura der Tapferkeit",
+          "2",
+          "9",
+          "4",
+          "3",
+          "2",
+          "–",
+          "–"
+        ],
+        [
+          "11",
+          "+4",
+          "Gleißende Schläge",
+          "3",
+          "10",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–"
+        ],
+        [
+          "12",
+          "+4",
+          "Attributswerterhöhung",
+          "3",
+          "10",
+          "4",
+          "3",
+          "3",
+          "–",
+          "–"
+        ],
+        [
+          "13",
+          "+5",
+          "–",
+          "3",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–"
+        ],
+        [
+          "14",
+          "+5",
+          "Erquickende Berührung",
+          "3",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "–"
+        ],
+        [
+          "15",
+          "+5",
+          "Unterklassenmerkmal",
+          "3",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–"
+        ],
+        [
+          "16",
+          "+5",
+          "Attributswerterhöhung",
+          "3",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "–"
+        ],
+        [
+          "17",
+          "+6",
+          "–",
+          "3",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1"
+        ],
+        [
+          "18",
+          "+6",
+          "Aura-Ausdehnung",
+          "3",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1"
+        ],
+        [
+          "19",
+          "+6",
+          "Epische Gabe",
+          "3",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2"
+        ],
+        [
+          "20",
+          "+6",
+          "Unterklassenmerkmal",
+          "3",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level1-lay-on-hands",
+      "level": 4,
+      "text": "1. Stufe: Handauflegen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-lay-on-hands-description",
+      "text": "Deine gesegnete Berührung kann Wunden heilen. Du hast einen Vorrat an Heilkraft, der nach einer langen Rast aufgefüllt wird. Mit diesem Vorrat kannst du das Fünffache deiner Paladinstufe an Trefferpunkten wiederherstellen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-lay-on-hands-use",
+      "text": "Als Bonusaktion kannst du eine Kreatur (auch dich selbst) berühren und Kraft aus deinem Vorrat an Heilkraft ziehen, um bei der Kreatur höchstens so viele Trefferpunkte wiederherzustellen, wie noch im Vorrat vorhanden sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-lay-on-hands-poison",
+      "text": "Du kannst auch 5 Trefferpunkte aus dem Vorrat an Heilkraft verbrauchen, um den Zustand Vergiftet von der Kreatur zu entfernen. Diese Punkte werden nicht als Trefferpunkte der Kreatur wiederhergestellt."
+    },
+    {
+      "type": "rule-callout",
+      "ruleId": "classes.paladin.breaking-your-oath",
+      "title": "Deinen Schwur brechen",
+      "text": "Paladine versuchen, sich nach den höchsten Verhaltensstandards zu richten, doch selbst die Tugendhaftesten können scheitern. Manchmal werden Paladine ihren Schwüren nicht gerecht.\n\nWenn ein Paladin seinen Schwur gebrochen hat, ersucht er üblicherweise um Absolution, leistet als Zeichen der Buße eine Nachtwache oder legt eine Fastenzeit ein. Nach einem Vergebungsritual ist dem Paladin ein Neuanfang möglich.\n\nBricht dein Paladin seinen Schwur allerdings reuelos, so sprich mit deinem SL. Dein Paladin sollte wahrscheinlich eine geeignetere Unterklasse auswählen oder sogar seine Klasse wechseln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level1-weapon-mastery",
+      "level": 4,
+      "text": "1. Stufe: Waffenbeherrschung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-weapon-mastery-description",
+      "text": "Deine Vertrautheit mit Waffen erlaubt dir, die Meisterschaftseigenschaften zweier Waffenarten deiner Wahl zu verwenden, sofern du Übung im Umgang mit diesen hast, beispielsweise Langschwerter und Wurfspeere."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-weapon-mastery-swap",
+      "text": "Wann immer du eine lange Rast beendest, kannst du die Art der ausgewählten Waffen ändern. Beispiel: Du könntest beschließen, die Meisterschaftseigenschaft von Hellebarden und Flegeln zu verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level1-spellcasting",
+      "level": 4,
+      "text": "1. Stufe: Zauberwirken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-spellcasting-introduction",
+      "text": "Du hast gelernt, durch Gebete und Meditation Zauber zu wirken. Die Regeln zum Zauberwirken findest du unter „Zauber“. Folgende Informationen erklären, wie du diese Regeln mit den Paladinzaubern verwendest, die in der Zauberliste des Paladins weiter hinten in dieser Klassenbeschreibung aufgeführt sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-spellcasting-slots",
+      "text": "Zauberplätze: Die Tabelle „Paladinmerkmale“ zeigt, wie viele Zauberplätze dir zum Wirken deiner Zauber ab dem 1. Grad zur Verfügung stehen. Du erhältst alle verbrauchten Zauberplätze nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-spellcasting-prepared",
+      "text": "Vorbereitete Zauber ab dem 1. Grad: Du bereitest die Liste der Zauber ab dem 1. Grad vor, die dir mit diesem Merkmal zur Verfügung stehen. Wähle zu Beginn zwei Paladinzauber des 1. Grades aus. Heldenmut und Sengendes Niederstrecken werden empfohlen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-spellcasting-prepared-growth",
+      "text": "Die Anzahl der Zauber auf deiner Liste erhöht sich, wenn du weitere Paladinstufen erhältst, wie in der Spalte „Vorbereitete Zauber“ der Tabelle „Paladinmerkmale“ dargestellt. Wann immer sich diese Anzahl erhöht, wählst du zusätzliche Paladinzauber aus, bis die Anzahl von Zaubern auf deiner Liste der Anzahl in der Tabelle „Paladinmerkmale“ entspricht. Der Grad der ausgewählten Zauber muss dem der verfügbaren Zauberplätze entsprechen. Beispiel: Wenn du ein Paladin der 5. Stufe bist, kann deine Liste vorbereiteter Zauber sechs Paladinzauber des 1. und 2. Grades in beliebiger Kombination enthalten."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-spellcasting-prepared-other-features",
+      "text": "Wenn ein anderes Paladinmerkmal dir Zauber gibt, die du stets vorbereitet hast, zählen diese Zauber nicht bei der Anzahl von Zaubern, die du mit diesem Merkmal vorbereiten kannst. Ansonsten zählen diese Zauber jedoch als Paladinzauber für dich."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-spellcasting-prepared-swap",
+      "text": "Deine vorbereiteten Zauber ändern: Wann immer du eine lange Rast beendest, kannst du einen der Zauber auf deiner Liste durch einen anderen Paladinzauber ersetzen, für den du Zauberplätze hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-spellcasting-ability",
+      "text": "Attribut zum Zauberwirken: Dein Attribut zum Wirken der Paladinzauber ist Charisma."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level1-spellcasting-focus",
+      "text": "Zauberfokus: Du kannst ein heiliges Symbol als Zauberfokus für deine Paladinzauber verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level2-fighting-style",
+      "level": 4,
+      "text": "2. Stufe: Kampfstil"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level2-fighting-style-description",
+      "text": "Du erhältst ein Kampfstil-Talent deiner Wahl (Talente siehe „Talente“). Anstatt eins dieser Talente auszuwählen, kannst du dich auch für die Option unten entscheiden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level2-fighting-style-blessed-warrior",
+      "text": "Gesegneter Krieger: Du erlernst zwei Klerikerzaubertricks deiner Wahl (eine Liste der Klerikerzauber findest du im Abschnitt zur Klerikerklasse). Göttliche Führung und Heilige Flamme werden empfohlen. Die ausgewählten Zaubertricks zählen für dich als Paladinzauber, und dein Attribut zum Wirken dieser Zauber ist Charisma. Wann immer du eine Paladinstufe erhältst, kannst du einen dieser Zaubertricks durch einen anderen Klerikerzaubertrick ersetzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level2-paladins-smite",
+      "level": 4,
+      "text": "2. Stufe: Paladin-Niederstrecken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level2-paladins-smite-description",
+      "text": "Du hast den Zauber Göttliches Niederstrecken stets vorbereitet. Du kannst diesen Zauber wirken, ohne einen Zauberplatz zu verbrauchen, kannst ihn aber erst nach einer langen Rast erneut auf diese Art wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level3-channel-divinity",
+      "level": 4,
+      "text": "3. Stufe: Göttliche Macht fokussieren"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level3-channel-divinity-description",
+      "text": "Du kannst göttliche Energie direkt von den Äußeren Ebenen kanalisieren, um magische Effekte zu wirken. Du beginnst mit einem solchen Effekt: Göttliches Gespür (unten beschrieben). Andere Paladinmerkmale verleihen dir zusätzliche Effektoptionen bei Göttliche Macht fokussieren. Wann immer du Göttliche Macht fokussieren dieser Klasse einsetzt, wählst du aus, welchen Effekt dieser Klasse du bewirkst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level3-channel-divinity-uses",
+      "text": "Du kannst Göttliche Macht fokussieren dieser Klasse zweimal anwenden. Wenn du eine kurze Rast beendest, erhältst du eine verbrauchte Anwendung zurück. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück. Du erhältst eine zusätzliche Anwendung, wenn du die 11. Paladinstufe erreichst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level3-channel-divinity-save-dc",
+      "text": "Wenn ein Effekt von Göttliche Macht fokussieren einen Rettungswurf erfordert, entspricht der SG dem Zauberrettungswurf-SG des Merkmals Zauberwirken dieser Klasse."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level3-channel-divinity-divine-sense",
+      "text": "Göttliches Gespür: Als Bonusaktion kannst du dein Bewusstsein öffnen, um celestische Wesen, Unholde und Untote zu erkennen. In den nächsten zehn Minuten – oder bis du kampfunfähig wirst – kennst du den Ort von jeder Kreatur dieser Typen im Abstand von bis zu 18 Metern von dir, und du erkennst den jeweiligen Kreaturentyp. Innerhalb der gleichen Reichweite erkennst du auch Orte und Gegenstände, die geweiht oder entweiht wurden, als würdest du den Zauber Weihen wirken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level3-subclass",
+      "level": 4,
+      "text": "3. Stufe: Paladin-Unterklasse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level3-subclass-description",
+      "text": "Du erhältst eine Paladin-Unterklasse deiner Wahl. Die Unterklasse Schwur der Hingabe wird nach der Beschreibung dieser Klasse erläutert. Unterklassen sind Spezialisierungen, die dir auf bestimmten Paladinstufen Merkmale gewähren. Du erhältst für den Rest deiner Laufbahn alle Merkmale deiner Unterklasse, die zu deiner aktuellen Paladinstufe oder den niedrigeren Stufen gehören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level4-ability-score-improvement",
+      "level": 4,
+      "text": "4. Stufe: Attributswerterhöhung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level4-ability-score-improvement-description",
+      "text": "Du erhältst das Talent Attributswerterhöhung (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Du erhältst dieses Merkmal auf der 8., 12. und 16. Paladinstufe erneut."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level5-extra-attack",
+      "level": 4,
+      "text": "5. Stufe: Zusätzlicher Angriff"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level5-extra-attack-description",
+      "text": "Du kannst jetzt zweimal angreifen, wenn du in deinem Zug eine Angriffsaktion ausführst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level5-faithful-steed",
+      "level": 4,
+      "text": "5. Stufe: Treues Reittier"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level5-faithful-steed-description",
+      "text": "Du kannst ein außerweltliches Reittier herbeirufen. Du hast den Zauber Reittier finden stets vorbereitet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level5-faithful-steed-free-cast",
+      "text": "Du kannst den Zauber auch einmal wirken, ohne einen Zauberplatz zu verbrauchen. Diese Fähigkeit erhältst du nach einer langen Rast zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level6-aura-of-protection",
+      "level": 4,
+      "text": "6. Stufe: Aura des Schutzes"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level6-aura-of-protection-description",
+      "text": "Du hast eine nicht sichtbare beschützende Aura in einer Ausströmung von drei Metern, die von dir ausgeht. Die Aura ist inaktiv, solange du kampfunfähig bist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level6-aura-of-protection-bonus",
+      "text": "Du und deine Verbündeten in der Aura erhaltet einen Bonus in Höhe deines Charismamodifikators (mindestens +1) auf Rettungswürfe."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level6-aura-of-protection-multiple-paladins",
+      "text": "Wenn ein anderer Paladin anwesend ist, kann eine Kreatur nur von jeweils einer Aura des Schutzes (nach ihrer Wahl) profitieren."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level9-abjure-foes",
+      "level": 4,
+      "text": "9. Stufe: Gegner verdammen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level9-abjure-foes-description",
+      "text": "Als magische Aktion kannst du eine Anwendung von Göttliche Macht fokussieren dieser Klasse verbrauchen, um Gegnern gehörige Ehrfurcht einzuflößen. Wenn du dein heiliges Symbol oder deine heilige Waffe präsentierst, kannst du auf eine Anzahl von Kreaturen in Höhe deines Charismamodifikators (mindestens eine Kreatur) im Abstand von bis zu 18 Metern von dir zielen, die du sehen kannst. Jedes Ziel muss einen Weisheitsrettungswurf bestehen, oder es ist eine Minute lang – oder bis es Schaden erleidet – verängstigt. Solange es auf diese Art verängstigt ist, kann es in seinen Zügen nur eine der folgenden Handlungen ausführen: sich bewegen, eine Aktion ausführen, eine Bonusaktion ausführen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level10-aura-of-courage",
+      "level": 4,
+      "text": "10. Stufe: Aura der Tapferkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level10-aura-of-courage-description",
+      "text": "Du und deine Verbündeten innerhalb deiner Aura des Schutzes seid gegen den Zustand Verängstigt immun. Wenn ein verängstigter Verbündeter die Aura betritt, hat der Zustand keine Wirkung auf ihn, solange er sich innerhalb der Aura aufhält."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level11-radiant-strikes",
+      "level": 4,
+      "text": "11. Stufe: Gleißende Schläge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level11-radiant-strikes-description",
+      "text": "Deine Schläge haben jetzt übernatürliche Macht. Wenn du ein Ziel mit einer Nahkampfwaffe oder einem waffenlosen Angriff triffst, erleidet es zusätzlich 1W8 gleißenden Schaden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level14-restoring-touch",
+      "level": 4,
+      "text": "14. Stufe: Erquickende Berührung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level14-restoring-touch-description",
+      "text": "Wenn du Handauflegen auf eine Kreatur wirkst, kannst du zusätzlich mindestens einen der folgenden Zustände von der Kreatur entfernen: Betäubt, Bezaubert, Blind, Gelähmt, Taub oder Verängstigt. Du musst für jeden dieser Zustände, den du entfernen willst, 5 Trefferpunkte aus dem Vorrat an Heilkraft von Handauflegen verbrauchen. Diese Punkte werden nicht als Trefferpunkte der Kreatur wiederhergestellt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level18-aura-expansion",
+      "level": 4,
+      "text": "18. Stufe: Aura-Ausdehnung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level18-aura-expansion-description",
+      "text": "Deine Aura des Schutzes ist nun eine Ausströmung von neun Metern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.level19-epic-boon",
+      "level": 4,
+      "text": "19. Stufe: Epische Gabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.level19-epic-boon-description",
+      "text": "Du erhältst ein Epische-Gabe-Talent (siehe „Talente“) oder ein anderes Talent deiner Wahl, für das du qualifiziert bist. Gabe des Wahren Blicks wird empfohlen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.spell-list",
+      "level": 3,
+      "text": "Zauberliste des Paladins"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.spell-list-introduction",
+      "text": "In diesem Abschnitt wird die Zauberliste des Paladins vorgestellt. Die Zauber sind nach Zaubergrad und dann alphabetisch sortiert, und die Schule der Magie der jeweiligen Zauber ist aufgeführt. In der Spalte „Besonderheit“ bedeutet K, dass der Zauber Konzentration erfordert, R bedeutet, dass es sich um ein Ritual handelt, und M bedeutet, dass eine bestimmte Materialkomponente erforderlich ist."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.paladin.spell-list-level1",
+      "caption": "Paladinzauber des 1. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Befehl",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Gift und Krankheit entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Göttliche Gunst",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Göttliches Niederstrecken",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Gutes und Böses entdecken",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Heldenmut",
+          "Verzauberungsmagie",
+          "K"
+        ],
+        [
+          "Magie entdecken",
+          "Erkenntnismagie",
+          "K, R"
+        ],
+        [
+          "Nahrung und Wasser reinigen",
+          "Verwandlungsmagie",
+          "R"
+        ],
+        [
+          "Schild des Glaubens",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Schutz vor Gut und Böse",
+          "Bannmagie",
+          "K, M"
+        ],
+        [
+          "Segnen",
+          "Verzauberungsmagie",
+          "K, M"
+        ],
+        [
+          "Sengendes Niederstrecken",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Wunden heilen",
+          "Bannmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.paladin.spell-list-level2",
+      "caption": "Paladinzauber des 2. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Beistand",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Gebet der Heilung",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Gegenstand aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Magische Waffe",
+          "Verwandlungsmagie",
+          "–"
+        ],
+        [
+          "Reittier finden",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Sanfte Ruhe",
+          "Nekromantie",
+          "R, M"
+        ],
+        [
+          "Schutz vor Gift",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Schützendes Band",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Schwache Genesung",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Strahlendes Niederstrecken",
+          "Verwandlungsmagie",
+          "K"
+        ],
+        [
+          "Zone der Wahrheit",
+          "Verzauberungsmagie",
+          "–"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.paladin.spell-list-level3",
+      "caption": "Paladinzauber des 3. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Fluch brechen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Magie bannen",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Nahrung und Wasser erschaffen",
+          "Beschwörungsmagie",
+          "–"
+        ],
+        [
+          "Schutzkreis",
+          "Bannmagie",
+          "M"
+        ],
+        [
+          "Tageslicht",
+          "Hervorrufungsmagie",
+          "–"
+        ],
+        [
+          "Wiederbeleben",
+          "Nekromantie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.paladin.spell-list-level4",
+      "caption": "Paladinzauber des 4. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Aura des Lebens",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Kreatur aufspüren",
+          "Erkenntnismagie",
+          "K"
+        ],
+        [
+          "Todesschutz",
+          "Bannmagie",
+          "–"
+        ],
+        [
+          "Verbannung",
+          "Bannmagie",
+          "K"
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.paladin.spell-list-level5",
+      "caption": "Paladinzauber des 5. Grades",
+      "columns": [
+        "Zauber",
+        "Schule",
+        "Besonderheit"
+      ],
+      "rows": [
+        [
+          "Geas",
+          "Verzauberungsmagie",
+          "–"
+        ],
+        [
+          "Gutes und Böses bannen",
+          "Bannmagie",
+          "K"
+        ],
+        [
+          "Tote erwecken",
+          "Nekromantie",
+          "M"
+        ],
+        [
+          "Vollständige Genesung",
+          "Bannmagie",
+          "M"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.subclass-devotion",
+      "level": 3,
+      "text": "Paladin-Unterklasse: Schwur der Hingabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-devotion-motto",
+      "text": "Kämpfe für die Ideale von Gerechtigkeit und Ordnung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-devotion-introduction",
+      "text": "Der Schwur der Hingabe bindet Paladine an die Ideale von Gerechtigkeit und Ordnung. Diese Paladine entsprechen dem Archetypen des Ritters in strahlender Rüstung. Sie legen die höchsten Verhaltensmaßstäbe an sich – und manchmal auch an alle anderen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-devotion-inspiration",
+      "text": "Viele, die diesen Schwur leisten, sind den Göttern der Gesetze und des Guten ergeben und betrachten deren Lehren als Maßstab für ihre Hingabe. Andere sehen Engel als ihre Vorbilder und versehen ihre Helme oder Wappen mit stilisierten Engelsflügeln."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-devotion-tenets-introduction",
+      "text": "Diese Paladine leben nach folgenden Lehren:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "classes.paladin.subclass-devotion-tenets",
+      "items": [
+        "Lass dein Wort dein Versprechen sein.",
+        "Beschütze die Schwachen und fürchte dich niemals davor, zu handeln.",
+        "Lass deine ehrenhaften Taten ein Beispiel sein."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.subclass-level3-sacred-weapon",
+      "level": 4,
+      "text": "3. Stufe: Heilige Waffe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level3-sacred-weapon-description",
+      "text": "Wenn du die Angriffsaktion ausführst, kannst du eine Anwendung von Göttliche Macht fokussieren verbrauchen, um eine Nahkampfwaffe, die du hältst, mit positiver Energie zu versehen. Deinen Angriffswürfen mit dieser Waffe fügst du zehn Minuten lang – oder bis du dieses Merkmal erneut einsetzt – deinen Charismamodifikator hinzu (mindestens +1), und bei jedem Treffer mit der Waffe bewirkst du ihre normale Schadensart oder gleißenden Schaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level3-sacred-weapon-light",
+      "text": "Außerdem spendet die Waffe in einem Radius von sechs Metern helles Licht und in einem Radius von weiteren sechs Metern dämmriges Licht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level3-sacred-weapon-end",
+      "text": "Du kannst diesen Effekt vorzeitig beenden (keine Aktion erforderlich). Der Effekt endet auch, wenn du die Waffe nicht trägst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.subclass-level3-oath-spells",
+      "level": 4,
+      "text": "3. Stufe: Schwurzauber der Hingabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level3-oath-spells-description",
+      "text": "Dank der Magie deines Schwurs hast du stets bestimmte Zauber vorbereitet. Wenn du die in der Tabelle „Schwurzauber der Hingabe“ angegebenen Paladinstufen erreichst, hast du fortan stets die aufgeführten Zauber vorbereitet."
+    },
+    {
+      "type": "table",
+      "ruleId": "classes.paladin.subclass-level3-oath-spells-table",
+      "caption": "Schwurzauber der Hingabe",
+      "columns": [
+        "Paladinstufe",
+        "Zauber"
+      ],
+      "rows": [
+        [
+          "3",
+          "Schild des Glaubens, Schutz vor Gut und Böse"
+        ],
+        [
+          "5",
+          "Beistand, Zone der Wahrheit"
+        ],
+        [
+          "9",
+          "Leuchtfeuer der Hoffnung, Magie bannen"
+        ],
+        [
+          "13",
+          "Bewegungsfreiheit, Hüter des Glaubens"
+        ],
+        [
+          "17",
+          "Flammenschlag, Heiliges Gespräch"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.subclass-level7-aura-of-devotion",
+      "level": 4,
+      "text": "7. Stufe: Aura der Hingabe"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level7-aura-of-devotion-description",
+      "text": "Du und deine Verbündeten innerhalb deiner Aura des Schutzes seid gegen den Zustand Bezaubert immun. Wenn ein bezauberter Verbündeter die Aura betritt, hat der Zustand keine Wirkung auf ihn, solange er sich innerhalb der Aura aufhält."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.subclass-level15-smiting-protection",
+      "level": 4,
+      "text": "15. Stufe: Schützendes Niederstrecken"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level15-smiting-protection-description",
+      "text": "Dein magisches Niederstrecken strahlt nun schützende Energie aus. Wann immer du Göttliches Niederstrecken wirkst, habt du und deine Verbündeten Teildeckung, solange sie sich in deiner Aura des Schutzes aufhalten. Die Aura behält diesen Vorzug bis zum Beginn deines nächsten Zugs bei."
+    },
+    {
+      "type": "heading",
+      "ruleId": "classes.paladin.subclass-level20-holy-nimbus",
+      "level": 4,
+      "text": "20. Stufe: Heiliger Nimbus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level20-holy-nimbus-description",
+      "text": "Als Bonusaktion kannst du deine Aura des Schutzes mit heiliger Macht versehen, welche zehn Minuten lang – oder bis du sie beendest (keine Aktion erforderlich) – die unten beschriebenen Vorzüge gewährt. Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden. Alternativ kannst du die Anwendung wiederherstellen, indem du einen Zauberplatz des 5. Grades verbrauchst (keine Aktion erforderlich)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level20-holy-nimbus-radiant-damage",
+      "text": "Gleißender Schaden: Wann immer ein Gegner seinen Zug in der Aura beginnt, erleidet er gleißenden Schaden in Höhe deines Charismamodifikators plus deines Übungsbonus."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level20-holy-nimbus-holy-ward",
+      "text": "Heiliger Schutz: Du bist bei allen Rettungswürfen im Vorteil, zu denen Unholde oder Untote dich zwingen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "classes.paladin.subclass-level20-holy-nimbus-sunlight",
+      "text": "Sonnenlicht: Die Aura ist von hellem Licht erfüllt, bei dem es sich um Sonnenlicht handelt."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "character-creation.advancement-and-multiclassing.multiclass-spell-slots-table",
+      "label": "Klassenkombinationen für Zauberwirker"
+    }
+  ],
+  "digest": "sha256:af0d3a2347e582b233f419614672a5e9b0fefc2aeee3ce6ee12e755168a62336"
+}

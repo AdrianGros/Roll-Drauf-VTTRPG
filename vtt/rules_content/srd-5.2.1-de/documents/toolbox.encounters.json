@@ -1,0 +1,360 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "toolbox.encounters",
+  "slug": "kampfbegegnungen",
+  "title": "Kampfbegegnungen",
+  "navigationPath": [
+    "Werkzeugkasten fürs Spiel",
+    "Kampfbegegnungen"
+  ],
+  "order": 970,
+  "sourcePages": [
+    234,
+    235
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.kampfbegegnungen",
+      "level": 2,
+      "text": "Kampfbegegnungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.kampfbegegnungen.text-1",
+      "text": "Die folgenden Merkmale können Kampfbegegnungen interessanter und herausfordernder machen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.kampfbegegnungen.text-2",
+      "text": "Höhenunterschiede: Geländemerkmale mit Höhenunterschieden (Stapel leerer Kisten, Vorsprünge, Balkons) belohnen eine kluge Positionierung und ermuntern die Charaktere zum Springen, Klettern, Fliegen oder Teleportieren."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.kampfbegegnungen.text-3",
+      "text": "Verteidigungspositionen: Gegner an schwierig zu erreichenden Orten oder auf Verteidigungspositionen zwingen Charaktere, die normalerweise aus der Distanz angreifen, zu Bewegung."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.kampfbegegnungen.text-4",
+      "text": "Gemischte Monstergruppen: Wenn verschiedene Monsterarten zusammenarbeiten, können sie ihre Fähigkeiten kombinieren – genau wie Charaktere verschiedener Klassen und Herkünfte. Vielfältige Kräfte sind stärker."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.kampfbegegnungen.text-5",
+      "text": "Gründe für Bewegung: Nutze Merkmale, die Charaktere und ihre Gegner dazu ermuntern, sich zu bewegen: Kronleuchter, Fässchen mit Schießpulver oder Öl sowie die Falle „Rollender Stein“."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.schwierigkeit-von-kampfbegegnungen",
+      "level": 3,
+      "text": "Schwierigkeit von Kampfbegegnungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schwierigkeit-von-kampfbegegnungen.text-1",
+      "text": "Verwende die folgenden Richtlinien, um eine Kampfbegegnung der gewünschten Schwierigkeitsstufe zu gestalten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.schritt-1-waehle-eine-schwierigkeit-aus",
+      "level": 4,
+      "text": "Schritt 1: Wähle eine Schwierigkeit aus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-1-waehle-eine-schwierigkeit-aus.text-1",
+      "text": "Die Schwierigkeitsbandbreite von Begegnungen lässt sich in drei Kategorien unterteilen:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-1-waehle-eine-schwierigkeit-aus.text-2",
+      "text": "Niedrige Schwierigkeit: Eine Begegnung von niedriger Schwierigkeit hält vermutlich einen oder zwei gruselige Momente für die Spieler bereit, doch ihre Charaktere sollten den Kampf für sich entscheiden können, ohne Todesfälle zu erleiden. Es kann allerdings sein, dass mindestens einer von ihnen zu Heilressourcen greifen muss. Als grobe Richtlinie kann gelten: Ein einzelnes Monster stellt für eine Abenteurergruppe mit vier Charakteren, deren Stufe dem Herausforderungsgrad des Monsters entspricht, normalerweise eine Herausforderung von niedriger Schwierigkeit dar."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-1-waehle-eine-schwierigkeit-aus.text-3",
+      "text": "Mittlere Schwierigkeit: Eine Begegnung von mittlerer Schwierigkeit kann für Abenteurer ohne Heil- und andere Ressourcen übel ausgehen. Schwächere Charaktere könnten aus dem Kampf ausscheiden, und es besteht ein gewisses Risiko, dass mindestens ein Charakter stirbt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-1-waehle-eine-schwierigkeit-aus.text-4",
+      "text": "Hohe Schwierigkeit: Eine Begegnung von hoher Schwierigkeit kann für mindestens einen Charakter tödlich enden. Die Charaktere brauchen clevere Taktiken, Geistesgegenwart und vielleicht sogar etwas Glück, um die Begegnung zu überstehen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.schritt-2-ermittle-dein-ep-budget",
+      "level": 4,
+      "text": "Schritt 2: Ermittle dein EP-Budget"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-2-ermittle-dein-ep-budget.text-1",
+      "text": "Verwende die Tabelle „EP-Budget pro Charakter“ und suche den Eintrag für die Stufe der Abenteurergruppe bei der gewünschten Begegnungsschwierigkeit. Multipliziere die Zahl in der Tabelle mit der Anzahl der Charaktere in der Abenteurergruppe – das Ergebnis ist dein EP-Budget für die Begegnung."
+    },
+    {
+      "type": "table",
+      "ruleId": "toolbox.encounters.schritt-2-ermittle-dein-ep-budget.tabelle-ep-budget",
+      "caption": "EP-Budget pro Charakter (Begegnungsschwierigkeit)",
+      "columns": [
+        "Stufe der Gruppe",
+        "Niedrig",
+        "Mittel",
+        "Hoch"
+      ],
+      "rows": [
+        [
+          "1",
+          "50",
+          "75",
+          "100"
+        ],
+        [
+          "2",
+          "100",
+          "150",
+          "200"
+        ],
+        [
+          "3",
+          "150",
+          "225",
+          "400"
+        ],
+        [
+          "4",
+          "250",
+          "375",
+          "500"
+        ],
+        [
+          "5",
+          "500",
+          "750",
+          "1.100"
+        ],
+        [
+          "6",
+          "600",
+          "1.000",
+          "1.400"
+        ],
+        [
+          "7",
+          "750",
+          "1.300",
+          "1.700"
+        ],
+        [
+          "8",
+          "1.000",
+          "1.700",
+          "2.100"
+        ],
+        [
+          "9",
+          "1.300",
+          "2.000",
+          "2.600"
+        ],
+        [
+          "10",
+          "1.600",
+          "2.300",
+          "3.100"
+        ],
+        [
+          "11",
+          "1.900",
+          "2.900",
+          "4.100"
+        ],
+        [
+          "12",
+          "2.200",
+          "3.700",
+          "4.700"
+        ],
+        [
+          "13",
+          "2.600",
+          "4.200",
+          "5.400"
+        ],
+        [
+          "14",
+          "2.900",
+          "4.900",
+          "6.200"
+        ],
+        [
+          "15",
+          "3.300",
+          "5.400",
+          "7.800"
+        ],
+        [
+          "16",
+          "3.800",
+          "6.100",
+          "9.800"
+        ],
+        [
+          "17",
+          "4.500",
+          "7.200",
+          "11.700"
+        ],
+        [
+          "18",
+          "5.000",
+          "8.700",
+          "14.200"
+        ],
+        [
+          "19",
+          "5.500",
+          "10.700",
+          "17.200"
+        ],
+        [
+          "20",
+          "6.400",
+          "13.200",
+          "22.000"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.schritt-3-gib-dein-budget-aus",
+      "level": 4,
+      "text": "Schritt 3: Gib dein Budget aus"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-3-gib-dein-budget-aus.text-1",
+      "text": "Jede Kreatur hat einen EP-Wert im Wertekasten. Wenn du deiner Kampfbegegnung eine Kreatur hinzufügst, ziehe deren EP von deinem EP-Budget ab, um zu ermitteln, wie viele EP du noch ausgeben kannst. Gib so viel von deinem EP-Budget wie möglich aus, ohne es zu überziehen. Es ist in Ordnung, wenn ein paar EP übrig bleiben. Es folgen einige Beispiele:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-3-gib-dein-budget-aus.text-2",
+      "text": "Beispiel 1: Eine Begegnung von niedriger Schwierigkeit für vier Charaktere der Stufe 1 hat ein EP-Budget von 50 × 4, also insgesamt 200 EP. Damit könntest du jede der folgenden Begegnungen gestalten:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "toolbox.encounters.schritt-3-gib-dein-budget-aus.liste-1",
+      "items": [
+        "1 Grottenschratkrieger (200 EP)",
+        "2 Riesenwespen (jeweils 100 EP) insgesamt 200 EP",
+        "6 Riesenratten (jeweils 25 EP) insgesamt 150 EP"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-3-gib-dein-budget-aus.text-3",
+      "text": "Beispiel 2: Eine Begegnung von mittlerer Schwierigkeit für fünf Charaktere der Stufe 3 hat ein EP-Budget von 225 × 5, also insgesamt 1.125 EP. Damit könntest du eine der folgenden Begegnungen gestalten:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "toolbox.encounters.schritt-3-gib-dein-budget-aus.liste-2",
+      "items": [
+        "2 Druide (jeweils 450 EP) und 9 Blutmücken (jeweils 25 EP), insgesamt 1.125 EP",
+        "1 Gruftschrecken (700 EP), 1 Streitross-Skelett (100 EP) und 6 Skelette (jeweils 50 EP), insgesamt 1.100 EP"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.schritt-3-gib-dein-budget-aus.text-4",
+      "text": "Beispiel 3: Eine Begegnung von hoher Schwierigkeit für sechs Charaktere der Stufe 15 hat ein EP-Budget von 7.800 × 6, also insgesamt 46.800 EP. Damit könntest du diese Begegnung gestalten:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "toolbox.encounters.schritt-3-gib-dein-budget-aus.liste-3",
+      "items": [
+        "2 ausgewachsene rote Drachen (jeweils 18.000 EP) und 2 Feuerriesen (jeweils 5.000 EP), insgesamt 46.000 EP"
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.probleme-vermeiden",
+      "level": 3,
+      "text": "Probleme vermeiden"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.probleme-vermeiden.text-1",
+      "text": "Behalte beim Erstellen und Leiten von Kampfbegegnungen die folgenden Punkte im Hinterkopf:"
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.viele-kreaturen",
+      "level": 4,
+      "text": "Viele Kreaturen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.viele-kreaturen.text-1",
+      "text": "Je mehr Kreaturen an einer Begegnung teilnehmen, desto höher ist das Risiko, dass sie eine Glückssträhne haben und den Charakteren mehr Schaden zufügen, als du erwartet hast. Wenn deine Begegnung mehr als zwei Kreaturen pro Charakter umfasst, dann schließe empfindliche Kreaturen ein, die rasch besiegt werden können. Diese Richtlinie ist vor allem für Charaktere der Stufen 1 und 2 wichtig."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.anpassungen",
+      "level": 4,
+      "text": "Anpassungen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.anpassungen.text-1",
+      "text": "Wenn ein Spieler fehlt, solltest du Kreaturen aus Begegnungen entfernen, um die beabsichtigte Schwierigkeit beizubehalten. Auch Würfelwürfe und andere Faktoren können dazu führen, dass eine Begegnung einfacher oder schwieriger als vorgesehen wird. Du kannst Begegnungen aus dem Stegreif anpassen, indem du beispielsweise Kreaturen fliehen lässt (die Begegnung wird einfacher) oder für Verstärkung bei den Gegnern sorgst (die Begegnung wird schwieriger)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.kreaturen-mit-hg-0",
+      "level": 4,
+      "text": "Kreaturen mit HG 0"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.kreaturen-mit-hg-0.text-1",
+      "text": "Kreaturen mit einem HG von 0, besonders solche, die 0 EP wert sind, sollten sparsam eingesetzt werden. Wenn du in einer Begegnung viele kleine Wesen mit HG 0 einbauen möchtest, verwende stattdessen Schwärme."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.anzahl-von-wertekaesten",
+      "level": 4,
+      "text": "Anzahl von Wertekästen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.anzahl-von-wertekaesten.text-1",
+      "text": "Bei den besten Kampfbegegnungen werden meist Kreaturen verschiedener Arten kombiniert, beispielsweise Feuerriesen und Höllenhunde. Achte auf die Anzahl von Wertekästen, die du für die Begegnung brauchst. Es kann mühsam sein, bei einer Begegnung mehr als zwei oder drei Wertekästen zurate ziehen zu müssen, vor allem dann, wenn es sich um komplexe Kreaturen handelt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.maechtige-kreaturen",
+      "level": 4,
+      "text": "Mächtige Kreaturen"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.maechtige-kreaturen.text-1",
+      "text": "Wenn deine Kampfbegegnung eine Kreatur enthält, deren HG die Stufe der Abenteurergruppe überschreitet, dann denk daran, dass diese Kreatur mit einer einzigen Aktion genügend Schaden bewirken kann, um mindestens einen Charakter außer Gefecht zu setzen. Beispiel: Ein Oger (HG 2) kann einen Magier der Stufe 1 mit einem Hieb töten."
+    },
+    {
+      "type": "heading",
+      "ruleId": "toolbox.encounters.ungewoehnliche-merkmale",
+      "level": 4,
+      "text": "Ungewöhnliche Merkmale"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "toolbox.encounters.ungewoehnliche-merkmale.text-1",
+      "text": "Wenn ein Monster ein Merkmal hat, das für Charaktere niedriger Stufe schwierig zu überwinden ist, solltest du dieses Monster nicht in Begegnungen mit Charakteren einbauen, deren Stufe niedriger ist als der Herausforderungsgrad des Monsters."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:8dec9c2d596c7ca44b4a51f1c031a8c5e3a5985a373884c144260d765f058db5"
+}

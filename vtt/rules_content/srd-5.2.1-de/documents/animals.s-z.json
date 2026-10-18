@@ -1,0 +1,1286 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "animals.s-z",
+  "slug": "tiere-s-z",
+  "title": "Tiere S–Z",
+  "navigationPath": [
+    "Tiere",
+    "Tiere S–Z"
+  ],
+  "order": 3040,
+  "sourcePages": [
+    409,
+    410,
+    411,
+    412
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "animals.s-z.tiere",
+      "level": 2,
+      "text": "Tiere (S–Z)"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.saebelzahntiger",
+      "name": "Säbelzahntiger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "52 (7W10+14)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Sprung aus dem Lauf: Nach drei Metern Anlauf kann der Tiger bis zu 7,5 Meter weit springen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Tiger führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 11 (2W6+4) Hiebschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Behändes Entkommen: Der Tiger führt die Rückzug- oder die Verstecken-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.schakal",
+      "name": "Schakal",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleines Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "3 (1W6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 27 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +1, Reichweite 1,5 m. Treffer: 1 (1W4−1) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.schreckenswolf",
+      "name": "Schreckenswolf",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (3W10+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Wolf ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 8 (1W10+3) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.schwarzbaer",
+      "name": "Schwarzbär",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "19 (3W8+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Bär führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.schwertwal",
+      "name": "Schwertwal",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "90 (12W12+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Schwimmen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 36 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "3 (EP 700; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Atem anhalten: Der Wal kann 30 Minuten lang den Atem anhalten."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 21 (5W6+4) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.seepferdchen",
+      "name": "Seepferdchen",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "1,5 m, Schwimmen 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 0; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Wasser atmen: Das Seepferdchen kann nur unter Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Blasenspurt: Solange das Seepferdchen sich unter Wasser befindet, legt es bis zu seiner Schwimmbewegungsrate zurück, ohne Gelegenheitsangriffe zu provozieren."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.skorpion",
+      "name": "Skorpion",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m"
+        },
+        {
+          "label": "Stä",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Stachel: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 1 Stichschaden plus 3 (1W6) Giftschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.spinne",
+      "name": "Spinne",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Klettern 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 9 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Netzwandler: Die Spinne ignoriert Bewegungseinschränkungen durch Netze und weiß genau, wo sich andere Kreaturen aufhalten, die in Kontakt mit demselben Netz sind.\n\nSpinnenklettern: Die Spinne kann ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 1 Stichschaden plus 2 (1W4) Giftschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.streitross",
+      "name": "Streitross",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "19 (3W10+3)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Hufe: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 9 (2W4+4) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist und das Pferd sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 5 (2W4) Wuchtschaden, wird umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.tiger",
+      "name": "Tiger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "30 (4W10+8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Zerfetzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 10 (2W6+3) Hiebschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Behändes Entkommen: Der Tiger führt die Rückzug- oder die Verstecken-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.triceratops",
+      "name": "Triceratops",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiges Tier (Dinosaurier), gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "114 (12W12+36)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Triceratops führt zwei Zerfleischen-Angriffe aus.\n\nZerfleischen: Nahkampfangriffswurf: +9, Reichweite 1,5 m. Treffer: 19 (2W12+6) Stichschaden. Wenn das Ziel eine Kreatur von höchstens riesiger Größe ist und der Triceratops sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 9 (2W8) Stichschaden, wird umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.tyrannosaurus-rex",
+      "name": "Tyrannosaurus Rex",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiges Tier (Dinosaurier), gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "136 (13W12+52)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "25 (MOD +7, RW +10)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "8 (EP 3.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Tyrannosaurus führt einen Bissangriff und einen Schwanzangriff aus.\n\nBiss: Nahkampfangriffswurf: +10, Reichweite 3 m. Treffer: 33 (4W12+7) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es gepackt (Flucht-SG 17). Das gepackte Ziel ist außerdem festgesetzt und kann nicht zum Ziel vom Schwanzangriff des Tyrannosaurus werden.\n\nSchwanz: Nahkampfangriffswurf: +10, Reichweite 4,5 m. Treffer: 25 (4W8+7) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens riesiger Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.wiesel",
+      "name": "Wiesel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "1 (1W4–1)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Akrobatik +5, Heimlichkeit +5, Wahrnehmung +3"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 1 Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.wolf",
+      "name": "Wolf",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "11 (2W8+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +5"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Rudeltaktik: Der Wolf ist bei Angriffswürfen gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Stichschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.wuergeschlange",
+      "name": "Würgeschlange",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "13 (2W10+2)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Biss: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 6 (1W8+2) Stichschaden.\n\nUmschlingen: Stärkerettungswurf: SG 12; eine Kreatur von höchstens mittelgroßer Größe im Abstand von bis zu 1,5 Metern von der Schlange, die von der Schlange gesehen werden kann. Misserfolg: 7 (3W4) Wuchtschaden, und das Ziel wird gepackt (Flucht-SG 12)."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.ziege",
+      "name": "Ziege",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "4 (1W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "0 (EP 10, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Rammen: Nahkampfangriffswurf: +2, Reichweite 1,5 m. Treffer: 1 Wuchtschaden oder 2 (1W4) Wuchtschaden, wenn die Ziege sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "animals.s-z.zugpferd",
+      "name": "Zugpferd",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Tier, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "15 (2W10+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Hufe: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 6 (1W4+4) Wuchtschaden."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:92aff345cb53b58e4c9c7ee23803693d1f1a2d3b2a6d6abe47796da3c6231e97"
+}

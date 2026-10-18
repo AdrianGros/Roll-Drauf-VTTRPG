@@ -1,0 +1,1531 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "equipment.adventuring-gear",
+  "slug": "abenteurerausruestung",
+  "title": "Abenteurerausrüstung",
+  "navigationPath": [
+    "Ausrüstung",
+    "Abenteurerausrüstung"
+  ],
+  "order": 630,
+  "sourcePages": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.adventuring-gear",
+      "level": 2,
+      "text": "Abenteurerausrüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.adventuring-gear-introduction",
+      "text": "Die Tabelle „Abenteurerausrüstung“ in diesem Abschnitt enthält Ausrüstung, die Abenteurern nützlich sein kann. Die Gegenstände werden im Folgenden in alphabetischer Reihenfolge beschrieben. Der Preis eines Gegenstands ist hinter seinem Namen aufgeführt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-alchemistenfeuer",
+      "level": 3,
+      "text": "Alchemistenfeuer (50 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-alchemistenfeuer-text",
+      "text": "Wenn du die Angriffsaktion ausführst, kannst du einen deiner Angriffe dadurch ersetzen, dass du eine Flasche mit Alchemistenfeuer wirfst. Wähle ein Ziel (Kreatur oder Gegenstand) im Abstand von bis zu sechs Metern von dir aus, das du sehen kannst. Das Ziel muss einen Geschicklichkeitsrettungswurf (SG 8 plus dein Geschicklichkeitsmodifikator plus dein Übungsbonus) bestehen, oder es erleidet 1W4 Feuerschaden und beginnt zu brennen (siehe „Regelglossar“)."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.adventuring-gear.gear-table",
+      "caption": "Abenteurerausrüstung",
+      "columns": [
+        "Gegenstand",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Abdeckbare Laterne",
+          "1 kg",
+          "5 GM"
+        ],
+        [
+          "Alchemistenfeuer",
+          "0,5 kg",
+          "50 GM"
+        ],
+        [
+          "Arkaner Fokus",
+          "Variiert",
+          "Variiert"
+        ],
+        [
+          "Behälter (Armbrustbolzen)",
+          "0,5 kg",
+          "1 GM"
+        ],
+        [
+          "Behälter (Karte oder Schriftrolle)",
+          "0,5 kg",
+          "1 GM"
+        ],
+        [
+          "Beutel",
+          "0,5 kg",
+          "5 SM"
+        ],
+        [
+          "Blendlaterne",
+          "1 kg",
+          "10 GM"
+        ],
+        [
+          "Brechstange",
+          "2,5 kg",
+          "2 GM"
+        ],
+        [
+          "Buch",
+          "2,5 kg",
+          "25 GM"
+        ],
+        [
+          "Decke",
+          "1,5 kg",
+          "5 SM"
+        ],
+        [
+          "Diplomatenausrüstung",
+          "19,5 kg",
+          "39 GM"
+        ],
+        [
+          "Druidischer Fokus",
+          "Variiert",
+          "Variiert"
+        ],
+        [
+          "Eimer",
+          "1 kg",
+          "5 KM"
+        ],
+        [
+          "Einbrecherausrüstung",
+          "21 kg",
+          "16 GM"
+        ],
+        [
+          "Entdeckerausrüstung",
+          "27,5 kg",
+          "10 GM"
+        ],
+        [
+          "Enterhaken",
+          "2 kg",
+          "2 GM"
+        ],
+        [
+          "Fackel",
+          "0,5 kg",
+          "1 KM"
+        ],
+        [
+          "Fass",
+          "35 kg",
+          "2 GM"
+        ],
+        [
+          "Fernrohr",
+          "0,5 kg",
+          "1.000 GM"
+        ],
+        [
+          "Flasche (Glas)",
+          "1 kg",
+          "2 GM"
+        ],
+        [
+          "Flaschenzug",
+          "2,5 kg",
+          "1 GM"
+        ],
+        [
+          "Flasche",
+          "0,5 kg",
+          "2 KM"
+        ],
+        [
+          "Gegengift",
+          "–",
+          "50 GM"
+        ],
+        [
+          "Gelehrtenausrüstung",
+          "11 kg",
+          "40 GM"
+        ],
+        [
+          "Geschosse",
+          "Variiert",
+          "Variiert"
+        ],
+        [
+          "Gewölbeforscherausrüstung",
+          "27,5 kg",
+          "12 GM"
+        ],
+        [
+          "Gift (einfach)",
+          "–",
+          "100 GM"
+        ],
+        [
+          "Glocke",
+          "–",
+          "1 GM"
+        ],
+        [
+          "Handschellen",
+          "3 kg",
+          "2 GM"
+        ],
+        [
+          "Heilerausrüstung",
+          "1,5 kg",
+          "5 GM"
+        ],
+        [
+          "Heiliges Symbol",
+          "Variiert",
+          "Variiert"
+        ],
+        [
+          "Heiltrank",
+          "0,25 kg",
+          "50 GM"
+        ],
+        [
+          "Jagdfalle",
+          "12,5 kg",
+          "5 GM"
+        ],
+        [
+          "Karte",
+          "–",
+          "1 GM"
+        ],
+        [
+          "Kerze",
+          "–",
+          "1 KM"
+        ],
+        [
+          "Kette",
+          "5 kg",
+          "5 GM"
+        ],
+        [
+          "Kleidung, fein",
+          "3 kg",
+          "15 GM"
+        ],
+        [
+          "Kleidung, Reise",
+          "2 kg",
+          "2 GM"
+        ],
+        [
+          "Kletterausrüstung",
+          "6 kg",
+          "25 GM"
+        ],
+        [
+          "Köcher",
+          "0,5 kg",
+          "1 GM"
+        ],
+        [
+          "Korb",
+          "1 kg",
+          "4 SM"
+        ],
+        [
+          "Kostüm",
+          "2 kg",
+          "5 GM"
+        ],
+        [
+          "Krähenfüße",
+          "1 kg",
+          "1 GM"
+        ],
+        [
+          "Krug",
+          "2 kg",
+          "2 KM"
+        ],
+        [
+          "Lampe",
+          "0,5 kg",
+          "5 SM"
+        ],
+        [
+          "Leiter",
+          "12,5 kg",
+          "1 SM"
+        ],
+        [
+          "Lupe",
+          "–",
+          "100 GM"
+        ],
+        [
+          "Materialkomponentenbeutel",
+          "1 kg",
+          "25 GM"
+        ],
+        [
+          "Metallkügelchen",
+          "1 kg",
+          "1 GM"
+        ],
+        [
+          "Netz",
+          "1,5 kg",
+          "1 GM"
+        ],
+        [
+          "Öl",
+          "0,5 kg",
+          "1 SM"
+        ],
+        [
+          "Papier",
+          "–",
+          "2 SM"
+        ],
+        [
+          "Parfüm",
+          "–",
+          "5 GM"
+        ],
+        [
+          "Pergament",
+          "–",
+          "1 SM"
+        ],
+        [
+          "Phiole",
+          "–",
+          "1 GM"
+        ],
+        [
+          "Priesterausrüstung",
+          "14,5 kg",
+          "33 GM"
+        ],
+        [
+          "Rammbock (tragbar)",
+          "17,5 kg",
+          "4 GM"
+        ],
+        [
+          "Rationen",
+          "1 kg",
+          "5 SM"
+        ],
+        [
+          "Robe",
+          "2 kg",
+          "1 GM"
+        ],
+        [
+          "Rucksack",
+          "2,5 kg",
+          "2 GM"
+        ],
+        [
+          "Sack",
+          "0,25 kg",
+          "1 KM"
+        ],
+        [
+          "Säure",
+          "0,5 kg",
+          "25 GM"
+        ],
+        [
+          "Schaufel",
+          "2,5 kg",
+          "2 GM"
+        ],
+        [
+          "Schlafsack",
+          "3,5 kg",
+          "1 GM"
+        ],
+        [
+          "Schloss",
+          "0,5 kg",
+          "10 GM"
+        ],
+        [
+          "Schnur",
+          "–",
+          "1 SM"
+        ],
+        [
+          "Seil",
+          "2,5 kg",
+          "1 GM"
+        ],
+        [
+          "Signalpfeife",
+          "–",
+          "5 KM"
+        ],
+        [
+          "Spiegel",
+          "0,25 kg",
+          "5 GM"
+        ],
+        [
+          "Stachel, Eisen",
+          "2,5 kg",
+          "1 GM"
+        ],
+        [
+          "Stange",
+          "3,5 kg",
+          "5 KM"
+        ],
+        [
+          "Tintenfüller",
+          "–",
+          "2 KM"
+        ],
+        [
+          "Tinte",
+          "–",
+          "10 GM"
+        ],
+        [
+          "Topf, Eisen",
+          "5 kg",
+          "2 GM"
+        ],
+        [
+          "Trinkschlauch",
+          "2,5 kg (voll)",
+          "2 SM"
+        ],
+        [
+          "Truhe",
+          "12,5 kg",
+          "5 GM"
+        ],
+        [
+          "Unterhaltungskünstler-Ausrüstung",
+          "29,25 kg",
+          "40 GM"
+        ],
+        [
+          "Weihwasser",
+          "0,5 kg",
+          "25 GM"
+        ],
+        [
+          "Zauberschriftrolle (1. Grad)",
+          "–",
+          "50 GM"
+        ],
+        [
+          "Zauberschriftrolle (Zaubertrick)",
+          "–",
+          "30 GM"
+        ],
+        [
+          "Zelt",
+          "10 kg",
+          "2 GM"
+        ],
+        [
+          "Zunderkästchen",
+          "0,5 kg",
+          "5 SM"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-arkaner-fokus",
+      "level": 3,
+      "text": "Arkaner Fokus (Preis variiert)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-arkaner-fokus-text",
+      "text": "Ein Arkaner Fokus hat eine der Formen, die in der Tabelle „Arkane Fokusse“ aufgeführt sind. Er ist mit Juwelen besetzt oder mit Schnitzereien versehen, um arkane Magie zu kanalisieren. Hexenmeister, Magier und Zauberer können diese Gegenstände als Zauberfokus verwenden."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.adventuring-gear.arcane-foci",
+      "caption": "Arkane Fokusse",
+      "columns": [
+        "Fokus",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Kristall",
+          "0,5 kg",
+          "10 GM"
+        ],
+        [
+          "Kugel",
+          "1,5 kg",
+          "20 GM"
+        ],
+        [
+          "Rute",
+          "1 kg",
+          "10 GM"
+        ],
+        [
+          "Stab (auch Kampfstab)",
+          "2 kg",
+          "5 GM"
+        ],
+        [
+          "Zauberstab",
+          "0,5 kg",
+          "10 GM"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-behaelter-armbrustbolzen",
+      "level": 3,
+      "text": "Behälter, Armbrustbolzen (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-behaelter-armbrustbolzen-text",
+      "text": "Ein Behälter für Armbrustbolzen fasst bis zu 20 Bolzen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-behaelter-karten-oder-schriftrollen",
+      "level": 3,
+      "text": "Behälter, Karten oder Schriftrollen (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-behaelter-karten-oder-schriftrollen-text",
+      "text": "Ein Karten- oder Schriftrollenbehälter fasst bis zu zehn Papierbögen oder fünf Pergamentbögen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-beutel",
+      "level": 3,
+      "text": "Beutel (5 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-beutel-text",
+      "text": "Ein Beutel fasst bis zu drei Kilogramm in einem Volumen von 5,6 Litern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-blendlaterne",
+      "level": 3,
+      "text": "Blendlaterne (10 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-blendlaterne-text",
+      "text": "Eine Blendlaterne spendet in einem Kegel von 18 Metern helles Licht und in weiteren 18 Metern dämmriges Licht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-brechstange",
+      "level": 3,
+      "text": "Brechstange (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-brechstange-text",
+      "text": "Wenn du eine Brechstange verwendest, bist du bei Stärkewürfen im Vorteil, bei denen sich die Hebelwirkung der Brechstange anwenden lässt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-buch",
+      "level": 3,
+      "text": "Buch (25 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-buch-text",
+      "text": "Ein Buch enthält Belletristik oder Sachtexte. Wenn du ein korrektes Sachbuch zu einem Thema liest, erhältst du einen Bonus von +5 auf Intelligenzwürfe (Arkane Kunde, Geschichte, Naturkunde oder Religion) zu diesem Thema."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-decke",
+      "level": 3,
+      "text": "Decke (5 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-decke-text",
+      "text": "In eine Decke gewickelt bist du bei Rettungswürfen gegen extreme Kälte (siehe „Werkzeugkasten fürs Spiel“) im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-diplomatenausruestung",
+      "level": 3,
+      "text": "Diplomatenausrüstung (39 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-diplomatenausruestung-text",
+      "text": "Eine Diplomatenausrüstung enthält folgende Gegenstände: zwei Karten- oder Schriftrollenbehälter, feine Kleidung, Lampe, vier Flaschen Öl, fünf Bögen Papier, Parfüm, fünf Bögen Pergament, Tinte, fünf Tintenfüller, Truhe und Zunderkästchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-druidischer-fokus",
+      "level": 3,
+      "text": "Druidischer Fokus (Preis variiert)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-druidischer-fokus-text",
+      "text": "Ein Druidischer Fokus hat eine der Formen, die in der Tabelle „Druidische Fokusse“ aufgeführt sind. Er ist mit Schnitzereien, Bändern oder Malereien versehen, um Urmagie zu kanalisieren. Ein Druide oder Waldläufer kann einen solchen Gegenstand als Zauberfokus verwenden."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.adventuring-gear.druidic-foci",
+      "caption": "Druidische Fokusse",
+      "columns": [
+        "Fokus",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Holzstab (auch Kampfstab)",
+          "2 kg",
+          "5 GM"
+        ],
+        [
+          "Mistelzweig",
+          "–",
+          "1 GM"
+        ],
+        [
+          "Zauberstab aus Eibe",
+          "0,5 kg",
+          "10 GM"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-eimer",
+      "level": 3,
+      "text": "Eimer (5 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-eimer-text",
+      "text": "Ein Eimer fasst bis zu 14 Liter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-einbrecherausruestung",
+      "level": 3,
+      "text": "Einbrecherausrüstung (16 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-einbrecherausruestung-text",
+      "text": "Eine Einbrecherausrüstung enthält folgende Gegenstände: Abdeckbare Laterne, Brechstange, Glocke, zehn Kerzen, Metallkügelchen, sieben Flaschen Öl, Rucksack, Seil, fünf Tagesrationen, Trinkschlauch und Zunderkästchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-entdeckerausruestung",
+      "level": 3,
+      "text": "Entdeckerausrüstung (10 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-entdeckerausruestung-text",
+      "text": "Eine Entdeckerausrüstung enthält folgende Gegenstände: zehn Fackeln, zwei Flaschen Öl, Rucksack, Schlafsack, Seil, zehn Tagesrationen, Trinkschlauch und Zunderkästchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-enterhaken",
+      "level": 3,
+      "text": "Enterhaken (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-enterhaken-text",
+      "text": "Als Verwenden-Aktion kannst du den Enterhaken nach einer Reling, einem Sims oder einem anderen geeigneten Gegenstand im Abstand von bis zu 15 Metern von dir werfen. Er greift, wenn du einen SG-13-Geschicklichkeitswurf (Akrobatik) bestehst. Wenn du ein Seil am Haken befestigt hast, kannst du daran hochklettern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-fackel",
+      "level": 3,
+      "text": "Fackel (1 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-fackel-text",
+      "text": "Eine Fackel brennt eine Stunde lang. Sie spendet in einem Radius von sechs Metern helles Licht und in einem Radius von weiteren sechs Metern dämmriges Licht. Mithilfe der Angriffsaktion kannst du mit der Fackel angreifen, wobei du sie als einfache Nahkampfwaffe verwendest. Bei einem Treffer erleidet das Ziel 1 Feuerschaden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-fass",
+      "level": 3,
+      "text": "Fass (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-fass-text",
+      "text": "Ein Fass bietet ein Volumen von 112 Litern und kann Flüssigkeiten oder trockene Güter fassen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-fernrohr",
+      "level": 3,
+      "text": "Fernrohr (1.000 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-fernrohr-text",
+      "text": "Durch ein Fernrohr erscheint alles doppelt so groß."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-flasche",
+      "level": 3,
+      "text": "Flasche (2 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-flasche-text",
+      "text": "Eine Flasche fasst bis zu 0,5 Liter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-flasche-glas",
+      "level": 3,
+      "text": "Flasche, Glas (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-flasche-glas-text",
+      "text": "Eine Glasflasche fasst bis zu 0,75 Liter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-flaschenzug",
+      "level": 3,
+      "text": "Flaschenzug (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-flaschenzug-text",
+      "text": "Mit einem Flaschenzug kannst du das Vierfache des Gewichts anheben, das du auf normale Weise heben könntest."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-gegengift",
+      "level": 3,
+      "text": "Gegengift (50 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-gegengift-text",
+      "text": "Als Bonusaktion kannst du eine Phiole mit Gegengift zu dir nehmen, damit deine Rettungswürfe zum Vermeiden oder Beenden des Zustands Vergiftet eine Stunde lang im Vorteil sind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-gelehrtenausruestung",
+      "level": 3,
+      "text": "Gelehrtenausrüstung (40 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-gelehrtenausruestung-text",
+      "text": "Eine Gelehrtenausrüstung enthält folgende Gegenstände: Buch, Lampe, zehn Flaschen Öl, zehn Bögen Pergament, Rucksack, Tinte, Tintenfüller und Zunderkästchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-geschosse",
+      "level": 3,
+      "text": "Geschosse (Preis variiert)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-geschosse-text",
+      "text": "Geschosse werden für Waffen mit der Eigenschaft Geschosse benötigt. Die jeweils erforderliche Art der Geschosse ist in der Waffenbeschreibung angegeben. In der Tabelle „Geschosse“ sind die verschiedenen Arten sowie die Mengen aufgeführt, die du beim Kauf erhältst. Außerdem ist der Gegenstand genannt, der üblicherweise zur Aufbewahrung der Geschosse verwendet wird (er muss separat erworben werden)."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.adventuring-gear.ammunition",
+      "caption": "Geschosse",
+      "columns": [
+        "Typ",
+        "Anzahl",
+        "Aufbewahrung",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Bolzen",
+          "20",
+          "Behälter",
+          "0,75 kg",
+          "1 GM"
+        ],
+        [
+          "Munition (Feuerwaffe)",
+          "10",
+          "Beutel",
+          "1 kg",
+          "3 GM"
+        ],
+        [
+          "Munition (Schleuder)",
+          "20",
+          "Beutel",
+          "0,75 kg",
+          "4 KM"
+        ],
+        [
+          "Pfeile (Blasrohr)",
+          "50",
+          "Beutel",
+          "0,5 kg",
+          "1 GM"
+        ],
+        [
+          "Pfeile",
+          "20",
+          "Köcher",
+          "0,5 kg",
+          "1 GM"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-gewoelbeforscherausruestung",
+      "level": 3,
+      "text": "Gewölbeforscherausrüstung (12 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-gewoelbeforscherausruestung-text",
+      "text": "Eine Gewölbeforscherausrüstung enthält folgende Gegenstände: Brechstange, zehn Fackeln, Krähenfüße, zwei Flaschen Öl, Rucksack, Seil, zehn Tagesrationen, Trinkschlauch und Zunderkästchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-gift-einfach",
+      "level": 3,
+      "text": "Gift, einfach (100 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-gift-einfach-text",
+      "text": "Als Bonusaktion kannst du mit einer Phiole einfachen Gifts eine Waffe oder bis zu drei Geschosse behandeln. Eine Kreatur, die durch die vergiftete Waffe oder ein vergiftetes Geschoss Hieb- oder Stichschaden erleidet, erleidet zusätzlich 1W4 Giftschaden. Wenn das Gift aufgetragen wurde, bleibt es wirksam, bis eine Minute vergangen ist oder sein Schaden bewirkt wurde, je nachdem, was zuerst eintritt."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-glocke",
+      "level": 3,
+      "text": "Glocke (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-glocke-text",
+      "text": "Wenn eine Glocke mit der Verwenden-Aktion geläutet wird, ist ihr Läuten bis zu 18 Meter weit zu hören."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-handschellen",
+      "level": 3,
+      "text": "Handschellen (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-handschellen-text",
+      "text": "Als Verwenden-Aktion kannst du mit Handschellen eine nicht bereitwillige, kleine oder mittelgroße Kreatur im Abstand von bis zu 1,5 Metern von dir fesseln, die gepackt, kampfunfähig oder festgesetzt ist, sofern du einen SG-13-Geschicklichkeitswurf (Fingerfertigkeit) bestehst. Eine auf diese Art gefesselte Kreatur ist bei Angriffswürfen im Nachteil. Außerdem ist sie festgesetzt, sofern die Handschellen an einem fixierten Gegenstand wie einer Kette oder einem Haken befestigt sind. Aus den Handschellen zu entkommen erfordert einen erfolgreichen SG-20-Geschicklichkeitswurf (Fingerfertigkeit) als Aktion. Die Handschellen zu sprengen erfordert einen erfolgreichen SG-25-Stärkewurf (Athletik) als Aktion."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-handschellen-2-text",
+      "text": "Zu jedem Paar Handschellen gehört ein Schlüssel. Ohne den Schlüssel kann eine Kreatur versuchen, das Schloss der Handschellen mit Diebeswerkzeug und einem erfolgreichen SG-15-Geschicklichkeitswurf (Fingerfertigkeit) zu knacken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-heilerausruestung",
+      "level": 3,
+      "text": "Heilerausrüstung (5 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-heilerausruestung-text",
+      "text": "Eine Heilerausrüstung reicht für zehn Anwendungen. Als Verwenden-Aktion kannst du eine der Anwendungen verbrauchen, um eine bewusstlose Kreatur mit 0 Trefferpunkten zu stabilisieren, ohne dass du dazu einen Weisheitswurf (Heilkunde) ausführen musst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-heiliges-symbol",
+      "level": 3,
+      "text": "Heiliges Symbol (Preis variiert)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-heiliges-symbol-text",
+      "text": "Ein heiliges Symbol hat eine der Formen, die in der Tabelle „Heilige Symbole“ aufgeführt sind. Es ist mit Juwelen besetzt oder mit Malereien versehen, um göttliche Magie zu kanalisieren. Kleriker und Paladine können ein heiliges Symbol als Zauberfokus verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-heiliges-symbol-2-text",
+      "text": "In der Tabelle ist angegeben, ob ein heiliges Symbol gehalten oder getragen werden oder sich auf Stoff (wie ein Wappenrock oder Banner) oder einem Schild befinden muss."
+    },
+    {
+      "type": "table",
+      "ruleId": "equipment.adventuring-gear.holy-symbols",
+      "caption": "Heilige Symbole",
+      "columns": [
+        "Symbol",
+        "Gewicht",
+        "Kosten"
+      ],
+      "rows": [
+        [
+          "Amulett (getragen oder gehalten)",
+          "0,5 kg",
+          "5 GM"
+        ],
+        [
+          "Emblem (auf Stoff oder Schild)",
+          "–",
+          "5 GM"
+        ],
+        [
+          "Reliquie (gehalten)",
+          "1 kg",
+          "5 GM"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-heiltrank",
+      "level": 3,
+      "text": "Heiltrank (50 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-heiltrank-text",
+      "text": "Dieser Trank ist ein magischer Gegenstand. Als Bonusaktion kannst du ihn zu dir nehmen oder einer anderen Kreatur im Abstand von bis zu 1,5 Metern von dir verabreichen. Eine Kreatur, die die magische rote Flüssigkeit in dieser Phiole trinkt, erhält 2W4+2 Trefferpunkte zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-jagdfalle",
+      "level": 3,
+      "text": "Jagdfalle (5 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-jagdfalle-text",
+      "text": "Als Verwenden-Aktion kannst du eine Jagdfalle stellen – einen gezahnten Stahlring, der zuschnappt, wenn eine Kreatur auf die Druckplatte in der Mitte tritt. Die Falle ist mit einer schweren Kette an einem Fixpunkt wie einem Baum oder einem in den Boden gerammten Pfahl befestigt. Eine Kreatur, die auf die Platte tritt, muss einen SG-13-Geschicklichkeitsrettungswurf bestehen, oder sie erleidet 1W4 Stichschaden, und ihre Bewegungsrate ist bis zum Beginn ihres nächsten Zugs auf 0 verringert. Anschließend ist die Bewegung der Kreatur durch die Länge der Kette (üblicherweise ein Meter) begrenzt, bis die Kreatur sich aus der Falle befreien kann. Eine Kreatur kann ihre Aktion verwenden, um einen SG-13-Stärkewurf (Athletik) auszuführen. Bei einem Erfolg befreit es sich selbst oder eine andere Kreatur in Reichweite aus der Falle. Jeder misslungene Wurf fügt der Kreatur in der Falle 1 Stichschaden zu."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-karte",
+      "level": 3,
+      "text": "Karte (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-karte-text",
+      "text": "Wenn du eine korrekte Karte konsultierst, hast du einen Bonus von +5 auf Weisheitswürfe (Überlebenskunst), die du ausführst, um dich im auf der Karte dargestellten Gebiet zurechtzufinden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-kerze",
+      "level": 3,
+      "text": "Kerze (1 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-kerze-text",
+      "text": "Eine brennende Kerze spendet eine Stunde lang in einem Radius von 1,5 Metern helles Licht und in einem Radius von weiteren 1,5 Metern dämmriges Licht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-kette",
+      "level": 3,
+      "text": "Kette (5 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-kette-text",
+      "text": "Als Verwenden-Aktion kannst du eine Kette um eine nicht bereitwillige Kreatur im Abstand von bis zu 1,5 Metern von dir schlingen, die gepackt, kampfunfähig oder festgesetzt ist, sofern du einen SG-13-Stärkewurf (Athletik) bestehst. Werden die Beine der Kreatur gefesselt, so ist die Kreatur festgesetzt, bis sie entkommt. Um die Kette abzustreifen, muss die Kreatur als Aktion einen SG-18-Geschicklichkeitswurf (Akrobatik) bestehen. Die Kette zu sprengen erfordert einen erfolgreichen SG-20-Stärkewurf (Athletik) als Aktion."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-kleidung-fein",
+      "level": 3,
+      "text": "Kleidung, fein (15 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-kleidung-fein-text",
+      "text": "Feine Kleidung besteht aus teuren Stoffen und ist mit kunstvollen Details verziert. Manche Veranstaltungen und Orte können nur in feiner Kleidung besucht werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-kleidung-reise",
+      "level": 3,
+      "text": "Kleidung, Reise (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-kleidung-reise-text",
+      "text": "Reisekleidung besteht aus belastbarem Material und eignet sich zum Reisen durch verschiedene Umgebungen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-kletterausruestung",
+      "level": 3,
+      "text": "Kletterausrüstung (25 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-kletterausruestung-text",
+      "text": "Zur Kletterausrüstung gehören Gurtzeug, Handschuhe, Kletterhaken und Steigeisen. Als Verwenden-Aktion kannst du dich mit der Kletterausrüstung durch Verankern sichern, um vom Ankerpunkt nicht tiefer als 7,5 Meter stürzen zu können. In diesem Fall kannst du dich höchstens 7,5 Meter weit bewegen, ohne den Anker als Bonusaktion zu lösen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-koecher",
+      "level": 3,
+      "text": "Köcher (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-koecher-text",
+      "text": "Ein Köcher fasst bis zu 20 Pfeile."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-korb",
+      "level": 3,
+      "text": "Korb (4 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-korb-text",
+      "text": "Ein Korb fasst bis zu 20 Kilogramm in einem Volumen von 56 Litern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-kostuem",
+      "level": 3,
+      "text": "Kostüm (5 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-kostuem-text",
+      "text": "Wenn du ein Kostüm trägst, bist du bei allen Attributswürfen im Vorteil, die du ausführst, um dich als die entsprechende Person oder Art von Person zu tarnen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-kraehenfuesse",
+      "level": 3,
+      "text": "Krähenfüße (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-kraehenfuesse-text",
+      "text": "Als Verwenden-Aktion kannst du Krähenfüße aus ihrem Beutel nehmen und in einem Bereich von 2,3 Quadratmetern im Abstand von bis zu 1,5 Metern von dir auslegen. Eine Kreatur, die diesen Bereich erstmals in einem Zug betritt, muss einen SG-15-Geschicklichkeitsrettungswurf bestehen, oder sie erleidet 1 Stichschaden, und ihre Bewegungsrate ist bis zum Beginn ihres nächsten Zugs auf 0 verringert. Es dauert zehn Minuten, die Krähenfüße wieder einzusammeln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-krug",
+      "level": 3,
+      "text": "Krug (2 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-krug-text",
+      "text": "Ein Krug fasst bis zu 4 Liter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-lampe",
+      "level": 3,
+      "text": "Lampe (5 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-lampe-text",
+      "text": "Eine Lampe brennt mit Öl und spendet in einem Radius von 4,5 Metern helles Licht und in einem Radius von weiteren neun Metern dämmriges Licht."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-laterne-abdeckbar",
+      "level": 3,
+      "text": "Laterne, abdeckbar (5 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-laterne-abdeckbar-text",
+      "text": "Eine abdeckbare Laterne spendet in einem Radius von neun Metern helles Licht und in einem Radius von weiteren neun Metern dämmriges Licht. Als Bonusaktion kannst du die Haube entweder absenken und so das Licht auf dämmriges Licht in einem Radius von 1,5 Metern verringern, oder du kannst die Haube wieder anheben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-leiter",
+      "level": 3,
+      "text": "Leiter (1 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-leiter-text",
+      "text": "Eine Leiter ist drei Meter lang. Du musst klettern, um dich an ihr hinauf- oder hinabzubewegen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-lupe",
+      "level": 3,
+      "text": "Lupe (100 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-lupe-text",
+      "text": "Mit einer Lupe bist du bei allen Attributswürfen zum Einschätzen oder Untersuchen kleiner oder detailreicher Gegenstände im Vorteil. Wenn du mit einer Lupe ein Feuer entfachen willst, benötigst du Sonnenlicht oder vergleichbar helles Licht zum Bündeln, Zunder zum Anzünden und etwa fünf Minuten Zeit."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-materialkomponentenbeutel",
+      "level": 3,
+      "text": "Materialkomponentenbeutel (25 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-materialkomponentenbeutel-text",
+      "text": "Ein Materialkomponentenbeutel ist wasserdicht und so unterteilt, dass er alle kostenlosen Materialkomponenten deiner Zauber aufnehmen kann."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-metallkuegelchen",
+      "level": 3,
+      "text": "Metallkügelchen (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-metallkuegelchen-text",
+      "text": "Als Verwenden-Aktion kannst du Metallkügelchen aus ihrem Beutel schütten. Sie verteilen sich und bedecken einen 1 Quadratmeter großen ebenen Bereich im Abstand von bis zu drei Metern von dir. Eine Kreatur, die diesen Bereich erstmals in einem Zug betritt, muss einen SG-10-Geschicklichkeitsrettungswurf bestehen, oder sie stürzt und hat den Zustand Liegend. Es dauert zehn Minuten, die Metallkügelchen wieder einzusammeln."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-netz",
+      "level": 3,
+      "text": "Netz (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-netz-text",
+      "text": "Wenn du die Angriffsaktion ausführst, kannst du einen deiner Angriffe dadurch ersetzen, dass du ein Netz wirfst. Ziele auf eine Kreatur im Abstand von bis zu 4,5 Metern von dir, die du sehen kannst. Das Ziel muss einen Geschicklichkeitsrettungswurf (SG 8 plus dein Geschicklichkeitsmodifikator plus dein Übungsbonus) bestehen, oder es ist festgesetzt, bis es entkommt. Es besteht den Rettungswurf automatisch, wenn es von mindestens riesiger Größe ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-netz-2-text",
+      "text": "Zum Entkommen muss das Ziel eine Aktion ausführen und einen SG-10-Stärkewurf (Athletik) bestehen. Alternativ kann eine andere Kreatur im Abstand von bis zu 1,5 Metern vom Ziel auf die gleiche Weise versuchen, das festgesetzte Ziel zu befreien. Durch Zerstören des Netzes (RK 10, 5 TP, Immunität gegen Gift-, psychischen und Wuchtschaden) wird das Ziel ebenfalls befreit, und der Effekt endet."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-oel",
+      "level": 3,
+      "text": "Öl (1 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-oel-text",
+      "text": "Du kannst eine Kreatur, einen Gegenstand oder einen Bereich mit Öl bedecken oder das Öl als Brennstoff verwenden wie unten beschrieben."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-oel-2-text",
+      "text": "Eine Kreatur oder einen Gegenstand bedecken: Wenn du die Angriffsaktion ausführst, kannst du einen deiner Angriffe dadurch ersetzen, dass du eine Flasche Öl wirfst. Wähle ein Ziel (Kreatur oder Gegenstand) im Abstand von bis zu sechs Metern von dir aus. Das Ziel muss einen Geschicklichkeitsrettungswurf (SG 8 plus dein Geschicklichkeitsmodifikator plus dein Übungsbonus) bestehen, oder es wird mit Öl bedeckt. Wenn das Ziel Feuerschaden erleidet, bevor das Öl (nach einer Minute) getrocknet ist, bewirkt das brennende Öl zusätzlich 5 Feuerschaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-oel-3-text",
+      "text": "Einen Bereich bedecken: Als Verwenden-Aktion kannst du eine Ölflasche auf ebenem Boden ausgießen. Das Öl bedeckt einen Bereich von 2,3 Quadratmetern im Abstand von bis zu 1,5 Metern von dir. Wenn das Öl angezündet wird, brennt es bis zum Ende des Zugs zwei Runden nach dem Entzünden (oder zwölf Sekunden lang) und fügt jeder Kreatur, die den Bereich betritt oder ihren Zug darin beendet, 5 Feuerschaden zu. Eine Kreatur kann diesen Schaden nur einmal pro Zug erleiden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-oel-4-text",
+      "text": "Brennstoff: Öl dient als Brennstoff für Lampen und Laternen. Eine Flasche Öl brennt sechs Stunden lang in einer Lampe oder Laterne. Diese Brenndauer muss nicht am Stück erfolgen. Das brennende Öl kann (als Verwenden-Aktion) gelöscht und später erneut entzündet werden, bis es insgesamt sechs Stunden lang gebrannt hat."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-papier",
+      "level": 3,
+      "text": "Papier (2 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-papier-text",
+      "text": "Ein Bogen Papier bietet Platz für etwa 250 handgeschriebene Wörter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-parfuem",
+      "level": 3,
+      "text": "Parfüm (5 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-parfuem-text",
+      "text": "Parfüm gibt es in Phiolen zu je 120 ml. Wenn du dich parfümierst, bist du eine Stunde lang bei Charismawürfen (Überzeugen) zum Beeinflussen von Humanoiden im Vorteil, die sich im Abstand von bis zu 1,5 Metern von dir befinden und dir gegenüber gleichgültig sind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-pergament",
+      "level": 3,
+      "text": "Pergament (1 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-pergament-text",
+      "text": "Ein Bogen Pergament bietet Platz für etwa 250 handgeschriebene Wörter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-phiole",
+      "level": 3,
+      "text": "Phiole (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-phiole-text",
+      "text": "Eine Phiole fasst bis zu 120 Milliliter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-priesterausruestung",
+      "level": 3,
+      "text": "Priesterausrüstung (33 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-priesterausruestung-text",
+      "text": "Eine Priesterausrüstung enthält folgende Gegenstände: Decke, Lampe, Rucksack, Robe, sieben Tagesrationen, Weihwasser und Zunderkästchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-rammbock-tragbar",
+      "level": 3,
+      "text": "Rammbock, tragbar (4 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-rammbock-tragbar-text",
+      "text": "Mit einem tragbaren Rammbock kannst du Türen aufbrechen. Dabei erhältst du einen Bonus von +4 auf den Stärkewurf. Wenn ein anderer Charakter dir hilft, den Rammbock zu verwenden, bist du bei diesem Wurf im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-rationen",
+      "level": 3,
+      "text": "Rationen (5 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-rationen-text",
+      "text": "Rationen enthalten reisetaugliche Nahrung wie Trockenfleisch, Trockenfrüchte, Zwieback und Nüsse. Nahrungsmangel führt zu Risiken, die unter „Unterernährung“ unter „Regelglossar“ aufgeführt sind."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-robe",
+      "level": 3,
+      "text": "Robe (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-robe-text",
+      "text": "Eine Robe hat eine berufliche oder zeremonielle Bedeutung. Manche Veranstaltungen und Orte können nur in Roben von bestimmter Farbe oder mit bestimmten Symbolen besucht werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-rucksack",
+      "level": 3,
+      "text": "Rucksack (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-rucksack-text",
+      "text": "Ein Rucksack fasst bis zu 15 Kilogramm in einem Volumen von 28 Litern. Kann auch als Satteltasche dienen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-sack",
+      "level": 3,
+      "text": "Sack (1 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-sack-text",
+      "text": "Ein Sack fasst bis zu 15 Kilogramm in einem Volumen von 28 Litern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-saeure",
+      "level": 3,
+      "text": "Säure (25 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-saeure-text",
+      "text": "Wenn du die Angriffsaktion ausführst, kannst du einen deiner Angriffe dadurch ersetzen, dass du eine Phiole mit Säure wirfst. Wähle ein Ziel (Kreatur oder Gegenstand) im Abstand von bis zu sechs Metern von dir aus, das du sehen kannst. Das Ziel muss einen Geschicklichkeitsrettungswurf (SG 8 plus dein Geschicklichkeitsmodifikator plus dein Übungsbonus) bestehen, oder es erleidet 2W6 Säureschaden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-schaufel",
+      "level": 3,
+      "text": "Schaufel (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-schaufel-text",
+      "text": "Mit der Schaufel kannst du in einer Stunde Arbeit ein Loch von 1,5 Metern Kantenlänge in die Erde (oder vergleichbares Material) graben."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-schlafsack",
+      "level": 3,
+      "text": "Schlafsack (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-schlafsack-text",
+      "text": "In einem Schlafsack kann eine kleine oder mittelgroße Kreatur schlafen. Im Schlafsack bestehst du Rettungswürfe gegen extreme Kälte (siehe „Werkzeugkasten fürs Spiel“) automatisch."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-schloss",
+      "level": 3,
+      "text": "Schloss (10 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-schloss-text",
+      "text": "Zu einem Schloss gehört ein Schlüssel. Ohne den Schlüssel kann eine Kreatur versuchen, das Schloss mit Diebeswerkzeug und einem erfolgreichen SG-15-Geschicklichkeitswurf (Fingerfertigkeit) zu knacken."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-schnur",
+      "level": 3,
+      "text": "Schnur (1 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-schnur-text",
+      "text": "Ein Stück Schnur misst drei Meter. Du kannst als Verwenden-Aktion einen Knoten in die Schnur knüpfen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-seil",
+      "level": 3,
+      "text": "Seil (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-seil-text",
+      "text": "Als Verwenden-Aktion kannst du mit einem erfolgreichen SG-10-Geschicklichkeitswurf (Fingerfertigkeit) einen Knoten in ein Seil knüpfen. Das Seil kann mit einem erfolgreichen SG-20-Stärkewurf (Athletik) zerrissen werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-seil-2-text",
+      "text": "Du kannst eine Kreatur, die nicht bereitwillig ist, nur dann mit dem Seil fesseln, wenn die Kreatur gepackt, kampfunfähig oder festgesetzt ist. Werden die Beine der Kreatur gefesselt, so ist die Kreatur festgesetzt, bis sie entkommt. Um das Seil abzustreifen, muss die Kreatur als Aktion einen SG-15-Geschicklichkeitswurf (Akrobatik) bestehen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-signalpfeife",
+      "level": 3,
+      "text": "Signalpfeife (5 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-signalpfeife-text",
+      "text": "Wenn eine Signalpfeife mit der Verwenden-Aktion geblasen wird, erzeugt sie einen Ton, der 180 Meter weit zu hören ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-spiegel",
+      "level": 3,
+      "text": "Spiegel (5 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-spiegel-text",
+      "text": "Ein stählerner Handspiegel ist nicht nur zu kosmetischen Zwecken nützlich, sondern auch zum Spähen um Ecken und zum Übermitteln von Lichtsignalen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-stachel-eisen",
+      "level": 3,
+      "text": "Stachel, Eisen (1 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-stachel-eisen-text",
+      "text": "Eisenstachel gibt es in Bündeln zu je zehn Stück. Als Verwenden-Aktion kannst du einen Eisenstachel mit einem stumpfen Gegenstand wie einem leichten Hammer in Holz, Erde oder ähnliches Material treiben. So kannst du eine Tür verrammeln, oder du kannst ein Seil oder eine Kette am Stachel befestigen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-stange",
+      "level": 3,
+      "text": "Stange (5 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-stange-text",
+      "text": "Eine Stange ist drei Meter lang. Du kannst sie verwenden, um etwas zu berühren, das bis zu drei Meter weit entfernt ist. Wenn du im Rahmen eines Hoch- oder Weitsprungs einen Stärkewurf (Athletik) ausführen musst und beim Springen die Stange verwenden kannst, bist du beim Wurf im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-tinte",
+      "level": 3,
+      "text": "Tinte (10 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-tinte-text",
+      "text": "Tinte gibt es in Flaschen zu je 30 ml (ausreichend für etwa 500 Seiten)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-tintenfueller",
+      "level": 3,
+      "text": "Tintenfüller (2 KM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-tintenfueller-text",
+      "text": "Um mit Tinte zu schreiben oder zu zeichnen, ist ein Tintenfüller erforderlich."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-topf-eisen",
+      "level": 3,
+      "text": "Topf, Eisen (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-topf-eisen-text",
+      "text": "Ein Eisentopf fasst bis zu 4 Liter."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-trinkschlauch",
+      "level": 3,
+      "text": "Trinkschlauch (2 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-trinkschlauch-text",
+      "text": "Ein Trinkschlauch fasst bis zu zwei Liter. Wenn du nicht genügend Wasser trinkst, riskierst du Dehydrierung (siehe „Regelglossar“)."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-truhe",
+      "level": 3,
+      "text": "Truhe (5 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-truhe-text",
+      "text": "Eine Truhe bietet ein Volumen von 324 Litern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-unterhaltungskuenstler-ausruestung",
+      "level": 3,
+      "text": "Unterhaltungskünstler-Ausrüstung (40 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-unterhaltungskuenstler-ausruestung-text",
+      "text": "Eine Unterhaltungskünstler-Ausrüstung enthält folgende Gegenstände: Blendlaterne, Glocke, drei Kostüme, acht Flaschen Öl, Rucksack, Schlafsack, Spiegel, neun Tagesrationen, Trinkschlauch und Zunderkästchen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-weihwasser",
+      "level": 3,
+      "text": "Weihwasser (25 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-weihwasser-text",
+      "text": "Wenn du die Angriffsaktion ausführst, kannst du einen deiner Angriffe dadurch ersetzen, dass du eine Flasche mit Weihwasser wirfst. Ziele auf eine Kreatur im Abstand von bis zu sechs Metern von dir, die du sehen kannst. Wenn das Ziel ein Unhold oder ein Untoter ist, muss es einen Geschicklichkeitsrettungswurf (SG 8 plus dein Geschicklichkeitsmodifikator plus dein Übungsbonus) bestehen, oder es erleidet 2W8 gleißenden Schaden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-zauberschriftrolle",
+      "level": 3,
+      "text": "Zauberschriftrolle (Zaubertrick: 30 GM, 1. Grad: 50 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-zauberschriftrolle-text",
+      "text": "Eine Zauberschriftrolle (Zaubertrick) oder Zauberschriftrolle (1. Grad) ist ein magischer Gegenstand mit den Worten eines Zaubertricks beziehungsweise Zaubers des 1. Grades nach Wahl des Schöpfers der Schriftrolle. Wenn sich der Zauber in der Liste deiner Klasse befindet, kannst du die Schriftrolle lesen und den Zauber mit normalem Zeitaufwand wirken, ohne Materialkomponenten zu benötigen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-zauberschriftrolle-2-text",
+      "text": "Wenn der Zauber einen Rettungs- oder Angriffswurf erfordert, beträgt der Zauberrettungswurf-SG 13 und der Angriffsbonus +5. Die Schriftrolle löst sich auf, wenn der Zauber gewirkt wurde."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-zelt",
+      "level": 3,
+      "text": "Zelt (2 GM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-zelt-text",
+      "text": "In einem Zelt können bis zu zwei kleine oder mittelgroße Kreaturen schlafen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "equipment.adventuring-gear.item-zunderkaestchen",
+      "level": 3,
+      "text": "Zunderkästchen (5 SM)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "equipment.adventuring-gear.item-zunderkaestchen-text",
+      "text": "Ein Zunderkästchen ist ein kleiner Behälter mit Feuerstahl, Feuerstein und Zunder (meist ein ölgetränktes Stoffstück), um ein Feuer zu entfachen. Soll damit eine Fackel, eine Kerze, eine Lampe, eine Laterne oder ein anderer Gegenstand mit freiliegendem Brennstoff entzündet werden, so ist dafür eine Bonusaktion erforderlich. Das Entfachen jedes anderen Feuers dauert eine Minute."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:9b1690d8eaf65d2727fa67a405f070827635b59555dc8f331e33e97d73b6a894"
+}

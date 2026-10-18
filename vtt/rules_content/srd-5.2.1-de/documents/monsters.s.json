@@ -1,0 +1,2775 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "monsters.s",
+  "slug": "monster-s",
+  "title": "Monster S",
+  "navigationPath": [
+    "Monster",
+    "Monster S"
+  ],
+  "order": 2160,
+  "sourcePages": [
+    364,
+    365,
+    366,
+    367,
+    368,
+    369,
+    370,
+    371,
+    372,
+    373,
+    374,
+    375,
+    376,
+    377
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.monster-von-a-z",
+      "level": 2,
+      "text": "Monster von A–Z (S)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.sahuagin",
+      "level": 3,
+      "text": "Sahuagin"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.sahuagin.sahuagin-krieger",
+      "name": "Sahuagin-Krieger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Unhold, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (4W8+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +5"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Kälte, Säure"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Sahuaginisch"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Begrenzt amphibisch: Der Sahuagin kann Luft und Wasser atmen, doch er muss sich mindestens einmal alle vier Stunden ganz im Wasser befinden, um nicht zu ersticken.\n\nBlutrausch: Der Sahuagin ist bei Angriffswürfen gegen jede Kreatur im Vorteil, die nicht alle Trefferpunkte hat.\n\nHaifischtelepathie: Der Sahuagin kann auf magische Art Haie im Abstand von bis zu 36 Metern von sich kontrollieren, wozu er spezielle Form von Telepathie nutzt."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Sahuagin führt zwei Klauenangriffe aus.\n\nKlauen: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 4 (1W6+1) Hiebschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Aquatischer Sturmangriff: Der Sahuagin nutzt seine Schwimmbewegungsrate und bewegt sich in gerader Linie auf einen Gegner zu, den er sehen kann."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.salamander",
+      "level": 3,
+      "text": "Salamander"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.salamander.salamander",
+      "name": "Salamander",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Elementar, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "90 (12W10+24)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Feuer"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Urtümlich (Ignal)"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Feueraura: Am Ende jedes Zugs des Salamanders erleidet jede Kreatur seiner Wahl in einer Ausströmung von 1,5 Metern, die vom Salamander ausgeht, 7 (2W6) Feuerschaden."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Salamander führt zwei Flammenspeer-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Umschlingen ersetzen.\n\nFlammenspeer: Nah- oder Fernkampfangriffswurf: +7, Reichweite 1,5 m oder Reichweite 6/18 m. Treffer: 13 (2W8+4) Stichschaden plus 7 (2W6) Feuerschaden. Treffer oder Fehlschlag: Unmittelbar nach einem Fernkampfangriff kehrt der Speer auf magische Art in die Hand des Salamanders zurück.\n\nUmschlingen: Stärkerettungswurf: SG 15; eine Kreatur von höchstens großer Größe im Abstand von bis zu drei Metern vom Salamander, die er sehen kann. Misserfolg: 11 (2W6+4) Wuchtschaden plus 7 (2W6) Feuerschaden. Das Ziel wird gepackt (Flucht-SG 14). Solange es gepackt bleibt, ist es außerdem festgesetzt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.satyr",
+      "level": 3,
+      "text": "Satyr"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.satyr.satyr",
+      "name": "Satyr",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Feenwesen, chaotisch neutral"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "31 (7W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Auftreten +6, Heimlichkeit +5, Wahrnehmung +2"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 12"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Elfisch, Gemeinsprache, Sylvanisch"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Magieresistenz: Der Satyr ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Hufe: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 5 (1W4+3) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens mittelgroßer Größe ist, stößt der Satyr es bis zu drei Meter weit in gerader Linie von sich weg.\n\nVerspotten: Weisheitsrettungswurf: SG 12; eine Kreatur im Abstand von bis zu 27 Metern vom Satyr, die er sehen kann. Misserfolg: 5 (1W6+2) psychischer Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.schatten",
+      "level": 3,
+      "text": "Schatten"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schatten.schatten",
+      "name": "Schatten",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "27 (5W8+5)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Gleißend"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Feuer, Kälte, Säure, Schall"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Nekrotisch; Bewusstlos, Erschöpft, Festgesetzt, Gelähmt, Gepackt, Liegend, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amorph: Der Schatten kann sich durch enge Bereiche von nur 2,5 Zentimetern Durchmesser bewegen, ohne zusätzliche Bewegung aufzuwenden.\n\nSchwach im Sonnenlicht: Im Sonnenlicht ist der Schatten bei W20-Prüfungen im Nachteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Zehrender Streich: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) nekrotischer Schaden, und der Stärkewert des Ziels wird um 1W4 verringert. Wenn sein Stärkewert dadurch auf 0 verringert wird, stirbt das Ziel. Stirbt ein Humanoide durch diesen Angriff, so erhebt sich 1W4 Stunden später ein Schatten aus dem Leichnam."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Heimlicher Schatten: In dämmrigem Licht oder Dunkelheit führt der Schatten die Verstecken-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.schildwaechter",
+      "level": 3,
+      "text": "Schildwächter"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schildwaechter.schildwaechter",
+      "name": "Schildwächter",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Konstrukt, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "–1 (9)"
+        },
+        {
+          "label": "TP",
+          "value": "142 (15W10+60)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Befehle in allen Sprachen, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "7 (EP 2.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Gebunden: Der Wächter ist auf magische Art an ein Amulett gebunden. Solange der Wächter und sein Amulett sich auf derselben Existenzebene befinden, kann der Träger des Amuletts den Wächter telepathisch zu sich rufen, und der Wächter kennt Richtung und Abstand zum Amulett. Wenn der Wächter sich im Abstand von bis zu 18 Metern vom Träger des Amuletts befindet, wird die Hälfte des Schadens, den der Träger erleidet (aufgerundet), an den Wächter übertragen.\n\nRegeneration: Der Wächter erhält zu Beginn jedes seiner Züge 10 Trefferpunkte zurück, wenn er noch mindestens 1 Trefferpunkt hat.\n\nZauberspeicher: Ein Zauberwirker, der das Amulett des Schildwächters trägt, kann einen Zauber des höchstens 4. Grades im Wächter speichern. Dazu muss der Träger den Zauber auf den Wächter wirken, während er sich im Abstand von bis zu 1,5 Metern vom Wächter befindet. Der Zauber hat dabei keinen Effekt, sondern wird im Wächter gespeichert. Jeder zuvor gespeicherte Zauber geht dabei verloren. Der Wächter kann den Zauber mit den Parametern nach Wahl des ursprünglichen Zauberwirkers wirken, ohne Zauberkomponenten zu benötigen. Sein Attribut zum Zauberwirken ist das des Zauberwirkers. Durch dieses Wirken wird der gespeicherte Zauber verbraucht."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Wächter führt zwei Faustangriffe aus.\n\nFaust: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 11 (2W6+4) Wuchtschaden plus 7 (2W6) Energieschaden."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Schutz: Auslöser: Ein Angriffswurf trifft den Träger des Amuletts des Wächters, während der Träger sich im Abstand von bis zu 1,5 Metern vom Wächter befindet.\n\nAntwort: Der Träger erhält bis zum Beginn des nächsten Zugs des Wächters einen Bonus von +5 auf seine RK, auch gegen den auslösenden Angriff, sodass dieser möglicherweise misslingt."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.schreckgespenst",
+      "level": 3,
+      "text": "Schreckgespenst"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schreckgespenst.schreckgespenst",
+      "name": "Schreckgespenst",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (5W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 15 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Blitz, Feuer, Hieb, Kälte, Säure, Schall, Stich, Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Nekrotisch; Bewusstlos, Bezaubert, Erschöpft, Festgesetzt, Gelähmt, Gepackt, Liegend, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Gemeinsprache und eine weitere Sprache, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Empfindlich gegenüber Sonnenlicht: Im Sonnenlicht ist das Schreckgespenst bei Angriffs- und Attributswürfen im Nachteil.\n\nKörperlose Bewegung: Das Schreckgespenst kann sich durch andere Kreaturen und Gegenstände bewegen, als wären sie schwieriges Gelände. Es erleidet 5 (1W10) Energieschaden, wenn es den Zug in einem Gegenstand beendet."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Lebensentzug: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 7 (2W6) nekrotischer Schaden. Wenn das Ziel eine Kreatur ist, wird sein Trefferpunktemaximum um einen Betrag in Höhe des erlittenen Schadens verringert."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.schreckhahn",
+      "level": 3,
+      "text": "Schreckhahn"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schreckhahn.schreckhahn",
+      "name": "Schreckhahn",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleine Monstrosität, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (5W6+5)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Fliegen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Versteinernder Biss: Nahkampfangriffswurf: +3, Reichweite 1,5 m. Treffer: 3 (1W4+1) Stichschaden. Wenn das Ziel eine Kreatur ist, erleidet es den folgenden Effekt: Konstitutionsrettungswurf: SG 11. Erster Misserfolg: Das Ziel ist festgesetzt. Es wiederholt den Rettungswurf am Ende seines nächsten Zugs, sofern es auch dann noch festgesetzt ist. Bei einem Erfolg endet der Effekt bei ihm. Zweiter Misserfolg: Das Ziel ist nicht mehr festgesetzt, sondern 24 Stunden lang versteinert."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.schwarze-drachen",
+      "level": 3,
+      "text": "Schwarze Drachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schwarze-drachen.schwarzer-drachennestling",
+      "name": "Schwarzer Drachennestling",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Drache (chromatisch), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "33 (6W8+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m, Schwimmen 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +4, Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Säure"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Hiebschaden plus 2 (1W4) Säureschaden.\n\nSäureodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 11; jede Kreatur in einer 4,5 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 22 (5W8) Säureschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schwarze-drachen.junger-schwarzer-drache",
+      "name": "Junger schwarzer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache (chromatisch), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "TP",
+          "value": "127 (15W10+45)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +6"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Säure"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 9 m, Dunkelsicht 36 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "7 (EP 2.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +7, Reichweite 3 m. Treffer: 9 (2W4+4) Hiebschaden plus 3 (1W6) Säureschaden.\n\nSäureodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 14; jede Kreatur in einer neun Meter langen, 1,5 Meter breiten Linie. Misserfolg: 49 (14W6) Säureschaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schwarze-drachen.ausgewachsener-schwarzer-drache",
+      "name": "Ausgewachsener schwarzer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Drache (chromatisch), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+12 (22)"
+        },
+        {
+          "label": "TP",
+          "value": "195 (17W12+85)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +7)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +6)"
+        },
+        {
+          "label": "Cha",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Wahrnehmung +11"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Säure"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 21"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "14 (EP 11.500 oder 13.000 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen.\n\nLegendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Zauberwirken ersetzen, um den Zauber Säurepfeil (Version des 3. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +11, Reichweite 3 m. Treffer: 13 (2W6+6) Hiebschaden plus 4 (1W8) Säureschaden.\n\nSäureodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 18; jede Kreatur in einer 18 Meter langen, 1,5 Meter breiten Linie. Misserfolg: 54 (12W8) Säureschaden. Erfolg: Halber Schaden.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 17, +9 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Furcht, Magie entdecken, Säurepfeil (Version des 3. Grades)\n\nJe 1-mal täglich: Ätzkugel, Mit Toten sprechen"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nFurchterregende Präsenz: Der Drache setzt Zauberwirken ein, um den Zauber Furcht zu wirken. Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nInsektenwolke: Geschicklichkeitsrettungswurf: SG 17; eine Kreatur im Abstand von bis zu 36 Metern vom Drachen, die er sehen kann. Misserfolg: 22 (4W10) Giftschaden, und das Ziel ist bis zum Ende seines nächsten Zugs bei Rettungswürfen zum Aufrechterhalten der Konzentration im Nachteil. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schwarze-drachen.uralter-schwarzer-drache",
+      "name": "Uralter schwarzer Drache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache (chromatisch), chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "22"
+        },
+        {
+          "label": "Initiative",
+          "value": "+16 (26)"
+        },
+        {
+          "label": "TP",
+          "value": "367 (21W20+147)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "27 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +9)"
+        },
+        {
+          "label": "Kon",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +9)"
+        },
+        {
+          "label": "Cha",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +9, Wahrnehmung +16"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Säure"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 26"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "21 (EP 33.000 oder 41.000 im Hort; ÜB +7)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Drache kann Luft und Wasser atmen.\n\nLegendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Zauberwirken ersetzen, um den Zauber Säurepfeil (Version des 4. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +15, Reichweite 4,5 m. Treffer: 17 (2W8+8) Hiebschaden plus 9 (2W8) Säureschaden.\n\nSäureodem (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 22; jede Kreatur in einer 27 Meter langen, drei Meter breiten Linie. Misserfolg: 67 (15W8) Säureschaden. Erfolg: Halber Schaden.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 21, +13 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Furcht, Magie entdecken, Säurepfeil (Version des 4. Grades)\n\nJe 1-mal täglich: Ätzkugel (Version des 5. Grades), Mit Toten sprechen, Untote erschaffen"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nFurchterregende Präsenz: Der Drache setzt Zauberwirken ein, um den Zauber Furcht zu wirken. Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nInsektenwolke: Geschicklichkeitsrettungswurf: SG 21; eine Kreatur im Abstand von bis zu 36 Metern, die der Drache sehen kann. Misserfolg: 33 (6W10) Giftschaden, und das Ziel ist bis zum Ende seines nächsten Zugs bei Rettungswürfen zum Aufrechterhalten der Konzentration im Nachteil. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.schwarzer-blob",
+      "level": 3,
+      "text": "Schwarzer Blob"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.schwarzer-blob.schwarzer-blob",
+      "name": "Schwarzer Blob",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Schlick, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "7"
+        },
+        {
+          "label": "Initiative",
+          "value": "–3 (7)"
+        },
+        {
+          "label": "TP",
+          "value": "68 (8W10+24)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Klettern 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Wei",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz, Hieb, Kälte, Säure; Bezaubert, Erschöpft, Festgesetzt, Gepackt, Liegend, Taub, Verängstigt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m; Passive Wahrnehmung 8"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amorph: Der Blob kann sich durch enge Bereiche von nur 2,5 Zentimetern Durchmesser bewegen, ohne zusätzliche Bewegung aufzuwenden.\n\nKorrosive Form: Eine Kreatur, die den Blob mit einem Nahkampfangriffswurf trifft, erleidet 4 (1W8) Säureschaden. Nichtmagische Geschosse werden zerstört, sobald sie den Blob getroffen und Schaden bewirkt haben. Jede nichtmagische Waffe erleidet einen kumulativen Malus von −1 auf Angriffswürfe, sobald sie dem Blob Schaden zugefügt hat und in Kontakt mit ihm gekommen ist. Wenn der Malus −5 erreicht, wird die Waffe zerstört. Der Malus kann aufgehoben werden, indem der Zauber Ausbessern auf die Waffe gewirkt wird.\n\nDer Blob kann sich binnen einer Minute durch 60 Zentimeter starkes nichtmagisches Holz oder Metall fressen.\n\nSpinnenklettern: Der Blob kann ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Auflösender Scheinfuß: Nahkampfangriffswurf: +5, Reichweite 3 m. Treffer: 17 (4W6+3) Säureschaden. Nichtmagische Rüstung, die vom Ziel getragen wird, erhält einen Malus von −1 auf die RK, die sie bietet. Die Rüstung wird zerstört, wenn der Malus ihre RK auf 10 verringert. Der Malus kann aufgehoben werden, indem der Zauber Ausbessern auf die Rüstung gewirkt wird."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Zerteilen: Auslöser: Der Blob ist von mittelgroßer oder großer Größe, hat mindestens 10 Trefferpunkte und wird blutig oder erleidet Blitz- oder Hiebschaden. Antwort: Der Blob teilt sich in zwei neue schwarze Blobs auf. Jeder neue Blob ist um eine Größenkategorie kleiner als der ursprüngliche Blob und handelt bei seiner Initiative. Die Trefferpunkte des ursprünglichen Blobs werden gleichmäßig auf die neuen Blobs verteilt (abgerundet)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.seeoger",
+      "level": 3,
+      "text": "Seeoger"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.seeoger.seeoger",
+      "name": "Seeoger",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Monstrosität, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "45 (6W10+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Wei",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch, Urtümlich (Aqual)"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Seeoger kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Seeoger führt zwei Angriffe mit Biss, Harpune und Klauen in beliebiger Kombination aus.\n\nBiss: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 6 (1W4+4) Stichschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Seeogers vergiftet.\n\nHarpune: Nah- oder Fernkampfangriffswurf: +6, Reichweite 1,5 m oder Reichweite 6/18 m. Treffer: 11 (2W6+4) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, zieht der Seeoger es bis zu 4,5 Meter weit in gerader Linie auf sich zu.\n\nKlauen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 9 (2W4+4) Hiebschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.seevettel",
+      "level": 3,
+      "text": "Seevettel"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.seevettel.seevettel",
+      "name": "Seevettel",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßes Feenwesen, chaotisch böse"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "52 (7W8+21)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Schwimmen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Ges",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Riesisch, Urtümlich (Aqual)"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Die Vettel kann Luft und Wasser atmen.\n\nBöses Erscheinungsbild: Weisheitsrettungswurf: SG 11; alle Tiere und Humanoiden, die ihren Zug im Abstand von bis zu neun Metern von der Vettel beginnen und die wahre Gestalt der Vettel sehen können. Misserfolg: Das Ziel ist bis zum Beginn seines nächsten Zugs verängstigt. Erfolg: Das Ziel ist 24 Stunden lang gegen das Böse Erscheinungsbild dieser Vettel immun.\n\nZirkelmagie: Wenn die Vettel sich im Abstand von bis zu neun Metern von mindestens zwei Vettel-Verbündeten befindet, kann sie einen der folgenden Zauber mit dem normalen Zeitaufwand und Intelligenz als Attribut zum Zauberwirken wirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 11): Ausspähung, Gegenstand aufspüren, Identifizieren, Unsichtbarer Diener, Vertrauten finden oder Vorahnung. Die Vettel muss eine lange Rast beenden, ehe sie dieses Merkmal erneut verwenden kann, um den Zauber zu wirken."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Klauen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 10 (2W6+3) Hiebschaden.\n\nIllusionäres Erscheinungsbild: Die Vettel wirkt den Zauber Selbstverkleidung mit Konstitution als Attribut zum Zauberwirken (Zauberrettungswurf-SG 13). Die Wirkungsdauer des Zaubers beträgt 24 Stunden.\n\nTodesstarren (Aufladung 5–6): Weisheitsrettungswurf: SG 11; eine verängstigte Kreatur im Abstand von bis zu neun Metern von der Vettel, die von der Vettel gesehen werden kann. Misserfolg: Wenn das Ziel höchstens 20 Trefferpunkte hat, sinken seine Trefferpunkte auf 0. Anderenfalls erleidet das Ziel 13 (3W8) psychischen Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.seiler",
+      "level": 3,
+      "text": "Seiler"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.seiler.seiler",
+      "name": "Seiler",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Große Aberration, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "20"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "TP",
+          "value": "93 (11W10+33)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "3 m, Klettern 6 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "7 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Cha",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +5, Wahrnehmung +6"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "5 (EP 1.800; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Spinnenklettern: Der Seiler kann ohne Attributswürfe schwierige Oberflächen erklimmen und sich an Decken entlang bewegen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Seiler führt zwei Tentakelangriffe aus, setzt Einholen ein und führt zwei Bissangriffe aus.\n\nBiss: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 17 (3W8+4) Stichschaden.\n\nTentakel: Nahkampfangriffswurf: +7, Reichweite 18 m. Treffer: Das Ziel wird von einem der sechs Tentakel gepackt (Flucht-SG 14). Solange es gepackt bleibt, ist es außerdem vergiftet.\n\nDas Tentakel kann beschädigt werden (er besitzt eine RK von 20, 10 TP und ist gegen Gift- und psychischen Schaden immun). Wird das Tentakel zerstört, so muss er eine gepackte Kreatur loslassen. Wird das Tentakel beschädigt, so erleidet der Seiler dadurch keinen Schaden. Ein zerstörtes Tentakel wächst zu Beginn des nächsten Zugs des Seilers nach.\n\nEinholen: Der Seiler zieht jede Kreatur, die er gepackt hält, bis zu neun Meter weit in gerader Linie auf sich zu."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.silberdrachen",
+      "level": 3,
+      "text": "Silberdrachen"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.silberdrachen.silberdrachennestling",
+      "name": "Silberdrachennestling",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "45 (6W8+18)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +2, Wahrnehmung +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch"
+        },
+        {
+          "label": "HG",
+          "value": "2 (450 EP; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt zwei Zerfetzen-Angriffe aus.\n\nZerfetzen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 9 (1W10+4) Stichschaden.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 13; jede Kreatur in einem Kegel von 4,5 Metern. Misserfolg: 18 (4W8) Kälteschaden. Erfolg: Halber Schaden.\n\nLähmender Odem: Konstitutionsrettungswurf: SG 13; jede Kreatur in einem Kegel von 4,5 Metern. Erster Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig. Dann wiederholt es den Rettungswurf. Zweiter Misserfolg: Das Ziel ist gelähmt und wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.silberdrachen.junger-silberdrache",
+      "name": "Junger Silberdrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "168 (16W10+80)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +4)"
+        },
+        {
+          "label": "Kon",
+          "value": "21 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "19 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Geschichte +6, Wahrnehmung +8, Heimlichkeit +4"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 3 m, Dunkelsicht 18 m; Passive Wahrnehmung 18"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "9 (EP 5.000; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Lähmender Odem ersetzen.\n\nZerfetzen: Nahkampfangriffswurf: +10, Reichweite 3 m. Treffer: 15 (2W8+6) Hiebschaden.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 17; jede Kreatur in einem Kegel von neun Metern. Misserfolg: 49 (11W8) Kälteschaden. Erfolg: Halber Schaden.\n\nLähmender Odem: Konstitutionsrettungswurf: SG 17; jede Kreatur in einem Kegel von neun Metern. Erster Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig. Dann wiederholt es den Rettungswurf. Zweiter Misserfolg: Das Ziel ist gelähmt und wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.silberdrachen.ausgewachsener-silberdrache",
+      "name": "Ausgewachsener Silberdrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "216 (16W12+112)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m"
+        },
+        {
+          "label": "Stä",
+          "value": "27 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +6)"
+        },
+        {
+          "label": "Cha",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Geschichte +8, Heimlichkeit +5, Wahrnehmung +11"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 21"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "16 (EP 15.000 oder 18.000 im Hort; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von (A) Lähmender Odem oder (B) Zauberwirken ersetzen, um den Zauber Eismesser zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +13, Reichweite 3 m. Treffer: 17 (2W8+8) Hiebschaden plus 4 (1W8) Kälteschaden.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 20; jede Kreatur in einem Kegel von 18 Metern. Misserfolg: 54 (12W8) Kälteschaden. Erfolg: Halber Schaden.\n\nLähmender Odem: Konstitutionsrettungswurf: SG 20; jede Kreatur in einem Kegel von 18 Metern. Erster Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig. Dann wiederholt es den Rettungswurf. Zweiter Misserfolg: Das Ziel ist gelähmt und wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 19, +11 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Eismesser, Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Magie entdecken, Monster festhalten\n\nJe 1-mal täglich: Eissturm (Version des 5. Grades), Zone der Wahrheit"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nKälte: Der Drache setzt Zauberwirken ein, um den Zauber Monster festhalten zu wirken. Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nKältesturm: Geschicklichkeitsrettungswurf: SG 19; jede Kreatur in einer 18 Meter langen, drei Meter breiten Linie. Misserfolg: 14 (4W6) Kälteschaden, und das Ziel wird bis zu neun Meter weit in gerader Linie vom Drachen weggestoßen. Erfolg: Nur halber Schaden. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.silberdrachen.uralter-silberdrache",
+      "name": "Uralter Silberdrache",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Gigantischer Drache (metallisch), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "22"
+        },
+        {
+          "label": "Initiative",
+          "value": "+14 (24)"
+        },
+        {
+          "label": "TP",
+          "value": "468 (24W20+216)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 24 m"
+        },
+        {
+          "label": "Stä",
+          "value": "30 (MOD +10, RW +10)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +7)"
+        },
+        {
+          "label": "Kon",
+          "value": "29 (MOD +9, RW +9)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "15 (MOD +2, RW +9)"
+        },
+        {
+          "label": "Cha",
+          "value": "26 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Geschichte +11, Heimlichkeit +7, Wahrnehmung +16"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Kälte"
+        },
+        {
+          "label": "Sinne",
+          "value": "Blindsicht 18 m, Dunkelsicht 36 m; Passive Wahrnehmung 26"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Drakonisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "23 (EP 50.000 oder 62.000 im Hort; ÜB +7)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (4-mal täglich, im Hort 5-mal täglich): Wenn der Drache bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Drache führt drei Zerfetzen-Angriffe aus. Er kann einen Angriff durch einen Einsatz von (A) Lähmender Odem oder (B) Zauberwirken ersetzen, um den Zauber Eismesser (Version des 2. Grades) zu wirken.\n\nZerfetzen: Nahkampfangriffswurf: +17, Reichweite 4,5 m. Treffer: 19 (2W8+10) Hiebschaden plus 9 (2W8) Kälteschaden.\n\nKälteodem (Aufladung 5–6): Konstitutionsrettungswurf: SG 24; jede Kreatur in einem Kegel von 27 Metern. Misserfolg: 67 (15W8) Kälteschaden. Erfolg: Halber Schaden.\n\nLähmender Odem: Konstitutionsrettungswurf: SG 24; jede Kreatur in einem Kegel von 27 Metern. Erster Misserfolg: Das Ziel ist bis zum Ende seines nächsten Zugs kampfunfähig. Dann wiederholt es den Rettungswurf. Zweiter Misserfolg: Das Ziel ist gelähmt und wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch.\n\nZauberwirken: Der Drache wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 23, +15 auf Treffer mit Zauberangriffen):\n\nBeliebig oft: Eismesser (Version des 2. Grades), Gestaltwandel (nur in Tier- oder humanoider Gestalt; durch den Zauber werden keine temporären Trefferpunkte erhalten, und zum Aufrechterhalten des Zaubers sind weder Konzentration noch temporäre Trefferpunkte erforderlich), Magie entdecken, Monster festhalten\n\nJe 1-mal täglich: Eissturm (Version des 7. Grades), Teleportieren, Wetterkontrolle, Zone der Wahrheit"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann der Drache eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Drachen wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nAnspringen: Der Drache legt bis zur Hälfte seiner Bewegungsrate zurück und führt einen Zerfetzen-Angriff aus.\n\nKälte: Der Drache setzt Zauberwirken ein, um den Zauber Monster festhalten zu wirken. Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nKältesturm: Geschicklichkeitsrettungswurf: SG 23; jede Kreatur in einer 18 Meter langen, drei Meter breiten Linie. Misserfolg: 14 (4W6) Kälteschaden, und das Ziel wird bis zu neun Meter weit in gerader Linie vom Drachen weggestoßen. Erfolg: Nur halber Schaden. Erfolg oder Misserfolg: Der Drache kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.skelette",
+      "level": 3,
+      "text": "Skelette"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.skelette.skelett",
+      "name": "Skelett",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Untoter, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "13 (2W8+4)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Kurzbogen, Kurzschwert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Gemeinsprache und eine weitere Sprache, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "1/4 (EP 50; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Kurzschwert: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 6 (1W6+3) Stichschaden.\n\nKurzbogen: Fernkampfangriffswurf: +5, Reichweite 24/96 m. Treffer: 6 (1W6+3) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.skelette.streitross-skelett",
+      "name": "Streitross-Skelett",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Untoter, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "TP",
+          "value": "22 (3W10+6)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "2 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "–"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Hufe: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 7 (1W6+4) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist und das Skelett sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, wird das Ziel umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.skelette.minotaurus-skelett",
+      "name": "Minotaurus-Skelett",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großer Untoter, rechtschaffen böse"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "TP",
+          "value": "45 (6W10+12)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Kon",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Int",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Wei",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Cha",
+          "value": "5 (MOD –3, RW –3)"
+        },
+        {
+          "label": "Anfälligkeiten",
+          "value": "Wucht"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift; Erschöpft, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 9"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Abyssisch, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "2 (EP 450; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Hieb: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 15 (2W10+4) Wuchtschaden.\n\nZerfleischen: Nahkampfangriffswurf: +6, Reichweite 1,5 m. Treffer: 11 (2W6+4) Stichschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist und das Skelett sich unmittelbar vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 9 (2W8) Stichschaden, wird umgestoßen und hat den Zustand Liegend."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.solar",
+      "level": 3,
+      "text": "Solar"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.solar.solar",
+      "name": "Solar",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes celestisches Wesen (Engel), rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "21"
+        },
+        {
+          "label": "Initiative",
+          "value": "+20 (30)"
+        },
+        {
+          "label": "TP",
+          "value": "297 (22W10+176)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m, Fliegen 45 m (Schweben)"
+        },
+        {
+          "label": "Stä",
+          "value": "26 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Ges",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "26 (MOD +8, RW +8)"
+        },
+        {
+          "label": "Int",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Wei",
+          "value": "25 (MOD +7, RW +7)"
+        },
+        {
+          "label": "Cha",
+          "value": "30 (MOD +10, RW +10)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Wahrnehmung +14"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Gleißend; Bezaubert, Erschöpft, Verängstigt, Vergiftet"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 24"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Alle; Telepathie auf 36 m"
+        },
+        {
+          "label": "HG",
+          "value": "21 (EP 33.000; ÜB +7)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Göttliches Bewusstsein: Der Solar erkennt, wenn er eine Lüge hört.\n\nErhabene Genesung: Wenn der Solar außerhalb des Bergs Celestia stirbt, verschwindet sein Körper. Der Solar erhält sofort einen neuen Körper, der mit allen Trefferpunkten irgendwo am Berg Celestia aufersteht.\n\nLegendäre Resistenz (4-mal täglich): Wenn der Solar bei einem Rettungswurf scheitert, kann er beschließen, ihn stattdessen zu bestehen.\n\nMagieresistenz: Der Solar ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Solar führt zwei Fliegendes-Schwert-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Bogen des Tötens ersetzen.\n\nFliegendes Schwert: Nah- oder Fernkampfangriffswurf: +15, Reichweite 3 m oder Reichweite 36 m. Treffer: 22 (4W6+8) Hiebschaden plus 36 (8W8) gleißender Schaden. Treffer oder Fehlschlag: Unmittelbar nach einem Fernkampfangriff kehrt das Schwert auf magische Art in die Hand des Solars zurück oder schwebt im Abstand von bis zu 1,5 Metern von ihm.\n\nBogen des Tötens: Geschicklichkeitsrettungswurf: SG 21; eine Kreatur im Abstand von bis zu 180 Metern vom Solar, die er sehen kann. Misserfolg: Wenn die Kreatur höchstens 100 Trefferpunkte hat, stirbt sie. Anderenfalls erleidet das Ziel 24 (4W8+6) Stichschaden plus 36 (8W8) gleißenden Schaden.\n\nZauberwirken: Der Solar wirkt einen der folgenden Zauber mit Charisma als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 25):\n\nBeliebig oft: Gutes und Böses entdecken Je 1-mal täglich: Auferstehung, Gutes und Böses bannen, Heiliges Gespräch, Wetterkontrolle"
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Göttlicher Beistand (3-mal täglich): Der Solar wirkt einen der Zauber Fluch brechen, Schwache Genesung oder Wunden heilen (Version des 2. Grades). Sein Attribut zum Zauberwirken ist dasselbe wie beim Ausführen der Zauberwirken-Aktion."
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3. Unmittelbar nach dem Zug einer anderen Kreatur kann der Solar eine legendäre Aktion ausführen. Zu Beginn jedes seiner Züge stehen dem Solar wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nBlendender Blick: Konstitutionsrettungswurf: SG 25; eine Kreatur im Abstand von bis zu 36 Metern vom Solar, die er sehen kann. Misserfolg: Das Ziel ist eine Minute lang blind. Erfolg oder Misserfolg: Der Solar kann diese Aktion erst nach Beginn seines nächsten Zugs erneut ausführen.\n\nGleißendes Teleportieren: Der Solar teleportiert sich bis zu 18 Meter weit in einen freien Bereich, den er sehen kann. Geschicklichkeitsrettungswurf: SG 25; jede Kreatur in einer Ausströmung von drei Metern, die vom Solar an seinem Zielbereich ausgeht. Misserfolg: 11 (2W10) gleißender Schaden. Erfolg: Halber Schaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.spaeher",
+      "level": 3,
+      "text": "Späher"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.spaeher.spaeher",
+      "name": "Späher",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "TP",
+          "value": "16 (3W8+3)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +6, Naturkunde +4, Überlebenskunst +5, Wahrnehmung +5"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Kurzschwert, Langbogen, Lederrüstung"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "1/2 (EP 100, ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Späher führt zwei Angriffe mit Kurzschwert oder Langbogen in beliebiger Kombination aus.\n\nKurzschwert: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Stichschaden.\n\nLangbogen: Fernkampfangriffswurf: +4, Reichweite 45/180 m. Treffer: 6 (1W8+2) Stichschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.sphinxe",
+      "level": 3,
+      "text": "Sphinxe"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.sphinxe.sphinx-des-wunders",
+      "name": "Sphinx des Wunders",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Winziges celestisches Wesen, rechtschaffen gut"
+        },
+        {
+          "label": "RK",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "24 (7W4+7)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "6 m, Fliegen 12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "6 (MOD –2, RW –2)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +4, Heimlichkeit +5, Religion +4"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Gleißend, Nekrotisch, Psychisch"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 11"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Celestisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Magieresistenz: Die Sphinx ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Zerfetzen: Nahkampfangriffswurf: +5, Reichweite 1,5 m. Treffer: 5 (1W4+3) Hiebschaden plus 7 (2W6) gleißender Schaden."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Ausbruch der Genialität (2-mal täglich): Auslöser: Die Sphinx oder eine andere Kreatur im Abstand von bis zu neun Metern führt einen Attributswurf oder einen Rettungswurf aus. Antwort: Die Sphinx fügt dem Wurf 2 hinzu."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.sphinxe.sphinx-der-tapferkeit",
+      "name": "Sphinx der Tapferkeit",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes celestisches Wesen, rechtschaffen neutral"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+12 (22)"
+        },
+        {
+          "label": "TP",
+          "value": "199 (19W10+95)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "10 (MOD +0, RW +6)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +11)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +9)"
+        },
+        {
+          "label": "Wei",
+          "value": "23 (MOD +6, RW +12)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +9, Religion +15, Wahrnehmung +12"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Gleißend, Nekrotisch"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Psychisch; Bezaubert, Verängstigt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 22"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Celestisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "17 (EP 18.000 oder 20.000 im Hort; ÜB +6)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn die Sphinx bei einem Rettungswurf scheitert, kann sie beschließen, ihn stattdessen zu bestehen.\n\nUndurchschaubar: Ohne ihre Erlaubnis kann keine Magie die Sphinx aus der Ferne beobachten oder ihre Gedanken erkennen. Weisheitswürfe (Motiv erkennen) zum Ermitteln ihrer Absichten oder ihrer Aufrichtigkeit sind im Nachteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Sphinx führt zwei Klauenangriffe aus und setzt Brüllen ein.\n\nKlauen: Nahkampfangriffswurf: +12, Reichweite 1,5 m. Treffer: 20 (4W6+6) Hiebschaden.\n\nBrüllen (3-mal täglich): Die Sphinx stößt ein magisches Brüllen aus. Wann immer sie brüllt, hat das Brüllen einen anderen Effekt, wie unten beschrieben (die Sequenz wird nach einer langen Rast zurückgesetzt):\n\nErstes Brüllen: Weisheitsrettungswurf: SG 20; jeder Gegner in einer Ausströmung von 150 Metern, die von der Sphinx ausgeht. Misserfolg: Das Ziel ist eine Minute lang verängstigt.\n\nZweites Brüllen: Weisheitsrettungswurf: SG 20; jeder Gegner in einer Ausströmung von 150 Metern, die von der Sphinx ausgeht. Misserfolg: Das Ziel ist gelähmt und wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Nach einer Minute besteht es den Rettungswurf automatisch.\n\nDrittes Brüllen: Konstitutionsrettungswurf: SG 20; jeder Gegner in einer Ausströmung von 150 Metern, die von der Sphinx ausgeht. Misserfolg: 44 (8W10) Schallschaden, und das Ziel wird umgestoßen und hat den Zustand Liegend. Erfolg: Nur halber Schaden.\n\nZauberwirken: Die Sphinx wirkt einen der folgenden Zauber mit Weisheit als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 20):\n\nBeliebig oft: Gutes und Böses entdecken, Thaumaturgie Je 1-mal täglich: Heldenmahl, Magie bannen, Magie entdecken, Vollständige Genesung, Zone der Wahrheit"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann die Sphinx eine legendäre Aktion ausführen. Zu Beginn jedes ihrer Züge stehen der Sphinx wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nArkanes Umherstreifen: Die Sphinx kann sich bis zu neun Meter weit in einen freien Bereich teleportieren, den sie sehen kann, und dort einen Klauenangriff ausführen.\n\nGewicht der Jahre: Konstitutionsrettungswurf: SG 16; eine Kreatur im Abstand von bis zu 36 Metern von der Sphinx, die von der Sphinx gesehen werden kann. Misserfolg: Das Ziel erhält eine Erschöpfungsstufe. Solange das Ziel Erschöpfungsstufen hat, erscheint es 3W10 Jahre älter. Erfolg oder Misserfolg: Die Sphinx kann diese Aktion erst nach Beginn ihres nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.sphinxe.sphinx-des-wissens",
+      "name": "Sphinx des Wissens",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes celestisches Wesen, rechtschaffen neutral"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "TP",
+          "value": "170 (20W10+60)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Int",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Wei",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +4)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +12, Geschichte +12, Religion +12, Wahrnehmung +8"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Gleißend, Nekrotisch"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Psychisch; Bezaubert, Verängstigt"
+        },
+        {
+          "label": "Sinne",
+          "value": "Wahrer Blick 36 m; Passive Wahrnehmung 18"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Celestisch, Gemeinsprache"
+        },
+        {
+          "label": "HG",
+          "value": "11 (EP 7.200 oder 8.400 im Hort; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Legendäre Resistenz (3-mal täglich, im Hort 4-mal täglich): Wenn die Sphinx bei einem Rettungswurf scheitert, kann sie beschließen, ihn stattdessen zu bestehen.\n\nUndurchschaubar: Ohne ihre Erlaubnis kann keine Magie die Sphinx aus der Ferne beobachten oder ihre Gedanken erkennen. Weisheitswürfe (Motiv erkennen) zum Ermitteln ihrer Absichten oder ihrer Aufrichtigkeit sind im Nachteil."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Die Sphinx führt drei Klauenangriffe aus.\n\nKlauen: Nahkampfangriffswurf: +8, Reichweite 1,5 m. Treffer: 14 (3W6+4) Hiebschaden.\n\nVerstand zerfetzendes Brüllen (Aufladung 5–6): Weisheitsrettungswurf: SG 16; jeder Gegner in einer Ausströmung von 90 Metern, die von der Sphinx ausgeht. Misserfolg: 35 (10W6) psychischer Schaden, und das Ziel ist bis zum Beginn des nächsten Zugs der Sphinx kampfunfähig.\n\nZauberwirken: Die Sphinx wirkt einen der folgenden Zauber mit Intelligenz als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 16):\n\nBeliebig oft: Einfache Illusion, Identifizieren, Magie entdecken, Magierhand, Taschenspielerei\n\nJe 1-mal täglich: Ebenenwechsel, Fluch brechen, Gegenstand aufspüren, Magie bannen, Sagenkunde, Zungen"
+        },
+        {
+          "title": "Legendäre Aktionen",
+          "text": "Anwendungen legendärer Aktionen: 3 (4 im Hort). Unmittelbar nach dem Zug einer anderen Kreatur kann die Sphinx eine legendäre Aktion ausführen. Zu Beginn jedes ihrer Züge stehen der Sphinx wieder alle ausgeführten legendären Aktionen zur Verfügung.\n\nArkanes Umherstreifen: Die Sphinx kann sich bis zu neun Meter weit in einen freien Bereich teleportieren, den sie sehen kann, und dort einen Klauenangriff ausführen.\n\nGewicht der Jahre: Konstitutionsrettungswurf: SG 16; eine Kreatur im Abstand von bis zu 36 Metern von der Sphinx, die von der Sphinx gesehen werden kann. Misserfolg: Das Ziel erhält eine Erschöpfungsstufe. Solange das Ziel Erschöpfungsstufen hat, erscheint es 3W10 Jahre älter. Erfolg oder Misserfolg: Die Sphinx kann diese Aktion erst nach Beginn ihres nächsten Zugs erneut ausführen."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.spion",
+      "level": 3,
+      "text": "Spion"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.spion.spion",
+      "name": "Spion",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Kleiner oder mittelgroßer Humanoide, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "TP",
+          "value": "27 (6W8)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Klettern 9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Int",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Wei",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Cha",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Fingerfertigkeit +4, Heimlichkeit +6, Motiv erkennen +4, Nachforschungen +5, Täuschen +5, Wahrnehmung +6"
+        },
+        {
+          "label": "Ausrüstung",
+          "value": "Diebeswerkzeug, Handarmbrust, Kurzschwert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Passive Wahrnehmung 16"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache und eine weitere Sprache"
+        },
+        {
+          "label": "HG",
+          "value": "1 (EP 200; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Kurzschwert: Nahkampfangriffswurf: +4, Reichweite 1,5 m. Treffer: 5 (1W6+2) Stichschaden plus 7 (2W6) Giftschaden.\n\nHandarmbrust: Fernkampfangriffswurf: +4, Reichweite 9/36 m. Treffer: 5 (1W6+2) Stichschaden plus 7 (2W6) Giftschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Raffinierte Aktion: Der Spion führt die Rückzug-, die Spurt- oder die Verstecken-Aktion aus."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.steingolem",
+      "level": 3,
+      "text": "Steingolem"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.steingolem.steingolem",
+      "name": "Steingolem",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Großes Konstrukt, gesinnungslos"
+        },
+        {
+          "label": "RK",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "220 (21W10+105)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m"
+        },
+        {
+          "label": "Stä",
+          "value": "22 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Int",
+          "value": "3 (MOD –4, RW –4)"
+        },
+        {
+          "label": "Wei",
+          "value": "11 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Cha",
+          "value": "1 (MOD –5, RW –5)"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Gift, Psychisch; Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet, Versteinert"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m; Passive Wahrnehmung 10"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Versteht Gemeinsprache und zwei weitere Sprachen, kann jedoch nicht sprechen"
+        },
+        {
+          "label": "HG",
+          "value": "10 (EP 5.900; ÜB +4)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Magieresistenz: Der Golem ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil.\n\nUnveränderliche Gestalt: Der Golem kann keine andere Gestalt annehmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Golem führt zwei Angriffe mit Hieb oder Energiegeschoss in beliebiger Kombination aus.\n\nHieb: Nahkampfangriffswurf: +10, Reichweite 1,5 m. Treffer: 15 (2W8+6) Wuchtschaden plus 9 (2W8) Energieschaden.\n\nEnergiegeschoss: Fernkampfangriffswurf: +9, Reichweite 36 m. Treffer: 22 (4W10) Energieschaden."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Verlangsamen (Aufladung 5–6): Der Golem wirkt den Zauber Verlangsamen mit Konstitution als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 17)."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.steinriese",
+      "level": 3,
+      "text": "Steinriese"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.steinriese.steinriese",
+      "name": "Steinriese",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Riese, neutral"
+        },
+        {
+          "label": "RK",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "TP",
+          "value": "126 (11W12+55)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "12 m"
+        },
+        {
+          "label": "Stä",
+          "value": "23 (MOD +6, RW +6)"
+        },
+        {
+          "label": "Ges",
+          "value": "15 (MOD +2, RW +5)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +8)"
+        },
+        {
+          "label": "Int",
+          "value": "10 (MOD +0, RW +0)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +4)"
+        },
+        {
+          "label": "Cha",
+          "value": "9 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Athletik +12, Heimlichkeit +5, Wahrnehmung +4"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 14"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Riesisch"
+        },
+        {
+          "label": "HG",
+          "value": "7 (EP 2.900; ÜB +3)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Riese führt zwei Angriffe mit Steinknüppel oder Felswurf in beliebiger Kombination aus.\n\nSteinknüppel: Nahkampfangriffswurf: +9, Reichweite 4,5 m. Treffer: 22 (3W10+6) Wuchtschaden.\n\nFelswurf: Fernkampfangriffswurf: +9, Reichweite 18/72 m. Treffer: 15 (2W8+6) Wuchtschaden. Wenn das Ziel eine Kreatur von höchstens großer Größe ist, wird es umgestoßen und hat den Zustand Liegend."
+        },
+        {
+          "title": "Reaktionen",
+          "text": "Geschoss umleiten (Aufladung 5–6): Auslöser: Der Riese wird von einem Fernkampfangriffswurf getroffen, durch den er Hieb-, Stich- oder Wuchtschaden erleidet. Antwort: Der Riese verringert den Schaden, den er durch diesen Angriff erleidet, um 11 (1W10+6). Wenn der Schaden dadurch auf 0 verringert wird, kann der Riese einen Teil der Angriffsenergie umleiten. Geschicklichkeitsrettungswurf: SG 17; eine Kreatur im Abstand von bis zu 18 Metern vom Riesen, die er sehen kann. Misserfolg: 11 (1W10+6) Energieschaden."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.sturmriese",
+      "level": 3,
+      "text": "Sturmriese"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.sturmriese.sturmriese",
+      "name": "Sturmriese",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Riesiger Riese, chaotisch gut"
+        },
+        {
+          "label": "RK",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "TP",
+          "value": "230 (20W12+100)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "15 m, Fliegen 7,5 m (Schweben), Schwimmen 15 m"
+        },
+        {
+          "label": "Stä",
+          "value": "29 (MOD +9, RW +14)"
+        },
+        {
+          "label": "Ges",
+          "value": "14 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Kon",
+          "value": "20 (MOD +5, RW +10)"
+        },
+        {
+          "label": "Int",
+          "value": "16 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Wei",
+          "value": "20 (MOD +5, RW +10)"
+        },
+        {
+          "label": "Cha",
+          "value": "18 (MOD +4, RW +9)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Arkane Kunde +8, Athletik +14, Geschichte +8, Wahrnehmung +10"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Kälte"
+        },
+        {
+          "label": "Immunitäten",
+          "value": "Blitz, Schall"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 36 m, Wahrer Blick 9 m; Passive Wahrnehmung 20"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Gemeinsprache, Riesisch"
+        },
+        {
+          "label": "HG",
+          "value": "13 (EP 10.000; ÜB +5)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Amphibisch: Der Riese kann Luft und Wasser atmen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Riese führt zwei Angriffe mit Sturmschwert oder Donnerkeil in beliebiger Kombination aus.\n\nSturmschwert: Nahkampfangriffswurf: +14, Reichweite 3 m. Treffer: 23 (4W6+9) Hiebschaden plus 13 (3W8) Blitzschaden.\n\nDonnerkeil: Fernkampfangriffswurf: +14, Reichweite 150 m. Treffer: 22 (2W12+9) Blitzschaden, und das Ziel ist bis zum Beginn des nächsten Zugs des Riesen blind und taub.\n\nGewittersturm (Aufladung 5–6): Geschicklichkeitsrettungswurf: SG 18, jede Kreatur in einem 12 Meter hohen Zylinder mit einem Radius von drei Metern um einen Punkt im Abstand von bis zu 150 Metern vom Riesen, den er sehen kann. Misserfolg: 55 (10W10) Blitzschaden. Erfolg: Halber Schaden.\n\nZauberwirken: Der Riese wirkt einen der folgenden Zauber mit Weisheit als Attribut zum Zauberwirken, ohne Materialkomponenten zu benötigen (Zauberrettungswurf-SG 18):\n\nBeliebig oft: Licht, Magie entdecken Je 1-mal täglich: Wetterkontrolle"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "monsters.s.sukkubus",
+      "level": 3,
+      "text": "Sukkubus"
+    },
+    {
+      "type": "stat-block",
+      "ruleId": "monsters.s.sukkubus.sukkubus",
+      "name": "Sukkubus",
+      "entries": [
+        {
+          "label": "Typ",
+          "value": "Mittelgroßer Unhold, neutral böse"
+        },
+        {
+          "label": "RK",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "TP",
+          "value": "71 (13W8+13)"
+        },
+        {
+          "label": "Bewegungsrate",
+          "value": "9 m, Fliegen 18 m"
+        },
+        {
+          "label": "Stä",
+          "value": "8 (MOD –1, RW –1)"
+        },
+        {
+          "label": "Ges",
+          "value": "17 (MOD +3, RW +3)"
+        },
+        {
+          "label": "Kon",
+          "value": "13 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Int",
+          "value": "15 (MOD +2, RW +2)"
+        },
+        {
+          "label": "Wei",
+          "value": "12 (MOD +1, RW +1)"
+        },
+        {
+          "label": "Cha",
+          "value": "20 (MOD +5, RW +5)"
+        },
+        {
+          "label": "Fertigkeiten",
+          "value": "Heimlichkeit +7, Motiv erkennen +5, Täuschen +9, Überzeugen +9, Wahrnehmung +5"
+        },
+        {
+          "label": "Resistenzen",
+          "value": "Feuer, Gift, Kälte, Psychisch"
+        },
+        {
+          "label": "Sinne",
+          "value": "Dunkelsicht 18 m; Passive Wahrnehmung 15"
+        },
+        {
+          "label": "Sprachen",
+          "value": "Abyssisch, Gemeinsprache, Infernalisch; Telepathie auf 18 m"
+        },
+        {
+          "label": "HG",
+          "value": "4 (EP 1.100; ÜB +2)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Merkmale",
+          "text": "Inkubus-Gestalt: Wenn der Sukkubus eine lange Rast beendet, kann er sich in einen Inkubus verwandeln und verwendet dann dessen Wertekasten statt diesen."
+        },
+        {
+          "title": "Aktionen",
+          "text": "Mehrfachangriff: Der Sukkubus führt einen Unholdische-Berührung-Angriff aus und setzt Bezaubern oder Schwächender Kuss ein.\n\nUnholdische Berührung: Nahkampfangriffswurf: +7, Reichweite 1,5 m. Treffer: 16 (2W10+5) psychischer Schaden.\n\nBezaubern: Der Sukkubus wirkt den Zauber Person beherrschen (Version des 8. Grades) mit Charisma als Attribut zum Zauberwirken, ohne Zauberkomponenten zu benötigen (Zauberrettungswurf-SG 15).\n\nSchwächender Kuss: Konstitutionsrettungswurf: SG 15; eine vom Sukkubus bezauberte Kreatur im Abstand von bis zu 1,5 Metern vom Sukkubus. Misserfolg: 13 (3W8) psychischer Schaden. Erfolg: Halber Schaden. Erfolg oder Misserfolg: Das Trefferpunktemaximum des Ziels wird um eine Anzahl in Höhe des erlittenen Schadens verringert."
+        },
+        {
+          "title": "Bonusaktionen",
+          "text": "Gestaltwandeln: Der Sukkubus nimmt die Gestalt eines Humanoiden von höchstens mittelgroßer Größe oder wieder seine wahre Gestalt an. Seine Spielwerte sind in allen Formen gleich, allerdings hat er die Flugbewegungsrate nur in seiner wahren Gestalt. Ausrüstung, die er trägt oder hält, wird nicht verwandelt."
+        }
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:54693242ace1b1543776ac65b5dc009fb998d08b7307b881c312e49b165fb27c"
+}

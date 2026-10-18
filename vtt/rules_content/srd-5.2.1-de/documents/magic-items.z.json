@@ -1,0 +1,846 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.z",
+  "slug": "magische-gegenstaende-z",
+  "title": "Magische Gegenstände Z",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "Magische Gegenstände Z"
+  ],
+  "order": 1200,
+  "sourcePages": [
+    288,
+    289,
+    290,
+    291,
+    292,
+    293,
+    294
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.beschreibungen",
+      "level": 2,
+      "text": "Beschreibungen der magischen Gegenstände (Z)"
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberabwehrschild",
+      "level": 3,
+      "text": "Zauberabwehrschild"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberabwehrschild.untertitel",
+      "text": "Rüstung (Schild), sehr selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberabwehrschild.text-1",
+      "text": "Wenn du diesen Schild hältst, bist du bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil, und Zauberangriffswürfe gegen dich sind im Nachteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberfluegel",
+      "level": 3,
+      "text": "Zauberflügel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberfluegel.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberfluegel.text-1",
+      "text": "Wenn du diesen Mantel trägst, kannst du eine magische Aktion ausführen, um den Mantel in ein Flügelpaar auf deinem Rücken zu verwandeln. Diese Flügel bleiben erhalten, bis eine Stunde vergangen ist oder du den Effekt als magische Aktion vorzeitig beendest. Die Flügel verleihen dir eine Flugbewegungsrate von 18 Metern. Befindest du dich in der Luft, wenn die Flügel verschwinden, so stürzt du ab. Wenn die Flügel verschwunden sind, kannst du sie erst nach 1W12 Stunden erneut verwenden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberschriftrolle",
+      "level": 3,
+      "text": "Zauberschriftrolle"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberschriftrolle.untertitel",
+      "text": "Schriftrolle, Seltenheit variiert"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberschriftrolle.text-1",
+      "text": "Eine Zauberschriftrolle trägt die Worte eines einzelnen Zaubers in mystischen Zeichen. Wenn sich der Zauber auf deiner Zauberliste befindet, kannst du die Schriftrolle verlesen und den Zauber wirken, ohne Materialkomponenten zu benötigen. Anderenfalls ist die Schriftrolle für dich unleserlich. Wird der Zauber gewirkt, indem die Schriftrolle verlesen wird, so ist der normale Zeitaufwand zum Wirken erforderlich. Sobald der Zauber gewirkt wurde, zerfällt die Schriftrolle zu Staub. Wird das Wirken des Zaubers unterbrochen, so ist die Schriftrolle nicht vergeudet."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberschriftrolle.text-2",
+      "text": "Wenn sich der Zauber auf deiner Zauberliste befindet, jedoch einen höheren Grad aufweist, als du normalerweise wirken kannst, musst du einen Attributswurf mit deinem Attribut zum Zauberwirken bestehen, um den Zauber erfolgreich zu wirken. Der SG beträgt 10 plus Grad des Zaubers. Misslingt der Wurf, so verschwindet der Zauber ohne weiteren Effekt von der Schriftrolle."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberschriftrolle.text-3",
+      "text": "Der Grad des Zaubers auf der Schriftrolle bestimmt den Rettungswurf-SG und den Angriffsbonus des Zaubers sowie die Seltenheit der Schriftrolle wie in der folgenden Tabelle gezeigt."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.z.zauberschriftrolle.tabelle-zauberschriftrolle",
+      "caption": "Zauberschriftrolle",
+      "columns": [
+        "Zaubergrad",
+        "Seltenheit",
+        "Rettungswurf-SG",
+        "Angriffsbonus"
+      ],
+      "rows": [
+        [
+          "Zaubertrick",
+          "Gewöhnlich",
+          "13",
+          "+5"
+        ],
+        [
+          "1",
+          "Gewöhnlich",
+          "13",
+          "+5"
+        ],
+        [
+          "2",
+          "Ungewöhnlich",
+          "13",
+          "+5"
+        ],
+        [
+          "3",
+          "Ungewöhnlich",
+          "15",
+          "+7"
+        ],
+        [
+          "4",
+          "Selten",
+          "15",
+          "+7"
+        ],
+        [
+          "5",
+          "Selten",
+          "17",
+          "+9"
+        ],
+        [
+          "6",
+          "Sehr selten",
+          "17",
+          "+9"
+        ],
+        [
+          "7",
+          "Sehr selten",
+          "18",
+          "+10"
+        ],
+        [
+          "8",
+          "Sehr selten",
+          "18",
+          "+10"
+        ],
+        [
+          "9",
+          "Legendär",
+          "19",
+          "+11"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberschriftrolle.text-4",
+      "text": "Eine Schriftrolle in ein Zauberbuch kopieren: Ein Magierzauber auf einer Zauberschriftrolle kann in ein Zauberbuch kopiert werden. Dazu muss der kopierende Charakter einen Intelligenzwurf (Arkane Kunde) bestehen, wobei der SG gleich 10 plus Zaubergrad ist. Bei einem Erfolg wird der Zauber kopiert. Unabhängig davon, ob der Wurf gelingt, wird die Zauberschriftrolle zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-angst",
+      "level": 3,
+      "text": "Zauberstab der Angst"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-angst.untertitel",
+      "text": "Zauberstab, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-angst.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-angst.text-2",
+      "text": "Zauber: Wenn du den Zauberstab hältst, kannst du einen der Zauber der nachstehenden Tabelle damit wirken (Rettungswurf-SG 15). In der Tabelle ist angegeben, wie viele Ladungen du verbrauchen musst, um den Zauber zu wirken."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.z.zauberstab-der-angst.tabelle-zauberstab-der-angst",
+      "caption": "Zauberstab der Angst",
+      "columns": [
+        "Zauber",
+        "Ladungskosten"
+      ],
+      "rows": [
+        [
+          "Befehl (nur „Fliehen“ oder „Hinlegen“)",
+          "1"
+        ],
+        [
+          "Furcht (18 m, Kegel)",
+          "3"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-angst.text-3",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-bindung",
+      "level": 3,
+      "text": "Zauberstab der Bindung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-bindung.untertitel",
+      "text": "Zauberstab, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-bindung.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-bindung.text-2",
+      "text": "Zauber: Wenn du den Zauberstab hältst, kannst du einen der Zauber der nachstehenden Tabelle damit wirken (Rettungswurf-SG 17). In der Tabelle ist angegeben, wie viele Ladungen du verbrauchen musst, um den Zauber zu wirken."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.z.zauberstab-der-bindung.tabelle-zauberstab-der-bindung",
+      "caption": "Zauberstab der Bindung",
+      "columns": [
+        "Zauber",
+        "Ladungskosten"
+      ],
+      "rows": [
+        [
+          "Monster festhalten",
+          "5"
+        ],
+        [
+          "Person festhalten",
+          "2"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-bindung.text-3",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-blitzschlaege",
+      "level": 3,
+      "text": "Zauberstab der Blitzschläge"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-blitzschlaege.untertitel",
+      "text": "Zauberstab, selten (erfordert Einstimmung durch einen Zauberwirker)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-blitzschlaege.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen. Wenn du ihn hältst, kannst du bis zu drei Ladungen verbrauchen, um den Zauber Blitz (Rettungswurf-SG 15) damit zu wirken. Mit einer Ladung wirkst du den Zauber auf dem 3. Grad. Du kannst den Zaubergrad mit jeder weitere Ladung, die du verbrauchst, um eins erhöhen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-blitzschlaege.text-2",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-feindeslokalisierung",
+      "level": 3,
+      "text": "Zauberstab der Feindeslokalisierung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-feindeslokalisierung.untertitel",
+      "text": "Zauberstab, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-feindeslokalisierung.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen. Wenn du ihn hältst, kannst du eine magische Aktion ausführen und eine Ladung verbrauchen. Nun weißt du eine Minute lang, in welcher Richtung sich die nächste dir feindlich gesinnte Kreatur im Abstand von bis zu 18 Metern befindet, jedoch nicht, welchen Abstand sie zu dir hat. Der Zauberstab kann die Anwesenheit von ätherischen, unsichtbaren, verkleideten oder versteckten feindlichen Kreaturen genauso erkennen wie die von offen sichtbaren. Der Effekt endet, wenn du den Zauberstab nicht mehr hältst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-feindeslokalisierung.text-2",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-feuerbaelle",
+      "level": 3,
+      "text": "Zauberstab der Feuerbälle"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-feuerbaelle.untertitel",
+      "text": "Zauberstab, selten (erfordert Einstimmung durch einen Zauberwirker)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-feuerbaelle.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen. Wenn du ihn hältst, kannst du bis zu drei Ladungen verbrauchen, um den Zauber Feuerball (Rettungswurf-SG 15) damit zu wirken. Mit einer Ladung wirkst du den Zauber auf dem 3. Grad. Du kannst den Zaubergrad mit jeder weitere Ladung, die du verbrauchst, um eins erhöhen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-feuerbaelle.text-2",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-geheimnisse",
+      "level": 3,
+      "text": "Zauberstab der Geheimnisse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-geheimnisse.untertitel",
+      "text": "Zauberstab, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-geheimnisse.text-1",
+      "text": "Dieser Zauberstab hat drei Ladungen und erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück. Wenn du ihn hältst, kannst du eine magische Aktion ausführen und eine Ladung verbrauchen. Falls sich im Abstand von bis zu 18 Metern von dir eine Geheimtür oder eine Falle befindet, pulsiert der Zauberstab und zeigt auf die, die dir am nächsten ist."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-des-kriegsmagiers-1-2-oder-3",
+      "level": 3,
+      "text": "Zauberstab des Kriegsmagiers +1, +2 oder +3"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-des-kriegsmagiers-1-2-oder-3.untertitel",
+      "text": "Zauberstab, ungewöhnlich (+1), selten (+2) oder sehr selten (+3) (erfordert Einstimmung durch einen Zauberwirker)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-des-kriegsmagiers-1-2-oder-3.text-1",
+      "text": "Während du diesen Zauberstab hältst, erhältst du einen Bonus auf Zauberangriffswürfe, der von der Seltenheit des Zauberstabs abhängt. Außerdem ignorierst du Teildeckung, wenn du einen Zauberangriffswurf ausführst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-magieerkennung",
+      "level": 3,
+      "text": "Zauberstab der Magieerkennung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-magieerkennung.untertitel",
+      "text": "Zauberstab, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-magieerkennung.text-1",
+      "text": "Dieser Zauberstab hat drei Ladungen. Wenn du ihn hältst, kannst du eine Ladung verbrauchen, um den Zauber Magie entdecken damit zu wirken. Der Zauberstab erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-magischen-geschosse",
+      "level": 3,
+      "text": "Zauberstab der Magischen Geschosse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-magischen-geschosse.untertitel",
+      "text": "Zauberstab, ungewöhnlich"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-magischen-geschosse.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen. Wenn du ihn hältst, kannst du bis zu drei Ladungen verbrauchen, um den Zauber Magisches Geschoss damit zu wirken. Mit einer Ladung wirkst du den Zauber auf dem 1. Grad. Du kannst den Zaubergrad mit jeder weitere Ladung, die du verbrauchst, um eins erhöhen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-magischen-geschosse.text-2",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-des-netzes",
+      "level": 3,
+      "text": "Zauberstab des Netzes"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-des-netzes.untertitel",
+      "text": "Zauberstab, ungewöhnlich (erfordert Einstimmung durch einen Zauberwirker)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-des-netzes.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen. Wenn du ihn hältst, kannst du eine Ladung verbrauchen, um den Zauber Spinnennetz (Rettungswurf-SG 13) damit zu wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-des-netzes.text-2",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-paralyse",
+      "level": 3,
+      "text": "Zauberstab der Paralyse"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-paralyse.untertitel",
+      "text": "Zauberstab, selten (erfordert Einstimmung durch einen Zauberwirker)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-paralyse.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen. Wenn du ihn hältst, kannst du eine magische Aktion ausführen und eine Ladung verbrauchen, um von seiner Spitze einen dünnen blauen Strahl auf eine Kreatur im Abstand von bis zu 18 Metern von dir abzufeuern, die du sehen kannst. Das Ziel muss einen SG-15-Konstitutionsrettungswurf bestehen, oder es ist eine Minute lang gelähmt. Das Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-paralyse.text-2",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-der-verwandlung",
+      "level": 3,
+      "text": "Zauberstab der Verwandlung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-verwandlung.untertitel",
+      "text": "Zauberstab, sehr selten (erfordert Einstimmung durch einen Zauberwirker)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-verwandlung.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen. Wenn du ihn hältst, kannst du eine Ladung verbrauchen, um den Zauber Verwandlung (Rettungswurf-SG 15) damit zu wirken."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-der-verwandlung.text-2",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Asche und ist damit zerstört."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zauberstab-des-wunders",
+      "level": 3,
+      "text": "Zauberstab des Wunders"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-des-wunders.untertitel",
+      "text": "Zauberstab, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-des-wunders.text-1",
+      "text": "Dieser Zauberstab hat sieben Ladungen. Wenn du ihn hältst, kannst du eine magische Aktion ausführen und eine Ladung verbrauchen, während du auf einen Punkt im Abstand von bis zu 36 Metern von dir zielst. Dieser Punkt wird zum Ursprung eines Zaubers oder eines anderen magischen Effekts, der durch Würfeln anhand der Tabelle „Zauberstab des Wunders: Effekte“ ermittelt wird. Mit dem Zauberstab gewirkte Zauber haben den Rettungswurf-SG 15. Beträgt die maximale Reichweite des Zaubers normalerweise weniger als 36 Meter, so wird sie zu 36 Metern, wenn der Zauber mit dem Zauberstab gewirkt wird. Wenn ein Effekt mehrere mögliche Ziele hat, bestimmt der SL zufällig, welches von ihnen betroffen ist."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zauberstab-des-wunders.text-2",
+      "text": "Ladungen zurückerhalten: Der Zauberstab erhält täglich im Morgengrauen 1W6+1 verbrauchte Ladungen zurück. Wenn du die letzte Ladung des Zauberstabs verbraucht hast, würfle mit 1W20. Bei einer 1 zerfällt der Zauberstab zu Staub und ist damit zerstört."
+    },
+    {
+      "type": "table",
+      "ruleId": "magic-items.z.zauberstab-des-wunders.tabelle-zauberstab-des-wunders-effekte",
+      "caption": "Zauberstab des Wunders: Effekte",
+      "columns": [
+        "1W100",
+        "Effekt"
+      ],
+      "rows": [
+        [
+          "1–20",
+          "Du wirkst einen Zauber, der vom ausgewählten Punkt ausgeht. Würfle mit 1W10, um den Zauber zu ermitteln. 1–2: Dunkelheit, 3–4: Feenfeuer, 5–6: Feuerball, 7–8: Verlangsamen, 9–10: Stinkende Wolke."
+        ],
+        [
+          "21–25",
+          "Am ausgewählten Ursprungspunkt geschieht nichts. Stattdessen bist du bis zum Beginn deines nächsten Zugs betäubt und glaubst, dass soeben etwas Überwältigendes geschehen ist."
+        ],
+        [
+          "26–30",
+          "Du wirkst den Zauber Windstoß. Die Linie des Zaubers erstreckt sich von dir zum ausgewählten Ursprungspunkt."
+        ],
+        [
+          "31–35",
+          "Am ausgewählten Ursprungspunkt geschieht nichts. Stattdessen erleidest du 1W6 psychischen Schaden."
+        ],
+        [
+          "36–40",
+          "Starker Regen fällt eine Minute lang in einem 36 Meter hohen Zylinder mit einem Radius von 18 Metern um den ausgewählten Ursprungspunkt. Während dieser Dauer ist der Wirkungsbereich leicht verschleiert."
+        ],
+        [
+          "41–45",
+          "Eine Wolke aus 600 übergroßen Schmetterlingen füllt einen 18 Meter hohen Zylinder mit einem Radius von neun Metern um den ausgewählten Ursprungspunkt. Die Schmetterlinge bleiben zehn Minuten lang erhalten. Während dieser Dauer ist der Wirkungsbereich komplett verschleiert."
+        ],
+        [
+          "46–50",
+          "Du wirkst den Zauber Blitz. Die Linie des Zaubers erstreckt sich von dir zum ausgewählten Ursprungspunkt."
+        ],
+        [
+          "51–55",
+          "Die dem ausgewählten Ursprungspunkt nächste Kreatur wird vergrößert, als hättest du den Zauber Vergrößern/Verkleinern auf sie gewirkt. Wenn das Ziel ein anderes ist als du und es nicht vom Zauber betroffen werden kann, wirst stattdessen du zum Ziel."
+        ],
+        [
+          "56–60",
+          "Eine auf magische Art entstandene Kreatur erscheint in einem freien Bereich so nahe wie möglich beim ausgewählten Ursprungspunkt. Sie steht nicht unter deiner Kontrolle und handelt, wie sie es normalerweise tun würde. Die Kreatur verschwindet, wenn eine Stunde vergangen ist oder wenn ihre Trefferpunkte auf 0 sinken. Würfle mit 1W4, um zu ermitteln, welche Kreatur erscheint. 1: ein Nashorn erscheint, 2: ein Elefant erscheint, 3–4: eine Ratte erscheint."
+        ],
+        [
+          "61–64",
+          "Gras bedeckt einen Kreis mit einem Radius von 18 Metern auf dem Boden, dessen Mittelpunkt so nahe wie möglich beim ausgewählten Ursprungspunkt liegt. Wenn dort bereits Gras wächst, nimmt dieses eine Minute lang die zehnfache Größe an."
+        ],
+        [
+          "65–68",
+          "Ein Gegenstand, den der SL auswählt, verschwindet in die Ätherebene. Der Gegenstand muss sich im Abstand von bis zu 36 Metern vom ausgewählten Ursprungspunkt befinden. Er darf weder getragen noch gehalten werden und in keiner Abmessung größer als drei Meter sein. Wenn sich keine solchen Gegenstände in Reichweite befinden, geschieht nichts."
+        ],
+        [
+          "69–72",
+          "Am ausgewählten Ursprungspunkt geschieht nichts. Stattdessen schrumpfst du, als hättest du den Zauber Vergrößern/Verkleinern auf dich selbst gewirkt, und bleibst eine Minute lang verkleinert."
+        ],
+        [
+          "73–77",
+          "Blätter wachsen aus der Kreatur, die dem ausgewählten Ursprungspunkt am nächsten ist. Werden die Blätter nicht abgepflückt, so werden sie nach 24 Stunden braun und fallen ab."
+        ],
+        [
+          "78–82",
+          "Am ausgewählten Ursprungspunkt geschieht nichts. Stattdessen geht bunt schimmerndes Licht in einer Ausströmung von neun Metern von dir aus. Jede Kreatur in diesem Bereich muss einen SG-15-Konstitutionsrettungswurf bestehen, oder sie ist eine Minute lang blind. Sie wiederholt den Rettungswurf am Ende jedes ihrer Züge. Bei einem Erfolg endet der Effekt bei ihr."
+        ],
+        [
+          "83–87",
+          "Am ausgewählten Ursprungspunkt geschieht nichts. Stattdessen wirkst du Unsichtbarkeit auf dich selbst."
+        ],
+        [
+          "88–92",
+          "Am ausgewählten Ursprungspunkt geschieht nichts. Stattdessen schießen 1W4 × 10 Edelsteine im Wert von jeweils 1 GM in einer neun Meter langen, 1,5 Meter breiten Linie von der Spitze des Zauberstabs zum ausgewählten Ursprungspunkt. Jeder Edelstein bewirkt 1 Wuchtschaden. Der Gesamtschaden durch die Edelsteine wird gleichmäßig auf alle Kreaturen in der Linie verteilt."
+        ],
+        [
+          "93–97",
+          "Du wirkst den Zauber Verwandlung und zielst auf die Kreatur, die dem ausgewählten Ursprungspunkt am nächsten ist. Würfle mit 1W4, um die neue Gestalt des Ziels zu ermitteln. 1: Schwarzbär, 2: Riesenwespe, 3–4: Frosch."
+        ],
+        [
+          "98–100",
+          "Die Kreatur, die dem ausgewählten Ursprungspunkt am nächsten ist, führt einen SG-15-Konstitutionsrettungswurf aus. Misslingt der Wurf, so ist die Kreatur festgesetzt und beginnt zu versteinern. Solange sie auf diese Art festgesetzt ist, wiederholt die Kreatur den Rettungswurf am Ende ihres nächsten Zugs. Bei einem erfolgreichen Rettungswurf endet der Effekt. Misslingt der Wurf, so ist die Kreatur nicht mehr festgesetzt, sondern versteinert. Die Versteinerung bleibt bestehen, bis die Kreatur vom Zauber Vollständige Genesung oder ähnlicher Magie befreit wird."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zepter-der-absorption",
+      "level": 3,
+      "text": "Zepter der Absorption"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-absorption.untertitel",
+      "text": "Zepter, sehr selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-absorption.text-1",
+      "text": "Wenn du dieses Zepter hältst, kannst du eine Reaktion ausführen, um einen Zauber zu absorbieren, der nur auf dich zielt und keinen Wirkungsbereich erzeugt. Der Effekt des absorbierten Zaubers wird aufgehoben, und die Energie des Zaubers – nicht aber der Zauber selbst – wird im Zepter gespeichert. Die Energie entspricht dem Grad, mit dem der Zauber gewirkt wurde. Ein aufgehobener Zauber verflüchtigt sich ohne Effekt, und alle Ressourcen, die zum Wirken verwendet wurden, sind vergeudet. Das Zepter kann im Verlauf seiner Existenz insgesamt bis zu 50 Zauberenergiegrade aufnehmen. Nach 50 Zauberenergiegraden kann es keine Energie mehr aufnehmen. Wenn du das Ziel eines Zaubers bist, den das Zepter nicht speichern kann, hat das Zepter keinen Effekt auf diesen Zauber."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-absorption.text-2",
+      "text": "Wenn du auf das Zepter eingestimmt bist, weißt du, wie viele Zauberenergiegrade es seit seiner Erschaffung absorbiert hat und wie viele aktuell in ihm gespeichert sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-absorption.text-3",
+      "text": "Wenn du ein Zauberwirker bist und das Zepter hältst, kannst du im Zepter gespeicherte Energie in Zauberplätze umwandeln, um Zauber zu wirken, die du vorbereitet hast oder kennst. Du kannst nur Zauberplätze bis zur Gradzahl deiner eigenen Zauberplätze und höchstens des 5. Grades erzeugen. Die gespeicherten Grade verwendest du statt deiner Zauberplätze. Ansonsten wirkst du die Zauber wie gewohnt. Beispiel: Du kannst drei im Zepter gespeicherte Zauberenergiegrade als Zauberplatz des 3. Grades verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-absorption.text-4",
+      "text": "Wenn das Zepter gefunden wird, sind in ihm normalerweise 1W10 Zauberenergiegrade gespeichert. Kann das Zepter keine weitere Zauberenergie aufnehmen und hat keine Energie mehr in sich gespeichert, so wird es nichtmagisch."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zepter-der-auferstehung",
+      "level": 3,
+      "text": "Zepter der Auferstehung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-auferstehung.untertitel",
+      "text": "Zepter, legendär (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-auferstehung.text-1",
+      "text": "Das Zepter hat fünf Ladungen. Wenn du es hältst, kannst du einen der folgenden Zauber damit wirken: Heilung (verbraucht eine Ladung) oder Auferstehung (verbraucht fünf Ladungen)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-auferstehung.text-2",
+      "text": "Das Zepter erhält täglich im Morgengrauen eine verbrauchte Ladung zurück. Wenn du die letzte Ladung verbraucht hast, würfle mit 1W20. Bei einer 1 verschwindet das Zepter in einem harmlosen gleißenden Ausbruch."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zepter-der-herrschaft",
+      "level": 3,
+      "text": "Zepter der Herrschaft"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaft.untertitel",
+      "text": "Zepter, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaft.text-1",
+      "text": "Du kannst eine magische Aktion ausführen, um das Zepter zu präsentieren und von jeder Kreatur deiner Wahl im Abstand von bis zu 36 Metern von dir, die du sehen kannst, Gehorsam zu verlangen. Jedes Ziel muss einen SG-15-Weisheitsrettungswurf bestehen, oder es ist acht Stunden lang bezaubert. Eine auf diese Art bezauberte Kreatur sieht dich als ihren vertrauenswürdigen Anführer. Wenn ihr von dir oder deinen Verbündeten Schaden zugefügt wird oder sie einen Befehl erhält, der ihrer Natur widerspricht, endet die Bezauberung bei ihr. Wurde diese Eigenschaft verwendet, so kann sie erst ab dem nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht",
+      "level": 3,
+      "text": "Zepter der Herrschaftlichen Macht"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.untertitel",
+      "text": "Zepter, legendär (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-1",
+      "text": "Dieses Zepter hat einen verbreiterten Kopf und kann als magischer Streitkolben verwendet werden. Dieser gewährt einen Bonus von +3 auf Angriffs- und Schadenswürfe, die mit ihm ausgeführt werden. Das Zepter trägt sechs Knöpfe im Heft, die ihm verschiedene Eigenschaften verleihen. Es hat außerdem drei weitere Eigenschaften, die unten aufgeführt sind."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-2",
+      "text": "Knöpfe: Du kannst als Bonusaktion einen der folgenden Knöpfe drücken. Der Effekt eines Knopfs hält an, bis du einen anderen Knopf drückst (oder denselben Knopf erneut, wodurch das Zepter wieder seine normale Gestalt annimmt):"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-3",
+      "text": "Knopf 1: Aus dem Ende gegenüber dem verbreiterten Zepterkopf wächst eine feurige Klinge. Die Flammen spenden in einem Radius von zwölf Metern helles Licht und in einem Radius von weiteren zwölf Metern dämmriges Licht. Die Klinge funktioniert als magisches Lang- oder Kurzschwert (nach deiner Wahl) und bewirkt bei einem Treffer zusätzlich 2W6 Feuerschaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-4",
+      "text": "Knopf 2: Der verbreiterte Kopf des Zepters wird schmaler, und zwei halbmondförmige Klingen erscheinen. Das Zepter verwandelt sich in eine magische Streitaxt mit einem Bonus von +3 auf Angriffs- und Schadenswürfe, die du mit ihr ausführst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-5",
+      "text": "Knopf 3: Der verbreiterte Kopf des Zepters wird schmaler, eine Speerspitze erscheint am oberen Ende, und der Griff verlängert sich zu einem 1,8 Meter langen Heft. Das Zepter verwandelt sich in einen magischen Speer mit einem Bonus von +3 auf Angriffs- und Schadenswürfe, die du mit ihm ausführst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-6",
+      "text": "Knopf 4: Das Zepter verwandelt sich in eine bis zu 15 Meter (nach deiner Wahl) lange Kletterstange, wobei die Knöpfe des Zepters in Reichweite bleiben. In Oberflächen, die hart wie Granit sind, wird die Stange mithilfe eines Dorns am unteren Ende und dreier Haken am oberen Ende verankert. Alle 30 Zentimeter erscheinen 7,5 Zentimeter breite waagerechte Sprossen, sodass eine Leiter entsteht. Die Stange kann bis zu 2.000 Kilogramm Last tragen. Wird sie mit mehr Gewicht belastet oder kann sie sich nicht solide verankern, so nimmt sie wieder ihre normale Form an."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-7",
+      "text": "Knopf 5: Das Zepter verwandelt sich in einen tragbaren Rammbock. Dieser gewährt dem Anwender einen Bonus von +10 auf Stärkewürfe (Athletik), die ausgeführt werden, um Türen, Barrikaden und andere Barrieren zu durchbrechen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-8",
+      "text": "Knopf 6: Das Zepter nimmt seine normale Form an und weist zum magnetischen Norden. (Wenn diese Funktion des Zepters an einem Ort verwendet wird, der keinen magnetischen Norden hat, geschieht nichts.) Außerdem vermittelt es dir, wie weit du dich unter oder über dem Boden befindest."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-9",
+      "text": "Lähmen: Wenn du eine Kreatur bei einem Nahkampfangriff mit diesem Zepter triffst, kannst du sie zu einem SG-17-Konstitutionsrettungswurf zwingen. Misslingt der Wurf, so ist das Ziel eine Minute lang gelähmt. Das Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Wurde diese Eigenschaft verwendet, so kann sie erst im nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-10",
+      "text": "Leben entziehen: Wenn du eine Kreatur bei einem Nahkampfangriff mit diesem Zepter triffst, kannst du sie zu einem SG-17-Konstitutionsrettungswurf zwingen. Misslingt der Wurf, so erleidet das Ziel zusätzlich 4W6 nekrotischen Schaden, und du erhältst eine Anzahl von Trefferpunkten in Höhe der Hälfte des nekrotischen Schadens zurück. Wurde diese Eigenschaft verwendet, so kann sie erst im nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-herrschaftlichen-macht.text-11",
+      "text": "Terrorisieren: Wenn du das Zepter hältst, kannst du eine magische Aktion ausführen, um jede Kreatur im Abstand von bis zu neun Metern von dir, die du sehen kannst, zu einem SG-17-Weisheitsrettungswurf zu zwingen. Misslingt der Wurf, so ist das Ziel eine Minute lang verängstigt. Ein verängstigtes Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt bei ihm. Wurde diese Eigenschaft verwendet, so kann sie erst im nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zepter-der-sicherheit",
+      "level": 3,
+      "text": "Zepter der Sicherheit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-sicherheit.untertitel",
+      "text": "Zepter, sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-sicherheit.text-1",
+      "text": "Wenn du dieses Zepter hältst, kannst du eine magische Aktion ausführen, um es zu aktivieren. Das Zepter transportiert dann dich und bis zu 199 bereitwillige Kreaturen, die du sehen kannst, sofort auf eine Halbebene. Du bestimmst, welche Form die Halbebene hat. Sie könnte ein ruhiger Garten, eine quirlige Taverne, ein weitläufiger Palast, eine Tropeninsel, ein herrlicher Jahrmarkt oder was immer dir einfällt sein. Unabhängig von ihrer Art gibt es auf der Halbebene genügend Wasser und Nahrung für ihre Besucher, und die Umgebung kann diesen keinen Schaden zufügen. Ansonsten kann alles, womit interagiert werden kann, nur dort existieren. Beispiel: Wird dort eine Blume in einem Garten gepflückt, so verschwindet sie, sobald sie die Halbebene verlässt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-sicherheit.text-2",
+      "text": "Für jede auf der Halbebene verbrachte Stunde erhält ein Besucher Trefferpunkte zurück, als hätte er 1 Trefferpunktewürfel verbraucht. Außerdem altern Kreaturen dort nicht, obwohl die Zeit normal vergeht. Besucher können bis zu 200 Tage geteilt durch die Anzahl der anwesenden Kreaturen (abgerundet) auf der Halbebene verbringen."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-sicherheit.text-3",
+      "text": "Wenn die Zeit abläuft oder du eine magische Aktion ausführst, um den Effekt zu beenden, gelangen alle Besucher wieder in den Bereich, die sie bei Aktivieren des Zepters besetzt hatten, oder in den nächstgelegenen freien Bereich. Wurde diese Eigenschaft verwendet, so kann sie erst nach zehn Tagen erneut verwendet werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zepter-der-wachsamkeit",
+      "level": 3,
+      "text": "Zepter der Wachsamkeit"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-wachsamkeit.untertitel",
+      "text": "Zepter, sehr selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-wachsamkeit.text-1",
+      "text": "Dieses Zepter hat die folgenden Eigenschaften:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-wachsamkeit.text-2",
+      "text": "Wachsamkeit: Wenn du das Zepter hältst, bist du bei Weisheitswürfen (Wahrnehmung) und Initiativewürfen im Vorteil."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-wachsamkeit.text-3",
+      "text": "Zauber: Wenn du das Zepter hältst, kannst du die folgenden Zauber damit wirken:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "magic-items.z.zepter-der-wachsamkeit.liste-1",
+      "items": [
+        "Gutes und Böses entdecken",
+        "Magie entdecken",
+        "Gift und Krankheit entdecken",
+        "Unsichtbares sehen"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-wachsamkeit.text-4",
+      "text": "Schützende Aura: Du kannst das Heft des Zepters als magische Aktion in den Boden rammen, woraufhin der Kopf des Zepters in einem Radius von 18 Metern helles Licht und in einem Radius von weiteren 18 Metern dämmriges Licht spendet. Im hellen Licht erhaltet du und deine Verbündeten einen Bonus von +1 auf die Rüstungsklasse und auf Rettungswürfe, und ihr könnt die Position von unsichtbaren feindlich gesinnten Kreaturen spüren, die sich ebenfalls in diesem hellen Licht befinden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zepter-der-wachsamkeit.text-5",
+      "text": "Der Kopf des Zepters hört auf zu leuchten und der Effekt endet, wenn zehn Minuten vergangen sind oder wenn eine Kreatur eine magische Aktion ausführt, um das Zepter aus dem Boden zu ziehen. Wurde diese Eigenschaft verwendet, so kann sie erst im nächsten Morgengrauen erneut verwendet werden."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zwergischer-guertel",
+      "level": 3,
+      "text": "Zwergischer Gürtel"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.untertitel",
+      "text": "Wundersamer Gegenstand, selten (erfordert Einstimmung)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.text-1",
+      "text": "Wenn du diesen Gürtel trägst, erhältst du die folgenden Vorzüge:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.text-2",
+      "text": "Zähigkeit: Dein Konstitutionswert wird um 2 erhöht (auf höchstens 20)."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.text-3",
+      "text": "Zwergenfreund: Du bist bei Charismawürfen (Überzeugen) im Vorteil, die erfolgen, um mit Zwergen und Duergar zu interagieren."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.text-4",
+      "text": "Zwergisch: Du sprichst Zwergisch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.text-5",
+      "text": "Wenn du auf den Gürtel eingestimmt bist, besteht außerdem täglich im Morgengrauen eine Chance von 50 Prozent, dass dir ein Vollbart wächst (sofern dies möglich ist) oder dass dein Bart dichter wird, falls du schon einen hast."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.text-6",
+      "text": "Falls du kein Zwerg oder Duergar bist, erhältst du folgende zusätzliche Vorzüge, wenn du den Gürtel trägst:"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.text-7",
+      "text": "Dunkelsicht: Du hast Dunkelsicht mit einer Reichweite von 18 Metern."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-guertel.text-8",
+      "text": "Unempfindlichkeit: Du bist gegen Giftschaden resistent. Außerdem bist du bei Rettungswürfen zum Vermeiden oder Beenden des Zustands Vergiftet im Vorteil."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zwergische-ritterruestung",
+      "level": 3,
+      "text": "Zwergische Ritterrüstung"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergische-ritterruestung.untertitel",
+      "text": "Rüstung (Plattenpanzer oder Ritterrüstung), sehr selten"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergische-ritterruestung.text-1",
+      "text": "Wenn du diese Rüstung trägst, erhältst du einen Bonus von +2 auf deine Rüstungsklasse. Wenn ein Effekt dich gegen deinen Willen über den Boden bewegt, kannst du außerdem eine Reaktion ausführen, um die Entfernung dieser Bewegung um bis zu drei Meter zu verringern."
+    },
+    {
+      "type": "heading",
+      "ruleId": "magic-items.z.zwergischer-wurfhammer",
+      "level": 3,
+      "text": "Zwergischer Wurfhammer"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-wurfhammer.untertitel",
+      "text": "Waffe (Kriegshammer), sehr selten (erfordert Einstimmung durch einen Zwerg oder eine Kreatur, die auf einen Zwergischen Gürtel eingestimmt ist)"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.z.zwergischer-wurfhammer.text-1",
+      "text": "Du erhältst einen Bonus von +3 auf Angriffs- und Schadenswürfe, die du mit dieser magischen Waffe ausführst. Sie ist eine Wurfwaffe mit einer Grundreichweite von sechs Metern und einer Maximalreichweite von 18 Metern. Wenn du mit ihr bei einem Fernkampfangriff triffst, bewirkt sie zusätzlich 1W8 Energieschaden (2W8 Energieschaden, wenn das Ziel ein Riese ist). Sofort nach dem Angriff fliegt die Waffe zurück in deine Hand."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:8f0e7f3d8ea30069c39350866b664a122de7566abcd2bebf1a1be056bd8a884b"
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "srd-5.2.1-de",
+  "documentId": "magic-items.next-dawn",
+  "slug": "naechstes-morgengrauen",
+  "title": "„Nächstes Morgengrauen“",
+  "navigationPath": [
+    "Magische Gegenstände",
+    "„Nächstes Morgengrauen“"
+  ],
+  "order": 1040,
+  "sourcePages": [
+    239
+  ],
+  "contentStatus": "verbatim",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "magic-items.next-dawn.naechstes-morgengrauen",
+      "level": 2,
+      "text": "„Nächstes Morgengrauen“"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "magic-items.next-dawn.naechstes-morgengrauen.text-1",
+      "text": "Magische Gegenstände haben oft Ladungen oder Eigenschaften, die sie nach Verbrauch im nächsten Morgengrauen (oder zu einer anderen angegebenen Zeit) zurückerhalten. Wenn ein solcher Gegenstand sich in einer Welt oder auf einer Existenzebene befindet, wo das angegebene Ereignis nicht vorkommt, bestimmt der SL, wann der Gegenstand seine Ladungen und Eigenschaften zurückerhält."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:0fa187d424c799ed8bfe9197e9ce2dda8780f5ace21f006d514201787724d7a6"
+}
