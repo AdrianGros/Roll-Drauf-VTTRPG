@@ -173,6 +173,8 @@
       else if (entry.type === 'milestone') text = `Freigabe bis Stufe ${entry.target ?? '–'}`;
       else if (entry.type === 'level-down') text = `Stufe ${entry.fromLevel} → ${entry.toLevel} (zurückgenommen)`;
       else if (entry.type === 'level-up') text = `Stufe ${entry.fromLevel} → ${entry.toLevel}${entry.hpGain != null ? ` (${entry.hpGain >= 0 ? '+' : ''}${entry.hpGain} TP)` : ''}`;
+      else if (entry.type === 'handout') text = `Von der Spielleitung ausgegeben: ${entry.label || 'Gegenstand'}`;
+      else if (entry.type === 'take-back') text = `Von der Spielleitung zurückgenommen: ${entry.label || 'Gegenstand'}`;
       else return;
       if (entry.note) text += ` – ${entry.note}`;
       const item = element('li', null, text);

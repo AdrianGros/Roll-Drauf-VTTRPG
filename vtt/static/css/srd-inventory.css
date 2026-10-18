@@ -50,3 +50,5 @@
 #srdInventory .srd-inv-item-controls { flex-wrap: nowrap; }
 @media (max-width: 620px) { #srdInventory .srd-inv-item-controls { flex-wrap: wrap; } }
 .srd-inv-btn { white-space: nowrap; }
+.srd-inv-magic summary { cursor: pointer; font-size: 0.85rem; color: #4b235a; font-weight: 700; }
+.srd-inv-magic-text { white-space: pre-line; }

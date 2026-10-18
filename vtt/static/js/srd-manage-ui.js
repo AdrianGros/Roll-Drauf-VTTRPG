@@ -13,6 +13,7 @@
     draft_limit: 'Es sind höchstens 25 offene Entwürfe möglich. Verwirf zuerst einen Entwurf.',
     too_many_companions: 'Höchstens 20 Begleiter.',
     invalid_companion: 'Ein Begleiter ist unvollständig oder zu lang.',
+    ability_method_not_allowed: 'Diese Kampagne erlaubt die Attributsmethode dieses Charakters nicht.',
   };
 
   let state = null;
@@ -154,6 +155,99 @@
     return bar;
   }
 
+  function shareUrl() {
+    return `${window.location.origin}/shared-sheet#${state.sharing.token}`;
+  }
+
+  async function putCampaign(value) {
+    try {
+      const campaign_id = value === '' ? null : Number(value);
+      await auth.makeAuthRequest(`/api/characters/${state.character.id}/campaign`, 'PUT', { campaign_id });
+      state.campaignId = campaign_id;
+      state.inCampaign = Boolean(campaign_id);
+      render();
+      setStatus(campaign_id ? 'Der Charakter ist der Kampagne zugeordnet.' : 'Der Charakter ist keiner Kampagne mehr zugeordnet.', false);
+    } catch (error) {
+      setStatus(failureText(error), true);
+    }
+  }
+
+  async function putSharing(body, doneText) {
+    try {
+      state.sharing = await auth.makeAuthRequest(base('/sharing'), 'PUT', body);
+      state.shareConfirm = null;
+      render();
+      setStatus(doneText, false);
+    } catch (error) {
+      state.shareConfirm = null;
+      render();
+      setStatus(failureText(error), true);
+    }
+  }
+
+  function campaignBlock() {
+    const block = element('div', 'srd-man-block');
+    block.append(element('div', 'srd-sheet-subtitle', 'Kampagne und Teilen'));
+    const row = element('div', 'srd-man-actions');
+    const field = element('label', 'srd-man-field');
+    field.append(element('span', 'srd-man-field-label', 'Kampagne'));
+    const select = element('select', 'srd-man-input');
+    select.id = 'srdManageCampaign';
+    const none = element('option', null, 'Keine Kampagne');
+    none.value = '';
+    select.append(none);
+    state.campaigns.forEach((campaign) => {
+      const option = element('option', null, campaign.name);
+      option.value = String(campaign.id);
+      select.append(option);
+    });
+    select.value = state.campaignId ? String(state.campaignId) : '';
+    field.append(select);
+    const assign = button('Zuordnung speichern', 'srd-man-btn', () => putCampaign(select.value));
+    assign.id = 'srdManageAssign';
+    row.append(field, assign);
+    if (state.campaignId) {
+      const link = element('a', 'srd-man-btn srd-man-link', 'Gruppenübersicht');
+      link.href = `/party?campaign=${state.campaignId}`;
+      link.id = 'srdManageParty';
+      row.append(link);
+    }
+    block.append(row);
+
+    const share = element('div', 'srd-man-actions');
+    if (state.shareConfirm) {
+      share.append(element('div', 'srd-man-warn', state.shareConfirm.text));
+      const yes = button(state.shareConfirm.yes, 'srd-man-btn srd-man-primary', state.shareConfirm.run);
+      yes.id = 'srdManageShareConfirm';
+      share.append(yes, button('Abbrechen', 'srd-man-btn', () => { state.shareConfirm = null; render(); }));
+    } else if (state.sharing && state.sharing.enabled) {
+      const label = element('label', 'srd-man-field srd-man-grow');
+      label.append(element('span', 'srd-man-field-label', 'Link zur schreibgeschützten Ansicht (jeder mit dem Link sieht Werte, Zauber und Ausrüstung)'));
+      const url = element('input', 'srd-man-input');
+      url.id = 'srdManageShareUrl';
+      url.readOnly = true;
+      url.value = shareUrl();
+      url.addEventListener('focus', () => url.select());
+      label.append(url);
+      share.append(label);
+      const copy = button('Link kopieren', 'srd-man-btn', async () => {
+        try { await navigator.clipboard.writeText(url.value); setStatus('Link kopiert.', false); } catch (error) { url.select(); setStatus('Kopieren nicht möglich. Der Link ist markiert.', true); }
+      });
+      copy.id = 'srdManageShareCopy';
+      const again = button('Neuen Link erzeugen', 'srd-man-btn', () => { state.shareConfirm = { text: 'Der bisherige Link funktioniert danach nicht mehr. Neuen Link erzeugen?', yes: 'Ja, neuen Link', run: () => putSharing({ enabled: true, regenerate: true }, 'Neuer Link erzeugt. Der alte Link ist ungültig.') }; render(); });
+      again.id = 'srdManageShareRegenerate';
+      const off = button('Freigabe beenden', 'srd-man-btn srd-man-danger', () => { state.shareConfirm = { text: 'Der Link zeigt den Charakter danach nicht mehr. Freigabe beenden?', yes: 'Ja, beenden', run: () => putSharing({ enabled: false }, 'Freigabe beendet.') }; render(); });
+      off.id = 'srdManageShareOff';
+      share.append(copy, again, off);
+    } else if (state.sharing) {
+      const on = button('Link zur Ansicht freigeben', 'srd-man-btn', () => putSharing({ enabled: true }, 'Freigabe aktiv. Jeder mit dem Link kann den Charakter ansehen.'));
+      on.id = 'srdManageShareOn';
+      share.append(on, element('span', 'srd-man-hint', 'Öffentlich heißt hier: jeder mit dem Link. Notizen, Hintergrund und dein Name bleiben verborgen.'));
+    }
+    block.append(share);
+    return block;
+  }
+
   function render() {
     const root = document.getElementById('srdManage');
     if (!root) return;
@@ -181,7 +275,15 @@
       save.id = 'srdManageSaveCompanions';
       row.append(add, save);
       root.append(row);
+      root.append(campaignBlock());
       root.append(actionBar());
+    } else if (state.campaignId) {
+      const link = element('a', 'srd-man-btn srd-man-link', 'Gruppenübersicht');
+      link.href = `/party?campaign=${state.campaignId}`;
+      link.id = 'srdManageParty';
+      const row = element('div', 'srd-man-actions');
+      row.append(link);
+      root.append(row);
     }
   }
 
@@ -190,7 +292,15 @@
     if (!root) return;
     try {
       const result = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/companions`);
-      state = { character, companions: result.companions, max: result.maxCompanions, canEdit: result.canEdit, archived: result.archived, inCampaign: result.inCampaign, confirm: null };
+      state = {
+        character, companions: result.companions, max: result.maxCompanions, canEdit: result.canEdit, archived: result.archived,
+        inCampaign: result.inCampaign, campaignId: result.campaignId, confirm: null, shareConfirm: null, campaigns: [], sharing: null,
+      };
+      if (state.canEdit) {
+        try { state.campaigns = (await auth.makeAuthRequest('/api/campaigns/mine'))?.campaigns || []; } catch (error) { /* optional */ }
+        try { state.sharing = await auth.makeAuthRequest(base('/sharing')); } catch (error) { /* optional */ }
+        if (state.campaignId && !state.campaigns.some((c) => c.id === state.campaignId)) state.campaigns.push({ id: state.campaignId, name: 'Aktuelle Kampagne' });
+      }
       render();
     } catch (error) {
       root.replaceChildren(element('div', 'sheet-empty', 'Begleiter und Verwaltung konnten nicht geladen werden.'));

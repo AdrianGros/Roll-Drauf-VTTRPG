@@ -197,6 +197,10 @@ def item_view(item, cat):
         "summary": summary(entry),
         "description": item.description,
         "custom": entry is None,
+        "handedOut": bool(meta.get("handedOutBy")),
+        "rarity": meta.get("rarity"),
+        "attunement": bool(meta.get("attunement")),
+        "source": meta.get("source"),
     }
 
 

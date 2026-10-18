@@ -18,3 +18,7 @@
 .srd-man-danger { color: #9c2a2a; border-color: rgba(156, 42, 42, 0.4); background: rgba(156, 42, 42, 0.06); justify-self: start; }
 .srd-man-warn { flex: 1 1 100%; font-size: 0.85rem; color: #7a4a00; background: rgba(214, 160, 40, 0.16); border-left: 3px solid #c28a1e; padding: 0.3rem 0.5rem; border-radius: 0 6px 6px 0; }
 @media (max-width: 480px) { .srd-man-btn { flex: 1 1 auto; } }
+
+.srd-man-block { display: grid; gap: 0.3rem; margin-top: 0.6rem; }
+.srd-man-link { display: inline-flex; align-items: center; text-decoration: none; box-sizing: border-box; }
+.srd-man-grow { flex: 1 1 18rem; }

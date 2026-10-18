@@ -298,6 +298,13 @@ def assign_character_campaign(char_id):
     if char.campaign_id != campaign_id:
         if char.is_party_stash:
             return jsonify({'error': 'Der gemeinsame Vorrat bleibt seiner Kampagne zugeordnet.'}), 409
+        from vtt.characters import srd_party
+        from vtt.characters.srd_progression import ProgressionError
+
+        try:
+            srd_party.check_character_for_campaign(char, campaign_id)
+        except ProgressionError as exc:
+            return jsonify({'error': exc.message, 'code': exc.code}), exc.status
         assigned = SessionCharacterAssignment.query.filter_by(character_id=char.id).first()
         token = TokenState.query.filter_by(character_id=char.id, deleted_at=None).first()
         if assigned or token:

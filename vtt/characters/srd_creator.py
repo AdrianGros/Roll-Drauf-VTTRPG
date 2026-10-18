@@ -9,7 +9,7 @@ import re
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from vtt.characters import sheet_link, srd_inventory, srd_manage, srd_progression
+from vtt.characters import sheet_link, srd_inventory, srd_manage, srd_party, srd_progression
 from vtt.characters.routes import (
     _can_read_character,
     _get_character_or_404,
@@ -259,6 +259,10 @@ def finalize_draft(draft_id):
     campaign_error = _validate_character_campaign(user.id, campaign_id)
     if campaign_error:
         return campaign_error
+    try:
+        srd_party.check_ability_method(state, campaign_id)
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
     finalized_at = utcnow()
     values = character_values(data, state, evaluation, draft_id=draft.id, finalized_at=finalized_at.isoformat() + 'Z')
     char = Character(user_id=user.id, campaign_id=campaign_id, mana_max=0, mana_current=0, **values)
@@ -729,6 +733,7 @@ def get_companions(char_id):
         'canEdit': char.user_id == user.id,
         'archived': srd_manage.is_archived(char),
         'inCampaign': bool(char.campaign_id),
+        'campaignId': char.campaign_id,
     })
 
 
@@ -748,3 +753,6 @@ def put_companions(char_id):
     except srd_progression.ProgressionError as exc:
         return _progression_failure(exc)
     return jsonify({'companions': stored, 'maxCompanions': srd_manage.MAX_COMPANIONS})
+
+
+from vtt.characters import srd_party_routes  # noqa: E402,F401  (registers the campaign routes on this blueprint)

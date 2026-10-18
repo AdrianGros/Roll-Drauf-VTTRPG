@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppenübersicht · Roll Drauf VTT</title>
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/regelwerk.css">
+    <link rel="stylesheet" href="/static/css/srd-party.css">
+</head>
+<body class="regelwerk-page srd-party-page">
+    <a class="regelwerk-skip" href="#spMain">Zum Inhalt springen</a>
+    <header class="regelwerk-site-header">
+        <nav class="book-dashboard-ribbon regelwerk-ribbon" aria-label="VTT-Hauptnavigation">
+            <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
+            <a class="book-dashboard-ribbon-btn is-active" href="/campaigns" aria-current="page">Kampagnen</a>
+            <a class="book-dashboard-ribbon-btn" href="/characters">Charaktere</a>
+            <a class="book-dashboard-ribbon-btn" href="/regelwerk">Regelwerk</a>
+            <a class="book-dashboard-ribbon-btn" href="/regelwerk/compendium">Compendium</a>
+        </nav>
+        <div class="regelwerk-titlebar">
+            <div>
+                <p class="regelwerk-kicker" id="spKicker">Roll Drauf VTT · Kampagne</p>
+                <h1 id="spTitle">Gruppenübersicht</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="sp-main" id="spMain" tabindex="-1">
+        <p id="spStatus" class="regelwerk-status" role="status" aria-live="polite">Wird geladen …</p>
+        <section id="spParty" class="sp-party" aria-label="Charaktere der Gruppe" hidden></section>
+        <section id="spDm" class="sp-dm" aria-label="Werkzeuge der Spielleitung" hidden></section>
+    </main>
+
+    <dialog id="spDialog" class="sp-dialog" aria-labelledby="spDialogTitle">
+        <div class="sp-dialog-head">
+            <h2 id="spDialogTitle" tabindex="-1"></h2>
+            <button type="button" id="spDialogClose" class="sp-btn" aria-label="Schließen">Schließen</button>
+        </div>
+        <div id="spDialogBody" class="sp-dialog-body"></div>
+    </dialog>
+
+    <footer class="regelwerk-footer">
+        <p>Quelle: Systemreferenzdokument 5.2.1 (Deutsch).</p>
+        <p><a href="/regelwerk/lizenz">CC BY 4.0 · Quellenangabe und Lizenz</a></p>
+    </footer>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/srd-party-ui.js"></script>
+</body>
+</html>

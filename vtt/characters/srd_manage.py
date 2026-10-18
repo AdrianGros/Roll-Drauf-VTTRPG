@@ -48,6 +48,7 @@ def set_archived(char, archived, *, user_id):
         data["lifecycle"] = {"archivedAt": utcnow().isoformat() + "Z"}
     else:
         data.pop("lifecycle", None)
+    data.pop("sharing", None)
     _log(data["srd"], {"type": "archive" if archived else "restore", "by": user_id})
     char.character_data = data
     flag_modified(char, "character_data")
@@ -58,6 +59,7 @@ def duplicate(char, *, user_id):
     _data(char)
     data = copy.deepcopy(char.character_data)
     data.pop("lifecycle", None)
+    data.pop("sharing", None)
     block = data["srd"]
     block["draftId"] = None
     block["history"] = []

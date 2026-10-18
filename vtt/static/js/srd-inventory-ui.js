@@ -4,7 +4,7 @@
   'use strict';
 
   const COIN_ORDER = ['PM', 'GM', 'EM', 'SM', 'KM'];
-  const KIND_LABELS = { weapon: 'Waffe', armor: 'Rüstung', shield: 'Schild', gear: 'Ausrüstung', tool: 'Werkzeug', custom: 'Eigener Gegenstand' };
+  const KIND_LABELS = { weapon: 'Waffe', armor: 'Rüstung', shield: 'Schild', gear: 'Ausrüstung', tool: 'Werkzeug', custom: 'Eigener Gegenstand', magic: 'Magischer Gegenstand' };
   const CHOICE_LABELS = {
     'arcane-focus': 'Arkaner Fokus', 'holy-symbol': 'Heiliges Symbol', 'druidic-focus': 'Druidischer Fokus',
     'musical-instrument': 'Musikinstrument', 'tool-choice': 'Handwerkszeug oder Musikinstrument',
@@ -205,10 +205,19 @@
     title.append(element('strong', '', item.name));
     title.append(element('span', 'srd-sheet-tag', KIND_LABELS[item.kind] || item.kind));
     if (item.equipped) title.append(element('span', 'srd-sheet-tag is-active', item.kind === 'weapon' ? 'in der Hand' : 'angelegt'));
+    if (item.rarity) title.append(element('span', 'srd-sheet-tag', item.rarity));
+    if (item.attunement) title.append(element('span', 'srd-sheet-tag', 'Einstimmung nötig'));
+    if (item.handedOut) title.append(element('span', 'srd-sheet-tag is-active', 'von der Spielleitung'));
     main.append(title);
     const meta = [item.summary, `${kg(item.weightKg)} je Stück`, item.cost ? `Wert ${item.cost}` : ''].filter(Boolean).join(' · ');
     if (meta) main.append(element('div', 'srd-inv-meta', meta));
-    if (item.description) main.append(element('div', 'srd-inv-meta', item.description));
+    if (item.description && item.kind === 'magic') {
+      const details = element('details', 'srd-inv-magic');
+      details.append(element('summary', null, 'Beschreibung'));
+      details.append(element('div', 'srd-inv-meta srd-inv-magic-text', item.description));
+      if (item.source) details.append(element('div', 'srd-inv-meta', `Quelle: ${item.source}`));
+      main.append(details);
+    } else if (item.description) main.append(element('div', 'srd-inv-meta', item.description));
     row.append(main);
 
     const controls = element('div', 'srd-inv-item-controls');

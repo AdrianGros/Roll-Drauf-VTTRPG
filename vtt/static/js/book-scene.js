@@ -765,6 +765,7 @@
                                     href: hubHref,
                                     primary: true,
                                 },
+                                { label: 'Gruppenübersicht', href: `/party?campaign=${Number(campaign.id)}` },
                             ], 'book-scene-action-row--inline')
                             : `
                                 <div class="book-scene-join" data-campaign-id="${Number(campaign.id)}">
