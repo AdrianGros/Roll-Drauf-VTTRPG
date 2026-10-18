@@ -538,6 +538,7 @@
     <link rel="stylesheet" href="/static/css/book-scene.css">
     <link rel="stylesheet" href="/static/css/srd-inventory.css">
     <link rel="stylesheet" href="/static/css/srd-progression.css">
+    <link rel="stylesheet" href="/static/css/srd-manage.css">
     <style>
         body.character-sheet-route-book-scene {
             background: #0d0514;
@@ -932,6 +933,7 @@
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/srd-inventory-ui.js"></script>
     <script src="/static/js/srd-progression-ui.js"></script>
+    <script src="/static/js/srd-manage-ui.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>
         const auth = new Auth();
@@ -1414,6 +1416,7 @@
             if (token !== srdRenderToken) return;
             body.replaceChildren(...buildSrdSheet(character, detail, srdCreatorData));
             loadSrdInventory(character, updateSrdArmorClass);
+            loadSrdManage(character);
             loadSrdProgression(character, detail.evaluation, (info) => {
                 if (info?.reload) {
                     Promise.resolve(loadSheet()).then(() => { if (info.message) showMessage(info.message); });
@@ -1539,6 +1542,11 @@
             inventory.id = 'srdInventory';
             inventory.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: 'Lade Inventar…' }));
             nodes.push(inventory);
+
+            const manage = document.createElement('div');
+            manage.id = 'srdManage';
+            manage.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: 'Lade Begleiter und Verwaltung…' }));
+            nodes.push(manage);
 
             const note = document.createElement('p');
             note.className = 'srd-sheet-note';

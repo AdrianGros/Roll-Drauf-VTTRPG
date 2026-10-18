@@ -386,16 +386,23 @@ def level_up(char, data, payload, *, user_id):
     if result["blockers"]:
         raise ProgressionError("level_up_incomplete", "Der Stufenaufstieg ist noch nicht vollständig oder verstößt gegen Regeln.", 422, blockers=result["blockers"])
     evaluation = result["evaluation"]
-    state = result["state"]
-    old_level, old_hp_max = char.level or 1, char.hp_max or 0
+    old_level = char.level or 1
+    apply_evaluation(char, data, result["state"], evaluation, {
+        "type": "level-up", "by": user_id, "classKey": payload["classKey"],
+        "fromLevel": old_level, "toLevel": evaluation["level"], "hpGain": result["hpGain"],
+    })
+    char.xp = max(char.xp or 0, _threshold(data, evaluation["level"]))
+    return result
+
+
+def apply_evaluation(char, data, state, evaluation, log_entry):
+    """Store a judged state on the character: columns, derived block and one history entry (caller commits)."""
+    old_hp_max = char.hp_max or 0
     new_data = copy.deepcopy(char.character_data)
     block = new_data["srd"]
     block["state"] = state
     block["derived"] = evaluation
-    _log(block, {
-        "type": "level-up", "by": user_id, "classKey": payload["classKey"],
-        "fromLevel": old_level, "toLevel": evaluation["level"], "hpGain": result["hpGain"],
-    })
+    _log(block, log_entry)
     char.level = evaluation["level"]
     char.class_name = class_label(evaluation)[:50]
     char.ac = evaluation["armorClass"]["value"]
@@ -404,7 +411,123 @@ def level_up(char, data, payload, *, user_id):
     for ability in ("str", "dex", "con", "int", "wis", "cha"):
         setattr(char, f"{ability}_score", evaluation["abilities"][ability]["score"])
     char.proficiency_bonus = evaluation["proficiencyBonus"]
-    char.xp = max(char.xp or 0, _threshold(data, evaluation["level"]))
     char.character_data = new_data
     flag_modified(char, "character_data")
-    return result
+
+
+# --------------------------------------------------------------------------- level-down
+
+def last_level(char, data):
+    """The level a level-down would remove, or None at level 1."""
+    levels = (_block(char).get("state") or {}).get("levels") or []
+    if len(levels) < 2 or not isinstance(levels[-1], dict):
+        return None
+    key = levels[-1].get("classKey")
+    entry = _lookup(data).get(key)
+    if entry is None:
+        return None
+    return {"classKey": key, "className": entry["name"], "classLevel": _levels_by_class({"levels": levels})[key], "totalLevel": len(levels)}
+
+
+def _prune_after_level_down(data, state):
+    """Drop every choice that belonged to the removed level so the engine sees a consistent smaller character."""
+    classes = _lookup(data)
+    counts = _levels_by_class(state)
+    state["advancements"] = [
+        a for a in state.get("advancements") or []
+        if isinstance(a, dict) and counts.get(a.get("classKey"), 0) >= (a.get("classLevel") or 0)
+    ]
+    for field in ("subclasses", "featureChoices", "spells"):
+        bucket = state.get(field)
+        if isinstance(bucket, dict):
+            for key in [k for k in bucket if not counts.get(k)]:
+                del bucket[key]
+    skills = state.get("skills")
+    if isinstance(skills, dict) and isinstance(skills.get("multiclass"), dict):
+        first = state["levels"][0]["classKey"]
+        for key in [k for k in skills["multiclass"] if not counts.get(k) or k == first]:
+            del skills["multiclass"][key]
+    for key, level in counts.items():
+        entry = classes[key]
+        subclasses = state.get("subclasses")
+        if isinstance(subclasses, dict) and level < entry["subclassLevels"][0]:
+            subclasses.pop(key, None)
+        chosen = (state.get("featureChoices") or {}).get(key)
+        if isinstance(chosen, dict):
+            for choice in entry["featureChoices"]:
+                value = chosen.get(choice["id"])
+                if choice["level"] > level:
+                    chosen.pop(choice["id"], None)
+                elif isinstance(value, list):
+                    chosen[choice["id"]] = value[: _need_count(choice, level)]
+        selection = (state.get("spells") or {}).get(key)
+        casting = entry["spellcasting"]
+        if isinstance(selection, dict):
+            if not casting:
+                state["spells"].pop(key, None)
+                continue
+            row = next(r for r in casting["levels"] if r["level"] == level)
+            max_grade = max([g + 1 for g, n in enumerate(row["slots"]) if n] or [0]) if casting["kind"] != "pact" else row["slotGrade"]
+            meta = data["spells"]
+
+            def keep(ids, count, cantrips=False):
+                ids = [i for i in ids if i in meta and (meta[i]["level"] == 0) == cantrips and meta[i]["level"] <= max_grade]
+                return ids[:count]
+
+            if "cantrips" in selection:
+                selection["cantrips"] = keep(selection["cantrips"], row["cantrips"], True)
+            book = casting["spellbook"] if casting["preparation"]["mode"] == "spellbook" else None
+            if book and "spellbook" in selection:
+                selection["spellbook"] = keep(selection["spellbook"], book["startingSpells"] + book["perLevel"] * (level - 1))
+            if "prepared" in selection:
+                prepared = keep(selection["prepared"], row["prepared"])
+                selection["prepared"] = [i for i in prepared if i in selection["spellbook"]] if book and "spellbook" in selection else prepared
+    expertise_total = sum(
+        c.get("count", 0)
+        for key, level in counts.items()
+        for c in classes[key]["featureChoices"]
+        if c["kind"] == "expertise" and c["level"] <= level
+    )
+    if isinstance(state.get("skills"), dict) and isinstance(state["skills"].get("expertise"), list):
+        state["skills"]["expertise"] = state["skills"]["expertise"][:expertise_total]
+
+
+def level_down(char, data, payload, *, user_id):
+    """Take the most recent level back (caller commits). Experience is capped so the character does not level up again."""
+    expected = payload.get("expectedLevel") if isinstance(payload, dict) else None
+    if type(expected) is not int:
+        raise ProgressionError("expected_level_required", "expectedLevel (die aktuelle Stufe) ist erforderlich.", 400)
+    if expected != (char.level or 1):
+        raise ProgressionError("level_conflict", "Die Stufe hat sich zwischenzeitlich geändert. Lade den Bogen neu.", 409)
+    removed = last_level(char, data)
+    if removed is None:
+        raise ProgressionError("min_level", "Stufe 1 kann nicht weiter zurückgenommen werden.", 409)
+    state = copy.deepcopy(_block(char).get("state") or {})
+    state["levels"] = state["levels"][:-1]
+    _prune_after_level_down(data, state)
+    clean, problems = sanitize_state(state, data)
+    if problems:
+        raise ProgressionError("invalid_state", "Der Zustand ist ungültig.", 422, problems=problems)
+    evaluation = evaluate(data, clean)
+    blockers = finalize_blockers(evaluation, clean)
+    if blockers:
+        raise ProgressionError("level_down_incomplete", "Die Stufe lässt sich nicht sauber zurücknehmen.", 422, blockers=blockers)
+    new_level = evaluation["level"]
+    old_xp = char.xp or 0
+    prog = progression(char)
+    new_xp = old_xp
+    if prog["mode"] == "xp" and new_level < data["maxLevel"]:
+        new_xp = min(old_xp, _threshold(data, new_level + 1) - 1)
+    new_xp = max(new_xp, _threshold(data, new_level)) if prog["mode"] == "xp" else new_xp
+    apply_evaluation(char, data, clean, evaluation, {
+        "type": "level-down", "by": user_id, "classKey": removed["classKey"],
+        "fromLevel": removed["totalLevel"], "toLevel": new_level, "xpFrom": old_xp, "xpTo": new_xp,
+    })
+    if new_xp != old_xp:
+        char.xp = new_xp
+    if prog["mode"] == "milestone" and (prog["milestoneTarget"] or 0) > new_level:
+        block_data = copy.deepcopy(char.character_data)
+        block_data["srd"]["progression"] = {**prog, "milestoneTarget": new_level}
+        char.character_data = block_data
+        flag_modified(char, "character_data")
+    return {"removed": removed, "evaluation": evaluation}

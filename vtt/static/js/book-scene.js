@@ -801,7 +801,56 @@
             `;
         },
 
-        buildCharacterLedger(characters, campaigns = null) {
+        buildCharacterManageActions(character, mode) {
+            if (character.system_id !== 'srd_5_2_1_de') {
+                return '';
+            }
+            const id = Number(character.id);
+            const button = (action, label) => `<button type="button" class="btn btn-secondary book-scene-action-btn" data-character-action="${action}" data-character-id="${id}" data-character-name="${escapeHtml(character.name || '')}">${label}</button>`;
+            const buttons = mode === 'archived'
+                ? [button('restore', 'Wiederherstellen'), button('delete', 'Endgültig löschen')]
+                : [button('duplicate', 'Duplizieren'), button('archive', 'Archivieren')];
+            return `<div class="book-scene-action-row book-scene-action-row--inline">${buttons.join('')}</div>`;
+        },
+
+        buildArchivedCharacters(archived) {
+            if (!Array.isArray(archived) || archived.length === 0) {
+                return '';
+            }
+            return `
+                <details class="book-scene-panel" data-archived-characters>
+                    <summary class="book-scene-panel-title">Archiv (${archived.length})</summary>
+                    <p>Archivierte Helden sind aus der Liste ausgeblendet. Wiederherstellen holt sie zurück, endgültiges Löschen entfernt sie.</p>
+                    ${this.buildCharacterLedger(archived, null, 'archived')}
+                </details>
+            `;
+        },
+
+        buildOpenDrafts(drafts) {
+            if (!Array.isArray(drafts) || drafts.length === 0) {
+                return '';
+            }
+            return `
+                <section class="book-scene-panel" data-open-drafts>
+                    <h2 class="book-scene-panel-title">Offene Entwürfe (${drafts.length})</h2>
+                    <div class="book-scene-ledger">
+                        ${drafts.map((draft) => `
+                            <div class="book-scene-ledger-item">
+                                <div class="book-scene-ledger-head">
+                                    <strong>${escapeHtml(draft.name || 'Unbenannter Entwurf')}</strong>
+                                </div>
+                                <div class="book-scene-ledger-meta">Zuletzt bearbeitet: ${escapeHtml(draft.updated_at ? new Date(draft.updated_at).toLocaleString('de-DE') : '–')}</div>
+                                <div class="book-scene-action-row book-scene-action-row--inline">
+                                    <a class="btn btn-primary book-scene-action-btn" data-draft-continue="${Number(draft.id)}" href="/srd-creator?draft=${Number(draft.id)}">Weiterführen</a>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+        },
+
+        buildCharacterLedger(characters, campaigns = null, mode = 'active') {
             if (!Array.isArray(characters) || characters.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
@@ -837,6 +886,7 @@
                                         href: buildIntentHref('/campaigns', {}),
                                     },
                             ], 'book-scene-action-row--inline')}
+                            ${Array.isArray(campaigns) || mode === 'archived' ? this.buildCharacterManageActions(character, mode) : ''}
                             ${Array.isArray(campaigns) && !character.is_party_stash ? `
                                 <form data-character-campaign="${Number(character.id)}" class="book-scene-panel">
                                     <label for="characterCampaign_${Number(character.id)}">Mit einer Kampagne teilen</label>
@@ -1613,6 +1663,8 @@
                         ])}
                         ${this.buildCharacterLedger(characters, campaigns)}
                     </section>
+                    ${this.buildOpenDrafts(snapshot?.drafts)}
+                    ${this.buildArchivedCharacters(snapshot?.archived_characters)}
                 `,
             });
         },
@@ -1723,6 +1775,10 @@
                         button.disabled = false;
                     }
                 });
+            });
+
+            root.querySelectorAll('[data-character-action]').forEach((node) => {
+                node.addEventListener('click', () => this.runCharacterAction(node));
             });
 
             this.sceneSurface.querySelectorAll('[data-dashboard-action="request-campaign-join"]').forEach((node) => {
@@ -2171,6 +2227,50 @@
             }
         },
 
+        async runCharacterAction(node) {
+            const id = Number(node.dataset.characterId);
+            const action = node.dataset.characterAction;
+            const name = node.dataset.characterName || 'Held';
+            if (action === 'delete' && !window.confirm(`„${name}“ endgültig löschen? Das kann nicht rückgängig gemacht werden.`)) {
+                return;
+            }
+            node.disabled = true;
+            const messages = {
+                duplicate: 'Kopie angelegt.',
+                archive: 'Held archiviert.',
+                restore: 'Held wiederhergestellt.',
+                delete: 'Held gelöscht.',
+            };
+            try {
+                if (action === 'duplicate') {
+                    await window.Auth.makeAuthRequest(`/api/srd-creator/characters/${id}/duplicate`, 'POST');
+                } else if (action === 'archive' || action === 'restore') {
+                    await window.Auth.makeAuthRequest(`/api/srd-creator/characters/${id}/archive`, 'POST', { archived: action === 'archive' });
+                } else if (action === 'delete') {
+                    await window.Auth.makeAuthRequest(`/api/characters/${id}`, 'DELETE');
+                } else {
+                    return;
+                }
+                const snapshot = await this.loadSceneSnapshot(this.sceneUser);
+                this.sceneSnapshot = snapshot;
+                this.renderSceneRoute('characters', this.sceneUser, snapshot);
+                const message = this.sceneSurface.querySelector('#charactersMessageBox');
+                if (message) {
+                    message.hidden = false;
+                    message.textContent = messages[action];
+                }
+            } catch (error) {
+                node.disabled = false;
+                const box = this.sceneSurface.querySelector('#charactersMessageBox');
+                if (box) {
+                    box.hidden = false;
+                    box.textContent = error.message === 'in_campaign'
+                        ? 'Nimm den Charakter zuerst aus der Kampagne, bevor du ihn archivierst.'
+                        : (error.message || 'Aktion fehlgeschlagen.');
+                }
+            }
+        },
+
         async loadSceneSnapshot(user = null) {
             const resolvedUser = user || this.sceneUser || await (window.Auth ? window.Auth.getCurrentUser() : null);
             const snapshot = {
@@ -2178,17 +2278,28 @@
                 campaigns: [],
                 characters: [],
                 shared_characters: [],
+                archived_characters: [],
+                drafts: [],
             };
 
             if (!window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
                 return snapshot;
             }
 
-            const [campaignsResult, charactersResult, sharedResult] = await Promise.allSettled([
+            const [campaignsResult, charactersResult, sharedResult, archivedResult, draftsResult] = await Promise.allSettled([
                 window.Auth.makeAuthRequest('/api/campaigns'),
                 window.Auth.makeAuthRequest('/api/characters/mine'),
                 window.Auth.makeAuthRequest('/api/characters/shared'),
+                window.Auth.makeAuthRequest('/api/characters/mine?archived=only'),
+                window.Auth.makeAuthRequest('/api/srd-creator/drafts'),
             ]);
+
+            if (archivedResult.status === 'fulfilled' && Array.isArray(archivedResult.value)) {
+                snapshot.archived_characters = archivedResult.value;
+            }
+            if (draftsResult.status === 'fulfilled' && Array.isArray(draftsResult.value?.drafts)) {
+                snapshot.drafts = draftsResult.value.drafts;
+            }
 
             if (campaignsResult.status === 'fulfilled' && Array.isArray(campaignsResult.value)) {
                 snapshot.campaigns = campaignsResult.value;

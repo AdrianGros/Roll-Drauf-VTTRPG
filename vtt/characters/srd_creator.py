@@ -9,7 +9,7 @@ import re
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from vtt.characters import sheet_link, srd_inventory, srd_progression
+from vtt.characters import sheet_link, srd_inventory, srd_manage, srd_progression
 from vtt.characters.routes import (
     _can_read_character,
     _get_character_or_404,
@@ -543,6 +543,7 @@ def _progression_character(char_id, *, write):
 
 def _progression_payload(char, user, can_manage):
     data = load_creator_data()
+    last_level = srd_progression.last_level(char, data)
     return {
         'status': srd_progression.status(char, data),
         'history': srd_progression.history(char)[-50:],
@@ -550,6 +551,9 @@ def _progression_payload(char, user, can_manage):
         'canLevelUp': char.user_id == user.id,
         'xpTable': [{'level': row['level'], 'xp': row['xp']} for row in data['levels']],
         'multiclassOptions': srd_progression.multiclass_options(data, evaluate(data, ((char.character_data or {}).get('srd') or {}).get('state') or {})),
+        'lastLevel': last_level,
+        'canLevelDown': char.user_id == user.id and last_level is not None,
+        'archived': srd_manage.is_archived(char),
     }
 
 
@@ -628,3 +632,119 @@ def post_level_up(char_id):
         'evaluation': result['evaluation'],
         **_progression_payload(char, user, can_manage),
     })
+
+
+# ------------------------------------------------------------------ management: level-down, archive, duplicate, rebuild, companions
+
+@srd_creator_bp.post('/characters/<int:char_id>/level-down')
+@limiter.limit('30 per hour')
+@jwt_required()
+def post_level_down(char_id):
+    user, char, can_manage, error = _progression_character(char_id, write='owner')
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    try:
+        result = srd_progression.level_down(char, load_creator_data(), body, user_id=user.id)
+        db.session.commit()
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
+    try:
+        sheet_link.push_character_to_tokens(char)
+    except Exception:  # the level-down itself is already stored
+        db.session.rollback()
+    return jsonify({
+        'level': char.level,
+        'removed': result['removed'],
+        'evaluation': result['evaluation'],
+        **_progression_payload(char, user, can_manage),
+    })
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/archive')
+@limiter.limit('120 per hour')
+@jwt_required()
+def post_archive(char_id):
+    user, char, _, error = _progression_character(char_id, write='owner')
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    try:
+        srd_manage.set_archived(char, body.get('archived'), user_id=user.id)
+        db.session.commit()
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
+    return jsonify({'characterId': char.id, 'archived': srd_manage.is_archived(char)})
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/duplicate')
+@limiter.limit('30 per hour')
+@jwt_required()
+def post_duplicate(char_id):
+    user, char, _, error = _progression_character(char_id, write='owner')
+    if error:
+        return error
+    try:
+        copy_row = srd_manage.duplicate(char, user_id=user.id)
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
+    db.session.add(copy_row)
+    db.session.commit()
+    return jsonify({'character': copy_row.serialize(include_details=True)}), 201
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/to-draft')
+@limiter.limit('30 per hour')
+@jwt_required()
+def post_to_draft(char_id):
+    user, char, _, error = _progression_character(char_id, write='owner')
+    if error:
+        return error
+    if SrdCreatorDraft.query.filter_by(user_id=user.id, status='draft').count() >= MAX_OPEN_DRAFTS:
+        return _bad('draft_limit', f'Es sind höchstens {MAX_OPEN_DRAFTS} offene Entwürfe möglich.', 409)
+    data = load_creator_data()
+    try:
+        state, name, sources = srd_manage.draft_values(char, data)
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
+    draft = SrdCreatorDraft(user_id=user.id, step='klasse', name=name, state=state, sources=sources)
+    db.session.add(draft)
+    db.session.commit()
+    return jsonify({'draft': draft.summary()}), 201
+
+
+@srd_creator_bp.get('/characters/<int:char_id>/companions')
+@jwt_required()
+def get_companions(char_id):
+    user, char, _, error = _progression_character(char_id, write=False)
+    if error:
+        return error
+    return jsonify({
+        'companions': srd_manage.companions(char),
+        'maxCompanions': srd_manage.MAX_COMPANIONS,
+        'canEdit': char.user_id == user.id,
+        'archived': srd_manage.is_archived(char),
+        'inCampaign': bool(char.campaign_id),
+    })
+
+
+@srd_creator_bp.put('/characters/<int:char_id>/companions')
+@limiter.limit('300 per hour')
+@jwt_required()
+def put_companions(char_id):
+    user, char, _, error = _progression_character(char_id, write='owner')
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    try:
+        stored = srd_manage.set_companions(char, body, user_id=user.id)
+        db.session.commit()
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
+    return jsonify({'companions': stored, 'maxCompanions': srd_manage.MAX_COMPANIONS})

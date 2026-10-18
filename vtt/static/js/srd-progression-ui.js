@@ -22,6 +22,8 @@
     invalid_xp: 'Erfahrungspunkte müssen eine ganze Zahl sein.',
     invalid_target: 'Die Zielstufe muss zwischen 1 und 20 liegen.',
     invalid_mode: 'Ungültiger Modus.',
+    min_level: 'Stufe 1 kann nicht weiter zurückgenommen werden.',
+    level_down_incomplete: 'Die Stufe lässt sich nicht sauber zurücknehmen.',
   };
 
   let current = null;
@@ -169,6 +171,7 @@
       if (entry.type === 'xp') text = `EP ${numberText(entry.from)} → ${numberText(entry.to)}`;
       else if (entry.type === 'mode') text = entry.mode === 'xp' ? 'Modus: Erfahrungspunkte' : 'Modus: Meilensteine';
       else if (entry.type === 'milestone') text = `Freigabe bis Stufe ${entry.target ?? '–'}`;
+      else if (entry.type === 'level-down') text = `Stufe ${entry.fromLevel} → ${entry.toLevel} (zurückgenommen)`;
       else if (entry.type === 'level-up') text = `Stufe ${entry.fromLevel} → ${entry.toLevel}${entry.hpGain != null ? ` (${entry.hpGain >= 0 ? '+' : ''}${entry.hpGain} TP)` : ''}`;
       else return;
       if (entry.note) text += ` – ${entry.note}`;
@@ -178,6 +181,40 @@
     });
     details.append(list);
     return details;
+  }
+
+  function levelDownBlock(payload) {
+    const last = payload.lastLevel;
+    const wrap = element('div', 'srd-prog-down');
+    if (!current.confirmDown) {
+      const open = button('Letzte Stufe rückgängig machen', 'srd-prog-btn', () => { current.confirmDown = true; render(); });
+      open.id = 'srdProgDown';
+      wrap.append(open);
+      return wrap;
+    }
+    wrap.append(element('div', 'srd-prog-warn', `Stufe ${payload.status.level} (${last.className} ${last.classLevel}) wird zurückgenommen: Trefferpunkte, Wahlen, Zauber und Erfahrung dieser Stufe entfallen. Erfahrungspunkte werden unter die Schwelle der nächsten Stufe gesetzt.`));
+    const row = element('div', 'srd-prog-row');
+    const yes = button(`Ja, Stufe ${payload.status.level} rückgängig machen`, 'srd-prog-btn srd-prog-primary', confirmLevelDown);
+    yes.id = 'srdProgDownConfirm';
+    row.append(yes, button('Abbrechen', 'srd-prog-btn', () => { current.confirmDown = false; render(); }));
+    wrap.append(row);
+    return wrap;
+  }
+
+  async function confirmLevelDown() {
+    try {
+      const result = await auth.makeAuthRequest(base('/level-down'), 'POST', { expectedLevel: current.payload.status.level });
+      current.confirmDown = false;
+      current.wizard = null;
+      current.payload = result;
+      current.notice = `Stufe ${result.removed.totalLevel} zurückgenommen, der Charakter ist jetzt Stufe ${result.level}.`;
+      render();
+      current.onChange?.({ reload: true, level: result.level, message: current.notice });
+    } catch (error) {
+      current.confirmDown = false;
+      render();
+      setStatus(failureText(error), true);
+    }
   }
 
   async function save(body, notice) {
@@ -223,6 +260,7 @@
     if (payload.canLevelUp && payload.status.canLevelUp) {
       root.append(button(`Stufe ${payload.status.level + 1} aufsteigen`, 'srd-prog-btn srd-prog-primary srd-prog-levelup', startWizard));
     }
+    if (payload.canLevelDown) root.append(levelDownBlock(payload));
     if (payload.canManage) root.append(manageBlock(payload));
     const history = historyBlock(payload);
     if (history) root.append(history);
@@ -725,7 +763,7 @@
       const body = { ...payloadFromWizard(), expectedLevel: current.payload.status.level };
       const result = await auth.makeAuthRequest(base('/level-up'), 'POST', body);
       current.wizard = null;
-      current.payload = { status: result.status, history: result.history, canManage: result.canManage, canLevelUp: result.canLevelUp, xpTable: result.xpTable, multiclassOptions: result.multiclassOptions };
+      current.payload = result;
       current.notice = `Aufgestiegen auf Stufe ${result.level} (${result.hpGain >= 0 ? '+' : ''}${result.hpGain} Trefferpunkte).`;
       render();
       current.onChange?.({ reload: true, level: result.level, message: current.notice });

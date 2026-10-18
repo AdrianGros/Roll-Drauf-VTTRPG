@@ -64,6 +64,11 @@ def _srd_write_guard(data, existing=None):
     return None
 
 
+def _is_archived(char):
+    lifecycle = char.character_data.get('lifecycle') if isinstance(char.character_data, dict) else None
+    return isinstance(lifecycle, dict) and bool(lifecycle.get('archivedAt'))
+
+
 def _get_current_user():
     user_id = get_jwt_identity()
     if not user_id:
@@ -242,6 +247,8 @@ def list_my_characters():
         return error
 
     chars = Character.query.filter_by(user_id=user.id, deleted_at=None).all()
+    archived = request.args.get('archived')
+    chars = [c for c in chars if _is_archived(c) == (archived == 'only')]
     return jsonify([c.serialize() for c in chars]), 200
 
 
@@ -264,7 +271,7 @@ def list_shared_characters():
     return jsonify([
         {**char.serialize(), 'campaign_name': campaign.name,
          'owner_username': char.user.username}
-        for char, campaign in rows
+        for char, campaign in rows if not _is_archived(char)
     ]), 200
 
 
