@@ -153,3 +153,52 @@ def test_srd_character_sheet_renders_rule_values_in_a_browser(site, data, width)
             page.screenshot(path=str(out / f"srd-sheet-chromium-{width}.png"), full_page=True)
         browser.close()
         assert errors == [], errors
+
+
+@pytest.mark.parametrize("width", [1440, 390])
+def test_srd_sheet_rolls_from_values_and_shows_the_result(site, data, width):
+    from playwright.sync_api import expect, sync_playwright
+    from tests.test_srd_creator_api import wizard_state
+    from vtt.rules_content.creator_drafts import character_values
+    from vtt.rules_content.creator_rules import evaluate
+    from vtt.models import Character
+
+    app, origin, info = site
+    state = wizard_state(data, "Mira Eulenfeder")
+    with app.app_context():
+        values = character_values(data, state, evaluate(data, state), draft_id=1, finalized_at="2026-10-18T10:00:00Z")
+        character = Character(user_id=info["user_id"], **values)
+        db.session.add(character)
+        db.session.commit()
+        char_id = character.id
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+        context = browser.new_context(viewport={"width": width, "height": 1000}, reduced_motion="reduce")
+        context.add_cookies([{"name": "access_token_cookie", "value": info["token"], "url": origin, "httpOnly": True}])
+        page = context.new_page()
+        page.set_default_timeout(15000)
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.goto(f"{origin}/character-sheet?id={char_id}")
+        result = page.locator("#srdRollResult")
+        expect(result).to_contain_text("Klicke auf einen Wert")
+        assert page.locator(".srd-roll-btn").count() >= 6 * 2 + 18 + 3
+        page.locator('[data-roll-kind="skill"][data-roll-key="arkane-kunde"]').click()
+        expect(result).to_contain_text("Arkane Kunde:")
+        expect(result).to_contain_text("+ 10 =")
+        expect(result).to_contain_text("nur hier")
+        page.select_option("#srdRollMode", "advantage")
+        page.locator('[data-roll-kind="save"][data-roll-key="int"]').click()
+        expect(result).to_contain_text("Intelligenz-Rettungswurf (Vorteil):")
+        expect(result).to_contain_text("+ 7 =")
+        expect(page.locator("#srdRollHistory li")).to_have_count(1)
+        page.locator('[data-roll-kind="spell_attack"]').first.click()
+        expect(result).to_contain_text("Zauberangriff (Magier)")
+        assert page.evaluate("document.documentElement.scrollWidth") <= width + 1
+        if os.environ.get("VTT_PROOF_DIR"):
+            out = Path(os.environ["VTT_PROOF_DIR"])
+            out.mkdir(parents=True, exist_ok=True)
+            page.locator("#srdRollBar").scroll_into_view_if_needed()
+            page.screenshot(path=str(out / f"srd-sheet-rolls-{width}.png"), full_page=True)
+        browser.close()
+        assert errors == [], errors

@@ -2,7 +2,7 @@
 
 from io import BytesIO
 
-from flask import jsonify, request, send_file
+from flask import current_app, jsonify, request, send_file
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from werkzeug.utils import secure_filename
 
@@ -394,6 +394,12 @@ def update_character(char_id):
         char.character_data = data['character_data']
 
     db.session.commit()
+    try:
+        from vtt.characters import sheet_link
+        sheet_link.push_character_to_tokens(char)
+    except Exception:
+        db.session.rollback()
+        current_app.logger.exception('token push after sheet update failed')
     return jsonify(char.serialize(include_details=True)), 200
 
 

@@ -9,6 +9,7 @@ import re
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
+from vtt.characters import sheet_link
 from vtt.characters.routes import (
     _can_read_character,
     _get_character_or_404,
@@ -294,4 +295,40 @@ def get_srd_character(char_id):
         'srd': block,
         'evaluation': evaluate(data, block.get('state') or {}),
         'sourceStatus': pin_status(data, block.get('sources')),
+    })
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/roll')
+@limiter.limit('240 per hour')
+@jwt_required()
+def roll_from_sheet(char_id):
+    user, error = _get_current_user()
+    if error:
+        return error
+    char, error = _get_character_or_404(char_id)
+    if error:
+        return error
+    if not sheet_link.can_roll_for(user, char):
+        return _bad('forbidden', 'Nur die Besitzerin, der Besitzer oder die Spielleitung darf für diesen Charakter würfeln.', 403)
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    evaluation = sheet_link.srd_evaluation(char)
+    if evaluation is None:
+        return _bad('not_srd', 'Kein SRD-Charakter.', 422)
+    kind, key = body.get('kind'), body.get('key')
+    if kind not in sheet_link.ROLL_KINDS:
+        return _bad('invalid_roll', 'Unbekannte Wurfart.', 422)
+    spec = sheet_link.roll_spec(evaluation, kind, key if isinstance(key, str) else None)
+    if spec is None:
+        return _bad('invalid_roll', 'Dieser Wurf existiert auf dem Bogen nicht.', 422)
+    result = sheet_link.roll_d20(spec['modifier'], body.get('mode') if isinstance(body.get('mode'), str) else 'normal')
+    visibility = body.get('visibility') if isinstance(body.get('visibility'), str) else 'public'
+    message_id = sheet_link.log_roll(user, char, spec, result, visibility)
+    return jsonify({
+        'label': spec['label'],
+        'dice': sheet_link.dice_text(spec['modifier']),
+        'result': result,
+        'logged': message_id is not None,
+        'messageId': message_id,
     })

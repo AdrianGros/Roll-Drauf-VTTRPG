@@ -432,6 +432,57 @@
             border: 1px solid rgba(75, 35, 90, 0.2);
             color: #2f1638;
         }
+        .srd-sheet-label { overflow-wrap: anywhere; }
+        .srd-rollbar {
+            position: sticky;
+            top: 0;
+            z-index: 3;
+            display: grid;
+            gap: 0.4rem;
+            margin-bottom: 0.8rem;
+            padding: 0.55rem 0.65rem;
+            border-radius: 8px;
+            background: #f6efe0;
+            border: 1px solid rgba(75, 35, 90, 0.35);
+        }
+        .srd-rollbar-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem 0.6rem;
+        }
+        .srd-rollbar-head label { font-size: 0.78rem; color: #6e5745; }
+        .srd-rollbar select { padding: 0.2rem 0.4rem; }
+        .srd-roll-result {
+            font-weight: 700;
+            color: #2f1638;
+            font-size: 0.95rem;
+            overflow-wrap: anywhere;
+        }
+        .srd-roll-result.is-crit { color: #1f6b2e; }
+        .srd-roll-result.is-fumble { color: #9c2a2a; }
+        .srd-roll-where { font-weight: 400; font-size: 0.78rem; color: #6e5745; }
+        .srd-roll-history {
+            margin: 0;
+            padding-left: 1.1rem;
+            font-size: 0.8rem;
+            color: #6e5745;
+        }
+        .srd-roll-btn {
+            font: inherit;
+            cursor: pointer;
+            border: 1px solid rgba(75, 35, 90, 0.35);
+            border-radius: 6px;
+            background: rgba(75, 35, 90, 0.07);
+            color: #4b235a;
+            padding: 0.15rem 0.5rem;
+            font-weight: 700;
+        }
+        .srd-roll-btn:hover, .srd-roll-btn:focus-visible { background: rgba(75, 35, 90, 0.18); }
+        .srd-roll-btn:disabled { opacity: 0.55; cursor: progress; }
+        .srd-sheet-skills li .srd-roll-btn { display: flex; justify-content: space-between; width: 100%; gap: 0.5rem; text-align: left; border-color: transparent; background: none; font-weight: inherit; color: inherit; }
+        .srd-sheet-skills li .srd-roll-btn:hover { background: rgba(75, 35, 90, 0.1); }
+        .srd-roll-pair { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.3rem; }
         .srd-sheet-note {
             margin: 0.6rem 0 0;
             font-size: 0.83rem;
@@ -1177,6 +1228,9 @@
         let srdCreatorData = null;
         let srdSubclassNames = {};
         let srdRenderToken = 0;
+        let srdRollMode = 'normal';
+        const srdRollHistory = [];
+        const SRD_ROLL_MODES = [['normal', 'Normal'], ['advantage', 'Vorteil'], ['disadvantage', 'Nachteil']];
 
         function appendText(parent, tag, text, className = '') {
             const node = document.createElement(tag);
@@ -1222,6 +1276,85 @@
             return wrap;
         }
 
+        function srdRollButton(text, kind, key, character, extraClass) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = `srd-roll-btn ${extraClass || ''}`.trim();
+            button.dataset.rollKind = kind;
+            if (key) button.dataset.rollKey = key;
+            button.textContent = text;
+            button.addEventListener('click', () => rollFromSheet(character, kind, key, button));
+            return button;
+        }
+
+        function renderSrdRollResult(entry) {
+            const node = document.getElementById('srdRollResult');
+            const history = document.getElementById('srdRollHistory');
+            if (!node || !history) return;
+            node.className = `srd-roll-result${entry.natural === 20 ? ' is-crit' : ''}${entry.natural === 1 ? ' is-fumble' : ''}`;
+            node.replaceChildren();
+            node.append(document.createTextNode(entry.error || entry.text));
+            if (!entry.error) {
+                appendText(node, 'span', entry.logged ? ' · im Tisch-Protokoll' : ' · nur hier (keine laufende Sitzung)', 'srd-roll-where');
+            }
+            history.replaceChildren();
+            srdRollHistory.slice(1, 6).forEach((past) => appendText(history, 'li', past.text));
+        }
+
+        async function rollFromSheet(character, kind, key, button) {
+            button.disabled = true;
+            try {
+                const result = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/roll`, 'POST', { kind, key, mode: srdRollMode });
+                const roll = result.result;
+                const kept = roll.rolls[0];
+                const modeText = roll.mode === 'advantage' ? ' (Vorteil)' : roll.mode === 'disadvantage' ? ' (Nachteil)' : '';
+                const modText = roll.modifier ? ` ${roll.modifier >= 0 ? '+' : '−'} ${Math.abs(roll.modifier)}` : '';
+                const entry = {
+                    text: `${result.label}${modeText}: ${kept}${modText} = ${roll.total}`,
+                    natural: roll.natural,
+                    logged: result.logged,
+                };
+                srdRollHistory.unshift(entry);
+                renderSrdRollResult(entry);
+            } catch (error) {
+                renderSrdRollResult({ error: error.message || 'Der Wurf ist fehlgeschlagen.' });
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        function buildSrdRollBar(character, ev) {
+            const bar = document.createElement('div');
+            bar.className = 'srd-rollbar';
+            bar.id = 'srdRollBar';
+            const head = document.createElement('div');
+            head.className = 'srd-rollbar-head';
+            const label = appendText(head, 'label', 'Würfeln mit ');
+            label.htmlFor = 'srdRollMode';
+            const select = document.createElement('select');
+            select.id = 'srdRollMode';
+            SRD_ROLL_MODES.forEach(([value, text]) => select.append(new Option(text, value, false, value === srdRollMode)));
+            select.addEventListener('change', () => { srdRollMode = select.value; });
+            head.append(select);
+            head.append(srdRollButton(`Initiative ${signed(ev.initiative)}`, 'initiative', null, character));
+            head.append(srdRollButton('Todesrettungswurf', 'death_save', null, character));
+            Object.entries((ev.spellcasting || {}).classes || {}).forEach(([classKey, info]) => {
+                const cls = (ev.classes || []).find((entry) => entry.classKey === classKey);
+                head.append(srdRollButton(`Zauberangriff ${cls?.name || classKey} ${signed(info.attackBonus)}`, 'spell_attack', classKey, character));
+            });
+            bar.append(head);
+            const result = appendText(bar, 'div', 'Klicke auf einen Wert, um zu würfeln. Der Wurf erscheint im Tisch-Protokoll, wenn eine Sitzung läuft.', 'srd-roll-result');
+            result.id = 'srdRollResult';
+            result.setAttribute('role', 'status');
+            result.setAttribute('aria-live', 'polite');
+            const history = document.createElement('ul');
+            history.className = 'srd-roll-history';
+            history.id = 'srdRollHistory';
+            bar.append(history);
+            if (srdRollHistory.length) setTimeout(() => renderSrdRollResult(srdRollHistory[0]), 0);
+            return bar;
+        }
+
         function applySrdManagedState(character) {
             const managed = isSrdCharacter(character);
             SRD_MANAGED_INPUTS.forEach((id) => {
@@ -1265,7 +1398,7 @@
         function buildSrdSheet(character, detail, data) {
             const ev = detail.evaluation || {};
             const state = detail.srd?.state || {};
-            const nodes = [];
+            const nodes = [buildSrdRollBar(character, ev)];
 
             const species = srdLookup(data.species, state.species?.id);
             const background = srdLookup(data.backgrounds, state.background?.id);
@@ -1302,6 +1435,11 @@
                 appendText(cell, 'div', SRD_ABILITY_NAMES[key], 'srd-sheet-label');
                 appendText(cell, 'div', `${ability.score ?? '–'} (${signed(ability.modifier)})`, 'srd-sheet-value srd-sheet-ability-score');
                 appendText(cell, 'div', `Rettungswurf ${signed(save.bonus)}${save.proficient ? ' • geübt' : ''}`, 'srd-sheet-label');
+                const pair = document.createElement('div');
+                pair.className = 'srd-roll-pair';
+                pair.append(srdRollButton(`Probe ${signed(ability.modifier)}`, 'ability', key, character));
+                pair.append(srdRollButton(`RW ${signed(save.bonus)}`, 'save', key, character));
+                cell.append(pair);
                 return cell;
             });
             nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Attribute' }));
@@ -1309,11 +1447,13 @@
 
             const skillList = document.createElement('ul');
             skillList.className = 'srd-sheet-skills';
-            Object.values(ev.skills || {}).forEach((skill) => {
+            Object.entries(ev.skills || {}).forEach(([skillId, skill]) => {
                 const row = document.createElement('li');
                 if (skill.proficiency !== 'none') row.className = 'is-proficient';
-                appendText(row, 'span', `${skill.name}${skill.proficiency === 'expertise' ? ' (Expertise)' : ''}`);
-                appendText(row, 'span', signed(skill.bonus));
+                const rollButton = srdRollButton('', 'skill', skillId, character);
+                appendText(rollButton, 'span', `${skill.name}${skill.proficiency === 'expertise' ? ' (Expertise)' : ''}`);
+                appendText(rollButton, 'span', signed(skill.bonus));
+                row.append(rollButton);
                 skillList.append(row);
             });
             nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Fertigkeiten' }));

@@ -249,6 +249,20 @@ def play_ready_check(campaign_id, session_id):
     return jsonify(result), 200
 
 
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/linkable-characters", methods=["GET"])
+@jwt_required()
+def play_linkable_characters(campaign_id, session_id):
+    """Characters the caller may link to a new token in this session."""
+    from vtt.characters import sheet_link
+    from vtt.socket_handlers import _is_dm
+
+    user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    characters = sheet_link.linkable_characters(campaign, user, _is_dm(campaign.id, user.id), game_session.id)
+    return jsonify({"characters": characters}), 200
+
+
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/scene-stack/init", methods=["POST"])
 @limiter.limit("30 per hour")
 @jwt_required()

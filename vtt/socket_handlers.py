@@ -996,6 +996,20 @@ def register_socket_handlers(socketio):
             _emit_error("bad_request", "invalid visibility")
             return
 
+        from vtt.characters import sheet_link
+        linked_character = None
+        if ce is None and token_payload.get("character_id") is not None:
+            from vtt.models.character import Character
+            character_id, parse_error = _coerce_int(token_payload["character_id"], "character_id")
+            if parse_error:
+                _emit_error(parse_error["code"], parse_error["message"])
+                return
+            link_message = sheet_link.link_error(campaign, user, is_dm_member, character_id, game_session.id)
+            if link_message:
+                _emit_error("bad_request", link_message)
+                return
+            linked_character = db.session.get(Character, character_id)
+
         _remember_client_event(campaign.id, game_session.id, user.id, client_event_id)
 
         token = TokenState(
@@ -1019,6 +1033,8 @@ def register_socket_handlers(socketio):
             updated_by=user.id,
             version=1,
         )
+        if linked_character is not None:
+            sheet_link.apply_character_to_token(token, linked_character)
         db.session.add(token)
         state.bump_version()
         _refresh_state_snapshot(state)
@@ -1154,10 +1170,22 @@ def register_socket_handlers(socketio):
             _emit_error(patch_error["code"], patch_error["message"])
             return
 
+        from vtt.characters import sheet_link
+        if parsed_patch.get("character_id") is not None:
+            link_message = sheet_link.link_error(
+                campaign, user, is_dm_member, parsed_patch["character_id"], game_session.id, token.id)
+            if link_message:
+                _emit_error("bad_request", link_message)
+                return
+
         old_visibility = token.visibility
         old_owner_user_id = token.owner_user_id
         for key, value in parsed_patch.items():
             setattr(token, key, value)
+        if parsed_patch.get("character_id") is not None:
+            from vtt.models.character import Character
+            sheet_link.apply_character_to_token(token, db.session.get(Character, token.character_id))
+        sheet_link.apply_token_patch_to_character(token, parsed_patch)
 
         _remember_client_event(campaign.id, game_session.id, user.id, client_event_id)
 

@@ -1467,6 +1467,7 @@
                 nameInput.value = "";
                 nameInput.focus();
             }
+            this._loadLinkableCharacters();
             const operator = isOperatorRole(this.bootstrap?.session_role);
             const visibilityRow = document.getElementById("tokenCreateVisibility");
             if (visibilityRow) {
@@ -1481,6 +1482,24 @@
                     typeSelect.value = "player";
                 }
                 typeSelect.disabled = !operator;
+            }
+        }
+
+        async _loadLinkableCharacters() {
+            const select = document.getElementById("tokenCreateCharacter");
+            if (!select) return;
+            select.hidden = true;
+            select.replaceChildren(new Option("Kein Charakter verknüpft", ""));
+            try {
+                const { characters = [] } = await this.api.getLinkableCharacters(this.campaignId, this.sessionId);
+                for (const character of characters) {
+                    const option = new Option(`${character.name} · Stufe ${character.level} · TP ${character.hp}`, String(character.id));
+                    option.dataset.name = character.name;
+                    select.append(option);
+                }
+                select.hidden = characters.length === 0;
+            } catch (error) {
+                select.hidden = true;
             }
         }
 
@@ -1502,6 +1521,8 @@
                 this._showMessage("Der Token braucht einen Namen.", true);
                 return;
             }
+            const characterSelect = document.getElementById("tokenCreateCharacter");
+            const characterId = characterSelect && !characterSelect.hidden ? Number(characterSelect.value) || null : null;
             const tokenType = document.getElementById("tokenCreateType")?.value || "npc";
             const sizeCells = Math.max(1, Math.min(6, Number(document.getElementById("tokenCreateSize")?.value) || 1));
             const visibility = isOperatorRole(this.bootstrap?.session_role)
@@ -1523,6 +1544,7 @@
                 // renderer never has to guess (the old <=300 heuristic).
                 metadata_json: metadataJson,
             };
+            if (characterId) token.character_id = characterId;
             this._cancelTokenPlacement();
             try {
                 if (this.socket && this.socket.isConnected) {
@@ -2709,6 +2731,18 @@
                     } else if (event.key === "Escape") {
                         this._cancelTokenPlacement();
                     }
+                });
+            }
+
+            const characterSelect = document.getElementById("tokenCreateCharacter");
+            if (characterSelect) {
+                characterSelect.addEventListener("change", () => {
+                    const picked = characterSelect.selectedOptions[0];
+                    if (!picked || !picked.value) return;
+                    const input = document.getElementById("tokenCreateName");
+                    if (input && !input.value.trim()) input.value = picked.dataset.name || "";
+                    const typeSelect = document.getElementById("tokenCreateType");
+                    if (typeSelect) typeSelect.value = "player";
                 });
             }
 
@@ -3935,8 +3969,10 @@
                         const hpText = hasHpData
                             ? `HP ${selectedToken.hp_current ?? "?"} / ${selectedToken.hp_max ?? "?"}`
                             : "HP unbekannt";
+                        const sheetAc = selectedToken.metadata_json?.sheet?.ac;
+                        const acText = sheetAc != null ? ` · RK ${sheetAc}` : "";
                         readonlyBox.textContent = selectedToken.character_id
-                            ? `${hpText} — nicht dein Charakter, nur ansehen.`
+                            ? `${hpText}${acText} — nicht dein Charakter, nur ansehen.`
                             : `${hpText} — kein verknüpfter Charakter.`;
                     }
                 }

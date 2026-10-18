@@ -1457,6 +1457,8 @@ def create_token(campaign_id, session_id):
         return jsonify({"error": "no active map selected for this session"}), 400
 
     data = request.get_json() or {}
+    if isinstance(data.get("token"), dict):
+        data = data["token"]
     name = str(data.get("name", "")).strip()
     if not name:
         return jsonify({"error": "token name required"}), 400
@@ -1507,6 +1509,15 @@ def create_token(campaign_id, session_id):
         if error:
             return error
 
+    from vtt.characters import sheet_link
+    from vtt.models.character import Character
+    linked_character = None
+    if character_id is not None:
+        link_message = sheet_link.link_error(campaign, user, is_dm_member, character_id, game_session.id)
+        if link_message:
+            return jsonify({"error": link_message}), 400
+        linked_character = db.session.get(Character, character_id)
+
     hp_current = data.get("hp_current")
     if hp_current is not None:
         hp_current, error = _coerce_int(hp_current, "hp_current")
@@ -1546,6 +1557,8 @@ def create_token(campaign_id, session_id):
         version=1,
         updated_by=user.id,
     )
+    if linked_character is not None:
+        sheet_link.apply_character_to_token(token, linked_character)
     db.session.add(token)
     state.bump_version()
     _refresh_state_snapshot(state)
@@ -1608,10 +1621,21 @@ def update_token(campaign_id, session_id, token_id):
     if error:
         return error
 
+    from vtt.characters import sheet_link
+    if patch.get("character_id") is not None:
+        link_message = sheet_link.link_error(
+            campaign, user, _is_dm(campaign, user.id), patch["character_id"], game_session.id, token.id)
+        if link_message:
+            return jsonify({"error": link_message}), 400
+
     old_visibility = token.visibility
     old_owner_user_id = token.owner_user_id
     for key, value in patch.items():
         setattr(token, key, value)
+    if patch.get("character_id") is not None:
+        from vtt.models.character import Character
+        sheet_link.apply_character_to_token(token, db.session.get(Character, token.character_id))
+    sheet_link.apply_token_patch_to_character(token, patch)
 
     token.map_id = state.active_map_id or token.map_id
     token.version += 1

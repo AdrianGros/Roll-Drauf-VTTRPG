@@ -159,6 +159,10 @@ class PlayClient {
         return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/maps/${mapId}`, "PUT", { fog_enabled: fogEnabled });
     }
 
+    getLinkableCharacters(campaignId, sessionId) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/linkable-characters`, "GET");
+    }
+
     createToken(campaignId, sessionId, token) {
         return this.auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/tokens`, "POST", {
             token: token && typeof token === "object" ? token : {},
