@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charakter erstellen · SRD 5.2.1 · Roll Drauf VTT</title>
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/regelwerk.css">
+    <link rel="stylesheet" href="/static/css/srd-creator.css">
+</head>
+<body class="regelwerk-page srd-creator-page">
+    <a class="regelwerk-skip" href="#scMain">Zum Inhalt springen</a>
+    <header class="regelwerk-site-header">
+        <nav class="book-dashboard-ribbon regelwerk-ribbon" aria-label="VTT-Hauptnavigation">
+            <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
+            <a class="book-dashboard-ribbon-btn" href="/campaigns">Kampagnen</a>
+            <a class="book-dashboard-ribbon-btn is-active" href="/characters" aria-current="page">Charaktere</a>
+            <a class="book-dashboard-ribbon-btn" href="/regelwerk">Regelwerk</a>
+            <a class="book-dashboard-ribbon-btn" href="/regelwerk/compendium">Compendium</a>
+        </nav>
+        <div class="regelwerk-titlebar">
+            <div>
+                <p class="regelwerk-kicker">Roll Drauf VTT · SRD 5.2.1</p>
+                <h1>Charakter erstellen</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="sc-main" id="scMain" tabindex="-1">
+        <p id="scStatus" class="regelwerk-status" role="status" aria-live="polite">Wird geladen …</p>
+        <section id="scHome" hidden></section>
+        <section id="scBuilder" class="sc-builder" hidden>
+            <div class="sc-toolbar">
+                <div class="sc-toolbar-left">
+                    <button type="button" id="scBackHome" class="sc-btn sc-btn-quiet">Alle Entwürfe</button>
+                    <span id="scSave" class="sc-save" role="status" aria-live="polite"></span>
+                </div>
+                <div class="sc-mode" role="group" aria-label="Erstellungsweg">
+                    <button type="button" id="scModeGuided" class="sc-btn sc-btn-toggle">Geführt</button>
+                    <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle">Schnellbau</button>
+                </div>
+            </div>
+            <div id="scConflict" class="sc-banner sc-banner-warn" role="alert" hidden></div>
+            <div class="sc-layout">
+                <div class="sc-content">
+                    <nav id="scSteps" class="sc-steps" aria-label="Schritte"></nav>
+                    <div id="scStepBody" class="sc-step-body"></div>
+                    <div id="scNav" class="sc-nav">
+                        <button type="button" id="scPrev" class="sc-btn">Zurück</button>
+                        <button type="button" id="scNext" class="sc-btn sc-btn-primary">Weiter</button>
+                    </div>
+                </div>
+                <aside id="scSummary" class="sc-summary" aria-label="Zusammenfassung"></aside>
+            </div>
+        </section>
+    </main>
+
+    <dialog id="scDialog" class="sc-dialog" aria-labelledby="scDialogTitle">
+        <div class="sc-dialog-head">
+            <h2 id="scDialogTitle" tabindex="-1"></h2>
+            <button type="button" id="scDialogClose" class="sc-btn sc-btn-quiet" aria-label="Schließen">Schließen</button>
+        </div>
+        <div id="scDialogBody" class="sc-dialog-body"></div>
+    </dialog>
+
+    <footer class="regelwerk-footer">
+        <p>Quelle: Systemreferenzdokument 5.2.1 (Deutsch).</p>
+        <p><a href="/regelwerk/lizenz">CC BY 4.0 · Quellenangabe und Lizenz</a></p>
+    </footer>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/srd-creator.js"></script>
+    <script src="/static/js/srd-creator-steps.js"></script>
+    <script src="/static/js/srd-creator-random.js"></script>
+</body>
+</html>
