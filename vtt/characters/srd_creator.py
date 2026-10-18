@@ -9,7 +9,7 @@ import re
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from vtt.characters import sheet_link
+from vtt.characters import sheet_link, srd_inventory
 from vtt.characters.routes import (
     _can_read_character,
     _get_character_or_404,
@@ -17,7 +17,7 @@ from vtt.characters.routes import (
     _validate_character_campaign,
 )
 from vtt.extensions import db, limiter
-from vtt.models import Character
+from vtt.models import Character, InventoryItem
 from vtt.models.srd_creator_draft import SrdCreatorDraft
 from vtt.rules_content.creator_drafts import (
     SYSTEM_ID,
@@ -319,16 +319,196 @@ def roll_from_sheet(char_id):
     kind, key = body.get('kind'), body.get('key')
     if kind not in sheet_link.ROLL_KINDS:
         return _bad('invalid_roll', 'Unbekannte Wurfart.', 422)
-    spec = sheet_link.roll_spec(evaluation, kind, key if isinstance(key, str) else None)
+    key = key if isinstance(key, str) else None
+    if kind in ('weapon_attack', 'weapon_damage'):
+        spec = srd_inventory.weapon_roll_spec(
+            char, evaluation, kind, key, critical=body.get('critical') is True, two_handed=body.get('twoHanded') is True)
+    else:
+        spec = sheet_link.roll_spec(evaluation, kind, key)
     if spec is None:
         return _bad('invalid_roll', 'Dieser Wurf existiert auf dem Bogen nicht.', 422)
-    result = sheet_link.roll_d20(spec['modifier'], body.get('mode') if isinstance(body.get('mode'), str) else 'normal')
+    if spec.get('damage'):
+        result = srd_inventory.roll_damage(spec['damage'])
+        dice = spec['dice']
+    else:
+        result = sheet_link.roll_d20(spec['modifier'], body.get('mode') if isinstance(body.get('mode'), str) else 'normal')
+        dice = sheet_link.dice_text(spec['modifier'])
     visibility = body.get('visibility') if isinstance(body.get('visibility'), str) else 'public'
     message_id = sheet_link.log_roll(user, char, spec, result, visibility)
     return jsonify({
         'label': spec['label'],
-        'dice': sheet_link.dice_text(spec['modifier']),
+        'dice': dice,
         'result': result,
         'logged': message_id is not None,
         'messageId': message_id,
     })
+
+
+def _inventory_character(char_id, *, write):
+    """(user, char, error) for the inventory endpoints; write access is the owner's only."""
+    user, error = _get_current_user()
+    if error:
+        return None, None, error
+    char, error = _get_character_or_404(char_id)
+    if error:
+        return None, None, error
+    if write and char.user_id != user.id:
+        return None, None, _bad('forbidden', 'Nur die Besitzerin oder der Besitzer ändert das Inventar.', 403)
+    if not write and not _can_read_character(user.id, char):
+        return None, None, _bad('forbidden', 'Kein Zugriff.', 403)
+    if sheet_link.srd_evaluation(char) is None:
+        return None, None, _bad('not_srd', 'Kein SRD-Charakter.', 422)
+    return user, char, None
+
+
+def _inventory_response(char, status=200, **extra):
+    payload = srd_inventory.inventory_payload(char, sheet_link.srd_evaluation(char))
+    payload.update(extra)
+    return jsonify(payload), status
+
+
+def _inventory_failure(exc):
+    db.session.rollback()
+    return _bad(exc.code, exc.message, exc.status)
+
+
+def _apply_inventory_change(char, action):
+    """Run `action()` and store the result; refresh open table tokens so the new armor class shows up."""
+    try:
+        extra = action()
+        db.session.commit()
+    except srd_inventory.InventoryError as exc:
+        return _inventory_failure(exc)
+    try:
+        sheet_link.push_character_to_tokens(char)
+    except Exception:  # the sheet change itself is already stored
+        db.session.rollback()
+    return _inventory_response(char, **(extra or {}))
+
+
+@srd_creator_bp.get('/characters/<int:char_id>/inventory')
+@jwt_required()
+def get_inventory(char_id):
+    _, char, error = _inventory_character(char_id, write=False)
+    if error:
+        return error
+    return _inventory_response(char)
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/inventory')
+@limiter.limit('300 per hour')
+@jwt_required()
+def add_inventory_item(char_id):
+    _, char, error = _inventory_character(char_id, write=True)
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+
+    def action():
+        if isinstance(body.get('custom'), dict):
+            srd_inventory.add_custom_item(char, body['custom'])
+        elif isinstance(body.get('itemId'), str):
+            srd_inventory.add_catalog_item(char, body['itemId'], body.get('quantity', 1))
+        else:
+            raise srd_inventory.InventoryError('invalid_item', 'Wähle einen Gegenstand aus dem Regelwerk oder lege einen eigenen an.')
+        if isinstance(body.get('resolve'), str):
+            srd_inventory.resolve_pending(char, body['resolve'])
+
+    return _apply_inventory_change(char, action)
+
+
+@srd_creator_bp.patch('/characters/<int:char_id>/inventory/<int:item_id>')
+@limiter.limit('300 per hour')
+@jwt_required()
+def update_inventory_item(char_id, item_id):
+    _, char, error = _inventory_character(char_id, write=True)
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    row = InventoryItem.query.filter_by(id=item_id, character_id=char.id).first()
+    if row is None:
+        return _bad('not_found', 'Gegenstand nicht gefunden.', 404)
+
+    def action():
+        if 'quantity' in body:
+            row.quantity = srd_inventory._clean_quantity(body['quantity'])
+        if row.item_type == 'custom':
+            if isinstance(body.get('name'), str) and body['name'].strip():
+                row.name = body['name'].strip()[:100]
+            if 'description' in body and (body['description'] is None or isinstance(body['description'], str)):
+                row.description = (body['description'] or None) and body['description'][:1000]
+            if 'weightKg' in body:
+                weight = body['weightKg']
+                if isinstance(weight, bool) or not isinstance(weight, (int, float)) or not 0 <= weight <= 1000:
+                    raise srd_inventory.InventoryError('invalid_weight', 'Das Gewicht muss zwischen 0 und 1000 kg liegen.')
+                row.weight_per_unit = float(weight)
+        if 'equipped' in body:
+            if not isinstance(body['equipped'], bool):
+                raise srd_inventory.InventoryError('invalid_body', 'equipped muss true oder false sein.')
+            srd_inventory.set_equipped(char, row, body['equipped'])
+
+    return _apply_inventory_change(char, action)
+
+
+@srd_creator_bp.delete('/characters/<int:char_id>/inventory/<int:item_id>')
+@limiter.limit('300 per hour')
+@jwt_required()
+def delete_inventory_item(char_id, item_id):
+    _, char, error = _inventory_character(char_id, write=True)
+    if error:
+        return error
+    row = InventoryItem.query.filter_by(id=item_id, character_id=char.id).first()
+    if row is None:
+        return _bad('not_found', 'Gegenstand nicht gefunden.', 404)
+    return _apply_inventory_change(char, lambda: srd_inventory.remove_item(char, row))
+
+
+@srd_creator_bp.put('/characters/<int:char_id>/inventory/coins')
+@limiter.limit('300 per hour')
+@jwt_required()
+def change_coins(char_id):
+    _, char, error = _inventory_character(char_id, write=True)
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    return _apply_inventory_change(char, lambda: srd_inventory.change_coins(char, body))
+
+
+@srd_creator_bp.delete('/characters/<int:char_id>/inventory/pending/<pending_id>')
+@limiter.limit('300 per hour')
+@jwt_required()
+def dismiss_pending(char_id, pending_id):
+    _, char, error = _inventory_character(char_id, write=True)
+    if error:
+        return error
+    return _apply_inventory_change(char, lambda: srd_inventory.resolve_pending(char, pending_id))
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/inventory/starting-equipment')
+@limiter.limit('60 per hour')
+@jwt_required()
+def seed_inventory(char_id):
+    _, char, error = _inventory_character(char_id, write=True)
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    packages = {}
+    for field in ('classPackage', 'backgroundPackage'):
+        value = body.get(field)
+        if value is not None and not (isinstance(value, str) and re.fullmatch(r'[A-Z]', value)):
+            return _bad('invalid_package', 'Ein Paket ist ein Buchstabe (A, B, …).')
+        packages[field] = value
+
+    def action():
+        notes = srd_inventory.seed_starting_equipment(char, packages['classPackage'], packages['backgroundPackage'])
+        return {'notes': notes}
+
+    return _apply_inventory_change(char, action)

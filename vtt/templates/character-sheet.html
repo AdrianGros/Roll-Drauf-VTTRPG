@@ -526,6 +526,7 @@
     <link rel="stylesheet" href="/static/css/book-shell.css">
     <link rel="stylesheet" href="/static/css/book-page.css">
     <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/srd-inventory.css">
     <style>
         body.character-sheet-route-book-scene {
             background: #0d0514;
@@ -856,7 +857,7 @@
                             </div>
                         </div>
 
-                        <div class="sheet-pane">
+                        <div class="sheet-pane" id="legacyEquipmentPane">
                             <div class="sheet-pane-header">
                                 <div class="sheet-pane-title">Ausrüstung</div>
                             </div>
@@ -880,7 +881,7 @@
                             </div>
                         </div>
 
-                        <div class="sheet-pane">
+                        <div class="sheet-pane" id="legacyInventoryPane">
                             <div class="sheet-pane-header">
                                 <div class="sheet-pane-title">Inventar</div>
                             </div>
@@ -918,6 +919,7 @@
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/regelwerk-navigation.js"></script>
+    <script src="/static/js/srd-inventory-ui.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>
         const auth = new Auth();
@@ -1276,14 +1278,14 @@
             return wrap;
         }
 
-        function srdRollButton(text, kind, key, character, extraClass) {
+        function srdRollButton(text, kind, key, character, extraClass, extraBody) {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = `srd-roll-btn ${extraClass || ''}`.trim();
             button.dataset.rollKind = kind;
             if (key) button.dataset.rollKey = key;
             button.textContent = text;
-            button.addEventListener('click', () => rollFromSheet(character, kind, key, button));
+            button.addEventListener('click', () => rollFromSheet(character, kind, key, button, extraBody));
             return button;
         }
 
@@ -1301,16 +1303,18 @@
             srdRollHistory.slice(1, 6).forEach((past) => appendText(history, 'li', past.text));
         }
 
-        async function rollFromSheet(character, kind, key, button) {
+        async function rollFromSheet(character, kind, key, button, extraBody) {
             button.disabled = true;
             try {
-                const result = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/roll`, 'POST', { kind, key, mode: srdRollMode });
+                const result = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/roll`, 'POST', { ...(extraBody || {}), kind, key, mode: srdRollMode });
                 const roll = result.result;
-                const kept = roll.rolls[0];
+                const rolls = roll.rolls || [];
+                const kept = rolls.join(' + ');
                 const modeText = roll.mode === 'advantage' ? ' (Vorteil)' : roll.mode === 'disadvantage' ? ' (Nachteil)' : '';
                 const modText = roll.modifier ? ` ${roll.modifier >= 0 ? '+' : '−'} ${Math.abs(roll.modifier)}` : '';
+                const shown = rolls.length ? `${kept}${modText}` : String(roll.modifier);
                 const entry = {
-                    text: `${result.label}${modeText}: ${kept}${modText} = ${roll.total}`,
+                    text: `${result.label}${modeText}: ${shown} = ${roll.total}`,
                     natural: roll.natural,
                     logged: result.logged,
                 };
@@ -1361,6 +1365,10 @@
                 const node = document.getElementById(id);
                 if (node && managed) node.disabled = true;
             });
+            ['legacyEquipmentPane', 'legacyInventoryPane'].forEach((id) => {
+                const pane = document.getElementById(id);
+                if (pane) pane.style.display = managed ? 'none' : '';
+            });
         }
 
         async function renderSrdSheet(character) {
@@ -1393,6 +1401,18 @@
             }
             if (token !== srdRenderToken) return;
             body.replaceChildren(...buildSrdSheet(character, detail, srdCreatorData));
+            loadSrdInventory(character, updateSrdArmorClass);
+        }
+
+        function updateSrdArmorClass(payload) {
+            const cell = document.getElementById('srdAcCell');
+            if (!cell || !payload?.armorClass) return;
+            const value = cell.querySelector('.srd-sheet-value');
+            if (!value) return;
+            value.replaceChildren(document.createTextNode(String(payload.armorClass.value)));
+            if (payload.armorClass.formula) appendText(value, 'small', ` ${payload.armorClass.formula}`);
+            const input = document.getElementById('charAc');
+            if (input) input.value = payload.armorClass.value;
         }
 
         function buildSrdSheet(character, detail, data) {
@@ -1416,8 +1436,10 @@
 
             const hp = ev.hitPoints?.max ?? character.hp_max;
             const hitDice = Object.entries(ev.hitDice || {}).map(([die, count]) => `${count}×${die}`).join(' + ');
+            const acCell = srdCell('Rüstungsklasse', String(ev.armorClass?.value ?? character.ac), ev.armorClass?.formula || '');
+            acCell.id = 'srdAcCell';
             nodes.push(srdGrid('srd-sheet-vitals', [
-                srdCell('Rüstungsklasse', String(ev.armorClass?.value ?? character.ac), ev.armorClass?.formula || ''),
+                acCell,
                 srdCell('Trefferpunkte', `${character.hp_current ?? hp} / ${hp}`),
                 srdCell('Trefferwürfel', hitDice || '–'),
                 srdCell('Übungsbonus', signed(ev.proficiencyBonus)),
@@ -1489,14 +1511,10 @@
                 nodes.push(srdTags(featNames));
             }
 
-            const gear = [];
-            const armor = srdLookup(data.equipment?.armor, state.equipment?.armor);
-            if (armor) gear.push(armor.name);
-            if (state.equipment?.shield) gear.push('Schild');
-            if (gear.length) {
-                nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Getragene Rüstung' }));
-                nodes.push(srdTags(gear));
-            }
+            const inventory = document.createElement('div');
+            inventory.id = 'srdInventory';
+            inventory.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: 'Lade Inventar…' }));
+            nodes.push(inventory);
 
             const note = document.createElement('p');
             note.className = 'srd-sheet-note';

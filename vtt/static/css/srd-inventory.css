@@ -1,0 +1,52 @@
+/* Inventory block of the SRD character sheet (character-sheet.html). */
+.srd-inv-status { min-height: 1.2em; font-size: 0.85rem; color: #1f6b2e; margin-bottom: 0.4rem; }
+.srd-inv-status.is-error { color: #9c2a2a; font-weight: 700; }
+.srd-inv-weight { display: grid; gap: 0.25rem; margin: 0.4rem 0 0.6rem; }
+.srd-inv-weight-text { font-weight: 700; color: #2f1638; font-size: 0.9rem; overflow-wrap: anywhere; }
+.srd-inv-weight-detail { font-size: 0.78rem; color: #6e5745; }
+.srd-inv-weight-track { height: 0.55rem; border-radius: 999px; background: rgba(75, 35, 90, 0.12); overflow: hidden; }
+.srd-inv-weight-fill { height: 100%; background: #4b235a; border-radius: 999px; }
+.srd-inv-weight-fill.is-over { background: #9c2a2a; }
+.srd-inv-warn { font-size: 0.82rem; color: #7a4a00; background: rgba(214, 160, 40, 0.16); border-left: 3px solid #c28a1e; padding: 0.25rem 0.5rem; margin: 0.25rem 0; border-radius: 0 6px 6px 0; }
+.srd-inv-warn.is-error { color: #9c2a2a; background: rgba(156, 42, 42, 0.1); border-left-color: #9c2a2a; }
+.srd-inv-seed, .srd-inv-pending { display: grid; gap: 0.5rem; padding: 0.6rem; margin-bottom: 0.6rem; border: 1px dashed rgba(75, 35, 90, 0.45); border-radius: 8px; background: rgba(75, 35, 90, 0.05); }
+.srd-inv-pending-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; }
+.srd-inv-pending-label { font-weight: 700; color: #2f1638; font-size: 0.88rem; }
+.srd-inv-field { display: grid; gap: 0.15rem; font-size: 0.8rem; color: #6e5745; min-width: 0; }
+.srd-inv-field-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.srd-inv-grow { flex: 1 1 12rem; }
+.srd-inv-select, .srd-inv-search, .srd-inv-qty, .srd-inv-coin-input { font: inherit; padding: 0.3rem 0.45rem; border: 1px solid rgba(130, 89, 52, 0.4); border-radius: 6px; background: #fffdf6; color: #2f1638; min-width: 0; max-width: 100%; }
+.srd-inv-qty { width: 4.6rem; }
+.srd-inv-coins { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.5rem; }
+.srd-inv-coin .srd-inv-coin-input { width: 5.2rem; }
+.srd-inv-btn { font: inherit; cursor: pointer; padding: 0.3rem 0.7rem; border: 1px solid rgba(75, 35, 90, 0.4); border-radius: 6px; background: rgba(75, 35, 90, 0.07); color: #4b235a; font-weight: 700; }
+.srd-inv-btn:hover, .srd-inv-btn:focus-visible { background: rgba(75, 35, 90, 0.18); }
+.srd-inv-primary { background: #4b235a; color: #fff; }
+.srd-inv-primary:hover, .srd-inv-primary:focus-visible { background: #3a1a46; }
+.srd-inv-danger { color: #9c2a2a; border-color: rgba(156, 42, 42, 0.4); background: rgba(156, 42, 42, 0.06); }
+.srd-inv-attacks { display: grid; gap: 0.4rem; }
+.srd-inv-attack { padding: 0.45rem 0.6rem; border: 1px solid rgba(130, 89, 52, 0.25); border-radius: 8px; background: rgba(255, 253, 246, 0.6); }
+.srd-inv-attack.is-equipped { border-color: rgba(75, 35, 90, 0.55); background: rgba(75, 35, 90, 0.06); }
+.srd-inv-attack-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.srd-sheet-tag.is-active { background: #4b235a; color: #fff; border-color: #4b235a; }
+.srd-roll-btn.is-crit-btn { color: #1f6b2e; border-color: rgba(31, 107, 46, 0.4); background: rgba(31, 107, 46, 0.07); }
+.srd-inv-meta { font-size: 0.78rem; color: #6e5745; margin-top: 0.15rem; overflow-wrap: anywhere; }
+.srd-inv-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+.srd-inv-item { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.4rem 0.8rem; padding: 0.4rem 0.6rem; border-bottom: 1px dotted rgba(130, 89, 52, 0.3); }
+.srd-inv-item.is-equipped { background: rgba(75, 35, 90, 0.06); border-radius: 6px; }
+.srd-inv-item-main { flex: 1 1 14rem; min-width: 0; }
+.srd-inv-item-title { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.srd-inv-item-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.srd-inv-total { font-size: 0.8rem; color: #6e5745; min-width: 4rem; text-align: right; }
+.srd-inv-add { display: grid; gap: 0.5rem; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(130, 89, 52, 0.25); }
+.srd-inv-add-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.5rem; }
+@media (max-width: 620px) {
+  .srd-inv-item-controls { width: 100%; justify-content: flex-start; }
+  .srd-inv-total { text-align: left; }
+  .srd-inv-select, .srd-inv-search { width: 100%; }
+}
+#srdInventory input.srd-inv-qty { width: 4.6rem; flex: none; }
+#srdInventory input.srd-inv-coin-input { width: 5.2rem; }
+#srdInventory .srd-inv-item-controls { flex-wrap: nowrap; }
+@media (max-width: 620px) { #srdInventory .srd-inv-item-controls { flex-wrap: wrap; } }
+.srd-inv-btn { white-space: nowrap; }

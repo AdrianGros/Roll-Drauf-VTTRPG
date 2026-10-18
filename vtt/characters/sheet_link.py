@@ -16,7 +16,7 @@ ABILITY_NAMES = {
     "str": "Stärke", "dex": "Geschicklichkeit", "con": "Konstitution",
     "int": "Intelligenz", "wis": "Weisheit", "cha": "Charisma",
 }
-ROLL_KINDS = ("ability", "save", "skill", "initiative", "spell_attack", "death_save")
+ROLL_KINDS = ("ability", "save", "skill", "initiative", "spell_attack", "death_save", "weapon_attack", "weapon_damage")
 ROLL_MODES = ("normal", "advantage", "disadvantage")
 LIVE_STATUSES = ("scheduled", "ready", "in_progress", "paused")
 
@@ -120,10 +120,12 @@ def log_roll(user, char, spec, result, visibility):
         visibility = "public"
     if visibility not in ("public", "gm_only", "blind", "self"):
         visibility = "public"
-    dice = dice_text(result["modifier"])
+    dice = spec.get("dice") or dice_text(result["modifier"])
     mode_text = {"advantage": " (Vorteil)", "disadvantage": " (Nachteil)"}.get(result["mode"], "")
-    kept = result["rolls"][0]
+    kept = " + ".join(str(r) for r in result["rolls"]) if spec.get("damage") else result["rolls"][0]
     modifier_text = f" {result['modifier']:+d}" if result["modifier"] else ""
+    if spec.get("damage") and not result["rolls"]:
+        kept, modifier_text = result["modifier"], ""
     message = ChatMessage(
         campaign_id=campaign.id,
         game_session_id=game_session.id,
