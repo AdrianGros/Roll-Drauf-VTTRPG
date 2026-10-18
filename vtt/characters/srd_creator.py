@@ -9,7 +9,7 @@ import re
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from vtt.characters import sheet_link, srd_inventory
+from vtt.characters import sheet_link, srd_inventory, srd_progression
 from vtt.characters.routes import (
     _can_read_character,
     _get_character_or_404,
@@ -512,3 +512,118 @@ def seed_inventory(char_id):
         return {'notes': notes}
 
     return _apply_inventory_change(char, action)
+
+
+# ------------------------------------------------------------------ progression: XP, milestones, level-up
+
+def _progression_character(char_id, *, write):
+    """(user, char, can_manage, error); XP and milestones are managed by the campaign's DM, else by the owner."""
+    user, error = _get_current_user()
+    if error:
+        return None, None, False, error
+    char, error = _get_character_or_404(char_id)
+    if error:
+        return None, None, False, error
+    if not _can_read_character(user.id, char):
+        return None, None, False, _bad('forbidden', 'Kein Zugriff.', 403)
+    if sheet_link.srd_evaluation(char) is None:
+        return None, None, False, _bad('not_srd', 'Kein SRD-Charakter.', 422)
+    if char.campaign_id:
+        from vtt.socket_handlers import _is_dm
+
+        can_manage = bool(_is_dm(char.campaign_id, user.id))
+    else:
+        can_manage = char.user_id == user.id
+    if write == 'manage' and not can_manage:
+        return None, None, False, _bad('forbidden', 'Erfahrung und Meilensteine vergibt die Spielleitung (ohne Kampagne die Besitzerin oder der Besitzer).', 403)
+    if write == 'owner' and char.user_id != user.id:
+        return None, None, False, _bad('forbidden', 'Nur die Besitzerin oder der Besitzer steigt die Stufe auf.', 403)
+    return user, char, can_manage, None
+
+
+def _progression_payload(char, user, can_manage):
+    data = load_creator_data()
+    return {
+        'status': srd_progression.status(char, data),
+        'history': srd_progression.history(char)[-50:],
+        'canManage': can_manage,
+        'canLevelUp': char.user_id == user.id,
+        'xpTable': [{'level': row['level'], 'xp': row['xp']} for row in data['levels']],
+    }
+
+
+def _progression_failure(exc):
+    db.session.rollback()
+    return _bad(exc.code, exc.message, exc.status, **exc.extra)
+
+
+@srd_creator_bp.get('/characters/<int:char_id>/progression')
+@jwt_required()
+def get_progression(char_id):
+    user, char, can_manage, error = _progression_character(char_id, write=False)
+    if error:
+        return error
+    return jsonify(_progression_payload(char, user, can_manage))
+
+
+@srd_creator_bp.put('/characters/<int:char_id>/progression')
+@limiter.limit('120 per hour')
+@jwt_required()
+def put_progression(char_id):
+    user, char, can_manage, error = _progression_character(char_id, write='manage')
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    try:
+        srd_progression.set_progression(char, load_creator_data(), body, user_id=user.id)
+        db.session.commit()
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
+    return jsonify(_progression_payload(char, user, can_manage))
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/level-up/preview')
+@limiter.limit('600 per hour')
+@jwt_required()
+def preview_level_up(char_id):
+    _, char, _, error = _progression_character(char_id, write='owner')
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    try:
+        result = srd_progression.preview(char, load_creator_data(), body)
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
+    result.pop('state')
+    return jsonify(result)
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/level-up')
+@limiter.limit('60 per hour')
+@jwt_required()
+def post_level_up(char_id):
+    user, char, can_manage, error = _progression_character(char_id, write='owner')
+    if error:
+        return error
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    try:
+        result = srd_progression.level_up(char, load_creator_data(), body, user_id=user.id)
+        db.session.commit()
+    except srd_progression.ProgressionError as exc:
+        return _progression_failure(exc)
+    try:
+        sheet_link.push_character_to_tokens(char)
+    except Exception:  # the level-up itself is already stored
+        db.session.rollback()
+    return jsonify({
+        'level': char.level,
+        'hpGain': result['hpGain'],
+        'evaluation': result['evaluation'],
+        **_progression_payload(char, user, can_manage),
+    })

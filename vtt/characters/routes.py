@@ -42,7 +42,7 @@ IDENTITY_FIELD_MAP = {
 
 # Derived by the SRD creator; the generic character API must not overwrite them.
 SRD_MANAGED_FIELDS = (
-    'race', 'class', 'background', 'level', 'ac', 'hp_max', 'mana_max',
+    'race', 'class', 'background', 'level', 'xp', 'ac', 'hp_max', 'mana_max',
     'str', 'dex', 'con', 'int', 'wis', 'cha', 'character_data',
 )
 

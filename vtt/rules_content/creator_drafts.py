@@ -138,15 +138,18 @@ def finalize_blockers(evaluation: dict, state: dict) -> list[dict]:
     return blockers
 
 
+def class_label(evaluation: dict) -> str:
+    classes = evaluation["classes"]
+    if len(classes) == 1:
+        return classes[0]["name"]
+    return " / ".join(f"{entry['name']} {entry['level']}" for entry in classes)
+
+
 def character_values(data: dict, state: dict, evaluation: dict, *, draft_id: int, finalized_at: str) -> dict:
     """Column values and `character_data` for a finished SRD character, derived on the server only."""
     species = next((entry for entry in data["species"] if entry["id"] == (state.get("species") or {}).get("id")), None)
     background = next((entry for entry in data["backgrounds"] if entry["id"] == (state.get("background") or {}).get("id")), None)
-    classes = evaluation["classes"]
-    if len(classes) == 1:
-        class_name = classes[0]["name"]
-    else:
-        class_name = " / ".join(f"{entry['name']} {entry['level']}" for entry in classes)
+    class_name = class_label(evaluation)
     xp = next((row["xp"] for row in data["levels"] if row["level"] == evaluation["level"]), 0)
     abilities = evaluation["abilities"]
     sources = state.get("sources") or default_source_ids()
@@ -184,6 +187,6 @@ def is_srd_character_data(character_data) -> bool:
 
 
 __all__ = [
-    "SRD_BLOCK_SCHEMA", "SRD_SOURCE_ID", "SYSTEM_ID", "STATE_FIELDS", "character_values", "finalize_blockers",
+    "SRD_BLOCK_SCHEMA", "SRD_SOURCE_ID", "SYSTEM_ID", "STATE_FIELDS", "character_values", "class_label", "finalize_blockers",
     "identity_name", "is_srd_character_data", "sanitize_state",
 ]

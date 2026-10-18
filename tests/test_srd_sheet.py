@@ -57,7 +57,8 @@ def test_sheet_payload_for_srd_and_plain_characters(client, data):
     legacy = client.get(f"/api/characters/{plain['id']}/sheet").get_json()["character"]
     assert legacy["system_id"] is None and legacy["race"] == "Mensch" and legacy["level"] == 3
     assert "progression" not in legacy and "faction" not in legacy
-    assert client.put(f"/api/characters/{srd['id']}", json={"name": "Neu", "xp": 10, "hp_current": 3}).status_code == 200
+    assert client.put(f"/api/characters/{srd['id']}", json={"name": "Neu", "hp_current": 3}).status_code == 200
+    assert client.put(f"/api/characters/{srd['id']}", json={"xp": 10}).status_code == 409
     assert client.put(f"/api/characters/{srd['id']}", json={"level": 9}).status_code == 409
 
 

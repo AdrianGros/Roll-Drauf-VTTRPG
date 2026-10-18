@@ -251,6 +251,16 @@
             display: none !important;
         }
 
+        body .book-dashboard-page.book-focus-page.sheet-focus-page .book-spread {
+            grid-template-columns: minmax(0, 1fr);
+            max-width: 62rem;
+            margin-inline: auto;
+        }
+
+        body .book-dashboard-page.book-focus-page.sheet-focus-page .book-page--index .book-page-folio {
+            display: none;
+        }
+
         body[data-sheet-empty="true"] .sheet-focus-page .book-shell-frame-header,
         body[data-sheet-empty="true"] .sheet-focus-page .book-shell-ribbon {
             display: none;
@@ -527,6 +537,7 @@
     <link rel="stylesheet" href="/static/css/book-page.css">
     <link rel="stylesheet" href="/static/css/book-scene.css">
     <link rel="stylesheet" href="/static/css/srd-inventory.css">
+    <link rel="stylesheet" href="/static/css/srd-progression.css">
     <style>
         body.character-sheet-route-book-scene {
             background: #0d0514;
@@ -920,6 +931,7 @@
     <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/srd-inventory-ui.js"></script>
+    <script src="/static/js/srd-progression-ui.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>
         const auth = new Auth();
@@ -1221,7 +1233,7 @@
 
         const SRD_SYSTEM_ID = 'srd_5_2_1_de';
         const SRD_MANAGED_INPUTS = [
-            'charRace', 'charClass', 'charBackground', 'charLevel', 'charAc', 'charHpMax',
+            'charRace', 'charClass', 'charBackground', 'charLevel', 'charXp', 'charAc', 'charHpMax',
             'charStr', 'charDex', 'charCon', 'charInt', 'charWis', 'charCha'
         ];
         const SRD_ABILITY_ORDER = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
@@ -1402,6 +1414,13 @@
             if (token !== srdRenderToken) return;
             body.replaceChildren(...buildSrdSheet(character, detail, srdCreatorData));
             loadSrdInventory(character, updateSrdArmorClass);
+            loadSrdProgression(character, detail.evaluation, (info) => {
+                if (info?.reload) {
+                    Promise.resolve(loadSheet()).then(() => { if (info.message) showMessage(info.message); });
+                } else if (info?.xp != null) {
+                    document.getElementById('charXp').value = info.xp;
+                }
+            });
         }
 
         function updateSrdArmorClass(payload) {
@@ -1511,6 +1530,11 @@
                 nodes.push(srdTags(featNames));
             }
 
+            const progression = document.createElement('div');
+            progression.id = 'srdProgression';
+            progression.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: 'Lade Stufe und Erfahrung…' }));
+            nodes.push(progression);
+
             const inventory = document.createElement('div');
             inventory.id = 'srdInventory';
             inventory.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: 'Lade Inventar…' }));
@@ -1518,7 +1542,7 @@
 
             const note = document.createElement('p');
             note.className = 'srd-sheet-note';
-            note.textContent = 'Diese Werte werden aus den SRD-5.2.1-Regeln berechnet. Name, Erfahrung und aktuelle Trefferpunkte änderst du direkt im Bogen, alles andere im Regelwerk-Ersteller.';
+            note.textContent = 'Diese Werte werden aus den SRD-5.2.1-Regeln berechnet. Name und aktuelle Trefferpunkte änderst du direkt im Bogen, Erfahrung und Stufenaufstieg im Abschnitt „Stufe und Erfahrung“, alles andere im Regelwerk-Ersteller.';
             nodes.push(note);
             const link = document.createElement('a');
             link.className = 'srd-sheet-link';
@@ -1696,11 +1720,10 @@
                 if (isSrdCharacter(sheet?.character)) {
                     await auth.makeAuthRequest(`/api/characters/${characterId}`, 'PUT', {
                         name: document.getElementById('charName').value.trim(),
-                        xp: Number(document.getElementById('charXp').value),
                         hp_current: Number(document.getElementById('charHpCurrent').value),
                     });
                     await loadSheet();
-                    showMessage('Name, Erfahrung und aktuelle Trefferpunkte gespeichert.');
+                    showMessage('Name und aktuelle Trefferpunkte gespeichert.');
                     return;
                 }
                 const payload = {
