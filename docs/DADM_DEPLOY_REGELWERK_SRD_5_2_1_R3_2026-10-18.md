@@ -94,4 +94,4 @@ No WotC or D&D references were added by Roll Drauf; no content outside the SRD w
   R6 acceptance criteria and still needs that check.
 - Search alias coverage for monster and animal names has not been exercised beyond the generated
   index.
-- The work is uncommitted in the working tree alongside unrelated changes.
+- The work was committed locally as `7bfe069` (Regelwerk files only; not pushed) and deployed as preview, see the R7 deploy record.

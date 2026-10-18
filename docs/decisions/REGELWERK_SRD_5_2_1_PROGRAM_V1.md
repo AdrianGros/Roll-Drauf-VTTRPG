@@ -1,7 +1,7 @@
 # DAD-M Program: German SRD 5.2.1 Regelwerk
 
 version: 1
-status: approved — R0-R6 corpus transcription complete and reviewed; R7 Discover next
+status: approved — R0-R6 corpus complete and reviewed; R7 preview live on the test environment, acceptance pending
 date: 2026-10-16
 phase: R3 Monitor complete (corpus run R3-R6)
 basis: `docs/DADM_APPLY_REGELWERK_SRD_5_2_1_2026-10-15.md`
@@ -203,6 +203,7 @@ All milestones are P1 for the full-project goal. R0 and R1 are the first authori
 | 2026-10-16 | Close R2 and permit R3 Discover | Reviewer sign-off received on pages 5, 9-32; coverage ledger, regenerated artifacts, and full route/regression suite passed Monitor | DAD-M Monitor under approved program | `docs/DADM_MONITOR_REGELWERK_SRD_5_2_1_R2_2026-10-16.md` |
 | 2026-10-18 | Run the R3-R6 corpus as one cadence-based transcription with per-range reviewer sign-off | Human owner directed continuous progress with a DM review after each range and status DM per cycle | human product owner (Donutarian) | `docs/DADM_DEPLOY_REGELWERK_SRD_5_2_1_R3_2026-10-18.md` |
 | 2026-10-18 | Close the R3-R6 corpus run and permit R7 Discover | Reviewer "Lgtm" on pages 5-412; 101 documents; coverage complete; build check and 39 tests green; package still `preview` | DAD-M Monitor under approved program | `docs/DADM_MONITOR_REGELWERK_SRD_5_2_1_R3_2026-10-18.md` |
+| 2026-10-18 | Activate the Regelwerk reader as `preview` on the live VTT (= test environment, no separate production) | Human owner asked for a readable "Regelwerk" tab to be able to accept; image `regelwerk-7bfe069`, `REGELWERK_PREVIEW=true`; rollback via compose backup + old image; `published` still requires named acceptance owner |
 
 This log is append-only after plan approval.
 
