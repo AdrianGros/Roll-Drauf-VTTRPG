@@ -17,8 +17,8 @@ body.regelwerk-page {
     margin: 0;
     color: var(--regelwerk-ink);
     background:
-        radial-gradient(circle at 12% 4%, rgba(255, 255, 255, 0.66), transparent 30rem),
-        linear-gradient(135deg, #251a17, #4a3026 45%, #201614);
+        radial-gradient(circle at 12% 4%, rgba(255, 252, 240, 0.85), transparent 34rem),
+        linear-gradient(160deg, #efe3c4, #e6d6af 55%, #dcc99b);
     font-family: Georgia, "Times New Roman", serif;
 }
 
@@ -113,7 +113,7 @@ body.regelwerk-page {
     border: 1px solid var(--regelwerk-border);
     border-radius: 0.6rem;
     background: var(--regelwerk-paper);
-    box-shadow: 0 1.1rem 2.5rem rgba(12, 7, 5, 0.28);
+    box-shadow: 0 0.5rem 1.4rem rgba(90, 62, 30, 0.2);
 }
 
 .regelwerk-sidebar {
@@ -302,12 +302,12 @@ body.regelwerk-page {
 
 .regelwerk-footer {
     padding: 0.4rem 0 2rem;
-    color: #f7ead3;
+    color: var(--regelwerk-muted);
     font: 0.85rem/1.4 system-ui, sans-serif;
 }
 
 .regelwerk-footer p { margin: 0.25rem 0; }
-.regelwerk-footer a { color: #ffe2a1; }
+.regelwerk-footer a { color: var(--regelwerk-accent); }
 
 :focus-visible { outline: 0.2rem solid #e3ad42; outline-offset: 0.15rem; }
 
@@ -400,3 +400,10 @@ body.regelwerk-page {
     .regelwerk-footer { color: #000; }
     .regelwerk-footer a { color: #000; }
 }
+
+.regelwerk-toc-group { margin: 0.15rem 0; border-left: 2px solid rgba(75, 35, 90, 0.25); }
+.regelwerk-toc-group > summary { cursor: pointer; padding: 0.45rem 0.5rem; font-weight: 700; color: #2f1638; }
+.regelwerk-toc-group > summary:hover, .regelwerk-toc-group > summary:focus-visible { background: rgba(75, 35, 90, 0.08); }
+.regelwerk-toc-group > a { padding-left: 1.1rem; }
+.regelwerk-toc a[aria-current="page"] { font-weight: 800; color: #2f1638; text-decoration: none; border-left: 3px solid #4b235a; padding-left: 0.5rem; }
+.regelwerk-toc-group > a[aria-current="page"] { padding-left: 0.85rem; }

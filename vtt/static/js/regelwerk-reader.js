@@ -119,15 +119,73 @@
         target.scrollIntoView({ block: 'start', behavior: 'auto' });
     }
 
+    const RANGE = /^(.+?) ([A-ZÄÖÜ](?:–[A-ZÄÖÜ])?)$/;
+    const RULE_GROUPS = { 'magic-items': 'Regeln für magische Gegenstände' };
+    const LABELS = {
+        'magic-items.intro': 'Überblick',
+        'magic-items.az-intro': 'Hinweise zum Katalog',
+        'equipment.magic-items': 'Magische Gegenstände (Grundlagen)',
+        'monsters.stat-block-overview': 'Übersicht: Wertekästen',
+    };
+
+    function tocEntries(section) {
+        const items = [];
+        const catalogPrefixes = new Set();
+        section.documents.forEach((entry) => {
+            const match = RANGE.exec(entry.title);
+            if (match && entry.title !== `${match[1]} A–Z`) catalogPrefixes.add(match[1]);
+        });
+        section.documents.forEach((entry) => {
+            const family = entry.documentId.split('.')[0];
+            const match = RANGE.exec(entry.title);
+            let group = null;
+            let label = LABELS[entry.documentId] || entry.title;
+            if (match && catalogPrefixes.has(match[1]) && entry.title !== `${match[1]} A–Z`) {
+                group = `${match[1]} A–Z`;
+                label = match[2];
+            } else if (entry.documentId === 'magic-items.az-intro') {
+                group = 'Magische Gegenstände A–Z';
+            } else if (RULE_GROUPS[family] && entry.documentId !== `${family}.intro`) {
+                group = RULE_GROUPS[family];
+            }
+            items.push({ entry, group, label });
+        });
+        return items;
+    }
+
+    function pageRange(pages) {
+        const sorted = [...pages].sort((a, b) => a - b);
+        if (!sorted.length) return 'Seiten unbekannt';
+        if (sorted.length === 1) return `Seite ${sorted[0]}`;
+        const consecutive = sorted.every((page, index) => index === 0 || page - sorted[index - 1] === 1);
+        return consecutive ? `Seiten ${sorted[0]}–${sorted[sorted.length - 1]}` : `Seiten ${sorted.join(', ')}`;
+    }
+
     function renderToc(data) {
         clear(toc);
         toc.appendChild(element('p', 'regelwerk-toc-heading', 'Inhaltsverzeichnis'));
+        const current = selectedDocument();
+        const link = (item) => {
+            const anchor = element('a', '', item.label);
+            anchor.href = item.entry.url;
+            if (current && current.documentId === item.entry.documentId) anchor.setAttribute('aria-current', 'page');
+            return anchor;
+        };
         data.sections.forEach((section) => {
             toc.appendChild(element('p', 'regelwerk-toc-section', section.title));
-            section.documents.forEach((documentEntry) => {
-                const link = element('a', '', documentEntry.title);
-                link.href = documentEntry.url;
-                toc.appendChild(link);
+            const groups = new Map();
+            tocEntries(section).forEach((item) => {
+                if (!item.group) { toc.appendChild(link(item)); return; }
+                if (!groups.has(item.group)) {
+                    const details = element('details', 'regelwerk-toc-group');
+                    details.appendChild(element('summary', '', item.group));
+                    groups.set(item.group, details);
+                    toc.appendChild(details);
+                }
+                const details = groups.get(item.group);
+                const anchor = link(item);
+                if (anchor.getAttribute('aria-current')) details.open = true;
+                details.appendChild(anchor);
             });
         });
         const license = element('a', '', 'Quelle & Lizenz');
@@ -150,12 +208,17 @@
         if (!entry) throw new Error('Noch kein Regelkapitel verfügbar.');
         const documentData = await getJson(`${API_ROOT}/documents/${encodeURIComponent(entry.documentId)}`);
         clear(article);
-        const breadcrumbs = element('p', 'regelwerk-breadcrumbs', documentData.navigationPath.join(' › '));
+        const trail = [documentData.navigationPath[0]];
+        const sectionEntry = navigation.sections.find((section) => section.title === trail[0]);
+        const item = sectionEntry && tocEntries(sectionEntry).find((candidate) => candidate.entry.documentId === entry.documentId);
+        if (item && item.group) trail.push(item.group);
+        trail.push(item ? item.label : documentData.title);
+        const breadcrumbs = element('p', 'regelwerk-breadcrumbs', trail.join(' › '));
         article.appendChild(breadcrumbs);
         article.appendChild(element(
             'p',
             'regelwerk-document-meta',
-            `SRD 5.2.1 · Seiten ${documentData.sourcePages.join('–')} · ${navigation.status === 'preview' ? 'Vorschau' : navigation.status}`,
+            `SRD 5.2.1 · ${pageRange(documentData.sourcePages)} · ${navigation.status === 'preview' ? 'Vorschau' : navigation.status}`,
         ));
         documentData.blocks.forEach((block) => article.appendChild(renderBlock(block)));
         article.setAttribute('aria-busy', 'false');
