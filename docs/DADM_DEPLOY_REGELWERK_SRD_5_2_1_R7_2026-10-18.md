@@ -39,3 +39,19 @@ production. The VTT itself is pre-alpha. Deploys here are reversible tests, not 
 - Final legal/fidelity audit and rollback rehearsal.
 - Preview label removal and `published` status only after the owner signs off.
 - Commit `7bfe069` is local; not pushed.
+
+## Update: publication (2026-10-18, owner sign-off)
+
+The human owner named themself acceptance owner, accepted the preview ("fast perfekt"), requested
+Roll Drauf violet headings, and authorized publishing the whole Regelwerk without slices.
+
+- Headings and accent now `#4b235a` (Roll Drauf violet) in `regelwerk.css`.
+- Package `srd-5.2.1-de` is `published`, version `1.0.0`, `publishedAt` 2026-10-18T12:00:00Z; immutable from now on
+  (changes need a new version).
+- `vtt/rules.py`: a published package is always served; `REGELWERK_PREVIEW` only gates unpublished packages.
+  Preview badge/note and the "Vorschau" nav suffix show only while status is `preview`.
+- Image `roll-drauf-vtt-app:regelwerk-72e3177` (commit `72e3177`); compose no longer sets `REGELWERK_PREVIEW`.
+- Verified locally and at https://vtt.roll-drauf.de: reader, license, document, search, main API (`published`), CSS accent.
+- Tests: 40 pass (package + routes). Rollback: previous image `regelwerk-7bfe069` / `bugfix-20261007`
+  and `production.compose.json.bak-pre-regelwerk-20261018`.
+- Still open: browser-level checks by the owner on device; rollback rehearsal not run; commits not pushed.
