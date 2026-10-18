@@ -101,14 +101,14 @@ def test_r0_source_and_attribution_are_pinned():
     assert hashlib.sha256((PACKAGE_ROOT / "attribution.txt").read_bytes()).hexdigest() == ATTRIBUTION_SHA256
 
 
-def test_live_preview_package_distinguishes_provenance_from_reviewed_coverage():
-    """Live-package snapshot: update the represented/covered expectations whenever
+def test_live_package_distinguishes_provenance_from_reviewed_coverage():
+    """Published live-package snapshot: update the represented/covered expectations whenever
     R2+ transcription adds or reviews another document; the identity, provenance-
     vs-reviewed distinction, and incompleteness this guards stay the same."""
     report = validate_package(PACKAGE_ROOT)
     assert report.ruleset_id == "srd-5.2.1-de"
-    assert report.ruleset_version == "0.1.0-r1"
-    assert report.status == "preview"
+    assert report.ruleset_version == "1.0.0"
+    assert report.status == "published"
     assert report.document_count == 101
     assert report.attribution_sha256 == ATTRIBUTION_SHA256
     assert report.coverage.required_pages == tuple(range(5, 413))

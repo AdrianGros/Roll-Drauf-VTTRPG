@@ -26,7 +26,7 @@
             node.hidden = false;
             node.href = state.readerUrl || '/regelwerk';
             node.setAttribute('aria-disabled', 'false');
-            node.textContent = 'Regelwerk · Vorschau';
+            node.textContent = state.status === 'preview' ? 'Regelwerk · Vorschau' : 'Regelwerk';
         });
         return Boolean(state.available);
     }

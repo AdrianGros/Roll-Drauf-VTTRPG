@@ -229,6 +229,11 @@
     async function init() {
         try {
             navigation = await getJson(`${API_ROOT}/manifest`);
+            const isPreview = navigation.status === 'preview';
+            ['regelwerkPreviewBadge', 'regelwerkPreviewNote'].forEach((id) => {
+                const node = document.getElementById(id);
+                if (node) node.hidden = !isPreview;
+            });
             renderToc(navigation);
             await renderRoute();
         } catch (error) {

@@ -1,4 +1,4 @@
-"""Public, read-only Regelwerk preview routes."""
+"""Public, read-only Regelwerk routes (published package, or preview behind a flag)."""
 
 from __future__ import annotations
 
@@ -20,7 +20,13 @@ _SOURCE_VERSION = "5.2.1"
 _ROUTE_LOCALE = "de"
 
 
+def _package_status() -> str:
+    return _load_json(_PACKAGE / "manifest.json")["status"]
+
+
 def _enabled() -> bool:
+    if _package_status() == "published":
+        return True
     return bool(current_app.config.get("REGELWERK_PREVIEW", False))
 
 

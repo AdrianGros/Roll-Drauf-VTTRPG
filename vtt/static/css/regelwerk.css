@@ -1,7 +1,7 @@
 :root {
     --regelwerk-ink: #2f241c;
     --regelwerk-muted: #6f6257;
-    --regelwerk-accent: #8e2c24;
+    --regelwerk-accent: #4b235a;
     --regelwerk-gold: #b68a3a;
     --regelwerk-paper: #f7f0df;
     --regelwerk-paper-deep: #eadfc5;
@@ -9,6 +9,8 @@
 }
 
 * { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
 
 body.regelwerk-page {
     min-height: 100vh;
@@ -165,7 +167,7 @@ body.regelwerk-page {
 .regelwerk-toc a {
     display: block;
     padding: 0.55rem 0;
-    color: #54231d;
+    color: #4b235a;
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.16em;
 }
@@ -203,7 +205,7 @@ body.regelwerk-page {
     border-top: 1px solid var(--regelwerk-border);
 }
 
-.regelwerk-sidebar-actions a { color: #54231d; }
+.regelwerk-sidebar-actions a { color: #4b235a; }
 
 .regelwerk-article {
     min-height: 60vh;

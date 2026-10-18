@@ -16,7 +16,7 @@
             <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
             <a class="book-dashboard-ribbon-btn" href="/campaigns">Kampagnen</a>
             <a class="book-dashboard-ribbon-btn" href="/characters">Charaktere</a>
-            <a class="book-dashboard-ribbon-btn is-active" href="/regelwerk" aria-current="page">Regelwerk · Vorschau</a>
+            <a class="book-dashboard-ribbon-btn is-active" href="/regelwerk" aria-current="page" data-regelwerk-nav-label>Regelwerk</a>
             <a class="book-dashboard-ribbon-btn" href="/login.html">Anmelden</a>
         </nav>
         <div class="regelwerk-titlebar">
@@ -24,9 +24,9 @@
                 <p class="regelwerk-kicker">Roll Drauf VTT</p>
                 <h1>Regelwerk</h1>
             </div>
-            <span class="regelwerk-preview-badge">Vorschau</span>
+            <span class="regelwerk-preview-badge" id="regelwerkPreviewBadge" hidden>Vorschau</span>
         </div>
-        <p class="regelwerk-preview-note" role="note">
+        <p class="regelwerk-preview-note" id="regelwerkPreviewNote" role="note" hidden>
             Diese Vorschau enthält erst einen geprüften Ausschnitt des deutschen SRD 5.2.1.
             Fehlende Kapitel werden schrittweise ergänzt.
         </p>

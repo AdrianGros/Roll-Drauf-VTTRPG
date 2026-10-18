@@ -31,6 +31,12 @@ def client(app):
     return app.test_client()
 
 
+@pytest.fixture
+def preview_package(monkeypatch):
+    """Treat the package as an unpublished preview so the flag gates access."""
+    monkeypatch.setattr("vtt.rules._package_status", lambda: "preview")
+
+
 def _enable(app):
     app.config["REGELWERK_PREVIEW"] = True
 
@@ -52,7 +58,7 @@ def test_preview_flag_defaults_off(app):
         f"/regelwerk/{SOURCE_VERSION}/{LOCALE}/{KNOWN_SLUG}",
     ],
 )
-def test_reader_pages_404_when_disabled(client, path):
+def test_reader_pages_404_when_disabled(preview_package, client, path):
     response = client.get(path)
     assert response.status_code == 404
 
@@ -66,12 +72,12 @@ def test_reader_pages_404_when_disabled(client, path):
         "/api/rulesets/srd-5.2.1-de/license",
     ],
 )
-def test_ruleset_api_404s_when_disabled(client, path):
+def test_ruleset_api_404s_when_disabled(preview_package, client, path):
     response = client.get(path)
     assert response.status_code == 404
 
 
-def test_main_ruleset_api_reports_unavailable_when_disabled(client):
+def test_main_ruleset_api_reports_unavailable_when_disabled(preview_package, client):
     response = client.get("/api/rulesets/main")
     assert response.status_code == 200
     assert response.get_json() == {"available": False}
@@ -86,7 +92,13 @@ def test_reader_home_serves_anonymously_when_enabled(app, client):
     _enable(app)
     response = client.get("/regelwerk")
     assert response.status_code == 200
-    assert b"Vorschau" in response.data
+    assert b"regelwerkPreviewBadge" in response.data
+
+
+def test_published_package_is_served_without_flag(client):
+    assert client.get("/regelwerk").status_code == 200
+    assert client.get("/api/rulesets/main").get_json()["available"] is True
+    assert client.get("/api/rulesets/main").get_json()["status"] == "published"
 
 
 def test_reader_license_page_serves_when_enabled(app, client):
