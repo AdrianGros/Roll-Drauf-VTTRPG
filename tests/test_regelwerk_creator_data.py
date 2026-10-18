@@ -246,3 +246,45 @@ def test_languages_alignments_equipment(data):
     longsword = next(w for w in data["equipment"]["weapons"] if w["name"] == "Langschwert")
     assert longsword["damage"] == {"dice": 1, "sides": 8, "flat": 0, "type": "slashing"}
     assert any(p.get("versatile") == {"dice": 1, "sides": 10} for p in longsword["properties"])
+
+
+def test_warlock_pact_slots_follow_printed_example_not_swapped_headers(data):
+    warlock = next(c for c in data["classes"] if c["classKey"] == "warlock")["spellcasting"]
+    rows = {row["level"]: (row["slots"], row["slotGrade"]) for row in warlock["levels"]}
+    assert rows[1] == (1, 1) and rows[2] == (2, 1) and rows[5] == (2, 3) and rows[11] == (3, 5) and rows[17] == (4, 5)
+    note = warlock["sourceNotes"][0]
+    assert note["kind"] == "source-defect" and note["evidence"]["quote"] == "hast du zwei Zauberplätze des 3. Grades"
+
+
+def test_modifier_tables_reference_known_classes_feats_and_species(data):
+    classes = {c["classKey"] for c in data["classes"]}
+    feat_ids = {f["id"] for f in data["feats"]}
+    species_ids = {s["id"] for s in data["species"]}
+    assert {f["id"] for f in data["armorClassFormulas"]} == {"barbarian-unarmored-defense", "monk-unarmored-defense", "draconic-resilience-scales"}
+    assert all(f["classKey"] in classes and f["source"]["quote"] for f in data["armorClassFormulas"])
+    assert {b["featId"] for b in data["armorClassBonuses"]} <= feat_ids
+    assert {b["featId"] for b in data["initiativeBonuses"]} <= feat_ids
+    assert {b["speciesId"] for b in data["hitPointBonuses"] if b["origin"] == "species"} <= species_ids
+    assert {b["classKey"] for b in data["speedBonuses"]} == {"barbarian", "monk"}
+    monk_columns = next(c for c in data["classes"] if c["classKey"] == "monk")["levels"][4]["columns"]
+    assert monk_columns["Ungerüstete Bewegung"] == "+3 m"
+
+
+def test_spell_lists_reference_known_spells(data, compendium):
+    entities = {e["id"]: e for e in compendium["entities"] if e["type"] == "spell"}
+    assert set(data["spells"]) == set(entities)
+    for key, ids in data["spellLists"].items():
+        assert set(ids) <= set(entities), key
+    assert all(data["spells"][sid]["level"] == entities[sid]["level"] for sid in data["spells"])
+
+
+def test_all_skill_references_are_valid_skill_ids(data):
+    skills = {s["id"] for s in data["skills"]}
+    for entry in data["classes"]:
+        assert set(entry["skillChoices"]["options"] or skills) <= skills
+    for background in data["backgrounds"]:
+        assert set(background["skills"]) <= skills
+    for species in data["species"]:
+        for choice in species["choices"]:
+            if choice["kind"] == "skill":
+                assert set(choice["options"] or skills) <= skills, choice

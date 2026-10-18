@@ -739,8 +739,8 @@ def _spellcasting(src: Source, class_key: str, progression: list[dict]) -> dict 
         extras = row["extras"]
         entry = {"level": row["level"], "cantrips": _num(extras.get("Zaubertricks")), "prepared": _num(extras.get("Vorbereitete Zauber"))}
         if pact:
-            entry["slotGrade"] = _num(extras.get("Grad der Zauberplätze"))
-            entry["slots"] = _num(extras.get("Zauberplätze"))
+            entry["slots"] = _num(extras.get("Grad der Zauberplätze"))
+            entry["slotGrade"] = _num(extras.get("Zauberplätze"))
         else:
             entry["slots"] = [_num(extras.get(f"Grad {grade}")) for grade in range(1, 10 if kind == "full" else 6)]
         levels.append(entry)
@@ -759,6 +759,16 @@ def _spellcasting(src: Source, class_key: str, progression: list[dict]) -> dict 
         "ritualCasting": class_key in {"bard", "cleric", "druid", "wizard"},
         "focus": prefix + "focus" in src.blocks,
     }
+    if pact:
+        fifth = next(row for row in levels if row["level"] == 5)
+        if (fifth["slots"], fifth["slotGrade"]) != (2, 3):
+            raise ValueError("warlock pact slots do not match the printed example (level 5: two slots of grade 3)")
+        result["sourceNotes"] = [{
+            "kind": "source-defect",
+            "printedText": src.ref(prefix + "slots", "zeigt, wie viele Zauberplätze dir"),
+            "evidence": src.ref(prefix + "slots-example", "hast du zwei Zauberplätze des 3. Grades"),
+            "resolution": "Die Spaltenköpfe „Grad der Zauberplätze“ und „Zauberplätze“ der Tabelle „Hexenmeistermerkmale“ sind vertauscht: Die Werte unter „Grad der Zauberplätze“ sind die Anzahl der Plätze, die Werte unter „Zauberplätze“ der Grad. Maßgeblich ist das gedruckte Beispiel (Stufe 5: zwei Plätze des 3. Grades).",
+        }]
     if class_key == "wizard":
         result["spellbook"] = {
             "startingSpells": 6,
@@ -894,7 +904,7 @@ def _species(src: Source, entities: list[dict], spells: Spells) -> list[dict]:
             })
             if key == "elf":
                 entry["choices"].append({
-                    "id": "keen-senses", "kind": "skill", "options": ["motiv-erkennen", "uberlebenskunst", "wahrnehmung"],
+                    "id": "keen-senses", "kind": "skill", "options": [_slug(n) for n in ("Motiv erkennen", "Überlebenskunst", "Wahrnehmung")],
                     "source": src.ref(prefix + "elf-keen-senses", "Motiv erkennen, Überlebenskunst oder Wahrnehmung"),
                 })
             else:
@@ -1061,6 +1071,81 @@ def _languages_alignments_trinkets(src: Source) -> dict:
     return {"languages": languages, "alignments": alignments, "trinkets": trinkets}
 
 
+def _modifiers(src: Source, classes: list[dict]) -> dict:
+    barbarian = next(c for c in classes if c["classKey"] == "barbarian")
+    monk = next(c for c in classes if c["classKey"] == "monk")
+    sorcerer = next(c for c in classes if c["classKey"] == "sorcerer")
+    if not any("Ungerüstete Bewegung" in row["columns"] for row in monk["levels"]):
+        raise ValueError("monk table lacks the unarmored movement column")
+    return {
+        "armorClassFormulas": [
+            {
+                "id": "barbarian-unarmored-defense", "classKey": "barbarian", "minClassLevel": 1, "subclass": None,
+                "base": 10, "abilities": ["dex", "con"], "armor": "none", "shield": "allowed",
+                "source": src.ref("classes.barbarian.level1-unarmored-defense-description", "10 plus deinem Geschicklichkeitsmodifikator plus deinem Konstitutionsmodifikator"),
+            },
+            {
+                "id": "monk-unarmored-defense", "classKey": "monk", "minClassLevel": 1, "subclass": None,
+                "base": 10, "abilities": ["dex", "wis"], "armor": "none", "shield": "forbidden",
+                "source": src.ref("classes.monk.level1-unarmored-defense-description", "weder Rüstung noch Schild"),
+            },
+            {
+                "id": "draconic-resilience-scales", "classKey": "sorcerer", "minClassLevel": 3, "subclass": sorcerer["subclasses"][0],
+                "base": 10, "abilities": ["dex", "cha"], "armor": "none", "shield": "allowed",
+                "source": src.ref("classes.sorcerer.subclass-level3-draconic-resilience-scales", "10 plus deinem Geschicklichkeits- plus deinem Charismamodifikator"),
+            },
+        ],
+        "armorClassBonuses": [
+            {
+                "id": "defense-fighting-style", "featId": "feats.descriptions.defense", "bonus": 1, "requiresArmor": True,
+                "source": src.ref("feats.descriptions.defense-description", "Bonus von +1 auf die Rüstungsklasse"),
+            }
+        ],
+        "hitPointBonuses": [
+            {
+                "id": "dwarven-toughness", "origin": "species", "speciesId": "character-origins.species.dwarf",
+                "perCharacterLevel": 1,
+                "source": src.ref("character-origins.species.dwarf-dwarven-toughness", "um 1 und bei jedem Stufenaufstieg um 1 weiteren Punkt"),
+            },
+            {
+                "id": "draconic-resilience-hp", "origin": "subclass", "subclass": sorcerer["subclasses"][0], "classKey": "sorcerer",
+                "minClassLevel": 3, "flat": 3, "perClassLevelAbove": 1,
+                "source": src.ref("classes.sorcerer.subclass-level3-draconic-resilience-description", "um 3 Punkte und auf jeder höheren Zaubererstufe um 1 weiteren Punkt"),
+            },
+        ],
+        "speedBonuses": [
+            {
+                "id": "barbarian-fast-movement", "classKey": "barbarian", "minClassLevel": 5, "meters": 3, "unless": ["heavy"],
+                "source": src.ref("classes.barbarian.level5-fast-movement-description", "Bewegungsrate erhöht sich um drei Meter, sofern du keine schwere Rüstung trägst"),
+            },
+            {
+                "id": "monk-unarmored-movement", "classKey": "monk", "minClassLevel": 2, "column": "Ungerüstete Bewegung",
+                "armor": "none", "shield": "forbidden",
+                "source": src.ref("classes.monk.level2-unarmored-movement-description", "sofern du weder Rüstung noch Schild trägst"),
+            },
+        ],
+        "initiativeBonuses": [
+            {
+                "id": "alert-initiative", "featId": "feats.descriptions.alert", "bonus": "proficiencyBonus",
+                "source": src.ref("feats.descriptions.alert-initiative-proficiency", "kannst du dem Ergebnis deinen Übungsbonus hinzufügen"),
+            }
+        ],
+    }
+
+
+def _spell_lists(entities: list[dict], classes: list[dict]) -> dict:
+    key_by_name = {entry["name"]: entry["classKey"] for entry in classes}
+    spells = [e for e in entities if e["type"] == "spell"]
+    lists: dict[str, list[str]] = {key: [] for key in key_by_name.values()}
+    for spell in sorted(spells, key=lambda e: e["id"]):
+        for name in spell["classes"]:
+            lists[key_by_name[name]].append(spell["id"])
+    return {
+        "spells": {s["id"]: {"level": s["level"], "ritual": bool(s["ritual"]), "name": s["name"]} for s in sorted(spells, key=lambda e: e["id"])},
+        "spellLists": lists,
+    }
+
+
 def build_creator_data(manifest: dict, documents: list[dict], compendium: dict, errors: list[str] | None = None) -> dict:
     src = Source(documents, errors)
     entities = compendium["entities"]
@@ -1089,6 +1174,8 @@ def build_creator_data(manifest: dict, documents: list[dict], compendium: dict, 
         "multiclass": _multiclass(src),
         "startingEquipmentByLevel": _starting_levels(src),
         "classes": classes,
+        **_modifiers(src, classes),
+        **_spell_lists(entities, classes),
         "classOptions": _class_options(entities),
         "species": _species(src, entities, spells),
         "backgrounds": _backgrounds(entities, items),

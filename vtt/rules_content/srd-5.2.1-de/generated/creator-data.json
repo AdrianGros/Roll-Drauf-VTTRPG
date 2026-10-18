@@ -162,6 +162,71 @@
       "name": "Chaotisch böse"
     }
   ],
+  "armorClassBonuses": [
+    {
+      "bonus": 1,
+      "featId": "feats.descriptions.defense",
+      "id": "defense-fighting-style",
+      "requiresArmor": true,
+      "source": {
+        "quote": "Bonus von +1 auf die Rüstungsklasse",
+        "ruleId": "feats.descriptions.defense-description"
+      }
+    }
+  ],
+  "armorClassFormulas": [
+    {
+      "abilities": [
+        "dex",
+        "con"
+      ],
+      "armor": "none",
+      "base": 10,
+      "classKey": "barbarian",
+      "id": "barbarian-unarmored-defense",
+      "minClassLevel": 1,
+      "shield": "allowed",
+      "source": {
+        "quote": "10 plus deinem Geschicklichkeitsmodifikator plus deinem Konstitutionsmodifikator",
+        "ruleId": "classes.barbarian.level1-unarmored-defense-description"
+      },
+      "subclass": null
+    },
+    {
+      "abilities": [
+        "dex",
+        "wis"
+      ],
+      "armor": "none",
+      "base": 10,
+      "classKey": "monk",
+      "id": "monk-unarmored-defense",
+      "minClassLevel": 1,
+      "shield": "forbidden",
+      "source": {
+        "quote": "weder Rüstung noch Schild",
+        "ruleId": "classes.monk.level1-unarmored-defense-description"
+      },
+      "subclass": null
+    },
+    {
+      "abilities": [
+        "dex",
+        "cha"
+      ],
+      "armor": "none",
+      "base": 10,
+      "classKey": "sorcerer",
+      "id": "draconic-resilience-scales",
+      "minClassLevel": 3,
+      "shield": "allowed",
+      "source": {
+        "quote": "10 plus deinem Geschicklichkeits- plus deinem Charismamodifikator",
+        "ruleId": "classes.sorcerer.subclass-level3-draconic-resilience-scales"
+      },
+      "subclass": "classes.sorcerer.subclass-draconic"
+    }
+  ],
   "backgrounds": [
     {
       "abilities": [
@@ -3549,8 +3614,8 @@
             "cantrips": 2,
             "level": 2,
             "prepared": 3,
-            "slotGrade": 2,
-            "slots": 1
+            "slotGrade": 1,
+            "slots": 2
           },
           {
             "cantrips": 2,
@@ -3570,113 +3635,113 @@
             "cantrips": 3,
             "level": 5,
             "prepared": 6,
-            "slotGrade": 2,
-            "slots": 3
+            "slotGrade": 3,
+            "slots": 2
           },
           {
             "cantrips": 3,
             "level": 6,
             "prepared": 7,
-            "slotGrade": 2,
-            "slots": 3
+            "slotGrade": 3,
+            "slots": 2
           },
           {
             "cantrips": 3,
             "level": 7,
             "prepared": 8,
-            "slotGrade": 2,
-            "slots": 4
+            "slotGrade": 4,
+            "slots": 2
           },
           {
             "cantrips": 3,
             "level": 8,
             "prepared": 9,
-            "slotGrade": 2,
-            "slots": 4
+            "slotGrade": 4,
+            "slots": 2
           },
           {
             "cantrips": 3,
             "level": 9,
             "prepared": 10,
-            "slotGrade": 2,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 2
           },
           {
             "cantrips": 4,
             "level": 10,
             "prepared": 10,
-            "slotGrade": 2,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 2
           },
           {
             "cantrips": 4,
             "level": 11,
             "prepared": 11,
-            "slotGrade": 3,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 3
           },
           {
             "cantrips": 4,
             "level": 12,
             "prepared": 11,
-            "slotGrade": 3,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 3
           },
           {
             "cantrips": 4,
             "level": 13,
             "prepared": 12,
-            "slotGrade": 3,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 3
           },
           {
             "cantrips": 4,
             "level": 14,
             "prepared": 12,
-            "slotGrade": 3,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 3
           },
           {
             "cantrips": 4,
             "level": 15,
             "prepared": 13,
-            "slotGrade": 3,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 3
           },
           {
             "cantrips": 4,
             "level": 16,
             "prepared": 13,
-            "slotGrade": 3,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 3
           },
           {
             "cantrips": 4,
             "level": 17,
             "prepared": 14,
-            "slotGrade": 4,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 4
           },
           {
             "cantrips": 4,
             "level": 18,
             "prepared": 14,
-            "slotGrade": 4,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 4
           },
           {
             "cantrips": 4,
             "level": 19,
             "prepared": 15,
-            "slotGrade": 4,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 4
           },
           {
             "cantrips": 4,
             "level": 20,
             "prepared": 15,
-            "slotGrade": 4,
-            "slots": 5
+            "slotGrade": 5,
+            "slots": 4
           }
         ],
         "preparation": {
@@ -3688,7 +3753,21 @@
           "swapAmount": "one",
           "swapWhen": "level-up"
         },
-        "ritualCasting": false
+        "ritualCasting": false,
+        "sourceNotes": [
+          {
+            "evidence": {
+              "quote": "hast du zwei Zauberplätze des 3. Grades",
+              "ruleId": "classes.warlock.level1-pact-magic-slots-example"
+            },
+            "kind": "source-defect",
+            "printedText": {
+              "quote": "zeigt, wie viele Zauberplätze dir",
+              "ruleId": "classes.warlock.level1-pact-magic-slots"
+            },
+            "resolution": "Die Spaltenköpfe „Grad der Zauberplätze“ und „Zauberplätze“ der Tabelle „Hexenmeistermerkmale“ sind vertauscht: Die Werte unter „Grad der Zauberplätze“ sind die Anzahl der Plätze, die Werte unter „Zauberplätze“ der Grad. Maßgeblich ist das gedruckte Beispiel (Stufe 5: zwei Plätze des 3. Grades)."
+          }
+        ]
       },
       "standardAbilityScores": {
         "cha": 15,
@@ -12793,6 +12872,31 @@
       "ruleId": "character-creation.abilities-alignment-and-details.spellcasting-formulas"
     }
   },
+  "hitPointBonuses": [
+    {
+      "id": "dwarven-toughness",
+      "origin": "species",
+      "perCharacterLevel": 1,
+      "source": {
+        "quote": "um 1 und bei jedem Stufenaufstieg um 1 weiteren Punkt",
+        "ruleId": "character-origins.species.dwarf-dwarven-toughness"
+      },
+      "speciesId": "character-origins.species.dwarf"
+    },
+    {
+      "classKey": "sorcerer",
+      "flat": 3,
+      "id": "draconic-resilience-hp",
+      "minClassLevel": 3,
+      "origin": "subclass",
+      "perClassLevelAbove": 1,
+      "source": {
+        "quote": "um 3 Punkte und auf jeder höheren Zaubererstufe um 1 weiteren Punkt",
+        "ruleId": "classes.sorcerer.subclass-level3-draconic-resilience-description"
+      },
+      "subclass": "classes.sorcerer.subclass-draconic"
+    }
+  ],
   "hitPoints": {
     "level1": {
       "formula": "hitDie + conModifier",
@@ -12842,6 +12946,17 @@
       "source": "character-creation.advancement-and-multiclassing.fixed-hit-points-table"
     }
   },
+  "initiativeBonuses": [
+    {
+      "bonus": "proficiencyBonus",
+      "featId": "feats.descriptions.alert",
+      "id": "alert-initiative",
+      "source": {
+        "quote": "kannst du dem Ergebnis deinen Übungsbonus hinzufügen",
+        "ruleId": "feats.descriptions.alert-initiative-proficiency"
+      }
+    }
+  ],
   "languages": [
     {
       "automatic": true,
@@ -13630,7 +13745,7 @@
           "kind": "skill",
           "options": [
             "motiv-erkennen",
-            "uberlebenskunst",
+            "ueberlebenskunst",
             "wahrnehmung"
           ],
           "source": {
@@ -14006,6 +14121,2631 @@
       ]
     }
   ],
+  "speedBonuses": [
+    {
+      "classKey": "barbarian",
+      "id": "barbarian-fast-movement",
+      "meters": 3,
+      "minClassLevel": 5,
+      "source": {
+        "quote": "Bewegungsrate erhöht sich um drei Meter, sofern du keine schwere Rüstung trägst",
+        "ruleId": "classes.barbarian.level5-fast-movement-description"
+      },
+      "unless": [
+        "heavy"
+      ]
+    },
+    {
+      "armor": "none",
+      "classKey": "monk",
+      "column": "Ungerüstete Bewegung",
+      "id": "monk-unarmored-movement",
+      "minClassLevel": 2,
+      "shield": "forbidden",
+      "source": {
+        "quote": "sofern du weder Rüstung noch Schild trägst",
+        "ruleId": "classes.monk.level2-unarmored-movement-description"
+      }
+    }
+  ],
+  "spellLists": {
+    "barbarian": [],
+    "bard": [
+      "spells.a-b.ablenkung",
+      "spells.a-b.aetherische-gestalten",
+      "spells.a-b.aeusserlichkeiten",
+      "spells.a-b.antipathie-sympathie",
+      "spells.a-b.arkane-spiegelung",
+      "spells.a-b.arkanes-schwert",
+      "spells.a-b.attribut-verbessern",
+      "spells.a-b.auferstehung",
+      "spells.a-b.ausbessern",
+      "spells.a-b.ausspaehung",
+      "spells.a-b.befehl",
+      "spells.a-b.beistand",
+      "spells.a-b.bewegungsfreiheit",
+      "spells.a-b.bindung-der-ebenen",
+      "spells.a-b.blindheit-taubheit",
+      "spells.a-b.boeser-blick",
+      "spells.a-b.botschaft",
+      "spells.c-e.dimensionstuer",
+      "spells.c-e.dissonantes-fluestern",
+      "spells.c-e.donnerwoge",
+      "spells.c-e.einfache-illusion",
+      "spells.c-e.einfluesterung",
+      "spells.c-e.energiekaefig",
+      "spells.c-e.erinnerung-veraendern",
+      "spells.c-e.erwecken",
+      "spells.f-g.federfall",
+      "spells.f-g.feenfeuer",
+      "spells.f-g.fesseln",
+      "spells.f-g.fluch",
+      "spells.f-g.fuerchterlicher-lachanfall",
+      "spells.f-g.furcht",
+      "spells.f-g.geas",
+      "spells.f-g.gedanken-wahrnehmen",
+      "spells.f-g.gedankenleere",
+      "spells.f-g.gefuehle-besaenftigen",
+      "spells.f-g.gegenstaende-beleben",
+      "spells.f-g.gegenstand-aufspueren",
+      "spells.f-g.gehaessiger-spott",
+      "spells.f-g.glyphe-des-schutzes",
+      "spells.h-l.heilendes-wort",
+      "spells.h-l.heldenmahl",
+      "spells.h-l.heldenmut",
+      "spells.h-l.hellsehen",
+      "spells.h-l.herrliches-herrenhaus",
+      "spells.h-l.hypnotisches-muster",
+      "spells.h-l.identifizieren",
+      "spells.h-l.illusionsschrift",
+      "spells.h-l.klopfen",
+      "spells.h-l.kreatur-aufspueren",
+      "spells.h-l.kreis-der-teleportation",
+      "spells.h-l.lange-schritte",
+      "spells.h-l.lautloses-trugbild",
+      "spells.h-l.leicht",
+      "spells.m-p.macht-der-vorstellungskraft",
+      "spells.m-p.maechtige-unsichtbarkeit",
+      "spells.m-p.maechtiges-trugbild",
+      "spells.m-p.magie-bannen",
+      "spells.m-p.magie-entdecken",
+      "spells.m-p.magierhand",
+      "spells.m-p.magischer-mund",
+      "spells.m-p.massen-einfluesterung",
+      "spells.m-p.massen-heilendes-wort",
+      "spells.m-p.massen-wunden-heilen",
+      "spells.m-p.metall-erhitzen",
+      "spells.m-p.mit-pflanzen-sprechen",
+      "spells.m-p.mit-tieren-sprechen",
+      "spells.m-p.mit-toten-sprechen",
+      "spells.m-p.monster-beherrschen",
+      "spells.m-p.monster-bezaubern",
+      "spells.m-p.monster-festhalten",
+      "spells.m-p.person-beherrschen",
+      "spells.m-p.person-bezaubern",
+      "spells.m-p.person-festhalten",
+      "spells.m-p.pflanzenwachstum",
+      "spells.r-s.redegewandtheit",
+      "spells.r-s.regenbogenspiel",
+      "spells.r-s.regenbogenwand",
+      "spells.r-s.regeneration",
+      "spells.r-s.sagenkunde",
+      "spells.r-s.scheingelaende",
+      "spells.r-s.schlaf",
+      "spells.r-s.schwache-genesung",
+      "spells.r-s.selbstverkleidung",
+      "spells.r-s.spiegelbilder",
+      "spells.r-s.sprachen-verstehen",
+      "spells.r-s.spruehende-farben",
+      "spells.r-s.sternenfunke",
+      "spells.r-s.stille",
+      "spells.r-s.stinkende-wolke",
+      "spells.r-s.symbol",
+      "spells.t-v.tanzende-lichter",
+      "spells.t-v.taschenspielerei",
+      "spells.t-v.telepathische-bindung",
+      "spells.t-v.teleportieren",
+      "spells.t-v.tierbote",
+      "spells.t-v.tiere-oder-pflanzen-aufspueren",
+      "spells.t-v.tierfreundschaft",
+      "spells.t-v.toedliches-phantom",
+      "spells.t-v.tote-erwecken",
+      "spells.t-v.traum",
+      "spells.t-v.trugbild-projizieren",
+      "spells.t-v.unauffindbarkeit",
+      "spells.t-v.unsichtbarer-diener",
+      "spells.t-v.unsichtbares-sehen",
+      "spells.t-v.unsichtbarkeit",
+      "spells.t-v.unwiderstehlicher-tanz",
+      "spells.t-v.verderben",
+      "spells.t-v.vergroessern-verkleinern",
+      "spells.t-v.verlangsamen",
+      "spells.t-v.verstaendigung",
+      "spells.t-v.verwandlung",
+      "spells.t-v.verwirrung",
+      "spells.t-v.vollstaendige-genesung",
+      "spells.t-v.voraussicht",
+      "spells.t-v.vorbestimmtes-trugbild",
+      "spells.w-z.waechter-und-hueter",
+      "spells.w-z.wahre-verwandlung",
+      "spells.w-z.wahrer-blick",
+      "spells.w-z.weg-finden",
+      "spells.w-z.winzige-huette",
+      "spells.w-z.wirrnis",
+      "spells.w-z.wort-der-macht-betaeubung",
+      "spells.w-z.wort-der-macht-heilung",
+      "spells.w-z.wort-der-macht-tod",
+      "spells.w-z.wunden-heilen",
+      "spells.w-z.zerbersten",
+      "spells.w-z.zielsicherer-schlag",
+      "spells.w-z.zone-der-wahrheit",
+      "spells.w-z.zungen",
+      "spells.w-z.zwang"
+    ],
+    "cleric": [
+      "spells.a-b.aetherische-gestalten",
+      "spells.a-b.ansteckung",
+      "spells.a-b.antimagisches-feld",
+      "spells.a-b.astrale-projektion",
+      "spells.a-b.attribut-verbessern",
+      "spells.a-b.auferstehung",
+      "spells.a-b.aura-des-lebens",
+      "spells.a-b.ausbessern",
+      "spells.a-b.ausspaehung",
+      "spells.a-b.befehl",
+      "spells.a-b.beistand",
+      "spells.a-b.bewegungsfreiheit",
+      "spells.a-b.bindung-der-ebenen",
+      "spells.a-b.blindheit-taubheit",
+      "spells.c-e.celestisches-wesen-beschwoeren",
+      "spells.c-e.dauerhafte-flamme",
+      "spells.c-e.ebenenwechsel",
+      "spells.c-e.erdbeben",
+      "spells.f-g.fallen-finden",
+      "spells.f-g.feuersturm",
+      "spells.f-g.flammenschlag",
+      "spells.f-g.fluch",
+      "spells.f-g.fluch-brechen",
+      "spells.f-g.geas",
+      "spells.f-g.gebet-der-heilung",
+      "spells.f-g.gefuehle-besaenftigen",
+      "spells.f-g.gegenstand-aufspueren",
+      "spells.f-g.gift-und-krankheit-entdecken",
+      "spells.f-g.glyphe-des-schutzes",
+      "spells.f-g.goettliche-fuehrung",
+      "spells.f-g.goettliches-wort",
+      "spells.f-g.gutes-und-boeses-bannen",
+      "spells.f-g.gutes-und-boeses-entdecken",
+      "spells.h-l.heilendes-wort",
+      "spells.h-l.heilige-aura",
+      "spells.h-l.heilige-flamme",
+      "spells.h-l.heiliges-gespraech",
+      "spells.h-l.heiligtum",
+      "spells.h-l.heilung",
+      "spells.h-l.heldenmahl",
+      "spells.h-l.hellsehen",
+      "spells.h-l.hueter-des-glaubens",
+      "spells.h-l.insektenplage",
+      "spells.h-l.klingenbarriere",
+      "spells.h-l.kreatur-aufspueren",
+      "spells.h-l.leicht",
+      "spells.h-l.leid",
+      "spells.h-l.lenkendes-geschoss",
+      "spells.h-l.leuchtfeuer-der-hoffnung",
+      "spells.m-p.magie-bannen",
+      "spells.m-p.magie-entdecken",
+      "spells.m-p.massen-heilendes-wort",
+      "spells.m-p.massen-heilung",
+      "spells.m-p.massen-wunden-heilen",
+      "spells.m-p.mit-stein-verschmelzen",
+      "spells.m-p.mit-toten-sprechen",
+      "spells.m-p.nahrung-und-wasser-erschaffen",
+      "spells.m-p.nahrung-und-wasser-reinigen",
+      "spells.m-p.person-festhalten",
+      "spells.r-s.regeneration",
+      "spells.r-s.sagenkunde",
+      "spells.r-s.sanfte-ruhe",
+      "spells.r-s.schild-des-glaubens",
+      "spells.r-s.schuetzendes-band",
+      "spells.r-s.schutz-vor-energie",
+      "spells.r-s.schutz-vor-gift",
+      "spells.r-s.schutz-vor-gut-und-boese",
+      "spells.r-s.schutzgeister",
+      "spells.r-s.schutzkreis",
+      "spells.r-s.schwache-genesung",
+      "spells.r-s.segnen",
+      "spells.r-s.sonnenfeuer",
+      "spells.r-s.sonnenstrahl",
+      "spells.r-s.stein-formen",
+      "spells.r-s.stille",
+      "spells.r-s.symbol",
+      "spells.t-v.tageslicht",
+      "spells.t-v.thaumaturgie",
+      "spells.t-v.todesschutz",
+      "spells.t-v.tor",
+      "spells.t-v.tote-beleben",
+      "spells.t-v.tote-erwecken",
+      "spells.t-v.untote-erschaffen",
+      "spells.t-v.verbannung",
+      "spells.t-v.verbuendeter-aus-den-ebenen",
+      "spells.t-v.verderben",
+      "spells.t-v.verschonung-der-sterbenden",
+      "spells.t-v.verstaendigung",
+      "spells.t-v.vollstaendige-genesung",
+      "spells.t-v.vorahnung",
+      "spells.w-z.waffe-des-glaubens",
+      "spells.w-z.wahre-auferstehung",
+      "spells.w-z.wahrer-blick",
+      "spells.w-z.wasser-erschaffen-oder-zerstoeren",
+      "spells.w-z.wasser-kontrollieren",
+      "spells.w-z.wasserwandeln",
+      "spells.w-z.weg-finden",
+      "spells.w-z.weihen",
+      "spells.w-z.weissagung",
+      "spells.w-z.wetterkontrolle",
+      "spells.w-z.widerstand",
+      "spells.w-z.wiederbeleben",
+      "spells.w-z.wort-der-macht-heilung",
+      "spells.w-z.wort-des-rueckrufs",
+      "spells.w-z.wunden-heilen",
+      "spells.w-z.wunden-verursachen",
+      "spells.w-z.zone-der-wahrheit",
+      "spells.w-z.zungen",
+      "spells.w-z.zutritt-verwehren"
+    ],
+    "druid": [
+      "spells.a-b.ansteckung",
+      "spells.a-b.antipathie-sympathie",
+      "spells.a-b.arkane-spiegelung",
+      "spells.a-b.attribut-verbessern",
+      "spells.a-b.ausbessern",
+      "spells.a-b.ausspaehung",
+      "spells.a-b.baumwandeln",
+      "spells.a-b.beistand",
+      "spells.a-b.bewegungsfreiheit",
+      "spells.a-b.bindung-der-ebenen",
+      "spells.a-b.blitze-herbeirufen",
+      "spells.a-b.botschaft",
+      "spells.c-e.dauerhafte-flamme",
+      "spells.c-e.donnerwoge",
+      "spells.c-e.dornenwand",
+      "spells.c-e.dornenwuchs",
+      "spells.c-e.druidenkunst",
+      "spells.c-e.duerre",
+      "spells.c-e.dunkelsicht",
+      "spells.c-e.ebenenwechsel",
+      "spells.c-e.einswerden-mit-der-natur",
+      "spells.c-e.eismesser",
+      "spells.c-e.eissturm",
+      "spells.c-e.elementalismus",
+      "spells.c-e.elementar-beschwoeren",
+      "spells.c-e.erdbeben",
+      "spells.c-e.erde-bewegen",
+      "spells.c-e.erwecken",
+      "spells.f-g.fallen-finden",
+      "spells.f-g.feenfeuer",
+      "spells.f-g.feenwesen-beschwoeren",
+      "spells.f-g.feuerschild",
+      "spells.f-g.feuersturm",
+      "spells.f-g.feuerwand",
+      "spells.f-g.flammen-erzeugen",
+      "spells.f-g.flammende-wolke",
+      "spells.f-g.flammenklinge",
+      "spells.f-g.flammenkugel",
+      "spells.f-g.fleisch-zu-stein",
+      "spells.f-g.geas",
+      "spells.f-g.gegenstand-aufspueren",
+      "spells.f-g.gestaltwandel",
+      "spells.f-g.gift-und-krankheit-entdecken",
+      "spells.f-g.gift-verspruehen",
+      "spells.f-g.goettliche-fuehrung",
+      "spells.f-g.gute-beeren",
+      "spells.h-l.heilendes-wort",
+      "spells.h-l.heilung",
+      "spells.h-l.heldenmahl",
+      "spells.h-l.insektenplage",
+      "spells.h-l.kaeltekegel",
+      "spells.h-l.kreatur-aufspueren",
+      "spells.h-l.lange-schritte",
+      "spells.m-p.magie-bannen",
+      "spells.m-p.magie-entdecken",
+      "spells.m-p.massen-wunden-heilen",
+      "spells.m-p.metall-erhitzen",
+      "spells.m-p.mit-pflanzen-sprechen",
+      "spells.m-p.mit-stein-verschmelzen",
+      "spells.m-p.mit-tieren-sprechen",
+      "spells.m-p.mondstrahl",
+      "spells.m-p.monster-bezaubern",
+      "spells.m-p.nahrung-und-wasser-reinigen",
+      "spells.m-p.nebelwolke",
+      "spells.m-p.person-bezaubern",
+      "spells.m-p.person-festhalten",
+      "spells.m-p.pflanzentor",
+      "spells.m-p.pflanzenwachstum",
+      "spells.r-s.regeneration",
+      "spells.r-s.rieseninsekt",
+      "spells.r-s.rindenhaut",
+      "spells.r-s.scheingelaende",
+      "spells.r-s.schneesturm",
+      "spells.r-s.schutz-vor-energie",
+      "spells.r-s.schutz-vor-gift",
+      "spells.r-s.schutz-vor-gut-und-boese",
+      "spells.r-s.schutzhuelle-gegen-lebendes",
+      "spells.r-s.schwache-elementare-beschwoeren",
+      "spells.r-s.schwache-genesung",
+      "spells.r-s.schwerkraft-umkehren",
+      "spells.r-s.shillelagh",
+      "spells.r-s.sonnenfeuer",
+      "spells.r-s.sonnenstrahl",
+      "spells.r-s.sprung",
+      "spells.r-s.spurloses-gehen",
+      "spells.r-s.stein-formen",
+      "spells.r-s.steinhaut",
+      "spells.r-s.steinwand",
+      "spells.r-s.sternenfunke",
+      "spells.r-s.sturm-der-vergeltung",
+      "spells.r-s.symbol",
+      "spells.t-v.tageslicht",
+      "spells.t-v.tier-beherrschen",
+      "spells.t-v.tierbote",
+      "spells.t-v.tiere-beschwoeren",
+      "spells.t-v.tiere-oder-pflanzen-aufspueren",
+      "spells.t-v.tierform",
+      "spells.t-v.tierfreundschaft",
+      "spells.t-v.tsunami",
+      "spells.t-v.vergroessern-verkleinern",
+      "spells.t-v.verschonung-der-sterbenden",
+      "spells.t-v.verstricken",
+      "spells.t-v.verwandlung",
+      "spells.t-v.verwirrung",
+      "spells.t-v.vollstaendige-genesung",
+      "spells.t-v.vorahnung",
+      "spells.t-v.voraussicht",
+      "spells.w-z.wahre-auferstehung",
+      "spells.w-z.wasser-atmen",
+      "spells.w-z.wasser-erschaffen-oder-zerstoeren",
+      "spells.w-z.wasser-kontrollieren",
+      "spells.w-z.wasserwandeln",
+      "spells.w-z.weg-finden",
+      "spells.w-z.weissagung",
+      "spells.w-z.wesen-des-waldes-beschwoeren",
+      "spells.w-z.wetterkontrolle",
+      "spells.w-z.widerstand",
+      "spells.w-z.wiederbeleben",
+      "spells.w-z.wiedergeburt",
+      "spells.w-z.windstoss",
+      "spells.w-z.windwall",
+      "spells.w-z.windwandeln",
+      "spells.w-z.wirrnis",
+      "spells.w-z.wunden-heilen"
+    ],
+    "fighter": [],
+    "monk": [],
+    "paladin": [
+      "spells.a-b.aura-des-lebens",
+      "spells.a-b.befehl",
+      "spells.a-b.beistand",
+      "spells.f-g.fluch-brechen",
+      "spells.f-g.geas",
+      "spells.f-g.gebet-der-heilung",
+      "spells.f-g.gegenstand-aufspueren",
+      "spells.f-g.gift-und-krankheit-entdecken",
+      "spells.f-g.goettliche-gunst",
+      "spells.f-g.goettliches-niederstrecken",
+      "spells.f-g.gutes-und-boeses-bannen",
+      "spells.f-g.gutes-und-boeses-entdecken",
+      "spells.h-l.heldenmut",
+      "spells.h-l.kreatur-aufspueren",
+      "spells.m-p.magie-bannen",
+      "spells.m-p.magie-entdecken",
+      "spells.m-p.magische-waffe",
+      "spells.m-p.nahrung-und-wasser-erschaffen",
+      "spells.m-p.nahrung-und-wasser-reinigen",
+      "spells.r-s.reittier-finden",
+      "spells.r-s.sanfte-ruhe",
+      "spells.r-s.schild-des-glaubens",
+      "spells.r-s.schuetzendes-band",
+      "spells.r-s.schutz-vor-gift",
+      "spells.r-s.schutz-vor-gut-und-boese",
+      "spells.r-s.schutzkreis",
+      "spells.r-s.schwache-genesung",
+      "spells.r-s.segnen",
+      "spells.r-s.sengendes-niederstrecken",
+      "spells.r-s.strahlendes-niederstrecken",
+      "spells.t-v.tageslicht",
+      "spells.t-v.todesschutz",
+      "spells.t-v.tote-erwecken",
+      "spells.t-v.verbannung",
+      "spells.t-v.vollstaendige-genesung",
+      "spells.w-z.wiederbeleben",
+      "spells.w-z.wunden-heilen",
+      "spells.w-z.zone-der-wahrheit"
+    ],
+    "ranger": [
+      "spells.a-b.alarm",
+      "spells.a-b.attribut-verbessern",
+      "spells.a-b.baumwandeln",
+      "spells.a-b.beistand",
+      "spells.a-b.bewegungsfreiheit",
+      "spells.c-e.dornenwuchs",
+      "spells.c-e.dunkelsicht",
+      "spells.c-e.einswerden-mit-der-natur",
+      "spells.f-g.fallen-finden",
+      "spells.f-g.fesselnder-schlag",
+      "spells.f-g.gegenstand-aufspueren",
+      "spells.f-g.gift-und-krankheit-entdecken",
+      "spells.f-g.gute-beeren",
+      "spells.h-l.kreatur-aufspueren",
+      "spells.h-l.lange-schritte",
+      "spells.m-p.magie-bannen",
+      "spells.m-p.magie-entdecken",
+      "spells.m-p.magische-waffe",
+      "spells.m-p.mit-pflanzen-sprechen",
+      "spells.m-p.mit-stein-verschmelzen",
+      "spells.m-p.mit-tieren-sprechen",
+      "spells.m-p.nebelwolke",
+      "spells.m-p.pflanzenwachstum",
+      "spells.r-s.rindenhaut",
+      "spells.r-s.schutz-vor-energie",
+      "spells.r-s.schutz-vor-gift",
+      "spells.r-s.schwache-genesung",
+      "spells.r-s.sprung",
+      "spells.r-s.spurloses-gehen",
+      "spells.r-s.steinhaut",
+      "spells.r-s.stille",
+      "spells.t-v.tageslicht",
+      "spells.t-v.tier-beherrschen",
+      "spells.t-v.tierbote",
+      "spells.t-v.tiere-beschwoeren",
+      "spells.t-v.tiere-oder-pflanzen-aufspueren",
+      "spells.t-v.tierfreundschaft",
+      "spells.t-v.unauffindbarkeit",
+      "spells.t-v.verstricken",
+      "spells.t-v.vollstaendige-genesung",
+      "spells.w-z.wasser-atmen",
+      "spells.w-z.wasserwandeln",
+      "spells.w-z.wesen-des-waldes-beschwoeren",
+      "spells.w-z.wiederbeleben",
+      "spells.w-z.windstoss",
+      "spells.w-z.windwall",
+      "spells.w-z.wunden-heilen",
+      "spells.w-z.zeichen-des-jaegers"
+    ],
+    "rogue": [],
+    "sorcerer": [
+      "spells.a-b.aetherische-gestalten",
+      "spells.a-b.aetzkugel",
+      "spells.a-b.aeusserlichkeiten",
+      "spells.a-b.arkane-hand",
+      "spells.a-b.attribut-verbessern",
+      "spells.a-b.aufloesung",
+      "spells.a-b.ausbessern",
+      "spells.a-b.blindheit-taubheit",
+      "spells.a-b.blitz",
+      "spells.a-b.boeser-blick",
+      "spells.a-b.botschaft",
+      "spells.a-b.brennende-haende",
+      "spells.c-e.chromatische-kugel",
+      "spells.c-e.dimensionstuer",
+      "spells.c-e.donnerwoge",
+      "spells.c-e.drachenodem",
+      "spells.c-e.duerre",
+      "spells.c-e.dunkelheit",
+      "spells.c-e.dunkelsicht",
+      "spells.c-e.ebenenwechsel",
+      "spells.c-e.einfache-illusion",
+      "spells.c-e.einfluesterung",
+      "spells.c-e.eismesser",
+      "spells.c-e.eissturm",
+      "spells.c-e.elementalismus",
+      "spells.c-e.erdbeben",
+      "spells.c-e.erde-bewegen",
+      "spells.c-e.erschaffung",
+      "spells.c-e.explosion-der-zauberei",
+      "spells.f-g.falsches-leben",
+      "spells.f-g.federfall",
+      "spells.f-g.feuerball",
+      "spells.f-g.feuerpfeil",
+      "spells.f-g.feuerschild",
+      "spells.f-g.feuersturm",
+      "spells.f-g.feuerwand",
+      "spells.f-g.finger-des-todes",
+      "spells.f-g.flammende-wolke",
+      "spells.f-g.flammenklinge",
+      "spells.f-g.flammenkugel",
+      "spells.f-g.fleisch-zu-stein",
+      "spells.f-g.flimmern",
+      "spells.f-g.flug",
+      "spells.f-g.frostsphaere",
+      "spells.f-g.furcht",
+      "spells.f-g.gasfoermige-gestalt",
+      "spells.f-g.gedanken-wahrnehmen",
+      "spells.f-g.gedankendorn",
+      "spells.f-g.gegenstaende-beleben",
+      "spells.f-g.gegenzauber",
+      "spells.f-g.gestalt-veraendern",
+      "spells.f-g.gift-verspruehen",
+      "spells.h-l.halbebene",
+      "spells.h-l.hast",
+      "spells.h-l.hellsehen",
+      "spells.h-l.hypnotisches-muster",
+      "spells.h-l.insektenplage",
+      "spells.h-l.kaeltekegel",
+      "spells.h-l.kaeltestrahl",
+      "spells.h-l.kalte-hand",
+      "spells.h-l.kettenblitz",
+      "spells.h-l.klopfen",
+      "spells.h-l.kreis-der-teleportation",
+      "spells.h-l.kugel-der-unverwundbarkeit",
+      "spells.h-l.lautloses-trugbild",
+      "spells.h-l.leicht",
+      "spells.m-p.macht-der-vorstellungskraft",
+      "spells.m-p.maechtige-unsichtbarkeit",
+      "spells.m-p.maechtiges-trugbild",
+      "spells.m-p.magie-bannen",
+      "spells.m-p.magie-entdecken",
+      "spells.m-p.magierhand",
+      "spells.m-p.magierruestung",
+      "spells.m-p.magische-waffe",
+      "spells.m-p.magisches-geschoss",
+      "spells.m-p.massen-einfluesterung",
+      "spells.m-p.meteoritenschwarm",
+      "spells.m-p.monster-beherrschen",
+      "spells.m-p.monster-bezaubern",
+      "spells.m-p.monster-festhalten",
+      "spells.m-p.nebelschritt",
+      "spells.m-p.nebelwolke",
+      "spells.m-p.person-beherrschen",
+      "spells.m-p.person-bezaubern",
+      "spells.m-p.person-festhalten",
+      "spells.r-s.rascher-rueckzug",
+      "spells.r-s.regenbogenspiel",
+      "spells.r-s.saeurespritzer",
+      "spells.r-s.schild",
+      "spells.r-s.schlaf",
+      "spells.r-s.schmieren",
+      "spells.r-s.schneesturm",
+      "spells.r-s.schockgriff",
+      "spells.r-s.schutz-vor-energie",
+      "spells.r-s.schweben",
+      "spells.r-s.schwerkraft-umkehren",
+      "spells.r-s.selbstverkleidung",
+      "spells.r-s.sengender-strahl",
+      "spells.r-s.sonnenfeuer",
+      "spells.r-s.sonnenstrahl",
+      "spells.r-s.spaetzuendender-feuerball",
+      "spells.r-s.spiegelbilder",
+      "spells.r-s.spinnenklettern",
+      "spells.r-s.spinnennetz",
+      "spells.r-s.sprachen-verstehen",
+      "spells.r-s.spruehende-farben",
+      "spells.r-s.sprung",
+      "spells.r-s.steinhaut",
+      "spells.r-s.steinwand",
+      "spells.r-s.stinkende-wolke",
+      "spells.r-s.strahl-der-uebelkeit",
+      "spells.t-v.tageslicht",
+      "spells.t-v.tanzende-lichter",
+      "spells.t-v.taschenspielerei",
+      "spells.t-v.telekinese",
+      "spells.t-v.teleportieren",
+      "spells.t-v.tier-beherrschen",
+      "spells.t-v.todeskreis",
+      "spells.t-v.todeswolke",
+      "spells.t-v.tor",
+      "spells.t-v.unsichtbares-sehen",
+      "spells.t-v.unsichtbarkeit",
+      "spells.t-v.vampirgriff",
+      "spells.t-v.verbannung",
+      "spells.t-v.vergroessern-verkleinern",
+      "spells.t-v.verlangsamen",
+      "spells.t-v.verschwimmen",
+      "spells.t-v.verwandlung",
+      "spells.t-v.verwirrung",
+      "spells.w-z.wahrer-blick",
+      "spells.w-z.wasser-atmen",
+      "spells.w-z.wasserwandeln",
+      "spells.w-z.windstoss",
+      "spells.w-z.wort-der-macht-betaeubung",
+      "spells.w-z.wort-der-macht-tod",
+      "spells.w-z.wunsch",
+      "spells.w-z.zeitstopp",
+      "spells.w-z.zerbersten",
+      "spells.w-z.zielsicherer-schlag",
+      "spells.w-z.zungen"
+    ],
+    "warlock": [
+      "spells.a-b.ablenkung",
+      "spells.a-b.aetherische-gestalten",
+      "spells.a-b.astrale-projektion",
+      "spells.a-b.ausspaehung",
+      "spells.a-b.bindung-der-ebenen",
+      "spells.a-b.boeser-blick",
+      "spells.c-e.dimensionstuer",
+      "spells.c-e.duerre",
+      "spells.c-e.dunkelheit",
+      "spells.c-e.ebenenwechsel",
+      "spells.c-e.einfache-illusion",
+      "spells.c-e.einfluesterung",
+      "spells.c-e.einkerkerung",
+      "spells.c-e.energiekaefig",
+      "spells.f-g.fesseln",
+      "spells.f-g.finger-des-todes",
+      "spells.f-g.fluch-brechen",
+      "spells.f-g.flug",
+      "spells.f-g.fuerchterlicher-lachanfall",
+      "spells.f-g.furcht",
+      "spells.f-g.gasfoermige-gestalt",
+      "spells.f-g.gedankendorn",
+      "spells.f-g.gegenzauber",
+      "spells.f-g.gift-verspruehen",
+      "spells.h-l.halbebene",
+      "spells.h-l.hoellischer-tadel",
+      "spells.h-l.hypnotisches-muster",
+      "spells.h-l.illusionsschrift",
+      "spells.h-l.kalte-hand",
+      "spells.h-l.kontakt-zu-anderen-ebenen",
+      "spells.h-l.kreis-der-teleportation",
+      "spells.m-p.maechtiges-trugbild",
+      "spells.m-p.magie-bannen",
+      "spells.m-p.magie-entdecken",
+      "spells.m-p.magierhand",
+      "spells.m-p.mit-tieren-sprechen",
+      "spells.m-p.monster-beherrschen",
+      "spells.m-p.monster-bezaubern",
+      "spells.m-p.monster-festhalten",
+      "spells.m-p.nebelschritt",
+      "spells.m-p.person-bezaubern",
+      "spells.m-p.person-festhalten",
+      "spells.r-s.rascher-rueckzug",
+      "spells.r-s.redegewandtheit",
+      "spells.r-s.schauriger-strahl",
+      "spells.r-s.scheingelaende",
+      "spells.r-s.schutz-vor-gut-und-boese",
+      "spells.r-s.schutzkreis",
+      "spells.r-s.schwaechestrahl",
+      "spells.r-s.spiegelbilder",
+      "spells.r-s.spinnenklettern",
+      "spells.r-s.sprachen-verstehen",
+      "spells.t-v.taschenspielerei",
+      "spells.t-v.todeskreis",
+      "spells.t-v.tor",
+      "spells.t-v.traum",
+      "spells.t-v.unheimliches-schicksal",
+      "spells.t-v.unsichtbarer-diener",
+      "spells.t-v.unsichtbarkeit",
+      "spells.t-v.untote-erschaffen",
+      "spells.t-v.vampirgriff",
+      "spells.t-v.verbannung",
+      "spells.t-v.verderben",
+      "spells.t-v.verwuenschung",
+      "spells.t-v.voraussicht",
+      "spells.w-z.wahre-verwandlung",
+      "spells.w-z.wahrer-blick",
+      "spells.w-z.wirrnis",
+      "spells.w-z.wort-der-macht-betaeubung",
+      "spells.w-z.wort-der-macht-tod",
+      "spells.w-z.zielsicherer-schlag",
+      "spells.w-z.zungen"
+    ],
+    "wizard": [
+      "spells.a-b.ablenkung",
+      "spells.a-b.aetherische-gestalten",
+      "spells.a-b.aetzkugel",
+      "spells.a-b.aeusserlichkeiten",
+      "spells.a-b.alarm",
+      "spells.a-b.antimagisches-feld",
+      "spells.a-b.antipathie-sympathie",
+      "spells.a-b.arkane-hand",
+      "spells.a-b.arkane-spiegelung",
+      "spells.a-b.arkanes-auge",
+      "spells.a-b.arkanes-schloss",
+      "spells.a-b.arkanes-schwert",
+      "spells.a-b.astrale-projektion",
+      "spells.a-b.attribut-verbessern",
+      "spells.a-b.aufloesung",
+      "spells.a-b.ausbessern",
+      "spells.a-b.ausspaehung",
+      "spells.a-b.bindung-der-ebenen",
+      "spells.a-b.blindheit-taubheit",
+      "spells.a-b.blitz",
+      "spells.a-b.boeser-blick",
+      "spells.a-b.botschaft",
+      "spells.a-b.brennende-haende",
+      "spells.c-e.chromatische-kugel",
+      "spells.c-e.dauerhafte-flamme",
+      "spells.c-e.dimensionstuer",
+      "spells.c-e.donnerwoge",
+      "spells.c-e.drachen-herbeirufen",
+      "spells.c-e.drachenodem",
+      "spells.c-e.duerre",
+      "spells.c-e.dunkelheit",
+      "spells.c-e.dunkelsicht",
+      "spells.c-e.ebenenwechsel",
+      "spells.c-e.einfache-illusion",
+      "spells.c-e.einfluesterung",
+      "spells.c-e.einkerkerung",
+      "spells.c-e.eismesser",
+      "spells.c-e.eissturm",
+      "spells.c-e.eiswand",
+      "spells.c-e.elementalismus",
+      "spells.c-e.elementar-beschwoeren",
+      "spells.c-e.energiekaefig",
+      "spells.c-e.energiewand",
+      "spells.c-e.erde-bewegen",
+      "spells.c-e.erinnerung-veraendern",
+      "spells.c-e.erschaffung",
+      "spells.f-g.falsches-leben",
+      "spells.f-g.federfall",
+      "spells.f-g.feuerball",
+      "spells.f-g.feuerpfeil",
+      "spells.f-g.feuerschild",
+      "spells.f-g.feuerwand",
+      "spells.f-g.finger-des-todes",
+      "spells.f-g.flammende-wolke",
+      "spells.f-g.flammenkugel",
+      "spells.f-g.fleisch-zu-stein",
+      "spells.f-g.flimmern",
+      "spells.f-g.fluch",
+      "spells.f-g.fluch-brechen",
+      "spells.f-g.flug",
+      "spells.f-g.frostsphaere",
+      "spells.f-g.fuerchterlicher-lachanfall",
+      "spells.f-g.furcht",
+      "spells.f-g.gasfoermige-gestalt",
+      "spells.f-g.geas",
+      "spells.f-g.gedanken-wahrnehmen",
+      "spells.f-g.gedankendorn",
+      "spells.f-g.gedankenleere",
+      "spells.f-g.gegenstaende-beleben",
+      "spells.f-g.gegenstand-aufspueren",
+      "spells.f-g.gegenzauber",
+      "spells.f-g.geheime-truhe",
+      "spells.f-g.geisterross",
+      "spells.f-g.gestalt-veraendern",
+      "spells.f-g.gestaltwandel",
+      "spells.f-g.gift-verspruehen",
+      "spells.f-g.glyphe-des-schutzes",
+      "spells.h-l.halbebene",
+      "spells.h-l.hast",
+      "spells.h-l.hellsehen",
+      "spells.h-l.herrliches-herrenhaus",
+      "spells.h-l.hypnotisches-muster",
+      "spells.h-l.identifizieren",
+      "spells.h-l.illusionsschrift",
+      "spells.h-l.irrgarten",
+      "spells.h-l.kaeltekegel",
+      "spells.h-l.kaeltestrahl",
+      "spells.h-l.kalte-hand",
+      "spells.h-l.kettenblitz",
+      "spells.h-l.klon",
+      "spells.h-l.klopfen",
+      "spells.h-l.kontakt-zu-anderen-ebenen",
+      "spells.h-l.kreatur-aufspueren",
+      "spells.h-l.kreis-der-teleportation",
+      "spells.h-l.kugel-der-unverwundbarkeit",
+      "spells.h-l.lange-schritte",
+      "spells.h-l.lautloses-trugbild",
+      "spells.h-l.leicht",
+      "spells.m-p.macht-der-vorstellungskraft",
+      "spells.m-p.maechtige-unsichtbarkeit",
+      "spells.m-p.maechtiges-trugbild",
+      "spells.m-p.magie-bannen",
+      "spells.m-p.magie-entdecken",
+      "spells.m-p.magierhand",
+      "spells.m-p.magierruestung",
+      "spells.m-p.magische-aura-des-arkanisten",
+      "spells.m-p.magische-waffe",
+      "spells.m-p.magischer-mund",
+      "spells.m-p.magisches-gefaess",
+      "spells.m-p.magisches-geschoss",
+      "spells.m-p.massen-einfluesterung",
+      "spells.m-p.meteoritenschwarm",
+      "spells.m-p.mit-toten-sprechen",
+      "spells.m-p.monster-beherrschen",
+      "spells.m-p.monster-bezaubern",
+      "spells.m-p.monster-festhalten",
+      "spells.m-p.nebelschritt",
+      "spells.m-p.nebelwolke",
+      "spells.m-p.notfall",
+      "spells.m-p.person-beherrschen",
+      "spells.m-p.person-bezaubern",
+      "spells.m-p.person-festhalten",
+      "spells.m-p.privates-heiligtum",
+      "spells.r-s.rascher-rueckzug",
+      "spells.r-s.regenbogenspiel",
+      "spells.r-s.regenbogenwand",
+      "spells.r-s.saeurepfeil",
+      "spells.r-s.saeurespritzer",
+      "spells.r-s.sagenkunde",
+      "spells.r-s.sanfte-ruhe",
+      "spells.r-s.scheingelaende",
+      "spells.r-s.schild",
+      "spells.r-s.schlaf",
+      "spells.r-s.schmieren",
+      "spells.r-s.schneesturm",
+      "spells.r-s.schockgriff",
+      "spells.r-s.schutz-vor-energie",
+      "spells.r-s.schutz-vor-gut-und-boese",
+      "spells.r-s.schutzkreis",
+      "spells.r-s.schwache-elementare-beschwoeren",
+      "spells.r-s.schwaechestrahl",
+      "spells.r-s.schwarze-tentakel",
+      "spells.r-s.schweben",
+      "spells.r-s.schwebende-scheibe",
+      "spells.r-s.schwerkraft-umkehren",
+      "spells.r-s.seiltrick",
+      "spells.r-s.selbstverkleidung",
+      "spells.r-s.sengender-strahl",
+      "spells.r-s.simulakrum",
+      "spells.r-s.sofortige-beschwoerung",
+      "spells.r-s.sonnenfeuer",
+      "spells.r-s.sonnenstrahl",
+      "spells.r-s.spaetzuendender-feuerball",
+      "spells.r-s.spiegelbilder",
+      "spells.r-s.spinnenklettern",
+      "spells.r-s.spinnennetz",
+      "spells.r-s.sprachen-verstehen",
+      "spells.r-s.spruehende-farben",
+      "spells.r-s.sprung",
+      "spells.r-s.stein-formen",
+      "spells.r-s.steinhaut",
+      "spells.r-s.steinwand",
+      "spells.r-s.stinkende-wolke",
+      "spells.r-s.strahl-der-uebelkeit",
+      "spells.r-s.symbol",
+      "spells.t-v.tanzende-lichter",
+      "spells.t-v.taschenspielerei",
+      "spells.t-v.telekinese",
+      "spells.t-v.telepathische-bindung",
+      "spells.t-v.teleportieren",
+      "spells.t-v.todeskreis",
+      "spells.t-v.todeswolke",
+      "spells.t-v.toedliches-phantom",
+      "spells.t-v.tor",
+      "spells.t-v.tote-beleben",
+      "spells.t-v.traum",
+      "spells.t-v.treuer-hund",
+      "spells.t-v.trugbild-projizieren",
+      "spells.t-v.unauffindbarkeit",
+      "spells.t-v.unheimliches-schicksal",
+      "spells.t-v.unsichtbarer-diener",
+      "spells.t-v.unsichtbares-sehen",
+      "spells.t-v.unsichtbarkeit",
+      "spells.t-v.untote-erschaffen",
+      "spells.t-v.unverwuestliche-sphaere",
+      "spells.t-v.unwiderstehlicher-tanz",
+      "spells.t-v.vampirgriff",
+      "spells.t-v.verarbeitung",
+      "spells.t-v.verbannung",
+      "spells.t-v.verbergen",
+      "spells.t-v.vergroessern-verkleinern",
+      "spells.t-v.verlangsamen",
+      "spells.t-v.verschwimmen",
+      "spells.t-v.verstaendigung",
+      "spells.t-v.vertrauten-finden",
+      "spells.t-v.verwandlung",
+      "spells.t-v.verwirrung",
+      "spells.t-v.vorahnung",
+      "spells.t-v.voraussicht",
+      "spells.t-v.vorbestimmtes-trugbild",
+      "spells.w-z.waechter-und-hueter",
+      "spells.w-z.waende-passieren",
+      "spells.w-z.wahre-verwandlung",
+      "spells.w-z.wahrer-blick",
+      "spells.w-z.wasser-atmen",
+      "spells.w-z.wasser-kontrollieren",
+      "spells.w-z.weissagung",
+      "spells.w-z.wetterkontrolle",
+      "spells.w-z.windstoss",
+      "spells.w-z.winzige-huette",
+      "spells.w-z.wirrnis",
+      "spells.w-z.wort-der-macht-betaeubung",
+      "spells.w-z.wort-der-macht-tod",
+      "spells.w-z.wunsch",
+      "spells.w-z.zeitstopp",
+      "spells.w-z.zerbersten",
+      "spells.w-z.zielsicherer-schlag",
+      "spells.w-z.zungen"
+    ]
+  },
+  "spells": {
+    "spells.a-b.ablenkung": {
+      "level": 5,
+      "name": "Ablenkung",
+      "ritual": false
+    },
+    "spells.a-b.aetherische-gestalten": {
+      "level": 7,
+      "name": "Ätherische Gestalten",
+      "ritual": false
+    },
+    "spells.a-b.aetzkugel": {
+      "level": 4,
+      "name": "Ätzkugel",
+      "ritual": false
+    },
+    "spells.a-b.aeusserlichkeiten": {
+      "level": 5,
+      "name": "Äußerlichkeiten",
+      "ritual": false
+    },
+    "spells.a-b.alarm": {
+      "level": 1,
+      "name": "Alarm",
+      "ritual": true
+    },
+    "spells.a-b.ansteckung": {
+      "level": 5,
+      "name": "Ansteckung",
+      "ritual": false
+    },
+    "spells.a-b.antimagisches-feld": {
+      "level": 8,
+      "name": "Antimagisches Feld",
+      "ritual": false
+    },
+    "spells.a-b.antipathie-sympathie": {
+      "level": 8,
+      "name": "Antipathie/Sympathie",
+      "ritual": false
+    },
+    "spells.a-b.arkane-hand": {
+      "level": 5,
+      "name": "Arkane Hand",
+      "ritual": false
+    },
+    "spells.a-b.arkane-spiegelung": {
+      "level": 7,
+      "name": "Arkane Spiegelung",
+      "ritual": false
+    },
+    "spells.a-b.arkanes-auge": {
+      "level": 4,
+      "name": "Arkanes Auge",
+      "ritual": false
+    },
+    "spells.a-b.arkanes-schloss": {
+      "level": 2,
+      "name": "Arkanes Schloss",
+      "ritual": false
+    },
+    "spells.a-b.arkanes-schwert": {
+      "level": 7,
+      "name": "Arkanes Schwert",
+      "ritual": false
+    },
+    "spells.a-b.astrale-projektion": {
+      "level": 9,
+      "name": "Astrale Projektion",
+      "ritual": false
+    },
+    "spells.a-b.attribut-verbessern": {
+      "level": 2,
+      "name": "Attribut verbessern",
+      "ritual": false
+    },
+    "spells.a-b.auferstehung": {
+      "level": 7,
+      "name": "Auferstehung",
+      "ritual": false
+    },
+    "spells.a-b.aufloesung": {
+      "level": 6,
+      "name": "Auflösung",
+      "ritual": false
+    },
+    "spells.a-b.aura-des-lebens": {
+      "level": 4,
+      "name": "Aura des Lebens",
+      "ritual": false
+    },
+    "spells.a-b.ausbessern": {
+      "level": 0,
+      "name": "Ausbessern",
+      "ritual": false
+    },
+    "spells.a-b.ausspaehung": {
+      "level": 5,
+      "name": "Ausspähung",
+      "ritual": false
+    },
+    "spells.a-b.baumwandeln": {
+      "level": 5,
+      "name": "Baumwandeln",
+      "ritual": false
+    },
+    "spells.a-b.befehl": {
+      "level": 1,
+      "name": "Befehl",
+      "ritual": false
+    },
+    "spells.a-b.beistand": {
+      "level": 2,
+      "name": "Beistand",
+      "ritual": false
+    },
+    "spells.a-b.bewegungsfreiheit": {
+      "level": 4,
+      "name": "Bewegungsfreiheit",
+      "ritual": false
+    },
+    "spells.a-b.bindung-der-ebenen": {
+      "level": 5,
+      "name": "Bindung der Ebenen",
+      "ritual": false
+    },
+    "spells.a-b.blindheit-taubheit": {
+      "level": 2,
+      "name": "Blindheit/Taubheit",
+      "ritual": false
+    },
+    "spells.a-b.blitz": {
+      "level": 3,
+      "name": "Blitz",
+      "ritual": false
+    },
+    "spells.a-b.blitze-herbeirufen": {
+      "level": 3,
+      "name": "Blitze herbeirufen",
+      "ritual": false
+    },
+    "spells.a-b.boeser-blick": {
+      "level": 6,
+      "name": "Böser Blick",
+      "ritual": false
+    },
+    "spells.a-b.botschaft": {
+      "level": 0,
+      "name": "Botschaft",
+      "ritual": false
+    },
+    "spells.a-b.brennende-haende": {
+      "level": 1,
+      "name": "Brennende Hände",
+      "ritual": false
+    },
+    "spells.c-e.celestisches-wesen-beschwoeren": {
+      "level": 7,
+      "name": "Celestisches Wesen beschwören",
+      "ritual": false
+    },
+    "spells.c-e.chromatische-kugel": {
+      "level": 1,
+      "name": "Chromatische Kugel",
+      "ritual": false
+    },
+    "spells.c-e.dauerhafte-flamme": {
+      "level": 2,
+      "name": "Dauerhafte Flamme",
+      "ritual": false
+    },
+    "spells.c-e.dimensionstuer": {
+      "level": 4,
+      "name": "Dimensionstür",
+      "ritual": false
+    },
+    "spells.c-e.dissonantes-fluestern": {
+      "level": 1,
+      "name": "Dissonantes Flüstern",
+      "ritual": false
+    },
+    "spells.c-e.donnerwoge": {
+      "level": 1,
+      "name": "Donnerwoge",
+      "ritual": false
+    },
+    "spells.c-e.dornenwand": {
+      "level": 6,
+      "name": "Dornenwand",
+      "ritual": false
+    },
+    "spells.c-e.dornenwuchs": {
+      "level": 2,
+      "name": "Dornenwuchs",
+      "ritual": false
+    },
+    "spells.c-e.drachen-herbeirufen": {
+      "level": 5,
+      "name": "Drachen herbeirufen",
+      "ritual": false
+    },
+    "spells.c-e.drachenodem": {
+      "level": 2,
+      "name": "Drachenodem",
+      "ritual": false
+    },
+    "spells.c-e.druidenkunst": {
+      "level": 0,
+      "name": "Druidenkunst",
+      "ritual": false
+    },
+    "spells.c-e.duerre": {
+      "level": 4,
+      "name": "Dürre",
+      "ritual": false
+    },
+    "spells.c-e.dunkelheit": {
+      "level": 2,
+      "name": "Dunkelheit",
+      "ritual": false
+    },
+    "spells.c-e.dunkelsicht": {
+      "level": 2,
+      "name": "Dunkelsicht",
+      "ritual": false
+    },
+    "spells.c-e.ebenenwechsel": {
+      "level": 7,
+      "name": "Ebenenwechsel",
+      "ritual": false
+    },
+    "spells.c-e.einfache-illusion": {
+      "level": 0,
+      "name": "Einfache Illusion",
+      "ritual": false
+    },
+    "spells.c-e.einfluesterung": {
+      "level": 2,
+      "name": "Einflüsterung",
+      "ritual": false
+    },
+    "spells.c-e.einkerkerung": {
+      "level": 9,
+      "name": "Einkerkerung",
+      "ritual": false
+    },
+    "spells.c-e.einswerden-mit-der-natur": {
+      "level": 5,
+      "name": "Einswerden mit der Natur",
+      "ritual": true
+    },
+    "spells.c-e.eismesser": {
+      "level": 1,
+      "name": "Eismesser",
+      "ritual": false
+    },
+    "spells.c-e.eissturm": {
+      "level": 4,
+      "name": "Eissturm",
+      "ritual": false
+    },
+    "spells.c-e.eiswand": {
+      "level": 6,
+      "name": "Eiswand",
+      "ritual": false
+    },
+    "spells.c-e.elementalismus": {
+      "level": 0,
+      "name": "Elementalismus",
+      "ritual": false
+    },
+    "spells.c-e.elementar-beschwoeren": {
+      "level": 5,
+      "name": "Elementar beschwören",
+      "ritual": false
+    },
+    "spells.c-e.energiekaefig": {
+      "level": 7,
+      "name": "Energiekäfig",
+      "ritual": false
+    },
+    "spells.c-e.energiewand": {
+      "level": 5,
+      "name": "Energiewand",
+      "ritual": false
+    },
+    "spells.c-e.erdbeben": {
+      "level": 8,
+      "name": "Erdbeben",
+      "ritual": false
+    },
+    "spells.c-e.erde-bewegen": {
+      "level": 6,
+      "name": "Erde bewegen",
+      "ritual": false
+    },
+    "spells.c-e.erinnerung-veraendern": {
+      "level": 5,
+      "name": "Erinnerung verändern",
+      "ritual": false
+    },
+    "spells.c-e.erschaffung": {
+      "level": 5,
+      "name": "Erschaffung",
+      "ritual": false
+    },
+    "spells.c-e.erwecken": {
+      "level": 5,
+      "name": "Erwecken",
+      "ritual": false
+    },
+    "spells.c-e.explosion-der-zauberei": {
+      "level": 0,
+      "name": "Explosion der Zauberei",
+      "ritual": false
+    },
+    "spells.f-g.fallen-finden": {
+      "level": 2,
+      "name": "Fallen finden",
+      "ritual": false
+    },
+    "spells.f-g.falsches-leben": {
+      "level": 1,
+      "name": "Falsches Leben",
+      "ritual": false
+    },
+    "spells.f-g.federfall": {
+      "level": 1,
+      "name": "Federfall",
+      "ritual": false
+    },
+    "spells.f-g.feenfeuer": {
+      "level": 1,
+      "name": "Feenfeuer",
+      "ritual": false
+    },
+    "spells.f-g.feenwesen-beschwoeren": {
+      "level": 6,
+      "name": "Feenwesen beschwören",
+      "ritual": false
+    },
+    "spells.f-g.fesseln": {
+      "level": 2,
+      "name": "Fesseln",
+      "ritual": false
+    },
+    "spells.f-g.fesselnder-schlag": {
+      "level": 1,
+      "name": "Fesselnder Schlag",
+      "ritual": false
+    },
+    "spells.f-g.feuerball": {
+      "level": 3,
+      "name": "Feuerball",
+      "ritual": false
+    },
+    "spells.f-g.feuerpfeil": {
+      "level": 0,
+      "name": "Feuerpfeil",
+      "ritual": false
+    },
+    "spells.f-g.feuerschild": {
+      "level": 4,
+      "name": "Feuerschild",
+      "ritual": false
+    },
+    "spells.f-g.feuersturm": {
+      "level": 7,
+      "name": "Feuersturm",
+      "ritual": false
+    },
+    "spells.f-g.feuerwand": {
+      "level": 4,
+      "name": "Feuerwand",
+      "ritual": false
+    },
+    "spells.f-g.finger-des-todes": {
+      "level": 7,
+      "name": "Finger des Todes",
+      "ritual": false
+    },
+    "spells.f-g.flammen-erzeugen": {
+      "level": 0,
+      "name": "Flammen erzeugen",
+      "ritual": false
+    },
+    "spells.f-g.flammende-wolke": {
+      "level": 8,
+      "name": "Flammende Wolke",
+      "ritual": false
+    },
+    "spells.f-g.flammenklinge": {
+      "level": 2,
+      "name": "Flammenklinge",
+      "ritual": false
+    },
+    "spells.f-g.flammenkugel": {
+      "level": 2,
+      "name": "Flammenkugel",
+      "ritual": false
+    },
+    "spells.f-g.flammenschlag": {
+      "level": 5,
+      "name": "Flammenschlag",
+      "ritual": false
+    },
+    "spells.f-g.fleisch-zu-stein": {
+      "level": 6,
+      "name": "Fleisch zu Stein",
+      "ritual": false
+    },
+    "spells.f-g.flimmern": {
+      "level": 3,
+      "name": "Flimmern",
+      "ritual": false
+    },
+    "spells.f-g.fluch": {
+      "level": 3,
+      "name": "Fluch",
+      "ritual": false
+    },
+    "spells.f-g.fluch-brechen": {
+      "level": 3,
+      "name": "Fluch brechen",
+      "ritual": false
+    },
+    "spells.f-g.flug": {
+      "level": 3,
+      "name": "Flug",
+      "ritual": false
+    },
+    "spells.f-g.frostsphaere": {
+      "level": 6,
+      "name": "Frostsphäre",
+      "ritual": false
+    },
+    "spells.f-g.fuerchterlicher-lachanfall": {
+      "level": 1,
+      "name": "Fürchterlicher Lachanfall",
+      "ritual": false
+    },
+    "spells.f-g.furcht": {
+      "level": 3,
+      "name": "Furcht",
+      "ritual": false
+    },
+    "spells.f-g.gasfoermige-gestalt": {
+      "level": 3,
+      "name": "Gasförmige Gestalt",
+      "ritual": false
+    },
+    "spells.f-g.geas": {
+      "level": 5,
+      "name": "Geas",
+      "ritual": false
+    },
+    "spells.f-g.gebet-der-heilung": {
+      "level": 2,
+      "name": "Gebet der Heilung",
+      "ritual": false
+    },
+    "spells.f-g.gedanken-wahrnehmen": {
+      "level": 2,
+      "name": "Gedanken wahrnehmen",
+      "ritual": false
+    },
+    "spells.f-g.gedankendorn": {
+      "level": 2,
+      "name": "Gedankendorn",
+      "ritual": false
+    },
+    "spells.f-g.gedankenleere": {
+      "level": 8,
+      "name": "Gedankenleere",
+      "ritual": false
+    },
+    "spells.f-g.gefuehle-besaenftigen": {
+      "level": 2,
+      "name": "Gefühle besänftigen",
+      "ritual": false
+    },
+    "spells.f-g.gegenstaende-beleben": {
+      "level": 5,
+      "name": "Gegenstände beleben",
+      "ritual": false
+    },
+    "spells.f-g.gegenstand-aufspueren": {
+      "level": 2,
+      "name": "Gegenstand aufspüren",
+      "ritual": false
+    },
+    "spells.f-g.gegenzauber": {
+      "level": 3,
+      "name": "Gegenzauber",
+      "ritual": false
+    },
+    "spells.f-g.gehaessiger-spott": {
+      "level": 0,
+      "name": "Gehässiger Spott",
+      "ritual": false
+    },
+    "spells.f-g.geheime-truhe": {
+      "level": 4,
+      "name": "Geheime Truhe",
+      "ritual": false
+    },
+    "spells.f-g.geisterross": {
+      "level": 3,
+      "name": "Geisterross",
+      "ritual": true
+    },
+    "spells.f-g.gestalt-veraendern": {
+      "level": 2,
+      "name": "Gestalt verändern",
+      "ritual": false
+    },
+    "spells.f-g.gestaltwandel": {
+      "level": 9,
+      "name": "Gestaltwandel",
+      "ritual": false
+    },
+    "spells.f-g.gift-und-krankheit-entdecken": {
+      "level": 1,
+      "name": "Gift und Krankheit entdecken",
+      "ritual": true
+    },
+    "spells.f-g.gift-verspruehen": {
+      "level": 0,
+      "name": "Gift versprühen",
+      "ritual": false
+    },
+    "spells.f-g.glyphe-des-schutzes": {
+      "level": 3,
+      "name": "Glyphe des Schutzes",
+      "ritual": false
+    },
+    "spells.f-g.goettliche-fuehrung": {
+      "level": 0,
+      "name": "Göttliche Führung",
+      "ritual": false
+    },
+    "spells.f-g.goettliche-gunst": {
+      "level": 1,
+      "name": "Göttliche Gunst",
+      "ritual": false
+    },
+    "spells.f-g.goettliches-niederstrecken": {
+      "level": 1,
+      "name": "Göttliches Niederstrecken",
+      "ritual": false
+    },
+    "spells.f-g.goettliches-wort": {
+      "level": 7,
+      "name": "Göttliches Wort",
+      "ritual": false
+    },
+    "spells.f-g.gute-beeren": {
+      "level": 1,
+      "name": "Gute Beeren",
+      "ritual": false
+    },
+    "spells.f-g.gutes-und-boeses-bannen": {
+      "level": 5,
+      "name": "Gutes und Böses bannen",
+      "ritual": false
+    },
+    "spells.f-g.gutes-und-boeses-entdecken": {
+      "level": 1,
+      "name": "Gutes und Böses entdecken",
+      "ritual": false
+    },
+    "spells.h-l.halbebene": {
+      "level": 8,
+      "name": "Halbebene",
+      "ritual": false
+    },
+    "spells.h-l.hast": {
+      "level": 3,
+      "name": "Hast",
+      "ritual": false
+    },
+    "spells.h-l.heilendes-wort": {
+      "level": 1,
+      "name": "Heilendes Wort",
+      "ritual": false
+    },
+    "spells.h-l.heilige-aura": {
+      "level": 8,
+      "name": "Heilige Aura",
+      "ritual": false
+    },
+    "spells.h-l.heilige-flamme": {
+      "level": 0,
+      "name": "Heilige Flamme",
+      "ritual": false
+    },
+    "spells.h-l.heiliges-gespraech": {
+      "level": 5,
+      "name": "Heiliges Gespräch",
+      "ritual": true
+    },
+    "spells.h-l.heiligtum": {
+      "level": 1,
+      "name": "Heiligtum",
+      "ritual": false
+    },
+    "spells.h-l.heilung": {
+      "level": 6,
+      "name": "Heilung",
+      "ritual": false
+    },
+    "spells.h-l.heldenmahl": {
+      "level": 6,
+      "name": "Heldenmahl",
+      "ritual": false
+    },
+    "spells.h-l.heldenmut": {
+      "level": 1,
+      "name": "Heldenmut",
+      "ritual": false
+    },
+    "spells.h-l.hellsehen": {
+      "level": 3,
+      "name": "Hellsehen",
+      "ritual": false
+    },
+    "spells.h-l.herrliches-herrenhaus": {
+      "level": 7,
+      "name": "Herrliches Herrenhaus",
+      "ritual": false
+    },
+    "spells.h-l.hoellischer-tadel": {
+      "level": 1,
+      "name": "Höllischer Tadel",
+      "ritual": false
+    },
+    "spells.h-l.hueter-des-glaubens": {
+      "level": 4,
+      "name": "Hüter des Glaubens",
+      "ritual": false
+    },
+    "spells.h-l.hypnotisches-muster": {
+      "level": 3,
+      "name": "Hypnotisches Muster",
+      "ritual": false
+    },
+    "spells.h-l.identifizieren": {
+      "level": 1,
+      "name": "Identifizieren",
+      "ritual": true
+    },
+    "spells.h-l.illusionsschrift": {
+      "level": 1,
+      "name": "Illusionsschrift",
+      "ritual": true
+    },
+    "spells.h-l.insektenplage": {
+      "level": 5,
+      "name": "Insektenplage",
+      "ritual": false
+    },
+    "spells.h-l.irrgarten": {
+      "level": 8,
+      "name": "Irrgarten",
+      "ritual": false
+    },
+    "spells.h-l.kaeltekegel": {
+      "level": 5,
+      "name": "Kältekegel",
+      "ritual": false
+    },
+    "spells.h-l.kaeltestrahl": {
+      "level": 0,
+      "name": "Kältestrahl",
+      "ritual": false
+    },
+    "spells.h-l.kalte-hand": {
+      "level": 0,
+      "name": "Kalte Hand",
+      "ritual": false
+    },
+    "spells.h-l.kettenblitz": {
+      "level": 6,
+      "name": "Kettenblitz",
+      "ritual": false
+    },
+    "spells.h-l.klingenbarriere": {
+      "level": 6,
+      "name": "Klingenbarriere",
+      "ritual": false
+    },
+    "spells.h-l.klon": {
+      "level": 8,
+      "name": "Klon",
+      "ritual": false
+    },
+    "spells.h-l.klopfen": {
+      "level": 2,
+      "name": "Klopfen",
+      "ritual": false
+    },
+    "spells.h-l.kontakt-zu-anderen-ebenen": {
+      "level": 5,
+      "name": "Kontakt zu anderen Ebenen",
+      "ritual": true
+    },
+    "spells.h-l.kreatur-aufspueren": {
+      "level": 4,
+      "name": "Kreatur aufspüren",
+      "ritual": false
+    },
+    "spells.h-l.kreis-der-teleportation": {
+      "level": 5,
+      "name": "Kreis der Teleportation",
+      "ritual": false
+    },
+    "spells.h-l.kugel-der-unverwundbarkeit": {
+      "level": 6,
+      "name": "Kugel der Unverwundbarkeit",
+      "ritual": false
+    },
+    "spells.h-l.lange-schritte": {
+      "level": 1,
+      "name": "Lange Schritte",
+      "ritual": false
+    },
+    "spells.h-l.lautloses-trugbild": {
+      "level": 1,
+      "name": "Lautloses Trugbild",
+      "ritual": false
+    },
+    "spells.h-l.leicht": {
+      "level": 0,
+      "name": "Leicht",
+      "ritual": false
+    },
+    "spells.h-l.leid": {
+      "level": 6,
+      "name": "Leid",
+      "ritual": false
+    },
+    "spells.h-l.lenkendes-geschoss": {
+      "level": 1,
+      "name": "Lenkendes Geschoss",
+      "ritual": false
+    },
+    "spells.h-l.leuchtfeuer-der-hoffnung": {
+      "level": 3,
+      "name": "Leuchtfeuer der Hoffnung",
+      "ritual": false
+    },
+    "spells.m-p.macht-der-vorstellungskraft": {
+      "level": 2,
+      "name": "Macht der Vorstellungskraft",
+      "ritual": false
+    },
+    "spells.m-p.maechtige-unsichtbarkeit": {
+      "level": 4,
+      "name": "Mächtige Unsichtbarkeit",
+      "ritual": false
+    },
+    "spells.m-p.maechtiges-trugbild": {
+      "level": 3,
+      "name": "Mächtiges Trugbild",
+      "ritual": false
+    },
+    "spells.m-p.magie-bannen": {
+      "level": 3,
+      "name": "Magie bannen",
+      "ritual": false
+    },
+    "spells.m-p.magie-entdecken": {
+      "level": 1,
+      "name": "Magie entdecken",
+      "ritual": true
+    },
+    "spells.m-p.magierhand": {
+      "level": 0,
+      "name": "Magierhand",
+      "ritual": false
+    },
+    "spells.m-p.magierruestung": {
+      "level": 1,
+      "name": "Magierrüstung",
+      "ritual": false
+    },
+    "spells.m-p.magische-aura-des-arkanisten": {
+      "level": 2,
+      "name": "Magische Aura des Arkanisten",
+      "ritual": false
+    },
+    "spells.m-p.magische-waffe": {
+      "level": 2,
+      "name": "Magische Waffe",
+      "ritual": false
+    },
+    "spells.m-p.magischer-mund": {
+      "level": 2,
+      "name": "Magischer Mund",
+      "ritual": true
+    },
+    "spells.m-p.magisches-gefaess": {
+      "level": 6,
+      "name": "Magisches Gefäß",
+      "ritual": false
+    },
+    "spells.m-p.magisches-geschoss": {
+      "level": 1,
+      "name": "Magisches Geschoss",
+      "ritual": false
+    },
+    "spells.m-p.massen-einfluesterung": {
+      "level": 6,
+      "name": "Massen-Einflüsterung",
+      "ritual": false
+    },
+    "spells.m-p.massen-heilendes-wort": {
+      "level": 3,
+      "name": "Massen-Heilendes Wort",
+      "ritual": false
+    },
+    "spells.m-p.massen-heilung": {
+      "level": 9,
+      "name": "Massen-Heilung",
+      "ritual": false
+    },
+    "spells.m-p.massen-wunden-heilen": {
+      "level": 5,
+      "name": "Massen-Wunden heilen",
+      "ritual": false
+    },
+    "spells.m-p.metall-erhitzen": {
+      "level": 2,
+      "name": "Metall erhitzen",
+      "ritual": false
+    },
+    "spells.m-p.meteoritenschwarm": {
+      "level": 9,
+      "name": "Meteoritenschwarm",
+      "ritual": false
+    },
+    "spells.m-p.mit-pflanzen-sprechen": {
+      "level": 3,
+      "name": "Mit Pflanzen sprechen",
+      "ritual": false
+    },
+    "spells.m-p.mit-stein-verschmelzen": {
+      "level": 3,
+      "name": "Mit Stein verschmelzen",
+      "ritual": true
+    },
+    "spells.m-p.mit-tieren-sprechen": {
+      "level": 1,
+      "name": "Mit Tieren sprechen",
+      "ritual": true
+    },
+    "spells.m-p.mit-toten-sprechen": {
+      "level": 3,
+      "name": "Mit Toten sprechen",
+      "ritual": false
+    },
+    "spells.m-p.mondstrahl": {
+      "level": 2,
+      "name": "Mondstrahl",
+      "ritual": false
+    },
+    "spells.m-p.monster-beherrschen": {
+      "level": 8,
+      "name": "Monster beherrschen",
+      "ritual": false
+    },
+    "spells.m-p.monster-bezaubern": {
+      "level": 4,
+      "name": "Monster bezaubern",
+      "ritual": false
+    },
+    "spells.m-p.monster-festhalten": {
+      "level": 5,
+      "name": "Monster festhalten",
+      "ritual": false
+    },
+    "spells.m-p.nahrung-und-wasser-erschaffen": {
+      "level": 3,
+      "name": "Nahrung und Wasser erschaffen",
+      "ritual": false
+    },
+    "spells.m-p.nahrung-und-wasser-reinigen": {
+      "level": 1,
+      "name": "Nahrung und Wasser reinigen",
+      "ritual": true
+    },
+    "spells.m-p.nebelschritt": {
+      "level": 2,
+      "name": "Nebelschritt",
+      "ritual": false
+    },
+    "spells.m-p.nebelwolke": {
+      "level": 1,
+      "name": "Nebelwolke",
+      "ritual": false
+    },
+    "spells.m-p.notfall": {
+      "level": 6,
+      "name": "Notfall",
+      "ritual": false
+    },
+    "spells.m-p.person-beherrschen": {
+      "level": 5,
+      "name": "Person beherrschen",
+      "ritual": false
+    },
+    "spells.m-p.person-bezaubern": {
+      "level": 1,
+      "name": "Person bezaubern",
+      "ritual": false
+    },
+    "spells.m-p.person-festhalten": {
+      "level": 2,
+      "name": "Person festhalten",
+      "ritual": false
+    },
+    "spells.m-p.pflanzentor": {
+      "level": 6,
+      "name": "Pflanzentor",
+      "ritual": false
+    },
+    "spells.m-p.pflanzenwachstum": {
+      "level": 3,
+      "name": "Pflanzenwachstum",
+      "ritual": false
+    },
+    "spells.m-p.privates-heiligtum": {
+      "level": 4,
+      "name": "Privates Heiligtum",
+      "ritual": false
+    },
+    "spells.r-s.rascher-rueckzug": {
+      "level": 1,
+      "name": "Rascher Rückzug",
+      "ritual": false
+    },
+    "spells.r-s.redegewandtheit": {
+      "level": 8,
+      "name": "Redegewandtheit",
+      "ritual": false
+    },
+    "spells.r-s.regenbogenspiel": {
+      "level": 7,
+      "name": "Regenbogenspiel",
+      "ritual": false
+    },
+    "spells.r-s.regenbogenwand": {
+      "level": 9,
+      "name": "Regenbogenwand",
+      "ritual": false
+    },
+    "spells.r-s.regeneration": {
+      "level": 7,
+      "name": "Regeneration",
+      "ritual": false
+    },
+    "spells.r-s.reittier-finden": {
+      "level": 2,
+      "name": "Reittier finden",
+      "ritual": false
+    },
+    "spells.r-s.rieseninsekt": {
+      "level": 4,
+      "name": "Rieseninsekt",
+      "ritual": false
+    },
+    "spells.r-s.rindenhaut": {
+      "level": 2,
+      "name": "Rindenhaut",
+      "ritual": false
+    },
+    "spells.r-s.saeurepfeil": {
+      "level": 2,
+      "name": "Säurepfeil",
+      "ritual": false
+    },
+    "spells.r-s.saeurespritzer": {
+      "level": 0,
+      "name": "Säurespritzer",
+      "ritual": false
+    },
+    "spells.r-s.sagenkunde": {
+      "level": 5,
+      "name": "Sagenkunde",
+      "ritual": false
+    },
+    "spells.r-s.sanfte-ruhe": {
+      "level": 2,
+      "name": "Sanfte Ruhe",
+      "ritual": true
+    },
+    "spells.r-s.schauriger-strahl": {
+      "level": 0,
+      "name": "Schauriger Strahl",
+      "ritual": false
+    },
+    "spells.r-s.scheingelaende": {
+      "level": 4,
+      "name": "Scheingelände",
+      "ritual": false
+    },
+    "spells.r-s.schild": {
+      "level": 1,
+      "name": "Schild",
+      "ritual": false
+    },
+    "spells.r-s.schild-des-glaubens": {
+      "level": 1,
+      "name": "Schild des Glaubens",
+      "ritual": false
+    },
+    "spells.r-s.schlaf": {
+      "level": 1,
+      "name": "Schlaf",
+      "ritual": false
+    },
+    "spells.r-s.schmieren": {
+      "level": 1,
+      "name": "Schmieren",
+      "ritual": false
+    },
+    "spells.r-s.schneesturm": {
+      "level": 3,
+      "name": "Schneesturm",
+      "ritual": false
+    },
+    "spells.r-s.schockgriff": {
+      "level": 0,
+      "name": "Schockgriff",
+      "ritual": false
+    },
+    "spells.r-s.schuetzendes-band": {
+      "level": 2,
+      "name": "Schützendes Band",
+      "ritual": false
+    },
+    "spells.r-s.schutz-vor-energie": {
+      "level": 3,
+      "name": "Schutz vor Energie",
+      "ritual": false
+    },
+    "spells.r-s.schutz-vor-gift": {
+      "level": 2,
+      "name": "Schutz vor Gift",
+      "ritual": false
+    },
+    "spells.r-s.schutz-vor-gut-und-boese": {
+      "level": 1,
+      "name": "Schutz vor Gut und Böse",
+      "ritual": false
+    },
+    "spells.r-s.schutzgeister": {
+      "level": 3,
+      "name": "Schutzgeister",
+      "ritual": false
+    },
+    "spells.r-s.schutzhuelle-gegen-lebendes": {
+      "level": 5,
+      "name": "Schutzhülle gegen Lebendes",
+      "ritual": false
+    },
+    "spells.r-s.schutzkreis": {
+      "level": 3,
+      "name": "Schutzkreis",
+      "ritual": false
+    },
+    "spells.r-s.schwache-elementare-beschwoeren": {
+      "level": 4,
+      "name": "Schwache Elementare beschwören",
+      "ritual": false
+    },
+    "spells.r-s.schwache-genesung": {
+      "level": 2,
+      "name": "Schwache Genesung",
+      "ritual": false
+    },
+    "spells.r-s.schwaechestrahl": {
+      "level": 2,
+      "name": "Schwächestrahl",
+      "ritual": false
+    },
+    "spells.r-s.schwarze-tentakel": {
+      "level": 4,
+      "name": "Schwarze Tentakel",
+      "ritual": false
+    },
+    "spells.r-s.schweben": {
+      "level": 2,
+      "name": "Schweben",
+      "ritual": false
+    },
+    "spells.r-s.schwebende-scheibe": {
+      "level": 1,
+      "name": "Schwebende Scheibe",
+      "ritual": true
+    },
+    "spells.r-s.schwerkraft-umkehren": {
+      "level": 7,
+      "name": "Schwerkraft umkehren",
+      "ritual": false
+    },
+    "spells.r-s.segnen": {
+      "level": 1,
+      "name": "Segnen",
+      "ritual": false
+    },
+    "spells.r-s.seiltrick": {
+      "level": 2,
+      "name": "Seiltrick",
+      "ritual": false
+    },
+    "spells.r-s.selbstverkleidung": {
+      "level": 1,
+      "name": "Selbstverkleidung",
+      "ritual": false
+    },
+    "spells.r-s.sengender-strahl": {
+      "level": 2,
+      "name": "Sengender Strahl",
+      "ritual": false
+    },
+    "spells.r-s.sengendes-niederstrecken": {
+      "level": 1,
+      "name": "Sengendes Niederstrecken",
+      "ritual": false
+    },
+    "spells.r-s.shillelagh": {
+      "level": 0,
+      "name": "Shillelagh",
+      "ritual": false
+    },
+    "spells.r-s.simulakrum": {
+      "level": 7,
+      "name": "Simulakrum",
+      "ritual": false
+    },
+    "spells.r-s.sofortige-beschwoerung": {
+      "level": 6,
+      "name": "Sofortige Beschwörung",
+      "ritual": true
+    },
+    "spells.r-s.sonnenfeuer": {
+      "level": 8,
+      "name": "Sonnenfeuer",
+      "ritual": false
+    },
+    "spells.r-s.sonnenstrahl": {
+      "level": 6,
+      "name": "Sonnenstrahl",
+      "ritual": false
+    },
+    "spells.r-s.spaetzuendender-feuerball": {
+      "level": 7,
+      "name": "Spätzündender Feuerball",
+      "ritual": false
+    },
+    "spells.r-s.spiegelbilder": {
+      "level": 2,
+      "name": "Spiegelbilder",
+      "ritual": false
+    },
+    "spells.r-s.spinnenklettern": {
+      "level": 2,
+      "name": "Spinnenklettern",
+      "ritual": false
+    },
+    "spells.r-s.spinnennetz": {
+      "level": 2,
+      "name": "Spinnennetz",
+      "ritual": false
+    },
+    "spells.r-s.sprachen-verstehen": {
+      "level": 1,
+      "name": "Sprachen verstehen",
+      "ritual": true
+    },
+    "spells.r-s.spruehende-farben": {
+      "level": 1,
+      "name": "Sprühende Farben",
+      "ritual": false
+    },
+    "spells.r-s.sprung": {
+      "level": 1,
+      "name": "Sprung",
+      "ritual": false
+    },
+    "spells.r-s.spurloses-gehen": {
+      "level": 2,
+      "name": "Spurloses Gehen",
+      "ritual": false
+    },
+    "spells.r-s.stein-formen": {
+      "level": 4,
+      "name": "Stein formen",
+      "ritual": false
+    },
+    "spells.r-s.steinhaut": {
+      "level": 4,
+      "name": "Steinhaut",
+      "ritual": false
+    },
+    "spells.r-s.steinwand": {
+      "level": 5,
+      "name": "Steinwand",
+      "ritual": false
+    },
+    "spells.r-s.sternenfunke": {
+      "level": 0,
+      "name": "Sternenfunke",
+      "ritual": false
+    },
+    "spells.r-s.stille": {
+      "level": 2,
+      "name": "Stille",
+      "ritual": true
+    },
+    "spells.r-s.stinkende-wolke": {
+      "level": 3,
+      "name": "Stinkende Wolke",
+      "ritual": false
+    },
+    "spells.r-s.strahl-der-uebelkeit": {
+      "level": 1,
+      "name": "Strahl der Übelkeit",
+      "ritual": false
+    },
+    "spells.r-s.strahlendes-niederstrecken": {
+      "level": 2,
+      "name": "Strahlendes Niederstrecken",
+      "ritual": false
+    },
+    "spells.r-s.sturm-der-vergeltung": {
+      "level": 9,
+      "name": "Sturm der Vergeltung",
+      "ritual": false
+    },
+    "spells.r-s.symbol": {
+      "level": 7,
+      "name": "Symbol",
+      "ritual": false
+    },
+    "spells.t-v.tageslicht": {
+      "level": 3,
+      "name": "Tageslicht",
+      "ritual": false
+    },
+    "spells.t-v.tanzende-lichter": {
+      "level": 0,
+      "name": "Tanzende Lichter",
+      "ritual": false
+    },
+    "spells.t-v.taschenspielerei": {
+      "level": 0,
+      "name": "Taschenspielerei",
+      "ritual": false
+    },
+    "spells.t-v.telekinese": {
+      "level": 5,
+      "name": "Telekinese",
+      "ritual": false
+    },
+    "spells.t-v.telepathische-bindung": {
+      "level": 5,
+      "name": "Telepathische Bindung",
+      "ritual": true
+    },
+    "spells.t-v.teleportieren": {
+      "level": 7,
+      "name": "Teleportieren",
+      "ritual": false
+    },
+    "spells.t-v.thaumaturgie": {
+      "level": 0,
+      "name": "Thaumaturgie",
+      "ritual": false
+    },
+    "spells.t-v.tier-beherrschen": {
+      "level": 4,
+      "name": "Tier beherrschen",
+      "ritual": false
+    },
+    "spells.t-v.tierbote": {
+      "level": 2,
+      "name": "Tierbote",
+      "ritual": true
+    },
+    "spells.t-v.tiere-beschwoeren": {
+      "level": 3,
+      "name": "Tiere beschwören",
+      "ritual": false
+    },
+    "spells.t-v.tiere-oder-pflanzen-aufspueren": {
+      "level": 2,
+      "name": "Tiere oder Pflanzen aufspüren",
+      "ritual": true
+    },
+    "spells.t-v.tierform": {
+      "level": 8,
+      "name": "Tierform",
+      "ritual": false
+    },
+    "spells.t-v.tierfreundschaft": {
+      "level": 1,
+      "name": "Tierfreundschaft",
+      "ritual": false
+    },
+    "spells.t-v.todeskreis": {
+      "level": 6,
+      "name": "Todeskreis",
+      "ritual": false
+    },
+    "spells.t-v.todesschutz": {
+      "level": 4,
+      "name": "Todesschutz",
+      "ritual": false
+    },
+    "spells.t-v.todeswolke": {
+      "level": 5,
+      "name": "Todeswolke",
+      "ritual": false
+    },
+    "spells.t-v.toedliches-phantom": {
+      "level": 4,
+      "name": "Tödliches Phantom",
+      "ritual": false
+    },
+    "spells.t-v.tor": {
+      "level": 9,
+      "name": "Tor",
+      "ritual": false
+    },
+    "spells.t-v.tote-beleben": {
+      "level": 3,
+      "name": "Tote beleben",
+      "ritual": false
+    },
+    "spells.t-v.tote-erwecken": {
+      "level": 5,
+      "name": "Tote erwecken",
+      "ritual": false
+    },
+    "spells.t-v.traum": {
+      "level": 5,
+      "name": "Traum",
+      "ritual": false
+    },
+    "spells.t-v.treuer-hund": {
+      "level": 4,
+      "name": "Treuer Hund",
+      "ritual": false
+    },
+    "spells.t-v.trugbild-projizieren": {
+      "level": 7,
+      "name": "Trugbild projizieren",
+      "ritual": false
+    },
+    "spells.t-v.tsunami": {
+      "level": 8,
+      "name": "Tsunami",
+      "ritual": false
+    },
+    "spells.t-v.unauffindbarkeit": {
+      "level": 3,
+      "name": "Unauffindbarkeit",
+      "ritual": false
+    },
+    "spells.t-v.unheimliches-schicksal": {
+      "level": 9,
+      "name": "Unheimliches Schicksal",
+      "ritual": false
+    },
+    "spells.t-v.unsichtbarer-diener": {
+      "level": 1,
+      "name": "Unsichtbarer Diener",
+      "ritual": true
+    },
+    "spells.t-v.unsichtbares-sehen": {
+      "level": 2,
+      "name": "Unsichtbares sehen",
+      "ritual": false
+    },
+    "spells.t-v.unsichtbarkeit": {
+      "level": 2,
+      "name": "Unsichtbarkeit",
+      "ritual": false
+    },
+    "spells.t-v.untote-erschaffen": {
+      "level": 6,
+      "name": "Untote erschaffen",
+      "ritual": false
+    },
+    "spells.t-v.unverwuestliche-sphaere": {
+      "level": 4,
+      "name": "Unverwüstliche Sphäre",
+      "ritual": false
+    },
+    "spells.t-v.unwiderstehlicher-tanz": {
+      "level": 6,
+      "name": "Unwiderstehlicher Tanz",
+      "ritual": false
+    },
+    "spells.t-v.vampirgriff": {
+      "level": 3,
+      "name": "Vampirgriff",
+      "ritual": false
+    },
+    "spells.t-v.verarbeitung": {
+      "level": 4,
+      "name": "Verarbeitung",
+      "ritual": false
+    },
+    "spells.t-v.verbannung": {
+      "level": 4,
+      "name": "Verbannung",
+      "ritual": false
+    },
+    "spells.t-v.verbergen": {
+      "level": 7,
+      "name": "Verbergen",
+      "ritual": false
+    },
+    "spells.t-v.verbuendeter-aus-den-ebenen": {
+      "level": 6,
+      "name": "Verbündeter aus den Ebenen",
+      "ritual": false
+    },
+    "spells.t-v.verderben": {
+      "level": 1,
+      "name": "Verderben",
+      "ritual": false
+    },
+    "spells.t-v.vergroessern-verkleinern": {
+      "level": 2,
+      "name": "Vergrößern/Verkleinern",
+      "ritual": false
+    },
+    "spells.t-v.verlangsamen": {
+      "level": 3,
+      "name": "Verlangsamen",
+      "ritual": false
+    },
+    "spells.t-v.verschonung-der-sterbenden": {
+      "level": 0,
+      "name": "Verschonung der Sterbenden",
+      "ritual": false
+    },
+    "spells.t-v.verschwimmen": {
+      "level": 2,
+      "name": "Verschwimmen",
+      "ritual": false
+    },
+    "spells.t-v.verstaendigung": {
+      "level": 3,
+      "name": "Verständigung",
+      "ritual": false
+    },
+    "spells.t-v.verstricken": {
+      "level": 1,
+      "name": "Verstricken",
+      "ritual": false
+    },
+    "spells.t-v.vertrauten-finden": {
+      "level": 1,
+      "name": "Vertrauten finden",
+      "ritual": true
+    },
+    "spells.t-v.verwandlung": {
+      "level": 4,
+      "name": "Verwandlung",
+      "ritual": false
+    },
+    "spells.t-v.verwirrung": {
+      "level": 4,
+      "name": "Verwirrung",
+      "ritual": false
+    },
+    "spells.t-v.verwuenschung": {
+      "level": 1,
+      "name": "Verwünschung",
+      "ritual": false
+    },
+    "spells.t-v.vollstaendige-genesung": {
+      "level": 5,
+      "name": "Vollständige Genesung",
+      "ritual": false
+    },
+    "spells.t-v.vorahnung": {
+      "level": 2,
+      "name": "Vorahnung",
+      "ritual": true
+    },
+    "spells.t-v.voraussicht": {
+      "level": 9,
+      "name": "Voraussicht",
+      "ritual": false
+    },
+    "spells.t-v.vorbestimmtes-trugbild": {
+      "level": 6,
+      "name": "Vorbestimmtes Trugbild",
+      "ritual": false
+    },
+    "spells.w-z.waechter-und-hueter": {
+      "level": 6,
+      "name": "Wächter und Hüter",
+      "ritual": false
+    },
+    "spells.w-z.waende-passieren": {
+      "level": 5,
+      "name": "Wände passieren",
+      "ritual": false
+    },
+    "spells.w-z.waffe-des-glaubens": {
+      "level": 2,
+      "name": "Waffe des Glaubens",
+      "ritual": false
+    },
+    "spells.w-z.wahre-auferstehung": {
+      "level": 9,
+      "name": "Wahre Auferstehung",
+      "ritual": false
+    },
+    "spells.w-z.wahre-verwandlung": {
+      "level": 9,
+      "name": "Wahre Verwandlung",
+      "ritual": false
+    },
+    "spells.w-z.wahrer-blick": {
+      "level": 6,
+      "name": "Wahrer Blick",
+      "ritual": false
+    },
+    "spells.w-z.wasser-atmen": {
+      "level": 3,
+      "name": "Wasser atmen",
+      "ritual": true
+    },
+    "spells.w-z.wasser-erschaffen-oder-zerstoeren": {
+      "level": 1,
+      "name": "Wasser erschaffen oder zerstören",
+      "ritual": false
+    },
+    "spells.w-z.wasser-kontrollieren": {
+      "level": 4,
+      "name": "Wasser kontrollieren",
+      "ritual": false
+    },
+    "spells.w-z.wasserwandeln": {
+      "level": 3,
+      "name": "Wasserwandeln",
+      "ritual": true
+    },
+    "spells.w-z.weg-finden": {
+      "level": 6,
+      "name": "Weg finden",
+      "ritual": false
+    },
+    "spells.w-z.weihen": {
+      "level": 5,
+      "name": "Weihen",
+      "ritual": false
+    },
+    "spells.w-z.weissagung": {
+      "level": 4,
+      "name": "Weissagung",
+      "ritual": true
+    },
+    "spells.w-z.wesen-des-waldes-beschwoeren": {
+      "level": 4,
+      "name": "Wesen des Waldes beschwören",
+      "ritual": false
+    },
+    "spells.w-z.wetterkontrolle": {
+      "level": 8,
+      "name": "Wetterkontrolle",
+      "ritual": false
+    },
+    "spells.w-z.widerstand": {
+      "level": 0,
+      "name": "Widerstand",
+      "ritual": false
+    },
+    "spells.w-z.wiederbeleben": {
+      "level": 3,
+      "name": "Wiederbeleben",
+      "ritual": false
+    },
+    "spells.w-z.wiedergeburt": {
+      "level": 5,
+      "name": "Wiedergeburt",
+      "ritual": false
+    },
+    "spells.w-z.windstoss": {
+      "level": 2,
+      "name": "Windstoß",
+      "ritual": false
+    },
+    "spells.w-z.windwall": {
+      "level": 3,
+      "name": "Windwall",
+      "ritual": false
+    },
+    "spells.w-z.windwandeln": {
+      "level": 6,
+      "name": "Windwandeln",
+      "ritual": false
+    },
+    "spells.w-z.winzige-huette": {
+      "level": 3,
+      "name": "Winzige Hütte",
+      "ritual": true
+    },
+    "spells.w-z.wirrnis": {
+      "level": 8,
+      "name": "Wirrnis",
+      "ritual": false
+    },
+    "spells.w-z.wort-der-macht-betaeubung": {
+      "level": 8,
+      "name": "Wort der Macht: Betäubung",
+      "ritual": false
+    },
+    "spells.w-z.wort-der-macht-heilung": {
+      "level": 9,
+      "name": "Wort der Macht: Heilung",
+      "ritual": false
+    },
+    "spells.w-z.wort-der-macht-tod": {
+      "level": 9,
+      "name": "Wort der Macht: Tod",
+      "ritual": false
+    },
+    "spells.w-z.wort-des-rueckrufs": {
+      "level": 6,
+      "name": "Wort des Rückrufs",
+      "ritual": false
+    },
+    "spells.w-z.wunden-heilen": {
+      "level": 1,
+      "name": "Wunden heilen",
+      "ritual": false
+    },
+    "spells.w-z.wunden-verursachen": {
+      "level": 1,
+      "name": "Wunden verursachen",
+      "ritual": false
+    },
+    "spells.w-z.wunsch": {
+      "level": 9,
+      "name": "Wunsch",
+      "ritual": false
+    },
+    "spells.w-z.zeichen-des-jaegers": {
+      "level": 1,
+      "name": "Zeichen des Jägers",
+      "ritual": false
+    },
+    "spells.w-z.zeitstopp": {
+      "level": 9,
+      "name": "Zeitstopp",
+      "ritual": false
+    },
+    "spells.w-z.zerbersten": {
+      "level": 2,
+      "name": "Zerbersten",
+      "ritual": false
+    },
+    "spells.w-z.zielsicherer-schlag": {
+      "level": 0,
+      "name": "Zielsicherer Schlag",
+      "ritual": false
+    },
+    "spells.w-z.zone-der-wahrheit": {
+      "level": 2,
+      "name": "Zone der Wahrheit",
+      "ritual": false
+    },
+    "spells.w-z.zungen": {
+      "level": 3,
+      "name": "Zungen",
+      "ritual": false
+    },
+    "spells.w-z.zutritt-verwehren": {
+      "level": 6,
+      "name": "Zutritt verwehren",
+      "ritual": true
+    },
+    "spells.w-z.zwang": {
+      "level": 4,
+      "name": "Zwang",
+      "ritual": false
+    }
+  },
   "startingEquipmentByLevel": [
     {
       "baseGold": 0,
