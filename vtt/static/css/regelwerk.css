@@ -332,6 +332,33 @@ body.regelwerk-page {
     }
 }
 
+.compendium-form { display: grid; gap: 0.7rem; }
+.compendium-field { display: grid; gap: 0.2rem; }
+.compendium-field label { font-weight: 800; font-size: 0.85rem; }
+.compendium-field select,
+.compendium-field input {
+    min-height: 2.4rem;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--regelwerk-border);
+    border-radius: 0.3rem;
+    font: inherit;
+    background: #fff;
+}
+.compendium-filters { display: grid; gap: 0.7rem; }
+.compendium-table td:first-child { font-weight: 700; }
+.compendium-table a { color: var(--regelwerk-accent); }
+.compendium-more {
+    margin: 1rem;
+    min-height: 2.6rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--regelwerk-accent);
+    border-radius: 0.3rem;
+    color: #fff;
+    background: var(--regelwerk-accent);
+    font: 700 0.95rem system-ui, sans-serif;
+    cursor: pointer;
+}
+
 @media print {
     @page { margin: 16mm; }
 

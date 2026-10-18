@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compendium · Regelwerk · Roll Drauf VTT</title>
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/book-page.css">
+    <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/regelwerk.css">
+</head>
+<body class="regelwerk-page">
+    <a class="regelwerk-skip" href="#compendiumResults">Zu den Ergebnissen springen</a>
+    <header class="regelwerk-site-header">
+        <nav class="book-dashboard-ribbon regelwerk-ribbon" aria-label="VTT-Hauptnavigation">
+            <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
+            <a class="book-dashboard-ribbon-btn" href="/campaigns">Kampagnen</a>
+            <a class="book-dashboard-ribbon-btn" href="/characters">Charaktere</a>
+            <a class="book-dashboard-ribbon-btn" href="/regelwerk">Regelwerk</a>
+            <a class="book-dashboard-ribbon-btn is-active" href="/regelwerk/compendium" aria-current="page">Compendium</a>
+            <a class="book-dashboard-ribbon-btn" href="/login.html">Anmelden</a>
+        </nav>
+        <div class="regelwerk-titlebar">
+            <div>
+                <p class="regelwerk-kicker">Roll Drauf VTT · SRD 5.2.1</p>
+                <h1>Compendium</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="regelwerk-layout">
+        <aside class="regelwerk-sidebar" aria-label="Filter">
+            <form id="compendiumForm" class="compendium-form" autocomplete="off">
+                <div class="compendium-field">
+                    <label for="cpType">Kategorie</label>
+                    <select id="cpType" name="type"></select>
+                </div>
+                <div class="compendium-field">
+                    <label for="cpQ">Name oder Kurztext</label>
+                    <input id="cpQ" name="q" type="search" maxlength="100">
+                </div>
+                <div id="cpFilters" class="compendium-filters"></div>
+                <div class="compendium-field">
+                    <label for="cpSort">Sortierung</label>
+                    <select id="cpSort" name="sort"></select>
+                </div>
+                <button type="button" id="cpReset">Filter zurücksetzen</button>
+            </form>
+            <div class="regelwerk-sidebar-actions">
+                <a href="/regelwerk">Zum Regelwerk</a>
+                <a href="/regelwerk/lizenz">Quelle &amp; Lizenz</a>
+            </div>
+        </aside>
+
+        <section class="regelwerk-article" id="compendiumResults" tabindex="-1" aria-busy="true">
+            <p id="cpStatus" class="regelwerk-status" role="status" aria-live="polite">Compendium wird geladen …</p>
+            <div class="regelwerk-table-wrap"><table class="regelwerk-table compendium-table" id="cpTable" hidden>
+                <caption id="cpCaption"></caption>
+                <thead id="cpHead"></thead>
+                <tbody id="cpBody"></tbody>
+            </table></div>
+            <button type="button" id="cpMore" class="compendium-more" hidden>Mehr anzeigen</button>
+        </section>
+    </main>
+
+    <footer class="regelwerk-footer">
+        <p>Quelle: Systemreferenzdokument 5.2.1 (Deutsch).</p>
+        <p><a href="/regelwerk/lizenz">CC BY 4.0 · Quellenangabe und Lizenz</a></p>
+    </footer>
+    <script src="/static/js/regelwerk-compendium.js"></script>
+</body>
+</html>

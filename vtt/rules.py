@@ -8,6 +8,7 @@ from pathlib import Path
 
 from flask import Blueprint, abort, current_app, jsonify, request, send_from_directory
 
+from vtt.rules_content.compendium import CompendiumQueryError, query_compendium
 from vtt.rules_content.generator import DEFAULT_PACKAGE, normalized_search_text
 
 
@@ -80,6 +81,16 @@ def reader_home():
     if not _enabled():
         abort(404)
     return _reader_shell()
+
+
+@rules_bp.get("/regelwerk/compendium")
+def reader_compendium():
+    if not _enabled():
+        abort(404)
+    response = send_from_directory(_TEMPLATES, "regelwerk-compendium.html")
+    response.cache_control.public = True
+    response.cache_control.max_age = 60
+    return response
 
 
 @rules_bp.get("/regelwerk/lizenz")
@@ -203,3 +214,24 @@ def public_license():
         "attribution": attribution,
     }
     return _public_json(payload, etag=manifest["license"]["attributionSha256"])
+
+
+@rules_bp.get(f"/api/rulesets/{_RULESET_ID}/compendium")
+def public_compendium():
+    if not _enabled():
+        return _json_not_found()
+    data = _load_json(_GENERATED / "compendium.json")
+    try:
+        payload = query_compendium(data, request.args.to_dict())
+    except CompendiumQueryError as error:
+        return _public_json({"error": str(error)}, status=400)
+    payload["rulesetVersion"] = data["rulesetVersion"]
+    return _public_json(payload)
+
+
+@rules_bp.get(f"/api/rulesets/{_RULESET_ID}/compendium/summary")
+def public_compendium_summary():
+    if not _enabled():
+        return _json_not_found()
+    data = _load_json(_GENERATED / "compendium.json")
+    return _public_json({"counts": data["counts"], "rulesetVersion": data["rulesetVersion"]})
