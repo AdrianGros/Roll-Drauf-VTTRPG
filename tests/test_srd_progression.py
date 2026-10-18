@@ -287,7 +287,7 @@ def test_level_up_validation_and_locks(client, other, data):
     assert other.post(url, json={"classKey": "wizard", "expectedLevel": 5}).status_code == 403
     assert client.post(url, json={"classKey": "wizard"}).get_json()["error"] == "expected_level_required"
     assert client.post(url, json={"classKey": "wizard", "expectedLevel": 4}).get_json()["error"] == "level_conflict"
-    assert client.post(url, json={"classKey": "fighter", "expectedLevel": 5}).get_json()["error"] == "invalid_class"
+    assert client.post(url, json={"classKey": "artificer", "expectedLevel": 5}).get_json()["error"] == "invalid_class"
     assert client.post(url, json={"expectedLevel": 5}).get_json()["error"] == "invalid_class"
     assert client.post(url, data="x", content_type="application/json").status_code == 400
     state = db.session.get(Character, cid).character_data["srd"]["state"]
@@ -363,3 +363,95 @@ def test_non_srd_characters_have_no_progression(client):
     assert client.get(f"{BASE}/characters/{plain['id']}/progression").status_code == 422
     assert client.put(f"{BASE}/characters/{plain['id']}/progression", json={"addXp": 5}).status_code == 422
     assert client.post(f"{BASE}/characters/{plain['id']}/level-up", json={"classKey": "wizard", "expectedLevel": 1}).status_code == 422
+
+
+# ------------------------------------------------------------------ P9: multiclassing
+
+def multiclass_character(client, data, key="fighter"):
+    state = level_one_state(data, key)
+    state["abilityBase"]["cha"] = 8
+    char = make_character(client, state)
+    award(client, char["id"], addXp=300)
+    return char
+
+
+def test_multiclass_options_name_eligible_and_blocked_classes(client, data):
+    cid = multiclass_character(client, data)["id"]
+    options = {o["classKey"]: o for o in client.get(f"{BASE}/characters/{cid}/progression").get_json()["multiclassOptions"]}
+    assert options["fighter"]["owned"] and options["fighter"]["level"] == 1
+    assert options["wizard"]["eligible"] and options["wizard"]["reason"] is None
+    assert not options["bard"]["eligible"] and "Charisma" in options["bard"]["reason"]
+    assert len(options) == 12
+
+
+def test_multiclass_into_wizard_adds_a_level_one_wizard(client, data):
+    cid = multiclass_character(client, data)["id"]
+    preview = client.post(f"{BASE}/characters/{cid}/level-up/preview", json={"classKey": "wizard"}).get_json()
+    need = preview["needs"]
+    assert need["newClassLevel"] == 1 and need["newTotalLevel"] == 2
+    assert need["multiclass"]["grants"] is not None
+    assert need["spells"]["spellbook"]["count"] > 0 and need["spells"]["cantrips"]["count"] > 0
+    state = db.session.get(Character, cid).character_data["srd"]["state"]
+    payload = payload_from_needs(data, need, evaluate(data, state), state)
+    payload["expectedLevel"] = 1
+    resp = client.post(f"{BASE}/characters/{cid}/level-up", json=payload)
+    assert resp.status_code == 200, resp.get_json()
+    stored = db.session.get(Character, cid)
+    classes = {c["classKey"]: c["level"] for c in stored.character_data["srd"]["derived"]["classes"]}
+    assert classes == {"fighter": 1, "wizard": 1}
+    assert stored.level == 2 and "Magier" in stored.class_name and "Kämpfer" in stored.class_name
+    sheet = client.get(f"{BASE}/characters/{cid}").get_json()["evaluation"]
+    assert sheet["spellcasting"] is not None
+
+
+def test_multiclass_prerequisite_blocks_the_level_up(client, data):
+    cid = multiclass_character(client, data)["id"]
+    preview = client.post(f"{BASE}/characters/{cid}/level-up/preview", json={"classKey": "bard"}).get_json()
+    assert any(b["code"] == "multiclass-prerequisite" for b in preview["blockers"])
+    resp = client.post(f"{BASE}/characters/{cid}/level-up", json={"classKey": "bard", "expectedLevel": 1})
+    assert resp.status_code == 422 and resp.get_json()["error"] == "level_up_incomplete"
+    assert db.session.get(Character, cid).level == 1
+
+
+def test_multiclass_skill_grant_is_required_and_applied(client, data):
+    cid = multiclass_character(client, data)["id"]
+    need = client.post(f"{BASE}/characters/{cid}/level-up/preview", json={"classKey": "rogue"}).get_json()
+    grant = next(c for c in data["classes"] if c["classKey"] == "rogue")["multiclassGrants"]["skillChoices"]
+    assert need["needs"]["multiclass"]["skillChoices"]["count"] == grant["count"]
+    assert any(b["code"] == "multiclass-skills" for b in need["blockers"])
+    state = db.session.get(Character, cid).character_data["srd"]["state"]
+    evaluation = evaluate(data, state)
+    payload = payload_from_needs(data, need["needs"], evaluation, state)
+    owned = {s for s, row in evaluation["skills"].items() if row["proficiency"] != "none"}
+    options = need["needs"]["multiclass"]["skillChoices"]["options"] or [s["id"] for s in data["skills"]]
+    pick = next(s for s in options if s not in owned)
+    payload["multiclassSkills"] = [pick]
+    ok = client.post(f"{BASE}/characters/{cid}/level-up/preview", json=payload).get_json()
+    assert not any(b["code"] == "multiclass-skills" for b in ok["blockers"])
+    assert ok["evaluation"]["skills"][pick]["proficiency"] == "proficient"
+    bad = client.post(f"{BASE}/characters/{cid}/level-up/preview", json={**payload, "multiclassSkills": ["nonsense"]}).get_json()
+    assert any(b["code"] == "multiclass-skills" and b["severity"] == "error" for b in bad["blockers"])
+    stored = client.post(f"{BASE}/characters/{cid}/level-up", json={**payload, "expectedLevel": 1})
+    assert stored.status_code == 200, stored.get_json()
+    assert db.session.get(Character, cid).character_data["srd"]["state"]["skills"]["multiclass"]["rogue"] == [pick]
+
+
+def test_multiclass_skills_are_refused_for_classes_the_character_already_has(client, data):
+    cid = multiclass_character(client, data)["id"]
+    resp = client.post(f"{BASE}/characters/{cid}/level-up/preview", json={"classKey": "fighter", "multiclassSkills": ["acrobatics"]})
+    assert resp.status_code == 422 and resp.get_json()["error"] == "invalid_payload"
+
+
+def test_unknown_class_is_refused(client, data):
+    cid = multiclass_character(client, data)["id"]
+    resp = client.post(f"{BASE}/characters/{cid}/level-up/preview", json={"classKey": "artificer"})
+    assert resp.status_code == 422 and resp.get_json()["error"] == "invalid_class"
+
+
+def test_caster_level_slots_combine_across_classes(data):
+    state = level_one_state(data, "wizard")
+    state["levels"] = [{"classKey": "wizard"}, {"classKey": "wizard", "hp": "fixed"}, {"classKey": "cleric", "hp": "fixed"}, {"classKey": "cleric", "hp": "fixed"}]
+    evaluation = evaluate(data, state)
+    assert [c["level"] for c in evaluation["classes"]] == [2, 2]
+    slots = evaluation["spellcasting"]["slots"]
+    assert slots and sum(slots) >= 4

@@ -244,6 +244,7 @@
       featureChoices: {},
       expertise: null,
       spells: null,
+      multiclassSkills: null,
       result: null,
       error: '',
       busy: false,
@@ -280,12 +281,14 @@
       if (value !== undefined && value !== '' && !(Array.isArray(value) && !value.length)) choices[entry.id] = value;
     });
     if (Object.keys(choices).length) out.featureChoices = choices;
+    if (need?.multiclass?.skillChoices && w.multiclassSkills?.length) out.multiclassSkills = w.multiclassSkills;
     if (need?.expertise && w.expertise) out.expertise = w.expertise;
     if (need?.spells && w.spells) out.spells = w.spells;
     return out;
   }
 
   function seedFromNeeds(w, need) {
+    if (need.multiclass?.skillChoices && w.multiclassSkills === null) w.multiclassSkills = need.multiclass.skillChoices.current.slice();
     if (need.expertise && w.expertise === null) w.expertise = need.expertise.current.slice();
     if (need.spells && w.spells === null) {
       w.spells = {
@@ -565,11 +568,27 @@
     return box;
   }
 
+  function multiclassStep(w, need) {
+    const info = need.multiclass;
+    const box = section(`Mehrklassigkeit: ${need.className}`);
+    if (info.grants.source) box.append(element('p', 'srd-prog-hint', info.grants.source));
+    if (info.skillChoices) {
+      const options = info.skillChoices.options
+        ? info.skillChoices.options.map((id) => ({ id, name: current.evaluation?.skills?.[id]?.name || srdCreatorData.skills.find((s) => s.id === id)?.name || id }))
+        : srdCreatorData.skills.map((s) => ({ id: s.id, name: s.name }));
+      const picked = w.multiclassSkills || [];
+      box.append(element('h5', 'srd-prog-sub', 'Fertigkeit'), counter(picked.length, info.skillChoices.count));
+      box.append(checklist(options, picked, info.skillChoices.count, (next) => change((x) => { x.multiclassSkills = next; }, true)));
+    }
+    return box;
+  }
+
   function expertiseStep(w, need) {
     const box = section('Expertise');
     const skills = current.evaluation?.skills || {};
+    const gained = w.multiclassSkills || [];
     const pool = Object.entries(skills)
-      .filter(([, row]) => row.proficiency === 'proficient' || row.proficiency === 'expertise')
+      .filter(([id, row]) => row.proficiency === 'proficient' || row.proficiency === 'expertise' || gained.includes(id))
       .map(([id, row]) => ({ id, name: row.name }));
     const picked = w.expertise || [];
     const total = need.expertise.current.length + need.expertise.add;
@@ -625,22 +644,33 @@
     head.append(chip(`Übungsbonus +${need.proficiencyBonus}`));
     panel.append(head);
 
-    const classes = current.evaluation?.classes || [];
-    if (classes.length > 1) {
+    const options = current.payload.multiclassOptions || [];
+    if (options.filter((o) => o.eligible).length > 1) {
       const select = element('select', 'srd-prog-select');
       select.id = 'srdWizClass';
-      classes.forEach((c) => {
-        const option = element('option', null, `${c.name} ${c.level}`);
+      options.forEach((c) => {
+        const option = element('option', null, c.owned ? `${c.name} ${c.level}` : `${c.name} (neue Klasse)${c.eligible ? '' : ' – nicht verfügbar'}`);
         option.value = c.classKey;
+        option.disabled = !c.eligible;
+        if (c.reason) option.title = c.reason;
         select.append(option);
       });
       select.value = w.classKey;
       select.addEventListener('change', () => {
-        current.wizard = { ...w, classKey: select.value, subclass: '', advancement: {}, featureChoices: {}, expertise: null, spells: null, result: null };
+        current.wizard = { ...w, classKey: select.value, subclass: '', advancement: {}, featureChoices: {}, expertise: null, spells: null, multiclassSkills: null, result: null };
         render();
         refreshPreview(true);
       });
       panel.append(labelled('Klasse', select));
+      const blocked = options.filter((o) => !o.eligible);
+      if (blocked.length) {
+        const details = element('details', 'srd-prog-history');
+        details.append(element('summary', null, `Nicht verfügbare Klassen (${blocked.length})`));
+        const list = element('ul', 'srd-prog-history-list');
+        blocked.forEach((o) => list.append(element('li', null, o.reason)));
+        details.append(list);
+        panel.append(details);
+      }
     }
 
     if (need.features.length) {
@@ -651,6 +681,7 @@
     }
 
     panel.append(hpStep(w, need));
+    if (need.multiclass) panel.append(multiclassStep(w, need));
     if (need.subclass) panel.append(subclassStep(w, need));
     if (need.advancement) panel.append(advancementStep(w, need));
     need.featureChoices.forEach((pending) => panel.append(featureChoiceStep(w, need, pending)));
@@ -694,7 +725,7 @@
       const body = { ...payloadFromWizard(), expectedLevel: current.payload.status.level };
       const result = await auth.makeAuthRequest(base('/level-up'), 'POST', body);
       current.wizard = null;
-      current.payload = { status: result.status, history: result.history, canManage: result.canManage, canLevelUp: result.canLevelUp, xpTable: result.xpTable };
+      current.payload = { status: result.status, history: result.history, canManage: result.canManage, canLevelUp: result.canLevelUp, xpTable: result.xpTable, multiclassOptions: result.multiclassOptions };
       current.notice = `Aufgestiegen auf Stufe ${result.level} (${result.hpGain >= 0 ? '+' : ''}${result.hpGain} Trefferpunkte).`;
       render();
       current.onChange?.({ reload: true, level: result.level, message: current.notice });

@@ -111,6 +111,9 @@
         const first = (state.levels || [])[0] && state.levels[0].classKey;
         if (state.skills) {
             if (first !== oldFirst) state.skills.class = [];
+            if (state.skills.multiclass) {
+                Object.keys(state.skills.multiclass).forEach((k) => { if (!lv[k] || k === first) delete state.skills.multiclass[k]; });
+            }
             if (state.skills.expertise) {
                 let need = 0;
                 Object.keys(lv).forEach((k) => cls(k).featureChoices.forEach((c) => { if (c.kind === 'expertise' && c.level <= lv[k]) need += c.count || 0; }));
@@ -424,6 +427,18 @@
             bg ? h('p', null, h('strong', { text: 'Vom Hintergrund: ' }), fromBg.map(SC.skillName).join(', ')) : h('p', { class: 'sc-muted', text: 'Hintergrund noch nicht gewählt.' }),
             counter(chosen.length, c.skillChoices.count),
             countedList(options, chosen, c.skillChoices.count, (next) => set('class', next), 'Klassenfertigkeiten'));
+        classOrder().slice(1).forEach((key) => {
+            const grant = cls(key).multiclassGrants.skillChoices;
+            if (!grant) return;
+            const picked = ((st().skills || {}).multiclass || {})[key] || [];
+            const pool = grant.from === 'class' ? SC.util.classSkillOptions(cls(key)) : Object.keys(SC.L.skills);
+            const options = pool.map((id) => ({ id, name: SC.skillName(id) }));
+            wrap.append(h('h3', { text: `Mehrklassigkeit: ${cls(key).name}` }), counter(picked.length, grant.count),
+                countedList(options, picked, grant.count, (next) => SC.mutate((state) => {
+                    state.skills = state.skills || {};
+                    state.skills.multiclass = { ...(state.skills.multiclass || {}), [key]: next };
+                }), `Fertigkeit durch ${cls(key).name}`));
+        });
         const need = expectedExpertise();
         if (need) {
             const prof = Object.entries((ev() || { skills: {} }).skills).filter(([, v]) => v.proficiency !== 'none').map(([id, v]) => ({ id, name: v.name }));

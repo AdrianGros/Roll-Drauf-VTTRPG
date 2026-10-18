@@ -178,7 +178,19 @@ def needs(data, state, evaluation, class_key):
         "featureChoices": [],
         "expertise": None,
         "spells": None,
+        "multiclass": None,
     }
+    if new_level == 1:
+        grants = entry["multiclassGrants"]
+        picks = grants.get("skillChoices")
+        out["multiclass"] = {
+            "grants": grants,
+            "skillChoices": {
+                "count": picks["count"],
+                "options": entry["skillChoices"]["options"] if picks["from"] == "class" else None,
+                "current": ((state.get("skills") or {}).get("multiclass") or {}).get(class_key) or [],
+            } if picks else None,
+        }
     if new_level >= entry["subclassLevels"][0] and not subclasses.get(class_key):
         out["subclass"] = {"options": entry["subclasses"]}
     if new_level in entry["asiLevels"] or new_level == entry["epicBoonLevel"]:
@@ -219,6 +231,37 @@ def needs(data, state, evaluation, class_key):
     return out
 
 
+def multiclass_options(data, evaluation):
+    """Every class the character could take its next level in, with eligibility under the multiclass prerequisite."""
+    rule = data["multiclass"]["prerequisite"]
+    classes = _lookup(data)
+    scores = {a: v["score"] for a, v in evaluation["abilities"].items()}
+    names = {a["id"]: a["name"] for a in data["abilities"]}
+
+    def check(entry):
+        need = entry["primaryAbilities"]
+        met = [scores[a] >= rule["minimumScore"] for a in need["abilities"]]
+        ok = any(met) if need["mode"] == "any" else all(met)
+        label = (" oder " if need["mode"] == "any" else " und ").join(names[a] for a in need["abilities"])
+        return ok, f"{entry['name']}: {label} {rule['minimumScore']}"
+
+    owned = {c["classKey"]: c["level"] for c in evaluation["classes"]}
+    unmet = [msg for ok, msg in (check(classes[key]) for key in owned) if not ok]
+    options = []
+    for entry in data["classes"]:
+        key = entry["classKey"]
+        if key in owned:
+            options.append({"classKey": key, "name": entry["name"], "owned": True, "level": owned[key], "eligible": True, "reason": None})
+            continue
+        ok, msg = check(entry)
+        reasons = ([msg] if not ok else []) + unmet
+        options.append({
+            "classKey": key, "name": entry["name"], "owned": False, "level": 0, "eligible": not reasons,
+            "reason": None if not reasons else "Mehrklassigkeit verlangt Hauptattribut mindestens " + ", ".join(reasons),
+        })
+    return options
+
+
 def _string_list(value, name):
     if not isinstance(value, list) or not all(isinstance(v, str) for v in value):
         raise ProgressionError("invalid_payload", f"„{name}“ muss eine Liste von Kennungen sein.")
@@ -232,11 +275,13 @@ def build_state(data, state, payload):
     classes = _lookup(data)
     class_key = payload.get("classKey")
     counts = _levels_by_class(state)
-    if class_key not in classes or class_key not in counts:
-        raise ProgressionError("invalid_class", "Die Klasse gehört nicht zu diesem Charakter.")
+    if class_key not in classes:
+        raise ProgressionError("invalid_class", "Unbekannte Klasse.")
     entry = classes[class_key]
     new = copy.deepcopy(state)
-    new_level = counts[class_key] + 1
+    new_level = counts.get(class_key, 0) + 1
+    if class_key not in counts and sum(counts.values()) >= data["maxLevel"]:
+        raise ProgressionError("max_level", "Stufe 20 ist bereits erreicht.", 409)
     hp = payload.get("hp", "fixed")
     if hp != "fixed" and (_int(hp) is None):
         raise ProgressionError("invalid_hp", "Trefferpunkte: „fixed“ oder der gewürfelte Wert.")
@@ -275,6 +320,12 @@ def build_state(data, state, payload):
             else:
                 value = _string_list(value, choice_id)
             bucket[choice_id] = value
+
+    multiclass_skills = payload.get("multiclassSkills")
+    if multiclass_skills is not None:
+        if class_key in counts or not entry["multiclassGrants"].get("skillChoices"):
+            raise ProgressionError("invalid_payload", "Diese Klasse gewährt keine Fertigkeit bei Mehrklassigkeit.")
+        new.setdefault("skills", {}).setdefault("multiclass", {})[class_key] = _string_list(multiclass_skills, "multiclassSkills")
 
     expertise = payload.get("expertise")
     if expertise is not None:

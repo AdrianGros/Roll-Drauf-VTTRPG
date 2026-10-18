@@ -345,6 +345,22 @@ def evaluate(data: dict, state: dict) -> dict:
             if proficiency.get(skill) == "proficient":
                 findings.add(WARNING, "skill-duplicate", f"„{skills[skill]['name']}“ kommt aus Klasse und Hintergrund; wähle für die Klassenfertigkeit eine andere.", "skills.class")
             proficiency[skill] = "proficient"
+    multiclass_skills = _dict(skill_state.get("multiclass"))
+    for key in order[1:]:
+        wanted = classes[key]["multiclassGrants"].get("skillChoices")
+        if not wanted:
+            continue
+        picks = [s for s in _list(multiclass_skills.get(key)) if isinstance(s, str)]
+        options = classes[key]["skillChoices"]["options"] if wanted["from"] == "class" else []
+        if len(picks) < wanted["count"]:
+            findings.add(INCOMPLETE, "multiclass-skills", f"{classes[key]['name']} (Mehrklassigkeit): Wähle {wanted['count']} Fertigkeit.", f"skills.multiclass.{key}")
+        elif len(set(picks)) != wanted["count"] or any(s not in skills or (options and s not in options) for s in picks):
+            findings.add(ERROR, "multiclass-skills", f"{classes[key]['name']} (Mehrklassigkeit): Genau {wanted['count']} gültige Fertigkeit wählen.", f"skills.multiclass.{key}")
+        for skill in picks:
+            if skill in skills:
+                if proficiency.get(skill) == "proficient":
+                    findings.add(WARNING, "skill-duplicate", f"„{skills[skill]['name']}“ ist schon geübt; wähle für {classes[key]['name']} eine andere Fertigkeit.", f"skills.multiclass.{key}")
+                proficiency[skill] = "proficient"
     for skill in _list(skill_state.get("other")):
         if skill in skills:
             proficiency.setdefault(skill, "proficient")

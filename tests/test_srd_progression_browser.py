@@ -71,3 +71,50 @@ def test_xp_award_and_level_up_wizard(site, data, width):
         expect(page.locator("#srdWizard")).to_have_count(0)
         assert not errors, errors
         browser.close()
+
+
+@pytest.mark.parametrize("width", [1440, 390])
+def test_multiclass_level_up_wizard(site, data, width):
+    from playwright.sync_api import expect, sync_playwright
+
+    app, origin, info = site
+    char_id = _character(app, info, data)
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+        context = browser.new_context(viewport={"width": width, "height": 1000}, reduced_motion="reduce")
+        context.add_cookies([{"name": "access_token_cookie", "value": info["token"], "url": origin, "httpOnly": True}])
+        page = context.new_page()
+        page.set_default_timeout(15000)
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.goto(f"{origin}/character-sheet?id={char_id}&mode=edit")
+        expect(page.locator("#srdProgression")).to_contain_text("Stufe 5")
+        page.fill("#srdProgXpAmount", "7500")
+        page.get_by_role("button", name="EP vergeben").click()
+        page.get_by_role("button", name="Stufe 6 aufsteigen").click()
+        select = page.locator("#srdWizClass")
+        expect(select).to_be_visible()
+        target = page.evaluate("""() => {
+            const options = [...document.querySelectorAll('#srdWizClass option')].filter((o) => !o.disabled && o.textContent.includes('neue Klasse'));
+            return (options.find((o) => o.value === 'fighter') || options[0]).value;
+        }""")
+        select.select_option(target)
+        expect(page.locator("#srdWizard")).to_contain_text("Stufe 6:")
+        expect(page.locator("#srdWizard")).to_contain_text(" 1")
+        expect(page.locator("#srdWizard")).to_contain_text("Mehrklassigkeit")
+        expect(page.locator("#srdWizConfirm")).to_be_disabled()
+        _fill_open_steps(page)
+        for index in range(page.locator("#srdWizard .srd-prog-step").count()):
+            step = page.locator("#srdWizard .srd-prog-step").nth(index)
+            title = step.locator(".srd-prog-step-title").inner_text()
+            if title not in ("Trefferpunkte", "Unterklasse") and step.locator(".srd-prog-toggle").count() and not step.locator(".srd-prog-counter").count():
+                step.locator(".srd-prog-toggle").first.click()
+                _fill_open_steps(page)
+        expect(page.locator("#srdWizConfirm")).to_be_enabled()
+        overflow = page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
+        assert overflow <= 1, overflow
+        page.locator("#srdWizConfirm").click()
+        expect(page.locator("#charLevel")).to_have_value("6")
+        expect(page.locator("#srdWizard")).to_have_count(0)
+        assert not errors, errors
+        browser.close()

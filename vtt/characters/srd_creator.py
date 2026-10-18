@@ -549,6 +549,7 @@ def _progression_payload(char, user, can_manage):
         'canManage': can_manage,
         'canLevelUp': char.user_id == user.id,
         'xpTable': [{'level': row['level'], 'xp': row['xp']} for row in data['levels']],
+        'multiclassOptions': srd_progression.multiclass_options(data, evaluate(data, ((char.character_data or {}).get('srd') or {}).get('state') or {})),
     }
 
 
