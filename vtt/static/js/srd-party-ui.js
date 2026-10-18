@@ -70,6 +70,7 @@
   function card(row, isDm) {
     const node = el('article', 'sp-card');
     node.dataset.characterId = String(row.id);
+    if (row.accent) node.style.setProperty('--sp-accent', row.accent);
     const head = el('div', 'sp-card-head');
     const title = el('h2', 'sp-card-title');
     const link = el('a', 'sp-card-link', row.name);

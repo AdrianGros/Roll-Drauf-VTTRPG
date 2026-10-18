@@ -248,6 +248,76 @@
     return block;
   }
 
+  function applyTheme(themeId, themes) {
+    const found = (themes || []).find((t) => t.id === themeId);
+    if (!found) return;
+    document.body.dataset.srdTheme = found.id;
+    document.body.style.setProperty('--srd-accent', found.accent);
+  }
+
+  async function download(path, fallbackName, retry = true) {
+    const response = await fetch(base(path), { credentials: 'include', headers: window.Auth.buildHeaders('GET', false) });
+    if (response.status === 401 && retry && await window.Auth.refreshAccessToken()) return download(path, fallbackName, false);
+    if (!response.ok) throw new Error(String(response.status));
+    const disposition = response.headers.get('Content-Disposition') || '';
+    const match = /filename="([^"]+)"/.exec(disposition);
+    const url = URL.createObjectURL(await response.blob());
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = match ? match[1] : fallbackName;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+  }
+
+  async function runDownload(path, fallbackName, doneText) {
+    setStatus('Wird erstellt …', false);
+    try { await download(path, fallbackName); setStatus(doneText, false); } catch (error) { setStatus('Der Download ist fehlgeschlagen. Bitte versuche es erneut.', true); }
+  }
+
+  async function putTheme(themeId) {
+    try {
+      const result = await auth.makeAuthRequest(base('/appearance'), 'PUT', { theme: themeId });
+      state.appearance = result;
+      applyTheme(result.theme, result.themes);
+      render();
+      setStatus('Farbe gespeichert.', false);
+    } catch (error) { setStatus(failureText(error), true); }
+  }
+
+  function appearanceBlock() {
+    const block = element('div', 'srd-man-block');
+    block.append(element('div', 'srd-sheet-subtitle', 'Darstellung, Export und Druck'));
+    const row = element('div', 'srd-man-actions');
+    const pdf = button('Als PDF drucken', 'srd-man-btn srd-man-primary', () => runDownload('/pdf', 'charakterbogen.pdf', 'PDF erstellt.'));
+    pdf.id = 'srdManagePdf';
+    row.append(pdf);
+    if (state.canEdit) {
+      const json = button('Als Datei sichern (JSON)', 'srd-man-btn', () => runDownload('/export', 'charakter.rollcharakter.json', 'Sicherung erstellt. Du kannst sie unter „Charaktere erstellen“ wieder einlesen.'));
+      json.id = 'srdManageExport';
+      row.append(json);
+    }
+    block.append(row);
+    if (state.canEdit && state.appearance) {
+      const field = element('div', 'srd-man-field');
+      field.append(element('span', 'srd-man-field-label', 'Farbe des Bogens auf dem Bildschirm'));
+      const swatches = element('div', 'srd-man-swatches');
+      swatches.setAttribute('role', 'group');
+      swatches.setAttribute('aria-label', 'Farbe wählen');
+      state.appearance.themes.forEach((theme) => {
+        const swatch = button(theme.name, 'srd-man-swatch', () => putTheme(theme.id));
+        swatch.dataset.theme = theme.id;
+        swatch.style.setProperty('--swatch', theme.accent);
+        swatch.setAttribute('aria-pressed', theme.id === state.appearance.theme ? 'true' : 'false');
+        swatches.append(swatch);
+      });
+      field.append(swatches);
+      block.append(field);
+    }
+    return block;
+  }
+
   function render() {
     const root = document.getElementById('srdManage');
     if (!root) return;
@@ -263,6 +333,7 @@
     state.companions.forEach((companion, index) => list.append(companionCard(companion, index)));
     if (!state.companions.length) list.append(element('div', 'srd-man-hint', 'Keine Begleiter eingetragen (Tierbegleiter, Vertraute, Beschworene, Gefolge).'));
     root.append(list);
+    root.append(appearanceBlock());
     if (state.canEdit) {
       const row = element('div', 'srd-man-actions');
       const add = button('Begleiter hinzufügen', 'srd-man-btn', () => {
@@ -301,6 +372,10 @@
         try { state.sharing = await auth.makeAuthRequest(base('/sharing')); } catch (error) { /* optional */ }
         if (state.campaignId && !state.campaigns.some((c) => c.id === state.campaignId)) state.campaigns.push({ id: state.campaignId, name: 'Aktuelle Kampagne' });
       }
+      try {
+        state.appearance = await auth.makeAuthRequest(base('/appearance'));
+        applyTheme(state.appearance.theme, state.appearance.themes);
+      } catch (error) { /* optional */ }
       render();
     } catch (error) {
       root.replaceChildren(element('div', 'sheet-empty', 'Begleiter und Verwaltung konnten nicht geladen werden.'));

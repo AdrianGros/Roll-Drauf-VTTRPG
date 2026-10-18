@@ -756,3 +756,4 @@ def put_companions(char_id):
 
 
 from vtt.characters import srd_party_routes  # noqa: E402,F401  (registers the campaign routes on this blueprint)
+from vtt.characters import srd_export_routes  # noqa: E402,F401  (registers export, import, PDF and theme routes)

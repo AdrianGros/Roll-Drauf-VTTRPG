@@ -30,6 +30,7 @@
 
   function render(sheet) {
     const root = document.getElementById('ssSheet');
+    if (/^#[0-9a-f]{6}$/i.test(sheet.accent || '')) root.style.setProperty('--ss-accent', sheet.accent);
     root.replaceChildren();
     document.getElementById('ssTitle').textContent = sheet.name;
     document.title = `${sheet.name} · Geteilter Charakter · Roll Drauf VTT`;

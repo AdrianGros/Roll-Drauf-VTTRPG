@@ -486,6 +486,33 @@
         showHome();
     }
 
+    const IMPORT_ERRORS = {
+        too_large: 'Die Datei ist zu groß (höchstens 400 KB).',
+        invalid_body: 'Die Datei ist keine gültige Charakterdatei.',
+        import_invalid: 'Die Datei passt nicht zu diesem Regelwerk oder wurde verändert.',
+        rate_limited: 'Zu viele Importe. Bitte versuche es später erneut.',
+    };
+
+    async function importFile(input, message) {
+        const file = input.files && input.files[0];
+        if (!file) { message.textContent = 'Bitte wähle zuerst eine Datei.'; message.className = 'sc-muted sc-import-error'; return; }
+        message.className = 'sc-muted';
+        if (file.size > 400000) { message.textContent = IMPORT_ERRORS.too_large; message.className = 'sc-muted sc-import-error'; return; }
+        message.textContent = 'Wird eingelesen …';
+        let doc;
+        try { doc = JSON.parse(await file.text()); } catch (error) { message.textContent = IMPORT_ERRORS.invalid_body; message.className = 'sc-muted sc-import-error'; return; }
+        const res = await api('/characters/import', 'POST', doc);
+        if (!res.ok) {
+            const detail = res.data && (res.data.problems || res.data.blockers);
+            const base = IMPORT_ERRORS[res.data && res.data.error] || (res.status === 429 ? IMPORT_ERRORS.rate_limited : 'Der Import ist fehlgeschlagen.');
+            message.textContent = `${res.data && res.data.message && res.data.error === 'import_invalid' ? res.data.message : base}${Array.isArray(detail) && detail.length ? ` (${detail.slice(0, 3).map((d) => (typeof d === 'string' ? d : d.message || d.code || '')).filter(Boolean).join('; ')})` : ''}`;
+            message.className = 'sc-muted sc-import-error';
+            return;
+        }
+        message.textContent = 'Charakter angelegt. Du wirst weitergeleitet …';
+        location.href = `/character-sheet?id=${res.data.character.id}`;
+    }
+
     async function showHome() {
         app.draft = null;
         clearTimeout(app.saveTimer);
@@ -514,6 +541,14 @@
                         h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => duplicateDraft(d.id) }, 'Duplizieren'),
                         h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-danger', onclick: () => discardDraft(d.id) }, 'Verwerfen')))))
                     : h('p', { class: 'sc-muted', text: 'Noch keine Entwürfe.' })),
+            h('div', { class: 'sc-home-card', id: 'scImportCard' },
+                h('h2', { text: 'Charakter einlesen' }),
+                h('p', { class: 'sc-muted', text: 'Hier kannst du eine gesicherte Charakterdatei (.rollcharakter.json) einlesen. Es entsteht ein neuer, unabhängiger Charakter für dich.' }),
+                h('div', { class: 'sc-row' },
+                    h('label', { class: 'sc-import-file' }, h('span', { class: 'sc-muted', text: 'Datei wählen' }),
+                        h('input', { type: 'file', id: 'scImportFile', accept: '.json,application/json' })),
+                    h('button', { type: 'button', class: 'sc-btn', id: 'scImportGo', onclick: (event) => importFile($('scImportFile'), $('scImportMessage')) }, 'Einlesen')),
+                h('p', { class: 'sc-muted', id: 'scImportMessage', role: 'status', 'aria-live': 'polite' })),
             h('p', { class: 'sc-home-links' }, h('a', { href: '/characters', text: 'Zu meinen Charakteren' })));
         setStatus('');
     }

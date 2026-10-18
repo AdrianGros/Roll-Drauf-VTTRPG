@@ -118,7 +118,7 @@ def party(campaign, *, viewer_is_dm):
                 ac=evaluation["armorClass"]["value"], speedMeters=evaluation["speedMeters"],
                 passivePerception=evaluation["passivePerception"], initiative=evaluation["initiative"],
                 abilities={key: value["score"] for key, value in evaluation["abilities"].items()},
-                spellSaveDc=casting["saveDc"] if casting else None,
+                spellSaveDc=casting["saveDc"] if casting else None, accent=srd_manage.accent_of(char),
             )
             if viewer_is_dm:
                 status = srd_progression.status(char, data)
@@ -224,7 +224,7 @@ def shared_view(char):
         "spellcasting": {"classes": evaluation["spellcasting"]["classes"], "slots": evaluation["spellcasting"]["slots"]},
         "spells": spells, "feats": [feat_names.get(f, f) for f in evaluation["feats"]],
         "equipment": [{"name": i["name"], "quantity": i["quantity"], "equipped": i["equipped"]} for i in items],
-        "coins": inventory["coins"],
+        "coins": inventory["coins"], "accent": srd_manage.accent_of(char),
     }
 
 

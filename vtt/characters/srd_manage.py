@@ -20,6 +20,15 @@ COMPANION_TEXT = {"name": 60, "kind": 40, "speed": 40, "attacks": 500, "notes": 
 COMPANION_NUMBERS = {"hpMax": (0, 9999), "hpCurrent": (0, 9999), "ac": (0, 50)}
 _ID = re.compile(r"^[A-Za-z0-9_-]{1,40}$")
 _CHILD_SKIP = {"id", "character_id", "created_at", "updated_at"}
+THEMES = (
+    {"id": "violett", "name": "Violett (Standard)", "accent": "#4b235a"},
+    {"id": "waldgruen", "name": "Waldgrün", "accent": "#1f5c3a"},
+    {"id": "glutrot", "name": "Glutrot", "accent": "#8a2b1c"},
+    {"id": "meerblau", "name": "Meerblau", "accent": "#1d4e7a"},
+    {"id": "schiefer", "name": "Schiefer", "accent": "#3d4a57"},
+    {"id": "bernstein", "name": "Bernstein", "accent": "#7a4f00"},
+)
+THEME_IDS = tuple(t["id"] for t in THEMES)
 
 
 def _data(char):
@@ -81,6 +90,27 @@ def duplicate(char, *, user_id):
         for row in getattr(char, relation):
             getattr(copy_row, relation).append(model(**{key: copy.deepcopy(getattr(row, key)) for key in columns}))
     return copy_row
+
+
+def theme_of(char):
+    stored = (char.character_data or {}).get("srdTheme") if isinstance(char.character_data, dict) else None
+    return stored if stored in THEME_IDS else THEME_IDS[0]
+
+
+def accent_of(char):
+    return next(t["accent"] for t in THEMES if t["id"] == theme_of(char))
+
+
+def set_theme(char, theme):
+    """Colour theme of the sheet on screen (caller commits); PDFs always print in the Roll Drauf violet."""
+    _data(char)
+    if theme not in THEME_IDS:
+        raise ProgressionError("invalid_theme", "Unbekanntes Farbschema.", 422)
+    data = copy.deepcopy(char.character_data)
+    data["srdTheme"] = theme
+    char.character_data = data
+    flag_modified(char, "character_data")
+    return theme
 
 
 def draft_values(char, data):
