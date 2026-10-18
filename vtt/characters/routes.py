@@ -33,6 +33,7 @@ from vtt.roll_drauf.catalog import (
     LEVEL_ONE_BASELINES as ROLL_DRAUF_LIGHT_LEVEL_ONE_BASELINES,
 )
 from vtt.roll_drauf.progression import apply_level1_package, apply_level_up
+from vtt.rules_content.creator_drafts import is_srd_character_data
 
 
 ROLL_DRAUF_LIGHT_VERSION = 1
@@ -60,6 +61,30 @@ _ATTRIBUTE_STAT_MAP = {
     'wis': 'wis_score',
     'cha': 'cha_score',
 }
+
+
+# Derived by the SRD creator; the generic character API must not overwrite them.
+SRD_MANAGED_FIELDS = (
+    'race', 'class', 'background', 'level', 'ac', 'hp_max', 'mana_max',
+    'str', 'dex', 'con', 'int', 'wis', 'cha', 'character_data',
+)
+
+
+def _srd_write_guard(data, existing=None):
+    if existing is not None and is_srd_character_data(existing.character_data):
+        locked = [field for field in SRD_MANAGED_FIELDS if field in data]
+        if locked:
+            return jsonify({
+                'error': 'srd_character_managed',
+                'message': 'Dieser SRD-Charakter wird über den Regelwerk-Ersteller geändert.',
+                'fields': locked,
+            }), 409
+    elif is_srd_character_data(data.get('character_data')):
+        return jsonify({
+            'error': 'srd_character_forbidden',
+            'message': 'SRD-Charaktere entstehen nur über den Regelwerk-Ersteller.',
+        }), 400
+    return None
 
 
 def _catalog_lookup(entries, raw_value):
@@ -325,6 +350,9 @@ def create_character():
     data, error = _normalize_character_payload(data)
     if error:
         return error
+    error = _srd_write_guard(data)
+    if error:
+        return error
 
     # Optional: attach to campaign if campaign_id provided
     campaign_id = data.get('campaign_id')
@@ -482,6 +510,9 @@ def update_character(char_id):
 
     data = request.get_json() or {}
     data, error = _normalize_character_payload(data, existing_character=char)
+    if error:
+        return error
+    error = _srd_write_guard(data, existing=char)
     if error:
         return error
 
