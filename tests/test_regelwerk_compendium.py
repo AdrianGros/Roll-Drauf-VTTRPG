@@ -26,10 +26,22 @@ def data():
 def test_entity_counts_match_the_source_inventory(data):
     assert data["counts"] == {
         "armor": 13,
+        "background": 4,
+        "class": 12,
+        "class-feature": 232,
+        "class-option": 38,
         "creature": 330,
         "feat": 17,
+        "gear": 108,
+        "glossary": 155,
         "magic-item": 258,
+        "mount": 8,
+        "service": 34,
+        "species": 9,
         "spell": 339,
+        "subclass": 12,
+        "tool": 25,
+        "vehicle": 7,
         "weapon": 38,
     }
     ids = [entity["id"] for entity in data["entities"]]
@@ -44,8 +56,9 @@ def test_every_entity_links_to_an_existing_rule_block(data):
             json.loads((PACKAGE / "documents" / f"{entity['documentId']}.json").read_text(encoding="utf-8")),
         )
         rule_ids = {block["ruleId"] for block in document["blocks"]}
-        assert entity["id"] in rule_ids or entity["id"].rsplit(".", 1)[0] in rule_ids, entity["id"]
-        assert entity["url"].endswith("#" + entity["id"])
+        assert entity["url"].split("#", 1)[1] in rule_ids, entity["id"]
+        assert entity.get("tableId", entity["id"]) in rule_ids
+        assert entity["url"].endswith("#" + entity.get("detailId", entity.get("tableId", entity["id"])))
 
 
 def test_spell_facets_are_complete_and_consistent(data):

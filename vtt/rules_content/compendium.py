@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from fractions import Fraction
 
 from .generator import document_url
@@ -238,7 +239,8 @@ _ARMOR_GROUPS = {
 
 def _slug(value: str) -> str:
     table = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss", "Ä": "ae", "Ö": "oe", "Ü": "ue"})
-    return re.sub(r"[^a-z0-9]+", "-", value.translate(table).lower()).strip("-")
+    text = unicodedata.normalize("NFC", value).translate(table).lower()
+    return re.sub(r"[^a-z0-9]+", "-", text).strip("-")
 
 
 def _equipment(manifest: dict, document: dict) -> list[dict]:
@@ -249,11 +251,14 @@ def _equipment(manifest: dict, document: dict) -> list[dict]:
         key = block["ruleId"].rsplit(".", 1)[-1]
         if key in _WEAPON_GROUPS:
             weapon_class, weapon_kind = _WEAPON_GROUPS[key]
-            for row in block["rows"]:
+            for row_index, row in enumerate(block["rows"]):
                 name, damage, properties, mastery, weight, cost = row
                 entity = _base(manifest, document, "weapon", name, f"{block['ruleId']}.{_slug(name)}")
+                entity["url"] = document_url(manifest, document, block["ruleId"])
                 entity.update(
                     {
+                        "tableId": block["ruleId"],
+                        "rowIndex": row_index,
                         "weaponClass": weapon_class,
                         "weaponKind": weapon_kind,
                         "damage": damage,
@@ -266,11 +271,14 @@ def _equipment(manifest: dict, document: dict) -> list[dict]:
                 )
                 result.append(entity)
         elif key in _ARMOR_GROUPS:
-            for row in block["rows"]:
+            for row_index, row in enumerate(block["rows"]):
                 name, armor_class, strength, stealth, weight, cost = row
                 entity = _base(manifest, document, "armor", name, f"{block['ruleId']}.{_slug(name)}")
+                entity["url"] = document_url(manifest, document, block["ruleId"])
                 entity.update(
                     {
+                        "tableId": block["ruleId"],
+                        "rowIndex": row_index,
                         "armorCategory": _ARMOR_GROUPS[key],
                         "armorClass": armor_class,
                         "strength": strength,
@@ -285,6 +293,8 @@ def _equipment(manifest: dict, document: dict) -> list[dict]:
 
 
 def build_compendium(manifest: dict, documents: list[dict]) -> dict:
+    from .compendium_creator import build_creator_entities
+
     entities: list[dict] = []
     for document in documents:
         prefix = document["documentId"].split(".", 1)[0]
@@ -298,6 +308,14 @@ def build_compendium(manifest: dict, documents: list[dict]) -> dict:
             entities.extend(_feats(manifest, document))
         elif document["documentId"] in {"equipment.coins-and-weapons", "equipment.armor"}:
             entities.extend(_equipment(manifest, document))
+    entities.extend(
+        build_creator_entities(
+            manifest,
+            documents,
+            [e for e in entities if e["type"] == "spell"],
+            [e for e in entities if e["type"] == "feat"],
+        )
+    )
     seen: set[str] = set()
     for entity in entities:
         if entity["id"] in seen:
@@ -323,7 +341,20 @@ _LIST_FACETS = {
     "feat": ("category",),
     "weapon": ("weaponClass", "weaponKind", "mastery"),
     "armor": ("armorCategory",),
+    "class": ("primaryAbility", "hitDie"),
+    "subclass": ("className",),
+    "class-feature": ("level", "className", "subclass"),
+    "class-option": ("className", "optionKind"),
+    "species": ("creatureType", "sizes"),
+    "background": ("feat",),
+    "gear": ("category",),
+    "tool": ("category", "ability"),
+    "mount": (),
+    "vehicle": (),
+    "service": ("category",),
+    "glossary": ("category",),
 }
+_LEVEL_MAX = {"spell": 9, "class-feature": 20}
 TYPES = tuple(_LIST_FACETS)
 MAX_LIMIT = 200
 
@@ -389,8 +420,10 @@ def facet_values(entities: list[dict], entity_type: str) -> dict[str, list]:
                 facets[name].update(value)
             elif value not in (None, ""):
                 facets[name].add(value)
-    return {name: sorted(values, key=lambda item: (str(item).casefold())) if name != "level" else sorted(values)
-            for name, values in facets.items()}
+    return {
+        name: sorted(values, key=lambda item: (0, item, "") if isinstance(item, int) else (1, 0, str(item).casefold()))
+        for name, values in facets.items()
+    }
 
 
 def query_compendium(data: dict, params: dict) -> dict:
@@ -411,9 +444,10 @@ def query_compendium(data: dict, params: dict) -> dict:
 
     for name in _LIST_FACETS[entity_type]:
         if name == "level":
-            level_min = _parse_int(params, "level_min", low=0, high=9)
-            level_max = _parse_int(params, "level_max", low=0, high=9)
-            exact = _parse_int(params, "level", low=0, high=9)
+            top = _LEVEL_MAX[entity_type]
+            level_min = _parse_int(params, "level_min", low=0, high=top)
+            level_max = _parse_int(params, "level_max", low=0, high=top)
+            exact = _parse_int(params, "level", low=0, high=top)
             if exact is not None:
                 level_min = level_max = exact
             if level_min is not None:
@@ -452,6 +486,10 @@ def query_compendium(data: dict, params: dict) -> dict:
         attunement = _parse_bool(params, "attunement")
         if attunement is not None:
             keep(lambda e: e["attunement"] is attunement)
+    elif entity_type == "class":
+        spellcaster = _parse_bool(params, "spellcaster")
+        if spellcaster is not None:
+            keep(lambda e: e["spellcaster"] is spellcaster)
 
     sort = params.get("sort") or "name"
     rarity_rank = {"gewöhnlich": 0, "ungewöhnlich": 1, "selten": 2, "sehr selten": 3, "legendär": 4, "Artefakt": 5}
@@ -473,3 +511,42 @@ def query_compendium(data: dict, params: dict) -> dict:
         "items": items[offset: offset + limit],
         "facets": facet_values(data["entities"], entity_type),
     }
+
+
+def entry_excerpt(document: dict, entity: dict) -> list[dict]:
+    """Verbatim package blocks that make up one compendium entry."""
+    blocks = document["blocks"]
+    by_id = {block.get("ruleId"): index for index, block in enumerate(blocks)}
+
+    def section(rule_id: str) -> list[dict]:
+        start = by_id[rule_id]
+        head = blocks[start]
+        if head["type"] != "heading":
+            return [head]
+        end = len(blocks)
+        for index in range(start + 1, len(blocks)):
+            other = blocks[index]
+            if other["type"] == "heading" and other["level"] <= head["level"]:
+                end = index
+                break
+        return blocks[start:end]
+
+    result: list[dict] = []
+    table_id = entity.get("tableId")
+    if table_id:
+        table = dict(blocks[by_id[table_id]])
+        table["rows"] = [table["rows"][entity["rowIndex"]]]
+        result.append(table)
+        if entity.get("detailId"):
+            result.extend(section(entity["detailId"]))
+        return result
+    anchor = entity["url"].split("#", 1)[1]
+    if entity["type"] == "class":
+        prefix = anchor.rsplit(".", 1)[0]
+        start = by_id[anchor]
+        features = by_id[f"{prefix}.class-features"]
+        end = next((i for i in range(features + 1, len(blocks)) if blocks[i]["type"] == "heading" and blocks[i]["level"] == 4), len(blocks))
+        overview = blocks[start:end]
+        progression = blocks[by_id[f"{prefix}.progression-table"]]
+        return overview if progression in overview else overview + [progression]
+    return section(anchor)

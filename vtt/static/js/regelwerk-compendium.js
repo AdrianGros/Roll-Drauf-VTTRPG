@@ -106,6 +106,165 @@
             filters: [{ key: 'armorCategory', label: 'Kategorie', type: 'select' }],
             sorts: [['name', 'Name']],
         },
+        class: {
+            label: 'Klassen',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Trefferwürfel', (e) => `W${e.hitDie}`],
+                ['Hauptattribut', (e) => e.primaryAbility],
+                ['Rettungswürfe', (e) => e.savingThrows.join(', ')],
+                ['Zauberwirker', (e) => (e.spellcaster ? 'ja' : 'nein')],
+                ['Rüstungen', (e) => e.armorTraining],
+            ],
+            filters: [
+                { key: 'primaryAbility', label: 'Hauptattribut', type: 'select' },
+                { key: 'hitDie', label: 'Trefferwürfel', type: 'select', format: (v) => `W${v}` },
+                { key: 'spellcaster', label: 'Zauberwirker', type: 'tri' },
+            ],
+            sorts: [['name', 'Name']],
+        },
+        subclass: {
+            label: 'Unterklassen',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Klasse', (e) => e.className],
+                ['Leitspruch', (e) => e.motto],
+            ],
+            filters: [{ key: 'className', label: 'Klasse', type: 'select' }],
+            sorts: [['name', 'Name']],
+        },
+        'class-feature': {
+            label: 'Klassenmerkmale',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Klasse', (e) => e.className],
+                ['Stufe', (e) => e.level],
+                ['Unterklasse', (e) => e.subclass || '–'],
+                ['Kurztext', (e) => e.summary],
+            ],
+            filters: [
+                { key: 'className', label: 'Klasse', type: 'select' },
+                { key: 'level', label: 'Stufe', type: 'select', format: (v) => `Stufe ${v}` },
+                { key: 'subclass', label: 'Unterklasse', type: 'select' },
+            ],
+            sorts: [['name', 'Name'], ['level', 'Stufe']],
+        },
+        'class-option': {
+            label: 'Klassenoptionen',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Klasse', (e) => e.className],
+                ['Art', (e) => e.optionKind],
+                ['Voraussetzung', (e) => e.prerequisite || '–'],
+                ['Kurztext', (e) => e.summary],
+            ],
+            filters: [
+                { key: 'className', label: 'Klasse', type: 'select' },
+                { key: 'optionKind', label: 'Art', type: 'select' },
+            ],
+            sorts: [['name', 'Name']],
+        },
+        species: {
+            label: 'Spezies',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Typ', (e) => e.creatureType],
+                ['Größe', (e) => e.sizeText],
+                ['Bewegungsrate', (e) => e.speed],
+                ['Dunkelsicht', (e) => (e.darkvision ? `${e.darkvision} m` : '–')],
+                ['Merkmale', (e) => e.traits.join(', ')],
+            ],
+            filters: [
+                { key: 'creatureType', label: 'Typ', type: 'select' },
+                { key: 'sizes', label: 'Größe', type: 'select' },
+            ],
+            sorts: [['name', 'Name']],
+        },
+        background: {
+            label: 'Hintergründe',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Attributswerte', (e) => e.abilities.join(', ')],
+                ['Talent', (e) => (e.featChoice ? `${e.feat} (${e.featChoice})` : e.feat)],
+                ['Fertigkeiten', (e) => e.skills.join(', ')],
+                ['Werkzeug', (e) => e.tool || '–'],
+            ],
+            filters: [{ key: 'feat', label: 'Talent', type: 'select' }],
+            sorts: [['name', 'Name']],
+        },
+        gear: {
+            label: 'Ausrüstung',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Kategorie', (e) => e.category],
+                ['Gewicht', (e) => e.weight],
+                ['Kosten', (e) => e.cost],
+                ['Kurztext', (e) => e.summary],
+            ],
+            filters: [{ key: 'category', label: 'Kategorie', type: 'select' }],
+            sorts: [['name', 'Name']],
+        },
+        tool: {
+            label: 'Werkzeuge',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Kategorie', (e) => e.category],
+                ['Attribut', (e) => e.ability],
+                ['Gewicht', (e) => e.weight],
+                ['Kosten', (e) => e.cost],
+            ],
+            filters: [
+                { key: 'category', label: 'Kategorie', type: 'select' },
+                { key: 'ability', label: 'Attribut', type: 'select' },
+            ],
+            sorts: [['name', 'Name']],
+        },
+        mount: {
+            label: 'Reittiere',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Traglast', (e) => e.carryingCapacity],
+                ['Kosten', (e) => e.cost],
+            ],
+            filters: [],
+            sorts: [['name', 'Name']],
+        },
+        vehicle: {
+            label: 'Fahrzeuge',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Bewegungsrate', (e) => e.speed],
+                ['Besatzung', (e) => e.crew],
+                ['Passagiere', (e) => e.passengers],
+                ['Fracht (t)', (e) => e.cargoTons],
+                ['RK', (e) => e.armorClass],
+                ['TP', (e) => e.hitPoints],
+                ['Kosten', (e) => e.cost],
+            ],
+            filters: [],
+            sorts: [['name', 'Name']],
+        },
+        service: {
+            label: 'Dienstleistungen',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Kategorie', (e) => e.category],
+                ['Kosten', (e) => e.cost],
+                ['Kurztext', (e) => e.summary],
+            ],
+            filters: [{ key: 'category', label: 'Kategorie', type: 'select' }],
+            sorts: [['name', 'Name']],
+        },
+        glossary: {
+            label: 'Regelbegriffe',
+            columns: [
+                ['Name', (e) => e.name, true],
+                ['Kategorie', (e) => e.category],
+                ['Kurztext', (e) => e.summary],
+            ],
+            filters: [{ key: 'category', label: 'Kategorie', type: 'select' }],
+            sorts: [['name', 'Name']],
+        },
     };
 
     const els = {
@@ -122,7 +281,14 @@
         body: document.getElementById('cpBody'),
         more: document.getElementById('cpMore'),
         results: document.getElementById('compendiumResults'),
+        list: document.getElementById('cpList'),
+        detail: document.getElementById('cpDetail'),
+        detailBack: document.getElementById('cpDetailBack'),
+        detailTitle: document.getElementById('cpDetailTitle'),
+        detailMeta: document.getElementById('cpDetailMeta'),
+        detailBody: document.getElementById('cpDetailBody'),
     };
+    const ENTRY_API = `${API}/entry/`;
 
     let facets = {};
     let offset = 0;
@@ -216,6 +382,11 @@
                 if (isName) {
                     const a = node('a', value);
                     a.href = entity.url;
+                    a.addEventListener('click', (event) => {
+                        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button) return;
+                        event.preventDefault();
+                        openDetail(entity.id, 'push').catch(showError);
+                    });
                     td.appendChild(a);
                 } else {
                     td.textContent = value === null || value === undefined ? '–' : String(value);
@@ -226,11 +397,140 @@
         });
     }
 
+    function renderTableBlock(block) {
+        const wrap = node('div', null, 'regelwerk-table-wrap');
+        const table = document.createElement('table');
+        table.className = 'regelwerk-table';
+        if (block.caption) table.appendChild(node('caption', block.caption));
+        const head = document.createElement('tr');
+        block.columns.forEach((column) => {
+            const th = node('th', column);
+            th.scope = 'col';
+            head.appendChild(th);
+        });
+        const thead = document.createElement('thead');
+        thead.appendChild(head);
+        table.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        block.rows.forEach((row) => {
+            const tr = document.createElement('tr');
+            row.forEach((value) => tr.appendChild(node('td', value)));
+            tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        wrap.appendChild(table);
+        return wrap;
+    }
+
+    function renderBlock(block) {
+        if (block.type === 'heading') return node(`h${Math.min(block.level + 1, 6)}`, block.text);
+        if (block.type === 'paragraph') return node('p', block.text);
+        if (block.type === 'ordered-list' || block.type === 'unordered-list') {
+            const list = document.createElement(block.type === 'ordered-list' ? 'ol' : 'ul');
+            block.items.forEach((item) => list.appendChild(node('li', item)));
+            return list;
+        }
+        if (block.type === 'definition-list') {
+            const list = document.createElement('dl');
+            block.entries.forEach((entry) => {
+                list.appendChild(node('dt', entry.term));
+                list.appendChild(node('dd', entry.definition));
+            });
+            return list;
+        }
+        if (block.type === 'table') return renderTableBlock(block);
+        if (block.type === 'rule-callout' || block.type === 'page-note' || block.type === 'original-note') {
+            const box = node('aside', null, block.type === 'original-note' ? 'regelwerk-original-note' : 'regelwerk-callout');
+            if (block.title) box.appendChild(node('strong', block.title, 'regelwerk-callout-title'));
+            box.appendChild(node('p', block.text));
+            return box;
+        }
+        if (block.type === 'stat-block') {
+            const box = node('section', null, 'regelwerk-stat-block');
+            box.appendChild(node('h3', block.name, 'regelwerk-stat-title'));
+            const details = document.createElement('dl');
+            block.entries.forEach((entry) => {
+                details.appendChild(node('dt', entry.label));
+                details.appendChild(node('dd', entry.value));
+            });
+            box.appendChild(details);
+            block.sections.forEach((section) => {
+                box.appendChild(node('h4', section.title));
+                box.appendChild(node('p', section.text));
+            });
+            return box;
+        }
+        return node('p', `Blocktyp ${block.type} wird nicht angezeigt.`);
+    }
+
+    function pageText(pages) {
+        if (!pages || !pages.length) return '';
+        return pages.length === 1 ? `S. ${pages[0]}` : `S. ${pages[0]}–${pages[pages.length - 1]}`;
+    }
+
+    let detailPushed = false;
+
+    function hideDetail() {
+        els.detail.hidden = true;
+        els.list.hidden = false;
+    }
+
+    async function openDetail(id, historyMode) {
+        const response = await fetch(ENTRY_API + encodeURIComponent(id), { credentials: 'same-origin' });
+        if (!response.ok) throw new Error('Eintrag nicht gefunden.');
+        const data = await response.json();
+        const entity = data.entity;
+        els.detailTitle.textContent = entity.name;
+        els.detailMeta.textContent = '';
+        const label = TYPES[entity.type] ? TYPES[entity.type].label : entity.type;
+        const pages = pageText(entity.sourcePages);
+        els.detailMeta.appendChild(node('span', `${label} · SRD 5.2.1${pages ? `, ${pages}` : ''} · `));
+        const link = node('a', 'Im Regelwerk lesen');
+        link.href = entity.url;
+        els.detailMeta.appendChild(link);
+        els.detailBody.textContent = '';
+        data.blocks.forEach((block) => els.detailBody.appendChild(renderBlock(block)));
+        els.list.hidden = true;
+        els.detail.hidden = false;
+        if (historyMode) {
+            const params = currentParams();
+            params.set('entry', id);
+            try {
+                const url = `${window.location.pathname}?${params.toString()}`;
+                if (historyMode === 'push') {
+                    window.history.pushState(null, '', url);
+                    detailPushed = true;
+                } else {
+                    window.history.replaceState(null, '', url);
+                }
+            } catch (error) { /* url sync is optional */ }
+        }
+        els.detailTitle.focus();
+        els.detail.scrollIntoView({ block: 'start' });
+    }
+
+    function closeDetail() {
+        if (detailPushed) {
+            window.history.back();
+            return;
+        }
+        hideDetail();
+        syncUrl(currentParams());
+    }
+
+    window.addEventListener('popstate', () => {
+        const entry = new URLSearchParams(window.location.search).get('entry');
+        detailPushed = false;
+        if (entry) openDetail(entry, null).catch(showError);
+        else hideDetail();
+    });
+
     async function load(append) {
         const mine = ++requestId;
         const params = currentParams();
         if (!append) {
             offset = 0;
+            hideDetail();
             syncUrl(params);
         }
         params.set('limit', String(PAGE));
@@ -294,8 +594,10 @@
         els.more.addEventListener('click', () => load(true));
         els.reset.addEventListener('click', () => switchType(els.type.value, null).catch(showError));
         els.form.addEventListener('submit', (event) => event.preventDefault());
+        els.detailBack.addEventListener('click', closeDetail);
         try {
             await switchType(typeKey, preset);
+            if (preset.get('entry')) await openDetail(preset.get('entry'), 'replace');
         } catch (error) {
             showError(error);
         }

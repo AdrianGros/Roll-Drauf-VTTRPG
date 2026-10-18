@@ -8,7 +8,7 @@ from pathlib import Path
 
 from flask import Blueprint, abort, current_app, jsonify, request, send_from_directory
 
-from vtt.rules_content.compendium import CompendiumQueryError, query_compendium
+from vtt.rules_content.compendium import CompendiumQueryError, entry_excerpt, query_compendium
 from vtt.rules_content.generator import DEFAULT_PACKAGE, normalized_search_text
 
 
@@ -33,6 +33,18 @@ def _enabled() -> bool:
 
 def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+_COMPENDIUM_CACHE: dict[str, tuple[int, dict]] = {}
+
+
+def _compendium() -> dict:
+    path = _GENERATED / "compendium.json"
+    stamp = path.stat().st_mtime_ns
+    cached = _COMPENDIUM_CACHE.get("data")
+    if cached is None or cached[0] != stamp:
+        cached = _COMPENDIUM_CACHE["data"] = (stamp, _load_json(path))
+    return cached[1]
 
 
 def _navigation() -> dict:
@@ -220,7 +232,7 @@ def public_license():
 def public_compendium():
     if not _enabled():
         return _json_not_found()
-    data = _load_json(_GENERATED / "compendium.json")
+    data = _compendium()
     try:
         payload = query_compendium(data, request.args.to_dict())
     except CompendiumQueryError as error:
@@ -229,9 +241,25 @@ def public_compendium():
     return _public_json(payload)
 
 
+@rules_bp.get(f"/api/rulesets/{_RULESET_ID}/compendium/entry/<path:entity_id>")
+def public_compendium_entry(entity_id: str):
+    if not _enabled():
+        return _json_not_found()
+    data = _compendium()
+    entity = next((item for item in data["entities"] if item["id"] == entity_id), None)
+    if entity is None:
+        return _json_not_found()
+    try:
+        document = _load_json(_PACKAGE / "documents" / f"{entity['documentId']}.json")
+        blocks = entry_excerpt(document, entity)
+    except (OSError, ValueError, KeyError):
+        return _json_not_found()
+    return _public_json({"entity": entity, "blocks": blocks, "rulesetVersion": data["rulesetVersion"]})
+
+
 @rules_bp.get(f"/api/rulesets/{_RULESET_ID}/compendium/summary")
 def public_compendium_summary():
     if not _enabled():
         return _json_not_found()
-    data = _load_json(_GENERATED / "compendium.json")
+    data = _compendium()
     return _public_json({"counts": data["counts"], "rulesetVersion": data["rulesetVersion"]})

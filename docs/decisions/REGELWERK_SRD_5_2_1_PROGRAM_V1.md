@@ -206,6 +206,7 @@ All milestones are P1 for the full-project goal. R0 and R1 are the first authori
 | 2026-10-18 | Activate the Regelwerk reader as `preview` on the live VTT (= test environment, no separate production) | Human owner asked for a readable "Regelwerk" tab to be able to accept; image `regelwerk-7bfe069`, `REGELWERK_PREVIEW=true`; rollback via compose backup + old image; `published` still requires named acceptance owner |
 | 2026-10-18 | Publish the full Regelwerk as `srd-5.2.1-de` 1.0.0 with violet headings | Owner is acceptance owner; reviewed pp.5-412, "Lgtm for the rest"; published packages are immutable; rollback via previous image + compose backup |
 | 2026-10-18 | Add a queryable compendium (derived artifact + API + UI) as step 1 toward creator parity | Owner request: compendium first; independent implementation on SRD data only; no package version change |
+| 2026-10-18 | Extend the compendium with creator data (classes, subclasses, features, options, species, backgrounds, gear, tools, mounts, vehicles, services, glossary) and an inline detail view (C2) | Needed as data basis for the creator; derived from the published package only; class spell lists follow the spell class lines because the printed class tables are incomplete in the source; no package version change |
 
 This log is append-only after plan approval.
 

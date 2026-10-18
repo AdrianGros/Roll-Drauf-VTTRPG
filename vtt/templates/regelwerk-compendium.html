@@ -54,12 +54,20 @@
 
         <section class="regelwerk-article" id="compendiumResults" tabindex="-1" aria-busy="true">
             <p id="cpStatus" class="regelwerk-status" role="status" aria-live="polite">Compendium wird geladen …</p>
-            <div class="regelwerk-table-wrap"><table class="regelwerk-table compendium-table" id="cpTable" hidden>
-                <caption id="cpCaption"></caption>
-                <thead id="cpHead"></thead>
-                <tbody id="cpBody"></tbody>
-            </table></div>
-            <button type="button" id="cpMore" class="compendium-more" hidden>Mehr anzeigen</button>
+            <div id="cpList">
+                <div class="regelwerk-table-wrap"><table class="regelwerk-table compendium-table" id="cpTable" hidden>
+                    <caption id="cpCaption"></caption>
+                    <thead id="cpHead"></thead>
+                    <tbody id="cpBody"></tbody>
+                </table></div>
+                <button type="button" id="cpMore" class="compendium-more" hidden>Mehr anzeigen</button>
+            </div>
+            <article id="cpDetail" class="compendium-detail" hidden>
+                <button type="button" id="cpDetailBack" class="compendium-back">Zurück zur Liste</button>
+                <h2 id="cpDetailTitle" tabindex="-1"></h2>
+                <p id="cpDetailMeta" class="compendium-detail-meta"></p>
+                <div id="cpDetailBody"></div>
+            </article>
         </section>
     </main>
 

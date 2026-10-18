@@ -358,6 +358,20 @@ body.regelwerk-page {
     font: 700 0.95rem system-ui, sans-serif;
     cursor: pointer;
 }
+.compendium-detail { padding: 0.5rem 0 2rem; }
+.compendium-detail > h2 { margin-top: 0.8rem; }
+.compendium-detail-meta { margin: 0 0 1rem; font-size: 0.9rem; opacity: 0.85; }
+.compendium-detail-meta a { color: var(--regelwerk-accent); font-weight: 700; }
+.compendium-back {
+    min-height: 2.4rem;
+    padding: 0.3rem 0.9rem;
+    border: 1px solid var(--regelwerk-accent);
+    border-radius: 0.3rem;
+    color: var(--regelwerk-accent);
+    background: #fff;
+    font: 700 0.95rem system-ui, sans-serif;
+    cursor: pointer;
+}
 
 @media print {
     @page { margin: 16mm; }
