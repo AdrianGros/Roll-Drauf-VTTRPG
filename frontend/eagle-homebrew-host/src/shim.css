@@ -1,0 +1,49 @@
+/* Only the elements Foundry would have drawn (window frame, form-group grid, tag widgets, toasts).
+   The host page's theme must not reach into the window: Foundry's window chrome is neutral, and Matt's
+   own stylesheet (eagle-homebrew.css) only handles layout. */
+.eh-window { position: fixed; z-index: 100; top: 5rem; right: 1rem; display: flex; flex-direction: column;
+  box-sizing: border-box; max-width: calc(100vw - 16px); max-height: calc(100vh - 6rem);
+  background: #f4f1ea; color: #191813; border: 1px solid #6b6a62; border-radius: 6px; box-shadow: 0 6px 24px rgb(0 0 0 / .35);
+  font: 14px/1.35 system-ui, -apple-system, "Segoe UI", sans-serif; letter-spacing: normal; text-align: left; }
+.eh-window { padding: 0; margin: 0; }
+.eh-window * { font-family: inherit; letter-spacing: inherit; text-transform: none; text-shadow: none; box-sizing: border-box; }
+.eh-window.eh-moved { right: auto; max-height: calc(100vh - 16px); }
+.eh-window.resizable { resize: both; overflow: hidden; }
+.eh-window .window-header { display: flex; align-items: center; gap: .5rem; margin: 0; padding: .35rem .6rem; border: 0;
+  background: #23221d; color: #f0f0e0; border-radius: 5px 5px 0 0; box-shadow: none; cursor: move; touch-action: none; user-select: none; width: auto; position: static; }
+.eh-window .window-title { flex: 1; margin: 0; padding: 0; border: 0; color: inherit; font-size: 1rem; font-weight: 600; line-height: 1.4; }
+.eh-window .header-control { margin: 0; padding: 0 .3rem; background: none; border: 0; color: inherit; font-size: 1.2rem; font-weight: 400; cursor: pointer; }
+.eh-window .window-content { flex: 1 1 auto; min-height: 0; padding: .6rem .8rem; }
+.eh-window h3, .eh-window h4 { margin: .5rem 0 .3rem; color: inherit; font-weight: 600; }
+.eh-window h3 { font-size: 1.1rem; } .eh-window h4 { font-size: 1rem; }
+.eh-window p { margin: .3rem 0; }
+.eh-window button { cursor: pointer; margin: .15rem .2rem .15rem 0; padding: .25rem .6rem; min-height: 0; border: 1px solid #8a887f; border-radius: 3px;
+  background: #e9e6dc; color: #191813; font-size: 14px; font-weight: 400; line-height: 1.35; box-shadow: none; }
+.eh-window button:disabled { opacity: .5; cursor: default; }
+.eh-window .form-group { display: flex; align-items: center; gap: .5rem; margin: .3rem 0; }
+.eh-window .form-group > label { flex: 2; margin: 0; color: inherit; font-size: 14px; font-weight: 400; }
+.eh-window .form-group > .form-fields { flex: 3; display: flex; gap: .3rem; align-items: center; min-width: 0; }
+.eh-window .form-group.stacked { flex-direction: column; align-items: stretch; }
+.eh-window .form-group .hint { flex-basis: 100%; margin: 0; font-size: .85em; color: #4b4a44; }
+.eh-window input[type=text], .eh-window input[type=number], .eh-window select { width: 100%; min-width: 0; margin: 0; padding: .2rem .3rem;
+  border: 1px solid #8a887f; border-radius: 3px; background: #fff; color: #191813; font-size: 14px; box-shadow: none; }
+.eh-window input[type=checkbox] { width: auto; margin: 0; }
+.eh-window fieldset { margin: .5rem 0; padding: .4rem .6rem; border: 1px solid #b5b3a4; border-radius: 4px; min-width: 0; }
+.eh-window legend { padding: 0 .2rem; color: inherit; font-size: 14px; }
+.eh-window details > summary { cursor: pointer; font-weight: 600; margin: .4rem 0; }
+.eh-window ul { margin: .3rem 0; padding-left: 1.4rem; }
+.eh-window .eagle-homebrew-choices { display: flex; flex-wrap: wrap; gap: .3rem; }
+.eh-window multi-select, .eh-window document-tags { display: flex; flex-direction: column; gap: .25rem; width: 100%; min-width: 0; }
+.eh-window .tags { display: flex; flex-wrap: wrap; gap: .25rem; }
+.eh-window .tag { display: inline-flex; align-items: center; gap: .2rem; padding: 0 .1rem 0 .4rem; border: 1px solid #8a887f; border-radius: 3px; background: #dedbd0; font-size: .85em; }
+.eh-window .tag .remove { margin: 0; padding: 0 .3rem; border: 0; background: none; }
+@media (max-width: 700px) {
+  .eh-window:not(.eh-moved) { top: 8px; right: 8px; left: 8px; width: auto !important; max-height: calc(100vh - 16px); }
+  .eh-window .form-group { flex-wrap: wrap; }
+  .eh-window .form-group > label { flex-basis: 100%; }
+}
+#eh-notifications { position: fixed; top: 8px; left: 50%; transform: translateX(-50%); margin: 0; padding: 0; list-style: none; z-index: 1000;
+  font: 14px/1.35 system-ui, sans-serif; max-width: calc(100vw - 16px); }
+.eh-notification { margin: .25rem 0; padding: .4rem .8rem; border-radius: 4px; color: #fff; background: #3a5a7a; }
+.eh-notification.warn { background: #8a6a12; }
+.eh-notification.error { background: #8a1f1f; }

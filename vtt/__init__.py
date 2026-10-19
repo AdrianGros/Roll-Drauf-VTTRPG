@@ -279,6 +279,10 @@ def create_app(config_name=None):
     app.register_blueprint(page_content_bp)  # M65
     app.register_blueprint(rules_bp)
     app.register_blueprint(srd_creator_bp, url_prefix='/api/srd-creator')
+    # Creation Engine = Matt's Eagle Homebrew editor. Always registered so its table is part of the schema;
+    # CE_AUTHORING switches it on and off per request (vtt/creation_engine/routes.py).
+    from vtt.creation_engine.routes import blueprint as creation_engine_bp
+    app.register_blueprint(creation_engine_bp, url_prefix='/api/ce')
 
     # Create database tables
     if app.config.get("AUTO_CREATE_SCHEMA", False):
@@ -297,13 +301,6 @@ def create_app(config_name=None):
     # Socket.IO event handlers
     from vtt.socket_handlers import register_socket_handlers
     register_socket_handlers(socketio)
-
-    if any(app.config.get(flag, False) for flag in ("CE_RUNTIME", "CE_AUTHORING", "CE_SHADOW")):
-        from vtt.creation_engine.transports import register as register_creation_engine
-        register_creation_engine(app, socketio)
-        if app.config.get("CE_LEGACY_ADAPTER", False):
-            from vtt.creation_engine.transports.legacy_host import install as install_creation_engine_host
-            install_creation_engine_host(app)
 
     # REST endpoints for static files
     @app.route('/')

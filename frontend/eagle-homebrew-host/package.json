@@ -1,0 +1,18 @@
+{
+  "name": "eagle-homebrew-vtt-host",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "esbuild": "0.24.2",
+    "typescript": "5.6.3",
+    "playwright": "1.48.2"
+  },
+  "scripts": {
+    "vendor": "sh tools/fetch-vendor.sh",
+    "build": "node tools/build.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "build:spike": "esbuild src/spike-entry.ts --bundle --format=esm --target=es2022 --tsconfig=tsconfig.json --outfile=spike/eagle-homebrew.spike.js && cp src/shim.css ../../vendor/eagle-homebrew/v13/styles/eagle-homebrew.css spike/",
+    "e2e:spike": "node tools/spike-e2e.mjs spike spike/shots",
+    "data:dnd5e": "node tools/extract-dnd5e-config.mjs $DND5E_ROOT en data/dnd5e-config.en.json && python3 -I tools/extract_base_items.py $DND5E_ROOT data/dnd5e-base-items.json"
+  }
+}

@@ -90,3 +90,6 @@ download_*_fonts.sh
 *_ASSETS_*.md
 OPTION_*.md
 SPELLBOOK_*.md
+
+# Creation Engine browser bundle, built by frontend/eagle-homebrew-host (npm run build) and in the Docker image.
+vtt/static/eagle-homebrew/

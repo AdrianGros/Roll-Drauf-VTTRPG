@@ -22,3 +22,9 @@ artifacts/
 tools/robots/snapshots/
 # Hypothesis-Beispieldatenbank der Property-Tests (Creation Engine WP1).
 .hypothesis/
+# Creation Engine: archived G1 code never ships; the editor build fetches its own pinned
+# vendor checkout and node_modules inside the creation-engine stage.
+archive/
+vendor/
+**/node_modules/
+vtt/static/eagle-homebrew/

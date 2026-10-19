@@ -2,7 +2,6 @@
 
 import re
 from threading import Thread
-from types import SimpleNamespace
 
 import pytest
 from flask_jwt_extended import create_access_token
@@ -16,13 +15,9 @@ from vtt.models import Campaign, GameSession, Role, User
 @pytest.fixture
 def navigation_app():
     app = create_app(config_name="testing")
-    # Exercise navigation independently of the PostgreSQL authoring service.
-    # The destination proves that the link leaves BookScene; the real authoring
-    # browser suite owns editor behavior once the destination has been reached.
+    # The destination is the real Creation Engine page (Eagle Homebrew host); the editor's own behavior is
+    # covered by test_creation_engine_eagle.py and the host's browser E2E.
     app.config['CE_AUTHORING'] = True
-    app.extensions['ce_gateway'] = SimpleNamespace(authoring=object())
-    app.add_url_rule('/api/ce/authoring', 'navigation_editor',
-                     lambda: '<main><h1>Creation Engine destination</h1></main>')
     with app.app_context():
         db.create_all()
         role = Role.query.filter_by(name='DM').first()
@@ -44,16 +39,13 @@ def navigation_app():
         db.session.remove(); db.drop_all()
 
 
-@pytest.mark.parametrize('state', ['enabled', 'flag_off', 'no_host', 'no_authoring',
-                                   'suspended', 'inactive', 'pending', 'view_as'])
+@pytest.mark.parametrize('state', ['enabled', 'flag_off', 'suspended', 'inactive', 'pending'])
 def test_navigation_capability_is_authenticated_private_and_matches_authority(navigation_app, state):
     app, context = navigation_app
     client = app.test_client()
     assert client.get('/api/dashboard/capabilities').status_code == 401
     client.set_cookie('access_token_cookie', context['token'])
     if state == 'flag_off': app.config['CE_AUTHORING'] = False
-    elif state == 'no_host': app.extensions.pop('ce_gateway')
-    elif state == 'no_authoring': app.extensions['ce_gateway'] = object()
     elif state in {'suspended', 'inactive', 'pending'}:
         with app.app_context():
             user = db.session.get(User, context['user_id'])
@@ -61,15 +53,14 @@ def test_navigation_capability_is_authenticated_private_and_matches_authority(na
             elif state == 'inactive': user.is_active = False
             else: user.account_state = 'pending'
             db.session.commit()
-    headers = {'X-CE-View-As': 'view:test'} if state == 'view_as' else {}
-    response = client.get('/api/dashboard/capabilities', headers=headers)
+    response = client.get('/api/dashboard/capabilities')
     if state == 'inactive':
         assert response.status_code == 404
     else:
         assert response.status_code == 200
         assert response.json == {'authoring_available': state == 'enabled'}
         assert response.headers['Cache-Control'] == 'private, no-store'
-        assert response.headers['Vary'] == 'Cookie, Authorization, X-CE-View-As'
+        assert response.headers['Vary'] == 'Cookie, Authorization'
 
 
 @pytest.fixture
@@ -106,7 +97,7 @@ def test_visible_book_navigation_reaches_editor_with_keyboard(navigation_browser
     expect(entry).to_have_attribute('aria-disabled', 'false')
     entry.focus(); page.keyboard.press('Enter')
     expect(page).to_have_url(re.compile(r'/api/ce/authoring(?:\?character_id=42)?$'))
-    expect(page.get_by_role('heading', name='Creation Engine destination')).to_be_visible()
+    expect(page.get_by_role('heading', name='Creation Engine', exact=True)).to_be_visible()
 
 
 def test_contents_and_in_book_page_turn_keep_engine_available(navigation_browser):
