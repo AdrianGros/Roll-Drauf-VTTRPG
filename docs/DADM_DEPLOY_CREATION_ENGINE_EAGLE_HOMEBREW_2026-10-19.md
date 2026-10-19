@@ -114,3 +114,20 @@ Gleiches Image (Python 3.12, `requirements.txt`, Chromium), gleiche Maschine, 20
   archivierten Rasse-in-Charakterbogen-Übergabe.
 - Encounter-Mitglieder aus fremden Kompendien (Foundry: `dnd5e.monsters`) gibt es in der VTT noch nicht;
   auswählbar sind Welt- und Library-Actors.
+
+## Deploy-Protokoll (2026-10-19)
+
+- Live-Container vorher mit `76e6577` verglichen: zwei nicht committete Hotfixes liefen in Produktion
+  (`vtt/auth/routes.py` Discord-OAuth-State, `vtt/static/js/book-scene.js` Zeile 1781). Beide sind in `fd76ec8`
+  enthalten, inklusive `tests/test_discord_only_login_guild_access_gate.py`. Die im Container liegenden,
+  nicht eingebundenen Kalender-Dateien sind nicht übernommen (laufende Arbeit im Haupt-Checkout).
+- Browser-E2E zusätzlich gegen PostgreSQL 16 mit parallelen Anfragen: 6/6 grün.
+- Sicherungen: `/srv/migration/2026-10-07/setup/db-pre-eagle-homebrew-20261019.sql.gz` (pg_dump, 88 Tabellen),
+  `/srv/migration/2026-10-07/setup/production.compose.json.bak-pre-eagle-homebrew-20261019`.
+- Image `roll-drauf-vtt-app:eagle-fd76ec8` (Commit `fd76ec8`) in `production.compose.json` eingetragen,
+  `docker compose -p migration-production -f /srv/migration/2026-10-07/setup/production.compose.json up -d --no-deps app`.
+- Nach dem Start: Gunicorn ohne Fehler, Tabelle `ce_eagle_documents` angelegt, G1-Tabellen unverändert;
+  öffentlich `/api/ce/authoring` 302 (ohne Login), Bundle 200, Editor-API 401 ohne Login, `/login.html` 200.
+- Rollback: Sicherung der Compose-Datei zurückkopieren und denselben `up -d --no-deps app`-Befehl ausführen
+  (altes Image `roll-drauf-vtt-app:regelwerk-76e6577-hf`). Die neue Tabelle stört das alte Image nicht.
+- Offen: Prüfung mit echtem Konto im Browser durch die Projektleitung.
