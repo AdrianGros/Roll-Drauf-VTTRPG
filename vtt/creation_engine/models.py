@@ -49,3 +49,44 @@ class CeEagleDocument(db.Model):
         return {"uuid": self.uuid, "pack": self.pack or None, "documentName": self.document_name,
                 "type": self.doc_type, "name": self.name, "revision": self.revision,
                 "updatedAt": self.updated_at.isoformat() if self.updated_at else None}
+
+
+class CeSpeciesRevision(db.Model):
+    """One published, immutable revision of an Eagle Species as a playable 2024 origin.
+
+    Rows are only ever inserted. `scope_kind`/`scope_id` say who may choose it: "personal" (the author, scope_id =
+    user id) or "campaign" (the campaign's members, scope_id = campaign id). `lineage` names the Eagle document it
+    came from ("<world scope>:<uuid>"); `revision_number` counts publications per (scope, lineage). The profile is
+    what characters pin; the Eagle source and the supplement are kept as provenance only.
+    """
+
+    __tablename__ = "ce_species_revisions"
+    __table_args__ = (
+        db.UniqueConstraint("scope_kind", "scope_id", "lineage", "revision_number", name="uq_ce_species_revisions_number"),
+        db.Index("ix_ce_species_revisions_scope", "scope_kind", "scope_id"),
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    scope_kind = db.Column(db.String(16), nullable=False)
+    scope_id = db.Column(db.Integer, nullable=False)
+    lineage = db.Column(db.String(240), nullable=False)
+    revision_number = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(200), nullable=False)
+    edition = db.Column(db.String(8), nullable=False)
+    source_uuid = db.Column(db.String(200), nullable=False)
+    source_revision = db.Column(db.Integer, nullable=False)
+    source_digest = db.Column(db.String(80), nullable=False)
+    source = db.Column(db.JSON, nullable=False)
+    supplement = db.Column(db.JSON, nullable=False)
+    profile = db.Column(db.JSON, nullable=False)
+    profile_digest = db.Column(db.String(80), nullable=False)
+    report = db.Column(db.JSON, nullable=False)
+    published_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    published_at = db.Column(db.DateTime, nullable=False, default=_now)
+
+    def summary(self):
+        return {"id": self.id, "name": self.name, "edition": self.edition, "revision": self.revision_number,
+                "scope": {"kind": self.scope_kind, "id": self.scope_id}, "sourceUuid": self.source_uuid,
+                "sourceRevision": self.source_revision, "sourceDigest": self.source_digest,
+                "profileDigest": self.profile_digest, "publishedBy": self.published_by,
+                "publishedAt": self.published_at.isoformat() if self.published_at else None}

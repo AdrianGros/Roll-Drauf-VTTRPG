@@ -9,7 +9,7 @@ import re
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from vtt.characters import sheet_link, srd_inventory, srd_manage, srd_party, srd_progression
+from vtt.characters import sheet_link, species_actions, species_catalog, srd_inventory, srd_manage, srd_party, srd_progression
 from vtt.characters.routes import (
     _can_read_character,
     _get_character_or_404,
@@ -29,6 +29,7 @@ from vtt.rules_content.creator_drafts import (
 )
 from vtt.rules_content.creator_rules import evaluate, load_creator_data
 from vtt.rules_content.creator_sources import default_source_ids, pin_status, registered_sources
+from vtt.rules_content.species_profiles import origin_view, pinned
 from vtt.utils.time import utcnow
 
 srd_creator_bp = Blueprint('srd_creator', __name__)
@@ -53,17 +54,32 @@ def _owned_draft(draft_id, user):
     return draft, None
 
 
-def _view(draft, data):
-    evaluation = evaluate(data, draft.state or {})
+def _species_blockers(problems):
+    return [{'code': 'species-unavailable', 'severity': 'error', 'message': p['message'], 'path': p['path']} for p in problems]
+
+
+def _view(draft):
+    """Draft, evaluation and blockers; a homebrew Species counts only while the draft's owner may still choose it."""
+    state = draft.state or {}
+    data, _, problems = species_catalog.resolve(draft.user_id, state)
+    evaluation = evaluate(data, state)
     return {
-        'draft': {**draft.summary(), 'state': draft.state or {}, 'sources': draft.sources},
+        'draft': {**draft.summary(), 'state': state, 'sources': draft.sources},
         'evaluation': evaluation,
-        'blockers': finalize_blockers(evaluation, draft.state or {}),
+        'blockers': _species_blockers(problems) + finalize_blockers(evaluation, state),
     }
 
 
 def _invalid_state(problems):
     return _bad('invalid_state', 'Der Entwurfszustand ist ungültig.', 422, problems=problems)
+
+
+def _clean_state(raw, data, user):
+    """(state, problems): structural hygiene plus the access check for a homebrew Species id."""
+    state, problems = sanitize_state(raw, data)
+    if not problems:
+        problems = species_catalog.resolve(user.id, state)[2]
+    return state, problems
 
 
 @srd_creator_bp.get('/meta')
@@ -93,16 +109,16 @@ def creator_data():
 @limiter.limit('600 per hour')
 @jwt_required()
 def evaluate_state():
-    _, error = _get_current_user()
+    user, error = _get_current_user()
     if error:
         return error
     body = _body()
     if body is None:
         return _bad('invalid_body', 'JSON-Objekt erwartet.')
-    data = load_creator_data()
-    state, problems = sanitize_state(body.get('state'), data)
+    state, problems = _clean_state(body.get('state'), load_creator_data(), user)
     if problems:
         return _invalid_state(problems)
+    data = species_catalog.resolve(user.id, state)[0]
     evaluation = evaluate(data, state)
     return jsonify({'evaluation': evaluation, 'blockers': finalize_blockers(evaluation, state)})
 
@@ -135,7 +151,7 @@ def create_draft():
     data = load_creator_data()
     if SrdCreatorDraft.query.filter_by(user_id=user.id, status='draft').count() >= MAX_OPEN_DRAFTS:
         return _bad('draft_limit', f'Es sind höchstens {MAX_OPEN_DRAFTS} offene Entwürfe möglich.', 409)
-    state, problems = sanitize_state(body.get('state'), data)
+    state, problems = _clean_state(body.get('state'), data, user)
     if problems:
         return _invalid_state(problems)
     step = body.get('step')
@@ -150,7 +166,7 @@ def create_draft():
     )
     db.session.add(draft)
     db.session.commit()
-    return jsonify(_view(draft, data)), 201
+    return jsonify(_view(draft)), 201
 
 
 @srd_creator_bp.get('/drafts/<int:draft_id>')
@@ -162,7 +178,7 @@ def get_draft(draft_id):
     draft, error = _owned_draft(draft_id, user)
     if error:
         return error
-    return jsonify(_view(draft, load_creator_data()))
+    return jsonify(_view(draft))
 
 
 @srd_creator_bp.put('/drafts/<int:draft_id>')
@@ -185,10 +201,10 @@ def update_draft(draft_id):
         return _bad('draft_not_editable', 'Dieser Entwurf ist bereits abgeschlossen.', 409)
     data = load_creator_data()
     if draft.version != version:
-        return jsonify({'error': 'version_conflict', 'message': 'Der Entwurf wurde zwischenzeitlich geändert.', **_view(draft, data)}), 409
+        return jsonify({'error': 'version_conflict', 'message': 'Der Entwurf wurde zwischenzeitlich geändert.', **_view(draft)}), 409
     values = {'version': draft.version + 1, 'updated_at': utcnow()}
     if 'state' in body:
-        state, problems = sanitize_state(body['state'], data)
+        state, problems = _clean_state(body['state'], data, user)
         if problems:
             return _invalid_state(problems)
         values.update(state=state, name=identity_name(state)[:100] or None, sources=state.get('sources') or default_source_ids())
@@ -201,10 +217,10 @@ def update_draft(draft_id):
     if changed != 1:
         db.session.rollback()
         fresh = db.session.get(SrdCreatorDraft, draft_id)
-        return jsonify({'error': 'version_conflict', 'message': 'Der Entwurf wurde zwischenzeitlich geändert.', **_view(fresh, data)}), 409
+        return jsonify({'error': 'version_conflict', 'message': 'Der Entwurf wurde zwischenzeitlich geändert.', **_view(fresh)}), 409
     db.session.commit()
     db.session.refresh(draft)
-    return jsonify(_view(draft, data))
+    return jsonify(_view(draft))
 
 
 @srd_creator_bp.delete('/drafts/<int:draft_id>')
@@ -249,10 +265,10 @@ def finalize_draft(draft_id):
         return _bad('draft_not_editable', 'Dieser Entwurf ist bereits abgeschlossen.', 409)
     if draft.version != body['version']:
         return _bad('version_conflict', 'Der Entwurf wurde zwischenzeitlich geändert.', 409)
-    data = load_creator_data()
     state = draft.state or {}
+    data, revision, species_problems = species_catalog.resolve(user.id, state)
     evaluation = evaluate(data, state)
-    blockers = finalize_blockers(evaluation, state)
+    blockers = _species_blockers(species_problems) + finalize_blockers(evaluation, state)
     if blockers:
         return _bad('draft_incomplete', 'Der Entwurf ist noch nicht vollständig oder enthält Regelverstöße.', 422, blockers=blockers)
     campaign_id = body.get('campaign_id')
@@ -263,8 +279,15 @@ def finalize_draft(draft_id):
         srd_party.check_ability_method(state, campaign_id)
     except srd_progression.ProgressionError as exc:
         return _progression_failure(exc)
+    pin = species_catalog.pin_for(revision) if revision is not None else None
+    if pin and pin['scope']['kind'] == 'campaign' and campaign_id != pin['scope']['id']:
+        return _bad('species_campaign_required',
+                    f"„{pin['profile']['name']}“ ist eine Spezies der Kampagne „{pin['scope']['label']}“. Schließe den Charakter in dieser Kampagne ab.",
+                    422, campaignId=pin['scope']['id'])
     finalized_at = utcnow()
     values = character_values(data, state, evaluation, draft_id=draft.id, finalized_at=finalized_at.isoformat() + 'Z')
+    if pin:
+        values['character_data']['srd']['speciesPin'] = pin
     char = Character(user_id=user.id, campaign_id=campaign_id, mana_max=0, mana_current=0, **values)
     db.session.add(char)
     db.session.flush()
@@ -293,13 +316,52 @@ def get_srd_character(char_id):
     block = (char.character_data or {}).get('srd') if is_srd_character_data(char.character_data) else None
     if not isinstance(block, dict):
         return _bad('not_srd', 'Kein SRD-Charakter.', 422)
-    data = load_creator_data()
+    data = sheet_link.rules_data(char)
+    origin = origin_view(pinned(block))
+    if origin:
+        origin['canAct'] = sheet_link.can_roll_for(user, char)
     return jsonify({
         'characterId': char.id,
         'srd': block,
         'evaluation': evaluate(data, block.get('state') or {}),
         'sourceStatus': pin_status(data, block.get('sources')),
+        'speciesOrigin': origin,
     })
+
+
+@srd_creator_bp.get('/species-catalog')
+@jwt_required()
+def species_catalog_entries():
+    """Published homebrew Species this user may choose (creator-data shape plus `origin` provenance)."""
+    user, error = _get_current_user()
+    if error:
+        return error
+    response = jsonify({'enabled': species_catalog.enabled(), 'species': species_catalog.catalog(user.id)})
+    response.headers['Cache-Control'] = 'private, no-store'
+    return response
+
+
+@srd_creator_bp.post('/characters/<int:char_id>/species-actions/<action_id>')
+@limiter.limit('120 per hour')
+@jwt_required()
+def use_species_action(char_id, action_id):
+    user, error = _get_current_user()
+    if error:
+        return error
+    char, error = _get_character_or_404(char_id)
+    if error:
+        return error
+    if not sheet_link.can_roll_for(user, char):
+        return _bad('forbidden', 'Nur die Besitzerin, der Besitzer oder die Spielleitung erklärt Aktionen dieses Charakters.', 403)
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    try:
+        receipt = species_actions.declare(user, char, action_id, body)
+    except species_actions.ActionError as exc:
+        db.session.rollback()
+        return _bad(exc.code, exc.message, exc.status, **exc.extra)
+    return jsonify(receipt), 200 if receipt['duplicate'] else 201
 
 
 @srd_creator_bp.post('/characters/<int:char_id>/roll')
@@ -546,7 +608,7 @@ def _progression_character(char_id, *, write):
 
 
 def _progression_payload(char, user, can_manage):
-    data = load_creator_data()
+    data = sheet_link.rules_data(char)
     last_level = srd_progression.last_level(char, data)
     return {
         'status': srd_progression.status(char, data),
@@ -586,7 +648,7 @@ def put_progression(char_id):
     if body is None:
         return _bad('invalid_body', 'JSON-Objekt erwartet.')
     try:
-        srd_progression.set_progression(char, load_creator_data(), body, user_id=user.id)
+        srd_progression.set_progression(char, sheet_link.rules_data(char), body, user_id=user.id)
         db.session.commit()
     except srd_progression.ProgressionError as exc:
         return _progression_failure(exc)
@@ -604,7 +666,7 @@ def preview_level_up(char_id):
     if body is None:
         return _bad('invalid_body', 'JSON-Objekt erwartet.')
     try:
-        result = srd_progression.preview(char, load_creator_data(), body)
+        result = srd_progression.preview(char, sheet_link.rules_data(char), body)
     except srd_progression.ProgressionError as exc:
         return _progression_failure(exc)
     result.pop('state')
@@ -622,7 +684,7 @@ def post_level_up(char_id):
     if body is None:
         return _bad('invalid_body', 'JSON-Objekt erwartet.')
     try:
-        result = srd_progression.level_up(char, load_creator_data(), body, user_id=user.id)
+        result = srd_progression.level_up(char, sheet_link.rules_data(char), body, user_id=user.id)
         db.session.commit()
     except srd_progression.ProgressionError as exc:
         return _progression_failure(exc)
@@ -651,7 +713,7 @@ def post_level_down(char_id):
     if body is None:
         return _bad('invalid_body', 'JSON-Objekt erwartet.')
     try:
-        result = srd_progression.level_down(char, load_creator_data(), body, user_id=user.id)
+        result = srd_progression.level_down(char, sheet_link.rules_data(char), body, user_id=user.id)
         db.session.commit()
     except srd_progression.ProgressionError as exc:
         return _progression_failure(exc)
@@ -715,6 +777,11 @@ def post_to_draft(char_id):
         state, name, sources = srd_manage.draft_values(char, data)
     except srd_progression.ProgressionError as exc:
         return _progression_failure(exc)
+    # The rebuild draft refers to the same pinned revision; it is only offered while the user may still choose it.
+    species_problems = species_catalog.resolve(user.id, state)[2]
+    if species_problems:
+        return _bad('species_unavailable', 'Der Neuaufbau nutzt eine Homebrew-Spezies, die dir nicht mehr freigegeben ist. '
+                    'Der bestehende Charakter bleibt unverändert.', 409, blockers=_species_blockers(species_problems))
     draft = SrdCreatorDraft(user_id=user.id, step='klasse', name=name, state=state, sources=sources)
     db.session.add(draft)
     db.session.commit()

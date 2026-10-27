@@ -321,3 +321,6 @@ def delete_document():
     db.session.delete(row)
     db.session.commit()
     return jsonify({"deleted": row.uuid})
+
+
+from . import species_routes  # noqa: E402,F401  (registers the Species check/publish routes on this blueprint)

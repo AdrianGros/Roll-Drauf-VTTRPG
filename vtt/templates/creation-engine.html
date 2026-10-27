@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='eagle-homebrew/shim.css') }}">
   <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/regelwerk-navigation.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/ce-species-publish.js') }}" defer></script>
   <script type="module" src="{{ url_for('static', filename='eagle-homebrew/creation-engine.js') }}"></script>
 </head>
 <body class="ce-authoring">
@@ -54,6 +55,41 @@
           <div id="ce-library-documents"></div>
         </section>
       </div>
+      <section id="ce-species" class="ce-species" aria-labelledby="ce-species-heading" hidden>
+        <h2 id="ce-species-heading">Spezies spielbar machen</h2>
+        <p class="ce-help">Prüft eine gespeicherte 2024-Spezies, ergänzt, was Eagle nicht ausdrücken kann, und veröffentlicht
+          eine unveränderliche Fassung für den Charakter-Ersteller. Spätere Änderungen in Eagle brauchen eine neue Fassung.</p>
+        <button id="ce-species-example" type="button">Duckfolk-Beispiel anlegen</button>
+        <p id="ce-species-empty" class="ce-help" hidden>In dieser Welt und deiner Bibliothek gibt es noch keine Spezies.</p>
+        <label for="ce-species-source">Spezies</label>
+        <select id="ce-species-source"></select>
+        <label for="ce-species-scope">Veröffentlichen für</label>
+        <select id="ce-species-scope"></select>
+        <fieldset>
+          <legend>Fertigkeitswahl (Übung, eine Fertigkeit nach Wahl)</legend>
+          <label for="ce-species-skill-label">Bezeichnung</label>
+          <input id="ce-species-skill-label" type="text" maxlength="60">
+          <div id="ce-species-skills" class="ce-species-skills"></div>
+        </fieldset>
+        <fieldset>
+          <legend><label><input id="ce-species-action-on" type="checkbox"> Aktion: Gegenstand telekinetisch bewegen</label></legend>
+          <label for="ce-species-action-name">Name</label>
+          <input id="ce-species-action-name" type="text" maxlength="80">
+          <label for="ce-species-action-activation">Aktivierung</label>
+          <select id="ce-species-action-activation"><option value="action">Aktion</option><option value="bonus-action">Bonusaktion</option></select>
+          <label for="ce-species-action-range">Reichweite (ft)</label>
+          <input id="ce-species-action-range" type="number" min="5" max="120">
+          <label for="ce-species-action-weight">Höchstgewicht (lb)</label>
+          <input id="ce-species-action-weight" type="number" min="1" max="500">
+          <label for="ce-species-action-move">Bewegung höchstens (ft)</label>
+          <input id="ce-species-action-move" type="number" min="5" max="120">
+          <label for="ce-species-action-description">Regeltext</label>
+          <textarea id="ce-species-action-description" maxlength="2000" rows="3"></textarea>
+        </fieldset>
+        <button id="ce-species-check" type="button">Spielbarkeit prüfen</button>
+        <button id="ce-species-publish" type="button" disabled>Veröffentlichen</button>
+        <div id="ce-species-report" role="status" aria-live="polite"></div>
+      </section>
     </main>
   </div>
   <div id="ce-eagle-mount"></div>

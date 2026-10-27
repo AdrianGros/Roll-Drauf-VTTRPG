@@ -1437,6 +1437,78 @@
             if (input) input.value = payload.armorClass.value;
         }
 
+        // A published homebrew Species pinned at finalize: shown from the pin, never from the editable Eagle document.
+        function buildSrdOrigin(character, origin) {
+            const box = document.createElement('div');
+            box.className = 'srd-sheet-origin';
+            box.id = 'srdSpeciesOrigin';
+            appendText(box, 'div', `Herkunft: ${origin.name} (Homebrew)`, 'srd-sheet-subtitle');
+            const movement = (origin.movement || []).map((m) => `${m.label} ${m.feet} ft (${String(m.meters).replace('.', ',')} m)`).join(', ');
+            const senses = (origin.senses || []).map((s) => `${s.label} ${s.feet} ft`).join(', ') || 'Keine Dunkelsicht';
+            box.append(srdGrid('srd-sheet-facts', [
+                srdCell('Kreaturentyp', origin.creatureType?.label || '–'),
+                srdCell('Größe', (origin.sizes || []).map((s) => s.label).join(' oder ') || '–'),
+                srdCell('Bewegung', movement || '–'),
+                srdCell('Sinne', senses),
+            ]));
+            appendText(box, 'p', `${origin.scope?.label || ''} · Fassung ${origin.revision ?? '–'} · Regelwerk ${origin.edition}${origin.author ? ` · veröffentlicht von ${origin.author}` : ''}`, 'srd-sheet-note');
+            if (origin.description) appendText(box, 'p', origin.description, 'srd-sheet-note');
+            if (origin.sensesNote) appendText(box, 'p', origin.sensesNote, 'srd-sheet-note');
+            (origin.traits || []).forEach((trait) => {
+                const rule = appendText(box, 'p', '', 'srd-sheet-note');
+                appendText(rule, 'strong', `${trait.name}: `);
+                appendText(rule, 'span', trait.description);
+            });
+            (origin.actions || []).forEach((action) => box.append(buildSrdOriginAction(character, origin, action)));
+            return box;
+        }
+
+        function buildSrdOriginAction(character, origin, action) {
+            const form = document.createElement('form');
+            form.className = 'srd-origin-action';
+            form.dataset.actionId = action.id;
+            appendText(form, 'strong', action.name);
+            appendText(form, 'p', action.summary, 'srd-sheet-note');
+            if (!origin.canAct) return form;
+            const input = (labelText, attrs) => {
+                const label = document.createElement('label');
+                label.textContent = `${labelText} `;
+                const field = Object.assign(document.createElement('input'), attrs);
+                label.append(field);
+                form.append(label);
+                return field;
+            };
+            const object = input('Gegenstand', { type: 'text', maxLength: 160, required: true, name: 'object', placeholder: 'z. B. der Schlüssel auf dem Tisch' });
+            const weight = input('Gewicht (lb)', { type: 'number', min: 0.1, max: action.maxWeightLb, step: 0.1, required: true, name: 'weightLb' });
+            const distance = input('Entfernung (ft)', { type: 'number', min: 0, max: action.rangeFeet, step: 1, required: true, name: 'distanceFeet' });
+            const move = input('Bewegen um (ft)', { type: 'number', min: 1, max: action.maxMoveFeet, step: 1, required: true, name: 'moveFeet' });
+            const unattended = input('Niemand trägt oder hält ihn', { type: 'checkbox', required: true, name: 'unattended' });
+            const button = Object.assign(document.createElement('button'), { type: 'submit', textContent: 'Am Tisch erklären', className: 'srd-roll-button' });
+            form.append(button);
+            // One key per declaration: a retry after a lost answer is recognised by the server and logged once.
+            let pendingKey = null;
+            form.addEventListener('input', () => { pendingKey = null; });
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                pendingKey = pendingKey || `q${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
+                button.disabled = true;
+                try {
+                    const receipt = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/species-actions/${encodeURIComponent(action.id)}`, 'POST', {
+                        idempotencyKey: pendingKey, object: object.value, weightLb: Number(weight.value),
+                        distanceFeet: Number(distance.value), moveFeet: Number(move.value), unattended: unattended.checked,
+                    });
+                    pendingKey = null;
+                    form.reset();
+                    showMessage(receipt.duplicate ? 'Diese Erklärung steht bereits im Tischprotokoll.' : `${action.name} erklärt: Die Spielleitung sieht es im Tischprotokoll.`);
+                } catch (error) {
+                    showMessage(error.message || 'Die Aktion konnte nicht erklärt werden.', true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+            return form;
+        }
+
         function buildSrdSheet(character, detail, data) {
             const ev = detail.evaluation || {};
             const state = detail.srd?.state || {};
@@ -1455,6 +1527,7 @@
                 srdCell('Klasse', classText || character.class || '–'),
                 srdCell('Gesinnung', alignment?.name || '–'),
             ]));
+            if (detail.speciesOrigin) nodes.push(buildSrdOrigin(character, detail.speciesOrigin));
 
             const hp = ev.hitPoints?.max ?? character.hp_max;
             const hitDice = Object.entries(ev.hitDice || {}).map(([die, count]) => `${count}×${die}`).join(' + ');

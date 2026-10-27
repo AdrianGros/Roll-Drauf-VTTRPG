@@ -15,6 +15,7 @@ from sqlalchemy.orm.attributes import flag_modified
 from vtt.extensions import db
 from vtt.models import InventoryItem
 from vtt.rules_content.creator_rules import _weapon_allowed, evaluate, load_creator_data
+from vtt.rules_content.species_profiles import rules_data_for_block
 
 MAX_ITEMS = 150
 MAX_QUANTITY = 9999
@@ -150,7 +151,7 @@ def _write(char, mutate, *, recompute=False):
     mutate(data)
     if recompute:
         block = data["srd"]
-        evaluation = evaluate(load_creator_data(), block.get("state") or {})
+        evaluation = evaluate(rules_data_for_block(block), block.get("state") or {})
         block["derived"] = evaluation
         char.ac = evaluation["armorClass"]["value"]
     char.character_data = data

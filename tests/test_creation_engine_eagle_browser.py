@@ -45,7 +45,7 @@ def server(monkeypatch):
         monkeypatch.setattr(TestingConfig, "SQLALCHEMY_ENGINE_OPTIONS",
                             {"connect_args": {"options": f"-csearch_path={schema}"}}, raising=False)
     app = create_app("testing")
-    app.config["CE_AUTHORING"] = True
+    app.config.update(CE_AUTHORING=True, CE_PLAYABLE_SPECIES=True)
     with app.app_context():
         db.create_all()
         init_default_roles(db.session)
@@ -213,3 +213,84 @@ def test_editor_fits_a_phone_screen(server, browser):
     assert page.evaluate("document.documentElement.scrollWidth") <= 390
     shot(page, "04-phone")
     assert errors == []
+
+
+def test_duckfolk_publish_creator_sheet_and_live_action(server, browser):
+    """Chromium follows the author → player → live table path against a disposable server."""
+    from playwright.sync_api import expect
+
+    from tests.test_playable_species import duck_state
+
+    origin, world = server
+    campaign_id = int(world.split(":", 1)[1])
+    gm, gm_errors = open_engine(browser, origin, "eagle_gm")
+    gm.select_option("#ce-world", world)
+    expect(gm.locator("#ce-species")).to_be_visible()
+    gm.locator("#ce-species-example").click()
+    expect(gm.locator("#ce-species-report")).to_contain_text("Duckfolk ist als normaler Eagle-Entwurf angelegt")
+    expect(gm.locator("#ce-species-source")).to_have_value(re.compile(r"Item\.D[0-9a-f]{15}"))
+    expect(gm.locator("#ce-species-action-name")).to_have_value("Telekinetisches Quaken")
+    gm.locator("#ce-species-check").click()
+    expect(gm.locator("#ce-species-report")).to_contain_text("Spielbar")
+    expect(gm.locator("#ce-species-publish")).to_be_enabled()
+    gm.select_option("#ce-species-scope", world)
+    gm.locator("#ce-species-publish").click()
+    expect(gm.locator("#ce-species-report")).to_contain_text("Veröffentlicht als Fassung 1")
+    shot(gm, "05-duckfolk-published")
+
+    player, player_errors = open_engine(browser, origin, "eagle_player")
+    catalog = api(player, origin, "/api/srd-creator/species-catalog")["species"]
+    duck = next(row for row in catalog if row["name"] == "Duckfolk")
+    data = api(player, origin, "/api/srd-creator/creator-data")
+    state = duck_state(data, duck["id"], skill="wahrnehmung", name="Quaki Browser")
+    state["species"]["choices"] = {}
+    draft_response = player.request.post(origin + "/api/srd-creator/drafts", data={"state": state})
+    assert draft_response.status == 201, draft_response.text()
+    draft = draft_response.json()["draft"]
+    player.goto(f"{origin}/srd-creator?draft={draft['id']}&schritt=herkunft")
+    expect(player.locator("#scStepBody")).to_contain_text("Duckfolk")
+    expect(player.locator("#scStepBody")).to_contain_text("Telekinetisches Quaken")
+    player.select_option("#scSpc-duck-skill", "wahrnehmung")
+    expect(player.locator("#scSave")).to_contain_text("Gespeichert")
+    shot(player, "06-duckfolk-creator")
+    draft = api(player, origin, f"/api/srd-creator/drafts/{draft['id']}")["draft"]
+    finished = player.request.post(origin + f"/api/srd-creator/drafts/{draft['id']}/finalize",
+                                   data={"version": draft["version"], "campaign_id": campaign_id})
+    assert finished.status == 201, finished.text()
+    char_id = finished.json()["character"]["id"]
+
+    campaign_map = gm.request.post(origin + f"/api/campaigns/{campaign_id}/maps",
+                                   data={"name": "Ententeich", "width": 20, "height": 20})
+    assert campaign_map.status == 201, campaign_map.text()
+    game_session = gm.request.post(origin + f"/api/campaigns/{campaign_id}/sessions",
+                                   data={"name": "Entenabend", "map_id": campaign_map.json()["id"]})
+    assert game_session.status == 201, game_session.text()
+    started = gm.request.post(origin + f"/api/campaigns/{campaign_id}/sessions/{game_session.json()['id']}/start")
+    assert started.status == 200, started.text()
+
+    player.goto(f"{origin}/character-sheet?id={char_id}")
+    expect(player.locator("#srdSpeciesOrigin")).to_contain_text("Duckfolk")
+    expect(player.locator("#srdSpeciesOrigin")).to_contain_text("Schwimmen 30 ft")
+    expect(player.locator("#srdSpeciesOrigin")).to_contain_text("Keine Dunkelsicht")
+    action = player.locator(".srd-origin-action[data-action-id=telekinetic-quack]")
+    expect(action).to_be_visible()
+    action.locator("input[name=object]").fill("der Schlüssel auf dem Tisch")
+    action.locator("input[name=weightLb]").fill("1")
+    action.locator("input[name=distanceFeet]").fill("20")
+    action.locator("input[name=moveFeet]").fill("15")
+    action.locator("input[name=unattended]").check()
+    action.get_by_role("button", name="Am Tisch erklären").click()
+    expect(player.locator("#srdSpeciesOrigin")).to_contain_text("Telekinetisches Quaken")
+    expect(player.locator("#messageBox")).to_contain_text("Telekinetisches Quaken erklärt")
+    shot(player, "07-duckfolk-sheet")
+    if SHOTS:
+        player.locator("#srdSpeciesOrigin").screenshot(path=os.path.join(SHOTS, "08-duckfolk-origin.png"))
+    gm.goto(f"{origin}/party?campaign={campaign_id}")
+    dm_origin = gm.locator(f".sp-card[data-character-id='{char_id}'] .sp-origin")
+    expect(dm_origin).to_contain_text("Duckfolk")
+    expect(dm_origin).to_contain_text("Schwimmen 30 ft")
+    expect(dm_origin).to_contain_text("Telekinetisches Quaken")
+    dm_origin.locator("summary").click()
+    expect(dm_origin).to_contain_text("Kein Angriff")
+    shot(gm, "09-duckfolk-dm-party")
+    assert gm_errors == [] and player_errors == []

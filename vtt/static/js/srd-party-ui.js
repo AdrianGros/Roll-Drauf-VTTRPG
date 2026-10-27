@@ -114,6 +114,23 @@
     }
     node.append(stats);
 
+    if (row.origin) {
+      // Pinned homebrew Species: what the table needs to know, as text (authored content is never HTML).
+      const origin = row.origin;
+      const movement = (origin.movement || []).map((m) => `${m.label} ${m.feet} ft`).join(', ');
+      const senses = (origin.senses || []).map((s) => `${s.label} ${s.feet} ft`).join(', ') || 'keine Dunkelsicht';
+      const box = el('div', 'sp-origin');
+      box.append(el('p', 'sp-card-sub', `${origin.name} (Homebrew, Fassung ${origin.revision}) · ${origin.creatureType?.label || ''} · ${(origin.sizes || []).map((s) => s.label).join('/')}`));
+      box.append(el('p', 'sp-card-sub', `Bewegung: ${movement} · Sinne: ${senses}`));
+      (origin.actions || []).forEach((action) => {
+        const details = el('details', 'sp-origin-action');
+        details.append(el('summary', '', `${action.name} · ${action.rangeFeet} ft · ${action.maxWeightLb} lb`),
+          el('p', 'sp-card-sub', action.summary));
+        box.append(details);
+      });
+      node.append(box);
+    }
+
     if (row.abilities) {
       const abilities = el('div', 'sp-abilities');
       ABIL.forEach(([key, label]) => {

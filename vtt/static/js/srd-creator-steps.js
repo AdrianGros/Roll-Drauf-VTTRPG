@@ -248,7 +248,21 @@
         } else {
             control = h('span', { text: 'Nicht unterstützt' });
         }
-        return h('div', null, field(label(choice.id), control, id), note);
+        return h('div', null, field(choice.label || label(choice.id), control, id), note);
+    }
+
+    function homebrewSpeciesDetail(species) {
+        const origin = species.origin || {};
+        const scope = origin.scope ? `${origin.scope.label}` : '';
+        const movement = (origin.movement || []).map((m) => `${m.label} ${m.feet} ft (${fmtMeters(m.meters)})`).join(', ');
+        const senses = (origin.senses || []).map((s) => `${s.label} ${s.feet} ft`).join(', ') || 'keine Dunkelsicht';
+        return [
+            h('p', { class: 'sc-muted', text: `Homebrew · ${scope} · Fassung ${origin.revision || '–'}${origin.author ? ` · von ${origin.author}` : ''}` }),
+            h('p', { text: `Bewegung: ${movement} · Sinne: ${senses}` }),
+            species.description ? h('p', { class: 'sc-muted', text: species.description }) : null,
+            (origin.actions || []).map((a) => h('p', null, h('strong', { text: `${a.name}: ` }), a.summary)),
+            (origin.traits || []).map((t) => h('p', null, h('strong', { text: `${t.name}: ` }), t.description)),
+        ];
     }
 
     function backgroundBonusControl(bg) {
@@ -289,14 +303,14 @@
         const curSpecies = st().species && SC.L.species[st().species.id];
         wrap.append(panel(
             h('h3', { text: 'Spezies' }),
-            h('div', { class: 'sc-grid' }, app.data.species.map((s) => card(s.name, `${s.sizes.join('/')} · ${fmtMeters(s.speedMeters)}`, curSpecies && curSpecies.id === s.id, () => {
+            h('div', { class: 'sc-grid' }, app.data.species.map((s) => card(s.name, `${s.sizes.join('/')} · ${fmtMeters(s.speedMeters)}${s.homebrew ? ` · Homebrew (${(s.origin && s.origin.scope && s.origin.scope.label) || 'veröffentlicht'})` : ''}`, curSpecies && curSpecies.id === s.id, () => {
                 SC.mutate((state) => { if (!state.species || state.species.id !== s.id) state.species = { id: s.id, choices: {} }; });
             }))),
             curSpecies ? h('div', { class: 'sc-detail' },
                 h('h3', { text: curSpecies.name }),
                 h('p', { text: `${curSpecies.creatureType} · Größe ${curSpecies.sizes.join(' oder ')} · Bewegungsrate ${fmtMeters(curSpecies.speedMeters)}${curSpecies.darkvisionMeters ? ` · Dunkelsicht ${curSpecies.darkvisionMeters} m` : ''}` }),
                 h('p', null, h('strong', { text: 'Merkmale: ' }), curSpecies.traits.join(', ')),
-                SC.detailButton(curSpecies.id, 'Spezies-Text lesen', curSpecies.name),
+                curSpecies.homebrew ? homebrewSpeciesDetail(curSpecies) : SC.detailButton(curSpecies.id, 'Spezies-Text lesen', curSpecies.name),
                 curSpecies.choices.map((c) => speciesChoiceControl(curSpecies, c))) : null));
         const curBg = st().background && SC.L.backgrounds[st().background.id];
         wrap.append(panel(

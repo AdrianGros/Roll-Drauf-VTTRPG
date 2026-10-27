@@ -10,7 +10,8 @@ import random
 from vtt.extensions import db
 from vtt.models import Campaign, ChatMessage, Character, GameSession, TokenState
 from vtt.rules_content.creator_drafts import is_srd_character_data
-from vtt.rules_content.creator_rules import evaluate, load_creator_data
+from vtt.rules_content.creator_rules import evaluate
+from vtt.rules_content.species_profiles import rules_data_for_block
 
 ABILITY_NAMES = {
     "str": "Stärke", "dex": "Geschicklichkeit", "con": "Konstitution",
@@ -21,14 +22,25 @@ ROLL_MODES = ("normal", "advantage", "disadvantage")
 LIVE_STATUSES = ("scheduled", "ready", "in_progress", "paused")
 
 
-def srd_evaluation(char):
-    """Fresh rules evaluation for an SRD character, else None."""
+def srd_block(char):
+    """The SRD block of a character, else None."""
     if not is_srd_character_data(char.character_data):
         return None
     block = (char.character_data or {}).get("srd")
-    if not isinstance(block, dict):
+    return block if isinstance(block, dict) else None
+
+
+def rules_data(char):
+    """The rules data this character is evaluated with: SRD plus its pinned homebrew Species, if any."""
+    return rules_data_for_block(srd_block(char))
+
+
+def srd_evaluation(char):
+    """Fresh rules evaluation for an SRD character (from its pinned Species, if any), else None."""
+    block = srd_block(char)
+    if block is None:
         return None
-    return evaluate(load_creator_data(), block.get("state") or {})
+    return evaluate(rules_data_for_block(block), block.get("state") or {})
 
 
 def roll_spec(evaluation, kind, key):
