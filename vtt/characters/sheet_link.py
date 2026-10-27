@@ -20,6 +20,15 @@ ABILITY_NAMES = {
 ROLL_KINDS = ("ability", "save", "skill", "initiative", "spell_attack", "death_save", "weapon_attack", "weapon_damage")
 ROLL_MODES = ("normal", "advantage", "disadvantage")
 LIVE_STATUSES = ("scheduled", "ready", "in_progress", "paused")
+NOT_RUNNING = {"paused": "ist pausiert", "ended": "ist beendet", "completed": "ist beendet", "cancelled": "wurde abgesagt"}
+
+
+class RollTargetError(Exception):
+    """The table a sheet roll names cannot take it: the roll is refused, never sent to another table."""
+
+    def __init__(self, code, message, status, **extra):
+        super().__init__(message)
+        self.code, self.message, self.status, self.extra = code, message, status, extra
 
 
 def srd_block(char):
@@ -98,36 +107,66 @@ def can_roll_for(user, char):
     return _is_dm(char.campaign_id, user.id)
 
 
-def roll_target_session(char):
-    """The session a sheet roll is logged to: the session of the character's token, else the live one."""
-    if not char.campaign_id:
-        return None
-    token = (
-        TokenState.query.join(GameSession, TokenState.game_session_id == GameSession.id)
-        .filter(TokenState.character_id == char.id, TokenState.deleted_at.is_(None),
-                GameSession.status == "in_progress")
-        .order_by(TokenState.updated_at.desc())
-        .first()
-    )
-    if token:
-        return db.session.get(GameSession, token.game_session_id)
-    return (
-        GameSession.query.filter_by(campaign_id=char.campaign_id, status="in_progress")
-        .order_by(GameSession.id.desc())
-        .first()
-    )
+def session_view(game_session):
+    return {"id": game_session.id, "name": game_session.name} if game_session else None
 
 
-def log_roll(user, char, spec, result, visibility):
-    """Persist the roll in the table chat log and broadcast it; returns the message id or None."""
-    from vtt.socket_handlers import _emit_scoped_roll, _is_active_member, _is_dm, _reject_read_only
+def rollable_sessions(user, char):
+    """Running sessions of the character's campaign in which `user` may roll at the table, newest first."""
+    from vtt.socket_handlers import _is_active_member, _reject_read_only
 
-    game_session = roll_target_session(char)
     campaign = db.session.get(Campaign, char.campaign_id) if char.campaign_id else None
-    if not game_session or not campaign or not _is_active_member(campaign.id, user.id):
-        return None
+    if campaign is None or not _is_active_member(campaign.id, user.id):
+        return []
+    running = (
+        GameSession.query.filter_by(campaign_id=campaign.id, status="in_progress")
+        .order_by(GameSession.id.desc())
+        .all()
+    )
+    return [s for s in running if not _reject_read_only(campaign, s, user)]
+
+
+def roll_destination(user, char, session_id=None):
+    """Where a sheet roll is logged: {"session": GameSession or None, "sessions": [...], "reason": str or None}.
+
+    An explicit `session_id` (the table the sheet was opened from or chosen on it) must be a running
+    session of the character's campaign in which `user` may roll, else RollTargetError. Without one,
+    the campaign's only running session is used; with several the player has to choose
+    ("choose_session"), and with none the roll stays on the sheet ("no_session" / "no_campaign").
+    """
+    from vtt.socket_handlers import _is_active_member, _reject_read_only
+
+    if session_id is None:
+        sessions = rollable_sessions(user, char)
+        if len(sessions) == 1:
+            return {"session": sessions[0], "sessions": sessions, "reason": None}
+        reason = "choose_session" if sessions else ("no_session" if char.campaign_id else "no_campaign")
+        return {"session": None, "sessions": sessions, "reason": reason}
+    campaign = db.session.get(Campaign, char.campaign_id) if char.campaign_id else None
+    game_session = db.session.get(GameSession, session_id)
+    if campaign is None or game_session is None or game_session.campaign_id != campaign.id:
+        raise RollTargetError("session_mismatch", "Dieser Tisch gehört nicht zur Kampagne des Charakters.", 409)
+    if not _is_active_member(campaign.id, user.id):
+        raise RollTargetError("session_forbidden", "Du sitzt nicht an diesem Tisch.", 403)
+    if game_session.status != "in_progress":
+        state = NOT_RUNNING.get(game_session.status, "hat noch nicht begonnen")
+        raise RollTargetError("session_not_live", f"Die Sitzung „{game_session.name}“ {state}.", 409,
+                              sessionStatus=game_session.status)
     if _reject_read_only(campaign, game_session, user):
+        raise RollTargetError("session_forbidden", "An diesem Tisch kannst du nur zusehen.", 403)
+    return {"session": game_session, "sessions": [game_session], "reason": None}
+
+
+def log_roll(user, char, game_session, spec, result, visibility):
+    """Persist the roll in the chat log of `game_session` (from roll_destination) and broadcast it there.
+
+    Returns the message id, or None when the roll stays on the sheet (no session).
+    """
+    from vtt.socket_handlers import _emit_scoped_roll, _is_dm
+
+    if game_session is None:
         return None
+    campaign = db.session.get(Campaign, game_session.campaign_id)
     if visibility in ("blind", "self") and not _is_dm(campaign.id, user.id):
         visibility = "public"
     if visibility not in ("public", "gm_only", "blind", "self"):

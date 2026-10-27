@@ -97,6 +97,119 @@ def test_rolls_are_not_logged_without_a_running_session(app, client, other, data
     assert ChatMessage.query.count() == 0
 
 
+def _session(campaign_id, name, status="in_progress"):
+    session = GameSession(campaign_id=campaign_id, name=name, status=status)
+    db.session.add(session)
+    db.session.commit()
+    return session.id
+
+
+def _context(client, char_id, session_id=None):
+    query = "" if session_id is None else f"?session_id={session_id}"
+    return client.get(f"{BASE}/characters/{char_id}/roll-context{query}")
+
+
+def test_an_explicit_table_gets_the_roll_while_several_run(app, client, other, data):
+    t = table(app, client, other, data)
+    second = _session(t["campaign"], "Zweiter Tisch")
+    first = roll(client, t["char"]["id"], kind="skill", key="arkane-kunde", sessionId=t["session"]).get_json()
+    assert first["logged"] and first["session"] == {"id": t["session"], "name": "Abend"}
+    assert db.session.get(ChatMessage, first["messageId"]).game_session_id == t["session"]
+    # the sheet sends the id it read from its URL, as text
+    there = roll(client, t["char"]["id"], kind="initiative", sessionId=str(second)).get_json()
+    assert db.session.get(ChatMessage, there["messageId"]).game_session_id == second
+    assert ChatMessage.query.count() == 2
+
+
+def test_several_running_tables_need_a_choice_before_anything_is_rolled(app, client, other, data):
+    t = table(app, client, other, data)
+    second = _session(t["campaign"], "Zweiter Tisch")
+    refused = roll(client, t["char"]["id"], kind="initiative")
+    assert refused.status_code == 409
+    body = refused.get_json()
+    assert body["error"] == "session_required" and "nicht gewürfelt" in body["message"] and "result" not in body
+    assert {s["id"] for s in body["sessions"]} == {t["session"], second}
+    context = _context(client, t["char"]["id"]).get_json()
+    assert context["live"] is False and context["reason"] == "choose_session" and context["session"] is None
+    assert [s["id"] for s in context["sessions"]] == [second, t["session"]]
+    assert ChatMessage.query.count() == 0
+
+
+def test_wrong_or_finished_tables_refuse_the_roll_and_never_redirect_it(app, client, other, data):
+    t = table(app, client, other, data)  # "Abend" keeps running: a fallback the server must not use
+    ended = _session(t["campaign"], "Gestern", status="ended")
+    paused = _session(t["campaign"], "Pause", status="paused")
+    stranger = Campaign(name="Fremd", description="", owner_id=other.user_id, status="active", max_players=6)
+    db.session.add(stranger)
+    db.session.flush()
+    foreign = _session(stranger.id, "Fremder Tisch")
+    for session_id, status, code in (
+        (ended, 409, "session_not_live"),
+        (paused, 409, "session_not_live"),
+        (foreign, 409, "session_mismatch"),
+        (99999, 409, "session_mismatch"),
+        ("abc", 400, "invalid_session"),
+        (0, 400, "invalid_session"),
+        (-3, 400, "invalid_session"),
+        (True, 400, "invalid_session"),
+        (1.5, 400, "invalid_session"),
+    ):
+        resp = roll(client, t["char"]["id"], kind="initiative", sessionId=session_id)
+        assert resp.status_code == status, (session_id, resp.get_json())
+        assert resp.get_json()["error"] == code and "result" not in resp.get_json()
+    assert "beendet" in roll(client, t["char"]["id"], kind="initiative", sessionId=ended).get_json()["message"]
+    assert ChatMessage.query.count() == 0
+    # the sheet's destination check gives the same answers
+    assert _context(client, t["char"]["id"], ended).get_json()["error"] == "session_not_live"
+    assert _context(client, t["char"]["id"], foreign).get_json()["error"] == "session_mismatch"
+    assert _context(client, t["char"]["id"], "x").status_code == 400
+    # a character without a campaign cannot name a table either
+    loose = finalized(client, data, name="Ohne Kampagne")
+    assert roll(client, loose["id"], kind="initiative", sessionId=t["session"]).get_json()["error"] == "session_mismatch"
+    alone = _context(client, loose["id"]).get_json()
+    assert alone["live"] is False and alone["reason"] == "no_campaign" and alone["sessions"] == []
+    assert ChatMessage.query.count() == 0
+
+
+def test_only_the_owner_or_dm_roll_and_only_at_tables_they_play_at(app, client, other, data):
+    t = table(app, client, other, data)
+    stolen = roll(other, t["char"]["id"], kind="initiative", sessionId=t["session"])
+    assert stolen.status_code == 403
+    assert _context(other, t["char"]["id"], t["session"]).status_code == 403
+    by_dm = roll(t["dm"], t["char"]["id"], kind="initiative", sessionId=t["session"]).get_json()
+    assert db.session.get(ChatMessage, by_dm["messageId"]).game_session_id == t["session"]
+
+    member = CampaignMember.query.filter_by(campaign_id=t["campaign"], user_id=client.user_id).first()
+    member.campaign_role = "Observer"
+    db.session.commit()
+    watching = roll(client, t["char"]["id"], kind="initiative", sessionId=t["session"])
+    assert watching.status_code == 403 and watching.get_json()["error"] == "session_forbidden"
+    local = roll(client, t["char"]["id"], kind="initiative").get_json()
+    assert local["logged"] is False and local["reason"] == "no_session" and local["session"] is None
+
+    member.campaign_role, member.status = "Player", "removed"
+    db.session.commit()
+    gone = roll(client, t["char"]["id"], kind="initiative", sessionId=t["session"])
+    assert gone.status_code == 403 and gone.get_json()["error"] == "session_forbidden"
+    assert ChatMessage.query.count() == 1
+
+
+def test_roll_context_names_the_destination_before_the_roll(app, client, other, data):
+    t = table(app, client, other, data)
+    implicit = _context(client, t["char"]["id"])
+    assert implicit.status_code == 200 and "no-store" in implicit.headers["Cache-Control"]
+    body = implicit.get_json()
+    assert body["live"] is True and body["explicit"] is False and body["reason"] is None
+    assert body["session"] == {"id": t["session"], "name": "Abend"} and body["campaignId"] == t["campaign"]
+    bound = _context(client, t["char"]["id"], t["session"]).get_json()
+    assert bound["live"] and bound["explicit"] and bound["sessions"] == [{"id": t["session"], "name": "Abend"}]
+    db.session.get(GameSession, t["session"]).status = "completed"
+    db.session.commit()
+    assert _context(client, t["char"]["id"]).get_json()["reason"] == "no_session"
+    assert _context(client, t["char"]["id"], t["session"]).status_code == 409
+    assert ChatMessage.query.count() == 0
+
+
 def _tokens(t):
     return f"/api/campaigns/{t['campaign']}/sessions/{t['session']}/tokens"
 

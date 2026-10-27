@@ -56,8 +56,6 @@ def _broadcast(message, user):
 
 def declare(user, char, action_id, body):
     """Validate and log one use of `action_id` for `char` by `user` (owner or DM; the caller checks). Commits."""
-    from vtt.socket_handlers import _is_active_member, _reject_read_only
-
     body = body if isinstance(body, dict) else {}
     pin = profiles.pinned(sheet_link.srd_block(char))
     action = profiles.find_action(pin, action_id)
@@ -69,11 +67,17 @@ def declare(user, char, action_id, body):
     declaration, problems = profiles.check_declaration(action, body)
     if problems:
         raise ActionError("invalid_declaration", "Die Erklärung passt nicht zur Regel der Spezies.", 422, problems=problems)
-    game_session = sheet_link.roll_target_session(char)
-    campaign = db.session.get(Campaign, char.campaign_id) if char.campaign_id else None
-    if game_session is None or campaign is None or not _is_active_member(campaign.id, user.id) \
-            or _reject_read_only(campaign, game_session, user):
+    try:
+        target = sheet_link.roll_destination(user, char, body.get("sessionId"))
+    except sheet_link.RollTargetError as exc:
+        raise ActionError(exc.code, exc.message, exc.status, **exc.extra) from None
+    if target["reason"] == "choose_session":
+        raise ActionError("session_required", "Mehrere Sitzungen laufen. Wähle am Bogen den Tisch für diese Aktion.", 409,
+                          sessions=[sheet_link.session_view(s) for s in target["sessions"]])
+    game_session = target["session"]
+    if game_session is None:
         raise ActionError("no_live_session", "Spezies-Aktionen werden in einer laufenden Sitzung der Kampagne erklärt.", 409)
+    campaign = db.session.get(Campaign, game_session.campaign_id)
     event_id = f"sa:{char.id}:{action['id']}:{key}"
     content = profiles.declaration_text(char.name, action, declaration)
     existing = _existing(user, game_session, event_id)

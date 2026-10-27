@@ -47,6 +47,17 @@ def _bad(code, message, status=400, **extra):
     return jsonify({'error': code, 'message': message, **extra}), status
 
 
+def _session_id(raw):
+    """(table session id or None, error) for an optional explicit table; a malformed id is refused, never read as 'no table'."""
+    if raw is None or raw == '':
+        return None, None
+    if isinstance(raw, str) and raw.isascii() and raw.isdigit():
+        raw = int(raw)
+    if isinstance(raw, bool) or not isinstance(raw, int) or not 0 < raw < 2 ** 31:
+        return None, _bad('invalid_session', 'Ungültige Sitzungs-ID.', 400)
+    return raw, None
+
+
 def _owned_draft(draft_id, user):
     draft = db.session.get(SrdCreatorDraft, draft_id)
     if draft is None or draft.user_id != user.id or draft.status == 'discarded':
@@ -356,8 +367,11 @@ def use_species_action(char_id, action_id):
     body = _body()
     if body is None:
         return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    session_id, error = _session_id(body.get('sessionId'))
+    if error:
+        return error
     try:
-        receipt = species_actions.declare(user, char, action_id, body)
+        receipt = species_actions.declare(user, char, action_id, {**body, 'sessionId': session_id})
     except species_actions.ActionError as exc:
         db.session.rollback()
         return _bad(exc.code, exc.message, exc.status, **exc.extra)
@@ -379,6 +393,9 @@ def roll_from_sheet(char_id):
     body = _body()
     if body is None:
         return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    session_id, error = _session_id(body.get('sessionId'))
+    if error:
+        return error
     evaluation = sheet_link.srd_evaluation(char)
     if evaluation is None:
         return _bad('not_srd', 'Kein SRD-Charakter.', 422)
@@ -393,6 +410,15 @@ def roll_from_sheet(char_id):
         spec = sheet_link.roll_spec(evaluation, kind, key)
     if spec is None:
         return _bad('invalid_roll', 'Dieser Wurf existiert auf dem Bogen nicht.', 422)
+    # The destination is settled before any die is rolled: a refused table means no roll at all.
+    try:
+        target = sheet_link.roll_destination(user, char, session_id)
+    except sheet_link.RollTargetError as exc:
+        return _bad(exc.code, f'{exc.message} Es wurde nicht gewürfelt.', exc.status, **exc.extra)
+    if target['reason'] == 'choose_session':
+        return _bad('session_required',
+                    'In dieser Kampagne laufen mehrere Sitzungen. Wähle am Bogen den Tisch, an dem du spielst. Es wurde nicht gewürfelt.',
+                    409, sessions=[sheet_link.session_view(s) for s in target['sessions']])
     if spec.get('damage'):
         result = srd_inventory.roll_damage(spec['damage'])
         dice = spec['dice']
@@ -400,14 +426,48 @@ def roll_from_sheet(char_id):
         result = sheet_link.roll_d20(spec['modifier'], body.get('mode') if isinstance(body.get('mode'), str) else 'normal')
         dice = sheet_link.dice_text(spec['modifier'])
     visibility = body.get('visibility') if isinstance(body.get('visibility'), str) else 'public'
-    message_id = sheet_link.log_roll(user, char, spec, result, visibility)
+    message_id = sheet_link.log_roll(user, char, target['session'], spec, result, visibility)
     return jsonify({
         'label': spec['label'],
         'dice': dice,
         'result': result,
         'logged': message_id is not None,
         'messageId': message_id,
+        'session': sheet_link.session_view(target['session']),
+        'reason': target['reason'],
     })
+
+
+@srd_creator_bp.get('/characters/<int:char_id>/roll-context')
+@jwt_required()
+def roll_context(char_id):
+    """Where a sheet roll would go right now, so the sheet can say so before the player rolls."""
+    user, error = _get_current_user()
+    if error:
+        return error
+    char, error = _get_character_or_404(char_id)
+    if error:
+        return error
+    if not sheet_link.can_roll_for(user, char):
+        return _bad('forbidden', 'Nur die Besitzerin, der Besitzer oder die Spielleitung darf für diesen Charakter würfeln.', 403)
+    session_id, error = _session_id(request.args.get('session_id'))
+    if error:
+        return error
+    try:
+        target = sheet_link.roll_destination(user, char, session_id)
+    except sheet_link.RollTargetError as exc:
+        return _bad(exc.code, exc.message, exc.status, **exc.extra)
+    response = jsonify({
+        'characterId': char.id,
+        'campaignId': char.campaign_id,
+        'explicit': session_id is not None,
+        'live': target['session'] is not None,
+        'session': sheet_link.session_view(target['session']),
+        'sessions': [sheet_link.session_view(s) for s in target['sessions']],
+        'reason': target['reason'],
+    })
+    response.headers['Cache-Control'] = 'private, no-store'
+    return response
 
 
 def _inventory_character(char_id, *, write):

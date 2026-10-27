@@ -271,7 +271,7 @@ def test_duckfolk_publish_creator_sheet_and_live_action(server, browser):
     started = gm.request.post(origin + f"/api/campaigns/{campaign_id}/sessions/{game_session.json()['id']}/start")
     assert started.status == 200, started.text()
 
-    player.goto(f"{origin}/character-sheet?id={char_id}")
+    player.goto(f"{origin}/character-sheet?id={char_id}&session_id={game_session.json()['id']}")
     expect(player.locator("#srdSpeciesOrigin")).to_contain_text("Duckfolk")
     expect(player.locator("#srdSpeciesOrigin")).to_contain_text("Schwimmen 30 ft")
     expect(player.locator("#srdSpeciesOrigin")).to_contain_text("Keine Dunkelsicht")

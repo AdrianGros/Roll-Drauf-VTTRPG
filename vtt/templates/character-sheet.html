@@ -472,6 +472,37 @@
         .srd-roll-result.is-crit { color: #1f6b2e; }
         .srd-roll-result.is-fumble { color: #9c2a2a; }
         .srd-roll-where { font-weight: 400; font-size: 0.78rem; color: #6e5745; }
+        .srd-roll-destination {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.3rem 0.6rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            color: #2f1638;
+            background: rgba(110, 87, 69, 0.08);
+            border-left: 4px solid #8e6b52;
+            overflow-wrap: anywhere;
+        }
+        .srd-roll-destination[data-state="live"] { background: rgba(31, 107, 46, 0.1); border-left-color: #1f6b2e; }
+        .srd-roll-destination[data-state="choose"] { background: rgba(202, 163, 59, 0.14); border-left-color: #a8842c; }
+        .srd-roll-destination[data-state="blocked"] { background: rgba(156, 42, 42, 0.1); border-left-color: #9c2a2a; }
+        .srd-roll-destination strong { font-weight: 700; }
+        .srd-roll-destination select { max-width: 100%; }
+        .srd-roll-jump { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: #6e5745; }
+        .srd-roll-link {
+            font: inherit;
+            cursor: pointer;
+            border: 1px solid rgba(75, 35, 90, 0.25);
+            border-radius: 6px;
+            background: none;
+            color: #4b235a;
+            padding: 0.1rem 0.45rem;
+        }
+        .srd-roll-link:hover, .srd-roll-link:focus-visible { background: rgba(75, 35, 90, 0.1); }
+        #srdSheetBody .srd-sheet-subtitle, #srdInventory { scroll-margin-top: 11rem; }
         .srd-roll-history {
             margin: 0;
             padding-left: 1.1rem;
@@ -506,6 +537,7 @@
             color: #4b235a;
         }
         @media (max-width: 620px) {
+            .srd-roll-jump { display: none; }
             .srd-sheet-facts,
             .srd-sheet-skills { grid-template-columns: 1fr; }
             .srd-sheet-vitals,
@@ -994,9 +1026,12 @@
             goTo('/characters');
         }
 
+        // The table this sheet rolls to travels with the sheet through view/edit.
         function toggleSheetMode() {
-            const nextMode = editable ? 'view' : 'edit';
-            goTo(`/character-sheet?id=${characterId}${nextMode === 'edit' ? '&mode=edit' : ''}`);
+            const query = new URLSearchParams({ id: String(characterId) });
+            if (!editable) query.set('mode', 'edit');
+            if (srdTableSession) query.set('session_id', srdTableSession);
+            goTo(`/character-sheet?${query}`);
         }
 
         function openCampaignContext() {
@@ -1247,6 +1282,16 @@
         let srdRollMode = 'normal';
         const srdRollHistory = [];
         const SRD_ROLL_MODES = [['normal', 'Normal'], ['advantage', 'Vorteil'], ['disadvantage', 'Nachteil']];
+        // Sheet to table: opened from a table, the URL names its session and every roll carries it.
+        // The server refuses a roll for a wrong or finished table instead of sending it elsewhere.
+        let srdTableSession = params.get('session_id') || null;
+        let srdRollContext = null;
+        let srdRollContextAt = 0;
+        let srdRollContextToken = 0;
+        const SRD_LOCAL_REASONS = {
+            no_campaign: 'Der Charakter gehört zu keiner Kampagne.',
+            no_session: 'In der Kampagne läuft gerade keine Sitzung, an der du mitspielst.',
+        };
 
         function appendText(parent, tag, text, className = '') {
             const node = document.createElement(tag);
@@ -1311,16 +1356,129 @@
             node.replaceChildren();
             node.append(document.createTextNode(entry.error || entry.text));
             if (!entry.error) {
-                appendText(node, 'span', entry.logged ? ' · im Tisch-Protokoll' : ' · nur hier (keine laufende Sitzung)', 'srd-roll-where');
+                appendText(node, 'span', entry.logged
+                    ? ` · live am Tisch${entry.table ? ` „${entry.table}“` : ''}`
+                    : ` · nur hier, nicht am Tisch${entry.reason ? ` – ${entry.reason}` : ''}`, 'srd-roll-where');
             }
             history.replaceChildren();
-            srdRollHistory.slice(1, 6).forEach((past) => appendText(history, 'li', past.text));
+            srdRollHistory.slice(1, 6).forEach((past) => appendText(history, 'li', `${past.text}${past.logged ? ' · am Tisch' : ' · nur hier'}`));
+        }
+
+        // Like auth.makeAuthRequest, but keeps the server's status, message and extra fields.
+        async function srdTableRequest(url, method = 'GET', body = null, retryOn401 = true) {
+            const options = { method, credentials: 'include', headers: Auth.buildHeaders(method, body !== null) };
+            if (body !== null) options.body = JSON.stringify(body);
+            const response = await fetch(url, options);
+            if (response.status === 401 && retryOn401) {
+                if (await Auth.refreshAccessToken()) return srdTableRequest(url, method, body, false);
+                window.location.href = '/login.html';
+                return null;
+            }
+            return { ok: response.ok, status: response.status, payload: await response.json().catch(() => ({})) };
+        }
+
+        async function loadSrdRollContext(character, force = false) {
+            if (!character?.id || (!force && Date.now() - srdRollContextAt < 5000)) return;
+            srdRollContextAt = Date.now();
+            const token = ++srdRollContextToken;
+            const query = srdTableSession ? `?session_id=${encodeURIComponent(srdTableSession)}` : '';
+            let next;
+            try {
+                const answer = await srdTableRequest(`/api/srd-creator/characters/${character.id}/roll-context${query}`);
+                if (!answer) return;
+                next = answer.ok ? answer.payload
+                    : { error: answer.payload.error || 'failed', message: answer.payload.message || 'Das Würfelziel konnte nicht geprüft werden.' };
+            } catch (error) {
+                next = { error: 'offline', message: 'Das Würfelziel konnte nicht geprüft werden (keine Verbindung).' };
+            }
+            if (token !== srdRollContextToken) return;
+            srdRollContext = next;
+            renderSrdRollDestination(character);
+        }
+
+        function bindSrdTable(character, sessionId) {
+            srdTableSession = sessionId ? String(sessionId) : null;
+            const url = new URL(window.location.href);
+            if (srdTableSession) url.searchParams.set('session_id', srdTableSession);
+            else url.searchParams.delete('session_id');
+            window.history.replaceState(window.history.state, '', url);
+            srdRollContext = null;
+            renderSrdRollDestination(character);
+            loadSrdRollContext(character, true);
+        }
+
+        // Where the next click goes, shown before the player rolls.
+        function renderSrdRollDestination(character, node) {
+            const box = node || document.getElementById('srdRollDestination');
+            if (!box) return;
+            const context = srdRollContext;
+            box.replaceChildren();
+            let state = 'checking';
+            if (!context) {
+                appendText(box, 'span', 'Würfelziel wird geprüft …');
+            } else if (context.error) {
+                state = 'blocked';
+                appendText(box, 'strong', 'Kein Tisch: ');
+                appendText(box, 'span', `${context.message} ${srdTableSession ? 'Solange dieser Tisch gewählt ist, wird nicht gewürfelt.' : ''}`.trim());
+            } else if (context.live) {
+                state = 'live';
+                appendText(box, 'strong', `Live am Tisch „${context.session.name}“: `);
+                appendText(box, 'span', context.explicit
+                    ? 'Würfe erscheinen sofort im Würfel- und Chat-Protokoll dieses Tisches.'
+                    : 'Würfe erscheinen sofort im Würfel- und Chat-Protokoll (einzige laufende Sitzung).');
+            } else if (context.reason === 'choose_session') {
+                state = 'choose';
+                const label = appendText(box, 'label', 'Mehrere Sitzungen laufen. Würfle an Tisch: ');
+                label.htmlFor = 'srdRollSession';
+                const select = document.createElement('select');
+                select.id = 'srdRollSession';
+                select.append(new Option('Tisch wählen …', ''));
+                (context.sessions || []).forEach((entry) => select.append(new Option(entry.name, String(entry.id))));
+                select.addEventListener('change', () => { if (select.value) bindSrdTable(character, select.value); });
+                box.append(select);
+            } else {
+                state = 'local';
+                appendText(box, 'strong', 'Nur hier: ');
+                appendText(box, 'span', `${SRD_LOCAL_REASONS[context.reason] || ''} Würfe erscheinen nicht am Tisch.`.trim());
+            }
+            if (srdTableSession && state !== 'checking') {
+                const unbind = document.createElement('button');
+                unbind.type = 'button';
+                unbind.className = 'srd-roll-link';
+                unbind.textContent = 'Tischbindung lösen';
+                unbind.addEventListener('click', () => bindSrdTable(character, null));
+                box.append(unbind);
+            }
+            box.dataset.state = state;
+        }
+
+        function watchSrdRollContext() {
+            const refresh = () => {
+                if (document.visibilityState === 'visible' && isSrdCharacter(sheet?.character)) loadSrdRollContext(sheet.character);
+            };
+            window.addEventListener('focus', refresh);
+            document.addEventListener('visibilitychange', refresh);
+            window.setInterval(refresh, 60000);
         }
 
         async function rollFromSheet(character, kind, key, button, extraBody) {
+            if (!srdTableSession && srdRollContext?.reason === 'choose_session') {
+                renderSrdRollResult({ error: 'Wähle zuerst oben den Tisch, an dem du spielst. Es wurde nicht gewürfelt.' });
+                document.getElementById('srdRollSession')?.focus();
+                return;
+            }
             button.disabled = true;
             try {
-                const result = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/roll`, 'POST', { ...(extraBody || {}), kind, key, mode: srdRollMode });
+                const body = { ...(extraBody || {}), kind, key, mode: srdRollMode };
+                if (srdTableSession) body.sessionId = srdTableSession;
+                const answer = await srdTableRequest(`/api/srd-creator/characters/${character.id}/roll`, 'POST', body);
+                if (!answer) return;
+                if (!answer.ok) {
+                    renderSrdRollResult({ error: answer.payload.message || 'Der Wurf ist fehlgeschlagen.' });
+                    if (String(answer.payload.error || '').startsWith('session_')) loadSrdRollContext(character, true);
+                    return;
+                }
+                const result = answer.payload;
                 const roll = result.result;
                 const rolls = roll.rolls || [];
                 const kept = rolls.join(' + ');
@@ -1331,11 +1489,15 @@
                     text: `${result.label}${modeText}: ${shown} = ${roll.total}`,
                     natural: roll.natural,
                     logged: result.logged,
+                    table: result.session?.name || '',
+                    reason: SRD_LOCAL_REASONS[result.reason] || '',
                 };
                 srdRollHistory.unshift(entry);
                 renderSrdRollResult(entry);
+                // A roll that stayed local while a table was expected, or the other way round, refreshes the status.
+                if (Boolean(result.logged) !== Boolean(srdRollContext?.live)) loadSrdRollContext(character, true);
             } catch (error) {
-                renderSrdRollResult({ error: error.message || 'Der Wurf ist fehlgeschlagen.' });
+                renderSrdRollResult({ error: 'Der Wurf ist fehlgeschlagen (keine Verbindung).' });
             } finally {
                 button.disabled = false;
             }
@@ -1361,7 +1523,28 @@
                 head.append(srdRollButton(`Zauberangriff ${cls?.name || classKey} ${signed(info.attackBonus)}`, 'spell_attack', classKey, character));
             });
             bar.append(head);
-            const result = appendText(bar, 'div', 'Klicke auf einen Wert, um zu würfeln. Der Wurf erscheint im Tisch-Protokoll, wenn eine Sitzung läuft.', 'srd-roll-result');
+            const destination = document.createElement('div');
+            destination.className = 'srd-roll-destination';
+            destination.id = 'srdRollDestination';
+            destination.setAttribute('role', 'status');
+            destination.setAttribute('aria-live', 'polite');
+            renderSrdRollDestination(character, destination);
+            bar.append(destination);
+            // Every value with a button rolls; the sticky bar jumps to the sections that hold them.
+            const jump = document.createElement('nav');
+            jump.className = 'srd-roll-jump';
+            jump.setAttribute('aria-label', 'Würfe auf dem Bogen');
+            appendText(jump, 'span', 'Würfe:');
+            [['Attribute & Rettungswürfe', 'srdAbilitiesTitle'], ['Fertigkeiten', 'srdSkillsTitle'], ['Waffenangriffe', 'srdInventory']].forEach(([text, target]) => {
+                const link = document.createElement('button');
+                link.type = 'button';
+                link.className = 'srd-roll-link';
+                link.textContent = text;
+                link.addEventListener('click', () => document.getElementById(target)?.scrollIntoView({ block: 'start' }));
+                jump.append(link);
+            });
+            bar.append(jump);
+            const result = appendText(bar, 'div', 'Klicke auf einen Wert, um zu würfeln.', 'srd-roll-result');
             result.id = 'srdRollResult';
             result.setAttribute('role', 'status');
             result.setAttribute('aria-live', 'polite');
@@ -1415,6 +1598,7 @@
             }
             if (token !== srdRenderToken) return;
             body.replaceChildren(...buildSrdSheet(character, detail, srdCreatorData));
+            loadSrdRollContext(character, true);
             loadSrdInventory(character, updateSrdArmorClass);
             loadSrdManage(character);
             loadSrdProgression(character, detail.evaluation, (info) => {
@@ -1496,6 +1680,7 @@
                     const receipt = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/species-actions/${encodeURIComponent(action.id)}`, 'POST', {
                         idempotencyKey: pendingKey, object: object.value, weightLb: Number(weight.value),
                         distanceFeet: Number(distance.value), moveFeet: Number(move.value), unattended: unattended.checked,
+                        ...(srdTableSession ? { sessionId: srdTableSession } : {}),
                     });
                     pendingKey = null;
                     form.reset();
@@ -1559,7 +1744,7 @@
                 cell.append(pair);
                 return cell;
             });
-            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Attribute' }));
+            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', id: 'srdAbilitiesTitle', textContent: 'Attribute' }));
             nodes.push(srdGrid('srd-sheet-abilities', abilityCells));
 
             const skillList = document.createElement('ul');
@@ -1573,7 +1758,7 @@
                 row.append(rollButton);
                 skillList.append(row);
             });
-            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Fertigkeiten' }));
+            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', id: 'srdSkillsTitle', textContent: 'Fertigkeiten' }));
             nodes.push(skillList);
 
             const casting = ev.spellcasting || {};
@@ -1938,6 +2123,7 @@
             if (picker) {
                 picker.addEventListener('change', handleIdentityFilePicked);
             }
+            watchSrdRollContext();
             bootstrapCharacterSheetScene();
         });
     </script>

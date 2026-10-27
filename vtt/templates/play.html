@@ -2455,6 +2455,7 @@
                     </div>
                     <div class="button-row" id="sheetButtonRow" hidden style="margin-bottom:0.45rem;">
                         <button type="button" id="btnOpenSheet" class="mini-btn">Bogen öffnen</button>
+                        <a id="btnOpenSheetTab" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch">Im neuen Tab ↗</a>
                     </div>
                     <div id="tokenSelectionDetail" hidden style="margin-bottom:0.45rem;">
                         <div class="button-row" style="margin-bottom:0.35rem;">
@@ -2832,6 +2833,7 @@
     <aside id="sheetDrawer" hidden aria-label="Charakterbogen">
         <header class="sheet-drawer-head">
             <strong id="sheetDrawerTitle">Charakterbogen</strong>
+            <a id="sheetDrawerTabLink" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch">Neuer Tab ↗</a>
             <button type="button" id="btnCloseSheet" class="mini-btn secondary" title="Bogen schließen (Esc)">Schließen ✕</button>
         </header>
         <iframe id="sheetFrame" title="Charakterbogen"></iframe>
@@ -2851,7 +2853,13 @@
             box-shadow: -12px 0 28px rgba(20, 8, 28, 0.45);
         }
         #sheetDrawer[hidden] { display: none; }
-        .sheet-drawer-head {
+        #sheetDrawer > .sheet-drawer-head {
+            /* The shared book-shell header rule sizes every header to the full viewport.
+               Keep this header inside the 520px sheet drawer so its controls stay clickable. */
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -2860,6 +2868,8 @@
             border-bottom: 1px solid rgba(120, 90, 40, 0.35);
         }
         #sheetFrame { flex: 1; width: 100%; border: 0; background: transparent; }
+        .sheet-drawer-head #sheetDrawerTitle { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+        a.sheet-tab-link { display: inline-flex; align-items: center; text-decoration: none; }
         .layer-add-choice {
             display: flex;
             flex-direction: column;

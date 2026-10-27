@@ -499,6 +499,27 @@ def test_telekinesis_is_declared_once_per_key_by_owner_or_dm(pond, data):
     assert ChatMessage.query.filter_by(content_type="species_action").count() == 2
 
 
+def test_telekinesis_uses_the_sheet_table_binding_without_guessing(pond, data):
+    char, _ = duck_character(pond, data)
+    first, second = live_session(pond), live_session(pond)
+    url = f"{BASE}/characters/{char['id']}/species-actions/telekinetic-quack"
+    body = {**DECLARATION, "idempotencyKey": "bound-quack-01"}
+    ambiguous = pond.player.post(url, json=body)
+    assert ambiguous.status_code == 409 and ambiguous.get_json()["error"] == "session_required"
+    assert ChatMessage.query.filter_by(content_type="species_action").count() == 0
+    receipt = pond.player.post(url, json={**body, "sessionId": str(first)})
+    assert receipt.status_code == 201, receipt.get_json()
+    assert db.session.get(ChatMessage, receipt.get_json()["messageId"]).game_session_id == first
+    db.session.get(GameSession, first).status = "completed"
+    db.session.commit()
+    ended = pond.player.post(url, json={**body, "sessionId": first})
+    assert ended.status_code == 409 and ended.get_json()["error"] == "session_not_live"
+    malformed = pond.player.post(url, json={**body, "sessionId": True})
+    assert malformed.status_code == 400 and malformed.get_json()["error"] == "invalid_session"
+    assert ChatMessage.query.filter_by(content_type="species_action").count() == 1
+    assert db.session.get(GameSession, second).status == "in_progress"
+
+
 def test_srd_characters_have_no_species_actions_or_origin(pond, data):
     srd = finalized(pond.player, data)
     sheet = pond.player.get(f"{BASE}/characters/{srd['id']}").get_json()
