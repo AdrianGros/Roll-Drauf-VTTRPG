@@ -289,6 +289,69 @@ def test_catalog_respects_personal_and_campaign_scope(pond, data):
     assert entry["id"] == sid and entry["homebrew"] is True and entry["origin"]["actions"][0]["summary"]
 
 
+def test_any_contributor_can_publish_global_duckfolk_for_another_campaign(pond, data):
+    uuid = create_species(pond.stranger, "personal", doc_id="GlobalDuck1")
+    private = publish(pond.stranger, "personal", uuid).get_json()["revision"]
+    assert not species_catalog.can_select(pond.player.user_id, species_catalog.revision(private["id"]))
+    published = publish(pond.stranger, "personal", uuid, scope="global")
+    assert published.status_code == 201, published.get_json()
+    revision = published.get_json()["revision"]
+    assert revision["scope"] == {"kind": "global", "id": 0}
+    assert publish(pond.stranger, "personal", uuid, scope="global").get_json()["created"] is False
+    sid = species_profiles.species_id(revision["id"])
+    for client in (pond.gm, pond.player, pond.stranger):
+        entries = client.get(f"{BASE}/species-catalog").get_json()["species"]
+        global_entry = next(entry for entry in entries if entry["id"] == sid)
+        assert global_entry["origin"]["scope"]["label"] == "VTT-Compendium"
+        assert global_entry["origin"]["author"] == "duck_stranger"
+    own = pond.stranger.get(f"{CE}/species/publications").get_json()["publications"]
+    assert any(row["id"] == revision["id"] for row in own)
+    assert all(row["id"] != revision["id"] for row in pond.gm.get(f"{CE}/species/publications").get_json()["publications"])
+    draft = pond.player.post(f"{BASE}/drafts", json={"state": duck_state(data, sid)})
+    assert draft.status_code == 201, draft.get_json()
+    final = pond.player.post(f"{BASE}/drafts/{draft.get_json()['draft']['id']}/finalize",
+                             json={"version": 1, "campaign_id": pond.campaign})
+    assert final.status_code == 201, final.get_json()
+    pin = db.session.get(Character, final.get_json()["character"]["id"]).character_data["srd"]["speciesPin"]
+    assert pin["revisionId"] == revision["id"] and pin["scope"]["kind"] == "global"
+    changed = pond.stranger.post(f"{CE}/request", json={"world": "personal", "type": "document.update",
+        "payload": {"uuid": uuid, "changes": {"img": "icons/svg/new-duck.svg"}}})
+    assert changed.get_json()["ok"] is True
+    second = publish(pond.stranger, "personal", uuid, scope="global").get_json()["revision"]
+    assert second["revision"] == 2
+    latest_ids = {row["id"] for row in pond.player.get(f"{BASE}/species-catalog").get_json()["species"]
+                  if row["origin"]["scope"]["kind"] == "global"}
+    assert latest_ids == {species_profiles.species_id(second["id"])}
+    assert db.session.get(Character, final.get_json()["character"]["id"]).character_data["srd"]["speciesPin"] == pin
+
+
+def test_global_publication_does_not_expose_a_private_source_or_campaign_publication(pond):
+    uuid = create_species(pond.stranger, "personal", doc_id="PrivateDuck1")
+    published = publish(pond.stranger, "personal", uuid, scope="global").get_json()["revision"]
+    assert pond.player.get(f"{CE}/document", query_string={"world": "personal", "uuid": uuid}).get_json()["document"] is None
+    attempt = pond.player.post(f"{CE}/species/publish", json={
+        "world": "personal", "uuid": uuid, "scope": "global", "expectedDigest": published["sourceDigest"],
+        "supplement": SUPPLEMENT})
+    assert attempt.status_code == 404
+    assert pond.player.get(f"{CE}/species/publications").get_json()["publications"] == []
+    campaign_uuid = create_species(pond.gm, pond.world, doc_id="CampaignOnly1")
+    campaign_revision = publish(pond.gm, pond.world, campaign_uuid).get_json()["revision"]
+    outsider_ids = {row["id"] for row in pond.stranger.get(f"{BASE}/species-catalog").get_json()["species"]}
+    assert species_profiles.species_id(campaign_revision["id"]) not in outsider_ids
+
+
+def test_global_lineage_is_owned_by_each_publisher(pond):
+    codm = _client(pond.app, "duck_codm")
+    _member(pond.campaign, pond.gm.user_id, codm.user_id, "CO_DM")
+    db.session.commit()
+    uuid = create_species(pond.gm, pond.world, doc_id="SharedDuck1")
+    first = publish(pond.gm, pond.world, uuid, scope="global").get_json()["revision"]
+    second = publish(codm, pond.world, uuid, scope="global").get_json()["revision"]
+    assert first["revision"] == second["revision"] == 1
+    rows = CeSpeciesRevision.query.filter_by(scope_kind="global").order_by(CeSpeciesRevision.id).all()
+    assert len(rows) == 2 and rows[0].lineage != rows[1].lineage
+
+
 def test_player_builds_a_duckfolk_and_the_server_derives_the_chosen_skill(pond, data):
     _, revision = published_duck(pond)
     sid = species_profiles.species_id(revision["id"])

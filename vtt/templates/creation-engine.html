@@ -65,6 +65,7 @@
         <select id="ce-species-source"></select>
         <label for="ce-species-scope">Veröffentlichen für</label>
         <select id="ce-species-scope"></select>
+        <p class="ce-help">Im VTT-Compendium können alle angemeldeten Nutzer deine spielbare Spezies sehen und für ihre Charaktere wählen.</p>
         <fieldset>
           <legend>Fertigkeitswahl (Übung, eine Fertigkeit nach Wahl)</legend>
           <label for="ce-species-skill-label">Bezeichnung</label>
@@ -89,6 +90,10 @@
         <button id="ce-species-check" type="button">Spielbarkeit prüfen</button>
         <button id="ce-species-publish" type="button" disabled>Veröffentlichen</button>
         <div id="ce-species-report" role="status" aria-live="polite"></div>
+        <section aria-labelledby="ce-species-global-heading">
+          <h3 id="ce-species-global-heading">VTT-Compendium · spielbare Spezies</h3>
+          <ul id="ce-species-global-list"></ul>
+        </section>
       </section>
     </main>
   </div>

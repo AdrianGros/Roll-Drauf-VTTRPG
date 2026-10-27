@@ -50,7 +50,7 @@ def server(monkeypatch):
         db.create_all()
         init_default_roles(db.session)
         users = {}
-        for name in ("eagle_gm", "eagle_player"):
+        for name in ("eagle_gm", "eagle_player", "eagle_contributor"):
             users[name] = User(username=name, email=f"{name}@example.test", role_id=1,
                                is_active=True, is_suspended=False, account_state="active")
             users[name].set_password(PASSWORD)
@@ -216,31 +216,33 @@ def test_editor_fits_a_phone_screen(server, browser):
 
 
 def test_duckfolk_publish_creator_sheet_and_live_action(server, browser):
-    """Chromium follows the author → player → live table path against a disposable server."""
+    """Chromium follows an unrelated contributor → global compendium → player → live table."""
     from playwright.sync_api import expect
 
     from tests.test_playable_species import duck_state
 
     origin, world = server
     campaign_id = int(world.split(":", 1)[1])
-    gm, gm_errors = open_engine(browser, origin, "eagle_gm")
-    gm.select_option("#ce-world", world)
-    expect(gm.locator("#ce-species")).to_be_visible()
-    gm.locator("#ce-species-example").click()
-    expect(gm.locator("#ce-species-report")).to_contain_text("Duckfolk ist als normaler Eagle-Entwurf angelegt")
-    expect(gm.locator("#ce-species-source")).to_have_value(re.compile(r"Item\.D[0-9a-f]{15}"))
-    expect(gm.locator("#ce-species-action-name")).to_have_value("Telekinetisches Quaken")
-    gm.locator("#ce-species-check").click()
-    expect(gm.locator("#ce-species-report")).to_contain_text("Spielbar")
-    expect(gm.locator("#ce-species-publish")).to_be_enabled()
-    gm.select_option("#ce-species-scope", world)
-    gm.locator("#ce-species-publish").click()
-    expect(gm.locator("#ce-species-report")).to_contain_text("Veröffentlicht als Fassung 1")
-    shot(gm, "05-duckfolk-published")
+    author, author_errors = open_engine(browser, origin, "eagle_contributor")
+    expect(author.locator("#ce-world option")).to_have_text(["Persönliche Werkstatt"])
+    expect(author.locator("#ce-species")).to_be_visible()
+    author.locator("#ce-species-example").click()
+    expect(author.locator("#ce-species-report")).to_contain_text("Duckfolk ist als normaler Eagle-Entwurf angelegt")
+    expect(author.locator("#ce-species-source")).to_have_value(re.compile(r"Item\.D[0-9a-f]{15}"))
+    expect(author.locator("#ce-species-action-name")).to_have_value("Telekinetisches Quaken")
+    author.locator("#ce-species-check").click()
+    expect(author.locator("#ce-species-report")).to_contain_text("Spielbar")
+    expect(author.locator("#ce-species-publish")).to_be_enabled()
+    author.select_option("#ce-species-scope", "global")
+    author.locator("#ce-species-publish").click()
+    expect(author.locator("#ce-species-report")).to_contain_text("Veröffentlicht als Fassung 1")
+    expect(author.locator("#ce-species-global-list")).to_contain_text("Duckfolk")
+    shot(author, "05-duckfolk-published")
 
     player, player_errors = open_engine(browser, origin, "eagle_player")
     catalog = api(player, origin, "/api/srd-creator/species-catalog")["species"]
     duck = next(row for row in catalog if row["name"] == "Duckfolk")
+    assert duck["origin"]["scope"]["kind"] == "global"
     data = api(player, origin, "/api/srd-creator/creator-data")
     state = duck_state(data, duck["id"], skill="wahrnehmung", name="Quaki Browser")
     state["species"]["choices"] = {}
@@ -259,6 +261,7 @@ def test_duckfolk_publish_creator_sheet_and_live_action(server, browser):
     assert finished.status == 201, finished.text()
     char_id = finished.json()["character"]["id"]
 
+    gm, gm_errors = open_engine(browser, origin, "eagle_gm")
     campaign_map = gm.request.post(origin + f"/api/campaigns/{campaign_id}/maps",
                                    data={"name": "Ententeich", "width": 20, "height": 20})
     assert campaign_map.status == 201, campaign_map.text()
@@ -293,4 +296,4 @@ def test_duckfolk_publish_creator_sheet_and_live_action(server, browser):
     dm_origin.locator("summary").click()
     expect(dm_origin).to_contain_text("Kein Angriff")
     shot(gm, "09-duckfolk-dm-party")
-    assert gm_errors == [] and player_errors == []
+    assert author_errors == [] and gm_errors == [] and player_errors == []

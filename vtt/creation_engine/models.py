@@ -55,7 +55,8 @@ class CeSpeciesRevision(db.Model):
     """One published, immutable revision of an Eagle Species as a playable 2024 origin.
 
     Rows are only ever inserted. `scope_kind`/`scope_id` say who may choose it: "personal" (the author, scope_id =
-    user id) or "campaign" (the campaign's members, scope_id = campaign id). `lineage` names the Eagle document it
+    user id), "campaign" (the campaign's members, scope_id = campaign id), or "global" (all VTT users, scope_id = 0).
+    `lineage` names the Eagle document it
     came from ("<world scope>:<uuid>"); `revision_number` counts publications per (scope, lineage). The profile is
     what characters pin; the Eagle source and the supplement are kept as provenance only.
     """

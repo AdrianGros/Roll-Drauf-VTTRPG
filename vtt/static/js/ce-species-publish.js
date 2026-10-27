@@ -69,7 +69,7 @@
     if (![...select.options].some((option) => option.value === pending.uuid)) return;
     select.value = pending.uuid;
     fill(pending.supplement);
-    $('ce-species-report').replaceChildren(el('p', 'Duckfolk ist als normaler Eagle-Entwurf angelegt. Prüfe die Regeln und veröffentliche ihn für deine Kampagne.', 'ce-species-ok'));
+    $('ce-species-report').replaceChildren(el('p', 'Duckfolk ist als normaler Eagle-Entwurf angelegt. Prüfe die Regeln und wähle, ob du ihn persönlich, für eine Kampagne oder im VTT-Compendium veröffentlichst.', 'ce-species-ok'));
     sessionStorage.removeItem(SAMPLE_KEY);
   }
 
@@ -135,13 +135,34 @@
     const box = $('ce-species-report');
     if (result.ok) {
       const revision = result.data.revision;
-      box.prepend(el('p', result.data.created ? `Veröffentlicht als Fassung ${revision.revision}. Spielerinnen und Spieler finden sie im Charakter-Ersteller.`
+      box.prepend(el('p', result.data.created ? `Veröffentlicht als Fassung ${revision.revision}. ${revision.scope.kind === 'global' ? 'Alle VTT-Nutzer können sie im Charakter-Ersteller wählen.' : 'Berechtigte Spielerinnen und Spieler finden sie im Charakter-Ersteller.'}`
         : `Unverändert: Fassung ${revision.revision} ist bereits veröffentlicht.`, 'ce-species-ok'));
+      await loadGlobal();
     } else {
       if (result.data.report) renderReport(result.data);
       box.prepend(el('p', result.data.detail || 'Veröffentlichen fehlgeschlagen.', 'ce-species-blocked'));
     }
     $('ce-species-publish').disabled = true;
+  }
+
+  async function loadGlobal() {
+    const list = $('ce-species-global-list');
+    if (!list) return;
+    const response = await call('/api/srd-creator/species-catalog');
+    if (!response.ok) {
+      list.replaceChildren(el('li', 'Das VTT-Compendium konnte nicht geladen werden.'));
+      return;
+    }
+    const entries = (response.data.species || []).filter((entry) => entry.origin?.scope?.kind === 'global');
+    list.replaceChildren(...entries.map((entry) => {
+      const origin = entry.origin;
+      const item = el('li');
+      item.append(el('strong', entry.name), document.createTextNode(
+        ` · 2024 · Fassung ${origin.revision} · von ${origin.author || 'VTT-Nutzer'}`));
+      if (origin.description) item.append(el('p', origin.description));
+      return item;
+    }));
+    if (!entries.length) list.replaceChildren(el('li', 'Noch keine VTT-weiten Spezies veröffentlicht.'));
   }
 
   async function refresh() {
@@ -159,7 +180,7 @@
       const option = el('option', entry.kind === 'personal' ? 'Nur für mich' : `Kampagne: ${entry.label}`);
       option.value = entry.id;
       return option;
-    }));
+    }), Object.assign(el('option', 'VTT-Compendium · für alle Nutzer'), { value: 'global' }));
     scope.value = world();
     $('ce-species-empty').hidden = state.species.length > 0;
     await loadSaved();
@@ -191,6 +212,7 @@
       return label;
     }));
     section.hidden = false;
+    await loadGlobal();
     $('ce-species-check').addEventListener('click', check);
     $('ce-species-example').addEventListener('click', createSample);
     $('ce-species-publish').addEventListener('click', publish);

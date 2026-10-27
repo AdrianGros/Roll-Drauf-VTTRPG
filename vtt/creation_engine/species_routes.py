@@ -11,7 +11,7 @@ from flask import current_app, jsonify, request
 from sqlalchemy import and_, or_
 from sqlalchemy.exc import IntegrityError
 
-from vtt.extensions import db
+from vtt.extensions import db, limiter
 from vtt.rules_content.creator_rules import load_creator_data
 
 from . import species as conversion
@@ -58,8 +58,9 @@ def _body():
     return body, None
 
 
-def _lineage(row):
-    return f"{row.scope_kind}:{row.scope_id}:{row.uuid}"
+def _lineage(row, user=None):
+    source = f"{row.scope_kind}:{row.scope_id}:{row.uuid}"
+    return f"author:{user.id}:{source}" if user is not None else source
 
 
 def _digest(row):
@@ -73,17 +74,22 @@ def _lead_scopes(user):
     return [("personal", user.id)] + [("campaign", campaign.id) for campaign in led_campaigns(user)]
 
 
-def _publications(user, lineage=None):
-    query = CeSpeciesRevision.query.filter(or_(*(
+def _publications(user, source=None):
+    scopes = [
         and_(CeSpeciesRevision.scope_kind == kind, CeSpeciesRevision.scope_id == scope_id)
-        for kind, scope_id in _lead_scopes(user))))
-    if lineage is not None:
-        query = query.filter(CeSpeciesRevision.lineage == lineage)
+        for kind, scope_id in _lead_scopes(user)
+    ]
+    scopes.append(and_(CeSpeciesRevision.scope_kind == "global", CeSpeciesRevision.scope_id == 0,
+                       CeSpeciesRevision.published_by == user.id))
+    query = CeSpeciesRevision.query.filter(or_(*scopes))
+    if source is not None:
+        query = query.filter(CeSpeciesRevision.lineage.in_((_lineage(source), _lineage(source, user))))
     rows = query.order_by(CeSpeciesRevision.id.desc()).limit(200).all()
     return [{**row.summary(), "lineage": row.lineage, "supplement": row.supplement} for row in rows]
 
 
 @blueprint.post("/authoring/species/check")
+@limiter.limit("240 per hour")
 def species_check():
     user = current_user()
     body, error = _body()
@@ -101,11 +107,12 @@ def species_check():
         "source": {"uuid": row.uuid, "name": row.name, "revision": row.revision, "digest": digest},
         "report": {"playable": result["playable"], "edition": result["edition"], "entries": result["entries"]},
         "profile": result["profile"],
-        "publications": _publications(user, _lineage(row)),
+        "publications": _publications(user, row),
     })
 
 
 @blueprint.post("/authoring/species/publish")
+@limiter.limit("60 per hour")
 def species_publish():
     user = current_user()
     body, error = _body()
@@ -116,7 +123,8 @@ def species_publish():
         return error
     try:
         digest = _digest(row)
-        kind, scope_id = resolve_world(user, body.get("scope") or body.get("world"))
+        target = body.get("scope") or body.get("world")
+        kind, scope_id = ("global", 0) if target == "global" else resolve_world(user, target)
     except RequestFailure as failure:
         return read_failure(failure)
     if body.get("expectedDigest") != digest:
@@ -128,7 +136,7 @@ def species_publish():
     if not result["playable"]:
         return _error("not-playable", "Die Spezies ist noch nicht spielbar; siehe die blockierenden Punkte.", 422, report=report)
     profile_digest = content_digest(result["profile"])
-    lineage = _lineage(row)
+    lineage = _lineage(row, user if kind == "global" else None)
     latest = (CeSpeciesRevision.query.filter_by(scope_kind=kind, scope_id=scope_id, lineage=lineage)
               .order_by(CeSpeciesRevision.revision_number.desc()).first())
     if latest is not None and latest.profile_digest == profile_digest and latest.source_digest == digest and latest.supplement == supplement:

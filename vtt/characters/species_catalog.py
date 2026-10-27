@@ -1,7 +1,7 @@
 """Which published homebrew Species a player may choose, and the pin a finished character keeps.
 
 Access is decided here and only here: a personal publication is for its author, a campaign publication for the
-campaign's owner and active members. A client-supplied Species id is always re-checked (draft save, evaluation,
+campaign's owner and active members, and a global publication for every authenticated VTT user. A client-supplied Species id is always re-checked (draft save, evaluation,
 finalize, rebuild, import). After finalizing, the character evaluates from its own pin (`srd.speciesPin`), so
 later edits, deletions or new revisions of the Eagle document never reach it.
 """
@@ -40,10 +40,14 @@ def can_select(user_id, row):
         return row.scope_id == user_id
     if row.scope_kind == "campaign":
         return row.scope_id in _campaign_ids(user_id)
+    if row.scope_kind == "global":
+        return row.scope_id == 0
     return False
 
 
 def _scope(row):
+    if row.scope_kind == "global":
+        return {"kind": "global", "id": 0, "label": "VTT-Compendium"}
     if row.scope_kind == "campaign":
         campaign = db.session.get(Campaign, row.scope_id)
         return {"kind": "campaign", "id": row.scope_id, "label": campaign.name if campaign else "Kampagne"}
@@ -74,6 +78,7 @@ def catalog(user_id):
     campaigns = _campaign_ids(user_id)
     rows = (
         CeSpeciesRevision.query.filter(or_(
+            and_(CeSpeciesRevision.scope_kind == "global", CeSpeciesRevision.scope_id == 0),
             and_(CeSpeciesRevision.scope_kind == "personal", CeSpeciesRevision.scope_id == user_id),
             and_(CeSpeciesRevision.scope_kind == "campaign", CeSpeciesRevision.scope_id.in_(campaigns or [-1])),
         ))
