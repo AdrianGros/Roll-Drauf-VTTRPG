@@ -578,6 +578,75 @@
             overflow-y: auto;
         }
 
+        .sheet-focus-page .book-dashboard-topbar {
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 6px;
+            padding-bottom: 8px;
+        }
+
+        .sheet-focus-page .book-dashboard-ribbon {
+            grid-column: 1;
+            justify-self: stretch;
+            min-width: 0;
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            gap: 4px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .sheet-focus-page .book-dashboard-ribbon-btn {
+            flex: 0 0 auto;
+            min-height: 36px;
+            padding-inline: 8px;
+            white-space: nowrap;
+            font-size: 0.75rem;
+        }
+
+        .sheet-focus-page .book-dashboard-crest {
+            grid-column: 2;
+            max-width: 110px;
+        }
+
+        .sheet-focus-page .book-dashboard-titlebar,
+        .sheet-focus-page .book-shell-frame-header,
+        .sheet-focus-page .book-shell-ribbon {
+            display: none;
+        }
+
+        .book-dashboard-page.book-focus-page.sheet-focus-page .book-page {
+            min-height: 0;
+        }
+
+        body[data-sheet-mode="view"][data-sheet-has-srd="true"] .sheet-focus-page .book-page--content {
+            display: none;
+        }
+
+        .sheet-character-heading #modeLabel,
+        body[data-sheet-has-srd="true"] .sheet-quick-ledger,
+        .sheet-journey-nav [aria-disabled="true"] {
+            display: none;
+        }
+
+        .sheet-journey-nav .sheet-split-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .sheet-journey-nav .sheet-split-actions .btn {
+            min-width: 0;
+            width: 100%;
+            padding-inline: 0.45rem;
+        }
+
+        .sheet-focus-page .sheet-identity-preview {
+            width: 96px;
+            height: 96px;
+            aspect-ratio: auto;
+        }
+
         #characterSheetSceneStatus {
             position: fixed;
             inset: 0;
@@ -620,6 +689,10 @@
                 display: inline-flex;
                 margin-bottom: 1rem;
             }
+        }
+
+        .sheet-focus-page .book-shell-ribbon {
+            display: none;
         }
 
     </style>
@@ -684,7 +757,7 @@
 
                     <div class="book-spread" id="sheetSpread">
                         <section class="book-page book-page--index">
-                    <div class="sheet-pane">
+                    <div class="sheet-pane sheet-character-heading">
                         <div class="sheet-pane-header">
                             <div>
                                 <div class="sheet-pane-title">Charakterblatt</div>
@@ -694,9 +767,9 @@
                         </div>
                     </div>
 
-                    <div class="sheet-pane">
+                    <div class="sheet-pane sheet-quick-ledger">
                         <div class="sheet-pane-header">
-                            <div class="sheet-pane-title">Quick Ledger</div>
+                            <div class="sheet-pane-title">Kurzüberblick</div>
                         </div>
                         <div class="sheet-stat-row">
                             <div class="sheet-stat">
@@ -728,7 +801,7 @@
                         </div>
                     </div>
 
-                    <div class="sheet-pane">
+                    <div class="sheet-pane sheet-journey-nav">
                         <div class="sheet-pane-header">
                         <div class="sheet-pane-title">Navigation</div>
                         </div>
@@ -799,8 +872,8 @@
                     <form id="sheetForm" class="sheet-form-inline" novalidate>
                         <div class="sheet-pane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Core</div>
-                                <div class="sheet-help">Read mode keeps the values visible. Edit mode unlocks the inputs below.</div>
+                                <div class="sheet-pane-title">Grundwerte</div>
+                                <div class="sheet-help">Im Ansichtsmodus bleiben die Werte sichtbar. Zum Ändern den Bearbeitungsmodus öffnen.</div>
                             </div>
                             <div class="sheet-core-grid">
                                 <div class="field field--wide">
@@ -1069,6 +1142,7 @@
         }
 
         function setEditMode() {
+            document.body.dataset.sheetMode = editable ? 'edit' : 'view';
             document.getElementById('sheetModeChip').textContent = editable ? 'Bearbeiten' : 'Ansicht';
             document.getElementById('modeLabel').textContent = editable
                 ? 'Bearbeitungsmodus: Kernwerte und Ressourcen können geändert werden.'
@@ -1141,7 +1215,7 @@
         }
 
         function renderCore(character) {
-            document.getElementById('sheetTitle').textContent = `Character Sheet: ${character.name || 'Nicht angegeben'}`;
+            document.getElementById('sheetTitle').textContent = character.name || 'Nicht angegeben';
             document.getElementById('sheetCharacterChip').textContent = character.name || 'Nicht angegeben';
             document.getElementById('summaryName').textContent = character.name || 'Nicht angegeben';
             document.getElementById('summaryLevel').textContent = String(character.level ?? 1);
@@ -1172,9 +1246,9 @@
             const isAvatar = identityKind === 'avatar';
             const label = isAvatar ? 'Avatar' : 'Token';
             const url = isAvatar ? character.avatar_url : character.token_url;
-            const uploadLabel = url ? `Replace ${label}` : `Upload ${label}`;
+            const uploadLabel = url ? `${label} ersetzen` : `${label} hochladen`;
             const removeButton = url
-                ? `<button class="btn btn-danger" type="button" onclick="removeIdentity('${identityKind}')">Remove ${label}</button>`
+                ? `<button class="btn btn-danger" type="button" onclick="removeIdentity('${identityKind}')">${label} entfernen</button>`
                 : '';
 
             return `
@@ -1187,8 +1261,8 @@
                     </div>
                     <div class="sheet-identity-copy">
                         ${url
-                            ? `${label} is stored and will remain available in archive, sheet, campaign context, and later table use.`
-                            : `${label} is empty right now. Upload one here to complete this character's identity.`}
+                            ? `${label} ist im Archiv und am Spieltisch verfügbar.`
+                            : `Noch kein ${label} vorhanden.`}
                     </div>
                     <div class="sheet-identity-actions">
                         <button class="btn btn-secondary" type="button" onclick="openIdentityPicker('${identityKind}')">${uploadLabel}</button>
@@ -1894,6 +1968,7 @@
 
         function renderSheet() {
             if (!sheet) return;
+            document.body.dataset.sheetHasSrd = isSrdCharacter(sheet.character) ? 'true' : 'false';
             document.getElementById('sheetEmptyState').hidden = true;
             document.getElementById('sheetSpread').hidden = false;
             renderCore(sheet.character);
