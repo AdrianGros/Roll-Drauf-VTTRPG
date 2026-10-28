@@ -1,8 +1,9 @@
 # DAD-M program: Roll Drauf character creation and play parity
 
 version: 1
-status: draft
+status: approved
 date: 2026-10-28
+approval: product owner replied "Go ahead" on 2026-10-28 to approve v1 and start C0
 basis: [current Discover audit](../DADM_DISCOVER_CHARACTER_CREATOR_PROGRAM_2026-10-28.md), [phone UX audit](../DADM_DISCOVER_CREATOR_UX_PARITY_2026-10-28.md), [original 48-point scope](../DADM_DISCOVER_CHARACTER_CREATOR_2026-10-18.md)
 
 ## Goal and acceptance boundary
@@ -149,4 +150,4 @@ The reusable protocol should run: (1) novice guided Fighter on a phone; (2) thre
 
 Activate new creation modes and content adapters behind reversible flags. Migrate/test existing drafts before switching the default entry. Keep old draft/read routes until compatibility checks pass. Run targeted unit/API tests, the six Chromium journeys, accessibility/phone checks and a production read-only smoke before activation; then use disposable accounts for write-path canaries where permitted. Roll back a flag or image if finalization errors rise, source access leaks, gear duplicates, or sheet/table state diverges. A rollback must preserve already finalized records; destructive data rewrites require a separate reviewed migration.
 
-**Plan artifacts (retention):** this versioned decision record (keep), Discover audit and 48-point ledger (keep), per-milestone phase records/proofs (keep), disposable test accounts/data (delete under test policy). **Risks and assumptions:** the Discover risk table remains active until each owning milestone closes it; future licensed content is outside this version. **Next step:** C0 Discover and Apply, then its bounded Deploy/Monitor; only then advance to C1. This document is a draft program plan, not a claim of implemented parity or approval to deploy code.
+**Plan artifacts (retention):** this versioned decision record (keep), Discover audit and 48-point ledger (keep), per-milestone phase records/proofs (keep), disposable test accounts/data (delete under test policy). **Risks and assumptions:** the Discover risk table remains active until each owning milestone closes it; future licensed content is outside this version. **Next step:** C0 Discover and Apply, then its bounded Deploy/Monitor; only then advance to C1. This approved program is a baseline, not a claim of implemented parity or blanket approval for later Deploy phases.
