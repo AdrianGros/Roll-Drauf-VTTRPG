@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Kartenwerkstatt – Roll Drauf</title>
+    <meta name="description" content="Welt- und Regionalkarten zeichnen: Gelände malen, Symbole setzen, Orte beschreiben, als PNG exportieren.">
+    <link rel="icon" type="image/svg+xml" href="../icons/icon-maps-compass.svg">
+    <link rel="stylesheet" href="mapmaker.css">
+    <link rel="stylesheet" href="../css/vtt-main-nav.css">
+    <script type="module" src="js/app.js"></script>
+</head>
+<body>
+<div class="mm-app" id="app" data-state="loading" data-sheet="closed" data-tool="brush">
+    <header class="mm-top">
+        <div class="mm-brand">
+            <img class="mm-brand-mark" src="../icons/icon-book-sparkles.svg" alt="" width="24" height="24">
+            <span class="mm-brand-text"><span class="mm-brand-word">Roll Drauf</span> <span class="mm-brand-sub">Kartenwerkstatt</span></span>
+        </div>
+        <label class="mm-title">
+            <span class="sr-only">Kartentitel</span>
+            <input id="mapTitle" type="text" maxlength="80" autocomplete="off" spellcheck="false" value="">
+        </label>
+        <div class="mm-top-actions">
+            <button id="undoBtn" class="mm-icon-btn" type="button" title="Rückgängig (Strg+Z)" aria-label="Rückgängig" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>
+            </button>
+            <button id="redoBtn" class="mm-icon-btn" type="button" title="Wiederholen (Strg+Umschalt+Z)" aria-label="Wiederholen" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/></svg>
+            </button>
+            <div class="mm-menu">
+                <button id="fileMenuBtn" class="mm-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="fileMenuList">
+                    Datei <svg viewBox="0 0 24 24" aria-hidden="true" class="mm-caret"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div id="fileMenuList" class="mm-menu-list" hidden>
+                    <button type="button" id="newBtn">Neue Karte …</button>
+                    <button type="button" id="openBtn">Öffnen (.rdmap.json) …</button>
+                    <button type="button" id="saveBtn">Als Datei speichern</button>
+                    <button type="button" id="exportBtn">Als PNG exportieren …</button>
+                </div>
+            </div>
+            <span id="saveStatus" class="mm-status" role="status" data-state="idle">Noch keine Änderungen</span>
+            <button id="helpBtn" class="mm-icon-btn" type="button" title="Tastenkürzel und Hilfe" aria-label="Hilfe">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 114 2c-1 .6-1.5 1.2-1.5 2.5"/><path d="M12 17h.01"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="mm-global-nav vtt-main-topbar">
+        <nav class="vtt-map-nav book-dashboard-ribbon" aria-label="VTT-Hauptnavigation"></nav>
+    </div>
+
+    <nav class="mm-tools" aria-label="Werkzeuge">
+        <button class="mm-tool" type="button" data-tool="pan" aria-pressed="false" title="Bewegen (H, Leertaste halten)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 013 0V12"/><path d="M11 11.5v-8a1.5 1.5 0 013 0V12"/><path d="M14 12V5.5a1.5 1.5 0 013 0V14"/><path d="M8 13l-1.6-1.6a1.6 1.6 0 00-2.3 2.3L8 18c1.5 2 3 3 6 3a5 5 0 005-5V8.5a1.5 1.5 0 00-3 0"/></svg>
+            <span>Bewegen</span>
+        </button>
+        <button class="mm-tool" type="button" data-tool="brush" aria-pressed="true" title="Pinsel (B)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.4 2.6a2 2 0 012.9 2.9L12 14.8 9.2 12z"/><path d="M9 12.5c-2.2 0-4 1.8-4 4 0 1.5-1 2.5-2.5 3 4 1.6 9 .5 9.3-4.2"/></svg>
+            <span>Pinsel</span>
+        </button>
+        <button class="mm-tool" type="button" data-tool="eraser" aria-pressed="false" title="Radierer (E)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21h13"/><path d="M4.5 15.5l9.9-9.9a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8L11 19H8z"/><path d="M9.5 10.5l5 5"/></svg>
+            <span>Radierer</span>
+        </button>
+        <button class="mm-tool" type="button" data-tool="path" aria-pressed="false" title="Editierbare Wege und Flüsse (W)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19c5-1 3-9 9-9s4-7 9-7"/><circle cx="3" cy="19" r="1.5"/><circle cx="12" cy="10" r="1.5"/><circle cx="21" cy="3" r="1.5"/></svg>
+            <span>Wege</span>
+        </button>
+        <button class="mm-tool" type="button" data-tool="stamp" aria-pressed="false" title="Stempel – Symbole setzen (S)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-11 4 6 3-4 5 9z"/><circle cx="17" cy="5" r="2"/></svg>
+            <span>Stempel</span>
+        </button>
+        <button class="mm-tool" type="button" data-tool="label" aria-pressed="false" title="Ort oder Beschriftung setzen (T)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.4-6-10a6 6 0 0112 0c0 4.6-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+            <span>Ort</span>
+        </button>
+        <button class="mm-tool" type="button" data-tool="select" aria-pressed="false" title="Auswählen und verschieben (V)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z"/></svg>
+            <span>Auswählen</span>
+        </button>
+    </nav>
+
+    <main class="mm-stage" id="stage">
+        <canvas id="mapCanvas" tabindex="0" aria-label="Kartenfläche. Werkzeuge in der Werkzeugleiste, Orte im Bereich „Orte“."></canvas>
+        <div class="mm-zoom" role="group" aria-label="Zoom">
+            <button id="zoomOut" type="button" class="mm-icon-btn" aria-label="Verkleinern" title="Verkleinern (−)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+            </button>
+            <output id="zoomLevel" aria-live="polite">100 %</output>
+            <button id="zoomIn" type="button" class="mm-icon-btn" aria-label="Vergrößern" title="Vergrößern (+)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <button id="zoomFit" type="button" class="mm-btn mm-btn-small" title="Ganze Karte zeigen (F)">Einpassen</button>
+        </div>
+        <div id="toast" class="mm-toast" role="status" aria-live="polite" hidden></div>
+        <div id="loading" class="mm-overlay">
+            <div class="mm-overlay-card">
+                <div class="mm-spinner" aria-hidden="true"></div>
+                <p id="loadingText">Karte wird gezeichnet …</p>
+                <button id="reloadBtn" class="mm-btn" type="button" hidden>Neu laden</button>
+            </div>
+        </div>
+    </main>
+
+    <aside class="mm-panel" id="panel" aria-label="Eigenschaften">
+        <div class="mm-tabs" role="tablist" aria-label="Bereiche">
+            <button type="button" role="tab" id="tab-tool" data-pane="tool" aria-controls="pane-tool" aria-selected="true">Werkzeug</button>
+            <button type="button" role="tab" id="tab-layers" data-pane="layers" aria-controls="pane-layers" aria-selected="false" tabindex="-1">Ebenen</button>
+            <button type="button" role="tab" id="tab-places" data-pane="places" aria-controls="pane-places" aria-selected="false" tabindex="-1">Orte</button>
+        </div>
+
+        <section class="mm-pane" id="pane-tool" role="tabpanel" aria-labelledby="tab-tool">
+            <div id="inspector" class="mm-group mm-inspector" hidden>
+                <div class="mm-group-head">
+                    <h2 id="inspectorTitle">Auswahl</h2>
+                    <button id="selDeselect" type="button" class="mm-link">Fertig</button>
+                </div>
+                <div id="inspectStamp" hidden>
+                    <p class="mm-meta" id="selStampName"></p>
+                    <label class="mm-range"><span>Größe</span><input id="selStampSize" type="range" min="16" max="320" step="1"><output id="selStampSizeOut"></output></label>
+                    <label class="mm-range"><span>Drehung</span><input id="selStampRot" type="range" min="-180" max="180" step="1"><output id="selStampRotOut"></output></label>
+                    <label class="mm-check"><input id="selStampFlip" type="checkbox"> Spiegeln</label>
+                </div>
+                <div id="inspectLabel" hidden>
+                    <label class="mm-field"><span>Name</span><input id="selText" type="text" maxlength="80" autocomplete="off"></label>
+                    <div class="mm-field-row">
+                        <label class="mm-field"><span>Stil</span><select id="selStyle"></select></label>
+                        <label class="mm-field mm-field-color"><span>Farbe</span><input id="selColor" type="color"></label>
+                    </div>
+                    <label class="mm-range"><span>Größe</span><input id="selSize" type="range" min="8" max="200" step="1"><output id="selSizeOut"></output></label>
+                    <label class="mm-range"><span>Drehung</span><input id="selRot" type="range" min="-180" max="180" step="1"><output id="selRotOut"></output></label>
+                    <label class="mm-check"><input id="selPin" type="checkbox"> Ortsnadel zeigen</label>
+                    <label class="mm-field"><span>Ortsart</span><select id="selKind"></select></label>
+                    <label class="mm-field"><span>Ortssymbol</span><select id="selSymbol"></select></label>
+                    <label class="mm-range" id="selSymbolSizeRow"><span>Symbolgröße</span><input id="selSymbolSize" type="range" min="16" max="320" step="1"><output id="selSymbolSizeOut"></output></label>
+                    <label class="mm-field"><span>Kurzbeschreibung <small id="selLoreCount"></small></span><textarea id="selLore" rows="4" maxlength="500" placeholder="Was macht diesen Ort besonders?"></textarea></label>
+                    <p id="collisionHint" class="mm-hint" role="status" hidden></p>
+                </div>
+                <div id="inspectPath" hidden>
+                    <label class="mm-field"><span>Art</span><select id="selPathMaterial"><option value="road">Weg</option><option value="river">Fluss</option></select></label>
+                    <div class="mm-range mm-range-edit"><label for="selPathWidth">Breite</label><input id="selPathWidth" type="range" min="2" max="80" step="1"><output id="selPathWidthOut"></output><input id="selPathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel"></div>
+                    <p class="mm-hint">Ziehen verschiebt den ganzen Verlauf. Umschalt + Ziehen an einem Punkt ändert eine Biegung.</p>
+                </div>
+                <button id="showMapBtn" type="button" class="mm-btn mm-show-map">Ort auf Karte zeigen</button>
+                <button id="selDelete" type="button" class="mm-btn mm-btn-danger">Auswahl löschen</button>
+            </div>
+
+            <div class="mm-group" data-options="brush eraser">
+                <p class="mm-target">Malt auf: <strong id="brushTarget">–</strong></p>
+                <div data-options="brush">
+                    <h3 class="mm-h3">Material</h3>
+                    <div id="materials" class="mm-swatches" role="radiogroup" aria-label="Material"></div>
+                </div>
+                <div class="mm-range mm-range-edit"><label for="brushSize">Größe</label><input id="brushSize" type="range" min="2" max="800" step="1"><output id="brushSizeOut"></output><input id="brushSizeNumber" class="mm-number" type="number" min="2" max="800" step="1" aria-label="Pinselgröße in Pixel"></div>
+                <label class="mm-range"><span>Deckkraft</span><input id="brushOpacity" type="range" min="1" max="100" step="1"><output id="brushOpacityOut"></output></label>
+                <label class="mm-range"><span>Weichheit</span><input id="brushSoftness" type="range" min="0" max="100" step="1"><output id="brushSoftnessOut"></output></label>
+                <label class="mm-check" id="pressureRow" hidden><input id="brushPressure" type="checkbox" checked> Stiftdruck steuert Größe und Deckkraft</label>
+                <canvas id="brushPreview" class="mm-brush-preview" width="480" height="96" aria-hidden="true"></canvas>
+                <p class="mm-hint" data-options="eraser">Radieren auf „Land“ formt Küsten, Buchten und Seen.</p>
+                <p class="mm-hint">Tasten: <kbd>[</kbd> <kbd>]</kbd> Größe, <kbd>Umschalt</kbd>+<kbd>[</kbd> <kbd>]</kbd> Weichheit.</p>
+            </div>
+
+            <div class="mm-group" data-options="path">
+                <p class="mm-target">Zeichnet auf: <strong id="pathTarget">Neue Ebene beim ersten Weg</strong></p>
+                <label class="mm-field"><span>Art</span><select id="pathMaterial"><option value="road">Weg</option><option value="river">Fluss</option></select></label>
+                <div class="mm-range mm-range-edit"><label for="pathWidth">Breite</label><input id="pathWidth" type="range" min="2" max="80" step="1"><output id="pathWidthOut"></output><input id="pathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel"></div>
+                <p class="mm-hint">Ziehen zeichnet einen editierbaren Verlauf. Mit Auswählen (V) kannst du ihn oder einzelne Punkte verschieben.</p>
+            </div>
+
+            <div class="mm-group" data-options="stamp">
+                <p class="mm-target">Setzt auf: <strong id="stampTarget">–</strong></p>
+                <div id="palette" class="mm-palette"></div>
+                <p id="packNote" class="mm-hint" hidden></p>
+                <div class="mm-range mm-range-edit"><label for="stampSize">Größe</label><input id="stampSize" type="range" min="16" max="320" step="1"><output id="stampSizeOut"></output><input id="stampSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Symbolgröße in Pixel"></div>
+                <label class="mm-range"><span>Drehung</span><input id="stampRot" type="range" min="-180" max="180" step="1"><output id="stampRotOut"></output></label>
+                <label class="mm-check"><input id="stampFlip" type="checkbox"> Spiegeln</label>
+                <label class="mm-check"><input id="stampVary" type="checkbox"> Leichte Variation (Größe, Drehung)</label>
+                <label class="mm-check"><input id="stampScatter" type="checkbox"> Streuen beim Ziehen (Wälder, Gebirge)</label>
+            </div>
+
+            <div class="mm-group" data-options="label">
+                <p class="mm-target">Setzt auf: <strong id="labelTarget">–</strong></p>
+                <div class="mm-field-row">
+                    <label class="mm-field"><span>Stil</span><select id="labelStyle"></select></label>
+                    <label class="mm-field"><span>Ortsart</span><select id="labelKind"></select></label>
+                </div>
+                <label class="mm-check"><input id="labelPin" type="checkbox" checked> Ortsnadel zeigen</label>
+                <label class="mm-field"><span>Ortssymbol</span><select id="placeSymbol"></select></label>
+                <div class="mm-range mm-range-edit"><label for="placeSymbolSize">Symbolgröße</label><input id="placeSymbolSize" type="range" min="16" max="320" step="1"><output id="placeSymbolSizeOut"></output><input id="placeSymbolSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Ortssymbolgröße in Pixel"></div>
+                <p class="mm-hint">Tippe auf die Karte, um immer einen neuen Ort zu setzen. Zum Bearbeiten vorhandener Orte nutze Auswählen (V) oder die Ortsliste.</p>
+            </div>
+
+            <div class="mm-group" data-options="select">
+                <p class="mm-hint">Symbole, Wege oder Beschriftungen antippen, um sie auszuwählen; ziehen verschiebt sie. Bei Wegen ändert <kbd>Umschalt</kbd> + Ziehen einen Punkt. <kbd>Entf</kbd> löscht die Auswahl.</p>
+            </div>
+            <div class="mm-group" data-options="pan">
+                <p class="mm-hint">Ziehen verschiebt die Karte. Mausrad oder zwei Finger zoomen. In jedem Werkzeug: <kbd>Leertaste</kbd> halten oder mittlere Maustaste zum Verschieben.</p>
+            </div>
+        </section>
+
+        <section class="mm-pane" id="pane-layers" role="tabpanel" aria-labelledby="tab-layers" hidden>
+            <div class="mm-group">
+                <h2 class="mm-h3">Kartenstil</h2>
+                <label class="mm-check"><input id="showTitle" type="checkbox"> Kartentitel auf der Karte zeigen</label>
+                <div class="mm-field-row">
+                    <label class="mm-field mm-field-color"><span>Meer oben</span><input id="seaTop" type="color"></label>
+                    <label class="mm-field mm-field-color"><span>Meer unten</span><input id="seaBottom" type="color"></label>
+                </div>
+                <p class="mm-hint">Der Titel verwendet den Namen oben im Editor. Eine vorhandene Überschrift in der Kartenmitte oben wird dafür vorübergehend ausgeblendet.</p>
+            </div>
+            <p class="mm-hint">Oben liegende Ebenen verdecken darunterliegende.</p>
+            <ol id="layerList" class="mm-layers"></ol>
+            <div id="layerProps" class="mm-group">
+                <label class="mm-range"><span>Deckkraft</span><input id="layerOpacity" type="range" min="0" max="100" step="1"><output id="layerOpacityOut"></output></label>
+                <label class="mm-check" id="layerCoastRow"><input id="layerCoast" type="checkbox"> Küstenlinie und Brandung</label>
+            </div>
+            <div class="mm-add-row">
+                <button id="addRaster" type="button" class="mm-btn mm-btn-small">+ Malebene</button>
+                <button id="addPaths" type="button" class="mm-btn mm-btn-small">+ Wegeebene</button>
+                <button id="addStamps" type="button" class="mm-btn mm-btn-small">+ Symbolebene</button>
+                <button id="addLabels" type="button" class="mm-btn mm-btn-small">+ Beschriftungsebene</button>
+            </div>
+        </section>
+
+        <section class="mm-pane" id="pane-places" role="tabpanel" aria-labelledby="tab-places" hidden>
+            <p class="mm-hint">Orte mit Kurzbeschreibung. Antippen zeigt den Ort auf der Karte.</p>
+            <ul id="placeList" class="mm-places"></ul>
+            <button id="addPlaceBtn" type="button" class="mm-btn mm-btn-small">+ Ort setzen</button>
+        </section>
+    </aside>
+</div>
+
+<dialog id="restoreDialog" class="mm-dialog" aria-labelledby="restoreTitle">
+    <h2 id="restoreTitle">Entwurf gefunden</h2>
+    <p id="restoreText"></p>
+    <div class="mm-dialog-actions">
+        <button id="restoreNo" type="button" class="mm-btn">Neue Startkarte</button>
+        <button id="restoreYes" type="button" class="mm-btn mm-btn-primary">Entwurf wiederherstellen</button>
+    </div>
+</dialog>
+
+<dialog id="replaceDialog" class="mm-dialog" aria-labelledby="replaceTitle">
+    <h2 id="replaceTitle">Aktuelle Karte behalten?</h2>
+    <p>Diese Karte enthält Änderungen, die noch nicht als Datei gespeichert wurden. Beim Ersetzen wird auch der lokale Entwurf überschrieben.</p>
+    <div class="mm-dialog-actions">
+        <button id="replaceCancel" type="button" class="mm-btn">Abbrechen</button>
+        <button id="replaceDiscard" type="button" class="mm-btn mm-btn-danger">Änderungen verwerfen</button>
+        <button id="replaceSave" type="button" class="mm-btn mm-btn-primary">Speichern und fortfahren</button>
+    </div>
+</dialog>
+
+<dialog id="newDialog" class="mm-dialog" aria-labelledby="newTitle">
+    <h2 id="newTitle">Neue Karte</h2>
+    <p>Die aktuelle Karte wird ersetzt und der Verlauf geleert. Speichere sie vorher als Datei, wenn du sie behalten willst.</p>
+    <div class="mm-dialog-choices">
+        <button id="newStarter" type="button" class="mm-choice"><strong>Startkarte „Die Silbermark“</strong><span>Fertige Region mit Küste, Gebirge, Wäldern und sieben Orten</span></button>
+        <button id="newEmpty" type="button" class="mm-choice"><strong>Leere Karte</strong><span>Nur Meer und leere Ebenen – male dein eigenes Land</span></button>
+    </div>
+    <div class="mm-dialog-actions">
+        <button id="newCancel" type="button" class="mm-btn">Abbrechen</button>
+    </div>
+</dialog>
+
+<dialog id="exportDialog" class="mm-dialog" aria-labelledby="exportTitle">
+    <h2 id="exportTitle">Karte exportieren</h2>
+    <fieldset class="mm-radio">
+        <legend>Auflösung</legend>
+        <label><input type="radio" name="exportScale" value="1" checked> <span id="exportLabel1">1×</span></label>
+        <label><input type="radio" name="exportScale" value="2"> <span id="exportLabel2">2×</span></label>
+    </fieldset>
+    <p class="mm-hint"><strong>In eine Kampagne übernehmen:</strong> PNG exportieren → Kampagnen → Kampagne öffnen → „Karte hinzufügen“ (nur Spielleitung). Das Paket enthält PNG und bearbeitbare Karte.</p>
+    <p id="exportError" class="mm-error" role="alert" hidden></p>
+    <div class="mm-dialog-actions">
+        <button id="exportCancel" type="button" class="mm-btn">Abbrechen</button>
+        <button id="exportGo" type="button" class="mm-btn">Exportieren (PNG)</button>
+        <button id="exportBundle" type="button" class="mm-btn mm-btn-primary">PNG + Projekt (.zip)</button>
+    </div>
+</dialog>
+
+<dialog id="errorDialog" class="mm-dialog" aria-labelledby="errorTitle">
+    <h2 id="errorTitle">Das hat nicht geklappt</h2>
+    <p id="errorText"></p>
+    <p class="mm-hint">Deine aktuelle Karte ist unverändert.</p>
+    <div class="mm-dialog-actions">
+        <button id="errorClose" type="button" class="mm-btn mm-btn-primary">Verstanden</button>
+    </div>
+</dialog>
+
+<dialog id="helpDialog" class="mm-dialog mm-dialog-wide" aria-labelledby="helpTitle">
+    <h2 id="helpTitle">Tastenkürzel und Hilfe</h2>
+    <div class="mm-help-grid">
+        <div>
+            <h3 class="mm-h3">Werkzeuge</h3>
+            <dl class="mm-keys">
+                <dt><kbd>H</kbd></dt><dd>Bewegen</dd>
+                <dt><kbd>B</kbd></dt><dd>Pinsel</dd>
+                <dt><kbd>E</kbd></dt><dd>Radierer</dd>
+                <dt><kbd>W</kbd></dt><dd>Wege / Flüsse</dd>
+                <dt><kbd>S</kbd></dt><dd>Stempel</dd>
+                <dt><kbd>T</kbd></dt><dd>Ort / Beschriftung</dd>
+                <dt><kbd>V</kbd></dt><dd>Auswählen</dd>
+            </dl>
+        </div>
+        <div>
+            <h3 class="mm-h3">Bearbeiten</h3>
+            <dl class="mm-keys">
+                <dt><kbd>Strg</kbd>+<kbd>Z</kbd></dt><dd>Rückgängig</dd>
+                <dt><kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>Z</kbd> / <kbd>Strg</kbd>+<kbd>Y</kbd></dt><dd>Wiederholen</dd>
+                <dt><kbd>[</kbd> <kbd>]</kbd></dt><dd>Pinsel- oder Symbolgröße</dd>
+                <dt><kbd>Umschalt</kbd>+<kbd>[</kbd> <kbd>]</kbd></dt><dd>Pinselweichheit</dd>
+                <dt><kbd>Entf</kbd></dt><dd>Auswahl löschen</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Auswahl aufheben</dd>
+                <dt><kbd>Alt</kbd>+Klick</dt><dd>Überlappende Symbole und Beschriftungen durchgehen</dd>
+            </dl>
+        </div>
+        <div>
+            <h3 class="mm-h3">Ansicht</h3>
+            <dl class="mm-keys">
+                <dt><kbd>Leertaste</kbd> halten</dt><dd>Karte verschieben</dd>
+                <dt>Mausrad / zwei Finger</dt><dd>Zoomen</dd>
+                <dt><kbd>+</kbd> <kbd>−</kbd></dt><dd>Zoomen</dd>
+                <dt><kbd>F</kbd></dt><dd>Einpassen</dd>
+            </dl>
+        </div>
+    </div>
+    <p class="mm-hint">Die Karte wird automatisch in diesem Browser gespeichert. Für Sicherungen und andere Geräte: „Datei → Als Datei speichern“. Symbole: Kenney Cartography Pack (CC0).</p>
+    <div class="mm-dialog-actions">
+        <button id="helpClose" type="button" class="mm-btn mm-btn-primary">Schließen</button>
+    </div>
+</dialog>
+
+<input type="file" id="fileInput" accept=".json,application/json" hidden>
+    <script src="../js/auth.js"></script>
+    <script src="../js/vtt-main-nav.js"></script>
+</body>
+</html>

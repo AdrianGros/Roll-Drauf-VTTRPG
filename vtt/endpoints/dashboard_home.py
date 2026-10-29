@@ -283,3 +283,31 @@ def get_navigation_capabilities():
     response.headers["Cache-Control"] = "private, no-store"
     response.headers["Vary"] = "Cookie, Authorization, X-CE-View-As"
     return response, 200
+
+
+@dashboard_home_bp.get("/navigation")
+@jwt_required()
+def get_navigation_memo():
+    """Return the account memo without loading the full dashboard snapshot."""
+    user, error = _get_current_user()
+    if error:
+        return error
+
+    campaign_ids = [campaign.id for campaign in _visible_campaigns_for_user(user)]
+    completed = 0
+    if campaign_ids:
+        completed = (
+            db.session.query(func.count(GameSession.id))
+            .filter(GameSession.campaign_id.in_(campaign_ids))
+            .filter(GameSession.status.in_(("completed", "ended")))
+            .scalar()
+            or 0
+        )
+
+    response = jsonify({
+        "user": {"username": user.username},
+        "completed_session_count": int(completed),
+    })
+    response.headers["Cache-Control"] = "private, no-store"
+    response.headers["Vary"] = "Cookie, Authorization, X-CE-View-As"
+    return response, 200

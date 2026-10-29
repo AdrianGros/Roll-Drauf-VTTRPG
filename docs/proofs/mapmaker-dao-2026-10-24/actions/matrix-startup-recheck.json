@@ -1,0 +1,485 @@
+{
+  "browser": "153.0.8010.12",
+  "source_sha256": {
+    "vtt/static/mapmaker/mapmaker.css": "0b8ece7a3b7ea5b47bcb05c2bd8e9fe4d39c47dbf6512a92ca81213b8f48c504",
+    "vtt/static/mapmaker/index.html": "6c10750b1b4c3e4b61b4356198e7898ffc9253a63ab741b50351c276bf76327d",
+    "vtt/static/mapmaker/js/storage.js": "47655cb25ac48a1913797b74ee64b778113d96ddbe285ecf55e4ccce8d745794",
+    "vtt/static/mapmaker/js/app.js": "80e451e080065ae574af5a65b90bc8e576f25ee5d46d0158e103f0c46f44bfe8",
+    "vtt/static/mapmaker/js/starter.js": "0518f6fef05df918ec216bcddf90fb4d8862aa41798197acaa43a49ba5b45b13",
+    "vtt/static/mapmaker/js/document.js": "d330485fab896af9049206e4f61ed34dece600229bfdbfb07d063d0b2d8a7983",
+    "vtt/static/mapmaker/js/render.js": "c6e2624284ab4ccaed44676ac9a05b8a602f481e454763824afe03ae43ccac07",
+    "vtt/static/mapmaker/js/history.js": "d43567c8cffe13a6789e2b7a4f7bf76c806bf4f183dc96b75a42b9bcada66e82",
+    "vtt/static/mapmaker/js/stamps.js": "89e00c31d5ab57d9d0602b1267bb6bea4c806701566211f22bde77f91fb0966d",
+    "vtt/static/mapmaker/js/ui.js": "e76ec14081c1e4b0782460e6544946bfeee8ff7c3a2aae5980364d0e0c925bcb",
+    "vtt/static/mapmaker/js/tools.js": "304c5305e202466fb275b2654696e9f5e99e90c39129999059fe46db7b2e20c2",
+    "vtt/static/mapmaker/js/brush.js": "d67c03d7ee9863e17c485829ef4e11bfff08709b647340c72e41bf8ebdc54d0f"
+  },
+  "rows": [
+    {
+      "id": "startup-fatal-ui",
+      "action": "Failure during editor initialization exposes error and Reload action",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        "JSHandle@<div id=\"app\" class=\"mm-app\" data-tool=\"brush\" data-state=\"error\" data-sheet=\"closed\">…</div>",
+        null,
+        null
+      ],
+      "duration_seconds": 0.189
+    },
+    {
+      "id": "startup-reload",
+      "action": "Reload after transient initialization failure restores usable map",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        "JSHandle@<div id=\"app\" class=\"mm-app\" data-sheet=\"open\" data-tool=\"brush\" data-state=\"ready\">…</div>",
+        null
+      ],
+      "duration_seconds": 4.176
+    }
+  ],
+  "snapshots": {},
+  "static_controls": [
+    {
+      "tag": "input",
+      "id": "mapTitle",
+      "type": "text",
+      "maxlength": "80",
+      "autocomplete": "off",
+      "spellcheck": "false",
+      "value": ""
+    },
+    {
+      "tag": "button",
+      "id": "undoBtn",
+      "class": "mm-icon-btn",
+      "type": "button",
+      "title": "Rückgängig (Strg+Z)",
+      "aria-label": "Rückgängig",
+      "disabled": null
+    },
+    {
+      "tag": "button",
+      "id": "redoBtn",
+      "class": "mm-icon-btn",
+      "type": "button",
+      "title": "Wiederholen (Strg+Umschalt+Z)",
+      "aria-label": "Wiederholen",
+      "disabled": null
+    },
+    {
+      "tag": "button",
+      "id": "fileMenuBtn",
+      "class": "mm-btn",
+      "type": "button",
+      "aria-haspopup": "true",
+      "aria-expanded": "false",
+      "aria-controls": "fileMenuList"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "id": "newBtn"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "id": "openBtn"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "id": "saveBtn"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "id": "exportBtn"
+    },
+    {
+      "tag": "button",
+      "id": "helpBtn",
+      "class": "mm-icon-btn",
+      "type": "button",
+      "title": "Tastenkürzel und Hilfe",
+      "aria-label": "Hilfe"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "pan",
+      "aria-pressed": "false",
+      "title": "Bewegen (H, Leertaste halten)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "brush",
+      "aria-pressed": "true",
+      "title": "Pinsel (B)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "eraser",
+      "aria-pressed": "false",
+      "title": "Radierer (E)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "stamp",
+      "aria-pressed": "false",
+      "title": "Stempel – Symbole setzen (S)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "label",
+      "aria-pressed": "false",
+      "title": "Ort oder Beschriftung setzen (T)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "select",
+      "aria-pressed": "false",
+      "title": "Auswählen und verschieben (V)"
+    },
+    {
+      "tag": "button",
+      "id": "zoomOut",
+      "type": "button",
+      "class": "mm-icon-btn",
+      "aria-label": "Verkleinern",
+      "title": "Verkleinern (−)"
+    },
+    {
+      "tag": "button",
+      "id": "zoomIn",
+      "type": "button",
+      "class": "mm-icon-btn",
+      "aria-label": "Vergrößern",
+      "title": "Vergrößern (+)"
+    },
+    {
+      "tag": "button",
+      "id": "zoomFit",
+      "type": "button",
+      "class": "mm-btn mm-btn-small",
+      "title": "Ganze Karte zeigen (F)"
+    },
+    {
+      "tag": "button",
+      "id": "reloadBtn",
+      "class": "mm-btn",
+      "type": "button",
+      "hidden": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "role": "tab",
+      "id": "tab-tool",
+      "data-pane": "tool",
+      "aria-controls": "pane-tool",
+      "aria-selected": "true"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "role": "tab",
+      "id": "tab-layers",
+      "data-pane": "layers",
+      "aria-controls": "pane-layers",
+      "aria-selected": "false",
+      "tabindex": "-1"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "role": "tab",
+      "id": "tab-places",
+      "data-pane": "places",
+      "aria-controls": "pane-places",
+      "aria-selected": "false",
+      "tabindex": "-1"
+    },
+    {
+      "tag": "button",
+      "id": "selDeselect",
+      "type": "button",
+      "class": "mm-link"
+    },
+    {
+      "tag": "input",
+      "id": "selStampSize",
+      "type": "range",
+      "min": "16",
+      "max": "320",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "selStampRot",
+      "type": "range",
+      "min": "-180",
+      "max": "180",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "selStampFlip",
+      "type": "checkbox"
+    },
+    {
+      "tag": "input",
+      "id": "selText",
+      "type": "text",
+      "maxlength": "80",
+      "autocomplete": "off"
+    },
+    {
+      "tag": "select",
+      "id": "selStyle"
+    },
+    {
+      "tag": "input",
+      "id": "selColor",
+      "type": "color"
+    },
+    {
+      "tag": "input",
+      "id": "selSize",
+      "type": "range",
+      "min": "8",
+      "max": "200",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "selRot",
+      "type": "range",
+      "min": "-180",
+      "max": "180",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "selPin",
+      "type": "checkbox"
+    },
+    {
+      "tag": "select",
+      "id": "selKind"
+    },
+    {
+      "tag": "textarea",
+      "id": "selLore",
+      "rows": "4",
+      "maxlength": "500",
+      "placeholder": "Was macht diesen Ort besonders?"
+    },
+    {
+      "tag": "button",
+      "id": "selDelete",
+      "type": "button",
+      "class": "mm-btn mm-btn-danger"
+    },
+    {
+      "tag": "input",
+      "id": "brushSize",
+      "type": "range",
+      "min": "2",
+      "max": "400",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "brushOpacity",
+      "type": "range",
+      "min": "1",
+      "max": "100",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "brushSoftness",
+      "type": "range",
+      "min": "0",
+      "max": "100",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "brushPressure",
+      "type": "checkbox",
+      "checked": null
+    },
+    {
+      "tag": "input",
+      "id": "stampSize",
+      "type": "range",
+      "min": "16",
+      "max": "320",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "stampRot",
+      "type": "range",
+      "min": "-180",
+      "max": "180",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "stampFlip",
+      "type": "checkbox"
+    },
+    {
+      "tag": "input",
+      "id": "stampVary",
+      "type": "checkbox",
+      "checked": null
+    },
+    {
+      "tag": "input",
+      "id": "stampScatter",
+      "type": "checkbox"
+    },
+    {
+      "tag": "select",
+      "id": "labelStyle"
+    },
+    {
+      "tag": "select",
+      "id": "labelKind"
+    },
+    {
+      "tag": "input",
+      "id": "labelPin",
+      "type": "checkbox",
+      "checked": null
+    },
+    {
+      "tag": "input",
+      "id": "layerOpacity",
+      "type": "range",
+      "min": "0",
+      "max": "100",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "layerCoast",
+      "type": "checkbox"
+    },
+    {
+      "tag": "button",
+      "id": "addRaster",
+      "type": "button",
+      "class": "mm-btn mm-btn-small"
+    },
+    {
+      "tag": "button",
+      "id": "addStamps",
+      "type": "button",
+      "class": "mm-btn mm-btn-small"
+    },
+    {
+      "tag": "button",
+      "id": "addLabels",
+      "type": "button",
+      "class": "mm-btn mm-btn-small"
+    },
+    {
+      "tag": "button",
+      "id": "addPlaceBtn",
+      "type": "button",
+      "class": "mm-btn mm-btn-small"
+    },
+    {
+      "tag": "button",
+      "id": "restoreNo",
+      "type": "button",
+      "class": "mm-btn"
+    },
+    {
+      "tag": "button",
+      "id": "restoreYes",
+      "type": "button",
+      "class": "mm-btn mm-btn-primary"
+    },
+    {
+      "tag": "button",
+      "id": "newStarter",
+      "type": "button",
+      "class": "mm-choice"
+    },
+    {
+      "tag": "button",
+      "id": "newEmpty",
+      "type": "button",
+      "class": "mm-choice"
+    },
+    {
+      "tag": "button",
+      "id": "newCancel",
+      "type": "button",
+      "class": "mm-btn"
+    },
+    {
+      "tag": "input",
+      "type": "radio",
+      "name": "exportScale",
+      "value": "1",
+      "checked": null
+    },
+    {
+      "tag": "input",
+      "type": "radio",
+      "name": "exportScale",
+      "value": "2"
+    },
+    {
+      "tag": "button",
+      "id": "exportCancel",
+      "type": "button",
+      "class": "mm-btn"
+    },
+    {
+      "tag": "button",
+      "id": "exportGo",
+      "type": "button",
+      "class": "mm-btn mm-btn-primary"
+    },
+    {
+      "tag": "button",
+      "id": "errorClose",
+      "type": "button",
+      "class": "mm-btn mm-btn-primary"
+    },
+    {
+      "tag": "button",
+      "id": "helpClose",
+      "type": "button",
+      "class": "mm-btn mm-btn-primary"
+    },
+    {
+      "tag": "input",
+      "type": "file",
+      "id": "fileInput",
+      "accept": ".json,application/json",
+      "hidden": null
+    }
+  ]
+}

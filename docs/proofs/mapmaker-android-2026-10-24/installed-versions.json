@@ -1,0 +1,6 @@
+{
+  "cmdline-tools/latest/source.properties": "Pkg.Revision=23.0\nPkg.Path=cmdline-tools;23.0\nPkg.Desc=Android SDK Command-line Tools\n",
+  "emulator/source.properties": "Pkg.UserSrc=false\nPkg.Revision=37.2.12\nPkg.Path=emulator\nPkg.Desc=Android Emulator\nPkg.BuildId=16428233",
+  "platform-tools/source.properties": "Pkg.UserSrc=false\nPkg.Revision=37.0.1\n",
+  "system-images/android-35/google_apis/x86_64/source.properties": "Pkg.Desc=System Image x86_64 with Google APIs.\nPkg.Revision=9\nPkg.Dependencies=emulator#33.1.24\nAndroidVersion.ApiLevel=35\nAndroidVersion.ExtensionLevel=13\nAndroidVersion.IsBaseSdk=true\nSystemImage.Abi=x86_64\nSystemImage.TagId=google_apis\nSystemImage.TagDisplay=Google APIs\nSystemImage.GpuSupport=true\nAddon.VendorId=google\nAddon.VendorDisplay=Google Inc.\n\n"
+}

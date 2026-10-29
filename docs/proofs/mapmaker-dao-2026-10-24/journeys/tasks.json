@@ -1,0 +1,46 @@
+{
+  "review": "First-time-user (DAU) task journeys, Kartenwerkstatt prototype",
+  "date": "2026-10-24",
+  "method": "Chromium UI interaction only (clicks, touch taps, typing, File menu, file chooser). Not a human user study. No campaign browser upload.",
+  "source_revisions": {
+    "preceding_desktop": {"index.html": "f501fb06…", "mapmaker.css": "b93d5e39…", "js": "identical to final", "note": "pre-branding source"},
+    "preceding_mobile": {"index.html": "6c10750b… (final)", "mapmaker.css": "0b8ece7a… (intermediate Deploy state; differs from final only in help-grid rules)", "js": "identical to final"},
+    "final_rerun": {"index.html": "6c10750b…", "mapmaker.css": "c79b0932…", "js": "identical", "evidence": "final-source-rerun/results.json"}
+  },
+  "attribution": {
+    "preceding": "Codex DAU journey agent (stopped at usage limit before writing a report). Screenshots 01–43 and three .rdmap.json files are its evidence; step outcomes were re-judged here from those artifacts.",
+    "final_rerun": "Claude Opus 5.5 Monitor review, final_journey_rerun.py"
+  },
+  "tasks": [
+    {"id": "D01", "viewport": "1440x1000", "task": "Open editor and understand starting point", "result": "pass", "evidence": ["01-desktop-first-load.png"], "by": "preceding"},
+    {"id": "D02", "viewport": "1440x1000", "task": "Paint a forest", "result": "pass", "evidence": ["02-desktop-forest-painted.png"], "by": "preceding"},
+    {"id": "D03", "viewport": "1440x1000", "task": "Erase part of the forest", "result": "pass", "evidence": ["03-desktop-forest-erased.png"], "by": "preceding"},
+    {"id": "D04", "viewport": "1440x1000", "task": "Find and place a mountain symbol", "result": "pass", "evidence": ["04-desktop-stamp-library.png", "05-desktop-mountain-added.png"], "by": "preceding"},
+    {"id": "D05", "viewport": "1440x1000", "task": "Move the placed mountain", "result": "partial", "evidence": ["06-desktop-mountain-moved.png", "07-desktop-mountain-move-retry.png", "13-desktop-mountain-moved-clean.png", "Dornwachts-Waldmark.rdmap.json"], "by": "preceding", "note": "The first drag on the new mountain grabbed the overlapping 'Silberlauf' label (labels sit above symbols). The saved file keeps Silberlauf displaced (1125,802)->(1365,1021). The original mountain stays at (1078,786), and a second mountain was placed and moved to (1724,1151). Trap T1."},
+    {"id": "D06", "viewport": "1440x1000", "task": "Create a place with lore", "result": "pass", "evidence": ["08-desktop-place-lore-list.png", "Dornwachts-Waldmark.rdmap.json (Dornwacht, landmark, lore present)"], "by": "preceding"},
+    {"id": "D07", "viewport": "1440x1000", "task": "Hide a layer, reorder layers, undo", "result": "pass", "evidence": ["09-desktop-layers.png", "10-desktop-layer-hidden.png", "11-desktop-layer-order-changed.png", "12-desktop-layer-order-undo.png"], "by": "preceding"},
+    {"id": "D08", "viewport": "1440x1000", "task": "Find help and the file menu", "result": "pass", "evidence": ["14-desktop-help.png", "15-desktop-file-menu.png"], "by": "preceding", "note": "Pre-branding help shows the V2 column overlap, fixed in final CSS"},
+    {"id": "D09", "viewport": "1440x1000", "task": "Save editable file and export PNG", "result": "pass", "evidence": ["16-desktop-export-dialog.png", "Dornwachts-Waldmark.rdmap.json", "Dornwachts-Waldmark.png (2400x1600)"], "by": "preceding", "note": "Project renamed 'Dornwachts Waldmark' but the painted map title still reads DIE SILBERMARK. Trap T2."},
+    {"id": "D10", "viewport": "1440x1000", "task": "Reopen saved file in a fresh browser", "result": "pass", "evidence": ["17-desktop-fresh-project-opened.png", "18-desktop-fresh-project-lore.png"], "by": "preceding"},
+    {"id": "D11", "viewport": "1440x1000", "task": "Reload and keep local work", "result": "pass", "evidence": ["19-desktop-reload-delayed.png ('Lokal gespeichert 13:57')"], "by": "preceding"},
+    {"id": "M01", "viewport": "390x844", "task": "Open editor and tools", "result": "pass", "evidence": ["20-mobile390-first-load.png", "21-mobile390-tools-open.png"], "by": "preceding"},
+    {"id": "M02", "viewport": "390x844", "task": "Paint and erase", "result": "pass", "evidence": ["22-mobile390-painted.png", "23-mobile390-erased.png"], "by": "preceding"},
+    {"id": "M03", "viewport": "390x844", "task": "Create place with lore", "result": "pass", "evidence": ["24-mobile390-place-tool.png", "25-mobile390-new-place.png", "26-mobile390-lore-editor.png", "27-mobile390-places-list.png", "Mondfurt390.rdmap.json"], "by": "preceding"},
+    {"id": "M04", "viewport": "390x844", "task": "Choose a place in Orte and see it on the map", "result": "fail", "evidence": ["28-mobile390-place-focused.png", "29-mobile390-place-sheet-collapsed.png", "../visual/after-probes.json"], "by": "preceding; reconfirmed on final source by visual after-probe", "note": "Marker centered behind open sheet (V3, medium). Collapsing the sheet reveals it."},
+    {"id": "M05", "viewport": "390x844", "task": "Help, file menu, save and fresh reopen", "result": "pass", "evidence": ["30-mobile390-help.png", "31-mobile390-file-menu.png", "32-mobile390-fresh-save-open.png"], "by": "preceding"},
+    {"id": "S01", "viewport": "320x568", "task": "Open editor, read help, find tools", "result": "pass", "evidence": ["33-mobile320-first-load.png", "34-mobile320-help-top.png", "35-mobile320-help-scrolled.png", "36-mobile320-tools.png"], "by": "preceding", "note": "Help opens scrolled down (V5, low)"},
+    {"id": "S02", "viewport": "320x568", "task": "Paint and erase", "result": "pass", "evidence": ["37-mobile320-paint-erase.png (not discernible at 13% zoom)", "final-source-rerun: phone320 raster 'Gelände' changed in saved file"], "by": "preceding; confirmed by final rerun"},
+    {"id": "S03", "viewport": "320x568", "task": "Create place with lore", "result": "pass", "evidence": ["38-mobile320-new-place.png", "39-mobile320-lore-edit.png", "40-mobile320-places-bottom.png", "Nebelpass320.rdmap.json"], "by": "preceding"},
+    {"id": "S04", "viewport": "320x568", "task": "Choose a place and see it on the map", "result": "fail", "evidence": ["41-mobile320-place-focus-hidden.png"], "by": "preceding", "note": "V3"},
+    {"id": "S05", "viewport": "320x568", "task": "Save file and export PNG", "result": "pass", "evidence": ["42-mobile320-file-menu.png", "43-mobile320-export.png", "Nebelpass320.rdmap.json", "final-source-rerun/final-phone320.png (2400x1600)"], "by": "preceding (JSON + export dialog); PNG file proven by final rerun"},
+    {"id": "F-D", "viewport": "1440x1000", "task": "Final source: title, paint, place+lore, save, PNG, fresh reopen, no errors", "result": "pass", "evidence": ["final-source-rerun/results.json", "final-source-rerun/desktop1440-*.png"], "by": "final_rerun", "steps_passed": "7/7"},
+    {"id": "F-S", "viewport": "320x568 touch", "task": "Final source: title, paint, place+lore, save, PNG, fresh reopen, no errors", "result": "pass", "evidence": ["final-source-rerun/results.json", "final-source-rerun/phone320-*.png"], "by": "final_rerun", "steps_passed": "7/7"}
+  ],
+  "traps": [
+    {"id": "T1", "severity": "low", "text": "Dragging a symbol that sits under a label moves the label. The unintended move survived into the saved file (D05)."},
+    {"id": "T2", "severity": "low", "text": "Renaming the project title does not change the painted map title label. The exported PNG still says DIE SILBERMARK (D09)."},
+    {"id": "T3", "severity": "info", "text": "After opening a file the status reads 'Ungespeicherte Änderungen' until the local autosave runs (17 vs 19)."},
+    {"id": "T4", "severity": "info", "text": "At 320 px the last tool is partly clipped in the horizontally scrolling rail."}
+  ],
+  "summary": {"tasks": 23, "pass": 20, "partial": 1, "fail": 2, "not_covered": ["authenticated campaign browser upload", "human participants", "physical touch/stylus devices", "Safari/Firefox", "landscape 667 journey (covered by visual/action reviews only)"]}
+}

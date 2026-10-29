@@ -1,0 +1,2714 @@
+{
+  "status": "Monitor validation complete; medium finding V3 prevents unconditional prototype acceptance",
+  "browser": "153.0.8010.12",
+  "unique_action_check_count": 226,
+  "total_executed_rows_across_runs": 272,
+  "rerun_rows": 47,
+  "counts": {
+    "tested-pass": 221,
+    "not-tested": 2,
+    "tested-fail": 2,
+    "blocked": 1
+  },
+  "rows": [
+    {
+      "id": "startup-desktop",
+      "action": "Open fresh editor with seeded map, fonts and asset palette",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.136
+    },
+    {
+      "id": "tool-pan",
+      "action": "Click pan tool and expose its options",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.153
+    },
+    {
+      "id": "tool-brush",
+      "action": "Click brush tool and expose its options",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.155
+    },
+    {
+      "id": "tool-eraser",
+      "action": "Click eraser tool and expose its options",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.158
+    },
+    {
+      "id": "tool-stamp",
+      "action": "Click stamp tool and expose its options",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.151
+    },
+    {
+      "id": "tool-label",
+      "action": "Click label tool and expose its options",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.141
+    },
+    {
+      "id": "tool-select",
+      "action": "Click select tool and expose its options",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.147
+    },
+    {
+      "id": "help-open",
+      "action": "Open Help dialog",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.108
+    },
+    {
+      "id": "help-close",
+      "action": "Close Help with button",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.082
+    },
+    {
+      "id": "help-escape",
+      "action": "Close Help with Escape",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.129
+    },
+    {
+      "id": "menu-escape",
+      "action": "Open File menu then Escape returns focus",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.167
+    },
+    {
+      "id": "menu-outside",
+      "action": "Click outside closes File menu",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.182
+    },
+    {
+      "id": "title-edit",
+      "action": "Edit map title and Enter leaves field",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.1
+    },
+    {
+      "id": "title-shortcuts-safe",
+      "action": "Type tool keys and spaces in title without tool changes",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.277
+    },
+    {
+      "id": "tab-key-right",
+      "action": "ArrowRight cycles tab focus and panel",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.067
+    },
+    {
+      "id": "tab-key-left",
+      "action": "ArrowLeft cycles back",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.019
+    },
+    {
+      "id": "startup-no-console",
+      "action": "Desktop interactions have no JS or CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.008
+    },
+    {
+      "id": "material-land",
+      "action": "Select Land and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.848
+    },
+    {
+      "id": "material-meadow",
+      "action": "Select Wiese and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.786
+    },
+    {
+      "id": "material-forest",
+      "action": "Select Wald and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.633
+    },
+    {
+      "id": "material-steppe",
+      "action": "Select Steppe and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.702
+    },
+    {
+      "id": "material-desert",
+      "action": "Select Wüste and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.85
+    },
+    {
+      "id": "material-snow",
+      "action": "Select Schnee and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.721
+    },
+    {
+      "id": "material-swamp",
+      "action": "Select Sumpf and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.702
+    },
+    {
+      "id": "material-rock",
+      "action": "Select Fels and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.788
+    },
+    {
+      "id": "material-shallow",
+      "action": "Select Flachwasser and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.703
+    },
+    {
+      "id": "material-river",
+      "action": "Select Fluss and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.637
+    },
+    {
+      "id": "material-road",
+      "action": "Select Weg and paint a dab",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.601
+    },
+    {
+      "id": "brushSize-2",
+      "action": "Adjust #brushSize to 2",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.095
+    },
+    {
+      "id": "brushSize-400",
+      "action": "Adjust #brushSize to 400",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.076
+    },
+    {
+      "id": "brushOpacity-1",
+      "action": "Adjust #brushOpacity to 1",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.094
+    },
+    {
+      "id": "brushOpacity-100",
+      "action": "Adjust #brushOpacity to 100",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.059
+    },
+    {
+      "id": "brushSoftness-0",
+      "action": "Adjust #brushSoftness to 0",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.072
+    },
+    {
+      "id": "brushSoftness-100",
+      "action": "Adjust #brushSoftness to 100",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.061
+    },
+    {
+      "id": "brush-drag",
+      "action": "Paint continuous stroke",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 1.806
+    },
+    {
+      "id": "undo-button",
+      "action": "Undo stroke restores exact pixels",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 1.178
+    },
+    {
+      "id": "redo-button",
+      "action": "Redo stroke restores exact pixels",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 1.271
+    },
+    {
+      "id": "eraser-stroke",
+      "action": "Erase painted raster and undo",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 2.776
+    },
+    {
+      "id": "brush-cancel-escape",
+      "action": "Escape cancels in-progress stroke",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 1.717
+    },
+    {
+      "id": "pressure-option",
+      "action": "Pen PointerEvent exposes pressure checkbox; toggle off/on",
+      "status": "tested-pass",
+      "details": "Synthetic DOM pen event; physical stylus behavior not claimed.",
+      "duration_seconds": 0.376
+    },
+    {
+      "id": "brush-no-errors",
+      "action": "Brush actions have no JS/CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.006
+    },
+    {
+      "id": "stamp-asset-kenney-mountains",
+      "action": "Select Bergkette and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.278
+    },
+    {
+      "id": "stamp-asset-kenney-crags",
+      "action": "Select Felsnadeln and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.225
+    },
+    {
+      "id": "stamp-asset-kenney-rocks",
+      "action": "Select Felsen and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.212
+    },
+    {
+      "id": "stamp-asset-kenney-mesa",
+      "action": "Select Tafelberg and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.232
+    },
+    {
+      "id": "stamp-asset-kenney-volcano",
+      "action": "Select Vulkan and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.528
+    },
+    {
+      "id": "stamp-asset-kenney-lake",
+      "action": "Select See and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.268
+    },
+    {
+      "id": "stamp-asset-kenney-forest",
+      "action": "Select Nadelwald and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.226
+    },
+    {
+      "id": "stamp-asset-kenney-pine",
+      "action": "Select Tanne and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.204
+    },
+    {
+      "id": "stamp-asset-kenney-tall_pine",
+      "action": "Select Hohe Tanne and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.243
+    },
+    {
+      "id": "stamp-asset-kenney-tree",
+      "action": "Select Laubbaum and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.22
+    },
+    {
+      "id": "stamp-asset-kenney-palm",
+      "action": "Select Palme and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.187
+    },
+    {
+      "id": "stamp-asset-kenney-cactus",
+      "action": "Select Kaktus and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.223
+    },
+    {
+      "id": "stamp-asset-kenney-scrub",
+      "action": "Select Busch and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.225
+    },
+    {
+      "id": "stamp-asset-kenney-town",
+      "action": "Select Stadt and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.229
+    },
+    {
+      "id": "stamp-asset-kenney-village",
+      "action": "Select Dorf and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.27
+    },
+    {
+      "id": "stamp-asset-kenney-longhouse",
+      "action": "Select Langhaus and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.257
+    },
+    {
+      "id": "stamp-asset-kenney-castle",
+      "action": "Select Burg and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.2
+    },
+    {
+      "id": "stamp-asset-kenney-citadel",
+      "action": "Select Zitadelle and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.243
+    },
+    {
+      "id": "stamp-asset-kenney-temple",
+      "action": "Select Tempel and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.254
+    },
+    {
+      "id": "stamp-asset-kenney-tower",
+      "action": "Select Turm and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.292
+    },
+    {
+      "id": "stamp-asset-kenney-lighthouse",
+      "action": "Select Leuchtturm and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.25
+    },
+    {
+      "id": "stamp-asset-kenney-mill",
+      "action": "Select Windmühle and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.429
+    },
+    {
+      "id": "stamp-asset-kenney-watermill",
+      "action": "Select Wassermühle and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.235
+    },
+    {
+      "id": "stamp-asset-kenney-ruins",
+      "action": "Select Ruinen and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.246
+    },
+    {
+      "id": "stamp-asset-kenney-mine",
+      "action": "Select Mine and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.258
+    },
+    {
+      "id": "stamp-asset-kenney-graveyard",
+      "action": "Select Friedhof and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.261
+    },
+    {
+      "id": "stamp-asset-kenney-campfire",
+      "action": "Select Lagerfeuer and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.193
+    },
+    {
+      "id": "stamp-asset-kenney-camp",
+      "action": "Select Lager and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.244
+    },
+    {
+      "id": "stamp-asset-kenney-ship",
+      "action": "Select Schiff and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.226
+    },
+    {
+      "id": "stamp-asset-kenney-bridge",
+      "action": "Select Brücke and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.225
+    },
+    {
+      "id": "stamp-asset-kenney-rope_bridge",
+      "action": "Select Hängebrücke and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.284
+    },
+    {
+      "id": "stamp-asset-kenney-harbor",
+      "action": "Select Hafen and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.278
+    },
+    {
+      "id": "stamp-asset-kenney-well",
+      "action": "Select Brunnen and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.27
+    },
+    {
+      "id": "stamp-asset-kenney-watchtower",
+      "action": "Select Wachturm and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.228
+    },
+    {
+      "id": "stamp-asset-kenney-danger",
+      "action": "Select Gefahr and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.244
+    },
+    {
+      "id": "stamp-asset-kenney-compass",
+      "action": "Select Windrose and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.222
+    },
+    {
+      "id": "stamp-asset-kenney-banner",
+      "action": "Select Banner and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.274
+    },
+    {
+      "id": "stamp-asset-kenney-flag",
+      "action": "Select Flagge and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.224
+    },
+    {
+      "id": "stamp-asset-builtin-compass",
+      "action": "Select Windrose (einfach) and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.233
+    },
+    {
+      "id": "stamp-asset-builtin-pin",
+      "action": "Select Ortsnadel and place it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.259
+    },
+    {
+      "id": "stamp-palette-groups",
+      "action": "Browse all categorized symbol groups",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.015
+    },
+    {
+      "id": "stamp-search",
+      "action": "Search symbols by text",
+      "status": "not-tested",
+      "details": "No search control exists; 38 curated assets are displayed in categorized grids."
+    },
+    {
+      "id": "stamp-options",
+      "action": "Place with exact size/rotation/flip and variation off",
+      "status": "tested-pass",
+      "details": "",
+      "observed": {
+        "layer": "symbols",
+        "id": "s9j2x15",
+        "asset": "kenney:castle",
+        "x": 1900,
+        "y": 1400,
+        "size": 160,
+        "rot": 45,
+        "flip": true
+      },
+      "duration_seconds": 0.135
+    },
+    {
+      "id": "stamp-select",
+      "action": "Select newly placed stamp and inspect it",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.012
+    },
+    {
+      "id": "stamp-inspect-size",
+      "action": "Resize selected symbol",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.156
+    },
+    {
+      "id": "stamp-inspect-rotation",
+      "action": "Rotate selected symbol",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.109
+    },
+    {
+      "id": "stamp-inspect-flip",
+      "action": "Unmirror selected symbol",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.14
+    },
+    {
+      "id": "stamp-move",
+      "action": "Drag selected symbol to new position",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.572
+    },
+    {
+      "id": "stamp-deselect",
+      "action": "Finish deselects symbol",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.15
+    },
+    {
+      "id": "stamp-delete-button",
+      "action": "Delete selected symbol and undo on a clear map",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.289
+    },
+    {
+      "id": "stamp-scatter",
+      "action": "Scatter several symbols as one undo step",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 2.443
+    },
+    {
+      "id": "stamp-scatter-cancel",
+      "action": "Escape removes in-progress scatter",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 1.714
+    },
+    {
+      "id": "stamp-no-errors",
+      "action": "Stamp actions have no JS/CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.007
+    },
+    {
+      "id": "label-style-realm",
+      "action": "Create label in realm style",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.318
+    },
+    {
+      "id": "label-style-region",
+      "action": "Create label in region style",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.279
+    },
+    {
+      "id": "label-style-city",
+      "action": "Create label in city style",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.293
+    },
+    {
+      "id": "label-style-town",
+      "action": "Create label in town style",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.224
+    },
+    {
+      "id": "label-style-water",
+      "action": "Create label in water style",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.259
+    },
+    {
+      "id": "label-style-feature",
+      "action": "Create label in feature style",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.269
+    },
+    {
+      "id": "label-kind-plain",
+      "action": "Create plain label kind",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.209
+    },
+    {
+      "id": "label-kind-city",
+      "action": "Create city kind",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.265
+    },
+    {
+      "id": "label-kind-town",
+      "action": "Create town kind",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.328
+    },
+    {
+      "id": "label-kind-castle",
+      "action": "Create castle kind",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.296
+    },
+    {
+      "id": "label-kind-harbor",
+      "action": "Create harbor kind",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.287
+    },
+    {
+      "id": "label-kind-ruin",
+      "action": "Create ruin kind",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.225
+    },
+    {
+      "id": "label-kind-landmark",
+      "action": "Create landmark kind",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.227
+    },
+    {
+      "id": "label-pin-default",
+      "action": "Create label without a pin",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.01
+    },
+    {
+      "id": "label-text",
+      "action": "Edit selected name",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.135
+    },
+    {
+      "id": "label-inspect-style",
+      "action": "Change selected style resets matching style size",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        [
+          "region"
+        ],
+        null
+      ],
+      "duration_seconds": 0.083
+    },
+    {
+      "id": "label-inspect-color",
+      "action": "Change selected text color",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.096
+    },
+    {
+      "id": "label-inspect-size",
+      "action": "Change selected text size",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.112
+    },
+    {
+      "id": "label-inspect-rotation",
+      "action": "Rotate selected label",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.131
+    },
+    {
+      "id": "label-inspect-pin",
+      "action": "Enable selected place pin",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.182
+    },
+    {
+      "id": "label-inspect-kind",
+      "action": "Change selected place kind",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        [
+          "harbor"
+        ],
+        null
+      ],
+      "duration_seconds": 0.121
+    },
+    {
+      "id": "label-lore",
+      "action": "Edit selected lore and preserve line breaks",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.203
+    },
+    {
+      "id": "places-list",
+      "action": "Open Places list and find edited place",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.106
+    },
+    {
+      "id": "places-navigate",
+      "action": "Click place list item selects and centers corresponding item",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.115
+    },
+    {
+      "id": "label-remove-kind",
+      "action": "Convert place to plain label disables lore and removes list entry",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        [
+          ""
+        ],
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.12
+    },
+    {
+      "id": "label-blank-name",
+      "action": "Blank name is rejected and previous text restored on blur",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.058
+    },
+    {
+      "id": "label-delete",
+      "action": "Delete selected label with toolbar button and undo",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.475
+    },
+    {
+      "id": "place-add-button",
+      "action": "Add Place switches to label creation tool",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.193
+    },
+    {
+      "id": "labels-no-errors",
+      "action": "Label actions have no JS/CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.008
+    },
+    {
+      "id": "layer-select",
+      "action": "Select Land raster layer",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.121
+    },
+    {
+      "id": "layer-hide",
+      "action": "Hide Land reveals sea",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.226
+    },
+    {
+      "id": "layer-show",
+      "action": "Show Land restores exact pixels",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.535
+    },
+    {
+      "id": "layer-opacity",
+      "action": "Set active layer opacity to 40% and undo",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.985
+    },
+    {
+      "id": "layer-coast",
+      "action": "Toggle coast effect and undo",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.745
+    },
+    {
+      "id": "layer-up",
+      "action": "Move Land one layer up",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.463
+    },
+    {
+      "id": "layer-down",
+      "action": "Move Land down restores order",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.541
+    },
+    {
+      "id": "layer-boundary-disabled",
+      "action": "Bottom down and top up actions disabled",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.041
+    },
+    {
+      "id": "layer-rename-enter",
+      "action": "Rename layer and commit with Enter",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.687
+    },
+    {
+      "id": "layer-rename-cancel",
+      "action": "Escape cancels layer rename",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.149
+    },
+    {
+      "id": "layer-rename-dblclick-blur",
+      "action": "Double click active layer name enters rename",
+      "status": "tested-fail",
+      "details": "",
+      "error": "Native double click did not open the layer rename textbox",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/roll-drauf-mapmaker/dao-actions/run.py\", line 19, in step\n    result=fn()\n           ^^^^\n  File \"/tmp/roll-drauf-mapmaker/dao-actions/run.py\", line 355, in doubleclick\n    ed.page.locator('[data-layer=land] .mm-layer-name').dblclick();check(ed.page.get_by_role('textbox',name='Neuer Ebenenname').count()==1,'Native double click did not open the layer rename textbox')\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/roll-drauf-mapmaker/dao-actions/run.py\", line 14, in check\n    if not value: raise AssertionError(message)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Native double click did not open the layer rename textbox\n",
+      "screenshot": "layer-rename-dblclick-blur-failure.png",
+      "state": {
+        "title": "Neue Karte",
+        "size": {
+          "w": 2400,
+          "h": 1600
+        },
+        "tool": "select",
+        "zoom": 0.425,
+        "fitZoom": 0.425,
+        "activeLayer": "land",
+        "selection": "pfan22",
+        "canUndo": true,
+        "canRedo": false,
+        "historySteps": 4,
+        "autosave": "pending",
+        "generation": 10,
+        "unsavedFile": true,
+        "mutating": false,
+        "layers": [
+          {
+            "id": "land",
+            "name": "Land",
+            "kind": "raster",
+            "visible": true,
+            "opacity": 1,
+            "items": null
+          },
+          {
+            "id": "terrain",
+            "name": "Gelände",
+            "kind": "raster",
+            "visible": true,
+            "opacity": 1,
+            "items": null
+          },
+          {
+            "id": "rivers",
+            "name": "Flüsse & Wege",
+            "kind": "raster",
+            "visible": true,
+            "opacity": 1,
+            "items": null
+          },
+          {
+            "id": "symbols",
+            "name": "Symbole",
+            "kind": "stamps",
+            "visible": true,
+            "opacity": 1,
+            "items": 1
+          },
+          {
+            "id": "labels",
+            "name": "Beschriftung",
+            "kind": "labels",
+            "visible": true,
+            "opacity": 1,
+            "items": 1
+          }
+        ],
+        "stamps": 1,
+        "labels": 1,
+        "places": [
+          "Move label"
+        ],
+        "items": [
+          {
+            "layer": "symbols",
+            "id": "sf9av1",
+            "asset": "kenney:castle",
+            "x": 1900,
+            "y": 1400,
+            "size": 88,
+            "rot": 0,
+            "flip": false
+          },
+          {
+            "layer": "labels",
+            "id": "pfan22",
+            "x": 1400,
+            "y": 950,
+            "text": "Move label",
+            "style": "town",
+            "size": 30,
+            "rot": 0,
+            "color": "#3b2a1a",
+            "pin": true,
+            "place": {
+              "kind": "landmark",
+              "lore": ""
+            }
+          }
+        ]
+      },
+      "duration_seconds": 0.454,
+      "severity": "low",
+      "finding_id": "A1"
+    },
+    {
+      "id": "layer-add-raster",
+      "action": "Add raster layer",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.643
+    },
+    {
+      "id": "layer-add-stamps",
+      "action": "Add stamps layer",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.631
+    },
+    {
+      "id": "layer-add-labels",
+      "action": "Add labels layer",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.83
+    },
+    {
+      "id": "layer-delete",
+      "action": "Delete selected new layer and undo",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 1.032
+    },
+    {
+      "id": "layer-count-limit",
+      "action": "32-layer cap disables all Add controls",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 12.97
+    },
+    {
+      "id": "layers-no-errors",
+      "action": "Layer actions have no JS/CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.007
+    },
+    {
+      "id": "key-tool-h",
+      "action": "Keyboard H selects pan",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.068
+    },
+    {
+      "id": "key-tool-b",
+      "action": "Keyboard B selects brush",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.089
+    },
+    {
+      "id": "key-tool-e",
+      "action": "Keyboard E selects eraser",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.076
+    },
+    {
+      "id": "key-tool-s",
+      "action": "Keyboard S selects stamp",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.076
+    },
+    {
+      "id": "key-tool-t",
+      "action": "Keyboard T selects label",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.078
+    },
+    {
+      "id": "key-tool-v",
+      "action": "Keyboard V selects select",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.063
+    },
+    {
+      "id": "key-brush-grow",
+      "action": "Right bracket grows brush",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.059
+    },
+    {
+      "id": "key-brush-shrink",
+      "action": "Left bracket shrinks brush",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.055
+    },
+    {
+      "id": "key-soft-grow",
+      "action": "Shift+] grows brush softness",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.062
+    },
+    {
+      "id": "key-soft-shrink",
+      "action": "Shift+[ shrinks brush softness",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.053
+    },
+    {
+      "id": "key-stamp-grow",
+      "action": "Right bracket grows stamp",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.052
+    },
+    {
+      "id": "key-stamp-shrink",
+      "action": "Left bracket shrinks stamp",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.058
+    },
+    {
+      "id": "pan-tool-drag",
+      "action": "Pan tool moves map without changing document",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.398
+    },
+    {
+      "id": "pan-space",
+      "action": "Hold Space temporarily pans with brush selected",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.452
+    },
+    {
+      "id": "pan-middle",
+      "action": "Middle mouse pans without painting",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.383
+    },
+    {
+      "id": "zoom-in",
+      "action": "Zoom In button increases zoom",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.129
+    },
+    {
+      "id": "zoom-out",
+      "action": "Zoom Out button returns previous scale",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.114
+    },
+    {
+      "id": "zoom-plus-key",
+      "action": "Plus key increases zoom",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.079
+    },
+    {
+      "id": "zoom-minus-key",
+      "action": "Minus key decreases zoom",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.07
+    },
+    {
+      "id": "zoom-wheel",
+      "action": "Mouse wheel zooms",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.176
+    },
+    {
+      "id": "zoom-fit-key",
+      "action": "F fits entire map",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.102
+    },
+    {
+      "id": "key-delete",
+      "action": "Delete removes selected stamp",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.023
+    },
+    {
+      "id": "key-undo",
+      "action": "Ctrl+Z restores deleted stamp",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.108
+    },
+    {
+      "id": "key-redo-shift",
+      "action": "Ctrl+Shift+Z repeats deletion",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.077
+    },
+    {
+      "id": "key-redo-y",
+      "action": "Ctrl+Y repeats deletion",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.072
+    },
+    {
+      "id": "key-backspace",
+      "action": "Backspace removes selected stamp",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.06
+    },
+    {
+      "id": "key-deselect",
+      "action": "Escape clears selection",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.096
+    },
+    {
+      "id": "view-no-errors",
+      "action": "Keyboard and view actions have no JS/CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.006
+    },
+    {
+      "id": "save-json",
+      "action": "Download editable map JSON",
+      "status": "tested-pass",
+      "details": "",
+      "observed": {
+        "bytes": 2971217,
+        "filename": "roundtrip.rdmap.json"
+      },
+      "duration_seconds": 0.944
+    },
+    {
+      "id": "new-cancel",
+      "action": "Cancel New Map leaves document unchanged",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.404
+    },
+    {
+      "id": "new-empty",
+      "action": "Create empty map with same working size",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.915
+    },
+    {
+      "id": "open-json",
+      "action": "Import saved map restores content and raster pixels",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 1.202
+    },
+    {
+      "id": "open-cancel",
+      "action": "Cancel file picker leaves document unchanged",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.267
+    },
+    {
+      "id": "import-malformed",
+      "action": "Reject malformed import and preserve current map",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.52
+    },
+    {
+      "id": "import-wrong-format",
+      "action": "Reject wrong-format import and preserve current map",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.821
+    },
+    {
+      "id": "import-array",
+      "action": "Reject array import and preserve current map",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.696
+    },
+    {
+      "id": "export-cancel",
+      "action": "Cancel PNG export leaves document unchanged",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.421
+    },
+    {
+      "id": "export-1x",
+      "action": "Export PNG at 1x actual dimensions",
+      "status": "tested-pass",
+      "details": "",
+      "observed": {
+        "filename": "die-silbermark.png",
+        "bytes": 4982623
+      },
+      "duration_seconds": 1.404
+    },
+    {
+      "id": "export-2x",
+      "action": "Export PNG at 2x actual dimensions",
+      "status": "tested-pass",
+      "details": "",
+      "observed": {
+        "filename": "die-silbermark-2x.png",
+        "bytes": 15463393
+      },
+      "duration_seconds": 7.434
+    },
+    {
+      "id": "new-starter",
+      "action": "New Starter creates seeded map",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 3.119
+    },
+    {
+      "id": "files-no-errors",
+      "action": "File actions have no JS/CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.005
+    },
+    {
+      "id": "autosave",
+      "action": "Title mutation produces local saved status",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.025
+    },
+    {
+      "id": "restore-offer",
+      "action": "Reload offers correct draft title",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.012
+    },
+    {
+      "id": "restore-escape",
+      "action": "Escape cannot accidentally discard restore decision",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.027
+    },
+    {
+      "id": "restore-yes",
+      "action": "Restore returns previous title/content",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        "JSHandle@<div id=\"app\" class=\"mm-app\" data-sheet=\"open\" data-tool=\"brush\" data-state=\"ready\">…</div>",
+        null
+      ],
+      "duration_seconds": 1.048
+    },
+    {
+      "id": "restore-no",
+      "action": "Choose fresh Starter instead of restored draft",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        "JSHandle@<div id=\"app\" class=\"mm-app\" data-sheet=\"open\" data-tool=\"brush\" data-state=\"ready\">…</div>",
+        null
+      ],
+      "duration_seconds": 3.12
+    },
+    {
+      "id": "restore-no-errors",
+      "action": "Restore actions have no JS/CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.006
+    },
+    {
+      "id": "new-unsaved-safety",
+      "action": "Protect existing unique edits when replacing map without a file backup",
+      "status": "tested-pass",
+      "details": "The New Map dialog explicitly warns that the current map is replaced and Undo cleared, and tells the user to save a file first. Confirmed Empty replacement clears content/history and subsequently updates the sole browser draft; this is warned, intentional behavior.",
+      "observed": {
+        "old_unique_present": false,
+        "canUndo": false,
+        "openDialogs": 0,
+        "beforeHadUnsavedFile": true
+      },
+      "screenshot": "destructive-new-dialog.png"
+    },
+    {
+      "id": "mobile-initial",
+      "action": "390px fresh map opens without overflow",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.053
+    },
+    {
+      "id": "mobile-sheet-tool",
+      "action": "Open/close tool bottom sheet",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.304
+    },
+    {
+      "id": "mobile-sheet-layers",
+      "action": "Open/close layers bottom sheet",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.166
+    },
+    {
+      "id": "mobile-sheet-places",
+      "action": "Open/close places bottom sheet",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.198
+    },
+    {
+      "id": "mobile-tool-pan",
+      "action": "Tap pan tool at 390px",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.134
+    },
+    {
+      "id": "mobile-tool-brush",
+      "action": "Tap brush tool at 390px",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.133
+    },
+    {
+      "id": "mobile-tool-eraser",
+      "action": "Tap eraser tool at 390px",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.139
+    },
+    {
+      "id": "mobile-tool-stamp",
+      "action": "Tap stamp tool at 390px",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.118
+    },
+    {
+      "id": "mobile-tool-label",
+      "action": "Tap label tool at 390px",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.132
+    },
+    {
+      "id": "mobile-tool-select",
+      "action": "Tap select tool at 390px",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.137
+    },
+    {
+      "id": "mobile-paint-tap",
+      "action": "Touchscreen tap paints with chosen brush",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.347
+    },
+    {
+      "id": "mobile-undo",
+      "action": "Mobile Undo restores tap pixels",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.234
+    },
+    {
+      "id": "mobile-stamp",
+      "action": "Touchscreen tap places symbol",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.124
+    },
+    {
+      "id": "mobile-place",
+      "action": "Touchscreen tap creates editable place sheet",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.242
+    },
+    {
+      "id": "mobile-place-navigate",
+      "action": "Mobile Places entry opens inspector",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.006
+    },
+    {
+      "id": "mobile-help",
+      "action": "Mobile Help opens and closes",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.247
+    },
+    {
+      "id": "mobile-file-dialog",
+      "action": "Mobile File menu can open/cancel export",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.284
+    },
+    {
+      "id": "mobile-pinch",
+      "action": "Two-finger browser-level touch pinch increases zoom",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.221
+    },
+    {
+      "id": "mobile-no-errors",
+      "action": "Mobile actions have no JS/CSP errors",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.011
+    },
+    {
+      "id": "autosave-unavailable",
+      "action": "Blocked IndexedDB shows unavailable status while tools still work",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.379
+    },
+    {
+      "id": "manual-save-without-idb",
+      "action": "Manual JSON backup remains usable without IndexedDB",
+      "status": "tested-pass",
+      "details": "",
+      "observed": "/home/admin/projects/roll-drauf-vtt/docs/proofs/mapmaker-dao-2026-10-24/actions/no-idb.rdmap.json",
+      "duration_seconds": 0.739
+    },
+    {
+      "id": "autosave-quota-failure",
+      "action": "Quota failure displays explicit recovery guidance",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 4.763
+    },
+    {
+      "id": "manual-save-after-quota",
+      "action": "Manual JSON backup remains usable after quota failure",
+      "status": "tested-pass",
+      "details": "",
+      "observed": "/home/admin/projects/roll-drauf-vtt/docs/proofs/mapmaker-dao-2026-10-24/actions/quota-backup.rdmap.json",
+      "duration_seconds": 0.483
+    },
+    {
+      "id": "label-and-stamp-move-cancel",
+      "action": "Escape cancels live vector drag and restores exact position",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 1.0
+    },
+    {
+      "id": "label-move",
+      "action": "Drag a label to a new map position",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.504
+    },
+    {
+      "id": "layer-rename-blur",
+      "action": "Explicit rename button supports committing on blur",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.622
+    },
+    {
+      "id": "hidden-layer-paint-guard",
+      "action": "Hidden raster refuses paint and explains recovery",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.099
+    },
+    {
+      "id": "missing-layer-stamp-guard",
+      "action": "Missing symbol layer refuses stamp and explains adding layer",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.076
+    },
+    {
+      "id": "last-layer-delete-guard",
+      "action": "Last remaining layer cannot be deleted",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.054
+    },
+    {
+      "id": "export-error-recovery",
+      "action": "Failed PNG encoding gives inline error and retry/cancel controls",
+      "status": "tested-pass",
+      "details": "",
+      "duration_seconds": 0.789
+    },
+    {
+      "id": "export-error-cancel",
+      "action": "Cancel closes failed export dialog",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null
+      ],
+      "duration_seconds": 0.105
+    },
+    {
+      "id": "save-error-dialog",
+      "action": "Failed JSON raster encoding opens readable error dialog",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.477
+    },
+    {
+      "id": "item-count-limit",
+      "action": "2000-item cap refuses additional stamp with feedback",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        null,
+        null
+      ],
+      "duration_seconds": 0.675
+    },
+    {
+      "id": "startup-fatal-ui",
+      "action": "Failure during editor initialization exposes error and Reload action",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        "JSHandle@<div id=\"app\" class=\"mm-app\" data-tool=\"brush\" data-state=\"error\" data-sheet=\"closed\">…</div>",
+        null,
+        null
+      ],
+      "duration_seconds": 0.189
+    },
+    {
+      "id": "startup-reload",
+      "action": "Reload after transient initialization failure restores usable map",
+      "status": "tested-pass",
+      "details": "",
+      "observed": [
+        null,
+        "JSHandle@<div id=\"app\" class=\"mm-app\" data-sheet=\"open\" data-tool=\"brush\" data-state=\"ready\">…</div>",
+        null
+      ],
+      "duration_seconds": 4.176
+    },
+    {
+      "id": "physical-stylus",
+      "action": "Operate with a real pressure-sensitive stylus and hardware palm rejection",
+      "status": "blocked",
+      "details": "No physical input device is attached; DOM pen events and CDP touch do not establish hardware behavior."
+    },
+    {
+      "id": "alternate-browsers",
+      "action": "Run action inventory in Safari/WebKit and Firefox",
+      "status": "not-tested",
+      "details": "This independent action pass uses installed Chromium 150 only; no cross-browser claim."
+    },
+    {
+      "id": "mobile-place-visible-navigation",
+      "action": "Places selection keeps chosen marker visible above the mobile inspector sheet",
+      "status": "tested-fail",
+      "severity": "medium",
+      "finding_id": "V3",
+      "details": "Independent visual reviewer and parent confirmed Places → Hohenfurt centers its marker behind the open bottom sheet at 390px, 320px and 667px. Selection-state assertions pass; actual visibility/navigation fails. See sibling visual review report for repro/screenshots.",
+      "evidence_owner": "parent/visual review"
+    }
+  ],
+  "source_sha256": {
+    "vtt/static/mapmaker/mapmaker.css": "b93d5e3958552ef77f4b232a81a4849a8179c3a897159db9e4cee77a5695de97",
+    "vtt/static/mapmaker/index.html": "f501fb0675c5ebd65da05a02748698e407af4a4e4146bee1317843b9a3249414",
+    "vtt/static/mapmaker/js/storage.js": "47655cb25ac48a1913797b74ee64b778113d96ddbe285ecf55e4ccce8d745794",
+    "vtt/static/mapmaker/js/app.js": "80e451e080065ae574af5a65b90bc8e576f25ee5d46d0158e103f0c46f44bfe8",
+    "vtt/static/mapmaker/js/starter.js": "0518f6fef05df918ec216bcddf90fb4d8862aa41798197acaa43a49ba5b45b13",
+    "vtt/static/mapmaker/js/document.js": "d330485fab896af9049206e4f61ed34dece600229bfdbfb07d063d0b2d8a7983",
+    "vtt/static/mapmaker/js/render.js": "c6e2624284ab4ccaed44676ac9a05b8a602f481e454763824afe03ae43ccac07",
+    "vtt/static/mapmaker/js/history.js": "d43567c8cffe13a6789e2b7a4f7bf76c806bf4f183dc96b75a42b9bcada66e82",
+    "vtt/static/mapmaker/js/stamps.js": "89e00c31d5ab57d9d0602b1267bb6bea4c806701566211f22bde77f91fb0966d",
+    "vtt/static/mapmaker/js/ui.js": "e76ec14081c1e4b0782460e6544946bfeee8ff7c3a2aae5980364d0e0c925bcb",
+    "vtt/static/mapmaker/js/tools.js": "304c5305e202466fb275b2654696e9f5e99e90c39129999059fe46db7b2e20c2",
+    "vtt/static/mapmaker/js/brush.js": "d67c03d7ee9863e17c485829ef4e11bfff08709b647340c72e41bf8ebdc54d0f"
+  },
+  "source_unchanged_at_completion": false,
+  "source_hash_differences": [
+    "vtt/static/mapmaker/mapmaker.css",
+    "vtt/static/mapmaker/index.html"
+  ],
+  "static_controls": [
+    {
+      "tag": "input",
+      "id": "mapTitle",
+      "type": "text",
+      "maxlength": "80",
+      "autocomplete": "off",
+      "spellcheck": "false",
+      "value": ""
+    },
+    {
+      "tag": "button",
+      "id": "undoBtn",
+      "class": "mm-icon-btn",
+      "type": "button",
+      "title": "Rückgängig (Strg+Z)",
+      "aria-label": "Rückgängig",
+      "disabled": null
+    },
+    {
+      "tag": "button",
+      "id": "redoBtn",
+      "class": "mm-icon-btn",
+      "type": "button",
+      "title": "Wiederholen (Strg+Umschalt+Z)",
+      "aria-label": "Wiederholen",
+      "disabled": null
+    },
+    {
+      "tag": "button",
+      "id": "fileMenuBtn",
+      "class": "mm-btn",
+      "type": "button",
+      "aria-haspopup": "true",
+      "aria-expanded": "false",
+      "aria-controls": "fileMenuList"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "id": "newBtn"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "id": "openBtn"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "id": "saveBtn"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "id": "exportBtn"
+    },
+    {
+      "tag": "button",
+      "id": "helpBtn",
+      "class": "mm-icon-btn",
+      "type": "button",
+      "title": "Tastenkürzel und Hilfe",
+      "aria-label": "Hilfe"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "pan",
+      "aria-pressed": "false",
+      "title": "Bewegen (H, Leertaste halten)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "brush",
+      "aria-pressed": "true",
+      "title": "Pinsel (B)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "eraser",
+      "aria-pressed": "false",
+      "title": "Radierer (E)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "stamp",
+      "aria-pressed": "false",
+      "title": "Stempel – Symbole setzen (S)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "label",
+      "aria-pressed": "false",
+      "title": "Ort oder Beschriftung setzen (T)"
+    },
+    {
+      "tag": "button",
+      "class": "mm-tool",
+      "type": "button",
+      "data-tool": "select",
+      "aria-pressed": "false",
+      "title": "Auswählen und verschieben (V)"
+    },
+    {
+      "tag": "button",
+      "id": "zoomOut",
+      "type": "button",
+      "class": "mm-icon-btn",
+      "aria-label": "Verkleinern",
+      "title": "Verkleinern (−)"
+    },
+    {
+      "tag": "button",
+      "id": "zoomIn",
+      "type": "button",
+      "class": "mm-icon-btn",
+      "aria-label": "Vergrößern",
+      "title": "Vergrößern (+)"
+    },
+    {
+      "tag": "button",
+      "id": "zoomFit",
+      "type": "button",
+      "class": "mm-btn mm-btn-small",
+      "title": "Ganze Karte zeigen (F)"
+    },
+    {
+      "tag": "button",
+      "id": "reloadBtn",
+      "class": "mm-btn",
+      "type": "button",
+      "hidden": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "role": "tab",
+      "id": "tab-tool",
+      "data-pane": "tool",
+      "aria-controls": "pane-tool",
+      "aria-selected": "true"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "role": "tab",
+      "id": "tab-layers",
+      "data-pane": "layers",
+      "aria-controls": "pane-layers",
+      "aria-selected": "false",
+      "tabindex": "-1"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "role": "tab",
+      "id": "tab-places",
+      "data-pane": "places",
+      "aria-controls": "pane-places",
+      "aria-selected": "false",
+      "tabindex": "-1"
+    },
+    {
+      "tag": "button",
+      "id": "selDeselect",
+      "type": "button",
+      "class": "mm-link"
+    },
+    {
+      "tag": "input",
+      "id": "selStampSize",
+      "type": "range",
+      "min": "16",
+      "max": "320",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "selStampRot",
+      "type": "range",
+      "min": "-180",
+      "max": "180",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "selStampFlip",
+      "type": "checkbox"
+    },
+    {
+      "tag": "input",
+      "id": "selText",
+      "type": "text",
+      "maxlength": "80",
+      "autocomplete": "off"
+    },
+    {
+      "tag": "select",
+      "id": "selStyle"
+    },
+    {
+      "tag": "input",
+      "id": "selColor",
+      "type": "color"
+    },
+    {
+      "tag": "input",
+      "id": "selSize",
+      "type": "range",
+      "min": "8",
+      "max": "200",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "selRot",
+      "type": "range",
+      "min": "-180",
+      "max": "180",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "selPin",
+      "type": "checkbox"
+    },
+    {
+      "tag": "select",
+      "id": "selKind"
+    },
+    {
+      "tag": "textarea",
+      "id": "selLore",
+      "rows": "4",
+      "maxlength": "500",
+      "placeholder": "Was macht diesen Ort besonders?"
+    },
+    {
+      "tag": "button",
+      "id": "selDelete",
+      "type": "button",
+      "class": "mm-btn mm-btn-danger"
+    },
+    {
+      "tag": "input",
+      "id": "brushSize",
+      "type": "range",
+      "min": "2",
+      "max": "400",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "brushOpacity",
+      "type": "range",
+      "min": "1",
+      "max": "100",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "brushSoftness",
+      "type": "range",
+      "min": "0",
+      "max": "100",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "brushPressure",
+      "type": "checkbox",
+      "checked": null
+    },
+    {
+      "tag": "input",
+      "id": "stampSize",
+      "type": "range",
+      "min": "16",
+      "max": "320",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "stampRot",
+      "type": "range",
+      "min": "-180",
+      "max": "180",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "stampFlip",
+      "type": "checkbox"
+    },
+    {
+      "tag": "input",
+      "id": "stampVary",
+      "type": "checkbox",
+      "checked": null
+    },
+    {
+      "tag": "input",
+      "id": "stampScatter",
+      "type": "checkbox"
+    },
+    {
+      "tag": "select",
+      "id": "labelStyle"
+    },
+    {
+      "tag": "select",
+      "id": "labelKind"
+    },
+    {
+      "tag": "input",
+      "id": "labelPin",
+      "type": "checkbox",
+      "checked": null
+    },
+    {
+      "tag": "input",
+      "id": "layerOpacity",
+      "type": "range",
+      "min": "0",
+      "max": "100",
+      "step": "1"
+    },
+    {
+      "tag": "input",
+      "id": "layerCoast",
+      "type": "checkbox"
+    },
+    {
+      "tag": "button",
+      "id": "addRaster",
+      "type": "button",
+      "class": "mm-btn mm-btn-small"
+    },
+    {
+      "tag": "button",
+      "id": "addStamps",
+      "type": "button",
+      "class": "mm-btn mm-btn-small"
+    },
+    {
+      "tag": "button",
+      "id": "addLabels",
+      "type": "button",
+      "class": "mm-btn mm-btn-small"
+    },
+    {
+      "tag": "button",
+      "id": "addPlaceBtn",
+      "type": "button",
+      "class": "mm-btn mm-btn-small"
+    },
+    {
+      "tag": "button",
+      "id": "restoreNo",
+      "type": "button",
+      "class": "mm-btn"
+    },
+    {
+      "tag": "button",
+      "id": "restoreYes",
+      "type": "button",
+      "class": "mm-btn mm-btn-primary"
+    },
+    {
+      "tag": "button",
+      "id": "newStarter",
+      "type": "button",
+      "class": "mm-choice"
+    },
+    {
+      "tag": "button",
+      "id": "newEmpty",
+      "type": "button",
+      "class": "mm-choice"
+    },
+    {
+      "tag": "button",
+      "id": "newCancel",
+      "type": "button",
+      "class": "mm-btn"
+    },
+    {
+      "tag": "input",
+      "type": "radio",
+      "name": "exportScale",
+      "value": "1",
+      "checked": null
+    },
+    {
+      "tag": "input",
+      "type": "radio",
+      "name": "exportScale",
+      "value": "2"
+    },
+    {
+      "tag": "button",
+      "id": "exportCancel",
+      "type": "button",
+      "class": "mm-btn"
+    },
+    {
+      "tag": "button",
+      "id": "exportGo",
+      "type": "button",
+      "class": "mm-btn mm-btn-primary"
+    },
+    {
+      "tag": "button",
+      "id": "errorClose",
+      "type": "button",
+      "class": "mm-btn mm-btn-primary"
+    },
+    {
+      "tag": "button",
+      "id": "helpClose",
+      "type": "button",
+      "class": "mm-btn mm-btn-primary"
+    },
+    {
+      "tag": "input",
+      "type": "file",
+      "id": "fileInput",
+      "accept": ".json,application/json",
+      "hidden": null
+    }
+  ],
+  "raw_runs": [
+    "matrix-initial.json",
+    "matrix-recheck.json",
+    "matrix-startup-recheck.json"
+  ],
+  "methodology": "Fresh browser context per scenario, actual CSP from Flask source, independent real-browser UI/pixel/download assertions. DOM PointerEvent used only for exposing pressure settings; mobile touch and pinch use browser input. Visible controls and documented shortcuts inventoried; no claim of exhaustive input combinations."
+}

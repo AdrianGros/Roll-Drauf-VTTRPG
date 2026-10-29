@@ -1,0 +1,260 @@
+{
+  "protocol": "Turtonia",
+  "mode": "Chromium + Playwright, visible map-editor UI",
+  "steps": [
+    {
+      "name": "Editor loaded",
+      "detail": "screenshots/01-initial-editor.png",
+      "elapsed_s": 5.7
+    },
+    {
+      "name": "Blank map opened",
+      "detail": "screenshots/02-blank.png",
+      "elapsed_s": 7.0
+    },
+    {
+      "name": "Mainland, eastern peninsula, and southern island painted",
+      "detail": "screenshots/03-land.png",
+      "elapsed_s": 32.6
+    },
+    {
+      "name": "Forest and mountain-ground textures painted",
+      "detail": "screenshots/04-terrain.png",
+      "elapsed_s": 47.8
+    },
+    {
+      "name": "River and roads painted",
+      "detail": "screenshots/05-river-road.png",
+      "elapsed_s": 56.0
+    },
+    {
+      "name": "Mountain arcs and volcanoes stamped",
+      "detail": "screenshots/06-mountains.png",
+      "elapsed_s": 65.9
+    },
+    {
+      "name": "Forests and settlements stamped",
+      "detail": "screenshots/07-symbols.png",
+      "elapsed_s": 80.7
+    },
+    {
+      "name": "Named places and lore added",
+      "detail": "screenshots/08-authored-editor.png",
+      "elapsed_s": 88.1
+    },
+    {
+      "name": "Editable project downloaded and structurally checked",
+      "detail": {
+        "title": "Turtonia – Protokollkarte",
+        "places": [
+          "Sroth",
+          "Aladia",
+          "Toldonar",
+          "Dorum",
+          "Porta Yolle",
+          "Kointavia"
+        ],
+        "stamps": 98,
+        "layers": [
+          "Land",
+          "Gelände",
+          "Flüsse & Wege",
+          "Symbole",
+          "Beschriftung"
+        ]
+      },
+      "elapsed_s": 89.2
+    },
+    {
+      "name": "PNG exported",
+      "detail": {
+        "size": [
+          2400,
+          1600
+        ],
+        "sha256": "d8bc00add4c337ecb8196be78f77a2a36c0ad838736acf4a88cb92d1b24a30cb"
+      },
+      "elapsed_s": 90.7
+    },
+    {
+      "name": "Fresh-browser reopen preserves places and lore",
+      "detail": "screenshots/09-reopened.png",
+      "elapsed_s": 97.3
+    },
+    {
+      "name": "Second download preserves every layer and object",
+      "detail": "Raster PNGs and item data match the first editable download",
+      "elapsed_s": 98.5
+    }
+  ],
+  "friction": [
+    {
+      "name": "Preview-only access",
+      "evidence": "The currently deployed VTT container does not serve this uncommitted map editor",
+      "workaround": "Use the local map editor preview with the VTT CSP; keep production untouched",
+      "severity": "low"
+    },
+    {
+      "name": "Reference legibility",
+      "evidence": "The reference is a phone screenshot with toolbar overlays and partly illegible place names",
+      "workaround": "Match the visible geography and readable names; record approximations",
+      "severity": "low"
+    },
+    {
+      "name": "Root-only test environment",
+      "evidence": "The prepared Playwright virtualenv is inside a root-only temporary directory",
+      "workaround": "Run the browser journey as root and restore admin ownership on proof artifacts afterward",
+      "severity": "low"
+    },
+    {
+      "name": "Proof-file permissions",
+      "evidence": "Files created in the root-run proof directory inherit root ownership and a restrictive umask",
+      "workaround": "Restore admin ownership and readable modes after the run",
+      "severity": "low"
+    },
+    {
+      "name": "Stamp variation default",
+      "evidence": "The stamp tool starts with slight random size/rotation variation enabled",
+      "workaround": "Turn it off in the visible controls for a repeatable reference journey",
+      "severity": "low"
+    },
+    {
+      "name": "Starter-map entry",
+      "evidence": "The editor first opens Die Silbermark rather than a blank canvas",
+      "workaround": "Use Datei → Neue Karte → Leere Karte before authoring",
+      "severity": "low"
+    },
+    {
+      "name": "Imprecise slider",
+      "evidence": "#brushSize: requested 180, first click got 170.0",
+      "workaround": "Adjust with the keyboard after the pointer click",
+      "severity": "low"
+    },
+    {
+      "name": "Large landmass by hand",
+      "evidence": "The visible brush tops out at 400 map pixels, so a continent outline needs many overlapping strokes and cleanup",
+      "workaround": "Use broad strokes, then smaller coastal strokes and eraser cuts",
+      "severity": "low"
+    },
+    {
+      "name": "Imprecise slider",
+      "evidence": "#brushSize: requested 290, first click got 240.0",
+      "workaround": "Adjust with the keyboard after the pointer click",
+      "severity": "low"
+    },
+    {
+      "name": "Manual material targets",
+      "evidence": "Forest and rock material selection does not reliably choose a terrain layer",
+      "workaround": "Use the Layers tab to set Gelände before each material",
+      "severity": "low"
+    },
+    {
+      "name": "Raster river/road editing",
+      "evidence": "Fluss and Weg become raster paint; individual bends cannot be selected as path objects",
+      "workaround": "Keep river/road work on its dedicated layer and use Undo or eraser for corrections",
+      "severity": "low"
+    },
+    {
+      "name": "Imprecise slider",
+      "evidence": "#stampSize: requested 119, first click got 88.0",
+      "workaround": "Adjust with the keyboard after the pointer click",
+      "severity": "low"
+    },
+    {
+      "name": "Imprecise slider",
+      "evidence": "#stampSize: requested 114, first click got 88.0",
+      "workaround": "Adjust with the keyboard after the pointer click",
+      "severity": "low"
+    },
+    {
+      "name": "Imprecise slider",
+      "evidence": "#stampSize: requested 68, first click got 88.0",
+      "workaround": "Adjust with the keyboard after the pointer click",
+      "severity": "low"
+    },
+    {
+      "name": "Imprecise slider",
+      "evidence": "#stampSize: requested 102, first click got 88.0",
+      "workaround": "Adjust with the keyboard after the pointer click",
+      "severity": "low"
+    },
+    {
+      "name": "Imprecise slider",
+      "evidence": "#stampSize: requested 75, first click got 88.0",
+      "workaround": "Adjust with the keyboard after the pointer click",
+      "severity": "low"
+    },
+    {
+      "name": "Imprecise slider",
+      "evidence": "#stampSize: requested 74, first click got 88.0",
+      "workaround": "Adjust with the keyboard after the pointer click",
+      "severity": "low"
+    },
+    {
+      "name": "Symbol-by-symbol terrain",
+      "evidence": "Mountain ranges and forests require many individual stamp placements to resemble the dense reference",
+      "workaround": "Use repeatable seeded placement coordinates and the curated Kenney palette",
+      "severity": "low"
+    },
+    {
+      "name": "Unlinked town icons and places",
+      "evidence": "Settlement symbols and named places are separate objects positioned by eye",
+      "workaround": "Use fixed coordinates for both and inspect the exported image",
+      "severity": "low"
+    },
+    {
+      "name": "Separate file and painted titles",
+      "evidence": "The project title in the header does not draw a title onto the map",
+      "workaround": "Place TURTONIA as a separate text label",
+      "severity": "low"
+    },
+    {
+      "name": "Two export formats",
+      "evidence": "The PNG is a flattened image; editable layers, place data, and lore stay in the separate .rdmap.json download",
+      "workaround": "Save both files and explicitly test reopening the project",
+      "severity": "low"
+    },
+    {
+      "name": "Asynchronous import state",
+      "evidence": "An initial check of hidden loading overlay ran before the file import had begun, causing a false failure",
+      "workaround": "Wait for the imported title and lore in a fresh context",
+      "severity": "low"
+    },
+    {
+      "name": "Crowded symbol/label placement",
+      "evidence": "Mountain stamps and several names overlap in the exported image; the editor does not avoid collisions",
+      "workaround": "Record the screenshot for manual cartographic refinement",
+      "severity": "medium"
+    }
+  ],
+  "errors": [],
+  "preview": "local static editor with current VTT Content-Security-Policy",
+  "document": {
+    "title": "Turtonia – Protokollkarte",
+    "places": [
+      "Sroth",
+      "Aladia",
+      "Toldonar",
+      "Dorum",
+      "Porta Yolle",
+      "Kointavia"
+    ],
+    "stamps": 98,
+    "layers": [
+      "Land",
+      "Gelände",
+      "Flüsse & Wege",
+      "Symbole",
+      "Beschriftung"
+    ]
+  },
+  "png": {
+    "size": [
+      2400,
+      1600
+    ],
+    "sha256": "d8bc00add4c337ecb8196be78f77a2a36c0ad838736acf4a88cb92d1b24a30cb"
+  },
+  "status": "passed",
+  "duration_s": 99.1
+}

@@ -1,0 +1,47 @@
+{
+  "timestamp_utc": "2026-10-24T16:40:51.533544+00:00",
+  "installation": "complete",
+  "android_release": "15",
+  "api": 35,
+  "architecture": "x86_64",
+  "emulator_version": "37.2.12.0",
+  "platform_tools_version": "37.0.1",
+  "sdk_root": "/opt/roll-drauf-android/sdk",
+  "avd_name": "RollDrauf_API35",
+  "avd_directory": "/home/admin/.local/share/roll-drauf-android/avd/RollDrauf_API35.avd",
+  "phone_screen_pixels": [
+    780,
+    1688
+  ],
+  "density_dpi": 320,
+  "memory_mb": 3072,
+  "virtual_cpu_count": 2,
+  "hardware_acceleration_available": false,
+  "host_kvm_device": false,
+  "cpu_vmx_svm_exposed": false,
+  "graphics": "SwiftShader",
+  "software_vm_kernel_and_adb_verified": true,
+  "device_properties": {
+    "sys.boot_completed": "",
+    "ro.build.version.release": "15",
+    "ro.build.version.sdk": "35",
+    "ro.product.model": "sdk_gphone64_x86_64"
+  },
+  "bundled_chrome_version": "124.0.6367.219",
+  "software_boot_complete": false,
+  "observed_zygote_restarts_seconds": [
+    1179,
+    1556
+  ],
+  "chrome_launch_result": "implicit intent unresolved; explicit component launch failed with activity Broken pipe (32)",
+  "android_browser_mapmaker_loaded": false,
+  "android_mobile_view_verified": false,
+  "penetration_testing_executed": false,
+  "native_boot_screenshot": "android-boot.png (black; not a mapmaker screenshot)",
+  "vm_stopped": true,
+  "software_vm_elapsed_seconds": 1679,
+  "management_ports_during_run": "127.0.0.1 / ::1 only",
+  "next_step": "Expose usable KVM/nested virtualization or run the installed AVD on a KVM-capable host; repeat actual Android browser validation.",
+  "preexisting_repo_files_checked": 1698,
+  "preexisting_repo_files_changed": []
+}

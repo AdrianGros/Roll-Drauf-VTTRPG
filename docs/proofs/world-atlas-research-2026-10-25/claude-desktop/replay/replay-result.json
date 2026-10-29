@@ -1,0 +1,69 @@
+{
+ "url": "http://127.0.0.1:8765/mapmaker/",
+ "checks": {
+  "blank_map_created": {
+   "pass": true,
+   "detail": ""
+  },
+  "land_targets_land_layer": {
+   "pass": true,
+   "detail": "Malt auf: Land"
+  },
+  "D1_forest_material_still_targets_land_layer": {
+   "pass": true,
+   "detail": "Malt auf: Land"
+  },
+  "rivers_layer_targeted_after_row_click": {
+   "pass": true,
+   "detail": "Malt auf: Flüsse & Wege"
+  },
+  "typing_title_does_not_switch_tool": {
+   "pass": true,
+   "detail": ""
+  },
+  "overlap_click_picks_label_not_stamp": {
+   "pass": true,
+   "detail": "Werkzeug|Ebenen|Orte|Ort|Fertig"
+  },
+  "filenames_follow_project_title": {
+   "pass": true,
+   "detail": "rp-das-tarnland.rdmap.json rp-das-tarnland.png"
+  },
+  "json_lore_retained": {
+   "pass": true,
+   "detail": "[\"Br\\u00fcckenfeste\", \"Eisenwacht\", \"Grauhain\"]"
+  },
+  "json_painted_title_separate_from_meta_title": {
+   "pass": true,
+   "detail": ""
+  },
+  "D2_space_drag_after_tool_click_creates_stroke": {
+   "pass": true,
+   "detail": "['Rückgängig: Pinselstrich']"
+  },
+  "D3_open_replaces_unsaved_without_prompt": {
+   "pass": true,
+   "detail": ""
+  },
+  "D5_layer_dblclick_rename_no_input": {
+   "pass": true,
+   "detail": ""
+  },
+  "D4_restore_dialog_default_focus_is_new_starter": {
+   "pass": true,
+   "detail": "Neue Startkarte"
+  },
+  "reopen_new_context_places_and_lore": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "artifacts": {
+  "rp-das-tarnland.rdmap.json": "fa57ecdea6a36b699e6a78f3782e387def3dc0f2268171038c5c7b33b42d0953",
+  "rp-das-tarnland.png": "49fdae3310ff7dd3b79364e1265b36dc6f00543dbc0f3c7a3d3ad095d29331d0"
+ },
+ "summary": {
+  "pass": 14,
+  "total": 14
+ }
+}

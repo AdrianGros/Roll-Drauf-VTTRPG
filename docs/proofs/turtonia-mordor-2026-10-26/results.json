@@ -1,0 +1,160 @@
+{
+  "protocol": "Turtonia — Mordor-inspired ash basin",
+  "mode": "Chromium + Playwright, visible editor UI",
+  "inspiration": "volcanic basin, encircling ranges, ash plains, marsh frontier; original Turtonia place names",
+  "steps": [
+    {
+      "name": "Editor ready",
+      "detail": "screenshots/01-editor.png",
+      "elapsed_s": 7.8
+    },
+    {
+      "name": "Blank map and title",
+      "detail": "screenshots/02-blank.png",
+      "elapsed_s": 9.6
+    },
+    {
+      "name": "Mainland, volcanic peninsula, and southern islet",
+      "detail": "screenshots/03-land.png",
+      "elapsed_s": 39.1
+    },
+    {
+      "name": "Ash basin, mountain ground, marsh frontier",
+      "detail": "screenshots/04-terrain.png",
+      "elapsed_s": 58.7
+    },
+    {
+      "name": "Roads and frontier waterway",
+      "detail": "screenshots/05-paths.png",
+      "elapsed_s": 69.0
+    },
+    {
+      "name": "Encircling ridges, crags, twin volcanoes",
+      "detail": "screenshots/06-ridges.png",
+      "elapsed_s": 77.6
+    },
+    {
+      "name": "Ruins, warning marks, and frontier trees",
+      "detail": "screenshots/07-symbols.png",
+      "elapsed_s": 83.4
+    },
+    {
+      "name": "Six linked places with lore and map labels",
+      "detail": "screenshots/08-authored.png",
+      "elapsed_s": 92.5
+    },
+    {
+      "name": "Editable project saved",
+      "detail": {
+        "title": "Turtonia – Die Aschenmark",
+        "places": [
+          "Sroth",
+          "Aladia",
+          "Toldonar",
+          "Dorum",
+          "Porta Yolle",
+          "Kointavia"
+        ],
+        "stamps": 108,
+        "linked_place_symbols": 6,
+        "layers": [
+          "Land",
+          "Gelände",
+          "Flüsse & Wege",
+          "Symbole",
+          "Beschriftung"
+        ]
+      },
+      "elapsed_s": 93.3
+    },
+    {
+      "name": "PNG exported",
+      "detail": {
+        "size": [
+          2400,
+          1600
+        ],
+        "sha256": "17807efa196512477f61a9410cd571f89841d92acdd1c632716262a3257d6c07"
+      },
+      "elapsed_s": 94.9
+    },
+    {
+      "name": "Fresh-browser place and symbol inspection",
+      "detail": "screenshots/09-reopened.png",
+      "elapsed_s": 103.6
+    },
+    {
+      "name": "Editable map roundtrip passed",
+      "detail": "All layer PNGs, items, and linked place symbols match",
+      "elapsed_s": 104.5
+    }
+  ],
+  "friction": [
+    {
+      "name": "Starter-map entry",
+      "evidence": "A blank authoring journey requires Datei → Neue Karte → Leere Karte after the starter opens",
+      "workaround": "Use the explicit blank-map choice",
+      "severity": "low"
+    },
+    {
+      "name": "Large landmass by hand",
+      "evidence": "The 400 px brush still needs many broad passes and coastal corrections",
+      "workaround": "Use several sizes and the eraser",
+      "severity": "low"
+    },
+    {
+      "name": "Raster paths",
+      "evidence": "Roads and waterways are still paint strokes, so a bend cannot be selected and moved",
+      "workaround": "Keep them on Flüsse & Wege and use Undo/eraser",
+      "severity": "low"
+    },
+    {
+      "name": "Stamp variation default",
+      "evidence": "The stamp tool starts with random size and rotation enabled",
+      "workaround": "Turn it off for a reproducible map",
+      "severity": "low"
+    },
+    {
+      "name": "Painted title",
+      "evidence": "The project title and large TURTONIA map lettering are entered separately",
+      "workaround": "Add a decorative realm label",
+      "severity": "low"
+    },
+    {
+      "name": "Separate exports",
+      "evidence": "The PNG has no editable place lore; the rdmap file must also be retained",
+      "workaround": "Save both files",
+      "severity": "low"
+    }
+  ],
+  "errors": [],
+  "document": {
+    "title": "Turtonia – Die Aschenmark",
+    "places": [
+      "Sroth",
+      "Aladia",
+      "Toldonar",
+      "Dorum",
+      "Porta Yolle",
+      "Kointavia"
+    ],
+    "stamps": 108,
+    "linked_place_symbols": 6,
+    "layers": [
+      "Land",
+      "Gelände",
+      "Flüsse & Wege",
+      "Symbole",
+      "Beschriftung"
+    ]
+  },
+  "png": {
+    "size": [
+      2400,
+      1600
+    ],
+    "sha256": "17807efa196512477f61a9410cd571f89841d92acdd1c632716262a3257d6c07"
+  },
+  "status": "passed",
+  "duration_s": 105.5
+}

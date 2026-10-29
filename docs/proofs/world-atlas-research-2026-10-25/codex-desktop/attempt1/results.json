@@ -1,0 +1,114 @@
+{
+  "reviewer": "Codex",
+  "mode": "desktop UI after Claude",
+  "checks": [
+    {
+      "name": "Blank map through File menu",
+      "status": "pass",
+      "evidence": "screenshots/01-blank.png"
+    },
+    {
+      "name": "Six tools directly selectable",
+      "status": "pass",
+      "evidence": "One click on each labelled icon; aria-pressed reflects current tool"
+    },
+    {
+      "name": "Author land, forest, river and road",
+      "status": "pass",
+      "evidence": {
+        "screenshot": "screenshots/02-painted.png",
+        "note": "Explicitly choose appropriate raster layer; strokes are not editable path objects"
+      }
+    },
+    {
+      "name": "Erase then undo a raster edit",
+      "status": "pass",
+      "evidence": "Embedded raster PNG data in real downloaded files before erasing and after undo is identical"
+    },
+    {
+      "name": "Create and select mountain stamp",
+      "status": "pass",
+      "evidence": "screenshots/03-stamp-selected.png"
+    },
+    {
+      "name": "Update, delete and undo stamp",
+      "status": "pass",
+      "evidence": "Inspector size change, selection deletion, then Undo; file inspection follows"
+    },
+    {
+      "name": "Create three places, reselect and edit lore",
+      "status": "pass",
+      "evidence": "screenshots/04-three-places.png"
+    },
+    {
+      "name": "Delete in text input edits text, preserves object",
+      "status": "pass",
+      "evidence": "Native Delete removes first character; replace name and finish edit"
+    },
+    {
+      "name": "Delete place and restore with undo",
+      "status": "pass",
+      "evidence": "Final project checked for restored name and lore"
+    },
+    {
+      "name": "Layer name double-click opens rename",
+      "status": "fail",
+      "evidence": "screenshots/05-layer-doubleclick.png"
+    },
+    {
+      "name": "Explicit layer rename action works",
+      "status": "pass",
+      "evidence": "Beschriftung\nText\nSymbole\nSymbole\nFlüsse & Wege\nMalen\nGelände\nMalen\nLandbasis\nMalen"
+    },
+    {
+      "name": "Add, delete, undo layer",
+      "status": "pass",
+      "evidence": "Symbole 2"
+    }
+  ],
+  "geometry": [],
+  "errors": [],
+  "server": "Loopback stdlib preview with current application's Content-Security-Policy header",
+  "stamp_names": [
+    "Bergkette",
+    "Felsnadeln",
+    "Felsen",
+    "Tafelberg",
+    "Vulkan",
+    "See",
+    "Nadelwald",
+    "Tanne",
+    "Hohe Tanne",
+    "Laubbaum",
+    "Palme",
+    "Kaktus",
+    "Busch",
+    "Stadt",
+    "Dorf",
+    "Langhaus",
+    "Burg",
+    "Zitadelle",
+    "Tempel",
+    "Turm",
+    "Leuchtturm",
+    "Windmühle",
+    "Wassermühle",
+    "Ruinen",
+    "Mine",
+    "Friedhof",
+    "Lagerfeuer",
+    "Lager",
+    "Schiff",
+    "Brücke",
+    "Hängebrücke",
+    "Hafen",
+    "Brunnen",
+    "Wachturm",
+    "Gefahr",
+    "Windrose",
+    "Banner",
+    "Flagge",
+    "Windrose (einfach)",
+    "Ortsnadel"
+  ]
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "viewport": "desktop",
+    "state": "new",
+    "dialog": {
+      "x": 490,
+      "y": 334,
+      "w": 460,
+      "h": 332,
+      "clientW": 458,
+      "scrollW": 458,
+      "clientH": 330,
+      "scrollH": 330,
+      "scrollTop": 0,
+      "focus": "newStarter"
+    }
+  },
+  {
+    "viewport": "desktop",
+    "state": "import-error",
+    "dialog": {
+      "x": 511.875,
+      "y": 407.125,
+      "w": 416.234375,
+      "h": 185.75,
+      "clientW": 414,
+      "scrollW": 414,
+      "clientH": 184,
+      "scrollH": 184,
+      "scrollTop": 0,
+      "focus": "errorClose"
+    }
+  },
+  {
+    "viewport": "desktop",
+    "state": "restore",
+    "dialog": {
+      "x": 490,
+      "y": 402.5,
+      "w": 460,
+      "h": 195,
+      "clientW": 458,
+      "scrollW": 458,
+      "clientH": 193,
+      "scrollH": 193,
+      "scrollTop": 0,
+      "focus": "restoreNo"
+    },
+    "restored_title": "Visual recovery test"
+  },
+  {
+    "viewport": "smallphone",
+    "state": "new",
+    "dialog": {
+      "x": 12,
+      "y": 78,
+      "w": 296,
+      "h": 412,
+      "clientW": 294,
+      "scrollW": 294,
+      "clientH": 410,
+      "scrollH": 410,
+      "scrollTop": 0,
+      "focus": "newStarter"
+    }
+  },
+  {
+    "viewport": "smallphone",
+    "state": "import-error",
+    "dialog": {
+      "x": 12,
+      "y": 167.625,
+      "w": 296,
+      "h": 232.75,
+      "clientW": 294,
+      "scrollW": 294,
+      "clientH": 231,
+      "scrollH": 231,
+      "scrollTop": 0,
+      "focus": "errorClose"
+    }
+  },
+  {
+    "viewport": "smallphone",
+    "state": "restore",
+    "dialog": {
+      "x": 12,
+      "y": 155,
+      "w": 296,
+      "h": 258,
+      "clientW": 294,
+      "scrollW": 294,
+      "clientH": 256,
+      "scrollH": 256,
+      "scrollTop": 0,
+      "focus": "restoreNo"
+    },
+    "restored_title": "Visual recovery test"
+  }
+]

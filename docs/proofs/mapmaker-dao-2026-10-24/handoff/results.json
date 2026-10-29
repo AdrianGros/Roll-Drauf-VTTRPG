@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "test": "existing PNG export -> campaign upload -> asset preview -> map creation -> catalogue readback",
+  "database": "ephemeral in-memory SQLite",
+  "storage": "disposable temporary directory",
+  "png_source": "docs/proofs/mapmaker-2026-10-24/silbermark.png",
+  "png_sha256": "1a79a2734c74ee3dd1f78874b618869f55c9a2518b22bafe13410df1fbe45b46",
+  "size": [
+    2400,
+    1600
+  ],
+  "http_statuses": {
+    "upload": 201,
+    "preview": 200,
+    "create_map": 201,
+    "list_maps": 200
+  },
+  "preview_identical": true,
+  "campaign_ui_tested": false,
+  "limitation": "API integration proof; not an authenticated human-browser campaign upload journey. PNG flattens layers and lore."
+}

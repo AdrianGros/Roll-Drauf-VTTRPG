@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "name": "F2 Space-pan after tool focus",
+      "observation": {
+        "undo_before": false,
+        "undo_after": true,
+        "focus": {
+          "tag": "BUTTON",
+          "tool": "brush"
+        },
+        "undo_message": "Rückgängig: Pinselstrich",
+        "screenshot": "screenshots/edge-space-after-tool-click.png"
+      }
+    },
+    {
+      "name": "F2 control: Space-pan with canvas focus",
+      "observation": {
+        "undo_before": false,
+        "undo_after": false,
+        "screenshot": "screenshots/edge-space-canvas-focus.png"
+      }
+    },
+    {
+      "name": "F3 Material routing",
+      "observation": {
+        "Land": "Land",
+        "Wald": "Land",
+        "Fluss": "Land",
+        "raster_alpha_extrema": {
+          "Land": [
+            0,
+            230
+          ],
+          "Gelände": [
+            0,
+            0
+          ],
+          "Flüsse & Wege": [
+            0,
+            0
+          ]
+        },
+        "screenshot": "screenshots/edge-material-routing.png"
+      }
+    },
+    {
+      "name": "F5 Draft restore default and next autosave",
+      "observation": {
+        "focused": "restoreNo",
+        "old_restore": "„Codex Restorable Draft“ wurde zuletzt am 25.10.2026, 09:22 in diesem Browser gespeichert. Möchtest du daran weiterarbeiten?",
+        "title_after_enter": "Die Silbermark",
+        "next_restore": "„Codex New Starter“ wurde zuletzt am 25.10.2026, 09:22 in diesem Browser gespeichert. Möchtest du daran weiterarbeiten?",
+        "screenshots": [
+          "screenshots/edge-restore-discard-default.png",
+          "screenshots/edge-draft-replaced.png"
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

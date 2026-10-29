@@ -1,0 +1,937 @@
+{
+  "desktop": {
+    "layout": {
+      "vw": 1440,
+      "vh": 1000,
+      "docScrollWidth": 1440,
+      "bodyScrollWidth": 1440,
+      "topScrollWidth": 1440,
+      "topClientWidth": 1440,
+      "header": {
+        "#mapTitle": {
+          "x": 178.703125,
+          "y": 7.5,
+          "r": 598.703125,
+          "b": 43.5,
+          "w": 420,
+          "h": 36,
+          "inViewport": true
+        },
+        "#undoBtn": {
+          "x": 1036.6875,
+          "y": 8.5,
+          "r": 1070.6875,
+          "b": 42.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#redoBtn": {
+          "x": 1076.6875,
+          "y": 8.5,
+          "r": 1110.6875,
+          "b": 42.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#fileMenuBtn": {
+          "x": 1116.6875,
+          "y": 8.5,
+          "r": 1202.046875,
+          "b": 42.5,
+          "w": 85.359375,
+          "h": 34,
+          "inViewport": true
+        },
+        "#saveStatus": {
+          "x": 1208.046875,
+          "y": 12.703125,
+          "r": 1388,
+          "b": 38.296875,
+          "w": 179.953125,
+          "h": 25.59375,
+          "inViewport": true
+        },
+        "#helpBtn": {
+          "x": 1394,
+          "y": 8.5,
+          "r": 1428,
+          "b": 42.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        }
+      },
+      "brand": {
+        "x": 12,
+        "y": 11.46875,
+        "r": 166.703125,
+        "b": 39.515625,
+        "w": 154.703125,
+        "h": 28.046875,
+        "wordmark": true,
+        "subtitle": true,
+        "ornament": true
+      },
+      "titleWidth": 420,
+      "ornamentLoaded": true
+    },
+    "styles": {
+      "top": {
+        "background-color": "rgba(0, 0, 0, 0)",
+        "background-image": "linear-gradient(rgb(75, 35, 90) 0%, rgb(47, 22, 56) 100%)",
+        "color": "rgb(247, 239, 228)",
+        "border-bottom-color": "color(srgb 0.364627 0.250196 0.201725)"
+      },
+      "brandWord": {
+        "color": "rgb(247, 239, 228)",
+        "font-family": "Cinzel, Georgia, serif",
+        "font-size": "15px"
+      },
+      "brandSub": {
+        "color": "color(srgb 0.751765 0.643529 0.38902)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif",
+        "font-size": "10.5px"
+      },
+      "tools": {
+        "background-color": "rgb(47, 22, 56)"
+      },
+      "tool": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "toolPressed": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgb(248, 243, 233)",
+        "border-top-color": "rgb(168, 132, 44)"
+      },
+      "fileBtn": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(75, 35, 90)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "status": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "background-color": "color(srgb 0.968627 0.937255 0.894118 / 0.07)"
+      },
+      "panel": {
+        "background-color": "rgb(248, 243, 233)"
+      },
+      "tab": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "tabsBar": {
+        "background-color": "rgb(241, 233, 216)"
+      },
+      "tabSel": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgb(248, 243, 233)",
+        "border-bottom-color": "rgb(168, 132, 44)"
+      },
+      "hint": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Literata, Georgia, serif"
+      },
+      "h3": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Cinzel, Georgia, serif"
+      },
+      "target": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "primary": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(122, 46, 46)"
+      },
+      "body": {
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      }
+    },
+    "contrast": {
+      "tool label / rail": 9.1,
+      "pressed tool": 11.25,
+      "file button": 10.92,
+      "tab / tab bar": 5.87,
+      "selected tab": 11.25,
+      "hint / panel": 6.41,
+      "h3 / panel": 6.41,
+      "primary button": 8.16,
+      "brand word / rail": 14.25,
+      "brand sub / rail": 6.75,
+      "status / rail": 9.1
+    },
+    "focusOutline": {
+      "id": "helpBtn",
+      "outline": "solid 2px color(srgb 0.751765 0.643529 0.38902)"
+    },
+    "fileMenu": {
+      "x": 972.046875,
+      "r": 1202.046875,
+      "vw": 1440
+    },
+    "help": {
+      "dialog": {
+        "x": 340,
+        "r": 1100,
+        "w": 760
+      },
+      "dialogScrollWidth": 758,
+      "dialogClientWidth": 758,
+      "vw": 1440,
+      "docScrollWidth": 1440,
+      "issues": []
+    },
+    "errors": []
+  },
+  "tablet": {
+    "layout": {
+      "vw": 1024,
+      "vh": 768,
+      "docScrollWidth": 1024,
+      "bodyScrollWidth": 1024,
+      "topScrollWidth": 1024,
+      "topClientWidth": 1024,
+      "header": {
+        "#mapTitle": {
+          "x": 178.703125,
+          "y": 7.5,
+          "r": 598.703125,
+          "b": 43.5,
+          "w": 420,
+          "h": 36,
+          "inViewport": true
+        },
+        "#undoBtn": {
+          "x": 620.6875,
+          "y": 8.5,
+          "r": 654.6875,
+          "b": 42.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#redoBtn": {
+          "x": 660.6875,
+          "y": 8.5,
+          "r": 694.6875,
+          "b": 42.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#fileMenuBtn": {
+          "x": 700.6875,
+          "y": 8.5,
+          "r": 786.046875,
+          "b": 42.5,
+          "w": 85.359375,
+          "h": 34,
+          "inViewport": true
+        },
+        "#saveStatus": {
+          "x": 792.046875,
+          "y": 12.703125,
+          "r": 972,
+          "b": 38.296875,
+          "w": 179.953125,
+          "h": 25.59375,
+          "inViewport": true
+        },
+        "#helpBtn": {
+          "x": 978,
+          "y": 8.5,
+          "r": 1012,
+          "b": 42.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        }
+      },
+      "brand": {
+        "x": 12,
+        "y": 11.46875,
+        "r": 166.703125,
+        "b": 39.515625,
+        "w": 154.703125,
+        "h": 28.046875,
+        "wordmark": true,
+        "subtitle": true,
+        "ornament": true
+      },
+      "titleWidth": 420,
+      "ornamentLoaded": true
+    },
+    "styles": {
+      "top": {
+        "background-color": "rgba(0, 0, 0, 0)",
+        "background-image": "linear-gradient(rgb(75, 35, 90) 0%, rgb(47, 22, 56) 100%)",
+        "color": "rgb(247, 239, 228)",
+        "border-bottom-color": "color(srgb 0.364627 0.250196 0.201725)"
+      },
+      "brandWord": {
+        "color": "rgb(247, 239, 228)",
+        "font-family": "Cinzel, Georgia, serif",
+        "font-size": "15px"
+      },
+      "brandSub": {
+        "color": "color(srgb 0.751765 0.643529 0.38902)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif",
+        "font-size": "10.5px"
+      },
+      "tools": {
+        "background-color": "rgb(47, 22, 56)"
+      },
+      "tool": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "toolPressed": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgb(248, 243, 233)",
+        "border-top-color": "rgb(168, 132, 44)"
+      },
+      "fileBtn": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(75, 35, 90)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "status": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "background-color": "color(srgb 0.968627 0.937255 0.894118 / 0.07)"
+      },
+      "panel": {
+        "background-color": "rgb(248, 243, 233)"
+      },
+      "tab": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "tabsBar": {
+        "background-color": "rgb(241, 233, 216)"
+      },
+      "tabSel": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgb(248, 243, 233)",
+        "border-bottom-color": "rgb(168, 132, 44)"
+      },
+      "hint": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Literata, Georgia, serif"
+      },
+      "h3": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Cinzel, Georgia, serif"
+      },
+      "target": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "primary": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(122, 46, 46)"
+      },
+      "body": {
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      }
+    },
+    "contrast": {
+      "tool label / rail": 9.1,
+      "pressed tool": 11.25,
+      "file button": 10.92,
+      "tab / tab bar": 5.87,
+      "selected tab": 11.25,
+      "hint / panel": 6.41,
+      "h3 / panel": 6.41,
+      "primary button": 8.16,
+      "brand word / rail": 14.25,
+      "brand sub / rail": 6.75,
+      "status / rail": 9.1
+    },
+    "focusOutline": {
+      "id": "helpBtn",
+      "outline": "solid 2px color(srgb 0.751765 0.643529 0.38902)"
+    },
+    "fileMenu": {
+      "x": 556.046875,
+      "r": 786.046875,
+      "vw": 1024
+    },
+    "help": {
+      "dialog": {
+        "x": 132,
+        "r": 892,
+        "w": 760
+      },
+      "dialogScrollWidth": 758,
+      "dialogClientWidth": 758,
+      "vw": 1024,
+      "docScrollWidth": 1024,
+      "issues": []
+    },
+    "errors": []
+  },
+  "phone": {
+    "layout": {
+      "vw": 390,
+      "vh": 844,
+      "docScrollWidth": 390,
+      "bodyScrollWidth": 390,
+      "topScrollWidth": 390,
+      "topClientWidth": 390,
+      "header": {
+        "#mapTitle": {
+          "x": 34,
+          "y": 8,
+          "r": 164.640625,
+          "b": 41,
+          "w": 130.640625,
+          "h": 33,
+          "inViewport": true
+        },
+        "#undoBtn": {
+          "x": 168.640625,
+          "y": 7.5,
+          "r": 202.640625,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#redoBtn": {
+          "x": 204.640625,
+          "y": 7.5,
+          "r": 238.640625,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#fileMenuBtn": {
+          "x": 240.640625,
+          "y": 7.5,
+          "r": 318,
+          "b": 41.5,
+          "w": 77.359375,
+          "h": 34,
+          "inViewport": true
+        },
+        "#saveStatus": {
+          "x": 320,
+          "y": 15.5,
+          "r": 348,
+          "b": 33.5,
+          "w": 28,
+          "h": 18,
+          "inViewport": true
+        },
+        "#helpBtn": {
+          "x": 350,
+          "y": 7.5,
+          "r": 384,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        }
+      },
+      "brand": {
+        "x": 6,
+        "y": 12.5,
+        "r": 30,
+        "b": 36.5,
+        "w": 24,
+        "h": 24,
+        "wordmark": false,
+        "subtitle": false,
+        "ornament": true
+      },
+      "titleWidth": 130.640625,
+      "ornamentLoaded": true
+    },
+    "styles": {
+      "top": {
+        "background-color": "rgba(0, 0, 0, 0)",
+        "background-image": "linear-gradient(rgb(75, 35, 90) 0%, rgb(47, 22, 56) 100%)",
+        "color": "rgb(247, 239, 228)",
+        "border-bottom-color": "color(srgb 0.364627 0.250196 0.201725)"
+      },
+      "brandWord": {
+        "color": "rgb(247, 239, 228)",
+        "font-family": "Cinzel, Georgia, serif",
+        "font-size": "15px"
+      },
+      "brandSub": {
+        "color": "color(srgb 0.751765 0.643529 0.38902)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif",
+        "font-size": "10.5px"
+      },
+      "tools": {
+        "background-color": "rgb(47, 22, 56)"
+      },
+      "tool": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "toolPressed": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgb(248, 243, 233)",
+        "border-top-color": "rgb(168, 132, 44)"
+      },
+      "fileBtn": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(75, 35, 90)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "status": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "background-color": "color(srgb 0.968627 0.937255 0.894118 / 0.07)"
+      },
+      "panel": {
+        "background-color": "rgb(248, 243, 233)"
+      },
+      "tab": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "tabsBar": {
+        "background-color": "rgb(241, 233, 216)"
+      },
+      "tabSel": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgba(0, 0, 0, 0)",
+        "border-bottom-color": "rgba(0, 0, 0, 0)"
+      },
+      "hint": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Literata, Georgia, serif"
+      },
+      "h3": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Cinzel, Georgia, serif"
+      },
+      "target": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "primary": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(122, 46, 46)"
+      },
+      "body": {
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      }
+    },
+    "contrast": {
+      "tool label / rail": 9.1,
+      "pressed tool": 11.25,
+      "file button": 10.92,
+      "tab / tab bar": 5.87,
+      "selected tab": null,
+      "hint / panel": 6.41,
+      "h3 / panel": 6.41,
+      "primary button": 8.16,
+      "brand word / rail": 14.25,
+      "brand sub / rail": 6.75,
+      "status / rail": 9.1
+    },
+    "focusOutline": {
+      "id": "helpBtn",
+      "outline": "solid 2px color(srgb 0.751765 0.643529 0.38902)"
+    },
+    "fileMenu": {
+      "x": 88,
+      "r": 318,
+      "vw": 390
+    },
+    "help": {
+      "dialog": {
+        "x": 12,
+        "r": 378,
+        "w": 366
+      },
+      "dialogScrollWidth": 364,
+      "dialogClientWidth": 364,
+      "vw": 390,
+      "docScrollWidth": 390,
+      "issues": []
+    },
+    "errors": []
+  },
+  "smallphone": {
+    "layout": {
+      "vw": 320,
+      "vh": 568,
+      "docScrollWidth": 320,
+      "bodyScrollWidth": 320,
+      "topScrollWidth": 320,
+      "topClientWidth": 320,
+      "header": {
+        "#mapTitle": {
+          "x": 34,
+          "y": 8,
+          "r": 100.640625,
+          "b": 41,
+          "w": 66.640625,
+          "h": 33,
+          "inViewport": true
+        },
+        "#undoBtn": {
+          "x": 104.640625,
+          "y": 7.5,
+          "r": 138.640625,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#redoBtn": {
+          "x": 140.640625,
+          "y": 7.5,
+          "r": 174.640625,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#fileMenuBtn": {
+          "x": 176.640625,
+          "y": 7.5,
+          "r": 248,
+          "b": 41.5,
+          "w": 71.359375,
+          "h": 34,
+          "inViewport": true
+        },
+        "#saveStatus": {
+          "x": 250,
+          "y": 15.5,
+          "r": 278,
+          "b": 33.5,
+          "w": 28,
+          "h": 18,
+          "inViewport": true
+        },
+        "#helpBtn": {
+          "x": 280,
+          "y": 7.5,
+          "r": 314,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        }
+      },
+      "brand": {
+        "x": 6,
+        "y": 12.5,
+        "r": 30,
+        "b": 36.5,
+        "w": 24,
+        "h": 24,
+        "wordmark": false,
+        "subtitle": false,
+        "ornament": true
+      },
+      "titleWidth": 66.640625,
+      "ornamentLoaded": true
+    },
+    "styles": {
+      "top": {
+        "background-color": "rgba(0, 0, 0, 0)",
+        "background-image": "linear-gradient(rgb(75, 35, 90) 0%, rgb(47, 22, 56) 100%)",
+        "color": "rgb(247, 239, 228)",
+        "border-bottom-color": "color(srgb 0.364627 0.250196 0.201725)"
+      },
+      "brandWord": {
+        "color": "rgb(247, 239, 228)",
+        "font-family": "Cinzel, Georgia, serif",
+        "font-size": "15px"
+      },
+      "brandSub": {
+        "color": "color(srgb 0.751765 0.643529 0.38902)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif",
+        "font-size": "10.5px"
+      },
+      "tools": {
+        "background-color": "rgb(47, 22, 56)"
+      },
+      "tool": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "toolPressed": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgb(248, 243, 233)",
+        "border-top-color": "rgb(168, 132, 44)"
+      },
+      "fileBtn": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(75, 35, 90)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "status": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "background-color": "color(srgb 0.968627 0.937255 0.894118 / 0.07)"
+      },
+      "panel": {
+        "background-color": "rgb(248, 243, 233)"
+      },
+      "tab": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "tabsBar": {
+        "background-color": "rgb(241, 233, 216)"
+      },
+      "tabSel": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgba(0, 0, 0, 0)",
+        "border-bottom-color": "rgba(0, 0, 0, 0)"
+      },
+      "hint": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Literata, Georgia, serif"
+      },
+      "h3": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Cinzel, Georgia, serif"
+      },
+      "target": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "primary": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(122, 46, 46)"
+      },
+      "body": {
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      }
+    },
+    "contrast": {
+      "tool label / rail": 9.1,
+      "pressed tool": 11.25,
+      "file button": 10.92,
+      "tab / tab bar": 5.87,
+      "selected tab": null,
+      "hint / panel": 6.41,
+      "h3 / panel": 6.41,
+      "primary button": 8.16,
+      "brand word / rail": 14.25,
+      "brand sub / rail": 6.75,
+      "status / rail": 9.1
+    },
+    "focusOutline": {
+      "id": "helpBtn",
+      "outline": "solid 2px color(srgb 0.751765 0.643529 0.38902)"
+    },
+    "fileMenu": {
+      "x": 18,
+      "r": 248,
+      "vw": 320
+    },
+    "help": {
+      "dialog": {
+        "x": 12,
+        "r": 308,
+        "w": 296
+      },
+      "dialogScrollWidth": 294,
+      "dialogClientWidth": 294,
+      "vw": 320,
+      "docScrollWidth": 320,
+      "issues": []
+    },
+    "errors": []
+  },
+  "landscape": {
+    "layout": {
+      "vw": 667,
+      "vh": 375,
+      "docScrollWidth": 667,
+      "bodyScrollWidth": 667,
+      "topScrollWidth": 667,
+      "topClientWidth": 667,
+      "header": {
+        "#mapTitle": {
+          "x": 34,
+          "y": 8,
+          "r": 441.640625,
+          "b": 41,
+          "w": 407.640625,
+          "h": 33,
+          "inViewport": true
+        },
+        "#undoBtn": {
+          "x": 445.640625,
+          "y": 7.5,
+          "r": 479.640625,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#redoBtn": {
+          "x": 481.640625,
+          "y": 7.5,
+          "r": 515.640625,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        },
+        "#fileMenuBtn": {
+          "x": 517.640625,
+          "y": 7.5,
+          "r": 595,
+          "b": 41.5,
+          "w": 77.359375,
+          "h": 34,
+          "inViewport": true
+        },
+        "#saveStatus": {
+          "x": 597,
+          "y": 15.5,
+          "r": 625,
+          "b": 33.5,
+          "w": 28,
+          "h": 18,
+          "inViewport": true
+        },
+        "#helpBtn": {
+          "x": 627,
+          "y": 7.5,
+          "r": 661,
+          "b": 41.5,
+          "w": 34,
+          "h": 34,
+          "inViewport": true
+        }
+      },
+      "brand": {
+        "x": 6,
+        "y": 12.5,
+        "r": 30,
+        "b": 36.5,
+        "w": 24,
+        "h": 24,
+        "wordmark": false,
+        "subtitle": false,
+        "ornament": true
+      },
+      "titleWidth": 407.640625,
+      "ornamentLoaded": true
+    },
+    "styles": {
+      "top": {
+        "background-color": "rgba(0, 0, 0, 0)",
+        "background-image": "linear-gradient(rgb(75, 35, 90) 0%, rgb(47, 22, 56) 100%)",
+        "color": "rgb(247, 239, 228)",
+        "border-bottom-color": "color(srgb 0.364627 0.250196 0.201725)"
+      },
+      "brandWord": {
+        "color": "rgb(247, 239, 228)",
+        "font-family": "Cinzel, Georgia, serif",
+        "font-size": "15px"
+      },
+      "brandSub": {
+        "color": "color(srgb 0.751765 0.643529 0.38902)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif",
+        "font-size": "10.5px"
+      },
+      "tools": {
+        "background-color": "rgb(47, 22, 56)"
+      },
+      "tool": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "toolPressed": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgb(248, 243, 233)",
+        "border-top-color": "rgb(168, 132, 44)"
+      },
+      "fileBtn": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(75, 35, 90)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "status": {
+        "color": "color(srgb 0.796078 0.750039 0.745726)",
+        "background-color": "color(srgb 0.968627 0.937255 0.894118 / 0.07)"
+      },
+      "panel": {
+        "background-color": "rgb(248, 243, 233)"
+      },
+      "tab": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "tabsBar": {
+        "background-color": "rgb(241, 233, 216)"
+      },
+      "tabSel": {
+        "color": "rgb(75, 35, 90)",
+        "background-color": "rgba(0, 0, 0, 0)",
+        "border-bottom-color": "rgba(0, 0, 0, 0)"
+      },
+      "hint": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Literata, Georgia, serif"
+      },
+      "h3": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "Cinzel, Georgia, serif"
+      },
+      "target": {
+        "color": "rgb(99, 86, 75)",
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      },
+      "primary": {
+        "color": "rgb(247, 239, 228)",
+        "background-color": "rgb(122, 46, 46)"
+      },
+      "body": {
+        "font-family": "\"Segoe UI\", system-ui, sans-serif"
+      }
+    },
+    "contrast": {
+      "tool label / rail": 9.1,
+      "pressed tool": 11.25,
+      "file button": 10.92,
+      "tab / tab bar": 5.87,
+      "selected tab": null,
+      "hint / panel": 6.41,
+      "h3 / panel": 6.41,
+      "primary button": 8.16,
+      "brand word / rail": 14.25,
+      "brand sub / rail": 6.75,
+      "status / rail": 9.1
+    },
+    "focusOutline": {
+      "id": "helpBtn",
+      "outline": "solid 2px color(srgb 0.751765 0.643529 0.38902)"
+    },
+    "fileMenu": {
+      "x": 365,
+      "r": 595,
+      "vw": 667
+    },
+    "help": {
+      "dialog": {
+        "x": 12,
+        "r": 655,
+        "w": 643
+      },
+      "dialogScrollWidth": 641,
+      "dialogClientWidth": 641,
+      "vw": 667,
+      "docScrollWidth": 667,
+      "issues": []
+    },
+    "errors": []
+  }
+}

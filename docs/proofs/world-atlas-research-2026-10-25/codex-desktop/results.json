@@ -1,0 +1,357 @@
+{
+  "reviewer": "Codex",
+  "mode": "desktop UI after Claude",
+  "checks": [
+    {
+      "name": "Blank map through File menu",
+      "status": "pass",
+      "evidence": "screenshots/01-blank.png"
+    },
+    {
+      "name": "Six tools directly selectable",
+      "status": "pass",
+      "evidence": "One click on each labelled icon; aria-pressed reflects current tool"
+    },
+    {
+      "name": "Author land, forest, river and road",
+      "status": "pass",
+      "evidence": {
+        "screenshot": "screenshots/02-painted.png",
+        "note": "Explicitly choose appropriate raster layer; strokes are not editable path objects"
+      }
+    },
+    {
+      "name": "Erase then undo a raster edit",
+      "status": "pass",
+      "evidence": "Embedded raster PNG data in real downloaded files before erasing and after undo is identical"
+    },
+    {
+      "name": "Create and select mountain stamp",
+      "status": "pass",
+      "evidence": "screenshots/03-stamp-selected.png"
+    },
+    {
+      "name": "Update, delete and undo stamp",
+      "status": "pass",
+      "evidence": "Inspector size change, selection deletion, then Undo; file inspection follows"
+    },
+    {
+      "name": "Create three places, reselect and edit lore",
+      "status": "pass",
+      "evidence": "screenshots/04-three-places.png"
+    },
+    {
+      "name": "Delete in text input edits text, preserves object",
+      "status": "pass",
+      "evidence": "Native Delete removes first character; replace name and finish edit"
+    },
+    {
+      "name": "Delete place and restore with undo",
+      "status": "pass",
+      "evidence": "Final project checked for restored name and lore"
+    },
+    {
+      "name": "Layer name double-click opens rename",
+      "status": "fail",
+      "evidence": "screenshots/05-layer-doubleclick.png"
+    },
+    {
+      "name": "Explicit layer rename action works",
+      "status": "pass",
+      "evidence": "Beschriftung\nText\nSymbole\nSymbole\nFlüsse & Wege\nMalen\nGelände\nMalen\nLandbasis\nMalen"
+    },
+    {
+      "name": "Add, delete, undo layer",
+      "status": "pass",
+      "evidence": "Symbole 2"
+    },
+    {
+      "name": "Editable file contains three named places and lore",
+      "status": "pass",
+      "evidence": {
+        "names": [
+          "Brückwacht",
+          "Grauhain am Bach",
+          "Silberhafen"
+        ],
+        "title": "Codex Waldmark Revision 2"
+      }
+    },
+    {
+      "name": "Project title and painted title are distinct",
+      "status": "partial",
+      "evidence": {
+        "project": "Codex Waldmark Revision 2",
+        "painted": [
+          "DIE WALDMARK"
+        ]
+      }
+    },
+    {
+      "name": "PNG image export",
+      "status": "pass",
+      "evidence": {
+        "dimensions": [
+          2400,
+          1600
+        ],
+        "sha256": "131889856d8d3b3de3aac397c4f737addfd7528678280d0657af9be0eb1c3bba"
+      }
+    },
+    {
+      "name": "Fresh-context reopen preserves map and lore",
+      "status": "pass",
+      "evidence": "screenshots/07-fresh-reopened.png"
+    },
+    {
+      "name": "Re-exported project preserves object/raster content",
+      "status": "pass",
+      "evidence": "Layer items and embedded PNG fields compared; timestamps may differ"
+    },
+    {
+      "name": "Opening a file protects existing unsaved changes",
+      "status": "fail",
+      "evidence": {
+        "before": "Ungespeicherte Änderungen",
+        "native_dialogs": [],
+        "in_page_dialogs": 0,
+        "undo_disabled_after": true,
+        "screenshots": [
+          "screenshots/08-unsaved-extra-stamp.png",
+          "screenshots/09-open-replaced-unsaved-stamp.png"
+        ]
+      }
+    },
+    {
+      "name": "Choose mountain underneath overlapping text",
+      "status": "partial",
+      "evidence": {
+        "label_selected": true,
+        "mountain_x": 1300,
+        "label_x": 1400,
+        "screenshot": "screenshots/10-overlap-captures-label.png"
+      }
+    },
+    {
+      "name": "Help opens at start 1440x900",
+      "status": "pass",
+      "evidence": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 256.375,
+        "top": 233.375
+      }
+    },
+    {
+      "name": "Help opens at start 1280x720",
+      "status": "pass",
+      "evidence": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 166.375,
+        "top": 143.375
+      }
+    },
+    {
+      "name": "Help opens at start 1024x768",
+      "status": "pass",
+      "evidence": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 190.375,
+        "top": 167.375
+      }
+    },
+    {
+      "name": "Help opens at start 1440x900-layout125",
+      "status": "pass",
+      "evidence": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 166.375,
+        "top": 143.375
+      }
+    },
+    {
+      "name": "Help opens at start 1280x720-layout125",
+      "status": "pass",
+      "evidence": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 94.375,
+        "top": 71.375
+      }
+    }
+  ],
+  "geometry": [
+    {
+      "label": "1440x900",
+      "viewport": [
+        1440,
+        900
+      ],
+      "dpr": 1,
+      "canvas": {
+        "x": 76,
+        "y": 52,
+        "width": 1052,
+        "height": 848
+      },
+      "zoom": "43 %",
+      "help": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 256.375,
+        "top": 233.375
+      },
+      "screenshot": "screenshots/1440x900-help.png"
+    },
+    {
+      "label": "1280x720",
+      "viewport": [
+        1280,
+        720
+      ],
+      "dpr": 1,
+      "canvas": {
+        "x": 76,
+        "y": 52,
+        "width": 892,
+        "height": 668
+      },
+      "zoom": "36 %",
+      "help": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 166.375,
+        "top": 143.375
+      },
+      "screenshot": "screenshots/1280x720-help.png"
+    },
+    {
+      "label": "1024x768",
+      "viewport": [
+        1024,
+        768
+      ],
+      "dpr": 1,
+      "canvas": {
+        "x": 76,
+        "y": 52,
+        "width": 636,
+        "height": 716
+      },
+      "zoom": "25 %",
+      "help": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 190.375,
+        "top": 167.375
+      },
+      "screenshot": "screenshots/1024x768-help.png"
+    },
+    {
+      "label": "1440x900-layout125",
+      "viewport": [
+        1152,
+        720
+      ],
+      "dpr": 1.25,
+      "canvas": {
+        "x": 76,
+        "y": 52,
+        "width": 764,
+        "height": 668
+      },
+      "zoom": "31 %",
+      "help": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 166.375,
+        "top": 143.375
+      },
+      "screenshot": "screenshots/1440x900-layout125-help.png"
+    },
+    {
+      "label": "1280x720-layout125",
+      "viewport": [
+        1024,
+        576
+      ],
+      "dpr": 1.25,
+      "canvas": {
+        "x": 76,
+        "y": 52,
+        "width": 636,
+        "height": 524
+      },
+      "zoom": "25 %",
+      "help": {
+        "scrollTop": 0,
+        "scrollHeight": 429,
+        "clientHeight": 429,
+        "heading": 94.375,
+        "top": 71.375
+      },
+      "screenshot": "screenshots/1280x720-layout125-help.png"
+    }
+  ],
+  "errors": [],
+  "server": "Loopback stdlib preview with current application's Content-Security-Policy header",
+  "stamp_names": [
+    "Bergkette",
+    "Felsnadeln",
+    "Felsen",
+    "Tafelberg",
+    "Vulkan",
+    "See",
+    "Nadelwald",
+    "Tanne",
+    "Hohe Tanne",
+    "Laubbaum",
+    "Palme",
+    "Kaktus",
+    "Busch",
+    "Stadt",
+    "Dorf",
+    "Langhaus",
+    "Burg",
+    "Zitadelle",
+    "Tempel",
+    "Turm",
+    "Leuchtturm",
+    "Windmühle",
+    "Wassermühle",
+    "Ruinen",
+    "Mine",
+    "Friedhof",
+    "Lagerfeuer",
+    "Lager",
+    "Schiff",
+    "Brücke",
+    "Hängebrücke",
+    "Hafen",
+    "Brunnen",
+    "Wachturm",
+    "Gefahr",
+    "Windrose",
+    "Banner",
+    "Flagge",
+    "Windrose (einfach)",
+    "Ortsnadel"
+  ],
+  "counts": {
+    "pass": 20,
+    "partial": 2,
+    "fail": 2
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "status": "complete",
+  "verifiedAt": "2026-10-24T11:20:54.863178+00:00",
+  "fullSuite": {
+    "passed": 34,
+    "browser": "Chromium headless shell 1234",
+    "executor": "Claude Opus 5.5"
+  },
+  "independentReview": {
+    "browser": "Chromium1243",
+    "reviewRegressionsAndFlask": "Seven passed; snapshot assertions also passed but one cleanliness check found favicon404. Favicon fixed; failed case plus all seven static tests rerun:8passed.",
+    "finalRerun": "........                                                                 [100%]\n8 passed in 7.63s",
+    "reviewFindings": "R1-R5 resolved; independently reviewed current source",
+    "manualAsyncSnapshot": {
+      "actual": [
+        0,
+        0,
+        255,
+        255
+      ],
+      "firstPixel": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "secondPixel": [
+        0,
+        0,
+        255,
+        255
+      ],
+      "firstTitle": "Before",
+      "secondTitle": "After",
+      "firstX": 100,
+      "secondX": 200,
+      "passed": true
+    },
+    "manualOffMapPlacement": "Exported JSON validates after off-map placement attempt; no invalid stamp added.",
+    "brushPixelChecks": {
+      "opacityDoesNotAccumulate": true,
+      "alpha": 128,
+      "cancelRestoresRed": true,
+      "pressureChangesAlpha": true,
+      "low": 122,
+      "high": 255,
+      "softnessChangesEdge": true,
+      "softEdge": 55,
+      "hardEdge": 255,
+      "eraserRemovesPixel": true
+    }
+  },
+  "ui": {
+    "viewportChecks": [
+      {
+        "width": 1440,
+        "height": 1000,
+        "title": "Die Silbermark",
+        "places": 7,
+        "placedStamps": 60,
+        "horizontalOverflow": false,
+        "consoleOrPageErrors": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "title": "Die Silbermark",
+        "places": 7,
+        "placedStamps": 60,
+        "horizontalOverflow": false,
+        "consoleOrPageErrors": []
+      }
+    ],
+    "pngSize": [
+      2400,
+      1600
+    ],
+    "projectFormat": "rd-mapmaker",
+    "projectVersion": 1,
+    "samplePngBytes": 4982623,
+    "sampleProjectBytes": 2971217
+  },
+  "integrity": {
+    "preExistingFilesChecked": 49,
+    "preExistingFilesChanged": [],
+    "unexpectedTrackedChanges": [],
+    "stagedChanges": [],
+    "verifiedStamps": 38,
+    "verifiedTextures": 2
+  },
+  "implementationSha256": {
+    "vtt/static/mapmaker/js/storage.js": "47655cb25ac48a1913797b74ee64b778113d96ddbe285ecf55e4ccce8d745794",
+    "vtt/static/mapmaker/js/app.js": "80e451e080065ae574af5a65b90bc8e576f25ee5d46d0158e103f0c46f44bfe8",
+    "vtt/static/mapmaker/js/starter.js": "0518f6fef05df918ec216bcddf90fb4d8862aa41798197acaa43a49ba5b45b13",
+    "vtt/static/mapmaker/js/document.js": "d330485fab896af9049206e4f61ed34dece600229bfdbfb07d063d0b2d8a7983",
+    "vtt/static/mapmaker/js/render.js": "c6e2624284ab4ccaed44676ac9a05b8a602f481e454763824afe03ae43ccac07",
+    "vtt/static/mapmaker/js/history.js": "d43567c8cffe13a6789e2b7a4f7bf76c806bf4f183dc96b75a42b9bcada66e82",
+    "vtt/static/mapmaker/js/stamps.js": "89e00c31d5ab57d9d0602b1267bb6bea4c806701566211f22bde77f91fb0966d",
+    "vtt/static/mapmaker/js/ui.js": "e76ec14081c1e4b0782460e6544946bfeee8ff7c3a2aae5980364d0e0c925bcb",
+    "vtt/static/mapmaker/js/tools.js": "304c5305e202466fb275b2654696e9f5e99e90c39129999059fe46db7b2e20c2",
+    "vtt/static/mapmaker/js/brush.js": "d67c03d7ee9863e17c485829ef4e11bfff08709b647340c72e41bf8ebdc54d0f",
+    "vtt/static/mapmaker/index.html": "f501fb0675c5ebd65da05a02748698e407af4a4e4146bee1317843b9a3249414",
+    "vtt/static/mapmaker/mapmaker.css": "b93d5e3958552ef77f4b232a81a4849a8179c3a897159db9e4cee77a5695de97",
+    "vtt/templates/mapmaker.html": "a26a10d17b84fc3fc13db50366ec09a6cb8ec2aa8e2f9d7a806c32e095ce0622",
+    "tests/test_mapmaker_browser.py": "3ef2a091f498af9b60f512be7a0ac496518e0bf43cbceb848279cfe44119295b",
+    "tests/test_mapmaker_static.py": "04544c32070e2cdf05ea76bca55e0a9fdc64e0f7275ef20c14f4f728015e004a"
+  },
+  "residualRisks": [
+    "Safari/Firefox and real pen/touch hardware untested",
+    "Canvas memory can be substantial on low-memory phones",
+    "Draft storage is browser-local; campaign integration uses existing PNG upload workflow"
+  ],
+  "permissions": {
+    "owner": "admin:admin",
+    "fileMode": "0644",
+    "directoryMode": "0755",
+    "adminReadVerification": "passed"
+  },
+  "previewHttpStatus": 200
+}
