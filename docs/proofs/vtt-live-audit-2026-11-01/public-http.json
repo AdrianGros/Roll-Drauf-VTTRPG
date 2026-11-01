@@ -1,0 +1,62 @@
+[
+  {
+    "path": "/health/live",
+    "status": 200,
+    "url": "https://vtt.roll-drauf.de/health/live",
+    "content_type": "application/json",
+    "sha256": "4371d15c338e1d36816fff2c5b57c7f856fc6b1ed02aaf5e77e8df4c09fe2071",
+    "same_as_container": null
+  },
+  {
+    "path": "/dashboard",
+    "status": 200,
+    "url": "https://vtt.roll-drauf.de/dashboard",
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "63d07a36bd21be860e2d54b3fcc9b6adc4a5d85e04d9a83e191108d3911100ea",
+    "same_as_container": null
+  },
+  {
+    "path": "/play",
+    "status": 200,
+    "url": "https://vtt.roll-drauf.de/play",
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "5a43a9fc4a8d6f487296bd3f85f42297664d7b524d470f41a2001a1d7818f7d7",
+    "same_as_container": null
+  },
+  {
+    "path": "/static/js/play-ui.js",
+    "status": 200,
+    "url": "https://vtt.roll-drauf.de/static/js/play-ui.js",
+    "content_type": "text/javascript; charset=utf-8",
+    "sha256": "b8070415b0097116ca191badf7fba651a0ca6051dc5c94a25ffaa2815a075678",
+    "same_as_container": true
+  },
+  {
+    "path": "/static/js/vtt-main-nav.js",
+    "status": 200,
+    "url": "https://vtt.roll-drauf.de/static/js/vtt-main-nav.js",
+    "content_type": "text/javascript; charset=utf-8",
+    "sha256": "57fb8997b440a74c67ee7f79a2673502023cc4179035b17ffd2d49ea871121df",
+    "same_as_container": true
+  },
+  {
+    "path": "/static/eagle-homebrew/build.json",
+    "status": 200,
+    "url": "https://vtt.roll-drauf.de/static/eagle-homebrew/build.json",
+    "content_type": "application/json",
+    "sha256": "f6dd1837e2a77e092251856e1d16c4229375f55a0ecb099ea2dc879cc992f0b9",
+    "same_as_container": true
+  },
+  {
+    "path": "/static/js/session-calendar.js",
+    "error": "HTTP Error 404: NOT FOUND"
+  },
+  {
+    "path": "/research-survey",
+    "status": 200,
+    "url": "https://vtt.roll-drauf.de/research-survey",
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "d11dfc3d793b5cd16dcc9b25331830799093dacd6707f6a7b28c47c0853798d5",
+    "same_as_container": null
+  }
+]

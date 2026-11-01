@@ -1,0 +1,28 @@
+{
+  "live_image": "roll-drauf-vtt-app:research-survey-20261029",
+  "image_id": "sha256:0febdcf788a3662a484e2a16429c82b588e4dc0d509b3a8d186849a00be20dd6",
+  "container_started_at": "2026-10-29T12:07:12.66340209Z",
+  "compose_project": "migration-production",
+  "compose_directory": "/srv/migration/2026-10-07/setup",
+  "live_source_mount": false,
+  "schema_tables_present": [
+    "ce_eagle_documents",
+    "ce_species_revisions",
+    "research_survey_responses",
+    "session_occurrences",
+    "session_series"
+  ],
+  "remote_verification": "git ls-remote origin failed: SSH publickey permission denied",
+  "git_worktree_head_at_start": "436c3cda107566edd3887a2f7a0b200aaba569cd",
+  "only_worktree_vtt_count": 86,
+  "only_worktree_vtt_already_archived_g1_count": 81,
+  "live_eagle_role_source_hash_match_paths": [
+    "vtt/socket_handlers.py",
+    "vtt/play/actions.py",
+    "vtt/play/routes.py",
+    "vtt/play/conditions.py",
+    "vtt/play/__init__.py",
+    "vtt/play/service.py",
+    "vtt/play/vision.py"
+  ]
+}

@@ -163,6 +163,38 @@ Custom agents in this repo:
 - Preserve unrelated work already in the tree
 - Use file references and concrete evidence when summarizing findings
 
+## VTT Live Delivery Rule (owner decision, 2026-11-01)
+
+- The existing production VTT is the user acceptance environment. Do not make
+  a separate development or staging environment a prerequisite for delivery.
+  Focused automated checks still run before release; they do not replace live acceptance.
+- An authorized functional change is not complete until it is committed,
+  deployed to `https://vtt.roll-drauf.de`, and reachable through the established
+  VTT UI by its intended user role. Carry implementation through deployment
+  and live verification in the same work cycle; do not leave an undisclosed
+  local-only feature or require the owner to know an undocumented URL.
+- For every functional slice, record the user journey/navigation entry,
+  intended roles, acceptance criteria, source commit, deployed image identity,
+  targeted checks, live verification and rollback reference. Report missing
+  evidence or a delivery blocker explicitly; never label an undeployed or
+  inaccessible change as done. Push the commit when repository access permits;
+  identify a failed push separately from deployment status.
+- Determine the actual running source/image and Compose configuration before
+  deployment. Reconcile the slice with the latest explicit product decisions.
+  Intentional replacements are allowed and expected: superseded code is not
+  unfinished work to resurrect, and difference from production alone is not a
+  regression. Protect behavior that remains required, including newer work
+  present in another branch or the live image.
+- Never bundle unrelated dirty work or superseded implementations into a
+  release. Keep a recoverable prior image; handle schema/data changes within
+  their explicit scope. If checks fail or required access is missing, leave
+  the slice visibly incomplete with the exact next step.
+- Discover/Apply reports, repository rules and other documentation-only work
+  retain their phase boundaries and do not require an application deployment.
+  An audit request does not itself authorize unrelated feature implementation.
+- This rule supersedes older runbooks that require staging or treat local
+  completion as delivery.
+
 ## Done When
 
 A task is done only when:
