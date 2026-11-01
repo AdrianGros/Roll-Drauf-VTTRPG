@@ -195,6 +195,25 @@ Custom agents in this repo:
 - This rule supersedes older runbooks that require staging or treat local
   completion as delivery.
 
+## Playtable Role Separation (owner clarification, 2026-11-01)
+
+- Build distinct Player and DM presentation/composition layers. A single
+  privileged view with hidden or disabled DM controls does not meet this requirement.
+  The Player surface must not mount or initialize DM-only controls and handlers.
+- Enforce the distinction in server-authorized table contexts, action permissions
+  and data/event delivery as well. Campaign ownership alone must not elevate a
+  request made in Player mode. Never trust a client role flag as authority or
+  fall back from an absent/invalid context to DM privileges.
+- Shared domain logic (dice, geometry, validated game mechanics) is allowed;
+  each entry path must independently enforce its context, action and resource
+  permissions. Separate frontend views by themselves are not an authorization boundary.
+- A DM may explicitly enter an authorized DM context again; switching views,
+  reconnecting, reloading or opening another tab must not silently grant a
+  Player context DM permissions or DM-only data. Cover HTTP, sockets, bootstrap,
+  resync, sheet actions and remaining legacy entry paths in the design and tests.
+- Use the current acceptance boundary in
+  `docs/decisions/PLAYTABLE_ROLE_SEPARATION_2026-11-01.md`.
+
 ## Done When
 
 A task is done only when:
