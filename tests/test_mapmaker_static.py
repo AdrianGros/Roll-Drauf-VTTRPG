@@ -163,3 +163,17 @@ def test_color_sources_have_lossless_palette_projection_and_complete_coverage():
             assert len(entries)==64310
             assert len(coverage['defects'])==1 and coverage['defects'][0]['bytes']==0
             assert sum('credits' in c['sourcePath'].lower() for c in m['creditFiles'])==35
+
+
+def test_all_four_color_batches_are_available():
+    from collections import Counter
+    assets=APP/'assets'
+    catalog=json.loads((assets/'packs.json').read_text())['packs']
+    sources=json.loads((assets/'color-source-lock.json').read_text())['sources']
+    assert len(catalog)==31
+    assert {s['id'] for s in sources}<={p['id'] for p in catalog}
+    totals=Counter()
+    for p in catalog:
+        m=json.loads((assets/p['manifest']).read_text())
+        totals[m.get('batch',0)]+=len(m['stamps'])
+    assert totals=={0:6456,1:572,2:64310,3:718,4:2}

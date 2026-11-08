@@ -467,6 +467,25 @@ export class UI {
         }
     }
 
+    sheetDefaultCrop(stamp) {
+        if (stamp.initialCrop) return stamp.initialCrop;
+        const grid = stamp.grid || 1;
+        if (grid === 1) return { x: 0, y: 0, w: stamp.w, h: stamp.h };
+        const canvas = document.createElement("canvas"); canvas.width = stamp.w; canvas.height = stamp.h;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true }); ctx.drawImage(stamp.image, 0, 0);
+        const pixels = ctx.getImageData(0, 0, stamp.w, stamp.h).data;
+        let crop = { x: 0, y: 0, w: Math.min(grid, stamp.w), h: Math.min(grid, stamp.h) };
+        outer: for (let y = 0; y < stamp.h; y += grid) for (let x = 0; x < stamp.w; x += grid) {
+            const w = Math.min(grid, stamp.w - x), h = Math.min(grid, stamp.h - y);
+            for (let dy = 0; dy < h; dy += 1) for (let dx = 0; dx < w; dx += 1) {
+                if (pixels[((y + dy) * stamp.w + x + dx) * 4 + 3] > 0) {
+                    crop = { x, y, w, h }; break outer;
+                }
+            }
+        }
+        canvas.width = 0; canvas.height = 0; stamp.initialCrop = crop; return crop;
+    }
+
     openSheet(id) {
         const stamp = this.ed.palette.stamps.get(id);
         if (!stamp || !stamp.image) return;
@@ -477,7 +496,7 @@ export class UI {
         $("sheetZoom").value = "fit"; canvas.style.width = ""; canvas.style.maxWidth = "100%";
         canvas.style.imageRendering = stamp.pixelArt ? "pixelated" : "auto";
         $("sheetGrid").value = stamp.grid || 1;
-        const crop = this.ed.stampOpts.crop || { x:0, y:0, w:Math.min(stamp.grid || stamp.w, stamp.w), h:Math.min(stamp.grid || stamp.h, stamp.h) };
+        const crop = this.ed.stampOpts.crop || this.sheetDefaultCrop(stamp);
         for (const key of ["x", "y", "w", "h"]) $("sheet"+key.toUpperCase()).value = crop[key];
         this.drawSheet(); if (!$("sheetDialog").open) $("sheetDialog").showModal();
     }

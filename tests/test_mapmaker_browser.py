@@ -1405,7 +1405,8 @@ def test_photographic_materials_paint_with_undo_and_credits_are_reachable(open_e
     credits = popup.value
     credits.wait_for_load_state()
     expect(credits.get_by_role("heading", name="Künstler & Credits", exact=True)).to_be_visible()
-    assert credits.locator("article").count() == 15
+    catalog=json.loads((STATIC / "mapmaker/assets/packs.json").read_text())
+    assert credits.locator("article").count() == len(catalog["packs"])+1
     credits.get_by_role("link", name="Zurück zur Kartenwerkstatt", exact=True).scroll_into_view_if_needed()
     expect(credits.get_by_role("link", name="Zurück zur Kartenwerkstatt", exact=True)).to_be_in_viewport()
     expect(credits.locator("body")).to_contain_text("Rob Tuytel")
@@ -1568,4 +1569,24 @@ def test_every_catalogued_asset_accepts_placement_and_edge_crops(open_editor):
     expected=sum(len(json.loads((STATIC/'mapmaker/assets'/p['manifest']).read_text())['stamps']) for p in catalog['packs'])+6
     assert result['placed']==result['cropped']==expected
     assert result['stats']['total']==expected and not result['errors']
+    ed.assert_clean()
+
+
+@pytest.mark.parametrize('pack_id', ['2dpixx-village', '2dpixx-mountain'])
+def test_sheet_initial_selection_contains_visible_art(open_editor, pack_id):
+    from PIL import Image
+    ed=open_editor();ed.tool('stamp')
+    ed.page.locator('#stampPack').select_option(pack_id)
+    entry=json.loads((STATIC/'mapmaker/assets'/pack_id/'manifest.json').read_text())['stamps'][0]
+    ed.page.locator(f'.mm-stamp[data-asset="{entry["id"]}"]').click()
+    expect(ed.page.locator('#sheetDialog')).to_be_visible()
+    crop={k:int(ed.page.locator('#sheet'+k.upper()).input_value()) for k in ('x','y','w','h')}
+    with Image.open(STATIC/'mapmaker/assets'/pack_id/entry['file']) as im:
+        assert im.convert('RGBA').getchannel('A').crop((crop['x'],crop['y'],crop['x']+crop['w'],crop['y']+crop['h'])).getbbox()
+    if entry['grid']==1:
+        assert crop==dict(x=0,y=0,w=entry['w'],h=entry['h'])
+    ed.page.locator('#sheetUse').click()
+    before=ed.region(SEA_A[0]-130,SEA_A[1]-130,260,260)
+    ed.click_doc(*SEA_A)
+    assert _diff_count(before,ed.region(SEA_A[0]-130,SEA_A[1]-130,260,260),threshold=4)>5
     ed.assert_clean()
