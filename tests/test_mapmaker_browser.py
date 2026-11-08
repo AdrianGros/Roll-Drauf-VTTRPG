@@ -1450,6 +1450,9 @@ def test_missing_used_artist_image_blocks_export_visibly(open_editor):
     entry = pack["stamps"][-1]
     ed = open_editor(route=("**/kma-blaeu/" + entry["file"], lambda route: route.fulfill(status=404, body="missing")),
                      allow_errors=("404", "Failed to load resource"))
+    ed.tool("stamp")
+    ed.page.locator("#stampPack").select_option("kma-blaeu")
+    ed.page.locator("#stampSearch").fill(entry["label"])
     ed.tool("label")
     ed.page.locator("#placeSymbol").select_option(entry["id"])
     ed.click_doc(1900, 900)
@@ -1471,6 +1474,9 @@ def test_color_sheet_crop_roundtrip_and_credit_export(open_editor, tmp_path, wid
     entry = next(e for e in manifest['stamps'] if e['sheet'] and 'transparent' in e['originalPath'].lower())
     ed.page.locator(f'.mm-stamp[data-asset="{entry["id"]}"]').click()
     expect(ed.page.locator('#sheetDialog')).to_be_visible()
+    ed.page.locator('#sheetZoom').select_option('2')
+    assert ed.page.locator('#sheetCanvas').evaluate('(c)=>Math.round(c.getBoundingClientRect().width)')==entry['w']*2
+    ed.page.locator('#sheetZoom').select_option('fit')
     for key, value in {'X':0,'Y':0,'W':16,'H':32}.items():
         ed.page.locator('#sheet'+key).fill(str(value))
     ed.page.locator('#sheetW').fill(str(entry['w']+1))
@@ -1478,7 +1484,9 @@ def test_color_sheet_crop_roundtrip_and_credit_export(open_editor, tmp_path, wid
     ed.page.locator('#sheetW').fill('16')
     ed.proof('color-sheet-'+str(width))
     ed.page.locator('#sheetUse').click()
+    pixels_before=ed.region(SEA_A[0]-30,SEA_A[1]-30,60,60)
     ed.click_doc(*SEA_A)
+    assert _diff_count(pixels_before,ed.region(SEA_A[0]-30,SEA_A[1]-30,60,60),threshold=4)>5
     placed = next(i for i in ed.summary()['items'] if i.get('asset') == entry['id'])
     assert placed['crop'] == dict(x=0,y=0,w=16,h=32)
     ed.page.keyboard.press('Control+z')

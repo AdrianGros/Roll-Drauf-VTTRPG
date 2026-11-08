@@ -415,6 +415,11 @@ export class UI {
 
     bindSheet() {
         const dialog = $("sheetDialog"), canvas = $("sheetCanvas");
+        $("sheetZoom").addEventListener("change", () => {
+            const stamp = this.ed.palette.stamps.get(this.sheetId), value = $("sheetZoom").value;
+            canvas.style.maxWidth = value === "fit" ? "100%" : "none";
+            canvas.style.width = value === "fit" ? "" : `${stamp.w * Number(value)}px`;
+        });
         $("sheetCancel").addEventListener("click", () => dialog.close());
         $("sheetWhole").addEventListener("click", () => { this.chooseStamp(this.sheetId, { openSheet: false }); dialog.close(); });
         $("sheetUse").addEventListener("click", () => {
@@ -469,6 +474,8 @@ export class UI {
         $("sheetName").textContent = `${stamp.label} · ${stamp.w}×${stamp.h} Pixel`;
         const canvas = $("sheetCanvas"), scale = Math.min(2, 960 / Math.max(stamp.w, stamp.h));
         canvas.width = Math.max(1, Math.round(stamp.w*scale)); canvas.height = Math.max(1, Math.round(stamp.h*scale));
+        $("sheetZoom").value = "fit"; canvas.style.width = ""; canvas.style.maxWidth = "100%";
+        canvas.style.imageRendering = stamp.pixelArt ? "pixelated" : "auto";
         $("sheetGrid").value = stamp.grid || 1;
         const crop = this.ed.stampOpts.crop || { x:0, y:0, w:Math.min(stamp.grid || stamp.w, stamp.w), h:Math.min(stamp.grid || stamp.h, stamp.h) };
         for (const key of ["x", "y", "w", "h"]) $("sheet"+key.toUpperCase()).value = crop[key];

@@ -177,6 +177,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
                     w: entry.w, h: entry.h, defaultSize: clampSize(entry.defaultSize),
                 });
             }
+            if (accepted.length !== entries.length) throw new Error("Unvollständiger Palettenkatalog.");
             if (pack.id === "kenney-cartography") {
                 const loaded = await Promise.all(accepted.map(async (stamp) => {
                     stamp.image = await loadImage(stamp.src).catch(() => null);
