@@ -469,7 +469,7 @@ def test_playtable_action_hotbar_is_a_pure_ui_trigger_over_the_existing_seam():
     assert 'role="toolbar"' in template
     # The existing sidebar "Aktionsleiste" test panel (actor+target+action
     # selects) must still exist untouched -- the hotbar is additive, not a
-    # replacement, since it deliberately has no target picker of its own.
+    # replacement.
     assert 'id="actionTargetTokenId"' in template
 
     assert "catalog.length" in script
@@ -484,7 +484,11 @@ def test_playtable_action_hotbar_is_a_pure_ui_trigger_over_the_existing_seam():
 
     # No client-side cooldown/optimistic update -- fires only after the
     # server confirms, disables entirely when read-only or no valid token.
-    assert "await this.api.executeAction(this.campaignId, this.sessionId, token.id, actionCode, null)" in script
+    assert "await this.api.executeAction(this.campaignId, this.sessionId, token.id, actionCode, targetTokenId)" in script
+    # 2026-11-08: actions that require a target (Angriff) ask for a target
+    # token instead of failing on the server.
+    assert "if (action?.requires_target) {" in script
+    assert "this._beginTargeting(token, action);" in script
     assert "canAct = !this.readOnly && token && this._canMoveToken(token)" in script
 
     # _handleAction previously showed a raw developer-facing action CODE

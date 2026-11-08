@@ -3633,7 +3633,9 @@
                 : allLayers;
 
             if (!allLayers.length) {
-                container.innerHTML = "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufügen.</div>";
+                container.innerHTML = this._composedOperator
+                    ? "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufügen.</div>"
+                    : "<div class='muted'>Die Spielleitung hat noch keine Karte aufgedeckt.</div>";
             } else if (!layers.length) {
                 container.innerHTML = "<div class='muted'>Keine Seite passt zur Suche.</div>";
             } else {
