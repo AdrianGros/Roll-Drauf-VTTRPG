@@ -72,7 +72,15 @@ berührten Dateien fest. Die Änderung selbst steht in `324482d` und `864678b`.
   gilt Stufe `table`, Vorhang-Opazität 0, keine Seitenfehler. Das Socket-Echo
   eines Wurfs war in dieser Kopie auch mit dem unveränderten Live-Image nicht
   herstellbar. Der Serverpfad ist durch `test_external_rolls.py` abgedeckt.
-- Volle Suite Live gegen Release läuft. Das Ergebnis wird nachgetragen.
+- Volle Suite (je ca. 26 min) auf dem extrahierten `/app`: Live 12 Fehler und
+  10 Errors, Release 14 Fehler und 10 Errors. Die Errors sind identisch. Neu im
+  Release waren drei veraltete String-Tests (`test_dashboard_social_hub_guild_navigation`,
+  zweimal `test_play_transition_choreography`), inzwischen angepasst und grün.
+  Dazu kam `test_creation_engine_navigation::test_play_session_menu_uses_existing_return_transition[True]`.
+  Er besteht auf dem Endstand dreimal in Folge, ist also instabil. In derselben
+  Datei schlugen im Live-Lauf zwei andere Browser-Tests vergleichbar instabil
+  fehl. Die übrigen Fehler sind in beiden Läufen identisch und bestanden schon
+  vorher.
 
 ## Auslieferung
 
