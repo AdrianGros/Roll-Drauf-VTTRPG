@@ -1,10 +1,9 @@
 // Stamp palette: curated Kenney Cartography Pack (CC0) as the primary set,
 // plus a tiny built-in set (compass, pin; simple fallbacks if the pack is missing).
 
-const MANIFEST_URL = "assets/kenney-cartography/manifest.json";
-const PACK_DIR = "assets/kenney-cartography/";
 const FILE_RE = /^[a-z0-9_]{1,40}\.png$/;
-const KENNEY_ID_RE = /^kenney:[a-z0-9_-]{1,40}$/;
+const ASSET_ID_RE = /^(kenney|kma):[a-z0-9_-]{1,40}$/;
+const PACK_ID_RE = /^[a-z0-9][a-z0-9-]{0,50}$/;
 const INK = "#3b2a1a";
 
 function loadImage(src) {
@@ -103,68 +102,124 @@ const BUILTINS = [
     { id: "builtin:castle", label: "Burg (einfach)", kind: "castle", defaultSize: 88 },
 ];
 
-/**
- * Returns {stamps: Map(id → stamp), groups: [{name, ids}], packLoaded, texture, packError}.
- * Every built-in stays resolvable (so documents referencing them load),
- * but fallback shapes are only offered in the palette without the pack.
+/** Local reviewed manifests; only Kenney and brush textures decode at startup.
+ * Additional stamp pixels are loaded on use, never all at once.
  */
-export async function loadPalette() {
+export async function loadPalette(onImageReady = () => {}, onImageError = () => {}) {
     const stamps = new Map();
     const groups = [];
-    let packLoaded = false;
-    let packError = "";
+    const packs = [];
+    const materialTextures = [];
+    const errors = [];
+    const pending = new Map();
     let texture = null;
+    let packLoaded = false;
 
+    const loadStamp = (id) => {
+        const stamp = stamps.get(id);
+        if (!stamp) return Promise.reject(new Error("Unbekanntes Symbol."));
+        if (stamp.image) return Promise.resolve(stamp.image);
+        if (!pending.has(id)) {
+            const promise = loadImage(stamp.src).then((image) => {
+                stamp.image = image;
+                onImageReady();
+                return image;
+            }).catch((error) => {
+                onImageError(`„${stamp.label}“ konnte nicht geladen werden.`);
+                throw error;
+            });
+            pending.set(id, promise);
+        }
+        return pending.get(id);
+    };
+    const ensureDocumentImages = (doc) => {
+        const ids = new Set();
+        for (const layer of doc.layers) for (const item of layer.items || []) {
+            if (item.asset) ids.add(item.asset);
+            if (item.symbol) ids.add(item.symbol.asset);
+        }
+        return Promise.all([...ids].map(loadStamp));
+    };
+    const addStamp = (stamp) => {
+        if (stamps.has(stamp.id)) return;
+        stamps.set(stamp.id, stamp);
+        let group = groups.find((g) => g.name === stamp.group);
+        if (!group) {
+            group = { name: stamp.group, ids: [] };
+            groups.push(group);
+        }
+        group.ids.push(stamp.id);
+    };
+    const readPack = async (pack) => {
+        try {
+            const response = await fetch(`assets/${pack.id}/manifest.json`, { cache: "no-cache" });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const manifest = await response.json();
+            const entries = Array.isArray(manifest.stamps) ? manifest.stamps.slice(0, 10000) : [];
+            const accepted = [];
+            for (const entry of entries) {
+                if (!entry || !ASSET_ID_RE.test(entry.id) || !FILE_RE.test(entry.file)) continue;
+                if (!(entry.w > 0 && entry.w <= 4096 && entry.h > 0 && entry.h <= 4096)) continue;
+                if (pack.id === "kenney-cartography" ? !entry.id.startsWith("kenney:") : !entry.id.startsWith("kma:")) continue;
+                accepted.push({
+                    id: entry.id, label: String(entry.label || entry.id).slice(0, 100),
+                    group: String(entry.group || "Symbole").slice(0, 50),
+                    pack: pack.id, packName: pack.name,
+                    search: String(entry.search || entry.label || "").slice(0, 500),
+                    src: `assets/${pack.id}/${entry.file}`, image: null,
+                    w: entry.w, h: entry.h, defaultSize: clampSize(entry.defaultSize),
+                });
+            }
+            if (pack.id === "kenney-cartography") {
+                const loaded = await Promise.all(accepted.map(async (stamp) => {
+                    stamp.image = await loadImage(stamp.src).catch(() => null);
+                    return stamp;
+                }));
+                for (const stamp of loaded) if (stamp.image) addStamp(stamp);
+                packLoaded = loaded.some((stamp) => stamp.image);
+                if (loaded.some((stamp) => !stamp.image)) errors.push("Einige Kenney-Symbole fehlen.");
+            } else for (const stamp of accepted) addStamp(stamp);
+            for (const entry of manifest.textures || []) {
+                if (!entry || !FILE_RE.test(entry.file)) continue;
+                const image = await loadImage(`assets/${pack.id}/${entry.file}`).catch(() => null);
+                if (!image) {
+                    errors.push(`Textur „${entry.label || entry.id}“ fehlt.`);
+                    continue;
+                }
+                if (entry.id === "kenney:parchment") texture = image;
+                if (entry.purpose === "material" && /^ph_[a-z0-9_]{1,35}$/.test(entry.id)) {
+                    materialTextures.push({ id: entry.id, name: String(entry.label).slice(0, 50), image });
+                }
+            }
+            packs.push(pack);
+        } catch (_error) {
+            errors.push(`Paket „${pack.name}“ konnte nicht geladen werden.`);
+        }
+    };
+    await readPack({ id: "kenney-cartography", name: "Kenney · Cartography" });
     try {
-        const response = await fetch(MANIFEST_URL, { cache: "no-cache" });
+        const response = await fetch("assets/packs.json", { cache: "no-cache" });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const manifest = await response.json();
-        const entries = Array.isArray(manifest.stamps) ? manifest.stamps.slice(0, 200) : [];
-        const loaded = await Promise.all(entries.map(async (entry) => {
-            if (!entry || !KENNEY_ID_RE.test(entry.id) || !FILE_RE.test(entry.file)) return null;
-            try {
-                const image = await loadImage(PACK_DIR + entry.file);
-                return {
-                    id: entry.id,
-                    label: String(entry.label || entry.id).slice(0, 40),
-                    group: String(entry.group || "Symbole").slice(0, 30),
-                    image,
-                    w: image.naturalWidth || 128,
-                    h: image.naturalHeight || 128,
-                    defaultSize: clampSize(entry.defaultSize),
-                };
-            } catch (_error) {
-                return null;
-            }
-        }));
-        for (const stamp of loaded) {
-            if (!stamp) continue;
-            stamps.set(stamp.id, stamp);
-            let group = groups.find((g) => g.name === stamp.group);
-            if (!group) {
-                group = { name: stamp.group, ids: [] };
-                groups.push(group);
-            }
-            group.ids.push(stamp.id);
+        const catalog = await response.json();
+        // Sequential insertion keeps catalogue ordering stable across connections.
+        for (const pack of (catalog.packs || []).slice(0, 32)) {
+            if (!pack || !PACK_ID_RE.test(pack.id) || pack.id === "kenney-cartography") continue;
+            if (pack.manifest !== `${pack.id}/manifest.json`) continue;
+            await readPack({ id: pack.id, name: String(pack.name || pack.id).slice(0, 80) });
         }
-        packLoaded = stamps.size > 0;
-        const textureEntry = (manifest.textures || []).find((t) => t && t.id === "kenney:parchment" && FILE_RE.test(t.file));
-        if (textureEntry) {
-            texture = await loadImage(PACK_DIR + textureEntry.file).catch(() => null);
-        }
-    } catch (error) {
-        packError = String(error.message || error);
+    } catch (_error) {
+        errors.push("Die Zusatzbibliothek konnte nicht geladen werden.");
     }
-
     const builtinGroup = { name: packLoaded ? "Extras" : "Einfache Symbole", ids: [] };
     for (const def of BUILTINS) {
         const canvas = drawBuiltin(def.kind);
-        stamps.set(def.id, { id: def.id, label: def.label, group: builtinGroup.name, image: canvas, w: 128, h: 128, defaultSize: def.defaultSize });
+        stamps.set(def.id, { id: def.id, label: def.label, group: builtinGroup.name, pack: "builtin", packName: "Roll Drauf · Einfache Symbole", search: def.label, image: canvas, w: 128, h: 128, defaultSize: def.defaultSize });
         if (def.always || !packLoaded) builtinGroup.ids.push(def.id);
     }
+    packs.push({ id: "builtin", name: "Roll Drauf · Einfache Symbole" });
     groups.push(builtinGroup);
-
-    return { stamps, groups, packLoaded, packError, texture };
+    if (!packLoaded) errors.unshift("Das Kenney-Paket fehlt – einfache Ersatzsymbole stehen bereit.");
+    return { stamps, groups, packs, packLoaded, packError: errors.join(" "), texture, materialTextures, loadStamp, ensureDocumentImages };
 }
 
 function clampSize(value) {

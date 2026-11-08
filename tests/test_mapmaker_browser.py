@@ -650,6 +650,7 @@ def test_json_round_trip_and_rejected_imports_keep_the_current_map(open_editor, 
         "externes Bild": variant(lambda d: first_raster(d).update(png="https://example.invalid/land.png")),
         "falsche Größe": variant(lambda d: d["size"].update(w=2000)),
         "unbekanntes Symbol": variant(lambda d: stamps_layer(d)["items"][0].update(asset="kenney:dragon")),
+        "unbekanntes Künstlersymbol": variant(lambda d: stamps_layer(d)["items"][0].update(asset="kma:missing")),
         "unbekanntes Ortssymbol": variant(lambda d: next(l for l in d["layers"] if l["kind"] == "labels")["items"][0].update(symbol={"asset": "kenney:dragon", "size": 56})),
         "zu viele Elemente": variant(too_many),
         "doppelte Kennung": variant(duplicate_id),
@@ -961,6 +962,8 @@ def test_missing_asset_pack_falls_back_to_simple_stamps(open_editor):
     assert all(item["asset"].startswith("builtin:") for item in summary["items"] if "asset" in item)
     ed.tool("stamp")
     expect(ed.page.locator("#packNote")).to_be_visible()
+    # Supplemental artist packs remain available independently of Kenney.
+    ed.page.locator("#stampPack").select_option("builtin")
     expect(ed.page.locator(".mm-palette-group h3")).to_have_text(["Einfache Symbole"])
     ed.assert_clean()
 
@@ -1310,4 +1313,146 @@ def test_flask_serves_entry_redirect_and_static_app(flask_origin, open_editor):
     assert ed.summary()["title"] == "Die Silbermark"
     assert _is_sea(ed.pixel(*SEA_A)) and not _is_sea(ed.pixel(*LAND))
     ed.proof("flask")
+    ed.assert_clean()
+
+
+def test_artist_catalogue_filters_pagination_and_lazy_images(open_editor):
+    ed = open_editor()
+    loaded = ed.page.evaluate("performance.getEntriesByType('resource').map(e => e.name)")
+    assert sum('/assets/kma-' in url and url.endswith('.png') for url in loaded) < 70
+    assert not any('api.polyhaven.com' in url or 'kmalexander.com' in url for url in loaded)
+    ed.tool("stamp")
+    assert ed.page.locator(".mm-stamp").count() == 64
+    first = ed.page.locator(".mm-stamp").first.get_attribute("data-asset")
+    ed.page.locator("#stampNext").click()
+    assert ed.page.locator(".mm-stamp").first.get_attribute("data-asset") != first
+    ed.page.locator("#stampPack").select_option("kma-blaeu")
+    ed.page.locator("#stampCategory").select_option("Gebirge & Felsen")
+    ed.page.locator("#stampSearch").fill("Berg")
+    assert 0 < ed.page.locator(".mm-stamp").count() <= 64
+    for button in ed.page.locator(".mm-stamp").all():
+        assert button.get_attribute("data-asset").startswith("kma:blaeu_")
+    ed.page.locator("#stampSearch").fill("keine-symbole-123456")
+    expect(ed.page.locator("#stampResults")).to_contain_text("Keine Symbole gefunden")
+    assert ed.page.locator(".mm-stamp").count() == 0
+    ed.proof("artist-search")
+    ed.assert_clean()
+
+
+def test_every_artist_set_places_pixels_and_survives_import_export(open_editor, tmp_path):
+    ed = open_editor()
+    ed.tool("stamp")
+    catalog = json.loads((STATIC / "mapmaker/assets/packs.json").read_text())
+    selected = []
+    for index, pack in enumerate(p for p in catalog["packs"] if p["id"].startswith("kma-")):
+        ed.page.locator("#stampPack").select_option(pack["id"])
+        button = ed.page.locator(".mm-stamp").first
+        asset = button.get_attribute("data-asset")
+        button.click()
+        expect(button).to_have_attribute("aria-checked", "true")
+        x, y = 1550 + (index % 4) * 130, 1050 + (index // 4) * 130
+        before = ed.region(x - 50, y - 50, 100, 100)
+        ed.click_doc(x, y)
+        assert _diff_count(before, ed.region(x - 50, y - 50, 100, 100), threshold=4) > 5, asset
+        selected.append(asset)
+    assert len(selected) == 12
+    assert set(selected) <= {i.get("asset") for i in ed.summary()["items"]}
+    # Exercise the independently loaded symbol-on-place path as well.
+    pack = json.loads((STATIC / "mapmaker/assets/kma-blaeu/manifest.json").read_text())
+    place_asset = pack["stamps"][-1]["id"]
+    ed.tool("label")
+    ed.page.locator("#placeSymbol").select_option(place_asset)
+    ed.click_doc(2000, 600)
+    ed.page.wait_for_timeout(300)
+    assert any(i.get("symbol", {}).get("asset") == place_asset for i in ed.summary()["items"])
+    with ed.page.expect_download() as info:
+        ed.menu("Als Datei speichern")
+    saved = tmp_path / "artist-roundtrip.rdmap.json"
+    info.value.save_as(saved)
+    expect(ed.page.locator("#saveStatus")).to_have_attribute("data-state", "saved", timeout=15000)
+    ed.page.reload()
+    ed.page.wait_for_selector("#restoreDialog[open]")
+    ed.page.locator("#restoreNo").click()
+    ed.page.wait_for_selector("#app[data-state=ready]")
+    ed.page.locator("#fileInput").set_input_files(saved)
+    expect(ed.page.locator("#toast")).to_contain_text("geladen")
+    assert set(selected) <= {i.get("asset") for i in ed.summary()["items"]}
+    ed.menu("Als PNG exportieren")
+    with ed.page.expect_download() as image:
+        ed.page.locator("#exportGo").click()
+    assert image.value.suggested_filename.endswith(".png")
+    ed.proof("artist-roundtrip")
+    ed.assert_clean()
+
+
+def test_photographic_materials_paint_with_undo_and_credits_are_reachable(open_editor):
+    ed = open_editor()
+    ed.tool("brush")
+    materials = ed.page.locator('.mm-swatch[data-material^="ph_"]')
+    assert materials.count() == 8
+    for button in materials.all():
+        button.click()
+        x, y = SEA_A
+        before = ed.region(x - 25, y - 25, 50, 50)
+        ed.click_doc(x, y)
+        assert _diff_count(before, ed.region(x - 25, y - 25, 50, 50)) > 100
+        ed.page.keyboard.press("Control+z")
+        assert ed.region(x - 25, y - 25, 50, 50) == before
+    with ed.page.expect_popup() as popup:
+        ed.page.get_by_role("link", name="Künstler & Credits", exact=True).click()
+    credits = popup.value
+    credits.wait_for_load_state()
+    expect(credits.get_by_role("heading", name="Künstler & Credits", exact=True)).to_be_visible()
+    assert credits.locator("article").count() == 15
+    credits.get_by_role("link", name="Zurück zur Kartenwerkstatt", exact=True).scroll_into_view_if_needed()
+    expect(credits.get_by_role("link", name="Zurück zur Kartenwerkstatt", exact=True)).to_be_in_viewport()
+    expect(credits.locator("body")).to_contain_text("Rob Tuytel")
+    ed.assert_clean()
+
+
+def test_missing_supplemental_pack_is_visible_and_kenney_still_works(open_editor):
+    ed = open_editor(route=("**/kma-blaeu/manifest.json", lambda route: route.fulfill(status=404, body="missing")),
+                     allow_errors=("404", "Failed to load resource"))
+    ed.tool("stamp")
+    expect(ed.page.locator("#packNote")).to_contain_text("Blaeu")
+    ed.page.locator("#stampPack").select_option("kenney-cartography")
+    ed.page.locator('[data-asset="kenney:castle"]').click()
+    before = ed.summary()["stamps"]
+    ed.click_doc(*SEA_B)
+    assert ed.summary()["stamps"] == before + 1
+    ed.assert_clean()
+
+
+def test_artist_filters_and_credits_on_phone(open_editor):
+    ed = open_editor(390)
+    ed.tool("stamp")
+    ed.tab("Werkzeug")
+    ed.page.locator("#stampPack").select_option("kma-kensett")
+    ed.page.locator("#stampSearch").fill("Haus")
+    assert 0 < ed.page.locator(".mm-stamp").count() <= 64
+    button = ed.page.locator(".mm-stamp").first
+    button.click()
+    expect(button).to_have_attribute("aria-checked", "true")
+    assert ed.page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
+    with ed.page.expect_popup() as popup:
+        ed.page.get_by_role("link", name="Künstler, Quellen & Lizenzen").click()
+    credits = popup.value
+    credits.wait_for_load_state()
+    assert credits.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
+    ed.proof("artist-phone")
+    ed.assert_clean()
+
+
+def test_missing_used_artist_image_blocks_export_visibly(open_editor):
+    pack = json.loads((STATIC / "mapmaker/assets/kma-blaeu/manifest.json").read_text())
+    entry = pack["stamps"][-1]
+    ed = open_editor(route=("**/kma-blaeu/" + entry["file"], lambda route: route.fulfill(status=404, body="missing")),
+                     allow_errors=("404", "Failed to load resource"))
+    ed.tool("label")
+    ed.page.locator("#placeSymbol").select_option(entry["id"])
+    ed.click_doc(1900, 900)
+    ed.menu("Als PNG exportieren")
+    ed.page.locator("#exportGo").click()
+    expect(ed.page.locator("#exportError")).to_be_visible()
+    expect(ed.page.locator("#exportError")).to_contain_text("Export fehlgeschlagen")
     ed.assert_clean()

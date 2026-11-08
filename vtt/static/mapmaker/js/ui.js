@@ -285,10 +285,17 @@ export class UI {
     }
 
     buildPalette() {
-        const ed = this.ed;
-        const { palette } = ed;
-        const container = $("palette");
-        container.replaceChildren();
+        const { palette } = this.ed;
+        this.palettePage = 0;
+        const packSelect = $("stampPack");
+        for (const pack of palette.packs) {
+            if ([...palette.stamps.values()].some((stamp) => stamp.pack === pack.id)) {
+                packSelect.appendChild(el("option", { value: pack.id }, pack.name));
+            }
+        }
+        for (const group of palette.groups) {
+            if (group.ids.length) $("stampCategory").appendChild(el("option", { value: group.name }, group.name));
+        }
         for (const select of [$("placeSymbol"), $("selSymbol")]) {
             select.replaceChildren(el("option", { value: "" }, "Kein Symbol"));
             for (const group of palette.groups) {
@@ -296,52 +303,102 @@ export class UI {
                 const options = el("optgroup", { label: group.name });
                 for (const id of group.ids) {
                     const stamp = palette.stamps.get(id);
-                    options.appendChild(el("option", { value: id }, stamp.label));
+                    options.appendChild(el("option", { value: id }, `${stamp.label} · ${stamp.packName}`));
                 }
                 select.appendChild(options);
             }
         }
-        for (const group of palette.groups) {
-            if (!group.ids.length) continue;
-            const section = el("div", { class: "mm-palette-group" });
-            section.appendChild(el("h3", { class: "mm-h3" }, group.name));
-            const grid = el("div", { class: "mm-palette-grid", role: "radiogroup", "aria-label": group.name });
-            for (const id of group.ids) {
-                const stamp = palette.stamps.get(id);
-                const button = el("button", { type: "button", class: "mm-stamp", role: "radio", "aria-checked": "false", "aria-label": stamp.label, title: stamp.label, dataset: { asset: id } });
-                const thumb = el("canvas", { width: 56, height: 56, "aria-hidden": "true" });
-                const tctx = thumb.getContext("2d");
-                const longest = Math.max(stamp.w, stamp.h);
-                const w = (48 * stamp.w) / longest;
-                const h = (48 * stamp.h) / longest;
-                tctx.drawImage(stamp.image, (56 - w) / 2, (56 - h) / 2, w, h);
-                button.append(thumb, el("span", {}, stamp.label));
-                button.addEventListener("click", () => this.chooseStamp(id));
-                grid.appendChild(button);
-            }
-            section.appendChild(grid);
-            container.appendChild(section);
+        for (const id of ["stampSearch", "stampPack", "stampCategory"]) {
+            $(id).addEventListener(id === "stampSearch" ? "input" : "change", () => {
+                this.palettePage = 0;
+                this.renderPalette();
+            });
         }
-        const note = $("packNote");
-        if (!palette.packLoaded) {
-            note.hidden = false;
-            note.textContent = "Das Symbolpaket konnte nicht geladen werden – es stehen einfache Symbole zur Verfügung.";
+        $("stampPrev").addEventListener("click", () => { this.palettePage -= 1; this.renderPalette(); });
+        $("stampNext").addEventListener("click", () => { this.palettePage += 1; this.renderPalette(); });
+        if (palette.packError) {
+            $("packNote").hidden = false;
+            $("packNote").textContent = palette.packError;
         }
         const first = palette.stamps.has("kenney:forest") ? "kenney:forest" : palette.groups.find((g) => g.ids.length).ids[0];
+        this.renderPalette();
         this.chooseStamp(first);
+    }
+
+    renderPalette() {
+        const { palette } = this.ed;
+        const normalize = (text) => text.toLocaleLowerCase("de").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const terms = normalize($("stampSearch").value).trim().split(/\s+/).filter(Boolean);
+        const pack = $("stampPack").value;
+        const category = $("stampCategory").value;
+        const ids = palette.groups.flatMap((group) => group.ids).filter((id) => {
+            const stamp = palette.stamps.get(id);
+            const text = normalize(`${stamp.label} ${stamp.group} ${stamp.packName} ${stamp.search}`);
+            return (!pack || stamp.pack === pack) && (!category || stamp.group === category) && terms.every((term) => text.includes(term));
+        });
+        const pageSize = 64;
+        const pageCount = Math.max(1, Math.ceil(ids.length / pageSize));
+        this.palettePage = Math.max(0, Math.min(this.palettePage, pageCount - 1));
+        $("stampResults").textContent = ids.length
+            ? `${ids.length.toLocaleString("de")} Symbole · Seite ${this.palettePage + 1} von ${pageCount}`
+            : "Keine Symbole gefunden. Suche oder Filter ändern.";
+        $("stampPrev").disabled = this.palettePage === 0;
+        $("stampNext").disabled = this.palettePage >= pageCount - 1;
+        const container = $("palette");
+        container.replaceChildren();
+        let currentGroup = null;
+        let grid = null;
+        for (const id of ids.slice(this.palettePage * pageSize, (this.palettePage + 1) * pageSize)) {
+            const stamp = palette.stamps.get(id);
+            if (stamp.group !== currentGroup) {
+                currentGroup = stamp.group;
+                const section = el("div", { class: "mm-palette-group" });
+                section.appendChild(el("h3", { class: "mm-h3" }, stamp.group));
+                grid = el("div", { class: "mm-palette-grid", role: "radiogroup", "aria-label": stamp.group });
+                section.appendChild(grid);
+                container.appendChild(section);
+            }
+            const button = el("button", { type: "button", class: "mm-stamp", role: "radio", "aria-checked": String(this.ed.stampOpts.asset === id), "aria-label": stamp.label, title: `${stamp.label} · ${stamp.packName}`, dataset: { asset: id } });
+            if (stamp.src) {
+                const thumb = el("img", { src: stamp.src, width: 56, height: 56, alt: "", loading: "lazy", decoding: "async" });
+                thumb.addEventListener("error", () => {
+                    button.disabled = true;
+                    button.title = `${stamp.label} – Bild konnte nicht geladen werden`;
+                    $("packNote").hidden = false;
+                    $("packNote").textContent = "Einige Symbolbilder fehlen. Bitte neu laden oder ein anderes Paket wählen.";
+                });
+                button.appendChild(thumb);
+            } else {
+                const thumb = el("canvas", { width: 56, height: 56, "aria-hidden": "true" });
+                thumb.getContext("2d").drawImage(stamp.image, 4, 4, 48, 48);
+                button.appendChild(thumb);
+            }
+            button.appendChild(el("span", {}, stamp.label));
+            button.addEventListener("click", () => this.chooseStamp(id));
+            grid.appendChild(button);
+        }
     }
 
     chooseStamp(id) {
         const ed = this.ed;
         const stamp = ed.palette.stamps.get(id);
         if (!stamp) return;
-        ed.stampOpts.asset = id;
-        ed.stampOpts.size = stamp.defaultSize;
-        this.stampSize.set(stamp.defaultSize);
-        document.querySelectorAll(".mm-stamp").forEach((button) => {
-            button.setAttribute("aria-checked", String(button.dataset.asset === id));
+        this.pendingStamp = id;
+        const select = () => {
+            if (this.pendingStamp !== id) return;
+            ed.stampOpts.asset = id;
+            ed.stampOpts.size = stamp.defaultSize;
+            this.stampSize.set(stamp.defaultSize);
+            $("stampSelected").textContent = `Ausgewählt: ${stamp.label} · ${stamp.packName}`;
+            document.querySelectorAll(".mm-stamp").forEach((button) => {
+                button.setAttribute("aria-checked", String(button.dataset.asset === id));
+            });
+            ed.requestFrame();
+        };
+        if (stamp.image) select();
+        else ed.palette.loadStamp(id).then(select).catch(() => {
+            this.toast("Das Symbol konnte nicht geladen werden. Bitte ein anderes wählen oder neu laden.");
         });
-        ed.requestFrame();
     }
 
     bindLabelTool() {

@@ -40,6 +40,7 @@
                 </div>
             </div>
             <span id="saveStatus" class="mm-status" role="status" data-state="idle">Noch keine Änderungen</span>
+            <a class="mm-link mm-credits-link" href="credits.html" target="_blank" rel="noopener">Künstler &amp; Credits</a>
             <button id="helpBtn" class="mm-icon-btn" type="button" title="Tastenkürzel und Hilfe" aria-label="Hilfe">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 114 2c-1 .6-1.5 1.2-1.5 2.5"/><path d="M12 17h.01"/></svg>
             </button>
@@ -170,7 +171,14 @@
 
             <div class="mm-group" data-options="stamp">
                 <p class="mm-target">Setzt auf: <strong id="stampTarget">–</strong></p>
+                <label class="mm-field"><span>Symbole suchen</span><input id="stampSearch" type="search" placeholder="Berge, Wald, Burg …" autocomplete="off"></label>
+                <label class="mm-field"><span>Asset-Paket</span><select id="stampPack"><option value="">Alle Pakete</option></select></label>
+                <label class="mm-field"><span>Kategorie</span><select id="stampCategory"><option value="">Alle Kategorien</option></select></label>
+                <p id="stampSelected" class="mm-meta"></p>
+                <p id="stampResults" class="mm-hint" role="status" aria-live="polite"></p>
+                <div class="mm-palette-pages"><button id="stampPrev" type="button" class="mm-btn mm-btn-small">Vorherige</button><button id="stampNext" type="button" class="mm-btn mm-btn-small">Weitere Symbole</button></div>
                 <div id="palette" class="mm-palette"></div>
+                <p class="mm-hint"><a href="credits.html" target="_blank" rel="noopener">Künstler, Quellen &amp; Lizenzen</a> · Alle Bildpakete: CC0.</p>
                 <p id="packNote" class="mm-hint" hidden></p>
                 <div class="mm-range mm-range-edit"><label for="stampSize">Größe</label><input id="stampSize" type="range" min="16" max="320" step="1"><output id="stampSizeOut"></output><input id="stampSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Symbolgröße in Pixel"></div>
                 <label class="mm-range"><span>Drehung</span><input id="stampRot" type="range" min="-180" max="180" step="1"><output id="stampRotOut"></output></label>
@@ -324,7 +332,7 @@
             </dl>
         </div>
     </div>
-    <p class="mm-hint">Die Karte wird automatisch in diesem Browser gespeichert. Für Sicherungen und andere Geräte: „Datei → Als Datei speichern“. Symbole: Kenney Cartography Pack (CC0).</p>
+    <p class="mm-hint">Die Karte wird automatisch in diesem Browser gespeichert. Für Sicherungen und andere Geräte: „Datei → Als Datei speichern“. Symbole und Fototexturen: kostenlose CC0-Künstlerpakete. <a href="credits.html" target="_blank" rel="noopener">Alle Künstler und Lizenzen</a>.</p>
     <div class="mm-dialog-actions">
         <button id="helpClose" type="button" class="mm-btn mm-btn-primary">Schließen</button>
     </div>

@@ -449,3 +449,18 @@ input[type=range] { width: 100%; accent-color: var(--plum); min-height: 28px; }
 @media (prefers-reduced-motion: reduce) {
     .mm-spinner { animation-duration: 3s; }
 }
+
+/* Bounded, searchable artist catalogue. */
+.mm-stamp img { width: 56px; height: 56px; object-fit: contain; display: block; margin: auto; }
+.mm-stamp span { overflow-wrap: anywhere; }
+.mm-palette-pages { display: flex; justify-content: space-between; gap: 8px; margin: 8px 0 12px; }
+.mm-credits-link { font-size: 12px; white-space: nowrap; }
+.mm-top .mm-credits-link { color: var(--chrome-text); }
+#stampSelected { overflow-wrap: anywhere; }
+@media (max-width: 700px) {
+    .mm-top-actions .mm-credits-link { display: none; }
+}
+
+@media (max-width: 760px) {
+    .mm-swatches { max-height: 155px; overflow-y: auto; padding: 3px; }
+}

@@ -41,7 +41,7 @@ export const PLACE_KINDS = {
 
 const ID_RE = /^[A-Za-z0-9_-]{1,40}$/;
 const COLOR_RE = /^#[0-9a-fA-F]{6}$/;
-const ASSET_RE = /^(builtin|kenney):[a-z0-9_-]{1,40}$/;
+const ASSET_RE = /^(builtin|kenney|kma):[a-z0-9_-]{1,40}$/;
 const PNG_PREFIX = "data:image/png;base64,";
 const PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
 // Control characters except tab and newline (lore may contain line breaks).

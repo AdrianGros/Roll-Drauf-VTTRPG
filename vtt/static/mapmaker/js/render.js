@@ -126,6 +126,10 @@ function intersects(a, b) {
 function drawStamp(ctx, item, palette) {
     const stamp = palette.stamps.get(item.asset);
     if (!stamp) return;
+    if (!stamp.image) {
+        palette.loadStamp(stamp.id).catch(() => {});
+        return;
+    }
     const ext = stampExtent(stamp, item.size);
     ctx.save();
     ctx.translate(item.x, item.y);

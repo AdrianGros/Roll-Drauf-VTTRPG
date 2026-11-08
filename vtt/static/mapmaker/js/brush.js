@@ -35,6 +35,17 @@ function rng(seed) {
 
 const tileCache = new Map();
 
+/** Register already decoded, local CC0 photographic brush materials. */
+export function registerMaterialTextures(entries) {
+    for (const entry of entries) {
+        if (!MATERIALS.some((material) => material.id === entry.id)) {
+            MATERIALS.push({ id: entry.id, name: entry.name });
+        }
+        tileCache.set(entry.id, entry.image);
+    }
+}
+
+
 export function materialTile(materialId) {
     if (tileCache.has(materialId)) return tileCache.get(materialId);
     const material = MATERIALS.find((m) => m.id === materialId) || MATERIALS[0];

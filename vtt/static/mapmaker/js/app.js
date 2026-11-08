@@ -7,7 +7,7 @@ import {
 import { History } from "./history.js";
 import { loadPalette } from "./stamps.js";
 import { COAST_PAD, Renderer, drawPath, itemBounds, pathHit, replacedTitleLabel } from "./render.js";
-import { StrokeEngine, rectUnion } from "./brush.js";
+import { StrokeEngine, rectUnion, registerMaterialTextures } from "./brush.js";
 import { createEmptyMap, createStarterMap } from "./starter.js";
 import { AutosaveUnavailable, DraftStore, downloadBlob, slugify } from "./storage.js";
 import { attachInput } from "./tools.js";
@@ -66,9 +66,15 @@ class Editor {
     // ---- startup -----------------------------------------------------------
 
     async init() {
-        this.ui.bind();
         this.ui.setLoading("Symbole und Schriften werden geladen …");
-        this.palette = await loadPalette();
+        this.palette = await loadPalette(() => this.renderer && this.invalidate(), (message) => {
+            this.ui.toast(message);
+            const note = document.getElementById("packNote");
+            note.hidden = false;
+            note.textContent = message;
+        });
+        registerMaterialTextures(this.palette.materialTextures);
+        this.ui.bind();
         this.renderer = new Renderer(this.palette);
         this.ui.buildPalette();
         await Promise.race([
@@ -103,6 +109,7 @@ class Editor {
                 this.ui.setLoading("Entwurf wird geladen …");
                 try {
                     const validated = validateDocument(draft.doc, { knownAssets: new Set(this.palette.stamps.keys()), rasterSource: "binary" });
+                    await this.palette.ensureDocumentImages(validated);
                     this.loadDocument(await materialize(validated));
                     this.setAutosaveState("saved", draft.savedAt);
                     this.ui.ready();
@@ -314,6 +321,10 @@ class Editor {
         } else if (this.tool === "stamp" && this.stampOpts.asset) {
             const stamp = this.palette.stamps.get(this.stampOpts.asset);
             if (!stamp) return;
+            if (!stamp.image) {
+                this.palette.loadStamp(stamp.id).catch(() => {});
+                return;
+            }
             const longest = Math.max(stamp.w, stamp.h);
             const w = (this.stampOpts.size * stamp.w) / longest;
             const h = (this.stampOpts.size * stamp.h) / longest;
@@ -908,6 +919,7 @@ class Editor {
                 throw new ValidationError("Die Datei ist keine gültige JSON-Datei.");
             }
             const validated = validateDocument(raw, { knownAssets: new Set(this.palette.stamps.keys()) });
+            await this.palette.ensureDocumentImages(validated);
             const doc = await materialize(validated);
             if (!(await this.ui.confirmReplace())) return;
             this.loadDocument(doc);
@@ -915,7 +927,7 @@ class Editor {
             this.fileGeneration = this.generation; // identical to the file just opened
             this.ui.toast(`„${doc.meta.title}“ geladen.`);
         } catch (error) {
-            const message = error instanceof ValidationError ? error.message : "Die Datei konnte nicht gelesen werden.";
+            const message = error instanceof ValidationError ? error.message : "Die Datei konnte nicht vollständig geladen werden. Bitte prüfe die Symbolpakete und versuche es erneut.";
             this.ui.showError(message);
         }
     }
@@ -930,6 +942,10 @@ class Editor {
         if (this.doc.size.w * scale * this.doc.size.h * scale > MAX_EXPORT_PIXELS) {
             throw new Error("Diese Auflösung ist zu groß für den Browser.");
         }
+        const doc = this.doc;
+        const generation = this.generation;
+        await this.palette.ensureDocumentImages(doc);
+        if (doc !== this.doc || generation !== this.generation) throw new Error("Die Karte wurde während des Exports geändert. Bitte erneut exportieren.");
         this.flushRender();
         const canvas = this.renderer.renderExport(scale);
         const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));

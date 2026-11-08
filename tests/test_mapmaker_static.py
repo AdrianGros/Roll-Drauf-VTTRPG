@@ -84,3 +84,46 @@ def test_attributions_cover_assets_fonts_and_the_excluded_texture():
     assert "background-old-paper.jpg" in text and "CC BY-SA" in text
     for path in JS_FILES + [APP / "mapmaker.css", APP / "index.html"]:
         assert "background-old-paper" not in path.read_text(encoding="utf-8"), path.name
+
+
+def test_artist_catalogue_has_complete_integrity_and_local_license_evidence():
+    import hashlib
+
+    assets = APP / "assets"
+    catalog = json.loads((assets / "packs.json").read_text())
+    assert len(catalog["packs"]) == 14
+    all_ids = set()
+    total = 0
+    for pack in catalog["packs"]:
+        assert re.fullmatch(r"[a-z0-9][a-z0-9-]{0,50}", pack["id"])
+        assert pack["manifest"] == f'{pack["id"]}/manifest.json'
+        folder = assets / pack["id"]
+        manifest = json.loads((assets / pack["manifest"]).read_text())
+        assert manifest["license"] == "CC0-1.0"
+        assert manifest["author"] and manifest["source"].startswith("https://")
+        assert "CC0" in (folder / "License.txt").read_text()
+        expected_files = set()
+        for kind in ("stamps", "textures"):
+            for entry in manifest[kind]:
+                assert entry["id"] not in all_ids
+                all_ids.add(entry["id"])
+                assert re.fullmatch(r"[a-z0-9_]{1,40}\.png", entry["file"])
+                content = (folder / entry["file"]).read_bytes()
+                assert hashlib.sha256(content).hexdigest() == entry["sha256"]
+                expected_files.add(entry["file"])
+                if pack["id"].startswith("kma-"):
+                    assert re.fullmatch(r"kma:[a-z0-9_-]{1,40}", entry["id"])
+                    assert 0 < entry["w"] <= 384 and 0 < entry["h"] <= 384
+                    assert re.fullmatch(r"[a-f0-9]{64}", entry["originalSha256"])
+        assert {p.name for p in folder.glob("*.png")} == expected_files
+        total += len(manifest["stamps"])
+        if pack["id"] != "kenney-cartography":
+            assert hashlib.sha256((folder / "License.txt").read_bytes()).hexdigest() == manifest["licenseEvidenceSha256"]
+            assert manifest["provenance"] and manifest["provenanceUrl"].startswith("https://")
+            assert manifest["retrievedAt"] == "2026-11-08"
+    assert total >= 6000
+    assert "kenney:castle" in all_ids
+    credits = (APP / "credits.html").read_text()
+    assert "K. M. Alexander" in credits and "Rob Tuytel" in credits and "Rico Cilliers" in credits
+    assert 'href="assets/inventory.csv"' in credits
+    assert 'href="credits.html"' in (APP / "index.html").read_text()
