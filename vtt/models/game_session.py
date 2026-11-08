@@ -74,7 +74,7 @@ class GameSession(db.Model):
         if status == "completed":
             return "ended"
         if status == "cancelled":
-            return "paused"
+            return "cancelled"
         return status or "scheduled"
 
     # M41: State machine methods

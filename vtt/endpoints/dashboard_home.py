@@ -85,6 +85,7 @@ def _build_session_summaries(campaigns: list[Campaign]) -> list[dict]:
     sessions = (
         GameSession.query.filter(GameSession.campaign_id.in_(campaign_ids))
         .filter(GameSession.is_archived.is_(False))
+        .filter(GameSession.status != 'cancelled')
         .order_by(
             GameSession.started_at.desc().nullslast(),
             GameSession.scheduled_at.asc().nullsfirst(),

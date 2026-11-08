@@ -75,7 +75,10 @@
             const status = String(session?.runtime_status || session?.session_state || session?.status || '').trim().toLowerCase();
             return status === 'in_progress' || status === 'active';
         });
-        return active || list[0] || null;
+        const upcoming = list.filter(session => ['scheduled', 'ready'].includes(session.status)
+            && session.scheduled_at && Date.parse(session.scheduled_at + (/Z$|[+-]\d\d:\d\d$/.test(session.scheduled_at) ? '' : 'Z')) >= Date.now())
+            .sort((a, b) => String(a.scheduled_at).localeCompare(String(b.scheduled_at)));
+        return active || upcoming[0] || list.find(session => session.status !== 'cancelled') || null;
     }
 
     function buildHubActionButton(label, hubAction, opts = {}) {
@@ -1270,6 +1273,7 @@
                             href: buildIntentHref('/campaigns', { campaign_id: campaign.id, workspace: 1 }),
                         }]) : ''}
                     </section>
+                    <section class="book-scene-panel" data-session-calendar></section>
                 `,
             });
         },
@@ -1434,39 +1438,39 @@
             }
         },
 
-        bindCampaignHubDetailActions(campaignId) {
-            if (!this.sceneSurface) {
+        bindCampaignHubDetailActions(campaignId, root = this.sceneSurface) {
+            if (!root) {
                 return;
             }
-            this.sceneSurface.querySelectorAll('[data-hub-action="leave-campaign"], [data-hub-action="kick-player"]').forEach((button) => {
+            root.querySelectorAll('[data-hub-action="leave-campaign"], [data-hub-action="kick-player"]').forEach((button) => {
                 button.addEventListener('click', () => this.changeCampaignMembership(campaignId, button));
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="open-session"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="open-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const sessionId = Number(node.getAttribute('data-hub-session-id'));
                     this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns' });
                 });
             });
             [['open-session-dm', 'dm'], ['open-session-player', 'player']].forEach(([hubAction, seat]) => {
-                this.sceneSurface.querySelectorAll(`[data-hub-action="${hubAction}"]`).forEach((node) => {
+                root.querySelectorAll(`[data-hub-action="${hubAction}"]`).forEach((node) => {
                     node.addEventListener('click', () => {
                         const sessionId = Number(node.getAttribute('data-hub-session-id'));
                         this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat });
                     });
                 });
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="start-session"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="start-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const sessionId = Number(node.getAttribute('data-hub-session-id'));
                     this.startCampaignHubSession(campaignId, sessionId);
                 });
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="new-session"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="new-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     this.createCampaignHubSession(campaignId);
                 });
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="generate-invite"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="generate-invite"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     this.generateCampaignHubInvite(campaignId);
                 });
@@ -1474,7 +1478,7 @@
             // The invite link box renders async (loadCampaignHubInvites), so
             // its copy button doesn't exist yet at bind time - delegate from
             // the static box container instead of binding it directly.
-            this.sceneSurface.querySelectorAll('[data-hub-invite-link-box]').forEach((node) => {
+            root.querySelectorAll('[data-hub-invite-link-box]').forEach((node) => {
                 node.addEventListener('click', (event) => {
                     const button = event.target.closest('[data-hub-action="copy-invite-link"]');
                     if (!button) {
@@ -1485,7 +1489,7 @@
                     this.copyInviteLinkField(field, button);
                 });
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="approve-join-request"], [data-hub-action="deny-join-request"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="approve-join-request"], [data-hub-action="deny-join-request"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const row = node.closest('[data-join-request]');
                     const userId = row ? Number(row.getAttribute('data-user-id')) : null;
@@ -1535,6 +1539,31 @@
                 this.bindSceneNavigation();
                 this.bindCampaignHubDetailActions(id);
                 this.loadCampaignHubInvites(id);
+                const calendarRoot = this.sceneSurface.querySelector('[data-session-calendar]');
+                if (calendarRoot) {
+                    try {
+                        const {mountSessionCalendar} = await import('/static/js/session-calendar.js');
+                        if (this.sceneRenderVersion === renderVersion && calendarRoot.isConnected) {
+                            await mountSessionCalendar(calendarRoot, {campaignId:id, campaignName:data.campaign.name,
+                                canManage:Boolean(data.campaign.is_owner) || ['DM','CO_DM','CODM'].includes(data.campaign.your_role),
+                                onChanged:async () => {
+                                    const updated = await window.Auth.makeAuthRequest(`/api/campaigns/${id}`);
+                                    if (this.sceneRenderVersion !== renderVersion || !calendarRoot.isConnected || !updated) return;
+                                    const fragment = document.createElement('template');
+                                    fragment.innerHTML = this.buildCampaignHubDetailMarkup(this.sceneUser, updated);
+                                    const next = fragment.content.querySelector('#campaignHubSessionPrep');
+                                    const previous = this.sceneSurface.querySelector('#campaignHubSessionPrep');
+                                    if (next && previous) {
+                                        previous.replaceWith(next);
+                                        this.bindCampaignHubDetailActions(id, next);
+                                        this.bindSceneNavigation(next);
+                                    }
+                                }});
+                        }
+                    } catch (_error) {
+                        if (calendarRoot.isConnected) calendarRoot.textContent = 'Der Session-Kalender konnte nicht geladen werden. Bitte die Seite neu laden.';
+                    }
+                }
             } catch (error) {
                 if (this.sceneRenderVersion !== renderVersion) return;
                 this.sceneSurface.innerHTML = this.buildPageShell('campaigns', this.sceneUser, {
@@ -1616,15 +1645,15 @@
             return this.buildDashboardMarkup(user, snapshot);
         },
 
-        bindSceneNavigation() {
-            if (!this.sceneSurface) {
+        bindSceneNavigation(root = this.sceneSurface) {
+            if (!root) {
                 return;
             }
 
-            window.CreationEngineNavigation?.hydrate(this.sceneSurface);
-            window.RegelwerkNavigation?.hydrate(this.sceneSurface);
+            window.CreationEngineNavigation?.hydrate(root);
+            window.RegelwerkNavigation?.hydrate(root);
 
-            this.sceneSurface.querySelectorAll('[data-dashboard-route]').forEach((node) => {
+            root.querySelectorAll('[data-dashboard-route]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const route = node.getAttribute('data-dashboard-route');
                     if (!route) {
@@ -1634,7 +1663,7 @@
                 });
             });
 
-            this.sceneSurface.querySelectorAll('[data-dashboard-href]').forEach((node) => {
+            root.querySelectorAll('[data-dashboard-href]').forEach((node) => {
                 const navigate = () => {
                     const href = node.getAttribute('data-dashboard-href');
                     if (!href) {
@@ -1656,7 +1685,7 @@
                 }
             });
 
-            this.sceneSurface.querySelectorAll('[data-dashboard-detail]').forEach((node) => {
+            root.querySelectorAll('[data-dashboard-detail]').forEach((node) => {
                 const openDetail = (event) => {
                     // The ledger row and its own "Hub öffnen" button both
                     // carry this attribute (row = whole-row click target per
@@ -1686,7 +1715,7 @@
                 }
             });
 
-            this.sceneSurface.querySelectorAll('[data-character-campaign]').forEach((form) => {
+            root.querySelectorAll('[data-character-campaign]').forEach((form) => {
                 form.addEventListener('submit', async (event) => {
                     event.preventDefault();
                     const button = form.querySelector('button');
@@ -1714,11 +1743,11 @@
                 });
             });
 
-            this.sceneSurface.querySelectorAll('[data-character-action]').forEach((node) => {
+            root.querySelectorAll('[data-character-action]').forEach((node) => {
                 node.addEventListener('click', () => this.runCharacterAction(node));
             });
 
-            this.sceneSurface.querySelectorAll('[data-dashboard-action="request-campaign-join"]').forEach((node) => {
+            root.querySelectorAll('[data-dashboard-action="request-campaign-join"]').forEach((node) => {
                 node.addEventListener('click', async () => {
                     const box = node.closest('[data-campaign-id]');
                     const status = box.querySelector('[data-join-status]');
@@ -1736,7 +1765,7 @@
                 });
             });
 
-            this.sceneSurface.querySelectorAll('[data-dashboard-action="join-campaign"]').forEach((node) => {
+            root.querySelectorAll('[data-dashboard-action="join-campaign"]').forEach((node) => {
                 node.addEventListener('click', async () => {
                     const joinBox = node.closest('.book-scene-join');
                     if (!joinBox) {
@@ -1784,7 +1813,7 @@
                 });
             });
 
-            this.sceneSurface.querySelectorAll('[data-dashboard-section]').forEach((node) => {
+            root.querySelectorAll('[data-dashboard-section]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const section = node.getAttribute('data-dashboard-section');
                     if (!section) {
@@ -1797,13 +1826,13 @@
                 });
             });
 
-            this.sceneSurface.querySelectorAll('[data-dashboard-action="play-launch"]').forEach((node) => {
+            root.querySelectorAll('[data-dashboard-action="play-launch"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     this.openPlayLaunch();
                 });
             });
 
-            this.sceneSurface.querySelectorAll('[data-dashboard-action="logout"]').forEach((node) => {
+            root.querySelectorAll('[data-dashboard-action="logout"]').forEach((node) => {
                 node.addEventListener('click', async () => {
                     if (window.Auth && typeof window.Auth.logout === 'function') {
                         await window.Auth.logout();
@@ -1972,6 +2001,7 @@
 
         getPlayLaunchSessionPhase(session) {
             const status = String(session?.runtime_status || '').trim().toLowerCase();
+            if (status === 'cancelled') return {label:'Abgesagt', tone:'cancelled'};
             if (status === 'in_progress' || status === 'active' || status === 'live') {
                 return { label: this.content('play_launch.phase_live', 'Live'), tone: 'live' };
             }

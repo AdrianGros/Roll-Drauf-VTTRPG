@@ -1745,6 +1745,9 @@
 
             const canManage = campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
             return sessions.map(session => {
+                if (session.status === 'cancelled') {
+                    return `<div class="list-item"><strong>${escapeHtml(session.name)}</strong><div class="muted">Abgesagt · ${formatDate(session.scheduled_at)}</div></div>`;
+                }
                 const phase = getSessionPhase(session);
                 let primaryAction = "";
                 let prepNote = "";
@@ -1824,7 +1827,10 @@
 
         function getLatestSession(sessions) {
             if (!sessions || sessions.length === 0) return null;
-            return sessions[0];
+            const upcoming = sessions.filter(session => ['scheduled', 'ready'].includes(session.status)
+                && session.scheduled_at && Date.parse(session.scheduled_at + (/Z$|[+-]\d\d:\d\d$/.test(session.scheduled_at) ? '' : 'Z')) >= Date.now())
+                .sort((a, b) => String(a.scheduled_at).localeCompare(String(b.scheduled_at)));
+            return upcoming[0] || sessions.find(session => session.status !== 'cancelled') || null;
         }
 
         function getLatestActiveSession(sessions) {
@@ -1903,6 +1909,7 @@
         }
 
         function getSessionPhase(session) {
+            if (session?.status === 'cancelled') return {label:'Abgesagt', className:'state-done', tone:'cancelled'};
             const status = String(session?.runtime_status || session?.session_state || session?.status || "").trim().toLowerCase();
             if (status === "in_progress" || status === "active") {
                 return { label: "Live", className: "state-live", tone: "live" };
