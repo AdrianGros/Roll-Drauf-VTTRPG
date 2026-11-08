@@ -464,3 +464,13 @@ input[type=range] { width: 100%; accent-color: var(--plum); min-height: 28px; }
 @media (max-width: 760px) {
     .mm-swatches { max-height: 155px; overflow-y: auto; padding: 3px; }
 }
+
+/* Original artist sheets: numeric fields also allow precise keyboard selection. */
+.mm-sheet-fields { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.mm-sheet-fields label { display:grid; gap:4px; }
+.mm-sheet-fields input { width:84px; }
+.mm-sheet-image { max-height:48vh; overflow:auto; background:repeating-conic-gradient(#6b655d 0% 25%, #847b6c 0% 50%) 0 / 16px 16px; }
+#sheetCanvas { display:block; max-width:100%; height:auto; touch-action:none; cursor:crosshair; }
+.mm-stamp img { image-rendering:pixelated; }
+#stampSearch { width:100%; box-sizing:border-box; }
+#sheetName { overflow-wrap:anywhere; }

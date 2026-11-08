@@ -41,7 +41,7 @@ export const PLACE_KINDS = {
 
 const ID_RE = /^[A-Za-z0-9_-]{1,40}$/;
 const COLOR_RE = /^#[0-9a-fA-F]{6}$/;
-const ASSET_RE = /^(builtin|kenney|kma):[a-z0-9_-]{1,40}$/;
+const ASSET_RE = /^(builtin|kenney|kma|color):[a-z0-9_-]{1,40}$/;
 const PNG_PREFIX = "data:image/png;base64,";
 const PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
 // Control characters except tab and newline (lore may contain line breaks).
@@ -273,6 +273,15 @@ function rasterBytes(layerIn, source, w, h) {
     return bytes;
 }
 
+function validateCrop(value, asset, knownAssets) {
+    const source = typeof knownAssets.get === "function" ? knownAssets.get(asset) : null;
+    if (!source || !isPlainObject(value)) fail("Ausschnitt ohne bekannte Bildmaße.");
+    for (const key of ["x", "y", "w", "h"]) if (!Number.isInteger(value[key])) fail("Ausschnitt muss ganzzahlige Bildpixel verwenden.");
+    const { x, y, w, h } = value;
+    if (x < 0 || y < 0 || w < 1 || h < 1 || x + w > source.w || y + h > source.h) fail("Ausschnitt liegt außerhalb des Quellbilds.");
+    return { x, y, w, h };
+}
+
 function validateStamp(itemIn, ids, knownAssets, w, h) {
     if (!isPlainObject(itemIn)) fail("Ungültiges Symbol.");
     if (typeof itemIn.asset !== "string" || !ASSET_RE.test(itemIn.asset)) fail("Ungültige Symbolkennung.");
@@ -282,6 +291,7 @@ function validateStamp(itemIn, ids, knownAssets, w, h) {
     return {
         id: id(itemIn.id, ids),
         asset: itemIn.asset,
+        ...(itemIn.crop === undefined || itemIn.crop === null ? {} : { crop: validateCrop(itemIn.crop, itemIn.asset, knownAssets) }),
         x: num(itemIn.x, -w, 2 * w, "Position"),
         y: num(itemIn.y, -h, 2 * h, "Position"),
         size: num(itemIn.size, LIMITS.stampSize[0], LIMITS.stampSize[1], "Symbolgröße"),
@@ -422,7 +432,7 @@ function plainItem(item) {
     if ("points" in item) return { id: item.id, x: round(item.x), y: round(item.y), material: item.material,
         width: round(item.width), points: item.points.map((p) => ({ x: round(p.x), y: round(p.y) })) };
     if ("asset" in item) {
-        return { id: item.id, asset: item.asset, x: round(item.x), y: round(item.y), size: round(item.size), rot: round(item.rot), flip: item.flip };
+        return { id: item.id, asset: item.asset, x: round(item.x), y: round(item.y), size: round(item.size), rot: round(item.rot), flip: item.flip, ...(item.crop ? { crop: { ...item.crop } } : {}) };
     }
     return {
         id: item.id, x: round(item.x), y: round(item.y), text: item.text, style: item.style, size: round(item.size),

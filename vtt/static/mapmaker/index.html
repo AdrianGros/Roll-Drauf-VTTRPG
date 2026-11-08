@@ -175,10 +175,11 @@
                 <label class="mm-field"><span>Asset-Paket</span><select id="stampPack"><option value="">Alle Pakete</option></select></label>
                 <label class="mm-field"><span>Kategorie</span><select id="stampCategory"><option value="">Alle Kategorien</option></select></label>
                 <p id="stampSelected" class="mm-meta"></p>
+                    <button id="stampCrop" type="button" class="mm-btn mm-btn-small" disabled>Ausschnitt wählen</button>
                 <p id="stampResults" class="mm-hint" role="status" aria-live="polite"></p>
                 <div class="mm-palette-pages"><button id="stampPrev" type="button" class="mm-btn mm-btn-small">Vorherige</button><button id="stampNext" type="button" class="mm-btn mm-btn-small">Weitere Symbole</button></div>
                 <div id="palette" class="mm-palette"></div>
-                <p class="mm-hint"><a href="credits.html" target="_blank" rel="noopener">Künstler, Quellen &amp; Lizenzen</a> · Alle Bildpakete: CC0.</p>
+                <p class="mm-hint"><a href="credits.html" target="_blank" rel="noopener">Künstler, Quellen &amp; Lizenzen</a> · Kommerziell nutzbar mit den jeweiligen Künstler-Credits.</p>
                 <p id="packNote" class="mm-hint" hidden></p>
                 <div class="mm-range mm-range-edit"><label for="stampSize">Größe</label><input id="stampSize" type="range" min="16" max="320" step="1"><output id="stampSizeOut"></output><input id="stampSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Symbolgröße in Pixel"></div>
                 <label class="mm-range"><span>Drehung</span><input id="stampRot" type="range" min="-180" max="180" step="1"><output id="stampRotOut"></output></label>
@@ -270,6 +271,26 @@
     </div>
 </dialog>
 
+<dialog id="sheetDialog" class="mm-dialog mm-dialog-wide" aria-labelledby="sheetTitle">
+    <h2 id="sheetTitle">Bild oder Ausschnitt platzieren</h2>
+    <p id="sheetName" class="mm-hint"></p>
+    <p class="mm-hint">Klicke oder ziehe im Bild für ein Tile, eine Figur oder ein ganzes Gebäude. Die Zahlen erlauben jeden Ausschnitt in Originalpixeln. Raster 1 löst die Rasterbindung.</p>
+    <div class="mm-sheet-fields">
+        <label>Raster <input id="sheetGrid" type="number" min="1" max="128" value="32"></label>
+        <label>X <input id="sheetX" type="number" min="0" step="1"></label>
+        <label>Y <input id="sheetY" type="number" min="0" step="1"></label>
+        <label>Breite <input id="sheetW" type="number" min="1" step="1"></label>
+        <label>Höhe <input id="sheetH" type="number" min="1" step="1"></label>
+    </div>
+    <div class="mm-sheet-image"><canvas id="sheetCanvas" aria-label="Bildblatt zur Ausschnittauswahl"></canvas></div>
+    <p id="sheetError" class="mm-error" role="alert" hidden>Ausschnitt muss innerhalb des Bildes liegen.</p>
+    <div class="mm-dialog-actions">
+        <button id="sheetCancel" type="button" class="mm-btn">Abbrechen</button>
+        <button id="sheetWhole" type="button" class="mm-btn">Ganzes Bild</button>
+        <button id="sheetUse" type="button" class="mm-btn mm-btn-primary">Ausschnitt verwenden</button>
+    </div>
+</dialog>
+
 <dialog id="exportDialog" class="mm-dialog" aria-labelledby="exportTitle">
     <h2 id="exportTitle">Karte exportieren</h2>
     <fieldset class="mm-radio">
@@ -277,7 +298,7 @@
         <label><input type="radio" name="exportScale" value="1" checked> <span id="exportLabel1">1×</span></label>
         <label><input type="radio" name="exportScale" value="2"> <span id="exportLabel2">2×</span></label>
     </fieldset>
-    <p class="mm-hint"><strong>In eine Kampagne übernehmen:</strong> PNG exportieren → Kampagnen → Kampagne öffnen → „Karte hinzufügen“ (nur Spielleitung). Das Paket enthält PNG und bearbeitbare Karte.</p>
+    <p class="mm-hint"><strong>In eine Kampagne übernehmen:</strong> PNG exportieren → Kampagnen → Kampagne öffnen → „Karte hinzufügen“ (nur Spielleitung). Das Paket enthält PNG, bearbeitbare Karte und CREDITS.txt. PNG enthält eingebettete Künstler-Credits. Bei Veröffentlichung die Angaben auch im Begleittext oder auf einer Credits-Seite nennen; manche Bilddienste entfernen Metadaten.</p>
     <p id="exportError" class="mm-error" role="alert" hidden></p>
     <div class="mm-dialog-actions">
         <button id="exportCancel" type="button" class="mm-btn">Abbrechen</button>
@@ -332,7 +353,7 @@
             </dl>
         </div>
     </div>
-    <p class="mm-hint">Die Karte wird automatisch in diesem Browser gespeichert. Für Sicherungen und andere Geräte: „Datei → Als Datei speichern“. Symbole und Fototexturen: kostenlose CC0-Künstlerpakete. <a href="credits.html" target="_blank" rel="noopener">Alle Künstler und Lizenzen</a>.</p>
+    <p class="mm-hint">Die Karte wird automatisch in diesem Browser gespeichert. Für Sicherungen und andere Geräte: „Datei → Als Datei speichern“. Symbole und Fototexturen: kostenlose Künstlerpakete unter CC0, CC BY und OGA-BY. <a href="credits.html" target="_blank" rel="noopener">Alle Künstler und Lizenzen</a>.</p>
     <div class="mm-dialog-actions">
         <button id="helpClose" type="button" class="mm-btn mm-btn-primary">Schließen</button>
     </div>

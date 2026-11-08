@@ -873,7 +873,7 @@ def test_terrain_style_and_combined_export(open_editor, tmp_path):
     info.value.save_as(target)
     with zipfile.ZipFile(io.BytesIO(target.read_bytes())) as archive:
         names = archive.namelist()
-        assert len(names) == 2 and any(n.endswith(".png") for n in names) and any(n.endswith(".rdmap.json") for n in names)
+        assert len(names) == 3 and "CREDITS.txt" in names and any(n.endswith(".png") for n in names) and any(n.endswith(".rdmap.json") for n in names)
         assert _png_size(archive.read(next(n for n in names if n.endswith(".png")))) == (2400, 1600)
         project = json.loads(archive.read(next(n for n in names if n.endswith(".rdmap.json"))))
     assert project["meta"]["showTitle"] is True
@@ -1360,6 +1360,8 @@ def test_every_artist_set_places_pixels_and_survives_import_export(open_editor, 
     # Exercise the independently loaded symbol-on-place path as well.
     pack = json.loads((STATIC / "mapmaker/assets/kma-blaeu/manifest.json").read_text())
     place_asset = pack["stamps"][-1]["id"]
+    ed.page.locator("#stampPack").select_option("kma-blaeu")
+    ed.page.locator("#stampSearch").fill(pack["stamps"][-1]["label"])
     ed.tool("label")
     ed.page.locator("#placeSymbol").select_option(place_asset)
     ed.click_doc(2000, 600)
@@ -1455,4 +1457,77 @@ def test_missing_used_artist_image_blocks_export_visibly(open_editor):
     ed.page.locator("#exportGo").click()
     expect(ed.page.locator("#exportError")).to_be_visible()
     expect(ed.page.locator("#exportError")).to_contain_text("Export fehlgeschlagen")
+    ed.assert_clean()
+
+
+@pytest.mark.parametrize('width', [1440, 390])
+def test_color_sheet_crop_roundtrip_and_credit_export(open_editor, tmp_path, width):
+    from PIL import Image
+    ed = open_editor(width=width)
+    ed.tool('stamp')
+    ed.tab('Werkzeug')
+    ed.page.locator('#stampPack').select_option('kenney-rpg')
+    manifest = json.loads((STATIC/'mapmaker/assets/kenney-rpg/manifest.json').read_text())
+    entry = next(e for e in manifest['stamps'] if e['sheet'] and 'transparent' in e['originalPath'].lower())
+    ed.page.locator(f'.mm-stamp[data-asset="{entry["id"]}"]').click()
+    expect(ed.page.locator('#sheetDialog')).to_be_visible()
+    for key, value in {'X':0,'Y':0,'W':16,'H':32}.items():
+        ed.page.locator('#sheet'+key).fill(str(value))
+    ed.page.locator('#sheetW').fill(str(entry['w']+1))
+    expect(ed.page.locator('#sheetUse')).to_be_disabled()
+    ed.page.locator('#sheetW').fill('16')
+    ed.page.locator('#sheetUse').click()
+    ed.click_doc(*SEA_A)
+    placed = next(i for i in ed.summary()['items'] if i.get('asset') == entry['id'])
+    assert placed['crop'] == dict(x=0,y=0,w=16,h=32)
+    ed.page.keyboard.press('Control+z')
+    assert not any(i.get('id') == placed['id'] for i in ed.summary()['items'])
+    ed.page.keyboard.press('Control+Shift+z')
+    assert next(i for i in ed.summary()['items'] if i.get('id') == placed['id'])['crop'] == placed['crop']
+    with ed.page.expect_download() as download:
+        ed.menu('Als Datei speichern')
+    project=tmp_path/'crop.rdmap.json';download.value.save_as(project)
+    raw=json.loads(project.read_text())
+    assert next(i for l in raw['layers'] for i in l.get('items',[]) if i.get('id')==placed['id'])['crop']==placed['crop']
+    ed.page.locator('#fileInput').set_input_files(project)
+    expect(ed.page.locator('#toast')).to_contain_text('geladen')
+    assert next(i for i in ed.summary()['items'] if i.get('id')==placed['id'])['crop']==placed['crop']
+    ed.menu('Als PNG exportieren')
+    with ed.page.expect_download(timeout=60000) as download:
+        ed.page.locator('#exportBundle').click()
+    target=tmp_path/'crop.zip';download.value.save_as(target)
+    with zipfile.ZipFile(target) as z:
+        credits=z.read('CREDITS.txt').decode()
+        assert 'Kenney' in credits and 'Lynn Evers' in credits and 'CC0-1.0' in credits
+        png=z.read(next(n for n in z.namelist() if n.endswith('.png')))
+        with Image.open(io.BytesIO(png)) as image:
+            image.load()
+            assert image.info['Credits']==credits
+    assert ed.page.locator('#placeSymbol option').count() < 100
+    ed.proof('color-crop-'+str(width))
+    ed.assert_clean()
+
+
+def test_color_crop_validation_and_geometry(open_editor):
+    ed=open_editor()
+    result=ed.page.evaluate('''async () => {
+        const { validateDocument, serialize } = await import('./js/document.js');
+        const { stampBounds } = await import('./js/render.js');
+        const { loadPalette } = await import('./js/stamps.js');
+        const palette=await loadPalette();
+        const stamp=[...palette.stamps.values()].find(s=>s.pack==='kenney-rpg' && s.sheet);
+        const item={id:'cropTest',asset:stamp.id,x:300,y:300,size:100,rot:0,flip:false,crop:{x:0,y:0,w:16,h:32}};
+        const raw={format:'rd-mapmaker',version:1,size:{w:512,h:512},meta:{title:'Crop'},layers:[{id:'layer',kind:'stamps',name:'Stempel',visible:true,opacity:1,items:[item]}]};
+        const valid=validateDocument(raw,{knownAssets:palette.stamps});
+        const bounds=stampBounds(valid.layers[0].items[0],palette);
+        const failures=[];
+        for(const crop of [{x:-1,y:0,w:16,h:16},{x:0,y:0,w:0,h:16},{x:0,y:0,w:1.5,h:16},{x:stamp.w,y:0,w:16,h:16},{x:0,y:stamp.h,w:16,h:16}]) {
+            raw.layers[0].items[0]={...item,crop};
+            try {validateDocument(raw,{knownAssets:palette.stamps});failures.push(crop);}catch(e){}
+        }
+        return {bounds,failures,count:palette.stamps.size};
+    }''')
+    assert result['bounds']==dict(x=275,y=250,w=50,h=100)
+    assert not result['failures']
+    assert result['count'] > 7000
     ed.assert_clean()

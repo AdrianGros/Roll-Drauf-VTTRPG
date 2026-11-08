@@ -3,7 +3,7 @@
 // map-resolution composite (region by region) and the PNG export.
 
 import { createCanvas } from "./document.js";
-import { stampExtent } from "./stamps.js";
+import { stampExtent, drawStampImage } from "./stamps.js";
 import { rectClamp, rectUnion } from "./brush.js";
 
 // Coast glow uses shadowBlur 26 (σ≈13 px); 64 px ≈ 5σ keeps region re-renders exact.
@@ -56,7 +56,7 @@ export function labelBounds(item) {
 
 export function stampBounds(item, palette) {
     const stamp = palette.stamps.get(item.asset);
-    const ext = stamp ? stampExtent(stamp, item.size) : { w: item.size, h: item.size };
+    const ext = stamp ? stampExtent(stamp, item.size, item.crop) : { w: item.size, h: item.size };
     const angle = (item.rot * Math.PI) / 180;
     const cos = Math.abs(Math.cos(angle));
     const sin = Math.abs(Math.sin(angle));
@@ -130,12 +130,12 @@ function drawStamp(ctx, item, palette) {
         palette.loadStamp(stamp.id).catch(() => {});
         return;
     }
-    const ext = stampExtent(stamp, item.size);
+    const ext = stampExtent(stamp, item.size, item.crop);
     ctx.save();
     ctx.translate(item.x, item.y);
     if (item.rot) ctx.rotate((item.rot * Math.PI) / 180);
     if (item.flip) ctx.scale(-1, 1);
-    ctx.drawImage(stamp.image, -ext.w / 2, -ext.h / 2, ext.w, ext.h);
+    drawStampImage(ctx, stamp, item.crop, -ext.w / 2, -ext.h / 2, ext.w, ext.h);
     ctx.restore();
 }
 

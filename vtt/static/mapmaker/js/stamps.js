@@ -2,7 +2,7 @@
 // plus a tiny built-in set (compass, pin; simple fallbacks if the pack is missing).
 
 const FILE_RE = /^[a-z0-9_]{1,40}\.png$/;
-const ASSET_ID_RE = /^(kenney|kma):[a-z0-9_-]{1,40}$/;
+const ASSET_ID_RE = /^(kenney|kma|color):[a-z0-9_-]{1,40}$/;
 const PACK_ID_RE = /^[a-z0-9][a-z0-9-]{0,50}$/;
 const INK = "#3b2a1a";
 
@@ -142,6 +142,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
     };
     const addStamp = (stamp) => {
         if (stamps.has(stamp.id)) return;
+        stamp.searchText = `${stamp.label} ${stamp.group} ${stamp.packName} ${stamp.search}`.toLocaleLowerCase("de").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         stamps.set(stamp.id, stamp);
         let group = groups.find((g) => g.name === stamp.group);
         if (!group) {
@@ -155,18 +156,19 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
             const response = await fetch(`assets/${pack.id}/manifest.json`, { cache: "no-cache" });
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const manifest = await response.json();
-            const entries = Array.isArray(manifest.stamps) ? manifest.stamps.slice(0, 10000) : [];
+            const entries = Array.isArray(manifest.stamps) ? manifest.stamps : [];
             const accepted = [];
             for (const entry of entries) {
                 if (!entry || !ASSET_ID_RE.test(entry.id) || !FILE_RE.test(entry.file)) continue;
                 if (!(entry.w > 0 && entry.w <= 4096 && entry.h > 0 && entry.h <= 4096)) continue;
-                if (pack.id === "kenney-cartography" ? !entry.id.startsWith("kenney:") : !entry.id.startsWith("kma:")) continue;
+                if (!(pack.id === "kenney-cartography" ? entry.id.startsWith("kenney:") : pack.id.startsWith("kma-") ? entry.id.startsWith("kma:") : entry.id.startsWith(`color:${pack.id}_`))) continue;
                 accepted.push({
-                    id: entry.id, label: String(entry.label || entry.id).slice(0, 100),
+                    id: entry.id, label: String(entry.label || entry.id).slice(0, 500),
                     group: String(entry.group || "Symbole").slice(0, 50),
                     pack: pack.id, packName: pack.name,
                     search: String(entry.search || entry.label || "").slice(0, 500),
                     src: `assets/${pack.id}/${entry.file}`, image: null,
+                    sheet: entry.sheet === true, grid: Number.isInteger(entry.grid) ? Math.max(1, Math.min(128, entry.grid)) : 1, pixelArt: entry.pixelArt === true,
                     w: entry.w, h: entry.h, defaultSize: clampSize(entry.defaultSize),
                 });
             }
@@ -191,7 +193,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
                     materialTextures.push({ id: entry.id, name: String(entry.label).slice(0, 50), image });
                 }
             }
-            packs.push(pack);
+            packs.push({ ...pack, credit: manifest.exportCredit || `${manifest.name || pack.name}\n${manifest.author}\n${manifest.source}\n${manifest.license}\n${manifest.licenseUrl}` });
         } catch (_error) {
             errors.push(`Paket „${pack.name}“ konnte nicht geladen werden.`);
         }
@@ -202,7 +204,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const catalog = await response.json();
         // Sequential insertion keeps catalogue ordering stable across connections.
-        for (const pack of (catalog.packs || []).slice(0, 32)) {
+        for (const pack of (catalog.packs || [])) {
             if (!pack || !PACK_ID_RE.test(pack.id) || pack.id === "kenney-cartography") continue;
             if (pack.manifest !== `${pack.id}/manifest.json`) continue;
             await readPack({ id: pack.id, name: String(pack.name || pack.id).slice(0, 80) });
@@ -228,7 +230,14 @@ function clampSize(value) {
 }
 
 /** Draw width/height for a stamp item (size = longest side in map pixels). */
-export function stampExtent(stamp, size) {
-    const longest = Math.max(stamp.w, stamp.h) || 1;
-    return { w: (size * stamp.w) / longest, h: (size * stamp.h) / longest };
+export function stampExtent(stamp, size, crop = null) {
+    const w = crop ? crop.w : stamp.w, h = crop ? crop.h : stamp.h;
+    const longest = Math.max(w, h) || 1;
+    return { w: (size * w) / longest, h: (size * h) / longest };
+}
+
+export function drawStampImage(ctx, stamp, crop, x, y, w, h) {
+    ctx.imageSmoothingEnabled = !stamp.pixelArt;
+    if (crop) ctx.drawImage(stamp.image, crop.x, crop.y, crop.w, crop.h, x, y, w, h);
+    else ctx.drawImage(stamp.image, x, y, w, h);
 }

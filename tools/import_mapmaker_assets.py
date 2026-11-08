@@ -164,40 +164,14 @@ def main():
         manifests.append(manifest)
         report.append({'pack': source['id'], 'stamps': len(manifest['stamps']), 'textures': len(manifest['textures']), 'excluded': len(excluded)})
         print(report[-1], flush=True)
+    # Keep reviewed color packs when reproducing the historical CC0 imports.
+    existing = json.loads((ASSETS / 'packs.json').read_text())['packs']
+    imported = {p['id'] for p in catalog}
+    catalog.extend(p for p in existing if p['id'] not in imported)
     write_json(ASSETS / 'packs.json', {'schemaVersion': 1, 'packs': catalog})
     write_json(ASSETS / 'import-report.json', report)
-    rows = []
-    for pack, manifest in zip(catalog, manifests):
-        for kind in ('stamps', 'textures'):
-            for entry in manifest[kind]:
-                rows.append({'pack': pack['id'], 'kind': kind, 'id': entry['id'], 'label': entry.get('label', entry['id']), 'category': entry.get('group', 'Material' if entry.get('purpose') == 'material' else 'Pergament'), 'file': pack['id'] + '/' + entry['file'], 'author': entry.get('author', manifest['author']), 'license': manifest['license'], 'sha256': entry['sha256'], 'source': entry.get('source', manifest['source'])})
-    with (ASSETS / 'inventory.csv').open('w', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=rows[0].keys(), lineterminator="\n")
-        writer.writeheader()
-        writer.writerows(rows)
-    (ROOT / 'docs/research/MAPMAKER_INVENTORY_AFTER_2026-11-08.csv').write_bytes((ASSETS / 'inventory.csv').read_bytes())
-    esc = html.escape
-    sections = []
-    for pack, m in zip(catalog, manifests):
-        authors = sorted({a.strip() for e in m['stamps'] + m['textures'] for a in e.get('author', m['author']).split(',')})
-        proof = m.get('provenance', 'Kenney Cartography Pack 1.0, 2020; Originalgrafiken des Künstlers.')
-        details = ''
-        if pack['id'] == 'polyhaven-terrain':
-            details = '<ul>' + ''.join(f'<li><a href="{esc(e["source"], quote=True)}">{esc(e["label"])}</a> – {esc(e["author"])}</li>' for e in m['textures']) + '</ul>'
-        sections.append(f'<article><h2>{esc(pack["name"])}</h2><p>Von {esc("; ".join(authors))} · {len(m["stamps"])} Stempel · {len(m["textures"])} Texturen</p><p>{esc(proof)}</p>{details}<p><a href="{esc(m["source"], quote=True)}">Künstler und Originalpaket</a> · <a href="{esc(m["licenseUrl"], quote=True)}">CC0 1.0</a> · <a href="assets/{pack["id"]}/License.txt">Original- und Lizenzhinweise</a> · <a href="assets/{pack["id"]}/manifest.json">Herkunft je Datei</a></p></article>')
-    credits = '''<!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Künstler &amp; Credits – Kartenwerkstatt</title><link rel="stylesheet" href="mapmaker.css"><link rel="stylesheet" href="credits.css"><link rel="icon" href="../icons/icon-maps-compass.svg"></head>
-<body class="mm-credits-page"><main class="mm-credits"><a href="index.html">← Zur Kartenwerkstatt</a><h1>Künstler &amp; Credits</h1>
-<p>Diese Kartenwerkstatt wächst durch die Arbeit von Künstlerinnen, Künstlern und historischen Kartografen. Danke, dass ihr eure Werke mit anderen teilt.</p>
-<p>Alle unten aufgeführten Bildpakete sind unter <strong>CC0 1.0</strong> kostenlos nutzbar, auch kommerziell und in exportierten Karten. Sie sind frei bei den verlinkten Quellen erhältlich. Wir nennen die Urheber freiwillig. Die Aufnahme bedeutet keine Partnerschaft oder Empfehlung durch die Künstler.</p>
-<p>Es wurden keine KI-generierten Bilder aufgenommen. Historische Kartenmotive und fotografierte Oberflächen werden nur technisch zugeschnitten und verkleinert; keine generative Bearbeitung.</p>
-<p><a href="assets/inventory.csv" download>Vollständiges Asset-Inventar (CSV)</a> · <a href="assets/source-lock.json">Quellen, Originaldateihashes und Herkunft</a></p>
-''' + '\n'.join(sections) + '''
-<article><h2>Schriften und Projektinhalte</h2><p>Cinzel – Natanael Gama; Literata – TypeTogether; Bad Script – Roman Shchyukin. Lokal eingebundene Schriften unter der <a href="https://openfontlicense.org/open-font-license-official-text/">SIL Open Font License 1.1</a>.</p><p>Die sechs einfachen Canvas-Symbole, prozeduralen Geländematerialien, Meereswellen und die Startkarte „Die Silbermark“ sind Projektinhalte. Sie sind keine heruntergeladenen Künstler-Bildpakete.</p></article>
-<p>Quellen und Lizenzen geprüft am 08.11.2026. <a href="index.html">Zurück zur Kartenwerkstatt</a></p></main></body></html>
-'''
-    (APP / 'credits.html').write_text(credits, encoding='utf-8')
-    print('Inventory rows:', len(rows))
+    from mapmaker_catalog import rebuild
+    rebuild()
 
 
 if __name__ == '__main__':

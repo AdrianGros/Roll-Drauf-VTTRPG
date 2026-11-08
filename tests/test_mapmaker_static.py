@@ -91,7 +91,7 @@ def test_artist_catalogue_has_complete_integrity_and_local_license_evidence():
 
     assets = APP / "assets"
     catalog = json.loads((assets / "packs.json").read_text())
-    assert len(catalog["packs"]) == 14
+    assert len(catalog["packs"]) >= 19
     all_ids = set()
     total = 0
     for pack in catalog["packs"]:
@@ -99,9 +99,9 @@ def test_artist_catalogue_has_complete_integrity_and_local_license_evidence():
         assert pack["manifest"] == f'{pack["id"]}/manifest.json'
         folder = assets / pack["id"]
         manifest = json.loads((assets / pack["manifest"]).read_text())
-        assert manifest["license"] == "CC0-1.0"
+        assert manifest["license"] in {"CC0-1.0", "CC-BY-3.0", "CC-BY-4.0", "OGA-BY-3.0"}
         assert manifest["author"] and manifest["source"].startswith("https://")
-        assert "CC0" in (folder / "License.txt").read_text()
+        assert manifest["license"].split("-")[0] in (folder / "License.txt").read_text()
         expected_files = set()
         for kind in ("stamps", "textures"):
             for entry in manifest[kind]:

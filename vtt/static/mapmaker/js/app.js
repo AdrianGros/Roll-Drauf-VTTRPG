@@ -1,3 +1,4 @@
+import { embedCredits, creditsForDocument } from "./credits.js";
 // Kartenwerkstatt editor controller: document state, commands, view, files, autosave.
 
 import {
@@ -5,7 +6,7 @@ import {
     createLayer, findItem, materialize, newId, serialize, validateDocument,
 } from "./document.js";
 import { History } from "./history.js";
-import { loadPalette } from "./stamps.js";
+import { drawStampImage, stampExtent, loadPalette } from "./stamps.js";
 import { COAST_PAD, Renderer, drawPath, itemBounds, pathHit, replacedTitleLabel } from "./render.js";
 import { StrokeEngine, rectUnion, registerMaterialTextures } from "./brush.js";
 import { createEmptyMap, createStarterMap } from "./starter.js";
@@ -108,7 +109,7 @@ class Editor {
             if (restore) {
                 this.ui.setLoading("Entwurf wird geladen …");
                 try {
-                    const validated = validateDocument(draft.doc, { knownAssets: new Set(this.palette.stamps.keys()), rasterSource: "binary" });
+                    const validated = validateDocument(draft.doc, { knownAssets: this.palette.stamps, rasterSource: "binary" });
                     await this.palette.ensureDocumentImages(validated);
                     this.loadDocument(await materialize(validated));
                     this.setAutosaveState("saved", draft.savedAt);
@@ -325,15 +326,13 @@ class Editor {
                 this.palette.loadStamp(stamp.id).catch(() => {});
                 return;
             }
-            const longest = Math.max(stamp.w, stamp.h);
-            const w = (this.stampOpts.size * stamp.w) / longest;
-            const h = (this.stampOpts.size * stamp.h) / longest;
+            const { w, h } = stampExtent(stamp, this.stampOpts.size, this.stampOpts.crop);
             ctx.save();
             ctx.globalAlpha = 0.55;
             ctx.translate(this.cursor.x, this.cursor.y);
             ctx.rotate((this.stampOpts.rot * Math.PI) / 180);
             if (this.stampOpts.flip) ctx.scale(-1, 1);
-            ctx.drawImage(stamp.image, -w / 2, -h / 2, w, h);
+            drawStampImage(ctx, stamp, this.stampOpts.crop, -w / 2, -h / 2, w, h);
             ctx.restore();
         }
     }
@@ -678,6 +677,7 @@ class Editor {
         return {
             id: newId("s", collectIds(this.doc)),
             asset: assetId,
+            ...(opts.crop && opts.asset === assetId ? { crop: { ...opts.crop } } : {}),
             x: at.x,
             y: at.y,
             size: Math.round(clamp(opts.size * vary, LIMITS.stampSize[0], LIMITS.stampSize[1])),
@@ -918,7 +918,7 @@ class Editor {
             } catch (_error) {
                 throw new ValidationError("Die Datei ist keine gültige JSON-Datei.");
             }
-            const validated = validateDocument(raw, { knownAssets: new Set(this.palette.stamps.keys()) });
+            const validated = validateDocument(raw, { knownAssets: this.palette.stamps });
             await this.palette.ensureDocumentImages(validated);
             const doc = await materialize(validated);
             if (!(await this.ui.confirmReplace())) return;
@@ -943,6 +943,7 @@ class Editor {
             throw new Error("Diese Auflösung ist zu groß für den Browser.");
         }
         const doc = this.doc;
+        const credits = creditsForDocument(doc, this.palette);
         const generation = this.generation;
         await this.palette.ensureDocumentImages(doc);
         if (doc !== this.doc || generation !== this.generation) throw new Error("Die Karte wurde während des Exports geändert. Bitte erneut exportieren.");
@@ -952,7 +953,7 @@ class Editor {
         canvas.width = 0;
         canvas.height = 0;
         if (!blob) throw new Error("Der Browser konnte das Bild nicht erzeugen (zu groß?).");
-        return blob;
+        return embedCredits(blob, credits);
     }
 
     async exportBundle(scale) {
@@ -965,6 +966,7 @@ class Editor {
         const packageBlob = await zipFiles([
             [`${base}${scale > 1 ? `-${scale}x` : ""}.png`, png],
             [`${base}.rdmap.json`, JSON.stringify(project)],
+            ["CREDITS.txt", creditsForDocument(project, this.palette)],
         ]);
         downloadBlob(packageBlob, `${base}-karte.zip`);
         if (generation > this.fileGeneration) this.fileGeneration = generation;

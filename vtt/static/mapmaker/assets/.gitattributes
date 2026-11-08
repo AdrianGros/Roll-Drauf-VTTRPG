@@ -1,2 +1,5 @@
 # Preserve upstream license/readme bytes, including their original whitespace.
 kma-*/License.txt -whitespace
+# Preserve upstream artist credit/license whitespace and line endings verbatim.
+*/credit_*.txt -whitespace
+*/License.txt -whitespace

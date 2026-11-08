@@ -296,18 +296,8 @@ export class UI {
         for (const group of palette.groups) {
             if (group.ids.length) $("stampCategory").appendChild(el("option", { value: group.name }, group.name));
         }
-        for (const select of [$("placeSymbol"), $("selSymbol")]) {
-            select.replaceChildren(el("option", { value: "" }, "Kein Symbol"));
-            for (const group of palette.groups) {
-                if (!group.ids.length) continue;
-                const options = el("optgroup", { label: group.name });
-                for (const id of group.ids) {
-                    const stamp = palette.stamps.get(id);
-                    options.appendChild(el("option", { value: id }, `${stamp.label} · ${stamp.packName}`));
-                }
-                select.appendChild(options);
-            }
-        }
+        $("stampCrop").addEventListener("click", () => this.openSheet(this.ed.stampOpts.asset));
+        this.bindSheet();
         for (const id of ["stampSearch", "stampPack", "stampCategory"]) {
             $(id).addEventListener(id === "stampSearch" ? "input" : "change", () => {
                 this.palettePage = 0;
@@ -333,7 +323,7 @@ export class UI {
         const category = $("stampCategory").value;
         const ids = palette.groups.flatMap((group) => group.ids).filter((id) => {
             const stamp = palette.stamps.get(id);
-            const text = normalize(`${stamp.label} ${stamp.group} ${stamp.packName} ${stamp.search}`);
+            const text = stamp.searchText || normalize(`${stamp.label} ${stamp.group} ${stamp.packName} ${stamp.search}`);
             return (!pack || stamp.pack === pack) && (!category || stamp.group === category) && terms.every((term) => text.includes(term));
         });
         const pageSize = 64;
@@ -348,7 +338,9 @@ export class UI {
         container.replaceChildren();
         let currentGroup = null;
         let grid = null;
-        for (const id of ids.slice(this.palettePage * pageSize, (this.palettePage + 1) * pageSize)) {
+        const pageIds = ids.slice(this.palettePage * pageSize, (this.palettePage + 1) * pageSize);
+        this.updateSymbolOptions(pageIds);
+        for (const id of pageIds) {
             const stamp = palette.stamps.get(id);
             if (stamp.group !== currentGroup) {
                 currentGroup = stamp.group;
@@ -379,7 +371,7 @@ export class UI {
         }
     }
 
-    chooseStamp(id) {
+    chooseStamp(id, { crop = null, openSheet = true } = {}) {
         const ed = this.ed;
         const stamp = ed.palette.stamps.get(id);
         if (!stamp) return;
@@ -387,18 +379,100 @@ export class UI {
         const select = () => {
             if (this.pendingStamp !== id) return;
             ed.stampOpts.asset = id;
-            ed.stampOpts.size = stamp.defaultSize;
-            this.stampSize.set(stamp.defaultSize);
+            ed.stampOpts.crop = crop;
+            ed.stampOpts.size = crop ? Math.min(256, Math.max(16, crop.w, crop.h)) : stamp.defaultSize;
+            this.stampSize.set(ed.stampOpts.size);
             $("stampSelected").textContent = `Ausgewählt: ${stamp.label} · ${stamp.packName}`;
             document.querySelectorAll(".mm-stamp").forEach((button) => {
                 button.setAttribute("aria-checked", String(button.dataset.asset === id));
             });
+            $("stampCrop").disabled = !stamp.src;
+            if (crop) $("stampSelected").textContent += ` · Ausschnitt ${crop.w}×${crop.h}`;
             ed.requestFrame();
+            if (stamp.sheet && openSheet) this.openSheet(id);
         };
         if (stamp.image) select();
         else ed.palette.loadStamp(id).then(select).catch(() => {
             this.toast("Das Symbol konnte nicht geladen werden. Bitte ein anderes wählen oder neu laden.");
         });
+    }
+
+    ensureSymbolOption(select, id) {
+        if (id && ![...select.options].some((option) => option.value === id)) {
+            const stamp = this.ed.palette.stamps.get(id);
+            if (stamp) select.appendChild(el("option", { value: id }, `${stamp.label} · ${stamp.packName}`));
+        }
+    }
+
+    updateSymbolOptions(ids) {
+        for (const select of [$("placeSymbol"), $("selSymbol")]) {
+            const value = select.value;
+            select.replaceChildren(el("option", { value: "" }, "Kein Symbol"));
+            for (const id of new Set([...ids, value, this.ed.labelOpts.symbol].filter(Boolean))) this.ensureSymbolOption(select, id);
+            select.value = value;
+        }
+    }
+
+    bindSheet() {
+        const dialog = $("sheetDialog"), canvas = $("sheetCanvas");
+        $("sheetCancel").addEventListener("click", () => dialog.close());
+        $("sheetWhole").addEventListener("click", () => { this.chooseStamp(this.sheetId, { openSheet: false }); dialog.close(); });
+        $("sheetUse").addEventListener("click", () => {
+            const crop = this.readSheetCrop();
+            if (!crop) return;
+            this.chooseStamp(this.sheetId, { crop, openSheet: false }); dialog.close();
+        });
+        for (const key of ["X", "Y", "W", "H"]) $(`sheet${key}`).addEventListener("input", () => this.drawSheet());
+        const point = (event) => {
+            const rect = canvas.getBoundingClientRect(), stamp = this.ed.palette.stamps.get(this.sheetId);
+            const step = Math.max(1, Number($("sheetGrid").value) || 1);
+            return { x: Math.min(stamp.w - 1, Math.max(0, Math.floor((event.clientX - rect.left) / rect.width * stamp.w / step) * step)), y: Math.min(stamp.h - 1, Math.max(0, Math.floor((event.clientY - rect.top) / rect.height * stamp.h / step) * step)), step };
+        };
+        canvas.addEventListener("pointerdown", (event) => { event.preventDefault(); this.sheetStart = point(event); canvas.setPointerCapture(event.pointerId); this.selectSheetRect(this.sheetStart, this.sheetStart); });
+        canvas.addEventListener("pointermove", (event) => { if (this.sheetStart) this.selectSheetRect(this.sheetStart, point(event)); });
+        for (const name of ["pointerup", "pointercancel", "lostpointercapture"]) canvas.addEventListener(name, () => { this.sheetStart = null; });
+    }
+
+    selectSheetRect(a, b) {
+        const stamp = this.ed.palette.stamps.get(this.sheetId);
+        const x = Math.min(a.x, b.x), y = Math.min(a.y, b.y);
+        const w = Math.min(stamp.w - x, Math.abs(a.x - b.x) + a.step), h = Math.min(stamp.h - y, Math.abs(a.y - b.y) + a.step);
+        for (const [key, value] of Object.entries({ X:x, Y:y, W:w, H:h })) $(`sheet${key}`).value = value;
+        this.drawSheet();
+    }
+
+    readSheetCrop() {
+        const stamp = this.ed.palette.stamps.get(this.sheetId);
+        const crop = Object.fromEntries(["x", "y", "w", "h"].map((key) => [key, Number($("sheet" + key.toUpperCase()).value)]));
+        const valid = Object.values(crop).every(Number.isInteger) && crop.x >= 0 && crop.y >= 0 && crop.w > 0 && crop.h > 0 && crop.x + crop.w <= stamp.w && crop.y + crop.h <= stamp.h;
+        $("sheetUse").disabled = !valid;
+        $("sheetError").hidden = valid;
+        return valid ? crop : null;
+    }
+
+    drawSheet() {
+        const stamp = this.ed.palette.stamps.get(this.sheetId), canvas = $("sheetCanvas"), ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.imageSmoothingEnabled = !stamp.pixelArt;
+        ctx.drawImage(stamp.image, 0, 0, canvas.width, canvas.height);
+        const crop = this.readSheetCrop();
+        if (crop) {
+            const sx = canvas.width / stamp.w, sy = canvas.height / stamp.h;
+            ctx.fillStyle = "rgba(220,170,40,0.25)"; ctx.fillRect(crop.x*sx, crop.y*sy, crop.w*sx, crop.h*sy);
+            ctx.strokeStyle = "#ffca4b"; ctx.lineWidth = 2; ctx.strokeRect(crop.x*sx+1, crop.y*sy+1, Math.max(1,crop.w*sx-2), Math.max(1,crop.h*sy-2));
+        }
+    }
+
+    openSheet(id) {
+        const stamp = this.ed.palette.stamps.get(id);
+        if (!stamp || !stamp.image) return;
+        this.sheetId = id; this.sheetStart = null;
+        $("sheetName").textContent = `${stamp.label} · ${stamp.w}×${stamp.h} Pixel`;
+        const canvas = $("sheetCanvas"), scale = Math.min(2, 960 / Math.max(stamp.w, stamp.h));
+        canvas.width = Math.max(1, Math.round(stamp.w*scale)); canvas.height = Math.max(1, Math.round(stamp.h*scale));
+        $("sheetGrid").value = stamp.grid || 1;
+        const crop = this.ed.stampOpts.crop || { x:0, y:0, w:Math.min(stamp.grid || stamp.w, stamp.w), h:Math.min(stamp.grid || stamp.h, stamp.h) };
+        for (const key of ["x", "y", "w", "h"]) $("sheet"+key.toUpperCase()).value = crop[key];
+        this.drawSheet(); if (!$("sheetDialog").open) $("sheetDialog").showModal();
     }
 
     bindLabelTool() {
@@ -540,6 +614,7 @@ export class UI {
             $("selPin").checked = !!item.pin;
             $("selKind").value = item.place ? item.place.kind : "";
             $("selSymbol").disabled = !item.place;
+            this.ensureSymbolOption($("selSymbol"), item.symbol ? item.symbol.asset : "");
             $("selSymbol").value = item.symbol ? item.symbol.asset : "";
             $("selSymbolSizeRow").hidden = !item.symbol;
             if (item.symbol && !editing("selSymbolSize")) this.selSymbolSize.set(item.symbol.size);
