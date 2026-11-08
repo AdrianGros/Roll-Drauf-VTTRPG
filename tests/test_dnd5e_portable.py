@@ -1,19 +1,17 @@
-"""D&D portable files create owned copies and retain public homebrew rules atomically."""
+"""D&D portable files create owned copies of plain 5E characters atomically.
+
+The homebrew-race part of this format (`homebrew_origin`) belonged to Creation Engine G1 and is archived
+with it (archive/creation-engine-g1/tests/test_dnd5e_portable.py); such payloads are refused without writes.
+"""
 
 from copy import deepcopy
-from types import SimpleNamespace
 
 import pytest
 from sqlalchemy import select
-from sqlalchemy.exc import SQLAlchemyError
 
 from vtt import create_app
-from vtt.creation_engine.canonical import parse_strict_json
-from vtt.creation_engine.store.content import ContentStore
-from vtt.creation_engine.store.models import CeDefinition, CeRevision, CeWorkspace
-from vtt.creation_engine.store.sheet_models import CeCharacterOrigin
 from vtt.extensions import db
-from vtt.models import Character, Equipment, InventoryItem, Spell, User
+from vtt.models import Character, User
 from vtt.models.role import init_default_roles
 
 
@@ -21,13 +19,8 @@ ORIGIN = {
     'name': 'Echo folk', 'edition': 'dnd5e_2024', 'creatureType': 'Humanoid', 'size': 'medium',
     'speed': 30, 'languages': 'Common and one chosen language',
     'abilityScoreRules': 'No automatic attribute changes.', 'prose': 'People of the echoing hills.',
-    'traits': [
-        {'name': 'Stone memory', 'kind': 'trait', 'description': 'Remember the path through stone.', 'usage': 'Passive'},
-        {'name': 'Echo step', 'kind': 'feature', 'description': 'Follow an echo to a visible space.',
-         'usage': 'Once per long rest', 'choices': 'Choose a visible space.', 'prerequisites': 'Level 3'},
-    ],
+    'traits': [{'name': 'Stone memory', 'kind': 'trait', 'description': 'Remember the path through stone.', 'usage': 'Passive'}],
 }
-
 
 def portable(*, origin=False, edition='dnd5e_2024'):
     payload = {
@@ -67,9 +60,6 @@ def app():
             user.set_password('PortablePass123!')
             db.session.add(user)
         db.session.commit()
-        # The adapter uses the real SQLAlchemy transaction; this host only advertises capability.
-        app.extensions['ce_gateway'] = SimpleNamespace(authoring=SimpleNamespace(store=SimpleNamespace(engine=db.engine)))
-        app.config['CE_AUTHORING'] = True
         yield app
         db.session.remove()
         db.drop_all()
@@ -93,9 +83,7 @@ def imported(client, payload):
 
 
 @pytest.mark.parametrize('edition', ['dnd5e_2014', 'dnd5e_2024'])
-def test_plain_portable_roundtrip_retains_all_stats_resources_and_metadata_without_engine(app, client, edition):
-    app.config['CE_AUTHORING'] = False
-    app.extensions.pop('ce_gateway')
+def test_plain_portable_roundtrip_retains_all_stats_resources_and_metadata(app, client, edition):
     payload = portable(edition=edition)
     character_id = imported(client, payload)
     exported = client.get(f'/api/characters/{character_id}/export')
@@ -111,51 +99,6 @@ def test_plain_portable_roundtrip_retains_all_stats_resources_and_metadata_witho
         assert character.user.username == 'portable_owner'
         assert len(character.spells) == len(character.equipment) == len(character.inventory) == 1
         assert character.character_data == {**payload['character_data'], 'system_id': edition}
-        assert db.session.query(CeRevision).count() == 0
-
-
-def test_homebrew_roundtrip_creates_new_owned_revision_without_private_source_ids(app, client):
-    payload = portable(origin=True)
-    original_id = imported(client, payload)
-    with app.app_context():
-        original_revision = db.session.get(CeCharacterOrigin, original_id).revision_id
-    exported = client.get(f'/api/characters/{original_id}/export')
-    assert exported.status_code == 200 and exported.json == payload
-    assert original_revision not in exported.get_data(as_text=True)
-    other = login(app, 'portable_other')
-    copied_id = imported(other, exported.json)
-    sheet = other.get(f'/api/characters/{copied_id}/sheet').json['character']
-    assert sheet['homebrew_origin'] == ORIGIN and sheet['system_id'] == 'dnd5e'
-    assert sheet['str'] == 8 and sheet['hp_current'] == 7
-    with app.app_context():
-        origin = db.session.get(CeCharacterOrigin, copied_id)
-        assert origin.revision_id != original_revision and origin.version == 1
-        revision = ContentStore(db.session).revision(origin.revision_id)
-        definition = db.session.get(CeDefinition, revision.definition_id)
-        workspace = db.session.get(CeWorkspace, definition.workspace_id)
-        copied = db.session.get(Character, copied_id)
-        assert workspace.owner_user_id == copied.user_id == revision.author_user_id
-        provenance = parse_strict_json(revision.provenance)
-        assert provenance['kind'] == 'portable_import' and provenance['declaredQuality'] == 'sheet_ready'
-        assert copied.character_data == {**payload['character_data'], 'system_id': 'dnd5e_2024'}
-    assert client.get(f'/api/characters/{copied_id}/export').status_code == 403
-
-
-def test_attached_origin_survives_disabled_editor_and_replaced_legacy_metadata(app, client):
-    character_id = imported(client, portable(origin=True))
-    # Existing legacy clients can replace their JSON blob; the association is authoritative.
-    assert client.put(f'/api/characters/{character_id}', json={'character_data': {'notes': 'updated'}}).status_code == 200
-    app.config['CE_AUTHORING'] = False
-    app.extensions.pop('ce_gateway')
-    sheet = client.get(f'/api/characters/{character_id}/sheet')
-    assert sheet.status_code == 200 and sheet.json['character']['homebrew_origin'] == ORIGIN
-    exported = client.get(f'/api/characters/{character_id}/export')
-    assert exported.status_code == 200 and exported.json['homebrew_origin'] == ORIGIN
-    assert exported.json['system_id'] == 'dnd5e_2024'
-    response = client.post('/api/characters/import', json=exported.json)
-    assert response.status_code == 409 and 'Creation Engine' in response.json['error']
-    with app.app_context():
-        assert db.session.query(Character).count() == 1
 
 
 @pytest.mark.parametrize('change', [
@@ -174,7 +117,7 @@ def test_invalid_or_authoritative_import_fields_are_rejected_without_writes(app,
     response = client.post('/api/characters/import', json={**portable(), **change})
     assert response.status_code == 422, response.json
     with app.app_context():
-        assert db.session.query(Character).count() == db.session.query(CeRevision).count() == 0
+        assert db.session.query(Character).count() == 0
 
 
 @pytest.mark.parametrize('stats', [{'str': True}, {'level': 21}, {'hp_current': 32}, {'mana_current': 5}])
@@ -186,65 +129,19 @@ def test_invalid_or_inconsistent_statistics_do_not_create_a_partial_character(ap
         assert db.session.query(Character).count() == 0
 
 
-@pytest.mark.parametrize('change', [
-    {'edition': 'dnd5e_2014'}, {'name': 'Different race'}, {'traits': []},
-    {'traits': [ORIGIN['traits'][0], {**ORIGIN['traits'][1], 'name': ' STONE MEMORY '}]},
-    {'revisionId': 'rev:foreign'},
-])
-def test_homebrew_import_rebuilds_and_validates_race_rules_before_any_write(app, client, change):
-    payload = portable(origin=True)
-    payload['homebrew_origin'].update(change)
-    assert client.post('/api/characters/import', json=payload).status_code == 422
-    with app.app_context():
-        assert db.session.query(Character).count() == db.session.query(CeRevision).count() == 0
-
-
-def test_failure_after_character_insert_rolls_back_character_items_workspace_and_revision(app, client, monkeypatch):
-    def cannot_save(*args, **kwargs):
-        raise SQLAlchemyError('test-only database interruption')
-    monkeypatch.setattr(ContentStore, 'append_revision', cannot_save)
+def test_previous_engine_homebrew_race_payloads_are_refused_without_writes(app, client):
     response = client.post('/api/characters/import', json=portable(origin=True))
-    assert response.status_code == 503 and 'No character was imported' in response.json['error']
-    with app.app_context():
-        for model in (Character, Spell, Equipment, InventoryItem, CeWorkspace, CeDefinition, CeRevision, CeCharacterOrigin):
-            assert db.session.query(model).count() == 0, model.__name__
-
-
-def test_homebrew_import_does_not_bypass_view_as_or_current_suspension(app, client):
-    assert client.post('/api/characters/import', json=portable(origin=True),
-                       headers={'X-CE-View-As': 'view:pretend'}).status_code == 403
-    with app.app_context():
-        user = db.session.scalar(select(User).where(User.username == 'portable_owner'))
-        user.is_suspended = True
-        db.session.commit()
-    assert client.post('/api/characters/import', json=portable(origin=True)).status_code == 403
+    assert response.status_code == 409 and 'previous Creation Engine' in response.json['error']
     with app.app_context():
         assert db.session.query(Character).count() == 0
 
 
-def test_portable_export_rejects_engine_owned_projection_instead_of_stale_legacy_stats(app, client):
-    character_id = imported(client, portable())
-    calls = []
-
-    class EngineOwnedCharacter:
-        """Runtime authority is a host boundary; the HTTP route and adapter call are real."""
-        def representation(self, kind, source_id):
-            assert (kind, source_id) == ('vtt.character', character_id)
-            return {'scopeId': 'scope:owned', 'instanceId': 'instance:owned'}
-
-        def read(self, principal, kind, source_id, *, operation='read'):
-            calls.append((principal, kind, source_id, operation))
-            return {'hp_current': 28, 'hp_max': 40, 'engine': {'scopeId': 'scope:owned'}}
-
-    app.extensions['ce_legacy'] = EngineOwnedCharacter()
-    response = client.get(f'/api/characters/{character_id}/export')
-    assert response.status_code == 409
-    assert 'stats' not in response.json and 'character' not in response.json
-    assert len(calls) == 1 and calls[0][1:] == ('vtt.character', character_id, 'export')
-
-
-def test_portable_export_denies_view_as_even_for_a_readable_owned_character(app, client):
-    character_id = imported(client, portable(origin=True))
-    response = client.get(f'/api/characters/{character_id}/export', headers={'X-CE-View-As': 'view:pretend'})
-    assert response.status_code == 403
-    assert 'stats' not in response.json and 'homebrew_origin' not in response.json
+def test_import_refuses_a_suspended_account(app, client):
+    with app.app_context():
+        user = db.session.scalar(select(User).where(User.username == 'portable_owner'))
+        user.is_suspended = True
+        db.session.commit()
+    # The route's usable-account gate (_get_current_user) answers before the importer runs.
+    assert client.post('/api/characters/import', json=portable()).status_code == 404
+    with app.app_context():
+        assert db.session.query(Character).count() == 0

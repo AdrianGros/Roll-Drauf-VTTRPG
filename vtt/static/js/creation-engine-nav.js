@@ -48,7 +48,7 @@
             entry.setAttribute('aria-disabled', String(!enabled));
             entry.textContent = enabled ? 'Creation Engine' : 'Creation Engine · nicht verfügbar';
             entry.title = enabled
-                ? 'Homebrew-Völker, Merkmale und weitere Inhalte erstellen'
+                ? 'Homebrew erstellen und bearbeiten (Eagle Homebrew)'
                 : 'Die Creation Engine ist für dieses Konto auf diesem Server nicht verfügbar.';
             if (enabled) {
                 const characterId = Number(entry.dataset.creationEngineCharacterId);

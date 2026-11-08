@@ -32,6 +32,7 @@ from vtt.models.app_theme_settings import AppThemeSettings
 from vtt.models.session_initiative import SessionInitiative  # M43
 from vtt.models.session_character_assignment import SessionCharacterAssignment
 from vtt.models.discord_identity_link import DiscordIdentityLink
+from vtt.models.research_survey_response import ResearchSurveyResponse
 from vtt.models.guild import Guild, GuildMembership
 from vtt.models.page_content import PageContent
 from vtt.models.password_reset_token import PasswordResetToken
@@ -50,6 +51,7 @@ __all__ = [
     'SceneStack', 'SceneLayer', 'SessionSnapshot',
     'RegistrationKey', 'AppThemeSettings',
     'SessionInitiative', 'SessionCharacterAssignment', 'DiscordIdentityLink',
+    'ResearchSurveyResponse',
     'Guild', 'GuildMembership', 'PageContent', 'PasswordResetToken',
     'TokenLoot', 'LootTransfer',
     'SceneWall', 'SceneLight', 'FogOfWarState',

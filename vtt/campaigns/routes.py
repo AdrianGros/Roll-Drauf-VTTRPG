@@ -2045,18 +2045,6 @@ def adjust_combat_hp(campaign_id, session_id):
     if error:
         return error
 
-    from vtt.ce_compat import adapter as creation_engine_adapter
-    ce = creation_engine_adapter()
-    if ce is not None and ce.representation("vtt.token", target_token_id) is not None:
-        from vtt.creation_engine.transports.legacy_http import context_from_headers
-        from vtt.creation_engine.kernel.records import refuse
-        target = db.session.get(TokenState, target_token_id)
-        if target is None or target.game_session_id != game_session.id or target.deleted_at:
-            refuse("NOT_FOUND")
-        result = ce.translate(user.id, "vtt.token", target_token_id, {"hp_current": delta},
-                              context_from_headers(), delta=True, reason=data.get("reason") or "legacy combat HP adjustment")
-        return jsonify({"receipt": result, "token": ce.read(user.id, "vtt.token", target_token_id)}), 200
-
     token, service_error = combat_service.adjust_hp(
         encounter=encounter,
         target_token_id=target_token_id,

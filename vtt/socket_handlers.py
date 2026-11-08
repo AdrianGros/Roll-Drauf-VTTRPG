@@ -909,18 +909,6 @@ def register_socket_handlers(socketio):
 
         token_payload = payload.get("token") or {}
         character_id = None
-        from vtt.ce_compat import adapter as creation_engine_adapter
-        ce = creation_engine_adapter()
-        if ce is not None and token_payload.get("character_id") is not None:
-            from vtt.models.character import Character
-            character_id, parse_error = _coerce_int(token_payload["character_id"], "character_id")
-            if parse_error:
-                _emit_error(parse_error["code"], parse_error["message"])
-                return
-            character = db.session.get(Character, character_id)
-            if character is None or character.campaign_id != campaign.id or character.deleted_at:
-                _emit_error("not_found", "character not found")
-                return
         name = str(token_payload.get("name", "")).strip()
         if not name:
             _emit_error("bad_request", "token name required")
@@ -998,7 +986,7 @@ def register_socket_handlers(socketio):
 
         from vtt.characters import sheet_link
         linked_character = None
-        if ce is None and token_payload.get("character_id") is not None:
+        if token_payload.get("character_id") is not None:
             from vtt.models.character import Character
             character_id, parse_error = _coerce_int(token_payload["character_id"], "character_id")
             if parse_error:
@@ -1101,38 +1089,6 @@ def register_socket_handlers(socketio):
         if not is_dm_member and token.owner_user_id != user.id:
             _emit_error("forbidden", "token ownership required")
             return
-
-        from vtt.ce_compat import adapter as creation_engine_adapter
-        ce = creation_engine_adapter()
-        ce_patch = payload.get("patch", {})
-        if (ce is not None and isinstance(ce_patch, dict) and {"hp_current", "hp_max"} & set(ce_patch)
-                and ce.representation("vtt.token", token.id) is not None):
-            from vtt.creation_engine.errors import ContractViolation
-            from vtt.creation_engine.policy.public_errors import public_error
-            try:
-                from flask_jwt_extended import get_jwt, verify_jwt_in_request
-                from flask_jwt_extended.exceptions import JWTExtendedException
-                from jwt import PyJWTError
-                from vtt.creation_engine.kernel.records import refuse
-                import secrets
-                try:
-                    verify_jwt_in_request()
-                except (JWTExtendedException, PyJWTError):
-                    refuse("OPERATION_FORBIDDEN")
-                ce_context = payload.get("ce")
-                expected_csrf = get_jwt().get("csrf")
-                supplied_csrf = ce_context.get("csrf") if isinstance(ce_context, dict) else None
-                if (not isinstance(expected_csrf, str) or not isinstance(supplied_csrf, str)
-                        or not secrets.compare_digest(expected_csrf, supplied_csrf)):
-                    refuse("OPERATION_FORBIDDEN")
-                result = ce.translate(user.id, "vtt.token", token.id, ce_patch, payload.get("ce") or {},
-                                      reason="legacy token edit")
-                emit("ce:receipt", result, room=request.sid)
-                return result
-            except ContractViolation as exc:
-                body, status = public_error(exc)
-                emit("ce:error", body, room=request.sid)
-                return body
 
         client_event_id, event_id_error = _extract_client_event_id(payload)
         if event_id_error:

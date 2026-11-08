@@ -3,140 +3,113 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gegenstand erschaffen · Roll Drauf</title>
+  <title>Creation Engine · Roll Drauf</title>
   <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/spellbook-theme.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/book-scene.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/creation-engine.css') }}">
+  <!-- Eagle Homebrew by MattTheEagle: the editor's own stylesheet, then the stand-ins for Foundry's widgets. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='eagle-homebrew/eagle-homebrew.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='eagle-homebrew/shim.css') }}">
   <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/ce-schema-form.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/creation-engine.js') }}" defer></script>
+  <script src="/static/js/vtt-main-nav.js" defer></script>
   <script src="{{ url_for('static', filename='js/regelwerk-navigation.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/ce-species-publish.js') }}" defer></script>
+  <script type="module" src="{{ url_for('static', filename='eagle-homebrew/creation-engine.js') }}"></script>
+    <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
 </head>
 <body class="ce-authoring">
   <div class="ce-page">
-  <a class="ce-skip" href="#main" data-i18n="skipToEditor">Zum Inhalt</a>
-  <header>
-    <div class="book-dashboard-topbar">
-      <nav class="book-dashboard-ribbon" aria-label="Buchnavigation" data-i18n-label="navigation">
-        <a class="book-dashboard-ribbon-btn" href="/dashboard" data-ce-nav data-i18n="overview">Übersicht</a>
-        <a class="book-dashboard-ribbon-btn" href="/campaigns" data-ce-nav data-i18n="campaigns">Kampagnen</a>
-        <a class="book-dashboard-ribbon-btn" href="/characters" data-ce-nav data-i18n="characters">Charaktere</a>
-        <span class="book-dashboard-ribbon-btn" aria-current="page">Creation Engine</span>
-        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
-        <a class="book-dashboard-ribbon-btn" href="/api/ce/authoring/advanced" data-ce-nav>Advanced studio</a>
-        <a id="return-character" class="book-dashboard-ribbon-btn" data-ce-nav hidden data-i18n="returnCharacter">Zum Charakterbogen</a>
-      </nav>
-    </div>
-    <p class="ce-eyebrow" data-i18n="location">Inhalte · Gegenstand</p>
-    <h1 data-i18n="title">Gegenstand erschaffen</h1>
-    <p data-i18n="intro">Erschaffe einen magischen Gegenstand. Jede Regel ist deine Entscheidung.</p></header>
-  <main id="main" tabindex="-1">
-    <section class="toolbar" aria-label="Entwurf und Ansicht" data-i18n-label="toolbar">
-      <label><span data-i18n="language">Sprache</span><select id="locale"><option value="de">Deutsch</option><option value="en">English</option><option value="fr">Français</option></select></label>
-      <label><span data-i18n="mode">Ansicht</span><select id="mode"><option value="guided" data-i18n="guided">Geführt</option><option value="structured" data-i18n="structured">Strukturiert</option><option value="advanced" data-i18n="advanced">Erweitert</option></select></label>
-      <label><span data-i18n="drafts">Entwürfe</span><select id="drafts"></select></label>
-      <label><span data-i18n="newType">Neuer Inhalt</span><select id="new-type"></select></label>
-      <button id="new" data-i18n="newItem">Neuer Gegenstand</button>
-      <button id="reload" data-i18n="reload">Neu laden</button>
-    </section>
-    <p id="status" role="status" aria-live="polite" tabindex="-1"></p>
-    <section id="access-notice" class="notice" aria-labelledby="access-heading" hidden>
-      <h2 id="access-heading" tabindex="-1" data-i18n="accessUnavailable">Inhalt nicht verfügbar</h2>
-      <p id="access-explanation" data-i18n="accessCleared">Der Inhalt dieses Tabs wurde entfernt. Prüfe deine Anmeldung und lade den aktuellen Stand erneut.</p>
-      <p id="access-outcome" hidden data-i18n="accessOutcome">Eine laufende Anfrage kann abgeschlossen worden sein. Prüfe den gespeicherten Stand, bevor du sie erneut ausführst.</p>
-      <button id="check-access" data-i18n="checkAccess">Zugriff erneut prüfen</button>
-      <a href="/login.html" data-ce-nav data-i18n="signIn">Anmelden</a>
-    </section>
-    <button id="retry" hidden data-i18n="retry">Gleiche Anfrage erneut senden</button>
-    <button id="discard" hidden data-i18n="discard">Ungespeicherte Eingabe verwerfen</button>
-    <section id="conflict" class="notice" aria-labelledby="conflict-heading" hidden>
-      <h2 id="conflict-heading" tabindex="-1" data-i18n="conflictTitle">Geänderter Entwurf</h2>
-      <p data-i18n="conflictHelp">Deine Eingabe bleibt hier erhalten. Lade den aktuellen Stand und vergleiche ihn vor einem neuen Speichern.</p>
-      <h3 id="conflict-local-label" data-i18n="retainedAnswer">Deine aufbewahrte Eingabe</h3>
-      <pre id="conflict-local" tabindex="0" aria-labelledby="conflict-local-label"></pre>
-      <h3 id="conflict-current-label" data-i18n="currentAnswer">Aktuell gespeicherter Stand</h3>
-      <pre id="conflict-current" tabindex="0" aria-labelledby="conflict-current-label"></pre>
-      <p id="conflict-note"></p>
-      <button id="conflict-refresh" data-i18n="refreshConflict">Aktuellen Stand zum Vergleichen laden</button>
-      <button id="conflict-edit" hidden data-i18n="editRetained">Aufbewahrte Antwort bearbeiten</button>
-      <button id="conflict-discard" data-i18n="discardRetained">Aufbewahrte Eingabe verwerfen</button>
-    </section>
-    <p class="help" data-i18n="tabMemory">Ungespeicherte Eingaben bleiben nur in diesem geöffneten Tab erhalten.</p>
-    <div id="editor" hidden>
-      <p id="draft-info"></p><p id="stale" class="notice" hidden></p>
-      <p id="profile-notice" class="notice" hidden></p>
-      <section id="guided-progress" hidden aria-label="Creation progress"></section>
-      <p id="homebrew-test-link" hidden><a href="/api/ce/authoring/advanced" data-ce-nav data-i18n="homebrewTest">Open private test bench</a></p>
-      <div class="columns"><section><h2 id="decisions-heading" tabindex="-1" data-i18n="decisions">Deine Entscheidungen</h2><div id="questions"></div></section>
-      <aside><h2 data-i18n="preview">Vorschau</h2><div id="content"></div>
-        <h2 data-i18n="quality">Verwendbarkeit</h2><div id="quality"></div>
-        <label><span data-i18n="claim">Revision speichern als</span><select id="claim">
-          <option value="lore_only" data-i18n="lore_only">Beschreibung</option><option value="sheet_ready" data-i18n="sheet_ready">Datenblatt</option>
-          <option value="runtime_ready" data-i18n="runtime_ready">Ausführbar</option><option value="automation_complete" data-i18n="automation_complete">Vollständig automatisiert</option>
-        </select></label><button id="commit" data-i18n="commit">Unveränderliche Revision speichern</button>
-        <p id="revision" role="status"></p>
-      </aside></div>
-      <section id="presets-section"><h2 data-i18n="presets">Vorlagen prüfen</h2><p data-i18n="presetHelp">Die Vorschau zeigt alle vorgegebenen Antworten. Erst beim Anwenden werden sie übernommen.</p>
-        <button id="visual-preset" data-i18n="visualPreset">Harmlose Flammen ansehen</button><button id="damage-preset" data-i18n="damagePreset">Zusatzschaden ansehen</button>
-        <div id="preset" hidden><div id="preset-values"></div><button id="apply-preset" data-i18n="applyPreset">Diese Antworten übernehmen</button></div>
+    <a class="ce-skip" href="#main">Zum Inhalt</a>
+    <header>
+      <div class="book-dashboard-topbar">
+        <nav class="book-dashboard-ribbon" aria-label="Buchnavigation">
+          <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
+          <a class="book-dashboard-ribbon-btn" href="/campaigns">Kampagnen</a>
+          <a class="book-dashboard-ribbon-btn" href="/characters">Charaktere</a>
+          <span class="book-dashboard-ribbon-btn" aria-current="page">Creation Engine</span>
+          <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
+          <a id="return-character" class="book-dashboard-ribbon-btn" hidden>Zum Charakterbogen</a>
+        </nav>
+      </div>
+      <p class="ce-eyebrow">Inhalte · Homebrew</p>
+      <h1>Creation Engine</h1>
+      <p>Erstelle und bearbeite Homebrew mit <strong>Eagle Homebrew</strong> von MattTheEagle: Gegenstände, Zauber,
+        Merkmale, Völker, Hintergründe, Klassen, NPCs, Fahrzeuge, Begegnungen, Gruppen und Zufallstabellen.</p>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="ce-toolbar" aria-label="Welt und Erstellen">
+        <label for="ce-world">Welt</label>
+        <select id="ce-world"></select>
+        <button id="ce-create" type="button">Neu erstellen</button>
       </section>
-      <section><h2 data-i18n="history">Verlauf</h2><label><span data-i18n="restoreVersion">Version wiederherstellen</span><select id="versions"></select></label>
-        <button id="revert" data-i18n="revert">Als neue Version wiederherstellen</button><ol id="history"></ol>
+      <p id="ce-status" role="status" aria-live="polite"></p>
+      <div class="ce-directory">
+        <section aria-labelledby="ce-world-heading">
+          <h2 id="ce-world-heading">Inhalte dieser Welt</h2>
+          <div id="ce-world-documents"></div>
+        </section>
+        <section aria-labelledby="ce-library-heading">
+          <h2 id="ce-library-heading">Meine Bibliothek</h2>
+          <p class="ce-help">Jede neue Erstellung landet zusätzlich hier und steht dir in allen deinen Welten zur Verfügung.</p>
+          <div id="ce-library-documents"></div>
+        </section>
+      </div>
+      <section id="ce-species" class="ce-species" aria-labelledby="ce-species-heading" hidden>
+        <h2 id="ce-species-heading">Spezies spielbar machen</h2>
+        <p class="ce-help">Prüft eine gespeicherte 2024-Spezies, ergänzt, was Eagle nicht ausdrücken kann, und veröffentlicht
+          eine unveränderliche Fassung für den Charakter-Ersteller. Spätere Änderungen in Eagle brauchen eine neue Fassung.</p>
+        <button id="ce-species-example" type="button">Duckfolk-Beispiel anlegen</button>
+        <p id="ce-species-empty" class="ce-help" hidden>In dieser Welt und deiner Bibliothek gibt es noch keine Spezies.</p>
+        <label for="ce-species-source">Spezies</label>
+        <select id="ce-species-source"></select>
+        <label for="ce-species-scope">Veröffentlichen für</label>
+        <select id="ce-species-scope"></select>
+        <p class="ce-help">Im VTT-Compendium können alle angemeldeten Nutzer deine spielbare Spezies sehen und für ihre Charaktere wählen.</p>
+        <fieldset>
+          <legend>Fertigkeitswahl (Übung, eine Fertigkeit nach Wahl)</legend>
+          <label for="ce-species-skill-label">Bezeichnung</label>
+          <input id="ce-species-skill-label" type="text" maxlength="60">
+          <div id="ce-species-skills" class="ce-species-skills"></div>
+        </fieldset>
+        <fieldset>
+          <legend><label><input id="ce-species-action-on" type="checkbox"> Aktion: Gegenstand telekinetisch bewegen</label></legend>
+          <label for="ce-species-action-name">Name</label>
+          <input id="ce-species-action-name" type="text" maxlength="80">
+          <label for="ce-species-action-activation">Aktivierung</label>
+          <select id="ce-species-action-activation"><option value="action">Aktion</option><option value="bonus-action">Bonusaktion</option></select>
+          <label for="ce-species-action-range">Reichweite (ft)</label>
+          <input id="ce-species-action-range" type="number" min="5" max="120">
+          <label for="ce-species-action-weight">Höchstgewicht (lb)</label>
+          <input id="ce-species-action-weight" type="number" min="1" max="500">
+          <label for="ce-species-action-move">Bewegung höchstens (ft)</label>
+          <input id="ce-species-action-move" type="number" min="5" max="120">
+          <label for="ce-species-action-description">Regeltext</label>
+          <textarea id="ce-species-action-description" maxlength="2000" rows="3"></textarea>
+        </fieldset>
+        <button id="ce-species-check" type="button">Spielbarkeit prüfen</button>
+        <button id="ce-species-publish" type="button" disabled>Veröffentlichen</button>
+        <div id="ce-species-report" role="status" aria-live="polite"></div>
+        <section aria-labelledby="ce-species-global-heading">
+          <h3 id="ce-species-global-heading">VTT-Compendium · spielbare Spezies</h3>
+          <ul id="ce-species-global-list"></ul>
+        </section>
       </section>
-      <section id="sheet-handoff" hidden aria-labelledby="sheet-handoff-title">
-        <h2 id="sheet-handoff-title" data-i18n="sheetHandoffTitle">Volk im Charakterbogen verwenden</h2>
-        <p data-i18n="sheetHandoffHelp">Speichere eine Revision als Datenblatt. Prüfe danach, welchen Charakter du damit erstellst oder ergänzt.</p>
-        <p id="sheet-save-first" class="notice" data-i18n="sheetSaveFirst">Speichere zuerst eine vollständige Revision als Datenblatt.</p>
-        <form id="sheet-form" hidden>
-          <label><span data-i18n="sheetRevision">Gespeicherte Revision</span><select id="sheet-revision" required></select></label>
-          <label><span data-i18n="sheetDestination">Verwendung</span><select id="sheet-destination" required>
-            <option value="existing" data-i18n="sheetExisting">Vorhandenen oder importierten Charakter ergänzen</option>
-            <option value="new" data-i18n="sheetNew">Neuen D&amp;D-Charakter erstellen</option>
-          </select></label>
-          <label id="sheet-target-label"><span data-i18n="sheetCharacter">Dein Charakter</span><select id="sheet-character"></select></label>
-          <fieldset id="sheet-new-fields" hidden><legend data-i18n="sheetCoreValues">Charakterwerte ausdrücklich festlegen</legend><div id="sheet-core-fields" class="ce-core-fields"></div></fieldset>
-          <div id="sheet-review" class="notice" aria-live="polite"></div>
-          <p data-i18n="sheetManual">Merkmale, Eigenschaften und ihre Regeln erscheinen im Bogen. Boni, Auswahlentscheidungen und andere regelabhängige Änderungen werden manuell angewendet. Vorhandene Werte und Ausrüstung bleiben erhalten.</p>
-          <label><input id="sheet-confirm" type="checkbox" required><span data-i18n="sheetConfirm">Ich habe die Auswahl geprüft. Der Inhalt des Volks wird für alle sichtbar, die diesen Charakterbogen sehen dürfen.</span></label>
-          <button id="sheet-apply" type="submit" data-i18n="sheetApply">Im Charakterbogen übernehmen</button>
-        </form>
-        <p id="sheet-result" role="status"></p><a id="sheet-open" data-ce-nav hidden data-i18n="sheetOpen">Charakterbogen öffnen</a>
-      </section>
-      <section id="sandbox" hidden><h2 data-i18n="sandboxTitle">Privater Sandbox-Test</h2>
-        <p data-i18n="sandboxHelp">Wähle die gespeicherten Revisionen für diesen Test. Jede Kopie hat eigene Ressourcen. Ein Treffer und ein Erholungsereignis werden ausdrücklich bestätigt.</p>
-        <p id="sb-disabled" data-i18n="sandboxDisabled" hidden>Sandbox-Ausführung ist in dieser Umgebung nicht verfügbar.</p>
-        <fieldset><legend data-i18n="sandboxRevisions">Revisionen für eine neue Sandbox</legend><div id="sb-revisions"></div><button id="sb-create" data-i18n="sandboxCreate">Sandbox mit dieser Auswahl erstellen</button></fieldset>
-        <label><span data-i18n="sandboxChoose">Vorhandene Sandbox</span><select id="sb-select"></select></label><button id="sb-refresh" data-i18n="reload">Neu laden</button>
-        <div id="sb-scope" hidden>
-          <p id="sb-state" role="status" tabindex="-1"></p><ul id="sb-instances"></ul>
-          <fieldset><legend data-i18n="sandboxCopy">Neue Kopie</legend>
-            <label><span data-i18n="sandboxRevision">Gesperrte Revision</span><select id="sb-revision"></select></label>
-            <label><span data-i18n="sandboxHolder">Träger (nur für Gegenstände)</span><select id="sb-holder"></select></label>
-            <label><span data-i18n="sandboxReason">Grund</span><input id="sb-reason" maxlength="2048"></label>
-            <button id="sb-instantiate" data-i18n="sandboxInstantiate">Diese Kopie erstellen</button>
-          </fieldset>
-          <fieldset><legend data-i18n="sandboxUse">Gegenstand testen</legend>
-            <label><span data-i18n="sandboxItem">Gegenstandskopie</span><select id="sb-item"></select></label>
-            <button id="sb-equip" data-i18n="sandboxEquip">Ausrüstungszustand wechseln</button>
-            <button id="sb-activate" data-i18n="sandboxActivate">Harmlose Flammen aktivieren</button>
-            <label><span data-i18n="sandboxTarget">Ziel eines bestätigten Treffers</span><select id="sb-target"></select></label>
-            <button id="sb-hit" data-i18n="sandboxHit">Treffer bestätigen und Flammen anbieten</button>
-            <p data-i18n="sandboxActorHelp">Für Schaden werden importierte Charakterrevisionen als Träger und Ziel benötigt. Die Sandbox erfindet keine Charakterwerte.</p>
-            <button id="sb-recover" data-i18n="sandboxRecover">Angegebenes Erholungsereignis bestätigen</button><span id="sb-recovery"></span>
-          </fieldset>
-          <div id="sb-decisions"></div>
-          <fieldset id="sb-manual" hidden><legend data-i18n="sandboxManual">Unterbrochenen Ablauf manuell abschließen</legend>
-            <label><span data-i18n="sandboxOutcome">Festgehaltenes Ergebnis</span><textarea id="sb-outcome" maxlength="2048"></textarea></label>
-            <label><span data-i18n="sandboxReason">Grund</span><input id="sb-manual-reason" maxlength="2048"></label>
-            <button id="sb-resolve" data-i18n="sandboxResolve">Ohne weitere Ressourcenänderung abschließen</button>
-          </fieldset>
-        </div>
-      </section>
-    </div>
-  </main>
+    </main>
   </div>
+  <div id="ce-eagle-mount"></div>
+  <script>
+    (function () {
+      var characterId = Number(new URLSearchParams(location.search).get('character_id'));
+      if (Number.isInteger(characterId) && characterId > 0) {
+        var link = document.getElementById('return-character');
+        link.href = '/character-sheet?id=' + characterId;
+        link.hidden = false;
+      }
+    }());
+  </script>
+    <script src="/static/js/creation-engine-nav.js"></script>
 </body>
 </html>

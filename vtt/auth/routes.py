@@ -484,17 +484,22 @@ def discord_callback():
         error = request.args.get("error_description") or request.args.get("error") or "Discord login canceled."
         return _discord_login_redirect(f"Discord login failed: {error}")
 
-    expected_state = session.pop("discord_oauth_state", None)
+    # Read the state first and consume it only after a successful match. A
+    # delayed callback from an older tab must not invalidate the newer login
+    # attempt that is still in flight in the same browser session.
+    expected_state = session.get("discord_oauth_state")
     received_state = request.args.get("state")
     code = request.args.get("code")
-    remember_me = _parse_bool(session.pop("discord_remember_me", False))
-    next_path = _sanitize_relative_path(session.pop("discord_oauth_next", "/dashboard"), "/dashboard")
-    redirect_uri = session.pop("discord_oauth_redirect_uri", None) or current_app.config.get("DISCORD_REDIRECT_URI") or url_for("auth.discord_callback", _external=True)
 
     if not code:
         return _discord_login_redirect("Discord callback missing authorization code.")
     if not received_state or not expected_state or received_state != expected_state:
         return _discord_login_redirect("Discord login state mismatch. Please try again.")
+
+    session.pop("discord_oauth_state", None)
+    remember_me = _parse_bool(session.pop("discord_remember_me", False))
+    next_path = _sanitize_relative_path(session.pop("discord_oauth_next", "/dashboard"), "/dashboard")
+    redirect_uri = session.pop("discord_oauth_redirect_uri", None) or current_app.config.get("DISCORD_REDIRECT_URI") or url_for("auth.discord_callback", _external=True)
 
     try:
         token_data = exchange_discord_code(code, redirect_uri)
@@ -525,8 +530,18 @@ def discord_callback():
             return _discord_login_redirect(reason)
 
         discord_email = str(discord_profile.get("email") or "").strip().lower()
+        existing_link = DiscordIdentityLink.query.filter_by(discord_user_id=discord_user_id).first()
         assignment, assignment_error = _resolve_discord_access_assignment(discord_user_id)
-        if assignment_error:
+        # The identity link is the durable local identity record. Preserve an
+        # established, active link when an older migration omitted only its
+        # provisioning-key row. Explicitly invalid assignments still fail
+        # closed, and first-time/unlinked users still need an assignment.
+        missing_migrated_assignment = (
+            assignment_error == "no_key_assignment"
+            and existing_link is not None
+            and existing_link.is_active()
+        )
+        if assignment_error and not missing_migrated_assignment:
             return _discord_login_redirect(_friendly_discord_denial_reason(assignment_error))
 
         user, link, user_error = _find_existing_user_for_discord_identity(discord_user_id, discord_email)
@@ -534,12 +549,15 @@ def discord_callback():
             return _discord_login_redirect(user_error)
 
         if not user:
+            if assignment is None:
+                return _discord_login_redirect(_friendly_discord_denial_reason("no_key_assignment"))
             user = _provision_user_from_discord_identity(discord_profile, assignment)
 
         if not user.is_accessible():
             return _discord_login_redirect("This account is not accessible.")
 
-        _bind_assignment_to_user(assignment, user)
+        if assignment is not None:
+            _bind_assignment_to_user(assignment, user)
 
         if not link:
             link = DiscordIdentityLink(

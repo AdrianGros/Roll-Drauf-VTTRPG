@@ -1,0 +1,135 @@
+/* One navigable top ribbon and account memo across the main VTT surfaces. */
+.vtt-main-topbar,
+.book-dashboard-topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.vtt-main-topbar { margin-bottom: 12px; }
+
+.book-dashboard-topbar > .book-dashboard-ribbon,
+.vtt-main-topbar > .book-dashboard-ribbon,
+.vtt-main-topbar > .vtt-map-nav {
+    grid-column: 1;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    padding: 5px;
+    white-space: nowrap;
+}
+
+.book-dashboard-ribbon .book-dashboard-ribbon-btn,
+.vtt-map-nav .book-dashboard-ribbon-btn {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 0 10px;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+}
+
+.vtt-account-memo {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    min-width: 124px;
+    max-width: 180px;
+    padding: 5px 9px;
+    border: 1px solid rgba(130, 89, 52, 0.28);
+    border-radius: 8px;
+    background: rgba(255, 248, 232, 0.94);
+    color: #2f1638;
+    font: 12px/1.2 system-ui, sans-serif;
+    box-shadow: 0 1px 3px rgba(47, 22, 56, 0.08);
+}
+
+.vtt-account-name {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 700;
+}
+
+.vtt-account-count { color: #63564b; white-space: nowrap; }
+.vtt-account-action {
+    min-height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #6b2841;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.vtt-account-action:focus-visible { outline: 2px solid #7a2e2e; outline-offset: 2px; }
+
+.book-dashboard-topbar > .play-session-title {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+body.ce-authoring .book-dashboard-topbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+body.ce-authoring .book-dashboard-ribbon { flex-wrap: nowrap; }
+
+/* The editor keeps its own tools; this is a separate global route row. */
+.mm-app {
+    grid-template-rows: var(--top-h) 66px minmax(0, 1fr);
+    grid-template-areas: "top top top" "global global global" "tools stage panel";
+}
+.mm-global-nav {
+    grid-area: global;
+    min-width: 0;
+    padding: 3px 8px;
+    background: #f8f3e9;
+    border-bottom: 1px solid rgba(130, 89, 52, 0.28);
+}
+.vtt-map-nav {
+    min-height: 48px;
+    border: 1px solid rgba(130, 89, 52, 0.24);
+    border-radius: 10px;
+    background: #fff8e8;
+    color: #2f1638;
+    font-family: var(--font-heading, Georgia, serif);
+}
+.vtt-map-nav .book-dashboard-ribbon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(130, 89, 52, 0.18);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.42);
+    color: #2f1638;
+    font: inherit;
+    cursor: pointer;
+}
+.vtt-map-nav .book-dashboard-ribbon-btn.is-active {
+    border-color: #a8842c;
+    background: rgba(168, 132, 44, 0.18);
+}
+
+@media (max-width: 760px) {
+    .vtt-account-memo { min-width: 112px; max-width: 126px; padding: 4px 6px; font-size: 11px; }
+    .book-dashboard-ribbon .book-dashboard-ribbon-btn,
+    .vtt-map-nav .book-dashboard-ribbon-btn { min-height: 38px; padding: 0 8px; }
+    .mm-app {
+        grid-template-rows: var(--top-h) 64px minmax(0, 1fr) var(--tools-h);
+        grid-template-areas: "top" "global" "stage" "tools";
+    }
+    .mm-global-nav { padding: 3px 5px; }
+}

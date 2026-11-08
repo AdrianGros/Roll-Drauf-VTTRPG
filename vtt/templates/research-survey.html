@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kurze Forschungsumfrage · Roll Drauf VTT</title>
+    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <style>
+        :root { color-scheme: dark; font-family: system-ui, sans-serif; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #140d1d; color: #f7f0e5; line-height: 1.5; }
+        main { width: min(100% - 2rem, 760px); margin: 2rem auto 4rem; }
+        a { color: #eac986; }
+        h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; }
+        h2 { font-size: 1.2rem; }
+        .card { background: #251a31; border: 1px solid #574562; border-radius: 16px; padding: 1.2rem; margin: 1rem 0; }
+        .intro { color: #d7c9db; }
+        fieldset { border: 0; padding: 0; margin: 1.5rem 0; }
+        legend { font-weight: 700; font-size: 1.08rem; margin-bottom: .6rem; }
+        label.option { display: flex; align-items: flex-start; gap: .7rem; padding: .55rem .7rem; margin: .3rem 0; border: 1px solid #574562; border-radius: 9px; cursor: pointer; }
+        label.option:hover, label.option:focus-within { border-color: #eac986; background: #34243f; }
+        input[type="radio"] { margin-top: .35rem; accent-color: #eac986; }
+        textarea { width: 100%; min-height: 110px; border-radius: 9px; border: 1px solid #8d789a; background: #160f1f; color: #fff; padding: .7rem; font: inherit; }
+        button { background: #eac986; color: #211429; border: 0; border-radius: 9px; padding: .75rem 1.2rem; font: inherit; font-weight: 700; cursor: pointer; }
+        button:disabled { opacity: .5; cursor: wait; }
+        #status { min-height: 1.5rem; font-weight: 700; }
+        .small { font-size: .9rem; color: #d7c9db; }
+        #results[hidden] { display: none; }
+        #results pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+    </style>
+</head>
+<body>
+<main>
+    <p><a href="/dashboard">← Zurück zum VTT</a></p>
+    <h1>Kurze Umfrage zu KI und zum VTT</h1>
+    <p class="intro">Wir haben drei Forschungsberichte geschrieben: über ein verlässliches KI-gestütztes IT-System, über aktuelle KI-Forschung und darüber, wo DAD-M helfen könnte. Deine Einschätzung hilft uns, die nächsten Fragen sinnvoll zu wählen. Das Ausfüllen dauert etwa drei Minuten.</p>
+    <div class="card"><h2>Die drei Themen in einem Satz</h2><p><strong>Technik:</strong> Wie kann KI Änderungen durchführen, während Rechte und Ergebnis überprüfbar bleiben?</p><p><strong>Forschung:</strong> Was kann leistungsfähige KI heute, und wo scheitert sie noch?</p><p><strong>DAD-M:</strong> Könnte ein klarer Nachweis von Auftrag bis Betriebswirkung bei KI-Änderungen helfen?</p></div>
+    <p class="small">Die Teilnahme ist freiwillig. Deine Antwort wird deinem VTT-Konto zugeordnet, damit du sie später ändern kannst. Nur die Projektleitung sieht die Ergebnisse und freiwillige Kommentare. Bitte schreibe keine privaten Daten oder Zugangsdaten in den Kommentar.</p>
+    <form id="surveyForm" class="card" hidden>
+        <fieldset><legend>1. Welches Thema sollten wir zuerst vertiefen?</legend>
+            <label class="option"><input type="radio" name="topic" value="technical" required> Die technische Umsetzung</label>
+            <label class="option"><input type="radio" name="topic" value="frontier"> Den Stand der KI-Forschung</label>
+            <label class="option"><input type="radio" name="topic" value="dadm_niche"> Einen konkreten Einsatz für DAD-M</label>
+            <label class="option"><input type="radio" name="topic" value="none"> Keines davon</label>
+            <label class="option"><input type="radio" name="topic" value="unsure"> Ich bin noch unsicher</label>
+        </fieldset>
+        <fieldset><legend>2. Wie nützlich fändest du einen prüfbaren Nachweis für KI-gestützte Softwareänderungen?</legend>
+            <label class="option"><input type="radio" name="usefulness" value="very" required> Sehr nützlich</label>
+            <label class="option"><input type="radio" name="usefulness" value="somewhat"> Eher nützlich</label>
+            <label class="option"><input type="radio" name="usefulness" value="little"> Eher wenig nützlich</label>
+            <label class="option"><input type="radio" name="usefulness" value="none"> Gar nicht nützlich</label>
+            <label class="option"><input type="radio" name="usefulness" value="unsure"> Kann ich noch nicht sagen</label>
+        </fieldset>
+        <fieldset><legend>3. Was wäre dabei deine größte Sorge?</legend>
+            <label class="option"><input type="radio" name="concern" value="security" required> Sicherheit und Datenschutz</label>
+            <label class="option"><input type="radio" name="concern" value="proof"> Unzuverlässige Nachweise</label>
+            <label class="option"><input type="radio" name="concern" value="effort"> Zu viel zusätzlicher Aufwand</label>
+            <label class="option"><input type="radio" name="concern" value="benefit"> Unklarer Nutzen</label>
+            <label class="option"><input type="radio" name="concern" value="other"> Etwas anderes</label>
+            <label class="option"><input type="radio" name="concern" value="unsure"> Ich bin noch unsicher</label>
+        </fieldset>
+        <fieldset><legend>4. Was ist dir bei Änderungen am VTT am wichtigsten?</legend>
+            <label class="option"><input type="radio" name="vtt_priority" value="stability" required> Dass alles stabil läuft</label>
+            <label class="option"><input type="radio" name="vtt_priority" value="features"> Neue Funktionen</label>
+            <label class="option"><input type="radio" name="vtt_priority" value="transparency"> Verständliche Entscheidungen und Änderungen</label>
+            <label class="option"><input type="radio" name="vtt_priority" value="privacy"> Schutz meiner Daten</label>
+            <label class="option"><input type="radio" name="vtt_priority" value="other"> Etwas anderes</label>
+            <label class="option"><input type="radio" name="vtt_priority" value="unsure"> Ich bin noch unsicher</label>
+        </fieldset>
+        <label for="comment"><strong>Was sollten wir sonst noch wissen?</strong> (freiwillig)</label>
+        <textarea id="comment" name="comment" maxlength="1000"></textarea>
+        <p><button type="submit" id="saveButton">Antwort speichern</button></p>
+        <p id="status" role="status" aria-live="polite"></p>
+    </form>
+    <section id="results" class="card" hidden><h2>Ergebnisse für die Projektleitung</h2><pre id="resultsText"></pre></section>
+</main>
+<script src="/static/js/auth.js"></script>
+<script>
+    const form = document.getElementById('surveyForm');
+    const statusNode = document.getElementById('status');
+    const saveButton = document.getElementById('saveButton');
+    const fields = ['topic', 'usefulness', 'concern', 'vtt_priority'];
+    const auth = new Auth();
+
+    async function loadSurvey() {
+        const user = await auth.requireAuth('/login.html?next=/research-survey');
+        if (!user) return;
+        try {
+            const data = await auth.makeAuthRequest('/api/research-survey');
+            if (!data) return;
+            if (data.answer) {
+                for (const field of fields) {
+                    const input = form.querySelector('input[name="' + field + '"][value="' + data.answer[field] + '"]');
+                    if (input) input.checked = true;
+                }
+                form.elements.comment.value = data.answer.comment || '';
+                statusNode.textContent = 'Deine bisherige Antwort ist geladen. Du kannst sie ändern.';
+            }
+            form.hidden = false;
+            if (user.platform_role === 'owner' || user.platform_role === 'admin') {
+                const results = await auth.makeAuthRequest('/api/research-survey/results');
+                document.getElementById('resultsText').textContent = JSON.stringify(results, null, 2);
+                document.getElementById('results').hidden = false;
+            }
+        } catch (error) {
+            statusNode.textContent = error.message || 'Die Umfrage konnte nicht geladen werden.';
+            form.hidden = false;
+        }
+    }
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const answer = {};
+        for (const field of fields) answer[field] = new FormData(form).get(field);
+        answer.comment = form.elements.comment.value;
+        saveButton.disabled = true;
+        statusNode.textContent = 'Antwort wird gespeichert …';
+        try {
+            await auth.makeAuthRequest('/api/research-survey', 'PUT', answer);
+            statusNode.textContent = 'Danke! Deine Antwort ist gespeichert.';
+        } catch (error) {
+            statusNode.textContent = error.message || 'Speichern fehlgeschlagen. Bitte versuche es erneut.';
+        } finally {
+            saveButton.disabled = false;
+        }
+    });
+    loadSurvey();
+</script>
+</body>
+</html>

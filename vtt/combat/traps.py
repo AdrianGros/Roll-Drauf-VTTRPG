@@ -68,10 +68,6 @@ def _is_live_target(token: TokenState, trap: TokenState, target_types: frozenset
 
 
 def _apply_poison_dart(token: TokenState, updated_by: int) -> dict:
-    from vtt.ce_compat import token_reference
-    if token_reference(token) is not None:
-        from vtt.creation_engine.kernel.records import refuse
-        refuse("LEGACY_FIELD_READ_ONLY", "ENGINE traps require an authored activity or manual resolution")
     roll = roll_dice(SCHABERNACKS_DAMAGE_DICE)
     damage = int(roll.get("total", 1)) if isinstance(roll, dict) else 1
     damage = max(1, damage)

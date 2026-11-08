@@ -151,6 +151,42 @@ def test_discord_callback_denies_user_without_valid_discord_assignment(client, m
     assert "noch kein VTT-Zugang" in location
 
 
+def test_stale_discord_callback_does_not_consume_current_oauth_state(client, monkeypatch, app):
+    with app.app_context():
+        _add_assignment("273456789012345678")
+
+    _set_discord_state(client, state="current-state")
+
+    stale = client.get(
+        "/api/auth/discord/callback?code=stale-code&state=older-state",
+        follow_redirects=False,
+    )
+
+    assert stale.status_code == 302
+    assert "state mismatch" in unquote(_read_location(stale))
+    with client.session_transaction() as session:
+        assert session["discord_oauth_state"] == "current-state"
+        assert session["discord_oauth_next"] == "/dashboard"
+
+    monkeypatch.setattr("vtt.auth.routes.exchange_discord_code", lambda code, redirect_uri: {"access_token": "discord-token"})
+    monkeypatch.setattr(
+        "vtt.auth.routes.fetch_discord_profile",
+        lambda token: {"id": "273456789012345678", "username": "CurrentAttempt", "email": "current@example.com"},
+    )
+    monkeypatch.setattr(
+        "vtt.auth.routes.verify_discord_with_bot",
+        lambda payload: {"allowed": True, "player": True, "role": "player", "guild_id": payload["guild_id"], "reason": None},
+    )
+
+    current = client.get(
+        "/api/auth/discord/callback?code=current-code&state=current-state",
+        follow_redirects=False,
+    )
+
+    assert current.status_code == 302
+    assert urlparse(current.headers["Location"]).path == "/dashboard"
+
+
 def test_discord_callback_auto_provisions_user_after_guild_and_key_validation(client, monkeypatch, app):
     with app.app_context():
         _add_assignment("323456789012345678", tier="dm")
@@ -234,6 +270,46 @@ def test_discord_callback_reuses_existing_linked_user_with_consumed_assignment(c
 
     assert response.status_code == 302
     assert urlparse(response.headers["Location"]).path == "/dashboard"
+
+
+def test_discord_callback_reuses_existing_link_when_assignment_was_not_migrated(client, monkeypatch, app):
+    with app.app_context():
+        player_role = Role.query.filter_by(name="Player").first()
+        user = User(username="legacy_link", email="legacy@example.com", role_id=player_role.id, profile_tier="player")
+        user.set_password("Password123!")
+        db.session.add(user)
+        db.session.flush()
+        db.session.add(
+            DiscordIdentityLink(
+                user_id=user.id,
+                discord_user_id="473456789012345678",
+                discord_guild_id="1328724663257268264",
+                discord_username_snapshot="Legacy Link",
+                link_status="linked",
+            )
+        )
+        db.session.commit()
+
+    _set_discord_state(client)
+
+    monkeypatch.setattr("vtt.auth.routes.exchange_discord_code", lambda code, redirect_uri: {"access_token": "discord-token"})
+    monkeypatch.setattr(
+        "vtt.auth.routes.fetch_discord_profile",
+        lambda token: {"id": "473456789012345678", "username": "Legacy Link", "email": "legacy@example.com"},
+    )
+    monkeypatch.setattr(
+        "vtt.auth.routes.verify_discord_with_bot",
+        lambda payload: {"allowed": True, "player": True, "role": "player", "guild_id": payload["guild_id"], "reason": None},
+    )
+
+    response = client.get("/api/auth/discord/callback?code=test-code&state=state-123", follow_redirects=False)
+
+    assert response.status_code == 302
+    assert urlparse(response.headers["Location"]).path == "/dashboard"
+    with app.app_context():
+        assert RegistrationKey.query.filter_by(key_batch_id="discord-assign-473456789012345678").first() is None
+        link = DiscordIdentityLink.query.filter_by(discord_user_id="473456789012345678").one()
+        assert link.last_verified_at is not None
 
 
 def test_discord_callback_allows_login_when_original_key_expired_after_consumption(client, monkeypatch, app):

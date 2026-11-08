@@ -1,117 +1,44 @@
-/* Feature layout uses the shared book material; all overrides stay in this page. */
-html.ce-authoring-root { background: var(--vtt-paper); color-scheme: light; }
-body.ce-authoring {
-  margin: 0;
-  padding: clamp(.75rem, 2vw, 2rem);
-  min-height: 100vh;
-  background: var(--vtt-paper);
-  color: var(--vtt-ink);
-  font-family: var(--vtt-font-ui);
-  line-height: 1.5;
-}
-.ce-authoring *, .ce-authoring *::before, .ce-authoring *::after { box-sizing: border-box; }
-.ce-authoring .ce-page {
-  max-width: 90rem;
-  margin: 0 auto;
-  padding: clamp(.75rem, 2.5vw, 2.5rem);
-  background: var(--vtt-paper-panel);
-  border: 1px solid var(--vtt-field-border);
-  border-radius: .5rem;
-  overflow-wrap: anywhere;
-}
-.ce-authoring header { margin-bottom: 1.5rem; background: none; }
-.ce-authoring h1 { margin: .5rem 0; font-size: clamp(1.6rem, 4vw, 2.25rem); }
-.ce-authoring h2 { font-size: 1.2rem; margin: 1.4rem 0 .75rem; }
-.ce-authoring h1, .ce-authoring h2 { font-family: var(--vtt-font-heading); color: var(--vtt-rubric); text-shadow: none; }
-.ce-authoring .ce-eyebrow { color: var(--vtt-ink-muted); margin: 1.5rem 0 .25rem; }
-.ce-authoring .field-error { color: var(--vtt-rubric); font-weight: 600; }
-.ce-authoring [aria-invalid="true"] { border: 2px solid var(--vtt-rubric); }
-.ce-authoring #conflict pre { white-space: pre-wrap; overflow-wrap: anywhere; }
-.ce-authoring header > p:last-child { max-width: 66ch; font-family: var(--vtt-font-body); }
-.ce-authoring a { color: var(--vtt-rubric); }
-.ce-authoring .book-dashboard-topbar { position: static; display: block; padding: 0 0 1rem; }
-.ce-authoring .book-dashboard-ribbon {
-  display: flex;
-  justify-content: flex-start;
-  padding: .5rem;
-  gap: .5rem;
-  background: var(--vtt-paper-card);
-  border-color: var(--vtt-field-border-strong);
-  font-family: var(--vtt-font-ui);
-  text-transform: none;
-  letter-spacing: normal;
-}
-.ce-authoring .book-dashboard-ribbon-btn {
-  display: inline-flex;
-  align-items: center;
-  max-width: 100%;
-  padding: .6rem .8rem;
-  background: var(--vtt-paper-panel);
-  color: var(--vtt-rubric);
-  border-color: var(--vtt-field-border-strong);
-  text-decoration: underline;
-  text-transform: none;
-  letter-spacing: normal;
-}
-.ce-authoring .ce-skip { position: absolute; width: 1px; height: 1px; overflow: hidden; }
-.ce-authoring .ce-skip:focus { position: static; display: block; width: auto; height: auto; padding: .5rem; }
-.ce-authoring .toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; }
-.ce-authoring .toolbar > * { min-width: 0; max-width: 100%; }
-.ce-authoring label { display: block; margin: .5rem 0; }
-.ce-authoring label > span { display: block; margin-bottom: .35rem; }
-.ce-authoring :is(button, input, select, textarea) {
-  max-width: 100%;
-  min-height: 2.75rem;
-  font: inherit;
-  padding: .6rem .75rem;
-  border-radius: .3rem;
-  border: 1px solid var(--vtt-field-border-strong);
-  color: var(--vtt-field-text);
-  background: var(--vtt-field-bg);
-  box-shadow: none;
-}
-.ce-authoring :is(input, textarea)::placeholder { color: var(--vtt-ink-muted); }
-.ce-authoring button { cursor: pointer; margin: .3rem .4rem .3rem 0; background: var(--vtt-paper-card); white-space: normal; }
-.ce-authoring button:hover { background: var(--vtt-paper-panel-soft); transform: none; }
-.ce-authoring button[type="submit"], .ce-authoring #commit { background: var(--vtt-rubric); color: var(--vtt-paper-panel); }
-.ce-authoring :is(button, input, select, textarea):disabled, .ce-authoring #commit:disabled { opacity: 1; color: var(--vtt-ink-muted); background: var(--vtt-paper-card); cursor: not-allowed; }
-.ce-authoring :focus-visible { outline: 3px solid var(--vtt-rubric); outline-offset: 3px; box-shadow: none; }
+/* Creation Engine page shell around Eagle Homebrew: VTT chrome only (toolbar, world directory).
+   The editor window itself is styled by eagle-homebrew/eagle-homebrew.css (Matt) and eagle-homebrew/shim.css. */
+.ce-authoring { margin: 0; min-height: 100vh; background: var(--parchment, #f4ecd8); color: var(--ink, #2b2118); }
+.ce-page { max-width: 72rem; margin: 0 auto; padding: 1rem clamp(1rem, 3vw, 2rem) 3rem; }
+.ce-skip { position: absolute; left: -999px; }
+.ce-skip:focus { left: 1rem; top: 1rem; z-index: 10; background: #fff; padding: .5rem; }
+.ce-eyebrow { margin: 1rem 0 0; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; opacity: .75; }
+.ce-authoring h1 { margin: .2rem 0 .4rem; }
+.ce-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: 1rem 0; }
+.ce-toolbar select { min-width: 14rem; max-width: 100%; padding: .35rem .5rem; }
+.ce-authoring button { cursor: pointer; padding: .35rem .8rem; border-radius: 4px; border: 1px solid #8a7a62; background: #fffaf0; color: inherit; }
+.ce-authoring button.ce-danger { border-color: #8a1f1f; color: #8a1f1f; }
+.ce-directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1.5rem; }
+.ce-directory h2 { margin: .5rem 0; font-size: 1.15rem; }
+.ce-directory h3 { margin: .8rem 0 .3rem; font-size: 1rem; }
+.ce-directory-list { list-style: none; margin: 0; padding: 0; }
+.ce-directory-list li { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; padding: .35rem 0; border-bottom: 1px solid rgb(0 0 0 / .1); }
+.ce-directory-name { font-weight: 600; flex: 1 1 10rem; overflow-wrap: anywhere; }
+.ce-directory-meta { font-size: .85rem; opacity: .7; }
+.ce-confirm { display: inline-flex; flex-wrap: wrap; gap: .3rem; }
+.ce-empty, .ce-help { opacity: .75; font-size: .9rem; }
+#ce-status:empty { display: none; }
+.ce-species { margin-top: 2rem; padding: clamp(1rem, 2vw, 1.5rem); border: 1px solid #b9a98e; border-radius: .6rem; background: #fffaf0; box-shadow: 0 2px 10px rgb(43 33 24 / .08); }
+.ce-species h2 { margin: 0 0 .4rem; }
+.ce-species > label { display: block; margin: .9rem 0 .3rem; font-weight: 600; }
+.ce-species > select { display: block; width: min(100%, 30rem); }
+.ce-species fieldset { min-width: 0; margin: 1rem 0; padding: .75rem 1rem 1rem; border: 1px solid #c8bba7; border-radius: .4rem; }
+.ce-species legend { padding: 0 .3rem; font-weight: 600; }
+.ce-species fieldset > label { display: block; margin: .65rem 0 .25rem; }
+.ce-species input:not([type=checkbox]), .ce-species select, .ce-species textarea { box-sizing: border-box; max-width: 100%; padding: .4rem .5rem; border: 1px solid #a99981; border-radius: .25rem; background: #fff; color: inherit; font: inherit; }
+.ce-species fieldset > input:not([type=checkbox]), .ce-species fieldset > select, .ce-species textarea { display: block; width: min(100%, 30rem); }
+.ce-species-skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: .35rem .8rem; margin-top: .5rem; }
+.ce-species-skills label { display: flex; align-items: center; gap: .35rem; }
+.ce-species #ce-species-check, .ce-species #ce-species-publish { margin: .25rem .5rem .5rem 0; }
+.ce-species button:disabled { opacity: .5; cursor: default; }
+.ce-species-entries { padding-left: 1.5rem; }
+.ce-species-entries li { margin: .25rem 0; }
+.ce-species-ok { color: #245b32; }
+.ce-species-blocked { color: #8a1f1f; }
 .ce-authoring [hidden] { display: none !important; }
-.ce-authoring .columns { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
-.ce-authoring .columns > * { min-width: 0; }
-.ce-authoring aside { margin: 0; padding: 0 1rem 1rem; background: var(--vtt-paper-card); border-radius: .3rem; }
-.ce-authoring fieldset { min-width: 0; margin: 1rem 0; padding: 1rem; border: 1px solid var(--vtt-field-border-strong); border-radius: .3rem; }
-.ce-authoring legend { max-width: 100%; font-weight: 600; padding: 0 .3rem; }
-.ce-authoring textarea { width: 100%; min-height: 6rem; resize: vertical; }
-.ce-authoring input[type="checkbox"] { min-height: auto; width: auto; margin-right: .5rem; }
-.ce-authoring pre { max-width: 100%; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--vtt-paper-card); color: var(--vtt-ink); padding: .75rem; }
-.ce-authoring .help, .ce-authoring dt { color: var(--vtt-ink-muted); }
-.ce-authoring dt { margin-top: .75rem; }
-.ce-authoring dd { margin: .3rem 0 1rem; white-space: pre-wrap; }
-.ce-authoring #content dd { font-family: var(--vtt-font-body); }
-.ce-authoring .notice, .ce-authoring #status { color: var(--vtt-ink); background: var(--vtt-paper-card); padding: .75rem; border-left: .25rem solid var(--vtt-warning); }
-.ce-authoring #status:empty { display: none; }
-.ce-authoring .ready { color: var(--vtt-success-ink); }
-.ce-authoring #quality ul { padding-left: 1.2rem; }
-.ce-authoring details { margin: .75rem 0; }
-.ce-authoring summary { cursor: pointer; }
-.ce-authoring #history { padding-left: 1.4rem; }
-@media (min-width: 1200px) {
-  .ce-authoring .columns { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+/* While Eagle Homebrew's window is docked on the right (as beside Foundry's sidebar), the page makes room. */
+@media (min-width: 1100px) {
+  body.eh-window-open .ce-page { max-width: none; margin: 0; padding-right: calc(min(520px, 45vw) + 2.5rem); }
 }
-@media (prefers-reduced-motion: reduce) {
-  .ce-authoring *, .ce-authoring *::before, .ce-authoring *::after { animation: none !important; transition: none !important; }
-}
-
-.ce-authoring .ce-core-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr)); gap: .75rem; }
-.ce-authoring #sheet-confirm + span { display: inline; }
-.ce-authoring .book-dashboard-ribbon { flex-wrap: wrap; }
-
-.ce-authoring .ce-schema-node { min-width: 0; }
-.ce-authoring .ce-schema-node :is(h4,h5) { margin: .8rem 0 .4rem; }
-.ce-authoring .ce-schema-node :is(input,select,textarea) { width: 100%; }
-.ce-authoring .ce-schema-entry { border-left: 3px solid var(--vtt-field-border-strong); padding: .4rem 0 .7rem .7rem; margin: .8rem 0; }
-.ce-authoring .ce-schema-property { margin-bottom: .5rem; }
-.ce-authoring #guided-progress { padding: .75rem; background: var(--vtt-paper-card); border-radius: .3rem; margin-bottom: 1rem; }
-.ce-authoring #guided-progress progress { width: 100%; accent-color: var(--vtt-rubric); }
-.ce-authoring #content :is(dl,ol) { padding-left: .7rem; }
