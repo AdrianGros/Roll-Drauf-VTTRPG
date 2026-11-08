@@ -87,12 +87,69 @@ Frame und nicht während eines Drags.
 
 ## Prüfungen
 
-Wird nach dem Lauf ergänzt.
+- Neue API-Tests `tests/test_table_seats.py`: **15 bestanden** (Platzwahl,
+  Projektion, Reload, pro Sitzung, Spieler/Beobachter ohne DM-Platz, Entzug,
+  DM-Routen und alte Tischrouten am Spielerplatz, Socket-Räume und -Ereignisse,
+  Bogen-Würfe).
+- Neue Browsertests `tests/test_table_seat_browser.py` (Chromium, echter
+  Socket.IO-Weg): **6 bestanden**. Spieler-DOM ohne 22 DM-Elemente,
+  DM-Werkzeuge vorhanden, „Raster“ nur im Messwerkzeug, Platzwechsel hin und
+  zurück, zweiter Tab folgt, Hub-Einstieg `seat=player`, Angriff mit Zielauswahl
+  und Esc.
+- Übernommene Token-Batching-Tests: Chromium bestanden; die Firefox-Variante
+  startet auf diesem Host nicht (fehlende GTK/NSS-Bibliotheken, wie schon im
+  Vormittagslauf).
+- Alle 79 Testdateien, die die geänderten Flächen berühren: 301 bestanden,
+  4 fehlgeschlagen, 14 Errors. Die 14 Errors sind Firefox-Starts. Zwei Fehlschläge
+  (`test_pre_table_usability_closeout`) bestehen auch im Live- und
+  Release-Lauf vom Vormittag. `test_visible_book_navigation_reaches_editor_with_keyboard[/dashboard]`
+  ist der bekannte instabile Test (Live-Lauf rot, hier dreimal in Folge grün).
+  Der Hotbar-Vertragstest pinnte den alten Aufruf ohne Ziel und ist angepasst.
+- Release-Image lokal mit SQLite und echtem gunicorn/eventlet: Tabelle
+  `table_seats` wird angelegt, DM-Ansicht → Spielerplatz → Reload → DM-Platz,
+  Hub-Einstieg `seat=player` und `seat=dm`, keine Seitenfehler.
 
 ## Auslieferung
 
-Wird nach dem Deploy ergänzt.
+- Commits `f56cbee` und `ec20e46` auf `feat/playtable-seats-20261108`, gepusht.
+  Basis-Commit `f9d5b15` hält den laufenden Live-Baum fest.
+- Image `roll-drauf-vtt-app:playtable-seats-20261108-ec20e46`,
+  `sha256:e4ef683613731af648ad353156ea0194a7e53c5bdf415d7c70b7e733a1be94e1`,
+  gebaut `FROM roll-drauf-vtt-app:mapmaker-color-b3-20261108-be52d043` (dem um
+  11:44 UTC laufenden Image; die Kartenwerkstatt-Auslieferungen des Tages
+  bleiben erhalten) mit genau den 15 geänderten Dateien. Hashabgleich aller 15
+  Dateien im Image gegen `ec20e46`: gleich.
+- Compose-Projekt `migration-production`, Image-Eintrag in
+  `production.duck-species.override.yml` (Sicherung
+  `.bak-playtable-seats-20261108`), `up -d --no-deps --no-build app` um
+  2026-11-08 11:44:19 UTC, Health 200 nach 19 s.
+- Die Tabelle `table_seats` legt `db.create_all()` beim Start an
+  (`AUTO_CREATE_SCHEMA=true` im Compose). Die SQL-Datei
+  `migrations/migration_m84_table_seats.sql` ist das Gegenstück ohne Auto-Create.
+
+## Live-Prüfung
+
+- Öffentlich: `play-ui.js`, `play-client.js`, `play-socket.js`,
+  `book-scene.js`, `book-scene.css` und `/play` hashgleich mit `ec20e46`.
+  `PUT …/seat` und `GET …/bootstrap` antworten ohne Anmeldung 401 (Route
+  vorhanden). Login, Übersicht, Kampagnen, Spieltisch, Beyond20-Hilfe: 200.
+  Startlog ohne Traceback.
+- **Nicht geprüft:** die angemeldete Live-Reise. Ein rein lesender Check im
+  Container (Tabelle vorhanden, Bootstrap des Kampagnenbesitzers) wurde von der
+  Berechtigungsprüfung als Produktionslesezugriff abgelehnt und nicht umgangen.
+  Erste Prüfung heute Abend durch den Owner: Hub → „Als Spielleitung an den
+  Tisch“; ein Spieler prüft, dass Wand/Licht/Sicht fehlen; ↩ Zurück → „Als
+  Spieler am Tisch sitzen“ und zurück.
+- Ein Hintergrundwächter meldet 5xx auf Tischrouten und einen Image-Wechsel.
 
 ## Rollback
 
-Wird nach dem Deploy ergänzt.
+```
+cd /srv/migration/2026-10-07/setup
+cp -p production.duck-species.override.yml.bak-playtable-seats-20261108 production.duck-species.override.yml
+docker compose -p migration-production -f production.compose.json -f production.duck-species.override.yml up -d --no-deps --no-build app
+```
+
+Das vorherige Image `roll-drauf-vtt-app:mapmaker-color-b3-20261108-be52d043`
+bleibt lokal erhalten. Die Tabelle `table_seats` darf bleiben; das alte Image
+liest sie nicht. Wer gerade als Spieler sitzt, ist nach dem Rollback wieder DM.
