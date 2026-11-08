@@ -1,0 +1,48 @@
+{
+  "baseImage": "sha256:2bdcccc4ee829406f63957c0cd32cda02e376b8d9b9cd91df304cdf73f556200",
+  "baseTag": "roll-drauf-vtt-app:playtable-fullscreen-20261108-72229c7",
+  "baseRevision": "72229c7f91bac3b1bae598ebf73ea728addbc71d",
+  "composeProject": "migration-production",
+  "composeFiles": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "oldPaths": [
+    "vtt/endpoints/assets.py",
+    "vtt/static/mapmaker/index.html",
+    "vtt/static/mapmaker/mapmaker.css",
+    "vtt/static/mapmaker/js/app.js",
+    "vtt/static/mapmaker/js/storage.js",
+    "vtt/static/mapmaker/js/tools.js",
+    "vtt/static/mapmaker/js/ui.js"
+  ],
+  "newPaths": [
+    "vtt/models/mapmaker_project.py",
+    "vtt/mapmaker_document.py",
+    "vtt/endpoints/mapmaker.py",
+    "vtt/static/mapmaker/js/library.js",
+    "tools/migrate_mapmaker_library.py"
+  ],
+  "affectedBaseFilesMatch": true,
+  "baseHashes": {
+    "vtt/endpoints/assets.py": "64030ef4df4f3a725d03f5cddd2fcd2d4bbb8b015fe495da57dd1e92a8ba1ba8",
+    "vtt/static/mapmaker/index.html": "aa73baaaf56211ac7df4fe25ec95bb80638d0d9fd022ba8d6efc0989b3ad3084",
+    "vtt/static/mapmaker/mapmaker.css": "14c5b4aa1eb10ad659d956743672181b6f1952b614e00cdd9c20995e7e4baefd",
+    "vtt/static/mapmaker/js/app.js": "8b4fe20056e1dbc4868432ec53900e43112b62e98ec5d129f7f0786a8585de8d",
+    "vtt/static/mapmaker/js/storage.js": "47655cb25ac48a1913797b74ee64b778113d96ddbe285ecf55e4ccce8d745794",
+    "vtt/static/mapmaker/js/tools.js": "87932365d71a0a681c710212b25802e05e3538e75a2c94b21a02d321af4272ff",
+    "vtt/static/mapmaker/js/ui.js": "feed14bd0c2a5519e90baf0a4cad68fb0d8ef99c4663f0cbd7c31d09ee1ad32c",
+    "vtt/models/mapmaker_project.py": null,
+    "vtt/mapmaker_document.py": null,
+    "vtt/endpoints/mapmaker.py": null,
+    "vtt/static/mapmaker/js/library.js": null,
+    "tools/migrate_mapmaker_library.py": null
+  },
+  "mounts": [
+    {
+      "type": "volume",
+      "destination": "/data/vtt-assets",
+      "name": "roll-drauf-vtt_vtt_assets_data"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "sourceCommit": "f37e1136d1890fac7407e7311d62f9096a72658d",
+  "baseImage": "sha256:2bdcccc4ee829406f63957c0cd32cda02e376b8d9b9cd91df304cdf73f556200",
+  "baseTag": "roll-drauf-vtt-app:playtable-fullscreen-20261108-72229c7",
+  "imageTag": "roll-drauf-vtt-app:mapmaker-library-20261108-f37e1136",
+  "builtImageId": "sha256:1d56fef8b325eba15653a9520b7ad5f7e2187f3302ba4a00d8ba8ed1f15174ad",
+  "rollbackTag": "roll-drauf-vtt-app:before-mapmaker-library-20261108",
+  "composeProject": "migration-production",
+  "composeFiles": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "baseLayersPreserved": true,
+  "baseImageConfigPreserved": true,
+  "overlayPaths": [
+    "vtt/endpoints/assets.py",
+    "vtt/static/mapmaker/index.html",
+    "vtt/static/mapmaker/mapmaker.css",
+    "vtt/static/mapmaker/js/app.js",
+    "vtt/static/mapmaker/js/storage.js",
+    "vtt/static/mapmaker/js/tools.js",
+    "vtt/static/mapmaker/js/ui.js",
+    "vtt/models/mapmaker_project.py",
+    "vtt/mapmaker_document.py",
+    "vtt/endpoints/mapmaker.py",
+    "vtt/static/mapmaker/js/library.js",
+    "tools/migrate_mapmaker_library.py"
+  ],
+  "overlaySha256": {
+    "vtt/endpoints/assets.py": "c40f0e87e25661a3179a732fd41d15376e26ec189466571ddc7c3c778a5c0044",
+    "vtt/static/mapmaker/index.html": "0b96e6c3b4d298b083bf635eb71ee02936663c41cc9b8cf7772306b0736c7d54",
+    "vtt/static/mapmaker/mapmaker.css": "c7f2d1f831ce05b219b52702ee21874c23a478edb47b26a64063057f8d300797",
+    "vtt/static/mapmaker/js/app.js": "0fac83689bc3a7807ac4ead0431f1e7b6aa16103a4e772037c56ef5ee8e851cd",
+    "vtt/static/mapmaker/js/storage.js": "230def26b2210b8abac29952399e7e814ca802addad0363c2979b15f6aeec4b8",
+    "vtt/static/mapmaker/js/tools.js": "37f07b3861110d453778963af670096fec18ed5367e2ed19416cd761e4113d9a",
+    "vtt/static/mapmaker/js/ui.js": "451804edef5b42e3e53a6d4b47fee656cc8b2dff1d00e4aae20db50ee5662e14",
+    "vtt/models/mapmaker_project.py": "cd956dfc19e99d175a7f0d5fb5c0daab5c18be81c7bb9fa55163b070e7ba763f",
+    "vtt/mapmaker_document.py": "4f9fe8db34c9efb003ee45ffcdd3063c435d3610b5e165277fcc4527c348a4c6",
+    "vtt/endpoints/mapmaker.py": "d7ae3b88c0c88485b5874004d3e5515930b53546c7e36f758e869a928ac9ae02",
+    "vtt/static/mapmaker/js/library.js": "5ddfb652dd67edbbccc2fea16877bbceb1f260f21ea2b76277a7b65916d6c2d5",
+    "tools/migrate_mapmaker_library.py": "711f372d31455d343a41449ddd576d70d760402360c769d739b81bf097b0fb79"
+  },
+  "migration": "additive mapmaker_projects table ready",
+  "runningImageId": "sha256:1d56fef8b325eba15653a9520b7ad5f7e2187f3302ba4a00d8ba8ed1f15174ad",
+  "deployedAt": "2026-11-08T19:12:08+0100",
+  "overrideBackup": "/srv/migration/2026-10-07/setup/mapmaker-library-20261108/production.duck-species.override.before.yml"
+}

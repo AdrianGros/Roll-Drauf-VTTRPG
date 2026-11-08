@@ -24,5 +24,21 @@
     "4096px map regression passed"
   ],
   "dependenciesAdded": [],
-  "liveDelivery": "pending"
+  "liveDelivery": {
+    "status": "verified",
+    "sourceCommit": "f37e1136d1890fac7407e7311d62f9096a72658d",
+    "imageId": "sha256:1d56fef8b325eba15653a9520b7ad5f7e2187f3302ba4a00d8ba8ed1f15174ad",
+    "roles": [
+      "dm",
+      "player"
+    ],
+    "widths": [
+      1440,
+      390
+    ],
+    "navigation": "Hauptnavigation → Karten → Deine Karten",
+    "createdAcceptanceProjectsDeleted": true,
+    "storageReturnedToBaseline": true,
+    "liveCatalogueIds": 72064
+  }
 }

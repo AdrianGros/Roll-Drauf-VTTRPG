@@ -1,0 +1,8 @@
+{
+  "initialDeployAbortedBeforeMigration": true,
+  "reason": "running image changed during build",
+  "reconciledImage": "sha256:2bdcccc4ee829406f63957c0cd32cda02e376b8d9b9cd91df304cdf73f556200",
+  "reconciledTag": "roll-drauf-vtt-app:playtable-fullscreen-20261108-72229c7",
+  "affectedBaseFilesMatch": true,
+  "preservedOtherRelease": "playtable-fullscreen 72229c7"
+}
