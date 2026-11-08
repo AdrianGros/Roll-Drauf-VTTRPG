@@ -42,6 +42,7 @@ from vtt.models.scene_wall import SceneWall  # S10
 from vtt.models.scene_light import SceneLight  # S10
 from vtt.models.fog_of_war_state import FogOfWarState  # S10
 from vtt.models.table_seat import TableSeat
+from vtt.models.table_macro_bar import TableMacroBar
 
 __all__ = [
     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',
@@ -55,5 +56,5 @@ __all__ = [
     'ResearchSurveyResponse',
     'Guild', 'GuildMembership', 'PageContent', 'PasswordResetToken',
     'TokenLoot', 'LootTransfer',
-    'SceneWall', 'SceneLight', 'FogOfWarState', 'TableSeat',
+    'SceneWall', 'SceneLight', 'FogOfWarState', 'TableSeat', 'TableMacroBar',
 ]

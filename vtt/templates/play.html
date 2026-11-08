@@ -379,6 +379,11 @@
             box-shadow: 0 -5px 18px rgba(0, 0, 0, 0.24);
         }
         .action-hotbar[hidden] { display: none; }
+        /* Macros make the bar wider: keep it on screen, scroll sideways. */
+        .action-hotbar {
+            max-width: calc(100vw - 1rem);
+            overflow-x: auto;
+        }
         .action-hotbar[aria-disabled="true"] { opacity: 0.5; }
         .hotbar-slot {
             display: flex;
@@ -404,6 +409,78 @@
         .hotbar-slot-key {
             font-size: 0.6rem;
             color: var(--muted);
+        }
+        .hotbar-actions, .hotbar-macros {
+            display: flex;
+            gap: inherit;
+        }
+        .hotbar-macros[hidden] { display: none; }
+        .hotbar-macros {
+            padding-left: 0.4rem;
+            margin-left: 0.1rem;
+            border-left: 1px solid rgba(232, 178, 63, 0.35);
+        }
+        .hotbar-slot.hotbar-macro, .hotbar-slot.hotbar-macro-edit {
+            width: auto;
+            min-width: 52px;
+            max-width: 9.5rem;
+            padding: 0 0.5rem;
+        }
+        .hotbar-macro span:first-child {
+            max-width: 8.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        /* .conditions-popover (later in this sheet) sets width and z-index. */
+        .conditions-popover.macro-editor {
+            left: 50%;
+            bottom: 7.5rem;
+            transform: translateX(-50%);
+            width: min(560px, calc(100vw - 2rem));
+            max-height: min(70vh, 640px);
+            overflow: hidden;
+            z-index: 360;
+        }
+        .macro-editor-slot > span:first-child {
+            color: var(--text);
+        }
+        .macro-editor-hint {
+            margin: 0 0.5rem 0.4rem;
+            font-size: 0.78rem;
+        }
+        .macro-editor-slots {
+            margin: 0 0.5rem 0.5rem;
+            padding-left: 1.4rem;
+        }
+        .macro-editor-slot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.15rem 0;
+        }
+        .macro-editor-slot-actions {
+            display: inline-flex;
+            gap: 0.25rem;
+        }
+        /* Only the roll list scrolls; title, slots and Speichern stay put. */
+        .macro-editor-options {
+            padding: 0 0.5rem;
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+        }
+        .macro-editor-slots {
+            flex: 0 0 auto;
+            max-height: 30vh;
+            overflow-y: auto;
+        }
+        .macro-editor-option-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 0.4rem;
         }
         .hotbar-slot.targeting {
             border-color: #e8b23f;
@@ -2607,6 +2684,22 @@
              different moments (quick numbered-key fire vs. deliberate
              actor+target+action selection). -->
         <div id="actionHotbar" class="action-hotbar" role="toolbar" aria-label="Aktionsleiste (Schnellzugriff)" hidden></div>
+
+        <!-- Charakter-Makroleiste: this person's own slots for the selected
+             token's character, filled from the sheet's rolls. -->
+        <div id="macroEditor" class="conditions-popover macro-editor" role="dialog" aria-labelledby="macroEditorTitle" hidden>
+            <div class="conditions-popover-head">
+                <strong id="macroEditorTitle">Makros</strong>
+                <button type="button" id="btnMacroEditorClose" class="mini-btn secondary" aria-label="Schließen">✕</button>
+            </div>
+            <p class="macro-editor-hint muted">Bis zu 10 Würfe aus dem Bogen. Sie würfeln mit Modus und Sichtbarkeit aus den Tools an diesem Tisch.</p>
+            <ol id="macroEditorSlots" class="macro-editor-slots"></ol>
+            <div id="macroEditorOptions" class="macro-editor-options"></div>
+            <div class="conditions-popover-foot">
+                <span id="macroEditorStatus" class="muted" role="status" aria-live="polite"></span>
+                <button type="button" id="btnMacroEditorSave" class="mini-btn">Speichern</button>
+            </div>
+        </div>
 
         <aside class="left-toolbar" aria-label="Werkzeugleiste">
             <!-- MMO-Aktionsleiste: dauerhaft sichtbar und zentral direkt

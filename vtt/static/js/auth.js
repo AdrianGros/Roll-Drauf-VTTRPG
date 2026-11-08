@@ -147,7 +147,9 @@ class Auth {
                 'not found': 'Das wurde nicht gefunden.',
                 'API request failed': 'Die Anfrage ist fehlgeschlagen. Bitte versuche es erneut.'
             };
-            const err = new Error(translations[rawCode] || rawCode);
+            // A German `message` from the server says what went wrong more
+            // precisely than any code translation (e.g. sheet rolls).
+            const err = new Error((typeof error.message === 'string' && error.message) || translations[rawCode] || rawCode);
             err.apiError = rawCode;
             err.status = response.status;
             throw err;

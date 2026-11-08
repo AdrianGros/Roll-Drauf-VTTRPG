@@ -9,7 +9,7 @@ import re
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from vtt.characters import sheet_link, species_actions, species_catalog, srd_inventory, srd_manage, srd_party, srd_progression
+from vtt.characters import sheet_link, species_actions, species_catalog, srd_inventory, srd_manage, srd_party, srd_progression, table_macros
 from vtt.characters.routes import (
     _can_read_character,
     _get_character_or_404,
@@ -436,6 +436,45 @@ def roll_from_sheet(char_id):
         'session': sheet_link.session_view(target['session']),
         'reason': target['reason'],
     })
+
+
+@srd_creator_bp.get('/characters/<int:char_id>/macros')
+@jwt_required()
+def get_table_macros(char_id):
+    """This person's hotbar macros for the character, plus every sheet roll that can go there."""
+    user, error = _get_current_user()
+    if error:
+        return error
+    char, error = _get_character_or_404(char_id)
+    if error:
+        return error
+    if not sheet_link.can_roll_for(user, char):
+        return _bad('forbidden', 'Nur wer für diesen Charakter würfeln darf, belegt seine Makros.', 403)
+    response = jsonify(table_macros.bar_view(user, char))
+    response.headers['Cache-Control'] = 'private, no-store'
+    return response
+
+
+@srd_creator_bp.put('/characters/<int:char_id>/macros')
+@limiter.limit('240 per hour')
+@jwt_required()
+def put_table_macros(char_id):
+    user, error = _get_current_user()
+    if error:
+        return error
+    char, error = _get_character_or_404(char_id)
+    if error:
+        return error
+    if not sheet_link.can_roll_for(user, char):
+        return _bad('forbidden', 'Nur wer für diesen Charakter würfeln darf, belegt seine Makros.', 403)
+    body = _body()
+    if body is None:
+        return _bad('invalid_body', 'JSON-Objekt erwartet.')
+    try:
+        return jsonify(table_macros.save_bar(user, char, body.get('slots')))
+    except table_macros.MacroError as exc:
+        db.session.rollback()
+        return _bad(exc.code, exc.message, exc.status)
 
 
 @srd_creator_bp.get('/characters/<int:char_id>/roll-context')

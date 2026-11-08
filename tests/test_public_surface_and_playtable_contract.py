@@ -473,7 +473,7 @@ def test_playtable_action_hotbar_is_a_pure_ui_trigger_over_the_existing_seam():
     assert 'id="actionTargetTokenId"' in template
 
     assert "catalog.length" in script
-    assert "bar.childElementCount !== catalog.length" in script
+    assert "actions.childElementCount !== catalog.length" in script
 
     # Keyboard shortcuts never fire from an input/textarea/select/
     # contenteditable or while a dialog is open (the research doc's own

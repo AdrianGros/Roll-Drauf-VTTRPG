@@ -85,6 +85,10 @@
             this.dragState = null;
             this.tokenRenderFrame = null;
             this.tokenRenderPending = false;
+            // Charakter-Makroleiste: per character id, this person's slots.
+            this._macroBars = new Map();
+            this._macroLoads = new Map();
+            this._macroEditor = null;
             this.panState = null;
             this.mapInteractionsBound = false;
             this.tokenIndex = new Map();
@@ -2473,11 +2477,16 @@
             const canAct = !this.readOnly && token && this._canMoveToken(token);
             bar.setAttribute("aria-disabled", String(!canAct));
 
-            if (bar.childElementCount !== catalog.length) {
-                bar.innerHTML = catalog.map((action, index) => {
-                    const keyLabel = index === 9 ? "0" : String(index + 1);
+            let actions = bar.querySelector(".hotbar-actions");
+            if (!actions) {
+                bar.innerHTML = '<div class="hotbar-actions"></div><div class="hotbar-macros" id="hotbarMacros" hidden></div>';
+                actions = bar.querySelector(".hotbar-actions");
+            }
+            if (actions.childElementCount !== catalog.length) {
+                actions.innerHTML = catalog.map((action, index) => {
+                    const keyLabel = String(index + 1);
                     return `
-                        <button type="button" class="hotbar-slot" data-action-code="${escapeHtml(action.code)}"
+                        <button type="button" class="hotbar-slot" data-action-code="${escapeHtml(action.code)}" data-hotkey="${keyLabel}"
                             title="${escapeHtml(action.description || action.name)}"
                             aria-label="Slot ${index + 1}: ${escapeHtml(action.name)} (Taste ${keyLabel})">
                             <span>${escapeHtml(action.name)}</span>
@@ -2485,13 +2494,211 @@
                         </button>
                     `;
                 }).join("");
-                bar.querySelectorAll(".hotbar-slot[data-action-code]").forEach((button) => {
+                actions.querySelectorAll(".hotbar-slot[data-action-code]").forEach((button) => {
                     button.addEventListener("click", () => this._fireHotbarSlot(button.dataset.actionCode));
                 });
             }
-            bar.querySelectorAll(".hotbar-slot[data-action-code]").forEach((button) => {
+            actions.querySelectorAll(".hotbar-slot[data-action-code]").forEach((button) => {
                 button.disabled = !canAct;
             });
+            this._renderMacroSlots(token, canAct, catalog.length);
+        }
+
+        // Charakter-Makroleiste: the selected token's character brings this
+        // person's own slots (sheet rolls). They roll through the sheet-roll
+        // route, which checks the character and the table every time.
+        _macroCharacterFor(token) {
+            if (!token?.character_id) return null;
+            const own = Number(token.owner_user_id) === Number(this.user?.id);
+            if (!own && !isOperatorRole(this.bootstrap?.session_role || "")) return null;
+            return Number(token.character_id);
+        }
+
+        _renderMacroSlots(token, canAct, firstIndex) {
+            const box = document.getElementById("hotbarMacros");
+            if (!box) return;
+            const characterId = canAct ? this._macroCharacterFor(token) : null;
+            const macroBar = characterId ? this._macroBars.get(characterId) : null;
+            if (characterId && !macroBar) this._loadMacroBar(characterId);
+            if (!macroBar || macroBar.reason) {
+                box.hidden = true;
+                box.innerHTML = "";
+                box.dataset.signature = "";
+                return;
+            }
+            const signature = `${characterId}|${macroBar.slots.map((slot) => `${slot.kind}:${slot.key || ""}`).join(",")}`;
+            box.hidden = false;
+            if (box.dataset.signature === signature) return;
+            box.dataset.signature = signature;
+            box.innerHTML = macroBar.slots.map((slot, index) => {
+                const position = firstIndex + index;
+                const keyLabel = position < 9 ? String(position + 1) : (position === 9 ? "0" : "");
+                return `
+                    <button type="button" class="hotbar-slot hotbar-macro" data-macro-index="${index}"${keyLabel ? ` data-hotkey="${keyLabel}"` : ""}
+                        title="${escapeHtml(slot.label)}"
+                        aria-label="Makro: ${escapeHtml(slot.label)}${keyLabel ? ` (Taste ${keyLabel})` : ""}">
+                        <span>${escapeHtml(slot.label)}</span>
+                        ${keyLabel ? `<span class="hotbar-slot-key">${keyLabel}</span>` : ""}
+                    </button>
+                `;
+            }).join("") + `
+                <button type="button" class="hotbar-slot hotbar-macro-edit" data-macro-edit
+                    title="Makros belegen: Würfe aus dem Bogen in die Leiste legen" aria-label="Makros belegen">
+                    <span>${macroBar.slots.length ? "✎" : "+ Makros"}</span>
+                </button>
+            `;
+            box.querySelectorAll(".hotbar-macro[data-macro-index]").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const slot = macroBar.slots[Number(button.dataset.macroIndex)];
+                    if (slot) this._fireMacro(characterId, slot, button);
+                });
+            });
+            box.querySelector("[data-macro-edit]")?.addEventListener("click", () => {
+                this._openMacroEditor(characterId, this._findStateToken(this.selectedTokenId)?.name || "");
+            });
+        }
+
+        async _loadMacroBar(characterId) {
+            if (this._macroLoads.has(characterId)) return this._macroLoads.get(characterId);
+            const load = this.auth.makeAuthRequest(`/api/srd-creator/characters/${characterId}/macros`)
+                .then((payload) => {
+                    this._macroBars.set(characterId, payload || { slots: [], options: [], reason: "unavailable" });
+                    this._renderActionHotbar();
+                    return payload;
+                })
+                .catch(() => {
+                    // Not allowed or offline: no macro slots, the fixed actions stay.
+                    this._macroBars.set(characterId, { slots: [], options: [], reason: "unavailable" });
+                    return null;
+                });
+            this._macroLoads.set(characterId, load);
+            return load;
+        }
+
+        async _fireMacro(characterId, slot, button) {
+            const mode = document.getElementById("rollMode")?.value || "normal";
+            const visibility = document.getElementById("rollVisibility")?.value || "public";
+            try {
+                const result = await this.auth.makeAuthRequest(`/api/srd-creator/characters/${characterId}/roll`, "POST", {
+                    kind: slot.kind,
+                    key: slot.key,
+                    sessionId: this.sessionId,
+                    mode,
+                    visibility,
+                });
+                if (button) {
+                    button.classList.add("firing");
+                    window.setTimeout(() => button.classList.remove("firing"), 300);
+                }
+                if (result) this._showMessage(`${result.label}: ${result.result?.total}`);
+            } catch (error) {
+                this._showMessage(error.message || "Der Wurf ist fehlgeschlagen.", true);
+            }
+        }
+
+        _openMacroEditor(characterId, characterName) {
+            const editor = document.getElementById("macroEditor");
+            const macroBar = this._macroBars.get(characterId);
+            if (!editor || !macroBar || macroBar.reason) return;
+            this._macroEditor = {
+                characterId,
+                draft: macroBar.slots.map((slot) => ({ ...slot })),
+                options: macroBar.options || [],
+                limit: Number(macroBar.limit) || 10,
+            };
+            const title = document.getElementById("macroEditorTitle");
+            if (title) title.textContent = characterName ? `Makros · ${characterName}` : "Makros";
+            const status = document.getElementById("macroEditorStatus");
+            if (status) status.textContent = "";
+            this._renderMacroEditor();
+            editor.hidden = false;
+            document.getElementById("btnMacroEditorClose")?.focus();
+        }
+
+        _closeMacroEditor() {
+            const editor = document.getElementById("macroEditor");
+            if (editor) editor.hidden = true;
+            this._macroEditor = null;
+        }
+
+        _renderMacroEditor() {
+            const state = this._macroEditor;
+            const slotsBox = document.getElementById("macroEditorSlots");
+            const optionsBox = document.getElementById("macroEditorOptions");
+            if (!state || !slotsBox || !optionsBox) return;
+            const slotId = (slot) => `${slot.kind}:${slot.key || ""}`;
+            const chosen = new Set(state.draft.map(slotId));
+            slotsBox.innerHTML = state.draft.length
+                ? state.draft.map((slot, index) => `
+                    <li class="macro-editor-slot" data-index="${index}">
+                        <span>${escapeHtml(slot.label)}</span>
+                        <span class="macro-editor-slot-actions">
+                            <button type="button" class="mini-btn secondary" data-macro-move="-1" aria-label="${escapeHtml(slot.label)} nach vorne"${index === 0 ? " disabled" : ""}>↑</button>
+                            <button type="button" class="mini-btn secondary" data-macro-move="1" aria-label="${escapeHtml(slot.label)} nach hinten"${index === state.draft.length - 1 ? " disabled" : ""}>↓</button>
+                            <button type="button" class="mini-btn danger" data-macro-remove aria-label="${escapeHtml(slot.label)} entfernen">✕</button>
+                        </span>
+                    </li>`).join("")
+                : '<li class="macro-editor-empty muted">Noch leer. Unten Würfe hinzufügen.</li>';
+            const full = state.draft.length >= state.limit;
+            const groups = [];
+            state.options.forEach((option) => {
+                let group = groups.find((entry) => entry.name === option.group);
+                if (!group) {
+                    group = { name: option.group, options: [] };
+                    groups.push(group);
+                }
+                group.options.push(option);
+            });
+            optionsBox.innerHTML = groups.map((group) => `
+                <div class="macro-editor-group">
+                    <div class="widget-subheading">${escapeHtml(group.name)}</div>
+                    <div class="macro-editor-option-list">
+                        ${group.options.map((option) => {
+                            const taken = chosen.has(slotId(option));
+                            return `<button type="button" class="mini-btn secondary" data-macro-add="${escapeHtml(slotId(option))}"${taken || full ? " disabled" : ""}>${taken ? "✓ " : "+ "}${escapeHtml(option.label)}</button>`;
+                        }).join("")}
+                    </div>
+                </div>`).join("");
+            slotsBox.querySelectorAll(".macro-editor-slot").forEach((row) => {
+                const index = Number(row.dataset.index);
+                row.querySelectorAll("[data-macro-move]").forEach((button) => {
+                    button.addEventListener("click", () => {
+                        const target = index + Number(button.dataset.macroMove);
+                        if (target < 0 || target >= state.draft.length) return;
+                        [state.draft[index], state.draft[target]] = [state.draft[target], state.draft[index]];
+                        this._renderMacroEditor();
+                    });
+                });
+                row.querySelector("[data-macro-remove]")?.addEventListener("click", () => {
+                    state.draft.splice(index, 1);
+                    this._renderMacroEditor();
+                });
+            });
+            optionsBox.querySelectorAll("[data-macro-add]").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const option = state.options.find((entry) => slotId(entry) === button.dataset.macroAdd);
+                    if (!option || state.draft.length >= state.limit) return;
+                    state.draft.push({ ...option });
+                    this._renderMacroEditor();
+                });
+            });
+        }
+
+        async _saveMacroEditor() {
+            const state = this._macroEditor;
+            if (!state) return;
+            const status = document.getElementById("macroEditorStatus");
+            try {
+                const saved = await this.auth.makeAuthRequest(`/api/srd-creator/characters/${state.characterId}/macros`, "PUT", {
+                    slots: state.draft.map((slot) => ({ kind: slot.kind, key: slot.key })),
+                });
+                if (saved) this._macroBars.set(state.characterId, saved);
+                this._closeMacroEditor();
+                this._renderActionHotbar();
+                this._showMessage("Makros gespeichert.");
+            } catch (error) {
+                if (status) status.textContent = error.message || "Die Makros konnten nicht gespeichert werden.";
+            }
         }
 
         async _fireHotbarSlot(actionCode) {
@@ -2589,11 +2796,26 @@
                 if (document.querySelector("dialog[open]")) return;
                 const bar = document.getElementById("actionHotbar");
                 if (!bar || bar.hidden || bar.getAttribute("aria-disabled") === "true") return;
-                const slotIndex = key === "0" ? 9 : Number(key) - 1;
-                const button = bar.querySelectorAll(".hotbar-slot[data-action-code]")[slotIndex];
+                // Keys 1-3 are the fixed actions, the macros follow up to 0.
+                const button = bar.querySelector(`.hotbar-slot[data-hotkey="${key}"]`);
                 if (!button || button.disabled) return;
                 event.preventDefault();
-                this._fireHotbarSlot(button.dataset.actionCode);
+                if (button.dataset.actionCode) {
+                    this._fireHotbarSlot(button.dataset.actionCode);
+                } else {
+                    button.click();
+                }
+            });
+
+            const editor = document.getElementById("macroEditor");
+            document.getElementById("btnMacroEditorClose")?.addEventListener("click", () => this._closeMacroEditor());
+            document.getElementById("btnMacroEditorSave")?.addEventListener("click", () => this._saveMacroEditor());
+            editor?.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    this._closeMacroEditor();
+                }
             });
         }
 
