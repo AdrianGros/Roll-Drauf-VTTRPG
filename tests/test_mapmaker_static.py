@@ -127,3 +127,39 @@ def test_artist_catalogue_has_complete_integrity_and_local_license_evidence():
     assert "K. M. Alexander" in credits and "Rob Tuytel" in credits and "Rico Cilliers" in credits
     assert 'href="assets/inventory.csv"' in credits
     assert 'href="credits.html"' in (APP / "index.html").read_text()
+
+
+def test_color_sources_have_lossless_palette_projection_and_complete_coverage():
+    import hashlib
+    assets=APP/'assets'
+    catalog=json.loads((assets/'packs.json').read_text())['packs']
+    registry=json.loads((assets/'color-source-lock.json').read_text())['sources']
+    assert len(registry)==17 and {s['batch'] for s in registry}=={1,2,3,4}
+    available={p['id']:p for p in catalog}
+    for source in registry:
+        if source['id'] not in available:
+            continue  # Later batches have not been imported yet.
+        folder=assets/source['id']
+        m=json.loads((folder/'manifest.json').read_text())
+        coverage=json.loads((folder/'coverage.json').read_text())
+        palette=json.loads((folder/'palette.json').read_text())
+        entries={e['id']:e for e in m['stamps']}
+        accepted=[r for r in coverage['files'] if r['status']=='placeable']
+        assert len(accepted)==len(entries)==len(palette['rows'])
+        assert {r['asset'] for r in accepted}==set(entries)
+        assert len({r['sourcePath'] for r in coverage['files']})==len(coverage['files'])
+        fields=('id','file','label','w','h','group','sheet','grid','pixelArt','defaultSize')
+        assert palette['rows']==[[e.get(k) for k in fields] for e in m['stamps']]
+        assert available[source['id']]['palette']==source['id']+'/palette.json'
+        for r in accepted:
+            e=entries[r['asset']]
+            assert r['sourcePath']==e['originalPath']
+            assert r['originalSha256']==e['originalSha256']
+            assert r['file']==e['file']
+        for c in m['creditFiles']:
+            assert hashlib.sha256((folder/c['file']).read_bytes()).hexdigest()==c['sha256']
+        assert m['license']==source['license'] and m['archiveSha256']==source['archiveSha256']
+        if source['id']=='lpc-revised':
+            assert len(entries)==64310
+            assert len(coverage['defects'])==1 and coverage['defects'][0]['bytes']==0
+            assert sum('credits' in c['sourcePath'].lower() for c in m['creditFiles'])==35

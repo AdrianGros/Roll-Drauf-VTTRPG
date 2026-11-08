@@ -9,7 +9,14 @@ def rebuild():
     (ASSETS/'packs.json').write_text(json.dumps(dict(schemaVersion=1,packs=catalog),ensure_ascii=False,indent=2)+'\n')
     rows=[];sections=[];esc=html.escape
     for p in catalog:
-        m=json.loads((ASSETS/p['manifest']).read_text());m.setdefault('name',p['name']);credits=m.get('creditFiles',[])
+        m=json.loads((ASSETS/p['manifest']).read_text());m.setdefault('name',p['name']);
+        if m.get('batch'):
+            fields=('id','file','label','w','h','group','sheet','grid','pixelArt','defaultSize')
+            index={k:m[k] for k in ('name','author','source','license','licenseUrl','exportCredit')}
+            index.update(schemaVersion=2,rows=[[e.get(k) for k in fields] for e in m['stamps']],textures=[])
+            (ASSETS/p['id']/'palette.json').write_text(json.dumps(index,ensure_ascii=False,separators=(',',':'))+'\n')
+            p['palette']=p['id']+'/palette.json'
+        credits=m.get('creditFiles',[])
         extra='<details><summary>Original-Credits je Ordner</summary><ul>'+''.join(f'<li><a href="assets/{p["id"]}/{esc(c["file"],quote=True)}">{esc(c["sourcePath"])}</a></li>' for c in credits)+'</ul></details>' if credits else ''
         sections.append(f'<article id="{p["id"]}"><h2>{esc(m["name"])}</h2><p>{esc(m["author"])} · {len(m["stamps"]):,} Stempel · {len(m["textures"])} Texturen</p><p>{esc(m.get("provenance","Originalgrafiken des Künstlers."))}</p><p><a href="{esc(m["source"],quote=True)}">Originalquelle</a> · <a href="{esc(m["licenseUrl"],quote=True)}">{esc(m["license"])}</a> · <a href="assets/{p["id"]}/License.txt">Lizenznachweis</a> · <a href="assets/{p["id"]}/manifest.json">Dateiinventar</a>'+ (f' · <a href="assets/{p["id"]}/coverage.json">Vollständigkeit und Ausnahmen</a>' if m.get('batch') else '')+f'</p>{extra}</article>')
         for kind in ('stamps','textures'):
@@ -17,5 +24,6 @@ def rebuild():
     with (ASSETS/'inventory.csv').open('w',newline='',encoding='utf-8') as f:
         w=csv.DictWriter(f,fieldnames=rows[0].keys(),lineterminator='\n');w.writeheader();w.writerows(rows)
     (APP/'credits.html').write_text('''<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Künstler &amp; Credits – Kartenwerkstatt</title><link rel="stylesheet" href="mapmaker.css"><link rel="stylesheet" href="credits.css"><link rel="icon" href="../icons/icon-maps-compass.svg"></head><body class="mm-credits-page"><main class="mm-credits"><a href="index.html">← Zur Kartenwerkstatt</a><h1>Künstler &amp; Credits</h1><p>Diese Kartenwerkstatt wächst durch die Arbeit von Künstlerinnen, Künstlern und historischen Kartografen. Danke für eure Werke.</p><p>Alle Pakete sind kostenlos auch kommerziell verwendbar. Die jeweilige Lizenz gilt pro Paket: CC0, CC BY oder OGA-BY. Bei BY-Inhalten müssen die Künstler, Quelle und Lizenz bei der Weitergabe genannt werden. PNG-Exporte enthalten eingebettete Credits; das ZIP enthält zusätzlich CREDITS.txt. Bei Veröffentlichung bitte die Angaben auch im Begleittext oder einer verlinkten Credits-Seite nennen, insbesondere wenn Bilddienste Metadaten entfernen.</p><p>Keine KI-generierten Bilder. Nur belegte Künstlergrafiken, historische Karten und fotografierte Oberflächen; technische Ausschnitte, Skalierung und SVG-Rasterisierung ohne generative Bearbeitung. Die Künstler unterstützen dieses Projekt nicht automatisch.</p><p><a href="assets/inventory.csv" download>Vollständiges Asset-Inventar (CSV)</a> · <a href="assets/source-lock.json">Historische Quellen</a> · <a href="assets/color-source-lock.json">Farbige Quellen und Downloadhashes</a></p>'''+ '\n'.join(sections)+'''<article><h2>Schriften und Projektinhalte</h2><p>Cinzel – Natanael Gama; Literata – TypeTogether; Bad Script – Roman Shchyukin. <a href="https://openfontlicense.org/open-font-license-official-text/">SIL Open Font License 1.1</a>.</p><p>Sechs einfache Canvas-Symbole, prozedurale Geländematerialien, Meereswellen und die Startkarte sind Projektinhalte.</p></article><p>Quellenprüfung: 08.11.2026. <a href="index.html">Zur Kartenwerkstatt</a></p></main></body></html>''',encoding='utf-8')
+    (ASSETS/'packs.json').write_text(json.dumps(dict(schemaVersion=1,packs=catalog),ensure_ascii=False,indent=2)+'\n')
     print('Catalog:',len(catalog),'packs,',len(rows),'entries',flush=True)
 if __name__=='__main__':rebuild()

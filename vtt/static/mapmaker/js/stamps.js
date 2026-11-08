@@ -153,10 +153,15 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
     };
     const readPack = async (pack) => {
         try {
-            const response = await fetch(`assets/${pack.id}/manifest.json`, { cache: "no-cache" });
+            const response = await fetch(`assets/${pack.palette || `${pack.id}/manifest.json`}`, { cache: "no-cache" });
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const manifest = await response.json();
-            const entries = Array.isArray(manifest.stamps) ? manifest.stamps : [];
+            const entries = manifest.schemaVersion === 2 && Array.isArray(manifest.rows)
+                ? manifest.rows.map((row) => {
+                    if (!Array.isArray(row) || row.length !== 10) throw new Error("Ungültiger Paletteneintrag.");
+                    const [id, file, label, w, h, group, sheet, grid, pixelArt, defaultSize] = row;
+                    return { id, file, label, w, h, group, sheet, grid, pixelArt, defaultSize };
+                }) : Array.isArray(manifest.stamps) ? manifest.stamps : [];
             const accepted = [];
             for (const entry of entries) {
                 if (!entry || !ASSET_ID_RE.test(entry.id) || !FILE_RE.test(entry.file)) continue;
@@ -207,7 +212,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
         for (const pack of (catalog.packs || [])) {
             if (!pack || !PACK_ID_RE.test(pack.id) || pack.id === "kenney-cartography") continue;
             if (pack.manifest !== `${pack.id}/manifest.json`) continue;
-            await readPack({ id: pack.id, name: String(pack.name || pack.id).slice(0, 80) });
+            await readPack({ id: pack.id, name: String(pack.name || pack.id).slice(0, 80), palette: pack.palette === `${pack.id}/palette.json` ? pack.palette : null });
         }
     } catch (_error) {
         errors.push("Die Zusatzbibliothek konnte nicht geladen werden.");

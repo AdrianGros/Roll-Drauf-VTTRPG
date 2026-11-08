@@ -74,27 +74,38 @@
     {
       "id": "kenney-rpg",
       "name": "Kenney · Roguelike / RPG",
-      "manifest": "kenney-rpg/manifest.json"
+      "manifest": "kenney-rpg/manifest.json",
+      "palette": "kenney-rpg/palette.json"
     },
     {
       "id": "kenney-tiny",
       "name": "Kenney · Tiny Town",
-      "manifest": "kenney-tiny/manifest.json"
+      "manifest": "kenney-tiny/manifest.json",
+      "palette": "kenney-tiny/palette.json"
     },
     {
       "id": "kenney-rts",
       "name": "Kenney · Medieval RTS",
-      "manifest": "kenney-rts/manifest.json"
+      "manifest": "kenney-rts/manifest.json",
+      "palette": "kenney-rts/palette.json"
     },
     {
       "id": "kenney-iso",
       "name": "Kenney · Isometric Buildings",
-      "manifest": "kenney-iso/manifest.json"
+      "manifest": "kenney-iso/manifest.json",
+      "palette": "kenney-iso/palette.json"
     },
     {
       "id": "green-village",
       "name": "Indie Squid · Green Village",
-      "manifest": "green-village/manifest.json"
+      "manifest": "green-village/manifest.json",
+      "palette": "green-village/palette.json"
+    },
+    {
+      "id": "lpc-revised",
+      "name": "LPC Revised · Häuser, Welt & Figuren",
+      "manifest": "lpc-revised/manifest.json",
+      "palette": "lpc-revised/palette.json"
     }
   ]
 }

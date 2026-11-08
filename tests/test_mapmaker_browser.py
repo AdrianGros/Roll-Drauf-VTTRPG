@@ -1476,6 +1476,7 @@ def test_color_sheet_crop_roundtrip_and_credit_export(open_editor, tmp_path, wid
     ed.page.locator('#sheetW').fill(str(entry['w']+1))
     expect(ed.page.locator('#sheetUse')).to_be_disabled()
     ed.page.locator('#sheetW').fill('16')
+    ed.proof('color-sheet-'+str(width))
     ed.page.locator('#sheetUse').click()
     ed.click_doc(*SEA_A)
     placed = next(i for i in ed.summary()['items'] if i.get('asset') == entry['id'])
@@ -1530,4 +1531,33 @@ def test_color_crop_validation_and_geometry(open_editor):
     assert result['bounds']==dict(x=275,y=250,w=50,h=100)
     assert not result['failures']
     assert result['count'] > 7000
+    ed.assert_clean()
+
+
+def test_every_catalogued_asset_accepts_placement_and_edge_crops(open_editor):
+    ed=open_editor()
+    result=ed.page.evaluate('''async () => {
+        const { validateDocument } = await import('./js/document.js');
+        const { loadPalette } = await import('./js/stamps.js');
+        const palette=await loadPalette();
+        const entries=[...palette.stamps.values()];
+        let placed=0, cropped=0;
+        for(let offset=0;offset<entries.length;offset+=1000) {
+            const items=[];
+            for(const [index,stamp] of entries.slice(offset,offset+1000).entries()) {
+                const base={asset:stamp.id,x:128,y:128,size:32,rot:0,flip:false};
+                items.push({...base,id:'whole'+index});
+                items.push({...base,id:'edge'+index,crop:{x:stamp.w-1,y:stamp.h-1,w:1,h:1}});
+            }
+            const raw={format:'rd-mapmaker',version:1,size:{w:256,h:256},meta:{title:'Catalogue coverage'},layers:[{id:'layer',kind:'stamps',name:'Stempel',visible:true,opacity:1,items}]};
+            const doc=validateDocument(raw,{knownAssets:palette.stamps});
+            placed+=doc.layers[0].items.length/2;
+            cropped+=doc.layers[0].items.filter(i=>i.crop).length;
+        }
+        return {placed,cropped,errors:palette.packError,stats:window.rdMapmaker.catalogue()};
+    }''')
+    catalog=json.loads((STATIC/'mapmaker/assets/packs.json').read_text())
+    expected=sum(len(json.loads((STATIC/'mapmaker/assets'/p['manifest']).read_text())['stamps']) for p in catalog['packs'])+6
+    assert result['placed']==result['cropped']==expected
+    assert result['stats']['total']==expected and not result['errors']
     ed.assert_clean()

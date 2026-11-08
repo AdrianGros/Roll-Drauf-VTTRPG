@@ -1027,6 +1027,11 @@ function exposeApi(editor, ready) {
                 items: doc.layers.flatMap((l) => (l.items || []).map((i) => ({ layer: l.id, ...snapshot(i) }))),
             };
         },
+        catalogue() {
+            const counts = new Map();
+            for (const stamp of editor.palette.stamps.values()) counts.set(stamp.pack, (counts.get(stamp.pack) || 0) + 1);
+            return { total: editor.palette.stamps.size, packs: Object.fromEntries(counts), errors: editor.palette.packError };
+        },
         docToClient: (x, y) => editor.docToClient(x, y),
         sampleRegion(x, y, w, h) {
             editor.flushRender();
