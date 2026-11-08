@@ -3390,6 +3390,7 @@
                     log.removeChild(log.lastChild);
                 }
             }
+            this._showRollFeed(roll, payload);
             this._appendChatMessage({
                 time: String(payload?.timestamp || new Date().toISOString()).slice(11, 19),
                 sender_name: roll.character || payload?.sender_name || "external",
@@ -3463,6 +3464,57 @@
             source.textContent = `via ${roll.source || "extern"}${roll.system ? ` · ${roll.system}` : ""}`;
             card.appendChild(source);
             return card;
+        }
+
+        // The dice log sits in the closed menu on the fullscreen table, so
+        // every external roll also shows on the map for a few seconds.
+        _showRollFeed(roll, payload) {
+            const feed = document.getElementById("rollFeed");
+            if (!feed) return;
+            const advantage = String(roll.advantage || "normal");
+            const card = document.createElement("div");
+            card.className = `roll-feed-card${advantage === "crit" ? " crit" : ""}${advantage === "fumble" ? " fumble" : ""}`;
+
+            const head = document.createElement("div");
+            head.className = "roll-feed-head";
+            const who = document.createElement("span");
+            who.className = "roll-feed-who";
+            who.textContent = roll.character || payload?.sender_name || "extern";
+            head.appendChild(who);
+            if (roll.total != null) {
+                const total = document.createElement("span");
+                total.className = "roll-feed-total";
+                total.textContent = String(roll.total);
+                head.appendChild(total);
+            }
+            card.appendChild(head);
+
+            const title = document.createElement("div");
+            title.className = "roll-feed-title";
+            const badge = advantage === "crit" ? " · KRIT!" : (advantage === "fumble" ? " · Patzer" : "");
+            title.textContent = `${roll.title || roll.formula || "Wurf"}${badge}`;
+            card.appendChild(title);
+
+            // Attack and damage arrive as one roll; name the parts.
+            const parts = (Array.isArray(roll.rolls) ? roll.rolls : [])
+                .filter((entry) => entry && entry.total != null)
+                .slice(0, 3)
+                .map((entry) => `${entry.label || entry.formula || "Wurf"} ${entry.total}`);
+            if (parts.length > 1) {
+                const detail = document.createElement("div");
+                detail.className = "roll-feed-detail";
+                detail.textContent = parts.join(" · ");
+                card.appendChild(detail);
+            }
+
+            feed.prepend(card);
+            while (feed.children.length > 4) {
+                feed.removeChild(feed.lastChild);
+            }
+            window.setTimeout(() => {
+                card.classList.add("is-leaving");
+                window.setTimeout(() => card.remove(), 450);
+            }, 9000);
         }
 
         _formatDiceBreakdown(result) {

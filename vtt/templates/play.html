@@ -2374,6 +2374,50 @@
             /* ...and must not float over the full-screen menu sheet. */
             body.play-fullscreen:has(.right-sidebar.is-open) .action-hotbar { display: none; }
         }
+        body.play-fullscreen #beyond20Chip { border-color: rgba(74, 165, 112, 0.7); }
+        body.play-fullscreen #beyond20Chip[hidden] { display: none !important; }
+
+        /* External rolls on the map itself: small, translucent, gone after a
+           few seconds and never in the way of a click. The id outranks
+           book-shell.css `body.book-shell-app > *` (position: relative). */
+        #rollFeed {
+            position: fixed;
+            top: calc(46px + env(safe-area-inset-top, 0px));
+            right: 10px;
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: min(280px, calc(100vw - 20px));
+            pointer-events: none;
+        }
+        .roll-feed-card {
+            padding: 6px 10px;
+            border: 1px solid rgba(140, 192, 255, 0.35);
+            border-radius: 10px;
+            background: rgba(7, 14, 28, 0.78);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+            color: #eef3ff;
+            font-size: 0.8rem;
+            line-height: 1.35;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .roll-feed-card.is-leaving { opacity: 0; transform: translateX(12px); }
+        .roll-feed-card.crit { border-color: rgba(74, 165, 112, 0.85); }
+        .roll-feed-card.fumble { border-color: rgba(212, 85, 85, 0.85); }
+        .roll-feed-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+        .roll-feed-who,
+        .roll-feed-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .roll-feed-who { font-weight: 600; }
+        .roll-feed-total { font-size: 1.25rem; font-weight: 700; color: #f4d18f; }
+        .roll-feed-title,
+        .roll-feed-detail { color: rgba(238, 243, 255, 0.72); }
+        .roll-feed-detail { font-size: 0.72rem; }
+        body:has(.right-sidebar.is-open) #rollFeed { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .roll-feed-card { transition: none; }
+        }
         @media (max-width: 560px) {
             body.play-fullscreen #presenceChip,
             body.play-fullscreen .play-status-strip .active-page-pill { display: none !important; }
@@ -2392,6 +2436,9 @@
          markup; _showMessage() only ever toggles aria-live between
          polite/assertive (success/error) and never removes it. -->
     <div id="msg" class="message" role="status" aria-live="polite" aria-atomic="true"></div>
+    <!-- Rolls from D&D Beyond (Beyond20) show here for a few seconds; the
+         full dice log stays under Menü > Tools. -->
+    <div id="rollFeed" class="roll-feed" aria-live="polite" aria-label="Letzte Würfe aus D&amp;D Beyond"></div>
     <main>
         <div class="book-dashboard-camera book-route-camera play-workspace-camera">
             <section class="book-dashboard-page book-route-page book-workspace-page play-workspace-page" role="region" aria-label="Play workspace page">
@@ -2427,6 +2474,7 @@
                         <span class="book-dashboard-chip" id="readOnlyChip"><span class="chip-label">Zugriff: </span><strong id="readOnlyBadge">-</strong></span>
                         <span class="book-dashboard-chip" id="statusChip"><span class="chip-label">Status: </span><strong id="sessionStatusPill">-</strong></span>
                         <span class="book-dashboard-chip" id="presenceChip" title="Am Tisch"><span class="chip-label">Am Tisch: </span><strong id="presenceRoster">–</strong></span>
+                        <span class="book-dashboard-chip" id="beyond20Chip" title="Beyond20 ist verbunden: Würfe aus D&amp;D Beyond kommen an diesem Tisch an." hidden>Beyond20</span>
                     </div>
                 </div>
 

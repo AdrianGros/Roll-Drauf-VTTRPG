@@ -53,6 +53,11 @@
         }
         node.textContent = text;
         node.dataset.state = state;
+        // Same answer at a glance in the table's top row.
+        var chip = document.getElementById("beyond20Chip");
+        if (chip) {
+            chip.hidden = state !== "active";
+        }
     }
 
     function detailPayload(event) {
