@@ -1,0 +1,115 @@
+{
+  "batch": 1,
+  "sourceCommit": "b5896f522f050316175bce9a47485af9a9a0c7d5",
+  "verifiedAt": "2026-11-08T12:32:09+0100",
+  "journeys": [
+    {
+      "role": "dm",
+      "width": 1440,
+      "entry": "Dashboard \u2192 Karten \u2192 Stempel \u2192 Paket \u2192 Motiv/Ausschnitt \u2192 Karte",
+      "readyMs": 4431,
+      "catalogue": null,
+      "placed": [
+        {
+          "asset": "color:kenney-rpg_a996d9cb34e5f9d7",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 16,
+            "h": 16
+          }
+        },
+        {
+          "asset": "color:kenney-tiny_962374a3b3ceb766",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 16,
+            "h": 16
+          }
+        },
+        {
+          "asset": "color:kenney-rts_6f900f6b859681cd",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "asset": "color:kenney-iso_e38555ed145ac1f0",
+          "crop": null
+        },
+        {
+          "asset": "color:green-village_56e8fdf68436a584",
+          "crop": null
+        }
+      ],
+      "saveReimport": true,
+      "pngCredits": true,
+      "zipCredits": true,
+      "creditsPage": true,
+      "pageErrors": [],
+      "cspViolations": []
+    },
+    {
+      "role": "player",
+      "width": 390,
+      "entry": "Dashboard \u2192 Karten \u2192 Stempel \u2192 Paket \u2192 Motiv/Ausschnitt \u2192 Karte",
+      "readyMs": 3940,
+      "catalogue": null,
+      "placed": [
+        {
+          "asset": "color:kenney-rpg_a996d9cb34e5f9d7",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 16,
+            "h": 16
+          }
+        },
+        {
+          "asset": "color:kenney-tiny_962374a3b3ceb766",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 16,
+            "h": 16
+          }
+        },
+        {
+          "asset": "color:kenney-rts_6f900f6b859681cd",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        },
+        {
+          "asset": "color:kenney-iso_e38555ed145ac1f0",
+          "crop": null
+        },
+        {
+          "asset": "color:green-village_56e8fdf68436a584",
+          "crop": null
+        }
+      ],
+      "saveReimport": true,
+      "pngCredits": true,
+      "zipCredits": true,
+      "creditsPage": true,
+      "pageErrors": [],
+      "cspViolations": []
+    }
+  ],
+  "httpsHashes": [
+    "index.html",
+    "js/app.js",
+    "js/stamps.js",
+    "js/credits.js",
+    "assets/packs.json",
+    "credits.html"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "uniqueTestCasesCovered": 57,
+  "initialRegression": {
+    "passed": 54,
+    "failed": 1,
+    "reason": "Stale hardcoded credits count 15 versus 32; then missing old footer wording found in focused rerun. Assertions/count derived from catalogue and the footer restored."
+  },
+  "finalFocused": {
+    "passed": 16,
+    "failed": 0
+  },
+  "defaultCropFocused": {
+    "passed": 4,
+    "failed": 0
+  },
+  "warningCount": 8,
+  "warnings": "Existing Eventlet/reportlab/ORM warnings. No claim of one single fully green 57-test run; the initial full run and passing focused reruns cover all 57 distinct final cases."
+}

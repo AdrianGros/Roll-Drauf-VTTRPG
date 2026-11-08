@@ -1,0 +1,19 @@
+{
+  "batch": 3,
+  "sourceCommit": "be52d043c7102b1fe5699c5aa3e6b3c7506f1d75",
+  "baseImage": "sha256:41407e7dee29a37be3aebe9fc5d5036ece6364fbbaf7ad8308a2b9ad6fb78559",
+  "baseTag": "roll-drauf-vtt-app:mapmaker-color-b2-20261108-08fa90ea",
+  "imageTag": "roll-drauf-vtt-app:mapmaker-color-b3-20261108-be52d043",
+  "builtImageId": "sha256:82ecc4e907dc467884ab372af87b9da7d7e2cf0018783a22f7fdc3315eb3282c",
+  "rollbackTag": "roll-drauf-vtt-app:before-mapmaker-color-b3-20261108",
+  "overrideBackup": "/srv/migration/2026-10-07/setup/mapmaker-color-b3-20261108/production.duck-species.override.before.yml",
+  "composeProject": "migration-production",
+  "composeFiles": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "baseLayersPreserved": true,
+  "baseImageConfigPreserved": true,
+  "runningImageId": "sha256:82ecc4e907dc467884ab372af87b9da7d7e2cf0018783a22f7fdc3315eb3282c",
+  "deployedAt": "2026-11-08T12:42:13+0100"
+}

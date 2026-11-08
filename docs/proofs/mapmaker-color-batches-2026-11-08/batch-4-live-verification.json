@@ -1,0 +1,189 @@
+{
+  "batch": 4,
+  "sourceCommit": "dd1084c48b100ab7e227e8a806fb26a424773c4d",
+  "verifiedAt": "2026-11-08T13:07:26+0100",
+  "journeys": [
+    {
+      "role": "dm",
+      "width": 1440,
+      "entry": "Dashboard \u2192 Karten \u2192 Stempel \u2192 Paket \u2192 Motiv/Ausschnitt \u2192 Karte",
+      "readyMs": 5761,
+      "catalogue": {
+        "total": 72064,
+        "packs": {
+          "kenney-cartography": 38,
+          "kma-muller": 1631,
+          "kma-myer": 148,
+          "kma-kensett": 387,
+          "kma-zuodong": 347,
+          "kma-ishikawa": 754,
+          "kma-hyacinth": 196,
+          "kma-homann": 429,
+          "kma-vischer": 959,
+          "kma-van-der-aa": 192,
+          "kma-gomboust": 607,
+          "kma-blaeu": 513,
+          "kma-walser": 255,
+          "kenney-rpg": 5,
+          "kenney-tiny": 136,
+          "kenney-rts": 260,
+          "kenney-iso": 132,
+          "green-village": 39,
+          "lpc-revised": 64310,
+          "2dpixx-forest": 1,
+          "2dpixx-cave": 1,
+          "2dpixx-snow": 1,
+          "2dpixx-town": 1,
+          "2dpixx-ruins": 2,
+          "2dpixx-interior": 2,
+          "2dpixx-village": 1,
+          "2dpixx-mountain": 1,
+          "medieval-props": 708,
+          "lpc-castle": 1,
+          "castle-rpg": 1,
+          "builtin": 6
+        },
+        "errors": ""
+      },
+      "placed": [
+        {
+          "asset": "color:lpc-castle_0c7de5958545e95e",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 32,
+            "h": 32
+          }
+        },
+        {
+          "asset": "color:castle-rpg_6f8df263a5878009",
+          "crop": {
+            "x": 32,
+            "y": 0,
+            "w": 32,
+            "h": 32
+          }
+        },
+        {
+          "asset": "color:2dpixx-village_fe84e49dd1440362",
+          "crop": {
+            "x": 238,
+            "y": 0,
+            "w": 328,
+            "h": 321
+          }
+        },
+        {
+          "asset": "color:2dpixx-mountain_176d509f9feca31d",
+          "crop": {
+            "x": 864,
+            "y": 0,
+            "w": 32,
+            "h": 32
+          }
+        }
+      ],
+      "saveReimport": true,
+      "pngCredits": true,
+      "zipCredits": true,
+      "creditsPage": true,
+      "pageErrors": [],
+      "cspViolations": []
+    },
+    {
+      "role": "player",
+      "width": 390,
+      "entry": "Dashboard \u2192 Karten \u2192 Stempel \u2192 Paket \u2192 Motiv/Ausschnitt \u2192 Karte",
+      "readyMs": 4752,
+      "catalogue": {
+        "total": 72064,
+        "packs": {
+          "kenney-cartography": 38,
+          "kma-muller": 1631,
+          "kma-myer": 148,
+          "kma-kensett": 387,
+          "kma-zuodong": 347,
+          "kma-ishikawa": 754,
+          "kma-hyacinth": 196,
+          "kma-homann": 429,
+          "kma-vischer": 959,
+          "kma-van-der-aa": 192,
+          "kma-gomboust": 607,
+          "kma-blaeu": 513,
+          "kma-walser": 255,
+          "kenney-rpg": 5,
+          "kenney-tiny": 136,
+          "kenney-rts": 260,
+          "kenney-iso": 132,
+          "green-village": 39,
+          "lpc-revised": 64310,
+          "2dpixx-forest": 1,
+          "2dpixx-cave": 1,
+          "2dpixx-snow": 1,
+          "2dpixx-town": 1,
+          "2dpixx-ruins": 2,
+          "2dpixx-interior": 2,
+          "2dpixx-village": 1,
+          "2dpixx-mountain": 1,
+          "medieval-props": 708,
+          "lpc-castle": 1,
+          "castle-rpg": 1,
+          "builtin": 6
+        },
+        "errors": ""
+      },
+      "placed": [
+        {
+          "asset": "color:lpc-castle_0c7de5958545e95e",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 32,
+            "h": 32
+          }
+        },
+        {
+          "asset": "color:castle-rpg_6f8df263a5878009",
+          "crop": {
+            "x": 32,
+            "y": 0,
+            "w": 32,
+            "h": 32
+          }
+        },
+        {
+          "asset": "color:2dpixx-village_fe84e49dd1440362",
+          "crop": {
+            "x": 238,
+            "y": 0,
+            "w": 328,
+            "h": 321
+          }
+        },
+        {
+          "asset": "color:2dpixx-mountain_176d509f9feca31d",
+          "crop": {
+            "x": 864,
+            "y": 0,
+            "w": 32,
+            "h": 32
+          }
+        }
+      ],
+      "saveReimport": true,
+      "pngCredits": true,
+      "zipCredits": true,
+      "creditsPage": true,
+      "pageErrors": [],
+      "cspViolations": []
+    }
+  ],
+  "httpsHashes": [
+    "index.html",
+    "js/app.js",
+    "js/stamps.js",
+    "js/credits.js",
+    "assets/packs.json",
+    "credits.html"
+  ]
+}

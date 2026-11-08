@@ -1,0 +1,121 @@
+{
+  "batch": 2,
+  "sourceCommit": "08fa90ea4f43137bf748ada03518f5f5ed9aae6b",
+  "verifiedAt": "2026-11-08T12:37:53+0100",
+  "journeys": [
+    {
+      "role": "dm",
+      "width": 1440,
+      "entry": "Dashboard \u2192 Karten \u2192 Stempel \u2192 Paket \u2192 Motiv/Ausschnitt \u2192 Karte",
+      "readyMs": 6841,
+      "catalogue": {
+        "total": 71344,
+        "packs": {
+          "kenney-cartography": 38,
+          "kma-muller": 1631,
+          "kma-myer": 148,
+          "kma-kensett": 387,
+          "kma-zuodong": 347,
+          "kma-ishikawa": 754,
+          "kma-hyacinth": 196,
+          "kma-homann": 429,
+          "kma-vischer": 959,
+          "kma-van-der-aa": 192,
+          "kma-gomboust": 607,
+          "kma-blaeu": 513,
+          "kma-walser": 255,
+          "kenney-rpg": 5,
+          "kenney-tiny": 136,
+          "kenney-rts": 260,
+          "kenney-iso": 132,
+          "green-village": 39,
+          "lpc-revised": 64310,
+          "builtin": 6
+        },
+        "errors": ""
+      },
+      "placed": [
+        {
+          "asset": "color:lpc-revised_d10ba45999fea2c7",
+          "crop": null
+        },
+        {
+          "asset": "color:lpc-revised_12d2342b60697d3c",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ],
+      "saveReimport": true,
+      "pngCredits": true,
+      "zipCredits": true,
+      "creditsPage": true,
+      "pageErrors": [],
+      "cspViolations": []
+    },
+    {
+      "role": "player",
+      "width": 390,
+      "entry": "Dashboard \u2192 Karten \u2192 Stempel \u2192 Paket \u2192 Motiv/Ausschnitt \u2192 Karte",
+      "readyMs": 4724,
+      "catalogue": {
+        "total": 71344,
+        "packs": {
+          "kenney-cartography": 38,
+          "kma-muller": 1631,
+          "kma-myer": 148,
+          "kma-kensett": 387,
+          "kma-zuodong": 347,
+          "kma-ishikawa": 754,
+          "kma-hyacinth": 196,
+          "kma-homann": 429,
+          "kma-vischer": 959,
+          "kma-van-der-aa": 192,
+          "kma-gomboust": 607,
+          "kma-blaeu": 513,
+          "kma-walser": 255,
+          "kenney-rpg": 5,
+          "kenney-tiny": 136,
+          "kenney-rts": 260,
+          "kenney-iso": 132,
+          "green-village": 39,
+          "lpc-revised": 64310,
+          "builtin": 6
+        },
+        "errors": ""
+      },
+      "placed": [
+        {
+          "asset": "color:lpc-revised_d10ba45999fea2c7",
+          "crop": null
+        },
+        {
+          "asset": "color:lpc-revised_12d2342b60697d3c",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 64,
+            "h": 64
+          }
+        }
+      ],
+      "saveReimport": true,
+      "pngCredits": true,
+      "zipCredits": true,
+      "creditsPage": true,
+      "pageErrors": [],
+      "cspViolations": []
+    }
+  ],
+  "httpsHashes": [
+    "index.html",
+    "js/app.js",
+    "js/stamps.js",
+    "js/credits.js",
+    "assets/packs.json",
+    "credits.html"
+  ]
+}

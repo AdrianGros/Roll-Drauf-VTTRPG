@@ -1,0 +1,16 @@
+{
+  "verifiedAt": "2026-11-08T13:01:18+0100",
+  "approvedBaseImage": "sha256:e4ef683613731af648ad353156ea0194a7e53c5bdf415d7c70b7e733a1be94e1",
+  "baseTag": "roll-drauf-vtt-app:playtable-seats-20261108-ec20e46",
+  "baseRevision": "ec20e46fcb4846306466a0964fd8f58177f79d07",
+  "baseIncludesAllBatch3Layers": true,
+  "mapmakerMatchesBatch3": true,
+  "mapmakerFilesMatched": 63145,
+  "priorMapmakerRevision": "be52d043c7102b1fe5699c5aa3e6b3c7506f1d75",
+  "composeProject": "migration-production",
+  "composeFiles": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "decision": "Preserve the new Playtable release by overlaying only committed Mapmaker static files on this exact currently running image; retain this newer image as batch-4 rollback. Earlier full-image rollback references must not overwrite this newer backend."
+}

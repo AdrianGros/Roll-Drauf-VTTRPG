@@ -1,0 +1,20 @@
+{
+  "batch": 4,
+  "sourceCommit": "dd1084c48b100ab7e227e8a806fb26a424773c4d",
+  "baseRevision": "ec20e46fcb4846306466a0964fd8f58177f79d07",
+  "baseImage": "sha256:e4ef683613731af648ad353156ea0194a7e53c5bdf415d7c70b7e733a1be94e1",
+  "baseTag": "roll-drauf-vtt-app:playtable-seats-20261108-ec20e46",
+  "imageTag": "roll-drauf-vtt-app:mapmaker-color-b4-20261108-dd1084c4",
+  "builtImageId": "sha256:e72a98bc24943c658d76038cb8554038c9e444cefd1f64373be682e10a5d879b",
+  "rollbackTag": "roll-drauf-vtt-app:before-mapmaker-color-b4-20261108",
+  "overrideBackup": "/srv/migration/2026-10-07/setup/mapmaker-color-b4-20261108/production.duck-species.override.before.yml",
+  "composeProject": "migration-production",
+  "composeFiles": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "baseLayersPreserved": true,
+  "baseImageConfigPreserved": true,
+  "runningImageId": "sha256:e72a98bc24943c658d76038cb8554038c9e444cefd1f64373be682e10a5d879b",
+  "deployedAt": "2026-11-08T13:05:21+0100"
+}
