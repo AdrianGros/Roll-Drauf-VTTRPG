@@ -30,9 +30,10 @@
         return Boolean(window.RollDraufTable && typeof window.RollDraufTable.sendExternalRoll === "function");
     }
 
+    // Returns false only when the table could not take the action yet.
     function dispatchToTable(action) {
         if (action.type === "roll") {
-            window.RollDraufTable.sendExternalRoll(action.payload);
+            return window.RollDraufTable.sendExternalRoll(action.payload) !== false;
         } else if (action.type === "hp" && typeof window.RollDraufTable.updateCharacterHp === "function") {
             window.RollDraufTable.updateCharacterHp(action.payload);
         } else if (action.type === "conditions" && typeof window.RollDraufTable.updateCharacterConditions === "function") {
@@ -40,6 +41,18 @@
         } else if (action.type === "combat" && typeof window.RollDraufTable.updateCombatTracker === "function") {
             window.RollDraufTable.updateCombatTracker(action.payload);
         }
+        return true;
+    }
+
+    // Shows on the table whether Beyond20 is active on this page, so a
+    // missing custom-domain permission is visible instead of silent.
+    function setStatus(text, state) {
+        var node = document.getElementById("beyond20Status");
+        if (!node) {
+            return;
+        }
+        node.textContent = text;
+        node.dataset.state = state;
     }
 
     function detailPayload(event) {
@@ -76,6 +89,20 @@
             }
         }
         return entry;
+    }
+
+    // Rendered rolls carry the character as a plain name string; the
+    // original roll request (request.request) carries {name, ...}.
+    function characterName(request) {
+        var character = request.character;
+        if (typeof character === "string") {
+            return character;
+        }
+        if (character && typeof character === "object" && character.name) {
+            return String(character.name);
+        }
+        var original = request.request && request.request.character;
+        return String((original && original.name) || "");
     }
 
     function normalizeRenderedRoll(request) {
@@ -153,7 +180,7 @@
         return {
             source: "beyond20",
             system: "dnd5e",
-            character: String((request.character && request.character.name) || ""),
+            character: characterName(request),
             title: title,
             roll_type: rollType,
             formula: String((primary && primary.formula) || (rolls[0] && rolls[0].formula) || ""),
@@ -169,9 +196,7 @@
             return;
         }
         var action = { type: type, payload: payload };
-        if (tableReady()) {
-            dispatchToTable(action);
-        } else {
+        if (!tableReady() || !dispatchToTable(action)) {
             // Table socket not up yet -- keep a short queue so events that
             // arrive during page load are not lost.
             queue.push(action);
@@ -183,20 +208,28 @@
 
     window.addEventListener("rolldrauf:table-ready", function () {
         while (queue.length && tableReady()) {
-            dispatchToTable(queue.shift());
+            if (!dispatchToTable(queue[0])) {
+                break;
+            }
+            queue.shift();
         }
     });
 
-    document.addEventListener("Beyond20_Loaded", function () {
+    function markLoaded() {
         if (!announced) {
             announced = true;
+            setStatus("Beyond20 ist aktiv: Würfe aus D&D Beyond kommen hier an.", "active");
             console.info("[beyond20-bridge] Beyond20 erkannt - D&D-Beyond-Wuerfe " +
                 "werden an den Spieltisch weitergeleitet.");
         }
-    });
+    }
+
+    document.addEventListener("Beyond20_Loaded", markLoaded);
+    document.addEventListener("Beyond20_NewSettings", markLoaded);
 
     document.addEventListener("Beyond20_RenderedRoll", function (event) {
         try {
+            markLoaded();
             deliver("roll", normalizeRenderedRoll(detailPayload(event)));
         } catch (error) {
             console.warn("[beyond20-bridge] roll konnte nicht verarbeitet werden:", error);

@@ -58,14 +58,15 @@ def test_play_runtime_exposes_return_seam_helper(client):
     assert "this.returnToBook(`/campaigns?campaign_id=${this.campaignId}`);" in js
 
 
-def test_bookscene_consumes_return_boundary_context(client):
+def test_bookscene_consumes_return_boundary_context_without_choreography(client):
     response = client.get("/static/js/book-scene.js")
 
     assert response.status_code == 200
     js = response.get_data(as_text=True)
 
+    # Owner decision 2026-11-08: back from the table is a plain tab switch.
     assert "const BOOK_RETURN_STORAGE_KEY = 'vtt.book.return-boundary';" in js
     assert "consumeBookEntryBoundary(routeKey) {" in js
-    assert "document.body.dataset.bookSceneEntryBoundary = 'table-to-book';" in js
-    assert "document.body.dataset.bookSceneEntryPhase = 'TABLE_TO_BOOK_TRANSITION';" in js
-    assert "this.finalizeBookEntryBoundary(entryBoundary);" in js
+    assert "clearBookReturnBoundary();" in js
+    assert "document.body.dataset.bookSceneEntryBoundary = 'table-to-book';" not in js
+    assert "finalizeBookEntryBoundary" not in js

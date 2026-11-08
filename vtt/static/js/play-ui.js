@@ -1,7 +1,4 @@
 (function () {
-    const reducedMotion = window.matchMedia
-        ? window.matchMedia("(prefers-reduced-motion: reduce)")
-        : { matches: false };
     const PLAY_ENTRY_STORAGE_KEY = "vtt.play.entry-boundary";
     const BOOK_RETURN_STORAGE_KEY = "vtt.book.return-boundary";
     const PLAY_ENTRY_PHASES = new Set(["book-exit", "play-route-entry"]);
@@ -250,20 +247,11 @@
         }
 
         _beginEntryArrival() {
-            const body = document.body;
-            if (!body || !this.entryBoundary) {
-                return;
+            // The table appears directly, without the dark arrival curtain
+            // (owner, 2026-11-08: tabs switch without a transition).
+            if (document.body) {
+                document.body.dataset.playTransitionStage = "table";
             }
-
-            body.dataset.playTransitionStage = "arrival";
-            window.requestAnimationFrame(() => {
-                window.requestAnimationFrame(() => {
-                    if (!document.body || document.body.dataset.playEntryBoundary !== "book-to-table") {
-                        return;
-                    }
-                    document.body.dataset.playTransitionStage = "settling";
-                });
-            });
         }
 
         _finalizeEntryArrival() {
@@ -497,7 +485,7 @@
                     // indicator instead of silently going stale while the
                     // socket is down. No other part of this app surfaced
                     // connect/disconnect at all before this.
-                    connect: () => { this._connectionLost = false; this._renderState(); },
+                    connect: () => { this._connectionLost = false; this._renderState(); this._announceTableReady(); },
                     disconnect: () => { this._connectionLost = true; this._renderState(); },
                 },
             });
@@ -506,8 +494,15 @@
             // beyond20-bridge.js): hand a normalized envelope to the table
             // without reaching into runtime internals.
             window.RollDraufTable = {
+                // Returns true when sent, false when the socket is not up yet
+                // (the adapter keeps the roll and retries on reconnect) and
+                // "read_only" when this seat may not roll right now. That case
+                // used to drop D&D Beyond rolls without any notice.
                 sendExternalRoll: (roll) => {
-                    if (this.readOnly) return false;
+                    if (this.readOnly) {
+                        this._showMessage(this._externalRollBlockedMessage(), true);
+                        return "read_only";
+                    }
                     if (!this.socket || !this.socket.isConnected) return false;
                     this.socket.sendExternalRoll(roll);
                     return true;
@@ -607,7 +602,7 @@
                     return patched;
                 },
             };
-            window.dispatchEvent(new CustomEvent("rolldrauf:table-ready"));
+            this._announceTableReady();
             window.addEventListener("beforeunload", () => {
                 if (this.entryArrivalTimer) {
                     window.clearTimeout(this.entryArrivalTimer);
@@ -700,8 +695,9 @@
             body.dataset.playReturnBoundary = "table-to-book";
             body.dataset.playReturnPhase = "TABLE_TO_BOOK_TRANSITION";
             body.dataset.playReturnTargetRoute = String(boundary.target?.route || "campaigns");
-            body.dataset.playTransitionStage = "table-exit";
 
+            // Leave at once: no dark exit curtain and no exit delay while the
+            // book page loads (owner, 2026-11-08).
             const navigateToBook = () => {
                 boundary.phase = "book-route-entry";
                 boundary.table_exit_completed_at = new Date().toISOString();
@@ -712,33 +708,13 @@
                 }
 
                 if (document.body) {
-                    document.body.dataset.playTransitionStage = "book-handoff";
                     document.body.dataset.playReturnBoundary = "handoff";
                     document.body.dataset.playReturnPhase = "BOOK_MODE";
                 }
                 window.location.href = boundary.target.href;
             };
 
-            const exitDuration = Math.max(
-                220,
-                Math.min(900, Number(boundary.exit_duration_ms) || PLAY_RETURN_EXIT_DURATION_MS)
-            );
-
-            if (reducedMotion.matches) {
-                this.returnExitTimer = window.setTimeout(navigateToBook, 64);
-                return true;
-            }
-
-            window.requestAnimationFrame(() => {
-                if (!document.body || document.body.dataset.playReturnBoundary !== "table-to-book") {
-                    return;
-                }
-
-                this.returnExitTimer = window.setTimeout(() => {
-                    navigateToBook();
-                }, exitDuration);
-            });
-
+            navigateToBook();
             return true;
         }
 
@@ -4836,6 +4812,24 @@
             top = Math.max(margin, Math.min(top, bounds.height - height - margin));
             popover.style.left = `${left}px`;
             popover.style.top = `${top}px`;
+        }
+
+        // External-roll adapters (beyond20-bridge.js) hand over queued rolls
+        // on this event: once at start-up and again after every reconnect.
+        _announceTableReady() {
+            if (window.RollDraufTable) {
+                window.dispatchEvent(new CustomEvent("rolldrauf:table-ready"));
+            }
+        }
+
+        _externalRollBlockedMessage() {
+            if (this.mode === "waiting") {
+                return "D&D-Beyond-Wurf nicht übertragen: Die Session ist noch nicht gestartet.";
+            }
+            if (this.mode === "ended") {
+                return "D&D-Beyond-Wurf nicht übertragen: Die Session ist beendet.";
+            }
+            return "D&D-Beyond-Wurf nicht übertragen: In dieser Rolle kannst du am Tisch nicht würfeln.";
         }
 
         _showMessage(text, isError = false) {

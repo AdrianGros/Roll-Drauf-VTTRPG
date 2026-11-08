@@ -81,7 +81,6 @@ def test_discord_community_links_receive_pointer_input(pointer_site, pointer_bro
     # Prove navigation without joining a server or relying on an external page.
     page.context.route('https://discord.gg/**', lambda route: route.fulfill(body='Discord invitation destination'))
     page.goto(origin + '/login.html')
-    press(page.locator('.book-cover'), width)
     expect(page.locator('#loginUsername')).to_be_visible()
     with page.expect_popup() as popup:
         press(page.locator('.login-discord-join'), width)

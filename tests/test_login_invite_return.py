@@ -52,7 +52,6 @@ def test_password_login_returns_to_invitation(login_browser):
     page, origin, _ = login_browser
     page.goto(origin + '/invite/test-invite')
     page.locator('#linkLogin').click()
-    page.locator('.book-cover').click()
     page.locator('#loginUsername').fill('Tester')
     page.locator('#loginPassword').fill('Password123!')
     page.locator('#passwordLoginSubmitBtn').click()
