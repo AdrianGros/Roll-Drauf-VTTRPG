@@ -150,6 +150,7 @@
             }
 
             this._consumeEntryBoundary();
+            this._bindEarlyControls();
 
             // Tischplatz: the server's role decides which surface is built.
             // The DM layer is only mounted for a DM seat; a player seat (or
@@ -839,7 +840,10 @@
             return this._beginReturnTransition(boundary);
         }
 
-        _bindControls() {
+        _bindEarlyControls() {
+            // The session menu and page navigation do not depend on the
+            // seat, so they work from the first paint instead of waiting
+            // for the bootstrap that decides the rest of the surface.
             // S02: btnBack no longer navigates directly on click -- it opens
             // the app menu, whose first item ("Zur Kampagne zurückkehren")
             // is the old one-click behavior, kept unconfirmed and fast.
@@ -861,7 +865,10 @@
                     this.returnToBook(target);
                 });
             });
+            this._bindAppMenu();
+        }
 
+        _bindControls() {
             if (this._composedOperator) this._bindSessionControls();
 
             document.querySelectorAll(".dice-presets [data-dice-preset]").forEach((button) => {
@@ -1053,7 +1060,6 @@
             this._setupTableSheet();
             this._bindWidgetDragging();
             this._bindLayersDirectoryControls();
-            this._bindAppMenu();
             this._bindActionHotbar();
 
             const sendChat = () => {
@@ -3874,9 +3880,12 @@
                 this.returnToBook(`/campaigns?campaign_id=${this.campaignId}`);
             });
 
-            document.getElementById("appMenuSeat")?.addEventListener("click", (event) => {
+            // The seat item is mounted after the bootstrap (DM/CO-DM only).
+            menu.addEventListener("click", (event) => {
+                const item = event.target.closest?.("#appMenuSeat");
+                if (!item) return;
                 closeMenu({ returnFocus: false });
-                const seat = event.currentTarget.dataset.seat;
+                const seat = item.dataset.seat;
                 if (seat === "dm" || seat === "player") this._switchTableSeat(seat);
             });
 
