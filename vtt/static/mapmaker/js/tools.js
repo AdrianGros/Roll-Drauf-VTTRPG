@@ -335,9 +335,14 @@ export function attachInput(ed) {
             }
             return;
         }
-        if (typing) return;
         const mod = event.ctrlKey || event.metaKey;
         const key = event.key.toLowerCase();
+        if (mod && key === "s") {
+            event.preventDefault();
+            ed.savePrimary();
+            return;
+        }
+        if (typing) return;
         if (mod && key === "z") {
             event.preventDefault();
             if (event.shiftKey) ed.redo();

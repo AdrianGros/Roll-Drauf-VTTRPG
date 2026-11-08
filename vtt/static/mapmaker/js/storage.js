@@ -14,8 +14,9 @@ function requestToPromise(request) {
 }
 
 export class DraftStore {
-    constructor() {
+    constructor(scope = "guest") {
         this.dbPromise = null;
+        this.key = scope === "guest" ? KEY : `${KEY}:${scope}`;
     }
 
     open() {
@@ -40,7 +41,7 @@ export class DraftStore {
     async load() {
         const db = await this.open();
         const tx = db.transaction(STORE, "readonly");
-        return requestToPromise(tx.objectStore(STORE).get(KEY));
+        return requestToPromise(tx.objectStore(STORE).get(this.key));
     }
 
     async save(record) {
@@ -49,7 +50,7 @@ export class DraftStore {
             let tx;
             try {
                 tx = db.transaction(STORE, "readwrite");
-                tx.objectStore(STORE).put(record, KEY);
+                tx.objectStore(STORE).put(record, this.key);
             } catch (error) {
                 reject(error);
                 return;

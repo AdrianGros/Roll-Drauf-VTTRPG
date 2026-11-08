@@ -14,6 +14,7 @@ import { AutosaveUnavailable, DraftStore, downloadBlob, slugify } from "./storag
 import { attachInput } from "./tools.js";
 import { UI } from "./ui.js";
 import { zipFiles } from "./zip.js";
+import { Library } from "./library.js";
 
 const KIND_NAMES = { raster: "Malebene", paths: "Wegeebene", stamps: "Symbolebene", labels: "Beschriftungsebene" };
 const MIN_ZOOM = 0.1;
@@ -62,6 +63,8 @@ class Editor {
         this.generation = 0;
         this.fileGeneration = 0;
         this.ui = new UI(this);
+        this.library = new Library(this);
+        this.mapOpened = false;
     }
 
     // ---- startup -----------------------------------------------------------
@@ -91,15 +94,17 @@ class Editor {
         attachInput(this);
         window.addEventListener("beforeunload", (event) => {
             const unprotected = this.autosave.state === "failed" || this.autosave.state === "unavailable";
-            if (unprotected && this.hasUnsavedFileChanges()) {
+            if (unprotected && this.hasUnsavedChanges()) {
                 event.preventDefault();
                 event.returnValue = "";
             }
         });
 
+        await this.library.initialize();
         let draft = null;
         try {
-            draft = await this.drafts.load();
+            if (this.drafts) draft = await this.drafts.load();
+            else this.setAutosaveState("unavailable");
         } catch (error) {
             this.setAutosaveState(error instanceof AutosaveUnavailable ? "unavailable" : "failed");
         }
@@ -112,18 +117,26 @@ class Editor {
                     const validated = validateDocument(draft.doc, { knownAssets: this.palette.stamps, rasterSource: "binary" });
                     await this.palette.ensureDocumentImages(validated);
                     this.loadDocument(await materialize(validated));
+                    this.mapOpened = true;
+                    this.fileGeneration = draft.fileClean ? this.generation : -1;
+                    if (draft.library?.accountId === this.library.accountId && this.library.accountId !== null) {
+                        this.library.project = draft.library.project;
+                        this.library.savedGeneration = draft.library.clean ? this.generation : -1;
+                    }
+                    this.library.updateStatus();
                     this.setAutosaveState("saved", draft.savedAt);
                     this.ui.ready();
                     return;
                 } catch (error) {
-                    this.ui.showError(`Der lokale Entwurf konnte nicht geladen werden: ${error.message || error}. Es wird die Startkarte geöffnet.`);
+                    this.ui.showError(`Der lokale Entwurf konnte nicht geladen werden: ${error.message || error}. Wähle eine Karte aus der Bibliothek oder starte eine neue Karte.`);
                 }
             }
         }
         this.ui.setLoading("Karte wird gezeichnet …");
         await new Promise((resolve) => requestAnimationFrame(resolve));
-        this.loadDocument(createStarterMap(this.palette, this.engineFor(2400, 1600)));
+        this.loadDocument(createEmptyMap());
         this.ui.ready();
+        this.library.show();
     }
 
     engineFor(w, h) {
@@ -795,11 +808,20 @@ class Editor {
 
     markChanged() {
         this.generation += 1;
+        this.library.updateStatus();
         this.scheduleAutosave();
     }
 
     hasUnsavedFileChanges() {
         return this.generation !== this.fileGeneration;
+    }
+
+    hasUnsavedChanges() {
+        return this.hasUnsavedFileChanges() && this.generation !== this.library.savedGeneration;
+    }
+
+    savePrimary() {
+        return this.library.accountId !== null ? this.library.save() : this.saveFile();
     }
 
     /** True while a gesture has live, not yet committed document changes. */
@@ -848,6 +870,7 @@ class Editor {
     }
 
     scheduleAutosave() {
+        if (!this.drafts) return;
         if (this.autosave.state === "unavailable") return;
         clearTimeout(this.autosave.timer);
         if (this.autosave.state !== "failed") this.setAutosaveState("pending");
@@ -868,9 +891,13 @@ class Editor {
         this.setAutosaveState("saving");
         try {
             const generation = this.generation;
+            const store = this.drafts;
+            const fileClean = generation === this.fileGeneration;
+            const library = { accountId: this.library.accountId, project: this.library.project,
+                clean: generation === this.library.savedGeneration };
             const data = await serialize(this.doc, "binary"); // snapshot taken synchronously at this generation
             const savedAt = Date.now();
-            await this.drafts.save({ savedAt, doc: data });
+            await store.save({ savedAt, doc: data, fileClean, library });
             if (this.generation === generation) {
                 this.setAutosaveState("saved", savedAt);
             } else {
@@ -923,6 +950,9 @@ class Editor {
             const doc = await materialize(validated);
             if (!(await this.ui.confirmReplace())) return;
             this.loadDocument(doc);
+            this.mapOpened = true;
+            this.library.detach();
+            this.library.close();
             this.markChanged(); // autosave the loaded map as the new draft
             this.fileGeneration = this.generation; // identical to the file just opened
             this.ui.toast(`„${doc.meta.title}“ geladen.`);
@@ -973,11 +1003,14 @@ class Editor {
     }
 
     async newMap(kind) {
+        const initial = !this.mapOpened;
         if (!(await this.ui.confirmReplace())) return;
         const doc = kind === "empty" ? createEmptyMap() : createStarterMap(this.palette, this.engineFor(2400, 1600));
         this.loadDocument(doc);
-        this.markChanged();
-        this.ui.toast(kind === "empty" ? "Leere Karte angelegt." : "Startkarte geladen.");
+        this.mapOpened = true;
+        this.library.detach();
+        if (!initial) this.markChanged();
+        if (!initial) this.ui.toast(kind === "empty" ? "Leere Karte angelegt." : "Startkarte geladen.");
     }
 
     setTool(tool) {

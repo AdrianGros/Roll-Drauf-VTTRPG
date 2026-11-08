@@ -110,7 +110,7 @@ export class UI {
             }
         });
         menu.querySelectorAll("button").forEach((button) => button.addEventListener("click", closeMenu));
-        $("newBtn").addEventListener("click", () => $("newDialog").showModal());
+        $("newBtn").addEventListener("click", () => ed.library.show());
         $("openBtn").addEventListener("click", () => $("fileInput").click());
         $("saveBtn").addEventListener("click", () => ed.saveFile());
         $("exportBtn").addEventListener("click", () => this.openExport());
@@ -970,7 +970,7 @@ export class UI {
     }
 
     confirmReplace() {
-        if (!this.ed.hasUnsavedFileChanges()) return Promise.resolve(true);
+        if (!this.ed.hasUnsavedChanges()) return Promise.resolve(true);
         const dialog = $("replaceDialog");
         return new Promise((resolve) => {
             const finish = (value) => {
@@ -983,7 +983,7 @@ export class UI {
                 const button = $("replaceSave");
                 button.disabled = true;
                 try {
-                    if (await this.ed.saveFile()) finish(true);
+                    if (await this.ed.savePrimary()) finish(true);
                 } finally {
                     button.disabled = false;
                 }

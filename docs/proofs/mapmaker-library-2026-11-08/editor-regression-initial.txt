@@ -1,0 +1,195 @@
+..........................F...............F..............                [100%]
+=================================== FAILURES ===================================
+________________ test_autosave_restores_the_draft_after_reload _________________
+
+open_editor = <function open_editor.<locals>._open at 0x732a09fc2020>
+
+    def test_autosave_restores_the_draft_after_reload(open_editor):
+        ed = open_editor()
+        ed.page.locator("#mapTitle").fill("Mein Entwurf")
+        ed.tool("brush")
+        ed.drag([(SEA_A[0] - 100, SEA_A[1]), (SEA_A[0] + 100, SEA_A[1])])
+        painted = ed.region(SEA_A[0] - 120, SEA_A[1] - 40, 240, 80)
+        status = ed.page.locator("#saveStatus")
+        expect(status).to_have_attribute("data-state", "saved", timeout=15000)
+        expect(status).to_contain_text("Lokal gespeichert")
+
+        ed.page.reload()
+        dialog = ed.page.locator("#restoreDialog")
+>       expect(dialog).to_be_visible()
+E       AssertionError: Locator expected to be visible
+E       Actual value: hidden
+E       Call log:
+E         - Expect "to_be_visible" with timeout 5000ms
+E         - waiting for locator("#restoreDialog")
+E           8 × locator resolved to <dialog class="mm-dialog" id="restoreDialog" aria-labelledby="restoreTitle">…</dialog>
+E             - unexpected value "hidden"
+E
+E       Aria snapshot:
+E       - banner:
+E         - text: Roll Drauf Kartenwerkstatt Kartentitel
+E         - textbox "Kartentitel"
+E         - button "Meine Karten"
+E         - button "In Bibliothek speichern" [disabled]
+E         - text: Noch nicht in Bibliothek
+E         - button "Rückgängig" [disabled]
+E         - button "Wiederholen" [disabled]
+E         - button "Datei"
+E         - status: Noch keine Änderungen
+E         - link "Künstler & Credits":
+E           - /url: credits.html
+E         - button "Hilfe"
+E       - navigation "VTT-Hauptnavigation":
+E         - link "Übersicht":
+E           - /url: /dashboard
+E         - link "Kampagnen":
+E           - /url: /campaigns
+E         - link "Charaktere":
+E           - /url: /characters
+E         - link "Karten":
+E           - /url: /mapmaker
+E         - link "Creation Engine" [disabled]:
+E           - /url: /api/ce/authoring
+E         - link "Regelwerk":
+E           - /url: /regelwerk
+E         - link "Compendium":
+E           - /url: /regelwerk/compendium
+E         - button "Spieltisch"
+E       - strong: Gast
+E       - button "Anmelden"
+E       - navigation "Werkzeuge":
+E         - button "Bewegen"
+E         - button "Pinsel" [pressed]
+E         - button "Radierer"
+E         - button "Wege"
+E         - button "Stempel"
+E         - button "Ort"
+E         - button "Auswählen"
+E       - main:
+E         - group "Zoom":
+E           - button "Verkleinern"
+E           - status: 100 %
+E           - button "Vergrößern"
+E           - button "Einpassen"
+E         - paragraph: Symbole und Schriften werden geladen …
+E       - complementary "Eigenschaften":
+E         - tablist "Bereiche":
+E           - tab "Werkzeug" [selected]
+E           - tab "Ebenen"
+E           - tab "Orte"
+E         - tabpanel "Werkzeug":
+E           - paragraph:
+E             - text: "Malt auf:"
+E             - strong: –
+E           - heading "Material" [level=3]
+E           - radiogroup "Material"
+E           - text: Größe
+E           - slider "Größe": "401"
+E           - status
+E           - spinbutton "Pinselgröße in Pixel"
+E           - text: Deckkraft
+E           - slider "Deckkraft": "51"
+E           - status
+E           - text: Weichheit
+E           - slider "Weichheit": "50"
+E           - status
+E           - paragraph: Radieren auf „Land“ formt Küsten, Buchten und Seen.
+E           - paragraph: "Tasten: [ ] Größe, Umschalt + [ ] Weichheit."
+E           - paragraph:
+E             - text: "Zeichnet auf:"
+E             - strong: Neue Ebene beim ersten Weg
+E           - text: Art
+E           - combobox "Art":
+E             - option "Weg" [selected]
+E             - option "Fluss"
+E           - text: Breite
+E           - slider "Breite": "41"
+E           - status
+E           - spinbutton "Wegbreite in Pixel"
+E           - paragraph: Ziehen zeichnet einen editierbaren Verlauf. Mit Auswählen (V) kannst du ihn oder einzelne Punkte verschieben.
+E           - paragraph:
+E             - text: "Setzt auf:"
+E             - strong: –
+E           - text: Symbole suchen
+E           - searchbox "Symbole suchen"
+E           - text: Asset-Paket
+E           - combobox "Asset-Paket":
+E             - option "Alle Pakete" [selected]
+E           - text: Kategorie
+E           - combobox "Kategorie":
+E             - option "Alle Kategorien" [selected]
+E           - paragraph
+E           - button "Ausschnitt wählen" [disabled]
+E           - status
+E           - button "Vorherige"
+E           - button "Weitere Symbole"
+E           - paragraph:
+E             - link "Künstler, Quellen & Lizenzen":
+E               - /url: credits.html
+E             - text: · Kommerziell nutzbar mit den jeweiligen Künstler-Credits.
+E           - text: Größe
+E           - slider "Größe": "168"
+E           - status
+E           - spinbutton "Symbolgröße in Pixel"
+E           - text: Drehung
+E           - slider "Drehung": "0"
+E           - status
+E           - checkbox "Spiegeln"
+E           - text: Spiegeln
+E           - checkbox "Leichte Variation (Größe, Drehung)"
+E           - text: Leichte Variation (Größe, Drehung)
+E           - checkbox "Streuen beim Ziehen (Wälder, Gebirge)"
+E           - text: Streuen beim Ziehen (Wälder, Gebirge)
+E           - paragraph:
+E             - text: "Setzt auf:"
+E             - strong: –
+E           - text: Stil
+E           - combobox "Stil"
+E           - text: Ortsart
+E           - combobox "Ortsart"
+E           - checkbox "Ortsnadel zeigen" [checked]
+E           - text: Ortsnadel zeigen Ortssymbol
+E           - combobox "Ortssymbol"
+E           - text: Symbolgröße
+E           - slider "Symbolgröße": "168"
+E           - status
+E           - spinbutton "Ortssymbolgröße in Pixel"
+E           - paragraph: Tippe auf die Karte, um immer einen neuen Ort zu setzen. Zum Bearbeiten vorhandener Orte nutze Auswählen (V) oder die Ortsliste.
+E           - paragraph: Symbole, Wege oder Beschriftungen antippen, um sie auszuwählen; ziehen verschiebt sie. Bei Wegen ändert Umschalt + Ziehen einen Punkt. Entf löscht die Auswahl.
+E           - paragraph: "Ziehen verschiebt die Karte. Mausrad oder zwei Finger zoomen. In jedem Werkzeug: Leertaste halten oder mittlere Maustaste zum Verschieben."
+
+tests/test_mapmaker_browser.py:712: AssertionError
+_________ test_r3_raster_area_limit_and_2x_export_limit_on_a_4096_map __________
+
+open_editor = <function open_editor.<locals>._open at 0x732a19b10d60>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-136/test_r3_raster_area_limit_and_0')
+
+    def test_r3_raster_area_limit_and_2x_export_limit_on_a_4096_map(open_editor, tmp_path):
+        ed = open_editor()
+        png = "data:image/png;base64," + base64.b64encode(_png_rgba_blank(4096, 4096)).decode()
+        big = {
+            "format": "rd-mapmaker", "version": 1,
+            "meta": {"title": "Großkarte", "seed": 0, "created": "", "modified": ""},
+            "size": {"w": 4096, "h": 4096}, "sea": {"top": "#2f5d6e", "bottom": "#7fa9a8"},
+            "layers": [
+                {"id": "land", "name": "Land", "kind": "raster", "visible": True, "opacity": 1, "effects": {"coast": True}, "png": png},
+                {"id": "sym", "name": "Symbole", "kind": "stamps", "visible": True, "opacity": 1,
+                 "items": [{"id": "s1", "asset": "kenney:castle", "x": 2048, "y": 2048, "size": 120, "rot": 0, "flip": False}]},
+                {"id": "txt", "name": "Beschriftung", "kind": "labels", "visible": True, "opacity": 1, "items": []},
+            ],
+        }
+        ed.page.locator("#fileInput").set_input_files({"name": "gross.rdmap.json", "mimeType": "application/json", "buffer": json.dumps(big).encode()})
+        expect(ed.page.locator("#toast")).to_contain_text("geladen")
+>       assert ed.summary()["size"] == {"w": 4096, "h": 4096}
+E       AssertionError: assert {'h': 1600, 'w': 2400} == {'h': 4096, 'w': 4096}
+E
+E         Differing items:
+E         {'w': 2400} != {'w': 4096}
+E         {'h': 1600} != {'h': 4096}
+E         Use -v to get more diff
+
+tests/test_mapmaker_browser.py:1184: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mapmaker_browser.py::test_autosave_restores_the_draft_after_reload
+FAILED tests/test_mapmaker_browser.py::test_r3_raster_area_limit_and_2x_export_limit_on_a_4096_map
+2 failed, 55 passed, 8 warnings in 605.00s (0:10:05)

@@ -178,7 +178,7 @@ class Editor:
 def open_editor(browser, preview_origin):
     contexts = []
 
-    def _open(width=1440, origin=None, path=PREVIEW_PATH, init_script=None, route=None, allow_errors=()):
+    def _open(width=1440, origin=None, path=PREVIEW_PATH, init_script=None, route=None, allow_errors=(), choose_template=True):
         context = browser.new_context(viewport={"width": width, "height": 900 if width > 600 else 844},
                                       accept_downloads=True, reduced_motion="reduce")
         contexts.append(context)
@@ -199,6 +199,9 @@ def open_editor(browser, preview_origin):
         page.on("console", on_console)
         page.goto((origin or preview_origin) + path)
         page.wait_for_selector("#app[data-state=ready]")
+        if choose_template:
+            page.locator("#newStarter").click()
+            expect(page.locator("#newDialog")).to_be_hidden()
         return Editor(context, page, errors)
 
     yield _open
@@ -706,6 +709,7 @@ def test_autosave_restores_the_draft_after_reload(open_editor):
 
     ed.page.reload()
     dialog = ed.page.locator("#restoreDialog")
+    ed.page.wait_for_selector("#restoreDialog[open]")
     expect(dialog).to_be_visible()
     expect(dialog).to_contain_text("Mein Entwurf")
     expect(dialog.get_by_role("button", name="Entwurf wiederherstellen")).to_be_focused()
@@ -716,8 +720,9 @@ def test_autosave_restores_the_draft_after_reload(open_editor):
     assert ed.summary()["canUndo"] is False
 
     ed.page.reload()
-    ed.page.locator("#restoreDialog").get_by_role("button", name="Neue Startkarte").click()
+    ed.page.locator("#restoreDialog").get_by_role("button", name="Zur Kartenauswahl").click()
     ed.page.wait_for_selector("#app[data-state=ready]")
+    ed.page.locator("#newStarter").click()
     assert ed.summary()["title"] == "Die Silbermark"
     ed.assert_clean()
 
@@ -1176,7 +1181,7 @@ def test_r3_raster_area_limit_and_2x_export_limit_on_a_4096_map(open_editor, tmp
         ],
     }
     ed.page.locator("#fileInput").set_input_files({"name": "gross.rdmap.json", "mimeType": "application/json", "buffer": json.dumps(big).encode()})
-    expect(ed.page.locator("#toast")).to_contain_text("geladen")
+    expect(ed.page.locator("#toast")).to_contain_text("„Großkarte“ geladen")
     assert ed.summary()["size"] == {"w": 4096, "h": 4096}
     steps = ed.summary()["historySteps"]
 

@@ -22,6 +22,13 @@
             <input id="mapTitle" type="text" maxlength="80" autocomplete="off" spellcheck="false" value="">
         </label>
         <div class="mm-top-actions">
+            <button id="libraryBtn" class="mm-icon-btn" type="button" title="Meine Karten" aria-label="Meine Karten">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7v16H3zM10 4h7v16h-7M18 4l3 15"/></svg>
+            </button>
+            <button id="cloudSave" class="mm-icon-btn" type="button" title="In Bibliothek speichern" aria-label="In Bibliothek speichern" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13l4 4v14H3V3zM7 3v7h10V3M7 21v-7h10v7"/></svg>
+            </button>
+            <span id="cloudStatus" class="mm-status">Noch nicht in Bibliothek</span>
             <button id="undoBtn" class="mm-icon-btn" type="button" title="Rückgängig (Strg+Z)" aria-label="Rückgängig" disabled>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>
             </button>
@@ -34,6 +41,9 @@
                 </button>
                 <div id="fileMenuList" class="mm-menu-list" hidden>
                     <button type="button" id="newBtn">Neue Karte …</button>
+                    <button type="button" id="libraryMenuBtn">Meine Karten …</button>
+                    <button type="button" id="cloudSaveMenu" disabled>In Bibliothek speichern</button>
+                    <button type="button" id="saveCopyBtn" disabled>Als Kopie in Bibliothek speichern</button>
                     <button type="button" id="openBtn">Öffnen (.rdmap.json) …</button>
                     <button type="button" id="saveBtn">Als Datei speichern</button>
                     <button type="button" id="exportBtn">Als PNG exportieren …</button>
@@ -244,14 +254,14 @@
     <h2 id="restoreTitle">Entwurf gefunden</h2>
     <p id="restoreText"></p>
     <div class="mm-dialog-actions">
-        <button id="restoreNo" type="button" class="mm-btn">Neue Startkarte</button>
+        <button id="restoreNo" type="button" class="mm-btn">Zur Kartenauswahl</button>
         <button id="restoreYes" type="button" class="mm-btn mm-btn-primary">Entwurf wiederherstellen</button>
     </div>
 </dialog>
 
 <dialog id="replaceDialog" class="mm-dialog" aria-labelledby="replaceTitle">
     <h2 id="replaceTitle">Aktuelle Karte behalten?</h2>
-    <p>Diese Karte enthält Änderungen, die noch nicht als Datei gespeichert wurden. Beim Ersetzen wird auch der lokale Entwurf überschrieben.</p>
+    <p>Diese Karte enthält Änderungen, die noch nicht in der Bibliothek oder als Datei gesichert wurden. Beim Ersetzen wird auch der lokale Entwurf überschrieben.</p>
     <div class="mm-dialog-actions">
         <button id="replaceCancel" type="button" class="mm-btn">Abbrechen</button>
         <button id="replaceDiscard" type="button" class="mm-btn mm-btn-danger">Änderungen verwerfen</button>
@@ -259,16 +269,33 @@
     </div>
 </dialog>
 
-<dialog id="newDialog" class="mm-dialog" aria-labelledby="newTitle">
-    <h2 id="newTitle">Neue Karte</h2>
-    <p>Die aktuelle Karte wird ersetzt und der Verlauf geleert. Speichere sie vorher als Datei, wenn du sie behalten willst.</p>
+<dialog id="newDialog" class="mm-dialog mm-dialog-wide mm-library" aria-labelledby="newTitle">
+    <h2 id="newTitle">Deine Karten</h2>
+    <p>Woran möchtest du arbeiten? Öffne eine gespeicherte Karte oder beginne eine neue.</p>
     <div class="mm-dialog-choices">
-        <button id="newStarter" type="button" class="mm-choice"><strong>Startkarte „Die Silbermark“</strong><span>Fertige Region mit Küste, Gebirge, Wäldern und sieben Orten</span></button>
+        <button id="newLibrary" type="button" class="mm-choice"><strong>Bestehende Karte laden</strong><span>Deine persönliche Bibliothek mit bearbeitbaren Projekten</span></button>
         <button id="newEmpty" type="button" class="mm-choice"><strong>Leere Karte</strong><span>Nur Meer und leere Ebenen – male dein eigenes Land</span></button>
+        <button id="newStarter" type="button" class="mm-choice"><strong>Template „Die Silbermark“</strong><span>Region mit Küste, Gebirge, Wäldern und sieben Orten</span></button>
     </div>
+    <section id="librarySection" aria-label="Persönliche Kartenbibliothek">
+        <h3 class="mm-h3">Meine Bibliothek</h3>
+        <p id="libraryQuota" class="mm-hint">Speicherplatz wird nach der Anmeldung angezeigt.</p>
+        <progress id="libraryMeter" max="1" value="0" aria-label="Belegter Speicherplatz" hidden></progress>
+        <div class="mm-library-search"><label class="mm-field"><span>Karten suchen</span><input id="librarySearch" type="search" maxlength="80" placeholder="Kartentitel …"></label><button id="libraryRefresh" type="button" class="mm-btn">Aktualisieren</button></div>
+        <p id="libraryFeedback" class="mm-hint" role="status" aria-live="polite"></p>
+        <ul id="libraryList" class="mm-library-list"></ul>
+        <div class="mm-library-pages"><button id="libraryPrev" type="button" class="mm-btn mm-btn-small" disabled>Zurück</button><span id="libraryPage"></span><button id="libraryNext" type="button" class="mm-btn mm-btn-small" disabled>Weiter</button></div>
+    </section>
     <div class="mm-dialog-actions">
+        <button id="libraryImport" type="button" class="mm-btn">Projektdatei öffnen …</button>
         <button id="newCancel" type="button" class="mm-btn">Abbrechen</button>
     </div>
+</dialog>
+
+<dialog id="deleteMapDialog" class="mm-dialog" aria-labelledby="deleteMapTitle">
+    <h2 id="deleteMapTitle">Karte löschen?</h2>
+    <p id="deleteMapText"></p>
+    <div class="mm-dialog-actions"><button id="deleteMapCancel" type="button" class="mm-btn">Abbrechen</button><button id="deleteMapConfirm" type="button" class="mm-btn mm-btn-danger">Endgültig löschen</button></div>
 </dialog>
 
 <dialog id="sheetDialog" class="mm-dialog mm-dialog-wide" aria-labelledby="sheetTitle">
@@ -337,6 +364,7 @@
             <dl class="mm-keys">
                 <dt><kbd>Strg</kbd>+<kbd>Z</kbd></dt><dd>Rückgängig</dd>
                 <dt><kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>Z</kbd> / <kbd>Strg</kbd>+<kbd>Y</kbd></dt><dd>Wiederholen</dd>
+                <dt><kbd>Strg</kbd>+<kbd>S</kbd></dt><dd>In der persönlichen Bibliothek speichern (angemeldet)</dd>
                 <dt><kbd>[</kbd> <kbd>]</kbd></dt><dd>Pinsel- oder Symbolgröße</dd>
                 <dt><kbd>Umschalt</kbd>+<kbd>[</kbd> <kbd>]</kbd></dt><dd>Pinselweichheit</dd>
                 <dt><kbd>Entf</kbd></dt><dd>Auswahl löschen</dd>
@@ -354,7 +382,7 @@
             </dl>
         </div>
     </div>
-    <p class="mm-hint">Die Karte wird automatisch in diesem Browser gespeichert. Für Sicherungen und andere Geräte: „Datei → Als Datei speichern“. Symbole und Fototexturen: kostenlose Künstlerpakete unter CC0, CC BY und OGA-BY. <a href="credits.html" target="_blank" rel="noopener">Alle Künstler und Lizenzen</a>.</p>
+    <p class="mm-hint">„Meine Karten“ öffnet deine persönliche Bibliothek. Angemeldet sicherst du über die Diskette oder Strg+S das bearbeitbare Projekt in deinem zugewiesenen Speicher und kannst es auf anderen Geräten wieder öffnen. „Als Kopie in Bibliothek speichern“ legt eine unabhängige Karte an. Lokales Autosave bleibt als Entwurf in diesem Browser; „Datei → Als Datei speichern“ erstellt zusätzlich eine Projektdatei. Symbole und Fototexturen: kostenlose Künstlerpakete unter CC0, CC BY und OGA-BY. <a href="credits.html" target="_blank" rel="noopener">Alle Künstler und Lizenzen</a>.</p>
     <div class="mm-dialog-actions">
         <button id="helpClose" type="button" class="mm-btn mm-btn-primary">Schließen</button>
     </div>

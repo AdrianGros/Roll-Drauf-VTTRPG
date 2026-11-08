@@ -14,10 +14,14 @@ from vtt.storage import get_storage_adapter
 from vtt.utils.audit import log_audit
 from vtt.utils.images import generate_thumbnail
 from vtt.security import current_user
+from vtt.endpoints.mapmaker import mapmaker_bp
 
 logger = logging.getLogger(__name__)
 
 assets_bp = Blueprint('assets', __name__, url_prefix='/api/assets')
+
+# Private editor projects are independent of the campaign asset library.
+assets_bp.register_blueprint(mapmaker_bp, url_prefix='/mapmaker')
 
 LIBRARY_ALLOWED_ASSET_TYPES = {'map', 'token', 'handout', 'image'}
 

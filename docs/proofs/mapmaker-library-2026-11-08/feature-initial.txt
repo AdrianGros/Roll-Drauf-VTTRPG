@@ -1,0 +1,167 @@
+...................................F..                                   [100%]
+=================================== FAILURES ===================================
+______________ test_account_change_blocks_save_and_scopes_drafts _______________
+
+site = (<Flask 'vtt'>, [1, 2], 'http://127.0.0.1:37075', <function site.<locals>.open_page at 0x712a189d2840>, <function site.<locals>.cookie_values at 0x712a189d1da0>)
+browser = <Browser type=<BrowserType name=chromium executable_path=/root/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome> version=151.0.7922.34>
+
+    def test_account_change_blocks_save_and_scopes_drafts(site, browser):
+        page, errors = site[3](browser)
+        page.locator('#newEmpty').click()
+        page.locator('#mapTitle').fill('Privater Entwurf Konto A')
+        save(page)
+        expect(page.locator('#saveStatus')).to_have_attribute('data-state', 'saved', timeout=20000)
+        page.context.add_cookies(site[4](1))
+        page.locator('#mapTitle').fill('Darf nicht in Konto B landen')
+        page.locator('#cloudSave').click()
+        expect(page.locator('#errorText')).to_contain_text('Konto hat sich geändert')
+        with site[0].app_context():
+            assert MapmakerProject.query.filter_by(owner_id=site[1][1]).count() == 0
+            assert MapmakerProject.query.filter_by(owner_id=site[1][0]).one().title == 'Privater Entwurf Konto A'
+        page.reload()
+>       expect(page.locator('#newDialog')).to_be_visible()
+E       AssertionError: Locator expected to be visible
+E       Actual value: hidden
+E       Call log:
+E         - Expect "to_be_visible" with timeout 5000ms
+E         - waiting for locator("#newDialog")
+E           9 × locator resolved to <dialog id="newDialog" aria-labelledby="newTitle" class="mm-dialog mm-dialog-wide mm-library">…</dialog>
+E             - unexpected value "hidden"
+E
+E       Aria snapshot:
+E       - banner:
+E         - text: Roll Drauf Kartenwerkstatt Kartentitel
+E         - textbox "Kartentitel"
+E         - button "Meine Karten"
+E         - button "In Bibliothek speichern" [disabled]
+E         - text: Noch nicht in Bibliothek
+E         - button "Rückgängig" [disabled]
+E         - button "Wiederholen" [disabled]
+E         - button "Datei"
+E         - status: Noch keine Änderungen
+E         - link "Künstler & Credits":
+E           - /url: credits.html
+E         - button "Hilfe"
+E       - navigation "VTT-Hauptnavigation":
+E         - link "Übersicht":
+E           - /url: /dashboard
+E         - link "Kampagnen":
+E           - /url: /campaigns
+E         - link "Charaktere":
+E           - /url: /characters
+E         - link "Karten":
+E           - /url: /mapmaker
+E         - link "Creation Engine · nicht verfügbar" [disabled]
+E         - link "Regelwerk":
+E           - /url: /regelwerk
+E         - link "Compendium":
+E           - /url: /regelwerk/compendium
+E         - button "Spieltisch"
+E       - strong: library_browser_player
+E       - text: 0 Sessions gespielt
+E       - button "Abmelden"
+E       - navigation "Werkzeuge":
+E         - button "Bewegen"
+E         - button "Pinsel" [pressed]
+E         - button "Radierer"
+E         - button "Wege"
+E         - button "Stempel"
+E         - button "Ort"
+E         - button "Auswählen"
+E       - main:
+E         - group "Zoom":
+E           - button "Verkleinern"
+E           - status: 100 %
+E           - button "Vergrößern"
+E           - button "Einpassen"
+E         - paragraph: Symbole und Schriften werden geladen …
+E       - complementary "Eigenschaften":
+E         - tablist "Bereiche":
+E           - tab "Werkzeug" [selected]
+E           - tab "Ebenen"
+E           - tab "Orte"
+E         - tabpanel "Werkzeug":
+E           - paragraph:
+E             - text: "Malt auf:"
+E             - strong: –
+E           - heading "Material" [level=3]
+E           - radiogroup "Material"
+E           - text: Größe
+E           - slider "Größe": "401"
+E           - status
+E           - spinbutton "Pinselgröße in Pixel"
+E           - text: Deckkraft
+E           - slider "Deckkraft": "51"
+E           - status
+E           - text: Weichheit
+E           - slider "Weichheit": "50"
+E           - status
+E           - paragraph: Radieren auf „Land“ formt Küsten, Buchten und Seen.
+E           - paragraph: "Tasten: [ ] Größe, Umschalt + [ ] Weichheit."
+E           - paragraph:
+E             - text: "Zeichnet auf:"
+E             - strong: Neue Ebene beim ersten Weg
+E           - text: Art
+E           - combobox "Art":
+E             - option "Weg" [selected]
+E             - option "Fluss"
+E           - text: Breite
+E           - slider "Breite": "41"
+E           - status
+E           - spinbutton "Wegbreite in Pixel"
+E           - paragraph: Ziehen zeichnet einen editierbaren Verlauf. Mit Auswählen (V) kannst du ihn oder einzelne Punkte verschieben.
+E           - paragraph:
+E             - text: "Setzt auf:"
+E             - strong: –
+E           - text: Symbole suchen
+E           - searchbox "Symbole suchen"
+E           - text: Asset-Paket
+E           - combobox "Asset-Paket":
+E             - option "Alle Pakete" [selected]
+E           - text: Kategorie
+E           - combobox "Kategorie":
+E             - option "Alle Kategorien" [selected]
+E           - paragraph
+E           - button "Ausschnitt wählen" [disabled]
+E           - status
+E           - button "Vorherige"
+E           - button "Weitere Symbole"
+E           - paragraph:
+E             - link "Künstler, Quellen & Lizenzen":
+E               - /url: credits.html
+E             - text: · Kommerziell nutzbar mit den jeweiligen Künstler-Credits.
+E           - text: Größe
+E           - slider "Größe": "168"
+E           - status
+E           - spinbutton "Symbolgröße in Pixel"
+E           - text: Drehung
+E           - slider "Drehung": "0"
+E           - status
+E           - checkbox "Spiegeln"
+E           - text: Spiegeln
+E           - checkbox "Leichte Variation (Größe, Drehung)"
+E           - text: Leichte Variation (Größe, Drehung)
+E           - checkbox "Streuen beim Ziehen (Wälder, Gebirge)"
+E           - text: Streuen beim Ziehen (Wälder, Gebirge)
+E           - paragraph:
+E             - text: "Setzt auf:"
+E             - strong: –
+E           - text: Stil
+E           - combobox "Stil"
+E           - text: Ortsart
+E           - combobox "Ortsart"
+E           - checkbox "Ortsnadel zeigen" [checked]
+E           - text: Ortsnadel zeigen Ortssymbol
+E           - combobox "Ortssymbol"
+E           - text: Symbolgröße
+E           - slider "Symbolgröße": "168"
+E           - status
+E           - spinbutton "Ortssymbolgröße in Pixel"
+E           - paragraph: Tippe auf die Karte, um immer einen neuen Ort zu setzen. Zum Bearbeiten vorhandener Orte nutze Auswählen (V) oder die Ortsliste.
+E           - paragraph: Symbole, Wege oder Beschriftungen antippen, um sie auszuwählen; ziehen verschiebt sie. Bei Wegen ändert Umschalt + Ziehen einen Punkt. Entf löscht die Auswahl.
+E           - paragraph: "Ziehen verschiebt die Karte. Mausrad oder zwei Finger zoomen. In jedem Werkzeug: Leertaste halten oder mittlere Maustaste zum Verschieben."
+
+tests/test_mapmaker_library_browser.py:185: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mapmaker_library_browser.py::test_account_change_blocks_save_and_scopes_drafts
+1 failed, 37 passed, 435 warnings in 182.66s (0:03:02)

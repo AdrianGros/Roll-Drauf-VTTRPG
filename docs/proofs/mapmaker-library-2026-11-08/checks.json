@@ -1,0 +1,28 @@
+{
+  "uniqueCasesCovered": 122,
+  "api": 30,
+  "libraryBrowser": 8,
+  "postgresConcurrency": 3,
+  "existingCampaignAssets": 24,
+  "existingMapmaker": 57,
+  "existingSuite": {
+    "passed": 55,
+    "initialFailures": 2,
+    "resolved": [
+      "restore test now waits for actual restore dialog after catalogue loading",
+      "large-map test waits for its specific import message; initial chooser no longer emits a competing loaded toast"
+    ]
+  },
+  "newFeatureSuite": {
+    "passed": 37,
+    "initialFailures": 1,
+    "resolved": "Account-switch test waits for editor ready before checking the chooser; targeted retest passed"
+  },
+  "finalFocusedChecks": [
+    "4 responsive/restore cases passed, including Ctrl+S from title field",
+    "2 account binding/save snapshot cases passed",
+    "4096px map regression passed"
+  ],
+  "dependenciesAdded": [],
+  "liveDelivery": "pending"
+}
