@@ -16,19 +16,17 @@ def client(app):
     return app.test_client()
 
 
-def test_bookscene_exit_choreography_is_defined_on_play_handoff(client):
+def test_bookscene_hands_off_to_play_without_exit_choreography(client):
+    # Owner decision 2026-11-08: the table opens like any other tab.
     response = client.get("/static/js/book-scene.js")
 
     assert response.status_code == 200
     js = response.get_data(as_text=True)
 
-    assert "const PLAY_EXIT_DURATION_MS = 560;" in js
-    assert "const PLAY_ARRIVAL_DURATION_MS = 720;" in js
     assert "_runPlayExitTransition(handoff) {" in js
-    assert "this.setSceneState('play-transition');" in js
-    assert "document.body.dataset.bookSceneTransitionTarget = 'play';" in js
-    assert "document.body.dataset.bookSceneTransitionPhase = 'BOOK_TO_TABLE_TRANSITION';" in js
     assert "handoff.book_exit_completed_at = new Date().toISOString();" in js
+    assert "this.setSceneState('play-transition');" not in js
+    assert "document.body.dataset.bookSceneTransitionPhase = 'BOOK_TO_TABLE_TRANSITION';" not in js
 
 
 def test_bookscene_play_transition_state_is_styled(client):
@@ -42,19 +40,18 @@ def test_bookscene_play_transition_state_is_styled(client):
     assert "body.is-book-scene-play-transition .book-scene-backdrop" in css
 
 
-def test_play_entry_shell_exposes_arrival_choreography_state(client):
+def test_play_entry_shell_starts_at_the_table(client):
     response = client.get("/play?campaign_id=9&session_id=11")
 
     assert response.status_code == 200
     html = response.get_data(as_text=True)
 
-    assert 'data-play-transition-stage="pending"' in html
+    assert 'data-play-mode-family="table" data-play-transition-stage="table"' in html
     assert 'data-play-entry-phase="pending"' in html
-    assert 'class="play-entry-curtain"' in html
     assert "The spellbook closes into table focus" not in html
 
 
-def test_play_runtime_honors_arrival_transition_states(client):
+def test_play_runtime_skips_the_arrival_curtain(client):
     response = client.get("/static/js/play-ui.js")
 
     assert response.status_code == 200
@@ -62,7 +59,7 @@ def test_play_runtime_honors_arrival_transition_states(client):
 
     assert "_beginEntryArrival() {" in js
     assert "_finalizeEntryArrival() {" in js
-    assert 'body.dataset.playTransitionStage = "arrival";' in js
-    assert 'document.body.dataset.playTransitionStage = "settling";' in js
+    assert 'body.dataset.playTransitionStage = "arrival";' not in js
+    assert 'document.body.dataset.playTransitionStage = "settling";' not in js
     assert 'document.body.dataset.playTransitionStage = "table";' in js
     assert 'body.dataset.playEntryPhase = String(boundary.phase || "BOOK_TO_TABLE_TRANSITION");' in js
