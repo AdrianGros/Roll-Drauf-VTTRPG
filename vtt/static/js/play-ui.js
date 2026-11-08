@@ -2685,8 +2685,11 @@
             const turnWidget = document.getElementById("turnOrderWidget");
             const tokenWidget = document.getElementById("tokenWidget");
             const layersToggle = layersWidget?.querySelector(".widget-toggle");
-            if (layersWidget) layersWidget.classList.remove("collapsed");
-            if (layersToggle) layersToggle.setAttribute("aria-expanded", "true");
+            // 2026-11-08: the table is fullscreen and the map comes first.
+            // Only a DM seat on a tall screen starts with the pages open.
+            const layersOpen = Boolean(this._composedOperator) && window.innerHeight >= 820;
+            if (layersWidget) layersWidget.classList.toggle("collapsed", !layersOpen);
+            if (layersToggle) layersToggle.setAttribute("aria-expanded", String(layersOpen));
             if (turnWidget) turnWidget.classList.add("collapsed");
             if (tokenWidget) tokenWidget.classList.add("collapsed");
             turnWidget?.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "false");
@@ -3550,9 +3553,15 @@
                 : role;
             this._renderSeatSwitch();
             document.getElementById("readOnlyBadge").textContent = this.readOnly ? "nur lesen" : "interaktiv";
+            document.getElementById("readOnlyChip")?.classList.toggle("is-read-only", this.readOnly);
             const statusPill = document.getElementById("sessionStatusPill");
             if (statusPill) {
-                statusPill.textContent = String(this.bootstrap?.session?.runtime_status || this.bootstrap?.session?.status || "-");
+                const status = String(this.bootstrap?.session?.runtime_status || this.bootstrap?.session?.status || "-");
+                const labels = {
+                    scheduled: "Geplant", ready: "Bereit", in_progress: "Live",
+                    paused: "Pausiert", ended: "Beendet",
+                };
+                statusPill.textContent = labels[status] || status;
             }
             this._renderAppMenuStatus();
 

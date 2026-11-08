@@ -2185,8 +2185,203 @@
         }
     </style>
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
+    <style id="tableFullscreenStyles">
+        /* Owner request 2026-11-08: at the table the map is the whole
+           screen. One transparent row of small controls on top; tools,
+           hotbar, widgets and the menu float over the map. Page navigation
+           and the account box live in the session menu (↩ Zurück) here.
+           Last in the cascade on purpose: it replaces the book frame,
+           paddings and the separate status/zoom rows of the rules above. */
+        body.play-fullscreen { overflow: hidden; }
+        body.play-fullscreen .book-dashboard-topbar { display: none !important; }
+        body.play-fullscreen main {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100vh;
+            height: 100dvh;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        body.play-fullscreen .play-workspace-camera,
+        body.play-fullscreen .play-workspace-page,
+        body.play-fullscreen .book-workspace-shell,
+        body.play-fullscreen .book-shell-frame,
+        body.play-fullscreen .tabletop-shell {
+            position: absolute !important;
+            inset: 0 !important;
+            width: auto !important;
+            height: auto !important;
+            min-height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            transform: none !important;
+            filter: none !important;
+            will-change: auto !important;
+            transition: none !important;
+        }
+        body.play-fullscreen .play-workspace-camera,
+        body.play-fullscreen .play-workspace-page,
+        body.play-fullscreen .book-workspace-shell,
+        body.play-fullscreen .book-shell-frame {
+            display: block !important;
+            background: none !important;
+        }
+        body.play-fullscreen .tabletop-shell {
+            grid-template-rows: minmax(0, 1fr) !important;
+        }
+        body.play-fullscreen .stage {
+            grid-row: 1;
+            grid-column: 1;
+            border-radius: 0;
+        }
+
+        /* The one top row: title, compact status, zoom. No bar background;
+           each control carries its own small translucent chip. */
+        body.play-fullscreen .play-status-strip {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 45;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 6px;
+            margin: 0 !important;
+            padding: 6px 8px !important;
+            padding-top: max(6px, env(safe-area-inset-top, 0px)) !important;
+            background: none !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            pointer-events: none;
+        }
+        body.play-fullscreen .play-status-strip > * { pointer-events: auto; }
+        body.play-fullscreen .play-status-strip #sessionTitle {
+            display: block !important;
+            flex: 0 1 auto;
+            min-width: 0;
+            max-width: 38vw;
+            font-size: 0.82rem;
+            color: #eef3ff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95), 0 0 8px rgba(0, 0, 0, 0.7);
+        }
+        body.play-fullscreen .play-status-strip .book-dashboard-meta {
+            order: 1;
+            display: flex !important;
+            flex: 0 1 auto;
+            min-width: 0;
+            gap: 4px;
+            margin: 0;
+            overflow: hidden;
+        }
+        body.play-fullscreen .play-status-strip .book-dashboard-chip,
+        body.play-fullscreen .play-status-strip .active-page-pill {
+            flex: 0 0 auto;
+            margin: 0;
+            padding: 2px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 999px;
+            background: rgba(7, 14, 28, 0.58);
+            color: #eef3ff;
+            font-size: 0.72rem;
+            line-height: 1.5;
+            white-space: nowrap;
+            box-shadow: none;
+            backdrop-filter: blur(4px);
+        }
+        body.play-fullscreen .play-status-strip .book-dashboard-chip strong { color: inherit; font-weight: 600; }
+        body.play-fullscreen .play-status-strip .chip-label { display: none; }
+        /* Mode and status say the same thing; access only matters when read-only. */
+        body.play-fullscreen #modeChip,
+        body.play-fullscreen #readOnlyChip:not(.is-read-only) { display: none !important; }
+        body.play-fullscreen #readOnlyChip.is-read-only { border-color: rgba(232, 178, 63, 0.6); }
+        body.play-fullscreen .play-status-strip .stage-topbar {
+            order: 2;
+            position: static !important;
+            inset: auto !important;
+            margin-left: auto;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center;
+            gap: 4px;
+            width: auto !important;
+            padding: 0 !important;
+            background: none !important;
+            border: 0 !important;
+            opacity: 1 !important;
+        }
+        body.play-fullscreen .play-status-strip .stage-zoom-cluster {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            gap: 4px;
+            position: static !important;
+        }
+        body.play-fullscreen #zoomRange,
+        body.play-fullscreen #btnZoomReset { display: none !important; }
+        body.play-fullscreen .play-status-strip .mini-control {
+            min-width: 30px;
+            min-height: 30px;
+            height: 30px;
+            padding: 0 0.45rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 8px;
+            background: rgba(7, 14, 28, 0.58);
+            color: #eef3ff;
+            font-size: 0.75rem;
+            backdrop-filter: blur(4px);
+        }
+        body.play-fullscreen #zoomLabel { min-width: 42px; }
+
+        /* Everything else floats over the map and keeps the map visible. */
+        body.play-fullscreen #layersWidget { top: 46px; }
+        body.play-fullscreen .right-sidebar { top: 44px; }
+        body.play-fullscreen .action-hotbar,
+        body.play-fullscreen .tabletop-shell > .left-toolbar {
+            background: rgba(7, 14, 28, 0.74);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        }
+        @media (min-width: 1041px) {
+            body.play-fullscreen .tabletop-shell > .left-toolbar {
+                position: absolute;
+                left: 50%;
+                bottom: 10px;
+                transform: translateX(-50%);
+                grid-row: 1;
+                align-self: end;
+                z-index: 32;
+            }
+            body.play-fullscreen .action-hotbar { bottom: 64px; }
+            body.play-fullscreen #turnOrderWidget,
+            body.play-fullscreen #tokenWidget { bottom: 10px; }
+        }
+        @media (max-width: 1040px) {
+            body.play-fullscreen #zoomLabel { display: none !important; }
+            /* The hotbar sat behind the fixed thumb-zone toolbar here. */
+            body.play-fullscreen .action-hotbar { bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
+            /* ...and must not float over the full-screen menu sheet. */
+            body.play-fullscreen:has(.right-sidebar.is-open) .action-hotbar { display: none; }
+        }
+        @media (max-width: 560px) {
+            body.play-fullscreen #presenceChip,
+            body.play-fullscreen .play-status-strip .active-page-pill { display: none !important; }
+            body.play-fullscreen .play-status-strip #sessionTitle { max-width: 34vw; }
+        }
+    </style>
 </head>
-<body class="spellbook book-shell-app play-workspace-realign" data-play-entry-boundary="pending" data-play-return-boundary="idle" data-play-mode-family="table" data-play-transition-stage="table" data-play-entry-phase="pending" data-play-return-phase="TABLE_MODE">
+<body class="spellbook book-shell-app play-workspace-realign play-fullscreen" data-play-entry-boundary="pending" data-play-return-boundary="idle" data-play-mode-family="table" data-play-transition-stage="table" data-play-entry-phase="pending" data-play-return-phase="TABLE_MODE">
     <div class="play-entry-curtain" aria-hidden="true">
     </div>
     <div class="play-return-curtain" aria-hidden="true">
@@ -2227,11 +2422,11 @@
                         </div>
                     </div>
                     <div class="book-dashboard-meta">
-                        <span class="book-dashboard-chip">Modus: <strong id="modeBadge">-</strong></span>
-                        <span class="book-dashboard-chip">Rolle: <strong id="roleBadge">-</strong></span>
-                        <span class="book-dashboard-chip">Zugriff: <strong id="readOnlyBadge">-</strong></span>
-                        <span class="book-dashboard-chip">Status: <strong id="sessionStatusPill">-</strong></span>
-                        <span class="book-dashboard-chip">Am Tisch: <strong id="presenceRoster">–</strong></span>
+                        <span class="book-dashboard-chip" id="modeChip"><span class="chip-label">Modus: </span><strong id="modeBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="roleChip"><span class="chip-label">Rolle: </span><strong id="roleBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="readOnlyChip"><span class="chip-label">Zugriff: </span><strong id="readOnlyBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="statusChip"><span class="chip-label">Status: </span><strong id="sessionStatusPill">-</strong></span>
+                        <span class="book-dashboard-chip" id="presenceChip" title="Am Tisch"><span class="chip-label">Am Tisch: </span><strong id="presenceRoster">–</strong></span>
                     </div>
                 </div>
 
@@ -2647,6 +2842,9 @@
         <div id="appMenu" class="app-menu" role="menu" aria-label="Sitzungsmenü" hidden>
             <div id="appMenuStatus" class="app-menu-status" role="none"></div>
             <button type="button" id="appMenuReturn" class="app-menu-item" role="menuitem">Zur Kampagne zurückkehren</button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/dashboard">Übersicht</button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/characters">Charaktere</button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/mapmaker">Karten</button>
             <!-- Tischplatz: only a DM or CO-DM gets this (mounted from the
                  bootstrap's can_switch_seat); it moves them between the DM
                  seat and a player seat at this table. -->
