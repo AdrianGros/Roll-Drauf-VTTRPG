@@ -1,0 +1,21 @@
+{
+  "baseImage": "sha256:e6477ac8ef803c4681e7db724be9a207043d81a2cac0675f1c092125587a5269",
+  "baseTag": "roll-drauf-vtt-app:entry-beyond20-20261108",
+  "sourceCommit": "a3db81ed04c1fecc8294a4bedf1a833aeecbd689",
+  "imageTag": "roll-drauf-vtt-app:mapmaker-assets-20261108-a3db81ed",
+  "rollbackTag": "roll-drauf-vtt-app:before-mapmaker-assets-20261108",
+  "overrideBackup": "/srv/migration/2026-10-07/setup/mapmaker-assets-20261108/production.duck-species.override.before.yml",
+  "composeProject": "migration-production",
+  "composeFiles": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "builtImageId": "sha256:85338a2498ce88cd1575cab86d19c53a2cffbd438d43e2fe27ea0190511bd127",
+  "runningImageId": "sha256:85338a2498ce88cd1575cab86d19c53a2cffbd438d43e2fe27ea0190511bd127",
+  "runningContainerId": "3e812f01ef4200d8889871b32a2afde3bba0ae21b245af6cc859e923f4f8d171",
+  "deployedAt": "2026-11-08T10:34:28+0100",
+  "baseLayersPreserved": true,
+  "baseLayerCount": 31,
+  "releaseLayerCount": 32,
+  "baseImageConfigPreserved": true
+}

@@ -1,0 +1,206 @@
+{
+  "verifiedAt": "2026-11-08T10:36:14+0100",
+  "sessions": "Short-lived server-signed sessions for existing DM/player accounts; no account changes; no Discord login flow simulated.",
+  "journeys": [
+    {
+      "role": "dm",
+      "viewport": 1440,
+      "entry": "dashboard > VTT-Hauptnavigation > Karten",
+      "readyMs": 5539,
+      "eagerKmaImages": 41,
+      "assetPlaced": "kma:blaeu_1fa41fae7c6b7c63",
+      "materialPaintAndUndo": true,
+      "projectSaveAndReimport": true,
+      "pngExport": true,
+      "creditsReachableAndScrollable": true,
+      "cspViolations": [],
+      "pageErrors": []
+    },
+    {
+      "role": "player",
+      "viewport": 390,
+      "entry": "dashboard > VTT-Hauptnavigation > Karten",
+      "readyMs": 5192,
+      "eagerKmaImages": 0,
+      "assetPlaced": "kma:blaeu_1fa41fae7c6b7c63",
+      "materialPaintAndUndo": true,
+      "projectSaveAndReimport": true,
+      "pngExport": true,
+      "creditsReachableAndScrollable": true,
+      "cspViolations": [],
+      "pageErrors": []
+    }
+  ],
+  "httpsHashChecks": [
+    {
+      "path": "index.html",
+      "sha256": "1189b44966e3a4bc6640543c44c5f250364824b9e01cb2436a5fdaacc0fe4eda",
+      "status": 200
+    },
+    {
+      "path": "js/app.js",
+      "sha256": "3fd15c6353d52eaf96b13408cc7ab76b88015af450d47d215a44944c6006d2a6",
+      "status": 200
+    },
+    {
+      "path": "js/stamps.js",
+      "sha256": "32ec94bd47684b41c3d60b16417f8d4f4e496f4ae9a9bdd4440ce91f6191e306",
+      "status": 200
+    },
+    {
+      "path": "credits.html",
+      "sha256": "d42913b49b8deb450637fd92965d20831a569d3490ba8f4d21d61f45c178f567",
+      "status": 200
+    },
+    {
+      "path": "assets/packs.json",
+      "sha256": "aba7d7c9d103a109ca42a2cec61ea51eded84f71f5e99e348e27d976cb07a52f",
+      "status": 200
+    },
+    {
+      "path": "assets/inventory.csv",
+      "sha256": "bbc06568b3172c3b733bc61c05a5e81e305d17cdbb7bfbbb93491bd74e02f7ca",
+      "status": 200
+    },
+    {
+      "path": "assets/kenney-cartography/manifest.json",
+      "sha256": "75c54b1643942f0c636c2d6a48a3245a49deef9ee5d51de177d9e9eb97d684dc",
+      "status": 200
+    },
+    {
+      "path": "assets/kenney-cartography/mountains.png",
+      "sha256": "726e87cbae9996a2c01df61d6c391f8f40872e143ce2da50efa83d8ffbe96a13",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-muller/manifest.json",
+      "sha256": "8bc3f36e6a7a3c8ab2a24d273af251371abdcae2fa86ea11d5e906ff41b3197a",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-muller/muller_1c3737cade9b002f.png",
+      "sha256": "11267e53fe2335cd0d9d0668f6d7de4917d4b92416fb237998a23b6c07c2d5a7",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-myer/manifest.json",
+      "sha256": "3ea52e879ce1a480b0b4564101fa6b2f04cfaa4190e8d5277e14e9d1b9b497da",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-myer/myer_fb3803237f327aba.png",
+      "sha256": "4b76aa0c31839c6a011af3f1c344718673d4b54d9426b35f47accc94a4cfc61b",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-kensett/manifest.json",
+      "sha256": "f8656d3f984a8ea814d53979a142700edcfe977eecb47e9ce121c681e2403f9b",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-kensett/kensett_3fd3f04b5d485728.png",
+      "sha256": "626aa74b12ed18349a521a857002b795459353fcd486ff79b5e825da414e6f46",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-zuodong/manifest.json",
+      "sha256": "93ba0f938e58a12def1d74d34b10e9bf6426c14166cbcaa627c4e22f7a9b8afb",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-zuodong/zuodong_48e3458f2db04116.png",
+      "sha256": "dcf39f55fd5edf4b8a46bdafffa0ca0daa9f164a51109542f83b342f05f64e34",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-ishikawa/manifest.json",
+      "sha256": "89e3aabcbd0924d5da711df91750066a1f580bb09efe52f335340c8dbcf87288",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-ishikawa/ishikawa_375a85f0ba7db7d7.png",
+      "sha256": "3735f1322c7f5c4fb57a5fa001da340b7c7227d07265dea43fe4d59163c4a4c0",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-hyacinth/manifest.json",
+      "sha256": "ad6399b3256ccfdaf9d5e6f7c52229c43cc4716aaabc43cd87f8b630c891aaea",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-hyacinth/hyacinth_13805557799a2623.png",
+      "sha256": "f984bb52504f0273379bbe5ddc4a7aa5c56fff881e7fc9a7eafe477dc79068f5",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-homann/manifest.json",
+      "sha256": "8de040764a38e6d78d85f688f5e43c7c7584e02fafa81c1d3f33a63eec4e9492",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-homann/homann_21ebfe3a257844c0.png",
+      "sha256": "750b6442e61da5ee0e65c4f113aba417345d9db795fba5db9cca40da4f80ad2a",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-vischer/manifest.json",
+      "sha256": "2e7f7be7532803569ccc67714ee1c96af64244d161766b70ebb35ae29ba38552",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-vischer/vischer_118c6d1531df5ad4.png",
+      "sha256": "98c192e020be5c57235ba32e5a52c230dcfce09a233733735b177a2f95e842dd",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-van-der-aa/manifest.json",
+      "sha256": "6d292ebcea006afb9fd8909923077a258ae6907d6921e572c17d6a9599382bdb",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-van-der-aa/van_der_aa_9d59f6e5b1f17591.png",
+      "sha256": "8864f653b1c13c293a550aafefb93bbb07c48f830bc7752201ce353576535941",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-gomboust/manifest.json",
+      "sha256": "71a5b8847bd16a4e03a35e1c1814495e2276f3728c9e7f20f926acdc3afaf07f",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-gomboust/gomboust_ce0a39070de26f89.png",
+      "sha256": "a4725d938b17f87d02b14c7739ce15f3ee6ceeabdb31cb9f94930933df1fc3b3",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-blaeu/manifest.json",
+      "sha256": "a0e70d4aacf73208be8be439ce12513b85e63ff2cfc202c04105ab86f5ae9969",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-blaeu/blaeu_95eaffb4218ee1b3.png",
+      "sha256": "c045622db4b0adbd7415b1e29ecdfc8ccb02bc77aa6a0a258411d2ef7c8b191a",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-walser/manifest.json",
+      "sha256": "f8d2b435387d2d6d6831687ce38fdcabafc6edad1380d5334e4eb4630e59aa11",
+      "status": 200
+    },
+    {
+      "path": "assets/kma-walser/walser_e327e674999c0a2f.png",
+      "sha256": "5bdc3568dcc08ff9c01daadb9648680a0ef42e5249a1a883068d15b0d5a1d151",
+      "status": 200
+    },
+    {
+      "path": "assets/polyhaven-terrain/manifest.json",
+      "sha256": "453e10222c90ebecc86db6ca76982d8ffaeb92103cc5d0f41fc09495bd81261a",
+      "status": 200
+    },
+    {
+      "path": "assets/polyhaven-terrain/ph_aerial_grass_rock.png",
+      "sha256": "87b54fdcbd17389ae7d9a8352de4472012a2eb244e99bfda7748a27b5bc3085c",
+      "status": 200
+    }
+  ]
+}
