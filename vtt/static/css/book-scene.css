@@ -2355,6 +2355,18 @@ body.has-reduced-motion .book-dashboard-topbar {
     margin-top: auto;
 }
 
+/* Tischplatz: DM seat and player seat side by side for the Spielleitung. */
+.play-launch-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.play-launch-card-actions .btn {
+    margin-top: 0;
+}
+
 .play-launch-empty {
     text-align: center;
     padding: 40px 20px;

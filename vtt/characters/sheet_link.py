@@ -107,6 +107,13 @@ def can_roll_for(user, char):
     return _is_dm(char.campaign_id, user.id)
 
 
+def _rolls_for_other_at(user, char, game_session):
+    """A roll for someone else's character at this table needs the DM seat there."""
+    from vtt.socket_handlers import _is_table_dm
+
+    return char.user_id != user.id and not _is_table_dm(char.campaign_id, user.id, game_session.id)
+
+
 def session_view(game_session):
     return {"id": game_session.id, "name": game_session.name} if game_session else None
 
@@ -123,7 +130,8 @@ def rollable_sessions(user, char):
         .order_by(GameSession.id.desc())
         .all()
     )
-    return [s for s in running if not _reject_read_only(campaign, s, user)]
+    return [s for s in running
+            if not _reject_read_only(campaign, s, user) and not _rolls_for_other_at(user, char, s)]
 
 
 def roll_destination(user, char, session_id=None):
@@ -154,6 +162,9 @@ def roll_destination(user, char, session_id=None):
                               sessionStatus=game_session.status)
     if _reject_read_only(campaign, game_session, user):
         raise RollTargetError("session_forbidden", "An diesem Tisch kannst du nur zusehen.", 403)
+    if _rolls_for_other_at(user, char, game_session):
+        raise RollTargetError("session_forbidden",
+                              "Du sitzt an diesem Tisch als Spieler und würfelst nur für deine eigenen Charaktere.", 403)
     return {"session": game_session, "sessions": [game_session], "reason": None}
 
 
@@ -162,12 +173,12 @@ def log_roll(user, char, game_session, spec, result, visibility):
 
     Returns the message id, or None when the roll stays on the sheet (no session).
     """
-    from vtt.socket_handlers import _emit_scoped_roll, _is_dm
+    from vtt.socket_handlers import _emit_scoped_roll, _is_table_dm
 
     if game_session is None:
         return None
     campaign = db.session.get(Campaign, game_session.campaign_id)
-    if visibility in ("blind", "self") and not _is_dm(campaign.id, user.id):
+    if visibility in ("blind", "self") and not _is_table_dm(campaign.id, user.id, game_session.id):
         visibility = "public"
     if visibility not in ("public", "gm_only", "blind", "self"):
         visibility = "public"

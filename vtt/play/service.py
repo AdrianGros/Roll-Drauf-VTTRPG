@@ -20,9 +20,11 @@ from vtt.models import (
     SceneWall,
     SessionSnapshot,
     SessionState,
+    TableSeat,
     TokenState,
     User,
 )
+from vtt.models.table_seat import PLAYER_SEAT
 from vtt.play.vision import calculate_visible_cells
 from vtt.utils.time import utcnow
 
@@ -119,6 +121,62 @@ def get_session_role(campaign: Campaign, user_id: int) -> str | None:
 
 def is_operator_role(role: str | None) -> bool:
     return role in {"DM", "CO_DM"}
+
+
+def sits_as_player(user_id: int, session_id: int | None) -> bool:
+    """Whether this user took a player seat at the session's table."""
+    if not session_id:
+        return False
+    return TableSeat.query.filter_by(
+        game_session_id=session_id, user_id=user_id, seat=PLAYER_SEAT,
+    ).first() is not None
+
+
+def get_table_role(campaign: Campaign, user_id: int, session_id: int | None) -> str | None:
+    """Role at one session's table.
+
+    The campaign role, except that a DM or CO-DM who sits there as a player
+    acts as PLAYER. The seat is re-read on every call, so a revoked campaign
+    role takes effect at once and a seat row can only ever lower rights.
+    """
+    role = get_session_role(campaign, user_id)
+    if is_operator_role(role) and sits_as_player(user_id, session_id):
+        return "PLAYER"
+    return role
+
+
+def table_seat_view(campaign: Campaign, user_id: int, session_id: int) -> dict:
+    """Seat facts for the table UI: which seat is taken and whether switching is allowed."""
+    campaign_role = get_session_role(campaign, user_id)
+    can_switch = is_operator_role(campaign_role)
+    seat = "player" if not can_switch or sits_as_player(user_id, session_id) else "dm"
+    return {"seat": seat, "can_switch_seat": can_switch}
+
+
+def set_table_seat(campaign: Campaign, user_id: int, game_session: GameSession, seat: str):
+    """Take the DM or the player seat at this session's table.
+
+    Only DMs and CO-DMs can choose; for everyone else "player" is the only
+    seat and asking for "dm" is refused. Returns (table_role, error).
+    """
+    if seat not in {"dm", "player"}:
+        return None, (jsonify({"error": "seat must be 'dm' or 'player'"}), 400)
+    campaign_role = get_session_role(campaign, user_id)
+    if not is_operator_role(campaign_role):
+        if seat == "dm":
+            return None, (jsonify({"error": "forbidden"}), 403)
+        return campaign_role, None
+    row = TableSeat.query.filter_by(game_session_id=game_session.id, user_id=user_id).first()
+    if seat == "player" and row is None:
+        db.session.add(TableSeat(game_session_id=game_session.id, user_id=user_id, seat=PLAYER_SEAT))
+    elif seat == "dm" and row is not None:
+        db.session.delete(row)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        # A parallel request stored the same player seat first.
+        db.session.rollback()
+    return get_table_role(campaign, user_id, game_session.id), None
 
 
 def is_read_only_mode(session_status, role: str | None) -> bool:

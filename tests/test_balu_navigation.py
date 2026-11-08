@@ -114,7 +114,7 @@ def test_back_after_actual_session_entry_unfreezes_book(balu_browser):
     page, origin, data = balu_browser
     page.goto(origin + '/campaigns')
     page.locator(f'[data-dashboard-detail="campaign:{data["campaign_id"]}"]').first.click()
-    page.locator('[data-hub-action="open-session"]').click()
+    page.locator('[data-hub-action="open-session-dm"]').click()
     expect(page).to_have_url(f"{origin}/play?campaign_id={data['campaign_id']}&session_id={data['session_id']}")
     expect(page.locator('#btnBack')).to_be_visible()
     page.go_back()
@@ -134,7 +134,7 @@ def test_cached_exit_state_is_rebuilt_on_pageshow(balu_browser):
     page.goto(origin + '/campaigns')
     page.locator(f'[data-dashboard-detail="campaign:{data["campaign_id"]}"]').first.click()
     with page.expect_request('**/play?**'):
-        page.locator('[data-hub-action="open-session"]').click()
+        page.locator('[data-hub-action="open-session-dm"]').click()
     assert page.evaluate('BookScene.transitionInFlight') is True
     with page.expect_navigation(wait_until='domcontentloaded'):
         page.evaluate("window.dispatchEvent(new PageTransitionEvent('pageshow', {persisted:true}))")

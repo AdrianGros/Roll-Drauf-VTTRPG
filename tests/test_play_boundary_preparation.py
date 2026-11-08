@@ -35,7 +35,7 @@ def test_bookscene_serves_play_boundary_handoff_helper(client):
     js = response.get_data(as_text=True)
 
     assert "const PLAY_ENTRY_STORAGE_KEY = 'vtt.play.entry-boundary';" in js
-    assert "function buildPlayHref(campaignId, sessionId) {" in js
+    assert "function buildPlayHref(campaignId, sessionId, seat = null) {" in js
     assert "enterPlay(config = {}) {" in js
     assert "transition_mode: 'BOOK_TO_TABLE_TRANSITION'" in js
     assert "target_mode: 'TABLE_MODE'" in js

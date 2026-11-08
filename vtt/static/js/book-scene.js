@@ -182,11 +182,15 @@
     const PLAY_EXIT_DURATION_MS = 560;
     const PLAY_ARRIVAL_DURATION_MS = 720;
 
-    function buildPlayHref(campaignId, sessionId) {
+    function buildPlayHref(campaignId, sessionId, seat = null) {
         const params = new URLSearchParams({
             campaign_id: String(campaignId),
             session_id: String(sessionId),
         });
+        // Tischplatz: the table asks the server for this seat on arrival.
+        if (seat === 'dm' || seat === 'player') {
+            params.set('seat', seat);
+        }
         return `/play?${params.toString()}`;
     }
 
@@ -1172,7 +1176,13 @@
                     <div class="book-scene-ledger-meta">Aktive Karte: ${escapeHtml(activeMap ? activeMap.name : 'Keine')} · Zugewiesene Helden: ${assignedCount}</div>
                 `;
 
-                if (phase.tone === 'live' || phase.tone === 'paused') {
+                if ((phase.tone === 'live' || phase.tone === 'paused') && canManage) {
+                    // Tischplatz: the Spielleitung picks a seat; "Als Spieler"
+                    // gives exactly a player's view and rights at this table.
+                    const label = phase.tone === 'live' ? 'Als Spielleitung an den Tisch' : 'Als Spielleitung fortsetzen';
+                    sessionActions = buildHubActionButton(label, 'open-session-dm', { primary: true, sessionId: Number(focusedSession.id) })
+                        + buildHubActionButton('Als Spieler an den Tisch', 'open-session-player', { primary: false, sessionId: Number(focusedSession.id) });
+                } else if (phase.tone === 'live' || phase.tone === 'paused') {
                     const label = phase.tone === 'live' ? 'Zu Play' : 'Fortsetzen';
                     sessionActions = buildHubActionButton(label, 'open-session', { primary: true, sessionId: Number(focusedSession.id) });
                 } else if ((phase.tone === 'scheduled' || phase.tone === 'ready') && canManage) {
@@ -1282,7 +1292,7 @@
             this.setCampaignHubStatus('Session wird gestartet …');
             try {
                 await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
-                this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns' });
+                this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat: 'dm' });
             } catch (error) {
                 this.setCampaignHubStatus(error.message || 'Session konnte nicht gestartet werden.', true);
             }
@@ -1295,7 +1305,7 @@
                     name: 'Session ' + new Date().toLocaleDateString('de-DE'),
                 });
                 await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
-                this.enterPlay({ campaignId, sessionId: session.id, sourceRoute: 'campaigns' });
+                this.enterPlay({ campaignId, sessionId: session.id, sourceRoute: 'campaigns', seat: 'dm' });
             } catch (error) {
                 this.setCampaignHubStatus(error.message || 'Session konnte nicht erstellt werden.', true);
             }
@@ -1435,6 +1445,14 @@
                 node.addEventListener('click', () => {
                     const sessionId = Number(node.getAttribute('data-hub-session-id'));
                     this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns' });
+                });
+            });
+            [['open-session-dm', 'dm'], ['open-session-player', 'player']].forEach(([hubAction, seat]) => {
+                this.sceneSurface.querySelectorAll(`[data-hub-action="${hubAction}"]`).forEach((node) => {
+                    node.addEventListener('click', () => {
+                        const sessionId = Number(node.getAttribute('data-hub-session-id'));
+                        this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat });
+                    });
                 });
             });
             this.sceneSurface.querySelectorAll('[data-hub-action="start-session"]').forEach((node) => {
@@ -2020,7 +2038,13 @@
                     statusDot = `<span class="play-launch-status-dot is-${escapeHtml(phase.tone)}">${escapeHtml(phase.label)}</span>`;
                     sessionLine = `<div class="play-launch-card-session">${escapeHtml(topSession.name)}</div>`;
 
-                    if (phase.tone === 'live' || phase.tone === 'paused') {
+                    if ((phase.tone === 'live' || phase.tone === 'paused') && canManage) {
+                        // Tischplatz: the Spielleitung chooses its seat.
+                        action = `<div class="play-launch-card-actions">`
+                            + `<button class="btn btn-primary btn-sm" type="button" data-play-launch-open="${campaign.id}:${topSession.id}" data-play-launch-seat="dm">${escapeHtml(this.content('play_launch.action_seat_dm', 'Als Spielleitung'))}</button>`
+                            + `<button class="btn btn-secondary btn-sm" type="button" data-play-launch-open="${campaign.id}:${topSession.id}" data-play-launch-seat="player">${escapeHtml(this.content('play_launch.action_seat_player', 'Als Spieler'))}</button>`
+                            + `</div>`;
+                    } else if (phase.tone === 'live' || phase.tone === 'paused') {
                         const label = phase.tone === 'live'
                             ? this.content('play_launch.action_to_play', 'Zu Play')
                             : this.content('play_launch.action_resume', 'Fortsetzen');
@@ -2064,7 +2088,7 @@
             content.querySelectorAll('[data-play-launch-open]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const [campaignId, sessionId] = node.getAttribute('data-play-launch-open').split(':').map(Number);
-                    this.openPlayFromLaunch(campaignId, sessionId);
+                    this.openPlayFromLaunch(campaignId, sessionId, node.getAttribute('data-play-launch-seat'));
                 });
             });
             content.querySelectorAll('[data-play-launch-start]').forEach((node) => {
@@ -2087,16 +2111,16 @@
             });
         },
 
-        openPlayFromLaunch(campaignId, sessionId) {
+        openPlayFromLaunch(campaignId, sessionId, seat = null) {
             this.closePlayLaunch();
-            this.enterPlay({ campaignId, sessionId, sourceRoute: this.currentView || this.currentPage || 'dashboard' });
+            this.enterPlay({ campaignId, sessionId, sourceRoute: this.currentView || this.currentPage || 'dashboard', seat });
         },
 
         async quickStartSessionAndPlay(campaignId, sessionId) {
             this.setPlayLaunchStatus('Session wird gestartet...');
             try {
                 await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
-                this.openPlayFromLaunch(campaignId, sessionId);
+                this.openPlayFromLaunch(campaignId, sessionId, 'dm');
             } catch (error) {
                 this.setPlayLaunchStatus(error.message || 'Session konnte nicht gestartet werden.', true);
             }
@@ -2110,7 +2134,7 @@
                 });
                 this.setPlayLaunchStatus('Schritt 2/2: Session wird gestartet...');
                 await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
-                this.openPlayFromLaunch(campaignId, session.id);
+                this.openPlayFromLaunch(campaignId, session.id, 'dm');
             } catch (error) {
                 this.setPlayLaunchStatus(error.message || 'Session konnte nicht erstellt werden.', true);
             }
@@ -2524,6 +2548,7 @@
                 campaignId,
                 sessionId,
                 sourceRoute = this.currentView || this.currentPage || 'campaigns',
+                seat = null,
             } = config;
 
             const resolvedCampaignId = Number(campaignId);
@@ -2535,7 +2560,7 @@
                 throw new Error('sessionId is required for play handoff');
             }
 
-            const targetHref = buildPlayHref(resolvedCampaignId, resolvedSessionId);
+            const targetHref = buildPlayHref(resolvedCampaignId, resolvedSessionId, seat);
             const handoff = {
                 kind: 'book-to-table',
                 from_mode: 'BOOK_MODE',

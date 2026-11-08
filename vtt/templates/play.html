@@ -405,6 +405,13 @@
             font-size: 0.6rem;
             color: var(--muted);
         }
+        .hotbar-slot.targeting {
+            border-color: #e8b23f;
+            box-shadow: 0 0 0 2px rgba(232, 178, 63, 0.45);
+        }
+        body.is-picking-target .token-marker {
+            cursor: crosshair;
+        }
         .hotbar-slot.firing {
             background: rgba(255, 210, 63, 0.35);
             border-color: #ffd23f;
@@ -462,6 +469,12 @@
             align-items: center;
             gap: 0.32rem;
             padding: 0 0.55rem;
+        }
+        /* display:inline-flex above beat the UA [hidden] rule, so hidden
+           tools (Raster outside the measure tool, DM tools in a read-only
+           session) still showed. */
+        .tabletop-shell > .left-toolbar .tool-btn[hidden] {
+            display: none;
         }
         .tabletop-shell > .left-toolbar .tool-btn .tool-label {
             display: inline;
@@ -2270,6 +2283,7 @@
                  clicks with sensible defaults (documented Apply decision:
                  no freehand draw-tool UI this slice), refined here after
                  the fact. -->
+            <template data-dm-layer="vision-edit">
             <div id="wallEditPopover" class="vision-geom-popover" role="dialog" aria-label="Wand bearbeiten" hidden>
                 <div class="button-row" style="margin-bottom:0.4rem;">
                     <strong>Wand</strong>
@@ -2322,6 +2336,7 @@
                     <button type="button" id="btnLightDelete" class="mini-btn danger">Licht löschen</button>
                 </div>
             </div>
+            </template>
 
             <!-- S11.1 fix: this is the only .floating panel whose content
                  wasn't wrapped in .widget-body -- when .floating moved
@@ -2352,10 +2367,12 @@
                         <option value="2">2x2 Felder</option>
                         <option value="3">3x3 Felder</option>
                     </select>
+                    <template data-dm-layer="token-visibility">
                     <select id="tokenCreateVisibility">
                         <option value="public">Sichtbar für alle</option>
                         <option value="dm_only">Nur DM</option>
                     </select>
+                    </template>
                     <input id="tokenCreateImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                     <button id="btnTokenCreateImage" class="secondary" type="button"><span id="tokenCreateImageLabel">Bild (optional)...</span></button>
                     <div class="button-row" style="margin-bottom:0;">
@@ -2374,10 +2391,13 @@
                          serverseitig kopiert) — in beiden Fällen entsteht
                          eine neue Seite; die alte Sackgasse „alle Karten
                          sind bereits Seiten" existiert nicht mehr. -->
+                    <template data-dm-layer="map-upload">
                     <input id="mapUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                     <div id="mapUploadStatus" class="muted" style="font-size:0.74rem;margin-top:0.3rem;" hidden></div>
+                    </template>
                     <input id="layerSearchInput" class="layer-search-input" type="text" placeholder="Seiten durchsuchen..." aria-label="Seiten durchsuchen" autocomplete="off">
                     <div id="layerList" role="listbox" aria-label="Seiten (Kartenebenen)"></div>
+                    <template data-dm-layer="layer-add">
                     <div id="layerAddRow" class="layer-add-row">
                         <input id="layerAddName" type="text" maxlength="120" placeholder="Name der neuen Seite..." style="flex:1;min-width:0;padding:0.25rem 0.4rem;">
                         <button id="layerAddBtn" class="mini-btn" type="button" title="Neue Seite anlegen: Karte hochladen oder vorhandene übernehmen">Hinzufügen</button>
@@ -2397,6 +2417,7 @@
                         </div>
                         <button id="layerAddCancel" class="mini-btn secondary" type="button">Abbrechen</button>
                     </div>
+                    </template>
                     <div id="layerAddStatus" class="layer-empty-state" role="status" aria-live="polite" hidden></div>
                 </div>
             </div>
@@ -2411,6 +2432,7 @@
                          screen-reader accessibility failure, not a nice-to-
                          have. -->
                     <div id="turnOrderAnnounce" class="sr-only" role="status" aria-live="polite"></div>
+                    <template data-dm-layer="combat-controls">
                     <div class="button-row" id="initiativeControls" style="margin:0.45rem 0 0;" hidden>
                         <!-- Playtable-Vordermann 2026-08-25: der Kampf läuft
                              über das getestete Server-Backend (Encounter,
@@ -2421,6 +2443,7 @@
                         <button type="button" id="btnEndCombat" class="mini-btn secondary" hidden>Kampf beenden</button>
                         <button type="button" id="btnRollInitiative" class="mini-btn secondary">Initiative auswürfeln</button>
                     </div>
+                    </template>
                     <!-- S10: DM-only, session-wide (not per-token). Fog of
                          War only actually computes/persists per player
                          while fog_enabled is on (CampaignMap.fog_enabled,
@@ -2435,6 +2458,7 @@
                          here. A labeled sub-heading means even a user who
                          only scrolls partway sees "Sicht & Nebel", not two
                          mystery buttons floating after "Kampf beenden". -->
+                    <template data-dm-layer="fog-controls">
                     <div id="visionControls" style="margin:0.45rem 0 0;" hidden>
                         <div class="widget-subheading">Sicht &amp; Nebel</div>
                         <div class="button-row">
@@ -2442,6 +2466,7 @@
                             <button type="button" id="btnFogReset" class="mini-btn danger">Nebel zurücksetzen</button>
                         </div>
                     </div>
+                    </template>
                 </div>
             </div>
 
@@ -2449,11 +2474,13 @@
                 <h3 class="widget-toggle" data-widget="tokenWidget" role="button" tabindex="0" aria-controls="tokenWidgetBody" aria-expanded="false">Tokens <span class="widget-caret">▾</span></h3>
                 <div id="tokenWidgetBody" class="widget-body">
                     <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewählt.</div>
+                    <template data-dm-layer="token-upload">
                     <div id="tokenUploadRow" class="button-row" hidden style="margin-bottom:0.45rem;">
                         <input id="tokenUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                         <button type="button" id="btnTokenUpload" class="mini-btn secondary" title="Tokenbild aus einer Datei hinzufügen">Token-Datei hinzufügen</button>
                         <span id="tokenUploadStatus" class="muted" aria-live="polite"></span>
                     </div>
+                    </template>
                     <div class="button-row" id="sheetButtonRow" hidden style="margin-bottom:0.45rem;">
                         <button type="button" id="btnOpenSheet" class="mini-btn">Bogen öffnen</button>
                         <a id="btnOpenSheetTab" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch">Im neuen Tab ↗</a>
@@ -2490,9 +2517,11 @@
                              (canEditSelected); gated to operator only in
                              JS, since a player shouldn't be able to flag
                              their own character token as loot. -->
+                        <template data-dm-layer="loot-source">
                         <div class="button-row" id="tokenLootSourceRow" hidden style="margin-top:0.35rem; margin-bottom:0;">
                             <button type="button" id="btnTokenLootSourceToggle" class="mini-btn secondary">Beute-Quelle: aus</button>
                         </div>
+                        </template>
                     </div>
                     <!-- S09: reachable regardless of owner-or-DM edit
                          permission -- a corpse/chest is inherently
@@ -2506,6 +2535,7 @@
                          alone -- unlike sight_range above this is not an
                          owner-editable field, and unlike the loot row it
                          is not reachable by players at all. -->
+                    <template data-dm-layer="visible-tokens">
                     <div class="button-row" id="tokenVisibleRow" hidden style="margin-bottom:0.45rem;">
                         <button type="button" id="btnTokenVisible" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="visibleTokensPopover">Sichtbare Tokens</button>
                     </div>
@@ -2516,17 +2546,20 @@
                         </div>
                         <div id="visibleTokensList" class="conditions-list" style="grid-template-columns:1fr;"></div>
                     </div>
+                    </template>
                     <div id="lootPopover" class="conditions-popover" role="dialog" aria-label="Beute übertragen" hidden>
                         <div class="conditions-popover-head">
                             <strong>Beute</strong>
                             <button type="button" id="btnLootClose" class="mini-btn secondary" aria-label="Schließen">✕</button>
                         </div>
                         <div id="lootItemList" class="conditions-list" style="grid-template-columns:1fr;"></div>
+                        <template data-dm-layer="loot-add">
                         <div id="lootAddRow" class="button-row" hidden style="padding:0 0.5rem;">
                             <input id="lootAddName" type="text" placeholder="Gegenstand..." style="flex:1;min-width:0;">
                             <input id="lootAddQuantity" type="number" min="1" value="1" style="width:60px;">
                             <button type="button" id="btnLootAddItem" class="mini-btn secondary">+</button>
                         </div>
+                        </template>
                         <div class="button-row" style="padding:0.3rem 0.5rem;">
                             <label for="lootRecipient" class="sr-only">Empfänger</label>
                             <select id="lootRecipient" style="flex:1;min-width:0;"></select>
@@ -2593,9 +2626,11 @@
                  underlying geometry endpoints were leaking full wall/
                  light layout to Players. Both are DM/CO-DM-only now,
                  client and server. -->
+            <template data-dm-layer="map-tools">
             <button type="button" id="toolWall" class="tool-btn" data-tool="wall" title="Wand setzen: zwei Punkte anklicken" hidden><span class="tool-ico" aria-hidden="true">🧱</span><span class="tool-label">Wand</span></button>
             <button type="button" id="toolLight" class="tool-btn" data-tool="light" title="Lichtquelle platzieren: auf die Karte klicken" hidden><span class="tool-ico" aria-hidden="true">💡</span><span class="tool-label">Licht</span></button>
             <button type="button" id="btnVisionToggle" class="tool-btn active" title="Wand-/Licht-Markierungen ein-/ausblenden" aria-pressed="true"><span class="tool-ico" aria-hidden="true">👁</span><span class="tool-label">Sicht</span></button>
+            </template>
             <div class="spacer">
                 <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
                 <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
@@ -2612,6 +2647,12 @@
         <div id="appMenu" class="app-menu" role="menu" aria-label="Sitzungsmenü" hidden>
             <div id="appMenuStatus" class="app-menu-status" role="none"></div>
             <button type="button" id="appMenuReturn" class="app-menu-item" role="menuitem">Zur Kampagne zurückkehren</button>
+            <!-- Tischplatz: only a DM or CO-DM gets this (mounted from the
+                 bootstrap's can_switch_seat); it moves them between the DM
+                 seat and a player seat at this table. -->
+            <template data-seat-switch>
+            <button type="button" id="appMenuSeat" class="app-menu-item" role="menuitem"></button>
+            </template>
             <a id="appMenuCreationEngine" class="app-menu-item" role="menuitem" data-creation-engine-nav data-book-return-target="/api/ce/authoring" aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
             <a class="app-menu-item" role="menuitem" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
             <button type="button" id="appMenuHelp" class="app-menu-item" role="menuitem">Hilfe &amp; Tastenkürzel</button>
@@ -2776,6 +2817,7 @@
                     <div id="readOnlyNotice" class="message"></div>
                     <div id="firstStepsNotice" class="message"></div>
 
+                    <template data-dm-layer="session-controls">
                     <div class="panel">
                         <h2>Vorbereitung</h2>
                         <div class="subpanel">
@@ -2801,6 +2843,7 @@
                         <h2>Start-Check</h2>
                         <div id="readyCheckOutput" class="muted">Noch kein Start-Check ausgeführt.</div>
                     </div>
+                    </template>
                 </section>
             </div>
         </aside>
