@@ -415,13 +415,22 @@
                 : "–";
         }
 
+        // The sheet carries this table's session, so its rolls land here
+        // and nowhere else -- in the drawer and in a tab of its own.
+        _sheetUrl(characterId) {
+            const query = new URLSearchParams({ id: String(characterId), session_id: String(this.sessionId) });
+            return `/character-sheet?${query}`;
+        }
+
         _openSheet(characterId, characterName) {
             if (!characterId) return;
             const drawer = document.getElementById("sheetDrawer");
             const frame = document.getElementById("sheetFrame");
             const title = document.getElementById("sheetDrawerTitle");
             if (!drawer || !frame) return;
-            frame.src = `/character-sheet?id=${encodeURIComponent(characterId)}`;
+            frame.src = this._sheetUrl(characterId);
+            const tabLink = document.getElementById("sheetDrawerTabLink");
+            if (tabLink) tabLink.href = this._sheetUrl(characterId);
             if (title) {
                 title.textContent = characterName
                     ? `Charakterbogen · ${characterName}` : "Charakterbogen";
@@ -3311,7 +3320,12 @@
             const player = payload.player || "player";
             const modeLabel = payload.result?.mode === "advantage" ? " (Vorteil)"
                 : payload.result?.mode === "disadvantage" ? " (Nachteil)" : "";
-            const summary = `${player} hat ${payload.dice} gewürfelt${modeLabel}: ${payload.result?.total}`;
+            // Sheet rolls name their action ("Arkane Kunde", "Angriff: Dolch");
+            // it is only ever rendered as text.
+            const label = String(payload.label || "").trim().slice(0, 160);
+            const summary = label
+                ? `${player} · ${label}${modeLabel} · ${payload.dice}: ${payload.result?.total}`
+                : `${player} hat ${payload.dice} gewürfelt${modeLabel}: ${payload.result?.total}`;
             const breakdown = this._formatDiceBreakdown(payload.result);
             const log = document.getElementById("diceLog");
             const line = document.createElement("div");
@@ -3335,7 +3349,7 @@
                 message: summary,
                 rollBreakdown: breakdown,
             });
-            this._logActivity(`${player} hat ${payload.dice} gewürfelt.`, "info");
+            this._logActivity(label ? `${player} · ${label}: ${payload.dice} gewürfelt.` : `${player} hat ${payload.dice} gewürfelt.`, "info");
         }
 
         _render() {
@@ -4077,6 +4091,8 @@
                 if (canOpenSheet) {
                     sheetRow.dataset.characterId = String(sheetToken.character_id);
                     sheetRow.dataset.characterName = sheetToken.name || "";
+                    const tabLink = document.getElementById("btnOpenSheetTab");
+                    if (tabLink) tabLink.href = this._sheetUrl(sheetToken.character_id);
                 }
             }
             const tokenToolBtn = document.querySelector('.tool-btn[data-tool="token"]');

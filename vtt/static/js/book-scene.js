@@ -1778,7 +1778,7 @@
                 });
             });
 
-            root.querySelectorAll('[data-character-action]').forEach((node) => {
+            this.sceneSurface.querySelectorAll('[data-character-action]').forEach((node) => {
                 node.addEventListener('click', () => this.runCharacterAction(node));
             });
 
