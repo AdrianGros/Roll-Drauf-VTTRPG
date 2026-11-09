@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "oglans-book-of-chaos-de",
+  "documentId": "subclasses.druid",
+  "slug": "unterklassen-druide",
+  "title": "Druide",
+  "navigationPath": [
+    "Unterklassen",
+    "Druide"
+  ],
+  "order": 20100,
+  "sourcePages": [
+    201
+  ],
+  "contentStatus": "original",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "subclasses.druid.nachtzeichner",
+      "level": 2,
+      "text": "Zirkel der Nachtzeichner"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.einleitung",
+      "text": "Die Druiden dieses Zirkels lesen den Nachthimmel, doch die alten Bilder, die andere darin sehen, lassen sie links liegen. Sie verbinden die Himmelslichter selbst, Nacht für Nacht, zu Dingen aus Haus und Werkstatt: zu einer Zwille, einer Flicknadel, einem Senklot. Jede Beobachtung kerben sie in ein kleines Holz, das sie stets bei sich tragen. Rufen sie eines ihrer Bilder in sich wach, zeichnet es sich in leuchtenden Linien auf ihrer Haut nach, und jeden Morgen deuten sie, welche Laune der Himmel für den Tag mitgebracht hat."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.unterklasse",
+      "text": "Unterklasse des Druiden: Du kannst sie ab der 3. Druidenstufe wählen und erhältst ihre Merkmale auf den unten angegebenen Druidenstufen."
+    },
+    {
+      "type": "heading",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-himmelskerbholz",
+      "level": 3,
+      "text": "3. Stufe: Himmelskerbholz"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-himmelskerbholz-fokus",
+      "text": "Du besitzt ein winziges Kerbholz, kaum länger als ein Finger, in das du die Bahnen der Himmelslichter gekerbt hast. Du kannst es als Zauberfokus für deine Druidenzauber verwenden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-himmelskerbholz-zauber",
+      "text": "Solange du das Kerbholz hältst, kennst du den Zaubertrick Göttliche Führung und hast den Zauber Lenkendes Geschoss stets vorbereitet. Kennst du Göttliche Führung bereits, erlernst du stattdessen einen anderen Druidenzaubertrick deiner Wahl; auch ihn kennst du nur, solange du das Kerbholz hältst. Lenkendes Geschoss zählt nicht bei der Anzahl von Zaubern, die du vorbereiten kannst. Diese Zauber zählen für dich als Druidenzauber."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-himmelskerbholz-ohne-zauberplatz",
+      "text": "Über das Kerbholz kannst du Lenkendes Geschoss außerdem wirken, ohne einen Zauberplatz zu verbrauchen. Die Anzahl der Male, die du das tun kannst, entspricht deinem Übungsbonus. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-himmelskerbholz-ersatz",
+      "text": "Verlierst du das Kerbholz, kannst du während einer kurzen oder langen Rast in einer Zeremonie von einer Stunde ein neues schnitzen. Dabei zerfällt das alte, wo immer es sich befindet, zu feinem Holzmehl."
+    },
+    {
+      "type": "heading",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-leuchtbild",
+      "level": 3,
+      "text": "3. Stufe: Leuchtbild"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-leuchtbild-annehmen",
+      "text": "Als Bonusaktion kannst du eine Anwendung von Tiergestalt verbrauchen, um statt einer Tierform ein Leuchtbild anzunehmen: Die Linien eines deiner Himmelsbilder ziehen sich glühend über deinen Körper. Du behältst alle deine Spielwerte und kannst wie gewohnt Zauber wirken. Die temporären Trefferpunkte, die Tiergestalt gewährt, erhältst du dabei nicht, weil du keine Tierform annimmst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-leuchtbild-licht",
+      "text": "Solange das Leuchtbild anhält, spendest du in einem Radius von drei Metern helles Licht und in einem Radius von weiteren drei Metern dämmriges Licht."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-leuchtbild-dauer",
+      "text": "Das Leuchtbild hält zehn Minuten lang an. Es endet vorzeitig, wenn du kampfunfähig wirst oder stirbst, wenn du es beendest (keine Aktion erforderlich), wenn du dieses Merkmal erneut verwendest oder wenn du mit Tiergestalt eine Tierform annimmst."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-leuchtbild-himmelsbilder",
+      "text": "Wähle jedes Mal, wenn du das Leuchtbild annimmst, eines der folgenden Himmelsbilder aus. Es bestimmt, wie das Leuchtbild wirkt:"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "subclasses.druid.nachtzeichner.level3-leuchtbild-optionen",
+      "entries": [
+        {
+          "term": "Zwille",
+          "definition": "Die Linien formen eine gespannte Zwille aus Licht. Als Teil der Bonusaktion, mit der du das Leuchtbild annimmst, und als Bonusaktion in jedem deiner späteren Züge, solange es anhält, kannst du einen Fernkampf-Zauberangriff gegen eine Kreatur im Abstand von bis zu 18 Metern von dir ausführen. Bei einem Treffer erleidet das Ziel gleißenden Schaden in Höhe von 1W8 plus deinem Weisheitsmodifikator."
+        },
+        {
+          "term": "Flicknadel",
+          "definition": "Die Linien formen eine Nadel mit leuchtendem Faden. Wenn du mit einem Zauberplatz einen Zauber wirkst, der Trefferpunkte wiederherstellt, wählst du dich selbst oder eine andere Kreatur im Abstand von bis zu neun Metern von dir. Diese Kreatur erhält zusätzlich Trefferpunkte in Höhe von 1W8 plus deinem Weisheitsmodifikator zurück."
+        },
+        {
+          "term": "Senklot",
+          "definition": "Die Linien formen ein Lot an gerader Schnur. Bei Intelligenz- und Weisheitswürfen sowie bei Konstitutionsrettungswürfen, um deine Konzentration aufrechtzuerhalten, zählt ein W20-Ergebnis von 9 oder darunter als 10."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "subclasses.druid.nachtzeichner.level6-himmelslaune",
+      "level": 3,
+      "text": "6. Stufe: Himmelslaune"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level6-himmelslaune-deuten",
+      "text": "Nach jeder langen Rast deutest du die Laune des Himmels: Würfle einen W6. Bei einem geraden Ergebnis ist die Laune bis zu deiner nächsten langen Rast fördernd, bei einem ungeraden Ergebnis hemmend."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level6-himmelslaune-reaktion",
+      "text": "Wenn eine Kreatur im Abstand von bis zu neun Metern von dir, die du sehen kannst, eine W20-Prüfung ausführt, kannst du eine Reaktion ausführen, um mit 1W6 zu würfeln. Auch du selbst kannst diese Kreatur sein. Ist die Laune fördernd, addierst du das Ergebnis zum Gesamtergebnis der Kreatur; ist sie hemmend, ziehst du es davon ab. Ob du die Reaktion nutzt, entscheidest du, nachdem die Kreatur gewürfelt hat, aber bevor feststeht, ob ihr Wurf gelingt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level6-himmelslaune-anwendungen",
+      "text": "Die Anzahl der Male, die du diese Reaktion ausführen kannst, entspricht deinem Übungsbonus. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück."
+    },
+    {
+      "type": "heading",
+      "ruleId": "subclasses.druid.nachtzeichner.level10-nachgezogene-linien",
+      "level": 3,
+      "text": "10. Stufe: Nachgezogene Linien"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level10-nachgezogene-linien-einleitung",
+      "text": "Du ziehst die Linien deiner Himmelsbilder kräftiger nach. Dein Leuchtbild erhält diese Verbesserungen:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "subclasses.druid.nachtzeichner.level10-nachgezogene-linien-verbesserungen",
+      "items": [
+        "Zwille und Flicknadel: Für den Schaden der Zwille und die zusätzlichen Trefferpunkte der Flicknadel würfelst du 2W8 statt 1W8. Dein Weisheitsmodifikator kommt weiterhin hinzu.",
+        "Senklot: Du hast eine Flugbewegungsrate von sechs Metern und kannst schweben.",
+        "Bildwechsel: Zu Beginn jedes deiner Züge, solange das Leuchtbild anhält, kannst du für das Leuchtbild ein anderes Himmelsbild wählen (keine Aktion erforderlich)."
+      ]
+    },
+    {
+      "type": "heading",
+      "ruleId": "subclasses.druid.nachtzeichner.level14-zwischen-den-linien",
+      "level": 3,
+      "text": "14. Stufe: Zwischen den Linien"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "subclasses.druid.nachtzeichner.level14-zwischen-den-linien-resistenz",
+      "text": "Ein Teil von dir besteht nur noch aus Licht und Zwischenraum. Solange dein Leuchtbild anhält, bist du gegen Hieb-, Stich- und Wuchtschaden resistent."
+    },
+    {
+      "type": "original-note",
+      "ruleId": "subclasses.druid.nachtzeichner.oglans-randnotiz",
+      "title": "Oglans Randnotiz",
+      "text": "Ich habe eine Nachtzeichnerin einmal gefragt, warum ausgerechnet ein Senklot. „Weil es nie lügt, Oglan“, sagte sie, „im Gegensatz zu dir.“ Ich war gekränkt, etwa eine Stunde lang, dann habe ich mir mein eigenes Himmelsbild gezeichnet. Es heißt „Der Oglan“, ist sehr groß, sehr hell und zeigt in alle Richtungen zugleich. Bisher hat es außer mir niemand gefunden, aber das liegt bestimmt an den Wolken."
+    }
+  ],
+  "ruleRefs": [
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "classes.druid.level2-wild-shape",
+      "label": "Tiergestalt"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "spells.f-g.goettliche-fuehrung",
+      "label": "Göttliche Führung"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "spells.h-l.lenkendes-geschoss",
+      "label": "Lenkendes Geschoss"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "core.d20-tests",
+      "label": "W20-Prüfungen"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "glossary.i-k.konzentration",
+      "label": "Konzentration"
+    },
+    {
+      "rulesetId": "srd-5.2.1-de",
+      "ruleId": "glossary.s.schweben",
+      "label": "Schweben"
+    }
+  ],
+  "digest": "sha256:a3423a2e509ace61808a22fbd835e244eacf6498a8ab461249e8ba1123683ac8"
+}

@@ -1,0 +1,65 @@
+{
+  "kind": "original",
+  "licenseUrl": "/regelwerk/oglan/lizenz",
+  "locale": "de-DE",
+  "packageDigest": "sha256:1b1506aa5099d17186e84260506391e3703c3b9bcab2be8afa2797a7e13e0744",
+  "readerUrl": "/regelwerk/oglan",
+  "routeKey": "oglan",
+  "rulesetId": "oglans-book-of-chaos-de",
+  "rulesetVersion": "0.1.0",
+  "schemaVersion": "regelwerk.navigation.v1",
+  "sections": [
+    {
+      "documents": [
+        {
+          "documentId": "frame.foreword",
+          "navigationPath": [
+            "Vorwort"
+          ],
+          "order": 100,
+          "slug": "vorwort",
+          "title": "Vorwort",
+          "url": "/regelwerk/oglan/de/vorwort"
+        }
+      ],
+      "sectionId": "frame",
+      "title": "Vorwort"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "subclasses.druid",
+          "navigationPath": [
+            "Unterklassen",
+            "Druide"
+          ],
+          "order": 20100,
+          "slug": "unterklassen-druide",
+          "title": "Druide",
+          "url": "/regelwerk/oglan/de/unterklassen-druide"
+        }
+      ],
+      "sectionId": "subclasses",
+      "title": "Unterklassen"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "spells.catalog",
+          "navigationPath": [
+            "Zauber"
+          ],
+          "order": 60100,
+          "slug": "zauber",
+          "title": "Zauber",
+          "url": "/regelwerk/oglan/de/zauber"
+        }
+      ],
+      "sectionId": "spells",
+      "title": "Zauber"
+    }
+  ],
+  "sourceVersion": "0.1.0",
+  "status": "preview",
+  "title": "Oglans Book of Chaos"
+}

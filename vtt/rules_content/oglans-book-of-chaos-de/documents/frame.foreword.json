@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "oglans-book-of-chaos-de",
+  "documentId": "frame.foreword",
+  "slug": "vorwort",
+  "title": "Vorwort",
+  "navigationPath": [
+    "Vorwort"
+  ],
+  "order": 100,
+  "sourcePages": [
+    1
+  ],
+  "contentStatus": "original",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "frame.foreword.vorwort",
+      "level": 2,
+      "text": "Vorwort"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.oglan-1",
+      "text": "Sei gegrüßt, und bitte nicht erschrecken: Die Flecken auf dieser Seite sind Tee. Größtenteils."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.oglan-2",
+      "text": "Ich bin Oglan. Gelehrter, Sammler, Fragensteller und, wenn man meinen ehemaligen Kollegen glaubt, ein wandelndes Ärgernis. Ich habe mein Leben damit verbracht, Dinge aufzuheben, die anderen aus den Taschen gefallen sind: einen Zauber, den keine Akademie unterrichten wollte, einen Kniff, über den sich eine Druidin beim dritten Krug Met verplappert hat, eine Idee, die so schief war, dass sie in kein ordentliches Regal passte. Die geordnete Welt hat für solche Dinge keinen Platz. Ich schon. Ich habe ein Notizbuch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.oglan-3",
+      "text": "Dieses Notizbuch hältst du gerade in den Händen. Es ist nicht ordentlich, nicht vollständig und ganz sicher nicht bescheiden. Es ist das bedeutendste Werk seiner Art, und zwar schon deshalb, weil es das einzige ist. Darin steht, was ich gefunden, erfragt, erprobt und gelegentlich auch angezündet habe. Alles davon funktioniert. Das meiste sogar beim ersten Versuch."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.oglan-4",
+      "text": "Warum ich es mit dir teile? Weil Magie, die in einer Schublade liegt, Staub ansetzt, und Staub ist das Einzige, was ich wirklich verabscheue. Ein Kniff wird erst lebendig, wenn ihn jemand ausprobiert, der nicht ich bin. Am besten jemand, der ihn ein wenig falsch versteht und dabei etwas Neues entdeckt."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.oglan-5",
+      "text": "Darum lade ich dich ein, und zwar ausdrücklich dich, ob du am Tisch eine Figur spielst oder als Spielleitung die Welt um sie herum lenkst. Blättere herum. Nimm dir, was dich neugierig macht. Probier es aus, auch wenn es seltsam aussieht, und gerade dann. Geht etwas schief, hast du eine Geschichte. Gelingt es, hast du eine bessere."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.oglan-6",
+      "text": "Und solltest du auf deinen Reisen einen Zauber finden, der sich nicht einordnen lässt, oder eine Idee, über die alle den Kopf schütteln, dann weißt du ja jetzt, wo sie hingehört."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.oglan-signatur",
+      "text": "Neugierig und mit tintenschwarzen Fingern, dein Oglan"
+    },
+    {
+      "type": "heading",
+      "ruleId": "frame.foreword.nutzung",
+      "level": 3,
+      "text": "Zum Gebrauch dieses Buchs"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.nutzung-erweiterung",
+      "text": "Alles in diesem Buch ist eine Erweiterung des Regelwerks (SRD 5.2.1). Es bietet zusätzliche Optionen an, die du mit den Regeln des Regelwerks verwendest."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.nutzung-spielleitung",
+      "text": "Die Spielleitung entscheidet, was davon am Tisch gilt. Sprich neue Optionen deshalb vorher mit deiner Gruppe ab, etwa bevor du eine Unterklasse, einen Zauber oder ein Talent aus diesem Buch für deinen Charakter wählst."
+    },
+    {
+      "type": "heading",
+      "ruleId": "frame.foreword.ueberblick",
+      "level": 3,
+      "text": "Was in diesem Notizbuch wächst"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "frame.foreword.ueberblick-einleitung",
+      "text": "Oglans Notizbuch wird nach und nach erweitert. Diese Teile sind vorgesehen:"
+    },
+    {
+      "type": "unordered-list",
+      "ruleId": "frame.foreword.ueberblick-teile",
+      "items": [
+        "Neue Unterklassen für die Klassen des Regelwerks",
+        "Eine neue Klasse",
+        "Zauber",
+        "Talente",
+        "Gegenstände",
+        "Werkzeuge für die Spielleitung"
+      ]
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:2853358a58580f4ed5f8a05a8e25acb64e793bfe4b70dfa331ad55eb963d84e5"
+}

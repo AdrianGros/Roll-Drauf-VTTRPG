@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "regelwerk.package.v1",
+  "kind": "original",
+  "routeKey": "oglan",
+  "rulesetId": "oglans-book-of-chaos-de",
+  "rulesetVersion": "0.1.0",
+  "edition": "2024",
+  "locale": "de-DE",
+  "status": "preview",
+  "title": "Oglans Book of Chaos",
+  "source": {
+    "title": "Oglans Book of Chaos — Clean-Room-Karten 0.1",
+    "publicationDate": "2026-11-09",
+    "retrievedAt": "2026-11-09",
+    "url": "https://vtt.roll-drauf.de/regelwerk/oglan/lizenz",
+    "sha256": "bbcbad181591eed75a5d004b898ce3e3dbb8cdfd3d7d146321fd87b33d2249e8",
+    "pageCount": 999
+  },
+  "license": {
+    "id": "LicenseRef-RollDrauf",
+    "url": "https://vtt.roll-drauf.de/regelwerk/oglan/lizenz",
+    "attributionFile": "attribution.txt",
+    "attributionSha256": "468ae63f4954becd5af46a4f5deb7976796f41cc13c456f0993b97a7a30705f0"
+  },
+  "documents": [
+    {
+      "documentId": "frame.foreword",
+      "slug": "vorwort",
+      "title": "Vorwort",
+      "digest": "sha256:2853358a58580f4ed5f8a05a8e25acb64e793bfe4b70dfa331ad55eb963d84e5"
+    },
+    {
+      "documentId": "subclasses.druid",
+      "slug": "unterklassen-druide",
+      "title": "Druide",
+      "digest": "sha256:a3423a2e509ace61808a22fbd835e244eacf6498a8ab461249e8ba1123683ac8"
+    },
+    {
+      "documentId": "spells.catalog",
+      "slug": "zauber",
+      "title": "Zauber",
+      "digest": "sha256:84ed09066db84ddf9bbd028a68d73bfe0ba9b0191a2d6de89cddfad1172f8b58"
+    }
+  ],
+  "coverage": {
+    "requiredPageRanges": [
+      {
+        "first": 1,
+        "last": 1
+      },
+      {
+        "first": 201,
+        "last": 201
+      },
+      {
+        "first": 601,
+        "last": 601
+      }
+    ],
+    "excludedPageRanges": [
+      {
+        "first": 2,
+        "last": 200,
+        "reason": "Karten späterer Phasen (Rahmen und Klassenoptionen)."
+      },
+      {
+        "first": 202,
+        "last": 600,
+        "reason": "Karten späterer Phasen (Unterklassen bis Talente)."
+      },
+      {
+        "first": 602,
+        "last": 999,
+        "reason": "Karten späterer Phasen (Zauber bis SL-Werkzeuge)."
+      }
+    ],
+    "reviewedPageRanges": [],
+    "expectedTopLevelSections": [
+      {
+        "sectionId": "frame",
+        "title": "Vorwort",
+        "firstPage": 1,
+        "lastPage": 1
+      },
+      {
+        "sectionId": "subclasses",
+        "title": "Unterklassen",
+        "firstPage": 201,
+        "lastPage": 201
+      },
+      {
+        "sectionId": "spells",
+        "title": "Zauber",
+        "firstPage": 601,
+        "lastPage": 601
+      }
+    ]
+  }
+}

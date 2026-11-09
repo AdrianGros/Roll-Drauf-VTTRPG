@@ -91,9 +91,9 @@ def _rewrite_document(package: Path, mutation) -> None:
 def test_r0_source_and_attribution_are_pinned():
     registry = _load_json(SOURCE_LOCKS)
     assert registry["schemaVersion"] == "regelwerk.source-locks.v1"
-    assert len(registry["sources"]) == 1
-    source = registry["sources"][0]
-    assert source["rulesetId"] == "srd-5.2.1-de"
+    # The SRD plus Roll Drauf's own clean-room book (tests/test_regelwerk_books.py).
+    assert sorted(item["rulesetId"] for item in registry["sources"]) == ["oglans-book-of-chaos-de", "srd-5.2.1-de"]
+    source = next(item for item in registry["sources"] if item["rulesetId"] == "srd-5.2.1-de")
     assert source["sourceSha256"] == SOURCE_SHA256
     assert source["sourcePageCount"] == 412
     assert source["licenseId"] == "CC-BY-4.0"

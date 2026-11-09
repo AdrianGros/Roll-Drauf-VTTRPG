@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "regelwerk.document.v1",
+  "rulesetId": "oglans-book-of-chaos-de",
+  "documentId": "spells.catalog",
+  "slug": "zauber",
+  "title": "Zauber",
+  "navigationPath": [
+    "Zauber"
+  ],
+  "order": 60100,
+  "sourcePages": [
+    601
+  ],
+  "contentStatus": "original",
+  "blocks": [
+    {
+      "type": "heading",
+      "ruleId": "spells.catalog.zauber-aus-oglans-notizbuch",
+      "level": 2,
+      "text": "Zauber aus Oglans Notizbuch"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.catalog.einleitung",
+      "text": "Hier stehen die Zauber aus Oglans Notizbuch, nach Namen geordnet. Zauber, deren Name mit „Oglans“ beginnt, sind seine Signaturzauber, und er wäre ernsthaft gekränkt, wenn jemand den Namen beim Wirken wegließe."
+    },
+    {
+      "type": "heading",
+      "ruleId": "spells.catalog.oglans-gruenspanguss",
+      "level": 3,
+      "text": "Oglans Grünspanguss"
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.catalog.oglans-gruenspanguss.schule",
+      "text": "Hervorrufungszauber 1. Grades (Magier, Zauberer)"
+    },
+    {
+      "type": "definition-list",
+      "ruleId": "spells.catalog.oglans-gruenspanguss.eigenschaften",
+      "entries": [
+        {
+          "term": "Zeitaufwand",
+          "definition": "Aktion"
+        },
+        {
+          "term": "Reichweite",
+          "definition": "Selbst (Linie, 9 Meter lang und 1,5 Meter breit)"
+        },
+        {
+          "term": "Komponenten",
+          "definition": "V, G, M (ein Stück Kupfer mit Grünspan, etwa ein alter Knopf)"
+        },
+        {
+          "term": "Wirkungsdauer",
+          "definition": "Konzentration, bis zu 1 Minute"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.catalog.oglans-gruenspanguss.text-1",
+      "text": "Ein zischender Schwall grünlicher Säure schießt in einer neun Meter langen und 1,5 Meter breiten Linie, die von dir ausgeht, in eine Richtung deiner Wahl. Jede Kreatur in der Linie führt einen Geschicklichkeitsrettungswurf aus. Misslingt der Wurf, so ist sie mit Säure bedeckt, bis der Zauber endet oder die Säure entfernt wird."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.catalog.oglans-gruenspanguss.text-2",
+      "text": "Eine mit Säure bedeckte Kreatur erleidet zu Beginn jedes ihrer Züge 2W4 Säureschaden."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.catalog.oglans-gruenspanguss.text-3",
+      "text": "Mit einer Aktion kann eine Kreatur die Säure entfernen, entweder bei sich selbst oder bei einer Kreatur im Abstand von bis zu 1,5 Metern von ihr. Danach endet der Effekt für die gereinigte Kreatur."
+    },
+    {
+      "type": "paragraph",
+      "ruleId": "spells.catalog.oglans-gruenspanguss.text-4",
+      "text": "Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. wird der Schaden um 2W4 erhöht."
+    },
+    {
+      "type": "original-note",
+      "ruleId": "spells.catalog.oglans-gruenspanguss.oglans-randnotiz",
+      "title": "Oglans Randnotiz",
+      "text": "Erfunden habe ich ihn beim Putzen, was beweist, dass Ordnung gefährlich ist. Die kupferne Türklinke meiner Studierstube wollte nicht glänzen, also habe ich ihr gezeigt, wie Anlaufen richtig geht. Die Klinke ist seither grüner als eine Froschwiese, und der Taschendieb, der sich gerade durch eben diese Tür an meinen Geldbeutel heranschlich, ebenfalls. Die Säure hat er übrigens selbst entfernt. Mit einer Aktion. Sehr lehrreich für uns beide."
+    }
+  ],
+  "ruleRefs": [],
+  "digest": "sha256:84ed09066db84ddf9bbd028a68d73bfe0ba9b0191a2d6de89cddfad1172f8b58"
+}
