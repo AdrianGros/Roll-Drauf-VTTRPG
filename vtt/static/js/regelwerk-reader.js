@@ -1,8 +1,10 @@
 (function () {
     'use strict';
 
-    const RULESET_ID = 'srd-5.2.1-de';
-    const API_ROOT = `/api/rulesets/${RULESET_ID}`;
+    const SRD_RULESET_ID = 'srd-5.2.1-de';
+    // The SRD is the main book; Roll Drauf's own books live under their readerUrl.
+    let book = { rulesetId: SRD_RULESET_ID, kind: 'srd', readerUrl: '/regelwerk' };
+    let API_ROOT = `/api/rulesets/${SRD_RULESET_ID}`;
     const article = document.getElementById('regelwerkArticle');
     const toc = document.getElementById('regelwerkToc');
     const searchForm = document.getElementById('regelwerkSearch');
@@ -215,18 +217,39 @@
         trail.push(item ? item.label : documentData.title);
         const breadcrumbs = element('p', 'regelwerk-breadcrumbs', trail.join(' › '));
         article.appendChild(breadcrumbs);
+        const status = navigation.status === 'preview' ? 'Vorschau' : navigation.status;
         article.appendChild(element(
             'p',
             'regelwerk-document-meta',
-            `SRD 5.2.1 · ${pageRange(documentData.sourcePages)} · ${navigation.status === 'preview' ? 'Vorschau' : navigation.status}`,
+            book.kind === 'original'
+                ? `${navigation.title} · eigenes Werk von Roll Drauf · ${status}`
+                : `SRD 5.2.1 · ${pageRange(documentData.sourcePages)} · ${status}`,
         ));
         documentData.blocks.forEach((block) => article.appendChild(renderBlock(block)));
         article.setAttribute('aria-busy', 'false');
-        document.title = `${documentData.title} · Regelwerk · Roll Drauf VTT`;
+        document.title = `${documentData.title} · ${book.kind === 'original' ? navigation.title : 'Regelwerk'} · Roll Drauf VTT`;
         window.requestAnimationFrame(focusHashTarget);
     }
 
+    async function showOwnLicense() {
+        const data = await getJson(`${API_ROOT}/license`);
+        clear(article);
+        article.appendChild(element('h2', '', 'Quelle & Lizenz'));
+        article.appendChild(element('p', 'regelwerk-document-meta', `${data.title} · eigenes Werk von Roll Drauf`));
+        data.attribution.split(/\n\s*\n/).filter((part) => part.trim()).forEach((part) => {
+            article.appendChild(element('p', 'regelwerk-license-text', part.trim()));
+        });
+        const srdLink = element('a', '', 'Quelle und Lizenz des SRD 5.2.1');
+        srdLink.href = '/regelwerk/lizenz';
+        const srdParagraph = element('p');
+        srdParagraph.appendChild(srdLink);
+        article.appendChild(srdParagraph);
+        article.setAttribute('aria-busy', 'false');
+        document.title = `Quelle & Lizenz · ${data.title} · Roll Drauf VTT`;
+    }
+
     async function showLicense() {
+        if (book.kind === 'original') return showOwnLicense();
         const data = await getJson(`${API_ROOT}/license`);
         clear(article);
         article.appendChild(element('h2', '', 'Quelle & Lizenz'));
@@ -250,7 +273,7 @@
     async function renderRoute() {
         article.setAttribute('aria-busy', 'true');
         try {
-            if (window.location.pathname === '/regelwerk/lizenz') await showLicense();
+            if (window.location.pathname === navigation.licenseUrl) await showLicense();
             else await showDocument();
         } catch (error) {
             clear(article);
@@ -289,14 +312,66 @@
         }
     }
 
+    function setText(id, text) {
+        const node = document.getElementById(id);
+        if (node) node.textContent = text;
+    }
+
+    function renderBooks(books) {
+        const nav = document.getElementById('regelwerkBooks');
+        if (!nav) return;
+        clear(nav);
+        nav.hidden = books.length < 2;
+        books.forEach((entry) => {
+            const link = element('a', '', entry.status === 'preview' ? `${entry.title} · Vorschau` : entry.title);
+            link.href = entry.readerUrl;
+            if (entry.rulesetId === book.rulesetId) link.setAttribute('aria-current', 'page');
+            nav.appendChild(link);
+        });
+    }
+
+    async function chooseBook() {
+        let books = [];
+        try {
+            books = (await getJson('/api/rulesets')).rulesets || [];
+        } catch (_error) {
+            return;
+        }
+        const path = window.location.pathname;
+        const own = books.find((entry) => entry.kind === 'original'
+            && (path === entry.readerUrl || path.startsWith(`${entry.readerUrl}/`)));
+        if (own) {
+            book = own;
+            API_ROOT = `/api/rulesets/${encodeURIComponent(own.rulesetId)}`;
+        }
+        renderBooks(books);
+    }
+
+    function applyBookChrome() {
+        const licenseLink = document.getElementById('regelwerkLicenseLink');
+        if (licenseLink) licenseLink.href = navigation.licenseUrl;
+        if (book.kind !== 'original') return;
+        setText('regelwerkTitle', navigation.title);
+        setText('regelwerkSearchLabel', 'In diesem Buch suchen');
+        setText('regelwerkPreviewNote', `${navigation.title} ist ein eigenes Erweiterungsbuch von Roll Drauf und entsteht schrittweise. Diese Vorschau enthält erst einen Teil.`);
+        setText('regelwerkFooterSource', `${navigation.title} · eigenes Werk von Roll Drauf · nutzt Regelbegriffe aus dem SRD 5.2.1.`);
+        const footerLicense = document.getElementById('regelwerkFooterLicense');
+        if (footerLicense) {
+            footerLicense.href = navigation.licenseUrl;
+            footerLicense.textContent = 'Quelle & Lizenz';
+        }
+    }
+
     async function init() {
         try {
+            await chooseBook();
             navigation = await getJson(`${API_ROOT}/manifest`);
             const isPreview = navigation.status === 'preview';
             ['regelwerkPreviewBadge', 'regelwerkPreviewNote'].forEach((id) => {
                 const node = document.getElementById(id);
                 if (node) node.hidden = !isPreview;
             });
+            applyBookChrome();
             renderToc(navigation);
             await renderRoute();
         } catch (error) {

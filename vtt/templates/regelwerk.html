@@ -23,10 +23,11 @@
         <div class="regelwerk-titlebar">
             <div>
                 <p class="regelwerk-kicker">Roll Drauf VTT</p>
-                <h1>Regelwerk</h1>
+                <h1 id="regelwerkTitle">Regelwerk</h1>
             </div>
             <span class="regelwerk-preview-badge" id="regelwerkPreviewBadge" hidden>Vorschau</span>
         </div>
+        <nav class="regelwerk-books" id="regelwerkBooks" aria-label="Bücher" hidden></nav>
         <p class="regelwerk-preview-note" id="regelwerkPreviewNote" role="note" hidden>
             Diese Vorschau enthält erst einen geprüften Ausschnitt des deutschen SRD 5.2.1.
             Fehlende Kapitel werden schrittweise ergänzt.
@@ -36,7 +37,7 @@
     <main class="regelwerk-layout">
         <aside class="regelwerk-sidebar" aria-label="Regelwerkzeuge">
             <form id="regelwerkSearch" class="regelwerk-search" role="search">
-                <label for="regelwerkSearchInput">Im Regelwerk suchen</label>
+                <label for="regelwerkSearchInput" id="regelwerkSearchLabel">Im Regelwerk suchen</label>
                 <div class="regelwerk-search-row">
                     <input id="regelwerkSearchInput" name="q" type="search" maxlength="100" autocomplete="off">
                     <button type="submit">Suchen</button>
@@ -52,7 +53,7 @@
 
             <div class="regelwerk-sidebar-actions">
                 <a href="/regelwerk/compendium">Compendium (Zauber, Monster, Gegenstände …)</a>
-                <a href="/regelwerk/lizenz">Quelle &amp; Lizenz</a>
+                <a href="/regelwerk/lizenz" id="regelwerkLicenseLink">Quelle &amp; Lizenz</a>
                 <button id="regelwerkPrint" type="button">Drucken</button>
             </div>
         </aside>
@@ -65,8 +66,8 @@
     </main>
 
     <footer class="regelwerk-footer">
-        <p>Quelle: Systemreferenzdokument 5.2.1 (Deutsch), Seiten 6–8.</p>
-        <p><a href="/regelwerk/lizenz">CC BY 4.0 · Quellenangabe und Lizenz</a></p>
+        <p id="regelwerkFooterSource">Quelle: Systemreferenzdokument 5.2.1 (Deutsch), Seiten 6–8.</p>
+        <p><a href="/regelwerk/lizenz" id="regelwerkFooterLicense">CC BY 4.0 · Quellenangabe und Lizenz</a></p>
     </footer>
     <script src="/static/js/regelwerk-reader.js"></script>
     <script src="/static/js/auth.js"></script>

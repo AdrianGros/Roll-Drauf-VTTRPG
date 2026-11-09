@@ -4,6 +4,13 @@ The official source lock lives outside an individual content package so a
 manifest cannot silently replace its own source or attribution. Published
 content is identified by an RFC 8785/SHA-256 digest; callers can pin that
 digest and reject changed bytes under the same package version.
+
+An `original` package is Roll Drauf's own clean-room book. Its "source" is
+the private hand-off of mechanics cards: `source.sha256` pins that hand-off,
+`pageCount` is the card number space and a document's `sourcePages` are the
+card numbers it was written from, so the page-based coverage contract carries
+over unchanged. Its documents must be `original` text, must not use
+third-party brand terms and must not reuse an SRD entity name as a heading.
 """
 
 from __future__ import annotations
@@ -22,6 +29,11 @@ from vtt.creation_engine.canonical import content_digest, parse_strict_json
 CONTENT_ROOT = Path(__file__).resolve().parent
 SCHEMA_ROOT = CONTENT_ROOT / "schemas"
 SOURCE_LOCKS_PATH = CONTENT_ROOT / "source-locks.json"
+BRAND_DENYLIST_PATH = CONTENT_ROOT / "brand-denylist.txt"
+SRD_COMPENDIUM_PATH = CONTENT_ROOT / "srd-5.2.1-de" / "generated" / "compendium.json"
+_SRD_NAME_TYPES = frozenset({
+    "background", "class", "class-feature", "class-option", "feat", "magic-item", "species", "spell", "subclass",
+})
 MAX_DOCUMENT_BYTES = 1_048_576
 _HTML_TAG = re.compile(r"<\s*/?\s*[A-Za-z][^>]*>")
 
@@ -271,6 +283,42 @@ def _validate_document_semantics(document: dict, manifest: dict) -> set[str]:
     return rule_ids
 
 
+def _brand_pattern() -> re.Pattern:
+    try:
+        lines = BRAND_DENYLIST_PATH.read_text(encoding="utf-8").splitlines()
+    except OSError as exc:
+        raise PackageValidationError(f"cannot read brand denylist: {exc}") from exc
+    terms = sorted({line.strip() for line in lines if line.strip() and not line.lstrip().startswith("#")}, key=len, reverse=True)
+    if not terms:
+        raise PackageValidationError("brand denylist is empty")
+    return re.compile("|".join(rf"(?<!\w){re.escape(term)}(?!\w)" for term in terms), re.IGNORECASE)
+
+
+def _fold(value: str) -> str:
+    return " ".join(value.casefold().split())
+
+
+def _srd_entity_names() -> set[str]:
+    compendium = _read_json(SRD_COMPENDIUM_PATH)
+    return {_fold(entity["name"]) for entity in compendium["entities"] if entity.get("type") in _SRD_NAME_TYPES}
+
+
+def _validate_original_documents(documents: list[dict]) -> None:
+    brand = _brand_pattern()
+    srd_names = _srd_entity_names()
+    for document in documents:
+        document_id = document["documentId"]
+        if document["contentStatus"] != "original":
+            raise PackageValidationError(f"document {document_id} in an original package must be original text")
+        for text in _walk_strings(document):
+            match = brand.search(text)
+            if match:
+                raise PackageValidationError(f"document {document_id} uses the third-party brand term {match.group(0)!r}")
+        for block in document["blocks"]:
+            if block["type"] == "heading" and block["level"] <= 4 and _fold(block["text"]) in srd_names:
+                raise PackageValidationError(f"document {document_id} reuses the SRD name {block['text']!r}")
+
+
 def validate_package(package_dir: str | Path, *, expected_digest: str | None = None) -> ValidationReport:
     """Validate one package and return deterministic identity and coverage evidence."""
     package_path = Path(package_dir).resolve()
@@ -279,6 +327,9 @@ def validate_package(package_dir: str | Path, *, expected_digest: str | None = N
     _validate_schema(_validator("regelwerk-package-v1.schema.json"), manifest, "manifest")
     if package_path.name != manifest["rulesetId"]:
         raise PackageValidationError("package directory must match rulesetId")
+    is_original = manifest.get("kind", "srd") == "original"
+    if is_original and "routeKey" not in manifest:
+        raise PackageValidationError("original packages must declare a routeKey")
 
     attribution_sha256 = _validate_source_lock(manifest, package_path)
     required_pages, reviewed_pages, sections = _validate_coverage_contract(manifest)
@@ -328,6 +379,9 @@ def validate_package(package_dir: str | Path, *, expected_digest: str | None = N
         all_rule_ids |= rule_ids
         represented_pages.update(document["sourcePages"])
         documents.append(document)
+
+    if is_original:
+        _validate_original_documents(documents)
 
     unexpected_pages = represented_pages - required_pages
     if unexpected_pages:

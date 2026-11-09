@@ -15,6 +15,8 @@ from .validator import CONTENT_ROOT, ValidationReport, validate_package
 
 DEFAULT_PACKAGE = CONTENT_ROOT / "srd-5.2.1-de"
 GENERATED_FILENAMES = ("navigation.json", "search-index.json", "coverage.json", "compendium.json", "creator-data.json")
+# Compendium and creator data parse the SRD's structure; an original book gets reader artifacts only.
+ORIGINAL_GENERATED_FILENAMES = ("navigation.json", "search-index.json", "coverage.json")
 _SOURCE_VERSION = re.compile(r"\b(\d+\.\d+(?:\.\d+)?)\b")
 
 
@@ -38,12 +40,24 @@ def _source_version(manifest: dict) -> str:
     return match.group(1)
 
 
+def is_original(manifest: dict) -> bool:
+    return manifest.get("kind", "srd") == "original"
+
+
+def _route_key(manifest: dict) -> str:
+    return manifest["routeKey"] if is_original(manifest) else _source_version(manifest)
+
+
 def _route_locale(manifest: dict) -> str:
     return manifest["locale"].split("-", 1)[0]
 
 
+def reader_url(manifest: dict) -> str:
+    return f"/regelwerk/{manifest['routeKey']}" if is_original(manifest) else "/regelwerk"
+
+
 def document_url(manifest: dict, document: dict, rule_id: str | None = None) -> str:
-    path = f"/regelwerk/{_source_version(manifest)}/{_route_locale(manifest)}/{document['slug']}"
+    path = f"/regelwerk/{_route_key(manifest)}/{_route_locale(manifest)}/{document['slug']}"
     return f"{path}#{rule_id}" if rule_id else path
 
 
@@ -114,19 +128,23 @@ def _navigation(manifest: dict, documents: list[dict], report: ValidationReport)
                     "documents": section_documents,
                 }
             )
-    return {
+    navigation = {
         "schemaVersion": "regelwerk.navigation.v1",
         "rulesetId": manifest["rulesetId"],
         "rulesetVersion": manifest["rulesetVersion"],
-        "sourceVersion": _source_version(manifest),
+        "sourceVersion": manifest["rulesetVersion"] if is_original(manifest) else _source_version(manifest),
         "locale": manifest["locale"],
         "status": manifest["status"],
         "title": manifest["title"],
         "packageDigest": report.package_digest,
-        "readerUrl": "/regelwerk",
-        "licenseUrl": "/regelwerk/lizenz",
+        "readerUrl": reader_url(manifest),
+        "licenseUrl": f"{reader_url(manifest)}/lizenz",
         "sections": sections,
     }
+    if is_original(manifest):
+        navigation["kind"] = "original"
+        navigation["routeKey"] = manifest["routeKey"]
+    return navigation
 
 
 def _search_index(manifest: dict, documents: list[dict], report: ValidationReport) -> dict:
@@ -169,6 +187,19 @@ def generate_artifacts(package_dir: str | Path = DEFAULT_PACKAGE) -> dict[str, d
     from .creator_data import build_creator_data
 
     manifest, documents, report = load_validated_package(package_dir)
+    if is_original(manifest):
+        coverage = report.coverage.to_wire()
+        coverage.update({
+            "schemaVersion": "regelwerk.coverage.v1",
+            "rulesetId": manifest["rulesetId"],
+            "rulesetVersion": manifest["rulesetVersion"],
+            "packageDigest": report.package_digest,
+        })
+        return {
+            "navigation.json": _navigation(manifest, documents, report),
+            "search-index.json": _search_index(manifest, documents, report),
+            "coverage.json": coverage,
+        }
     compendium = build_compendium(manifest, documents)
     compendium["packageDigest"] = report.package_digest
     creator_data = build_creator_data(manifest, documents, compendium)

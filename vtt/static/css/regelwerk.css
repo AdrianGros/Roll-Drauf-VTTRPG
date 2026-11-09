@@ -91,6 +91,34 @@ body.regelwerk-page {
     text-transform: uppercase;
 }
 
+.regelwerk-books {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-inline: 1px solid var(--regelwerk-border);
+    border-bottom: 1px solid var(--regelwerk-border);
+    background: var(--regelwerk-paper-deep);
+}
+
+.regelwerk-books[hidden] { display: none; }
+
+.regelwerk-books a {
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--regelwerk-border);
+    border-radius: 99rem;
+    color: var(--regelwerk-accent);
+    font: 700 0.85rem/1.2 system-ui, sans-serif;
+    text-decoration: none;
+    background: var(--regelwerk-paper);
+}
+
+.regelwerk-books a[aria-current="page"] {
+    border-color: var(--regelwerk-accent);
+    background: var(--regelwerk-accent);
+    color: var(--regelwerk-paper);
+}
+
 .regelwerk-preview-note {
     margin: 0;
     padding: 0.7rem 1.5rem;

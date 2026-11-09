@@ -20,6 +20,15 @@
     "schemaVersion": {
       "const": "regelwerk.package.v1"
     },
+    "kind": {
+      "description": "srd (default): transcribed licensed source; source pages are PDF pages. original: Roll Drauf's own clean-room book; source pages are clean-room card numbers and source.sha256 pins the private card hand-off.",
+      "enum": ["srd", "original"]
+    },
+    "routeKey": {
+      "description": "Reader URL segment (/regelwerk/<routeKey>/...). Required for original packages; srd packages use the source version.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,30}$"
+    },
     "rulesetId": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
