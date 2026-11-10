@@ -46,6 +46,7 @@ from vtt.play.service import (
     get_current_user,
     get_scene_stack,
     get_session_role,
+    get_table_role,
     init_scene_stack,
     is_active_member,
     is_operator_role,
@@ -56,6 +57,8 @@ from vtt.play.service import (
     recalculate_fog_for_owner,
     refresh_state_snapshot,
     reorder_scene_layers,
+    set_table_seat,
+    table_seat_view,
     run_ready_check,
     serialize_scene_stack,
     serialize_state_payload,
@@ -85,7 +88,7 @@ def _emit_scoped_state_snapshot(campaign, game_session, state):
         if token.owner_user_id is not None
     }
     for owner_id in owner_ids:
-        if is_operator_role(get_session_role(campaign, owner_id)):
+        if is_operator_role(get_table_role(campaign, owner_id, game_session.id)):
             continue  # operators already hold the full view
         owner_view = serialize_state_payload(game_session, state,
                                              role="PLAYER",
@@ -139,7 +142,7 @@ def _get_context(campaign_id: int, session_id: int):
     if not is_active_member(campaign, user.id):
         return None, None, None, (jsonify({"error": "forbidden"}), 403)
 
-    session_role = get_session_role(campaign, user.id)
+    session_role = get_table_role(campaign, user.id, game_session.id)
     return user, campaign, game_session, session_role
 
 
@@ -198,6 +201,9 @@ def bootstrap_play_runtime(campaign_id, session_id):
         },
         "session": _serialize_session_runtime(game_session),
         "session_role": session_role,
+        # Tischplatz: a DM/CO-DM can sit here as a player (session_role is
+        # then PLAYER and everything below is the player projection).
+        **table_seat_view(campaign, user.id, game_session.id),
         "mode": mode,
         "read_only": read_only,
         # Playtable-Audit 2026-08-25 (P0): the bootstrap is role-scoped —
@@ -254,13 +260,31 @@ def play_ready_check(campaign_id, session_id):
 def play_linkable_characters(campaign_id, session_id):
     """Characters the caller may link to a new token in this session."""
     from vtt.characters import sheet_link
-    from vtt.socket_handlers import _is_dm
 
     user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
     if isinstance(session_role, tuple):
         return session_role
-    characters = sheet_link.linkable_characters(campaign, user, _is_dm(campaign.id, user.id), game_session.id)
+    characters = sheet_link.linkable_characters(campaign, user, is_operator_role(session_role), game_session.id)
     return jsonify({"characters": characters}), 200
+
+
+@play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/seat", methods=["PUT"])
+@limiter.limit("60 per hour")
+@jwt_required()
+def play_set_table_seat(campaign_id, session_id):
+    """Sit at this table as DM or as player (only DMs and CO-DMs can choose)."""
+    from vtt.socket_handlers import apply_table_seat_change
+
+    user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
+    if isinstance(session_role, tuple):
+        return session_role
+    seat = str((request.get_json(silent=True) or {}).get("seat") or "").strip().lower()
+    table_role, error = set_table_seat(campaign, user.id, game_session, seat)
+    if error:
+        return error
+    if table_role != session_role:
+        apply_table_seat_change(campaign.id, game_session.id, user.id, table_role)
+    return jsonify({"session_role": table_role, **table_seat_view(campaign, user.id, game_session.id)}), 200
 
 
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/scene-stack/init", methods=["POST"])

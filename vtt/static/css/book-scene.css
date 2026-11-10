@@ -2355,6 +2355,18 @@ body.has-reduced-motion .book-dashboard-topbar {
     margin-top: auto;
 }
 
+/* Tischplatz: DM seat and player seat side by side for the Spielleitung. */
+.play-launch-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.play-launch-card-actions .btn {
+    margin-top: 0;
+}
+
 .play-launch-empty {
     text-align: center;
     padding: 40px 20px;
@@ -2939,4 +2951,31 @@ body.is-book-scene-transition .book-shell-page-stack {
         max-width: 22ch;
         overflow-wrap: anywhere;
     }
+}
+
+/* The book is always shown open (owner decision 2026-11-08): no closed
+   "Zum Buchzugang" cover before login and none between tabs. Mirrors
+   BookScene.applyOpenedBookState() so the first paint is already open. */
+body.book-scene-open #book {
+    transform: rotateY(0deg) scale(1);
+}
+
+body.book-scene-open .book-cover {
+    transform: rotateY(-160deg);
+    pointer-events: none;
+    cursor: default;
+}
+
+body.book-scene-open .book-pages {
+    transform: translateX(4px) rotateY(0deg) scaleX(1) scaleY(1);
+}
+
+body.book-scene-open .book-back {
+    opacity: 1;
+}
+
+.book-scene-loading {
+    margin: 0;
+    color: var(--vtt-ink-muted, #6b5442);
+    font-style: italic;
 }

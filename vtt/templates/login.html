@@ -506,22 +506,17 @@
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-scene.css">
 </head>
-<body class="spellbook">
+<body class="spellbook book-scene-open book-login-open is-book-scene-login">
     <!-- 3D Book Scene — server-rendered (2026-08-25). This markup is the
          verbatim shell book-scene.js used to inject at runtime; shipping it
-         in the HTML means the user's FIRST paint is the finished closed
+         in the HTML means the user's FIRST paint is the finished open
          book instead of an empty body that JS visibly assembles.
          book-scene.js's create() detects it and only binds. -->
     <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="Buchoberfläche">
         <div class="book-scene-backdrop" aria-hidden="true"></div>
         <div class="book-scene-stage">
             <div id="book" class="book-scene-book" role="doc-cover" aria-label="Interactive spellbook">
-                <div class="book-element book-cover" role="button" tabindex="0" aria-label="Buchzugang öffnen" aria-pressed="false">
-                    <div class="cover-kicker" aria-hidden="true">roll drauf</div>
-                    <div class="cover-title" aria-hidden="false">Zum Buchzugang</div>
-                    <div class="cover-ornament" aria-hidden="true"><img src="/static/icons/icon-book-sparkles.svg" alt=""></div>
-                    <div class="cover-action" aria-hidden="true">Anmelden</div>
-                </div>
+                <div class="book-element book-cover is-open" aria-hidden="true"></div>
                 <div class="book-element book-pages" role="doc-pagebreak" aria-label="Buchseiten"></div>
                 <div class="book-element book-back" role="doc-cover" aria-label="Buchrückseite"></div>
                 <div class="book-shell-page-stack book-shell-page-stack--left" aria-hidden="true"></div>
@@ -542,8 +537,8 @@
                 </div>
                 <div id="book-dashboard-scene" class="book-dashboard-scene" hidden aria-hidden="true"></div>
 
-    <!-- Login content (rendered as the first open spread) -->
-    <main id="login-content">
+    <!-- Login content: the landing page IS the login (owner, 2026-11-08) -->
+    <main id="login-content" class="visible">
         <div class="login-book-spread" role="presentation">
             <section class="login-book-page login-book-page--left" aria-label="Login page">
                 <div class="login-book-paper login-book-paper--login">
@@ -654,9 +649,8 @@
         const FORCE_LOGGED_OUT = new URLSearchParams(window.location.search).get('logged_out') === '1'
             || consumeForcedLogout();
 
-        // The cover is an explicit, deterministic entry state. The form is
-        // revealed only after the reader activates the cover, so the first
-        // checkpoint is meaningful and never captures an in-flight animation.
+        // The landing page is the login itself: the book is open and the
+        // form is usable from the first paint, no cover to click first.
         let bookInitStarted = false;
 
         function loginReturnPath() {
@@ -685,25 +679,20 @@
             bookInitStarted = true;
 
             BookScene.create();
-            BookScene.setCoverState(FORCE_LOGGED_OUT ? 'logged-out' : 'login');
+            BookScene.open();
 
             if (FORCE_LOGGED_OUT) {
+                showStatus('Du wurdest abgemeldet.');
                 return;
             }
 
-            // Keep authenticated users inside the same book object.
+            // An existing session goes straight on to the overview.
             Auth.getCurrentUser().then((user) => {
-                const destination = loginReturnPath();
-                if (user && destination !== '/dashboard') {
-                    window.location.replace(destination);
-                    return null;
+                if (user) {
+                    window.location.replace(loginReturnPath());
                 }
-                if (user && window.BookScene && typeof BookScene.transitionToDashboard === 'function') {
-                    return BookScene.transitionToDashboard(user, { instant: true });
-                }
-                return null;
             }).catch((error) => {
-                console.warn('[Login] Could not open dashboard pilot from existing session', error);
+                console.warn('[Login] Could not check for an existing session', error);
             });
         }
 
@@ -765,7 +754,7 @@
             }
 
             if (loggedOut === '1') {
-                showStatus('Du wurdest abgemeldet und bist wieder im Einstiegskapitel.');
+                showStatus('Du wurdest abgemeldet.');
                 currentUrl.searchParams.delete('logged_out');
             }
 

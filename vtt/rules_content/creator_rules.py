@@ -370,6 +370,14 @@ def evaluate(data: dict, state: dict) -> dict:
             proficiency.setdefault(chosen, "proficient")
     if species and species["id"].endswith(".human") and species_choices.get("skillful") in skills:
         proficiency.setdefault(species_choices["skillful"], "proficient")
+    # Published homebrew Species declare their grants on the choice itself (species_profiles.species_entry).
+    for choice in species["choices"] if species else []:
+        chosen = species_choices.get(choice["id"])
+        if choice.get("grants") != "proficiency" or chosen not in skills or chosen not in (choice.get("options") or ()):
+            continue
+        if proficiency.get(chosen) == "proficient":
+            findings.add(WARNING, "skill-duplicate", f"„{skills[chosen]['name']}“ ist schon geübt; wähle für {species['name']} eine andere Fertigkeit.", f"species.choices.{choice['id']}")
+        proficiency.setdefault(chosen, "proficient")
     for skill in _list(skill_state.get("expertise")):
         if proficiency.get(skill) == "proficient" and skill not in expertise:
             expertise.append(skill)

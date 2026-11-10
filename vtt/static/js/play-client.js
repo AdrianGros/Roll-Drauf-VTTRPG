@@ -7,6 +7,10 @@ class PlayClient {
         return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/bootstrap`);
     }
 
+    setTableSeat(campaignId, sessionId, seat) {
+        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/seat`, "PUT", { seat });
+    }
+
     readyCheck(campaignId, sessionId) {
         return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/ready-check`);
     }

@@ -472,6 +472,37 @@
         .srd-roll-result.is-crit { color: #1f6b2e; }
         .srd-roll-result.is-fumble { color: #9c2a2a; }
         .srd-roll-where { font-weight: 400; font-size: 0.78rem; color: #6e5745; }
+        .srd-roll-destination {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.3rem 0.6rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            color: #2f1638;
+            background: rgba(110, 87, 69, 0.08);
+            border-left: 4px solid #8e6b52;
+            overflow-wrap: anywhere;
+        }
+        .srd-roll-destination[data-state="live"] { background: rgba(31, 107, 46, 0.1); border-left-color: #1f6b2e; }
+        .srd-roll-destination[data-state="choose"] { background: rgba(202, 163, 59, 0.14); border-left-color: #a8842c; }
+        .srd-roll-destination[data-state="blocked"] { background: rgba(156, 42, 42, 0.1); border-left-color: #9c2a2a; }
+        .srd-roll-destination strong { font-weight: 700; }
+        .srd-roll-destination select { max-width: 100%; }
+        .srd-roll-jump { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: #6e5745; }
+        .srd-roll-link {
+            font: inherit;
+            cursor: pointer;
+            border: 1px solid rgba(75, 35, 90, 0.25);
+            border-radius: 6px;
+            background: none;
+            color: #4b235a;
+            padding: 0.1rem 0.45rem;
+        }
+        .srd-roll-link:hover, .srd-roll-link:focus-visible { background: rgba(75, 35, 90, 0.1); }
+        #srdSheetBody .srd-sheet-subtitle, #srdInventory { scroll-margin-top: 11rem; }
         .srd-roll-history {
             margin: 0;
             padding-left: 1.1rem;
@@ -506,6 +537,7 @@
             color: #4b235a;
         }
         @media (max-width: 620px) {
+            .srd-roll-jump { display: none; }
             .srd-sheet-facts,
             .srd-sheet-skills { grid-template-columns: 1fr; }
             .srd-sheet-vitals,
@@ -546,18 +578,90 @@
             overflow-y: auto;
         }
 
+        .sheet-focus-page .book-dashboard-topbar {
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 6px;
+            padding-bottom: 8px;
+        }
+
+        .sheet-focus-page .book-dashboard-ribbon {
+            grid-column: 1;
+            justify-self: stretch;
+            min-width: 0;
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            gap: 4px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .sheet-focus-page .book-dashboard-ribbon-btn {
+            flex: 0 0 auto;
+            min-height: 36px;
+            padding-inline: 8px;
+            white-space: nowrap;
+            font-size: 0.75rem;
+        }
+
+        .sheet-focus-page .book-dashboard-crest {
+            grid-column: 2;
+            max-width: 110px;
+        }
+
+        .sheet-focus-page .book-dashboard-titlebar,
+        .sheet-focus-page .book-shell-frame-header,
+        .sheet-focus-page .book-shell-ribbon {
+            display: none;
+        }
+
+        .book-dashboard-page.book-focus-page.sheet-focus-page .book-page {
+            min-height: 0;
+        }
+
+        body[data-sheet-mode="view"][data-sheet-has-srd="true"] .sheet-focus-page .book-page--content {
+            display: none;
+        }
+
+        .sheet-character-heading #modeLabel,
+        body[data-sheet-has-srd="true"] .sheet-quick-ledger,
+        .sheet-journey-nav [aria-disabled="true"] {
+            display: none;
+        }
+
+        .sheet-journey-nav .sheet-split-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .sheet-journey-nav .sheet-split-actions .btn {
+            min-width: 0;
+            width: 100%;
+            padding-inline: 0.45rem;
+        }
+
+        .sheet-focus-page .sheet-identity-preview {
+            width: 96px;
+            height: 96px;
+            aspect-ratio: auto;
+        }
+
+        /* Only shown when loading is slow: a small note over the open book,
+           not a full-screen curtain (it flashed on every tab switch). */
         #characterSheetSceneStatus {
             position: fixed;
-            inset: 0;
-            display: grid;
-            place-items: center;
-            padding: 2rem;
-            background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%);
+            left: 50%;
+            bottom: 1.5rem;
+            transform: translateX(-50%);
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            background: rgba(13, 5, 20, 0.78);
             color: #f6e8c8;
             font-family: var(--vtt-font-heading);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            z-index: 10;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            z-index: 9600;
         }
 
         #characterSheetSceneStatus[hidden] {
@@ -590,10 +694,15 @@
             }
         }
 
+        .sheet-focus-page .book-shell-ribbon {
+            display: none;
+        }
+
     </style>
+    <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
 </head>
 <body class="spellbook character-sheet-route-book-scene">
-    <div id="characterSheetSceneStatus" role="status" aria-live="polite">Charakterbogen wird vorbereitet …</div>
+    <div id="characterSheetSceneStatus" role="status" aria-live="polite" hidden>Charakterbogen wird geladen …</div>
     <template id="characterSheetSceneTemplate">
         <div class="book-dashboard-camera book-route-camera sheet-focus-camera">
             <section class="book-dashboard-page book-route-page book-focus-page sheet-focus-page" role="region" aria-label="Character sheet focus page">
@@ -652,7 +761,7 @@
 
                     <div class="book-spread" id="sheetSpread">
                         <section class="book-page book-page--index">
-                    <div class="sheet-pane">
+                    <div class="sheet-pane sheet-character-heading">
                         <div class="sheet-pane-header">
                             <div>
                                 <div class="sheet-pane-title">Charakterblatt</div>
@@ -662,9 +771,9 @@
                         </div>
                     </div>
 
-                    <div class="sheet-pane">
+                    <div class="sheet-pane sheet-quick-ledger">
                         <div class="sheet-pane-header">
-                            <div class="sheet-pane-title">Quick Ledger</div>
+                            <div class="sheet-pane-title">Kurzüberblick</div>
                         </div>
                         <div class="sheet-stat-row">
                             <div class="sheet-stat">
@@ -696,7 +805,7 @@
                         </div>
                     </div>
 
-                    <div class="sheet-pane">
+                    <div class="sheet-pane sheet-journey-nav">
                         <div class="sheet-pane-header">
                         <div class="sheet-pane-title">Navigation</div>
                         </div>
@@ -767,8 +876,8 @@
                     <form id="sheetForm" class="sheet-form-inline" novalidate>
                         <div class="sheet-pane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Core</div>
-                                <div class="sheet-help">Read mode keeps the values visible. Edit mode unlocks the inputs below.</div>
+                                <div class="sheet-pane-title">Grundwerte</div>
+                                <div class="sheet-help">Im Ansichtsmodus bleiben die Werte sichtbar. Zum Ändern den Bearbeitungsmodus öffnen.</div>
                             </div>
                             <div class="sheet-core-grid">
                                 <div class="field field--wide">
@@ -994,9 +1103,12 @@
             goTo('/characters');
         }
 
+        // The table this sheet rolls to travels with the sheet through view/edit.
         function toggleSheetMode() {
-            const nextMode = editable ? 'view' : 'edit';
-            goTo(`/character-sheet?id=${characterId}${nextMode === 'edit' ? '&mode=edit' : ''}`);
+            const query = new URLSearchParams({ id: String(characterId) });
+            if (!editable) query.set('mode', 'edit');
+            if (srdTableSession) query.set('session_id', srdTableSession);
+            goTo(`/character-sheet?${query}`);
         }
 
         function openCampaignContext() {
@@ -1029,11 +1141,12 @@
                 routeKey: 'character-sheet',
                 auth,
                 statusElementId: 'characterSheetSceneStatus',
-                statusMessage: 'Charakterbogen wird vorbereitet …',
+                statusMessage: 'Charakterbogen wird geladen …',
             });
         }
 
         function setEditMode() {
+            document.body.dataset.sheetMode = editable ? 'edit' : 'view';
             document.getElementById('sheetModeChip').textContent = editable ? 'Bearbeiten' : 'Ansicht';
             document.getElementById('modeLabel').textContent = editable
                 ? 'Bearbeitungsmodus: Kernwerte und Ressourcen können geändert werden.'
@@ -1106,7 +1219,7 @@
         }
 
         function renderCore(character) {
-            document.getElementById('sheetTitle').textContent = `Character Sheet: ${character.name || 'Nicht angegeben'}`;
+            document.getElementById('sheetTitle').textContent = character.name || 'Nicht angegeben';
             document.getElementById('sheetCharacterChip').textContent = character.name || 'Nicht angegeben';
             document.getElementById('summaryName').textContent = character.name || 'Nicht angegeben';
             document.getElementById('summaryLevel').textContent = String(character.level ?? 1);
@@ -1137,9 +1250,9 @@
             const isAvatar = identityKind === 'avatar';
             const label = isAvatar ? 'Avatar' : 'Token';
             const url = isAvatar ? character.avatar_url : character.token_url;
-            const uploadLabel = url ? `Replace ${label}` : `Upload ${label}`;
+            const uploadLabel = url ? `${label} ersetzen` : `${label} hochladen`;
             const removeButton = url
-                ? `<button class="btn btn-danger" type="button" onclick="removeIdentity('${identityKind}')">Remove ${label}</button>`
+                ? `<button class="btn btn-danger" type="button" onclick="removeIdentity('${identityKind}')">${label} entfernen</button>`
                 : '';
 
             return `
@@ -1152,8 +1265,8 @@
                     </div>
                     <div class="sheet-identity-copy">
                         ${url
-                            ? `${label} is stored and will remain available in archive, sheet, campaign context, and later table use.`
-                            : `${label} is empty right now. Upload one here to complete this character's identity.`}
+                            ? `${label} ist im Archiv und am Spieltisch verfügbar.`
+                            : `Noch kein ${label} vorhanden.`}
                     </div>
                     <div class="sheet-identity-actions">
                         <button class="btn btn-secondary" type="button" onclick="openIdentityPicker('${identityKind}')">${uploadLabel}</button>
@@ -1247,6 +1360,16 @@
         let srdRollMode = 'normal';
         const srdRollHistory = [];
         const SRD_ROLL_MODES = [['normal', 'Normal'], ['advantage', 'Vorteil'], ['disadvantage', 'Nachteil']];
+        // Sheet to table: opened from a table, the URL names its session and every roll carries it.
+        // The server refuses a roll for a wrong or finished table instead of sending it elsewhere.
+        let srdTableSession = params.get('session_id') || null;
+        let srdRollContext = null;
+        let srdRollContextAt = 0;
+        let srdRollContextToken = 0;
+        const SRD_LOCAL_REASONS = {
+            no_campaign: 'Der Charakter gehört zu keiner Kampagne.',
+            no_session: 'In der Kampagne läuft gerade keine Sitzung, an der du mitspielst.',
+        };
 
         function appendText(parent, tag, text, className = '') {
             const node = document.createElement(tag);
@@ -1311,16 +1434,129 @@
             node.replaceChildren();
             node.append(document.createTextNode(entry.error || entry.text));
             if (!entry.error) {
-                appendText(node, 'span', entry.logged ? ' · im Tisch-Protokoll' : ' · nur hier (keine laufende Sitzung)', 'srd-roll-where');
+                appendText(node, 'span', entry.logged
+                    ? ` · live am Tisch${entry.table ? ` „${entry.table}“` : ''}`
+                    : ` · nur hier, nicht am Tisch${entry.reason ? ` – ${entry.reason}` : ''}`, 'srd-roll-where');
             }
             history.replaceChildren();
-            srdRollHistory.slice(1, 6).forEach((past) => appendText(history, 'li', past.text));
+            srdRollHistory.slice(1, 6).forEach((past) => appendText(history, 'li', `${past.text}${past.logged ? ' · am Tisch' : ' · nur hier'}`));
+        }
+
+        // Like auth.makeAuthRequest, but keeps the server's status, message and extra fields.
+        async function srdTableRequest(url, method = 'GET', body = null, retryOn401 = true) {
+            const options = { method, credentials: 'include', headers: Auth.buildHeaders(method, body !== null) };
+            if (body !== null) options.body = JSON.stringify(body);
+            const response = await fetch(url, options);
+            if (response.status === 401 && retryOn401) {
+                if (await Auth.refreshAccessToken()) return srdTableRequest(url, method, body, false);
+                window.location.href = '/login.html';
+                return null;
+            }
+            return { ok: response.ok, status: response.status, payload: await response.json().catch(() => ({})) };
+        }
+
+        async function loadSrdRollContext(character, force = false) {
+            if (!character?.id || (!force && Date.now() - srdRollContextAt < 5000)) return;
+            srdRollContextAt = Date.now();
+            const token = ++srdRollContextToken;
+            const query = srdTableSession ? `?session_id=${encodeURIComponent(srdTableSession)}` : '';
+            let next;
+            try {
+                const answer = await srdTableRequest(`/api/srd-creator/characters/${character.id}/roll-context${query}`);
+                if (!answer) return;
+                next = answer.ok ? answer.payload
+                    : { error: answer.payload.error || 'failed', message: answer.payload.message || 'Das Würfelziel konnte nicht geprüft werden.' };
+            } catch (error) {
+                next = { error: 'offline', message: 'Das Würfelziel konnte nicht geprüft werden (keine Verbindung).' };
+            }
+            if (token !== srdRollContextToken) return;
+            srdRollContext = next;
+            renderSrdRollDestination(character);
+        }
+
+        function bindSrdTable(character, sessionId) {
+            srdTableSession = sessionId ? String(sessionId) : null;
+            const url = new URL(window.location.href);
+            if (srdTableSession) url.searchParams.set('session_id', srdTableSession);
+            else url.searchParams.delete('session_id');
+            window.history.replaceState(window.history.state, '', url);
+            srdRollContext = null;
+            renderSrdRollDestination(character);
+            loadSrdRollContext(character, true);
+        }
+
+        // Where the next click goes, shown before the player rolls.
+        function renderSrdRollDestination(character, node) {
+            const box = node || document.getElementById('srdRollDestination');
+            if (!box) return;
+            const context = srdRollContext;
+            box.replaceChildren();
+            let state = 'checking';
+            if (!context) {
+                appendText(box, 'span', 'Würfelziel wird geprüft …');
+            } else if (context.error) {
+                state = 'blocked';
+                appendText(box, 'strong', 'Kein Tisch: ');
+                appendText(box, 'span', `${context.message} ${srdTableSession ? 'Solange dieser Tisch gewählt ist, wird nicht gewürfelt.' : ''}`.trim());
+            } else if (context.live) {
+                state = 'live';
+                appendText(box, 'strong', `Live am Tisch „${context.session.name}“: `);
+                appendText(box, 'span', context.explicit
+                    ? 'Würfe erscheinen sofort im Würfel- und Chat-Protokoll dieses Tisches.'
+                    : 'Würfe erscheinen sofort im Würfel- und Chat-Protokoll (einzige laufende Sitzung).');
+            } else if (context.reason === 'choose_session') {
+                state = 'choose';
+                const label = appendText(box, 'label', 'Mehrere Sitzungen laufen. Würfle an Tisch: ');
+                label.htmlFor = 'srdRollSession';
+                const select = document.createElement('select');
+                select.id = 'srdRollSession';
+                select.append(new Option('Tisch wählen …', ''));
+                (context.sessions || []).forEach((entry) => select.append(new Option(entry.name, String(entry.id))));
+                select.addEventListener('change', () => { if (select.value) bindSrdTable(character, select.value); });
+                box.append(select);
+            } else {
+                state = 'local';
+                appendText(box, 'strong', 'Nur hier: ');
+                appendText(box, 'span', `${SRD_LOCAL_REASONS[context.reason] || ''} Würfe erscheinen nicht am Tisch.`.trim());
+            }
+            if (srdTableSession && state !== 'checking') {
+                const unbind = document.createElement('button');
+                unbind.type = 'button';
+                unbind.className = 'srd-roll-link';
+                unbind.textContent = 'Tischbindung lösen';
+                unbind.addEventListener('click', () => bindSrdTable(character, null));
+                box.append(unbind);
+            }
+            box.dataset.state = state;
+        }
+
+        function watchSrdRollContext() {
+            const refresh = () => {
+                if (document.visibilityState === 'visible' && isSrdCharacter(sheet?.character)) loadSrdRollContext(sheet.character);
+            };
+            window.addEventListener('focus', refresh);
+            document.addEventListener('visibilitychange', refresh);
+            window.setInterval(refresh, 60000);
         }
 
         async function rollFromSheet(character, kind, key, button, extraBody) {
+            if (!srdTableSession && srdRollContext?.reason === 'choose_session') {
+                renderSrdRollResult({ error: 'Wähle zuerst oben den Tisch, an dem du spielst. Es wurde nicht gewürfelt.' });
+                document.getElementById('srdRollSession')?.focus();
+                return;
+            }
             button.disabled = true;
             try {
-                const result = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/roll`, 'POST', { ...(extraBody || {}), kind, key, mode: srdRollMode });
+                const body = { ...(extraBody || {}), kind, key, mode: srdRollMode };
+                if (srdTableSession) body.sessionId = srdTableSession;
+                const answer = await srdTableRequest(`/api/srd-creator/characters/${character.id}/roll`, 'POST', body);
+                if (!answer) return;
+                if (!answer.ok) {
+                    renderSrdRollResult({ error: answer.payload.message || 'Der Wurf ist fehlgeschlagen.' });
+                    if (String(answer.payload.error || '').startsWith('session_')) loadSrdRollContext(character, true);
+                    return;
+                }
+                const result = answer.payload;
                 const roll = result.result;
                 const rolls = roll.rolls || [];
                 const kept = rolls.join(' + ');
@@ -1331,11 +1567,15 @@
                     text: `${result.label}${modeText}: ${shown} = ${roll.total}`,
                     natural: roll.natural,
                     logged: result.logged,
+                    table: result.session?.name || '',
+                    reason: SRD_LOCAL_REASONS[result.reason] || '',
                 };
                 srdRollHistory.unshift(entry);
                 renderSrdRollResult(entry);
+                // A roll that stayed local while a table was expected, or the other way round, refreshes the status.
+                if (Boolean(result.logged) !== Boolean(srdRollContext?.live)) loadSrdRollContext(character, true);
             } catch (error) {
-                renderSrdRollResult({ error: error.message || 'Der Wurf ist fehlgeschlagen.' });
+                renderSrdRollResult({ error: 'Der Wurf ist fehlgeschlagen (keine Verbindung).' });
             } finally {
                 button.disabled = false;
             }
@@ -1361,7 +1601,28 @@
                 head.append(srdRollButton(`Zauberangriff ${cls?.name || classKey} ${signed(info.attackBonus)}`, 'spell_attack', classKey, character));
             });
             bar.append(head);
-            const result = appendText(bar, 'div', 'Klicke auf einen Wert, um zu würfeln. Der Wurf erscheint im Tisch-Protokoll, wenn eine Sitzung läuft.', 'srd-roll-result');
+            const destination = document.createElement('div');
+            destination.className = 'srd-roll-destination';
+            destination.id = 'srdRollDestination';
+            destination.setAttribute('role', 'status');
+            destination.setAttribute('aria-live', 'polite');
+            renderSrdRollDestination(character, destination);
+            bar.append(destination);
+            // Every value with a button rolls; the sticky bar jumps to the sections that hold them.
+            const jump = document.createElement('nav');
+            jump.className = 'srd-roll-jump';
+            jump.setAttribute('aria-label', 'Würfe auf dem Bogen');
+            appendText(jump, 'span', 'Würfe:');
+            [['Attribute & Rettungswürfe', 'srdAbilitiesTitle'], ['Fertigkeiten', 'srdSkillsTitle'], ['Waffenangriffe', 'srdInventory']].forEach(([text, target]) => {
+                const link = document.createElement('button');
+                link.type = 'button';
+                link.className = 'srd-roll-link';
+                link.textContent = text;
+                link.addEventListener('click', () => document.getElementById(target)?.scrollIntoView({ block: 'start' }));
+                jump.append(link);
+            });
+            bar.append(jump);
+            const result = appendText(bar, 'div', 'Klicke auf einen Wert, um zu würfeln.', 'srd-roll-result');
             result.id = 'srdRollResult';
             result.setAttribute('role', 'status');
             result.setAttribute('aria-live', 'polite');
@@ -1415,6 +1676,7 @@
             }
             if (token !== srdRenderToken) return;
             body.replaceChildren(...buildSrdSheet(character, detail, srdCreatorData));
+            loadSrdRollContext(character, true);
             loadSrdInventory(character, updateSrdArmorClass);
             loadSrdManage(character);
             loadSrdProgression(character, detail.evaluation, (info) => {
@@ -1437,6 +1699,79 @@
             if (input) input.value = payload.armorClass.value;
         }
 
+        // A published homebrew Species pinned at finalize: shown from the pin, never from the editable Eagle document.
+        function buildSrdOrigin(character, origin) {
+            const box = document.createElement('div');
+            box.className = 'srd-sheet-origin';
+            box.id = 'srdSpeciesOrigin';
+            appendText(box, 'div', `Herkunft: ${origin.name} (Homebrew)`, 'srd-sheet-subtitle');
+            const movement = (origin.movement || []).map((m) => `${m.label} ${m.feet} ft (${String(m.meters).replace('.', ',')} m)`).join(', ');
+            const senses = (origin.senses || []).map((s) => `${s.label} ${s.feet} ft`).join(', ') || 'Keine Dunkelsicht';
+            box.append(srdGrid('srd-sheet-facts', [
+                srdCell('Kreaturentyp', origin.creatureType?.label || '–'),
+                srdCell('Größe', (origin.sizes || []).map((s) => s.label).join(' oder ') || '–'),
+                srdCell('Bewegung', movement || '–'),
+                srdCell('Sinne', senses),
+            ]));
+            appendText(box, 'p', `${origin.scope?.label || ''} · Fassung ${origin.revision ?? '–'} · Regelwerk ${origin.edition}${origin.author ? ` · veröffentlicht von ${origin.author}` : ''}`, 'srd-sheet-note');
+            if (origin.description) appendText(box, 'p', origin.description, 'srd-sheet-note');
+            if (origin.sensesNote) appendText(box, 'p', origin.sensesNote, 'srd-sheet-note');
+            (origin.traits || []).forEach((trait) => {
+                const rule = appendText(box, 'p', '', 'srd-sheet-note');
+                appendText(rule, 'strong', `${trait.name}: `);
+                appendText(rule, 'span', trait.description);
+            });
+            (origin.actions || []).forEach((action) => box.append(buildSrdOriginAction(character, origin, action)));
+            return box;
+        }
+
+        function buildSrdOriginAction(character, origin, action) {
+            const form = document.createElement('form');
+            form.className = 'srd-origin-action';
+            form.dataset.actionId = action.id;
+            appendText(form, 'strong', action.name);
+            appendText(form, 'p', action.summary, 'srd-sheet-note');
+            if (!origin.canAct) return form;
+            const input = (labelText, attrs) => {
+                const label = document.createElement('label');
+                label.textContent = `${labelText} `;
+                const field = Object.assign(document.createElement('input'), attrs);
+                label.append(field);
+                form.append(label);
+                return field;
+            };
+            const object = input('Gegenstand', { type: 'text', maxLength: 160, required: true, name: 'object', placeholder: 'z. B. der Schlüssel auf dem Tisch' });
+            const weight = input('Gewicht (lb)', { type: 'number', min: 0.1, max: action.maxWeightLb, step: 0.1, required: true, name: 'weightLb' });
+            const distance = input('Entfernung (ft)', { type: 'number', min: 0, max: action.rangeFeet, step: 1, required: true, name: 'distanceFeet' });
+            const move = input('Bewegen um (ft)', { type: 'number', min: 1, max: action.maxMoveFeet, step: 1, required: true, name: 'moveFeet' });
+            const unattended = input('Niemand trägt oder hält ihn', { type: 'checkbox', required: true, name: 'unattended' });
+            const button = Object.assign(document.createElement('button'), { type: 'submit', textContent: 'Am Tisch erklären', className: 'srd-roll-button' });
+            form.append(button);
+            // One key per declaration: a retry after a lost answer is recognised by the server and logged once.
+            let pendingKey = null;
+            form.addEventListener('input', () => { pendingKey = null; });
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                pendingKey = pendingKey || `q${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
+                button.disabled = true;
+                try {
+                    const receipt = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/species-actions/${encodeURIComponent(action.id)}`, 'POST', {
+                        idempotencyKey: pendingKey, object: object.value, weightLb: Number(weight.value),
+                        distanceFeet: Number(distance.value), moveFeet: Number(move.value), unattended: unattended.checked,
+                        ...(srdTableSession ? { sessionId: srdTableSession } : {}),
+                    });
+                    pendingKey = null;
+                    form.reset();
+                    showMessage(receipt.duplicate ? 'Diese Erklärung steht bereits im Tischprotokoll.' : `${action.name} erklärt: Die Spielleitung sieht es im Tischprotokoll.`);
+                } catch (error) {
+                    showMessage(error.message || 'Die Aktion konnte nicht erklärt werden.', true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+            return form;
+        }
+
         function buildSrdSheet(character, detail, data) {
             const ev = detail.evaluation || {};
             const state = detail.srd?.state || {};
@@ -1455,6 +1790,7 @@
                 srdCell('Klasse', classText || character.class || '–'),
                 srdCell('Gesinnung', alignment?.name || '–'),
             ]));
+            if (detail.speciesOrigin) nodes.push(buildSrdOrigin(character, detail.speciesOrigin));
 
             const hp = ev.hitPoints?.max ?? character.hp_max;
             const hitDice = Object.entries(ev.hitDice || {}).map(([die, count]) => `${count}×${die}`).join(' + ');
@@ -1486,7 +1822,7 @@
                 cell.append(pair);
                 return cell;
             });
-            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Attribute' }));
+            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', id: 'srdAbilitiesTitle', textContent: 'Attribute' }));
             nodes.push(srdGrid('srd-sheet-abilities', abilityCells));
 
             const skillList = document.createElement('ul');
@@ -1500,7 +1836,7 @@
                 row.append(rollButton);
                 skillList.append(row);
             });
-            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Fertigkeiten' }));
+            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', id: 'srdSkillsTitle', textContent: 'Fertigkeiten' }));
             nodes.push(skillList);
 
             const casting = ev.spellcasting || {};
@@ -1636,6 +1972,7 @@
 
         function renderSheet() {
             if (!sheet) return;
+            document.body.dataset.sheetHasSrd = isSrdCharacter(sheet.character) ? 'true' : 'false';
             document.getElementById('sheetEmptyState').hidden = true;
             document.getElementById('sheetSpread').hidden = false;
             renderCore(sheet.character);
@@ -1865,8 +2202,10 @@
             if (picker) {
                 picker.addEventListener('change', handleIdentityFilePicked);
             }
+            watchSrdRollContext();
             bootstrapCharacterSheetScene();
         });
     </script>
+    <script src="/static/js/vtt-main-nav.js"></script>
 </body>
 </html>

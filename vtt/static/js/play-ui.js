@@ -1,7 +1,4 @@
 (function () {
-    const reducedMotion = window.matchMedia
-        ? window.matchMedia("(prefers-reduced-motion: reduce)")
-        : { matches: false };
     const PLAY_ENTRY_STORAGE_KEY = "vtt.play.entry-boundary";
     const BOOK_RETURN_STORAGE_KEY = "vtt.book.return-boundary";
     const PLAY_ENTRY_PHASES = new Set(["book-exit", "play-route-entry"]);
@@ -86,6 +83,8 @@
             // ({encounter, participants, events}) for the table.
             this.combat = null;
             this.dragState = null;
+            this.tokenRenderFrame = null;
+            this.tokenRenderPending = false;
             this.panState = null;
             this.mapInteractionsBound = false;
             this.tokenIndex = new Map();
@@ -151,10 +150,111 @@
             }
 
             this._consumeEntryBoundary();
+            this._bindEarlyControls();
 
+            // Tischplatz: the server's role decides which surface is built.
+            // The DM layer is only mounted for a DM seat; a player seat (or
+            // a failed first load) never gets DM controls or their handlers.
+            const initial = await this._prepareTableSeat();
+            this._composeTableSurface(initial);
             this._bindControls();
-            await this.loadBootstrap();
+            await this.loadBootstrap(initial);
             this._connectSocket();
+        }
+
+        async _prepareTableSeat() {
+            // ?seat=dm|player comes from the campaign hub's entry buttons. It
+            // only asks; the server refuses a DM seat to anyone but a DM or
+            // CO-DM. The parameter is dropped so a reload keeps the seat
+            // without asking again.
+            const params = new URLSearchParams(window.location.search);
+            const seat = params.get("seat");
+            if (params.has("seat")) {
+                params.delete("seat");
+                const query = params.toString();
+                window.history.replaceState(window.history.state, "",
+                    `${window.location.pathname}${query ? `?${query}` : ""}`);
+            }
+            if (seat === "dm" || seat === "player") {
+                try {
+                    await this.api.setTableSeat(this.campaignId, this.sessionId, seat);
+                } catch (error) {
+                    this._showMessage(error.message || "Der Tischplatz konnte nicht gewählt werden.", true);
+                }
+            }
+            try {
+                return await this.api.bootstrap(this.campaignId, this.sessionId);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        _composeTableSurface(initialPayload) {
+            const operator = isOperatorRole(initialPayload?.session_role || "");
+            document.querySelectorAll("template[data-dm-layer]").forEach((template) => {
+                if (operator) {
+                    template.replaceWith(template.content.cloneNode(true));
+                } else {
+                    template.remove();
+                }
+            });
+            const seatSwitch = document.querySelector("template[data-seat-switch]");
+            if (seatSwitch) {
+                if (initialPayload?.can_switch_seat) {
+                    seatSwitch.replaceWith(seatSwitch.content.cloneNode(true));
+                } else {
+                    seatSwitch.remove();
+                }
+            }
+            if (!operator) {
+                // Verdeckt/Privat are DM roll modes; a player seat lists only its own.
+                document.querySelectorAll('#rollVisibility option[value="blind"], #rollVisibility option[value="self"]')
+                    .forEach((option) => option.remove());
+            }
+            this._composedOperator = operator;
+            document.body.dataset.tableSeat = operator ? "dm" : "player";
+        }
+
+        _recomposeForNewRole() {
+            // The seat or the campaign role changed under an open page. A
+            // reload rebuilds the surface from the server's answer; the
+            // marker stops a reload loop if the answers keep disagreeing.
+            const key = "vtt.play.table-recompose";
+            let last = 0;
+            try {
+                last = Number(window.sessionStorage.getItem(key)) || 0;
+                window.sessionStorage.setItem(key, String(Date.now()));
+            } catch (error) {
+                last = 0;
+            }
+            if (Date.now() - last < 15000) {
+                this._showMessage("Deine Rolle am Tisch hat sich geändert. Bitte lade die Seite neu.", true);
+                return;
+            }
+            window.location.reload();
+        }
+
+        async _switchTableSeat(seat) {
+            try {
+                await this.api.setTableSeat(this.campaignId, this.sessionId, seat);
+            } catch (error) {
+                this._showMessage(error.message || "Der Tischplatz konnte nicht gewechselt werden.", true);
+                return;
+            }
+            try {
+                window.sessionStorage.removeItem("vtt.play.table-recompose");
+            } catch (error) {
+                // Storage blocked: the reload below still rebuilds the page.
+            }
+            window.location.reload();
+        }
+
+        _renderSeatSwitch() {
+            const item = document.getElementById("appMenuSeat");
+            if (!item) return;
+            const asPlayer = this.bootstrap?.seat === "player";
+            item.textContent = asPlayer ? "Als Spielleitung übernehmen" : "Als Spieler am Tisch sitzen";
+            item.dataset.seat = asPlayer ? "dm" : "player";
         }
 
         _showMissingSessionState() {
@@ -250,20 +350,11 @@
         }
 
         _beginEntryArrival() {
-            const body = document.body;
-            if (!body || !this.entryBoundary) {
-                return;
+            // The table appears directly, without the dark arrival curtain
+            // (owner, 2026-11-08: tabs switch without a transition).
+            if (document.body) {
+                document.body.dataset.playTransitionStage = "table";
             }
-
-            body.dataset.playTransitionStage = "arrival";
-            window.requestAnimationFrame(() => {
-                window.requestAnimationFrame(() => {
-                    if (!document.body || document.body.dataset.playEntryBoundary !== "book-to-table") {
-                        return;
-                    }
-                    document.body.dataset.playTransitionStage = "settling";
-                });
-            });
         }
 
         _finalizeEntryArrival() {
@@ -290,9 +381,14 @@
             }, settleDelay);
         }
 
-        async loadBootstrap() {
+        async loadBootstrap(prefetched = null) {
             try {
-                const payload = await this.api.bootstrap(this.campaignId, this.sessionId);
+                const payload = prefetched || await this.api.bootstrap(this.campaignId, this.sessionId);
+                if (this._composedOperator !== undefined
+                    && isOperatorRole(payload.session_role || "") !== this._composedOperator) {
+                    this._recomposeForNewRole();
+                    return;
+                }
                 this.bootstrap = payload;
                 this.mode = payload.mode || "waiting";
                 this.readOnly = Boolean(payload.read_only);
@@ -415,13 +511,22 @@
                 : "–";
         }
 
+        // The sheet carries this table's session, so its rolls land here
+        // and nowhere else -- in the drawer and in a tab of its own.
+        _sheetUrl(characterId) {
+            const query = new URLSearchParams({ id: String(characterId), session_id: String(this.sessionId) });
+            return `/character-sheet?${query}`;
+        }
+
         _openSheet(characterId, characterName) {
             if (!characterId) return;
             const drawer = document.getElementById("sheetDrawer");
             const frame = document.getElementById("sheetFrame");
             const title = document.getElementById("sheetDrawerTitle");
             if (!drawer || !frame) return;
-            frame.src = `/character-sheet?id=${encodeURIComponent(characterId)}`;
+            frame.src = this._sheetUrl(characterId);
+            const tabLink = document.getElementById("sheetDrawerTabLink");
+            if (tabLink) tabLink.href = this._sheetUrl(characterId);
             if (title) {
                 title.textContent = characterName
                     ? `Charakterbogen · ${characterName}` : "Charakterbogen";
@@ -461,6 +566,9 @@
                     combatState: (payload) => this._handleCombatState(payload),
                     combatEnded: (payload) => this._handleCombatState(payload),
                     presenceUpdate: (payload) => this._handlePresence(payload),
+                    // Tischplatz switched in this or another tab of the same
+                    // person: rebuild the page for the new seat.
+                    seatChanged: () => this._recomposeForNewRole(),
                     lootUpdated: (payload) => this._handleLootBroadcast(payload),
                     lootTransferred: (payload) => this._handleLootBroadcast(payload),
                     visionGeometryChanged: () => this._loadVisionGeometry(),
@@ -488,7 +596,7 @@
                     // indicator instead of silently going stale while the
                     // socket is down. No other part of this app surfaced
                     // connect/disconnect at all before this.
-                    connect: () => { this._connectionLost = false; this._renderState(); },
+                    connect: () => { this._connectionLost = false; this._renderState(); this._announceTableReady(); },
                     disconnect: () => { this._connectionLost = true; this._renderState(); },
                 },
             });
@@ -497,8 +605,15 @@
             // beyond20-bridge.js): hand a normalized envelope to the table
             // without reaching into runtime internals.
             window.RollDraufTable = {
+                // Returns true when sent, false when the socket is not up yet
+                // (the adapter keeps the roll and retries on reconnect) and
+                // "read_only" when this seat may not roll right now. That case
+                // used to drop D&D Beyond rolls without any notice.
                 sendExternalRoll: (roll) => {
-                    if (this.readOnly) return false;
+                    if (this.readOnly) {
+                        this._showMessage(this._externalRollBlockedMessage(), true);
+                        return "read_only";
+                    }
                     if (!this.socket || !this.socket.isConnected) return false;
                     this.socket.sendExternalRoll(roll);
                     return true;
@@ -598,8 +713,9 @@
                     return patched;
                 },
             };
-            window.dispatchEvent(new CustomEvent("rolldrauf:table-ready"));
+            this._announceTableReady();
             window.addEventListener("beforeunload", () => {
+                this._cancelTokenRender();
                 if (this.entryArrivalTimer) {
                     window.clearTimeout(this.entryArrivalTimer);
                 }
@@ -691,8 +807,9 @@
             body.dataset.playReturnBoundary = "table-to-book";
             body.dataset.playReturnPhase = "TABLE_TO_BOOK_TRANSITION";
             body.dataset.playReturnTargetRoute = String(boundary.target?.route || "campaigns");
-            body.dataset.playTransitionStage = "table-exit";
 
+            // Leave at once: no dark exit curtain and no exit delay while the
+            // book page loads (owner, 2026-11-08).
             const navigateToBook = () => {
                 boundary.phase = "book-route-entry";
                 boundary.table_exit_completed_at = new Date().toISOString();
@@ -703,33 +820,13 @@
                 }
 
                 if (document.body) {
-                    document.body.dataset.playTransitionStage = "book-handoff";
                     document.body.dataset.playReturnBoundary = "handoff";
                     document.body.dataset.playReturnPhase = "BOOK_MODE";
                 }
                 window.location.href = boundary.target.href;
             };
 
-            const exitDuration = Math.max(
-                220,
-                Math.min(900, Number(boundary.exit_duration_ms) || PLAY_RETURN_EXIT_DURATION_MS)
-            );
-
-            if (reducedMotion.matches) {
-                this.returnExitTimer = window.setTimeout(navigateToBook, 64);
-                return true;
-            }
-
-            window.requestAnimationFrame(() => {
-                if (!document.body || document.body.dataset.playReturnBoundary !== "table-to-book") {
-                    return;
-                }
-
-                this.returnExitTimer = window.setTimeout(() => {
-                    navigateToBook();
-                }, exitDuration);
-            });
-
+            navigateToBook();
             return true;
         }
 
@@ -743,7 +840,10 @@
             return this._beginReturnTransition(boundary);
         }
 
-        _bindControls() {
+        _bindEarlyControls() {
+            // The session menu and page navigation do not depend on the
+            // seat, so they work from the first paint instead of waiting
+            // for the bootstrap that decides the rest of the surface.
             // S02: btnBack no longer navigates directly on click -- it opens
             // the app menu, whose first item ("Zur Kampagne zurückkehren")
             // is the old one-click behavior, kept unconfirmed and fast.
@@ -765,49 +865,11 @@
                     this.returnToBook(target);
                 });
             });
+            this._bindAppMenu();
+        }
 
-            document.getElementById("btnInitStack").addEventListener("click", async () => {
-                try {
-                    await this.api.initSceneStack(this.campaignId, this.sessionId);
-                    this._showMessage("Kartenstapel initialisiert.");
-                    await this.loadBootstrap();
-                } catch (error) {
-                    this._showMessage(error.message || "Kartenstapel konnte nicht initialisiert werden.", true);
-                }
-            });
-
-            document.getElementById("btnReadyCheck").addEventListener("click", async () => {
-                await this._runReadyCheck();
-            });
-
-            document.getElementById("btnToReady").addEventListener("click", async () => {
-                await this._transition("ready");
-            });
-
-            document.getElementById("btnStart").addEventListener("click", async () => {
-                const report = await this._runReadyCheck();
-                if (!report) return;
-                if (report.blocking_issues && report.blocking_issues.length) return;
-                if (report.warnings && report.warnings.length) {
-                    const ok = window.confirm("Start-Check hat Warnungen. Trotzdem live starten?");
-                    if (!ok) return;
-                }
-                await this._transition("in_progress", true);
-            });
-
-            document.getElementById("btnPause").addEventListener("click", async () => {
-                await this._transition("paused");
-            });
-
-            document.getElementById("btnResume").addEventListener("click", async () => {
-                await this._transition("in_progress", true);
-            });
-
-            document.getElementById("btnEnd").addEventListener("click", async () => {
-                const ok = window.confirm("Session wirklich beenden?");
-                if (!ok) return;
-                await this._transition("ended", true);
-            });
+        _bindControls() {
+            if (this._composedOperator) this._bindSessionControls();
 
             document.querySelectorAll(".dice-presets [data-dice-preset]").forEach((button) => {
                 button.addEventListener("click", () => {
@@ -883,6 +945,52 @@
             this._bindTableActions();
         }
 
+        _bindSessionControls() {
+            // DM layer only: these buttons exist only in a DM seat.
+            document.getElementById("btnInitStack").addEventListener("click", async () => {
+                try {
+                    await this.api.initSceneStack(this.campaignId, this.sessionId);
+                    this._showMessage("Kartenstapel initialisiert.");
+                    await this.loadBootstrap();
+                } catch (error) {
+                    this._showMessage(error.message || "Kartenstapel konnte nicht initialisiert werden.", true);
+                }
+            });
+
+            document.getElementById("btnReadyCheck").addEventListener("click", async () => {
+                await this._runReadyCheck();
+            });
+
+            document.getElementById("btnToReady").addEventListener("click", async () => {
+                await this._transition("ready");
+            });
+
+            document.getElementById("btnStart").addEventListener("click", async () => {
+                const report = await this._runReadyCheck();
+                if (!report) return;
+                if (report.blocking_issues && report.blocking_issues.length) return;
+                if (report.warnings && report.warnings.length) {
+                    const ok = window.confirm("Start-Check hat Warnungen. Trotzdem live starten?");
+                    if (!ok) return;
+                }
+                await this._transition("in_progress", true);
+            });
+
+            document.getElementById("btnPause").addEventListener("click", async () => {
+                await this._transition("paused");
+            });
+
+            document.getElementById("btnResume").addEventListener("click", async () => {
+                await this._transition("in_progress", true);
+            });
+
+            document.getElementById("btnEnd").addEventListener("click", async () => {
+                const ok = window.confirm("Session wirklich beenden?");
+                if (!ok) return;
+                await this._transition("ended", true);
+            });
+        }
+
         _bindWorkspaceControls() {
             // M3: the right sidebar (Journal/Chat/Tools/Session) is an overlay
             // toggled on demand now, closed by default, so the map keeps the
@@ -952,7 +1060,6 @@
             this._setupTableSheet();
             this._bindWidgetDragging();
             this._bindLayersDirectoryControls();
-            this._bindAppMenu();
             this._bindActionHotbar();
 
             const sendChat = () => {
@@ -2396,27 +2503,87 @@
         async _fireHotbarSlot(actionCode) {
             const token = this._findStateToken(this.selectedTokenId);
             if (!token || this.readOnly || !this._canMoveToken(token)) return;
+            if (this._pendingTarget) {
+                // Pressing a slot again (or another one) while picking a
+                // target cancels the pick instead of stacking a second one.
+                const sameSlot = this._pendingTarget.actionCode === actionCode;
+                this._cancelTargeting(sameSlot ? "Zielauswahl abgebrochen." : "");
+                if (sameSlot) return;
+            }
+            const catalog = Array.isArray(this.bootstrap?.action_catalog) ? this.bootstrap.action_catalog : [];
+            const action = catalog.find((entry) => entry.code === actionCode);
+            if (action?.requires_target) {
+                this._beginTargeting(token, action);
+                return;
+            }
+            await this._executeHotbarAction(token, actionCode, null);
+        }
+
+        async _executeHotbarAction(token, actionCode, targetTokenId) {
             const button = document.querySelector(`.hotbar-slot[data-action-code="${actionCode}"]`);
             // Acceptance: brief (~300ms) highlight on execution, only after
             // the server confirms -- no optimistic pre-response feedback.
             try {
-                await this.api.executeAction(this.campaignId, this.sessionId, token.id, actionCode, null);
+                await this.api.executeAction(this.campaignId, this.sessionId, token.id, actionCode, targetTokenId);
                 if (button) {
                     button.classList.add("firing");
                     window.setTimeout(() => button.classList.remove("firing"), 300);
                 }
             } catch (error) {
-                // Server is sole authority (Apply decision) -- e.g. a
-                // target-required action fired with no target picker on
-                // this quick-fire bar surfaces here as a clear error
-                // rather than a silent no-op or an invented target-picker.
+                // Server is sole authority (Apply decision).
                 this._showMessage(error.message || "Aktion fehlgeschlagen.", true);
             }
+        }
+
+        // Target picker for actions that need one (Angriff): the next token
+        // clicked on the map, in the token list or in the turn order is the
+        // target. Esc or the same slot again cancels.
+        _beginTargeting(actor, action) {
+            this._pendingTarget = { actorId: Number(actor.id), actionCode: action.code, name: action.name };
+            document.body.classList.add("is-picking-target");
+            const button = document.querySelector(`.hotbar-slot[data-action-code="${action.code}"]`);
+            if (button) {
+                button.classList.add("targeting");
+                button.setAttribute("aria-pressed", "true");
+            }
+            this._showMessage(`${action.name}: Ziel-Token anklicken. Esc bricht ab.`);
+        }
+
+        _cancelTargeting(message = "") {
+            const pending = this._pendingTarget;
+            this._pendingTarget = null;
+            document.body.classList.remove("is-picking-target");
+            document.querySelectorAll(".hotbar-slot.targeting").forEach((button) => {
+                button.classList.remove("targeting");
+                button.removeAttribute("aria-pressed");
+            });
+            if (pending && message) this._showMessage(message);
+        }
+
+        async _completeTargeting(targetTokenId) {
+            const pending = this._pendingTarget;
+            this._cancelTargeting();
+            if (!pending) return;
+            if (Number(targetTokenId) === pending.actorId) {
+                this._showMessage("Wähle als Ziel einen anderen Token.", true);
+                return;
+            }
+            const actor = this._findStateToken(pending.actorId);
+            if (!actor || !this._findStateToken(targetTokenId)) {
+                this._showMessage("Dieser Token ist nicht mehr am Tisch.", true);
+                return;
+            }
+            await this._executeHotbarAction(actor, pending.actionCode, Number(targetTokenId));
         }
 
         _bindActionHotbar() {
             document.addEventListener("keydown", (event) => {
                 const key = event.key;
+                if (key === "Escape" && this._pendingTarget) {
+                    event.preventDefault();
+                    this._cancelTargeting("Zielauswahl abgebrochen.");
+                    return;
+                }
                 if (!/^[0-9]$/.test(key)) return;
                 // Acceptance (HIGH risk in the research doc): never fire
                 // while focus is in an input/textarea/select/contenteditable
@@ -2524,8 +2691,11 @@
             const turnWidget = document.getElementById("turnOrderWidget");
             const tokenWidget = document.getElementById("tokenWidget");
             const layersToggle = layersWidget?.querySelector(".widget-toggle");
-            if (layersWidget) layersWidget.classList.remove("collapsed");
-            if (layersToggle) layersToggle.setAttribute("aria-expanded", "true");
+            // 2026-11-08: the table is fullscreen and the map comes first.
+            // Only a DM seat on a tall screen starts with the pages open.
+            const layersOpen = Boolean(this._composedOperator) && window.innerHeight >= 820;
+            if (layersWidget) layersWidget.classList.toggle("collapsed", !layersOpen);
+            if (layersToggle) layersToggle.setAttribute("aria-expanded", String(layersOpen));
             if (turnWidget) turnWidget.classList.add("collapsed");
             if (tokenWidget) tokenWidget.classList.add("collapsed");
             turnWidget?.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "false");
@@ -3043,6 +3213,7 @@
 
         _handleSnapshot(payload) {
             if (!this.bootstrap) return;
+            this._cancelTokenRender();
             this.bootstrap.state_payload = payload;
             this._renderState();
             this._renderMapCanvas();
@@ -3094,10 +3265,7 @@
             const token = payload?.token;
             if (!token) return;
             this._upsertStateToken(token);
-            this._renderState();
-            this._renderMapCanvas();
-            this._renderTurnOrder();
-            this._renderTokenSelectors();
+            this._scheduleTokenRender();
             this._logActivity(`Token erstellt: ${token.name}.`, "info");
         }
 
@@ -3105,10 +3273,7 @@
             const token = payload?.token;
             if (!token) return;
             this._upsertStateToken(token);
-            this._renderState();
-            this._renderMapCanvas();
-            this._renderTurnOrder();
-            this._renderTokenSelectors();
+            this._scheduleTokenRender();
             this._logActivity(`Token aktualisiert: ${token.name}.`, "info");
         }
 
@@ -3119,10 +3284,7 @@
             if (Number(this.selectedTokenId) === tokenId) {
                 this.selectedTokenId = null;
             }
-            this._renderState();
-            this._renderMapCanvas();
-            this._renderTurnOrder();
-            this._renderTokenSelectors();
+            this._scheduleTokenRender();
             this._logActivity(`Token gelöscht: #${tokenId}.`, "info");
         }
 
@@ -3138,10 +3300,34 @@
                     if (Number.isFinite(nextY)) token.y = nextY;
                 }
             }
-            this._renderMapCanvas();
-            this._renderState();
-            this._renderTokenSelectors();
+            this._scheduleTokenRender();
             this._logActivity(`Tokenbewegung synchronisiert (${moves.length}).`, "info");
+        }
+
+        _scheduleTokenRender() {
+            // Apply every socket event to state immediately, then paint its
+            // latest result once per frame. Rebuilding hundreds of markers
+            // for every event in a burst blocks input and decodes art again.
+            this.tokenRenderPending = true;
+            if (this.tokenRenderFrame != null || this.dragState) return;
+            this.tokenRenderFrame = window.requestAnimationFrame(() => {
+                this.tokenRenderFrame = null;
+                // A drag owns its marker and pointer capture until release.
+                if (!this.tokenRenderPending || this.dragState) return;
+                this.tokenRenderPending = false;
+                this._renderState();
+                this._renderMapCanvas();
+                this._renderTurnOrder();
+                this._renderTokenSelectors();
+            });
+        }
+
+        _cancelTokenRender() {
+            if (this.tokenRenderFrame != null) {
+                window.cancelAnimationFrame(this.tokenRenderFrame);
+            }
+            this.tokenRenderFrame = null;
+            this.tokenRenderPending = false;
         }
 
         _handleTrapTriggered(payload) {
@@ -3204,6 +3390,7 @@
                     log.removeChild(log.lastChild);
                 }
             }
+            this._showRollFeed(roll, payload);
             this._appendChatMessage({
                 time: String(payload?.timestamp || new Date().toISOString()).slice(11, 19),
                 sender_name: roll.character || payload?.sender_name || "external",
@@ -3279,6 +3466,57 @@
             return card;
         }
 
+        // The dice log sits in the closed menu on the fullscreen table, so
+        // every external roll also shows on the map for a few seconds.
+        _showRollFeed(roll, payload) {
+            const feed = document.getElementById("rollFeed");
+            if (!feed) return;
+            const advantage = String(roll.advantage || "normal");
+            const card = document.createElement("div");
+            card.className = `roll-feed-card${advantage === "crit" ? " crit" : ""}${advantage === "fumble" ? " fumble" : ""}`;
+
+            const head = document.createElement("div");
+            head.className = "roll-feed-head";
+            const who = document.createElement("span");
+            who.className = "roll-feed-who";
+            who.textContent = roll.character || payload?.sender_name || "extern";
+            head.appendChild(who);
+            if (roll.total != null) {
+                const total = document.createElement("span");
+                total.className = "roll-feed-total";
+                total.textContent = String(roll.total);
+                head.appendChild(total);
+            }
+            card.appendChild(head);
+
+            const title = document.createElement("div");
+            title.className = "roll-feed-title";
+            const badge = advantage === "crit" ? " · KRIT!" : (advantage === "fumble" ? " · Patzer" : "");
+            title.textContent = `${roll.title || roll.formula || "Wurf"}${badge}`;
+            card.appendChild(title);
+
+            // Attack and damage arrive as one roll; name the parts.
+            const parts = (Array.isArray(roll.rolls) ? roll.rolls : [])
+                .filter((entry) => entry && entry.total != null)
+                .slice(0, 3)
+                .map((entry) => `${entry.label || entry.formula || "Wurf"} ${entry.total}`);
+            if (parts.length > 1) {
+                const detail = document.createElement("div");
+                detail.className = "roll-feed-detail";
+                detail.textContent = parts.join(" · ");
+                card.appendChild(detail);
+            }
+
+            feed.prepend(card);
+            while (feed.children.length > 4) {
+                feed.removeChild(feed.lastChild);
+            }
+            window.setTimeout(() => {
+                card.classList.add("is-leaving");
+                window.setTimeout(() => card.remove(), 450);
+            }, 9000);
+        }
+
         _formatDiceBreakdown(result) {
             const rolls = Array.isArray(result?.rolls) ? result.rolls : [];
             const modifier = Number(result?.modifier) || 0;
@@ -3311,7 +3549,12 @@
             const player = payload.player || "player";
             const modeLabel = payload.result?.mode === "advantage" ? " (Vorteil)"
                 : payload.result?.mode === "disadvantage" ? " (Nachteil)" : "";
-            const summary = `${player} hat ${payload.dice} gewürfelt${modeLabel}: ${payload.result?.total}`;
+            // Sheet rolls name their action ("Arkane Kunde", "Angriff: Dolch");
+            // it is only ever rendered as text.
+            const label = String(payload.label || "").trim().slice(0, 160);
+            const summary = label
+                ? `${player} · ${label}${modeLabel} · ${payload.dice}: ${payload.result?.total}`
+                : `${player} hat ${payload.dice} gewürfelt${modeLabel}: ${payload.result?.total}`;
             const breakdown = this._formatDiceBreakdown(payload.result);
             const log = document.getElementById("diceLog");
             const line = document.createElement("div");
@@ -3335,7 +3578,7 @@
                 message: summary,
                 rollBreakdown: breakdown,
             });
-            this._logActivity(`${player} hat ${payload.dice} gewürfelt.`, "info");
+            this._logActivity(label ? `${player} · ${label}: ${payload.dice} gewürfelt.` : `${player} hat ${payload.dice} gewürfelt.`, "info");
         }
 
         _render() {
@@ -3363,11 +3606,20 @@
                 sessionTitleHeader.textContent = sessionTitle;
             }
             document.getElementById("modeBadge").textContent = this.mode;
-            document.getElementById("roleBadge").textContent = role;
+            document.getElementById("roleBadge").textContent = this.bootstrap?.can_switch_seat && this.bootstrap?.seat === "player"
+                ? `${role} · Spielleitung sitzt als Spieler`
+                : role;
+            this._renderSeatSwitch();
             document.getElementById("readOnlyBadge").textContent = this.readOnly ? "nur lesen" : "interaktiv";
+            document.getElementById("readOnlyChip")?.classList.toggle("is-read-only", this.readOnly);
             const statusPill = document.getElementById("sessionStatusPill");
             if (statusPill) {
-                statusPill.textContent = String(this.bootstrap?.session?.runtime_status || this.bootstrap?.session?.status || "-");
+                const status = String(this.bootstrap?.session?.runtime_status || this.bootstrap?.session?.status || "-");
+                const labels = {
+                    scheduled: "Geplant", ready: "Bereit", in_progress: "Live",
+                    paused: "Pausiert", ended: "Beendet",
+                };
+                statusPill.textContent = labels[status] || status;
             }
             this._renderAppMenuStatus();
 
@@ -3398,13 +3650,14 @@
             const btnExecute = document.getElementById("btnExecuteAction");
             const btnRoll = document.getElementById("btnRoll");
 
-            btnInitStack.disabled = !canOperate || sessionStatus === "ended";
-            btnReadyCheck.disabled = !canOperate || sessionStatus === "ended";
-            btnToReady.disabled = !canOperate || sessionStatus !== "scheduled";
-            btnStart.disabled = !canOperate || sessionStatus !== "ready";
-            btnPause.disabled = !canOperate || sessionStatus !== "in_progress";
-            btnResume.disabled = !canOperate || sessionStatus !== "paused";
-            btnEnd.disabled = !canOperate || !(sessionStatus === "in_progress" || sessionStatus === "paused");
+            // Session controls exist only in a DM seat (DM layer).
+            if (btnInitStack) btnInitStack.disabled = !canOperate || sessionStatus === "ended";
+            if (btnReadyCheck) btnReadyCheck.disabled = !canOperate || sessionStatus === "ended";
+            if (btnToReady) btnToReady.disabled = !canOperate || sessionStatus !== "scheduled";
+            if (btnStart) btnStart.disabled = !canOperate || sessionStatus !== "ready";
+            if (btnPause) btnPause.disabled = !canOperate || sessionStatus !== "in_progress";
+            if (btnResume) btnResume.disabled = !canOperate || sessionStatus !== "paused";
+            if (btnEnd) btnEnd.disabled = !canOperate || !(sessionStatus === "in_progress" || sessionStatus === "paused");
 
             btnExecute.disabled = this.readOnly || this.mode !== "live";
             btnRoll.disabled = this.readOnly || this.mode === "ended";
@@ -3447,7 +3700,9 @@
                 : allLayers;
 
             if (!allLayers.length) {
-                container.innerHTML = "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufügen.</div>";
+                container.innerHTML = this._composedOperator
+                    ? "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufügen.</div>"
+                    : "<div class='muted'>Die Spielleitung hat noch keine Karte aufgedeckt.</div>";
             } else if (!layers.length) {
                 container.innerHTML = "<div class='muted'>Keine Seite passt zur Suche.</div>";
             } else {
@@ -3675,6 +3930,15 @@
             document.getElementById("appMenuReturn")?.addEventListener("click", () => {
                 closeMenu({ returnFocus: false });
                 this.returnToBook(`/campaigns?campaign_id=${this.campaignId}`);
+            });
+
+            // The seat item is mounted after the bootstrap (DM/CO-DM only).
+            menu.addEventListener("click", (event) => {
+                const item = event.target.closest?.("#appMenuSeat");
+                if (!item) return;
+                closeMenu({ returnFocus: false });
+                const seat = item.dataset.seat;
+                if (seat === "dm" || seat === "player") this._switchTableSeat(seat);
             });
 
             document.getElementById("appMenuHelp")?.addEventListener("click", () => {
@@ -4077,6 +4341,8 @@
                 if (canOpenSheet) {
                     sheetRow.dataset.characterId = String(sheetToken.character_id);
                     sheetRow.dataset.characterName = sheetToken.name || "";
+                    const tabLink = document.getElementById("btnOpenSheetTab");
+                    if (tabLink) tabLink.href = this._sheetUrl(sheetToken.character_id);
                 }
             }
             const tokenToolBtn = document.querySelector('.tool-btn[data-tool="token"]');
@@ -4498,6 +4764,10 @@
 
         _selectToken(tokenId, repaintMap = false) {
             const searchId = Number(tokenId);
+            if (this._pendingTarget && Number.isInteger(searchId)) {
+                this._completeTargeting(searchId);
+                return;
+            }
             if (!Number.isInteger(searchId)) {
                 this.selectedTokenId = null;
             } else {
@@ -4544,6 +4814,13 @@
                 const tokenId = Number(marker.getAttribute("data-token-id"));
                 const token = this._findStateToken(tokenId);
                 if (!token) return;
+                if (this._pendingTarget) {
+                    // Picking a target, not grabbing the token.
+                    event.preventDefault();
+                    event.stopPropagation();
+                    this._completeTargeting(tokenId);
+                    return;
+                }
 
                 this._selectToken(tokenId, false);
                 const canMove = this._canMoveToken(token);
@@ -4622,6 +4899,7 @@
                 if (!this.dragState) return;
                 const drag = this.dragState;
                 this.dragState = null;
+                if (this.tokenRenderPending) this._scheduleTokenRender();
                 drag.marker.classList.remove("dragging");
                 const finalLeft = Number(drag.marker.dataset.tokenLeft || drag.baseLeft);
                 const finalTop = Number(drag.marker.dataset.tokenTop || drag.baseTop);
@@ -4820,6 +5098,24 @@
             top = Math.max(margin, Math.min(top, bounds.height - height - margin));
             popover.style.left = `${left}px`;
             popover.style.top = `${top}px`;
+        }
+
+        // External-roll adapters (beyond20-bridge.js) hand over queued rolls
+        // on this event: once at start-up and again after every reconnect.
+        _announceTableReady() {
+            if (window.RollDraufTable) {
+                window.dispatchEvent(new CustomEvent("rolldrauf:table-ready"));
+            }
+        }
+
+        _externalRollBlockedMessage() {
+            if (this.mode === "waiting") {
+                return "D&D-Beyond-Wurf nicht übertragen: Die Session ist noch nicht gestartet.";
+            }
+            if (this.mode === "ended") {
+                return "D&D-Beyond-Wurf nicht übertragen: Die Session ist beendet.";
+            }
+            return "D&D-Beyond-Wurf nicht übertragen: In dieser Rolle kannst du am Tisch nicht würfeln.";
         }
 
         _showMessage(text, isError = false) {

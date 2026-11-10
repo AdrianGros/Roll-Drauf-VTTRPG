@@ -190,6 +190,12 @@ def _get_campaign_character_or_404(campaign_id: int, character_id: int):
     return character, None
 
 
+def _is_table_dm(campaign: Campaign, user_id: int, session_id: int) -> bool:
+    """DM rights at one session's table: none while the DM or CO-DM sits there
+    as a player (vtt.play.service.get_table_role)."""
+    return _is_dm(campaign, user_id) and not scene_service.sits_as_player(user_id, session_id)
+
+
 def _can_manage_session_assignment(campaign: Campaign, user_id: int, character: Character) -> bool:
     if _is_dm(campaign, user_id):
         return True
@@ -283,7 +289,7 @@ def _emit_combat_event(campaign_id: int, session_id: int, event_name: str, paylo
     if owner_ids:
         campaign = db.session.get(Campaign, campaign_id)
         for owner_id in owner_ids:
-            role = scene_service.get_session_role(campaign, owner_id)
+            role = scene_service.get_table_role(campaign, owner_id, session_id)
             if scene_service.is_operator_role(role):
                 continue
             owner_view = scene_service.filter_combat_payload(
@@ -1258,7 +1264,7 @@ def get_session_state(campaign_id, session_id):
         return error
 
     state = _ensure_session_state(campaign, game_session)
-    role = scene_service.get_session_role(campaign, user.id)
+    role = scene_service.get_table_role(campaign, user.id, game_session.id)
     return jsonify(scene_service.serialize_state_payload(
         game_session, state, role=role, viewer_id=user.id)), 200
 
@@ -1275,7 +1281,7 @@ def activate_session_map(campaign_id, session_id):
     campaign, error = _get_campaign_or_404(campaign_id)
     if error:
         return error
-    if not _is_dm(campaign, user.id):
+    if not _is_table_dm(campaign, user.id, session_id):
         return jsonify({"error": "forbidden"}), 403
 
     game_session, error = _get_campaign_session(campaign.id, session_id)
@@ -1344,7 +1350,7 @@ def activate_session_map(campaign_id, session_id):
 
 
 def _can_manage_token(campaign: Campaign, user_id: int, token: TokenState) -> bool:
-    if _is_dm(campaign, user_id):
+    if _is_table_dm(campaign, user_id, token.game_session_id):
         return True
     return token.owner_user_id == user_id
 
@@ -1470,7 +1476,7 @@ def create_token(campaign_id, session_id):
     if error:
         return error
 
-    is_dm_member = _is_dm(campaign, user.id)
+    is_dm_member = _is_table_dm(campaign, user.id, game_session.id)
     token_type = str(data.get("token_type", "player")).strip().lower()
     if token_type not in {"player", "npc", "monster", "object"}:
         return jsonify({"error": "invalid token_type"}), 400
@@ -1617,14 +1623,14 @@ def update_token(campaign_id, session_id, token_id):
                 }
             ), 409
 
-    patch, error = _parse_token_patch(data.get("patch", data), _is_dm(campaign, user.id))
+    patch, error = _parse_token_patch(data.get("patch", data), _is_table_dm(campaign, user.id, game_session.id))
     if error:
         return error
 
     from vtt.characters import sheet_link
     if patch.get("character_id") is not None:
         link_message = sheet_link.link_error(
-            campaign, user, _is_dm(campaign, user.id), patch["character_id"], game_session.id, token.id)
+            campaign, user, _is_table_dm(campaign, user.id, game_session.id), patch["character_id"], game_session.id, token.id)
         if link_message:
             return jsonify({"error": link_message}), 400
 
@@ -1792,7 +1798,7 @@ def get_combat_state(campaign_id, session_id):
 
     payload = scene_service.filter_combat_payload(
         _serialize_combat_state(encounter, state),
-        scene_service.get_session_role(campaign, user.id),
+        scene_service.get_table_role(campaign, user.id, game_session.id),
         user.id,
     )
     return jsonify(payload), 200
@@ -1810,7 +1816,7 @@ def start_combat(campaign_id, session_id):
     campaign, error = _get_campaign_or_404(campaign_id)
     if error:
         return error
-    if not _is_dm(campaign, user.id):
+    if not _is_table_dm(campaign, user.id, session_id):
         return jsonify({"error": "forbidden"}), 403
 
     game_session, error = _get_campaign_session(campaign.id, session_id)
@@ -1871,7 +1877,7 @@ def set_combat_initiative(campaign_id, session_id):
     campaign, error = _get_campaign_or_404(campaign_id)
     if error:
         return error
-    if not _is_dm(campaign, user.id):
+    if not _is_table_dm(campaign, user.id, session_id):
         return jsonify({"error": "forbidden"}), 403
 
     game_session, error = _get_campaign_session(campaign.id, session_id)
@@ -1945,7 +1951,7 @@ def advance_combat_turn(campaign_id, session_id):
     campaign, error = _get_campaign_or_404(campaign_id)
     if error:
         return error
-    if not _is_dm(campaign, user.id):
+    if not _is_table_dm(campaign, user.id, session_id):
         return jsonify({"error": "forbidden"}), 403
 
     game_session, error = _get_campaign_session(campaign.id, session_id)
@@ -2010,7 +2016,7 @@ def adjust_combat_hp(campaign_id, session_id):
     campaign, error = _get_campaign_or_404(campaign_id)
     if error:
         return error
-    if not _is_dm(campaign, user.id):
+    if not _is_table_dm(campaign, user.id, session_id):
         return jsonify({"error": "forbidden"}), 403
 
     game_session, error = _get_campaign_session(campaign.id, session_id)
@@ -2044,18 +2050,6 @@ def adjust_combat_hp(campaign_id, session_id):
     delta, error = _coerce_int(data.get("delta"), "delta")
     if error:
         return error
-
-    from vtt.ce_compat import adapter as creation_engine_adapter
-    ce = creation_engine_adapter()
-    if ce is not None and ce.representation("vtt.token", target_token_id) is not None:
-        from vtt.creation_engine.transports.legacy_http import context_from_headers
-        from vtt.creation_engine.kernel.records import refuse
-        target = db.session.get(TokenState, target_token_id)
-        if target is None or target.game_session_id != game_session.id or target.deleted_at:
-            refuse("NOT_FOUND")
-        result = ce.translate(user.id, "vtt.token", target_token_id, {"hp_current": delta},
-                              context_from_headers(), delta=True, reason=data.get("reason") or "legacy combat HP adjustment")
-        return jsonify({"receipt": result, "token": ce.read(user.id, "vtt.token", target_token_id)}), 200
 
     token, service_error = combat_service.adjust_hp(
         encounter=encounter,
@@ -2100,7 +2094,7 @@ def end_combat(campaign_id, session_id):
     campaign, error = _get_campaign_or_404(campaign_id)
     if error:
         return error
-    if not _is_dm(campaign, user.id):
+    if not _is_table_dm(campaign, user.id, session_id):
         return jsonify({"error": "forbidden"}), 403
 
     game_session, error = _get_campaign_session(campaign.id, session_id)

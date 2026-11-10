@@ -9,8 +9,9 @@ import secrets
 
 from sqlalchemy.orm.attributes import flag_modified
 
-from vtt.characters import sheet_link, srd_inventory, srd_manage, srd_progression
+from vtt.characters import sheet_link, species_catalog, srd_inventory, srd_manage, srd_progression
 from vtt.characters.srd_progression import ProgressionError, _log
+from vtt.rules_content import species_profiles
 from vtt.extensions import db
 from vtt.models import Character, GameSession, InventoryItem, TokenState
 from vtt.models.campaign_srd_rules import CampaignSrdRules
@@ -76,6 +77,9 @@ def check_character_for_campaign(char, campaign_id):
     block = (char.character_data or {}).get("srd") if isinstance(char.character_data, dict) else None
     if isinstance(block, dict):
         check_ability_method(block.get("state"), campaign_id)
+        problem = species_catalog.campaign_problem(species_profiles.pinned(block), campaign_id)
+        if problem:
+            raise ProgressionError("species_campaign_only", problem, 409)
 
 
 # --------------------------------------------------------------------------- party view
@@ -120,6 +124,10 @@ def party(campaign, *, viewer_is_dm):
                 abilities={key: value["score"] for key, value in evaluation["abilities"].items()},
                 spellSaveDc=casting["saveDc"] if casting else None, accent=srd_manage.accent_of(char),
             )
+            origin = species_profiles.origin_view(species_profiles.pinned(sheet_link.srd_block(char)))
+            if origin:
+                row["origin"] = {key: origin[key] for key in ("name", "revision", "creatureType", "sizes", "movement", "senses", "traits", "scope")}
+                row["origin"]["actions"] = [{"id": a["id"], "name": a["name"], "summary": a["summary"]} for a in origin["actions"]]
             if viewer_is_dm:
                 status = srd_progression.status(char, data)
                 row["progress"] = {key: status[key] for key in ("mode", "xp", "nextLevelXp", "canLevelUp", "targetLevel")}

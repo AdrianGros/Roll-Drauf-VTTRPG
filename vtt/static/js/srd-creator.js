@@ -592,6 +592,11 @@
             return;
         }
         app.data = dataRes.data;
+        // Published homebrew Species this account may choose; the server re-checks access on every save.
+        const catalogRes = await api('/species-catalog');
+        if (catalogRes.ok && Array.isArray(catalogRes.data.species) && catalogRes.data.species.length) {
+            app.data = { ...app.data, species: [...app.data.species, ...catalogRes.data.species] };
+        }
         app.defaultSources = metaRes.data.defaultSources;
         buildLookups(app.data);
         let savedMode = 'guided';

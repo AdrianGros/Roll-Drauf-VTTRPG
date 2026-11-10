@@ -1,17 +1,14 @@
 """Versioned VTT D&D JSON transport; imported rule text never executes effects."""
 
 from copy import deepcopy
-from datetime import datetime, timezone
 import json
 import math
 
-from flask import current_app, request
+from jsonschema import Draft202012Validator
+from jsonschema.validators import extend
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 
-from vtt.creation_engine.compiler import catalog, race
-from vtt.creation_engine.compiler.interview import StrictValidator
-from vtt.creation_engine.errors import ContractViolation
 from vtt.extensions import db
 from vtt.models import Character, Equipment, InventoryItem, Spell, User
 
@@ -23,6 +20,10 @@ STATS = (*SCORES, 'level', 'xp', 'ac', 'hp_current', 'hp_max', 'mana_current', '
 RESERVED_METADATA = {'system_id', 'roll_drauf_light', 'homebrew_origin', 'creation_engine', 'provenance',
                      'workspaceId', 'draftId', 'revisionId', 'definitionId', 'scopeId', 'executionLockDigest'}
 REFERENCE_KINDS = {'revision', 'definition', 'instance', 'scope', 'draft', 'workspace'}
+EDITIONS = ('dnd5e_2014', 'dnd5e_2024')
+# JSON Schema 2020-12 where booleans never count as integers.
+StrictValidator = extend(Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine(
+    'integer', lambda checker, value: type(value) is int))
 
 
 class PortableError(ValueError):
@@ -81,15 +82,12 @@ def payload_schema():
                  hp_current=integer(0, 10000), hp_max=integer(1, 10000),
                  mana_current=integer(0, 10000), mana_max=integer(0, 10000),
                  proficiency_bonus=integer(0, 100))
-    guide = race.interview()
-    origin = object_schema({q.path[-1]: q.schema for q in guide.questions},
-                           [q.path[-1] for q in guide.questions if q.required])
     properties = {
         'export_kind': {'const': KIND}, 'export_version': {'const': VERSION, 'type': 'integer'},
-        'system_id': {'enum': list(race.EDITIONS)}, 'name': text_field(100), 'race': text_field(50),
+        'system_id': {'enum': list(EDITIONS)}, 'name': text_field(100), 'race': text_field(50),
         'class': text_field(50), 'background': text_field(100),
         'stats': object_schema(stats, [key for key in STATS if not key.startswith('mana_')]),
-        'character_data': JSON_OBJECT, 'homebrew_origin': origin,
+        'character_data': JSON_OBJECT,
     }
     for name, (_, fields, _) in RESOURCE_FIELDS.items():
         properties[name] = {'type': 'array', 'maxItems': 200, 'items': object_schema(fields, ['name'])}
@@ -123,7 +121,10 @@ def _check_metadata(value, path, depth=0):
         raise PortableError(f'{path}: unsupported JSON value.')
 
 
-def validate_payload(payload, *, principal):
+def validate_payload(payload):
+    if isinstance(payload, dict) and 'homebrew_origin' in payload:
+        # Pinned race rules came from Creation Engine G1, which is archived (archive/creation-engine-g1).
+        raise PortableError('Homebrew race rules from the previous Creation Engine can no longer be imported.', 409)
     try:
         encoded = json.dumps(payload, allow_nan=False, ensure_ascii=False).encode('utf-8')
     except (ValueError, TypeError, RecursionError):
@@ -144,68 +145,34 @@ def validate_payload(payload, *, principal):
             for key in ('custom_data', 'special_properties', 'effects'):
                 if key in item:
                     _check_metadata(item[key], f'{group}.{key}')
-    origin = payload.get('homebrew_origin')
-    if origin is None:
-        return None
-    if origin['edition'] != payload['system_id'] or origin['name'] != payload['race']:
-        raise PortableError('Homebrew race name and edition must match the character.')
-    guide = race.interview()
-    state = guide.empty()
-    try:
-        for question in guide.questions:
-            if question.path[-1] in origin:
-                state, _, _ = guide.change(state, {'questionId': question.id, 'questionVersion': question.version},
-                    answer=question.answer(origin[question.path[-1]]), author=principal, locale='en')
-        gates = catalog.quality_gates(state, 'sheet_ready')
-    except ContractViolation:
-        raise PortableError('Homebrew race rules failed validation.') from None
-    if gates:
-        raise PortableError('Homebrew race needs complete rules and distinct trait names before import.')
-    return guide.values(state)
 
 
 def export_payload(character):
-    from vtt.ce_compat import character_projection, homebrew_origin
-    if request.headers.get('X-CE-View-As') is not None:
-        raise PortableError('Exit View As before exporting a D&D character.', 403)
-    # A direct/lightweight host may not install the legacy HTTP interceptor.
-    # Respect its export policy and never serialize stale legacy runtime fields.
-    if character_projection(character, operation='export') is not None:
-        raise PortableError('Portable D&D export is unavailable for a character managed by the runtime engine.', 409)
     if character.character_data is not None and not isinstance(character.character_data, dict):
         raise PortableError('Existing character_data must be an object before portable export.')
     data = character.character_data or {}
-    origin = homebrew_origin(character)
-    edition = origin['edition'] if origin else data.get('system_id')
-    if edition not in race.EDITIONS or data.get('roll_drauf_light'):
+    edition = data.get('system_id')
+    if edition not in EDITIONS or data.get('roll_drauf_light'):
         raise PortableError('This character has no supported, explicit D&D 5e edition.')
     payload = {'export_kind': KIND, 'export_version': VERSION, 'system_id': edition,
-               'name': character.name, 'race': origin['name'] if origin else character.race,
+               'name': character.name, 'race': character.race,
                'class': character.class_name, 'background': character.background,
                'stats': {key: getattr(character, key + '_score' if key in SCORES else key) for key in STATS},
                'character_data': {key: deepcopy(value) for key, value in data.items() if key != 'system_id'}}
     for group, (_, fields, aliases) in RESOURCE_FIELDS.items():
         payload[group] = [{key: deepcopy(getattr(item, aliases.get(key, key))) for key in fields}
                           for item in getattr(character, group)]
-    if origin:
-        payload['homebrew_origin'] = origin
-    validate_payload(payload, principal=character.user_id)
+    validate_payload(payload)
     return payload
 
 
 def import_payload(payload, user):
-    content = validate_payload(payload, principal=user.id)
-    if request.headers.get('X-CE-View-As') is not None:
-        raise PortableError('Exit View As before importing a character.', 403)
+    validate_payload(payload)
     # Hold current account authority until the single import transaction commits.
     user = db.session.scalar(select(User).where(User.id == user.id).with_for_update(read=True)
                              .execution_options(populate_existing=True))
     if user is None or not user.is_active or user.is_suspended or user.account_state != 'active':
         raise PortableError('An active account is required to import a D&D character.', 403)
-    if content is not None:
-        host = current_app.extensions.get('ce_gateway')
-        if not current_app.config.get('CE_AUTHORING') or getattr(host, 'authoring', None) is None:
-            raise PortableError('Importing homebrew race rules requires the Creation Engine to be available.', 409)
     stats = payload['stats']
     character = Character(user_id=user.id, campaign_id=None, name=payload['name'], race=payload['race'],
                           class_name=payload['class'], background=payload['background'],
@@ -218,22 +185,6 @@ def import_payload(payload, user):
             for item in payload.get(group, []):
                 db.session.add(model(character_id=character.id,
                                      **{aliases.get(key, key): deepcopy(value) for key, value in item.items()}))
-        if content is not None:
-            from vtt.creation_engine.content import create_revision
-            from vtt.creation_engine.store.content import ContentStore
-            from vtt.creation_engine.store.sheet_models import CeCharacterOrigin
-            now = datetime.now(timezone.utc)
-            store = ContentStore(db.session)
-            workspace = store.workspace_for(user.id, now=now)
-            definition = store.add_definition(workspace.id, content['name'], race.RACE_TYPE.type_id, now=now)
-            registry = catalog.registry(race.RACE_TYPE)
-            revision = create_revision(definition.id, race.RACE_TYPE, content, registry=registry,
-                author_user_id=user.id, now=now,
-                provenance={'kind': 'portable_import', 'sourceFormat': f'{KIND}:{VERSION}',
-                            'declaredQuality': 'sheet_ready', 'compilerVersion': race.COMPILER_VERSION,
-                            'registry': registry.artifact()})
-            store.append_revision(revision)
-            db.session.add(CeCharacterOrigin(character_id=character.id, revision_id=revision.id, version=1))
         db.session.commit()
     except SQLAlchemyError:
         db.session.rollback()

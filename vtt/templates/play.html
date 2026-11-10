@@ -405,6 +405,13 @@
             font-size: 0.6rem;
             color: var(--muted);
         }
+        .hotbar-slot.targeting {
+            border-color: #e8b23f;
+            box-shadow: 0 0 0 2px rgba(232, 178, 63, 0.45);
+        }
+        body.is-picking-target .token-marker {
+            cursor: crosshair;
+        }
         .hotbar-slot.firing {
             background: rgba(255, 210, 63, 0.35);
             border-color: #ffd23f;
@@ -462,6 +469,12 @@
             align-items: center;
             gap: 0.32rem;
             padding: 0 0.55rem;
+        }
+        /* display:inline-flex above beat the UA [hidden] rule, so hidden
+           tools (Raster outside the measure tool, DM tools in a read-only
+           session) still showed. */
+        .tabletop-shell > .left-toolbar .tool-btn[hidden] {
+            display: none;
         }
         .tabletop-shell > .left-toolbar .tool-btn .tool-label {
             display: inline;
@@ -2171,8 +2184,248 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
+    <style id="tableFullscreenStyles">
+        /* Owner request 2026-11-08: at the table the map is the whole
+           screen. One transparent row of small controls on top; tools,
+           hotbar, widgets and the menu float over the map. Page navigation
+           and the account box live in the session menu (↩ Zurück) here.
+           Last in the cascade on purpose: it replaces the book frame,
+           paddings and the separate status/zoom rows of the rules above. */
+        body.play-fullscreen { overflow: hidden; }
+        body.play-fullscreen .book-dashboard-topbar { display: none !important; }
+        body.play-fullscreen main {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100vh;
+            height: 100dvh;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        body.play-fullscreen .play-workspace-camera,
+        body.play-fullscreen .play-workspace-page,
+        body.play-fullscreen .book-workspace-shell,
+        body.play-fullscreen .book-shell-frame,
+        body.play-fullscreen .tabletop-shell {
+            position: absolute !important;
+            inset: 0 !important;
+            width: auto !important;
+            height: auto !important;
+            min-height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            transform: none !important;
+            filter: none !important;
+            will-change: auto !important;
+            transition: none !important;
+        }
+        body.play-fullscreen .play-workspace-camera,
+        body.play-fullscreen .play-workspace-page,
+        body.play-fullscreen .book-workspace-shell,
+        body.play-fullscreen .book-shell-frame {
+            display: block !important;
+            background: none !important;
+        }
+        body.play-fullscreen .tabletop-shell {
+            grid-template-rows: minmax(0, 1fr) !important;
+        }
+        body.play-fullscreen .stage {
+            grid-row: 1;
+            grid-column: 1;
+            border-radius: 0;
+        }
+
+        /* The one top row: title, compact status, zoom. No bar background;
+           each control carries its own small translucent chip. */
+        body.play-fullscreen .play-status-strip {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 45;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 6px;
+            margin: 0 !important;
+            padding: 6px 8px !important;
+            padding-top: max(6px, env(safe-area-inset-top, 0px)) !important;
+            background: none !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            pointer-events: none;
+        }
+        body.play-fullscreen .play-status-strip > * { pointer-events: auto; }
+        body.play-fullscreen .play-status-strip #sessionTitle {
+            display: block !important;
+            flex: 0 1 auto;
+            min-width: 0;
+            max-width: 38vw;
+            font-size: 0.82rem;
+            color: #eef3ff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95), 0 0 8px rgba(0, 0, 0, 0.7);
+        }
+        body.play-fullscreen .play-status-strip .book-dashboard-meta {
+            order: 1;
+            display: flex !important;
+            flex: 0 1 auto;
+            min-width: 0;
+            gap: 4px;
+            margin: 0;
+            overflow: hidden;
+        }
+        body.play-fullscreen .play-status-strip .book-dashboard-chip,
+        body.play-fullscreen .play-status-strip .active-page-pill {
+            flex: 0 0 auto;
+            margin: 0;
+            padding: 2px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 999px;
+            background: rgba(7, 14, 28, 0.58);
+            color: #eef3ff;
+            font-size: 0.72rem;
+            line-height: 1.5;
+            white-space: nowrap;
+            box-shadow: none;
+            backdrop-filter: blur(4px);
+        }
+        body.play-fullscreen .play-status-strip .book-dashboard-chip strong { color: inherit; font-weight: 600; }
+        body.play-fullscreen .play-status-strip .chip-label { display: none; }
+        /* Mode and status say the same thing; access only matters when read-only. */
+        body.play-fullscreen #modeChip,
+        body.play-fullscreen #readOnlyChip:not(.is-read-only) { display: none !important; }
+        body.play-fullscreen #readOnlyChip.is-read-only { border-color: rgba(232, 178, 63, 0.6); }
+        body.play-fullscreen .play-status-strip .stage-topbar {
+            order: 2;
+            position: static !important;
+            inset: auto !important;
+            margin-left: auto;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center;
+            gap: 4px;
+            width: auto !important;
+            padding: 0 !important;
+            background: none !important;
+            border: 0 !important;
+            opacity: 1 !important;
+        }
+        body.play-fullscreen .play-status-strip .stage-zoom-cluster {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            gap: 4px;
+            position: static !important;
+        }
+        body.play-fullscreen #zoomRange,
+        body.play-fullscreen #btnZoomReset { display: none !important; }
+        body.play-fullscreen .play-status-strip .mini-control {
+            min-width: 30px;
+            min-height: 30px;
+            height: 30px;
+            padding: 0 0.45rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 8px;
+            background: rgba(7, 14, 28, 0.58);
+            color: #eef3ff;
+            font-size: 0.75rem;
+            backdrop-filter: blur(4px);
+        }
+        body.play-fullscreen #zoomLabel { min-width: 42px; }
+
+        /* Everything else floats over the map and keeps the map visible. */
+        body.play-fullscreen #layersWidget { top: 46px; }
+        body.play-fullscreen .right-sidebar { top: 44px; }
+        body.play-fullscreen .action-hotbar,
+        body.play-fullscreen .tabletop-shell > .left-toolbar {
+            background: rgba(7, 14, 28, 0.74);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        }
+        @media (min-width: 1041px) {
+            body.play-fullscreen .tabletop-shell > .left-toolbar {
+                position: absolute;
+                left: 50%;
+                bottom: 10px;
+                transform: translateX(-50%);
+                grid-row: 1;
+                align-self: end;
+                z-index: 32;
+            }
+            body.play-fullscreen .action-hotbar { bottom: 64px; }
+            body.play-fullscreen #turnOrderWidget,
+            body.play-fullscreen #tokenWidget { bottom: 10px; }
+        }
+        @media (max-width: 1040px) {
+            body.play-fullscreen #zoomLabel { display: none !important; }
+            /* The hotbar sat behind the fixed thumb-zone toolbar here. */
+            body.play-fullscreen .action-hotbar { bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
+            /* ...and must not float over the full-screen menu sheet. */
+            body.play-fullscreen:has(.right-sidebar.is-open) .action-hotbar { display: none; }
+        }
+        body.play-fullscreen #beyond20Chip { border-color: rgba(74, 165, 112, 0.7); }
+        body.play-fullscreen #beyond20Chip[hidden] { display: none !important; }
+
+        /* External rolls on the map itself: small, translucent, gone after a
+           few seconds and never in the way of a click. The id outranks
+           book-shell.css `body.book-shell-app > *` (position: relative). */
+        #rollFeed {
+            position: fixed;
+            top: calc(46px + env(safe-area-inset-top, 0px));
+            right: 10px;
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: min(280px, calc(100vw - 20px));
+            pointer-events: none;
+        }
+        .roll-feed-card {
+            padding: 6px 10px;
+            border: 1px solid rgba(140, 192, 255, 0.35);
+            border-radius: 10px;
+            background: rgba(7, 14, 28, 0.78);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+            color: #eef3ff;
+            font-size: 0.8rem;
+            line-height: 1.35;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .roll-feed-card.is-leaving { opacity: 0; transform: translateX(12px); }
+        .roll-feed-card.crit { border-color: rgba(74, 165, 112, 0.85); }
+        .roll-feed-card.fumble { border-color: rgba(212, 85, 85, 0.85); }
+        .roll-feed-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+        .roll-feed-who,
+        .roll-feed-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .roll-feed-who { font-weight: 600; }
+        .roll-feed-total { font-size: 1.25rem; font-weight: 700; color: #f4d18f; }
+        .roll-feed-title,
+        .roll-feed-detail { color: rgba(238, 243, 255, 0.72); }
+        .roll-feed-detail { font-size: 0.72rem; }
+        body:has(.right-sidebar.is-open) #rollFeed { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .roll-feed-card { transition: none; }
+        }
+        @media (max-width: 560px) {
+            body.play-fullscreen #presenceChip,
+            body.play-fullscreen .play-status-strip .active-page-pill { display: none !important; }
+            body.play-fullscreen .play-status-strip #sessionTitle { max-width: 34vw; }
+        }
+    </style>
 </head>
-<body class="spellbook book-shell-app play-workspace-realign" data-play-entry-boundary="pending" data-play-return-boundary="idle" data-play-mode-family="table" data-play-transition-stage="pending" data-play-entry-phase="pending" data-play-return-phase="TABLE_MODE">
+<body class="spellbook book-shell-app play-workspace-realign play-fullscreen" data-play-entry-boundary="pending" data-play-return-boundary="idle" data-play-mode-family="table" data-play-transition-stage="table" data-play-entry-phase="pending" data-play-return-phase="TABLE_MODE">
     <div class="play-entry-curtain" aria-hidden="true">
     </div>
     <div class="play-return-curtain" aria-hidden="true">
@@ -2183,6 +2436,9 @@
          markup; _showMessage() only ever toggles aria-live between
          polite/assertive (success/error) and never removes it. -->
     <div id="msg" class="message" role="status" aria-live="polite" aria-atomic="true"></div>
+    <!-- Rolls from D&D Beyond (Beyond20) show here for a few seconds; the
+         full dice log stays under Menü > Tools. -->
+    <div id="rollFeed" class="roll-feed" aria-live="polite" aria-label="Letzte Würfe aus D&amp;D Beyond"></div>
     <main>
         <div class="book-dashboard-camera book-route-camera play-workspace-camera">
             <section class="book-dashboard-page book-route-page book-workspace-page play-workspace-page" role="region" aria-label="Play workspace page">
@@ -2213,11 +2469,12 @@
                         </div>
                     </div>
                     <div class="book-dashboard-meta">
-                        <span class="book-dashboard-chip">Modus: <strong id="modeBadge">-</strong></span>
-                        <span class="book-dashboard-chip">Rolle: <strong id="roleBadge">-</strong></span>
-                        <span class="book-dashboard-chip">Zugriff: <strong id="readOnlyBadge">-</strong></span>
-                        <span class="book-dashboard-chip">Status: <strong id="sessionStatusPill">-</strong></span>
-                        <span class="book-dashboard-chip">Am Tisch: <strong id="presenceRoster">–</strong></span>
+                        <span class="book-dashboard-chip" id="modeChip"><span class="chip-label">Modus: </span><strong id="modeBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="roleChip"><span class="chip-label">Rolle: </span><strong id="roleBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="readOnlyChip"><span class="chip-label">Zugriff: </span><strong id="readOnlyBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="statusChip"><span class="chip-label">Status: </span><strong id="sessionStatusPill">-</strong></span>
+                        <span class="book-dashboard-chip" id="presenceChip" title="Am Tisch"><span class="chip-label">Am Tisch: </span><strong id="presenceRoster">–</strong></span>
+                        <span class="book-dashboard-chip" id="beyond20Chip" title="Beyond20 ist verbunden: Würfe aus D&amp;D Beyond kommen an diesem Tisch an." hidden>Beyond20</span>
                     </div>
                 </div>
 
@@ -2269,6 +2526,7 @@
                  clicks with sensible defaults (documented Apply decision:
                  no freehand draw-tool UI this slice), refined here after
                  the fact. -->
+            <template data-dm-layer="vision-edit">
             <div id="wallEditPopover" class="vision-geom-popover" role="dialog" aria-label="Wand bearbeiten" hidden>
                 <div class="button-row" style="margin-bottom:0.4rem;">
                     <strong>Wand</strong>
@@ -2321,6 +2579,7 @@
                     <button type="button" id="btnLightDelete" class="mini-btn danger">Licht löschen</button>
                 </div>
             </div>
+            </template>
 
             <!-- S11.1 fix: this is the only .floating panel whose content
                  wasn't wrapped in .widget-body -- when .floating moved
@@ -2351,10 +2610,12 @@
                         <option value="2">2x2 Felder</option>
                         <option value="3">3x3 Felder</option>
                     </select>
+                    <template data-dm-layer="token-visibility">
                     <select id="tokenCreateVisibility">
                         <option value="public">Sichtbar für alle</option>
                         <option value="dm_only">Nur DM</option>
                     </select>
+                    </template>
                     <input id="tokenCreateImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                     <button id="btnTokenCreateImage" class="secondary" type="button"><span id="tokenCreateImageLabel">Bild (optional)...</span></button>
                     <div class="button-row" style="margin-bottom:0;">
@@ -2373,10 +2634,13 @@
                          serverseitig kopiert) — in beiden Fällen entsteht
                          eine neue Seite; die alte Sackgasse „alle Karten
                          sind bereits Seiten" existiert nicht mehr. -->
+                    <template data-dm-layer="map-upload">
                     <input id="mapUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                     <div id="mapUploadStatus" class="muted" style="font-size:0.74rem;margin-top:0.3rem;" hidden></div>
+                    </template>
                     <input id="layerSearchInput" class="layer-search-input" type="text" placeholder="Seiten durchsuchen..." aria-label="Seiten durchsuchen" autocomplete="off">
                     <div id="layerList" role="listbox" aria-label="Seiten (Kartenebenen)"></div>
+                    <template data-dm-layer="layer-add">
                     <div id="layerAddRow" class="layer-add-row">
                         <input id="layerAddName" type="text" maxlength="120" placeholder="Name der neuen Seite..." style="flex:1;min-width:0;padding:0.25rem 0.4rem;">
                         <button id="layerAddBtn" class="mini-btn" type="button" title="Neue Seite anlegen: Karte hochladen oder vorhandene übernehmen">Hinzufügen</button>
@@ -2396,6 +2660,7 @@
                         </div>
                         <button id="layerAddCancel" class="mini-btn secondary" type="button">Abbrechen</button>
                     </div>
+                    </template>
                     <div id="layerAddStatus" class="layer-empty-state" role="status" aria-live="polite" hidden></div>
                 </div>
             </div>
@@ -2410,6 +2675,7 @@
                          screen-reader accessibility failure, not a nice-to-
                          have. -->
                     <div id="turnOrderAnnounce" class="sr-only" role="status" aria-live="polite"></div>
+                    <template data-dm-layer="combat-controls">
                     <div class="button-row" id="initiativeControls" style="margin:0.45rem 0 0;" hidden>
                         <!-- Playtable-Vordermann 2026-08-25: der Kampf läuft
                              über das getestete Server-Backend (Encounter,
@@ -2420,6 +2686,7 @@
                         <button type="button" id="btnEndCombat" class="mini-btn secondary" hidden>Kampf beenden</button>
                         <button type="button" id="btnRollInitiative" class="mini-btn secondary">Initiative auswürfeln</button>
                     </div>
+                    </template>
                     <!-- S10: DM-only, session-wide (not per-token). Fog of
                          War only actually computes/persists per player
                          while fog_enabled is on (CampaignMap.fog_enabled,
@@ -2434,6 +2701,7 @@
                          here. A labeled sub-heading means even a user who
                          only scrolls partway sees "Sicht & Nebel", not two
                          mystery buttons floating after "Kampf beenden". -->
+                    <template data-dm-layer="fog-controls">
                     <div id="visionControls" style="margin:0.45rem 0 0;" hidden>
                         <div class="widget-subheading">Sicht &amp; Nebel</div>
                         <div class="button-row">
@@ -2441,6 +2709,7 @@
                             <button type="button" id="btnFogReset" class="mini-btn danger">Nebel zurücksetzen</button>
                         </div>
                     </div>
+                    </template>
                 </div>
             </div>
 
@@ -2448,13 +2717,16 @@
                 <h3 class="widget-toggle" data-widget="tokenWidget" role="button" tabindex="0" aria-controls="tokenWidgetBody" aria-expanded="false">Tokens <span class="widget-caret">▾</span></h3>
                 <div id="tokenWidgetBody" class="widget-body">
                     <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewählt.</div>
+                    <template data-dm-layer="token-upload">
                     <div id="tokenUploadRow" class="button-row" hidden style="margin-bottom:0.45rem;">
                         <input id="tokenUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
                         <button type="button" id="btnTokenUpload" class="mini-btn secondary" title="Tokenbild aus einer Datei hinzufügen">Token-Datei hinzufügen</button>
                         <span id="tokenUploadStatus" class="muted" aria-live="polite"></span>
                     </div>
+                    </template>
                     <div class="button-row" id="sheetButtonRow" hidden style="margin-bottom:0.45rem;">
                         <button type="button" id="btnOpenSheet" class="mini-btn">Bogen öffnen</button>
+                        <a id="btnOpenSheetTab" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch">Im neuen Tab ↗</a>
                     </div>
                     <div id="tokenSelectionDetail" hidden style="margin-bottom:0.45rem;">
                         <div class="button-row" style="margin-bottom:0.35rem;">
@@ -2488,9 +2760,11 @@
                              (canEditSelected); gated to operator only in
                              JS, since a player shouldn't be able to flag
                              their own character token as loot. -->
+                        <template data-dm-layer="loot-source">
                         <div class="button-row" id="tokenLootSourceRow" hidden style="margin-top:0.35rem; margin-bottom:0;">
                             <button type="button" id="btnTokenLootSourceToggle" class="mini-btn secondary">Beute-Quelle: aus</button>
                         </div>
+                        </template>
                     </div>
                     <!-- S09: reachable regardless of owner-or-DM edit
                          permission -- a corpse/chest is inherently
@@ -2504,6 +2778,7 @@
                          alone -- unlike sight_range above this is not an
                          owner-editable field, and unlike the loot row it
                          is not reachable by players at all. -->
+                    <template data-dm-layer="visible-tokens">
                     <div class="button-row" id="tokenVisibleRow" hidden style="margin-bottom:0.45rem;">
                         <button type="button" id="btnTokenVisible" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="visibleTokensPopover">Sichtbare Tokens</button>
                     </div>
@@ -2514,17 +2789,20 @@
                         </div>
                         <div id="visibleTokensList" class="conditions-list" style="grid-template-columns:1fr;"></div>
                     </div>
+                    </template>
                     <div id="lootPopover" class="conditions-popover" role="dialog" aria-label="Beute übertragen" hidden>
                         <div class="conditions-popover-head">
                             <strong>Beute</strong>
                             <button type="button" id="btnLootClose" class="mini-btn secondary" aria-label="Schließen">✕</button>
                         </div>
                         <div id="lootItemList" class="conditions-list" style="grid-template-columns:1fr;"></div>
+                        <template data-dm-layer="loot-add">
                         <div id="lootAddRow" class="button-row" hidden style="padding:0 0.5rem;">
                             <input id="lootAddName" type="text" placeholder="Gegenstand..." style="flex:1;min-width:0;">
                             <input id="lootAddQuantity" type="number" min="1" value="1" style="width:60px;">
                             <button type="button" id="btnLootAddItem" class="mini-btn secondary">+</button>
                         </div>
+                        </template>
                         <div class="button-row" style="padding:0.3rem 0.5rem;">
                             <label for="lootRecipient" class="sr-only">Empfänger</label>
                             <select id="lootRecipient" style="flex:1;min-width:0;"></select>
@@ -2591,9 +2869,11 @@
                  underlying geometry endpoints were leaking full wall/
                  light layout to Players. Both are DM/CO-DM-only now,
                  client and server. -->
+            <template data-dm-layer="map-tools">
             <button type="button" id="toolWall" class="tool-btn" data-tool="wall" title="Wand setzen: zwei Punkte anklicken" hidden><span class="tool-ico" aria-hidden="true">🧱</span><span class="tool-label">Wand</span></button>
             <button type="button" id="toolLight" class="tool-btn" data-tool="light" title="Lichtquelle platzieren: auf die Karte klicken" hidden><span class="tool-ico" aria-hidden="true">💡</span><span class="tool-label">Licht</span></button>
             <button type="button" id="btnVisionToggle" class="tool-btn active" title="Wand-/Licht-Markierungen ein-/ausblenden" aria-pressed="true"><span class="tool-ico" aria-hidden="true">👁</span><span class="tool-label">Sicht</span></button>
+            </template>
             <div class="spacer">
                 <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
                 <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
@@ -2610,6 +2890,15 @@
         <div id="appMenu" class="app-menu" role="menu" aria-label="Sitzungsmenü" hidden>
             <div id="appMenuStatus" class="app-menu-status" role="none"></div>
             <button type="button" id="appMenuReturn" class="app-menu-item" role="menuitem">Zur Kampagne zurückkehren</button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/dashboard">Übersicht</button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/characters">Charaktere</button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/mapmaker">Karten</button>
+            <!-- Tischplatz: only a DM or CO-DM gets this (mounted from the
+                 bootstrap's can_switch_seat); it moves them between the DM
+                 seat and a player seat at this table. -->
+            <template data-seat-switch>
+            <button type="button" id="appMenuSeat" class="app-menu-item" role="menuitem"></button>
+            </template>
             <a id="appMenuCreationEngine" class="app-menu-item" role="menuitem" data-creation-engine-nav data-book-return-target="/api/ce/authoring" aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
             <a class="app-menu-item" role="menuitem" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
             <button type="button" id="appMenuHelp" class="app-menu-item" role="menuitem">Hilfe &amp; Tastenkürzel</button>
@@ -2754,6 +3043,9 @@
                             einmalig eingerichtet ist.
                             <a href="/beyond20.html" target="_blank" rel="noopener" style="color:#8cc0ff;">Schritt-fuer-Schritt-Anleitung</a>.
                         </div>
+                        <div id="beyond20Status" class="muted" data-state="missing" role="status" aria-live="polite" style="font-size:0.8rem; line-height:1.45; margin-top:0.45rem;">
+                            Beyond20 ist auf dieser Seite noch nicht aktiv. Einrichtung prüfen und die Seite neu laden.
+                        </div>
                     </div>
                 </section>
 
@@ -2771,6 +3063,7 @@
                     <div id="readOnlyNotice" class="message"></div>
                     <div id="firstStepsNotice" class="message"></div>
 
+                    <template data-dm-layer="session-controls">
                     <div class="panel">
                         <h2>Vorbereitung</h2>
                         <div class="subpanel">
@@ -2796,6 +3089,7 @@
                         <h2>Start-Check</h2>
                         <div id="readyCheckOutput" class="muted">Noch kein Start-Check ausgeführt.</div>
                     </div>
+                    </template>
                 </section>
             </div>
         </aside>
@@ -2832,6 +3126,7 @@
     <aside id="sheetDrawer" hidden aria-label="Charakterbogen">
         <header class="sheet-drawer-head">
             <strong id="sheetDrawerTitle">Charakterbogen</strong>
+            <a id="sheetDrawerTabLink" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch">Neuer Tab ↗</a>
             <button type="button" id="btnCloseSheet" class="mini-btn secondary" title="Bogen schließen (Esc)">Schließen ✕</button>
         </header>
         <iframe id="sheetFrame" title="Charakterbogen"></iframe>
@@ -2851,7 +3146,13 @@
             box-shadow: -12px 0 28px rgba(20, 8, 28, 0.45);
         }
         #sheetDrawer[hidden] { display: none; }
-        .sheet-drawer-head {
+        #sheetDrawer > .sheet-drawer-head {
+            /* The shared book-shell header rule sizes every header to the full viewport.
+               Keep this header inside the 520px sheet drawer so its controls stay clickable. */
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -2860,6 +3161,8 @@
             border-bottom: 1px solid rgba(120, 90, 40, 0.35);
         }
         #sheetFrame { flex: 1; width: 100%; border: 0; background: transparent; }
+        .sheet-drawer-head #sheetDrawerTitle { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+        a.sheet-tab-link { display: inline-flex; align-items: center; text-decoration: none; }
         .layer-add-choice {
             display: flex;
             flex-direction: column;
@@ -2918,5 +3221,6 @@
     <script src="/static/js/play-socket.js"></script>
     <script src="/static/js/play-ui.js"></script>
     <script src="/static/js/beyond20-bridge.js"></script>
+    <script src="/static/js/vtt-main-nav.js"></script>
 </body>
 </html>

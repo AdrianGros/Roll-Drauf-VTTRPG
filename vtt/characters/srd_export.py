@@ -7,8 +7,9 @@ so a hand-edited or outdated file can never produce a character the creator woul
 
 import copy
 
-from vtt.characters import srd_inventory, srd_manage
+from vtt.characters import species_catalog, srd_inventory, srd_manage
 from vtt.extensions import db
+from vtt.rules_content import species_profiles
 from vtt.characters.srd_progression import MODES, ProgressionError, _log
 from vtt.models import Character, InventoryItem
 from vtt.rules_content.creator_drafts import character_values, finalize_blockers, sanitize_state
@@ -48,7 +49,10 @@ def export_document(char):
         items.append(item)
     progression = block.get("progression") if isinstance(block.get("progression"), dict) else {}
     companions = [{k: v for k, v in c.items() if k != "id"} for c in srd_manage.companions(char)]
+    pin = species_profiles.pinned(block)
+    extra = {"speciesPin": {"revisionId": pin["revisionId"], "digest": pin.get("digest"), "name": pin["profile"]["name"]}} if pin else {}
     return {
+        **extra,
         "format": FORMAT, "version": VERSION, "ruleset": load_creator_data()["rulesetId"],
         "exportedAt": utcnow().isoformat() + "Z",
         "sources": block.get("sources"),
@@ -118,6 +122,21 @@ def _clean_coins(raw):
     return coins
 
 
+def _species_for_import(doc, state, data, user_id):
+    """(rules data, pin or None). A homebrew Species is re-pinned from this server's published revision, never
+    from the file, and only if the importing user may choose exactly that revision; otherwise nothing is written."""
+    species = state.get("species") if isinstance(state.get("species"), dict) else {}
+    if not species_profiles.is_homebrew_species(species.get("id")):
+        return data, None
+    named = doc.get("speciesPin") if isinstance(doc.get("speciesPin"), dict) else {}
+    resolved, row, problems = species_catalog.resolve(user_id, state)
+    if problems or row is None or named.get("revisionId") != row.id or named.get("digest") != row.profile_digest:
+        name = named.get("name") if isinstance(named.get("name"), str) else "Homebrew-Spezies"
+        raise _bad(f"Die Datei nutzt die Homebrew-Spezies „{name[:100]}“. Sie ist hier nicht in genau dieser Fassung für dich "
+                   "veröffentlicht, darum wird nichts importiert.")
+    return resolved, species_catalog.pin_for(row)
+
+
 def import_character(doc, *, user_id):
     """(Character, extras) built from an export file; the caller adds the character, flushes and calls `finish_import`."""
     if not isinstance(doc, dict) or doc.get("format") != FORMAT:
@@ -130,6 +149,7 @@ def import_character(doc, *, user_id):
     state, problems = sanitize_state(copy.deepcopy(doc.get("state")) if isinstance(doc.get("state"), dict) else {}, data)
     if problems:
         raise _bad("Der Charakterzustand in der Datei ist ungültig.", problems=problems)
+    data, pin = _species_for_import(doc, state, data, user_id)
     evaluation = evaluate(data, state)
     blockers = finalize_blockers(evaluation, state)
     if blockers:
@@ -155,6 +175,8 @@ def import_character(doc, *, user_id):
     if type(hp) is int:
         values["hp_current"] = max(0, min(hp, values["hp_max"]))
     block = values["character_data"]["srd"]
+    if pin:
+        block["speciesPin"] = pin
     block["progression"] = {"mode": mode, "milestoneTarget": target}
     _log(block, {"type": "import", "by": user_id})
     if doc.get("theme") in srd_manage.THEME_IDS:

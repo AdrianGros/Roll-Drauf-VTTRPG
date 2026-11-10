@@ -13,10 +13,12 @@ from vtt.extensions import db, socketio
 from vtt.play.service import (
     filter_combat_payload,
     get_session_role,
+    get_table_role,
     is_operator_role,
     is_read_only_mode,
     is_token_visible_to,
     recalculate_fog_for_owner,
+    sits_as_player,
 )
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
 from vtt.utils.realtime import (
@@ -237,6 +239,47 @@ def disconnect_user_from_campaign(campaign_id: int, user_id: int) -> None:
         socketio.server.disconnect(sid)
 
 
+def apply_table_seat_change(campaign_id: int, session_id: int, user_id: int, table_role: str | None) -> None:
+    """Move this user's open tabs at the session's table to the new seat.
+
+    Taking the player seat removes every such connection from the DM room at
+    once, so no tab keeps receiving unfiltered events even if its page never
+    reloads. Taking the DM seat does not add anyone to the DM room: the tabs
+    rejoin after the reload that table:seat_changed asks for.
+    """
+    room = _room_name(campaign_id, session_id)
+    operator_room = dm_room(campaign_id, session_id)
+    player_room = players_room(campaign_id, session_id)
+    for sid, rooms in list(_connected_rooms.items()):
+        if _connected_users.get(sid) != user_id or room not in rooms:
+            continue
+        if not is_operator_role(table_role) and operator_room in rooms:
+            rooms.discard(operator_room)
+            try:
+                socketio.server.leave_room(sid, operator_room, namespace="/")
+                socketio.server.enter_room(sid, player_room, namespace="/")
+            except (KeyError, ValueError):
+                # The tab disconnected meanwhile; its disconnect handler
+                # clears the rest.
+                continue
+            rooms.add(player_room)
+        presence = _room_presence.get(room, {}).get(sid)
+        if presence is not None:
+            presence["role"] = table_role
+    # Called from an HTTP route, where flask_socketio.emit (used by
+    # _broadcast_presence) has no socket context; same roster, socketio.emit.
+    by_user = {info["user_id"]: info for info in _room_presence.get(room, {}).values()}
+    users = sorted(by_user.values(), key=lambda info: info["username"].lower())
+    socketio.emit("presence:update",
+                  build_event_envelope(campaign_id, session_id, {"users": users}, advance=True),
+                  room=room)
+    socketio.emit(
+        "table:seat_changed",
+        {"campaign_id": campaign_id, "session_id": session_id, "session_role": table_role},
+        room=user_room(campaign_id, session_id, user_id),
+    )
+
+
 def _token_player_audience(visibility: str, owner_user_id: int | None,
                            campaign_id: int, session_id: int) -> str | None:
     """Which non-operator room may see a token with this visibility.
@@ -314,7 +357,7 @@ def _reject_read_only(campaign, game_session, user):
     sessions could mutate tokens over the socket while every REST play route
     and the whole UI treated them as read-only. Same rule as the play
     routes: is_read_only_mode(session status, session role)."""
-    role = get_session_role(campaign, user.id)
+    role = get_table_role(campaign, user.id, game_session.id)
     if is_read_only_mode(game_session.status, role):
         return {"code": "forbidden", "message": "read-only for your role or the current session status"}
     return None
@@ -419,6 +462,12 @@ def _is_dm(campaign_id: int, user_id: int) -> bool:
     ).first()
     role = str(member.campaign_role).strip().upper() if member else ""
     return role in {"DM", "CO_DM", "CODM"}
+
+
+def _is_table_dm(campaign_id: int, user_id: int, session_id: int) -> bool:
+    """DM rights at one session's table: a DM or CO-DM who sits there as a
+    player has none (see vtt.play.service.get_table_role)."""
+    return _is_dm(campaign_id, user_id) and not sits_as_player(user_id, session_id)
 
 
 def _normalize_session_status(raw_status: str | None) -> str:
@@ -674,7 +723,7 @@ def register_socket_handlers(socketio):
         # Role-scoped rooms (Playtable-Audit 2026-08-25, P0): operators get
         # unfiltered broadcasts, everyone else the player-filtered variant,
         # and owner_only token events target the owner's user room.
-        session_role = get_session_role(campaign, user.id)
+        session_role = get_table_role(campaign, user.id, game_session.id)
         role_room = (dm_room(campaign.id, game_session.id)
                      if is_operator_role(session_role)
                      else players_room(campaign.id, game_session.id))
@@ -810,7 +859,7 @@ def register_socket_handlers(socketio):
 
         state = _ensure_session_state(campaign.id, game_session)
         snapshot_payload = _serialize_snapshot(
-            state, role=get_session_role(campaign, user.id), viewer_id=user.id)
+            state, role=get_table_role(campaign, user.id, game_session.id), viewer_id=user.id)
         snapshot_payload["event_seq"] = current_event_seq(campaign.id, game_session.id)
         snapshot_payload["server_time"] = utcnow().isoformat()
         emit("state:snapshot", snapshot_payload, room=request.sid)
@@ -844,7 +893,7 @@ def register_socket_handlers(socketio):
         state = _ensure_session_state(campaign.id, game_session)
         payload = filter_combat_payload(
             _serialize_combat_snapshot(state),
-            get_session_role(campaign, user.id), user.id)
+            get_table_role(campaign, user.id, game_session.id), user.id)
         payload["event_seq"] = current_event_seq(campaign.id, game_session.id)
         payload["server_time"] = utcnow().isoformat()
         emit("combat:updated", payload, room=request.sid)
@@ -909,18 +958,6 @@ def register_socket_handlers(socketio):
 
         token_payload = payload.get("token") or {}
         character_id = None
-        from vtt.ce_compat import adapter as creation_engine_adapter
-        ce = creation_engine_adapter()
-        if ce is not None and token_payload.get("character_id") is not None:
-            from vtt.models.character import Character
-            character_id, parse_error = _coerce_int(token_payload["character_id"], "character_id")
-            if parse_error:
-                _emit_error(parse_error["code"], parse_error["message"])
-                return
-            character = db.session.get(Character, character_id)
-            if character is None or character.campaign_id != campaign.id or character.deleted_at:
-                _emit_error("not_found", "character not found")
-                return
         name = str(token_payload.get("name", "")).strip()
         if not name:
             _emit_error("bad_request", "token name required")
@@ -934,7 +971,7 @@ def register_socket_handlers(socketio):
             _emit_error(parse_error["code"], parse_error["message"])
             return
 
-        is_dm_member = _is_dm(campaign.id, user.id)
+        is_dm_member = _is_table_dm(campaign.id, user.id, game_session.id)
         token_type = str(token_payload.get("token_type", "player")).strip().lower()
         if token_type not in {"player", "npc", "monster", "object"}:
             _emit_error("bad_request", "invalid token_type")
@@ -998,7 +1035,7 @@ def register_socket_handlers(socketio):
 
         from vtt.characters import sheet_link
         linked_character = None
-        if ce is None and token_payload.get("character_id") is not None:
+        if token_payload.get("character_id") is not None:
             from vtt.models.character import Character
             character_id, parse_error = _coerce_int(token_payload["character_id"], "character_id")
             if parse_error:
@@ -1097,42 +1134,10 @@ def register_socket_handlers(socketio):
             _emit_error("not_found", "token not found")
             return
 
-        is_dm_member = _is_dm(campaign.id, user.id)
+        is_dm_member = _is_table_dm(campaign.id, user.id, game_session.id)
         if not is_dm_member and token.owner_user_id != user.id:
             _emit_error("forbidden", "token ownership required")
             return
-
-        from vtt.ce_compat import adapter as creation_engine_adapter
-        ce = creation_engine_adapter()
-        ce_patch = payload.get("patch", {})
-        if (ce is not None and isinstance(ce_patch, dict) and {"hp_current", "hp_max"} & set(ce_patch)
-                and ce.representation("vtt.token", token.id) is not None):
-            from vtt.creation_engine.errors import ContractViolation
-            from vtt.creation_engine.policy.public_errors import public_error
-            try:
-                from flask_jwt_extended import get_jwt, verify_jwt_in_request
-                from flask_jwt_extended.exceptions import JWTExtendedException
-                from jwt import PyJWTError
-                from vtt.creation_engine.kernel.records import refuse
-                import secrets
-                try:
-                    verify_jwt_in_request()
-                except (JWTExtendedException, PyJWTError):
-                    refuse("OPERATION_FORBIDDEN")
-                ce_context = payload.get("ce")
-                expected_csrf = get_jwt().get("csrf")
-                supplied_csrf = ce_context.get("csrf") if isinstance(ce_context, dict) else None
-                if (not isinstance(expected_csrf, str) or not isinstance(supplied_csrf, str)
-                        or not secrets.compare_digest(expected_csrf, supplied_csrf)):
-                    refuse("OPERATION_FORBIDDEN")
-                result = ce.translate(user.id, "vtt.token", token.id, ce_patch, payload.get("ce") or {},
-                                      reason="legacy token edit")
-                emit("ce:receipt", result, room=request.sid)
-                return result
-            except ContractViolation as exc:
-                body, status = public_error(exc)
-                emit("ce:error", body, room=request.sid)
-                return body
 
         client_event_id, event_id_error = _extract_client_event_id(payload)
         if event_id_error:
@@ -1319,7 +1324,7 @@ def register_socket_handlers(socketio):
             _emit_error("not_found", "token not found")
             return
 
-        is_dm_member = _is_dm(campaign.id, user.id)
+        is_dm_member = _is_table_dm(campaign.id, user.id, game_session.id)
         if not is_dm_member and token.owner_user_id != user.id:
             _emit_error("forbidden", "token ownership required")
             return
@@ -1458,7 +1463,7 @@ def register_socket_handlers(socketio):
             emit("dice_rolled", {"player": player_tag, "dice": dice_str, "result": result}, room=request.sid)
             return result
 
-        if visibility in ("blind", "self") and not _is_dm(campaign.id, user.id):
+        if visibility in ("blind", "self") and not _is_table_dm(campaign.id, user.id, game_session.id):
             visibility = "public"
 
         # Playtable-Audit 2026-08-25 (P2): internal rolls used to live only

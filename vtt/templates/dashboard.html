@@ -22,27 +22,31 @@
         }
 
 
+        /* Only shown when loading is slow: a small note over the open book,
+           not a full-screen curtain (it flashed on every tab switch). */
         #dashboardSceneStatus {
             position: fixed;
-            inset: 0;
-            display: grid;
-            place-items: center;
-            padding: 2rem;
-            background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%);
-            color: var(--vtt-paper, #f8f3e9);
+            left: 50%;
+            bottom: 1.5rem;
+            transform: translateX(-50%);
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            background: rgba(13, 5, 20, 0.78);
+            color: #f6e8c8;
             font-family: var(--vtt-font-heading);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            z-index: 10;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            z-index: 9600;
         }
 
         #dashboardSceneStatus[hidden] {
             display: none;
         }
     </style>
+    <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
 </head>
 <body class="spellbook dashboard-route-book-scene">
-    <div id="dashboardSceneStatus" role="status" aria-live="polite">Übersicht wird vorbereitet …</div>
+    <div id="dashboardSceneStatus" role="status" aria-live="polite" hidden>Übersicht wird geladen …</div>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/regelwerk-navigation.js"></script>
@@ -60,8 +64,7 @@
                 routeKey: 'dashboard',
                 auth,
                 statusElementId: 'dashboardSceneStatus',
-                statusMessage: 'Übersicht wird vorbereitet …',
-                minimumStatusDuration: 620,
+                statusMessage: 'Übersicht wird geladen …',
                 snapshotLoader(user) {
                     return BookScene.loadDashboardSnapshot(user);
                 },
@@ -82,5 +85,6 @@
 
         document.addEventListener('DOMContentLoaded', bootstrapDashboardScene);
     </script>
+    <script src="/static/js/vtt-main-nav.js"></script>
 </body>
 </html>

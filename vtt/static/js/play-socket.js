@@ -74,6 +74,8 @@ class PlaySocketRuntime {
         this.socket.on("session:paused", (payload) => this._handleSequencedEvent("session:paused", payload, "sessionPaused"));
         this.socket.on("session:resumed", (payload) => this._handleSequencedEvent("session:resumed", payload, "sessionResumed"));
         this.socket.on("session:ended", (payload) => this._handleSequencedEvent("session:ended", payload, "sessionEnded"));
+        // Not sequenced: a per-person notice, sent only to this user's room.
+        this.socket.on("table:seat_changed", (payload) => this._fire("seatChanged", payload));
         this.socket.on("state:conflict", (payload) => this._fire("conflict", payload));
         this.socket.on("state:duplicate", (payload) => this._fire("duplicate", payload));
         this.socket.on("state:error", (payload) => this._fire("error", payload));

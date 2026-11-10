@@ -7,7 +7,7 @@ from vtt import socket_handlers
 from vtt.community import community_bp, policy, service
 from vtt.extensions import db, limiter, socketio
 from vtt.models import Campaign, ChatMessage, GameSession, ModerationAction, ModerationReport, User
-from vtt.play.service import get_session_role, is_operator_role
+from vtt.play.service import get_table_role, is_operator_role
 from vtt.utils.time import utcnow
 
 
@@ -90,7 +90,7 @@ def list_chat_messages(campaign_id, session_id):
     # "may this viewer see a gm_only/blind/self dice roll." Use the same
     # DM/CO_DM operator role every other secrecy check in this codebase
     # keys off (vtt.play.service.is_operator_role).
-    viewer_is_operator = is_operator_role(get_session_role(campaign, user.id))
+    viewer_is_operator = is_operator_role(get_table_role(campaign, user.id, game_session.id))
 
     next_before_id = rows_desc[-1].id if rows_desc else None
     messages = [

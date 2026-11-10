@@ -1,7 +1,10 @@
-"""Roll Drauf Creation Engine (spec: docs/creation-engine/v1.1.4/).
+"""Roll Drauf Creation Engine: Matt's Eagle Homebrew editor hosted in the VTT.
 
-G1 work package WP1: canonical types, strict JSON and RFC 8785 canonical
-bytes, exact rationals, units, UTC timestamps and wire-contract validation.
-Nothing in this package is wired into the running app yet, and it imports no
-Flask, SQLAlchemy or legacy model code (enforced by tests).
+The editor itself is vendor/eagle-homebrew (pinned, unmodified), bundled by frontend/eagle-homebrew-host.
+This package serves it and answers the Eagle Flight Control requests it sends:
+`routes.py` (HTTP), `documents.py` (pure rules), `models.py` (storage), `capability.py` (who may open it).
+`species.py` (pure playability check of a Species plus the VTT supplement) and `species_routes.py` (check and
+publish an immutable, playable 2024 revision; gated by CE_PLAYABLE_SPECIES) make an Eagle Species a character origin.
+`canonical.py` and `errors.py` are shared RFC 8785 JSON helpers used by the Regelwerk.
+The previous engine (G1) is archived under archive/creation-engine-g1/.
 """

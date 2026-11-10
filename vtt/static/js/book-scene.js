@@ -181,13 +181,16 @@
     const BOOK_RETURN_STORAGE_KEY = 'vtt.book.return-boundary';
     const PLAY_EXIT_DURATION_MS = 560;
     const PLAY_ARRIVAL_DURATION_MS = 720;
-    const BOOK_RETURN_ARRIVAL_DURATION_MS = 680;
 
-    function buildPlayHref(campaignId, sessionId) {
+    function buildPlayHref(campaignId, sessionId, seat = null) {
         const params = new URLSearchParams({
             campaign_id: String(campaignId),
             session_id: String(sessionId),
         });
+        // Tischplatz: the table asks the server for this seat on arrival.
+        if (seat === 'dm' || seat === 'player') {
+            params.set('seat', seat);
+        }
         return `/play?${params.toString()}`;
     }
 
@@ -196,15 +199,6 @@
             window.sessionStorage.setItem(PLAY_ENTRY_STORAGE_KEY, JSON.stringify(handoff));
         } catch (error) {
             console.warn('Failed to persist play handoff context:', error);
-        }
-    }
-
-    function readBookReturnBoundary() {
-        try {
-            return window.sessionStorage.getItem(BOOK_RETURN_STORAGE_KEY);
-        } catch (error) {
-            console.warn('Failed to read book return boundary context:', error);
-            return null;
         }
     }
 
@@ -225,7 +219,6 @@
         dashboardNotice: null,
         sceneBuiltRoute: null,
         transitionInFlight: false,
-        bookEntryArrivalTimer: null,
         loginBookResizeObserver: null,
         navigationMap: {
             login: { prev: null, next: '/dashboard' },
@@ -256,12 +249,7 @@
                     <div class="book-scene-backdrop" aria-hidden="true"></div>
                     <div class="book-scene-stage">
                         <div id="book" class="book-scene-book" role="doc-cover" aria-label="Interactive spellbook">
-                            <div class="book-element book-cover" role="button" tabindex="0" aria-label="Buchzugang öffnen" aria-pressed="false">
-                                <div class="cover-kicker" aria-hidden="true">roll drauf</div>
-                                <div class="cover-title" aria-hidden="false">Zum Buchzugang</div>
-                                <div class="cover-ornament" aria-hidden="true"><img src="/static/icons/icon-book-sparkles.svg" alt=""></div>
-                                <div class="cover-action" aria-hidden="true">Anmelden</div>
-                            </div>
+                            <div class="book-element book-cover is-open" aria-hidden="true"></div>
                             <div class="book-element book-pages" role="doc-pagebreak" aria-label="Buchseiten"></div>
                             <div class="book-element book-back" role="doc-cover" aria-label="Buchrückseite"></div>
                             <div class="book-shell-page-stack book-shell-page-stack--left" aria-hidden="true"></div>
@@ -286,6 +274,10 @@
                 </div>
             `;
 
+            // The book is always shown open (owner decision 2026-11-08): no
+            // closed entry cover and no click to enter. The class is set
+            // before the markup lands so the closed state is never painted.
+            document.body.classList.add('book-scene-open');
             if (!document.getElementById('book-scene-wrapper')) {
                 document.body.insertAdjacentHTML('afterbegin', bookHTML);
             }
@@ -307,8 +299,6 @@
             this.bookCover = document.querySelector('.book-cover');
             this.bookPages = document.querySelector('.book-pages');
             this.bookBack = document.querySelector('.book-back');
-            this.coverTitle = document.querySelector('.book-cover .cover-title');
-            this.coverOrnament = document.querySelector('.book-cover .cover-ornament');
             this.loginContent = loginContent;
             this.loginSpread = loginContent ? loginContent.querySelector('.login-book-spread') : null;
             this.loginLeftPage = loginContent ? loginContent.querySelector('.login-book-page--left') : null;
@@ -328,28 +318,12 @@
             }
             window.addEventListener('resize', () => this.syncLoginBookHeight());
 
-            this.setCoverState('login');
+            this.applyOpenedBookState();
 
             this.syncMotionPreference();
             if (reducedMotion.addEventListener) {
                 reducedMotion.addEventListener('change', () => this.syncMotionPreference());
             }
-
-            document.addEventListener('click', (event) => {
-                if (event.target.closest('.book-cover') && !this.isOpened) {
-                    this.open();
-                }
-            });
-
-            document.addEventListener('keydown', (event) => {
-                const cover = event.target && typeof event.target.closest === 'function'
-                    ? event.target.closest('.book-cover')
-                    : null;
-                if (cover && !this.isOpened && (event.key === 'Enter' || event.key === ' ')) {
-                    event.preventDefault();
-                    this.open();
-                }
-            });
 
             // Keep keyboard focus in the readable part of the page. The
             // dashboard is intentionally taller than a phone viewport, so a
@@ -432,58 +406,6 @@
             }
             this.book.style.removeProperty('height');
             this.book.style.removeProperty('aspect-ratio');
-        },
-
-        setCoverInteractive(enabled) {
-            if (!this.bookCover) {
-                return;
-            }
-
-            if (enabled) {
-                this.bookCover.setAttribute('role', 'button');
-                this.bookCover.setAttribute('tabindex', '0');
-                this.bookCover.setAttribute('aria-hidden', 'false');
-                this.bookCover.setAttribute('aria-pressed', 'false');
-                this.bookCover.style.pointerEvents = 'auto';
-                return;
-            }
-
-            if (document.activeElement === this.bookCover) {
-                this.bookCover.blur();
-            }
-            this.bookCover.setAttribute('tabindex', '-1');
-            this.bookCover.setAttribute('aria-hidden', 'true');
-            this.bookCover.setAttribute('aria-pressed', 'true');
-            this.bookCover.removeAttribute('role');
-            // The cover is transformed away when the book opens, but its
-            // transformed box can still win hit-testing in Chromium. Keep
-            // it from intercepting the login form underneath it.
-            this.bookCover.style.pointerEvents = 'none';
-        },
-
-        setCoverState(state = 'login') {
-            if (!this.bookCover) {
-                return;
-            }
-
-            const title = this.bookCover.querySelector('.cover-title');
-            const kicker = this.bookCover.querySelector('.cover-kicker');
-            const action = this.bookCover.querySelector('.cover-action');
-            const loggedOut = state === 'logged-out';
-            if (kicker) {
-                kicker.textContent = loggedOut ? 'Abmeldung bestätigt' : 'roll drauf';
-            }
-            if (title) {
-                title.textContent = loggedOut ? 'Du bist abgemeldet' : 'Zum Buchzugang';
-            }
-            if (action) {
-                action.textContent = loggedOut ? 'Erneut anmelden' : 'Anmelden';
-            }
-            this.bookCover.setAttribute(
-                'aria-label',
-                loggedOut ? 'Abmeldung bestätigt. Buchzugang öffnen' : 'Buchzugang öffnen',
-            );
-            this.bookCover.dataset.coverState = state;
         },
 
         setSceneState(state) {
@@ -1024,7 +946,7 @@
         },
 
         buildPageShell(routeKey, user, options) {
-            const displayName = escapeHtml(user?.username || 'Donut');
+            const displayName = options.loading ? '' : escapeHtml(user?.username || 'Donut');
             const chips = Array.isArray(options.chips) ? options.chips : [];
             const leftTitle = escapeHtml(options.title || 'Übersicht');
             const leftCopy = escapeHtml(options.copy || '');
@@ -1254,7 +1176,13 @@
                     <div class="book-scene-ledger-meta">Aktive Karte: ${escapeHtml(activeMap ? activeMap.name : 'Keine')} · Zugewiesene Helden: ${assignedCount}</div>
                 `;
 
-                if (phase.tone === 'live' || phase.tone === 'paused') {
+                if ((phase.tone === 'live' || phase.tone === 'paused') && canManage) {
+                    // Tischplatz: the Spielleitung picks a seat; "Als Spieler"
+                    // gives exactly a player's view and rights at this table.
+                    const label = phase.tone === 'live' ? 'Als Spielleitung an den Tisch' : 'Als Spielleitung fortsetzen';
+                    sessionActions = buildHubActionButton(label, 'open-session-dm', { primary: true, sessionId: Number(focusedSession.id) })
+                        + buildHubActionButton('Als Spieler an den Tisch', 'open-session-player', { primary: false, sessionId: Number(focusedSession.id) });
+                } else if (phase.tone === 'live' || phase.tone === 'paused') {
                     const label = phase.tone === 'live' ? 'Zu Play' : 'Fortsetzen';
                     sessionActions = buildHubActionButton(label, 'open-session', { primary: true, sessionId: Number(focusedSession.id) });
                 } else if ((phase.tone === 'scheduled' || phase.tone === 'ready') && canManage) {
@@ -1364,7 +1292,7 @@
             this.setCampaignHubStatus('Session wird gestartet …');
             try {
                 await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
-                this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns' });
+                this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat: 'dm' });
             } catch (error) {
                 this.setCampaignHubStatus(error.message || 'Session konnte nicht gestartet werden.', true);
             }
@@ -1377,7 +1305,7 @@
                     name: 'Session ' + new Date().toLocaleDateString('de-DE'),
                 });
                 await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
-                this.enterPlay({ campaignId, sessionId: session.id, sourceRoute: 'campaigns' });
+                this.enterPlay({ campaignId, sessionId: session.id, sourceRoute: 'campaigns', seat: 'dm' });
             } catch (error) {
                 this.setCampaignHubStatus(error.message || 'Session konnte nicht erstellt werden.', true);
             }
@@ -1517,6 +1445,14 @@
                 node.addEventListener('click', () => {
                     const sessionId = Number(node.getAttribute('data-hub-session-id'));
                     this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns' });
+                });
+            });
+            [['open-session-dm', 'dm'], ['open-session-player', 'player']].forEach(([hubAction, seat]) => {
+                this.sceneSurface.querySelectorAll(`[data-hub-action="${hubAction}"]`).forEach((node) => {
+                    node.addEventListener('click', () => {
+                        const sessionId = Number(node.getAttribute('data-hub-session-id'));
+                        this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat });
+                    });
                 });
             });
             this.sceneSurface.querySelectorAll('[data-hub-action="start-session"]').forEach((node) => {
@@ -1778,7 +1714,7 @@
                 });
             });
 
-            root.querySelectorAll('[data-character-action]').forEach((node) => {
+            this.sceneSurface.querySelectorAll('[data-character-action]').forEach((node) => {
                 node.addEventListener('click', () => this.runCharacterAction(node));
             });
 
@@ -2102,7 +2038,13 @@
                     statusDot = `<span class="play-launch-status-dot is-${escapeHtml(phase.tone)}">${escapeHtml(phase.label)}</span>`;
                     sessionLine = `<div class="play-launch-card-session">${escapeHtml(topSession.name)}</div>`;
 
-                    if (phase.tone === 'live' || phase.tone === 'paused') {
+                    if ((phase.tone === 'live' || phase.tone === 'paused') && canManage) {
+                        // Tischplatz: the Spielleitung chooses its seat.
+                        action = `<div class="play-launch-card-actions">`
+                            + `<button class="btn btn-primary btn-sm" type="button" data-play-launch-open="${campaign.id}:${topSession.id}" data-play-launch-seat="dm">${escapeHtml(this.content('play_launch.action_seat_dm', 'Als Spielleitung'))}</button>`
+                            + `<button class="btn btn-secondary btn-sm" type="button" data-play-launch-open="${campaign.id}:${topSession.id}" data-play-launch-seat="player">${escapeHtml(this.content('play_launch.action_seat_player', 'Als Spieler'))}</button>`
+                            + `</div>`;
+                    } else if (phase.tone === 'live' || phase.tone === 'paused') {
                         const label = phase.tone === 'live'
                             ? this.content('play_launch.action_to_play', 'Zu Play')
                             : this.content('play_launch.action_resume', 'Fortsetzen');
@@ -2146,7 +2088,7 @@
             content.querySelectorAll('[data-play-launch-open]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const [campaignId, sessionId] = node.getAttribute('data-play-launch-open').split(':').map(Number);
-                    this.openPlayFromLaunch(campaignId, sessionId);
+                    this.openPlayFromLaunch(campaignId, sessionId, node.getAttribute('data-play-launch-seat'));
                 });
             });
             content.querySelectorAll('[data-play-launch-start]').forEach((node) => {
@@ -2169,16 +2111,16 @@
             });
         },
 
-        openPlayFromLaunch(campaignId, sessionId) {
+        openPlayFromLaunch(campaignId, sessionId, seat = null) {
             this.closePlayLaunch();
-            this.enterPlay({ campaignId, sessionId, sourceRoute: this.currentView || this.currentPage || 'dashboard' });
+            this.enterPlay({ campaignId, sessionId, sourceRoute: this.currentView || this.currentPage || 'dashboard', seat });
         },
 
         async quickStartSessionAndPlay(campaignId, sessionId) {
             this.setPlayLaunchStatus('Session wird gestartet...');
             try {
                 await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
-                this.openPlayFromLaunch(campaignId, sessionId);
+                this.openPlayFromLaunch(campaignId, sessionId, 'dm');
             } catch (error) {
                 this.setPlayLaunchStatus(error.message || 'Session konnte nicht gestartet werden.', true);
             }
@@ -2192,7 +2134,7 @@
                 });
                 this.setPlayLaunchStatus('Schritt 2/2: Session wird gestartet...');
                 await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
-                this.openPlayFromLaunch(campaignId, session.id);
+                this.openPlayFromLaunch(campaignId, session.id, 'dm');
             } catch (error) {
                 this.setPlayLaunchStatus(error.message || 'Session konnte nicht erstellt werden.', true);
             }
@@ -2403,11 +2345,6 @@
             }
 
             this.isOpened = true;
-            this.setSceneState('opening');
-
-            // The cover is a semantic entry surface, not a loading curtain.
-            // Settle it in one synchronous state so Firefox, Chromium, slow
-            // devices, and acceptance captures all see the same composition.
             this.applyOpenedBookState();
             if (this.currentPage !== 'login') {
                 this.hideLoginContent();
@@ -2443,7 +2380,6 @@
             if (this.bookCover) {
                 this.bookCover.classList.add('is-open');
             }
-            this.setCoverInteractive(false);
         },
 
         showSceneInstant(routeKey, user = null, snapshot = null) {
@@ -2489,13 +2425,36 @@
             this.bootstrapRoute('dashboard', user);
         },
 
+        // First paint of a protected route: the open book with the route's
+        // ribbon and an empty spread. A full-screen loading curtain and the
+        // closed cover used to flash on every tab switch (owner, 2026-11-08).
+        showLoadingShell(routeKey) {
+            if (!this.sceneSurface) {
+                return;
+            }
+            this.currentView = routeKey;
+            this.sceneSurface.dataset.bookRoute = routeKey;
+            this.sceneSurface.innerHTML = this.buildPageShell(routeKey, null, {
+                loading: true,
+                showRunningHead: false,
+                showRightHeader: false,
+                folio: this.getRouteMeta(routeKey).folio,
+                title: this.getSpreadTitle(routeKey),
+                leftPage: '<p class="book-scene-loading">Wird geladen …</p>',
+            });
+            this.sceneBuiltRoute = null;
+            this.sceneSurface.hidden = false;
+            this.sceneSurface.setAttribute('aria-hidden', 'false');
+            this.sceneSurface.classList.add('is-visible');
+            this.setSceneState('dashboard');
+        },
+
         async bootstrapProtectedRoute(config = {}) {
             const {
                 routeKey,
                 auth,
                 statusElementId = null,
                 statusMessage = null,
-                minimumStatusDuration = 0,
                 loginPath = '/login.html',
                 snapshotLoader = null,
             } = config;
@@ -2513,42 +2472,44 @@
                 statusNode.textContent = message;
             };
 
-            try {
-                const statusStartedAt = performance.now();
-                setStatus(statusMessage || `${this.getSpreadTitle(routeKey)} wird vorbereitet …`);
+            // The status line only appears when loading is noticeably slow.
+            const slowTimer = window.setTimeout(() => {
+                setStatus(statusMessage || `${this.getSpreadTitle(routeKey)} wird geladen …`);
+            }, 900);
 
+            try {
                 if (!auth || typeof auth.requireAuth !== 'function') {
                     throw new Error('Auth client unavailable');
                 }
 
-                const user = await auth.requireAuth(loginPath);
+                this.create();
+                this.showLoadingShell(routeKey);
+
+                // Page texts are public, so they load alongside the auth check.
+                const [user] = await Promise.all([
+                    auth.requireAuth(loginPath),
+                    this.loadPageContent(routeKey),
+                ]);
                 if (!user) {
                     return false;
                 }
 
-                const entryBoundary = this.consumeBookEntryBoundary(routeKey);
-                this.create();
-
+                this.consumeBookEntryBoundary(routeKey);
                 const resolvedSnapshot = snapshotLoader
                     ? await snapshotLoader(user)
                     : await this.loadSceneSnapshot(user);
 
                 this.sceneSnapshot = resolvedSnapshot || { user };
                 this.sceneUser = this.sceneSnapshot.user || user;
-                await this.loadPageContent(routeKey);
                 this.bootstrapRoute(routeKey, user);
-                this.finalizeBookEntryBoundary(entryBoundary);
-                const remaining = Math.max(0, Number(minimumStatusDuration) - (performance.now() - statusStartedAt));
-                if (remaining) {
-                    await new Promise((resolve) => window.setTimeout(resolve, remaining));
-                }
-                setStatus('');
                 return true;
             } catch (error) {
                 console.error(`Failed to bootstrap ${routeKey} scene:`, error);
-                setStatus('');
                 window.location.href = loginPath;
                 return false;
+            } finally {
+                window.clearTimeout(slowTimer);
+                setStatus('');
             }
         },
 
@@ -2560,108 +2521,10 @@
             delete document.body.dataset.bookSceneEntryTargetRoute;
             delete document.body.dataset.bookSceneTransitionTarget;
             document.body.dataset.bookSceneTransitionPhase = 'BOOK_MODE';
-
-            const raw = readBookReturnBoundary();
-            if (!raw) {
-                return null;
-            }
-
-            try {
-                const boundary = JSON.parse(raw);
-                clearBookReturnBoundary();
-
-                if (!boundary || typeof boundary !== 'object') {
-                    return null;
-                }
-
-                const target = boundary.target && typeof boundary.target === 'object' ? boundary.target : {};
-                if (boundary.kind !== 'table-to-book') {
-                    return null;
-                }
-                if (boundary.from_mode !== 'TABLE_MODE') {
-                    return null;
-                }
-                if (boundary.transition_mode !== 'TABLE_TO_BOOK_TRANSITION') {
-                    return null;
-                }
-                if (boundary.target_mode !== 'BOOK_MODE') {
-                    return null;
-                }
-                if (target.family !== 'book') {
-                    return null;
-                }
-                if (target.route !== routeKey) {
-                    return null;
-                }
-                if (!['table-exit', 'book-route-entry'].includes(String(boundary.phase || 'table-exit'))) {
-                    return null;
-                }
-
-                document.body.dataset.bookSceneEntryBoundary = 'table-to-book';
-                document.body.dataset.bookSceneEntryPhase = 'TABLE_TO_BOOK_TRANSITION';
-                document.body.dataset.bookSceneEntrySourceMode = 'TABLE_MODE';
-                document.body.dataset.bookSceneEntrySourceRoute = String(boundary.source_route || 'play');
-                document.body.dataset.bookSceneEntryTargetRoute = String(target.route || routeKey);
-                return boundary;
-            } catch (error) {
-                console.warn('Failed to parse book return boundary context:', error);
-                clearBookReturnBoundary();
-                return null;
-            }
-        },
-
-        finalizeBookEntryBoundary(boundary = null) {
-            if (!boundary) {
-                return;
-            }
-
-            if (this.bookEntryArrivalTimer) {
-                window.clearTimeout(this.bookEntryArrivalTimer);
-                this.bookEntryArrivalTimer = null;
-            }
-
-            this.setSceneState('return-transition');
-            document.body.dataset.bookSceneTransitionTarget = String(boundary.target?.route || this.currentView || 'dashboard');
-            document.body.dataset.bookSceneTransitionPhase = 'TABLE_TO_BOOK_TRANSITION';
-
-            const settleBoundary = () => {
-                if (!document.body || document.body.dataset.bookSceneEntryBoundary !== 'table-to-book') {
-                    return;
-                }
-                document.body.dataset.bookSceneEntryBoundary = 'arrived';
-                document.body.dataset.bookSceneEntryPhase = 'BOOK_MODE';
-
-                const arrivalDuration = Math.max(
-                    240,
-                    Math.min(960, Number(boundary.arrival_duration_ms) || BOOK_RETURN_ARRIVAL_DURATION_MS)
-                );
-
-                this.bookEntryArrivalTimer = window.setTimeout(() => {
-                    if (!document.body) {
-                        return;
-                    }
-                    delete document.body.dataset.bookSceneEntrySourceMode;
-                    delete document.body.dataset.bookSceneEntrySourceRoute;
-                    delete document.body.dataset.bookSceneEntryTargetRoute;
-                    delete document.body.dataset.bookSceneTransitionTarget;
-                    document.body.dataset.bookSceneTransitionPhase = 'BOOK_MODE';
-                    this.setSceneState('dashboard');
-                    this.bookEntryArrivalTimer = null;
-                }, arrivalDuration);
-            };
-
-            if (reducedMotion.matches) {
-                this.bookEntryArrivalTimer = window.setTimeout(() => {
-                    settleBoundary();
-                }, 64);
-                return;
-            }
-
-            window.requestAnimationFrame(() => {
-                window.requestAnimationFrame(() => {
-                    settleBoundary();
-                });
-            });
+            // Coming back from the table is a plain tab switch: drop the
+            // handoff record and render the book directly, without the old
+            // blur/scale arrival (owner, 2026-11-08).
+            clearBookReturnBoundary();
         },
 
         _runPlayExitTransition(handoff) {
@@ -2673,9 +2536,6 @@
             };
 
             this.transitionInFlight = true;
-            this.setSceneState('play-transition');
-            document.body.dataset.bookSceneTransitionTarget = 'play';
-            document.body.dataset.bookSceneTransitionPhase = 'BOOK_TO_TABLE_TRANSITION';
             // Cross-document navigation cannot use a same-document View
             // Transition. Persist the boundary and leave immediately so no
             // animation curtain can block the play surface or input focus.
@@ -2688,6 +2548,7 @@
                 campaignId,
                 sessionId,
                 sourceRoute = this.currentView || this.currentPage || 'campaigns',
+                seat = null,
             } = config;
 
             const resolvedCampaignId = Number(campaignId);
@@ -2699,7 +2560,7 @@
                 throw new Error('sessionId is required for play handoff');
             }
 
-            const targetHref = buildPlayHref(resolvedCampaignId, resolvedSessionId);
+            const targetHref = buildPlayHref(resolvedCampaignId, resolvedSessionId, seat);
             const handoff = {
                 kind: 'book-to-table',
                 from_mode: 'BOOK_MODE',
@@ -2736,7 +2597,6 @@
                 this.sceneUser = snapshot.user || user || this.sceneUser;
                 await this.loadPageContent(routeKey);
 
-                const currentRoute = this.currentView || this.currentPage || 'login';
                 const render = () => {
                     this.setSceneState('transition');
                     this.renderSceneRoute(routeKey, this.sceneUser, snapshot);
@@ -2762,25 +2622,9 @@
                     window.history.replaceState({ book_scene: routeKey }, '', historyHrefForRoute(routeKey));
                 };
 
-                const useNativeTransition = !options.instant
-                    && !reducedMotion.matches
-                    && typeof document.startViewTransition === 'function'
-                    && currentRoute !== routeKey;
-
-                if (useNativeTransition) {
-                    try {
-                        const transition = document.startViewTransition({
-                            update: render,
-                            types: ['book-route', `book-route-${routeKey}`],
-                        });
-                        await transition.finished.catch(() => undefined);
-                    } catch (error) {
-                        // A failed enhancement must never strand the route.
-                        render();
-                    }
-                } else {
-                    render();
-                }
+                // Tabs switch instantly: no crossfade between routes
+                // (owner, 2026-11-08).
+                render();
             } finally {
                 this.transitionInFlight = false;
             }
