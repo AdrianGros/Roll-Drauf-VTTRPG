@@ -98,6 +98,7 @@ body.ce-authoring .book-dashboard-ribbon { flex-wrap: nowrap; }
 }
 .mm-global-nav {
     grid-area: global;
+    margin-bottom: 0;
     min-width: 0;
     padding: 3px 8px;
     background: #f8f3e9;

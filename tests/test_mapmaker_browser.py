@@ -1349,6 +1349,9 @@ def test_flask_serves_entry_redirect_and_static_app(flask_origin, open_editor):
 def test_map_account_action_fits_its_navigation_row(flask_origin, open_editor, width):
     origin, _ = flask_origin
     ed = open_editor(width=width, origin=origin, path='/mapmaker')
+    # Guest previews hide the session counter. Exercise the full three-row
+    # account memo too, without introducing authentication into this fixture.
+    ed.page.locator('.vtt-account-count').evaluate("node => { node.hidden = false; node.textContent = '0 Sessions gespielt'; }")
     action = ed.page.locator('.vtt-account-action')
     expect(action).to_be_visible()
     box = action.bounding_box()
