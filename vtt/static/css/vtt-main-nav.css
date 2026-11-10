@@ -93,7 +93,7 @@ body.ce-authoring .book-dashboard-ribbon { flex-wrap: nowrap; }
 
 /* The editor keeps its own tools; this is a separate global route row. */
 .mm-app {
-    grid-template-rows: var(--top-h) 66px minmax(0, 1fr);
+    grid-template-rows: var(--top-h) 84px minmax(0, 1fr);
     grid-template-areas: "top top top" "global global global" "tools stage panel";
 }
 .mm-global-nav {
@@ -132,7 +132,7 @@ body.ce-authoring .book-dashboard-ribbon { flex-wrap: nowrap; }
     .book-dashboard-ribbon .book-dashboard-ribbon-btn,
     .vtt-map-nav .book-dashboard-ribbon-btn { min-height: 38px; padding: 0 8px; }
     .mm-app {
-        grid-template-rows: var(--top-h) 64px minmax(0, 1fr) var(--tools-h);
+        grid-template-rows: var(--top-h) 84px minmax(0, 1fr) var(--tools-h);
         grid-template-areas: "top" "global" "stage" "tools";
     }
     .mm-global-nav { padding: 3px 5px; }

@@ -1345,6 +1345,20 @@ def test_flask_serves_entry_redirect_and_static_app(flask_origin, open_editor):
     ed.assert_clean()
 
 
+@pytest.mark.parametrize('width', [1440, 390])
+def test_map_account_action_fits_its_navigation_row(flask_origin, open_editor, width):
+    origin, _ = flask_origin
+    ed = open_editor(width=width, origin=origin, path='/mapmaker')
+    action = ed.page.locator('.vtt-account-action')
+    expect(action).to_be_visible()
+    box = action.bounding_box()
+    nav = ed.page.locator('.mm-global-nav').bounding_box()
+    assert box['height'] >= 32
+    assert box['y'] >= nav['y']
+    assert box['y'] + box['height'] <= nav['y'] + nav['height'] + 1
+    ed.assert_clean()
+
+
 def test_artist_catalogue_filters_pagination_and_lazy_images(open_editor):
     ed = open_editor()
     loaded = ed.page.evaluate("performance.getEntriesByType('resource').map(e => e.name)")

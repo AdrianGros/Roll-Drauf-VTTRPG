@@ -113,7 +113,7 @@ def test_back_after_actual_session_entry_unfreezes_book(balu_browser):
     from playwright.sync_api import expect
     page, origin, data = balu_browser
     page.goto(origin + '/campaigns')
-    page.locator(f'[data-dashboard-detail="campaign:{data["campaign_id"]}"]').first.click()
+    page.locator(f'[data-dashboard-detail="campaign:{data["campaign_id"]}"]').first.locator('.book-scene-ledger-head strong').click()
     page.locator('[data-hub-action="open-session-dm"]').click()
     expect(page).to_have_url(f"{origin}/play?campaign_id={data['campaign_id']}&session_id={data['session_id']}&seat=dm")
     expect(page.locator('#btnBack')).to_be_visible()
@@ -132,7 +132,7 @@ def test_cached_exit_state_is_rebuilt_on_pageshow(balu_browser):
     # No production flags or security headers are changed to force caching.
     page.route('**/play?**', lambda route: route.fulfill(status=204))
     page.goto(origin + '/campaigns')
-    page.locator(f'[data-dashboard-detail="campaign:{data["campaign_id"]}"]').first.click()
+    page.locator(f'[data-dashboard-detail="campaign:{data["campaign_id"]}"]').first.locator('.book-scene-ledger-head strong').click()
     with page.expect_request('**/play?**'):
         page.locator('[data-hub-action="open-session-dm"]').click()
     assert page.evaluate('BookScene.transitionInFlight') is True
@@ -186,7 +186,7 @@ def test_late_campaign_response_does_not_replace_newer_route(balu_browser):
     pending = []
     page.goto(origin + '/campaigns')
     page.route(f'**/api/campaigns/{data["campaign_id"]}', lambda route: pending.append(route))
-    page.locator(f'[data-dashboard-detail="campaign:{data["campaign_id"]}"]').first.click()
+    page.locator(f'[data-dashboard-detail="campaign:{data["campaign_id"]}"]').first.locator('.book-scene-ledger-head strong').click()
     page.locator('.book-dashboard-ribbon [data-dashboard-route="/characters"]').click()
     expect(page).to_have_url(origin + '/characters')
     assert len(pending) == 1
