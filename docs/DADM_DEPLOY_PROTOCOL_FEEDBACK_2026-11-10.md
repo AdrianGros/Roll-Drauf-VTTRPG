@@ -1,6 +1,7 @@
 # Deploy: Protokollfeedback – Creator, Bogen, Kampagnen und Karten
 
-Status: Implementierung geprüft, Live-Übergabe wird ergänzt. Dauerhaft aufbewahren.
+Status: implementiert und veröffentlicht; abschließende Abnahme im Monitor-Bericht.
+Dauerhaft aufbewahren.
 Vertrag: `DADM_APPLY_PROTOCOL_FEEDBACK_2026-11-10.md`; vollständige Zuordnung aller
 40 Karten: `PROTOCOL_FEEDBACK_SPECIFICATIONS_2026-11-10.md`.
 
@@ -54,13 +55,32 @@ Netz. Produktionsimage enthält diese zusätzlich installierte Testlaufzeit nich
 3. Neue Bogenreisen Chromium 1440/390/320 und Firefox 1440/390:
    **5 bestanden**, 88,59 s. Prüft Tastatur, Gradfilter, Münzupdate, Uploadzugang,
    Einheiten-/Theme-Reload, keine JS-Fehler und Kontrast der Nacht-Kernelemente.
-4. Ergänzte Kampagnen-/Navigations-/Bogenprüfung wird vor Release abgeschlossen.
+4. Ergänzte Navigation/Layout/Bogenprüfung: **28 bestanden**, 389,87 s.
+   Kampagnenliste mit 50 Einträgen separat: **2 bestanden**, 55,12 s.
    Zwei alte Tests verwendeten den vor der aktuellen Produktion gültigen
    `open-session`-Ownerselektor. Die Tests wählen nun ausdrücklich
    `open-session-dm` und erwarten `seat=dm`; App-Rollenlogik wird nicht verändert.
+   Der Klick auf den Kampagnennamen vermeidet außerdem einen mehrdeutigen
+   Kartenmittelpunkt, der je Browser einen darunterliegenden Unterbutton trifft.
 5. `git diff --check`: bestanden. Fehlläufe wegen fehlender Browserbibliotheken,
    falscher alter Paket-/Geschwindigkeitsannahmen und CSS-Kontrastkollisionen
    wurden nachvollzogen und korrigiert; sie sind keine erfolgreichen Nachweise.
+6. Sichtprüfung der ersten Live-Abnahme zeigte einen unten abgeschnittenen
+   Abmeldebutton im Editor: die bisher feste 64/66-px-Zeile bot für den neuen
+   32-px-Button zu wenig Platz. Zusätzlich verringerte der geerbte 12-px-Abstand
+   der Buchnavigation den tatsächlich nutzbaren Bereich. Die Editorzeile bekommt
+   84 px ohne diesen Abstand. Final: **4 gezielte Kartenfälle bestanden**,
+   46 nicht ausgewählt, 46,01 s. Enthält vollständige Button-Geometrie mit
+   eingeblendeter Sessionzahl bei 1440/390 px, Pan/Weiterzeichnen und mobile
+   Ortsauswahl. Die Gastvorschau allein hatte diesen zusätzlichen Text ausgeblendet;
+   die Live-Messung mit angemeldetem Konto deckte den Unterschied auf. Keine erneute
+   vollständige Katalogprüfung nötig, da nur die Navigationshöhe geändert wurde.
+
+Insgesamt 195 verschiedene automatisierte Fälle bestanden; fokussierte Wiederholungen
+sind darin nicht doppelt gezählt. Die große Regression gehört zum Funktionsstand
+`b8f3b54ba`; die anschließenden App-Änderungen in `187dc90a7` und `32cc5bfee`
+betreffen ausschließlich Höhe/Abstand der Editor-Navigationszeile und wurden
+gezielt erneut geprüft.
 
 ## Benutzerwege und Live-Abnahme
 
@@ -89,3 +109,13 @@ entfernen; Cookies/Tokens nicht in Repo oder Nachweisdateien aufnehmen.
 - Vor Umschaltung aktuelle Image-ID erneut vergleichen; bei unerwartetem
   Produktionswechsel nicht überschreiben. Neues Commit/Image, Dateimanifest,
   Push-, Health-, Live- und Bereinigungsnachweise werden im Monitor ergänzt.
+
+Veröffentlichter Funktionsstand: `32cc5bfee66419176d38248f68d5941144dad79f` auf
+`feat/protocol-feedback-20261110`, gepusht. Aktives Image:
+`roll-drauf-vtt-app:protocol-feedback-20261110-32cc5bfee`,
+`sha256:f6bc1008f0bb03962fba266d3f3477e5edf7c81fcfe205586dab6bd2cc0b445a`.
+17 Overlaypfade und 225 erwartete Datei-Hashes im fertigen Image geprüft;
+App-Factory erfolgreich gestartet. Releasezeit und öffentlicher Healthcheck stehen
+im finalen `deployment.json`. Datenbank, Redis und Mail wurden laut
+Container-ID/Startzeit-Vergleich bei keiner Veröffentlichung neu gestartet.
+Rollback: `/srv/migration/2026-11-10/protocol-feedback/rollback.sh`.

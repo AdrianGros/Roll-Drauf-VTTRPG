@@ -1,0 +1,37 @@
+{
+  "distinctPassedCases": 195,
+  "calculation": "159 core + 4 new creator + 28 navigation/layout/sheet + 2 campaign list + 2 new account geometry; repeated pan/mobile cases counted once",
+  "checks": [
+    {
+      "file": "regression.txt",
+      "sourceLog": "vtt-feedback-regression.log",
+      "command": "python -m pytest -q --tb=short --disable-warnings tests/test_srd_creator_api.py tests/test_srd_creator_browser.py tests/test_srd_sheet.py tests/test_srd_inventory.py tests/test_srd_inventory_browser.py tests/test_srd_progression_browser.py tests/test_srd_manage_browser.py tests/test_mapmaker_static.py tests/test_mapmaker_library.py tests/test_mapmaker_browser.py"
+    },
+    {
+      "file": "creator-map.txt",
+      "sourceLog": "vtt-feedback-final-creator-map.log",
+      "command": "python -m pytest -q --tb=short --disable-warnings --show-capture=no tests/test_protocol_feedback.py tests/test_mapmaker_browser.py -k \"protocol_feedback or right_drag\""
+    },
+    {
+      "file": "navigation-sheet.txt",
+      "sourceLog": "vtt-feedback-navigation-release-check.log",
+      "command": "python -m pytest -xq --tb=short --disable-warnings --show-capture=no tests/test_balu_navigation.py tests/test_book_scene_layout_contract.py tests/test_protocol_feedback_browser.py"
+    },
+    {
+      "file": "campaign-fifty.txt",
+      "sourceLog": "vtt-feedback-campaign-fifty-final.log",
+      "command": "python -m pytest -q --tb=short --disable-warnings --show-capture=no tests/test_campaign_list_feedback.py"
+    },
+    {
+      "file": "map-navigation.txt",
+      "sourceLog": "vtt-feedback-map-nav-correction.log",
+      "command": "python -m pytest -q --tb=short --disable-warnings --show-capture=no tests/test_mapmaker_browser.py -k \"map_account_action or right_drag or mobile_place_selection\""
+    }
+  ],
+  "profile": "standard",
+  "productionCommit": "32cc5bfee66419176d38248f68d5941144dad79f",
+  "browserEngines": [
+    "Chromium",
+    "Firefox"
+  ]
+}

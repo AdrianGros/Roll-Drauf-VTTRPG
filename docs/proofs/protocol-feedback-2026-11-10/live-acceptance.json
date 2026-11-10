@@ -1,0 +1,20 @@
+[
+  {
+    "role": "Player",
+    "browser": "Chromium",
+    "journey": "Übersicht → Charaktere → Held anlegen → Creator → Bogen; Pakete, Nacht, ft, Tastatur, Münzen und Uploadzugang",
+    "result": "passed"
+  },
+  {
+    "role": "DM",
+    "browser": "chromium",
+    "journey": "Übersicht → Karten → Leere Karte → zeichnen → rechtsziehen → Ebene → Ort editieren → Bibliothek speichern/öffnen/löschen",
+    "result": "passed"
+  },
+  {
+    "role": "DM",
+    "browser": "firefox",
+    "journey": "Übersicht → Karten → Leere Karte → zeichnen → rechtsziehen → Ebene → Ort editieren → Bibliothek speichern/öffnen/löschen",
+    "result": "passed"
+  }
+]

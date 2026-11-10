@@ -1,0 +1,79 @@
+{
+  "commit": "32cc5bfee66419176d38248f68d5941144dad79f",
+  "branch": "feat/protocol-feedback-20261110",
+  "baseImageId": "sha256:496595790afb006e6907fe6ecef49ea617d65802583e300bbb91aeeb01908cf4",
+  "previousImage": "roll-drauf-vtt-app:protocol-feedback-20261110-187dc90a7",
+  "previousImageId": "sha256:57f6acb9b70282397dda9473e5f4e726d6438f0d3db23e365cf36cb86da562bb",
+  "image": "roll-drauf-vtt-app:protocol-feedback-20261110-32cc5bfee",
+  "imageId": "sha256:f6bc1008f0bb03962fba266d3f3477e5edf7c81fcfe205586dab6bd2cc0b445a",
+  "files": [
+    {
+      "path": "vtt/characters/srd_creator.py",
+      "sha256": "fa76f9b10ac1436564ebc47ebd3abc36669b543260475a2bc5937df670f49a84"
+    },
+    {
+      "path": "vtt/characters/srd_inventory.py",
+      "sha256": "c02b481210e317f35b6fb506e29838ecba62cdc07ff59d4e7f91799245f9ec83"
+    },
+    {
+      "path": "vtt/rules_content/creator_drafts.py",
+      "sha256": "753845b72e4816f11d34707d200376bda87dc24a919a3cec9f5c9a605acc2183"
+    },
+    {
+      "path": "vtt/static/css/book-scene.css",
+      "sha256": "0f0622378e9d75fd0aa7dcb05d2c97e22cb1e8a1451f1f4797bf3deb186e8cf7"
+    },
+    {
+      "path": "vtt/static/css/sheet-feedback.css",
+      "sha256": "8d9bbe47a29053ea29b4ba3f038ca45c11b86142de842ae7a805c01413fa7f02"
+    },
+    {
+      "path": "vtt/static/css/srd-creator.css",
+      "sha256": "c045b343933c91f9aaa830813a5e98c8bb2660d1979291ee54974341ad3b8afa"
+    },
+    {
+      "path": "vtt/static/css/vtt-main-nav.css",
+      "sha256": "813d2b007c617718dfe5247bf20d40e844a92ea52d3ba6b038c5c0a599813f9c"
+    },
+    {
+      "path": "vtt/static/js/book-scene.js",
+      "sha256": "790db899b079e6c2783663a7b51260e5af82536c2fc22fad9dbd335fdef5d1cd"
+    },
+    {
+      "path": "vtt/static/js/sheet-feedback.js",
+      "sha256": "dbaec76d07250cb808557c7ba625aa7a37d8e142f0db0e94abb1ff112b6308af"
+    },
+    {
+      "path": "vtt/static/js/srd-creator-random.js",
+      "sha256": "905f3a0e7f8d8235adb96be806abdea12c8650aebef910df5c845cd24f483787"
+    },
+    {
+      "path": "vtt/static/js/srd-creator-steps.js",
+      "sha256": "d3f87b1a05005bd2fc89af9b7fb44365db182ad1dd6baa3964781be3ded393a7"
+    },
+    {
+      "path": "vtt/static/js/srd-inventory-ui.js",
+      "sha256": "c93253cddada58ac5d82375a7872a8ca56852c68f130b3b5a33134b2a64fae66"
+    },
+    {
+      "path": "vtt/static/mapmaker/index.html",
+      "sha256": "53bd9ec732069695ab6e34ec203a66c81ce917c6cb587d0853bb5e7b0d720c4c"
+    },
+    {
+      "path": "vtt/static/mapmaker/js/tools.js",
+      "sha256": "2e1a963c7425499b0cf03adfcf79ba7f9cf8a599c3b91ea3dbf26bca13d783d7"
+    },
+    {
+      "path": "vtt/static/mapmaker/js/ui.js",
+      "sha256": "7247380609dcd993e6019aefb1bd1de13ae2d3afb4a69f029c0beabe7df041a3"
+    },
+    {
+      "path": "vtt/static/mapmaker/mapmaker.css",
+      "sha256": "31e322c543dbb46835e488ac5959a0ba3ed61b5b82159e1ff084d42154f3f3f3"
+    },
+    {
+      "path": "vtt/templates/character-sheet.html",
+      "sha256": "93eede0d0f65d0f0312d4f894eb3b4b25cd4493274a4739e036718b516c20ee8"
+    }
+  ]
+}

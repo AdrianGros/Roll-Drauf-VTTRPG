@@ -1,0 +1,23 @@
+{
+  "deployedAt": "2026-11-10T21:48:53.573807+00:00",
+  "commit": "32cc5bfee66419176d38248f68d5941144dad79f",
+  "image": "roll-drauf-vtt-app:protocol-feedback-20261110-32cc5bfee",
+  "imageId": "sha256:f6bc1008f0bb03962fba266d3f3477e5edf7c81fcfe205586dab6bd2cc0b445a",
+  "health": {
+    "now": "2026-11-10T21:48:53.228938",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-10T21:48:51.664708",
+    "status": "ok"
+  },
+  "otherServicesUnchanged": true,
+  "rollback": "/srv/migration/2026-11-10/protocol-feedback/rollback.sh",
+  "liveAcceptance": "passed",
+  "checkedAt": "2026-11-10T21:53:10.690772+00:00",
+  "finalHealth": {
+    "now": "2026-11-10T21:53:10.686490",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-10T21:48:51.664708",
+    "status": "ok"
+  },
+  "cleanup": "passed"
+}
