@@ -90,7 +90,7 @@ export function attachInput(ed) {
         event.preventDefault();
         const point = ed.clientToDoc(event.clientX, event.clientY);
         ed.cursor = point;
-        const wantsPan = event.button === 1 || spaceDown || ed.tool === "pan";
+        const wantsPan = event.button === 1 || (event.pointerType === "mouse" && event.button === 2) || spaceDown || ed.tool === "pan";
         if (wantsPan) {
             gesture = { type: "pan", pointerId: event.pointerId, last: local(event) };
             updateCursorClass();

@@ -1,0 +1,62 @@
+/* Compact SRD play surface; detail actions keep their original roots and IDs. */
+body[data-sheet-mode="view"][data-sheet-has-srd="true"] #sheetSpread { grid-template-columns: minmax(0, 1fr); }
+body[data-sheet-has-srd="true"] .sheet-character-heading { display: none; }
+body[data-sheet-has-srd="true"] .sheet-journey-nav .sheet-pane-header { display: none; }
+body[data-sheet-has-srd="true"] .sheet-journey-nav .sheet-split-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+body[data-sheet-has-srd="true"] .sheet-journey-nav .sheet-split-actions .btn { width: auto; flex: 1 1 8rem; padding: 0.4rem 0.6rem; font-size: 0.8rem; }
+.sf-heading { display: flex; align-items: center; gap: 0.8rem; min-width: 0; }
+.sf-heading h3 { margin: 0; overflow-wrap: anywhere; color: #38203f; }
+.sf-heading p { margin: 0.2rem 0 0; font-size: 0.85rem; }
+.sf-portraits { display: flex; gap: 0.35rem; flex: 0 0 auto; }
+.sf-portrait { width: 56px; height: 56px; object-fit: cover; border: 1px solid #886529; border-radius: 9px; }
+.sf-portrait-empty { display: grid; place-items: center; font-size: 0.65rem; background: #eadbbd; color: #4a3325; }
+.sf-wallet { color: #5b4026; font-weight: 600; }
+.sf-controls { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 0.5rem 0; }
+.sf-preference { display: flex; gap: 0.4rem; align-items: center; font-size: 0.8rem; color: #5d4839; min-width: 0; }
+.sf-preference select, .sf-preference input { border: 1px solid #91734e; border-radius: 5px; background: #fff8e9; color: #38203f; font: inherit; padding: 0.35rem; min-height: 34px; min-width: 0; max-width: 100%; }
+.sf-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; padding: 0.4rem 0; border-bottom: 1px solid #a88b5e; }
+.sf-tab { border: 1px solid #87642e; border-radius: 6px; color: #44214e; background: #f0e2c7; font: inherit; font-size: 0.85rem; padding: 0.4rem 0.7rem; cursor: pointer; min-height: 38px; }
+.sf-tab[aria-selected="true"] { color: #fff6e3; background: #492255; box-shadow: inset 0 -3px #e4bf72; }
+.sf-tab:focus-visible, .sf-preference :focus-visible, .sf-panel:focus-visible { outline: 3px solid #97701e; outline-offset: 3px; }
+.sf-panel { min-width: 0; padding-top: 0.65rem; }
+.sf-panel[hidden], .sf-spell-card[hidden] { display: none !important; }
+.sf-panel .srd-sheet-vitals { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; }
+.sf-panel .srd-sheet-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; }
+.sf-panel .srd-sheet-abilities { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.4rem; }
+.sf-panel .srd-sheet-cell { padding: 0.45rem; }
+.sf-panel .srd-sheet-skills { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.25rem; }
+.sf-panel .srd-sheet-skills button { padding: 0.35rem 0.45rem; min-height: 34px; }
+.sf-panel .srd-roll-pair { flex-wrap: wrap; gap: 0.25rem; }
+.sf-panel .srd-roll-pair button { padding: 0.25rem 0.35rem; font-size: 0.75rem; min-width: 0; }
+.sf-spell-filter { display: flex; flex-wrap: wrap; gap: 0.6rem; position: sticky; top: 0; background: #f1e2c5; padding: 0.55rem; border-radius: 6px; z-index: 2; }
+.sf-spell-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 0.5rem; }
+.sf-spell-card { display: grid; gap: 0.2rem; padding: 0.65rem; background: #fff5df; border: 1px solid #a38764; border-radius: 7px; }
+.sf-spell-card small { font-size: 0.8rem; color: #644b36; }
+.sf-count, .sf-caster { font-size: 0.85rem; margin: 0.4rem 0; }
+body[data-sheet-theme="night"] .sheet-focus-page .book-page { background: #211a29 !important; background-image: none !important; color: #f5e8d1; border-color: #967544; }
+body[data-sheet-theme="night"] .sheet-focus-page .book-page :is(h2,h3,h4,strong,.srd-sheet-value,.srd-sheet-label,.srd-sheet-subtitle,.sf-preference,.sf-wallet,.sheet-pane-title,.sheet-pane-copy,.sheet-help,.sheet-item-meta) { color: #f5e8d1; }
+body[data-sheet-theme="night"] .sheet-focus-page :is(.srd-sheet-cell,.sheet-item,.sheet-empty,.homebrew-origin-trait,.sheet-stat,.sf-spell-card,.srd-inv-item,.srd-manage-card) { background: #30263a; color: #f5e8d1; border-color: #987b59; }
+body[data-sheet-theme="night"] .sheet-focus-page :is(button,input,select,textarea,.srd-sheet-tag) { background: #34263e; color: #fff1d6; border-color: #b89560; }
+body[data-sheet-theme="night"] .sheet-focus-page :is(p,small,.srd-sheet-note,.sheet-pane-copy,.sheet-identity-label) { color: #dbcdb8; }
+body[data-sheet-theme="night"] .sf-spell-filter { background: #211a29; }
+body[data-sheet-theme="night"] .sf-tab[aria-selected="true"] { background: #745083; color: #fff6e3; }
+/* The book theme also styles headings and the legacy roll bar. Keep their
+   foregrounds and surfaces paired in the night palette. */
+body[data-sheet-theme="night"] .sheet-focus-page :is(#srdSheetHeading,.sf-heading h3,.srd-sheet-ability-score,.is-proficient,.srd-roll-result,.sheet-next-hint) { color: #f5e8d1; }
+body[data-sheet-theme="night"] .sheet-focus-page .srd-rollbar { background: #30263a; border-color: #987b59; }
+body[data-sheet-theme="night"] .sheet-focus-page .sheet-next-hint { background: #30263a; }
+body[data-sheet-theme="night"] .sheet-focus-page :is(.srd-rollbar-head label,.srd-roll-destination,.srd-roll-where,.srd-roll-jump,.srd-roll-history) { color: #dbcdb8; }
+body[data-sheet-theme="night"] .sheet-focus-page .srd-roll-result.is-crit { color: #9ee0a9; }
+body[data-sheet-theme="night"] .sheet-focus-page .srd-roll-result.is-fumble { color: #ffb2ab; }
+body.spellbook[data-sheet-theme="night"] .sheet-focus-page .book-page :is(h2,h3,h4) { color: #f5e8d1 !important; }
+@media (max-width: 720px) {
+    .sf-panel .srd-sheet-abilities { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .sf-panel .srd-sheet-vitals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sf-panel .srd-sheet-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sf-heading { align-items: flex-start; }
+    .sf-portraits { flex-direction: column; }
+    .sf-portrait { width: 38px; height: 38px; }
+    .sf-tabs { gap: 0.25rem; }
+    .sf-tab { flex: 1 1 auto; padding: 0.35rem; font-size: 0.78rem; }
+    .sf-controls { gap: 0.5rem; }
+}

@@ -114,10 +114,11 @@
         }
 
         // armor
-        const armors = data.equipment.armor.filter((a) => a.category !== 'shield' && c.armorProficiencies.includes(a.category) && (!a.strengthRequirement || score.str >= a.strengthRequirement))
+        const owned = SC.startingItems(state);
+        const armors = data.equipment.armor.filter((a) => owned.has(a.id) && a.category !== 'shield' && c.armorProficiencies.includes(a.category) && (!a.strengthRequirement || score.str >= a.strengthRequirement))
             .sort((a, b) => b.base - a.base);
         if (armors.length) state.equipment.armor = armors[0].id;
-        if (c.armorProficiencies.includes('shield') && randInt(2) === 0) state.equipment.shield = true;
+        if (c.armorProficiencies.includes('shield') && data.equipment.armor.some((a) => a.category === 'shield' && owned.has(a.id)) && randInt(2) === 0) state.equipment.shield = true;
 
         state.identity = {
             name: `${pick(FIRST)} ${pick(LAST)}`,

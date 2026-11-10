@@ -502,3 +502,4 @@ input[type=range] { width: 100%; accent-color: var(--plum); min-height: 28px; }
     .mm-top-actions { gap: 0; flex-basis: 100%; margin-left: 0; justify-content: space-between; height: 36px; }
     .mm-top-actions .mm-icon-btn { width: 30px; min-width: 30px; }
 }
+:root .mm-layer-jump { position: absolute; top: 12px; left: 12px; z-index: 2; max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; box-shadow: 0 2px 8px #0003; }

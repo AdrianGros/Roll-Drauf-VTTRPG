@@ -434,8 +434,7 @@ def seed_starting_equipment(char, class_package=None, background_package=None):
         _set_meta(target, equipped=True)
     if shield_rows:
         _set_meta(shield_rows[0], equipped=True)
-    if target or shield_rows:
-        _sync_worn(char, rows)
+    _sync_worn(char, rows)
     return notes
 
 
@@ -586,6 +585,12 @@ def inventory_payload(char, evaluation):
     state = (srd_block(char) or {}).get("state") or {}
     worn = state.get("equipment") if isinstance(state.get("equipment"), dict) else {}
     armor = cat.get(worn.get("armor"))
+    first = (evaluation.get("classes") or [{}])[0].get("classKey")
+    cls = next((c for c in data["classes"] if c["classKey"] == first), {})
+    background = next((b for b in data["backgrounds"] if b["id"] == (state.get("background") or {}).get("id")), {})
+    def package_options(source):
+        return [{"id": key, "label": f"{key} · {'Gold' if all(e.get('kind') == 'coins' for e in entries) else 'Ausrüstung'}"}
+                for key, entries in sorted(source.get("startingEquipment", {}).items())]
     return {
         "items": [item_view(row, cat) for row in rows],
         "coins": inv["coins"],
@@ -598,4 +603,5 @@ def inventory_payload(char, evaluation):
         "attacks": attack_rows(char, evaluation, rows),
         "findings": [f for f in evaluation.get("findings", []) if str(f.get("path") or "").startswith("equipment.")],
         "packages": {"class": worn.get("classPackage"), "background": worn.get("backgroundPackage")},
+        "packageOptions": {"class": package_options(cls), "background": package_options(background)},
     }

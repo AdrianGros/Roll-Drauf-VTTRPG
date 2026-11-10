@@ -126,7 +126,7 @@ def identity_name(state: dict) -> str:
     return name.strip() if isinstance(name, str) else ""
 
 
-def finalize_blockers(evaluation: dict, state: dict) -> list[dict]:
+def finalize_blockers(evaluation: dict, state: dict, data: dict | None = None) -> list[dict]:
     """Reasons a draft cannot become a character yet (empty list: ready)."""
     blockers = [
         {"code": item["code"], "severity": item["severity"], "message": item["message"], "path": item.get("path")}
@@ -135,6 +135,30 @@ def finalize_blockers(evaluation: dict, state: dict) -> list[dict]:
     ]
     if not identity_name(state):
         blockers.append({"code": "name-missing", "severity": "incomplete", "message": "Gib deinem Charakter einen Namen.", "path": "identity.name"})
+    if data is not None:
+        # This applies to new drafts only. Existing characters may legitimately
+        # own armor bought or granted later through their inventory.
+        equipment = state.get("equipment") or {}
+        first = (state.get("levels") or [{}])[0].get("classKey")
+        background_id = (state.get("background") or {}).get("id")
+        sources = (
+            (next((c for c in data["classes"] if c["classKey"] == first), {}), "classPackage"),
+            (next((b for b in data["backgrounds"] if b["id"] == background_id), {}), "backgroundPackage"),
+        )
+        owned = set()
+        for source, key in sources:
+            for entry in source.get("startingEquipment", {}).get(equipment.get(key), []):
+                if entry.get("kind") != "item":
+                    continue
+                pack = data["equipment"]["packs"].get(entry["itemId"])
+                for item in pack["contents"] if pack else [entry]:
+                    if item.get("kind") == "item":
+                        owned.add(item["itemId"])
+        if equipment.get("armor") and equipment["armor"] not in owned:
+            blockers.append({"code": "armor-not-in-package", "severity": "error", "message": "Diese Rüstung ist nicht in deinen gewählten Startpaketen enthalten. Weitere Ausrüstung verwaltest du nach der Erstellung im Inventar.", "path": "equipment.armor"})
+        shields = {a["id"] for a in data["equipment"]["armor"] if a["category"] == "shield"}
+        if equipment.get("shield") and not owned.intersection(shields):
+            blockers.append({"code": "shield-not-in-package", "severity": "error", "message": "Deine gewählten Startpakete enthalten keinen Schild.", "path": "equipment.shield"})
     return blockers
 
 

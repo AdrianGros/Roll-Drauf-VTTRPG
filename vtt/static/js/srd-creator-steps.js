@@ -26,7 +26,7 @@
     function select(id, options, value, onchange, placeholder) {
         const node = h('select', { id, onchange: (e) => onchange(e.target.value) },
             placeholder ? h('option', { value: '', text: placeholder }) : null,
-            options.map(([v, t]) => h('option', { value: v, text: t })));
+            options.map(([v, t, disabled]) => h('option', { value: v, text: t, disabled: !!disabled })));
         node.value = value == null ? '' : String(value);
         return node;
     }
@@ -35,7 +35,7 @@
             h('strong', { text: title }), sub ? h('span', { text: sub }) : null, extra || null);
     }
     function checkRow(text, checked, disabled, onchange, sub, detailId) {
-        return h('div', { class: 'sc-check' },
+        return h('div', { class: `sc-check${checked ? ' is-selected' : ''}` },
             h('label', { class: 'sc-check-label' }, h('input', { type: 'checkbox', checked, disabled, onchange: (e) => onchange(e.target.checked) }),
                 h('span', null, text, sub ? h('small', { text: sub }) : null)),
             detailId ? h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-quiet', onclick: () => SC.openEntry(detailId, text), 'aria-label': `Regeltext zu ${text}` }, '?') : null);
@@ -206,7 +206,12 @@
                 const classCell = i === 0 ? h('td', { text: cls(l.classKey).name }) : h('td', null, select(`scLvlClass${i}`, app.data.classes.map((c) => [c.classKey, c.name]), l.classKey, (v) => {
                     SC.mutate((state) => { state.levels[i].classKey = v; prune(state, firstClass()); });
                 }));
-                return h('tr', null, h('td', { text: i + 1 }), classCell, hpCell);
+                const classLevel = levels.slice(0, i + 1).filter((entry) => entry.classKey === l.classKey).length;
+                const levelData = cls(l.classKey).levels.find((entry) => entry.level === classLevel);
+                const features = (levelData?.features || []).map((feature) => feature.name);
+                return h('tr', null, h('td', { text: i + 1 }), classCell, hpCell,
+                    h('td', { class: 'sc-level-features' }, h('small', { class: 'sc-muted', text: `${cls(l.classKey).name} · Klassenstufe ${classLevel}` }),
+                        h('div', { text: features.join(' · ') || 'Keine neuen Klassenmerkmale' })));
             });
             wrap.append(panel(
                 h('h3', { text: 'Stufe und Verlauf' }),
@@ -214,7 +219,7 @@
                 h('p', { class: 'sc-muted', text: 'Ab Stufe 2 kannst du pro Stufe die Klasse wechseln (Mehrklassigkeit); der Server prüft die Voraussetzungen.' }),
                 h('div', { class: 'sc-scroll' }, h('table', { class: 'sc-table' },
                     h('caption', { class: 'sc-muted', text: 'Stufenverlauf' }),
-                    h('thead', null, h('tr', null, ['Stufe', 'Klasse', 'Trefferpunkte'].map((t) => h('th', { scope: 'col', text: t })))),
+                    h('thead', null, h('tr', null, ['Stufe', 'Klasse', 'Trefferpunkte', 'Neue Merkmale'].map((t) => h('th', { scope: 'col', text: t })))),
                     h('tbody', null, rows)))));
         }
         return wrap;
@@ -389,11 +394,13 @@
                 const remaining = totals.slice();
                 ABIL.forEach((a) => { const idx = remaining.indexOf(base[a]); if (idx >= 0) remaining.splice(idx, 1); });
                 ABIL.forEach((a) => {
-                    const pool = remaining.slice();
-                    if (base[a] != null) pool.push(base[a]);
-                    const options = Array.from(new Set(pool)).sort((x, y) => y - x);
+                    const options = Array.from(new Set(totals)).sort((x, y) => y - x).map((value) => {
+                        const count = totals.filter((v) => v === value).length;
+                        const available = remaining.filter((v) => v === value).length + (base[a] === value ? 1 : 0);
+                        return [value, `${value} · ${count}× gewürfelt${available ? ` · ${available} zuweisbar` : ' · bereits vergeben'}`, !available];
+                    });
                     grid.append(h('div', { class: 'sc-abil' }, h('h4', { text: SC.abilityName(a) }),
-                        select(`scBase-${a}`, options.map((v) => [v, v]), base[a], (v) => setBase(a, v === '' ? undefined : Number(v)), '–'), abilitySummaryCell(a)));
+                        select(`scBase-${a}`, options, base[a], (v) => setBase(a, v === '' ? undefined : Number(v)), '–'), abilitySummaryCell(a)));
                 });
             }
         } else if (method === 'manual') {
@@ -606,10 +613,36 @@
     }
     function packageChooser(title, source, key) {
         const cur = (st().equipment || {})[key];
-        const set = (v) => SC.mutate((state) => { state.equipment = state.equipment || {}; state.equipment[key] = v; });
+        const set = (v) => SC.mutate((state) => {
+            state.equipment = state.equipment || {};
+            state.equipment[key] = v;
+            const owned = startingItems(state);
+            if (!owned.has(state.equipment.armor)) delete state.equipment.armor;
+            if (!app.data.equipment.armor.some((a) => a.category === 'shield' && owned.has(a.id))) delete state.equipment.shield;
+        });
         return h('div', null, h('h4', { text: title }),
-            h('div', { class: 'sc-grid' }, ['A', 'B'].map((p) => h('div', null, card(`Paket ${p}`, p === 'B' ? 'Nur Gold' : 'Ausrüstung', cur === p, () => set(p)), packageContents(source[p] || [])))));
+            h('div', { class: 'sc-grid' }, Object.keys(source).sort().map((p) => h('div', null,
+                card(`Paket ${p}`, (source[p] || []).every((item) => item.kind === 'coins') ? 'Nur Gold' : 'Ausrüstung', cur === p, () => set(p)), packageContents(source[p] || [])))));
     }
+
+    function startingItems(state) {
+        const owned = new Map();
+        const first = state.levels?.[0]?.classKey;
+        const background = SC.L.backgrounds[state.background?.id];
+        for (const [source, key, label] of [[SC.L.classes[first], 'classPackage', 'Klasse'], [background, 'backgroundPackage', 'Hintergrund']]) {
+            for (const item of source?.startingEquipment?.[state.equipment?.[key]] || []) {
+                if (item.kind !== 'item') continue;
+                const contents = app.data.equipment.packs[item.itemId]?.contents || [item];
+                for (const entry of contents) if (entry.kind === 'item') {
+                    const sources = owned.get(entry.itemId) || [];
+                    sources.push(`${label}: ${source.name} · Paket ${state.equipment[key]}`);
+                    owned.set(entry.itemId, sources);
+                }
+            }
+        }
+        return owned;
+    }
+    SC.startingItems = startingItems;
 
     function renderAusruestung() {
         const wrap = h('div');
@@ -620,16 +653,20 @@
             bg ? packageChooser(`Hintergrund: ${bg.name}`, bg.startingEquipment, 'backgroundPackage') : null,
             h('p', { class: 'sc-muted', text: 'Hinweis: Das Inventar wird erst mit dem Charakterbogen aufgebaut; hier hältst du die Wahl der Pakete fest.' })));
         const equip = st().equipment || {};
-        const armors = app.data.equipment.armor.filter((a) => a.category !== 'shield');
+        const owned = startingItems(st());
+        const armors = app.data.equipment.armor.filter((a) => a.category !== 'shield' && owned.has(a.id));
+        const ownsShield = app.data.equipment.armor.some((a) => a.category === 'shield' && owned.has(a.id));
         const classTrained = (cat) => {
             const lv = levelsByClass();
             return classOrder().some((k, i) => (i === 0 ? cls(k).armorProficiencies.includes(cat) : (cls(k).multiclassGrants.armor || []).includes(cat)));
         };
         const set = (key, value) => SC.mutate((state) => { state.equipment = state.equipment || {}; if (value === '' || value === false) delete state.equipment[key]; else state.equipment[key] = value; });
-        wrap.append(panel(h('h3', { text: 'Rüstung und Schild' }),
+        wrap.append(panel(h('h3', { text: 'Anlegen aus deinen Startpaketen' }),
+            h('p', { class: 'sc-muted', text: 'Hier legst du vorhandene Ausrüstung an; du erhältst keine zusätzliche Rüstung. Weitere Gegenstände kannst du später im Inventar mit deiner Spielleitung verwalten.' }),
             h('div', { class: 'sc-fields' },
-                field('Getragene Rüstung', select('scArmor', armors.map((a) => [a.id, `${a.name} (RK ${a.base}${a.dex === 'none' ? '' : a.dex === 'capped' ? ` + GES max. ${a.dexCap}` : ' + GES'})${classTrained(a.category) ? '' : ' – ungeübt'}`]), equip.armor, (v) => set('armor', v), 'Keine Rüstung'), 'scArmor')),
-            checkRow('Schild führen (+2 RK)', !!equip.shield, false, (checked) => set('shield', checked), classTrained('shield') ? null : 'Du bist mit Schilden nicht vertraut.'),
+                field('Getragene Rüstung', select('scArmor', armors.map((a) => [a.id, `${a.name} (RK ${a.base}${a.dex === 'none' ? '' : a.dex === 'capped' ? ` + GES max. ${a.dexCap}` : ' + GES'}) · ${owned.get(a.id).join('; ')}${classTrained(a.category) ? '' : ' – ungeübt'}`]), equip.armor, (v) => set('armor', v), 'Keine Rüstung'), 'scArmor')),
+            !armors.length ? h('p', { class: 'sc-muted', text: 'Deine gewählten Startpakete enthalten keine Rüstung.' }) : null,
+            checkRow('Schild führen (+2 RK)', !!equip.shield, !ownsShield, (checked) => set('shield', checked), !ownsShield ? 'In den gewählten Startpaketen ist kein Schild enthalten.' : classTrained('shield') ? 'Schild aus deinen Startpaketen.' : 'Du bist mit Schilden nicht vertraut.'),
             ev() ? h('p', null, h('strong', { text: `Rüstungsklasse ${ev().armorClass.value}` }), h('span', { class: 'sc-muted', text: ` · ${ev().armorClass.formula}` })) : null));
         const level = (ev() && ev().level) || 1;
         if (level > 1) {
@@ -671,13 +708,15 @@
         const casters = classOrder().filter((k) => cls(k).spellcasting);
         if (!casters.length) return panel(h('h3', { text: 'Zauber' }), h('p', { class: 'sc-muted', text: 'Deine gewählten Klassen wirken auf diesen Stufen keine Zauber.' }));
         const wrap = h('div');
-        wrap.append(panel(
+        const filters = panel(
             h('h3', { text: 'Zauber filtern' }),
             h('div', { class: 'sc-fields' },
                 field('Suche', h('input', { type: 'search', id: 'scSpellSearch', value: spellFilter.text, oninput: (e) => { spellFilter.text = e.target.value.toLowerCase(); wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); } }), 'scSpellSearch'),
                 field('Grad', select('scSpellLevel', [['0', 'Zaubertricks'], ...Array.from({ length: 9 }, (_, i) => [String(i + 1), `${i + 1}. Grad`])], spellFilter.level, (v) => { spellFilter.level = v; wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); }, 'Alle'), 'scSpellLevel')),
             ev() && ev().spellcasting.slots ? h('p', null, h('strong', { text: 'Zauberplätze: ' }), ev().spellcasting.slots.map((n, i) => (n ? `${i + 1}. Grad ×${n}` : null)).filter(Boolean).join(' · ')) : null,
-            ev() && ev().spellcasting.pact ? h('p', null, h('strong', { text: 'Paktmagie: ' }), `${ev().spellcasting.pact.slots} Plätze, ${ev().spellcasting.pact.grade}. Grad`) : null));
+            ev() && ev().spellcasting.pact ? h('p', null, h('strong', { text: 'Paktmagie: ' }), `${ev().spellcasting.pact.slots} Plätze, ${ev().spellcasting.pact.grade}. Grad`) : null);
+        filters.classList.add('sc-spell-filters');
+        wrap.append(filters);
         casters.forEach((key) => {
             const c = cls(key);
             const row = castingRow(key, lv[key]);

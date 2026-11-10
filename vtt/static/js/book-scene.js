@@ -671,6 +671,15 @@
             // der Buch-Ansicht komplett fehlte (F4-Loch). Der garantierte
             // 403-Hub-Link für Nicht-Mitglieder (D07/B1) entfällt damit.
             return `
+                <div data-campaign-list>
+                <label class="book-scene-campaign-search">Kampagnen suchen
+                    <input type="search" data-campaign-search placeholder="Name oder Beschreibung" autocomplete="off">
+                </label>
+                <div class="book-scene-campaign-pages" aria-label="Kampagnenseiten">
+                    <button type="button" class="btn btn-secondary" data-campaign-prev>Vorherige</button>
+                    <span data-campaign-count role="status" aria-live="polite"></span>
+                    <button type="button" class="btn btn-secondary" data-campaign-next>Nächste</button>
+                </div>
                 <div class="book-scene-ledger">
                     ${campaigns.map((campaign) => {
                         // F1/C1 (interim slice): this used to be a hard
@@ -720,6 +729,7 @@
                         </div>
                         `;
                     }).join('')}
+                </div>
                 </div>
             `;
         },
@@ -1620,6 +1630,32 @@
             if (!this.sceneSurface) {
                 return;
             }
+
+            this.sceneSurface.querySelectorAll('[data-campaign-list]').forEach((list) => {
+                if (list.dataset.bound === 'true') return;
+                list.dataset.bound = 'true';
+                const rows = [...list.querySelectorAll('[data-testid="campaign-ledger-item"]')];
+                const search = list.querySelector('[data-campaign-search]');
+                const previous = list.querySelector('[data-campaign-prev]');
+                const next = list.querySelector('[data-campaign-next]');
+                const count = list.querySelector('[data-campaign-count]');
+                const searchable = new Map(rows.map((row) => [row, [row.querySelector('.book-scene-ledger-head strong')?.textContent, row.querySelector('.book-scene-ledger-copy')?.textContent].join(' ').toLocaleLowerCase('de')]));
+                let page = 0;
+                const refresh = () => {
+                    const term = search.value.trim().toLocaleLowerCase('de');
+                    const matches = rows.filter((row) => searchable.get(row).includes(term));
+                    page = Math.max(0, Math.min(page, Math.ceil(matches.length / 5) - 1));
+                    const visible = new Set(matches.slice(page * 5, page * 5 + 5));
+                    rows.forEach((row) => { row.hidden = !visible.has(row); });
+                    previous.disabled = page === 0;
+                    next.disabled = (page + 1) * 5 >= matches.length;
+                    count.textContent = matches.length ? `${page * 5 + 1}–${Math.min((page + 1) * 5, matches.length)} von ${matches.length} Kampagnen` : 'Keine passende Kampagne';
+                };
+                search.addEventListener('input', () => { page = 0; refresh(); });
+                previous.addEventListener('click', () => { page--; refresh(); });
+                next.addEventListener('click', () => { page++; refresh(); });
+                refresh();
+            });
 
             window.CreationEngineNavigation?.hydrate(this.sceneSurface);
             window.RegelwerkNavigation?.hydrate(this.sceneSurface);

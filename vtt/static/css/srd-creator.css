@@ -133,6 +133,24 @@ body.srd-creator-page { background: radial-gradient(circle at 12% 4%, rgba(255, 
 .sc-home-links { margin-top: 1rem; }
 .sc-card[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--sc-accent); }
 
+/* Feedback: keep the chosen state visible without relying on color alone. */
+.sc-check { border: 1px solid transparent; }
+.sc-check.is-selected { border-color: #876019; background: #efe4f3; box-shadow: inset 3px 0 #876019; }
+.sc-check.is-selected .sc-check-label { font-weight: 600; }
+.sc-check[hidden] { display: none; }
+.sc-check-label { display: flex; gap: 0.5rem; flex: 1; cursor: pointer; min-width: 0; }
+.sc-check input { flex: 0 0 auto; accent-color: var(--sc-accent); }
+.sc-level-features { min-width: 15rem; }
+.sc-level-features small { display: block; }
+.sc-table select { width: 100%; min-width: 8rem; }
+.sc-spell-filters { position: sticky; top: 0.5rem; z-index: 4; box-shadow: 0 3px 12px #2f163825; }
+.sc-spell-filters .sc-field { margin-bottom: 0.25rem; }
+@media (max-width: 600px) {
+    .sc-spell-filters { padding: 0.5rem; }
+    .sc-spell-filters h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .sc-spell-filters .sc-fields { grid-template-columns: minmax(0, 1fr) 7rem; gap: 0.5rem; }
+}
+
 .sc-import-file { display: grid; gap: 0.2rem; min-width: 0; }
 .sc-import-file input { max-width: 100%; }
 .sc-import-error { color: #9c2a2a; font-weight: 700; }

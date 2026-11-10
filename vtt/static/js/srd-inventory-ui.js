@@ -136,13 +136,14 @@
 
   function seedBlock(payload) {
     const wrap = element('div', 'srd-inv-seed');
-    wrap.append(element('p', 'srd-sheet-note', 'Die Ausgangsausrüstung aus Klasse und Hintergrund ist noch nicht im Inventar. Wähle jeweils das Paket, das du im Ersteller genommen hast (A: Ausrüstung, B: Gold).'));
+    wrap.append(element('p', 'srd-sheet-note', 'Die Ausgangsausrüstung aus Klasse und Hintergrund ist noch nicht im Inventar. Wähle jeweils das Paket, das du im Ersteller genommen hast. Die Paketangebote hängen von Klasse und Hintergrund ab.'));
     if (!editable) return wrap;
     const selects = {};
     [['classPackage', 'Klassenpaket', payload.packages.class], ['backgroundPackage', 'Hintergrundpaket', payload.packages.background]].forEach(([key, text, preset]) => {
       const select = element('select', 'srd-inv-select');
       select.append(new Option('Bitte wählen', ''));
-      select.append(new Option('A · Ausrüstung', 'A'), new Option('B · Gold', 'B'));
+      const scope = key === 'classPackage' ? 'class' : 'background';
+      for (const option of payload.packageOptions?.[scope] || []) select.append(new Option(option.label, option.id));
       select.value = preset || '';
       selects[key] = select;
       wrap.append(labelled(text, select));
@@ -342,6 +343,7 @@
       const payload = await auth.makeAuthRequest(`/api/srd-creator/characters/${character.id}/inventory`);
       current = { character, payload, onChange, notice: '', error: '' };
       render();
+      current.onChange?.(payload);
     } catch (error) {
       root.replaceChildren(element('div', 'sheet-empty', 'Das Inventar konnte nicht geladen werden.'));
     }

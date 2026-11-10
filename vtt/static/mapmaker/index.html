@@ -94,6 +94,7 @@
 
     <main class="mm-stage" id="stage">
         <canvas id="mapCanvas" tabindex="0" aria-label="Kartenfläche. Werkzeuge in der Werkzeugleiste, Orte im Bereich „Orte“."></canvas>
+        <button id="activeLayerJump" class="mm-btn mm-btn-small mm-layer-jump" type="button" aria-controls="pane-layers" title="Aktive Ebene und Ebenenverwaltung öffnen">Ebenen verwalten</button>
         <div class="mm-zoom" role="group" aria-label="Zoom">
             <button id="zoomOut" type="button" class="mm-icon-btn" aria-label="Verkleinern" title="Verkleinern (−)">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
@@ -375,6 +376,7 @@
         <div>
             <h3 class="mm-h3">Ansicht</h3>
             <dl class="mm-keys">
+                <dt>Rechte Maustaste ziehen</dt><dd>Karte verschieben, ohne das Werkzeug zu wechseln</dd>
                 <dt><kbd>Leertaste</kbd> halten</dt><dd>Karte verschieben</dd>
                 <dt>Mausrad / zwei Finger</dt><dd>Zoomen</dd>
                 <dt><kbd>+</kbd> <kbd>−</kbd></dt><dd>Zoomen</dd>

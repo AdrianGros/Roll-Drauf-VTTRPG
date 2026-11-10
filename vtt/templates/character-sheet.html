@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Sheet - roll drauf vtt</title>
+    <title>Charakterbogen - roll drauf vtt</title>
     <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -700,6 +700,8 @@
 
     </style>
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
+    <link rel="stylesheet" href="/static/css/sheet-feedback.css">
+    <script src="/static/js/sheet-feedback.js"></script>
 </head>
 <body class="spellbook character-sheet-route-book-scene">
     <div id="characterSheetSceneStatus" role="status" aria-live="polite" hidden>Charakterbogen wird geladen …</div>
@@ -1618,7 +1620,10 @@
                 link.type = 'button';
                 link.className = 'srd-roll-link';
                 link.textContent = text;
-                link.addEventListener('click', () => document.getElementById(target)?.scrollIntoView({ block: 'start' }));
+                link.addEventListener('click', () => {
+                    window.SheetFeedback?.reveal(target);
+                    document.getElementById(target)?.scrollIntoView({ block: 'start' });
+                });
                 jump.append(link);
             });
             bar.append(jump);
@@ -1689,6 +1694,7 @@
         }
 
         function updateSrdArmorClass(payload) {
+            window.SheetFeedback.updateInventory(payload);
             const cell = document.getElementById('srdAcCell');
             if (!cell || !payload?.armorClass) return;
             const value = cell.querySelector('.srd-sheet-value');
@@ -1893,7 +1899,7 @@
             link.href = '/srd-creator';
             link.textContent = 'Zum Regelwerk-Ersteller';
             nodes.push(link);
-            return nodes;
+            return window.SheetFeedback.compose(character, detail, data, nodes);
         }
 
         function renderHomebrewOrigin(character) {

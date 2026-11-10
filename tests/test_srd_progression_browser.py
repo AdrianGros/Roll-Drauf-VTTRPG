@@ -44,6 +44,7 @@ def test_xp_award_and_level_up_wizard(site, data, width):
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(f"{origin}/character-sheet?id={char_id}&mode=edit")
+        page.get_by_role("tab", name="Verwaltung", exact=True).click()
         progression = page.locator("#srdProgression")
         expect(progression).to_contain_text("Stufe 5")
         expect(page.locator("#charXp")).to_be_disabled()
@@ -88,6 +89,7 @@ def test_multiclass_level_up_wizard(site, data, width):
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(f"{origin}/character-sheet?id={char_id}&mode=edit")
+        page.get_by_role("tab", name="Verwaltung", exact=True).click()
         expect(page.locator("#srdProgression")).to_contain_text("Stufe 5")
         page.fill("#srdProgXpAmount", "7500")
         page.get_by_role("button", name="EP vergeben").click()

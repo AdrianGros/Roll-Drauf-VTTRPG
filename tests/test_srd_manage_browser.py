@@ -29,6 +29,7 @@ def test_level_down_and_companions_on_the_sheet(site, data, width):
     with sync_playwright() as p:
         browser, page, errors = _page(p, origin, info, width)
         page.goto(f"{origin}/character-sheet?id={char_id}&mode=edit")
+        page.get_by_role("tab", name="Verwaltung", exact=True).click()
         progression = page.locator("#srdProgression")
         expect(progression).to_contain_text("Stufe 5")
 
@@ -54,6 +55,7 @@ def test_level_down_and_companions_on_the_sheet(site, data, width):
         assert overflow <= 1, overflow
 
         page.reload()
+        page.get_by_role("tab", name="Verwaltung", exact=True).click()
         expect(page.locator(".srd-man-card [data-field=name]").first).to_have_value("Wolf")
         expect(page.locator(".srd-man-card [data-field=hpCurrent]").first).to_have_value("7")
         page.get_by_role("button", name="Begleiter entfernen").click()
@@ -72,18 +74,22 @@ def test_duplicate_rebuild_and_archive_flow(site, data, width):
     with sync_playwright() as p:
         browser, page, errors = _page(p, origin, info, width)
         page.goto(f"{origin}/character-sheet?id={char_id}&mode=edit")
+        page.get_by_role("tab", name="Verwaltung", exact=True).click()
         page.locator("#srdManageDuplicate").click()
         page.locator("#srdManageConfirm").click()
         page.wait_for_url(re.compile(r"/character-sheet\?id=(?!%d$)\d+" % char_id))
         expect(page.locator("#charName")).to_have_value("Mira Eulenfeder (Kopie)")
+        page.get_by_role("tab", name="Verwaltung", exact=True).click()
         expect(page.locator("#srdManage")).to_be_visible()
 
         page.goto(f"{origin}/character-sheet?id={char_id}&mode=edit")
+        page.get_by_role("tab", name="Verwaltung", exact=True).click()
         page.locator("#srdManageRebuild").click()
         page.locator("#srdManageConfirm").click()
         page.wait_for_url(re.compile(r"/srd-creator\?draft=\d+"))
 
         page.goto(f"{origin}/character-sheet?id={char_id}&mode=edit")
+        page.get_by_role("tab", name="Verwaltung", exact=True).click()
         page.locator("#srdManageArchive").click()
         page.locator("#srdManageConfirm").click()
         page.wait_for_url(re.compile(r"/characters"))

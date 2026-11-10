@@ -96,6 +96,20 @@ offene Produktfreigabe. Ein veröffentlichter Editor-Fix erteilt sie nicht impli
 4. Startauswahl, private Bibliothek, Revisionskontrolle, Import/Export und der
    aktuelle Künstlerkatalog bleiben erhalten. Kein automatisch geladenes Template.
 
+### Kampagnen und Navigation (ergänzter Apply-Vertrag)
+
+1. Die bereits serverseitig erlaubte Kampagnenliste wird nach Name/Beschreibung
+   lokal durchsuchbar und zeigt höchstens fünf Einträge pro Seite. Vor/Zurück,
+   Trefferanzahl und leerer Trefferzustand sind beschriftet. Filterwechsel setzt
+   die Seite zurück. Die Liste verändert keine Sichtbarkeits-/Beitrittsrechte.
+2. Blättern blendet vorhandene Zeilen aus; laufende Einladungseingaben bleiben
+   erhalten. Einzelne Hubs und die Gruppenübersicht behalten ihre bisherigen Ziele.
+3. Abmelden erhält einen lesbaren, zur Kontokarte passenden Button mit mindestens
+   32 px Höhe; Authentifizierungs- und Abmeldeablauf bleiben unverändert.
+4. Abnahme: 50 erlaubte Kampagnen, letzter Treffer über Suche und Seitenwechsel,
+   kein Treffer, Filter löschen, Gruppenlink und beide Browser. Neue Testdaten
+   bleiben ausschließlich in der lokalen Testdatenbank; Live nur eigene Inhalte.
+
 ## Akzeptanz und technische Nachweise
 
 - Creator: doppelte Würfelsummen, vollständige Zuordnung, erneute Zuweisung,

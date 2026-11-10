@@ -2979,3 +2979,8 @@ body.book-scene-open .book-back {
     color: var(--vtt-ink-muted, #6b5442);
     font-style: italic;
 }
+.book-scene-campaign-search { display: grid; gap: 0.3rem; margin-block: 0.65rem; font-size: 0.85rem; }
+.book-scene-campaign-search input { min-width: 0; width: 100%; padding: 0.5rem; border: 1px solid #94724e; border-radius: 6px; background: #fff8e8; color: #38203f; font: inherit; }
+.book-scene-campaign-pages { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-block: 0.5rem; font-size: 0.8rem; }
+.book-scene-campaign-pages .btn { font-size: 0.8rem; padding: 0.4rem 0.55rem; }
+[data-campaign-list] .book-scene-ledger-item[hidden] { display: none !important; }

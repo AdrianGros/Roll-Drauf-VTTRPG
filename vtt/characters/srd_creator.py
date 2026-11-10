@@ -77,7 +77,7 @@ def _view(draft):
     return {
         'draft': {**draft.summary(), 'state': state, 'sources': draft.sources},
         'evaluation': evaluation,
-        'blockers': _species_blockers(problems) + finalize_blockers(evaluation, state),
+        'blockers': _species_blockers(problems) + finalize_blockers(evaluation, state, data),
     }
 
 
@@ -131,7 +131,7 @@ def evaluate_state():
         return _invalid_state(problems)
     data = species_catalog.resolve(user.id, state)[0]
     evaluation = evaluate(data, state)
-    return jsonify({'evaluation': evaluation, 'blockers': finalize_blockers(evaluation, state)})
+    return jsonify({'evaluation': evaluation, 'blockers': finalize_blockers(evaluation, state, data)})
 
 
 @srd_creator_bp.get('/drafts')
@@ -279,7 +279,7 @@ def finalize_draft(draft_id):
     state = draft.state or {}
     data, revision, species_problems = species_catalog.resolve(user.id, state)
     evaluation = evaluate(data, state)
-    blockers = _species_blockers(species_problems) + finalize_blockers(evaluation, state)
+    blockers = _species_blockers(species_problems) + finalize_blockers(evaluation, state, data)
     if blockers:
         return _bad('draft_incomplete', 'Der Entwurf ist noch nicht vollständig oder enthält Regelverstöße.', 422, blockers=blockers)
     campaign_id = body.get('campaign_id')

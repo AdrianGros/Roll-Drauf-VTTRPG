@@ -40,6 +40,7 @@ def test_inventory_is_built_and_used_from_the_sheet(site, data, width):
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(f"{origin}/character-sheet?id={char_id}&mode=edit")
+        page.get_by_role("tab", name="Inventar", exact=True).click()
         inventory = page.locator("#srdInventory")
         expect(inventory).to_contain_text("noch nicht im Inventar")
         expect(page.locator("#legacyInventoryPane")).to_be_hidden()
@@ -113,6 +114,7 @@ def test_inventory_is_built_and_used_from_the_sheet(site, data, width):
         page = context.new_page()
         page.set_default_timeout(15000)
         page.goto(f"{origin}/character-sheet?id={char_id}")
+        page.get_by_role("tab", name="Inventar", exact=True).click()
         expect(page.locator("#srdInventory")).to_contain_text("Dolch")
         expect(page.locator("#srdInventory")).to_contain_text("Tragelast")
         assert page.get_by_role("button", name="Entfernen").count() == 0
