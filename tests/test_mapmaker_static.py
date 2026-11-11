@@ -145,8 +145,10 @@ def test_color_sources_have_lossless_palette_projection_and_complete_coverage():
         palette=json.loads((folder/'palette.json').read_text())
         entries={e['id']:e for e in m['stamps']}
         accepted=[r for r in coverage['files'] if r['status']=='placeable']
-        assert len(accepted)==len(entries)==len(palette['rows'])
-        assert {r['asset'] for r in accepted}==set(entries)
+        sliced=coverage.get('slices',{}).get('produced',[])  # reviewed tilesheet slices, see tools/mapmaker_sheet_slicer.py
+        assert len(accepted)+len(sliced)==len(entries)==len(palette['rows'])
+        assert {r['asset'] for r in accepted+sliced}==set(entries)
+        assert palette.get('hidden',[])==[e['id'] for e in m['stamps'] if e.get('hidden')]
         assert len({r['sourcePath'] for r in coverage['files']})==len(coverage['files'])
         fields=('id','file','label','w','h','group','sheet','grid','pixelArt','defaultSize')
         assert palette['rows']==[[e.get(k) for k in fields] for e in m['stamps']]
@@ -176,4 +178,4 @@ def test_all_four_color_batches_are_available():
     for p in catalog:
         m=json.loads((assets/p['manifest']).read_text())
         totals[m.get('batch',0)]+=len(m['stamps'])
-    assert totals=={0:6456,1:572,2:64310,3:718,4:2}
+    assert totals=={0:6456,1:589,2:64310,3:718,4:2}

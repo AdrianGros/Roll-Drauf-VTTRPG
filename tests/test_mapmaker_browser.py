@@ -1636,3 +1636,46 @@ def test_sheet_initial_selection_contains_visible_art(open_editor, pack_id):
     ed.click_doc(*SEA_A)
     assert _diff_count(before,ed.region(SEA_A[0]-130,SEA_A[1]-130,260,260),threshold=4)>5
     ed.assert_clean()
+
+
+def test_tiny_town_slices_offer_whole_objects_and_still_load_hidden_parts(open_editor, tmp_path):
+    manifest = json.loads((STATIC/'mapmaker/assets/kenney-tiny/manifest.json').read_text())
+    by_label = {s['label']: s for s in manifest['stamps']}
+    tree, crown = by_label['Hoher Laubbaum'], by_label['Hoher Laubbaum · Krone']
+    ed = open_editor()
+    ed.tool('stamp')
+    ed.page.locator('#stampPack').select_option('kenney-tiny')
+    expect(ed.page.locator('#stampResults')).to_contain_text('141 Symbole')
+    ed.page.locator('#stampSearch').fill('Hoher Laubbaum')
+    expect(ed.page.locator(f'.mm-stamp[data-asset="{tree["id"]}"]')).to_have_count(1)
+    assert ed.page.locator(f'.mm-stamp[data-asset="{crown["id"]}"]').count() == 0
+    ed.page.locator('#stampSearch').fill('Krone')
+    expect(ed.page.locator('#stampResults')).to_contain_text('Keine Symbole gefunden')
+    ed.page.locator('#stampSearch').fill('Haus mit')
+    assert ed.page.locator('.mm-stamp').count() == 4
+    ed.page.locator('#stampSearch').fill('Hoher Laubbaum')
+    ed.page.locator(f'.mm-stamp[data-asset="{tree["id"]}"]').click()
+    expect(ed.page.locator('#stampSelected')).to_contain_text('Hoher Laubbaum')
+    assert not ed.page.locator('#sheetDialog').is_visible()
+    before = ed.region(SEA_A[0]-40, SEA_A[1]-40, 80, 80)
+    ed.click_doc(*SEA_A)
+    assert _diff_count(before, ed.region(SEA_A[0]-40, SEA_A[1]-40, 80, 80), threshold=4) > 5
+    placed = next(i for i in ed.summary()['items'] if i.get('asset') == tree['id'])
+    assert placed['size'] == 32 and not placed.get('crop')
+    with ed.page.expect_download() as download:
+        ed.menu('Als Datei speichern')
+    project = tmp_path/'tiny.rdmap.json'
+    download.value.save_as(project)
+    raw = json.loads(project.read_text())
+    layer = next(l for l in raw['layers'] if any(i.get('asset') == tree['id'] for i in l.get('items', [])))
+    # A map saved before slicing references the half tile; it must keep loading.
+    layer['items'].append({'id': 'legacyCrown', 'asset': crown['id'], 'x': SEA_B[0], 'y': SEA_B[1], 'size': 64, 'rot': 0, 'flip': False})
+    project.write_text(json.dumps(raw))
+    before = ed.region(SEA_B[0]-40, SEA_B[1]-40, 80, 80)
+    ed.page.locator('#fileInput').set_input_files(project)
+    expect(ed.page.locator('#toast')).to_contain_text('geladen')
+    assets = {i.get('asset') for i in ed.summary()['items']}
+    assert {tree['id'], crown['id']} <= assets
+    assert _diff_count(before, ed.region(SEA_B[0]-40, SEA_B[1]-40, 80, 80), threshold=4) > 5
+    ed.proof('tiny-town-slices')
+    ed.assert_clean()
