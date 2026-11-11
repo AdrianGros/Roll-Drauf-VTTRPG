@@ -1,0 +1,8 @@
+Checks before release (scratch venv: pytest, Pillow 12.3.0, Playwright 1.65, chromium_headless_shell-1243):
+tests/test_mapmaker_browser.py tests/test_mapmaker_static.py tests/test_mapmaker_sheet_slicer.py tests/test_mapmaker_tiles_server.py
+Final full run: 81 passed, 3 skipped in 1076.52s (skipped: Flask-served variants, Flask not importable in the scratch venv).
+Earlier full runs on the way: one failure in test_missing_asset_pack_falls_back_to_simple_stamps (tile groups shared the
+.mm-palette-group class; fixed by a separate class), one load-dependent timeout in
+test_every_artist_set_places_pixels_and_survives_import_export (green 3/3 alone and in the final full run; stamp-only
+import path unchanged). New tile test polls for the lazily decoded tile image instead of sampling immediately.
+After the label fix (index.html only): 13 passed, 1 skipped for tile, narrow-viewport and static tests.

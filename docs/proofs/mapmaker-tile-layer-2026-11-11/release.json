@@ -1,0 +1,31 @@
+{
+ "commits": {
+  "reconcileLiveEditor": "be54198cb",
+  "feature": "cb6c7d13669b9839781ac3d97338a595aab3cee6",
+  "labelFix": "f526e937b4a75082742fc1e2738efe7a93b440f9"
+ },
+ "branch": "feat/creation-engine-g1",
+ "pushed": true,
+ "baseImage": "roll-drauf-vtt-app:feedback-contexts-20261111-721fc1c8c",
+ "baseImageId": "sha256:eb81dc1c236e0ecf834084909b7eac0c4b7c393b790886a08860776b473fb610",
+ "rollbackTag": "roll-drauf-vtt-app:tile-layer-rollback-20261111-eb81dc1c236e",
+ "image": "roll-drauf-vtt-app:tile-layer-20261111-f526e937",
+ "imageId": "sha256:d32dd25233615598d03020860f1f0c9a81d79b5b357d0e2eadf02c0b13d76895",
+ "intermediateImage": {
+  "tag": "roll-drauf-vtt-app:tile-layer-20261111-cb6c7d13",
+  "id": "sha256:b75f476cdc1d34e4540a19c96e11ae0cd7b1e4e8864864d324d5045229dff4c6",
+  "live": "2026-11-11T08:28Z to 08:31Z"
+ },
+ "overlayFiles": 12,
+ "overlayHashesVerifiedInImage": 12,
+ "liveFilesReconciledBeforeOverlay": 12,
+ "switchedAt": "2026-11-11T08:31:50Z",
+ "health": {
+  "now": "2026-11-11T08:31:56.621444",
+  "service": "roll_drauf_vtt",
+  "started_at": "2026-11-11T08:31:54.496533",
+  "status": "ok"
+ },
+ "otherServicesUnchanged": true,
+ "rollback": "/srv/migration/2026-11-11/tile-layer/rollback.sh"
+}
