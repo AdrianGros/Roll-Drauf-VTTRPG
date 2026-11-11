@@ -1,0 +1,26 @@
+{
+  "task": "C03",
+  "phase": "deploy",
+  "base_commit": "a13d6f1a62d7a0cbc0f84501c5567823adb8807f",
+  "owned_files": [
+    "vtt/auth/lifetime.py",
+    "vtt/auth/routes.py",
+    "vtt/config.py",
+    "vtt/__init__.py",
+    "vtt/socket_handlers.py",
+    "vtt/play/contexts.py",
+    "tests/test_auth_lifetime.py",
+    "tests/test_auth.py",
+    "tests/test_table_contexts.py",
+    "tests/test_auth_lifetime_browser.py"
+  ],
+  "apply": "docs/DADM_APPLY_CLAUDE_C03_2026-11-11.md",
+  "model": "sonnet",
+  "new_dependencies": false,
+  "new_schema": false,
+  "coordinator_executes_tests": true,
+  "status": "worker_running",
+  "worktree": "/home/admin/projects/roll-drauf-vtt-claude-c03-20261111",
+  "extra_usage_enabled": false,
+  "api_fallback_authorized": false
+}

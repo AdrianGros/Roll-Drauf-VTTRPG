@@ -20,11 +20,12 @@
     "extra_usage_setting_verified": true,
     "api_fallback_authorized": false,
     "automatic_extra_usage_authorized": false,
-    "model": "inherit",
+    "model": "sonnet for subsequent implementation; current C01 Opus session retained",
     "default_concurrent_implementers": 1,
     "maximum_disjoint_implementers": 2,
     "nested_agents": false,
-    "extra_usage_enabled": false
+    "extra_usage_enabled": false,
+    "model_policy_reason": "Subscription quota conservation after optional preference window; extra usage disabled"
   },
   "roles": {
     "implementation": [
@@ -148,7 +149,7 @@
     {
       "id": "C03",
       "title": "Absolute sechs Stunden pro Anmeldung",
-      "status": "planned",
+      "status": "running",
       "implementer": "vtt-domain-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -160,20 +161,32 @@
       ],
       "next_phase": "deploy",
       "requires_task_specific_apply": true,
-      "base_commit": null,
-      "owned_files": null,
+      "base_commit": "a13d6f1a62d7a0cbc0f84501c5567823adb8807f",
+      "owned_files": [
+        "vtt/auth/lifetime.py",
+        "vtt/auth/routes.py",
+        "vtt/config.py",
+        "vtt/__init__.py",
+        "vtt/socket_handlers.py",
+        "vtt/play/contexts.py",
+        "tests/test_auth_lifetime.py",
+        "tests/test_auth.py",
+        "tests/test_table_contexts.py",
+        "tests/test_auth_lifetime_browser.py"
+      ],
       "acceptance": [
         "Eigenes Discover/Apply einschließlich Bestandsvertrag",
         "Access/Refresh/Login/Discord/Socket respektieren dasselbe absolute Ende",
         "Refresh verlängert nicht über sechs Stunden",
         "Regelwerk-Zugriff verursacht keinen eigenen Logout"
       ],
-      "execution_session_id": null,
+      "execution_session_id": "pending CLI result",
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C03_2026-11-11.md",
-      "apply_contract": "docs/DADM_APPLY_CLAUDE_C03_2026-11-11.md"
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C03_2026-11-11.md",
+      "execution_model": "sonnet"
     },
     {
       "id": "C04",
@@ -194,7 +207,7 @@
         "R27",
         "R28"
       ],
-      "next_phase": "apply",
+      "next_phase": "deploy",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -208,7 +221,8 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C04_2026-11-11.md"
     },
     {
       "id": "C05",
@@ -235,7 +249,8 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C05_2026-11-11.md"
     },
     {
       "id": "C06",
@@ -253,7 +268,7 @@
         "R03",
         "R04"
       ],
-      "next_phase": "discover",
+      "next_phase": "apply",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -267,7 +282,8 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C06_2026-11-11.md"
     },
     {
       "id": "C07",
@@ -413,5 +429,5 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "C00: preserve and review pending P4, reconcile live/new work, verify Claude subscription usage and set exact worker base/file ownership. No implementation started by this plan."
+  "next_step": "Finish active C01/C03 Claude work, integrate after exact diff review and targeted checks, then live verify before marking slices delivered."
 }
