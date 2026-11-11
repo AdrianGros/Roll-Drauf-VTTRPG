@@ -280,7 +280,7 @@ def cmd_build(args):
     by_path = {s['originalPath']: s for s in manifest['stamps'] if 'slice' not in s}
     previous = {s['id']: s for s in manifest['stamps'] if 'slice' in s}
     rel = (PROFILES / f'{args.pack}.json').relative_to(PROFILES.parents[1]).as_posix()
-    hidden, labelled, produced, records, rank = set(), {}, [], [], {}
+    hidden, labelled, produced, records, rank, tiles = set(), {}, [], [], {}, set()
 
     def single_for(k, part):
         """Original single image with the same visible pixels, if the pack ships one."""
@@ -327,6 +327,7 @@ def cmd_build(args):
         if k not in cells or cells[k]['state'] == 'empty': raise SystemExit(f'Cell {key} is empty')
         asset = emit(cells[k]['image'], key, spec['label'], spec['group'], spec.get('kind', 'tile'), single=k)
         if k in parts_of_objects or spec.get('hidden'): hidden.add(asset)
+        elif spec.get('kind', 'tile') == 'tile' and grid.w == grid.h: tiles.add(asset)  # painted on the tile grid, not stamped
     missing = [k for k, c in sorted(cells.items()) if c['state'] != 'empty' and fmt_cells([k]) not in profile['cells']]
     if missing: raise SystemExit(f'Cells not accounted for in the profile: {fmt_cells(missing)}')
 
@@ -336,11 +337,13 @@ def cmd_build(args):
         if 'slice' in s: continue
         if s['id'] in labelled: s['label'], s['group'] = labelled[s['id']]
         if s.get('sheet'): s['group'] = 'Referenzen & Szenen'
-        s.pop('hidden', None)
+        s.pop('hidden', None); s.pop('tile', None)
         if s['id'] in hidden: s['hidden'] = True
+        if s['id'] in tiles: s['tile'] = True
         originals.append(s)
     for p in produced:
         if p['id'] in hidden: p['hidden'] = True
+        if p['id'] in tiles: p['tile'] = True
     # Published slice IDs stay resolvable for saved maps even when a later review drops them.
     retired = [dict(previous[i], hidden=True) for i in previous if i not in new_ids]
     order = {g: n for n, g in enumerate(profile.get('groupOrder', []))}
@@ -354,7 +357,7 @@ def cmd_build(args):
     write_json(folder / 'manifest.json', manifest, compact=True)
     write_json(folder / 'coverage.json', coverage, compact=True)
     shown = sum(not s.get('hidden') for s in manifest['stamps'])
-    print(f'{args.pack}: {len(produced)} new slice stamps, {len(labelled)} originals relabelled, {len(hidden)} parts hidden, {shown} visible')
+    print(f'{args.pack}: {len(produced)} new slice stamps, {len(labelled)} originals relabelled, {len(hidden)} parts hidden, {len(tiles)} grid tiles, {shown} visible')
     rebuild()
 
 

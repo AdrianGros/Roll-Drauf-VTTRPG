@@ -16,6 +16,8 @@ def rebuild():
             index.update(schemaVersion=2,rows=[[e.get(k) for k in fields] for e in m['stamps']],textures=[])
             # Parts of assembled objects stay resolvable for saved maps but leave the palette.
             if any(e.get('hidden') for e in m['stamps']):index['hidden']=[e['id'] for e in m['stamps'] if e.get('hidden')]
+            # Grid tiles go to the tile tool's palette instead of the stamp palette.
+            if any(e.get('tile') for e in m['stamps']):index['tiles']=[e['id'] for e in m['stamps'] if e.get('tile')]
             (ASSETS/p['id']/'palette.json').write_text(json.dumps(index,ensure_ascii=False,separators=(',',':'))+'\n')
             p['palette']=p['id']+'/palette.json'
         credits=m.get('creditFiles',[])

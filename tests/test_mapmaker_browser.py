@@ -1645,7 +1645,8 @@ def test_tiny_town_slices_offer_whole_objects_and_still_load_hidden_parts(open_e
     ed = open_editor()
     ed.tool('stamp')
     ed.page.locator('#stampPack').select_option('kenney-tiny')
-    expect(ed.page.locator('#stampResults')).to_contain_text('141 Symbole')
+    # Grid tiles moved to the tile tool; the stamp palette keeps objects, composites and references.
+    expect(ed.page.locator('#stampResults')).to_contain_text('44 Symbole')
     ed.page.locator('#stampSearch').fill('Hoher Laubbaum')
     expect(ed.page.locator(f'.mm-stamp[data-asset="{tree["id"]}"]')).to_have_count(1)
     assert ed.page.locator(f'.mm-stamp[data-asset="{crown["id"]}"]').count() == 0
@@ -1678,4 +1679,122 @@ def test_tiny_town_slices_offer_whole_objects_and_still_load_hidden_parts(open_e
     assert {tree['id'], crown['id']} <= assets
     assert _diff_count(before, ed.region(SEA_B[0]-40, SEA_B[1]-40, 80, 80), threshold=4) > 5
     ed.proof('tiny-town-slices')
+    ed.assert_clean()
+
+
+GRASS = 'color:kenney-tiny_33382ddbb14436e9'
+WALL = 'color:kenney-tiny_1a2fdb62b6610bca'
+
+
+def test_tile_tool_paints_grid_cells_with_undo_size_and_file_roundtrip(open_editor, tmp_path):
+    ed = open_editor()
+    ed.tool('tile')
+    expect(ed.page.locator('#tileResults')).to_contain_text('97 Kacheln')
+    assert ed.page.locator('.mm-tile-btn').count() == 64
+    expect(ed.page.locator('#tileTarget')).to_contain_text('Neue Kachelebene')
+    ed.page.locator('#tileSearch').fill('Gras')
+    ed.page.locator(f'.mm-tile-btn[data-tile="{GRASS}"]').click()
+    expect(ed.page.locator('#tileSelected')).to_contain_text('Gras')
+    before = ed.region(992, 992, 224, 64)
+    # One quick drag across six cells: interpolation must not leave gaps.
+    ed.drag([(1000, 1010), (1190, 1010)], steps=2)
+    tiles = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
+    assert tiles['name'] == 'Kacheln 1' and tiles['grid'] == 32
+    assert sorted((t['col'], t['row']) for t in tiles['tiles']) == [(c, 31) for c in range(31, 38)]
+    assert {t['asset'] for t in tiles['tiles']} == {GRASS}
+    # Tile pixels appear once the lazily loaded image has decoded.
+    deadline = time.monotonic() + 10
+    while _diff_count(before, ed.region(992, 992, 224, 64), threshold=4) <= 500:
+        assert time.monotonic() < deadline, 'painted tiles never appeared'
+        ed.page.wait_for_timeout(100)
+    # Cells are filled edge to edge with the tile's own pixels (16 px art scaled 2x, no smoothing).
+    from PIL import Image
+    with Image.open(STATIC / 'mapmaker/assets/kenney-tiny' / next(s for s in json.loads((STATIC / 'mapmaker/assets/kenney-tiny/manifest.json').read_text())['stamps'] if s['id'] == GRASS)['file']) as png:
+        source = png.convert('RGB').getpixel((0, 0))
+    sample = ed.region(32 * 33 + 0, 32 * 31 + 0, 2, 2)
+    assert max(abs(sample[i] - source[i]) for i in range(3)) <= 40  # parchment/vignette tint only
+    # The tile layer sits above painted land and below symbols.
+    kinds = [l['kind'] for l in ed.summary()['layers']]
+    assert kinds.index('tiles') < kinds.index('stamps')
+    ed.page.keyboard.press('Control+z')
+    assert not any(l['kind'] == 'tiles' for l in ed.summary()['layers'])
+    ed.page.keyboard.press('Control+Shift+z')
+    tiles = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
+    assert len(tiles['tiles']) == 7
+    # Second tile kind and erase mode in the same layer.
+    ed.page.locator('#tileSearch').fill('Steinmauer')
+    ed.page.locator(f'.mm-tile-btn[data-tile="{WALL}"]').click()
+    ed.click_doc(32 * 31 + 5, 32 * 33 + 5)
+    ed.page.locator('#tileMode').select_option('erase')
+    ed.click_doc(32 * 37 + 5, 32 * 31 + 5)
+    tiles = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
+    assert len(tiles['tiles']) == 7 and (37, 31) not in {(t['col'], t['row']) for t in tiles['tiles']}
+    # Changing the layer's tile size rescales the layer and is one undo step.
+    ed.page.locator('#tileSize').select_option('48')
+    assert next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')['grid'] == 48
+    ed.page.keyboard.press('Control+z')
+    assert next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')['grid'] == 32
+    with ed.page.expect_download() as download:
+        ed.menu('Als Datei speichern')
+    project = tmp_path / 'tiles.rdmap.json'
+    download.value.save_as(project)
+    raw = json.loads(project.read_text())
+    layer = next(l for l in raw['layers'] if l['kind'] == 'tiles')
+    assert layer['grid'] == {'size': 32} and layer['palette'] == [GRASS, WALL]
+    assert layer['cells'] == [31, 31, 0, 32, 31, 0, 33, 31, 0, 34, 31, 0, 35, 31, 0, 36, 31, 0, 31, 33, 1]
+    assert 'items' not in layer
+    expected = sorted([(c, 31, GRASS) for c in range(31, 37)] + [(31, 33, WALL)])
+    expect(ed.page.locator('#saveStatus')).to_have_attribute('data-state', 'saved', timeout=15000)
+    ed.page.reload()
+    ed.page.wait_for_selector('#restoreDialog[open]')
+    ed.page.locator('#restoreYes').click()
+    ed.page.wait_for_selector('#app[data-state=ready]')
+    _wait_until(ed, "() => window.rdMapmaker.summary().layers.some((l) => l.kind === 'tiles')")
+    restored = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
+    assert sorted((t['col'], t['row'], t['asset']) for t in restored['tiles']) == expected
+    ed.page.locator('#fileInput').set_input_files(project)
+    expect(ed.page.locator('#toast')).to_contain_text('geladen')
+    reloaded = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
+    assert sorted((t['col'], t['row'], t['asset']) for t in reloaded['tiles']) == expected
+    ed.menu('Als PNG exportieren')
+    with ed.page.expect_download(timeout=60000) as download:
+        ed.page.locator('#exportBundle').click()
+    target = tmp_path / 'tiles.zip'
+    download.value.save_as(target)
+    with zipfile.ZipFile(target) as z:
+        assert 'Kenney · Tiny Town' in z.read('CREDITS.txt').decode()
+    ed.proof('tile-layer')
+    ed.assert_clean()
+
+
+def test_tile_layer_import_contract(open_editor):
+    ed = open_editor()
+    result = ed.page.evaluate("""async ([grass, wall]) => {
+        const { validateDocument } = await import('./js/document.js');
+        const { loadPalette } = await import('./js/stamps.js');
+        const palette = await loadPalette();
+        const doc = (tiles) => ({format: 'rd-mapmaker', version: 1, size: {w: 512, h: 256}, meta: {title: 'Kacheln'},
+            layers: [{id: 'k1', kind: 'tiles', name: 'Boden', visible: true, opacity: 1, ...tiles}]});
+        const ok = validateDocument(doc({grid: {size: 32}, palette: [grass, wall], cells: [0, 0, 0, 15, 7, 1]}), {knownAssets: palette.stamps});
+        const bad = [
+            {grid: {size: 4}, palette: [grass], cells: []},
+            {grid: {size: 32}, palette: [grass], cells: [16, 0, 0]},
+            {grid: {size: 32}, palette: [grass], cells: [0, 8, 0]},
+            {grid: {size: 32}, palette: [grass], cells: [0, 0, 1]},
+            {grid: {size: 32}, palette: [grass], cells: [0, 0, 0, 0, 0, 0]},
+            {grid: {size: 32}, palette: [grass, grass], cells: []},
+            {grid: {size: 32}, palette: ['color:kenney-tiny_0000000000000000'], cells: []},
+            {grid: {size: 32}, palette: [grass], cells: [0, 0]},
+            {grid: {size: 32}, palette: [grass], cells: [0.5, 0, 0]},
+        ];
+        const accepted = [];
+        for (const tiles of bad) {
+            try { validateDocument(doc(tiles), {knownAssets: palette.stamps}); accepted.push(tiles); } catch (e) {}
+        }
+        return {cells: [...ok.layers[0].cells.entries()], accepted, tileGroups: palette.tileGroups.map((g) => g.name),
+            stampHasTiles: palette.groups.some((g) => g.ids.some((id) => palette.stamps.get(id).tile))};
+    }""", [GRASS, WALL])
+    assert result['cells'] == [[0, GRASS], [7 * 1024 + 15, WALL]]
+    assert result['accepted'] == []
+    assert 'Gelände & Tiles' in result['tileGroups'] and not result['stampHasTiles']
     ed.assert_clean()

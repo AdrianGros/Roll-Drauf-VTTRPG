@@ -1,8 +1,15 @@
 // Credits accompany the composed image. Text comes only from reviewed local manifests.
 export function creditsForDocument(doc, palette) {
     const used = new Set();
-    for (const layer of doc.layers) for (const item of layer.items || []) {
-        for (const id of [item.asset, item.symbol && item.symbol.asset].filter(Boolean)) {
+    for (const layer of doc.layers) {
+        for (const item of layer.items || []) {
+            for (const id of [item.asset, item.symbol && item.symbol.asset].filter(Boolean)) {
+                const stamp = palette.stamps.get(id);
+                if (stamp) used.add(stamp.pack);
+            }
+        }
+        // Tile layers: runtime cells (Map) or the serialized palette of a saved project.
+        for (const id of layer.cells instanceof Map ? new Set(layer.cells.values()) : layer.palette || []) {
             const stamp = palette.stamps.get(id);
             if (stamp) used.add(stamp.pack);
         }

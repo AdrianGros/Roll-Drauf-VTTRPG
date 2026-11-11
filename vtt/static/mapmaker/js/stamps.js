@@ -108,6 +108,7 @@ const BUILTINS = [
 export async function loadPalette(onImageReady = () => {}, onImageError = () => {}) {
     const stamps = new Map();
     const groups = [];
+    const tileGroups = []; // grid tiles are painted with the tile tool, not stamped
     const packs = [];
     const materialTextures = [];
     const errors = [];
@@ -134,9 +135,12 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
     };
     const ensureDocumentImages = (doc) => {
         const ids = new Set();
-        for (const layer of doc.layers) for (const item of layer.items || []) {
-            if (item.asset) ids.add(item.asset);
-            if (item.symbol) ids.add(item.symbol.asset);
+        for (const layer of doc.layers) {
+            for (const item of layer.items || []) {
+                if (item.asset) ids.add(item.asset);
+                if (item.symbol) ids.add(item.symbol.asset);
+            }
+            for (const asset of layer.cells ? layer.cells.values() : []) ids.add(asset);
         }
         return Promise.all([...ids].map(loadStamp));
     };
@@ -145,10 +149,11 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
         stamp.searchText = `${stamp.label} ${stamp.group} ${stamp.packName} ${stamp.search}`.toLocaleLowerCase("de").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         stamps.set(stamp.id, stamp);
         if (!listed) return; // parts of an assembled object: resolvable for saved maps, not offered
-        let group = groups.find((g) => g.name === stamp.group);
+        const list = stamp.tile ? tileGroups : groups;
+        let group = list.find((g) => g.name === stamp.group);
         if (!group) {
             group = { name: stamp.group, ids: [] };
-            groups.push(group);
+            list.push(group);
         }
         group.ids.push(stamp.id);
     };
@@ -180,6 +185,8 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
             }
             if (accepted.length !== entries.length) throw new Error("Unvollständiger Palettenkatalog.");
             const hidden = new Set(Array.isArray(manifest.hidden) ? manifest.hidden : entries.filter((entry) => entry.hidden === true).map((entry) => entry.id));
+            const tiles = new Set(Array.isArray(manifest.tiles) ? manifest.tiles : entries.filter((entry) => entry.tile === true).map((entry) => entry.id));
+            for (const stamp of accepted) stamp.tile = tiles.has(stamp.id) && stamp.w === stamp.h;
             if (pack.id === "kenney-cartography") {
                 const loaded = await Promise.all(accepted.map(async (stamp) => {
                     stamp.image = await loadImage(stamp.src).catch(() => null);
@@ -229,7 +236,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
     packs.push({ id: "builtin", name: "Roll Drauf · Einfache Symbole" });
     groups.push(builtinGroup);
     if (!packLoaded) errors.unshift("Das Kenney-Paket fehlt – einfache Ersatzsymbole stehen bereit.");
-    return { stamps, groups, packs, packLoaded, packError: errors.join(" "), texture, materialTextures, loadStamp, ensureDocumentImages };
+    return { stamps, groups, tileGroups, packs, packLoaded, packError: errors.join(" "), texture, materialTextures, loadStamp, ensureDocumentImages };
 }
 
 function clampSize(value) {

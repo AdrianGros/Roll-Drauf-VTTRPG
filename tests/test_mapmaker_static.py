@@ -149,6 +149,7 @@ def test_color_sources_have_lossless_palette_projection_and_complete_coverage():
         assert len(accepted)+len(sliced)==len(entries)==len(palette['rows'])
         assert {r['asset'] for r in accepted+sliced}==set(entries)
         assert palette.get('hidden',[])==[e['id'] for e in m['stamps'] if e.get('hidden')]
+        assert palette.get('tiles',[])==[e['id'] for e in m['stamps'] if e.get('tile')]
         assert len({r['sourcePath'] for r in coverage['files']})==len(coverage['files'])
         fields=('id','file','label','w','h','group','sheet','grid','pixelArt','defaultSize')
         assert palette['rows']==[[e.get(k) for k in fields] for e in m['stamps']]

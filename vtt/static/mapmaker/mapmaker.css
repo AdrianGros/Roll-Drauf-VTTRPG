@@ -328,6 +328,15 @@ input[type=range] { width: 100%; accent-color: var(--plum); min-height: 28px; }
 .mm-stamp canvas { width: 44px; height: 44px; }
 .mm-stamp span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mm-stamp[aria-checked="true"] { border-color: var(--plum); box-shadow: 0 0 0 2px var(--gold); background: var(--selected-bg); font-weight: 600; }
+.mm-tile-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 4px 2px; border: 1px solid var(--parchment-line); border-radius: 7px;
+    background: var(--parchment-panel); font-size: 10.5px; line-height: 1.15; min-height: 70px;
+}
+.mm-tile-btn img { width: 48px; height: 48px; object-fit: contain; display: block; margin: auto; }
+.mm-tile-btn span { max-width: 100%; overflow-wrap: anywhere; }
+.mm-tile-btn[aria-checked="true"] { border-color: var(--plum); box-shadow: 0 0 0 2px var(--gold); background: var(--selected-bg); font-weight: 600; }
+img.mm-pixel { image-rendering: pixelated; }
 
 /* layers */
 .mm-layers { list-style: none; margin: 8px 0 12px; padding: 0; display: flex; flex-direction: column; gap: 4px; }
@@ -421,7 +430,7 @@ input[type=range] { width: 100%; accent-color: var(--plum); min-height: 28px; }
         border-right: 0; border-top: 1px solid var(--chrome-line);
         overflow-x: auto; overflow-y: hidden;
     }
-    .mm-tool { width: auto; flex: 1 1 0; min-width: 52px; padding: 6px 2px 4px; font-size: 10.5px; }
+    .mm-tool { width: auto; flex: 1 1 0; min-width: 0; padding: 6px 1px 4px; font-size: 9.5px; letter-spacing: -0.01em; }
     .mm-tool svg { width: 22px; height: 22px; }
     .mm-panel {
         position: absolute; left: 0; right: 0; bottom: var(--tools-h); z-index: 15;
@@ -503,3 +512,8 @@ input[type=range] { width: 100%; accent-color: var(--plum); min-height: 28px; }
     .mm-top-actions .mm-icon-btn { width: 30px; min-width: 30px; }
 }
 :root .mm-layer-jump { position: absolute; top: 12px; left: 12px; z-index: 2; max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; box-shadow: 0 2px 8px #0003; }
+/* Eight tools on the phone rail: below 360 px only icons stay visible; names remain for assistive tech and titles. */
+@media (max-width: 360px) {
+    .mm-tools .mm-tool span { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .mm-tools .mm-tool { padding: 10px 1px; }
+}
