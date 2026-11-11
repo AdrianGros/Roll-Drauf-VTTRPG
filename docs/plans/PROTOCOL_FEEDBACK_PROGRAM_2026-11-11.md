@@ -1,6 +1,6 @@
 # Ausführungsplan: Protokollfeedback bis zur gemeinsamen Live-Abnahme
 
-Status: **Programm geplant; neue Funktionspakete noch nicht implementiert**.
+Status: **Umsetzung läuft; P1/P2 technisch live geprüft, P3–P6 in Arbeit**.
 Phase: Apply auf Programmebene, Profil `standard`. Aufbewahrung: dauerhaft.
 Auftrag: nächste Punkte ordnen, technische Arbeit autonom erledigen, anschließend
 ein zusammenhängender Owner-Test auf `https://vtt.roll-drauf.de`.

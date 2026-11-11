@@ -1,0 +1,121 @@
+{
+  "status": "live_verified",
+  "ui_journey": "Kampagnen -> Sitzung als Player/DM -> eigener verknüpfter Token -> Belegen",
+  "intended_roles": [
+    "player",
+    "dm"
+  ],
+  "releases": [
+    {
+      "commit": "d15e092aabf17b8ddd5c698c948994e6e233b21a",
+      "image": "roll-drauf-vtt-app:feedback-player-actions-20261111-d15e092aa",
+      "image_id": "sha256:1ea634be3ebe14b15af3a94895bfc33f13902b089f798287a26dc4a0408fcd63",
+      "base_image_id": "sha256:d32dd25233615598d03020860f1f0c9a81d79b5b357d0e2eadf02c0b13d76895",
+      "prior_image": "roll-drauf-vtt-app:feedback-player-actions-rollback-20261111-d32dd2523361",
+      "compose_project": "migration-production",
+      "compose_files": [
+        "/srv/migration/2026-10-07/setup/production.compose.json",
+        "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+      ],
+      "overlay_manifest": {
+        "vtt/__init__.py": "ca7ede9534a7c06c318bd9244632884498aca1553c03120024538c1898c30914",
+        "vtt/characters/sheet_link.py": "0a910c1633cc1a0fe6494710ceaf0f8e9fdf20cb1a886724e9457f84b71e241c",
+        "vtt/characters/srd_creator.py": "7e978fb99587573263c67d1f93af1a6147a9327390ba418c7bbda8aec0c80af0",
+        "vtt/models/__init__.py": "e71e7bedba6aa6d871d6e618944fb9c8d16f5e266b2127680fd894b2ce5dae84",
+        "vtt/models/character_hotbar.py": "22af43efef40e1d9a9a7499efd89a7f0834c11732a84efafca8866a8e22ad466",
+        "vtt/play/__init__.py": "bc7a1574ba1bc22f0ab4e776bbcdb336bf592ee564618a525136d6f610fce1df",
+        "vtt/play/contexts.py": "0d4eb65a9ee3ba61adb493410288f7c9b137b21bb6a53728256200a6778a7288",
+        "vtt/play/personal_actions.py": "aa79d2d495dd3e4f41c16017811d6a3139eb53565284023ecef759f5457fb4f2",
+        "vtt/play/receipts.py": "9b46e5491998975966cc64d6f95d5af1edd4f8fa45bda10105175727e9f0a82d",
+        "vtt/play/routes.py": "393032cc8e70f8ba9aca11f694d3bfea363084c03563edc770eb1dc5abefc68b",
+        "vtt/socket_handlers.py": "07e9e61c4744d20e0d7e7d6fa708acc5a1600898ead2a4eb0514da92697f0a3d",
+        "vtt/static/css/play-personal.css": "d1272cd5f6f1a825004e0c6c51f1125a05162529e03211740cab83c53106b310",
+        "vtt/static/js/play-client.js": "dcb45daa9c51ea0f707a00a94257d901133d8782b20bff2576cc97de10509a30",
+        "vtt/static/js/play-personal.js": "435b2f31dfb62fc67be9c8ab90aaec521b2d9a4fda0a946d6fba2ddd8c2ba0c4",
+        "vtt/static/js/play-socket.js": "d51b7b0d4807d7078f5bef6a4d5194bd9e5e67cbb0f247ee0d546f80a6a38b0a",
+        "vtt/static/js/play-ui.js": "657c5824e31c8f2ba08604ca8b0263c4f6e83a56b4a5e99205af2c73681d1ee3",
+        "vtt/templates/character-sheet.html": "e582a558fb380a7a9395545139fcd1819eba298183908dc95d516200bf02d5b6",
+        "vtt/templates/play.html": "aa724fa3e5e0d8242fbefb159fdbd82911127260a3961c0140f4e5c6a1a5c124"
+      },
+      "database_backup": {
+        "path": "/srv/migration/2026-11-11/feedback-player-actions/d15e092aa/database-before.dump",
+        "bytes": 402873,
+        "archive_readable": true,
+        "restore_exercised": false
+      },
+      "schema_migration": {
+        "status": "pass",
+        "tables": [
+          "character_hotbars",
+          "table_request_receipts"
+        ],
+        "previously_present": [],
+        "columns_verified": true
+      },
+      "built_source_verification": {
+        "checked": 234,
+        "mismatches": []
+      },
+      "deployed_at": "2026-11-11T09:03:04.662452898Z",
+      "other_services_unchanged": true,
+      "rollback": "/srv/migration/2026-11-11/feedback-player-actions/d15e092aa/rollback.sh",
+      "rollback_syntax_checked": true,
+      "rollback_executed": false
+    },
+    {
+      "commit": "e8040f9e28377159d4d06eb923fb338938efa8a2",
+      "image": "roll-drauf-vtt-app:feedback-player-reconnect-20261111-e8040f9e2",
+      "image_id": "sha256:506e98ca3feba300f0da305eb5e963c71ce719aa4620e2008ba9b3309794a099",
+      "base_image_id": "sha256:1ea634be3ebe14b15af3a94895bfc33f13902b089f798287a26dc4a0408fcd63",
+      "prior_image": "roll-drauf-vtt-app:feedback-player-reconnect-rollback-20261111-1ea634be3ebe",
+      "compose_project": "migration-production",
+      "compose_files": [
+        "/srv/migration/2026-10-07/setup/production.compose.json",
+        "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+      ],
+      "overlay_manifest": {
+        "vtt/play/contexts.py": "164debfde68b653eaa9a0b6bc018696da835829eefaaa4149e7ff231d158b0c8",
+        "vtt/play/routes.py": "e1f1b7e526907e0941b911a8e11d00455d44ffb8757d976840c2579253710062",
+        "vtt/static/js/auth.js": "b5f5cfc0d4576f5cdd5d748826e0f88feb07d91462772e3e4cdaec95901239c4",
+        "vtt/static/js/play-socket.js": "0c7bbba894c37a6621445b91780cd1b11505cb937c33413e703f9df1d0a768d5"
+      },
+      "database_backup": {
+        "path": "/srv/migration/2026-11-11/feedback-player-reconnect/e8040f9e2/database-before.dump",
+        "bytes": 417036,
+        "archive_readable": true,
+        "restore_exercised": false
+      },
+      "schema_migration": {
+        "status": "pass",
+        "tables": [],
+        "previously_present": [],
+        "columns_verified": true
+      },
+      "built_source_verification": {
+        "checked": 234,
+        "mismatches": []
+      },
+      "deployed_at": "2026-11-11T09:35:55.998599343Z",
+      "other_services_unchanged": true,
+      "rollback": "/srv/migration/2026-11-11/feedback-player-reconnect/e8040f9e2/rollback.sh",
+      "rollback_syntax_checked": true,
+      "rollback_executed": false
+    }
+  ],
+  "health": {
+    "now": "2026-11-11T12:15:36.093842",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-11T09:36:01.099048",
+    "status": "ok"
+  },
+  "push_status": "pushed",
+  "latest_recheck_cases": {
+    "api_and_receipt": 36,
+    "browser": 6
+  },
+  "distinct_targeted_cases_across_slice": 55,
+  "live_journeys": 2,
+  "network_fault": "Player-only TLS tunnel interrupts polling and WebSocket; native client reconnect recovers missed ID once",
+  "owner_acceptance": "not_run",
+  "temporary_credentials_removed": true
+}

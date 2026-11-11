@@ -1,0 +1,30 @@
+{
+  "scope": "P2 actual production UI, Eventlet and real socket delivery",
+  "results": [
+    {
+      "player_browser": "firefox",
+      "dm_browser": "chromium",
+      "normal_ui_entry": "campaign hub -> table -> own token -> Belegen",
+      "persisted_slots": 3,
+      "confirmed_announcement_resources": "manual",
+      "repeat_same_result": true,
+      "new_unique_message_ids": 5,
+      "reconnect_missed_roll_recovered": true,
+      "other_session_received": 0,
+      "status": "pass"
+    },
+    {
+      "player_browser": "firefox",
+      "dm_browser": "firefox",
+      "normal_ui_entry": "campaign hub -> table -> own token -> Belegen",
+      "persisted_slots": 3,
+      "confirmed_announcement_resources": "manual",
+      "repeat_same_result": true,
+      "new_unique_message_ids": 5,
+      "reconnect_missed_roll_recovered": true,
+      "other_session_received": 0,
+      "status": "pass"
+    }
+  ],
+  "status": "pass"
+}

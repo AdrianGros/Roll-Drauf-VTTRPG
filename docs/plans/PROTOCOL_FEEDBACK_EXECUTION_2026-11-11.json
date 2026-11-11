@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "program": "protocol-feedback-2026-11-11",
-  "phase": "deploy_P2",
+  "phase": "deploy_P3",
   "status": "in_progress",
   "implementation_started": true,
   "background_execution": false,
@@ -26,18 +26,68 @@
     "card_specifications": "../PROTOCOL_FEEDBACK_SPECIFICATIONS_2026-11-10.md",
     "retention": "permanent"
   },
-  "execution_order": ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7"],
+  "execution_order": [
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7"
+  ],
   "risks_and_assumptions": [
-    {"id": "R01", "severity": "medium", "package": "P1", "status": "open", "description": "Kontextlebenszyklus und vollständige Nebenpfadinventur vor Implementierung detailliert entwerfen"},
-    {"id": "R02", "severity": "medium", "package": "P2", "status": "open", "description": "Request-Dedup, Ereigniszustellung und Reconnect-Vertrag vor Ausführungserweiterung prüfen"},
-    {"id": "R03", "severity": "medium", "package": "P3", "status": "open", "description": "Homebrew- und Atlas-Datenverträge benötigen je Paket Migration, Backup und kompatiblen Rückweg"},
-    {"id": "R04", "severity": "medium", "package": "P0", "status": "open", "description": "I01 bis I05 verhindern betroffene Zusatzabschlüsse, nicht die unabhängige Kernarbeit"},
-    {"id": "R05", "severity": "medium", "package": "P6", "status": "open", "description": "Leserprojektion einschließlich Suche und Assets gegen private Lore abgrenzen"},
-    {"id": "R06", "severity": "low", "package": "P7", "status": "open", "description": "Technische Zwischenabnahme autonom; menschliche Schlussrunde benötigt DM und weiteren Player mit Firefox"}
+    {
+      "id": "R01",
+      "severity": "medium",
+      "package": "P1",
+      "status": "open",
+      "description": "Kontextlebenszyklus und vollständige Nebenpfadinventur vor Implementierung detailliert entwerfen"
+    },
+    {
+      "id": "R02",
+      "severity": "medium",
+      "package": "P2",
+      "status": "open",
+      "description": "Request-Dedup, Ereigniszustellung und Reconnect-Vertrag vor Ausführungserweiterung prüfen"
+    },
+    {
+      "id": "R03",
+      "severity": "medium",
+      "package": "P3",
+      "status": "open",
+      "description": "Homebrew- und Atlas-Datenverträge benötigen je Paket Migration, Backup und kompatiblen Rückweg"
+    },
+    {
+      "id": "R04",
+      "severity": "medium",
+      "package": "P0",
+      "status": "open",
+      "description": "I01 bis I05 verhindern betroffene Zusatzabschlüsse, nicht die unabhängige Kernarbeit"
+    },
+    {
+      "id": "R05",
+      "severity": "medium",
+      "package": "P6",
+      "status": "open",
+      "description": "Leserprojektion einschließlich Suche und Assets gegen private Lore abgrenzen"
+    },
+    {
+      "id": "R06",
+      "severity": "low",
+      "package": "P7",
+      "status": "open",
+      "description": "Technische Zwischenabnahme autonom; menschliche Schlussrunde benötigt DM und weiteren Player mit Firefox"
+    }
   ],
   "autonomy": {
     "existing_implementation_and_live_delivery_authorization": true,
-    "per_package_phases": ["discover", "apply", "deploy", "monitor"],
+    "per_package_phases": [
+      "discover",
+      "apply",
+      "deploy",
+      "monitor"
+    ],
     "subagents": false,
     "staging_required": false,
     "owner_intermediate_acceptance_required": false,
@@ -59,7 +109,10 @@
       "status": "verified",
       "depends_on": [],
       "next_phase": "monitor",
-      "acceptance_ids": ["A08", "A11"],
+      "acceptance_ids": [
+        "A08",
+        "A11"
+      ],
       "gates": [
         "Aktuelle Quelle, Image, Compose und Unterschiede zu neuerer Arbeit abgeglichen",
         "Vorhandene Funktionen und schmutziger ursprünglicher Arbeitsbaum geschützt",
@@ -71,11 +124,17 @@
       "id": "P1",
       "title": "Getrennte Tischkontexte und Player-/DM-Komposition",
       "status": "live_verified",
-      "depends_on": ["P0"],
+      "depends_on": [
+        "P0"
+      ],
       "next_phase": "monitor",
       "delivery_evidence": "../DADM_MONITOR_PLAYTABLE_CONTEXTS_2026-11-11.md",
       "planned_design_artifact": "../DADM_APPLY_PLAYTABLE_CONTEXTS_2026-11-11.md",
-      "acceptance_ids": ["A05", "A07", "A12"],
+      "acceptance_ids": [
+        "A05",
+        "A07",
+        "A12"
+      ],
       "gates": [
         "Vollständige HTTP-/Socket-/Bootstrap-/Resync-/Sheet-/Legacy-Pfadinventur",
         "Serverautorisierter Kontextlebenszyklus mit Tab-/Verbindungsbindung entworfen",
@@ -87,26 +146,44 @@
     {
       "id": "P2",
       "title": "Persönliche Charakteraktionen und Würfelübertragung",
-      "status": "implemented_pending_live",
-      "depends_on": ["P1"],
-      "next_phase": "deploy",
-      "acceptance_ids": ["A06", "A07", "A12"],
+      "status": "live_verified",
+      "depends_on": [
+        "P1"
+      ],
+      "next_phase": "monitor_complete",
+      "acceptance_ids": [
+        "A06",
+        "A07",
+        "A12"
+      ],
       "gates": [
         "Deklarative persönliche Belegung je Nutzer/Charakter speicherbar und zugänglich bedienbar",
         "Vorhandene Zielwahl und Schutz beim Tippen erhalten",
         "Server prüft Kontext, Ressource, Ziel und unterstützte Mechanik je Ausführung",
         "Request-Dedup, Ereignis-ID und autoritativer Resync mit begrenzter Retention definiert",
         "Firefox-Mehrclient, Crossbrowser, Reconnect und Sessionisolation nachgewiesen"
-      ]
+      ],
+      "evidence": "docs/proofs/player-actions-2026-11-11",
+      "source_commit": "e8040f9e28377159d4d06eb923fb338938efa8a2",
+      "image_id": "sha256:506e98ca3feba300f0da305eb5e963c71ce719aa4620e2008ba9b3309794a099"
     },
     {
       "id": "P3",
       "title": "Homebrew-Hintergründe/Merkmale und Bonus-Herkunft",
       "status": "planned",
-      "depends_on": ["P2"],
+      "depends_on": [
+        "P2"
+      ],
       "next_phase": "discover",
-      "acceptance_ids": ["A01", "A02", "A03", "A06"],
-      "optional_input_ids": ["I01"],
+      "acceptance_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A06"
+      ],
+      "optional_input_ids": [
+        "I01"
+      ],
       "gates": [
         "Vorhandene lizenzierte Inhalte und Auswahl-/Evaluationspfade auditiert",
         "Aktueller Eagle-Arbeitsplatz statt paralleler Regelengine erweitert",
@@ -120,10 +197,19 @@
       "id": "P4",
       "title": "Darstellung, DE/EN und kalibrierte Einheiten",
       "status": "planned",
-      "depends_on": ["P0"],
+      "depends_on": [
+        "P0"
+      ],
       "next_phase": "discover",
-      "acceptance_ids": ["A03", "A04", "A10", "A11"],
-      "optional_input_ids": ["I04"],
+      "acceptance_ids": [
+        "A03",
+        "A04",
+        "A10",
+        "A11"
+      ],
+      "optional_input_ids": [
+        "I04"
+      ],
       "gates": [
         "Nutzeransicht von administrativer globaler Palette getrennt",
         "Lesbare Pergament-/Nachtzustände, Tastatur und kleine Viewports geprüft",
@@ -137,9 +223,14 @@
       "id": "P5",
       "title": "Seedbasierte Landmassen im Karteneditor",
       "status": "planned",
-      "depends_on": ["P0"],
+      "depends_on": [
+        "P0"
+      ],
       "next_phase": "discover",
-      "acceptance_ids": ["A08", "A09"],
+      "acceptance_ids": [
+        "A08",
+        "A09"
+      ],
       "gates": [
         "Seed, Parameter und Generatorversion deterministisch",
         "Insel und zusammenhängende Landmasse im begrenzten ersten Umfang",
@@ -152,9 +243,15 @@
       "id": "P6",
       "title": "Atlas mit verknüpften Karten, Orten und Leserpublikation",
       "status": "planned",
-      "depends_on": ["P1"],
+      "depends_on": [
+        "P1"
+      ],
       "next_phase": "discover",
-      "acceptance_ids": ["A04", "A10", "A12"],
+      "acceptance_ids": [
+        "A04",
+        "A10",
+        "A12"
+      ],
       "gates": [
         "Welt-/Ortsmodell und Autor-/Leserrechte explizit von Authoring-Scopes getrennt",
         "Stabile IDs, zyklenfreie Hierarchie und kartenbezogene Koordinaten",
@@ -168,10 +265,33 @@
       "id": "P7",
       "title": "Gesamtprüfung und ein menschlicher Live-Abnahmelauf",
       "status": "planned",
-      "depends_on": ["P1", "P2", "P3", "P4", "P5", "P6"],
+      "depends_on": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
       "next_phase": "monitor",
-      "acceptance_ids": ["A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12"],
-      "optional_input_ids": ["I03", "I05"],
+      "acceptance_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12"
+      ],
+      "optional_input_ids": [
+        "I03",
+        "I05"
+      ],
       "gates": [
         "Alle technischen Paketgates erfüllt und gemeinsame Regression bestanden",
         "Ein Sourcecommit und eine Image-ID für den zusammenhängenden Test festgehalten",
@@ -199,11 +319,51 @@
     "residual_risks": null
   },
   "inputs": [
-    {"id": "I01", "status": "missing", "cards": ["VTT-03"], "need": "Konkrete fehlende Inhalts-ID, Quelle und Regelversion", "blocks": "Nur unbenannte Inhaltsergänzung; Katalogaudit kann laufen"},
-    {"id": "I02", "status": "missing", "cards": ["VTT-37"], "need": "Konkretes 200-%-Steuerelement mit Reproduktion", "blocks": "Nur den unbestimmten Fehler; kein pauschales Werte-Clamping"},
-    {"id": "I03", "status": "missing", "cards": ["VTT-35"], "need": "Zusätzliche Assetdateien, Ursprung, Lizenz und Attribution", "blocks": "Nur neue Assetpakete; vorhandener Katalog bleibt testbar"},
-    {"id": "I04", "status": "missing", "cards": ["VTT-40"], "need": "Ausgangsregelwerk, Nutzungsrechte und Zielsprachumfang", "blocks": "Regeltextübersetzung; UI-DE/EN ist unabhängig"},
-    {"id": "I05", "status": "decision_pending", "cards": ["VTT-36"], "need": "Konkreter öffentlicher Partner-/Streamingumfang", "blocks": "Öffentlichen Test/Stream; private technische Abnahme kann laufen"}
+    {
+      "id": "I01",
+      "status": "missing",
+      "cards": [
+        "VTT-03"
+      ],
+      "need": "Konkrete fehlende Inhalts-ID, Quelle und Regelversion",
+      "blocks": "Nur unbenannte Inhaltsergänzung; Katalogaudit kann laufen"
+    },
+    {
+      "id": "I02",
+      "status": "missing",
+      "cards": [
+        "VTT-37"
+      ],
+      "need": "Konkretes 200-%-Steuerelement mit Reproduktion",
+      "blocks": "Nur den unbestimmten Fehler; kein pauschales Werte-Clamping"
+    },
+    {
+      "id": "I03",
+      "status": "missing",
+      "cards": [
+        "VTT-35"
+      ],
+      "need": "Zusätzliche Assetdateien, Ursprung, Lizenz und Attribution",
+      "blocks": "Nur neue Assetpakete; vorhandener Katalog bleibt testbar"
+    },
+    {
+      "id": "I04",
+      "status": "missing",
+      "cards": [
+        "VTT-40"
+      ],
+      "need": "Ausgangsregelwerk, Nutzungsrechte und Zielsprachumfang",
+      "blocks": "Regeltextübersetzung; UI-DE/EN ist unabhängig"
+    },
+    {
+      "id": "I05",
+      "status": "decision_pending",
+      "cards": [
+        "VTT-36"
+      ],
+      "need": "Konkreter öffentlicher Partner-/Streamingumfang",
+      "blocks": "Öffentlichen Test/Stream; private technische Abnahme kann laufen"
+    }
   ],
   "card_status_definitions": {
     "delivered": "Im aktuellen Programm implementiert, veröffentlicht und technisch live geprüft; gemeinsame Owner-Abnahme bleibt separat",
@@ -217,60 +377,494 @@
     "human_acceptance_pending": "Erst echte menschliche Runde schließt die Karte"
   },
   "cards": [
-    {"id": "VTT-01", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Würfelmultimenge in Gesamtregression erhalten"},
-    {"id": "VTT-02", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Startausrüstung und Paketwechsel erhalten"},
-    {"id": "VTT-03", "package": "P3", "status": "input_required", "input_ids": ["I01"], "acceptance_ids": ["A01", "A02"], "closure": "Katalogaudit plus konkret benannte zulässige Inhaltslücke; ohne ID nicht ganz erledigt"},
-    {"id": "VTT-04", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Stufen-/Mehrklassenanzeige erhalten"},
-    {"id": "VTT-05", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Lesbare Creator-Felder erhalten"},
-    {"id": "VTT-06", "package": "P4", "status": "partial", "acceptance_ids": ["A04"], "closure": "Lesbare sichere Farbvarianten auf allen betroffenen Hauptwegen; freie CSS-Konfiguration gesondert"},
-    {"id": "VTT-07", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Zauberauswahlzustand erhalten"},
-    {"id": "VTT-08", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Berechtigte Gruppenübersicht erreichbar"},
-    {"id": "VTT-09", "package": "P2", "status": "open", "acceptance_ids": ["A07"], "closure": "Mehrteilnehmer-Firefox, Crossbrowser, Reconnect und Sessionisolation belegt"},
-    {"id": "VTT-10", "package": "P1", "status": "delivered", "acceptance_ids": ["A05", "A07"], "closure": "P1 technisch live geprüft; gemeinsame Owner-Abnahme und weitere Würfelreise bleiben separat"},
-    {"id": "VTT-11", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A08"], "closure": "Ort über Liste editierbar und wieder ladbar"},
-    {"id": "VTT-12", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A08"], "closure": "Ebenenzugang und Aktionen erhalten"},
-    {"id": "VTT-13", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A03"], "closure": "Kompakter Bogen mit funktionierenden Bereichen"},
-    {"id": "VTT-14", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A03"], "closure": "Bilder und Klasse/Stufe responsiv erhalten"},
-    {"id": "VTT-15", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A03"], "closure": "Münzen und angelegte Ausrüstung aktualisieren sich"},
-    {"id": "VTT-16", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A03"], "closure": "Zaubergrade und Suchfilter erhalten"},
-    {"id": "VTT-17", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Sticky-Filter weiter bedienbar"},
-    {"id": "VTT-18", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Klassenmerkmale je Klassenstufe korrekt"},
-    {"id": "VTT-19", "package": "P3", "status": "partial", "acceptance_ids": ["A03"], "closure": "Inventar aller berechneten Bonusfelder mit nachvollziehbarer maßgeblicher Herleitung"},
-    {"id": "VTT-20", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Kampagnensuche und Fünferseiten erhalten"},
-    {"id": "VTT-21", "package": "P4", "status": "partial", "acceptance_ids": ["A04"], "closure": "Pergament/Nacht auf betroffenen Hauptwegen statt nur Bogen"},
-    {"id": "VTT-22", "package": "P4", "status": "bounded_proposal", "acceptance_ids": ["A04", "A10"], "closure": "DE/EN-UI vollständig im vereinbarten Wegumfang; FR/ES weiterhin nachgelagert"},
-    {"id": "VTT-23", "package": "P4", "status": "partial", "acceptance_ids": ["A04"], "closure": "Bogen und kalibrierte Tisch-/Kartendistanzen, keine Pixel-als-Meter-Umdeutung"},
-    {"id": "VTT-24", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A12"], "closure": "Lesbarer und erreichbarer Logout erhalten"},
-    {"id": "VTT-25", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A01"], "closure": "Direkter Creator-Einstieg erhalten"},
-    {"id": "VTT-26", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A08"], "closure": "Bewusste Kartenauswahl ohne automatisches Silbermark erhalten"},
-    {"id": "VTT-27", "package": "P7", "status": "baseline_verified", "acceptance_ids": ["A08"], "closure": "Rechtspan ohne Dokument-/Werkzeugänderung erhalten"},
-    {"id": "VTT-28", "package": "P3", "status": "bounded_proposal", "acceptance_ids": ["A02", "A03"], "closure": "Hintergründe/Merkmale typisiert publizierbar und spielbar; weitere Homebrew-Typen gesondert"},
-    {"id": "VTT-29", "package": "P2", "status": "open", "acceptance_ids": ["A06"], "closure": "Persönliche persistente Charakteraktionen mit serverseitiger Autorisierung"},
-    {"id": "VTT-30", "package": "P7", "status": "partial", "acceptance_ids": ["A01", "A12"], "closure": "Gemeinsamer Soll/Ist-/Repro-Bogen mit technischen und menschlichen Belegen"},
-    {"id": "VTT-31", "package": "P7", "status": "human_acceptance_pending", "acceptance_ids": ["A07", "A12"], "closure": "Tatsächlich abgeschlossene menschliche DM-/Player-Sitzung mit Firefox"},
-    {"id": "VTT-32", "package": "P5", "status": "bounded_proposal", "acceptance_ids": ["A09"], "closure": "Insel/Landmasse aus Seed, Vorschau, Abbruch und Undo; keine volle Weltsimulation"},
-    {"id": "VTT-33", "package": "P6", "status": "bounded_proposal", "acceptance_ids": ["A10"], "closure": "Welt/Region/Ort mit Kartenlinks, Autorenrechten und privater/veröffentlichter Lore"},
-    {"id": "VTT-34", "package": "P3", "status": "bounded_proposal", "acceptance_ids": ["A02"], "closure": "Bestehender visueller Eagle-Arbeitsplatz/Vorschau; freier Sheet-Designer bleibt Produktentscheidung"},
-    {"id": "VTT-35", "package": "P7", "status": "input_required", "input_ids": ["I03"], "acceptance_ids": ["A11"], "closure": "Vorhandener Katalog erhalten; neue angebotene Pakete erst mit Dateien/Rechten"},
-    {"id": "VTT-36", "package": "P7", "status": "decision_required", "input_ids": ["I05"], "acceptance_ids": ["A12"], "closure": "Private Abnahme ist keine öffentliche Partner-/Streamingfreigabe"},
-    {"id": "VTT-37", "package": "P0", "status": "input_required", "input_ids": ["I02"], "acceptance_ids": ["A08"], "closure": "Erst benanntes Steuerelement reproduzieren; Testfall nach Zuordnung aktualisieren"},
-    {"id": "VTT-38", "package": "P4", "status": "optional", "acceptance_ids": ["A03", "A04"], "closure": "Abschaltbares Sticky-Porträt ohne verdeckte Bedienung; kein Kernblocker"},
-    {"id": "VTT-39", "package": "P4", "status": "baseline_verified", "acceptance_ids": ["A04"], "closure": "Dezente Gestaltung und zusätzliche Zustandskennzeichnung erhalten"},
-    {"id": "VTT-40", "package": "P4", "status": "input_required", "input_ids": ["I04"], "acceptance_ids": ["A11"], "closure": "Regelquelle/Rechte/Sprachfassung klären; UI-Übersetzung schließt diese Karte nicht"}
+    {
+      "id": "VTT-01",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Würfelmultimenge in Gesamtregression erhalten"
+    },
+    {
+      "id": "VTT-02",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Startausrüstung und Paketwechsel erhalten"
+    },
+    {
+      "id": "VTT-03",
+      "package": "P3",
+      "status": "input_required",
+      "input_ids": [
+        "I01"
+      ],
+      "acceptance_ids": [
+        "A01",
+        "A02"
+      ],
+      "closure": "Katalogaudit plus konkret benannte zulässige Inhaltslücke; ohne ID nicht ganz erledigt"
+    },
+    {
+      "id": "VTT-04",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Stufen-/Mehrklassenanzeige erhalten"
+    },
+    {
+      "id": "VTT-05",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Lesbare Creator-Felder erhalten"
+    },
+    {
+      "id": "VTT-06",
+      "package": "P4",
+      "status": "partial",
+      "acceptance_ids": [
+        "A04"
+      ],
+      "closure": "Lesbare sichere Farbvarianten auf allen betroffenen Hauptwegen; freie CSS-Konfiguration gesondert"
+    },
+    {
+      "id": "VTT-07",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Zauberauswahlzustand erhalten"
+    },
+    {
+      "id": "VTT-08",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Berechtigte Gruppenübersicht erreichbar"
+    },
+    {
+      "id": "VTT-09",
+      "package": "P2",
+      "status": "delivered",
+      "acceptance_ids": [
+        "A07"
+      ],
+      "closure": "Mehrteilnehmer-Firefox, Crossbrowser, Reconnect und Sessionisolation belegt"
+    },
+    {
+      "id": "VTT-10",
+      "package": "P1",
+      "status": "delivered",
+      "acceptance_ids": [
+        "A05",
+        "A07"
+      ],
+      "closure": "P1 technisch live geprüft; gemeinsame Owner-Abnahme und weitere Würfelreise bleiben separat"
+    },
+    {
+      "id": "VTT-11",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A08"
+      ],
+      "closure": "Ort über Liste editierbar und wieder ladbar"
+    },
+    {
+      "id": "VTT-12",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A08"
+      ],
+      "closure": "Ebenenzugang und Aktionen erhalten"
+    },
+    {
+      "id": "VTT-13",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A03"
+      ],
+      "closure": "Kompakter Bogen mit funktionierenden Bereichen"
+    },
+    {
+      "id": "VTT-14",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A03"
+      ],
+      "closure": "Bilder und Klasse/Stufe responsiv erhalten"
+    },
+    {
+      "id": "VTT-15",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A03"
+      ],
+      "closure": "Münzen und angelegte Ausrüstung aktualisieren sich"
+    },
+    {
+      "id": "VTT-16",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A03"
+      ],
+      "closure": "Zaubergrade und Suchfilter erhalten"
+    },
+    {
+      "id": "VTT-17",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Sticky-Filter weiter bedienbar"
+    },
+    {
+      "id": "VTT-18",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Klassenmerkmale je Klassenstufe korrekt"
+    },
+    {
+      "id": "VTT-19",
+      "package": "P3",
+      "status": "partial",
+      "acceptance_ids": [
+        "A03"
+      ],
+      "closure": "Inventar aller berechneten Bonusfelder mit nachvollziehbarer maßgeblicher Herleitung"
+    },
+    {
+      "id": "VTT-20",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Kampagnensuche und Fünferseiten erhalten"
+    },
+    {
+      "id": "VTT-21",
+      "package": "P4",
+      "status": "partial",
+      "acceptance_ids": [
+        "A04"
+      ],
+      "closure": "Pergament/Nacht auf betroffenen Hauptwegen statt nur Bogen"
+    },
+    {
+      "id": "VTT-22",
+      "package": "P4",
+      "status": "bounded_proposal",
+      "acceptance_ids": [
+        "A04",
+        "A10"
+      ],
+      "closure": "DE/EN-UI vollständig im vereinbarten Wegumfang; FR/ES weiterhin nachgelagert"
+    },
+    {
+      "id": "VTT-23",
+      "package": "P4",
+      "status": "partial",
+      "acceptance_ids": [
+        "A04"
+      ],
+      "closure": "Bogen und kalibrierte Tisch-/Kartendistanzen, keine Pixel-als-Meter-Umdeutung"
+    },
+    {
+      "id": "VTT-24",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A12"
+      ],
+      "closure": "Lesbarer und erreichbarer Logout erhalten"
+    },
+    {
+      "id": "VTT-25",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A01"
+      ],
+      "closure": "Direkter Creator-Einstieg erhalten"
+    },
+    {
+      "id": "VTT-26",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A08"
+      ],
+      "closure": "Bewusste Kartenauswahl ohne automatisches Silbermark erhalten"
+    },
+    {
+      "id": "VTT-27",
+      "package": "P7",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A08"
+      ],
+      "closure": "Rechtspan ohne Dokument-/Werkzeugänderung erhalten"
+    },
+    {
+      "id": "VTT-28",
+      "package": "P3",
+      "status": "bounded_proposal",
+      "acceptance_ids": [
+        "A02",
+        "A03"
+      ],
+      "closure": "Hintergründe/Merkmale typisiert publizierbar und spielbar; weitere Homebrew-Typen gesondert"
+    },
+    {
+      "id": "VTT-29",
+      "package": "P2",
+      "status": "delivered",
+      "acceptance_ids": [
+        "A06"
+      ],
+      "closure": "Persönliche persistente Charakteraktionen mit serverseitiger Autorisierung"
+    },
+    {
+      "id": "VTT-30",
+      "package": "P7",
+      "status": "partial",
+      "acceptance_ids": [
+        "A01",
+        "A12"
+      ],
+      "closure": "Gemeinsamer Soll/Ist-/Repro-Bogen mit technischen und menschlichen Belegen"
+    },
+    {
+      "id": "VTT-31",
+      "package": "P7",
+      "status": "human_acceptance_pending",
+      "acceptance_ids": [
+        "A07",
+        "A12"
+      ],
+      "closure": "Tatsächlich abgeschlossene menschliche DM-/Player-Sitzung mit Firefox"
+    },
+    {
+      "id": "VTT-32",
+      "package": "P5",
+      "status": "bounded_proposal",
+      "acceptance_ids": [
+        "A09"
+      ],
+      "closure": "Insel/Landmasse aus Seed, Vorschau, Abbruch und Undo; keine volle Weltsimulation"
+    },
+    {
+      "id": "VTT-33",
+      "package": "P6",
+      "status": "bounded_proposal",
+      "acceptance_ids": [
+        "A10"
+      ],
+      "closure": "Welt/Region/Ort mit Kartenlinks, Autorenrechten und privater/veröffentlichter Lore"
+    },
+    {
+      "id": "VTT-34",
+      "package": "P3",
+      "status": "bounded_proposal",
+      "acceptance_ids": [
+        "A02"
+      ],
+      "closure": "Bestehender visueller Eagle-Arbeitsplatz/Vorschau; freier Sheet-Designer bleibt Produktentscheidung"
+    },
+    {
+      "id": "VTT-35",
+      "package": "P7",
+      "status": "input_required",
+      "input_ids": [
+        "I03"
+      ],
+      "acceptance_ids": [
+        "A11"
+      ],
+      "closure": "Vorhandener Katalog erhalten; neue angebotene Pakete erst mit Dateien/Rechten"
+    },
+    {
+      "id": "VTT-36",
+      "package": "P7",
+      "status": "decision_required",
+      "input_ids": [
+        "I05"
+      ],
+      "acceptance_ids": [
+        "A12"
+      ],
+      "closure": "Private Abnahme ist keine öffentliche Partner-/Streamingfreigabe"
+    },
+    {
+      "id": "VTT-37",
+      "package": "P0",
+      "status": "input_required",
+      "input_ids": [
+        "I02"
+      ],
+      "acceptance_ids": [
+        "A08"
+      ],
+      "closure": "Erst benanntes Steuerelement reproduzieren; Testfall nach Zuordnung aktualisieren"
+    },
+    {
+      "id": "VTT-38",
+      "package": "P4",
+      "status": "optional",
+      "acceptance_ids": [
+        "A03",
+        "A04"
+      ],
+      "closure": "Abschaltbares Sticky-Porträt ohne verdeckte Bedienung; kein Kernblocker"
+    },
+    {
+      "id": "VTT-39",
+      "package": "P4",
+      "status": "baseline_verified",
+      "acceptance_ids": [
+        "A04"
+      ],
+      "closure": "Dezente Gestaltung und zusätzliche Zustandskennzeichnung erhalten"
+    },
+    {
+      "id": "VTT-40",
+      "package": "P4",
+      "status": "input_required",
+      "input_ids": [
+        "I04"
+      ],
+      "acceptance_ids": [
+        "A11"
+      ],
+      "closure": "Regelquelle/Rechte/Sprachfassung klären; UI-Übersetzung schließt diese Karte nicht"
+    }
   ],
   "final_acceptance": [
-    {"id": "A01", "status": "not_run", "roles": ["player"], "title": "Creator und Kampagneneinstieg"},
-    {"id": "A02", "status": "not_run", "roles": ["author", "dm"], "title": "Homebrew-Prüfung und Veröffentlichung"},
-    {"id": "A03", "status": "not_run", "roles": ["player"], "title": "Bogen, Inventar und Bonusquellen"},
-    {"id": "A04", "status": "not_run", "roles": ["player", "dm"], "title": "Darstellung, Sprache und Einheiten"},
-    {"id": "A05", "status": "not_run", "roles": ["dm_as_player", "dm"], "title": "Getrennte Kontexte und parallele Tabs"},
-    {"id": "A06", "status": "not_run", "roles": ["player"], "title": "Persönliche Hotbar"},
-    {"id": "A07", "status": "not_run", "roles": ["dm", "player_firefox"], "title": "Mehrteilnehmer-Würfel und Reconnect"},
-    {"id": "A08", "status": "not_run", "roles": ["author", "dm"], "title": "Kartenbedienung und Wiederladen"},
-    {"id": "A09", "status": "not_run", "roles": ["author"], "title": "Landmassen und Undo-Rundlauf"},
-    {"id": "A10", "status": "not_run", "roles": ["author", "reader"], "title": "Atlas und Leserpublikation"},
-    {"id": "A11", "status": "not_run", "roles": ["author", "player"], "title": "Assets, Quellen und offene Zusätze"},
-    {"id": "A12", "status": "not_run", "roles": ["human_dm", "human_player_firefox"], "title": "Abgeschlossene Sitzung und strukturiertes Feedback"}
+    {
+      "id": "A01",
+      "status": "not_run",
+      "roles": [
+        "player"
+      ],
+      "title": "Creator und Kampagneneinstieg"
+    },
+    {
+      "id": "A02",
+      "status": "not_run",
+      "roles": [
+        "author",
+        "dm"
+      ],
+      "title": "Homebrew-Prüfung und Veröffentlichung"
+    },
+    {
+      "id": "A03",
+      "status": "not_run",
+      "roles": [
+        "player"
+      ],
+      "title": "Bogen, Inventar und Bonusquellen"
+    },
+    {
+      "id": "A04",
+      "status": "not_run",
+      "roles": [
+        "player",
+        "dm"
+      ],
+      "title": "Darstellung, Sprache und Einheiten"
+    },
+    {
+      "id": "A05",
+      "status": "not_run",
+      "roles": [
+        "dm_as_player",
+        "dm"
+      ],
+      "title": "Getrennte Kontexte und parallele Tabs"
+    },
+    {
+      "id": "A06",
+      "status": "not_run",
+      "roles": [
+        "player"
+      ],
+      "title": "Persönliche Hotbar"
+    },
+    {
+      "id": "A07",
+      "status": "not_run",
+      "roles": [
+        "dm",
+        "player_firefox"
+      ],
+      "title": "Mehrteilnehmer-Würfel und Reconnect"
+    },
+    {
+      "id": "A08",
+      "status": "not_run",
+      "roles": [
+        "author",
+        "dm"
+      ],
+      "title": "Kartenbedienung und Wiederladen"
+    },
+    {
+      "id": "A09",
+      "status": "not_run",
+      "roles": [
+        "author"
+      ],
+      "title": "Landmassen und Undo-Rundlauf"
+    },
+    {
+      "id": "A10",
+      "status": "not_run",
+      "roles": [
+        "author",
+        "reader"
+      ],
+      "title": "Atlas und Leserpublikation"
+    },
+    {
+      "id": "A11",
+      "status": "not_run",
+      "roles": [
+        "author",
+        "player"
+      ],
+      "title": "Assets, Quellen und offene Zusätze"
+    },
+    {
+      "id": "A12",
+      "status": "not_run",
+      "roles": [
+        "human_dm",
+        "human_player_firefox"
+      ],
+      "title": "Abgeschlossene Sitzung und strukturiertes Feedback"
+    }
   ],
-  "next_step": "P2-Discover/Apply: persistente persönliche Hotbar, serverseitige Request-Dedup und verlässliche Firefox-Würfelreise; P1 ist live verifiziert."
+  "next_step": "P3: geprüfte unveränderliche Hintergründe/Merkmale, Bonusherkunft und Eagle-Companion; P1/P2 live verifiziert."
 }
