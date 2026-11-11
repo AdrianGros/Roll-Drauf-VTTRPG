@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 import { embedCredits, creditsForDocument } from "./credits.js";
 // Kartenwerkstatt editor controller: document state, commands, view, files, autosave.
 
@@ -16,7 +18,7 @@ import { UI } from "./ui.js";
 import { zipFiles } from "./zip.js";
 import { Library } from "./library.js";
 
-const KIND_NAMES = { raster: "Malebene", paths: "Wegeebene", stamps: "Symbolebene", labels: "Beschriftungsebene", tiles: "Kachelebene" };
+const KIND_NAMES = { raster: globalThis.VTTUi("Malebene"), paths: globalThis.VTTUi("Wegeebene"), stamps: globalThis.VTTUi("Symbolebene"), labels: globalThis.VTTUi("Beschriftungsebene"), tiles: globalThis.VTTUi("Kachelebene") };
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4;
 export const MAX_EXPORT_PIXELS = 16777216; // same bound as the export dialog (ui.js openExport)
@@ -394,12 +396,12 @@ class Editor {
     /** Start painting or erasing grid tiles; the first tile creates a tile layer above the painted land. */
     beginTiles(point) {
         if (!this.insideMap(point)) {
-            this.ui.toast("Kacheln lassen sich nur auf der Karte setzen.");
+            this.ui.toast(globalThis.VTTUi("Kacheln lassen sich nur auf der Karte setzen."));
             return false;
         }
         const erase = this.tileOpts.erase;
         if (!erase && !this.tileOpts.asset) {
-            this.ui.toast("Wähle zuerst eine Kachel aus der Kachelauswahl.");
+            this.ui.toast(globalThis.VTTUi("Wähle zuerst eine Kachel aus der Kachelauswahl."));
             return false;
         }
         const exists = this.doc.layers.some((layer) => layer.kind === "tiles");
@@ -408,11 +410,11 @@ class Editor {
         let created = null;
         if (!layer) {
             if (erase) {
-                this.ui.toast("Es gibt noch keine Kachelebene zum Löschen.");
+                this.ui.toast(globalThis.VTTUi("Es gibt noch keine Kachelebene zum Löschen."));
                 return false;
             }
             if (this.doc.layers.length >= LIMITS.layers) {
-                this.ui.toast(`Höchstens ${LIMITS.layers} Ebenen.`);
+                this.ui.toast(globalThis.VTTUi("Höchstens {p0} Ebenen.",{p0:(LIMITS.layers)}));
                 return false;
             }
             layer = createLayer("tiles", `Kacheln ${countLayers(this.doc, "tiles") + 1}`, this.doc.size, collectIds(this.doc));
@@ -454,7 +456,7 @@ class Editor {
         const after = this.tileOpts.erase ? undefined : this.tileOpts.asset;
         if (before === after) return;
         if (before === undefined && countTiles(this.doc) >= LIMITS.tiles) {
-            if (!gesture.full) this.ui.toast(`Höchstens ${LIMITS.tiles.toLocaleString("de")} Kacheln pro Karte.`);
+            if (!gesture.full) this.ui.toast(globalThis.VTTUi("Höchstens {p0} Kacheln pro Karte.",{p0:(LIMITS.tiles.toLocaleString("de"))}));
             gesture.full = true;
             return;
         }
@@ -551,11 +553,11 @@ class Editor {
             if (layer && !quiet) this.setActiveLayer(layer.id);
         }
         if (!layer) {
-            if (!quiet) this.ui.toast(`Keine ${KIND_NAMES[kind]} vorhanden – lege unter „Ebenen“ eine an.`);
+            if (!quiet) this.ui.toast(globalThis.VTTUi("Keine {p0} vorhanden – lege unter „Ebenen“ eine an.",{p0:(KIND_NAMES[kind])}));
             return null;
         }
         if (!layer.visible && !quiet) {
-            this.ui.toast(`„${layer.name}“ ist ausgeblendet – blende die Ebene ein, um darauf zu arbeiten.`);
+            this.ui.toast(globalThis.VTTUi("„{p0}“ ist ausgeblendet – blende die Ebene ein, um darauf zu arbeiten.",{p0:(layer.name)}));
             return null;
         }
         return layer;
@@ -602,18 +604,18 @@ class Editor {
 
     addLayer(kind) {
         if (this.doc.layers.length >= LIMITS.layers) {
-            this.ui.toast(`Höchstens ${LIMITS.layers} Ebenen.`);
+            this.ui.toast(globalThis.VTTUi("Höchstens {p0} Ebenen.",{p0:(LIMITS.layers)}));
             return;
         }
         if (kind === "raster" && countLayers(this.doc, "raster") >= LIMITS.rasterLayers) {
-            this.ui.toast(`Höchstens ${LIMITS.rasterLayers} Malebenen.`);
+            this.ui.toast(globalThis.VTTUi("Höchstens {p0} Malebenen.",{p0:(LIMITS.rasterLayers)}));
             return;
         }
         if (kind === "raster" && !this.canAddRaster()) {
-            this.ui.toast("Die Malebenen wären zusammen zu groß für diese Kartengröße.");
+            this.ui.toast(globalThis.VTTUi("Die Malebenen wären zusammen zu groß für diese Kartengröße."));
             return;
         }
-        const names = { raster: "Malebene", paths: "Wege & Flüsse", stamps: "Symbole", labels: "Beschriftung", tiles: "Kacheln" };
+        const names = { raster: globalThis.VTTUi("Malebene"), paths: globalThis.VTTUi("Wege & Flüsse"), stamps: globalThis.VTTUi("Symbole"), labels: globalThis.VTTUi("Beschriftung"), tiles: globalThis.VTTUi("Kacheln") };
         const layer = createLayer(kind, `${names[kind]} ${countLayers(this.doc, kind) + 1}`, this.doc.size, collectIds(this.doc));
         if (kind === "tiles") layer.grid.size = this.tileOpts.size;
         const active = this.doc.layers.indexOf(this.activeLayer());
@@ -629,7 +631,7 @@ class Editor {
         const layer = this.layerById(id);
         if (!layer) return;
         if (this.doc.layers.length <= 1) {
-            this.ui.toast("Die letzte Ebene kann nicht gelöscht werden.");
+            this.ui.toast(globalThis.VTTUi("Die letzte Ebene kann nicht gelöscht werden."));
             return;
         }
         const index = this.doc.layers.indexOf(layer);
@@ -638,7 +640,7 @@ class Editor {
             () => { this.doc.layers.splice(this.doc.layers.indexOf(layer), 1); },
             () => { this.doc.layers.splice(index, 0, layer); this.activeLayerId = layer.id; },
             bytes);
-        this.ui.toast(`Ebene „${layer.name}“ gelöscht – Strg+Z holt sie zurück.`);
+        this.ui.toast(globalThis.VTTUi("Ebene „{p0}“ gelöscht – Strg+Z holt sie zurück.",{p0:(layer.name)}));
     }
 
     moveLayer(id, delta) {
@@ -668,12 +670,12 @@ class Editor {
             // Cells keep their column/row; refuse a size that would push used cells off the map.
             const { cols, rows } = tileGridSize(this.doc, value);
             if ([...layer.cells.keys()].some((k) => cellOf(k).col >= cols || cellOf(k).row >= rows)) {
-                this.ui.toast("Diese Kachelgröße ist zu groß: belegte Kacheln lägen außerhalb der Karte.");
+                this.ui.toast(globalThis.VTTUi("Diese Kachelgröße ist zu groß: belegte Kacheln lägen außerhalb der Karte."));
                 this.ui.refreshLayers();
                 return;
             }
         }
-        const labels = { visible: value ? "Ebene einblenden" : "Ebene ausblenden", name: "Ebene umbenennen", opacity: "Deckkraft", coast: "Küstenlinie", gridSize: "Kachelgröße" };
+        const labels = { visible: value ? globalThis.VTTUi("Ebene einblenden") : globalThis.VTTUi("Ebene ausblenden"), name: globalThis.VTTUi("Ebene umbenennen"), opacity: globalThis.VTTUi("Deckkraft"), coast: globalThis.VTTUi("Küstenlinie"), gridSize: globalThis.VTTUi("Kachelgröße") };
         this.layerCommand(labels[key] || "Ebene ändern", () => set(value), () => set(before));
     }
 
@@ -681,7 +683,7 @@ class Editor {
 
     addItems(layer, items, label) {
         if (countItems(this.doc) + items.length > LIMITS.items) {
-            this.ui.toast(`Höchstens ${LIMITS.items} Symbole und Beschriftungen pro Karte.`);
+            this.ui.toast(globalThis.VTTUi("Höchstens {p0} Symbole und Beschriftungen pro Karte.",{p0:(LIMITS.items)}));
             return false;
         }
         const apply = () => {
@@ -708,7 +710,7 @@ class Editor {
         let layer = [...this.doc.layers].reverse().find((entry) => entry.kind === "paths" && entry.visible);
         if (layer) return this.addItems(layer, [item], item.material === "river" ? "Fluss zeichnen" : "Weg zeichnen");
         if (this.doc.layers.length >= LIMITS.layers || countItems(this.doc) >= LIMITS.items) {
-            this.ui.toast("Höchstgrenze an Ebenen oder Kartenelementen erreicht.");
+            this.ui.toast(globalThis.VTTUi("Höchstgrenze an Ebenen oder Kartenelementen erreicht."));
             return false;
         }
         layer = createLayer("paths", "Wege & Flüsse", this.doc.size, collectIds(this.doc));
@@ -725,7 +727,7 @@ class Editor {
             this.afterLayerChange();
         };
         apply();
-        this.commit({ label: item.material === "river" ? "Fluss zeichnen" : "Weg zeichnen", bytes: 1024 + item.points.length * 24, undo: revert, redo: apply });
+        this.commit({ label: item.material === "river" ? globalThis.VTTUi("Fluss zeichnen") : globalThis.VTTUi("Weg zeichnen"), bytes: 1024 + item.points.length * 24, undo: revert, redo: apply });
         return true;
     }
 
@@ -755,7 +757,7 @@ class Editor {
             this.afterItemChange();
         };
         this.afterItemChange();
-        this.commit({ label: items.length > 1 ? "Symbole streuen" : "Symbol setzen", bytes: 256 * items.length, undo: revert, redo: apply });
+        this.commit({ label: items.length > 1 ? globalThis.VTTUi("Symbole streuen") : globalThis.VTTUi("Symbol setzen"), bytes: 256 * items.length, undo: revert, redo: apply });
     }
 
     removeLive(layer, items) {
@@ -785,7 +787,7 @@ class Editor {
         };
         this.selection = null;
         apply();
-        this.commit({ label: "Löschen", bytes: 256, undo: revert, redo: apply });
+        this.commit({ label: globalThis.VTTUi("Löschen"), bytes: 256, undo: revert, redo: apply });
     }
 
     updateItem(item, before, after, label) {
@@ -900,7 +902,7 @@ class Editor {
             id: newId("p", collectIds(this.doc)),
             x: at.x,
             y: at.y,
-            text: "Neuer Ort",
+            text: globalThis.VTTUi("Neuer Ort"),
             style,
             size: LABEL_STYLES[style].size,
             rot: 0,
@@ -948,7 +950,7 @@ class Editor {
             this.invalidate(pad(rect, layer.effects.coast ? COAST_PAD : 0));
         };
         this.commit({
-            label: this.tool === "eraser" ? "Radieren" : "Pinselstrich",
+            label: this.tool === "eraser" ? globalThis.VTTUi("Radieren") : globalThis.VTTUi("Pinselstrich"),
             bytes: imgBefore.data.length + imgAfter.data.length,
             undo: () => put(imgBefore),
             redo: () => put(imgAfter),
@@ -973,7 +975,7 @@ class Editor {
 
     commit(command) {
         if (!this.history.push(command)) {
-            this.ui.toast("Dieser Schritt war zu groß für den Verlauf – ältere Schritte wurden verworfen.");
+            this.ui.toast(globalThis.VTTUi("Dieser Schritt war zu groß für den Verlauf – ältere Schritte wurden verworfen."));
         }
     }
 
@@ -981,14 +983,14 @@ class Editor {
         this.cancelInteractions();
         this.commitEdit();
         const command = this.history.undo();
-        if (command) this.ui.toast(`Rückgängig: ${command.label}`);
+        if (command) this.ui.toast(globalThis.VTTUi("Rückgängig: {p0}",{p0:(command.label)}));
     }
 
     redo() {
         this.cancelInteractions();
         this.commitEdit();
         const command = this.history.redo();
-        if (command) this.ui.toast(`Wiederholt: ${command.label}`);
+        if (command) this.ui.toast(globalThis.VTTUi("Wiederholt: {p0}",{p0:(command.label)}));
     }
 
     onHistoryChange() {
@@ -1028,7 +1030,7 @@ class Editor {
     }
 
     setTitle(value) {
-        this.doc.meta.title = cleanText(value, LIMITS.title) || "Unbenannte Karte";
+        this.doc.meta.title = cleanText(value, LIMITS.title) || globalThis.VTTUi("Unbenannte Karte");
         if (this.doc.meta.showTitle) this.invalidate(null);
         this.markChanged();
     }
@@ -1045,7 +1047,7 @@ class Editor {
             this.ui.refreshMapStyle();
         };
         apply(value);
-        this.commit({ label: "Kartenstil ändern", bytes: 128, undo: () => apply(before), redo: () => apply(value) });
+        this.commit({ label: globalThis.VTTUi("Kartenstil ändern"), bytes: 128, undo: () => apply(before), redo: () => apply(value) });
     }
 
     setAutosaveState(state, time) {
@@ -1054,8 +1056,8 @@ class Editor {
         this.ui.setStatus(state, time);
         if ((state === "failed" || state === "unavailable") && previous !== state) {
             this.ui.toast(state === "failed"
-                ? "Autosave fehlgeschlagen – bitte über „Datei → Als Datei speichern“ sichern."
-                : "Autosave ist in diesem Browser nicht verfügbar – bitte als Datei speichern.");
+                ? globalThis.VTTUi("Autosave fehlgeschlagen – bitte über „Datei → Als Datei speichern“ sichern.")
+                : globalThis.VTTUi("Autosave ist in diesem Browser nicht verfügbar – bitte als Datei speichern."));
         }
     }
 
@@ -1115,8 +1117,8 @@ class Editor {
             // Only edits up to the snapshot are in the file; newer edits stay unsaved.
             if (generation > this.fileGeneration) this.fileGeneration = generation;
             this.ui.toast(this.generation === generation
-                ? "Karte als Datei gespeichert."
-                : "Karte als Datei gespeichert – Änderungen während des Speicherns sind noch nicht in der Datei.");
+                ? globalThis.VTTUi("Karte als Datei gespeichert.")
+                : globalThis.VTTUi("Karte als Datei gespeichert – Änderungen während des Speicherns sind noch nicht in der Datei."));
             return true;
         } catch (error) {
             this.ui.showError(`Speichern fehlgeschlagen: ${error.message || error}`);
@@ -1145,7 +1147,7 @@ class Editor {
             this.library.close();
             this.markChanged(); // autosave the loaded map as the new draft
             this.fileGeneration = this.generation; // identical to the file just opened
-            this.ui.toast(`„${doc.meta.title}“ geladen.`);
+            this.ui.toast(globalThis.VTTUi("„{p0}“ geladen.",{p0:(doc.meta.title)}));
         } catch (error) {
             const message = error instanceof ValidationError ? error.message : "Die Datei konnte nicht vollständig geladen werden. Bitte prüfe die Symbolpakete und versuche es erneut.";
             this.ui.showError(message);
@@ -1160,19 +1162,19 @@ class Editor {
 
     async renderPngBlob(scale) {
         if (this.doc.size.w * scale * this.doc.size.h * scale > MAX_EXPORT_PIXELS) {
-            throw new Error("Diese Auflösung ist zu groß für den Browser.");
+            throw new Error(globalThis.VTTUi("Diese Auflösung ist zu groß für den Browser."));
         }
         const doc = this.doc;
         const credits = creditsForDocument(doc, this.palette);
         const generation = this.generation;
         await this.palette.ensureDocumentImages(doc);
-        if (doc !== this.doc || generation !== this.generation) throw new Error("Die Karte wurde während des Exports geändert. Bitte erneut exportieren.");
+        if (doc !== this.doc || generation !== this.generation) throw new Error(globalThis.VTTUi("Die Karte wurde während des Exports geändert. Bitte erneut exportieren."));
         this.flushRender();
         const canvas = this.renderer.renderExport(scale);
         const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
         canvas.width = 0;
         canvas.height = 0;
-        if (!blob) throw new Error("Der Browser konnte das Bild nicht erzeugen (zu groß?).");
+        if (!blob) throw new Error(globalThis.VTTUi("Der Browser konnte das Bild nicht erzeugen (zu groß?)."));
         return embedCredits(blob, credits);
     }
 
@@ -1200,7 +1202,7 @@ class Editor {
         this.mapOpened = true;
         this.library.detach();
         if (!initial) this.markChanged();
-        if (!initial) this.ui.toast(kind === "empty" ? "Leere Karte angelegt." : "Startkarte geladen.");
+        if (!initial) this.ui.toast(kind === "empty" ? globalThis.VTTUi("Leere Karte angelegt.") : globalThis.VTTUi("Startkarte geladen."));
     }
 
     setTool(tool) {

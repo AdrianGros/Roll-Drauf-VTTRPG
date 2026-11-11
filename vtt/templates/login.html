@@ -2,8 +2,11 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - roll drauf vtt</title>
+    <title data-ui-key="u_8dfa3059da36">Login - roll drauf vtt</title>
     <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
     <link rel="preload" as="image" href="/static/assets/sternenstaub/banners/banner-roll-drauf-1400.webp">
     <style>
@@ -505,6 +508,7 @@
     <link rel="stylesheet" href="/static/css/spellbook-theme.css">
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="spellbook book-scene-open book-login-open is-book-scene-login">
     <!-- 3D Book Scene — server-rendered (2026-08-25). This markup is the
@@ -512,13 +516,13 @@
          in the HTML means the user's FIRST paint is the finished open
          book instead of an empty body that JS visibly assembles.
          book-scene.js's create() detects it and only binds. -->
-    <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="Buchoberfläche">
+    <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="Buchoberfläche" data-ui-aria-label="u_aaa94a7794ee">
         <div class="book-scene-backdrop" aria-hidden="true"></div>
         <div class="book-scene-stage">
-            <div id="book" class="book-scene-book" role="doc-cover" aria-label="Interactive spellbook">
+            <div id="book" class="book-scene-book" role="doc-cover" aria-label="Interactive spellbook" data-ui-aria-label="u_edb1782ea294">
                 <div class="book-element book-cover is-open" aria-hidden="true"></div>
-                <div class="book-element book-pages" role="doc-pagebreak" aria-label="Buchseiten"></div>
-                <div class="book-element book-back" role="doc-cover" aria-label="Buchrückseite"></div>
+                <div class="book-element book-pages" role="doc-pagebreak" aria-label="Buchseiten" data-ui-aria-label="u_eeb40b901eef"></div>
+                <div class="book-element book-back" role="doc-cover" aria-label="Buchrückseite" data-ui-aria-label="u_5925e8ec1e99"></div>
                 <div class="book-shell-page-stack book-shell-page-stack--left" aria-hidden="true"></div>
                 <div class="book-shell-page-stack book-shell-page-stack--right" aria-hidden="true"></div>
                 <div class="book-shell-spine" aria-hidden="true">
@@ -540,38 +544,38 @@
     <!-- Login content: the landing page IS the login (owner, 2026-11-08) -->
     <main id="login-content" class="visible">
         <div class="login-book-spread" role="presentation">
-            <section class="login-book-page login-book-page--left" aria-label="Login page">
+            <section class="login-book-page login-book-page--left" aria-label="Login page" data-ui-aria-label="u_7db42c1e3a76">
                 <div class="login-book-paper login-book-paper--login">
-                    <div class="login-book-page-header" aria-label="Roll drauf Buchzugang">
-                        <img src="/static/assets/sternenstaub/banners/banner-roll-drauf-1400.webp" width="1400" height="788" alt="Roll drauf – Buchzugang" class="login-book-banner-image">
+                    <div class="login-book-page-header" aria-label="Roll drauf Buchzugang" data-ui-aria-label="u_1329dc7cce30">
+                        <img src="/static/assets/sternenstaub/banners/banner-roll-drauf-1400.webp" width="1400" height="788" alt="Roll drauf – Buchzugang" data-ui-alt="u_051ce86113ca" class="login-book-banner-image">
                     </div>
 
-                    <h1 class="login-book-page-title">Anmelden</h1>
+                    <h1 class="login-book-page-title"><span data-ui-key="u_a13480ab170c">Anmelden</span></h1>
 
-                    <form id="passwordLoginForm" class="book-form book-auth-form" novalidate aria-label="Anmeldung mit E-Mail oder Benutzername">
+                    <form id="passwordLoginForm" class="book-form book-auth-form" novalidate aria-label="Anmeldung mit E-Mail oder Benutzername" data-ui-aria-label="u_f87146a870a4">
                         <div id="passwordLoginStatus" class="book-form-status" role="status" aria-live="polite" hidden></div>
                         <div class="form-group">
-                            <label for="loginUsername">E-Mail oder Benutzername</label>
+                            <label for="loginUsername"><span data-ui-key="u_bbfa9226ec6d">E-Mail oder Benutzername</span></label>
                             <input type="text" class="book-input" id="loginUsername" name="identifier" required autocomplete="username" aria-describedby="passwordLoginError">
                         </div>
                         <div class="form-group">
-                            <label for="loginPassword">Passwort</label>
+                            <label for="loginPassword"><span data-ui-key="u_0719708d1cc8">Passwort</span></label>
                             <input type="password" class="book-input" id="loginPassword" name="password" required autocomplete="current-password" aria-describedby="passwordLoginError">
                         </div>
                         <div class="book-auth-actions">
-                            <button type="submit" class="btn btn-primary" id="passwordLoginSubmitBtn">Anmelden</button>
-                            <a class="btn btn-primary book-auth-action" href="/signup.html">Registrieren</a>
-                            <a class="btn btn-primary book-auth-action" href="/forgot-password.html">Passwort vergessen</a>
+                            <button type="submit" class="btn btn-primary" id="passwordLoginSubmitBtn"><span data-ui-key="u_a13480ab170c">Anmelden</span></button>
+                            <a class="btn btn-primary book-auth-action" href="/signup.html"><span data-ui-key="u_1551c98e96c5">Registrieren</span></a>
+                            <a class="btn btn-primary book-auth-action" href="/forgot-password.html"><span data-ui-key="u_ed140845df35">Passwort vergessen</span></a>
                         </div>
                         <div class="error book-auth-error" id="passwordLoginError" role="alert" aria-live="assertive" tabindex="-1"></div>
                     </form>
 
                     <div class="book-auth-divider" aria-hidden="true"><span>oder</span></div>
 
-                    <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Optionaler Discord-Login">
+                    <div id="loginDiscordGate" class="book-form book-discord-gate" role="region" aria-label="Optionaler Discord-Login" data-ui-aria-label="u_09da90bc98a7">
                         <div id="statusBanner" class="book-status" role="status" aria-live="polite"></div>
-                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Mit Discord anmelden"><img src="/static/images/discord-symbol.svg" alt="" class="login-discord-button-icon"><span>Mit Discord anmelden</span></button>
-                        <div class="loading" id="loading" role="status" aria-live="polite">Discord wird geöffnet...</div>
+                        <button type="button" class="book-login-btn" id="discordLoginBtn" aria-label="Mit Discord anmelden" data-ui-aria-label="u_e6c0c6ad615b"><img src="/static/images/discord-symbol.svg" alt="" class="login-discord-button-icon"><span><span data-ui-key="u_e6c0c6ad615b">Mit Discord anmelden</span></span></button>
+                        <div class="loading" id="loading" role="status" aria-live="polite"><span data-ui-key="u_f178c2b12cac">Discord wird geöffnet...</span></div>
                         <div class="error" id="generalError" role="alert" aria-live="assertive"></div>
                         <div class="error" id="discordError" role="alert" aria-live="polite"></div>
                     </div>
@@ -582,47 +586,47 @@
                 </div>
             </section>
 
-            <section class="login-book-page login-book-page--right" aria-label="Roll drauf Discord-Gemeinschaft">
+            <section class="login-book-page login-book-page--right" aria-label="Roll drauf Discord-Gemeinschaft" data-ui-aria-label="u_7fc245d20ef0">
                 <div class="login-book-paper login-book-paper--welcome" id="loginWelcomePage">
-                    <div class="login-book-welcome-kicker">Unsere Gemeinschaft</div>
-                    <h2 class="login-book-welcome-title">Roll drauf im Discord</h2>
+                    <div class="login-book-welcome-kicker"><span data-ui-key="u_b2a8bfaaec1f">Unsere Gemeinschaft</span></div>
+                    <h2 class="login-book-welcome-title"><span data-ui-key="u_4971813f0cba">Roll drauf im Discord</span></h2>
                     <p class="login-book-welcome-copy">
-                        Dein Abenteuer beginnt nicht allein: Im Roll-Drauf-Server findest du Menschen für D&amp;D, Geschichten und gemeinsame Spielabende.
+                        <span data-ui-key="u_5262dd8b48b6">Dein Abenteuer beginnt nicht allein: Im Roll-Drauf-Server findest du Menschen für D</span>&amp;<span data-ui-key="u_188ba8b7324c">D, Geschichten und gemeinsame Spielabende.</span>
                     </p>
 
-                    <div class="login-discord-community" aria-label="Roll drauf Discord-Community">
+                    <div class="login-discord-community" aria-label="Roll drauf Discord-Community" data-ui-aria-label="u_9b9776c6b8e9">
                         <div class="login-discord-community-header">
-                            <img src="/static/images/discord-symbol.svg" alt="Discord" class="login-discord-logo">
+                            <img src="/static/images/discord-symbol.svg" alt="Discord" data-ui-alt="u_bccc14ee7da1" class="login-discord-logo">
                             <div>
-                                <div class="login-discord-community-mark">Roll drauf</div>
-                                <h3 class="login-discord-community-name">Würfel, Welten und Weggefährten</h3>
+                                <div class="login-discord-community-mark"><span data-ui-key="u_efb0ad9744d2">Roll drauf</span></div>
+                                <h3 class="login-discord-community-name"><span data-ui-key="u_aef43843b86c">Würfel, Welten und Weggefährten</span></h3>
                             </div>
                         </div>
                         <p class="login-discord-community-copy">
-                            LGBTQIA+-freundlich, offen für Neulinge und erfahrene Abenteurer:innen. Dich erwarten Kampagnen, One-Shots, Sessions zum Zuschauen und eine Community, die dir den Einstieg Schritt für Schritt erleichtert.
+                            <span data-ui-key="u_f9da71ca0b44">LGBTQIA+-freundlich, offen für Neulinge und erfahrene Abenteurer:innen. Dich erwarten Kampagnen, One-Shots, Sessions zum Zuschauen und eine Community, die dir den Einstieg Schritt für Schritt erleichtert.</span>
                         </p>
-                        <div class="login-discord-tags" aria-label="Community-Schwerpunkte">
+                        <div class="login-discord-tags" aria-label="Community-Schwerpunkte" data-ui-aria-label="u_784d528b4c8c">
                             <span class="login-discord-tag">D&amp;D</span>
                             <span class="login-discord-tag">VTT</span>
-                            <span class="login-discord-tag">One-Shots</span>
-                            <span class="login-discord-tag">Queer-friendly</span>
+                            <span class="login-discord-tag"><span data-ui-key="u_01eb37c7f766">One-Shots</span></span>
+                            <span class="login-discord-tag"><span data-ui-key="u_8c47008b1e13">Queer-friendly</span></span>
                         </div>
                         <a class="login-discord-join" href="https://discord.gg/rolldrauf" target="_blank" rel="noopener noreferrer">
-                            <span>Discord-Server beitreten</span>
+                            <span><span data-ui-key="u_a5d5d91ad5e5">Discord-Server beitreten</span></span>
                             <span aria-hidden="true">↗</span>
                         </a>
                         <a class="login-discord-directory" href="https://disboard.org/de/server/1244342177539166238" target="_blank" rel="noopener noreferrer">
-                            Serverprofil auf DISBOARD ansehen
+                            <span data-ui-key="u_9f713a10954a">Serverprofil auf DISBOARD ansehen</span>
                         </a>
                         <p class="login-discord-disclaimer">
-                            Discord ist ein unabhängiger Dienst. Roll Drauf steht in keiner Partnerschaft mit Discord.
+                            <span data-ui-key="u_4f3c25bac326">Discord ist ein unabhängiger Dienst. Roll Drauf steht in keiner Partnerschaft mit Discord.</span>
                         </p>
                     </div>
 
                     <div class="login-book-welcome-footer">
-                        <span>Offene Community</span>
-                        <span>Für Neulinge willkommen</span>
-                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
+                        <span><span data-ui-key="u_545995d35443">Offene Community</span></span>
+                        <span><span data-ui-key="u_45d8c0f37805">Für Neulinge willkommen</span></span>
+                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0"><span data-ui-key="u_4230de9147dc">Regelwerk · Vorschau</span></a>
                     </div>
                 </div>
             </section>
@@ -637,7 +641,9 @@
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/book-scene.js"></script>
 
-    <script>
+    <script>globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
         // Captured synchronously the instant this script runs - before
         // DOMContentLoaded (and initEntryStatus(), which strips ?logged_out=1
         // from the URL) and before duplicate
@@ -682,7 +688,7 @@
             BookScene.open();
 
             if (FORCE_LOGGED_OUT) {
-                showStatus('Du wurdest abgemeldet.');
+                showStatus(globalThis.VTTUi("Du wurdest abgemeldet."));
                 return;
             }
 
@@ -749,12 +755,12 @@
             const authNotice = currentUrl.searchParams.get('auth_notice');
 
             if (authNotice === 'discord_only') {
-                showStatus('Du kannst dich direkt mit E-Mail und Passwort anmelden. Discord bleibt optional.');
+                showStatus(globalThis.VTTUi("Du kannst dich direkt mit E-Mail und Passwort anmelden. Discord bleibt optional."));
                 currentUrl.searchParams.delete('auth_notice');
             }
 
             if (loggedOut === '1') {
-                showStatus('Du wurdest abgemeldet.');
+                showStatus(globalThis.VTTUi("Du wurdest abgemeldet."));
                 currentUrl.searchParams.delete('logged_out');
             }
 
@@ -803,7 +809,7 @@
 
                 discordLoginButton.addEventListener('click', () => {
                     discordLoginButton.disabled = true;
-                    discordLoginButton.textContent = 'Discord wird geöffnet...';
+                    discordLoginButton.textContent = globalThis.VTTUi("Discord wird geöffnet...");
                     showLoading(true);
                     const discordUrl = new URL('/api/auth/discord/start', window.location.origin);
                     discordUrl.searchParams.set('next', nextPath);
@@ -811,7 +817,7 @@
                 }, { once: true });
             } catch (error) {
                 console.warn('[Login] Discord status check failed', error);
-                showStatus('Discord-Zugang konnte gerade nicht vorbereitet werden. Bitte später erneut versuchen.');
+                showStatus(globalThis.VTTUi("Discord-Zugang konnte gerade nicht vorbereitet werden. Bitte später erneut versuchen."));
                 discordLoginButton.disabled = true;
             }
         }
@@ -845,7 +851,7 @@
                 submitBtn.disabled = true;
 
                 if (!identifier || !password) {
-                    errorEl.textContent = 'E-Mail/Benutzername und Passwort werden benötigt.';
+                    errorEl.textContent = globalThis.VTTUi("E-Mail/Benutzername und Passwort werden benötigt.");
                     usernameEl.setAttribute('aria-invalid', identifier ? 'false' : 'true');
                     passwordEl.setAttribute('aria-invalid', password ? 'false' : 'true');
                     submitBtn.disabled = false;
@@ -864,7 +870,7 @@
                     await response.json().catch(() => ({}));
 
                     if (!response.ok) {
-                        errorEl.textContent = 'E-Mail/Benutzername oder Passwort ist nicht korrekt. Prüfe beide Angaben und versuche es erneut.';
+                        errorEl.textContent = globalThis.VTTUi("E-Mail/Benutzername oder Passwort ist nicht korrekt. Prüfe beide Angaben und versuche es erneut.");
                         usernameEl.setAttribute('aria-invalid', 'true');
                         passwordEl.setAttribute('aria-invalid', 'true');
                         submitBtn.disabled = false;
@@ -873,12 +879,12 @@
                         return;
                     }
 
-                    statusEl.textContent = 'Anmeldung bestätigt. Du wirst weitergeleitet.';
+                    statusEl.textContent = globalThis.VTTUi("Anmeldung bestätigt. Du wirst weitergeleitet.");
                     statusEl.hidden = false;
-                    submitBtn.textContent = 'Anmeldung bestätigt';
+                    submitBtn.textContent = globalThis.VTTUi("Anmeldung bestätigt");
                     window.location.replace(loginReturnPath());
                 } catch (error) {
-                    errorEl.textContent = 'Der Zugang konnte gerade nicht geprüft werden. Bitte versuche es erneut.';
+                    errorEl.textContent = globalThis.VTTUi("Der Zugang konnte gerade nicht geprüft werden. Bitte versuche es erneut.");
                     usernameEl.setAttribute('aria-invalid', 'true');
                     passwordEl.setAttribute('aria-invalid', 'true');
                     submitBtn.disabled = false;

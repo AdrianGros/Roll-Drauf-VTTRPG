@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // DM composition and DM-only initializers. Loaded only after authorized bootstrap.
 window.PlayDMSurface = {
     compose(ui, fragments) {
@@ -11,15 +13,42 @@ window.PlayDMSurface = {
         for (const name of Object.keys(this.methods)) ui[name] = this.methods[name].bind(ui);
     },
     methods: {
+_refreshMapScale() {
+            const map=this.bootstrap?.state_payload?.active_map;
+            const input=document.getElementById('mapScaleMeters');if(!input)return;
+            for(const id of ['mapScaleMeters','mapScaleSave','mapScaleClear'])document.getElementById(id).disabled=!map;
+            if(!map){this._mapScaleMapId=null;this._mapScaleKey=null;input.value='';document.getElementById('mapScaleName').textContent='—';return;}
+            const scale=map.measurement_scale || {revision:0,meters_per_square:null};
+            const key=`${map.id}:${scale.revision}`;
+            if(this._mapScaleKey===key || document.activeElement===input)return;
+            this._mapScaleKey=key;this._mapScaleMapId=map.id;this._mapScaleRevision=scale.revision;
+            input.value=scale.meters_per_square ?? '';
+            document.getElementById('mapScaleName').textContent=map.name;
+        },
+_bindMapScale() {
+            this._refreshMapScale();
+            const save=async(clear)=>{
+                if(!this._mapScaleMapId)return;
+                const input=document.getElementById('mapScaleMeters');const value=clear || input.value.trim()===''?null:Number(input.value);
+                try {
+                    await Auth.makeAuthRequest(`/api/play/campaigns/${this.campaignId}/sessions/${this.sessionId}/maps/${this._mapScaleMapId}/scale`,
+                        'PUT',{revision:this._mapScaleRevision,meters_per_square:value});
+                    await this.loadBootstrap();this._refreshMapScale();this._showMessage(globalThis.VTTUi("Kartenmaßstab gespeichert."));
+                }catch(error){this._showMessage(error.message || globalThis.VTTUi("Kartenmaßstab konnte nicht gespeichert werden."),true);await this.loadBootstrap();this._refreshMapScale();}
+            };
+            document.getElementById('mapScaleSave').addEventListener('click',()=>save(false));
+            document.getElementById('mapScaleClear').addEventListener('click',()=>save(true));
+        },
 _bindSessionControls() {
+            this._bindMapScale();
             // DM layer only: these buttons exist only in a DM seat.
             document.getElementById("btnInitStack").addEventListener("click", async () => {
                 try {
                     await this.api.initSceneStack(this.campaignId, this.sessionId);
-                    this._showMessage("Kartenstapel initialisiert.");
+                    this._showMessage(globalThis.VTTUi("Kartenstapel initialisiert."));
                     await this.loadBootstrap();
                 } catch (error) {
-                    this._showMessage(error.message || "Kartenstapel konnte nicht initialisiert werden.", true);
+                    this._showMessage(error.message || globalThis.VTTUi("Kartenstapel konnte nicht initialisiert werden."), true);
                 }
             });
 
@@ -36,7 +65,7 @@ _bindSessionControls() {
                 if (!report) return;
                 if (report.blocking_issues && report.blocking_issues.length) return;
                 if (report.warnings && report.warnings.length) {
-                    const ok = window.confirm("Start-Check hat Warnungen. Trotzdem live starten?");
+                    const ok = window.confirm(globalThis.VTTUi("Start-Check hat Warnungen. Trotzdem live starten?"));
                     if (!ok) return;
                 }
                 await this._transition("in_progress", true);
@@ -51,7 +80,7 @@ _bindSessionControls() {
             });
 
             document.getElementById("btnEnd").addEventListener("click", async () => {
-                const ok = window.confirm("Session wirklich beenden?");
+                const ok = window.confirm(globalThis.VTTUi("Session wirklich beenden?"));
                 if (!ok) return;
                 await this._transition("ended", true);
             });

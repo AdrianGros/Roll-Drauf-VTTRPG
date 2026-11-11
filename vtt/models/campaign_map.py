@@ -39,7 +39,9 @@ class CampaignMap(db.Model):
         return self.archived_at is not None
 
     def serialize(self):
+        from .campaign_map_scale import scale_for
         return {
+            "measurement_scale":scale_for(self.id),
             "id": self.id,
             "campaign_id": self.campaign_id,
             "name": self.name,

@@ -1,19 +1,21 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /* Management of an SRD character sheet: companions plus duplicate, archive and rebuild-as-draft.
  * Relies on the global `auth` of character-sheet.html. */
 (function () {
   'use strict';
 
   const FIELDS = [
-    ['name', 'Name', 'text', 60], ['kind', 'Art (z. B. Wolf, Familiar)', 'text', 40], ['speed', 'Bewegung', 'text', 40],
+    ['name', globalThis.VTTUi("Name"), 'text', 60], ['kind', globalThis.VTTUi("Art (z. B. Wolf, Familiar)"), 'text', 40], ['speed', globalThis.VTTUi("Bewegung"), 'text', 40],
     ['hpCurrent', 'TP aktuell', 'number', 9999], ['hpMax', 'TP max.', 'number', 9999], ['ac', 'RK', 'number', 50],
   ];
   const ERRORS = {
-    forbidden: 'Dafür fehlt dir die Berechtigung.',
-    in_campaign: 'Nimm den Charakter zuerst aus der Kampagne, bevor du ihn archivierst.',
-    draft_limit: 'Es sind höchstens 25 offene Entwürfe möglich. Verwirf zuerst einen Entwurf.',
-    too_many_companions: 'Höchstens 20 Begleiter.',
-    invalid_companion: 'Ein Begleiter ist unvollständig oder zu lang.',
-    ability_method_not_allowed: 'Diese Kampagne erlaubt die Attributsmethode dieses Charakters nicht.',
+    forbidden: globalThis.VTTUi("Dafür fehlt dir die Berechtigung."),
+    in_campaign: globalThis.VTTUi("Nimm den Charakter zuerst aus der Kampagne, bevor du ihn archivierst."),
+    draft_limit: globalThis.VTTUi("Es sind höchstens 25 offene Entwürfe möglich. Verwirf zuerst einen Entwurf."),
+    too_many_companions: globalThis.VTTUi("Höchstens 20 Begleiter."),
+    invalid_companion: globalThis.VTTUi("Ein Begleiter ist unvollständig oder zu lang."),
+    ability_method_not_allowed: globalThis.VTTUi("Diese Kampagne erlaubt die Attributsmethode dieses Charakters nicht."),
   };
 
   let state = null;
@@ -69,7 +71,7 @@
       grid.append(field);
     });
     card.append(grid);
-    [['attacks', 'Angriffe', 500], ['notes', 'Notizen', 2000]].forEach(([key, labelText, limit]) => {
+    [['attacks', globalThis.VTTUi("Angriffe"), 500], ['notes', globalThis.VTTUi("Notizen"), 2000]].forEach(([key, labelText, limit]) => {
       const field = element('label', 'srd-man-field');
       field.append(element('span', 'srd-man-field-label', labelText));
       const area = element('textarea', 'srd-man-input');
@@ -96,7 +98,7 @@
       const result = await auth.makeAuthRequest(base('/companions'), 'PUT', { companions: state.companions });
       state.companions = result.companions;
       render();
-      setStatus('Begleiter gespeichert.', false);
+      setStatus(globalThis.VTTUi("Begleiter gespeichert."), false);
     } catch (error) {
       setStatus(failureText(error), true);
     }
@@ -137,13 +139,13 @@
         state.confirm = null;
         if (result.archived) { window.location.href = '/characters'; return; }
         render();
-        setStatus('Wiederhergestellt.', false);
+        setStatus(globalThis.VTTUi("Wiederhergestellt."), false);
       }),
     ));
     archive.id = 'srdManageArchive';
     if (!state.archived && state.inCampaign) {
       archive.disabled = true;
-      archive.title = 'Nimm den Charakter zuerst aus der Kampagne.';
+      archive.title = globalThis.VTTUi("Nimm den Charakter zuerst aus der Kampagne.");
     }
     const rebuild = button('Neuaufbau als Entwurf', 'srd-man-btn', ask(
       'Aus diesem Charakter einen Entwurf im Regelwerk-Ersteller anlegen? Der Charakter bleibt unverändert; aus dem Entwurf entsteht ein zweiter Charakter.',
@@ -166,7 +168,7 @@
       state.campaignId = campaign_id;
       state.inCampaign = Boolean(campaign_id);
       render();
-      setStatus(campaign_id ? 'Der Charakter ist der Kampagne zugeordnet.' : 'Der Charakter ist keiner Kampagne mehr zugeordnet.', false);
+      setStatus(campaign_id ? globalThis.VTTUi("Der Charakter ist der Kampagne zugeordnet.") : globalThis.VTTUi("Der Charakter ist keiner Kampagne mehr zugeordnet."), false);
     } catch (error) {
       setStatus(failureText(error), true);
     }
@@ -187,13 +189,13 @@
 
   function campaignBlock() {
     const block = element('div', 'srd-man-block');
-    block.append(element('div', 'srd-sheet-subtitle', 'Kampagne und Teilen'));
+    block.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Kampagne und Teilen")));
     const row = element('div', 'srd-man-actions');
     const field = element('label', 'srd-man-field');
-    field.append(element('span', 'srd-man-field-label', 'Kampagne'));
+    field.append(element('span', 'srd-man-field-label', globalThis.VTTUi("Kampagne")));
     const select = element('select', 'srd-man-input');
     select.id = 'srdManageCampaign';
-    const none = element('option', null, 'Keine Kampagne');
+    const none = element('option', null, globalThis.VTTUi("Keine Kampagne"));
     none.value = '';
     select.append(none);
     state.campaigns.forEach((campaign) => {
@@ -207,7 +209,7 @@
     assign.id = 'srdManageAssign';
     row.append(field, assign);
     if (state.campaignId) {
-      const link = element('a', 'srd-man-btn srd-man-link', 'Gruppenübersicht');
+      const link = element('a', 'srd-man-btn srd-man-link', globalThis.VTTUi("Gruppenübersicht"));
       link.href = `/party?campaign=${state.campaignId}`;
       link.id = 'srdManageParty';
       row.append(link);
@@ -222,7 +224,7 @@
       share.append(yes, button('Abbrechen', 'srd-man-btn', () => { state.shareConfirm = null; render(); }));
     } else if (state.sharing && state.sharing.enabled) {
       const label = element('label', 'srd-man-field srd-man-grow');
-      label.append(element('span', 'srd-man-field-label', 'Link zur schreibgeschützten Ansicht (jeder mit dem Link sieht Werte, Zauber und Ausrüstung)'));
+      label.append(element('span', 'srd-man-field-label', globalThis.VTTUi("Link zur schreibgeschützten Ansicht (jeder mit dem Link sieht Werte, Zauber und Ausrüstung)")));
       const url = element('input', 'srd-man-input');
       url.id = 'srdManageShareUrl';
       url.readOnly = true;
@@ -231,18 +233,18 @@
       label.append(url);
       share.append(label);
       const copy = button('Link kopieren', 'srd-man-btn', async () => {
-        try { await navigator.clipboard.writeText(url.value); setStatus('Link kopiert.', false); } catch (error) { url.select(); setStatus('Kopieren nicht möglich. Der Link ist markiert.', true); }
+        try { await navigator.clipboard.writeText(url.value); setStatus(globalThis.VTTUi("Link kopiert."), false); } catch (error) { url.select(); setStatus(globalThis.VTTUi("Kopieren nicht möglich. Der Link ist markiert."), true); }
       });
       copy.id = 'srdManageShareCopy';
-      const again = button('Neuen Link erzeugen', 'srd-man-btn', () => { state.shareConfirm = { text: 'Der bisherige Link funktioniert danach nicht mehr. Neuen Link erzeugen?', yes: 'Ja, neuen Link', run: () => putSharing({ enabled: true, regenerate: true }, 'Neuer Link erzeugt. Der alte Link ist ungültig.') }; render(); });
+      const again = button('Neuen Link erzeugen', 'srd-man-btn', () => { state.shareConfirm = { text: globalThis.VTTUi("Der bisherige Link funktioniert danach nicht mehr. Neuen Link erzeugen?"), yes: 'Ja, neuen Link', run: () => putSharing({ enabled: true, regenerate: true }, 'Neuer Link erzeugt. Der alte Link ist ungültig.') }; render(); });
       again.id = 'srdManageShareRegenerate';
-      const off = button('Freigabe beenden', 'srd-man-btn srd-man-danger', () => { state.shareConfirm = { text: 'Der Link zeigt den Charakter danach nicht mehr. Freigabe beenden?', yes: 'Ja, beenden', run: () => putSharing({ enabled: false }, 'Freigabe beendet.') }; render(); });
+      const off = button('Freigabe beenden', 'srd-man-btn srd-man-danger', () => { state.shareConfirm = { text: globalThis.VTTUi("Der Link zeigt den Charakter danach nicht mehr. Freigabe beenden?"), yes: 'Ja, beenden', run: () => putSharing({ enabled: false }, 'Freigabe beendet.') }; render(); });
       off.id = 'srdManageShareOff';
       share.append(copy, again, off);
     } else if (state.sharing) {
       const on = button('Link zur Ansicht freigeben', 'srd-man-btn', () => putSharing({ enabled: true }, 'Freigabe aktiv. Jeder mit dem Link kann den Charakter ansehen.'));
       on.id = 'srdManageShareOn';
-      share.append(on, element('span', 'srd-man-hint', 'Öffentlich heißt hier: jeder mit dem Link. Notizen, Hintergrund und dein Name bleiben verborgen.'));
+      share.append(on, element('span', 'srd-man-hint', globalThis.VTTUi("Öffentlich heißt hier: jeder mit dem Link. Notizen, Hintergrund und dein Name bleiben verborgen.")));
     }
     block.append(share);
     return block;
@@ -272,8 +274,8 @@
   }
 
   async function runDownload(path, fallbackName, doneText) {
-    setStatus('Wird erstellt …', false);
-    try { await download(path, fallbackName); setStatus(doneText, false); } catch (error) { setStatus('Der Download ist fehlgeschlagen. Bitte versuche es erneut.', true); }
+    setStatus(globalThis.VTTUi("Wird erstellt …"), false);
+    try { await download(path, fallbackName); setStatus(doneText, false); } catch (error) { setStatus(globalThis.VTTUi("Der Download ist fehlgeschlagen. Bitte versuche es erneut."), true); }
   }
 
   async function putTheme(themeId) {
@@ -282,13 +284,13 @@
       state.appearance = result;
       applyTheme(result.theme, result.themes);
       render();
-      setStatus('Farbe gespeichert.', false);
+      setStatus(globalThis.VTTUi("Farbe gespeichert."), false);
     } catch (error) { setStatus(failureText(error), true); }
   }
 
   function appearanceBlock() {
     const block = element('div', 'srd-man-block');
-    block.append(element('div', 'srd-sheet-subtitle', 'Darstellung, Export und Druck'));
+    block.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Darstellung, Export und Druck")));
     const row = element('div', 'srd-man-actions');
     const pdf = button('Als PDF drucken', 'srd-man-btn srd-man-primary', () => runDownload('/pdf', 'charakterbogen.pdf', 'PDF erstellt.'));
     pdf.id = 'srdManagePdf';
@@ -301,7 +303,7 @@
     block.append(row);
     if (state.canEdit && state.appearance) {
       const field = element('div', 'srd-man-field');
-      field.append(element('span', 'srd-man-field-label', 'Farbe des Bogens auf dem Bildschirm'));
+      field.append(element('span', 'srd-man-field-label', globalThis.VTTUi("Farbe des Bogens auf dem Bildschirm")));
       const swatches = element('div', 'srd-man-swatches');
       swatches.setAttribute('role', 'group');
       swatches.setAttribute('aria-label', 'Farbe wählen');
@@ -322,7 +324,7 @@
     const root = document.getElementById('srdManage');
     if (!root) return;
     root.replaceChildren();
-    root.append(element('div', 'srd-sheet-subtitle', 'Begleiter und Verwaltung'));
+    root.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Begleiter und Verwaltung")));
     const status = element('div', 'srd-man-status');
     status.id = 'srdManageStatus';
     status.setAttribute('role', 'status');
@@ -331,7 +333,7 @@
 
     const list = element('div', 'srd-man-list');
     state.companions.forEach((companion, index) => list.append(companionCard(companion, index)));
-    if (!state.companions.length) list.append(element('div', 'srd-man-hint', 'Keine Begleiter eingetragen (Tierbegleiter, Vertraute, Beschworene, Gefolge).'));
+    if (!state.companions.length) list.append(element('div', 'srd-man-hint', globalThis.VTTUi("Keine Begleiter eingetragen (Tierbegleiter, Vertraute, Beschworene, Gefolge).")));
     root.append(list);
     root.append(appearanceBlock());
     if (state.canEdit) {
@@ -349,7 +351,7 @@
       root.append(campaignBlock());
       root.append(actionBar());
     } else if (state.campaignId) {
-      const link = element('a', 'srd-man-btn srd-man-link', 'Gruppenübersicht');
+      const link = element('a', 'srd-man-btn srd-man-link', globalThis.VTTUi("Gruppenübersicht"));
       link.href = `/party?campaign=${state.campaignId}`;
       link.id = 'srdManageParty';
       const row = element('div', 'srd-man-actions');
@@ -378,7 +380,7 @@
       } catch (error) { /* optional */ }
       render();
     } catch (error) {
-      root.replaceChildren(element('div', 'sheet-empty', 'Begleiter und Verwaltung konnten nicht geladen werden.'));
+      root.replaceChildren(element('div', 'sheet-empty', globalThis.VTTUi("Begleiter und Verwaltung konnten nicht geladen werden.")));
     }
   };
 })();

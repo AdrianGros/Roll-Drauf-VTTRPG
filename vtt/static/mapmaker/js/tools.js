@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Pointer, wheel and keyboard input. One gesture at a time; a second touch
 // cancels the running gesture (reverting a partial stroke) and starts a pinch.
 
@@ -113,11 +115,11 @@ export function attachInput(ed) {
             gesture = { type: "path", pointerId: event.pointerId, item, spacing: 28 };
         } else if (ed.tool === "stamp") {
             if (!ed.stampOpts.asset) {
-                ed.ui.toast("Wähle zuerst ein Symbol aus der Palette.");
+                ed.ui.toast(globalThis.VTTUi("Wähle zuerst ein Symbol aus der Palette."));
                 return;
             }
             if (!ed.insideMap(point)) {
-                ed.ui.toast("Symbole lassen sich nur auf der Karte setzen.");
+                ed.ui.toast(globalThis.VTTUi("Symbole lassen sich nur auf der Karte setzen."));
                 return;
             }
             const layer = ed.targetLayer("stamps");
@@ -125,13 +127,13 @@ export function attachInput(ed) {
             ed.commitEdit();
             const item = ed.createStamp(point, ed.stampOpts.asset);
             if (!ed.placeLive(layer, item)) {
-                ed.ui.toast("Höchstgrenze an Symbolen erreicht.");
+                ed.ui.toast(globalThis.VTTUi("Höchstgrenze an Symbolen erreicht."));
                 return;
             }
             gesture = { type: "scatter", pointerId: event.pointerId, layer, items: [item], last: point };
         } else if (ed.tool === "label") {
             if (!ed.insideMap(point)) {
-                ed.ui.toast("Orte lassen sich nur auf der Karte setzen.");
+                ed.ui.toast(globalThis.VTTUi("Orte lassen sich nur auf der Karte setzen."));
                 return;
             }
             const layer = ed.targetLayer("labels");

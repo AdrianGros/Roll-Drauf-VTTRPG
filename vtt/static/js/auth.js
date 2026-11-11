@@ -179,7 +179,7 @@ class Auth {
                 'not found': 'Das wurde nicht gefunden.',
                 'API request failed': 'Die Anfrage ist fehlgeschlagen. Bitte versuche es erneut.'
             };
-            const err = new Error(translations[rawCode] || rawCode);
+            const err = new Error(window.VTTI18n?.error(error) || translations[rawCode] || rawCode);
             err.apiError = rawCode;
             err.status = response.status;
             throw err;

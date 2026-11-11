@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Declarative character actions; every save and execution is server-authorized.
 class PersonalActionBar {
     constructor(ui) {
@@ -104,9 +106,9 @@ class PersonalActionBar {
                 ${!action || this.busy || !this.canAct ? 'disabled' : ''}><kbd>${index === 9 ? 0 : index + 1}</kbd> ${this.text(label)}</button>`;
         }).join('');
         this.root.innerHTML = `<span class="pa-name">${this.text(this.data?.character_name || 'Charakteraktionen')}</span>
-            <div class="pa-slots">${slots || '<span>Noch keine Aktion belegt.</span>'}</div>
-            <button type="button" data-pa-edit ${!this.active || this.busy ? 'disabled' : ''}>Belegen</button>
-            <button type="button" data-pa-generic aria-expanded="${this.showGeneric}">Allgemeine</button>`;
+            <div class="pa-slots">${slots || `<span>${globalThis.VTTUiHTML("Noch keine Aktion belegt.")}</span>`}</div>
+            <button type="button" data-pa-edit ${!this.active || this.busy ? 'disabled' : ''}>${globalThis.VTTUiHTML("Belegen")}</button>
+            <button type="button" data-pa-generic aria-expanded="${this.showGeneric}">${globalThis.VTTUiHTML("Allgemeine")}</button>`;
     }
 
     async save(slots) {
@@ -118,11 +120,11 @@ class PersonalActionBar {
             const data = await this.ui.auth.makeAuthRequest(this.endpoint() + '/hotbar', 'PUT',
                 {revision: this.data.revision, slots});
             if (characterId === this.characterId) this.data = data;
-            this.ui._showMessage('Persönliche Aktionsleiste gespeichert.');
+            this.ui._showMessage(globalThis.VTTUi("Persönliche Aktionsleiste gespeichert."));
             return true;
         } catch (error) {
             this.ui._showMessage(error.apiError === 'hotbar_conflict'
-                ? 'Die Belegung wurde in einem anderen Tab geändert. Bitte erneut öffnen.' : error.message, true);
+                ? globalThis.VTTUi("Die Belegung wurde in einem anderen Tab geändert. Bitte erneut öffnen.") : error.message, true);
             await this.load();
             return false;
         } finally {
@@ -140,13 +142,13 @@ class PersonalActionBar {
         dialog.id = 'personalActionDialog';
         dialog.className = 'pa-dialog';
         dialog.setAttribute('aria-label', 'Persönliche Aktionsleiste belegen');
-        dialog.innerHTML = '<h2>Meine Aktionsleiste</h2><p>Wähle bis zu zehn Bogenaktionen. Zauber-Ankündigungen verbrauchen keine Plätze und wenden keine Effekte an.</p>';
+        dialog.innerHTML = `<h2>${globalThis.VTTUiHTML("Meine Aktionsleiste")}</h2><p>${globalThis.VTTUiHTML("Wähle bis zu zehn Bogenaktionen. Zauber-Ankündigungen verbrauchen keine Plätze und wenden keine Effekte an.")}</p>`;
         const rows = [];
         for (let index = 0; index < 10; index++) {
             const row = document.createElement('div');
             row.className = 'pa-edit-row';
             const label = document.createElement('label');
-            label.textContent = `Platz ${index + 1}`;
+            label.textContent = globalThis.VTTUi("Platz {p0}",{p0:(index + 1)});
             const select = document.createElement('select');
             select.id = `paSlot${index}`;
             label.htmlFor = select.id;
@@ -172,19 +174,19 @@ class PersonalActionBar {
         status.setAttribute('role', 'status');
         dialog.append(status);
         const save = document.createElement('button');
-        save.type = 'button'; save.textContent = 'Speichern';
+        save.type = 'button'; save.textContent = globalThis.VTTUi("Speichern");
         save.addEventListener('click', async () => {
             save.disabled = true;
             if (this.characterId !== characterId) {
-                status.textContent = 'Der ausgewählte Charakter hat sich geändert. Bitte neu öffnen.';
+                status.textContent = globalThis.VTTUi("Der ausgewählte Charakter hat sich geändert. Bitte neu öffnen.");
                 return;
             }
             const success = await this.save(rows.map(select => select.value || null));
             if (success) dialog.close();
-            else status.textContent = 'Nicht gespeichert. Prüfe die Meldung und öffne die aktuelle Belegung neu.';
+            else status.textContent = globalThis.VTTUi("Nicht gespeichert. Prüfe die Meldung und öffne die aktuelle Belegung neu.");
         });
         const cancel = document.createElement('button');
-        cancel.type = 'button'; cancel.textContent = 'Abbrechen';
+        cancel.type = 'button'; cancel.textContent = globalThis.VTTUi("Abbrechen");
         cancel.addEventListener('click', () => dialog.close());
         dialog.append(save, cancel);
         dialog.addEventListener('close', () => dialog.remove(), {once: true});
@@ -214,8 +216,8 @@ class PersonalActionBar {
         } catch (error) {
             if (error.status && error.status < 500 && error.apiError !== 'request_in_progress') this.pending.delete(pendingKey);
             this.ui._showMessage(error.apiError === 'action_catalog_changed'
-                ? 'Die Figur hat sich geändert; die Aktionsleiste wird aktualisiert.'
-                : `${error.message} Bei fehlender Bestätigung zuerst den Verlauf prüfen.`, true);
+                ? globalThis.VTTUi("Die Figur hat sich geändert; die Aktionsleiste wird aktualisiert.")
+                : globalThis.VTTUi("{p0} Bei fehlender Bestätigung zuerst den Verlauf prüfen.",{p0:(error.message)}), true);
             if (error.apiError === 'action_catalog_changed') await this.load();
             await this.ui.loadBootstrap();
         } finally {

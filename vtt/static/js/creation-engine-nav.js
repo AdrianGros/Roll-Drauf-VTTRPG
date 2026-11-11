@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /** Shared, non-provisioning capability check for Creation Engine entry points. */
 (function () {
     'use strict';
@@ -46,10 +48,10 @@
         const enabled = await available();
         entries.forEach((entry) => {
             entry.setAttribute('aria-disabled', String(!enabled));
-            entry.textContent = enabled ? 'Creation Engine' : 'Creation Engine · nicht verfügbar';
+            entry.textContent = enabled ? globalThis.VTTUi("Creation Engine") : globalThis.VTTUi("Creation Engine · nicht verfügbar");
             entry.title = enabled
-                ? 'Homebrew erstellen und bearbeiten (Eagle Homebrew)'
-                : 'Die Creation Engine ist für dieses Konto auf diesem Server nicht verfügbar.';
+                ? globalThis.VTTUi("Homebrew erstellen und bearbeiten (Eagle Homebrew)")
+                : globalThis.VTTUi("Die Creation Engine ist für dieses Konto auf diesem Server nicht verfügbar.");
             if (enabled) {
                 const characterId = Number(entry.dataset.creationEngineCharacterId);
                 if (window.self !== window.top) entry.setAttribute('target', '_top');

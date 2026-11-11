@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 (function () {
     'use strict';
 
@@ -5,10 +7,10 @@
     const COMP = '/api/rulesets/srd-5.2.1-de/compendium';
     const ABIL = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
     const STEPS = [
-        ['klasse', 'Klasse'], ['herkunft', 'Herkunft'], ['attribute', 'Attribute'], ['wahlen', 'Wahlen'],
-        ['ausruestung', 'Ausrüstung'], ['zauber', 'Zauber'], ['beschreibung', 'Beschreibung'], ['pruefung', 'Prüfung'],
+        ['klasse', globalThis.VTTUi("Klasse")], ['herkunft', globalThis.VTTUi("Herkunft")], ['attribute', globalThis.VTTUi("Attribute")], ['wahlen', globalThis.VTTUi("Wahlen")],
+        ['ausruestung', globalThis.VTTUi("Ausrüstung")], ['zauber', globalThis.VTTUi("Zauber")], ['beschreibung', globalThis.VTTUi("Beschreibung")], ['pruefung', globalThis.VTTUi("Prüfung")],
     ];
-    const SEV_LABEL = { error: 'Fehler', incomplete: 'Offen', warning: 'Hinweis', info: 'Info' };
+    const SEV_LABEL = { error: globalThis.VTTUi("Fehler"), incomplete: globalThis.VTTUi("Offen"), warning: globalThis.VTTUi("Hinweis"), info: globalThis.VTTUi("Info") };
 
     const SC = window.SrdCreator = { API, COMP, ABIL, STEPS, SEV_LABEL, steps: {}, L: {} };
     const app = SC.app = {
@@ -129,15 +131,15 @@
     }
     SC.openEntry = async function (id, fallbackTitle) {
         const dialog = $('scDialog');
-        $('scDialogTitle').textContent = fallbackTitle || 'Regeltext';
+        $('scDialogTitle').textContent = fallbackTitle || globalThis.VTTUi("Regeltext");
         const body = $('scDialogBody');
-        body.textContent = 'Wird geladen …';
+        body.textContent = globalThis.VTTUi("Wird geladen …");
         if (!dialog.open) dialog.showModal();
         const own = [...app.data.backgrounds,...app.data.feats].find(entry=>entry.id===id && entry.homebrew);
         if (own) {
-            body.replaceChildren(h('p',{class:'sc-muted',text:`Homebrew · Fassung ${own.origin.revision} · ${own.origin.author || ''}`}),
+            body.replaceChildren(h('p',{class:'sc-muted',text:globalThis.VTTUi("Homebrew · Fassung {p0} · {p1}",{p0:(own.origin.revision),p1:(own.origin.author || '')})}),
                 h('p',{text:own.description || ''}));
-            if (own.mechanics) own.mechanics.forEach(grant=>body.append(h('p',{text:grant.kind==='skill_proficiency' ? `Übung: ${SC.skillName(grant.skill)}` : `${({initiative_pb:'Initiative',initiative:'Initiative',ac:'Rüstungsklasse',speed_meters:'Bewegung (m)',hp_per_level:'Trefferpunkte je Stufe'})[grant.kind] || 'Regelbeitrag'}: +${grant.kind==='initiative_pb'?'Übungsbonus':grant.value}`})));
+            if (own.mechanics) own.mechanics.forEach(grant=>body.append(h('p',{text:grant.kind==='skill_proficiency' ? globalThis.VTTUi("Übung: {p0}",{p0:(SC.skillName(grant.skill))}) : `${({initiative_pb:'Initiative',initiative:'Initiative',ac:'Rüstungsklasse',speed_meters:'Bewegung (m)',hp_per_level:'Trefferpunkte je Stufe'})[grant.kind] || 'Regelbeitrag'}: +${grant.kind==='initiative_pb'?'Übungsbonus':grant.value}`})));
             $('scDialogTitle').focus();return;
         }
         try {
@@ -146,14 +148,14 @@
             const data = await response.json();
             $('scDialogTitle').textContent = data.entity.name;
             body.textContent = '';
-            body.append(h('p', { class: 'sc-muted' }, 'SRD 5.2.1 · ', h('a', { href: data.entity.url, target: '_blank', rel: 'noopener' }, 'Im Regelwerk lesen')));
+            body.append(h('p', { class: 'sc-muted' }, globalThis.VTTUi("SRD 5.2.1 · "), h('a', { href: data.entity.url, target: '_blank', rel: 'noopener' }, globalThis.VTTUi("Im Regelwerk lesen"))));
             data.blocks.forEach((b) => body.append(renderBlock(b)));
         } catch (error) {
-            body.textContent = 'Der Regeltext konnte nicht geladen werden.';
+            body.textContent = globalThis.VTTUi("Der Regeltext konnte nicht geladen werden.");
         }
         $('scDialogTitle').focus();
     };
-    SC.detailButton = (id, label, name) => h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => SC.openEntry(id, name) }, label || 'Regeltext');
+    SC.detailButton = (id, label, name) => h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => SC.openEntry(id, name) }, label || globalThis.VTTUi("Regeltext"));
 
     // ---------------------------------------------------------------- state & saving
     function setSaveText(text) { $('scSave').textContent = text; }
@@ -217,7 +219,7 @@
         const box = $('scConflict');
         box.hidden = false;
         box.textContent = '';
-        box.append(h('strong', { text: 'Eine Eingabe ist ungültig und wurde nicht gespeichert: ' }),
+        box.append(h('strong', { text: globalThis.VTTUi("Eine Eingabe ist ungültig und wurde nicht gespeichert: ") }),
             (problems || []).slice(0, 3).map((p) => h('div', { text: `${p.path || ''} ${p.message || ''}` })));
     }
 
@@ -227,10 +229,10 @@
         box.hidden = false;
         box.textContent = '';
         box.append(
-            h('p', { text: 'Dieser Entwurf wurde zwischenzeitlich anderswo geändert (zweiter Tab oder anderes Gerät).' }),
+            h('p', { text: globalThis.VTTUi("Dieser Entwurf wurde zwischenzeitlich anderswo geändert (zweiter Tab oder anderes Gerät).") }),
             h('div', { class: 'sc-row' },
-                h('button', { type: 'button', class: 'sc-btn', onclick: () => resolveConflict('server') }, 'Neueste Version laden (meine ungespeicherten Änderungen verwerfen)'),
-                h('button', { type: 'button', class: 'sc-btn', onclick: () => resolveConflict('mine') }, 'Meine Version behalten (überschreibt die andere)')));
+                h('button', { type: 'button', class: 'sc-btn', onclick: () => resolveConflict('server') }, globalThis.VTTUi("Neueste Version laden (meine ungespeicherten Änderungen verwerfen)")),
+                h('button', { type: 'button', class: 'sc-btn', onclick: () => resolveConflict('mine') }, globalThis.VTTUi("Meine Version behalten (überschreibt die andere)"))));
         setSaveText('Konflikt');
     }
 
@@ -272,7 +274,7 @@
     SC.findingsFor = (stepId) => SC.allFindings().filter((f) => stepOf(f.path) === stepId);
 
     SC.findingList = function (findings) {
-        if (!findings.length) return h('p', { class: 'sc-ok-note', text: 'Hier ist alles in Ordnung.' });
+        if (!findings.length) return h('p', { class: 'sc-ok-note', text: globalThis.VTTUi("Hier ist alles in Ordnung.") });
         const order = { error: 0, incomplete: 1, warning: 2, info: 3 };
         return h('ul', { class: 'sc-findings' }, findings.slice().sort((a, b) => order[a.severity] - order[b.severity]).map((f) =>
             h('li', { class: 'sc-finding', 'data-sev': f.severity },
@@ -284,7 +286,7 @@
         document.querySelectorAll('[data-findings-for]').forEach((box) => {
             box.textContent = '';
             const stepId = box.getAttribute('data-findings-for');
-            box.append(h('h3', { text: 'Prüfung' }), SC.findingList(SC.findingsFor(stepId)));
+            box.append(h('h3', { text: globalThis.VTTUi("Prüfung") }), SC.findingList(SC.findingsFor(stepId)));
         });
     }
 
@@ -298,9 +300,9 @@
             const findings = SC.findingsFor(id);
             const errors = findings.filter((f) => f.severity === 'error').length;
             const open = findings.filter((f) => f.severity === 'incomplete').length;
-            const badge = errors ? h('span', { class: 'sc-count sc-count-error', text: errors, 'aria-label': `${errors} Fehler` })
+            const badge = errors ? h('span', { class: 'sc-count sc-count-error', text: errors, 'aria-label': globalThis.VTTUi("{p0} Fehler",{p0:(errors)}) })
                 : open ? h('span', { class: 'sc-count', text: open, 'aria-label': `${open} offen` })
-                    : (app.evaluation ? h('span', { class: 'sc-count sc-count-ok', text: '✓', 'aria-label': 'in Ordnung' }) : null);
+                    : (app.evaluation ? h('span', { class: 'sc-count sc-count-ok', text: '✓', 'aria-label': globalThis.VTTUi("in Ordnung") }) : null);
             nav.append(h('button', {
                 type: 'button', class: 'sc-step', 'aria-current': app.mode === 'guided' && app.step === id ? 'step' : null,
                 onclick: () => (app.mode === 'guided' ? goStep(id) : scrollToSection(id)),
@@ -317,15 +319,15 @@
         const box = $('scSummary');
         const ev = app.evaluation;
         box.textContent = '';
-        box.append(h('h2', { text: (app.draft.state.identity && app.draft.state.identity.name) || 'Unbenannter Charakter' }));
-        if (!ev) { box.append(h('p', { class: 'sc-muted', text: 'Wird berechnet …' })); return; }
+        box.append(h('h2', { text: (app.draft.state.identity && app.draft.state.identity.name) || globalThis.VTTUi("Unbenannter Charakter") }));
+        if (!ev) { box.append(h('p', { class: 'sc-muted', text: globalThis.VTTUi("Wird berechnet …") })); return; }
         const classLine = ev.classes.length ? ev.classes.map((c) => `${c.name} ${c.level}${c.subclass ? ` (${SC.subclassName(c.subclass)})` : ''}`).join(' / ') : 'Noch keine Klasse';
         const state = app.draft.state;
         const species = state.species && SC.L.species[state.species.id];
         const background = state.background && SC.L.backgrounds[state.background.id];
         box.append(h('p', { class: 'sc-muted', text: [classLine, species && species.name, background && background.name].filter(Boolean).join(' · ') }));
         const more = h('div', { class: 'sc-summary-more' });
-        box.append(h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-summary-toggle', 'aria-expanded': app.summaryOpen ? 'true' : 'false', onclick: () => { app.summaryOpen = !app.summaryOpen; renderSummary(); } }, app.summaryOpen ? 'Werte ausblenden' : 'Werte anzeigen'), more);
+        box.append(h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-summary-toggle', 'aria-expanded': app.summaryOpen ? 'true' : 'false', onclick: () => { app.summaryOpen = !app.summaryOpen; renderSummary(); } }, app.summaryOpen ? globalThis.VTTUi("Werte ausblenden") : globalThis.VTTUi("Werte anzeigen")), more);
         box.dataset.collapsed = app.summaryOpen ? 'false' : 'true';
         more.append(h('div', { class: 'sc-abilities' }, ABIL.map((a) => h('div', { class: 'sc-ability' },
             h('span', { text: SC.abilityAbbr(a) }), h('b', { text: ev.abilities[a].score }), h('span', { text: sign(ev.abilities[a].modifier) })))));
@@ -340,10 +342,10 @@
         const all = SC.allFindings();
         const count = (s) => all.filter((f) => f.severity === s).length;
         box.append(h('p', null,
-            count('error') ? h('span', { class: 'sc-tag', text: `${count('error')} Fehler` }) : null,
+            count('error') ? h('span', { class: 'sc-tag', text: globalThis.VTTUi("{p0} Fehler",{p0:(count('error'))}) }) : null,
             count('incomplete') ? h('span', { class: 'sc-tag', text: `${count('incomplete')} offen` }) : null,
-            count('warning') ? h('span', { class: 'sc-tag', text: `${count('warning')} Hinweise` }) : null,
-            !count('error') && !count('incomplete') ? h('span', { class: 'sc-ok-note', text: 'Bereit zum Erstellen' }) : null));
+            count('warning') ? h('span', { class: 'sc-tag', text: globalThis.VTTUi("{p0} Hinweise",{p0:(count('warning'))}) }) : null,
+            !count('error') && !count('incomplete') ? h('span', { class: 'sc-ok-note', text: globalThis.VTTUi("Bereit zum Erstellen") }) : null));
     }
 
     function renderNav() {
@@ -436,15 +438,15 @@
     }
 
     async function openDraft(id, mode, step) {
-        setStatus('Entwurf wird geladen …');
+        setStatus(globalThis.VTTUi("Entwurf wird geladen …"));
         const res = await api(`/drafts/${id}`);
         if (!res.ok) {
-            setStatus('Dieser Entwurf wurde nicht gefunden.');
+            setStatus(globalThis.VTTUi("Dieser Entwurf wurde nicht gefunden."));
             showHome();
             return;
         }
         if (res.data.draft.status !== 'draft') {
-            setStatus('Dieser Entwurf ist bereits abgeschlossen.');
+            setStatus(globalThis.VTTUi("Dieser Entwurf ist bereits abgeschlossen."));
             showHome();
             return;
         }
@@ -488,24 +490,24 @@
     }
 
     async function discardDraft(id) {
-        if (!window.confirm('Diesen Entwurf wirklich verwerfen?')) return;
+        if (!window.confirm(globalThis.VTTUi("Diesen Entwurf wirklich verwerfen?"))) return;
         await api(`/drafts/${id}`, 'DELETE');
         showHome();
     }
 
     const IMPORT_ERRORS = {
-        too_large: 'Die Datei ist zu groß (höchstens 400 KB).',
-        invalid_body: 'Die Datei ist keine gültige Charakterdatei.',
-        import_invalid: 'Die Datei passt nicht zu diesem Regelwerk oder wurde verändert.',
-        rate_limited: 'Zu viele Importe. Bitte versuche es später erneut.',
+        too_large: globalThis.VTTUi("Die Datei ist zu groß (höchstens 400 KB)."),
+        invalid_body: globalThis.VTTUi("Die Datei ist keine gültige Charakterdatei."),
+        import_invalid: globalThis.VTTUi("Die Datei passt nicht zu diesem Regelwerk oder wurde verändert."),
+        rate_limited: globalThis.VTTUi("Zu viele Importe. Bitte versuche es später erneut."),
     };
 
     async function importFile(input, message) {
         const file = input.files && input.files[0];
-        if (!file) { message.textContent = 'Bitte wähle zuerst eine Datei.'; message.className = 'sc-muted sc-import-error'; return; }
+        if (!file) { message.textContent = globalThis.VTTUi("Bitte wähle zuerst eine Datei."); message.className = 'sc-muted sc-import-error'; return; }
         message.className = 'sc-muted';
         if (file.size > 400000) { message.textContent = IMPORT_ERRORS.too_large; message.className = 'sc-muted sc-import-error'; return; }
-        message.textContent = 'Wird eingelesen …';
+        message.textContent = globalThis.VTTUi("Wird eingelesen …");
         let doc;
         try { doc = JSON.parse(await file.text()); } catch (error) { message.textContent = IMPORT_ERRORS.invalid_body; message.className = 'sc-muted sc-import-error'; return; }
         const res = await api('/characters/import', 'POST', doc);
@@ -516,7 +518,7 @@
             message.className = 'sc-muted sc-import-error';
             return;
         }
-        message.textContent = 'Charakter angelegt. Du wirst weitergeleitet …';
+        message.textContent = globalThis.VTTUi("Charakter angelegt. Du wirst weitergeleitet …");
         location.href = `/character-sheet?id=${res.data.character.id}`;
     }
 
@@ -532,31 +534,31 @@
         home.textContent = '';
         home.append(
             h('div', { class: 'sc-home-card' },
-                h('h2', { text: 'Neuen Charakter beginnen' }),
-                h('p', { class: 'sc-muted', text: 'Du baust auf dem veröffentlichten SRD 5.2.1. Alles wird als Entwurf gespeichert, du kannst jederzeit abbrechen und später weitermachen.' }),
+                h('h2', { text: globalThis.VTTUi("Neuen Charakter beginnen") }),
+                h('p', { class: 'sc-muted', text: globalThis.VTTUi("Du baust auf dem veröffentlichten SRD 5.2.1. Alles wird als Entwurf gespeichert, du kannst jederzeit abbrechen und später weitermachen.") }),
                 h('div', { class: 'sc-row' },
-                    h('button', { type: 'button', class: 'sc-btn sc-btn-primary', id: 'scNewGuided', onclick: () => startNew('guided') }, 'Geführt, Schritt für Schritt'),
-                    h('button', { type: 'button', class: 'sc-btn', id: 'scNewQuick', onclick: () => startNew('quick') }, 'Schnellbau (alles auf einer Seite)'),
-                    h('button', { type: 'button', class: 'sc-btn', id: 'scNewRandom', onclick: () => startNew('guided', 1) }, 'Zufallscharakter (Stufe 1)'))),
+                    h('button', { type: 'button', class: 'sc-btn sc-btn-primary', id: 'scNewGuided', onclick: () => startNew('guided') }, globalThis.VTTUi("Geführt, Schritt für Schritt")),
+                    h('button', { type: 'button', class: 'sc-btn', id: 'scNewQuick', onclick: () => startNew('quick') }, globalThis.VTTUi("Schnellbau (alles auf einer Seite)")),
+                    h('button', { type: 'button', class: 'sc-btn', id: 'scNewRandom', onclick: () => startNew('guided', 1) }, globalThis.VTTUi("Zufallscharakter (Stufe 1)")))),
             h('div', { class: 'sc-home-card' },
-                h('h2', { text: 'Offene Entwürfe' }),
+                h('h2', { text: globalThis.VTTUi("Offene Entwürfe") }),
                 drafts.length ? h('ul', { class: 'sc-drafts' }, drafts.map((d) => h('li', { class: 'sc-draft' },
-                    h('div', null, h('strong', { text: d.name || 'Unbenannter Charakter' }),
-                        h('div', { class: 'sc-muted', text: `Zuletzt geändert: ${new Date(d.updated_at + 'Z').toLocaleString('de-DE')}` })),
+                    h('div', null, h('strong', { text: d.name || globalThis.VTTUi("Unbenannter Charakter") }),
+                        h('div', { class: 'sc-muted', text: globalThis.VTTUi("Zuletzt geändert: {p0}",{p0:(new Date(d.updated_at + 'Z').toLocaleString('de-DE'))}) })),
                     h('div', { class: 'sc-row' },
-                        h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => openDraft(d.id, null, d.step) }, 'Fortsetzen'),
-                        h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => duplicateDraft(d.id) }, 'Duplizieren'),
-                        h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-danger', onclick: () => discardDraft(d.id) }, 'Verwerfen')))))
-                    : h('p', { class: 'sc-muted', text: 'Noch keine Entwürfe.' })),
+                        h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => openDraft(d.id, null, d.step) }, globalThis.VTTUi("Fortsetzen")),
+                        h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => duplicateDraft(d.id) }, globalThis.VTTUi("Duplizieren")),
+                        h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-danger', onclick: () => discardDraft(d.id) }, globalThis.VTTUi("Verwerfen"))))))
+                    : h('p', { class: 'sc-muted', text: globalThis.VTTUi("Noch keine Entwürfe.") })),
             h('div', { class: 'sc-home-card', id: 'scImportCard' },
-                h('h2', { text: 'Charakter einlesen' }),
-                h('p', { class: 'sc-muted', text: 'Hier kannst du eine gesicherte Charakterdatei (.rollcharakter.json) einlesen. Es entsteht ein neuer, unabhängiger Charakter für dich.' }),
+                h('h2', { text: globalThis.VTTUi("Charakter einlesen") }),
+                h('p', { class: 'sc-muted', text: globalThis.VTTUi("Hier kannst du eine gesicherte Charakterdatei (.rollcharakter.json) einlesen. Es entsteht ein neuer, unabhängiger Charakter für dich.") }),
                 h('div', { class: 'sc-row' },
-                    h('label', { class: 'sc-import-file' }, h('span', { class: 'sc-muted', text: 'Datei wählen' }),
+                    h('label', { class: 'sc-import-file' }, h('span', { class: 'sc-muted', text: globalThis.VTTUi("Datei wählen") }),
                         h('input', { type: 'file', id: 'scImportFile', accept: '.json,application/json' })),
-                    h('button', { type: 'button', class: 'sc-btn', id: 'scImportGo', onclick: (event) => importFile($('scImportFile'), $('scImportMessage')) }, 'Einlesen')),
+                    h('button', { type: 'button', class: 'sc-btn', id: 'scImportGo', onclick: (event) => importFile($('scImportFile'), $('scImportMessage')) }, globalThis.VTTUi("Einlesen"))),
                 h('p', { class: 'sc-muted', id: 'scImportMessage', role: 'status', 'aria-live': 'polite' })),
-            h('p', { class: 'sc-home-links' }, h('a', { href: '/characters', text: 'Zu meinen Charakteren' })));
+            h('p', { class: 'sc-home-links' }, h('a', { href: '/characters', text: globalThis.VTTUi("Zu meinen Charakteren") })));
         setStatus('');
     }
 
@@ -595,7 +597,7 @@
         const metaRes = await api('/meta');
         const dataRes = await api('/creator-data');
         if (!metaRes.ok || !dataRes.ok) {
-            setStatus('Der Ersteller konnte nicht geladen werden. Bitte lade die Seite neu.');
+            setStatus(globalThis.VTTUi("Der Ersteller konnte nicht geladen werden. Bitte lade die Seite neu."));
             return;
         }
         app.data = dataRes.data;
@@ -638,6 +640,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         // steps/random modules register on window.SrdCreator before DOMContentLoaded fires
-        init().catch((error) => { console.error(error); setStatus('Der Ersteller konnte nicht gestartet werden.'); });
+        init().catch((error) => { console.error(error); setStatus(globalThis.VTTUi("Der Ersteller konnte nicht gestartet werden.")); });
     });
 })();

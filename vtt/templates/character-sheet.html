@@ -2,8 +2,11 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charakterbogen - roll drauf vtt</title>
+    <title data-ui-key="u_da578ad217b8">Charakterbogen - roll drauf vtt</title>
     <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -706,63 +709,64 @@
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
     <link rel="stylesheet" href="/static/css/sheet-feedback.css">
     <script src="/static/js/sheet-feedback.js"></script>
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="spellbook character-sheet-route-book-scene">
-    <div id="characterSheetSceneStatus" role="status" aria-live="polite" hidden>Charakterbogen wird geladen …</div>
+    <div id="characterSheetSceneStatus" role="status" aria-live="polite" hidden><span data-ui-key="u_ced1b5bd9dd5">Charakterbogen wird geladen …</span></div>
     <template id="characterSheetSceneTemplate">
         <div class="book-dashboard-camera book-route-camera sheet-focus-camera">
-            <section class="book-dashboard-page book-route-page book-focus-page sheet-focus-page" role="region" aria-label="Character sheet focus page">
+            <section class="book-dashboard-page book-route-page book-focus-page sheet-focus-page" role="region" aria-label="Character sheet focus page" data-ui-aria-label="u_1bc46f3301bd">
                 <div class="book-dashboard-topbar">
-                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
-                        <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')">Übersicht</button>
-                        <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')">Kampagnen</button>
-                        <button type="button" class="book-dashboard-ribbon-btn is-active" data-book-route="/characters" onclick="goTo('/characters')">Charaktere</button>
-                        <a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0" title="Creation Engine wird geprüft">Creation Engine · wird geprüft</a>
-                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
-                        <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()">Abmelden</button>
+                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation" data-ui-aria-label="u_c1626b86894a">
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/dashboard" onclick="goTo('/dashboard')"><span data-ui-key="u_cb27327d0207">Übersicht</span></button>
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-route="/campaigns" onclick="goTo('/campaigns')"><span data-ui-key="u_4538fc5c1596">Kampagnen</span></button>
+                        <button type="button" class="book-dashboard-ribbon-btn is-active" data-book-route="/characters" onclick="goTo('/characters')"><span data-ui-key="u_346a518c3530">Charaktere</span></button>
+                        <a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0" title="Creation Engine wird geprüft" data-ui-title="u_614b051099b2"><span data-ui-key="u_8e0ac23811b8">Creation Engine · wird geprüft</span></a>
+                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0"><span data-ui-key="u_4230de9147dc">Regelwerk · Vorschau</span></a>
+                        <button type="button" class="book-dashboard-ribbon-btn" onclick="logout()"><span data-ui-key="u_7e324c5c0077">Abmelden</span></button>
                     </div>
-                    <div class="book-dashboard-crest" id="sheetReaderBadge" aria-label="Aktuelle Person">Bogenfokus</div>
+                    <div class="book-dashboard-crest" id="sheetReaderBadge" aria-label="Aktuelle Person" data-ui-aria-label="u_c0bf2213a30f"><span data-ui-key="u_19e89fc586d2">Bogenfokus</span></div>
                 </div>
 
                 <div class="book-dashboard-titlebar">
                     <div>
-                        <p class="book-dashboard-eyebrow">Kapitel IV</p>
-                        <h1 class="book-dashboard-title">Charakterbogen</h1>
+                        <p class="book-dashboard-eyebrow"><span data-ui-key="u_102dede4c511">Kapitel IV</span></p>
+                        <h1 class="book-dashboard-title"><span data-ui-key="u_8318505609bb">Charakterbogen</span></h1>
                         <p class="book-dashboard-copy">
-                            Öffne hier einen Charakter aus dem Archiv, bearbeite seine Werte und kehre danach direkt in den Kampagnenkontext zurück.
+                            <span data-ui-key="u_64aad6dae48f">Öffne hier einen Charakter aus dem Archiv, bearbeite seine Werte und kehre danach direkt in den Kampagnenkontext zurück.</span>
                         </p>
                     </div>
                     <div class="book-dashboard-meta">
-                        <span class="book-dashboard-chip">Charakterfokus</span>
-                        <span class="book-dashboard-chip" id="sheetModeChip">Ansicht</span>
-                        <span class="book-dashboard-chip" id="sheetCharacterChip">Kein Charakter gewählt</span>
+                        <span class="book-dashboard-chip"><span data-ui-key="u_834ec9d17f46">Charakterfokus</span></span>
+                        <span class="book-dashboard-chip" id="sheetModeChip"><span data-ui-key="u_5c388792c607">Ansicht</span></span>
+                        <span class="book-dashboard-chip" id="sheetCharacterChip"><span data-ui-key="u_a499ede5f6f0">Kein Charakter gewählt</span></span>
                     </div>
                 </div>
 
                 <div class="book-shell-frame">
-                    <div class="book-shell-ribbon">Fokus</div>
+                    <div class="book-shell-ribbon"><span data-ui-key="u_3edc1333d06b">Fokus</span></div>
 
                     <div class="book-shell-frame-header">
                         <div>
-                            <p class="book-frame-eyebrow">Charakterarchiv</p>
-                            <h2 class="book-page-title" data-book-field="section">Charakterbogen</h2>
+                            <p class="book-frame-eyebrow"><span data-ui-key="u_72fa007cc591">Charakterarchiv</span></p>
+                            <h2 class="book-page-title" data-book-field="section"><span data-ui-key="u_8318505609bb">Charakterbogen</span></h2>
                             <p class="book-frame-copy">
-                                Links bleiben Übersicht und Rückweg sichtbar; rechts bearbeitest du den gewählten Charakter.
+                                <span data-ui-key="u_ae77b7e63cd2">Links bleiben Übersicht und Rückweg sichtbar; rechts bearbeitest du den gewählten Charakter.</span>
                             </p>
                         </div>
                         <div class="book-frame-meta">
-                            <span class="book-chip">Kapitel <span data-book-field="chapter">Helden</span></span>
-                            <span class="book-chip">Fokusmodus</span>
-                            <span class="book-chip">Lesen / Bearbeiten</span>
+                            <span class="book-chip"><span data-ui-key="u_d2c2c86260e2">Kapitel</span> <span data-book-field="chapter"><span data-ui-key="u_a8bb93824d92">Helden</span></span></span>
+                            <span class="book-chip"><span data-ui-key="u_95135d414225">Fokusmodus</span></span>
+                            <span class="book-chip"><span data-ui-key="u_f32dad114935">Lesen / Bearbeiten</span></span>
                         </div>
                     </div>
 
                     <div id="messageBox" class="book-form-banner" hidden aria-live="polite"></div>
 
                     <section id="sheetEmptyState" class="sheet-empty-state" hidden aria-live="polite">
-                        <h2>Kein Charakter ausgewählt</h2>
-                        <p>Öffne zuerst einen Charakter aus deinem Archiv, um den Bogen zu bearbeiten.</p>
-                        <button class="btn btn-primary" type="button" onclick="goBack()">Zum Charakterarchiv</button>
+                        <h2><span data-ui-key="u_0acd7d711f30">Kein Charakter ausgewählt</span></h2>
+                        <p><span data-ui-key="u_2eb024a8b446">Öffne zuerst einen Charakter aus deinem Archiv, um den Bogen zu bearbeiten.</span></p>
+                        <button class="btn btn-primary" type="button" onclick="goBack()"><span data-ui-key="u_86af65ec58d7">Zum Charakterarchiv</span></button>
                     </section>
 
                     <div class="book-spread" id="sheetSpread">
@@ -770,8 +774,8 @@
                     <div class="sheet-pane sheet-character-heading">
                         <div class="sheet-pane-header">
                             <div>
-                                <div class="sheet-pane-title">Charakterblatt</div>
-                            <h2 id="sheetTitle" class="book-page-section-title">Charakterbogen</h2>
+                                <div class="sheet-pane-title"><span data-ui-key="u_a84e0bd827d4">Charakterblatt</span></div>
+                            <h2 id="sheetTitle" class="book-page-section-title"><span data-ui-key="u_8318505609bb">Charakterbogen</span></h2>
                             </div>
                             <div class="book-page-note" id="modeLabel"></div>
                         </div>
@@ -779,33 +783,33 @@
 
                     <div class="sheet-pane sheet-quick-ledger">
                         <div class="sheet-pane-header">
-                            <div class="sheet-pane-title">Kurzüberblick</div>
+                            <div class="sheet-pane-title"><span data-ui-key="u_1697b304f208">Kurzüberblick</span></div>
                         </div>
                         <div class="sheet-stat-row">
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Kern</div>
+                                <div class="sheet-stat-label"><span data-ui-key="u_db0ed9a8c975">Kern</span></div>
                             <div class="sheet-stat-value" id="summaryName">—</div>
                             </div>
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Stufe</div>
+                                <div class="sheet-stat-label"><span data-ui-key="u_7ef0f0264602">Stufe</span></div>
                                 <div class="sheet-stat-value" id="summaryLevel">-</div>
                             </div>
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Trefferpunkte</div>
+                                <div class="sheet-stat-label"><span data-ui-key="u_ae5e76d0f67e">Trefferpunkte</span></div>
                                 <div class="sheet-stat-value" id="summaryHp">-</div>
                             </div>
                         </div>
                         <div class="sheet-stat-row">
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Rüstung</div>
+                                <div class="sheet-stat-label"><span data-ui-key="u_219669d1fc69">Rüstung</span></div>
                                 <div class="sheet-stat-value" id="summaryAc">-</div>
                             </div>
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Zauber</div>
+                                <div class="sheet-stat-label"><span data-ui-key="u_9c3e304600ac">Zauber</span></div>
                                 <div class="sheet-stat-value" id="summarySpells">-</div>
                             </div>
                             <div class="sheet-stat">
-                                <div class="sheet-stat-label">Inventar</div>
+                                <div class="sheet-stat-label"><span data-ui-key="u_5158b2fd0818">Inventar</span></div>
                                 <div class="sheet-stat-value" id="summaryInventory">-</div>
                             </div>
                         </div>
@@ -813,13 +817,13 @@
 
                     <div class="sheet-pane sheet-journey-nav">
                         <div class="sheet-pane-header">
-                        <div class="sheet-pane-title">Navigation</div>
+                        <div class="sheet-pane-title"><span data-ui-key="u_cf03cf2e9cdf">Navigation</span></div>
                         </div>
                         <div class="sheet-split-actions">
-                            <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()">Bogen bearbeiten</button>
-                            <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden>Kampagnen-Kontext</button>
-                            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goBack()">Zurück zum Archiv</button>
-                            <a class="btn btn-secondary" data-creation-engine-nav aria-disabled="true" tabindex="0" title="Creation Engine wird geprüft">Creation Engine · wird geprüft</a>
+                            <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()"><span data-ui-key="u_34f16d12a82e">Bogen bearbeiten</span></button>
+                            <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden><span data-ui-key="u_7435de3f95bb">Kampagnen-Kontext</span></button>
+                            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goBack()"><span data-ui-key="u_de4007287294">Zurück zum Archiv</span></button>
+                            <a class="btn btn-secondary" data-creation-engine-nav aria-disabled="true" tabindex="0" title="Creation Engine wird geprüft" data-ui-title="u_614b051099b2"><span data-ui-key="u_8e0ac23811b8">Creation Engine · wird geprüft</span></a>
                         </div>
                         <!-- Robot audit, 2026-08-23, Arc 0.7: a second,
                              static "next step" element (id=sheetNextStepNote,
@@ -837,39 +841,39 @@
 
                     <section class="sheet-pane" id="homebrewOriginSection" aria-labelledby="homebrewOriginHeading" hidden>
                         <div class="sheet-pane-header">
-                            <h2 class="sheet-pane-title" id="homebrewOriginHeading">D&amp;D 5e · Homebrew-Rasse</h2>
+                            <h2 class="sheet-pane-title" id="homebrewOriginHeading">D&amp;<span data-ui-key="u_e98609dc504b">D 5e · Homebrew-Rasse</span></h2>
                         </div>
                         <div id="homebrewOriginProfile" class="homebrew-origin-profile"></div>
-                        <p class="sheet-mode-note">Merkmale und Features sind Regeltexte. Effekte, Auswahlentscheidungen und begrenzte Nutzungen werden am Tisch manuell angewendet und nachgehalten.</p>
+                        <p class="sheet-mode-note"><span data-ui-key="u_6df91db1a8af">Merkmale und Features sind Regeltexte. Effekte, Auswahlentscheidungen und begrenzte Nutzungen werden am Tisch manuell angewendet und nachgehalten.</span></p>
                     </section>
 
                     <section class="sheet-pane" id="dndExportSection" aria-labelledby="dndExportHeading" hidden>
-                        <h2 class="sheet-pane-title" id="dndExportHeading">D&amp;D-Portabilität</h2>
-                        <p class="sheet-pane-copy">Speichere Werte, Ausrüstung und Homebrew-Regeln als VTT-JSON. Im Charakterarchiv kannst du daraus eine neue Kopie importieren.</p>
-                        <div><button type="button" class="sheet-export-btn" onclick="exportCharacter()">↓ Charakter exportieren</button></div>
+                        <h2 class="sheet-pane-title" id="dndExportHeading">D&amp;<span data-ui-key="u_6e30b3f3ec2d">D-Portabilität</span></h2>
+                        <p class="sheet-pane-copy"><span data-ui-key="u_b22f3a261c04">Speichere Werte, Ausrüstung und Homebrew-Regeln als VTT-JSON. Im Charakterarchiv kannst du daraus eine neue Kopie importieren.</span></p>
+                        <div><button type="button" class="sheet-export-btn" onclick="exportCharacter()"><span data-ui-key="u_4ebfac01e34c">↓ Charakter exportieren</span></button></div>
                     </section>
 
                     <section class="sheet-pane" id="srdSheetSection" aria-labelledby="srdSheetHeading" hidden>
                         <div class="sheet-pane-header">
-                            <h2 class="sheet-pane-title" id="srdSheetHeading">SRD 5.2.1 · Regelwerk-Bogen</h2>
+                            <h2 class="sheet-pane-title" id="srdSheetHeading"><span data-ui-key="u_05c1d88e15b4">SRD 5.2.1 · Regelwerk-Bogen</span></h2>
                         </div>
-                        <div id="srdSheetBody"><div class="sheet-empty">Lade Regelwerte…</div></div>
+                        <div id="srdSheetBody"><div class="sheet-empty"><span data-ui-key="u_f2290e06a0bd">Lade Regelwerte…</span></div></div>
                     </section>
 
                     <div class="sheet-pane">
                         <div class="sheet-pane-header">
-                        <div class="sheet-pane-title">Identität</div>
+                        <div class="sheet-pane-title"><span data-ui-key="u_966792d66d55">Identität</span></div>
                         </div>
                         <div class="sheet-pane-copy">
-                            Avatar und Spielmarker werden hier gepflegt, bevor der Charakter in Kampagne oder Spieltisch verwendet wird.
+                            <span data-ui-key="u_1ea7bbc836da">Avatar und Spielmarker werden hier gepflegt, bevor der Charakter in Kampagne oder Spieltisch verwendet wird.</span>
                         </div>
                         <div id="sheetIdentityGrid" class="sheet-identity-grid">
                             <div class="sheet-identity-card">
-                                <div class="sheet-identity-label">Avatar</div>
+                                <div class="sheet-identity-label"><span data-ui-key="u_7631b26ea80b">Avatar</span></div>
                                 <div class="sheet-identity-preview">🙂</div>
                             </div>
                             <div class="sheet-identity-card">
-                                <div class="sheet-identity-label">Token</div>
+                                <div class="sheet-identity-label"><span data-ui-key="u_a1141eb96836">Token</span></div>
                                 <div class="sheet-identity-preview">🛡️</div>
                             </div>
                         </div>
@@ -882,44 +886,44 @@
                     <form id="sheetForm" class="sheet-form-inline" novalidate>
                         <div class="sheet-pane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Grundwerte</div>
-                                <div class="sheet-help">Im Ansichtsmodus bleiben die Werte sichtbar. Zum Ändern den Bearbeitungsmodus öffnen.</div>
+                                <div class="sheet-pane-title"><span data-ui-key="u_64b82e61b5f6">Grundwerte</span></div>
+                                <div class="sheet-help"><span data-ui-key="u_e8b76495439b">Im Ansichtsmodus bleiben die Werte sichtbar. Zum Ändern den Bearbeitungsmodus öffnen.</span></div>
                             </div>
                             <div class="sheet-core-grid">
                                 <div class="field field--wide">
-                                    <label for="charName">Name</label>
+                                    <label for="charName"><span data-ui-key="u_709a23220f2c">Name</span></label>
                                     <input id="charName" type="text">
                                 </div>
                                 <div class="field">
-                                    <label for="charRace">Spezies</label>
+                                    <label for="charRace"><span data-ui-key="u_768edb4909d9">Spezies</span></label>
                                     <input id="charRace" type="text">
                                 </div>
                                 <div class="field">
-                                    <label for="charClass">Klasse</label>
+                                    <label for="charClass"><span data-ui-key="u_f495100d3eb7">Klasse</span></label>
                                     <input id="charClass" type="text">
                                 </div>
                                 <div class="field field--wide">
-                                    <label for="charBackground">Hintergrund</label>
+                                    <label for="charBackground"><span data-ui-key="u_6ea4ea25fb03">Hintergrund</span></label>
                                     <input id="charBackground" type="text">
                                 </div>
                                 <div class="field">
-                                    <label for="charLevel">Stufe</label>
+                                    <label for="charLevel"><span data-ui-key="u_7ef0f0264602">Stufe</span></label>
                                     <input id="charLevel" type="number" min="1">
                                 </div>
                                 <div class="field">
-                                    <label for="charXp">Erfahrung</label>
+                                    <label for="charXp"><span data-ui-key="u_d5d2affb58fe">Erfahrung</span></label>
                                     <input id="charXp" type="number" min="0">
                                 </div>
                                 <div class="field">
-                                    <label for="charAc">Rüstung</label>
+                                    <label for="charAc"><span data-ui-key="u_219669d1fc69">Rüstung</span></label>
                                     <input id="charAc" type="number">
                                 </div>
                                 <div class="field">
-                                    <label for="charHpCurrent">Trefferpunkte aktuell</label>
+                                    <label for="charHpCurrent"><span data-ui-key="u_0c5061e18358">Trefferpunkte aktuell</span></label>
                                     <input id="charHpCurrent" type="number">
                                 </div>
                                 <div class="field">
-                                    <label for="charHpMax">Trefferpunkte maximal</label>
+                                    <label for="charHpMax"><span data-ui-key="u_8d03b709cccb">Trefferpunkte maximal</span></label>
                                     <input id="charHpMax" type="number">
                                 </div>
                                 <div class="field">
@@ -948,87 +952,87 @@
                                 </div>
                             </div>
                             <div class="sheet-actions-row">
-                                <button class="btn btn-primary" type="button" id="saveCoreBtn" onclick="saveCore()">Kernwerte speichern</button>
-                                <button class="btn btn-secondary" type="button" onclick="reloadSheet()">Neu laden</button>
+                                <button class="btn btn-primary" type="button" id="saveCoreBtn" onclick="saveCore()"><span data-ui-key="u_315977764d57">Kernwerte speichern</span></button>
+                                <button class="btn btn-secondary" type="button" onclick="reloadSheet()"><span data-ui-key="u_00e5baddf108">Neu laden</span></button>
                             </div>
                         </div>
 
                         <section class="sheet-pane" id="homebrewOriginTraitsSection" aria-labelledby="homebrewOriginTraitsHeading" hidden>
                             <div class="sheet-pane-header">
-                                <h2 class="sheet-pane-title" id="homebrewOriginTraitsHeading">Rassenmerkmale &amp; Features</h2>
+                                <h2 class="sheet-pane-title" id="homebrewOriginTraitsHeading"><span data-ui-key="u_851e70aac751">Rassenmerkmale</span> &amp; <span data-ui-key="u_fc338f87a058">Features</span></h2>
                             </div>
                             <div id="homebrewOriginTraits" class="homebrew-origin-traits"></div>
                         </section>
 
                         <div class="sheet-pane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Zauber</div>
+                                <div class="sheet-pane-title"><span data-ui-key="u_9c3e304600ac">Zauber</span></div>
                             </div>
                             <div id="spellsList" class="sheet-list"></div>
                             <div id="spellsForm" class="sheet-form-inline">
                                 <div class="inline-row">
                                     <div>
-                                        <label for="newSpellName">Name des Zaubers</label>
-                                        <input id="newSpellName" type="text" placeholder="Zaubername">
+                                        <label for="newSpellName"><span data-ui-key="u_d82ec67a8b37">Name des Zaubers</span></label>
+                                        <input id="newSpellName" type="text" placeholder="Zaubername" data-ui-placeholder="u_cbc68f3b5801">
                                     </div>
                                     <div>
-                                        <label for="newSpellLevel">Stufe</label>
+                                        <label for="newSpellLevel"><span data-ui-key="u_7ef0f0264602">Stufe</span></label>
                                         <input id="newSpellLevel" type="number" min="0" max="9" placeholder="0">
                                     </div>
                                 </div>
                                 <div>
-                                        <label for="newSpellSchool">Schule</label>
-                                    <input id="newSpellSchool" type="text" placeholder="Zauberschule">
+                                        <label for="newSpellSchool"><span data-ui-key="u_9ac4bb0469fe">Schule</span></label>
+                                    <input id="newSpellSchool" type="text" placeholder="Zauberschule" data-ui-placeholder="u_2c340ca6a6df">
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="addSpell()">Zauber hinzufügen</button>
+                                <button class="btn btn-primary" type="button" onclick="addSpell()"><span data-ui-key="u_1b6205731c03">Zauber hinzufügen</span></button>
                             </div>
                         </div>
 
                         <div class="sheet-pane" id="legacyEquipmentPane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Ausrüstung</div>
+                                <div class="sheet-pane-title"><span data-ui-key="u_67d2d16757df">Ausrüstung</span></div>
                             </div>
                             <div id="equipmentList" class="sheet-list"></div>
                             <div id="equipmentForm" class="sheet-form-inline">
                                 <div class="inline-row">
                                     <div>
-                                        <label for="newEquipmentName">Gegenstand</label>
-                                        <input id="newEquipmentName" type="text" placeholder="Name des Gegenstands">
+                                        <label for="newEquipmentName"><span data-ui-key="u_fd5bce7fb784">Gegenstand</span></label>
+                                        <input id="newEquipmentName" type="text" placeholder="Name des Gegenstands" data-ui-placeholder="u_bd29f21995bd">
                                     </div>
                                     <div>
-                                        <label for="newEquipmentType">Typ</label>
-                                        <input id="newEquipmentType" type="text" placeholder="Gegenstandstyp">
+                                        <label for="newEquipmentType"><span data-ui-key="u_edcaf9aaa282">Typ</span></label>
+                                        <input id="newEquipmentType" type="text" placeholder="Gegenstandstyp" data-ui-placeholder="u_deb0bf25d60d">
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="newEquipmentAcBonus">Rüstungsbonus</label>
+                                    <label for="newEquipmentAcBonus"><span data-ui-key="u_1b152386f020">Rüstungsbonus</span></label>
                                     <input id="newEquipmentAcBonus" type="number" placeholder="0">
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="addEquipment()">Ausrüstung hinzufügen</button>
+                                <button class="btn btn-primary" type="button" onclick="addEquipment()"><span data-ui-key="u_fb6e93601e1a">Ausrüstung hinzufügen</span></button>
                             </div>
                         </div>
 
                         <div class="sheet-pane" id="legacyInventoryPane">
                             <div class="sheet-pane-header">
-                                <div class="sheet-pane-title">Inventar</div>
+                                <div class="sheet-pane-title"><span data-ui-key="u_5158b2fd0818">Inventar</span></div>
                             </div>
                             <div id="inventoryList" class="sheet-list"></div>
                             <div id="inventoryForm" class="sheet-form-inline">
                                 <div class="inline-row">
                                     <div>
-                                        <label for="newInventoryName">Gegenstand</label>
-                                        <input id="newInventoryName" type="text" placeholder="Name des Gegenstands">
+                                        <label for="newInventoryName"><span data-ui-key="u_fd5bce7fb784">Gegenstand</span></label>
+                                        <input id="newInventoryName" type="text" placeholder="Name des Gegenstands" data-ui-placeholder="u_bd29f21995bd">
                                     </div>
                                     <div>
-                                        <label for="newInventoryType">Typ</label>
-                                        <input id="newInventoryType" type="text" placeholder="Gegenstandstyp">
+                                        <label for="newInventoryType"><span data-ui-key="u_edcaf9aaa282">Typ</span></label>
+                                        <input id="newInventoryType" type="text" placeholder="Gegenstandstyp" data-ui-placeholder="u_deb0bf25d60d">
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="newInventoryQuantity">Quantity</label>
+                                    <label for="newInventoryQuantity"><span data-ui-key="u_44f6af694554">Quantity</span></label>
                                     <input id="newInventoryQuantity" type="number" min="1" placeholder="1">
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="addInventoryItem()">Ins Inventar legen</button>
+                                <button class="btn btn-primary" type="button" onclick="addInventoryItem()"><span data-ui-key="u_c30d0188562b">Ins Inventar legen</span></button>
                             </div>
                         </div>
                     </form>
@@ -1050,7 +1054,9 @@
     <script src="/static/js/srd-progression-ui.js"></script>
     <script src="/static/js/srd-manage-ui.js"></script>
     <script src="/static/js/book-scene.js"></script>
-    <script>
+    <script>globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
         const auth = new Auth();
         const params = new URLSearchParams(window.location.search);
         const characterId = Number(params.get('id'));
@@ -1100,7 +1106,7 @@
 
             const payload = await response.json().catch(() => ({}));
             if (!response.ok) {
-                throw new Error(payload.error || 'Upload failed');
+                throw new Error(payload.error || globalThis.VTTUi("Upload failed"));
             }
             return payload;
         }
@@ -1153,11 +1159,11 @@
 
         function setEditMode() {
             document.body.dataset.sheetMode = editable ? 'edit' : 'view';
-            document.getElementById('sheetModeChip').textContent = editable ? 'Bearbeiten' : 'Ansicht';
+            document.getElementById('sheetModeChip').textContent = editable ? globalThis.VTTUi("Bearbeiten") : globalThis.VTTUi("Ansicht");
             document.getElementById('modeLabel').textContent = editable
-                ? 'Bearbeitungsmodus: Kernwerte und Ressourcen können geändert werden.'
-                : 'Ansicht: Der Charakterbogen ist schreibgeschützt.';
-            document.getElementById('sheetModeActionBtn').textContent = editable ? 'Bogen ansehen' : 'Bogen bearbeiten';
+                ? globalThis.VTTUi("Bearbeitungsmodus: Kernwerte und Ressourcen können geändert werden.")
+                : globalThis.VTTUi("Ansicht: Der Charakterbogen ist schreibgeschützt.");
+            document.getElementById('sheetModeActionBtn').textContent = editable ? globalThis.VTTUi("Bogen ansehen") : globalThis.VTTUi("Bogen bearbeiten");
             document.getElementById('saveCoreBtn').style.display = editable ? 'inline-flex' : 'none';
             document.getElementById('spellsForm').style.display = editable ? 'grid' : 'none';
             document.getElementById('equipmentForm').style.display = editable ? 'grid' : 'none';
@@ -1183,11 +1189,11 @@
             if (contextButton) {
                 if (character?.campaign_id) {
                     contextButton.hidden = false;
-                    contextButton.textContent = 'Kampagnen-Kontext';
+                    contextButton.textContent = globalThis.VTTUi("Kampagnen-Kontext");
                     contextButton.dataset.bookRoute = `/campaigns?campaign_id=${character.campaign_id}`;
                 } else {
                     contextButton.hidden = false;
-                    contextButton.textContent = 'Kampagnen-Hub';
+                    contextButton.textContent = globalThis.VTTUi("Kampagnen-Hub");
                     contextButton.dataset.bookRoute = '/campaigns';
                 }
             }
@@ -1225,9 +1231,9 @@
         }
 
         function renderCore(character) {
-            document.getElementById('sheetTitle').textContent = character.name || 'Nicht angegeben';
-            document.getElementById('sheetCharacterChip').textContent = character.name || 'Nicht angegeben';
-            document.getElementById('summaryName').textContent = character.name || 'Nicht angegeben';
+            document.getElementById('sheetTitle').textContent = character.name || globalThis.VTTUi("Nicht angegeben");
+            document.getElementById('sheetCharacterChip').textContent = character.name || globalThis.VTTUi("Nicht angegeben");
+            document.getElementById('summaryName').textContent = character.name || globalThis.VTTUi("Nicht angegeben");
             document.getElementById('summaryLevel').textContent = String(character.level ?? 1);
             document.getElementById('summaryHp').textContent = `${character.hp_current ?? 0} / ${character.hp_max ?? 0}`;
             document.getElementById('summaryAc').textContent = String(character.ac ?? 10);
@@ -1309,7 +1315,7 @@
                         <div class="sheet-item-meta">Level ${spell.level} | ${escapeHtml(spell.school || 'Schule nicht angegeben')}</div>
                         <div class="sheet-item-meta">${escapeHtml(spell.damage_dice || '-')} ${escapeHtml(spell.damage_type || '')}</div>
                     </div>
-                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteSpell(${spell.id})">Delete</button>` : ''}
+                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteSpell(${spell.id})">${globalThis.VTTUiHTML("Delete")}</button>` : ''}
                 </div>
             `).join('');
         }
@@ -1328,7 +1334,7 @@
                         <div class="sheet-item-meta">${escapeHtml(item.type || 'Typ nicht angegeben')} | AC +${item.ac_bonus ?? 0}</div>
                         <div class="sheet-item-meta">${escapeHtml(item.damage_dice || '-')} ${escapeHtml(item.damage_type || '')}</div>
                     </div>
-                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteEquipment(${item.id})">Delete</button>` : ''}
+                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteEquipment(${item.id})">${globalThis.VTTUiHTML("Delete")}</button>` : ''}
                 </div>
             `).join('');
         }
@@ -1347,7 +1353,7 @@
                         <div class="sheet-item-meta">${escapeHtml(item.type || 'Typ nicht angegeben')} | Anzahl ${item.quantity}</div>
                         <div class="sheet-item-meta">Weight total: ${item.total_weight ?? 0}</div>
                     </div>
-                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteInventoryItem(${item.id})">Delete</button>` : ''}
+                    ${editable ? `<button class="btn btn-danger" type="button" onclick="deleteInventoryItem(${item.id})">${globalThis.VTTUiHTML("Delete")}</button>` : ''}
                 </div>
             `).join('');
         }
@@ -1358,14 +1364,14 @@
             'charStr', 'charDex', 'charCon', 'charInt', 'charWis', 'charCha'
         ];
         const SRD_ABILITY_ORDER = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-        const SRD_ABILITY_NAMES = { str: 'Stärke', dex: 'Geschicklichkeit', con: 'Konstitution', int: 'Intelligenz', wis: 'Weisheit', cha: 'Charisma' };
+        const SRD_ABILITY_NAMES = { str: globalThis.VTTUi("Stärke"), dex: globalThis.VTTUi("Geschicklichkeit"), con: globalThis.VTTUi("Konstitution"), int: globalThis.VTTUi("Intelligenz"), wis: globalThis.VTTUi("Weisheit"), cha: globalThis.VTTUi("Charisma") };
         const SRD_SLOT_ORDINALS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
         let srdCreatorData = null;
         let srdSubclassNames = {};
         let srdRenderToken = 0;
         let srdRollMode = 'normal';
         const srdRollHistory = [];
-        const SRD_ROLL_MODES = [['normal', 'Normal'], ['advantage', 'Vorteil'], ['disadvantage', 'Nachteil']];
+        const SRD_ROLL_MODES = [['normal', globalThis.VTTUi("Normal")], ['advantage', globalThis.VTTUi("Vorteil")], ['disadvantage', globalThis.VTTUi("Nachteil")]];
         // Sheet to table: opened from a table, the URL names its session and every roll carries it.
         // The server refuses a roll for a wrong or finished table instead of sending it elsewhere.
         let srdTableSession = params.get('session_id') || null;
@@ -1441,8 +1447,8 @@
             node.append(document.createTextNode(entry.error || entry.text));
             if (!entry.error) {
                 appendText(node, 'span', entry.logged
-                    ? ` · live am Tisch${entry.table ? ` „${entry.table}“` : ''}`
-                    : ` · nur hier, nicht am Tisch${entry.reason ? ` – ${entry.reason}` : ''}`, 'srd-roll-where');
+                    ? globalThis.VTTUi(" · live am Tisch{p0}",{p0:(entry.table ? ` „${entry.table}“` : '')})
+                    : globalThis.VTTUi(" · nur hier, nicht am Tisch{p0}",{p0:(entry.reason ? ` – ${entry.reason}` : '')}), 'srd-roll-where');
             }
             history.replaceChildren();
             srdRollHistory.slice(1, 6).forEach((past) => appendText(history, 'li', `${past.text}${past.logged ? ' · am Tisch' : ' · nur hier'}`));
@@ -1471,9 +1477,9 @@
                 const answer = await srdTableRequest(`/api/srd-creator/characters/${character.id}/roll-context${query}`);
                 if (!answer) return;
                 next = answer.ok ? answer.payload
-                    : { error: answer.payload.error || 'failed', message: answer.payload.message || 'Das Würfelziel konnte nicht geprüft werden.' };
+                    : { error: answer.payload.error || 'failed', message: answer.payload.message || globalThis.VTTUi("Das Würfelziel konnte nicht geprüft werden.") };
             } catch (error) {
-                next = { error: 'offline', message: 'Das Würfelziel konnte nicht geprüft werden (keine Verbindung).' };
+                next = { error: 'offline', message: globalThis.VTTUi("Das Würfelziel konnte nicht geprüft werden (keine Verbindung).") };
             }
             if (token !== srdRollContextToken) return;
             srdRollContext = next;
@@ -1499,20 +1505,20 @@
             box.replaceChildren();
             let state = 'checking';
             if (!context) {
-                appendText(box, 'span', 'Würfelziel wird geprüft …');
+                appendText(box, 'span', globalThis.VTTUi("Würfelziel wird geprüft …"));
             } else if (context.error) {
                 state = 'blocked';
-                appendText(box, 'strong', 'Kein Tisch: ');
+                appendText(box, 'strong', globalThis.VTTUi("Kein Tisch: "));
                 appendText(box, 'span', `${context.message} ${srdTableSession ? 'Solange dieser Tisch gewählt ist, wird nicht gewürfelt.' : ''}`.trim());
             } else if (context.live) {
                 state = 'live';
-                appendText(box, 'strong', `Live am Tisch „${context.session.name}“: `);
+                appendText(box, 'strong', globalThis.VTTUi("Live am Tisch „{p0}“: ",{p0:(context.session.name)}));
                 appendText(box, 'span', context.explicit
-                    ? 'Würfe erscheinen sofort im Würfel- und Chat-Protokoll dieses Tisches.'
-                    : 'Würfe erscheinen sofort im Würfel- und Chat-Protokoll (einzige laufende Sitzung).');
+                    ? globalThis.VTTUi("Würfe erscheinen sofort im Würfel- und Chat-Protokoll dieses Tisches.")
+                    : globalThis.VTTUi("Würfe erscheinen sofort im Würfel- und Chat-Protokoll (einzige laufende Sitzung)."));
             } else if (context.reason === 'choose_session') {
                 state = 'choose';
-                const label = appendText(box, 'label', 'Mehrere Sitzungen laufen. Würfle an Tisch: ');
+                const label = appendText(box, 'label', globalThis.VTTUi("Mehrere Sitzungen laufen. Würfle an Tisch: "));
                 label.htmlFor = 'srdRollSession';
                 const select = document.createElement('select');
                 select.id = 'srdRollSession';
@@ -1522,14 +1528,14 @@
                 box.append(select);
             } else {
                 state = 'local';
-                appendText(box, 'strong', 'Nur hier: ');
+                appendText(box, 'strong', globalThis.VTTUi("Nur hier: "));
                 appendText(box, 'span', `${SRD_LOCAL_REASONS[context.reason] || ''} Würfe erscheinen nicht am Tisch.`.trim());
             }
             if (srdTableSession && state !== 'checking') {
                 const unbind = document.createElement('button');
                 unbind.type = 'button';
                 unbind.className = 'srd-roll-link';
-                unbind.textContent = 'Tischbindung lösen';
+                unbind.textContent = globalThis.VTTUi("Tischbindung lösen");
                 unbind.addEventListener('click', () => bindSrdTable(character, null));
                 box.append(unbind);
             }
@@ -1593,18 +1599,18 @@
             bar.id = 'srdRollBar';
             const head = document.createElement('div');
             head.className = 'srd-rollbar-head';
-            const label = appendText(head, 'label', 'Würfeln mit ');
+            const label = appendText(head, 'label', globalThis.VTTUi("Würfeln mit "));
             label.htmlFor = 'srdRollMode';
             const select = document.createElement('select');
             select.id = 'srdRollMode';
             SRD_ROLL_MODES.forEach(([value, text]) => select.append(new Option(text, value, false, value === srdRollMode)));
             select.addEventListener('change', () => { srdRollMode = select.value; });
             head.append(select);
-            head.append(srdRollButton(`Initiative ${signed(ev.initiative)}`, 'initiative', null, character));
-            head.append(srdRollButton('Todesrettungswurf', 'death_save', null, character));
+            head.append(srdRollButton(globalThis.VTTUi("Initiative {p0}",{p0:(signed(ev.initiative))}), 'initiative', null, character));
+            head.append(srdRollButton(globalThis.VTTUi("Todesrettungswurf"), 'death_save', null, character));
             Object.entries((ev.spellcasting || {}).classes || {}).forEach(([classKey, info]) => {
                 const cls = (ev.classes || []).find((entry) => entry.classKey === classKey);
-                head.append(srdRollButton(`Zauberangriff ${cls?.name || classKey} ${signed(info.attackBonus)}`, 'spell_attack', classKey, character));
+                head.append(srdRollButton(globalThis.VTTUi("Zauberangriff {p0} {p1}",{p0:(cls?.name || classKey),p1:(signed(info.attackBonus))}), 'spell_attack', classKey, character));
             });
             bar.append(head);
             const destination = document.createElement('div');
@@ -1618,7 +1624,7 @@
             const jump = document.createElement('nav');
             jump.className = 'srd-roll-jump';
             jump.setAttribute('aria-label', 'Würfe auf dem Bogen');
-            appendText(jump, 'span', 'Würfe:');
+            appendText(jump, 'span', globalThis.VTTUi("Würfe:"));
             [['Attribute & Rettungswürfe', 'srdAbilitiesTitle'], ['Fertigkeiten', 'srdSkillsTitle'], ['Waffenangriffe', 'srdInventory']].forEach(([text, target]) => {
                 const link = document.createElement('button');
                 link.type = 'button';
@@ -1631,7 +1637,7 @@
                 jump.append(link);
             });
             bar.append(jump);
-            const result = appendText(bar, 'div', 'Klicke auf einen Wert, um zu würfeln.', 'srd-roll-result');
+            const result = appendText(bar, 'div', globalThis.VTTUi("Klicke auf einen Wert, um zu würfeln."), 'srd-roll-result');
             result.id = 'srdRollResult';
             result.setAttribute('role', 'status');
             result.setAttribute('aria-live', 'polite');
@@ -1679,7 +1685,7 @@
             } catch (error) {
                 if (token === srdRenderToken) {
                     body.replaceChildren();
-                    appendText(body, 'div', 'Die Regelwerte dieses Charakters konnten nicht geladen werden.', 'sheet-empty');
+                    appendText(body, 'div', globalThis.VTTUi("Die Regelwerte dieses Charakters konnten nicht geladen werden."), 'sheet-empty');
                 }
                 return;
             }
@@ -1714,16 +1720,16 @@
             const box = document.createElement('div');
             box.className = 'srd-sheet-origin';
             box.id = 'srdSpeciesOrigin';
-            appendText(box, 'div', `Herkunft: ${origin.name} (Homebrew)`, 'srd-sheet-subtitle');
+            appendText(box, 'div', globalThis.VTTUi("Herkunft: {p0} (Homebrew)",{p0:(origin.name)}), 'srd-sheet-subtitle');
             const movement = (origin.movement || []).map((m) => `${m.label} ${m.feet} ft (${String(m.meters).replace('.', ',')} m)`).join(', ');
             const senses = (origin.senses || []).map((s) => `${s.label} ${s.feet} ft`).join(', ') || 'Keine Dunkelsicht';
             box.append(srdGrid('srd-sheet-facts', [
-                srdCell('Kreaturentyp', origin.creatureType?.label || '–'),
-                srdCell('Größe', (origin.sizes || []).map((s) => s.label).join(' oder ') || '–'),
-                srdCell('Bewegung', movement || '–'),
-                srdCell('Sinne', senses),
+                srdCell(globalThis.VTTUi("Kreaturentyp"), origin.creatureType?.label || '–'),
+                srdCell(globalThis.VTTUi("Größe"), (origin.sizes || []).map((s) => s.label).join(' oder ') || '–'),
+                srdCell(globalThis.VTTUi("Bewegung"), movement || '–'),
+                srdCell(globalThis.VTTUi("Sinne"), senses),
             ]));
-            appendText(box, 'p', `${origin.scope?.label || ''} · Fassung ${origin.revision ?? '–'} · Regelwerk ${origin.edition}${origin.author ? ` · veröffentlicht von ${origin.author}` : ''}`, 'srd-sheet-note');
+            appendText(box, 'p', globalThis.VTTUi("{p0} · Fassung {p1} · Regelwerk {p2}{p3}",{p0:(origin.scope?.label || ''),p1:(origin.revision ?? '–'),p2:(origin.edition),p3:(origin.author ? ` · veröffentlicht von ${origin.author}` : '')}), 'srd-sheet-note');
             if (origin.description) appendText(box, 'p', origin.description, 'srd-sheet-note');
             if (origin.sensesNote) appendText(box, 'p', origin.sensesNote, 'srd-sheet-note');
             (origin.traits || []).forEach((trait) => {
@@ -1750,12 +1756,12 @@
                 form.append(label);
                 return field;
             };
-            const object = input('Gegenstand', { type: 'text', maxLength: 160, required: true, name: 'object', placeholder: 'z. B. der Schlüssel auf dem Tisch' });
+            const object = input('Gegenstand', { type: 'text', maxLength: 160, required: true, name: 'object', placeholder: globalThis.VTTUi("z. B. der Schlüssel auf dem Tisch") });
             const weight = input('Gewicht (lb)', { type: 'number', min: 0.1, max: action.maxWeightLb, step: 0.1, required: true, name: 'weightLb' });
             const distance = input('Entfernung (ft)', { type: 'number', min: 0, max: action.rangeFeet, step: 1, required: true, name: 'distanceFeet' });
             const move = input('Bewegen um (ft)', { type: 'number', min: 1, max: action.maxMoveFeet, step: 1, required: true, name: 'moveFeet' });
             const unattended = input('Niemand trägt oder hält ihn', { type: 'checkbox', required: true, name: 'unattended' });
-            const button = Object.assign(document.createElement('button'), { type: 'submit', textContent: 'Am Tisch erklären', className: 'srd-roll-button' });
+            const button = Object.assign(document.createElement('button'), { type: 'submit', textContent: globalThis.VTTUi("Am Tisch erklären"), className: 'srd-roll-button' });
             form.append(button);
             // One key per declaration: a retry after a lost answer is recognised by the server and logged once.
             let pendingKey = null;
@@ -1784,12 +1790,12 @@
 
         function buildSrdProvenance(detail) {
             const root=document.createElement('details');root.id='srdProvenance';root.className='srd-sheet-provenance';
-            appendText(root,'summary','Werte und Bonusquellen');
+            appendText(root,'summary',globalThis.VTTUi("Werte und Bonusquellen"));
             const version=detail.evaluation?.provenanceRuleset;
-            if(version)appendText(root,'p',`Regelpaket ${version.id} · Fassung ${version.version}`,'srd-sheet-label');
+            if(version)appendText(root,'p',globalThis.VTTUi("Regelpaket {p0} · Fassung {p1}",{p0:(version.id),p1:(version.version)}),'srd-sheet-label');
             for(const pin of detail.ruleOrigins || []) {
                 const section=document.createElement('section');section.className='srd-sheet-cell';
-                appendText(section,'strong',`${pin.profile.entry.name} · Homebrew-Fassung ${pin.revision}`);
+                appendText(section,'strong',globalThis.VTTUi("{p0} · Homebrew-Fassung {p1}",{p0:(pin.profile.entry.name),p1:(pin.revision)}));
                 appendText(section,'p',`${pin.author || ''} · ${pin.scope?.label || pin.scope?.kind || ''}`,'srd-sheet-label');
                 appendText(section,'p',pin.profile.description || '');root.append(section);
             }
@@ -1799,7 +1805,7 @@
             for(const [key,value] of Object.entries(detail.evaluation?.provenance || {})) {
                 const row=document.createElement('details');row.dataset.provenanceKey=key;
                 appendText(row,'summary',`${value.label}: ${value.total}`);
-                appendText(row,'p',(stacking[value.stacking.replace('_then_override','')] || 'Regelbeiträge')+(value.stacking.endsWith('_then_override')?' · danach manuelle Änderung':''),'srd-sheet-label');
+                appendText(row,'p',(stacking[value.stacking.replace('_then_override','')] || globalThis.VTTUi("Regelbeiträge"))+(value.stacking.endsWith('_then_override')?globalThis.VTTUi(" · danach manuelle Änderung"):''),'srd-sheet-label');
                 const list=document.createElement('ul');
                 for(const part of value.contributions) {
                     const li=document.createElement('li');appendText(li,'span',`${part.label}: ${part.value>0?'+':''}${part.value}`);
@@ -1810,7 +1816,7 @@
                 }
                 row.append(list);root.append(row);
             }
-            appendText(root,'p','Manuelle Änderungen gelten für den gewählten Wert. Weitere Werte können gesondert geändert werden.','srd-sheet-label');
+            appendText(root,'p',globalThis.VTTUi("Manuelle Änderungen gelten für den gewählten Wert. Weitere Werte können gesondert geändert werden."),'srd-sheet-label');
             return root;
         }
 
@@ -1827,27 +1833,27 @@
                 return `${entry.name} ${entry.level}${sub}`;
             }).join(', ');
             nodes.push(srdGrid('srd-sheet-facts', [
-                srdCell('Spezies', species?.name || character.race || '–'),
-                srdCell('Hintergrund', background?.name || character.background || '–'),
-                srdCell('Klasse', classText || character.class || '–'),
-                srdCell('Gesinnung', alignment?.name || '–'),
+                srdCell(globalThis.VTTUi("Spezies"), species?.name || character.race || '–'),
+                srdCell(globalThis.VTTUi("Hintergrund"), background?.name || character.background || '–'),
+                srdCell(globalThis.VTTUi("Klasse"), classText || character.class || '–'),
+                srdCell(globalThis.VTTUi("Gesinnung"), alignment?.name || '–'),
             ]));
             if (detail.speciesOrigin) nodes.push(buildSrdOrigin(character, detail.speciesOrigin));
             nodes.push(buildSrdProvenance(detail));
 
             const hp = ev.hitPoints?.max ?? character.hp_max;
             const hitDice = Object.entries(ev.hitDice || {}).map(([die, count]) => `${count}×${die}`).join(' + ');
-            const acCell = srdCell('Rüstungsklasse', String(ev.armorClass?.value ?? character.ac), ev.armorClass?.formula || '');
+            const acCell = srdCell(globalThis.VTTUi("Rüstungsklasse"), String(ev.armorClass?.value ?? character.ac), ev.armorClass?.formula || '');
             acCell.id = 'srdAcCell';
             nodes.push(srdGrid('srd-sheet-vitals', [
                 acCell,
-                srdCell('Trefferpunkte', `${character.hp_current ?? hp} / ${hp}`),
-                srdCell('Trefferwürfel', hitDice || '–'),
-                srdCell('Übungsbonus', signed(ev.proficiencyBonus)),
-                srdCell('Initiative', signed(ev.initiative)),
-                srdCell('Bewegung', `${String(ev.speedMeters ?? '–').replace('.', ',')} m`),
-                srdCell('Passive Wahrnehmung', String(ev.passivePerception ?? '–')),
-                srdCell('Stufe', String(ev.level ?? character.level)),
+                srdCell(globalThis.VTTUi("Trefferpunkte"), `${character.hp_current ?? hp} / ${hp}`),
+                srdCell(globalThis.VTTUi("Trefferwürfel"), hitDice || '–'),
+                srdCell(globalThis.VTTUi("Übungsbonus"), signed(ev.proficiencyBonus)),
+                srdCell(globalThis.VTTUi("Initiative"), signed(ev.initiative)),
+                srdCell(globalThis.VTTUi("Bewegung"), `${String(ev.speedMeters ?? '–').replace('.', ',')} m`),
+                srdCell(globalThis.VTTUi("Passive Wahrnehmung"), String(ev.passivePerception ?? '–')),
+                srdCell(globalThis.VTTUi("Stufe"), String(ev.level ?? character.level)),
             ]));
 
             const abilityCells = SRD_ABILITY_ORDER.map((key) => {
@@ -1857,15 +1863,15 @@
                 cell.className = 'srd-sheet-cell';
                 appendText(cell, 'div', SRD_ABILITY_NAMES[key], 'srd-sheet-label');
                 appendText(cell, 'div', `${ability.score ?? '–'} (${signed(ability.modifier)})`, 'srd-sheet-value srd-sheet-ability-score');
-                appendText(cell, 'div', `Rettungswurf ${signed(save.bonus)}${save.proficient ? ' • geübt' : ''}`, 'srd-sheet-label');
+                appendText(cell, 'div', globalThis.VTTUi("Rettungswurf {p0}{p1}",{p0:(signed(save.bonus)),p1:(save.proficient ? ' • geübt' : '')}), 'srd-sheet-label');
                 const pair = document.createElement('div');
                 pair.className = 'srd-roll-pair';
-                pair.append(srdRollButton(`Probe ${signed(ability.modifier)}`, 'ability', key, character));
+                pair.append(srdRollButton(globalThis.VTTUi("Probe {p0}",{p0:(signed(ability.modifier))}), 'ability', key, character));
                 pair.append(srdRollButton(`RW ${signed(save.bonus)}`, 'save', key, character));
                 cell.append(pair);
                 return cell;
             });
-            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', id: 'srdAbilitiesTitle', textContent: 'Attribute' }));
+            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', id: 'srdAbilitiesTitle', textContent: globalThis.VTTUi("Attribute") }));
             nodes.push(srdGrid('srd-sheet-abilities', abilityCells));
 
             const skillList = document.createElement('ul');
@@ -1879,13 +1885,13 @@
                 row.append(rollButton);
                 skillList.append(row);
             });
-            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', id: 'srdSkillsTitle', textContent: 'Fertigkeiten' }));
+            nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', id: 'srdSkillsTitle', textContent: globalThis.VTTUi("Fertigkeiten") }));
             nodes.push(skillList);
 
             const casting = ev.spellcasting || {};
             const casterEntries = Object.entries(casting.classes || {});
             if (casterEntries.length) {
-                nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Zauberwirken' }));
+                nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: globalThis.VTTUi("Zauberwirken") }));
                 const castCells = casterEntries.map(([classKey, info]) => {
                     const cls = data.classes.find((c) => c.classKey === classKey);
                     return srdCell(cls?.name || classKey, `SG ${info.saveDc} · Angriff ${signed(info.attackBonus)}`,
@@ -1897,7 +1903,7 @@
                 if (slots.length) nodes.push(srdTags(slots));
                 Object.entries(state.spells || {}).forEach(([classKey, lists]) => {
                     const cls = data.classes.find((c) => c.classKey === classKey);
-                    [['cantrips', 'Zaubertricks'], ['spellbook', 'Zauberbuch'], ['known', 'Bekannte Zauber'], ['prepared', 'Vorbereitet']].forEach(([key, label]) => {
+                    [['cantrips', globalThis.VTTUi("Zaubertricks")], ['spellbook', globalThis.VTTUi("Zauberbuch")], ['known', globalThis.VTTUi("Bekannte Zauber")], ['prepared', globalThis.VTTUi("Vorbereitet")]].forEach(([key, label]) => {
                         const names = (lists?.[key] || []).map((id) => data.spells[id]?.name || id);
                         if (!names.length) return;
                         nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: `${cls?.name || classKey} · ${label}` }));
@@ -1908,33 +1914,33 @@
 
             const featNames = (ev.feats || []).map((id) => srdLookup(data.feats, id)?.name || id);
             if (featNames.length) {
-                nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: 'Talente' }));
+                nodes.push(Object.assign(document.createElement('div'), { className: 'srd-sheet-subtitle', textContent: globalThis.VTTUi("Talente") }));
                 nodes.push(srdTags(featNames));
             }
 
             const progression = document.createElement('div');
             progression.id = 'srdProgression';
-            progression.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: 'Lade Stufe und Erfahrung…' }));
+            progression.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: globalThis.VTTUi("Lade Stufe und Erfahrung…") }));
             nodes.push(progression);
 
             const inventory = document.createElement('div');
             inventory.id = 'srdInventory';
-            inventory.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: 'Lade Inventar…' }));
+            inventory.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: globalThis.VTTUi("Lade Inventar…") }));
             nodes.push(inventory);
 
             const manage = document.createElement('div');
             manage.id = 'srdManage';
-            manage.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: 'Lade Begleiter und Verwaltung…' }));
+            manage.append(Object.assign(document.createElement('div'), { className: 'sheet-empty', textContent: globalThis.VTTUi("Lade Begleiter und Verwaltung…") }));
             nodes.push(manage);
 
             const note = document.createElement('p');
             note.className = 'srd-sheet-note';
-            note.textContent = 'Diese Werte werden aus den SRD-5.2.1-Regeln berechnet. Name und aktuelle Trefferpunkte änderst du direkt im Bogen, Erfahrung und Stufenaufstieg im Abschnitt „Stufe und Erfahrung“, alles andere im Regelwerk-Ersteller.';
+            note.textContent = globalThis.VTTUi("Diese Werte werden aus den SRD-5.2.1-Regeln berechnet. Name und aktuelle Trefferpunkte änderst du direkt im Bogen, Erfahrung und Stufenaufstieg im Abschnitt „Stufe und Erfahrung“, alles andere im Regelwerk-Ersteller.");
             nodes.push(note);
             const link = document.createElement('a');
             link.className = 'srd-sheet-link';
             link.href = '/srd-creator';
-            link.textContent = 'Zum Regelwerk-Ersteller';
+            link.textContent = globalThis.VTTUi("Zum Regelwerk-Ersteller");
             nodes.push(link);
             return window.SheetFeedback.compose(character, detail, data, nodes);
         }
@@ -1983,7 +1989,7 @@
             for (const trait of origin.traits || []) {
                 const card = document.createElement('article');
                 card.className = 'homebrew-origin-trait';
-                appendText(card, 'div', trait.kind === 'feature' ? 'Feature' : 'Merkmal', 'sheet-pane-title');
+                appendText(card, 'div', trait.kind === 'feature' ? globalThis.VTTUi("Feature") : globalThis.VTTUi("Merkmal"), 'sheet-pane-title');
                 appendText(card, 'h3', trait.name);
                 appendText(card, 'p', trait.description, 'homebrew-origin-copy');
                 appendRule(card, 'Nutzung', trait.usage);
@@ -2030,7 +2036,7 @@
         async function loadSheet() {
             if (!Number.isInteger(characterId) || characterId <= 0) {
                 document.body.dataset.sheetEmpty = 'true';
-                document.getElementById('sheetCharacterChip').textContent = 'Kein Charakter gewählt';
+                document.getElementById('sheetCharacterChip').textContent = globalThis.VTTUi("Kein Charakter gewählt");
                 document.getElementById('sheetEmptyState').hidden = false;
                 document.getElementById('sheetSpread').hidden = true;
                 return;
@@ -2039,7 +2045,7 @@
             try {
                 delete document.body.dataset.sheetEmpty;
                 currentUser = await auth.requireAuth('/login.html');
-                document.getElementById('sheetReaderBadge').textContent = currentUser?.username || 'Sheet Focus';
+                document.getElementById('sheetReaderBadge').textContent = currentUser?.username || globalThis.VTTUi("Sheet Focus");
                 sheet = await auth.makeAuthRequest(`/api/characters/${characterId}/sheet`);
                 renderSheet();
             } catch (error) {
@@ -2092,7 +2098,7 @@
 
         async function removeIdentity(identityKind) {
             const label = identityKind === 'avatar' ? 'Avatar' : 'Token';
-            if (!window.confirm(`${label} entfernen?`)) return;
+            if (!window.confirm(globalThis.VTTUi("{p0} entfernen?",{p0:(label)}))) return;
             try {
                 await auth.makeAuthRequest(`/api/characters/${characterId}/identity/${identityKind}`, 'DELETE');
                 await loadSheet();
@@ -2162,7 +2168,7 @@
 
         async function deleteSpell(spellId) {
             if (!editable) return;
-            if (!window.confirm('Delete spell?')) return;
+            if (!window.confirm(globalThis.VTTUi("Delete spell?"))) return;
             try {
                 await auth.makeAuthRequest(`/api/characters/${characterId}/spells/${spellId}`, 'DELETE');
                 await loadSheet();
@@ -2193,7 +2199,7 @@
 
         async function deleteEquipment(itemId) {
             if (!editable) return;
-            if (!window.confirm('Delete equipment?')) return;
+            if (!window.confirm(globalThis.VTTUi("Delete equipment?"))) return;
             try {
                 await auth.makeAuthRequest(`/api/characters/${characterId}/equipment/${itemId}`, 'DELETE');
                 await loadSheet();
@@ -2224,7 +2230,7 @@
 
         async function deleteInventoryItem(itemId) {
             if (!editable) return;
-            if (!window.confirm('Delete inventory item?')) return;
+            if (!window.confirm(globalThis.VTTUi("Delete inventory item?"))) return;
             try {
                 await auth.makeAuthRequest(`/api/characters/${characterId}/inventory/${itemId}`, 'DELETE');
                 await loadSheet();

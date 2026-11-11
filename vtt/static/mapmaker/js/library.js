@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Personal project library. JWT/CSRF and ownership are enforced by the server.
 import { LIMITS, materialize, serialize, validateDocument } from "./document.js";
 import { DraftStore } from "./storage.js";
@@ -74,7 +76,7 @@ export class Library {
             response = await fetch(API + path, { method, headers, credentials: "include",
                 body: body === undefined ? undefined : JSON.stringify(body), signal: controller.signal });
         } catch (_error) {
-            throw new Error("Keine Verbindung zur Kartenbibliothek. Deine Karte bleibt geöffnet. Bitte erneut versuchen oder als Datei sichern.");
+            throw new Error(globalThis.VTTUi("Keine Verbindung zur Kartenbibliothek. Deine Karte bleibt geöffnet. Bitte erneut versuchen oder als Datei sichern."));
         } finally { clearTimeout(timer); }
         if (response.status === 401 && retry && window.Auth?.getCookie("csrf_refresh_token")) {
             if (await window.Auth.refreshAccessToken()) return this.request(path, method, body, false);
@@ -82,8 +84,8 @@ export class Library {
         const data = await response.json().catch(() => ({}));
         if (!response.ok) {
             const error = new Error(data.error || (response.status === 401
-                ? "Bitte erneut anmelden, um deine Kartenbibliothek zu öffnen."
-                : "Die Kartenbibliothek ist momentan nicht erreichbar. Bitte erneut versuchen."));
+                ? globalThis.VTTUi("Bitte erneut anmelden, um deine Kartenbibliothek zu öffnen.")
+                : globalThis.VTTUi("Die Kartenbibliothek ist momentan nicht erreichbar. Bitte erneut versuchen.")));
             error.code = data.code;
             error.status = response.status;
             throw error;
@@ -108,7 +110,7 @@ export class Library {
     storage(data) {
         this.storageInfo = data;
         const cap = data.unlimited ? "unbegrenzt" : formatBytes(data.quotaBytes);
-        $("libraryQuota").textContent = `${formatBytes(data.usedBytes)} von ${cap} belegt · Karten: ${formatBytes(data.libraryBytes)}. Gemeinsamer Speicher mit deinen Uploads.`;
+        $("libraryQuota").textContent = globalThis.VTTUi("{p0} von {p1} belegt · Karten: {p2}. Gemeinsamer Speicher mit deinen Uploads.",{p0:(formatBytes(data.usedBytes)),p1:(cap),p2:(formatBytes(data.libraryBytes))});
         $("libraryMeter").hidden = data.unlimited || !data.quotaBytes;
         $("libraryMeter").max = data.quotaBytes || 1;
         $("libraryMeter").value = Math.min(data.usedBytes, data.quotaBytes || 1);
@@ -164,7 +166,7 @@ export class Library {
         }
         $("libraryPrev").disabled = data.page <= 1;
         $("libraryNext").disabled = data.page * data.pageSize >= data.total;
-        $("libraryPage").textContent = `Seite ${data.page} von ${Math.max(1, Math.ceil(data.total / data.pageSize))}`;
+        $("libraryPage").textContent = globalThis.VTTUi("Seite {p0} von {p1}",{p0:(data.page),p1:(Math.max(1, Math.ceil(data.total / data.pageSize)))});
     }
 
     updateStatus() {
@@ -176,7 +178,7 @@ export class Library {
             : this.project && this.savedGeneration === this.ed.generation ? "In Bibliothek gespeichert"
                 : this.project ? "Bibliothek: Änderungen offen" : "Noch nicht in Bibliothek";
         $("cloudStatus").textContent = label;
-        $("cloudSave").title = label + " (Strg+S)";
+        $("cloudSave").title = label + globalThis.VTTUi(" (Strg+S)");
     }
 
     detach() {
@@ -189,14 +191,14 @@ export class Library {
         if (this.busy || this.accountId === null || !this.ed.mapOpened) return false;
         const ed = this.ed;
         ed.commitEdit();
-        if (ed.isMutating()) { ed.ui.toast("Bitte die laufende Zeichenbewegung zuerst beenden."); return false; }
+        if (ed.isMutating()) { ed.ui.toast(globalThis.VTTUi("Bitte die laufende Zeichenbewegung zuerst beenden.")); return false; }
         const doc = ed.doc, generation = ed.generation;
         const project = asCopy ? null : this.project;
         this.busy = true;
         this.updateStatus();
         try {
             const document = await serialize(doc, "file");
-            if (new Blob([JSON.stringify(document)]).size > LIMITS.fileBytes) throw new Error("Das Projekt ist größer als 50 MiB. Bitte als Datei sichern.");
+            if (new Blob([JSON.stringify(document)]).size > LIMITS.fileBytes) throw new Error(globalThis.VTTUi("Das Projekt ist größer als 50 MiB. Bitte als Datei sichern."));
             const result = await this.request(project ? `/${project.id}` : "", project ? "PUT" : "POST",
                 { document, ...(project ? { revision: project.revision } : {}) });
             this.storage(result.storage);
@@ -207,7 +209,7 @@ export class Library {
                 ed.scheduleAutosave(); // persist project identity with the account's local draft
             }
             ed.ui.toast(ed.doc === doc && ed.generation === generation
-                ? "Karte in deiner Bibliothek gespeichert." : "Kartenstand gespeichert; neuere Änderungen sind noch offen.");
+                ? globalThis.VTTUi("Karte in deiner Bibliothek gespeichert.") : globalThis.VTTUi("Kartenstand gespeichert; neuere Änderungen sind noch offen."));
             return true;
         } catch (error) {
             this.message(error.message, true);
@@ -232,7 +234,7 @@ export class Library {
             await this.ed.palette.ensureDocumentImages(validated);
             const doc = await materialize(validated);
             if (this.ed.doc !== previous || this.ed.generation !== generation) {
-                throw new Error("Die geöffnete Karte wurde während des Ladens verändert. Bitte die Bibliothekskarte erneut öffnen.");
+                throw new Error(globalThis.VTTUi("Die geöffnete Karte wurde während des Ladens verändert. Bitte die Bibliothekskarte erneut öffnen."));
             }
             this.ed.loadDocument(doc);
             this.ed.fileGeneration = -1;
@@ -240,7 +242,7 @@ export class Library {
             this.savedGeneration = this.ed.generation;
             this.ed.mapOpened = true;
             this.ed.scheduleAutosave();
-            this.ed.ui.toast(`„${result.project.title}“ aus deiner Bibliothek geöffnet.`);
+            this.ed.ui.toast(globalThis.VTTUi("„{p0}“ aus deiner Bibliothek geöffnet.",{p0:(result.project.title)}));
         } catch (error) {
             if (!this.ed.mapOpened) this.show();
             this.ed.ui.showError(error.message);
@@ -253,7 +255,7 @@ export class Library {
     async remove(project) {
         if (this.busy) return;
         const dialog = $("deleteMapDialog");
-        $("deleteMapText").textContent = `„${project.title}“ dauerhaft aus deiner Bibliothek löschen? Eine aktuell geöffnete Karte bleibt im Editor und kann als Kopie gespeichert werden.`;
+        $("deleteMapText").textContent = globalThis.VTTUi("„{p0}“ dauerhaft aus deiner Bibliothek löschen? Eine aktuell geöffnete Karte bleibt im Editor und kann als Kopie gespeichert werden.",{p0:(project.title)});
         const confirmed = await new Promise((resolve) => {
             const finish = (value) => { dialog.close(); resolve(value); };
             $("deleteMapCancel").onclick = () => finish(false);

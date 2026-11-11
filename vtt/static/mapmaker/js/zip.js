@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Small STORE-only ZIP writer for a PNG and its editable project file.
 // No compression is useful for PNG, and this keeps the download offline-ready.
 
@@ -23,7 +25,7 @@ export async function zipFiles(files) {
         const filename = encoder.encode(name);
         const bytes = data instanceof Blob ? new Uint8Array(await data.arrayBuffer())
             : data instanceof Uint8Array ? data : encoder.encode(String(data));
-        if (filename.length > 65535 || bytes.length > 0xffffffff) throw new Error("Datei ist zu groß für ZIP.");
+        if (filename.length > 65535 || bytes.length > 0xffffffff) throw new Error(globalThis.VTTUi("Datei ist zu groß für ZIP."));
         const crc = crc32(bytes);
         const local = new Uint8Array(30 + filename.length);
         const l = new DataView(local.buffer);
@@ -51,7 +53,7 @@ export async function zipFiles(files) {
         offset += local.length + bytes.length;
     }
     const directorySize = centers.reduce((sum, part) => sum + part.length, 0);
-    if (offset + directorySize > 0xffffffff) throw new Error("Paket ist zu groß für ZIP.");
+    if (offset + directorySize > 0xffffffff) throw new Error(globalThis.VTTUi("Paket ist zu groß für ZIP."));
     const end = new Uint8Array(22);
     const e = new DataView(end.buffer);
     e.setUint32(0, 0x06054b50, true);

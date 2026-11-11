@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 (function () {
     const PLAY_ENTRY_STORAGE_KEY = "vtt.play.entry-boundary";
     const BOOK_RETURN_STORAGE_KEY = "vtt.book.return-boundary";
@@ -18,22 +20,22 @@
     // fields are deliberately not part of this shape yet, reserved for
     // Slice 06 to define once combat owns tick semantics.
     const CONDITION_CATALOG = [
-        { id: "blinded", label: "Blind" },
-        { id: "charmed", label: "Bezaubert" },
-        { id: "concentrating", label: "Konzentriert" },
-        { id: "deafened", label: "Taub" },
-        { id: "exhausted", label: "Erschöpft" },
-        { id: "frightened", label: "Verängstigt" },
-        { id: "grappled", label: "Gepackt" },
-        { id: "incapacitated", label: "Kampfunfähig" },
-        { id: "invisible", label: "Unsichtbar" },
-        { id: "paralyzed", label: "Gelähmt" },
-        { id: "petrified", label: "Versteinert" },
-        { id: "poisoned", label: "Vergiftet" },
-        { id: "prone", label: "Liegend" },
-        { id: "restrained", label: "Festgesetzt" },
-        { id: "stunned", label: "Betäubt" },
-        { id: "unconscious", label: "Bewusstlos" },
+        { id: "blinded", label: globalThis.VTTUi("Blind") },
+        { id: "charmed", label: globalThis.VTTUi("Bezaubert") },
+        { id: "concentrating", label: globalThis.VTTUi("Konzentriert") },
+        { id: "deafened", label: globalThis.VTTUi("Taub") },
+        { id: "exhausted", label: globalThis.VTTUi("Erschöpft") },
+        { id: "frightened", label: globalThis.VTTUi("Verängstigt") },
+        { id: "grappled", label: globalThis.VTTUi("Gepackt") },
+        { id: "incapacitated", label: globalThis.VTTUi("Kampfunfähig") },
+        { id: "invisible", label: globalThis.VTTUi("Unsichtbar") },
+        { id: "paralyzed", label: globalThis.VTTUi("Gelähmt") },
+        { id: "petrified", label: globalThis.VTTUi("Versteinert") },
+        { id: "poisoned", label: globalThis.VTTUi("Vergiftet") },
+        { id: "prone", label: globalThis.VTTUi("Liegend") },
+        { id: "restrained", label: globalThis.VTTUi("Festgesetzt") },
+        { id: "stunned", label: globalThis.VTTUi("Betäubt") },
+        { id: "unconscious", label: globalThis.VTTUi("Bewusstlos") },
     ];
     const CONDITION_LABELS = Object.fromEntries(CONDITION_CATALOG.map((c) => [c.id, c.label]));
     const WIDGET_DRAG_MIN_WIDTH_MEDIA = "(min-width: 1040px)";
@@ -180,7 +182,7 @@
                 try {
                     await this.api.setTableSeat(this.campaignId, this.sessionId, seat);
                 } catch (error) {
-                    this._showMessage(error.message || "Der Tischplatz konnte nicht gewählt werden.", true);
+                    this._showMessage(error.message || globalThis.VTTUi("Der Tischplatz konnte nicht gewählt werden."), true);
                 }
             }
             try {
@@ -195,7 +197,7 @@
         }
 
         async _composeTableSurface(initialPayload) {
-            if (!initialPayload) throw new Error("Kein autorisierter Tischkontext.");
+            if (!initialPayload) throw new Error(globalThis.VTTUi("Kein autorisierter Tischkontext."));
             const operator = isOperatorRole(initialPayload.session_role);
             this._composedOperator = operator;
             if (operator) {
@@ -228,7 +230,7 @@
                 last = 0;
             }
             if (Date.now() - last < 15000) {
-                this._showMessage("Deine Rolle am Tisch hat sich geändert. Bitte lade die Seite neu.", true);
+                this._showMessage(globalThis.VTTUi("Deine Rolle am Tisch hat sich geändert. Bitte lade die Seite neu."), true);
                 return;
             }
             window.location.reload();
@@ -238,7 +240,7 @@
             try {
                 await this.api.setTableSeat(this.campaignId, this.sessionId, seat);
             } catch (error) {
-                this._showMessage(error.message || "Der Tischplatz konnte nicht gewechselt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Der Tischplatz konnte nicht gewechselt werden."), true);
                 return;
             }
             try {
@@ -253,7 +255,7 @@
             const item = document.getElementById("appMenuSeat");
             if (!item) return;
             const asPlayer = this.bootstrap?.seat === "player";
-            item.textContent = asPlayer ? "Als Spielleitung übernehmen" : "Als Spieler am Tisch sitzen";
+            item.textContent = asPlayer ? globalThis.VTTUi("Als Spielleitung übernehmen") : globalThis.VTTUi("Als Spieler am Tisch sitzen");
             item.dataset.seat = asPlayer ? "dm" : "player";
         }
 
@@ -399,7 +401,7 @@
                 await this._refreshCombatState();
                 this._render();
             } catch (error) {
-                this._showMessage(error.message || "Startdaten konnten nicht geladen werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Startdaten konnten nicht geladen werden."), true);
             } finally {
                 this._finalizeEntryArrival();
             }
@@ -451,9 +453,9 @@
                 try {
                     this._handleCombatState(
                         await this.api.combatStart(this.campaignId, this.sessionId, "auto"));
-                    this._logActivity("Kampf gestartet — Initiative vom Server ausgewürfelt.", "info");
+                    this._logActivity(globalThis.VTTUi("Kampf gestartet — Initiative vom Server ausgewürfelt."), "info");
                 } catch (error) {
-                    this._showMessage(error.message || "Kampf konnte nicht gestartet werden.", true);
+                    this._showMessage(error.message || globalThis.VTTUi("Kampf konnte nicht gestartet werden."), true);
                 }
             });
         }
@@ -472,7 +474,7 @@
                         await this._refreshCombatState();
                         return this._advanceCombatTurn(false);
                     }
-                    this._showMessage(error.message || "Zugwechsel fehlgeschlagen.", true);
+                    this._showMessage(error.message || globalThis.VTTUi("Zugwechsel fehlgeschlagen."), true);
                 }
             });
         }
@@ -483,13 +485,13 @@
                 try {
                     this._handleCombatState(
                         await this.api.combatEnd(this.campaignId, this.sessionId, baseVersion));
-                    this._logActivity("Kampf beendet.", "info");
+                    this._logActivity(globalThis.VTTUi("Kampf beendet."), "info");
                 } catch (error) {
                     if (allowRetry) {
                         await this._refreshCombatState();
                         return this._endCombat(false);
                     }
-                    this._showMessage(error.message || "Kampf konnte nicht beendet werden.", true);
+                    this._showMessage(error.message || globalThis.VTTUi("Kampf konnte nicht beendet werden."), true);
                 }
             });
         }
@@ -521,7 +523,7 @@
             if (tabLink) tabLink.href = this._sheetUrl(characterId);
             if (title) {
                 title.textContent = characterName
-                    ? `Charakterbogen · ${characterName}` : "Charakterbogen";
+                    ? globalThis.VTTUi("Charakterbogen · {p0}",{p0:(characterName)}) : globalThis.VTTUi("Charakterbogen");
             }
             drawer.hidden = false;
         }
@@ -545,6 +547,7 @@
                     stateChanged: (payload) => this._handleStateChanged(payload),
                     layerActivated: () => this.loadBootstrap(),
                     layersUpdated: () => this.loadBootstrap(),
+                    scaleUpdated: () => this.loadBootstrap(),
                     actionExecuted: (payload) => this._handleAction(payload),
                     diceRolled: (payload) => this._handleDiceBroadcast(payload),
                     chatMessageSent: (payload) => this._handleChatBroadcast(payload),
@@ -571,20 +574,20 @@
                     // re-render, or fog stays stale until some UNRELATED
                     // vision-layer trigger happens to fire next.
                     fogUpdated: (payload) => { this._fog = payload?.fog || null; this._renderVisionLayer(); },
-                    fogReset: () => this._logActivity("Die Spielleitung hat die Aufklärung zurückgesetzt.", "info"),
+                    fogReset: () => this._logActivity(globalThis.VTTUi("Die Spielleitung hat die Aufklärung zurückgesetzt."), "info"),
                     tick: () => {},
                     sessionPaused: (payload) => this._handleLifecycleBroadcast("paused", payload),
                     sessionResumed: (payload) => this._handleLifecycleBroadcast("resumed", payload),
                     sessionEnded: (payload) => this._handleLifecycleBroadcast("ended", payload),
                     conflict: (payload) => this._handleSocketConflict(payload),
-                    duplicate: (payload) => this._logActivity(`Doppelte Socket-Aktion erkannt: ${payload?.client_event_id || "unknown"}.`, "info"),
-                    resyncRequested: (payload) => { this._logActivity(`Resync requested (${payload?.reason || "unknown"}).`, "info"); this._recoverTable(); },
+                    duplicate: (payload) => this._logActivity(globalThis.VTTUi("Doppelte Socket-Aktion erkannt: {p0}.",{p0:(payload?.client_event_id || "unknown")}), "info"),
+                    resyncRequested: (payload) => { this._logActivity(globalThis.VTTUi("Resync requested ({p0}).",{p0:(payload?.reason || "unknown")}), "info"); this._recoverTable(); },
                     staleEventDropped: (payload) =>
                         this._logActivity(
-                            `Dropped stale event ${payload?.event_name || "unknown"} seq=${payload?.event_seq || "?"}.`,
+                            globalThis.VTTUi("Dropped stale event {p0} seq={p1}.",{p0:(payload?.event_name || "unknown"),p1:(payload?.event_seq || "?")}),
                             "info"
                         ),
-                    error: (payload) => this._showMessage(payload?.message || "Socket error", true),
+                    error: (payload) => this._showMessage(payload?.message || globalThis.VTTUi("Socket error"), true),
                     // S04 acceptance: the token HUD shows a "reconnecting"
                     // indicator instead of silently going stale while the
                     // socket is down. No other part of this app surfaced
@@ -669,7 +672,7 @@
                             : `Zustände: ${token.name} -> keine.`,
                         "info");
                     if (dropped.length) {
-                        this._logActivity(`Unbekannte Zustände von Beyond20 ignoriert: ${dropped.join(", ")}.`, "info");
+                        this._logActivity(globalThis.VTTUi("Unbekannte Zustände von Beyond20 ignoriert: {p0}.",{p0:(dropped.join(", "))}), "info");
                     }
                     return true;
                 },
@@ -701,12 +704,13 @@
                         }
                     }
                     if (patched) {
-                        this._logActivity(`Turn-Tracker synchronisiert (${patched} Token).`, "info");
+                        this._logActivity(globalThis.VTTUi("Turn-Tracker synchronisiert ({p0} Token).",{p0:(patched)}), "info");
                     }
                     return patched;
                 },
             };
             this._announceTableReady();
+            window.addEventListener("vtt:displaychange",()=>this._renderMeasurement());
             window.addEventListener("beforeunload", () => {
                 this._cancelTokenRender();
                 if (this.entryArrivalTimer) {
@@ -826,7 +830,7 @@
         returnToBook(targetHref) {
             const target = this._normalizeBookReturnTarget(targetHref);
             if (!target) {
-                throw new Error("Invalid book return target");
+                throw new Error(globalThis.VTTUi("Invalid book return target"));
             }
 
             const boundary = this._persistBookReturnBoundary(target);
@@ -873,7 +877,7 @@
 
             document.getElementById("btnRoll").addEventListener("click", () => {
                 if (this.readOnly || !this.socket) {
-                    this._showMessage("Nur-Lesen aktiv: Würfeln ist gesperrt.", true);
+                    this._showMessage(globalThis.VTTUi("Nur-Lesen aktiv: Würfeln ist gesperrt."), true);
                     return;
                 }
                 const dice = document.getElementById("diceInput").value.trim() || "1d20";
@@ -882,7 +886,7 @@
                 this.socket.rollDice(dice, this.user?.username || "player", (result) => {
                     const target = document.getElementById("diceResult");
                     if (!result || result.error) {
-                        target.textContent = `Fehler: ${result?.error || "keine Antwort vom Server"}`;
+                        target.textContent = globalThis.VTTUi("Fehler: {p0}",{p0:(result?.error || "keine Antwort vom Server")});
                         return;
                     }
                     target.textContent = `${dice} → ${result.total} · ${this._formatDiceBreakdown(result)}`;
@@ -900,7 +904,7 @@
 
             document.getElementById("btnExecuteAction").addEventListener("click", async () => {
                 if (this.readOnly) {
-                    this._showMessage("Nur-Lesen aktiv: Aktion ist gesperrt.", true);
+                    this._showMessage(globalThis.VTTUi("Nur-Lesen aktiv: Aktion ist gesperrt."), true);
                     return;
                 }
                 const tokenId = Number(document.getElementById("actionTokenId").value);
@@ -909,15 +913,15 @@
                 const targetTokenId = targetRaw ? Number(targetRaw) : null;
 
                 if (!Number.isInteger(tokenId) || tokenId <= 0) {
-                    this._showMessage("Bitte einen gueltigen Token wählen.", true);
+                    this._showMessage(globalThis.VTTUi("Bitte einen gueltigen Token wählen."), true);
                     return;
                 }
                 if (!actionCode) {
-                    this._showMessage("Bitte zuerst eine Aktion wählen.", true);
+                    this._showMessage(globalThis.VTTUi("Bitte zuerst eine Aktion wählen."), true);
                     return;
                 }
                 if (targetTokenId !== null && (!Number.isInteger(targetTokenId) || targetTokenId <= 0)) {
-                    this._showMessage("Ungueltiger Ziel-Token.", true);
+                    this._showMessage(globalThis.VTTUi("Ungueltiger Ziel-Token."), true);
                     return;
                 }
                 try {
@@ -928,9 +932,9 @@
                         actionCode,
                         targetTokenId
                     );
-                    this._showMessage(`Aktion ausgeführt: ${payload.result.action_code}`);
+                    this._showMessage(globalThis.VTTUi("Aktion ausgeführt: {p0}",{p0:(payload.result.action_code)}));
                 } catch (error) {
-                    this._showMessage(error.message || "Aktion fehlgeschlagen.", true);
+                    this._showMessage(error.message || globalThis.VTTUi("Aktion fehlgeschlagen."), true);
                 }
             });
 
@@ -1026,7 +1030,7 @@
                         sender_name: this.user?.username || "player",
                         message: text,
                     });
-                    this._logActivity(`Chat: ${text}`, "info");
+                    this._logActivity(globalThis.VTTUi("Chat: {p0}",{p0:(text)}), "info");
                 }
                 input.value = "";
             };
@@ -1060,7 +1064,7 @@
             select.querySelectorAll('option[value="blind"], option[value="self"]').forEach((option) => {
                 option.disabled = !operator;
             });
-            select.title = operator ? "" : "Verdeckt/Privat sind nur für die Spielleitung verfügbar.";
+            select.title = operator ? "" : globalThis.VTTUi("Verdeckt/Privat sind nur für die Spielleitung verfügbar.");
             if (!operator && (select.value === "blind" || select.value === "self")) {
                 select.value = "public";
             }
@@ -1394,6 +1398,7 @@
 
         _measureGridSize() {
             const activeMap = this.bootstrap?.state_payload?.active_map;
+            if (['none','gridless'].includes(activeMap?.grid_type)) return 0;
             return Number(activeMap?.grid_size) || 0;
         }
 
@@ -1409,7 +1414,8 @@
         }
 
         _measureDistanceSquares(a, b) {
-            const gridSize = this._measureGridSize() || 70;
+            const gridSize = this._measureGridSize();
+            if (!gridSize) return Math.hypot(a.x-b.x,a.y-b.y);
             const dx = Math.abs(a.x - b.x) / gridSize;
             const dy = Math.abs(a.y - b.y) / gridSize;
             // Grid-snapped: diagonal costs the same as orthogonal (5e's
@@ -1419,15 +1425,11 @@
         }
 
         _formatMeasureDistance(squares) {
-            // FEET_PER_SQUARE is a client-only placeholder (S03 Apply
-            // decision, marked non-reversible in the research doc): no
-            // per-map/campaign real-world-unit field exists in this
-            // codebase yet -- CampaignMap.grid_size is *pixels* per
-            // square, not feet -- so a real configurable unit is deferred
-            // to a future slice rather than adding new backend schema
-            // just for this one label.
-            const FEET_PER_SQUARE = 5;
-            return `${Math.round(squares * FEET_PER_SQUARE)} ft`;
+            if (!this._measureGridSize()) return `${Math.round(squares*100)/100} px`;
+            const scale=this.bootstrap?.state_payload?.active_map?.measurement_scale?.meters_per_square;
+            if (!(Number(scale)>0)) return `${Math.round(squares*100)/100} ${window.VTTI18n?.literal('Felder') || 'Felder'}`;
+            const meters=squares*Number(scale);
+            return window.VTTDisplay?.formatDistance(meters) || `${Math.round(meters*100)/100} m`;
         }
 
         _addMeasureWaypoint(point) {
@@ -1477,21 +1479,21 @@
                 parts.push(`<circle class="measure-point" cx="${point.x}" cy="${point.y}" r="5"></circle>`);
             }
             const last = points[points.length - 1];
-            parts.push(`<text class="measure-label" x="${last.x + 10}" y="${last.y - 10}">Gesamt: ${this._formatMeasureDistance(cumulative)}</text>`);
+            parts.push(`<text class="measure-label" x="${last.x + 10}" y="${last.y - 10}">${VTTUiHTML("Gesamt:")} ${this._formatMeasureDistance(cumulative)}</text>`);
             svg.innerHTML = parts.join("");
             if (announce) {
-                announce.textContent = `Messwerkzeug aktiv: ${waypoints.length} Wegpunkt(e), Gesamtstrecke ${this._formatMeasureDistance(cumulative)}.`;
+                announce.textContent = globalThis.VTTUi("Messwerkzeug aktiv: {p0} Wegpunkt(e), Gesamtstrecke {p1}.",{p0:(waypoints.length),p1:(this._formatMeasureDistance(cumulative))});
             }
         }
 
         _openTokenCreatePanel(worldX, worldY, clickEvent) {
             if (this.readOnly) {
-                this._showMessage("Nur-Lesen aktiv: Tokens können nicht platziert werden.", true);
+                this._showMessage(globalThis.VTTUi("Nur-Lesen aktiv: Tokens können nicht platziert werden."), true);
                 return;
             }
             const activeMap = this.bootstrap?.state_payload?.active_map;
             if (!activeMap) {
-                this._showMessage("Erst eine Karte aktivieren, dann Tokens platzieren.", true);
+                this._showMessage(globalThis.VTTUi("Erst eine Karte aktivieren, dann Tokens platzieren."), true);
                 return;
             }
             const gridSize = Math.max(16, Number(activeMap.grid_size) || 70);
@@ -1514,8 +1516,8 @@
             const imageLabel = document.getElementById("tokenCreateImageLabel");
             if (imageLabel) {
                 imageLabel.textContent = this.pendingTokenImage
-                    ? (this.pendingTokenImageLabel || "Bild ausgewählt")
-                    : "Bild (optional)...";
+                    ? (this.pendingTokenImageLabel || globalThis.VTTUi("Bild ausgewählt"))
+                    : globalThis.VTTUi("Bild (optional)...");
             }
 
             const nameInput = document.getElementById("tokenCreateName");
@@ -1564,7 +1566,7 @@
             this.pendingTokenImage = null;
             this.pendingTokenImageLabel = "";
             const imageLabel = document.getElementById("tokenCreateImageLabel");
-            if (imageLabel) imageLabel.textContent = "Bild (optional)...";
+            if (imageLabel) imageLabel.textContent = globalThis.VTTUi("Bild (optional)...");
             const panel = document.getElementById("tokenCreatePanel");
             if (panel) panel.hidden = true;
         }
@@ -1574,7 +1576,7 @@
             if (!placement) return;
             const name = String(document.getElementById("tokenCreateName")?.value || "").trim();
             if (!name) {
-                this._showMessage("Der Token braucht einen Namen.", true);
+                this._showMessage(globalThis.VTTUi("Der Token braucht einen Namen."), true);
                 return;
             }
             const characterSelect = document.getElementById("tokenCreateCharacter");
@@ -1609,16 +1611,16 @@
                     await this.api.createToken(this.campaignId, this.sessionId, token);
                     await this.loadBootstrap();
                 }
-                this._logActivity(`Token platziert: ${name}.`, "info");
+                this._logActivity(globalThis.VTTUi("Token platziert: {p0}.",{p0:(name)}), "info");
             } catch (error) {
-                this._showMessage(error.message || "Token konnte nicht erstellt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Token konnte nicht erstellt werden."), true);
             }
         }
 
         async _deleteSelectedToken() {
             const token = this._findStateToken(this.selectedTokenId);
             if (!token) return;
-            if (!window.confirm(`Token "${token.name}" wirklich löschen? Das entfernt ihn für alle am Tisch und kann nicht rückgängig gemacht werden.`)) return;
+            if (!window.confirm(globalThis.VTTUi("Token \"{p0}\" wirklich löschen? Das entfernt ihn für alle am Tisch und kann nicht rückgängig gemacht werden.",{p0:(token.name)}))) return;
             try {
                 if (this.socket && this.socket.isConnected) {
                     this.socket.deleteToken(token.id, Number(token.version || 1));
@@ -1627,7 +1629,7 @@
                     await this.loadBootstrap();
                 }
             } catch (error) {
-                this._showMessage(error.message || "Token konnte nicht gelöscht werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Token konnte nicht gelöscht werden."), true);
             }
         }
 
@@ -1648,9 +1650,9 @@
                     await this.api.updateToken(this.campaignId, this.sessionId, token.id, Number(token.version || 1), { name: nextName });
                     await this.loadBootstrap();
                 }
-                this._logActivity(`Token umbenannt: ${nextName}.`, "info");
+                this._logActivity(globalThis.VTTUi("Token umbenannt: {p0}.",{p0:(nextName)}), "info");
             } catch (error) {
-                this._showMessage(error.message || "Token konnte nicht umbenannt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Token konnte nicht umbenannt werden."), true);
             }
         }
 
@@ -1672,7 +1674,7 @@
                     await this.loadBootstrap();
                 }
             } catch (error) {
-                this._showMessage(error.message || "Zustände konnten nicht geändert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Zustände konnten nicht geändert werden."), true);
             }
         }
 
@@ -1693,7 +1695,7 @@
             if (!current.length) return;
             // Destructive acceptance: names the token AND the count, not a
             // bare "really clear?".
-            if (!window.confirm(`Alle ${current.length} Zustände von "${token.name}" entfernen?`)) return;
+            if (!window.confirm(globalThis.VTTUi("Alle {p0} Zustände von \"{p1}\" entfernen?",{p0:(current.length),p1:(token.name)}))) return;
             await this._patchTokenConditions(token, []);
         }
 
@@ -1737,7 +1739,7 @@
             }
             if (clearBtn) {
                 clearBtn.disabled = !canEdit || active.size === 0;
-                clearBtn.title = canEdit ? "" : "Nur für den Besitzer oder die Spielleitung.";
+                clearBtn.title = canEdit ? "" : globalThis.VTTUi("Nur für den Besitzer oder die Spielleitung.");
             }
         }
 
@@ -1796,7 +1798,7 @@
                 this._openLootTokenId = tokenId;
                 this._renderLootPopover();
             } catch (error) {
-                this._showMessage(error.message || "Beute konnte nicht geladen werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Beute konnte nicht geladen werden."), true);
             }
         }
 
@@ -1817,14 +1819,14 @@
                         <input type="number" min="1" max="${item.quantity}" value="${item.quantity}" data-loot-quantity="${item.id}" style="width:56px;">
                     </div>
                 `).join("")
-                : `<div class="muted" style="padding:0.4rem 0.5rem;">Keine Gegenstände.</div>`;
+                : `<div class="muted" style="padding:0.4rem 0.5rem;">${globalThis.VTTUiHTML("Keine Gegenstände.")}</div>`;
 
             const recipientSelect = document.getElementById("lootRecipient");
             if (recipientSelect) {
                 const previous = recipientSelect.value;
                 recipientSelect.innerHTML = recipients.length
                     ? recipients.map((r) => `<option value="${r.id}">${escapeHtml(r.name)}${r.is_party_stash ? " (Gemeinsam)" : ""}</option>`).join("")
-                    : `<option value="">Kein Empfänger verfügbar</option>`;
+                    : `<option value="">${globalThis.VTTUiHTML("Kein Empfänger verfügbar")}</option>`;
                 if (recipients.some((r) => String(r.id) === previous)) recipientSelect.value = previous;
             }
 
@@ -1849,7 +1851,7 @@
                     await this.loadBootstrap();
                 }
             } catch (error) {
-                this._showMessage(error.message || "Beute-Quelle konnte nicht geändert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Beute-Quelle konnte nicht geändert werden."), true);
             }
         }
 
@@ -1860,7 +1862,7 @@
             const qtyInput = document.getElementById("lootAddQuantity");
             const name = (nameInput?.value || "").trim();
             if (!name) {
-                this._showMessage("Bitte einen Namen für den Gegenstand angeben.", true);
+                this._showMessage(globalThis.VTTUi("Bitte einen Namen für den Gegenstand angeben."), true);
                 return;
             }
             const quantity = Math.max(1, parseInt(qtyInput?.value, 10) || 1);
@@ -1874,7 +1876,7 @@
                 // it without waiting for the next unrelated state tick.
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Gegenstand konnte nicht hinzugefügt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Gegenstand konnte nicht hinzugefügt werden."), true);
             }
         }
 
@@ -1896,7 +1898,7 @@
 
             const recipientCharacterId = Number(recipientSelect.value);
             if (!Number.isInteger(recipientCharacterId) || recipientCharacterId <= 0) {
-                this._showMessage("Bitte einen Empfänger wählen.", true);
+                this._showMessage(globalThis.VTTUi("Bitte einen Empfänger wählen."), true);
                 return;
             }
 
@@ -1908,7 +1910,7 @@
                 items.push({ token_loot_id: tokenLootId, quantity });
             });
             if (!items.length) {
-                this._showMessage("Bitte mindestens einen Gegenstand auswählen.", true);
+                this._showMessage(globalThis.VTTUi("Bitte mindestens einen Gegenstand auswählen."), true);
                 return;
             }
 
@@ -1919,14 +1921,14 @@
             // the durable network-retry guarantee.
             const idempotencyKey = this._makeLootIdempotencyKey();
             if (transferBtn) transferBtn.disabled = true;
-            if (statusEl) statusEl.textContent = "Übertrage...";
+            if (statusEl) statusEl.textContent = globalThis.VTTUi("Übertrage...");
             try {
                 await this.api.transferLoot(this.campaignId, this.sessionId, idempotencyKey, token.id, recipientCharacterId, items);
-                if (statusEl) statusEl.textContent = "Übertragen.";
+                if (statusEl) statusEl.textContent = globalThis.VTTUi("Übertragen.");
                 await this._loadLootPopoverData(token.id);
             } catch (error) {
                 if (statusEl) statusEl.textContent = "";
-                this._showMessage(error.message || "Beute konnte nicht übertragen werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Beute konnte nicht übertragen werden."), true);
             } finally {
                 if (transferBtn) transferBtn.disabled = false;
             }
@@ -2042,7 +2044,7 @@
                 this._visionGeometryLoadedForMapId = activeMap.id;
                 this._renderVisionLayer();
             } catch (error) {
-                this._showMessage(error.message || "Wand-/Lichtdaten konnten nicht geladen werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Wand-/Lichtdaten konnten nicht geladen werden."), true);
             }
         }
 
@@ -2155,9 +2157,9 @@
                 });
                 await this._loadVisionGeometry();
                 if (response?.light?.id != null) this._flashJustPlacedGeometry("light", response.light.id);
-                this._showMessage("Lichtquelle platziert.");
+                this._showMessage(globalThis.VTTUi("Lichtquelle platziert."));
             } catch (error) {
-                this._showMessage(error.message || "Lichtquelle konnte nicht platziert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Lichtquelle konnte nicht platziert werden."), true);
             }
         }
 
@@ -2169,9 +2171,9 @@
                 });
                 await this._loadVisionGeometry();
                 if (response?.wall?.id != null) this._flashJustPlacedGeometry("wall", response.wall.id);
-                this._showMessage("Wand platziert.");
+                this._showMessage(globalThis.VTTUi("Wand platziert."));
             } catch (error) {
-                this._showMessage(error.message || "Wand konnte nicht platziert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Wand konnte nicht platziert werden."), true);
             }
         }
 
@@ -2208,18 +2210,18 @@
             try {
                 await this.api.updateWall(this.campaignId, this.sessionId, this._openWallEditId, { sight, light });
             } catch (error) {
-                this._showMessage(error.message || "Wand konnte nicht aktualisiert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Wand konnte nicht aktualisiert werden."), true);
             }
         }
 
         async _deleteSelectedWall() {
             if (!this._openWallEditId) return;
-            if (!window.confirm("Diese Wand wirklich löschen?")) return;
+            if (!window.confirm(globalThis.VTTUi("Diese Wand wirklich löschen?"))) return;
             try {
                 await this.api.deleteWall(this.campaignId, this.sessionId, this._openWallEditId);
                 this._closeWallEditPopover();
             } catch (error) {
-                this._showMessage(error.message || "Wand konnte nicht gelöscht werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Wand konnte nicht gelöscht werden."), true);
             }
         }
 
@@ -2255,18 +2257,18 @@
                     provides_vision: providesVision,
                 });
             } catch (error) {
-                this._showMessage(error.message || "Licht konnte nicht aktualisiert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Licht konnte nicht aktualisiert werden."), true);
             }
         }
 
         async _deleteSelectedLight() {
             if (!this._openLightEditId) return;
-            if (!window.confirm("Diese Lichtquelle wirklich löschen?")) return;
+            if (!window.confirm(globalThis.VTTUi("Diese Lichtquelle wirklich löschen?"))) return;
             try {
                 await this.api.deleteLight(this.campaignId, this.sessionId, this._openLightEditId);
                 this._closeLightEditPopover();
             } catch (error) {
-                this._showMessage(error.message || "Licht konnte nicht gelöscht werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Licht konnte nicht gelöscht werden."), true);
             }
         }
 
@@ -2277,7 +2279,7 @@
             const raw = (input?.value || "").trim();
             const sightRange = raw === "" ? null : Number(raw);
             if (raw !== "" && (!Number.isFinite(sightRange) || sightRange < 0)) {
-                this._showMessage("Sichtweite muss eine positive Zahl sein oder leer (unbegrenzt).", true);
+                this._showMessage(globalThis.VTTUi("Sichtweite muss eine positive Zahl sein oder leer (unbegrenzt)."), true);
                 return;
             }
             try {
@@ -2288,7 +2290,7 @@
                     await this.loadBootstrap();
                 }
             } catch (error) {
-                this._showMessage(error.message || "Sichtweite konnte nicht gesetzt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Sichtweite konnte nicht gesetzt werden."), true);
             }
         }
 
@@ -2308,16 +2310,16 @@
             // tool that visibly did nothing when clicked.
             const rect = trigger.getBoundingClientRect();
             this._positionPopoverNear(popover, rect.left, rect.top, { anchorAbove: true });
-            list.innerHTML = `<div class="muted" style="padding:0.4rem 0.5rem;">Lädt...</div>`;
+            list.innerHTML = `<div class="muted" style="padding:0.4rem 0.5rem;">${globalThis.VTTUiHTML("Lädt...")}</div>`;
             try {
                 const response = await this.api.getVisibleTokens(this.campaignId, this.sessionId, token.id);
                 const visible = Array.isArray(response?.visible_tokens) ? response.visible_tokens : [];
                 list.innerHTML = visible.length
                     ? visible.map((entry) => `<div style="padding:0.2rem 0.5rem;">${escapeHtml(entry.name)}</div>`).join("")
-                    : `<div class="muted" style="padding:0.4rem 0.5rem;">Keine sichtbaren Tokens.</div>`;
+                    : `<div class="muted" style="padding:0.4rem 0.5rem;">${globalThis.VTTUiHTML("Keine sichtbaren Tokens.")}</div>`;
             } catch (error) {
                 list.innerHTML = "";
-                this._showMessage(error.message || "Sichtbare Tokens konnten nicht geladen werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Sichtbare Tokens konnten nicht geladen werden."), true);
             }
             // Re-clamp now that the list has real content (same reasoning
             // as the loot popover's second pass above).
@@ -2331,7 +2333,7 @@
                 await this.api.setMapFogEnabled(this.campaignId, activeMap.id, !activeMap.fog_enabled);
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Nebel des Krieges konnte nicht umgeschaltet werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Nebel des Krieges konnte nicht umgeschaltet werden."), true);
             }
         }
 
@@ -2339,12 +2341,12 @@
             // Destructive-action acceptance: names the consequence, not a
             // bare "really reset?" -- same convention S05's clear-all-
             // conditions confirmation already established.
-            if (!window.confirm("Die Aufklärung (Fog of War) für ALLE Spieler zurücksetzen? Das kann nicht rückgängig gemacht werden.")) return;
+            if (!window.confirm(globalThis.VTTUi("Die Aufklärung (Fog of War) für ALLE Spieler zurücksetzen? Das kann nicht rückgängig gemacht werden."))) return;
             try {
                 await this.api.resetFog(this.campaignId, this.sessionId);
-                this._showMessage("Nebel des Krieges zurückgesetzt.");
+                this._showMessage(globalThis.VTTUi("Nebel des Krieges zurückgesetzt."));
             } catch (error) {
-                this._showMessage(error.message || "Nebel des Krieges konnte nicht zurückgesetzt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Nebel des Krieges konnte nicht zurückgesetzt werden."), true);
             }
         }
 
@@ -2424,7 +2426,7 @@
                 }
             } catch (error) {
                 // Server is sole authority (Apply decision).
-                this._showMessage(error.message || "Aktion fehlgeschlagen.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Aktion fehlgeschlagen."), true);
             }
         }
 
@@ -2439,7 +2441,7 @@
                 button.classList.add("targeting");
                 button.setAttribute("aria-pressed", "true");
             }
-            this._showMessage(`${action.name}: Ziel-Token anklicken. Esc bricht ab.`);
+            this._showMessage(globalThis.VTTUi("{p0}: Ziel-Token anklicken. Esc bricht ab.",{p0:(action.name)}));
         }
 
         _cancelTargeting(message = "") {
@@ -2458,12 +2460,12 @@
             this._cancelTargeting();
             if (!pending) return;
             if (Number(targetTokenId) === pending.actorId) {
-                this._showMessage("Wähle als Ziel einen anderen Token.", true);
+                this._showMessage(globalThis.VTTUi("Wähle als Ziel einen anderen Token."), true);
                 return;
             }
             const actor = this._findStateToken(pending.actorId);
             if (!actor || !this._findStateToken(targetTokenId)) {
-                this._showMessage("Dieser Token ist nicht mehr am Tisch.", true);
+                this._showMessage(globalThis.VTTUi("Dieser Token ist nicht mehr am Tisch."), true);
                 return;
             }
             await this._executeHotbarAction(actor, pending.actionCode, Number(targetTokenId));
@@ -2516,7 +2518,7 @@
                     await this.loadBootstrap();
                 }
             } catch (error) {
-                this._showMessage(error.message || "HP konnten nicht gesetzt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("HP konnten nicht gesetzt werden."), true);
             }
         }
 
@@ -2527,7 +2529,7 @@
         async _rollInitiativeForTokens() {
             const tokens = Array.isArray(this.bootstrap?.state_payload?.tokens) ? this.bootstrap.state_payload.tokens : [];
             if (!tokens.length) {
-                this._showMessage("Keine Tokens auf der Karte.", true);
+                this._showMessage(globalThis.VTTUi("Keine Tokens auf der Karte."), true);
                 return;
             }
             let rolled = 0;
@@ -2541,13 +2543,13 @@
                     }
                     rolled += 1;
                 } catch (error) {
-                    this._logActivity(`Initiative für ${token.name} fehlgeschlagen.`, "error");
+                    this._logActivity(globalThis.VTTUi("Initiative für {p0} fehlgeschlagen.",{p0:(token.name)}), "error");
                 }
             }
             if (!(this.socket && this.socket.isConnected)) {
                 await this.loadBootstrap();
             }
-            this._logActivity(`Initiative für ${rolled} Token(s) gewürfelt.`, "info");
+            this._logActivity(globalThis.VTTUi("Initiative für {p0} Token(s) gewürfelt.",{p0:(rolled)}), "info");
         }
 
         _bindWidgetToggles() {
@@ -2835,14 +2837,14 @@
                     if (!file) return;
                     const label = document.getElementById("tokenCreateImageLabel");
                     try {
-                        if (label) label.textContent = "Lade hoch...";
+                        if (label) label.textContent = globalThis.VTTUi("Lade hoch...");
                         const uploaded = await this._uploadAssetFile(file, "token");
                         this.pendingTokenImage = `/api/assets/${uploaded.asset_id}/preview`;
                         if (label) label.textContent = file.name.slice(0, 24);
                     } catch (error) {
                         this.pendingTokenImage = null;
-                        if (label) label.textContent = "Bild (optional)...";
-                        this._showMessage(error.message || "Token-Bild-Upload fehlgeschlagen.", true);
+                        if (label) label.textContent = globalThis.VTTUi("Bild (optional)...");
+                        this._showMessage(error.message || globalThis.VTTUi("Token-Bild-Upload fehlgeschlagen."), true);
                     }
                 });
             }
@@ -2861,9 +2863,9 @@
                             ? { ...token.metadata_json } : {};
                         metadataJson.image_url = `/api/assets/${uploaded.asset_id}/preview`;
                         this._patchToken(token, { metadata_json: metadataJson });
-                        this._logActivity(`Token-Bild gesetzt: ${token.name}.`, "info");
+                        this._logActivity(globalThis.VTTUi("Token-Bild gesetzt: {p0}.",{p0:(token.name)}), "info");
                     } catch (error) {
-                        this._showMessage(error.message || "Token-Bild-Upload fehlgeschlagen.", true);
+                        this._showMessage(error.message || globalThis.VTTUi("Token-Bild-Upload fehlgeschlagen."), true);
                     }
                 });
             }
@@ -2883,18 +2885,18 @@
                     if (!file) return;
                     const status = document.getElementById("tokenUploadStatus");
                     try {
-                        if (status) status.textContent = "Lade hoch...";
+                        if (status) status.textContent = globalThis.VTTUi("Lade hoch...");
                         const uploaded = await this._uploadAssetFile(file, "token");
                         this.pendingTokenImage = `/api/assets/${uploaded.asset_id}/preview`;
                         this.pendingTokenImageLabel = file.name.slice(0, 24);
-                        if (status) status.textContent = "Tokenbild geladen – auf die Karte klicken.";
+                        if (status) status.textContent = globalThis.VTTUi("Tokenbild geladen – auf die Karte klicken.");
                         this._setTool("token");
-                        this._showMessage("Tokenbild geladen. Klicke auf die Karte, um den Token zu platzieren.");
+                        this._showMessage(globalThis.VTTUi("Tokenbild geladen. Klicke auf die Karte, um den Token zu platzieren."));
                     } catch (error) {
                         this.pendingTokenImage = null;
                         this.pendingTokenImageLabel = "";
-                        if (status) status.textContent = "Upload fehlgeschlagen.";
-                        this._showMessage(error.message || "Token-Bild-Upload fehlgeschlagen.", true);
+                        if (status) status.textContent = globalThis.VTTUi("Upload fehlgeschlagen.");
+                        this._showMessage(error.message || globalThis.VTTUi("Token-Bild-Upload fehlgeschlagen."), true);
                     }
                 });
             }
@@ -3006,10 +3008,10 @@
             const gridSize = Math.max(16, Math.min(300, Number(document.getElementById("mapUploadGridSize")?.value) || 70));
 
             try {
-                setStatus(`Lade ${file.name} hoch...`);
+                setStatus(globalThis.VTTUi("Lade {p0} hoch...",{p0:(file.name)}));
                 const uploadBody = await this._uploadAssetFile(file, "map");
 
-                setStatus("Erzeuge Karte...");
+                setStatus(globalThis.VTTUi("Erzeuge Karte..."));
                 // Eingegebener Seitenname gewinnt gegen den Dateinamen —
                 // sonst heißen Karten wie ihre Asset-Hashes.
                 const enteredName = document.getElementById("layerAddName")?.value.trim() || "";
@@ -3022,7 +3024,7 @@
                     background_url: `/api/assets/${uploadBody.asset_id}/preview`,
                 });
 
-                setStatus("Füge Seite hinzu...");
+                setStatus(globalThis.VTTUi("Füge Seite hinzu..."));
                 const stack = this.bootstrap?.scene_stack;
                 if (stack && Array.isArray(stack.layers)) {
                     const layerResult = await this.api.addLayer(this.campaignId, this.sessionId, created.id, mapName);
@@ -3041,12 +3043,12 @@
                 if (nameInput) nameInput.value = "";
                 const choice = document.getElementById("layerAddChoice");
                 if (choice) choice.hidden = true;
-                this._showMessage(`Karte "${mapName}" hochgeladen und aktiviert.`);
+                this._showMessage(globalThis.VTTUi("Karte \"{p0}\" hochgeladen und aktiviert.",{p0:(mapName)}));
                 await this.loadBootstrap();
             } catch (error) {
                 setStatus("");
                 this._reportUploadFailure("_uploadMapFromTable", file, error);
-                this._showMessage(error.message || "Karten-Upload fehlgeschlagen.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Karten-Upload fehlgeschlagen."), true);
             }
         }
 
@@ -3065,17 +3067,17 @@
                     : "<div class='ready-ok'>Keine Warnungen.</div>";
 
                 node.innerHTML = `
-                    <div><strong>Kann starten:</strong> ${result.can_start ? "ja" : "nein"}</div>
-                    <div style="margin-top:0.45rem;"><strong>Blocker</strong></div>
+                    <div><strong>${globalThis.VTTUiHTML("Kann starten:")}</strong> ${result.can_start ? "ja" : "nein"}</div>
+                    <div style="margin-top:0.45rem;"><strong>${globalThis.VTTUiHTML("Blocker")}</strong></div>
                     ${blockHtml}
-                    <div style="margin-top:0.45rem;"><strong>Warnungen</strong></div>
+                    <div style="margin-top:0.45rem;"><strong>${globalThis.VTTUiHTML("Warnungen")}</strong></div>
                     ${warnHtml}
                 `;
 
-                this._logActivity(`Start-Check ausgeführt (startbar=${result.can_start ? "ja" : "nein"}).`, "info");
+                this._logActivity(globalThis.VTTUi("Start-Check ausgeführt (startbar={p0}).",{p0:(result.can_start ? "ja" : "nein")}), "info");
                 return result;
             } catch (error) {
-                this._showMessage(error.message || "Start-Check fehlgeschlagen.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Start-Check fehlgeschlagen."), true);
                 return null;
             }
         }
@@ -3086,12 +3088,12 @@
                 this.mode = payload.mode;
                 this.readOnly = Boolean(payload.read_only);
                 const runtimeStatus = payload.session.runtime_status || payload.session.status;
-                this._showMessage(`Session-Status: ${runtimeStatus}`);
-                this._logActivity(`Statuswechsel angewendet: ${runtimeStatus}.`, "info");
+                this._showMessage(globalThis.VTTUi("Session-Status: {p0}",{p0:(runtimeStatus)}));
+                this._logActivity(globalThis.VTTUi("Statuswechsel angewendet: {p0}.",{p0:(runtimeStatus)}), "info");
                 if (this.socket) this.socket.requestState();
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Statuswechsel fehlgeschlagen.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Statuswechsel fehlgeschlagen."), true);
             }
         }
 
@@ -3101,6 +3103,7 @@
             this.bootstrap.state_payload = payload;
             this._renderState();
             this._renderMapCanvas();
+            this._renderMeasurement();
             this._renderTurnOrder();
             this._renderTokenSelectors();
             this._renderChat();
@@ -3120,7 +3123,7 @@
 
         _handleStateChanged(payload) {
             this._showMessage(`Statuswechsel: ${payload.previous_state} -> ${payload.target_state}`);
-            this._logActivity(`Status geaendert zu ${payload.target_state}.`, "info");
+            this._logActivity(globalThis.VTTUi("Status geaendert zu {p0}.",{p0:(payload.target_state)}), "info");
             this.loadBootstrap();
         }
 
@@ -3150,7 +3153,7 @@
                 sender_name: payload?.sender_name || payload?.sender || "player",
                 message: payload?.message || "",
             });
-            this._logActivity(`Chat von ${payload?.sender_name || "player"} empfangen.`, "info");
+            this._logActivity(globalThis.VTTUi("Chat von {p0} empfangen.",{p0:(payload?.sender_name || "player")}), "info");
         }
 
         _handleTokenCreated(payload) {
@@ -3158,7 +3161,7 @@
             if (!token) return;
             this._upsertStateToken(token);
             this._scheduleTokenRender();
-            this._logActivity(`Token erstellt: ${token.name}.`, "info");
+            this._logActivity(globalThis.VTTUi("Token erstellt: {p0}.",{p0:(token.name)}), "info");
         }
 
         _handleTokenUpdated(payload) {
@@ -3166,7 +3169,7 @@
             if (!token) return;
             this._upsertStateToken(token);
             this._scheduleTokenRender();
-            this._logActivity(`Token aktualisiert: ${token.name}.`, "info");
+            this._logActivity(globalThis.VTTUi("Token aktualisiert: {p0}.",{p0:(token.name)}), "info");
         }
 
         _handleTokenDeleted(payload) {
@@ -3177,7 +3180,7 @@
                 this.selectedTokenId = null;
             }
             this._scheduleTokenRender();
-            this._logActivity(`Token gelöscht: #${tokenId}.`, "info");
+            this._logActivity(globalThis.VTTUi("Token gelöscht: #{p0}.",{p0:(tokenId)}), "info");
         }
 
         _handleTokenBatchMoved(payload) {
@@ -3193,7 +3196,7 @@
                 }
             }
             this._scheduleTokenRender();
-            this._logActivity(`Tokenbewegung synchronisiert (${moves.length}).`, "info");
+            this._logActivity(globalThis.VTTUi("Tokenbewegung synchronisiert ({p0}).",{p0:(moves.length)}), "info");
         }
 
         _scheduleTokenRender() {
@@ -3239,7 +3242,7 @@
             this.bootstrap.state_payload = this.bootstrap.state_payload || {};
             this.bootstrap.state_payload.initiative = initiative;
             this._renderTurnOrder();
-            this._logActivity("Initiative aktualisiert.", "info");
+            this._logActivity(globalThis.VTTUi("Initiative aktualisiert."), "info");
         }
 
         _handleInitiativeTurnChanged(payload) {
@@ -3248,7 +3251,7 @@
             this.bootstrap.state_payload = this.bootstrap.state_payload || {};
             this.bootstrap.state_payload.current_turn = currentTurn;
             this._renderTurnOrder();
-            this._logActivity("Turn Order weiterschaltet.", "info");
+            this._logActivity(globalThis.VTTUi("Turn Order weiterschaltet."), "info");
         }
 
         _handleLifecycleBroadcast(stateName, payload) {
@@ -3261,13 +3264,13 @@
                 this._renderMeta();
                 this._renderFirstSteps();
             }
-            this._logActivity(`Session-Status: ${stateName}.`, "info");
+            this._logActivity(globalThis.VTTUi("Session-Status: {p0}.",{p0:(stateName)}), "info");
         }
 
         _handleSocketConflict(payload) {
             const tokenId = payload?.token_id || payload?.character_id || "unknown";
-            this._showMessage(`Konflikt bei Token ${tokenId}. Bitte Ansicht neu laden.`, true);
-            this._logActivity("Socket-Konflikt erkannt, Ansicht wird neu synchronisiert.", "error");
+            this._showMessage(globalThis.VTTUi("Konflikt bei Token {p0}. Bitte Ansicht neu laden.",{p0:(tokenId)}), true);
+            this._logActivity(globalThis.VTTUi("Socket-Konflikt erkannt, Ansicht wird neu synchronisiert."), "error");
             this.loadBootstrap();
         }
 
@@ -3313,7 +3316,7 @@
             if (advantage === "crit") {
                 const badge = document.createElement("span");
                 badge.className = "ext-roll-badge";
-                badge.textContent = "KRIT!";
+                badge.textContent = globalThis.VTTUi("KRIT!");
                 header.appendChild(badge);
             }
             card.appendChild(header);
@@ -3324,7 +3327,7 @@
                 row.className = `ext-roll-row${entry.kind ? ` kind-${entry.kind}` : ""}`;
                 const label = document.createElement("span");
                 label.className = "ext-roll-label";
-                label.textContent = entry.label || entry.kind || "Wurf";
+                label.textContent = entry.label || entry.kind || globalThis.VTTUi("Wurf");
                 row.appendChild(label);
                 const detail = document.createElement("span");
                 const dice = Array.isArray(entry.dice) && entry.dice.length
@@ -3478,7 +3481,7 @@
                 message: summary,
                 rollBreakdown: breakdown,
             });
-            this._logActivity(label ? `${player} · ${label}: ${payload.dice} gewürfelt.` : `${player} hat ${payload.dice} gewürfelt.`, "info");
+            this._logActivity(label ? globalThis.VTTUi("{p0} · {p1}: {p2} gewürfelt.",{p0:(player),p1:(label),p2:(payload.dice)}) : globalThis.VTTUi("{p0} hat {p1} gewürfelt.",{p0:(player),p1:(payload.dice)}), "info");
         }
 
         _render() {
@@ -3487,6 +3490,7 @@
             this._renderActions();
             this._renderState();
             this._renderMapCanvas();
+            this._renderMeasurement();
             this._renderTurnOrder();
             this._renderTokenSelectors();
             this._renderChat();
@@ -3495,6 +3499,7 @@
         }
 
         _renderMeta() {
+            this._refreshMapScale?.();
             const campaignName = this.bootstrap?.campaign?.name || `Campaign ${this.campaignId}`;
             const sessionName = this.bootstrap?.session?.name || `Session ${this.sessionId}`;
             const role = this.bootstrap?.session_role || "-";
@@ -3507,17 +3512,17 @@
             }
             document.getElementById("modeBadge").textContent = this.mode;
             document.getElementById("roleBadge").textContent = this.bootstrap?.can_switch_seat && this.bootstrap?.seat === "player"
-                ? `${role} · Spielleitung sitzt als Spieler`
+                ? globalThis.VTTUi("{p0} · Spielleitung sitzt als Spieler",{p0:(role)})
                 : role;
             this._renderSeatSwitch();
-            document.getElementById("readOnlyBadge").textContent = this.readOnly ? "nur lesen" : "interaktiv";
+            document.getElementById("readOnlyBadge").textContent = this.readOnly ? globalThis.VTTUi("nur lesen") : "interaktiv";
             document.getElementById("readOnlyChip")?.classList.toggle("is-read-only", this.readOnly);
             const statusPill = document.getElementById("sessionStatusPill");
             if (statusPill) {
                 const status = String(this.bootstrap?.session?.runtime_status || this.bootstrap?.session?.status || "-");
                 const labels = {
-                    scheduled: "Geplant", ready: "Bereit", in_progress: "Live",
-                    paused: "Pausiert", ended: "Beendet",
+                    scheduled: globalThis.VTTUi("Geplant"), ready: globalThis.VTTUi("Bereit"), in_progress: globalThis.VTTUi("Live"),
+                    paused: globalThis.VTTUi("Pausiert"), ended: globalThis.VTTUi("Beendet"),
                 };
                 statusPill.textContent = labels[status] || status;
             }
@@ -3526,7 +3531,7 @@
             const notice = document.getElementById("readOnlyNotice");
             if (this.readOnly) {
                 notice.className = "message info";
-                notice.textContent = "Nur-Lesen ist aktiv für deine Rolle oder den Session-Status.";
+                notice.textContent = globalThis.VTTUi("Nur-Lesen ist aktiv für deine Rolle oder den Session-Status.");
             } else {
                 notice.className = "message";
                 notice.textContent = "";
@@ -3601,10 +3606,10 @@
 
             if (!allLayers.length) {
                 container.innerHTML = this._composedOperator
-                    ? "<div class='muted'>Noch keine Seiten. Unten eine Karte hinzufügen.</div>"
-                    : "<div class='muted'>Die Spielleitung hat noch keine Karte aufgedeckt.</div>";
+                    ? `<div class='muted'>${globalThis.VTTUiHTML("Noch keine Seiten. Unten eine Karte hinzufügen.")}</div>`
+                    : `<div class='muted'>${globalThis.VTTUiHTML("Die Spielleitung hat noch keine Karte aufgedeckt.")}</div>`;
             } else if (!layers.length) {
-                container.innerHTML = "<div class='muted'>Keine Seite passt zur Suche.</div>";
+                container.innerHTML = `<div class='muted'>${globalThis.VTTUiHTML("Keine Seite passt zur Suche.")}</div>`;
             } else {
                 container.innerHTML = layers.map((layer) => {
                     const index = allLayers.indexOf(layer);
@@ -3629,12 +3634,12 @@
                     const visibleTitle = layer.is_player_visible ? "Für Spieler sichtbar - klicken um sie vor Spielern zu verbergen" : "Nur für DM sichtbar - klicken um sie für Spieler freizugeben";
                     const actionsRow = canEdit ? `
                                 <div class="layer-actions-row">
-                                    <button data-act="up" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach oben" ${index === 0 ? "disabled" : ""}>&uarr;</button>
-                                    <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Nach unten" ${index === allLayers.length - 1 ? "disabled" : ""}>&darr;</button>
+                                    <button data-act="up" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Nach oben")}" ${index === 0 ? "disabled" : ""}>&uarr;</button>
+                                    <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Nach unten")}" ${index === allLayers.length - 1 ? "disabled" : ""}>&darr;</button>
                                     <button data-act="visibility" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn ${layer.is_player_visible ? "active-toggle" : ""}" title="${visibleTitle}" aria-pressed="${layer.is_player_visible ? "true" : "false"}">${visibleIcon}</button>
-                                    <button data-act="duplicate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Seite duplizieren">&#10697;</button>
-                                    <button data-act="activate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="Seite aktivieren" aria-label="Seite aktivieren">${activateIcon}</button>
-                                    <button data-act="delete" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn danger" title="Seite entfernen">&times;</button>
+                                    <button data-act="duplicate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Seite duplizieren")}">&#10697;</button>
+                                    <button data-act="activate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Seite aktivieren")}" aria-label="${globalThis.VTTUiHTML("Seite aktivieren")}">${activateIcon}</button>
+                                    <button data-act="delete" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn danger" title="${globalThis.VTTUiHTML("Seite entfernen")}">&times;</button>
                                 </div>
                     ` : "";
                     return `
@@ -3841,6 +3846,7 @@
                 if (seat === "dm" || seat === "player") this._switchTableSeat(seat);
             });
 
+            document.getElementById("appMenuDisplay")?.addEventListener("click",()=>{closeMenu({returnFocus:false});window.VTTDisplay?.open();});
             document.getElementById("appMenuHelp")?.addEventListener("click", () => {
                 closeMenu({ returnFocus: false });
                 helpDialog?.showModal();
@@ -3872,10 +3878,10 @@
             if (!box) return;
             const status = String(this.bootstrap?.session?.runtime_status || this.bootstrap?.session?.status || "scheduled");
             const labels = {
-                scheduled: "Geplant", ready: "Bereit", in_progress: "Live",
-                paused: "Pausiert", ended: "Beendet",
+                scheduled: globalThis.VTTUi("Geplant"), ready: globalThis.VTTUi("Bereit"), in_progress: globalThis.VTTUi("Live"),
+                paused: globalThis.VTTUi("Pausiert"), ended: globalThis.VTTUi("Beendet"),
             };
-            box.textContent = `Status: ${labels[status] || status}`;
+            box.textContent = globalThis.VTTUi("Status: {p0}",{p0:(labels[status] || status)});
             if (leaveItem) {
                 // Acceptance: read-only mode disables Leave with a tooltip
                 // rather than the Apply-handoff's other option (enable it) --
@@ -3885,7 +3891,7 @@
                 // consistent with that existing rule rather than carving
                 // out an exception.
                 leaveItem.disabled = this.readOnly;
-                leaveItem.title = this.readOnly ? "Im Nur-Lesen-Modus nicht verfügbar." : "";
+                leaveItem.title = this.readOnly ? globalThis.VTTUi("Im Nur-Lesen-Modus nicht verfügbar.") : "";
             }
         }
 
@@ -3921,13 +3927,13 @@
                     : (Array.isArray(maps?.maps) ? maps.maps : []);
                 source.innerHTML = rows.length
                     ? rows.map((m) => `<option value="${m.id}">${escapeHtml(m.name)}${usedMapIds.has(Number(m.id)) ? " — wird kopiert" : ""}</option>`).join("")
-                    : `<option value="">Noch keine Karte — lade eine hoch</option>`;
+                    : `<option value="">${globalThis.VTTUiHTML("Noch keine Karte — lade eine hoch")}</option>`;
                 if (copyBtn) copyBtn.disabled = rows.length === 0;
                 setStatus("");
             } catch (error) {
-                source.innerHTML = `<option value="">Karten konnten nicht geladen werden</option>`;
+                source.innerHTML = `<option value="">${globalThis.VTTUiHTML("Karten konnten nicht geladen werden")}</option>`;
                 if (copyBtn) copyBtn.disabled = true;
-                setStatus("Karten konnten nicht geladen werden. Prüfe die Verbindung und versuche es erneut.");
+                setStatus(globalThis.VTTUi("Karten konnten nicht geladen werden. Prüfe die Verbindung und versuche es erneut."));
             }
 
             addBtn.onclick = () => {
@@ -3946,12 +3952,12 @@
                 try {
                     const label = nameInput?.value.trim() || null;
                     await this.api.addLayer(this.campaignId, this.sessionId, mapId, label, true);
-                    this._showMessage("Seite hinzugefügt.");
+                    this._showMessage(globalThis.VTTUi("Seite hinzugefügt."));
                     if (nameInput) nameInput.value = "";
                     choice.hidden = true;
                     await this.loadBootstrap();
                 } catch (error) {
-                    this._showMessage(error.message || "Seite konnte nicht hinzugefügt werden.", true);
+                    this._showMessage(error.message || globalThis.VTTUi("Seite konnte nicht hinzugefügt werden."), true);
                     copyBtn.disabled = false;
                 }
             };
@@ -3960,11 +3966,11 @@
         async _activateLayer(layerId) {
             try {
                 await this.api.activateLayer(this.campaignId, this.sessionId, layerId);
-                this._showMessage("Seite aktiviert - alle Spieler wechseln mit.");
-                this._logActivity(`Seite ${layerId} aktiviert.`, "info");
+                this._showMessage(globalThis.VTTUi("Seite aktiviert - alle Spieler wechseln mit."));
+                this._logActivity(globalThis.VTTUi("Seite {p0} aktiviert.",{p0:(layerId)}), "info");
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Seite konnte nicht gewechselt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Seite konnte nicht gewechselt werden."), true);
             }
         }
 
@@ -3975,7 +3981,7 @@
                 await this.api.updateLayer(this.campaignId, this.sessionId, layerId, { label: trimmed });
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Umbenennen fehlgeschlagen.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Umbenennen fehlgeschlagen."), true);
             }
         }
 
@@ -3984,19 +3990,19 @@
                 await this.api.updateLayer(this.campaignId, this.sessionId, layerId, { is_player_visible: nextVisible });
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Sichtbarkeit konnte nicht geaendert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Sichtbarkeit konnte nicht geaendert werden."), true);
             }
         }
 
         async _deleteLayer(layerId, label) {
             const name = label ? `"${label}"` : "Diese Seite";
-            if (!window.confirm(`${name} endgültig aus dem Kartenstapel entfernen? Das kann nicht rückgängig gemacht werden.`)) return;
+            if (!window.confirm(globalThis.VTTUi("{p0} endgültig aus dem Kartenstapel entfernen? Das kann nicht rückgängig gemacht werden.",{p0:(name)}))) return;
             try {
                 await this.api.deleteLayer(this.campaignId, this.sessionId, layerId);
-                this._showMessage("Seite entfernt.");
+                this._showMessage(globalThis.VTTUi("Seite entfernt."));
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Seite konnte nicht entfernt werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Seite konnte nicht entfernt werden."), true);
             }
         }
 
@@ -4006,10 +4012,10 @@
             if (!layer) return;
             try {
                 await this.api.addLayer(this.campaignId, this.sessionId, layer.campaign_map_id, `${layer.label} (Kopie)`, true);
-                this._showMessage("Seite dupliziert.");
+                this._showMessage(globalThis.VTTUi("Seite dupliziert."));
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Seite konnte nicht dupliziert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Seite konnte nicht dupliziert werden."), true);
             }
         }
 
@@ -4026,7 +4032,7 @@
                 await this.api.reorderLayers(this.campaignId, this.sessionId, order);
                 await this.loadBootstrap();
             } catch (error) {
-                this._showMessage(error.message || "Reihenfolge konnte nicht geaendert werden.", true);
+                this._showMessage(error.message || globalThis.VTTUi("Reihenfolge konnte nicht geaendert werden."), true);
             }
         }
 
@@ -4059,7 +4065,7 @@
                 this.selectedTokenId = null;
             }
             if (!tokens.length) {
-                tokenList.innerHTML = "<div class='muted'>Keine Tokens. Mit dem TOK-Werkzeug auf die Karte klicken.</div>";
+                tokenList.innerHTML = `<div class='muted'>${globalThis.VTTUiHTML("Keine Tokens. Mit dem TOK-Werkzeug auf die Karte klicken.")}</div>`;
             } else {
                 tokenList.innerHTML = tokens.map((token) => {
                     const cell = this._resolveTokenPosition(token, gridSize);
@@ -4102,8 +4108,8 @@
             const selectedToken = this._findStateToken(this.selectedTokenId);
             if (selectedSummary) {
                 selectedSummary.textContent = selectedToken
-                    ? `Ausgewählt: ${selectedToken.name} (#${selectedToken.id})`
-                    : "Kein Token ausgewählt.";
+                    ? globalThis.VTTUi("Ausgewählt: {p0} (#{p1})",{p0:(selectedToken.name),p1:(selectedToken.id)})
+                    : globalThis.VTTUi("Kein Token ausgewählt.");
             }
             if (selectedDetail) {
                 const canEditSelected = selectedToken && this._canMoveToken(selectedToken);
@@ -4136,8 +4142,8 @@
                         const sheetAc = selectedToken.metadata_json?.sheet?.ac;
                         const acText = sheetAc != null ? ` · RK ${sheetAc}` : "";
                         readonlyBox.textContent = selectedToken.character_id
-                            ? `${hpText}${acText} — nicht dein Charakter, nur ansehen.`
-                            : `${hpText} — kein verknüpfter Charakter.`;
+                            ? globalThis.VTTUi("{p0}{p1} — nicht dein Charakter, nur ansehen.",{p0:(hpText),p1:(acText)})
+                            : globalThis.VTTUi("{p0} — kein verknüpfter Charakter.",{p0:(hpText)});
                     }
                 }
             }
@@ -4167,7 +4173,7 @@
             if (lootSourceRow) lootSourceRow.hidden = !operator || !selectedToken;
             const lootSourceToggleBtn = document.getElementById("btnTokenLootSourceToggle");
             if (lootSourceToggleBtn) {
-                lootSourceToggleBtn.textContent = isLootSource ? "Beute-Quelle: an" : "Beute-Quelle: aus";
+                lootSourceToggleBtn.textContent = isLootSource ? globalThis.VTTUi("Beute-Quelle: an") : globalThis.VTTUi("Beute-Quelle: aus");
                 lootSourceToggleBtn.setAttribute("aria-pressed", String(isLootSource));
             }
             const lootRow = document.getElementById("tokenLootRow");
@@ -4216,7 +4222,7 @@
             const fogEnabledToggle = document.getElementById("btnFogEnabledToggle");
             if (fogEnabledToggle) {
                 const fogEnabled = Boolean(activeMap?.fog_enabled);
-                fogEnabledToggle.textContent = fogEnabled ? "Nebel des Krieges: an" : "Nebel des Krieges: aus";
+                fogEnabledToggle.textContent = fogEnabled ? globalThis.VTTUi("Nebel des Krieges: an") : globalThis.VTTUi("Nebel des Krieges: aus");
                 fogEnabledToggle.setAttribute("aria-pressed", String(fogEnabled));
             }
             const combatActive = this._combatActive();
@@ -4253,9 +4259,9 @@
             const mapMetaText = document.getElementById("mapMetaText");
             if (mapMetaText) {
                 if (!activeMap) {
-                    mapMetaText.textContent = "Keine aktive Karte.";
+                    mapMetaText.textContent = globalThis.VTTUi("Keine aktive Karte.");
                 } else {
-                    mapMetaText.textContent = `${activeMap.name} (${activeMap.width}x${activeMap.height}), Grid ${activeMap.grid_size || 70}px`;
+                    mapMetaText.textContent = globalThis.VTTUi("{p0} ({p1}x{p2}), Grid {p3}px",{p0:(activeMap.name),p1:(activeMap.width),p2:(activeMap.height),p3:(activeMap.grid_size || 70)});
                 }
             }
         }
@@ -4431,15 +4437,15 @@
                 const activeIndex = order.findIndex((token) => Number(token.id) === Number(encounter.active_token_id));
                 if (summary) {
                     const turnPosition = activeIndex >= 0 ? `Zug ${activeIndex + 1} von ${order.length} · ` : "";
-                    summary.textContent = `Runde ${encounter.round_number} · ${turnPosition}Am Zug: `
-                        + (active ? active.name : "Verdeckter Akteur");
+                    summary.textContent = globalThis.VTTUi("Runde {p0} · {p1}Am Zug: ",{p0:(encounter.round_number),p1:(turnPosition)})
+                        + (active ? active.name : globalThis.VTTUi("Verdeckter Akteur"));
                 }
                 container.innerHTML = order.length ? order.map((token) => `
                     <div class="turn-item ${Number(token.id) === Number(encounter.active_token_id) ? "is-active" : ""} ${Number(this.selectedTokenId) === Number(token.id) ? "selected" : ""}">
                         <span>${escapeHtml(token.name)}</span>
                         <span class="turn-score">${escapeHtml(token.initiative)}</span>
                     </div>
-                `).join("") : "<div class='muted'>Alle Akteure sind verdeckt.</div>";
+                `).join("") : `<div class='muted'>${globalThis.VTTUiHTML("Alle Akteure sind verdeckt.")}</div>`;
                 container.querySelectorAll(".turn-item").forEach((row, index) => {
                     if (order[index]) this._bindTurnItemRow(row, order[index].id);
                 });
@@ -4455,21 +4461,21 @@
             const entries = this._getInitiativeEntries(tokens);
 
             if (!entries.length) {
-                container.innerHTML = "<div class='muted'>Noch keine Initiative-Werte.</div>";
-                if (summary) summary.textContent = "Noch keine Initiative-Werte.";
+                container.innerHTML = `<div class='muted'>${globalThis.VTTUiHTML("Noch keine Initiative-Werte.")}</div>`;
+                if (summary) summary.textContent = globalThis.VTTUi("Noch keine Initiative-Werte.");
                 return;
             }
 
             const currentEntry = entries.find((entry) => entry.is_current_turn) || entries[0];
             if (summary) {
-                summary.textContent = `Aktuell: ${currentEntry.name} (${currentEntry.initiative})`;
+                summary.textContent = globalThis.VTTUi("Aktuell: {p0} ({p1})",{p0:(currentEntry.name),p1:(currentEntry.initiative)});
             }
 
             container.innerHTML = entries.map((token) => {
                 const isCurrent = token === currentEntry;
                 return `
                 <div class="turn-item ${isCurrent ? "current" : ""} ${Number(this.selectedTokenId) === Number(token.id) ? "selected" : ""}">
-                    <span>${escapeHtml(token.name)}${isCurrent ? " <strong>• aktuell</strong>" : ""}</span>
+                    <span>${escapeHtml(token.name)}${isCurrent ? ` <strong>${globalThis.VTTUiHTML("• aktuell")}</strong>` : ""}</span>
                     <span class="turn-score">${escapeHtml(token.initiative)}</span>
                 </div>
             `;
@@ -4512,8 +4518,8 @@
                 persisted.set(id, previous && !entry.edited_at ? previous : {
                     message_id: id, time: String(entry.created_at || entry.timestamp || '').slice(11, 19),
                     user: entry.sender_name || 'Tisch', sender_name: entry.sender_name || 'Tisch',
-                    text: entry.hidden ? 'Jemand würfelt verdeckt.' : entry.message || entry.content || '',
-                    message: entry.hidden ? 'Jemand würfelt verdeckt.' : entry.message || entry.content || '',
+                    text: entry.hidden ? globalThis.VTTUi("Jemand würfelt verdeckt.") : entry.message || entry.content || '',
+                    message: entry.hidden ? globalThis.VTTUi("Jemand würfelt verdeckt.") : entry.message || entry.content || '',
                     rollHidden: Boolean(entry.hidden)
                 });
             }
@@ -4846,12 +4852,12 @@
                     } else {
                         await this.api.updateToken(this.campaignId, this.sessionId, drag.tokenId, drag.baseVersion, patch);
                         await this.loadBootstrap();
-                        this._logActivity(`Token bewegt: ${token.name}.`, "info");
+                        this._logActivity(globalThis.VTTUi("Token bewegt: {p0}.",{p0:(token.name)}), "info");
                     }
                 } catch (error) {
                     drag.marker.style.left = `${drag.baseLeft}px`;
                     drag.marker.style.top = `${drag.baseTop}px`;
-                    this._showMessage(error.message || "Token konnte nicht bewegt werden.", true);
+                    this._showMessage(error.message || globalThis.VTTUi("Token konnte nicht bewegt werden."), true);
                     await this.loadBootstrap();
                 }
             });
@@ -4874,8 +4880,8 @@
             const myUserId = Number(this.user?.id);
 
             if (!tokens.length) {
-                actorSelect.innerHTML = "<option value=''>Kein Actor-Token</option>";
-                targetSelect.innerHTML = "<option value=''>Kein Ziel-Token</option>";
+                actorSelect.innerHTML = `<option value=''>${globalThis.VTTUiHTML("Kein Actor-Token")}</option>`;
+                targetSelect.innerHTML = `<option value=''>${globalThis.VTTUiHTML("Kein Ziel-Token")}</option>`;
                 return;
             }
 
@@ -4892,7 +4898,7 @@
             }
             actorSelect.innerHTML = actorOptions.concat(fallbackOptions).join("");
 
-            targetSelect.innerHTML = "<option value=''>Kein Ziel</option>" + tokens
+            targetSelect.innerHTML = `<option value=''>${globalThis.VTTUiHTML("Kein Ziel")}</option>` + tokens
                 .map((token) => `<option value="${token.id}">${escapeHtml(`${token.name} (#${token.id})`)}</option>`)
                 .join("");
 
@@ -4910,16 +4916,16 @@
             let text = "";
             if (isOperatorRole(role)) {
                 if (status === "scheduled") {
-                    text = "DM Schnellstart: 1) Start-Check 2) Bereit setzen 3) Live starten.";
+                    text = globalThis.VTTUi("DM Schnellstart: 1) Start-Check 2) Bereit setzen 3) Live starten.");
                 } else if (status === "ready") {
-                    text = "Session ist bereit. Mit 'Live starten' beginnt die Runde.";
+                    text = globalThis.VTTUi("Session ist bereit. Mit 'Live starten' beginnt die Runde.");
                 } else if (status === "in_progress") {
-                    text = "Session läuft: Karte pruefen, Tokens bewegen und Würfeln nutzen.";
+                    text = globalThis.VTTUi("Session läuft: Karte pruefen, Tokens bewegen und Würfeln nutzen.");
                 } else if (status === "paused") {
-                    text = "Session pausiert: Fortsetzen oder sauber beenden.";
+                    text = globalThis.VTTUi("Session pausiert: Fortsetzen oder sauber beenden.");
                 }
             } else {
-                text = "Spieler Schnellstart: 1) Karte ansehen 2) Würfeln testen 3) Eine Aktion ausführen.";
+                text = globalThis.VTTUi("Spieler Schnellstart: 1) Karte ansehen 2) Würfeln testen 3) Eine Aktion ausführen.");
             }
 
             if (!text) {

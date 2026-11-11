@@ -1,16 +1,18 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /* Shared VTT ribbon and account memo for book, rules, table, and map pages. */
 (function () {
     'use strict';
 
     const launchKey = 'vtt_open_play_launcher';
     const routes = [
-        ['/dashboard', 'Übersicht'],
-        ['/campaigns', 'Kampagnen'],
-        ['/characters', 'Charaktere'],
-        ['/mapmaker', 'Karten'],
-        ['/api/ce/authoring', 'Creation Engine'],
-        ['/regelwerk', 'Regelwerk'],
-        ['/regelwerk/compendium', 'Compendium'],
+        ['/dashboard', globalThis.VTTUi("Übersicht")],
+        ['/campaigns', globalThis.VTTUi("Kampagnen")],
+        ['/characters', globalThis.VTTUi("Charaktere")],
+        ['/mapmaker', globalThis.VTTUi("Karten")],
+        ['/api/ce/authoring', globalThis.VTTUi("Creation Engine")],
+        ['/regelwerk', globalThis.VTTUi("Regelwerk")],
+        ['/regelwerk/compendium', globalThis.VTTUi("Compendium")],
     ];
     let memoPromise;
     const staticPreview = location.pathname === '/mapmaker/';
@@ -98,10 +100,15 @@
             fragment.appendChild(anchor);
         });
 
+        const display=document.createElement('button');
+        display.type='button';display.className='book-dashboard-ribbon-btn vtt-display-open';display.id='vttDisplayOpen';
+        display.textContent=globalThis.VTTUi("Ansicht und Sprache");display.addEventListener('click',()=>window.VTTDisplay?.open());
+        fragment.appendChild(display);
+
         const play = document.createElement('button');
         play.type = 'button';
         play.className = 'book-dashboard-ribbon-btn';
-        play.textContent = 'Spieltisch';
+        play.textContent = globalThis.VTTUi("Spieltisch");
         if (isPlay) {
             play.classList.add('is-active');
             play.setAttribute('aria-current', 'page');
@@ -142,17 +149,17 @@
         const crest = host.querySelector('.book-dashboard-crest');
         const memo = document.createElement('div');
         memo.className = 'vtt-account-memo';
-        memo.setAttribute('aria-label', 'Konto und gespielte Sessions');
+        memo.setAttribute('aria-label', VTTUi('Konto und gespielte Sessions'));
         const name = crest || document.createElement('strong');
         name.className = 'vtt-account-name';
-        if (!crest) name.textContent = 'Konto';
+        if (!crest) name.textContent = globalThis.VTTUi("Konto");
         const count = document.createElement('span');
         count.className = 'vtt-account-count';
-        count.textContent = 'Sessions …';
+        count.textContent = globalThis.VTTUi("Sessions …");
         const action = document.createElement('button');
         action.type = 'button';
         action.className = 'vtt-account-action';
-        action.textContent = 'Abmelden';
+        action.textContent = globalThis.VTTUi("Abmelden");
         action.addEventListener('click', () => {
             if (action.dataset.signedOut === 'true') location.href = '/login.html';
             else window.Auth?.logout?.();
@@ -164,15 +171,15 @@
         const data = await getMemo();
         if (!memo.isConnected) return;
         if (!data?.user) {
-            name.textContent = 'Gast';
+            name.textContent = globalThis.VTTUi("Gast");
             count.hidden = true;
-            action.textContent = 'Anmelden';
+            action.textContent = globalThis.VTTUi("Anmelden");
             action.dataset.signedOut = 'true';
             return;
         }
-        name.textContent = data.user.username || 'Konto';
+        name.textContent = data.user.username || globalThis.VTTUi("Konto");
         const total = Number(data.completed_session_count) || 0;
-        count.textContent = `${total} ${total === 1 ? 'Session' : 'Sessions'} gespielt`;
+        count.textContent = VTTUi(total===1?'{total} Session gespielt':'{total} Sessions gespielt',{total});
     }
 
     function scan() {

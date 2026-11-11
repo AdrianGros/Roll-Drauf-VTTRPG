@@ -1,8 +1,10 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /* Read-only view of a character that its owner shares by link. No login; the token lives in the URL fragment. */
 (function () {
   'use strict';
 
-  const ABIL = [['str', 'Stärke'], ['dex', 'Geschicklichkeit'], ['con', 'Konstitution'], ['int', 'Intelligenz'], ['wis', 'Weisheit'], ['cha', 'Charisma']];
+  const ABIL = [['str', globalThis.VTTUi("Stärke")], ['dex', globalThis.VTTUi("Geschicklichkeit")], ['con', globalThis.VTTUi("Konstitution")], ['int', globalThis.VTTUi("Intelligenz")], ['wis', globalThis.VTTUi("Weisheit")], ['cha', globalThis.VTTUi("Charisma")]];
   const PROFICIENCY = { proficient: 'geübt', expertise: 'Expertise' };
 
   function el(tag, className, text) {
@@ -33,7 +35,7 @@
     if (/^#[0-9a-f]{6}$/i.test(sheet.accent || '')) root.style.setProperty('--ss-accent', sheet.accent);
     root.replaceChildren();
     document.getElementById('ssTitle').textContent = sheet.name;
-    document.title = `${sheet.name} · Geteilter Charakter · Roll Drauf VTT`;
+    document.title = globalThis.VTTUi("{p0} · Geteilter Charakter · Roll Drauf VTT",{p0:(sheet.name)});
 
     const overview = section('Überblick');
     const classes = sheet.classes.map((c) => `${c.name} ${c.level}`).join(' / ');
@@ -50,8 +52,8 @@
       const ability = sheet.abilities[key];
       const save = sheet.saves[key];
       const box = el('div', 'ss-ability');
-      box.append(el('span', 'ss-ability-name', label), el('span', 'ss-ability-mod', signed(ability.modifier)), el('span', 'ss-ability-score', `Wert ${ability.score}`),
-        el('span', 'ss-ability-save', `Rettungswurf ${signed(save.bonus)}${save.proficient ? ' (geübt)' : ''}`));
+      box.append(el('span', 'ss-ability-name', label), el('span', 'ss-ability-mod', signed(ability.modifier)), el('span', 'ss-ability-score', globalThis.VTTUi("Wert {p0}",{p0:(ability.score)})),
+        el('span', 'ss-ability-save', globalThis.VTTUi("Rettungswurf {p0}{p1}",{p0:(signed(save.bonus)),p1:(save.proficient ? ' (geübt)' : '')})));
       grid.append(box);
     });
     abilities.append(grid);
@@ -79,7 +81,7 @@
       if (casting.length) {
         spells.append(tags(casting.map((c) => `Zauber-SG ${c.saveDc}`).concat(casting.map((c) => `Zauberangriff ${signed(c.attackBonus)}`))));
         const slots = sheet.spellcasting.slots.map((count, index) => (count ? `Grad ${index + 1}: ${count}` : null)).filter(Boolean);
-        if (slots.length) spells.append(el('p', null, `Zauberplätze: ${slots.join(' · ')}`));
+        if (slots.length) spells.append(el('p', null, globalThis.VTTUi("Zauberplätze: {p0}",{p0:(slots.join(' · '))})));
       }
       if (sheet.spells.length) spells.append(tags(sheet.spells.map((s) => `${s.name}${s.level === 0 ? ' (Zaubertrick)' : ` (Grad ${s.level})`}`)));
       root.append(spells);
@@ -87,12 +89,12 @@
 
     const gear = section('Ausrüstung');
     if (sheet.equipment.length) gear.append(tags(sheet.equipment.map((i) => `${i.name}${i.quantity > 1 ? ` ×${i.quantity}` : ''}${i.equipped ? ' (angelegt)' : ''}`)));
-    else gear.append(el('p', null, 'Keine Gegenstände.'));
+    else gear.append(el('p', null, globalThis.VTTUi("Keine Gegenstände.")));
     const coins = Object.entries(sheet.coins || {}).filter(([, amount]) => amount > 0).map(([code, amount]) => `${amount} ${code}`);
-    if (coins.length) gear.append(el('p', null, `Münzen: ${coins.join(', ')}`));
+    if (coins.length) gear.append(el('p', null, globalThis.VTTUi("Münzen: {p0}",{p0:(coins.join(', '))})));
     root.append(gear);
 
-    root.append(el('p', 'ss-banner', 'Dies ist eine schreibgeschützte Ansicht. Notizen, Hintergrund und Besitzerdaten werden nicht geteilt.'));
+    root.append(el('p', 'ss-banner', globalThis.VTTUi("Dies ist eine schreibgeschützte Ansicht. Notizen, Hintergrund und Besitzerdaten werden nicht geteilt.")));
     root.hidden = false;
   }
 
@@ -100,7 +102,7 @@
     const status = document.getElementById('ssStatus');
     const token = decodeURIComponent((window.location.hash || '').replace(/^#t=|^#/, ''));
     if (!/^\d{1,9}-[A-Za-z0-9_-]{8,80}$/.test(token)) {
-      status.textContent = 'Dieser Link ist nicht (mehr) gültig.';
+      status.textContent = globalThis.VTTUi("Dieser Link ist nicht (mehr) gültig.");
       return;
     }
     try {
@@ -109,7 +111,7 @@
       render(await response.json());
       status.textContent = '';
     } catch (error) {
-      status.textContent = 'Dieser Link ist nicht (mehr) gültig.';
+      status.textContent = globalThis.VTTUi("Dieser Link ist nicht (mehr) gültig.");
     }
   }
 

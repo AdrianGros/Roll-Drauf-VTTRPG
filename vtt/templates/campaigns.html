@@ -2,8 +2,11 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VTT - Campaigns</title>
+    <title data-ui-key="u_813935a38eb7">VTT - Campaigns</title>
     <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1365,45 +1368,46 @@
         }
     </style>
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="spellbook campaigns-route-book-scene">
-    <div id="campaignsSceneStatus" role="status" aria-live="polite" hidden>Kampagnen werden geladen …</div>
+    <div id="campaignsSceneStatus" role="status" aria-live="polite" hidden><span data-ui-key="u_ae24a165ec75">Kampagnen werden geladen …</span></div>
     <template id="campaignCreateTemplate">
                     <section class="campaign-create-panel" aria-labelledby="campaignCreateTitle">
                         <div class="campaign-create-topline">
                             <div>
-                                <div id="campaignCreateTitle" class="campaign-create-title">Neue Kampagne im Buch anlegen</div>
-                                <div class="campaign-create-copy">Die Erstellung bleibt bewusst schlank: erst den Kern erfassen, dann im Hub die nächsten Schritte wie Einladungen, Karte oder erste Session vorbereiten.</div>
-                                <div class="campaign-create-meta">Pflicht: Kampagnenname. Optional: Kurzbeschreibung und maximale Spielerzahl.</div>
+                                <div id="campaignCreateTitle" class="campaign-create-title"><span data-ui-key="u_cc875606a29d">Neue Kampagne im Buch anlegen</span></div>
+                                <div class="campaign-create-copy"><span data-ui-key="u_35ff462387f1">Die Erstellung bleibt bewusst schlank: erst den Kern erfassen, dann im Hub die nächsten Schritte wie Einladungen, Karte oder erste Session vorbereiten.</span></div>
+                                <div class="campaign-create-meta"><span data-ui-key="u_94e3d31b6605">Pflicht: Kampagnenname. Optional: Kurzbeschreibung und maximale Spielerzahl.</span></div>
                             </div>
                         </div>
 
                         <form id="campaignCreateForm" class="campaign-create-form" hidden onsubmit="submitCampaignCreationForm(event)">
                             <div class="campaign-create-grid">
                                 <label class="campaign-create-field campaign-create-field--full">
-                                    <span class="campaign-create-label">Kampagnenname</span>
-                                    <input id="campaignCreateName" type="text" maxlength="120" placeholder="z.B. Schatten über Auenwald" autocomplete="off" required>
-                                    <span class="campaign-create-help">Der Name ist der spätere Einstiegspunkt im Hub, in Einladungen und im Weg nach Play.</span>
+                                    <span class="campaign-create-label"><span data-ui-key="u_b305ea23f939">Kampagnenname</span></span>
+                                    <input id="campaignCreateName" type="text" maxlength="120" placeholder="z.B. Schatten über Auenwald" data-ui-placeholder="u_c13490cea06c" autocomplete="off" required>
+                                    <span class="campaign-create-help"><span data-ui-key="u_8430a158be8f">Der Name ist der spätere Einstiegspunkt im Hub, in Einladungen und im Weg nach Play.</span></span>
                                 </label>
                                 <label class="campaign-create-field campaign-create-field--full">
-                                    <span class="campaign-create-label">Kurzbeschreibung</span>
-                                    <textarea id="campaignCreateDescription" maxlength="600" placeholder="Worum geht es in dieser Kampagne, und was ist der Einstieg für Gruppe und Session-Vorbereitung?"></textarea>
-                                    <span class="campaign-create-help">Optional, aber hilfreich für spätere Orientierung im Kampagnen-Hub.</span>
+                                    <span class="campaign-create-label"><span data-ui-key="u_169c9ceb129d">Kurzbeschreibung</span></span>
+                                    <textarea id="campaignCreateDescription" maxlength="600" placeholder="Worum geht es in dieser Kampagne, und was ist der Einstieg für Gruppe und Session-Vorbereitung?" data-ui-placeholder="u_c970fcd77404"></textarea>
+                                    <span class="campaign-create-help"><span data-ui-key="u_76363f582408">Optional, aber hilfreich für spätere Orientierung im Kampagnen-Hub.</span></span>
                                 </label>
                                 <label class="campaign-create-field">
-                                    <span class="campaign-create-label">Maximale Spielerzahl</span>
+                                    <span class="campaign-create-label"><span data-ui-key="u_46590b887103">Maximale Spielerzahl</span></span>
                                     <input id="campaignCreateMaxPlayers" type="number" min="2" max="20" step="1" value="6" required>
-                                    <span class="campaign-create-help">Zwischen 2 und 20 Spielern, damit Session- und Einladungslogik sauber bleibt.</span>
+                                    <span class="campaign-create-help"><span data-ui-key="u_5c071190988c">Zwischen 2 und 20 Spielern, damit Session- und Einladungslogik sauber bleibt.</span></span>
                                 </label>
                                 <div class="campaign-create-field">
-                                    <span class="campaign-create-label">Nächster Schritt nach dem Anlegen</span>
-                                    <div class="campaign-create-help">Nach dem Anlegen öffnet sich der Kampagnen-Hub mit Einladungen, Karten und Session-Vorbereitung.</div>
+                                    <span class="campaign-create-label"><span data-ui-key="u_afefa4f79a6f">Nächster Schritt nach dem Anlegen</span></span>
+                                    <div class="campaign-create-help"><span data-ui-key="u_b7965c64b217">Nach dem Anlegen öffnet sich der Kampagnen-Hub mit Einladungen, Karten und Session-Vorbereitung.</span></div>
                                 </div>
                                 <label class="campaign-create-field campaign-create-field--full campaign-create-field--checkbox">
                                     <input id="campaignCreateDiscoverable" type="checkbox">
                                     <span class="campaign-create-checkbox-copy">
-                                        <span class="campaign-create-label">Öffentlich sichtbar (Spielersuche)</span>
-                                        <span class="campaign-create-help">Private Kampagnen sehen nur ihre Mitglieder. Öffentliche Kampagnen erscheinen in der Kampagnenübersicht; interessierte Spieler können dort den Beitritt anfragen. Die Spielleitung bestätigt jede Anfrage. Einladungslinks funktionieren weiterhin.</span>
+                                        <span class="campaign-create-label"><span data-ui-key="u_2d02dc5f126f">Öffentlich sichtbar (Spielersuche)</span></span>
+                                        <span class="campaign-create-help"><span data-ui-key="u_afd5d9e501a8">Private Kampagnen sehen nur ihre Mitglieder. Öffentliche Kampagnen erscheinen in der Kampagnenübersicht; interessierte Spieler können dort den Beitritt anfragen. Die Spielleitung bestätigt jede Anfrage. Einladungslinks funktionieren weiterhin.</span></span>
                                     </span>
                                 </label>
                             </div>
@@ -1411,9 +1415,9 @@
                             <div id="campaignCreateState" class="campaign-create-state" hidden></div>
 
                             <div class="campaign-create-actions">
-                                <button id="campaignCreateSubmit" class="btn btn-primary" type="submit">Kampagne erstellen</button>
-                                <button class="btn btn-secondary" type="button" onclick="resetCampaignCreationForm()">Zurücksetzen</button>
-                                <button class="btn btn-secondary" type="button" onclick="closeCampaignCreationPanel()">Schließen</button>
+                                <button id="campaignCreateSubmit" class="btn btn-primary" type="submit"><span data-ui-key="u_9fb14315911d">Kampagne erstellen</span></button>
+                                <button class="btn btn-secondary" type="button" onclick="resetCampaignCreationForm()"><span data-ui-key="u_a4565af537e2">Zurücksetzen</span></button>
+                                <button class="btn btn-secondary" type="button" onclick="closeCampaignCreationPanel()"><span data-ui-key="u_44424b18700e">Schließen</span></button>
                             </div>
                         </form>
 
@@ -1426,7 +1430,9 @@
     <script src="/static/js/community.js"></script>
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/book-scene.js"></script>
-    <script>
+    <script>globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
         const auth = new Auth();
         const community = new CommunityClient(auth);
         let campaigns = [];
@@ -1473,11 +1479,11 @@
                 ?.content.querySelector('.campaign-create-panel');
             if (!panel) return;
             BookScene.sceneSurface.innerHTML = BookScene.buildPageShell('campaigns', currentUser, {
-                title: 'Kampagne anlegen',
+                title: globalThis.VTTUi("Kampagne anlegen"),
                 showRunningHead: false,
                 showRightHeader: false,
                 leftPage: `<section data-campaign-create><div id="messageBox" class="message"></div>${panel.outerHTML}</section>`,
-                rightPage: BookScene.buildActionButtons([{label: 'Zur Kampagnenliste', route: '/campaigns'}]),
+                rightPage: BookScene.buildActionButtons([{label: globalThis.VTTUi("Zur Kampagnenliste"), route: '/campaigns'}]),
             });
             BookScene.bindSceneNavigation();
             window.history.replaceState({book_scene: 'campaigns'}, '', '/campaigns?intent=create');
@@ -1522,10 +1528,10 @@
             node.hidden = false;
             node.innerHTML = `
                 <div class="campaign-create-success-title">Kampagne angelegt: ${escapeHtml(lastCreatedCampaign.name)}</div>
-                <div class="campaign-create-success-copy">Die Kampagne ist jetzt Teil deines Buchwegs. Als Nächstes: Hub öffnen, Spieler einladen oder die erste Session vorbereiten.</div>
+                <div class="campaign-create-success-copy">${globalThis.VTTUiHTML("Die Kampagne ist jetzt Teil deines Buchwegs. Als Nächstes: Hub öffnen, Spieler einladen oder die erste Session vorbereiten.")}</div>
                 <div class="campaign-create-success-actions">
-                    <button class="btn btn-primary" type="button" onclick="openCreatedCampaignHub()">Kampagnen-Hub öffnen</button>
-                    <button class="btn btn-secondary" type="button" onclick="openCampaignCreationPanel(true)">Weitere Kampagne anlegen</button>
+                    <button class="btn btn-primary" type="button" onclick="openCreatedCampaignHub()">${globalThis.VTTUiHTML("Kampagnen-Hub öffnen")}</button>
+                    <button class="btn btn-secondary" type="button" onclick="openCampaignCreationPanel(true)">${globalThis.VTTUiHTML("Weitere Kampagne anlegen")}</button>
                 </div>
             `;
         }
@@ -1534,7 +1540,7 @@
             const submit = document.getElementById("campaignCreateSubmit");
             if (!submit) return;
             submit.disabled = isBusy;
-            submit.textContent = isBusy ? "Kampagne wird angelegt..." : "Kampagne erstellen";
+            submit.textContent = isBusy ? globalThis.VTTUi("Kampagne wird angelegt...") : globalThis.VTTUi("Kampagne erstellen");
         }
 
         function openCampaignCreationPanel(clearSuccess = false) {
@@ -1545,7 +1551,7 @@
             form.hidden = false;
             if (toggle) {
                 toggle.setAttribute("aria-expanded", "true");
-                toggle.textContent = "Kampagnenformular geöffnet";
+                toggle.textContent = globalThis.VTTUi("Kampagnenformular geöffnet");
             }
             if (clearSuccess) {
                 lastCreatedCampaign = null;
@@ -1571,7 +1577,7 @@
             form.hidden = true;
             if (toggle) {
                 toggle.setAttribute("aria-expanded", "false");
-                toggle.textContent = "+ Kampagne anlegen";
+                toggle.textContent = globalThis.VTTUi("+ Kampagne anlegen");
             }
         }
 
@@ -1905,26 +1911,26 @@
         function getSessionPhase(session) {
             const status = String(session?.runtime_status || session?.session_state || session?.status || "").trim().toLowerCase();
             if (status === "in_progress" || status === "active") {
-                return { label: "Live", className: "state-live", tone: "live" };
+                return { label: globalThis.VTTUi("Live"), className: "state-live", tone: "live" };
             }
             if (status === "paused") {
-                return { label: "Pausiert", className: "state-todo", tone: "paused" };
+                return { label: globalThis.VTTUi("Pausiert"), className: "state-todo", tone: "paused" };
             }
             if (status === "ended" || status === "completed") {
-                return { label: "Beendet", className: "state-done", tone: "ended" };
+                return { label: globalThis.VTTUi("Beendet"), className: "state-done", tone: "ended" };
             }
             if (status === "ready") {
-                return { label: "Bereit", className: "state-live", tone: "ready" };
+                return { label: globalThis.VTTUi("Bereit"), className: "state-live", tone: "ready" };
             }
-            return { label: "Geplant", className: "state-todo", tone: "scheduled" };
+            return { label: globalThis.VTTUi("Geplant"), className: "state-todo", tone: "scheduled" };
         }
 
         function getCampaignRoleLabel(campaign) {
-            if (!campaign) return "Gast";
+            if (!campaign) return globalThis.VTTUi("Gast");
             if (campaign.is_owner || canModerateCampaign(campaign)) {
                 return "DM";
             }
-            return campaign.your_role || "Spieler";
+            return campaign.your_role || globalThis.VTTUi("Spieler");
         }
 
         function getPrepStateSummary(campaign, sessions, maps, characters = [], assignments = []) {
@@ -1942,7 +1948,7 @@
             if (!canManage) {
                 if (!latestSession) {
                     return {
-                        label: "Wartet auf Session",
+                        label: globalThis.VTTUi("Wartet auf Session"),
                         summary: "Die Kampagne ist sichtbar, aber noch gibt es keine freigegebene Session zum Betreten.",
                         nextStep: "Warte auf die erste Session der Spielleitung oder nutze deinen Kampagnenkontext weiter von hier.",
                     };
@@ -1950,33 +1956,33 @@
                 if (phase?.tone === "scheduled" || phase?.tone === "ready") {
                     if (!hasAssignedCharacters) {
                         return {
-                            label: "Charakter fehlt",
+                            label: globalThis.VTTUi("Charakter fehlt"),
                             summary: `Die Session "${latestSession.name}" ist sichtbar, aber noch ohne zugewiesenen Charakterkontext.`,
                             nextStep: "Verknuepfe zuerst einen kampagnengebundenen Helden in der Session-Prep-Fläche und warte dann auf den DM-Start.",
                         };
                     }
                     return {
-                        label: "Bereit zum Start",
+                        label: globalThis.VTTUi("Bereit zum Start"),
                         summary: `Die Session "${latestSession.name}" ist angelegt, aber noch nicht live freigegeben.`,
                         nextStep: "Sobald die DM startet, wird derselbe Hub zur Eintrittsstelle in den Tisch.",
                     };
                 }
                 if (phase?.tone === "paused") {
                     return {
-                        label: "Fortsetzen bereit",
+                        label: globalThis.VTTUi("Fortsetzen bereit"),
                         summary: `Die Session "${latestSession.name}" ist pausiert und kann direkt aus dem Hub fortgesetzt werden.`,
                         nextStep: "Nutze Session fortsetzen, um über denselben Übergang wieder in Play zu gehen.",
                     };
                 }
                 if (activeSession) {
                     return {
-                        label: "Live",
+                        label: globalThis.VTTUi("Live"),
                         summary: `Die Session "${activeSession.name}" läuft bereits im Tisch.`,
                         nextStep: "Session betreten führt direkt in die laufende Runde.",
                     };
                 }
                 return {
-                    label: "Abgeschlossen",
+                    label: globalThis.VTTUi("Abgeschlossen"),
                     summary: `Die letzte Session "${latestSession.name}" ist beendet.`,
                     nextStep: "Warte auf die nächste freigegebene Session der Spielleitung.",
                 };
@@ -1984,62 +1990,62 @@
 
             if (!hasPlayers) {
                 return {
-                    label: "Kickoff",
+                    label: globalThis.VTTUi("Kickoff"),
                     summary: "Die Kampagne ist angelegt, aber noch ohne weitere Spieler im Hub.",
                     nextStep: "Lade zuerst Spieler ein, damit Session-Prep und Play-Entry für die Gruppe Sinn ergeben.",
                 };
             }
             if (!hasMap && !latestSession) {
                 return {
-                    label: "Prep startet jetzt",
+                    label: globalThis.VTTUi("Prep startet jetzt"),
                     summary: "Weder erste Karte noch erste Session sind vorbereitet.",
                     nextStep: "Lege zuerst Karte und Session an oder nutze den Schnellstart für beides zusammen.",
                 };
             }
             if (!hasMap) {
                 return {
-                    label: "Map fehlt",
+                    label: globalThis.VTTUi("Map fehlt"),
                     summary: `Die Session-Vorbereitung hat begonnen, aber für "${latestSession.name}" fehlt noch eine sichtbare Kartenbasis.`,
                     nextStep: "Gehe als Nächstes in die Karten-Vorbereitung, bevor du in Play wechselst.",
                 };
             }
             if (!latestSession) {
                 return {
-                    label: "Session fehlt",
+                    label: globalThis.VTTUi("Session fehlt"),
                     summary: `Die Karte "${latestMap.name}" ist bereit, aber es gibt noch keine Session für die Gruppe.`,
                     nextStep: "Lege jetzt die erste Session an, damit der Weg nach Play kontrolliert sichtbar wird.",
                 };
             }
             if ((phase?.tone === "scheduled" || phase?.tone === "ready") && !hasAssignedCharacters) {
                 return {
-                    label: "Charaktere fehlen",
+                    label: globalThis.VTTUi("Charaktere fehlen"),
                     summary: `Die Session "${latestSession.name}" hat bereits Kampagnenkontext, aber noch keine direkte Session-Besetzung.`,
                     nextStep: "Öffne jetzt die Session-Prep-Fläche und weise mindestens einen kampagnengebundenen Charakter zu.",
                 };
             }
             if (phase?.tone === "scheduled" || phase?.tone === "ready") {
                 return {
-                    label: "Bereit zum Start",
+                    label: globalThis.VTTUi("Bereit zum Start"),
                     summary: `Die Session "${latestSession.name}" ist vorbereitet und wartet auf den Start im Hub.`,
                     nextStep: "Starte die Session hier im Hub und gehe anschließend über denselben Pfad nach Play.",
                 };
             }
             if (phase?.tone === "paused") {
                 return {
-                    label: "Fortsetzen bereit",
+                    label: globalThis.VTTUi("Fortsetzen bereit"),
                     summary: `Die Session "${latestSession.name}" ist pausiert und kann kontrolliert wieder aufgenommen werden.`,
                     nextStep: "Session fortsetzen führt direkt über den akzeptierten Übergang zurück in den Tisch.",
                 };
             }
             if (activeSession) {
                 return {
-                    label: "Live",
+                    label: globalThis.VTTUi("Live"),
                     summary: `Die Session "${activeSession.name}" ist bereits live.`,
                     nextStep: "Der Hub bleibt deine Zentrale für Rückkehr, Übersicht und vorbereitende Folgeaktionen.",
                 };
             }
             return {
-                label: "Nachbereitung",
+                label: globalThis.VTTUi("Nachbereitung"),
                 summary: `Die letzte Session "${latestSession.name}" ist beendet.`,
                 nextStep: "Lege von hier aus die nächste Session an oder aktualisiere Karten, Assets und Charakter-Kontext für die Fortsetzung.",
             };
@@ -2061,27 +2067,27 @@
                 if (canManage) {
                     if (!hasPlayers) {
                         return {
-                            label: "Spieler einladen",
+                            label: globalThis.VTTUi("Spieler einladen"),
                             hint: "Bevor eine Session Sinn ergibt, sollte zuerst die Gruppe sichtbar in der Kampagne sein.",
                             action: `<button class="btn btn-primary" type="button" onclick="focusInviteControls()">Spieler einladen</button>`,
                         };
                     }
                     if (!hasCampaignMap) {
                         return {
-                            label: "Session vorbereiten",
+                            label: globalThis.VTTUi("Session vorbereiten"),
                             hint: "Es fehlt noch die erste Session und eine sichtbare Kartenbasis für den Weg nach Play.",
                             action: `<button class="btn btn-primary" type="button" onclick="focusQuickStart()">Karte + Session vorbereiten</button>`,
                         };
                     }
                     return {
-                        label: "Erste Session anlegen",
+                        label: globalThis.VTTUi("Erste Session anlegen"),
                         hint: "Die Kampagne ist bereit für ihre erste Sitzung. Der Hub bleibt danach der Rücksprungpunkt vor dem Spieltisch.",
                         action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Session anlegen</button>`,
                     };
                 }
 
                 return {
-                    label: "Warte auf Session",
+                    label: globalThis.VTTUi("Warte auf Session"),
                     hint: "Sobald die Spielleitung eine Session vorbereitet, erscheint sie hier als nächster Schritt vor dem Tisch.",
                             action: `<span class="session-action-status">Warte auf die Spielleitung</span>`,
                 };
@@ -2090,7 +2096,7 @@
             if (canManage) {
                 if ((phase.tone === "scheduled" || phase.tone === "ready") && !hasSessionMap) {
                     return {
-                        label: "Session-Map setzen",
+                        label: globalThis.VTTUi("Session-Map setzen"),
                         hint: hasCampaignMap
                             ? `Für "${session.name}" ist noch keine aktive Karte gewählt. Wähle zuerst die Session-Karte, bevor du startest.`
                             : `Für "${session.name}" fehlt noch jede Kartenbasis. Nutze zuerst den Map-Prep-Bereich.`,
@@ -2101,34 +2107,34 @@
                 }
                 if ((phase.tone === "scheduled" || phase.tone === "ready") && !hasAssignedCharacters) {
                     return {
-                        label: "Charaktere zuweisen",
+                        label: globalThis.VTTUi("Charaktere zuweisen"),
                         hint: `Für "${session.name}" ist noch kein Charakter direkt zugeordnet. Weise zuerst die Session-Besetzung zu, bevor du startest.`,
                         action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">Session-Besetzung öffnen</button>`,
                     };
                 }
                 if (phase.tone === "scheduled" || phase.tone === "ready") {
                     return {
-                        label: "Session starten",
+                        label: globalThis.VTTUi("Session starten"),
                         hint: `Die Session "${session.name}" ist vorbereitet und kann von hier kontrolliert live geschaltet werden.`,
                         action: `<button class="btn btn-primary" type="button" onclick="startSession(${campaign.id}, ${session.id})">Session starten</button>`,
                     };
                 }
                 if (phase.tone === "paused") {
                     return {
-                        label: "Session fortsetzen",
+                        label: globalThis.VTTUi("Session fortsetzen"),
                         hint: `Die Session "${session.name}" ist pausiert und führt über denselben Übergang wieder in den Tisch.`,
                         action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`,
                     };
                 }
                 if (phase.tone === "live") {
                     return {
-                        label: "Zu Play",
+                        label: globalThis.VTTUi("Zu Play"),
                         hint: `Die Session "${session.name}" läuft bereits. Die Prep-Oberfläche bleibt der letzte Buchstopp davor.`,
                         action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Zu Play</button>`,
                     };
                 }
                 return {
-                    label: "Nächste Session anlegen",
+                    label: globalThis.VTTUi("Nächste Session anlegen"),
                     hint: `Die Session "${session.name}" ist abgeschlossen. Für die Fortsetzung ist jetzt wieder Vorbereitung statt Tisch angesagt.`,
                     action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Nächste Session anlegen</button>`,
                 };
@@ -2137,33 +2143,33 @@
             if (phase.tone === "scheduled" || phase.tone === "ready") {
                 if (!hasSelfAssignedCharacter && hasAssignableCharacters) {
                     return {
-                        label: "Eigenen Charakter zuweisen",
+                        label: globalThis.VTTUi("Eigenen Charakter zuweisen"),
                         hint: `Du kannst jetzt einen deiner kampagnengebundenen Helden direkt dieser Session zuordnen und danach auf den Sessionstart warten.`,
                         action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">Charakter zuweisen</button>`,
                     };
                 }
                 return {
-                    label: "Auf Sessionstart warten",
+                    label: globalThis.VTTUi("Auf Sessionstart warten"),
                     hint: `Die Session "${session.name}" ist sichtbar, wird aber erst nach dem DM-Start betretbar.`,
                     action: `<span class="session-action-status">Warte auf den Start durch die Spielleitung</span>`,
                 };
             }
             if (phase.tone === "paused") {
                 return {
-                    label: "Session fortsetzen",
+                    label: globalThis.VTTUi("Session fortsetzen"),
                     hint: `Die Session "${session.name}" kann jetzt direkt aus der Vorbereitung wieder betreten werden.`,
                     action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`,
                 };
             }
             if (phase.tone === "live") {
                 return {
-                    label: "Session betreten",
+                    label: globalThis.VTTUi("Session betreten"),
                     hint: `Die Session "${session.name}" läuft bereits live.`,
                     action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session betreten</button>`,
                 };
             }
             return {
-                label: "Warte auf nächste Session",
+                label: globalThis.VTTUi("Warte auf nächste Session"),
                 hint: `Die Session "${session.name}" ist abgeschlossen. Die nächste freigegebene Runde erscheint wieder hier.`,
                     action: `<span class="session-action-status">Keine aktive Session</span>`,
             };
@@ -2229,16 +2235,16 @@
 
             const stats = getSessionAssetStats(sessionId);
             if (!stats) {
-                statsNode.innerHTML = `<div class="muted">Session-Assets werden geladen...</div>`;
+                statsNode.innerHTML = `<div class="muted">${globalThis.VTTUiHTML("Session-Assets werden geladen...")}</div>`;
                 return;
             }
 
             statsNode.innerHTML = `
                 <div class="hub-pill-row">
-                    <span class="hub-badge"><strong>Session-Assets:</strong> ${escapeHtml(String(stats.total))}</span>
-                    <span class="hub-badge"><strong>Karten:</strong> ${escapeHtml(String(stats.maps))}</span>
-                    <span class="hub-badge"><strong>Handouts:</strong> ${escapeHtml(String(stats.handouts))}</span>
-                    <span class="hub-badge"><strong>Tokens:</strong> ${escapeHtml(String(stats.tokens))}</span>
+                    <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Session-Assets:")}</strong> ${escapeHtml(String(stats.total))}</span>
+                    <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Karten:")}</strong> ${escapeHtml(String(stats.maps))}</span>
+                    <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Handouts:")}</strong> ${escapeHtml(String(stats.handouts))}</span>
+                    <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Tokens:")}</strong> ${escapeHtml(String(stats.tokens))}</span>
                 </div>
             `;
         }
@@ -2275,7 +2281,7 @@
                 if (requestToken === sessionPrepAssetStatsRequestToken) {
                     const statsNode = document.getElementById("sessionPrepAssetStats");
                     if (statsNode) {
-                        statsNode.innerHTML = `<div class="muted">Session-Assets konnten gerade nicht gelesen werden.</div>`;
+                        statsNode.innerHTML = `<div class="muted">${globalThis.VTTUiHTML("Session-Assets konnten gerade nicht gelesen werden.")}</div>`;
                     }
                 }
             }
@@ -2399,11 +2405,11 @@
                     const canEditAssignment = canCurrentUserManageSessionCharacter(campaign, character);
                     const assignmentButton = mode === "assigned"
                         ? (canEditAssignment
-                            ? `<button class="btn btn-secondary btn-sm" type="button" onclick="unassignCharacterFromPrepSession(${campaign.id}, ${prepSession.id}, ${character.id})">Entfernen</button>`
-                            : `<button class="btn btn-secondary btn-sm" type="button" disabled>Nicht deine Zuweisung</button>`)
+                            ? `<button class="btn btn-secondary btn-sm" type="button" onclick="unassignCharacterFromPrepSession(${campaign.id}, ${prepSession.id}, ${character.id})">${globalThis.VTTUiHTML("Entfernen")}</button>`
+                            : `<button class="btn btn-secondary btn-sm" type="button" disabled>${globalThis.VTTUiHTML("Nicht deine Zuweisung")}</button>`)
                         : (canEditAssignment
-                            ? `<button class="btn btn-primary btn-sm" type="button" onclick="assignCharacterToPrepSession(${campaign.id}, ${prepSession.id}, ${character.id})">Zuordnen</button>`
-                            : `<button class="btn btn-secondary btn-sm" type="button" disabled>Nicht direkt zuweisbar</button>`);
+                            ? `<button class="btn btn-primary btn-sm" type="button" onclick="assignCharacterToPrepSession(${campaign.id}, ${prepSession.id}, ${character.id})">${globalThis.VTTUiHTML("Zuordnen")}</button>`
+                            : `<button class="btn btn-secondary btn-sm" type="button" disabled>${globalThis.VTTUiHTML("Nicht direkt zuweisbar")}</button>`);
 
                     return `
                         <div class="list-item">
@@ -2414,7 +2420,7 @@
                             <div class="muted">${escapeHtml(ownerLabel)} · ${escapeHtml(identityLabel)}</div>
                             <div class="hub-session-actions">
                                 ${assignmentButton}
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${character.id})">Bogen öffnen</button>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${character.id})">${globalThis.VTTUiHTML("Bogen öffnen")}</button>
                             </div>
                         </div>
                     `;
@@ -2666,7 +2672,7 @@
 
             if (!campaign.is_member && !canManage) {
                 return {
-                    label: "Einladung eingeben",
+                    label: globalThis.VTTUi("Einladung eingeben"),
                     hint: "Spieler sehen hier die schnellste Route in die Kampagne.",
                     action: `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">Einladung eingeben</button>`,
                 };
@@ -2675,7 +2681,7 @@
             if (canManage) {
                 if (!hasMembers) {
                     return {
-                        label: "Spieler einladen",
+                        label: globalThis.VTTUi("Spieler einladen"),
                         hint: "Die DM-Route startet mit der ersten Einladung.",
                         action: `<button class="btn btn-primary" onclick="focusInviteControls()">Spieler einladen</button>`,
                     };
@@ -2684,13 +2690,13 @@
                 if (!latestSession) {
                     if (!latestMap) {
                         return {
-                            label: "Session vorbereiten",
+                            label: globalThis.VTTUi("Session vorbereiten"),
                             hint: "Erste Karte und erste Session fehlen noch. Der Schnellstart verbindet beides im selben Hub-Schritt.",
                             action: `<button class="btn btn-primary" onclick="focusQuickStart()">Karte + Session vorbereiten</button>`,
                         };
                     }
                     return {
-                        label: "Erste Session anlegen",
+                        label: globalThis.VTTUi("Erste Session anlegen"),
                         hint: "Karte und Gruppe sind sichtbar. Jetzt fehlt nur noch die erste Session als kontrollierter Weg nach Play.",
                         action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Session anlegen</button>`,
                     };
@@ -2700,7 +2706,7 @@
                 if (phase.tone === "scheduled" || phase.tone === "ready") {
                     if (!latestSessionMap) {
                         return {
-                            label: "Session-Prep öffnen",
+                            label: globalThis.VTTUi("Session-Prep öffnen"),
                             hint: latestMap
                                 ? `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte. Öffne zuerst die fokussierte Session-Vorbereitung.`
                                 : `Die Session "${latestSession.name}" braucht vor dem Start noch sichtbares Kartenmaterial.`,
@@ -2711,13 +2717,13 @@
                     }
                     if (!hasSessionCharacters) {
                         return {
-                            label: "Session-Prep öffnen",
+                            label: globalThis.VTTUi("Session-Prep öffnen"),
                             hint: `Die Session "${latestSession.name}" braucht vor dem Start noch direkte Session-Charaktere.`,
                             action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`,
                         };
                     }
                     return {
-                        label: "Session starten",
+                        label: globalThis.VTTUi("Session starten"),
                         hint: `Die letzte Session "${latestSession.name}" ist vorbereitet und kann live geschaltet werden.`,
                         action: `<button class="btn btn-primary" onclick="startSession(${campaign.id}, ${latestSession.id})">Session starten</button>`,
                     };
@@ -2725,7 +2731,7 @@
 
                 if (phase.tone === "paused") {
                     return {
-                        label: "Session fortsetzen",
+                        label: globalThis.VTTUi("Session fortsetzen"),
                         hint: `Die Session "${latestSession.name}" ist pausiert. Im Tisch kann sie weitergeführt werden.`,
                         action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">Session fortsetzen</button>`,
                     };
@@ -2733,14 +2739,14 @@
 
                 if (activeSession) {
                     return {
-                        label: "Zu Play",
+                        label: globalThis.VTTUi("Zu Play"),
                         hint: `Die Session "${activeSession.name}" läuft bereits im Tisch und kann direkt weitergeführt werden.`,
                         action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${activeSession.id})">Zu Play</button>`,
                     };
                 }
 
                 return {
-                    label: "Nächste Session anlegen",
+                    label: globalThis.VTTUi("Nächste Session anlegen"),
                     hint: `Die letzte Session "${latestSession.name}" ist beendet. Von hier aus beginnt die Vorbereitung für die nächste Runde.`,
                     action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Nächste Session anlegen</button>`,
                 };
@@ -2752,33 +2758,33 @@
                 if (phase.tone === "scheduled" || phase.tone === "ready") {
                     if (!latestBuckets.currentUserAssigned.length && latestBuckets.assignable.length) {
                         return {
-                            label: "Session-Prep öffnen",
+                            label: globalThis.VTTUi("Session-Prep öffnen"),
                             hint: `Bevor die Session "${latestSession.name}" startet, kannst du hier noch deinen Helden direkt zuweisen.`,
                             action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`,
                         };
                     }
                     return {
-                        label: "Auf Sessionstart warten",
+                        label: globalThis.VTTUi("Auf Sessionstart warten"),
                         hint: `Die Session "${latestSession.name}" ist angelegt, wird aber erst nach dem DM-Start betretbar.`,
                         action: `<span class="session-action-status">Warte auf den Start durch die Spielleitung</span>`,
                     };
                 }
                 if (phase.tone === "ended") {
                     return {
-                        label: "Warte auf nächste Session",
+                        label: globalThis.VTTUi("Warte auf nächste Session"),
                         hint: `Die letzte Session "${latestSession.name}" ist beendet. Die nächste freigegebene Session erscheint wieder hier im Hub.`,
                         action: `<span class="session-action-status">Keine aktive Session</span>`,
                     };
                 }
                 return {
-                    label: "Session betreten",
+                    label: globalThis.VTTUi("Session betreten"),
                     hint: `Als Spieler gelangst du von hier direkt in die Session "${latestSession.name}".`,
                     action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">Session betreten</button>`,
                 };
             }
 
             return {
-                label: "Warte auf DM",
+                label: globalThis.VTTUi("Warte auf DM"),
                 hint: "Du bist Teil der Kampagne, aber noch gibt es keine Session zum Betreten.",
                 action: `<span class="session-action-status">Warte auf die Spielleitung</span>`,
             };
@@ -2870,7 +2876,7 @@
 
             if (button) {
                 button.disabled = true;
-                button.textContent = "Wird hochgeladen...";
+                button.textContent = globalThis.VTTUi("Wird hochgeladen...");
             }
 
             try {
@@ -2904,7 +2910,7 @@
             } finally {
                 if (button) {
                     button.disabled = false;
-                    button.textContent = "Karte hinzufügen";
+                    button.textContent = globalThis.VTTUi("Karte hinzufügen");
                 }
             }
         }
@@ -3285,7 +3291,7 @@
 
         function formatBytes(bytes) {
             const value = Number(bytes || 0);
-            if (!Number.isFinite(value) || value <= 0) return "0 B";
+            if (!Number.isFinite(value) || value <= 0) return globalThis.VTTUi("0 B");
             const units = ["B", "KB", "MB", "GB"];
             let current = value;
             let unitIndex = 0;
@@ -3298,17 +3304,17 @@
 
         function getAssetTypeLabel(assetType) {
             const labels = {
-                map: "Karte",
-                token: "Token",
-                handout: "Handout",
-                image: "Bild",
+                map: globalThis.VTTUi("Karte"),
+                token: globalThis.VTTUi("Token"),
+                handout: globalThis.VTTUi("Handout"),
+                image: globalThis.VTTUi("Bild"),
             };
             return labels[String(assetType || "").toLowerCase()] || String(assetType || "Asset");
         }
 
         function getAssetScopeLabel(asset) {
             if (asset?.scope_label) return asset.scope_label;
-            return asset?.session_id ? "Session" : "Campaign";
+            return asset?.session_id ? globalThis.VTTUi("Session") : globalThis.VTTUi("Campaign");
         }
 
         function getAssetPreviewMarkup(asset) {
@@ -3411,16 +3417,16 @@
 
         function renderAssetLibraryStats(stats, payload) {
             const items = [
-                { label: "Assets", value: stats?.total_assets ?? 0 },
-                { label: "Kampagne", value: stats?.campaign_assets ?? 0 },
-                { label: "Session", value: stats?.session_assets ?? 0 },
-                { label: "Karten", value: stats?.maps ?? 0 },
-                { label: "Tokens", value: stats?.tokens ?? 0 },
-                { label: "Handouts", value: stats?.handouts ?? 0 },
-                { label: "Bilder", value: stats?.images ?? 0 },
-                { label: "Preview", value: stats?.previewable_assets ?? 0 },
-                { label: "Gesamt", value: formatBytes(stats?.total_size_bytes ?? 0) },
-                { label: "Gefiltert", value: payload?.total ?? 0 },
+                { label: globalThis.VTTUi("Assets"), value: stats?.total_assets ?? 0 },
+                { label: globalThis.VTTUi("Kampagne"), value: stats?.campaign_assets ?? 0 },
+                { label: globalThis.VTTUi("Session"), value: stats?.session_assets ?? 0 },
+                { label: globalThis.VTTUi("Karten"), value: stats?.maps ?? 0 },
+                { label: globalThis.VTTUi("Tokens"), value: stats?.tokens ?? 0 },
+                { label: globalThis.VTTUi("Handouts"), value: stats?.handouts ?? 0 },
+                { label: globalThis.VTTUi("Bilder"), value: stats?.images ?? 0 },
+                { label: globalThis.VTTUi("Preview"), value: stats?.previewable_assets ?? 0 },
+                { label: globalThis.VTTUi("Gesamt"), value: formatBytes(stats?.total_size_bytes ?? 0) },
+                { label: globalThis.VTTUi("Gefiltert"), value: payload?.total ?? 0 },
             ];
 
             return items.map(item => `
@@ -3437,7 +3443,7 @@
             statsNode.innerHTML = renderAssetLibraryStats(payload?.stats || {}, payload);
 
             if (!assets.length) {
-                grid.innerHTML = `<div class="asset-empty-state">Keine Assets entsprechen den aktuellen Filtern.</div>`;
+                grid.innerHTML = `<div class="asset-empty-state">${globalThis.VTTUiHTML("Keine Assets entsprechen den aktuellen Filtern.")}</div>`;
                 return;
             }
 
@@ -3451,10 +3457,10 @@
                     ? `<div class="asset-card-meta">Session: ${escapeHtml(asset.session_name)}</div>`
                     : "";
                 const deleteButton = canManage
-                    ? `<button class="btn btn-danger btn-sm" onclick="deleteLibraryAsset(${asset.id}, ${campaignId})">Löschen</button>`
+                    ? `<button class="btn btn-danger btn-sm" onclick="deleteLibraryAsset(${asset.id}, ${campaignId})">${globalThis.VTTUiHTML("Löschen")}</button>`
                     : "";
                 const previewButton = canPreview
-                    ? `<button class="btn btn-secondary btn-sm" onclick="openAssetPreview('${previewUrl.replace(/'/g, "\\'")}')">Vorschau</button>`
+                    ? `<button class="btn btn-secondary btn-sm" onclick="openAssetPreview('${previewUrl.replace(/'/g, "\\'")}')">${globalThis.VTTUiHTML("Vorschau")}</button>`
                     : "";
 
                 return `
@@ -3471,7 +3477,7 @@
                             <div class="asset-card-meta">Uploaded by ${escapeHtml(asset.uploaded_by || "-")} · ${escapeHtml(formatBytes(asset.size_bytes))}</div>
                             <div class="asset-card-actions">
                                 ${previewButton}
-                                <a class="btn btn-secondary btn-sm" href="${downloadUrl}" target="_blank" rel="noopener">Herunterladen</a>
+                                <a class="btn btn-secondary btn-sm" href="${downloadUrl}" target="_blank" rel="noopener">${globalThis.VTTUiHTML("Herunterladen")}</a>
                                 ${deleteButton}
                             </div>
                         </div>
@@ -3522,7 +3528,7 @@
 
             const grid = document.getElementById("assetLibraryGrid");
             if (grid) {
-                grid.innerHTML = `<div class="asset-empty-state">Bibliothek wird geladen...</div>`;
+                grid.innerHTML = `<div class="asset-empty-state">${globalThis.VTTUiHTML("Bibliothek wird geladen...")}</div>`;
             }
 
             try {
@@ -3531,7 +3537,7 @@
                 syncAssetLibraryUploadScope();
             } catch (error) {
                 if (grid) {
-                    grid.innerHTML = `<div class="asset-empty-state">Bibliothek konnte nicht geladen werden.</div>`;
+                    grid.innerHTML = `<div class="asset-empty-state">${globalThis.VTTUiHTML("Bibliothek konnte nicht geladen werden.")}</div>`;
                 }
                 showMessage(error.message || "Asset-Library konnte nicht geladen werden.", true);
             }
@@ -3560,7 +3566,7 @@
             const button = document.querySelector('.asset-library-upload .btn.btn-primary');
             if (button) {
                 button.disabled = true;
-                button.textContent = "Upload...";
+                button.textContent = globalThis.VTTUi("Upload...");
             }
 
             const formData = new FormData();
@@ -3598,13 +3604,13 @@
             } finally {
                 if (button) {
                     button.disabled = false;
-                    button.textContent = "Upload";
+                    button.textContent = globalThis.VTTUi("Upload");
                 }
             }
         }
 
         async function deleteLibraryAsset(assetId, campaignId) {
-            if (!window.confirm("Asset wirklich löschen?")) return;
+            if (!window.confirm(globalThis.VTTUi("Asset wirklich löschen?"))) return;
             try {
                 await auth.makeAuthRequest(`/api/assets/${assetId}/delete`, "DELETE");
                 showMessage("Asset gelöscht.");
@@ -3627,9 +3633,9 @@
             feed.className = "chat-feed";
             feed.innerHTML = messages.map(message => {
                 const canDelete = canModerate || message.author_user_id === currentUser?.id;
-                const reportButton = `<button class="btn btn-secondary btn-sm" onclick="reportCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Melden</button>`;
+                const reportButton = `<button class="btn btn-secondary btn-sm" onclick="reportCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">${globalThis.VTTUiHTML("Melden")}</button>`;
                 const deleteButton = canDelete
-                    ? `<button class="btn btn-danger btn-sm" onclick="deleteCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">Löschen</button>`
+                    ? `<button class="btn btn-danger btn-sm" onclick="deleteCommunityMessage(${campaignId}, ${sessionId}, ${message.id})">${globalThis.VTTUiHTML("Löschen")}</button>`
                     : "";
 
                 return `
@@ -3664,7 +3670,7 @@
 
                 const voiceBox = document.getElementById("communityVoice");
                 if (voiceBox) {
-                    voiceBox.textContent = `Voice: ${voicePayload.voice_enabled ? "aktiv" : "deaktiviert (M7.1)"}`;
+                    voiceBox.textContent = globalThis.VTTUi("Voice: {p0}",{p0:(voicePayload.voice_enabled ? "aktiv" : "deaktiviert (M7.1)")});
                 }
             } catch (error) {
                 showMessage(error.message || "Community-Bereich konnte nicht geladen werden.", true);
@@ -3702,7 +3708,7 @@
         }
 
         async function deleteCommunityMessage(campaignId, sessionId, messageId) {
-            if (!window.confirm("Nachricht wirklich löschen?")) return;
+            if (!window.confirm(globalThis.VTTUi("Nachricht wirklich löschen?"))) return;
             try {
                 await community.deleteMessage(campaignId, sessionId, messageId);
                 await loadCommunityPanel(campaignId);
@@ -3720,7 +3726,7 @@
                 const reports = payload.reports || [];
                 if (!reports.length) {
                     queue.className = "mod-queue muted";
-                    queue.textContent = "Keine offenen Meldungen.";
+                    queue.textContent = globalThis.VTTUi("Keine offenen Meldungen.");
                     return;
                 }
 
@@ -3814,7 +3820,7 @@
             BookScene.currentView = 'campaigns';
             BookScene.currentPage = 'campaigns';
             BookScene.sceneSurface.innerHTML = BookScene.buildPageShell('campaigns', currentUser, {
-                title: 'Kampagne vorbereiten',
+                title: globalThis.VTTUi("Kampagne vorbereiten"),
                 showRunningHead: false,
                 showRightHeader: false,
                 leftPage: `
@@ -3822,8 +3828,8 @@
                         <h2>${escapeHtml(campaign.name)}</h2>
                         <div id="messageBox" class="message" role="status"></div>
                         <div class="book-scene-action-row">
-                            <button class="btn btn-secondary" id="refreshDetailBtn" type="button">Aktualisieren</button>
-                            <button class="btn btn-secondary" type="button" data-dashboard-detail="campaign:${Number(campaign.id)}">Zum Kampagnen-Hub</button>
+                            <button class="btn btn-secondary" id="refreshDetailBtn" type="button">${globalThis.VTTUiHTML("Aktualisieren")}</button>
+                            <button class="btn btn-secondary" type="button" data-dashboard-detail="campaign:${Number(campaign.id)}">${globalThis.VTTUiHTML("Zum Kampagnen-Hub")}</button>
                         </div>
                         ${buildRoll20CopyWorkflow(campaign, sessions, maps, characters, assignments)}
                         ${buildSessionPrepSurface(campaign, members, sessions, maps, characters, assignments)}
@@ -3831,7 +3837,7 @@
                 rightPage: `
                     ${buildAssetLibraryPanel(campaign, sessions, canManage)}
                     <section class="book-scene-panel">
-                        <h2>Mitglieder</h2>
+                        <h2>${globalThis.VTTUiHTML("Mitglieder")}</h2>
                         <div class="list">${buildMembersList(members)}</div>
                     </section>
                     ${buildCommunityPanel(campaign, sessions)}`,
@@ -3910,7 +3916,7 @@
             }
             if (button) {
                 const label = button.textContent;
-                button.textContent = copied ? "Kopiert ✓" : "Manuell kopieren (Strg+C)";
+                button.textContent = copied ? globalThis.VTTUi("Kopiert ✓") : globalThis.VTTUi("Manuell kopieren (Strg+C)");
                 window.setTimeout(() => { button.textContent = label; }, 2000);
             }
         }
@@ -3996,7 +4002,7 @@
                 };
                 image.onerror = () => {
                     URL.revokeObjectURL(objectUrl);
-                    reject(new Error("Could not read image dimensions"));
+                    reject(new Error(globalThis.VTTUi("Could not read image dimensions")));
                 };
                 image.src = objectUrl;
             });
@@ -4025,7 +4031,7 @@
 
             if (button) {
                 button.disabled = true;
-                button.textContent = "Bitte warten...";
+                button.textContent = globalThis.VTTUi("Bitte warten...");
             }
 
             try {
@@ -4081,7 +4087,7 @@
             } finally {
                 if (button) {
                     button.disabled = false;
-                    button.textContent = "Session + Karte jetzt starten";
+                    button.textContent = globalThis.VTTUi("Session + Karte jetzt starten");
                 }
             }
         }
@@ -4099,7 +4105,7 @@
 
         async function endSession(campaignId, sessionId) {
             const ok = window.confirm(
-                "Session wirklich beenden?\n\nHinweis: Danach ist die Session nicht mehr live."
+                globalThis.VTTUi("Session wirklich beenden?\n\nHinweis: Danach ist die Session nicht mehr live.")
             );
             if (!ok) return;
             try {
@@ -4259,7 +4265,7 @@
         }
 
         async function endCombat(campaignId, sessionId) {
-            if (!window.confirm("Aktuellen Kampf wirklich beenden?")) return;
+            if (!window.confirm(globalThis.VTTUi("Aktuellen Kampf wirklich beenden?"))) return;
             try {
                 const state = await fetchCombatState(campaignId, sessionId);
                 if (!state.encounter) {
@@ -4281,7 +4287,7 @@
         }
 
         async function deleteCampaign(campaignId) {
-            if (!window.confirm("Kampagne wirklich löschen?")) return;
+            if (!window.confirm(globalThis.VTTUi("Kampagne wirklich löschen?"))) return;
 
             try {
                 await auth.makeAuthRequest(`/api/campaigns/${campaignId}`, "DELETE");

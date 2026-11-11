@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Stamp palette: curated Kenney Cartography Pack (CC0) as the primary set,
 // plus a tiny built-in set (compass, pin; simple fallbacks if the pack is missing).
 
@@ -11,7 +13,7 @@ function loadImage(src) {
         const img = new Image();
         img.decoding = "async";
         img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error(`Bild fehlt: ${src}`));
+        img.onerror = () => reject(new Error(globalThis.VTTUi("Bild fehlt: {p0}",{p0:(src)})));
         img.src = src;
     });
 }
@@ -94,12 +96,12 @@ function drawBuiltin(kind) {
 }
 
 const BUILTINS = [
-    { id: "builtin:compass", label: "Windrose (einfach)", always: true, kind: "compass", defaultSize: 160 },
-    { id: "builtin:pin", label: "Ortsnadel", always: true, kind: "pin", defaultSize: 48 },
-    { id: "builtin:mountain", label: "Berg (einfach)", kind: "mountain", defaultSize: 88 },
-    { id: "builtin:tree", label: "Baum (einfach)", kind: "tree", defaultSize: 56 },
-    { id: "builtin:house", label: "Haus (einfach)", kind: "house", defaultSize: 72 },
-    { id: "builtin:castle", label: "Burg (einfach)", kind: "castle", defaultSize: 88 },
+    { id: "builtin:compass", label: globalThis.VTTUi("Windrose (einfach)"), always: true, kind: "compass", defaultSize: 160 },
+    { id: "builtin:pin", label: globalThis.VTTUi("Ortsnadel"), always: true, kind: "pin", defaultSize: 48 },
+    { id: "builtin:mountain", label: globalThis.VTTUi("Berg (einfach)"), kind: "mountain", defaultSize: 88 },
+    { id: "builtin:tree", label: globalThis.VTTUi("Baum (einfach)"), kind: "tree", defaultSize: 56 },
+    { id: "builtin:house", label: globalThis.VTTUi("Haus (einfach)"), kind: "house", defaultSize: 72 },
+    { id: "builtin:castle", label: globalThis.VTTUi("Burg (einfach)"), kind: "castle", defaultSize: 88 },
 ];
 
 /** Local reviewed manifests; only Kenney and brush textures decode at startup.
@@ -118,7 +120,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
 
     const loadStamp = (id) => {
         const stamp = stamps.get(id);
-        if (!stamp) return Promise.reject(new Error("Unbekanntes Symbol."));
+        if (!stamp) return Promise.reject(new Error(globalThis.VTTUi("Unbekanntes Symbol.")));
         if (stamp.image) return Promise.resolve(stamp.image);
         if (!pending.has(id)) {
             const promise = loadImage(stamp.src).then((image) => {
@@ -164,7 +166,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
             const manifest = await response.json();
             const entries = manifest.schemaVersion === 2 && Array.isArray(manifest.rows)
                 ? manifest.rows.map((row) => {
-                    if (!Array.isArray(row) || row.length !== 10) throw new Error("Ungültiger Paletteneintrag.");
+                    if (!Array.isArray(row) || row.length !== 10) throw new Error(globalThis.VTTUi("Ungültiger Paletteneintrag."));
                     const [id, file, label, w, h, group, sheet, grid, pixelArt, defaultSize] = row;
                     return { id, file, label, w, h, group, sheet, grid, pixelArt, defaultSize };
                 }) : Array.isArray(manifest.stamps) ? manifest.stamps : [];
@@ -183,7 +185,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
                     w: entry.w, h: entry.h, defaultSize: clampSize(entry.defaultSize),
                 });
             }
-            if (accepted.length !== entries.length) throw new Error("Unvollständiger Palettenkatalog.");
+            if (accepted.length !== entries.length) throw new Error(globalThis.VTTUi("Unvollständiger Palettenkatalog."));
             const hidden = new Set(Array.isArray(manifest.hidden) ? manifest.hidden : entries.filter((entry) => entry.hidden === true).map((entry) => entry.id));
             const tiles = new Set(Array.isArray(manifest.tiles) ? manifest.tiles : entries.filter((entry) => entry.tile === true).map((entry) => entry.id));
             for (const stamp of accepted) stamp.tile = tiles.has(stamp.id) && stamp.w === stamp.h;

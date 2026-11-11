@@ -1,26 +1,28 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /* Inventory, coins, worn armor and weapon attacks of an SRD character sheet.
  * Relies on globals of character-sheet.html: auth, editable, srdCreatorData, appendText, signed, srdRollButton. */
 (function () {
   'use strict';
 
   const COIN_ORDER = ['PM', 'GM', 'EM', 'SM', 'KM'];
-  const KIND_LABELS = { weapon: 'Waffe', armor: 'Rüstung', shield: 'Schild', gear: 'Ausrüstung', tool: 'Werkzeug', custom: 'Eigener Gegenstand', magic: 'Magischer Gegenstand' };
+  const KIND_LABELS = { weapon: globalThis.VTTUi("Waffe"), armor: globalThis.VTTUi("Rüstung"), shield: globalThis.VTTUi("Schild"), gear: globalThis.VTTUi("Ausrüstung"), tool: globalThis.VTTUi("Werkzeug"), custom: globalThis.VTTUi("Eigener Gegenstand"), magic: globalThis.VTTUi("Magischer Gegenstand") };
   const CHOICE_LABELS = {
-    'arcane-focus': 'Arkaner Fokus', 'holy-symbol': 'Heiliges Symbol', 'druidic-focus': 'Druidischer Fokus',
-    'musical-instrument': 'Musikinstrument', 'tool-choice': 'Handwerkszeug oder Musikinstrument',
+    'arcane-focus': globalThis.VTTUi("Arkaner Fokus"), 'holy-symbol': globalThis.VTTUi("Heiliges Symbol"), 'druidic-focus': globalThis.VTTUi("Druidischer Fokus"),
+    'musical-instrument': globalThis.VTTUi("Musikinstrument"), 'tool-choice': globalThis.VTTUi("Handwerkszeug oder Musikinstrument"),
   };
   const ERRORS = {
-    already_seeded: 'Die Ausgangsausrüstung wurde bereits übernommen.',
-    invalid_coins: 'Ungültige Münzmenge.',
-    not_enough_coins: 'Du hast nicht genug Münzen dafür.',
-    invalid_quantity: 'Die Anzahl muss eine ganze Zahl zwischen 1 und 9999 sein.',
-    invalid_name: 'Gib dem Gegenstand einen Namen.',
-    invalid_weight: 'Das Gewicht muss zwischen 0 und 1000 kg liegen.',
-    inventory_full: 'Das Inventar ist voll.',
-    not_wearable: 'Dieser Gegenstand kann nicht angelegt werden.',
-    unknown_item: 'Diesen Gegenstand gibt es im Regelwerk nicht.',
-    package_missing: 'Wähle für Klasse und Hintergrund jeweils ein Ausrüstungspaket.',
-    forbidden: 'Nur die Besitzerin oder der Besitzer ändert das Inventar.',
+    already_seeded: globalThis.VTTUi("Die Ausgangsausrüstung wurde bereits übernommen."),
+    invalid_coins: globalThis.VTTUi("Ungültige Münzmenge."),
+    not_enough_coins: globalThis.VTTUi("Du hast nicht genug Münzen dafür."),
+    invalid_quantity: globalThis.VTTUi("Die Anzahl muss eine ganze Zahl zwischen 1 und 9999 sein."),
+    invalid_name: globalThis.VTTUi("Gib dem Gegenstand einen Namen."),
+    invalid_weight: globalThis.VTTUi("Das Gewicht muss zwischen 0 und 1000 kg liegen."),
+    inventory_full: globalThis.VTTUi("Das Inventar ist voll."),
+    not_wearable: globalThis.VTTUi("Dieser Gegenstand kann nicht angelegt werden."),
+    unknown_item: globalThis.VTTUi("Diesen Gegenstand gibt es im Regelwerk nicht."),
+    package_missing: globalThis.VTTUi("Wähle für Klasse und Hintergrund jeweils ein Ausrüstungspaket."),
+    forbidden: globalThis.VTTUi("Nur die Besitzerin oder der Besitzer ändert das Inventar."),
   };
 
   let current = null;
@@ -104,9 +106,9 @@
     track.setAttribute('aria-label', text);
     wrap.append(track);
     if (weight.over) {
-      wrap.append(element('div', 'srd-inv-warn', 'Über der Tragkraft: Die Bewegungsrate sinkt auf höchstens 1,5 m.'));
+      wrap.append(element('div', 'srd-inv-warn', globalThis.VTTUi("Über der Tragkraft: Die Bewegungsrate sinkt auf höchstens 1,5 m.")));
     }
-    wrap.append(element('div', 'srd-inv-weight-detail', `Gegenstände ${kg(weight.itemsKg)} · Münzen ${kg(weight.coinsKg)}`));
+    wrap.append(element('div', 'srd-inv-weight-detail', globalThis.VTTUi("Gegenstände {p0} · Münzen {p1}",{p0:(kg(weight.itemsKg)),p1:(kg(weight.coinsKg))})));
     return wrap;
   }
 
@@ -136,7 +138,7 @@
 
   function seedBlock(payload) {
     const wrap = element('div', 'srd-inv-seed');
-    wrap.append(element('p', 'srd-sheet-note', 'Die Ausgangsausrüstung aus Klasse und Hintergrund ist noch nicht im Inventar. Wähle jeweils das Paket, das du im Ersteller genommen hast. Die Paketangebote hängen von Klasse und Hintergrund ab.'));
+    wrap.append(element('p', 'srd-sheet-note', globalThis.VTTUi("Die Ausgangsausrüstung aus Klasse und Hintergrund ist noch nicht im Inventar. Wähle jeweils das Paket, das du im Ersteller genommen hast. Die Paketangebote hängen von Klasse und Hintergrund ab.")));
     if (!editable) return wrap;
     const selects = {};
     [['classPackage', 'Klassenpaket', payload.packages.class], ['backgroundPackage', 'Hintergrundpaket', payload.packages.background]].forEach(([key, text, preset]) => {
@@ -160,7 +162,7 @@
     const wrap = element('div', 'srd-inv-pending');
     pending.forEach((entry) => {
       const row = element('div', 'srd-inv-pending-row');
-      row.append(element('span', 'srd-inv-pending-label', `Noch zu wählen: ${CHOICE_LABELS[entry.category] || entry.category}${entry.quantity > 1 ? ` (${entry.quantity}×)` : ''}`));
+      row.append(element('span', 'srd-inv-pending-label', globalThis.VTTUi("Noch zu wählen: {p0}{p1}",{p0:(CHOICE_LABELS[entry.category] || entry.category),p1:(entry.quantity > 1 ? ` (${entry.quantity}×)` : '')})));
       if (editable) {
         const select = element('select', 'srd-inv-select');
         entry.options.forEach((option) => select.append(new Option(option.name, option.itemId)));
@@ -180,20 +182,20 @@
       row.dataset.attackKey = attack.key;
       const head = element('div', 'srd-inv-attack-head');
       head.append(element('strong', '', attack.name));
-      if (!attack.proficient) head.append(element('span', 'srd-sheet-tag', 'ohne Übung'));
-      if (attack.mastery) head.append(element('span', `srd-sheet-tag${attack.masteryActive ? ' is-active' : ''}`, `Meisterschaft ${attack.mastery}${attack.masteryActive ? ' (aktiv)' : ''}`));
+      if (!attack.proficient) head.append(element('span', 'srd-sheet-tag', globalThis.VTTUi("ohne Übung")));
+      if (attack.mastery) head.append(element('span', `srd-sheet-tag${attack.masteryActive ? ' is-active' : ''}`, globalThis.VTTUi("Meisterschaft {p0}{p1}",{p0:(attack.mastery),p1:(attack.masteryActive ? ' (aktiv)' : '')})));
       row.append(head);
       const rolls = element('div', 'srd-roll-pair');
-      rolls.append(srdRollButton(`Angriff ${signed(attack.attackBonus)}`, 'weapon_attack', attack.key, current.character));
+      rolls.append(srdRollButton(globalThis.VTTUi("Angriff {p0}",{p0:(signed(attack.attackBonus))}), 'weapon_attack', attack.key, current.character));
       const damageLabel = `Schaden ${attack.damage} ${attack.damageType}`;
       rolls.append(srdRollButton(damageLabel, 'weapon_damage', attack.key, current.character));
-      rolls.append(srdRollButton('Kritisch', 'weapon_damage', attack.key, current.character, 'is-crit-btn', { critical: true }));
+      rolls.append(srdRollButton(globalThis.VTTUi("Kritisch"), 'weapon_damage', attack.key, current.character, 'is-crit-btn', { critical: true }));
       if (attack.versatile) {
-        rolls.append(srdRollButton(`Zweihändig ${attack.versatile}`, 'weapon_damage', attack.key, current.character, '', { twoHanded: true }));
+        rolls.append(srdRollButton(globalThis.VTTUi("Zweihändig {p0}",{p0:(attack.versatile)}), 'weapon_damage', attack.key, current.character, '', { twoHanded: true }));
       }
       row.append(rolls);
       if(attack.provenance) {
-        const details=element('details','srd-inv-provenance');details.append(element('summary','','Bonusquellen'));
+        const details=element('details','srd-inv-provenance');details.append(element('summary','',globalThis.VTTUi("Bonusquellen")));
         for(const value of Object.values(attack.provenance)) {
           details.append(element('strong','',`${value.label}: ${value.total}${value.formula?' · '+value.formula:''}`));
           const list=element('ul','');
@@ -216,18 +218,18 @@
     const title = element('div', 'srd-inv-item-title');
     title.append(element('strong', '', item.name));
     title.append(element('span', 'srd-sheet-tag', KIND_LABELS[item.kind] || item.kind));
-    if (item.equipped) title.append(element('span', 'srd-sheet-tag is-active', item.kind === 'weapon' ? 'in der Hand' : 'angelegt'));
+    if (item.equipped) title.append(element('span', 'srd-sheet-tag is-active', item.kind === 'weapon' ? globalThis.VTTUi("in der Hand") : 'angelegt'));
     if (item.rarity) title.append(element('span', 'srd-sheet-tag', item.rarity));
-    if (item.attunement) title.append(element('span', 'srd-sheet-tag', 'Einstimmung nötig'));
-    if (item.handedOut) title.append(element('span', 'srd-sheet-tag is-active', 'von der Spielleitung'));
+    if (item.attunement) title.append(element('span', 'srd-sheet-tag', globalThis.VTTUi("Einstimmung nötig")));
+    if (item.handedOut) title.append(element('span', 'srd-sheet-tag is-active', globalThis.VTTUi("von der Spielleitung")));
     main.append(title);
     const meta = [item.summary, `${kg(item.weightKg)} je Stück`, item.cost ? `Wert ${item.cost}` : ''].filter(Boolean).join(' · ');
     if (meta) main.append(element('div', 'srd-inv-meta', meta));
     if (item.description && item.kind === 'magic') {
       const details = element('details', 'srd-inv-magic');
-      details.append(element('summary', null, 'Beschreibung'));
+      details.append(element('summary', null, globalThis.VTTUi("Beschreibung")));
       details.append(element('div', 'srd-inv-meta srd-inv-magic-text', item.description));
-      if (item.source) details.append(element('div', 'srd-inv-meta', `Quelle: ${item.source}`));
+      if (item.source) details.append(element('div', 'srd-inv-meta', globalThis.VTTUi("Quelle: {p0}",{p0:(item.source)})));
       main.append(details);
     } else if (item.description) main.append(element('div', 'srd-inv-meta', item.description));
     row.append(main);
@@ -260,7 +262,7 @@
     const search = element('input', 'srd-inv-search');
     search.type = 'search';
     search.id = 'srdInvSearch';
-    search.placeholder = 'Gegenstand suchen (z. B. Seil, Langschwert)';
+    search.placeholder = globalThis.VTTUi("Gegenstand suchen (z. B. Seil, Langschwert)");
     const results = element('select', 'srd-inv-select');
     results.id = 'srdInvResults';
     results.size = 1;
@@ -317,7 +319,7 @@
     if (!root || !current) return;
     const payload = current.payload;
     root.replaceChildren();
-    root.append(element('div', 'srd-sheet-subtitle', 'Inventar und Angriffe'));
+    root.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Inventar und Angriffe")));
     const status = element('div', `srd-inv-status${current.error ? ' is-error' : ''}`, current.error || current.notice || '');
     status.id = 'srdInvStatus';
     status.setAttribute('role', 'status');
@@ -329,19 +331,19 @@
     root.append(weightBar(payload.weight));
     payload.findings.forEach((finding) => root.append(element('div', `srd-inv-warn${finding.severity === 'error' ? ' is-error' : ''}`, finding.message)));
 
-    root.append(element('div', 'srd-sheet-subtitle', 'Angriffe'));
+    root.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Angriffe")));
     root.append(attacksBlock(payload));
 
-    root.append(element('div', 'srd-sheet-subtitle', 'Münzen'));
+    root.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Münzen")));
     root.append(coinsBlock(payload));
 
-    root.append(element('div', 'srd-sheet-subtitle', `Gegenstände (${payload.items.length})`));
+    root.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Gegenstände ({p0})",{p0:(payload.items.length)})));
     if (payload.items.length) {
       const list = element('ul', 'srd-inv-items');
       payload.items.forEach((item) => list.append(itemRow(item)));
       root.append(list);
     } else {
-      root.append(element('div', 'sheet-empty', 'Noch keine Gegenstände.'));
+      root.append(element('div', 'sheet-empty', globalThis.VTTUi("Noch keine Gegenstände.")));
     }
     if (editable) root.append(addBlock());
   }
@@ -356,7 +358,7 @@
       render();
       current.onChange?.(payload);
     } catch (error) {
-      root.replaceChildren(element('div', 'sheet-empty', 'Das Inventar konnte nicht geladen werden.'));
+      root.replaceChildren(element('div', 'sheet-empty', globalThis.VTTUi("Das Inventar konnte nicht geladen werden.")));
     }
   };
 })();

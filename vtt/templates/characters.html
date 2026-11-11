@@ -2,8 +2,11 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VTT - Characters</title>
+    <title data-ui-key="u_f093c72683b8">VTT - Characters</title>
     <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -571,16 +574,19 @@
         }
     </style>
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="spellbook characters-route-book-scene">
-    <div id="charactersSceneStatus" role="status" aria-live="polite" hidden>Charaktere werden geladen …</div>
+    <div id="charactersSceneStatus" role="status" aria-live="polite" hidden><span data-ui-key="u_d978b0e66a7a">Charaktere werden geladen …</span></div>
     <input id="identityFilePicker" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
 
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/book-scene.js"></script>
-    <script>
+    <script>globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
         const auth = new Auth();
         let allCharacters = [];
         let journeyNoteState = null;
@@ -629,7 +635,7 @@
 
             const payload = await response.json().catch(() => ({}));
             if (!response.ok) {
-                throw new Error(payload.error || 'Upload failed');
+                throw new Error(payload.error || globalThis.VTTUi("Upload failed"));
             }
             return payload;
         }
@@ -728,7 +734,7 @@
         }
 
         async function removeCharacterIdentity(characterId, identityKind) {
-            if (!window.confirm(`Remove this ${identityKind}?`)) return;
+            if (!window.confirm(globalThis.VTTUi("Remove this {p0}?",{p0:(identityKind)}))) return;
             try {
                 await auth.makeAuthRequest(`/api/characters/${characterId}/identity/${identityKind}`, 'DELETE');
                 await loadCharacters();
@@ -777,24 +783,24 @@
             }
 
                 const campaignAction = journeyNoteState.campaignId
-                ? `<button class="btn btn-secondary" onclick="goToCampaignContext(${journeyNoteState.campaignId})">Open Campaign Context</button>`
-                : `<button class="btn btn-secondary" onclick="goTo('/campaigns')">Campaigns Hub</button>`;
+                ? `<button class="btn btn-secondary" onclick="goToCampaignContext(${journeyNoteState.campaignId})">${globalThis.VTTUiHTML("Open Campaign Context")}</button>`
+                : `<button class="btn btn-secondary" onclick="goTo('/campaigns')">${globalThis.VTTUiHTML("Campaigns Hub")}</button>`;
 
             container.hidden = false;
             container.innerHTML = `
                 <div class="journey-note-title">${journeyNoteState.title}</div>
                 <div class="journey-note-copy">${journeyNoteState.message}</div>
                 <div class="journey-note-actions">
-                    <button class="btn btn-primary" onclick="openCharacterSheet(${journeyNoteState.characterId}, 'edit')">Bogen öffnen</button>
+                    <button class="btn btn-primary" onclick="openCharacterSheet(${journeyNoteState.characterId}, 'edit')">${globalThis.VTTUiHTML("Bogen öffnen")}</button>
                     ${campaignAction}
-                    <button class="btn btn-secondary" onclick="goTo('/campaigns')">Session Assignment Route</button>
-                    <button class="btn btn-secondary" onclick="clearJourneyNote()">Dismiss</button>
+                    <button class="btn btn-secondary" onclick="goTo('/campaigns')">${globalThis.VTTUiHTML("Session Assignment Route")}</button>
+                    <button class="btn btn-secondary" onclick="clearJourneyNote()">${globalThis.VTTUiHTML("Dismiss")}</button>
                 </div>
             `;
         }
 
         async function deleteCharacter(id) {
-            if (!confirm('Delete this character?')) return;
+            if (!confirm(globalThis.VTTUi("Delete this character?"))) return;
             try {
                 await auth.makeAuthRequest(`/api/characters/${id}`, 'DELETE');
                 await loadCharacters();
@@ -836,14 +842,14 @@
             const errEl = document.getElementById('importError');
             errEl.textContent = '';
             if (!raw) {
-                errEl.textContent = 'Paste the exported JSON above.';
+                errEl.textContent = globalThis.VTTUi("Paste the exported JSON above.");
                 return;
             }
             let payload;
             try {
                 payload = JSON.parse(raw);
             } catch (e) {
-                errEl.textContent = 'Invalid JSON — paste the full export payload.';
+                errEl.textContent = globalThis.VTTUi("Invalid JSON — paste the full export payload.");
                 return;
             }
             const btn = document.getElementById('importSubmitBtn');
@@ -862,7 +868,7 @@
                     showCharactersMessage(message);
                 }
             } catch (error) {
-                errEl.textContent = error.message || 'Import fehlgeschlagen.';
+                errEl.textContent = error.message || globalThis.VTTUi("Import fehlgeschlagen.");
                 btn.disabled = false;
             }
         }
@@ -880,22 +886,22 @@
     <div id="importModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="importModalTitle" style="display:none">
         <div class="modal-box">
             <div class="modal-header">
-                <h2 id="importModalTitle">Charakter importieren</h2>
+                <h2 id="importModalTitle"><span data-ui-key="u_bb638014796f">Charakter importieren</span></h2>
                 <button class="close-btn" onclick="closeImportModal()">×</button>
             </div>
             <div class="modal-steps">
                 <p style="color:#d6d2cb;font-size:0.9rem;margin-bottom:1rem;line-height:1.5;">
-                    Füge einen VTT-Export für D&amp;D 5e ein. Ein neuer Charakter wird erstellt; Avatar und Kampagne werden nicht übertragen. Direkte Exporte von D&amp;D Beyond oder Roll20 benötigen eine Formatumwandlung.
+                    <span data-ui-key="u_1c70c4c2c934">Füge einen VTT-Export für D</span>&amp;<span data-ui-key="u_70becdfabf38">D 5e ein. Ein neuer Charakter wird erstellt; Avatar und Kampagne werden nicht übertragen. Direkte Exporte von D</span>&amp;<span data-ui-key="u_28a08bef7ce1">D Beyond oder Roll20 benötigen eine Formatumwandlung.</span>
                 </p>
                 <div class="form-group">
-                    <label for="importPayload">Export-JSON</label>
-                    <textarea id="importPayload" rows="10" style="width:100%;background:rgba(0,0,0,0.4);border:1px solid #444;border-radius:4px;color:#e0e0e0;padding:0.5rem;font-size:0.82rem;font-family:monospace;resize:vertical;" placeholder='{ "export_kind": "character", ... }'></textarea>
+                    <label for="importPayload"><span data-ui-key="u_69eec5142e0d">Export-JSON</span></label>
+                    <textarea id="importPayload" rows="10" style="width:100%;background:rgba(0,0,0,0.4);border:1px solid #444;border-radius:4px;color:#e0e0e0;padding:0.5rem;font-size:0.82rem;font-family:monospace;resize:vertical;" placeholder='{ "export_kind": "character", ... }' data-ui-placeholder="u_2e9c48f8a53a"></textarea>
                 </div>
                 <div id="importError" class="error-message"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeImportModal()">Abbrechen</button>
-                <button id="importSubmitBtn" class="btn btn-primary" onclick="submitImport()">Importieren</button>
+                <button class="btn btn-secondary" onclick="closeImportModal()"><span data-ui-key="u_07af7cb30fca">Abbrechen</span></button>
+                <button id="importSubmitBtn" class="btn btn-primary" onclick="submitImport()"><span data-ui-key="u_7d4a3f2aaafe">Importieren</span></button>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "program": "protocol-feedback-2026-11-11",
-  "phase": "apply_P4",
+  "phase": "deploy_P4",
   "status": "in_progress",
   "implementation_started": true,
   "background_execution": false,
@@ -203,7 +203,7 @@
       "depends_on": [
         "P0"
       ],
-      "next_phase": "apply",
+      "next_phase": "deploy",
       "acceptance_ids": [
         "A03",
         "A04",
@@ -220,7 +220,8 @@
         "Physische Rastergröße von Pixeln getrennt; alte Karten ohne erfundene Kalibrierung",
         "Anzeigepräferenzen verändern keine gespeicherten Spielwerte",
         "Spätere neue Oberflächen in gemeinsamer P7-Prüfung einbezogen"
-      ]
+      ],
+      "implementation_evidence": "../DADM_DEPLOY_PRESENTATION_UNITS_2026-11-11.md"
     },
     {
       "id": "P5",

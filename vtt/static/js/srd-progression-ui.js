@@ -1,29 +1,31 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /* Level, experience and level-up wizard of an SRD character sheet.
  * Relies on globals of character-sheet.html: auth, srdCreatorData, srdSubclassNames. */
 (function () {
   'use strict';
 
   const ABILITIES = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-  const ABILITY_NAMES = { str: 'Stärke', dex: 'Geschicklichkeit', con: 'Konstitution', int: 'Intelligenz', wis: 'Weisheit', cha: 'Charisma' };
+  const ABILITY_NAMES = { str: globalThis.VTTUi("Stärke"), dex: globalThis.VTTUi("Geschicklichkeit"), con: globalThis.VTTUi("Konstitution"), int: globalThis.VTTUi("Intelligenz"), wis: globalThis.VTTUi("Weisheit"), cha: globalThis.VTTUi("Charisma") };
   const CHOICE_LABELS = {
-    'primal-order': 'Heilige Rolle', 'divine-order': 'Heilige Rolle', 'fighting-style': 'Kampfstil-Talent',
-    'weapon-mastery': 'Waffenbeherrschung', 'eldritch-invocations': 'Schauerliche Anrufungen',
-    'thieves-cant-language': 'Zusätzliche Sprache (Diebessprache)', 'deft-explorer-languages': 'Geschickter Erkunder: Sprachen',
-    'draconic-ancestry': 'Drakonische Abstammung', lineage: 'Abstammung', 'spellcasting-ability': 'Zauberattribut',
-    'keen-senses': 'Scharfe Sinne: Fertigkeit', metamagic: 'Metamagie',
+    'primal-order': globalThis.VTTUi("Heilige Rolle"), 'divine-order': globalThis.VTTUi("Heilige Rolle"), 'fighting-style': globalThis.VTTUi("Kampfstil-Talent"),
+    'weapon-mastery': globalThis.VTTUi("Waffenbeherrschung"), 'eldritch-invocations': globalThis.VTTUi("Schauerliche Anrufungen"),
+    'thieves-cant-language': globalThis.VTTUi("Zusätzliche Sprache (Diebessprache)"), 'deft-explorer-languages': globalThis.VTTUi("Geschickter Erkunder: Sprachen"),
+    'draconic-ancestry': globalThis.VTTUi("Drakonische Abstammung"), lineage: globalThis.VTTUi("Abstammung"), 'spellcasting-ability': globalThis.VTTUi("Zauberattribut"),
+    'keen-senses': globalThis.VTTUi("Scharfe Sinne: Fertigkeit"), metamagic: globalThis.VTTUi("Metamagie"),
   };
-  const OPTION_LABELS = { magician: 'Magier', warden: 'Wächter', protector: 'Beschützer', thaumaturge: 'Thaumaturg' };
+  const OPTION_LABELS = { magician: globalThis.VTTUi("Magier"), warden: globalThis.VTTUi("Wächter"), protector: globalThis.VTTUi("Beschützer"), thaumaturge: globalThis.VTTUi("Thaumaturg") };
   const ERRORS = {
-    forbidden: 'Dafür fehlt dir die Berechtigung.',
-    not_ready: 'Für den nächsten Stufenaufstieg fehlen Erfahrungspunkte oder die Freigabe der Spielleitung.',
-    max_level: 'Stufe 20 ist bereits erreicht.',
-    level_conflict: 'Der Charakter hat sich inzwischen verändert. Lade den Bogen neu.',
-    level_up_incomplete: 'Der Stufenaufstieg ist noch nicht vollständig.',
-    invalid_xp: 'Erfahrungspunkte müssen eine ganze Zahl sein.',
-    invalid_target: 'Die Zielstufe muss zwischen 1 und 20 liegen.',
-    invalid_mode: 'Ungültiger Modus.',
-    min_level: 'Stufe 1 kann nicht weiter zurückgenommen werden.',
-    level_down_incomplete: 'Die Stufe lässt sich nicht sauber zurücknehmen.',
+    forbidden: globalThis.VTTUi("Dafür fehlt dir die Berechtigung."),
+    not_ready: globalThis.VTTUi("Für den nächsten Stufenaufstieg fehlen Erfahrungspunkte oder die Freigabe der Spielleitung."),
+    max_level: globalThis.VTTUi("Stufe 20 ist bereits erreicht."),
+    level_conflict: globalThis.VTTUi("Der Charakter hat sich inzwischen verändert. Lade den Bogen neu."),
+    level_up_incomplete: globalThis.VTTUi("Der Stufenaufstieg ist noch nicht vollständig."),
+    invalid_xp: globalThis.VTTUi("Erfahrungspunkte müssen eine ganze Zahl sein."),
+    invalid_target: globalThis.VTTUi("Die Zielstufe muss zwischen 1 und 20 liegen."),
+    invalid_mode: globalThis.VTTUi("Ungültiger Modus."),
+    min_level: globalThis.VTTUi("Stufe 1 kann nicht weiter zurückgenommen werden."),
+    level_down_incomplete: globalThis.VTTUi("Die Stufe lässt sich nicht sauber zurücknehmen."),
   };
 
   let current = null;
@@ -89,9 +91,9 @@
     if (status.nextLevelXp != null) {
       const span = Math.max(status.nextLevelXp - status.currentLevelXp, 1);
       percent = Math.max(0, Math.min(100, Math.round(((status.xp - status.currentLevelXp) / span) * 100)));
-      text += ` von ${numberText(status.nextLevelXp)} bis Stufe ${status.level + 1}`;
+      text += globalThis.VTTUi(" von {p0} bis Stufe {p1}",{p0:(numberText(status.nextLevelXp)),p1:(status.level + 1)});
     }
-    if (status.mode === 'milestone') text += ' · Meilensteine';
+    if (status.mode === 'milestone') text += globalThis.VTTUi(" · Meilensteine");
     wrap.append(element('div', 'srd-prog-bar-text', text));
     const track = element('div', 'srd-prog-bar-track');
     const fill = element('div', 'srd-prog-bar-fill');
@@ -101,9 +103,9 @@
     track.setAttribute('aria-label', text);
     wrap.append(track);
     if (status.canLevelUp) {
-      wrap.append(element('div', 'srd-prog-ready', `Bereit für Stufe ${status.level + 1}${status.targetLevel > status.level + 1 ? ` (freigegeben bis Stufe ${status.targetLevel})` : ''}.`));
+      wrap.append(element('div', 'srd-prog-ready', globalThis.VTTUi("Bereit für Stufe {p0}{p1}.",{p0:(status.level + 1),p1:(status.targetLevel > status.level + 1 ? ` (freigegeben bis Stufe ${status.targetLevel})` : '')})));
     } else if (status.mode === 'milestone' && status.level < status.maxLevel) {
-      wrap.append(element('div', 'srd-prog-hint', 'Der nächste Stufenaufstieg wird von der Spielleitung freigegeben.'));
+      wrap.append(element('div', 'srd-prog-hint', globalThis.VTTUi("Der nächste Stufenaufstieg wird von der Spielleitung freigegeben.")));
     }
     return wrap;
   }
@@ -111,11 +113,11 @@
   function manageBlock(payload) {
     const status = payload.status;
     const wrap = element('div', 'srd-prog-manage');
-    wrap.append(element('div', 'srd-sheet-subtitle', 'Fortschritt verwalten'));
+    wrap.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Fortschritt verwalten")));
 
     const mode = element('select', 'srd-prog-select');
     mode.id = 'srdProgMode';
-    [['xp', 'Erfahrungspunkte'], ['milestone', 'Meilensteine']].forEach(([value, text]) => {
+    [['xp', globalThis.VTTUi("Erfahrungspunkte")], ['milestone', globalThis.VTTUi("Meilensteine")]].forEach(([value, text]) => {
       const option = element('option', null, text);
       option.value = value;
       mode.append(option);
@@ -129,17 +131,17 @@
       amount.type = 'number';
       amount.step = '1';
       amount.id = 'srdProgXpAmount';
-      amount.placeholder = 'z. B. 300';
+      amount.placeholder = globalThis.VTTUi("z. B. 300");
       const note = element('input', 'srd-prog-input');
       note.type = 'text';
       note.maxLength = 200;
       note.id = 'srdProgXpNote';
-      note.placeholder = 'Notiz (optional)';
+      note.placeholder = globalThis.VTTUi("Notiz (optional)");
       const row = element('div', 'srd-prog-row');
       row.append(labelled('EP vergeben (negativ zieht ab)', amount), labelled('Notiz', note));
       row.append(button('EP vergeben', 'srd-prog-btn srd-prog-primary', () => {
         const value = Number(amount.value);
-        if (!amount.value || !Number.isInteger(value)) { setStatus('Gib eine ganze Zahl ein.', true); return; }
+        if (!amount.value || !Number.isInteger(value)) { setStatus(globalThis.VTTUi("Gib eine ganze Zahl ein."), true); return; }
         save({ addXp: value, note: note.value }, `${value >= 0 ? '+' : ''}${numberText(value)} EP gespeichert.`);
       }));
       wrap.append(row);
@@ -147,7 +149,7 @@
       const target = element('select', 'srd-prog-select');
       target.id = 'srdProgTarget';
       for (let level = 1; level <= status.maxLevel; level += 1) {
-        const option = element('option', null, `Stufe ${level}`);
+        const option = element('option', null, globalThis.VTTUi("Stufe {p0}",{p0:(level)}));
         option.value = String(level);
         target.append(option);
       }
@@ -164,17 +166,17 @@
     const entries = (payload.history || []).slice().reverse();
     if (!entries.length) return null;
     const details = element('details', 'srd-prog-history');
-    details.append(element('summary', null, `Verlauf (${entries.length})`));
+    details.append(element('summary', null, globalThis.VTTUi("Verlauf ({p0})",{p0:(entries.length)})));
     const list = element('ul', 'srd-prog-history-list');
     entries.forEach((entry) => {
       let text = '';
-      if (entry.type === 'xp') text = `EP ${numberText(entry.from)} → ${numberText(entry.to)}`;
-      else if (entry.type === 'mode') text = entry.mode === 'xp' ? 'Modus: Erfahrungspunkte' : 'Modus: Meilensteine';
-      else if (entry.type === 'milestone') text = `Freigabe bis Stufe ${entry.target ?? '–'}`;
-      else if (entry.type === 'level-down') text = `Stufe ${entry.fromLevel} → ${entry.toLevel} (zurückgenommen)`;
-      else if (entry.type === 'level-up') text = `Stufe ${entry.fromLevel} → ${entry.toLevel}${entry.hpGain != null ? ` (${entry.hpGain >= 0 ? '+' : ''}${entry.hpGain} TP)` : ''}`;
-      else if (entry.type === 'handout') text = `Von der Spielleitung ausgegeben: ${entry.label || 'Gegenstand'}`;
-      else if (entry.type === 'take-back') text = `Von der Spielleitung zurückgenommen: ${entry.label || 'Gegenstand'}`;
+      if (entry.type === 'xp') text = globalThis.VTTUi("EP {p0} → {p1}",{p0:(numberText(entry.from)),p1:(numberText(entry.to))});
+      else if (entry.type === 'mode') text = entry.mode === 'xp' ? globalThis.VTTUi("Modus: Erfahrungspunkte") : globalThis.VTTUi("Modus: Meilensteine");
+      else if (entry.type === 'milestone') text = globalThis.VTTUi("Freigabe bis Stufe {p0}",{p0:(entry.target ?? '–')});
+      else if (entry.type === 'level-down') text = globalThis.VTTUi("Stufe {p0} → {p1} (zurückgenommen)",{p0:(entry.fromLevel),p1:(entry.toLevel)});
+      else if (entry.type === 'level-up') text = globalThis.VTTUi("Stufe {p0} → {p1}{p2}",{p0:(entry.fromLevel),p1:(entry.toLevel),p2:(entry.hpGain != null ? ` (${entry.hpGain >= 0 ? '+' : ''}${entry.hpGain} TP)` : '')});
+      else if (entry.type === 'handout') text = globalThis.VTTUi("Von der Spielleitung ausgegeben: {p0}",{p0:(entry.label || 'Gegenstand')});
+      else if (entry.type === 'take-back') text = globalThis.VTTUi("Von der Spielleitung zurückgenommen: {p0}",{p0:(entry.label || 'Gegenstand')});
       else return;
       if (entry.note) text += ` – ${entry.note}`;
       const item = element('li', null, text);
@@ -194,7 +196,7 @@
       wrap.append(open);
       return wrap;
     }
-    wrap.append(element('div', 'srd-prog-warn', `Stufe ${payload.status.level} (${last.className} ${last.classLevel}) wird zurückgenommen: Trefferpunkte, Wahlen, Zauber und Erfahrung dieser Stufe entfallen. Erfahrungspunkte werden unter die Schwelle der nächsten Stufe gesetzt.`));
+    wrap.append(element('div', 'srd-prog-warn', globalThis.VTTUi("Stufe {p0} ({p1} {p2}) wird zurückgenommen: Trefferpunkte, Wahlen, Zauber und Erfahrung dieser Stufe entfallen. Erfahrungspunkte werden unter die Schwelle der nächsten Stufe gesetzt.",{p0:(payload.status.level),p1:(last.className),p2:(last.classLevel)})));
     const row = element('div', 'srd-prog-row');
     const yes = button(`Ja, Stufe ${payload.status.level} rückgängig machen`, 'srd-prog-btn srd-prog-primary', confirmLevelDown);
     yes.id = 'srdProgDownConfirm';
@@ -252,7 +254,7 @@
     const focus = focusKey();
     const payload = current.payload;
     root.replaceChildren();
-    root.append(element('div', 'srd-sheet-subtitle', 'Stufe und Erfahrung'));
+    root.append(element('div', 'srd-sheet-subtitle', globalThis.VTTUi("Stufe und Erfahrung")));
     const status = element('div', 'srd-prog-status', current.notice || '');
     status.id = 'srdProgStatus';
     status.setAttribute('role', 'status');
@@ -410,7 +412,7 @@
     const box = section('Unterklasse');
     const select = element('select', 'srd-prog-select');
     select.id = 'srdWizSubclass';
-    const blank = element('option', null, 'Bitte wählen');
+    const blank = element('option', null, globalThis.VTTUi("Bitte wählen"));
     blank.value = '';
     select.append(blank);
     need.subclass.options.forEach((id) => {
@@ -441,7 +443,7 @@
     const abilityOptions = (allowed, selected, onPick, text, id) => {
       const select = element('select', 'srd-prog-select');
       select.id = id;
-      const blank = element('option', null, 'Bitte wählen');
+      const blank = element('option', null, globalThis.VTTUi("Bitte wählen"));
       blank.value = '';
       select.append(blank);
       allowed.forEach((key) => {
@@ -483,7 +485,7 @@
       const feats = srdCreatorData.feats.filter((f) => f.category === category && f.id !== 'feats.descriptions.ability-score-improvement');
       const select = element('select', 'srd-prog-select');
       select.id = 'srdWizFeat';
-      const blank = element('option', null, 'Bitte wählen');
+      const blank = element('option', null, globalThis.VTTUi("Bitte wählen"));
       blank.value = '';
       select.append(blank);
       feats.forEach((f) => {
@@ -526,7 +528,7 @@
   }
 
   function counter(have, need) {
-    const node = element('div', `srd-prog-counter${have === need ? ' is-done' : ''}`, `${have} von ${need} gewählt`);
+    const node = element('div', `srd-prog-counter${have === need ? ' is-done' : ''}`, globalThis.VTTUi("{p0} von {p1} gewählt",{p0:(have),p1:(need)}));
     node.setAttribute('aria-live', 'polite');
     return node;
   }
@@ -536,7 +538,7 @@
     if (list.children.length > 12) {
       const search = element('input', 'srd-prog-input');
       search.type = 'search';
-      search.placeholder = 'Suchen';
+      search.placeholder = globalThis.VTTUi("Suchen");
       search.setAttribute('aria-label', 'Liste durchsuchen');
       search.addEventListener('input', () => {
         const needle = search.value.trim().toLowerCase();
@@ -570,7 +572,7 @@
     if (pending.kind === 'feat-category') {
       const select = element('select', 'srd-prog-select');
       select.id = `srdWizChoice-${pending.id}`;
-      const blank = element('option', null, 'Bitte wählen');
+      const blank = element('option', null, globalThis.VTTUi("Bitte wählen"));
       blank.value = '';
       select.append(blank);
       srdCreatorData.feats.filter((f) => f.category.startsWith(definition.category)).forEach((f) => {
@@ -603,7 +605,7 @@
     options = options.filter((o) => !elsewhere.includes(o.id));
     const picked = Array.isArray(value) ? value : [];
     box.append(counter(picked.length, pending.need));
-    box.append(element('p', 'srd-prog-hint', 'Bereits gewählte Einträge bleiben erhalten; wähle zusätzlich die fehlenden.'));
+    box.append(element('p', 'srd-prog-hint', globalThis.VTTUi("Bereits gewählte Einträge bleiben erhalten; wähle zusätzlich die fehlenden.")));
     box.append(filterable(checklist(options, picked, pending.need, (next) => change((x) => { x.featureChoices[pending.id] = next; }, true), locked)));
     return box;
   }
@@ -653,7 +655,7 @@
     }
     if (spells.spellbook) {
       box.append(element('h5', 'srd-prog-sub', 'Zauberbuch'), counter(w.spells.spellbook.length, spells.spellbook.count));
-      box.append(element('p', 'srd-prog-hint', 'Zauber im Zauberbuch bleiben erhalten.'));
+      box.append(element('p', 'srd-prog-hint', globalThis.VTTUi("Zauber im Zauberbuch bleiben erhalten.")));
       box.append(filterable(checklist(leveled, w.spells.spellbook, spells.spellbook.count, (next) => change((x) => {
         x.spells.spellbook = next;
         x.spells.prepared = x.spells.prepared.filter((id) => next.includes(id));
@@ -675,12 +677,12 @@
     panel.setAttribute('aria-label', 'Stufenaufstieg');
     const need = w.result?.needs;
     if (!need) {
-      panel.append(element('p', 'srd-prog-hint', w.error || 'Lade Stufenaufstieg…'));
+      panel.append(element('p', 'srd-prog-hint', w.error || globalThis.VTTUi("Lade Stufenaufstieg…")));
       if (w.error) panel.append(button('Schließen', 'srd-prog-btn', closeWizard));
       return panel;
     }
     const head = element('div', 'srd-prog-wizard-head');
-    head.append(element('h3', 'srd-prog-wizard-title', `Stufe ${need.newTotalLevel}: ${need.className} ${need.newClassLevel}`));
+    head.append(element('h3', 'srd-prog-wizard-title', globalThis.VTTUi("Stufe {p0}: {p1} {p2}",{p0:(need.newTotalLevel),p1:(need.className),p2:(need.newClassLevel)})));
     head.append(chip(`Übungsbonus +${need.proficiencyBonus}`));
     panel.append(head);
 
@@ -689,7 +691,7 @@
       const select = element('select', 'srd-prog-select');
       select.id = 'srdWizClass';
       options.forEach((c) => {
-        const option = element('option', null, c.owned ? `${c.name} ${c.level}` : `${c.name} (neue Klasse)${c.eligible ? '' : ' – nicht verfügbar'}`);
+        const option = element('option', null, c.owned ? `${c.name} ${c.level}` : globalThis.VTTUi("{p0} (neue Klasse){p1}",{p0:(c.name),p1:(c.eligible ? '' : ' – nicht verfügbar')}));
         option.value = c.classKey;
         option.disabled = !c.eligible;
         if (c.reason) option.title = c.reason;
@@ -705,7 +707,7 @@
       const blocked = options.filter((o) => !o.eligible);
       if (blocked.length) {
         const details = element('details', 'srd-prog-history');
-        details.append(element('summary', null, `Nicht verfügbare Klassen (${blocked.length})`));
+        details.append(element('summary', null, globalThis.VTTUi("Nicht verfügbare Klassen ({p0})",{p0:(blocked.length)})));
         const list = element('ul', 'srd-prog-history-list');
         blocked.forEach((o) => list.append(element('li', null, o.reason)));
         details.append(list);
@@ -715,7 +717,7 @@
 
     if (need.features.length) {
       const features = element('div', 'srd-prog-features');
-      features.append(element('span', 'srd-prog-field-label', 'Neue Merkmale'));
+      features.append(element('span', 'srd-prog-field-label', globalThis.VTTUi("Neue Merkmale")));
       need.features.forEach((f) => features.append(chip(f.name)));
       panel.append(features);
     }
@@ -747,7 +749,7 @@
       const blockers = result.blockers || [];
       blockers.forEach((b) => footer.append(element('div', 'srd-prog-warn', b.message)));
       const gain = result.hpGain;
-      footer.append(element('div', 'srd-prog-summary', `Trefferpunkte: ${result.evaluation.hitPoints.max} (${gain >= 0 ? '+' : ''}${gain}) · Übungsbonus +${result.evaluation.proficiencyBonus} · Rüstungsklasse ${result.evaluation.armorClass.value}`));
+      footer.append(element('div', 'srd-prog-summary', globalThis.VTTUi("Trefferpunkte: {p0} ({p1}{p2}) · Übungsbonus +{p3} · Rüstungsklasse {p4}",{p0:(result.evaluation.hitPoints.max),p1:(gain >= 0 ? '+' : ''),p2:(gain),p3:(result.evaluation.proficiencyBonus),p4:(result.evaluation.armorClass.value)})));
       ready = !blockers.length && !w.error && (w.hpMode === 'fixed' || Number(w.rolled) >= 1) && !w.busy;
     }
     const confirm = button(w.busy ? 'Speichere…' : `Stufe ${result?.needs?.newTotalLevel ?? ''} bestätigen`, 'srd-prog-btn srd-prog-primary', confirmLevelUp);
@@ -785,7 +787,7 @@
       current = { character, evaluation, payload, onChange, notice: '', wizard: null };
       render();
     } catch (error) {
-      root.replaceChildren(element('div', 'sheet-empty', 'Stufe und Erfahrung konnten nicht geladen werden.'));
+      root.replaceChildren(element('div', 'sheet-empty', globalThis.VTTUi("Stufe und Erfahrung konnten nicht geladen werden.")));
     }
   };
 })();

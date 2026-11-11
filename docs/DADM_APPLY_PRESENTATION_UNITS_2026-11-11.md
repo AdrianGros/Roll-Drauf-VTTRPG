@@ -84,3 +84,15 @@ Präferenzen. Keine neuen Charakter- oder Kartenformate. Commit/Push, aktuelles
 Image/Compose abgleichen, App-only-Deployment, technische Live-Prüfung und Monitor.
 Nächster Schritt: Deploy innerhalb dieser Verträge, danach P5/P6 und gemeinsame
 P7-Regressions-/Owner-Checkliste.
+
+### Präzisierung der Eagle-Anbindung vor Release
+
+Die vorhandene Foundry-Shim-i18n-Schnittstelle erhält einen expliziten Adapter
+für die 410 bereits vorhandenen Eagle-UI-Schlüssel (Upstream-Pin 518b2f9c…):
+Original-EN plus eigener DE-Katalog, Platzhaltergleichheit geprüft. Der VTT-eigene
+Host-Einstieg installiert ihn nach Shim-Initialisierung; ausschließlich dessen
+wenige direkte Verzeichnislabels werden zusätzlich markiert. Exakte Änderungen
+am vorhandenen Bundle sind in `tools/i18n/eagle-host-patches.json` festgehalten.
+Keine Änderung an Eagle-Domänenlogik oder importierten Regel-/Benutzerdokumenten.
+Die Host-/Shim-Panels verwenden dieselben Kontrasttokens. Diese Konkretisierung
+bleibt innerhalb der bereits vorgesehenen UI-Sprach-/Darstellungsgrenze.

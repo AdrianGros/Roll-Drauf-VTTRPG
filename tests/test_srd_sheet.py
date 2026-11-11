@@ -36,7 +36,8 @@ def test_sheet_page_has_no_light_panes_but_an_srd_pane(client):
 
 def test_create_entry_points_lead_to_the_srd_creator():
     book_scene = (ROOT / "vtt/static/js/book-scene.js").read_text(encoding="utf-8")
-    assert "{ label: 'Held anlegen', href: '/srd-creator', primary: true }" in book_scene
+    assert 'globalThis.VTTUi("Held anlegen")' in book_scene
+    assert "href: '/srd-creator', primary: true" in book_scene
     assert "/characters?intent=create" not in (ROOT / "vtt/endpoints/dashboard_home.py").read_text(encoding="utf-8")
     assert "window.location.replace('/srd-creator')" in (ROOT / "vtt/templates/characters.html").read_text(encoding="utf-8")
 

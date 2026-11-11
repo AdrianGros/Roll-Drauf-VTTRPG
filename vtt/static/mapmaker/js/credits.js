@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Credits accompany the composed image. Text comes only from reviewed local manifests.
 export function creditsForDocument(doc, palette) {
     const used = new Set();
@@ -45,6 +47,6 @@ export async function embedCredits(blob, credits) {
     chunk.set(encoder.encode("iTXt"), 4);
     chunk.set(payload, 8);
     view.setUint32(chunk.length - 4, crc32(chunk.subarray(4, chunk.length - 4)));
-    if (png.length < 20 || String.fromCharCode(...png.subarray(-8, -4)) !== "IEND") throw new Error("PNG-Abschluss fehlt.");
+    if (png.length < 20 || String.fromCharCode(...png.subarray(-8, -4)) !== "IEND") throw new Error(globalThis.VTTUi("PNG-Abschluss fehlt."));
     return new Blob([png.subarray(0, -12), chunk, png.subarray(-12)], { type: "image/png" });
 }

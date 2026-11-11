@@ -2,11 +2,14 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Invite-Landing (Desktop-Audit D01/A1): der Token steht in der URL, also
          so wenig Abfluss wie möglich — keine Fremd-Assets, kein Referrer. -->
     <meta name="referrer" content="no-referrer">
-    <title>Einladung - roll drauf vtt</title>
+    <title data-ui-key="u_c4d253582bee">Einladung - roll drauf vtt</title>
     <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/theme.css">
@@ -58,24 +61,27 @@
         .btn[disabled] { opacity: 0.6; cursor: default; }
         [hidden] { display: none !important; }
     </style>
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body>
     <main id="inviteScene" class="invite-page" aria-live="polite">
-        <div class="invite-eyebrow">Einladung an den Spieltisch</div>
-        <h1 id="inviteTitle">Einladung wird geprüft …</h1>
+        <div class="invite-eyebrow"><span data-ui-key="u_29fd79912294">Einladung an den Spieltisch</span></div>
+        <h1 id="inviteTitle"><span data-ui-key="u_fcbd675be14b">Einladung wird geprüft …</span></h1>
         <div id="inviteDetail" class="invite-detail" hidden></div>
         <div id="inviteState" class="invite-state"></div>
         <div class="invite-actions">
             <button id="btnAcceptInvite" class="btn btn-primary" type="button"
-                    data-testid="invite-accept" hidden>Kampagne beitreten</button>
-            <a id="linkLogin" class="btn btn-primary" data-testid="invite-login" hidden>Anmelden</a>
-            <a id="linkRegister" class="btn btn-secondary" data-testid="invite-register" hidden>Registrieren</a>
-            <a id="linkCampaigns" class="btn btn-secondary" href="/campaigns" hidden>Zu meinen Kampagnen</a>
+                    data-testid="invite-accept" hidden><span data-ui-key="u_f71f6b596622">Kampagne beitreten</span></button>
+            <a id="linkLogin" class="btn btn-primary" data-testid="invite-login" hidden><span data-ui-key="u_a13480ab170c">Anmelden</span></a>
+            <a id="linkRegister" class="btn btn-secondary" data-testid="invite-register" hidden><span data-ui-key="u_1551c98e96c5">Registrieren</span></a>
+            <a id="linkCampaigns" class="btn btn-secondary" href="/campaigns" hidden><span data-ui-key="u_6764fde4858c">Zu meinen Kampagnen</span></a>
         </div>
     </main>
 
     <script src="/static/js/auth.js"></script>
-    <script>
+    <script>globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
         (async function () {
             const token = decodeURIComponent(window.location.pathname.split("/").pop() || "");
             const el = (id) => document.getElementById(id);
@@ -92,25 +98,25 @@
             } catch (error) { /* handled below as invalid */ }
 
             if (!info) {
-                el("inviteTitle").textContent = "Diese Einladung gibt es nicht";
+                el("inviteTitle").textContent = globalThis.VTTUi("Diese Einladung gibt es nicht");
                 state("Der Link ist unvollständig oder wurde widerrufen. Bitte die Spielleitung um einen neuen Einladungslink.", true);
                 return;
             }
 
             el("inviteDetail").innerHTML =
-                `Du bist eingeladen zur Kampagne <strong></strong> ` +
-                `(Spielleitung: <span id="inviteDm"></span>).`;
+                `${globalThis.VTTUiHTML("Du bist eingeladen zur Kampagne")} <strong></strong> ` +
+                `${globalThis.VTTUiHTML("(Spielleitung:")} <span id="inviteDm"></span>).`;
             el("inviteDetail").querySelector("strong").textContent = info.campaign_name;
             el("inviteDetail").querySelector("#inviteDm").textContent = info.dm_username || "unbekannt";
             show("inviteDetail");
 
             if (info.status === "expired") {
-                el("inviteTitle").textContent = "Einladung abgelaufen";
+                el("inviteTitle").textContent = globalThis.VTTUi("Einladung abgelaufen");
                 state("Dieser Link ist abgelaufen. Bitte die Spielleitung um einen neuen Einladungslink.", true);
                 return;
             }
             if (info.status === "used") {
-                el("inviteTitle").textContent = "Einladung aufgebraucht";
+                el("inviteTitle").textContent = globalThis.VTTUi("Einladung aufgebraucht");
                 state("Dieser Link hat sein Beitritts-Limit erreicht. Bitte die Spielleitung um einen neuen Einladungslink.", false);
                 show("linkCampaigns");
                 return;
@@ -118,7 +124,7 @@
 
             const user = await Auth.getCurrentUser().catch(() => null);
             if (!user) {
-                el("inviteTitle").textContent = "Fast am Tisch";
+                el("inviteTitle").textContent = globalThis.VTTUi("Fast am Tisch");
                 state("Melde dich an oder registriere dich — danach landest du direkt wieder bei dieser Einladung.");
                 const next = encodeURIComponent(`/invite/${token}`);
                 el("linkLogin").href = `/login.html?next=${next}`;
@@ -128,7 +134,7 @@
                 return;
             }
 
-            el("inviteTitle").textContent = "Willkommen am Tisch";
+            el("inviteTitle").textContent = globalThis.VTTUi("Willkommen am Tisch");
             state(`Angemeldet als ${user.username}. Ein Klick, und du sitzt mit am Tisch.`);
             show("btnAcceptInvite");
 
@@ -144,7 +150,7 @@
                         // Generic multi-use link (2026-09-22): this files a
                         // join request, not instant membership - the DM has
                         // to approve it before there is a campaign to open.
-                        el("inviteTitle").textContent = "Beitrittsanfrage gesendet";
+                        el("inviteTitle").textContent = globalThis.VTTUi("Beitrittsanfrage gesendet");
                         state("Die Spielleitung muss deine Anfrage noch bestätigen. Du bekommst Zugriff, sobald sie das tut.");
                         show("linkCampaigns");
                         return;

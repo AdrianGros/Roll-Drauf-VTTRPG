@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Document model, limits and import validation for the rd-mapmaker v1 format.
 
 export const FORMAT = "rd-mapmaker";
@@ -27,12 +29,12 @@ export const LIMITS = Object.freeze({
 export const LAYER_KINDS = ["raster", "paths", "stamps", "labels", "tiles"];
 export const TILE_GRID_DEFAULT = 32;
 export const LABEL_STYLES = {
-    realm: { name: "Reich", size: 72 },
-    region: { name: "Region", size: 40 },
-    city: { name: "Stadt", size: 40 },
-    town: { name: "Ort", size: 30 },
-    water: { name: "Gewässer", size: 34 },
-    feature: { name: "Landmarke", size: 28 },
+    realm: { name: globalThis.VTTUi("Reich"), size: 72 },
+    region: { name: globalThis.VTTUi("Region"), size: 40 },
+    city: { name: globalThis.VTTUi("Stadt"), size: 40 },
+    town: { name: globalThis.VTTUi("Ort"), size: 30 },
+    water: { name: globalThis.VTTUi("Gewässer"), size: 34 },
+    feature: { name: globalThis.VTTUi("Landmarke"), size: 28 },
 };
 export const PLACE_KINDS = {
     city: "Stadt",
@@ -221,7 +223,7 @@ export function validateDocument(raw, { knownAssets, rasterSource = "dataurl" })
 
     const metaIn = isPlainObject(raw.meta) ? raw.meta : {};
     const meta = {
-        title: cleanText(metaIn.title, LIMITS.title) || "Unbenannte Karte",
+        title: cleanText(metaIn.title, LIMITS.title) || globalThis.VTTUi("Unbenannte Karte"),
         seed: Number.isInteger(metaIn.seed) ? metaIn.seed : 0,
         created: cleanText(metaIn.created, 40),
         modified: cleanText(metaIn.modified, 40),
@@ -441,7 +443,7 @@ export async function materialize(validated) {
 
 function canvasToBlob(canvas) {
     return new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("PNG-Kodierung fehlgeschlagen"))), "image/png");
+        canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error(globalThis.VTTUi("PNG-Kodierung fehlgeschlagen")))), "image/png");
     });
 }
 

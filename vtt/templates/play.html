@@ -2,8 +2,11 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VTT Spieltisch</title>
+    <title data-ui-key="u_cbecc62a80be">VTT Spieltisch</title>
     <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/theme.css">
@@ -2424,6 +2427,7 @@
             body.play-fullscreen .play-status-strip #sessionTitle { max-width: 34vw; }
         }
     </style>
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="spellbook book-shell-app play-workspace-realign play-fullscreen" data-play-entry-boundary="pending" data-play-return-boundary="idle" data-play-mode-family="table" data-play-transition-stage="table" data-play-entry-phase="pending" data-play-return-phase="TABLE_MODE">
     <div class="play-entry-curtain" aria-hidden="true">
@@ -2438,43 +2442,43 @@
     <div id="msg" class="message" role="status" aria-live="polite" aria-atomic="true"></div>
     <!-- Rolls from D&D Beyond (Beyond20) show here for a few seconds; the
          full dice log stays under Menü > Tools. -->
-    <div id="rollFeed" class="roll-feed" aria-live="polite" aria-label="Letzte Würfe aus D&amp;D Beyond"></div>
+    <div id="rollFeed" class="roll-feed" aria-live="polite" aria-label="Letzte Würfe aus D&amp;D Beyond" data-ui-aria-label="u_757bab71930e"></div>
     <main>
         <div class="book-dashboard-camera book-route-camera play-workspace-camera">
-            <section class="book-dashboard-page book-route-page book-workspace-page play-workspace-page" role="region" aria-label="Play workspace page">
+            <section class="book-dashboard-page book-route-page book-workspace-page play-workspace-page" role="region" aria-label="Play workspace page" data-ui-aria-label="u_62059c98e422">
                 <div class="book-dashboard-topbar">
-                    <p id="sessionTitleHeader" class="play-session-title">Session wird geladen...</p>
-                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Workspace page menu">
-                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/dashboard">Übersicht</button>
-                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/campaigns">Kampagnen</button>
-                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/characters">Charaktere</button>
-                        <a class="book-dashboard-ribbon-btn" data-creation-engine-nav data-book-return-target="/api/ce/authoring" aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
-                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
-                        <button type="button" class="book-dashboard-ribbon-btn is-active">Spieltisch</button>
+                    <p id="sessionTitleHeader" class="play-session-title"><span data-ui-key="u_ee407309bcac">Session wird geladen...</span></p>
+                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Workspace page menu" data-ui-aria-label="u_28ca0f94d9e5">
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/dashboard"><span data-ui-key="u_cb27327d0207">Übersicht</span></button>
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/campaigns"><span data-ui-key="u_4538fc5c1596">Kampagnen</span></button>
+                        <button type="button" class="book-dashboard-ribbon-btn" data-book-return-target="/characters"><span data-ui-key="u_346a518c3530">Charaktere</span></button>
+                        <a class="book-dashboard-ribbon-btn" data-creation-engine-nav data-book-return-target="/api/ce/authoring" aria-disabled="true" tabindex="0"><span data-ui-key="u_8e0ac23811b8">Creation Engine · wird geprüft</span></a>
+                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0"><span data-ui-key="u_4230de9147dc">Regelwerk · Vorschau</span></a>
+                        <button type="button" class="book-dashboard-ribbon-btn is-active"><span data-ui-key="u_c3978abc3c1c">Spieltisch</span></button>
                     </div>
-                    <div class="book-dashboard-crest" aria-label="Tischmodus">Am Spieltisch</div>
+                    <div class="book-dashboard-crest" aria-label="Tischmodus" data-ui-aria-label="u_20d69bd7aa77"><span data-ui-key="u_94a1bbd8fd60">Am Spieltisch</span></div>
                 </div>
 
                 <div class="book-dashboard-titlebar play-status-strip">
-                    <p id="sessionTitle" class="play-session-title">Session wird geladen...</p>
-                    <div class="stage-topbar" aria-label="Seiten- und Zoomsteuerung">
-                        <div id="activePagePill" class="active-page-pill" hidden>Seite: <strong id="activePageName">-</strong></div>
+                    <p id="sessionTitle" class="play-session-title"><span data-ui-key="u_ee407309bcac">Session wird geladen...</span></p>
+                    <div class="stage-topbar" aria-label="Seiten- und Zoomsteuerung" data-ui-aria-label="u_cc2fd2dfcccc">
+                        <div id="activePagePill" class="active-page-pill" hidden><span data-ui-key="u_818d1d028bc4">Seite:</span> <strong id="activePageName">-</strong></div>
                         <div class="stage-zoom-cluster">
-                            <button type="button" id="btnZoomOut" class="mini-control" title="Zoom out">-</button>
+                            <button type="button" id="btnZoomOut" class="mini-control" title="Zoom out" data-ui-title="u_a4ae4b24a1f5">-</button>
                             <span id="zoomLabel" class="mini-control">100%</span>
-                            <button type="button" id="btnZoomIn" class="mini-control" title="Zoom in">+</button>
+                            <button type="button" id="btnZoomIn" class="mini-control" title="Zoom in" data-ui-title="u_4fc05f2763ba">+</button>
                             <input id="zoomRange" type="range" min="20" max="300" step="5" value="100">
-                            <button type="button" id="btnZoomFit" class="mini-control" title="Karte einpassen">FIT</button>
+                            <button type="button" id="btnZoomFit" class="mini-control" title="Karte einpassen" data-ui-title="u_9788efabf9ed">FIT</button>
                             <button type="button" id="btnZoomReset" class="mini-control" title="100%">RST</button>
                         </div>
                     </div>
                     <div class="book-dashboard-meta">
-                        <span class="book-dashboard-chip" id="modeChip"><span class="chip-label">Modus: </span><strong id="modeBadge">-</strong></span>
-                        <span class="book-dashboard-chip" id="roleChip"><span class="chip-label">Rolle: </span><strong id="roleBadge">-</strong></span>
-                        <span class="book-dashboard-chip" id="readOnlyChip"><span class="chip-label">Zugriff: </span><strong id="readOnlyBadge">-</strong></span>
-                        <span class="book-dashboard-chip" id="statusChip"><span class="chip-label">Status: </span><strong id="sessionStatusPill">-</strong></span>
-                        <span class="book-dashboard-chip" id="presenceChip" title="Am Tisch"><span class="chip-label">Am Tisch: </span><strong id="presenceRoster">–</strong></span>
-                        <span class="book-dashboard-chip" id="beyond20Chip" title="Beyond20 ist verbunden: Würfe aus D&amp;D Beyond kommen an diesem Tisch an." hidden>Beyond20</span>
+                        <span class="book-dashboard-chip" id="modeChip"><span class="chip-label"><span data-ui-key="u_ce3a208e993e">Modus:</span> </span><strong id="modeBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="roleChip"><span class="chip-label"><span data-ui-key="u_795413fb1cb1">Rolle:</span> </span><strong id="roleBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="readOnlyChip"><span class="chip-label"><span data-ui-key="u_ef63d0ed101f">Zugriff:</span> </span><strong id="readOnlyBadge">-</strong></span>
+                        <span class="book-dashboard-chip" id="statusChip"><span class="chip-label"><span data-ui-key="u_11dc9e195292">Status:</span> </span><strong id="sessionStatusPill">-</strong></span>
+                        <span class="book-dashboard-chip" id="presenceChip" title="Am Tisch" data-ui-title="u_15262fee2ed4"><span class="chip-label"><span data-ui-key="u_503364bb1304">Am Tisch:</span> </span><strong id="presenceRoster">–</strong></span>
+                        <span class="book-dashboard-chip" id="beyond20Chip" title="Beyond20 ist verbunden: Würfe aus D&amp;D Beyond kommen an diesem Tisch an." data-ui-title="u_a2e15102445c" hidden><span data-ui-key="u_f3fe420f6087">Beyond20</span></span>
                     </div>
                 </div>
 
@@ -2492,17 +2496,17 @@
              über oder unter der Karte zu schweben. play-ui.js verschiebt
              die Widgets unterhalb von 1040px hierher und zurück. -->
         <div id="tableSheetBackdrop" class="table-sheet-backdrop" hidden></div>
-        <div id="tableSheet" class="table-sheet" hidden role="region" aria-label="Tisch-Panels">
+        <div id="tableSheet" class="table-sheet" hidden role="region" aria-label="Tisch-Panels" data-ui-aria-label="u_ffd9da5b825a">
             <div id="tableSheetBody" class="table-sheet-body"></div>
-            <button type="button" id="btnTableSheetBack" class="table-sheet-back">↩ Zur Kampagne</button>
+            <button type="button" id="btnTableSheetBack" class="table-sheet-back"><span data-ui-key="u_407574305440">↩ Zur Kampagne</span></button>
         </div>
 
         <section class="stage">
             <div class="map-viewport" id="mapViewport">
                 <div id="mapExtent">
                     <div class="map-world" id="mapWorld">
-                        <div class="map-empty-state" id="mapEmptyState">Keine aktive Karte geladen. Initialisiere den Kartenstapel oder wähle eine Ebene aus.</div>
-                        <img id="mapImage" alt="Aktive Karte">
+                        <div class="map-empty-state" id="mapEmptyState"><span data-ui-key="u_c1b303f37a2e">Keine aktive Karte geladen. Initialisiere den Kartenstapel oder wähle eine Ebene aus.</span></div>
+                        <img id="mapImage" alt="Aktive Karte" data-ui-alt="u_4dd9d57569b6">
                         <div class="map-grid-layer" id="mapGridLayer"></div>
                         <div id="mapTokenLayer"></div>
                         <svg id="measureLayer" aria-hidden="true"></svg>
@@ -2540,35 +2544,35 @@
                  behavior to apply -- that only activates via the parent's
                  .collapsed class, which this panel never gets. -->
             <div id="tokenCreatePanel" class="floating" hidden style="width: 250px;">
-                <h3>Token platzieren</h3>
+                <h3><span data-ui-key="u_9be283477212">Token platzieren</span></h3>
                 <div class="widget-body" style="display:flex; flex-direction:column; gap:0.4rem;">
-                    <select id="tokenCreateCharacter" aria-label="Charakter verknüpfen" hidden>
-                        <option value="">Kein Charakter verknüpft</option>
+                    <select id="tokenCreateCharacter" aria-label="Charakter verknüpfen" data-ui-aria-label="u_92665402bd9a" hidden>
+                        <option value="" data-ui-key="u_aea631b61270">Kein Charakter verknüpft</option>
                     </select>
-                    <input id="tokenCreateName" type="text" placeholder="Name" maxlength="120">
+                    <input id="tokenCreateName" type="text" placeholder="Name" data-ui-placeholder="u_709a23220f2c" maxlength="120">
                     <select id="tokenCreateType">
                         <option value="npc">NPC</option>
-                        <option value="player">Spieler</option>
-                        <option value="monster">Monster</option>
-                        <option value="object">Objekt</option>
+                        <option value="player" data-ui-key="u_1f52fa28b727">Spieler</option>
+                        <option value="monster" data-ui-key="u_e63d88bd7bf3">Monster</option>
+                        <option value="object" data-ui-key="u_41b05720e1ae">Objekt</option>
                     </select>
                     <select id="tokenCreateSize">
-                        <option value="1">1x1 Feld</option>
-                        <option value="2">2x2 Felder</option>
-                        <option value="3">3x3 Felder</option>
+                        <option value="1" data-ui-key="u_8f1ce822c02b">1x1 Feld</option>
+                        <option value="2" data-ui-key="u_f533c6969a9a">2x2 Felder</option>
+                        <option value="3" data-ui-key="u_5a5d8be608ac">3x3 Felder</option>
                     </select>
                     <span data-dm-slot="token-visibility"></span>
                     <input id="tokenCreateImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-                    <button id="btnTokenCreateImage" class="secondary" type="button"><span id="tokenCreateImageLabel">Bild (optional)...</span></button>
+                    <button id="btnTokenCreateImage" class="secondary" type="button"><span id="tokenCreateImageLabel"><span data-ui-key="u_d571bd0cb680">Bild (optional)...</span></span></button>
                     <div class="button-row" style="margin-bottom:0;">
-                        <button type="button" id="btnTokenCreateConfirm">Platzieren</button>
-                        <button type="button" id="btnTokenCreateCancel" class="secondary">Abbrechen</button>
+                        <button type="button" id="btnTokenCreateConfirm"><span data-ui-key="u_a7a18a398e19">Platzieren</span></button>
+                        <button type="button" id="btnTokenCreateCancel" class="secondary"><span data-ui-key="u_07af7cb30fca">Abbrechen</span></button>
                     </div>
                 </div>
             </div>
 
             <div id="layersWidget" class="floating">
-                <h3 class="widget-toggle" data-widget="layersWidget" role="button" tabindex="0" aria-controls="layersWidgetBody" aria-expanded="true">Seiten (Kartenebenen) <span class="widget-caret">▾</span></h3>
+                <h3 class="widget-toggle" data-widget="layersWidget" role="button" tabindex="0" aria-controls="layersWidgetBody" aria-expanded="true"><span data-ui-key="u_832c9eec3d6d">Seiten (Kartenebenen)</span> <span class="widget-caret">▾</span></h3>
                 <div id="layersWidgetBody" class="widget-body">
                     <!-- Seiten-Hinzufügen-Flow (Adrian, 2026-08-25): EIN Weg.
                          „Hinzufügen" fragt: neue Karte hochladen oder eine
@@ -2577,18 +2581,18 @@
                          eine neue Seite; die alte Sackgasse „alle Karten
                          sind bereits Seiten" existiert nicht mehr. -->
                     <span data-dm-slot="map-upload"></span>
-                    <input id="layerSearchInput" class="layer-search-input" type="text" placeholder="Seiten durchsuchen..." aria-label="Seiten durchsuchen" autocomplete="off">
-                    <div id="layerList" role="listbox" aria-label="Seiten (Kartenebenen)"></div>
+                    <input id="layerSearchInput" class="layer-search-input" type="text" placeholder="Seiten durchsuchen..." data-ui-placeholder="u_0f040903e1e3" aria-label="Seiten durchsuchen" data-ui-aria-label="u_159904309ef9" autocomplete="off">
+                    <div id="layerList" role="listbox" aria-label="Seiten (Kartenebenen)" data-ui-aria-label="u_832c9eec3d6d"></div>
                     <span data-dm-slot="layer-add"></span>
                     <div id="layerAddStatus" class="layer-empty-state" role="status" aria-live="polite" hidden></div>
                 </div>
             </div>
 
             <div id="turnOrderWidget" class="floating">
-                <h3 class="widget-toggle" data-widget="turnOrderWidget" role="button" tabindex="0" aria-controls="turnOrderWidgetBody" aria-expanded="false">Turn Order <span class="widget-caret">▾</span></h3>
+                <h3 class="widget-toggle" data-widget="turnOrderWidget" role="button" tabindex="0" aria-controls="turnOrderWidgetBody" aria-expanded="false"><span data-ui-key="u_10f0c1707cf4">Turn Order</span> <span class="widget-caret">▾</span></h3>
                 <div id="turnOrderWidgetBody" class="widget-body">
-                    <div id="turnOrderSummary" class="turn-state">Noch keine Initiative-Werte.</div>
-                    <div id="turnOrderList" class="muted" role="listbox" aria-label="Kampfreihenfolge">Noch keine Initiative-Werte.</div>
+                    <div id="turnOrderSummary" class="turn-state"><span data-ui-key="u_7a5be3a91b66">Noch keine Initiative-Werte.</span></div>
+                    <div id="turnOrderList" class="muted" role="listbox" aria-label="Kampfreihenfolge" data-ui-aria-label="u_d4dd9c7ccb34"><span data-ui-key="u_7a5be3a91b66">Noch keine Initiative-Werte.</span></div>
                     <!-- S06: HIGH-severity risk in the research doc --
                          turn changes with no live-region announcement is a
                          screen-reader accessibility failure, not a nice-to-
@@ -2614,31 +2618,31 @@
             </div>
 
             <div id="tokenWidget" class="floating">
-                <h3 class="widget-toggle" data-widget="tokenWidget" role="button" tabindex="0" aria-controls="tokenWidgetBody" aria-expanded="false">Tokens <span class="widget-caret">▾</span></h3>
+                <h3 class="widget-toggle" data-widget="tokenWidget" role="button" tabindex="0" aria-controls="tokenWidgetBody" aria-expanded="false"><span data-ui-key="u_c38c6c1f3a27">Tokens</span> <span class="widget-caret">▾</span></h3>
                 <div id="tokenWidgetBody" class="widget-body">
-                    <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;">Kein Token ausgewählt.</div>
+                    <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;"><span data-ui-key="u_df50cde94f81">Kein Token ausgewählt.</span></div>
                     <span data-dm-slot="token-upload"></span>
                     <div class="button-row" id="sheetButtonRow" hidden style="margin-bottom:0.45rem;">
-                        <button type="button" id="btnOpenSheet" class="mini-btn">Bogen öffnen</button>
-                        <a id="btnOpenSheetTab" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch">Im neuen Tab ↗</a>
+                        <button type="button" id="btnOpenSheet" class="mini-btn"><span data-ui-key="u_6b26b69f735b">Bogen öffnen</span></button>
+                        <a id="btnOpenSheetTab" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch" data-ui-title="u_b4baf156e009"><span data-ui-key="u_00e97cd63f76">Im neuen Tab ↗</span></a>
                     </div>
                     <div id="tokenSelectionDetail" hidden style="margin-bottom:0.45rem;">
                         <div class="button-row" style="margin-bottom:0.35rem;">
-                            <input id="tokenNameInput" type="text" placeholder="Name" style="width:140px;" title="Token-Name" maxlength="80">
-                            <button type="button" id="btnTokenNameSet" class="mini-btn">Umbenennen</button>
+                            <input id="tokenNameInput" type="text" placeholder="Name" data-ui-placeholder="u_709a23220f2c" style="width:140px;" title="Token-Name" data-ui-title="u_cef44e6e282d" maxlength="80">
+                            <button type="button" id="btnTokenNameSet" class="mini-btn"><span data-ui-key="u_a0aa20d8c296">Umbenennen</span></button>
                         </div>
                         <div class="button-row" style="margin-bottom:0.35rem;">
-                            <input id="tokenHpCurrent" type="number" placeholder="HP" style="width:70px;" title="Aktuelle HP">
-                            <input id="tokenHpMax" type="number" placeholder="Max" style="width:70px;" title="Maximale HP">
-                            <button type="button" id="btnTokenHpSet" class="mini-btn">HP setzen</button>
+                            <input id="tokenHpCurrent" type="number" placeholder="HP" style="width:70px;" title="Aktuelle HP" data-ui-title="u_53f310a226ac">
+                            <input id="tokenHpMax" type="number" placeholder="Max" data-ui-placeholder="u_a95e85aed563" style="width:70px;" title="Maximale HP" data-ui-title="u_ce71794a6126">
+                            <button type="button" id="btnTokenHpSet" class="mini-btn"><span data-ui-key="u_97d6037dcf05">HP setzen</span></button>
                         </div>
                         <div class="button-row" style="margin-bottom:0.35rem;">
                             <input id="tokenImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-                            <button type="button" id="btnTokenImageSet" class="mini-btn secondary">Bild setzen...</button>
-                            <button type="button" id="btnTokenDelete" class="mini-btn danger">Token löschen</button>
+                            <button type="button" id="btnTokenImageSet" class="mini-btn secondary"><span data-ui-key="u_808bbb320fc7">Bild setzen...</span></button>
+                            <button type="button" id="btnTokenDelete" class="mini-btn danger"><span data-ui-key="u_c96573a88c59">Token löschen</span></button>
                         </div>
                         <div class="button-row" style="margin-bottom:0.35rem;">
-                            <button type="button" id="btnTokenConditions" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="conditionsPopover">Zustände<span id="conditionsCountBadge" class="conditions-count-badge" hidden>0</span></button>
+                            <button type="button" id="btnTokenConditions" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="conditionsPopover"><span data-ui-key="u_1b49baf7e76a">Zustände</span><span id="conditionsCountBadge" class="conditions-count-badge" hidden>0</span></button>
                         </div>
                         <!-- S10: NULL/empty = unlimited natural sight
                              (still wall-blocked) -- most tokens leave this
@@ -2646,8 +2650,8 @@
                              tier as HP; unlike the loot-source toggle
                              below, sight_range is not DM-exclusive. -->
                         <div class="button-row" style="margin-bottom:0;">
-                            <input id="tokenSightRange" type="number" min="0" placeholder="Sichtweite" style="width:110px;" title="Sichtweite in Weltkoordinaten (leer = unbegrenzt)">
-                            <button type="button" id="btnTokenSightRangeSet" class="mini-btn secondary">Setzen</button>
+                            <input id="tokenSightRange" type="number" min="0" placeholder="Sichtweite" data-ui-placeholder="u_4b36c7ad6481" style="width:110px;" title="Sichtweite in Weltkoordinaten (leer = unbegrenzt)" data-ui-title="u_b0ac000c62ce">
+                            <button type="button" id="btnTokenSightRangeSet" class="mini-btn secondary"><span data-ui-key="u_a7f2eb381743">Setzen</span></button>
                         </div>
                         <!-- S09: DM-only, marks a corpse/chest token as
                              lootable -- distinct from owner-or-DM
@@ -2661,7 +2665,7 @@
                          shared/table-wide, unlike the rest of this panel
                          which is gated to the owning player or the DM. -->
                     <div class="button-row" id="tokenLootRow" hidden style="margin-bottom:0.45rem;">
-                        <button type="button" id="btnTokenLoot" class="mini-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lootPopover">Beute</button>
+                        <button type="button" id="btnTokenLoot" class="mini-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lootPopover"><span data-ui-key="u_4221998fcce7">Beute</span></button>
                     </div>
                     <!-- S10: DM-only verification tool (AC: read-only,
                          "see what this token can see"), gated on operator
@@ -2669,19 +2673,19 @@
                          owner-editable field, and unlike the loot row it
                          is not reachable by players at all. -->
                     <span data-dm-slot="visible-tokens"></span>
-                    <div id="lootPopover" class="conditions-popover" role="dialog" aria-label="Beute übertragen" hidden>
+                    <div id="lootPopover" class="conditions-popover" role="dialog" aria-label="Beute übertragen" data-ui-aria-label="u_62e7b502d0e8" hidden>
                         <div class="conditions-popover-head">
-                            <strong>Beute</strong>
-                            <button type="button" id="btnLootClose" class="mini-btn secondary" aria-label="Schließen">✕</button>
+                            <strong><span data-ui-key="u_4221998fcce7">Beute</span></strong>
+                            <button type="button" id="btnLootClose" class="mini-btn secondary" aria-label="Schließen" data-ui-aria-label="u_44424b18700e">✕</button>
                         </div>
                         <div id="lootItemList" class="conditions-list" style="grid-template-columns:1fr;"></div>
                         <span data-dm-slot="loot-add"></span>
                         <div class="button-row" style="padding:0.3rem 0.5rem;">
-                            <label for="lootRecipient" class="sr-only">Empfänger</label>
+                            <label for="lootRecipient" class="sr-only"><span data-ui-key="u_dd8278c7dc44">Empfänger</span></label>
                             <select id="lootRecipient" style="flex:1;min-width:0;"></select>
                         </div>
                         <div class="conditions-popover-foot">
-                            <button type="button" id="btnLootTransfer" class="mini-btn">Übertragen</button>
+                            <button type="button" id="btnLootTransfer" class="mini-btn"><span data-ui-key="u_aa0a9e22df43">Übertragen</span></button>
                         </div>
                         <div id="lootStatus" class="muted" role="status" aria-live="polite" style="padding:0 0.5rem 0.4rem;"></div>
                     </div>
@@ -2691,14 +2695,14 @@
                          pattern from S02 rather than a native <dialog>,
                          since this one is explicitly NOT supposed to be
                          modal. -->
-                    <div id="conditionsPopover" class="conditions-popover" role="dialog" aria-label="Zustände" hidden>
+                    <div id="conditionsPopover" class="conditions-popover" role="dialog" aria-label="Zustände" data-ui-aria-label="u_1b49baf7e76a" hidden>
                         <div class="conditions-popover-head">
-                            <strong>Zustände</strong>
-                            <button type="button" id="btnConditionsClose" class="mini-btn secondary" aria-label="Schließen">✕</button>
+                            <strong><span data-ui-key="u_1b49baf7e76a">Zustände</span></strong>
+                            <button type="button" id="btnConditionsClose" class="mini-btn secondary" aria-label="Schließen" data-ui-aria-label="u_44424b18700e">✕</button>
                         </div>
                         <div id="conditionsList" class="conditions-list"></div>
                         <div class="conditions-popover-foot">
-                            <button type="button" id="btnConditionsClearAll" class="mini-btn danger">Alle löschen</button>
+                            <button type="button" id="btnConditionsClearAll" class="mini-btn danger"><span data-ui-key="u_a85903c24dbb">Alle löschen</span></button>
                         </div>
                     </div>
                     <!-- S04: a selected token that isn't yours and isn't
@@ -2707,7 +2711,7 @@
                          this is someone else's character. This is the
                          read-only counterpart to #tokenSelectionDetail. -->
                     <div id="tokenSelectionReadonly" hidden class="muted" style="margin-bottom:0.45rem; font-size:0.82rem;"></div>
-                    <div id="tokenConnectionNotice" hidden class="muted" role="status" aria-live="polite" style="margin-bottom:0.45rem; color:#e8b23f;">Verbindung wird wiederhergestellt…</div>
+                    <div id="tokenConnectionNotice" hidden class="muted" role="status" aria-live="polite" style="margin-bottom:0.45rem; color:#e8b23f;"><span data-ui-key="u_9854852a2d21">Verbindung wird wiederhergestellt…</span></div>
                     <div id="tokenList"></div>
                 </div>
             </div>
@@ -2722,17 +2726,17 @@
              whichever token is currently selected). Both stay; they serve
              different moments (quick numbered-key fire vs. deliberate
              actor+target+action selection). -->
-        <div id="actionHotbar" class="action-hotbar" role="toolbar" aria-label="Aktionsleiste (Schnellzugriff)" hidden></div>
-        <div id="personalActionBar" class="personal-action-bar" role="toolbar" aria-label="Persönliche Charakteraktionen" hidden></div>
+        <div id="actionHotbar" class="action-hotbar" role="toolbar" aria-label="Aktionsleiste (Schnellzugriff)" data-ui-aria-label="u_6b8ef9e91008" hidden></div>
+        <div id="personalActionBar" class="personal-action-bar" role="toolbar" aria-label="Persönliche Charakteraktionen" data-ui-aria-label="u_79f0cf887444" hidden></div>
 
-        <aside class="left-toolbar" aria-label="Werkzeugleiste">
+        <aside class="left-toolbar" aria-label="Werkzeugleiste" data-ui-aria-label="u_78b91335f55e">
             <!-- MMO-Aktionsleiste: dauerhaft sichtbar und zentral direkt
                  unter der Karte, statt die obere Statusleiste zu belasten. -->
-            <button type="button" class="tool-btn active" data-tool="select" title="Auswählen"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label">Wählen</span></button>
-            <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label">Bewegen</span></button>
-            <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label">Token</span></button>
-            <button type="button" class="tool-btn" data-tool="measure" title="Entfernung messen: klicken für Wegpunkte, Esc entfernt den letzten, nochmal Esc bricht ab" aria-label="Entfernung messen"><span class="tool-ico" aria-hidden="true">📏</span><span class="tool-label">Messen</span></button>
-            <button type="button" id="btnMeasureSnap" class="tool-btn active" title="Rastereinrasten für Messungen an/aus" aria-pressed="true" hidden><span class="tool-ico" aria-hidden="true">▦</span><span class="tool-label">Raster</span></button>
+            <button type="button" class="tool-btn active" data-tool="select" title="Auswählen" data-ui-title="u_2ac692f43843"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label"><span data-ui-key="u_06cea5c40f66">Wählen</span></span></button>
+            <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)" data-ui-title="u_7d07bdddbf19"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label"><span data-ui-key="u_5f489a216d95">Bewegen</span></span></button>
+            <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken" data-ui-title="u_6c9ec1bb2a0a"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label"><span data-ui-key="u_a1141eb96836">Token</span></span></button>
+            <button type="button" class="tool-btn" data-tool="measure" title="Entfernung messen: klicken für Wegpunkte, Esc entfernt den letzten, nochmal Esc bricht ab" data-ui-title="u_462949b03aab" aria-label="Entfernung messen" data-ui-aria-label="u_b9fceaaa639e"><span class="tool-ico" aria-hidden="true">📏</span><span class="tool-label"><span data-ui-key="u_1d017b3a6394">Messen</span></span></button>
+            <button type="button" id="btnMeasureSnap" class="tool-btn active" title="Rastereinrasten für Messungen an/aus" data-ui-title="u_dc8d09e66c34" aria-pressed="true" hidden><span class="tool-ico" aria-hidden="true">▦</span><span class="tool-label"><span data-ui-key="u_4e92822e2798">Raster</span></span></button>
             <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
                  used to sit here as silent no-ops (the handler only toggled
                  a CSS class). Removed until the tools actually exist -- a
@@ -2745,9 +2749,9 @@
                  client and server. -->
             <span data-dm-slot="map-tools"></span>
             <div class="spacer">
-                <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label">Tisch</span></button>
-                <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" aria-label="Menü öffnen"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label">Menü</span></button>
-                <button type="button" id="btnBack" class="tool-btn" title="Sitzungsmenü: Kampagne, Hilfe, Sitzung verlassen" aria-haspopup="true" aria-expanded="false" aria-controls="appMenu"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label">Zurück</span><span class="tool-caret" aria-hidden="true">▾</span></button>
+                <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" data-ui-title="u_e154500c2731" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label"><span data-ui-key="u_a78441065292">Tisch</span></span></button>
+                <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" data-ui-title="u_b642b1e0fc89" aria-label="Menü öffnen" data-ui-aria-label="u_7241c6309388"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label"><span data-ui-key="u_0ebbd1b8c8ae">Menü</span></span></button>
+                <button type="button" id="btnBack" class="tool-btn" title="Sitzungsmenü: Kampagne, Hilfe, Sitzung verlassen" data-ui-title="u_ec19c008ddda" aria-haspopup="true" aria-expanded="false" aria-controls="appMenu"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label"><span data-ui-key="u_4080624342b2">Zurück</span></span><span class="tool-caret" aria-hidden="true">▾</span></button>
             </div>
         </aside>
 
@@ -2757,113 +2761,114 @@
              both labelled/iconed as "menu"-ish before this slice; keeping
              them functionally separate matters more than picking a new
              label, since renaming the sidebar toggle is out of scope here). -->
-        <div id="appMenu" class="app-menu" role="menu" aria-label="Sitzungsmenü" hidden>
+        <div id="appMenu" class="app-menu" role="menu" aria-label="Sitzungsmenü" data-ui-aria-label="u_8d220da4f98d" hidden>
             <div id="appMenuStatus" class="app-menu-status" role="none"></div>
-            <button type="button" id="appMenuReturn" class="app-menu-item" role="menuitem">Zur Kampagne zurückkehren</button>
-            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/dashboard">Übersicht</button>
-            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/characters">Charaktere</button>
-            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/mapmaker">Karten</button>
+            <button type="button" id="appMenuReturn" class="app-menu-item" role="menuitem"><span data-ui-key="u_4c504bedc4f3">Zur Kampagne zurückkehren</span></button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/dashboard"><span data-ui-key="u_cb27327d0207">Übersicht</span></button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/characters"><span data-ui-key="u_346a518c3530">Charaktere</span></button>
+            <button type="button" class="app-menu-item" role="menuitem" data-book-return-target="/mapmaker"><span data-ui-key="u_295ce85597c5">Karten</span></button>
             <!-- Tischplatz: only a DM or CO-DM gets this (mounted from the
                  bootstrap's can_switch_seat); it moves them between the DM
                  seat and a player seat at this table. -->
             <template data-seat-switch>
             <button type="button" id="appMenuSeat" class="app-menu-item" role="menuitem"></button>
             </template>
-            <a id="appMenuCreationEngine" class="app-menu-item" role="menuitem" data-creation-engine-nav data-book-return-target="/api/ce/authoring" aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
-            <a class="app-menu-item" role="menuitem" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
-            <button type="button" id="appMenuHelp" class="app-menu-item" role="menuitem">Hilfe &amp; Tastenkürzel</button>
+            <a id="appMenuCreationEngine" class="app-menu-item" role="menuitem" data-creation-engine-nav data-book-return-target="/api/ce/authoring" aria-disabled="true" tabindex="0"><span data-ui-key="u_8e0ac23811b8">Creation Engine · wird geprüft</span></a>
+            <a class="app-menu-item" role="menuitem" data-regelwerk-nav hidden aria-disabled="true" tabindex="0"><span data-ui-key="u_4230de9147dc">Regelwerk · Vorschau</span></a>
+            <button type="button" id="appMenuDisplay" class="app-menu-item" role="menuitem"><span data-ui-key="u_31d78ef69876">Ansicht und Sprache</span></button>
+            <button type="button" id="appMenuHelp" class="app-menu-item" role="menuitem"><span data-ui-key="u_b74af50bb9c6">Hilfe</span> &amp; <span data-ui-key="u_58262f7de46a">Tastenkürzel</span></button>
             <hr class="app-menu-divider">
-            <button type="button" id="appMenuLeave" class="app-menu-item app-menu-item--danger" role="menuitem">Sitzung verlassen</button>
+            <button type="button" id="appMenuLeave" class="app-menu-item app-menu-item--danger" role="menuitem"><span data-ui-key="u_ca90230b3c9b">Sitzung verlassen</span></button>
         </div>
 
         <dialog id="appMenuLeaveDialog" class="app-dialog">
             <form method="dialog">
-                <h3>Sitzung verlassen?</h3>
-                <p>Du kehrst zur Kampagne zurück. Andere am Tisch sehen sofort, dass du gegangen bist.</p>
+                <h3><span data-ui-key="u_f7d6adfac27c">Sitzung verlassen?</span></h3>
+                <p><span data-ui-key="u_58b04051b040">Du kehrst zur Kampagne zurück. Andere am Tisch sehen sofort, dass du gegangen bist.</span></p>
                 <div class="app-dialog-actions">
-                    <button type="button" id="appMenuLeaveCancel" class="mini-btn secondary" autofocus>Abbrechen</button>
-                    <button type="button" id="appMenuLeaveConfirm" class="mini-btn danger">Sitzung verlassen</button>
+                    <button type="button" id="appMenuLeaveCancel" class="mini-btn secondary" autofocus><span data-ui-key="u_07af7cb30fca">Abbrechen</span></button>
+                    <button type="button" id="appMenuLeaveConfirm" class="mini-btn danger"><span data-ui-key="u_ca90230b3c9b">Sitzung verlassen</span></button>
                 </div>
             </form>
         </dialog>
 
         <dialog id="appMenuHelpDialog" class="app-dialog">
             <form method="dialog">
-                <h3>Hilfe &amp; Tastenkürzel</h3>
+                <h3><span data-ui-key="u_b74af50bb9c6">Hilfe</span> &amp; <span data-ui-key="u_58262f7de46a">Tastenkürzel</span></h3>
                 <ul class="app-help-list">
-                    <li><kbd>Esc</kbd> — Menü, Dialog oder Seitenleiste schließen</li>
-                    <li><kbd>Enter</kbd> / <kbd>Leertaste</kbd> — Fokussiertes Element aktivieren</li>
-                    <li><kbd>↑</kbd> / <kbd>↓</kbd> — In Listen (z. B. Seiten) navigieren</li>
-                    <li><kbd>Pos1</kbd> / <kbd>Ende</kbd> — Zum ersten/letzten Eintrag springen</li>
+                    <li><kbd>Esc</kbd> <span data-ui-key="u_ebb84188deeb">— Menü, Dialog oder Seitenleiste schließen</span></li>
+                    <li><kbd>Enter</kbd> / <kbd>Leertaste</kbd> <span data-ui-key="u_f3fe0f7ce642">— Fokussiertes Element aktivieren</span></li>
+                    <li><kbd>↑</kbd> / <kbd>↓</kbd> <span data-ui-key="u_a5d5b6bddbed">— In Listen (z. B. Seiten) navigieren</span></li>
+                    <li><kbd>Pos1</kbd> / <kbd>Ende</kbd> <span data-ui-key="u_4b1edfeb7b95">— Zum ersten/letzten Eintrag springen</span></li>
                     <!-- Barrierefreiheit-Audit (2026-09-05): diese beiden
                          Kürzel existieren und funktionieren (siehe
                          play-ui.js _bindActionHotbar / measure-Escape-
                          Handler), standen aber nirgendwo -- die einzige
                          Stelle, an der eine neue Spielleitung nach
                          "Tastenkürzel" sucht, dokumentierte sie nicht. -->
-                    <li><kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd> — Aktion aus der Schnellleiste auslösen (wenn sichtbar)</li>
-                    <li><kbd>Esc</kbd> / <kbd>Strg</kbd>+<kbd>Z</kbd> (im Werkzeug „Messen“) — letzten Wegpunkt entfernen; erneut bricht die Messung ganz ab</li>
+                    <li><kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd> <span data-ui-key="u_06e1c39a8c8f">— Aktion aus der Schnellleiste auslösen (wenn sichtbar)</span></li>
+                    <li><kbd>Esc</kbd> / <kbd>Strg</kbd>+<kbd>Z</kbd> <span data-ui-key="u_bb6a5d955b7b">(im Werkzeug „Messen“) — letzten Wegpunkt entfernen; erneut bricht die Messung ganz ab</span></li>
                 </ul>
                 <div class="app-dialog-actions">
-                    <button type="button" id="appMenuHelpClose" class="mini-btn secondary" autofocus>Schließen</button>
+                    <button type="button" id="appMenuHelpClose" class="mini-btn secondary" autofocus><span data-ui-key="u_44424b18700e">Schließen</span></button>
                 </div>
             </form>
         </dialog>
 
         <aside class="right-sidebar">
             <div class="sidebar-tabs">
-                <button type="button" class="sidebar-tab" data-tab="journal">Journal</button>
-                <button type="button" class="sidebar-tab" data-tab="chat">Chat</button>
-                <button type="button" class="sidebar-tab active" data-tab="tools">Tools</button>
-                <button type="button" class="sidebar-tab" data-tab="session">Session</button>
-                <button type="button" id="btnSidebarClose" class="sidebar-tab sidebar-close" title="Schliessen" aria-label="Seitenleiste schliessen">×</button>
+                <button type="button" class="sidebar-tab" data-tab="journal"><span data-ui-key="u_57d7f743bbd1">Journal</span></button>
+                <button type="button" class="sidebar-tab" data-tab="chat"><span data-ui-key="u_2ced57f12591">Chat</span></button>
+                <button type="button" class="sidebar-tab active" data-tab="tools"><span data-ui-key="u_4fa8cc860c52">Tools</span></button>
+                <button type="button" class="sidebar-tab" data-tab="session"><span data-ui-key="u_f7f1997c6cd1">Session</span></button>
+                <button type="button" id="btnSidebarClose" class="sidebar-tab sidebar-close" title="Schliessen" data-ui-title="u_8288e9e0cb7b" aria-label="Seitenleiste schliessen" data-ui-aria-label="u_58540a801923">×</button>
             </div>
 
             <div class="sidebar-content">
                 <section id="panel-journal" class="tab-panel">
                     <div class="panel">
-                        <h2>Aktivität</h2>
-                        <div id="activityLog" class="muted">Noch keine Ereignisse.</div>
+                        <h2><span data-ui-key="u_1c4aaccf808e">Aktivität</span></h2>
+                        <div id="activityLog" class="muted"><span data-ui-key="u_dd8e8a99c699">Noch keine Ereignisse.</span></div>
                     </div>
                     <div class="panel">
-                        <h2>Map-Notizen</h2>
-                        <div class="muted" id="mapMetaText">Keine aktive Karte.</div>
+                        <h2><span data-ui-key="u_b1d0223c873a">Map-Notizen</span></h2>
+                        <div class="muted" id="mapMetaText"><span data-ui-key="u_e39f95a2a153">Keine aktive Karte.</span></div>
                     </div>
                 </section>
 
                 <section id="panel-chat" class="tab-panel">
                     <div class="panel">
-                        <h2>Session Chat</h2>
-                        <div id="chatLog" class="muted" role="log" aria-live="polite" aria-label="Chat-Verlauf">Noch keine Chat-Nachrichten.</div>
+                        <h2><span data-ui-key="u_a959ae998b2c">Session Chat</span></h2>
+                        <div id="chatLog" class="muted" role="log" aria-live="polite" aria-label="Chat-Verlauf" data-ui-aria-label="u_40a678bfdefd"><span data-ui-key="u_df4a37dfa72e">Noch keine Chat-Nachrichten.</span></div>
                     </div>
                     <div class="panel">
-                        <h2>Nachricht senden</h2>
-                        <label for="chatInput" class="sr-only">Nachricht an den Tisch</label>
+                        <h2><span data-ui-key="u_17ba0b59f01f">Nachricht senden</span></h2>
+                        <label for="chatInput" class="sr-only"><span data-ui-key="u_fb9938fbd17c">Nachricht an den Tisch</span></label>
                         <!-- S08: Enter sends, Shift+Enter inserts a line
                              break -- needs a real <textarea>, a single-line
                              <input> can't distinguish the two. -->
-                        <textarea id="chatInput" rows="2" placeholder="Nachricht an den Tisch..." inputmode="text"></textarea>
+                        <textarea id="chatInput" rows="2" placeholder="Nachricht an den Tisch..." data-ui-placeholder="u_3666022332d7" inputmode="text"></textarea>
                         <div class="button-row" style="margin-top:0.35rem; margin-bottom:0;">
-                            <button type="button" id="btnSendChat">Senden</button>
+                            <button type="button" id="btnSendChat"><span data-ui-key="u_452568f6b13e">Senden</span></button>
                         </div>
                     </div>
                 </section>
 
                 <section id="panel-tools" class="tab-panel active">
                     <div class="panel">
-                        <h2>Aktionsleiste</h2>
+                        <h2><span data-ui-key="u_1b76b0249f28">Aktionsleiste</span></h2>
                         <div class="button-row" style="margin-bottom:0.45rem;">
                             <select id="actionTokenId"></select>
                             <select id="actionTargetTokenId"></select>
                         </div>
                         <div class="button-row">
                             <select id="actionCode"></select>
-                            <button type="button" id="btnExecuteAction">Aktion ausführen</button>
+                            <button type="button" id="btnExecuteAction"><span data-ui-key="u_b40c4d04cdd8">Aktion ausführen</span></button>
                         </div>
                     </div>
 
                     <div class="panel">
-                        <h2>Würfel</h2>
+                        <h2><span data-ui-key="u_be908121d617">Würfel</span></h2>
                         <!-- S08: die presets just set #diceInput's value --
                              the formula field stays the single source of
                              truth (Apply decision: a fully separate
@@ -2872,9 +2877,9 @@
                              a nice-to-have polish item, not a functional
                              gap -- the doc's own decision on this exact
                              question was left unresolved with no lean). -->
-                        <div class="button-row dice-presets" role="group" aria-label="Würfel-Vorlagen">
+                        <div class="button-row dice-presets" role="group" aria-label="Würfel-Vorlagen" data-ui-aria-label="u_b5279e3de2f3">
                             <button type="button" class="mini-btn secondary" data-dice-preset="1d20">d20</button>
-                            <button type="button" class="mini-btn secondary" data-dice-preset="1d20+2">d20+2</button>
+                            <button type="button" class="mini-btn secondary" data-dice-preset="1d20+2"><span data-ui-key="u_623693b6cfce">d20+2</span></button>
                             <button type="button" class="mini-btn secondary" data-dice-preset="1d4">d4</button>
                             <button type="button" class="mini-btn secondary" data-dice-preset="1d6">d6</button>
                             <button type="button" class="mini-btn secondary" data-dice-preset="1d8">d8</button>
@@ -2882,39 +2887,39 @@
                             <button type="button" class="mini-btn secondary" data-dice-preset="1d12">d12</button>
                         </div>
                         <div class="button-row">
-                            <label for="diceInput" class="sr-only">Würfelformel</label>
-                            <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5" inputmode="text">
-                            <button type="button" id="btnRoll">Würfeln</button>
+                            <label for="diceInput" class="sr-only"><span data-ui-key="u_c7076da4e0db">Würfelformel</span></label>
+                            <input id="diceInput" type="text" value="1d20+5" placeholder="1d20+5" data-ui-placeholder="u_dc62d816c476" inputmode="text">
+                            <button type="button" id="btnRoll"><span data-ui-key="u_d8d5e9296fc2">Würfeln</span></button>
                         </div>
                         <div class="button-row">
-                            <label for="rollMode">Modus</label>
+                            <label for="rollMode"><span data-ui-key="u_a7f116c3648a">Modus</span></label>
                             <select id="rollMode">
-                                <option value="normal">Normal</option>
-                                <option value="advantage">Vorteil</option>
-                                <option value="disadvantage">Nachteil</option>
+                                <option value="normal" data-ui-key="u_45e118d0563e">Normal</option>
+                                <option value="advantage" data-ui-key="u_e2b939c2f570">Vorteil</option>
+                                <option value="disadvantage" data-ui-key="u_71e7743e0e99">Nachteil</option>
                             </select>
-                            <label for="rollVisibility">Sichtbarkeit</label>
+                            <label for="rollVisibility"><span data-ui-key="u_0218eb5cd0e8">Sichtbarkeit</span></label>
                             <select id="rollVisibility">
-                                <option value="public">Öffentlich</option>
-                                <option value="gm_only">Nur SL</option>
-                                <option value="blind">Verdeckt</option>
-                                <option value="self">Privat</option>
+                                <option value="public" data-ui-key="u_a30d2b6e3012">Öffentlich</option>
+                                <option value="gm_only" data-ui-key="u_29203587591a">Nur SL</option>
+                                <option value="blind" data-ui-key="u_aefbfb6e4306">Verdeckt</option>
+                                <option value="self" data-ui-key="u_5547f53b168d">Privat</option>
                             </select>
                         </div>
-                        <div id="diceResult" class="muted" role="status" aria-live="polite" aria-atomic="true">Noch kein Wurf.</div>
+                        <div id="diceResult" class="muted" role="status" aria-live="polite" aria-atomic="true"><span data-ui-key="u_7432c7a0e90e">Noch kein Wurf.</span></div>
                         <div id="diceLog" class="muted" style="margin-top:0.45rem;"></div>
                     </div>
 
                     <div class="panel">
-                        <h2>D&amp;D Beyond</h2>
+                        <h2>D&amp;<span data-ui-key="u_ed7e3a9d35e6">D Beyond</span></h2>
                         <div class="muted" style="font-size:0.8rem; line-height:1.45;">
-                            Wuerfe aus D&amp;D Beyond landen automatisch hier am Tisch, sobald die
-                            <a href="https://beyond20.here-for-more.info/" target="_blank" rel="noopener" style="color:#8cc0ff;">Beyond20</a>-Erweiterung
-                            einmalig eingerichtet ist.
-                            <a href="/beyond20.html" target="_blank" rel="noopener" style="color:#8cc0ff;">Schritt-fuer-Schritt-Anleitung</a>.
+                            <span data-ui-key="u_ad983e9d979d">Wuerfe aus D</span>&amp;<span data-ui-key="u_09d73a42748d">D Beyond landen automatisch hier am Tisch, sobald die</span>
+                            <a href="https://beyond20.here-for-more.info/" target="_blank" rel="noopener" style="color:#8cc0ff;"><span data-ui-key="u_f3fe420f6087">Beyond20</span></a><span data-ui-key="u_9991abebfc37">-Erweiterung
+                            einmalig eingerichtet ist.</span>
+                            <a href="/beyond20.html" target="_blank" rel="noopener" style="color:#8cc0ff;"><span data-ui-key="u_07d1fe002d96">Schritt-fuer-Schritt-Anleitung</span></a>.
                         </div>
                         <div id="beyond20Status" class="muted" data-state="missing" role="status" aria-live="polite" style="font-size:0.8rem; line-height:1.45; margin-top:0.45rem;">
-                            Beyond20 ist auf dieser Seite noch nicht aktiv. Einrichtung prüfen und die Seite neu laden.
+                            <span data-ui-key="u_ce6f2296149a">Beyond20 ist auf dieser Seite noch nicht aktiv. Einrichtung prüfen und die Seite neu laden.</span>
                         </div>
                     </div>
                 </section>
@@ -2967,13 +2972,13 @@
          der bestehende, getestete Bogen als Seitenlade, ohne den Tisch zu
          verlassen. Geöffnet über den Token (Bogen öffnen), geschlossen per
          Knopf oder Escape. -->
-    <aside id="sheetDrawer" hidden aria-label="Charakterbogen">
+    <aside id="sheetDrawer" hidden aria-label="Charakterbogen" data-ui-aria-label="u_8318505609bb">
         <header class="sheet-drawer-head">
-            <strong id="sheetDrawerTitle">Charakterbogen</strong>
-            <a id="sheetDrawerTabLink" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch">Neuer Tab ↗</a>
-            <button type="button" id="btnCloseSheet" class="mini-btn secondary" title="Bogen schließen (Esc)">Schließen ✕</button>
+            <strong id="sheetDrawerTitle"><span data-ui-key="u_8318505609bb">Charakterbogen</span></strong>
+            <a id="sheetDrawerTabLink" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch" data-ui-title="u_b4baf156e009"><span data-ui-key="u_21e16905353c">Neuer Tab ↗</span></a>
+            <button type="button" id="btnCloseSheet" class="mini-btn secondary" title="Bogen schließen (Esc)" data-ui-title="u_c01b66b7ce7b"><span data-ui-key="u_6fd8c6ed1de0">Schließen ✕</span></button>
         </header>
-        <iframe id="sheetFrame" title="Charakterbogen"></iframe>
+        <iframe id="sheetFrame" title="Charakterbogen" data-ui-title="u_8318505609bb"></iframe>
     </aside>
     <style>
         #sheetDrawer {

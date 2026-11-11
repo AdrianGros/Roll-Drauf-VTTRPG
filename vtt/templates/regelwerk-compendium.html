@@ -2,69 +2,73 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compendium · Regelwerk · Roll Drauf VTT</title>
+    <title data-ui-key="u_7ede7f358a57">Compendium · Regelwerk · Roll Drauf VTT</title>
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-page.css">
     <link rel="stylesheet" href="/static/css/book-scene.css">
     <link rel="stylesheet" href="/static/css/regelwerk.css">
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="regelwerk-page">
-    <a class="regelwerk-skip" href="#compendiumResults">Zu den Ergebnissen springen</a>
+    <a class="regelwerk-skip" href="#compendiumResults"><span data-ui-key="u_93a79fe34bff">Zu den Ergebnissen springen</span></a>
     <header class="regelwerk-site-header">
-        <nav class="book-dashboard-ribbon regelwerk-ribbon" aria-label="VTT-Hauptnavigation">
-            <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
-            <a class="book-dashboard-ribbon-btn" href="/campaigns">Kampagnen</a>
-            <a class="book-dashboard-ribbon-btn" href="/characters">Charaktere</a>
-            <a class="book-dashboard-ribbon-btn" href="/regelwerk">Regelwerk</a>
-            <a class="book-dashboard-ribbon-btn is-active" href="/regelwerk/compendium" aria-current="page">Compendium</a>
-            <a class="book-dashboard-ribbon-btn" href="/login.html">Anmelden</a>
+        <nav class="book-dashboard-ribbon regelwerk-ribbon" aria-label="VTT-Hauptnavigation" data-ui-aria-label="u_74d3d7c38935">
+            <a class="book-dashboard-ribbon-btn" href="/dashboard"><span data-ui-key="u_cb27327d0207">Übersicht</span></a>
+            <a class="book-dashboard-ribbon-btn" href="/campaigns"><span data-ui-key="u_4538fc5c1596">Kampagnen</span></a>
+            <a class="book-dashboard-ribbon-btn" href="/characters"><span data-ui-key="u_346a518c3530">Charaktere</span></a>
+            <a class="book-dashboard-ribbon-btn" href="/regelwerk"><span data-ui-key="u_1a2d1786f33e">Regelwerk</span></a>
+            <a class="book-dashboard-ribbon-btn is-active" href="/regelwerk/compendium" aria-current="page"><span data-ui-key="u_ddedf884b06c">Compendium</span></a>
+            <a class="book-dashboard-ribbon-btn" href="/login.html"><span data-ui-key="u_a13480ab170c">Anmelden</span></a>
         </nav>
         <div class="regelwerk-titlebar">
             <div>
-                <p class="regelwerk-kicker">Roll Drauf VTT · SRD 5.2.1</p>
-                <h1>Compendium</h1>
+                <p class="regelwerk-kicker"><span data-ui-key="u_7335361e5645">Roll Drauf VTT · SRD 5.2.1</span></p>
+                <h1><span data-ui-key="u_ddedf884b06c">Compendium</span></h1>
             </div>
         </div>
     </header>
 
     <main class="regelwerk-layout">
-        <aside class="regelwerk-sidebar" aria-label="Filter">
+        <aside class="regelwerk-sidebar" aria-label="Filter" data-ui-aria-label="u_d7decf1aa22b">
             <form id="compendiumForm" class="compendium-form" autocomplete="off">
                 <div class="compendium-field">
-                    <label for="cpType">Kategorie</label>
+                    <label for="cpType"><span data-ui-key="u_358210386a4f">Kategorie</span></label>
                     <select id="cpType" name="type"></select>
                 </div>
                 <div class="compendium-field">
-                    <label for="cpQ">Name oder Kurztext</label>
+                    <label for="cpQ"><span data-ui-key="u_c2305b7c2a74">Name oder Kurztext</span></label>
                     <input id="cpQ" name="q" type="search" maxlength="100">
                 </div>
                 <div id="cpFilters" class="compendium-filters"></div>
                 <div class="compendium-field">
-                    <label for="cpSort">Sortierung</label>
+                    <label for="cpSort"><span data-ui-key="u_84beaa4a368a">Sortierung</span></label>
                     <select id="cpSort" name="sort"></select>
                 </div>
-                <button type="button" id="cpReset">Filter zurücksetzen</button>
+                <button type="button" id="cpReset"><span data-ui-key="u_f711760625d8">Filter zurücksetzen</span></button>
             </form>
             <div class="regelwerk-sidebar-actions">
-                <a href="/regelwerk">Zum Regelwerk</a>
-                <a href="/regelwerk/lizenz">Quelle &amp; Lizenz</a>
+                <a href="/regelwerk"><span data-ui-key="u_919657b6acd4">Zum Regelwerk</span></a>
+                <a href="/regelwerk/lizenz"><span data-ui-key="u_f707c323c08e">Quelle</span> &amp; <span data-ui-key="u_a0dcbd4b0c9d">Lizenz</span></a>
             </div>
         </aside>
 
         <section class="regelwerk-article" id="compendiumResults" tabindex="-1" aria-busy="true">
-            <p id="cpStatus" class="regelwerk-status" role="status" aria-live="polite">Compendium wird geladen …</p>
+            <p id="cpStatus" class="regelwerk-status" role="status" aria-live="polite"><span data-ui-key="u_5985a522acfe">Compendium wird geladen …</span></p>
             <div id="cpList">
                 <div class="regelwerk-table-wrap"><table class="regelwerk-table compendium-table" id="cpTable" hidden>
                     <caption id="cpCaption"></caption>
                     <thead id="cpHead"></thead>
                     <tbody id="cpBody"></tbody>
                 </table></div>
-                <button type="button" id="cpMore" class="compendium-more" hidden>Mehr anzeigen</button>
+                <button type="button" id="cpMore" class="compendium-more" hidden><span data-ui-key="u_57152bd91a93">Mehr anzeigen</span></button>
             </div>
             <article id="cpDetail" class="compendium-detail" hidden>
-                <button type="button" id="cpDetailBack" class="compendium-back">Zurück zur Liste</button>
+                <button type="button" id="cpDetailBack" class="compendium-back"><span data-ui-key="u_5cac34dec818">Zurück zur Liste</span></button>
                 <h2 id="cpDetailTitle" tabindex="-1"></h2>
                 <p id="cpDetailMeta" class="compendium-detail-meta"></p>
                 <div id="cpDetailBody"></div>
@@ -73,8 +77,8 @@
     </main>
 
     <footer class="regelwerk-footer">
-        <p>Quelle: Systemreferenzdokument 5.2.1 (Deutsch).</p>
-        <p><a href="/regelwerk/lizenz">CC BY 4.0 · Quellenangabe und Lizenz</a></p>
+        <p><span data-ui-key="u_c6627fdd13a6">Quelle: Systemreferenzdokument 5.2.1 (Deutsch).</span></p>
+        <p><a href="/regelwerk/lizenz"><span data-ui-key="u_630fe80c048d">CC BY 4.0 · Quellenangabe und Lizenz</span></a></p>
     </footer>
     <script src="/static/js/regelwerk-compendium.js"></script>
     <script src="/static/js/auth.js"></script>

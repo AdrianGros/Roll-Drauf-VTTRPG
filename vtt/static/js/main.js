@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // roll drauf vtt - Frontend Main Application
 // Canvas-based map rendering with Socket.IO real-time sync
 
@@ -235,7 +237,7 @@ class DiceRoller {
     displayResult(dice, result) {
         const resultDiv = document.getElementById('dice-result');
         if (result.error) {
-            resultDiv.innerHTML = `<strong>Error:</strong> ${result.error}`;
+            resultDiv.innerHTML = `<strong>${globalThis.VTTUiHTML("Error:")}</strong> ${result.error}`;
             return;
         }
         const rolls = result.rolls.join(', ');
@@ -337,10 +339,10 @@ async function initialize() {
 function updateConnectionStatus(connected) {
     const status = document.getElementById('connection-status');
     if (connected) {
-        status.textContent = '🟢 Connected';
+        status.textContent = globalThis.VTTUi("🟢 Connected");
         status.classList.remove('disconnected');
     } else {
-        status.textContent = '🔴 Disconnected';
+        status.textContent = globalThis.VTTUi("🔴 Disconnected");
         status.classList.add('disconnected');
     }
 }

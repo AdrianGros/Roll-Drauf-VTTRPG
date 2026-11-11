@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 (function () {
     'use strict';
 
@@ -8,15 +10,15 @@
     const ev = () => app.evaluation;
 
     const CHOICE_LABELS = {
-        'primal-order': 'Heilige Rolle', 'divine-order': 'Heilige Rolle', 'fighting-style': 'Kampfstil-Talent',
-        'weapon-mastery': 'Waffenbeherrschung', 'eldritch-invocations': 'Schauerliche Anrufungen',
-        'thieves-cant-language': 'Zusätzliche Sprache (Diebessprache)', 'deft-explorer-languages': 'Geschickter Erkunder: Sprachen',
-        'draconic-ancestry': 'Drakonische Abstammung', lineage: 'Abstammung', 'spellcasting-ability': 'Zauberattribut',
-        'keen-senses': 'Scharfe Sinne: Fertigkeit', 'giant-ancestry': 'Abstammung der Riesen', skillful: 'Geschickt: Fertigkeit',
-        versatile: 'Vielseitig: Herkunftstalent', size: 'Größe',
+        'primal-order': globalThis.VTTUi("Heilige Rolle"), 'divine-order': globalThis.VTTUi("Heilige Rolle"), 'fighting-style': globalThis.VTTUi("Kampfstil-Talent"),
+        'weapon-mastery': globalThis.VTTUi("Waffenbeherrschung"), 'eldritch-invocations': globalThis.VTTUi("Schauerliche Anrufungen"),
+        'thieves-cant-language': globalThis.VTTUi("Zusätzliche Sprache (Diebessprache)"), 'deft-explorer-languages': globalThis.VTTUi("Geschickter Erkunder: Sprachen"),
+        'draconic-ancestry': globalThis.VTTUi("Drakonische Abstammung"), lineage: globalThis.VTTUi("Abstammung"), 'spellcasting-ability': globalThis.VTTUi("Zauberattribut"),
+        'keen-senses': globalThis.VTTUi("Scharfe Sinne: Fertigkeit"), 'giant-ancestry': globalThis.VTTUi("Abstammung der Riesen"), skillful: globalThis.VTTUi("Geschickt: Fertigkeit"),
+        versatile: globalThis.VTTUi("Vielseitig: Herkunftstalent"), size: globalThis.VTTUi("Größe"),
     };
-    const OPTION_LABELS = { magician: 'Magier', warden: 'Wächter', protector: 'Beschützer', thaumaturge: 'Thaumaturg' };
-    const ARMOR_LABELS = { light: 'Leichte Rüstung', medium: 'Mittelschwere Rüstung', heavy: 'Schwere Rüstung', shield: 'Schilde' };
+    const OPTION_LABELS = { magician: globalThis.VTTUi("Magier"), warden: globalThis.VTTUi("Wächter"), protector: globalThis.VTTUi("Beschützer"), thaumaturge: globalThis.VTTUi("Thaumaturg") };
+    const ARMOR_LABELS = { light: globalThis.VTTUi("Leichte Rüstung"), medium: globalThis.VTTUi("Mittelschwere Rüstung"), heavy: globalThis.VTTUi("Schwere Rüstung"), shield: globalThis.VTTUi("Schilde") };
     const label = (id) => CHOICE_LABELS[id] || id.replace(/-/g, ' ');
 
     // ------------------------------------------------------------ shared widgets
@@ -38,7 +40,7 @@
         return h('div', { class: `sc-check${checked ? ' is-selected' : ''}` },
             h('label', { class: 'sc-check-label' }, h('input', { type: 'checkbox', checked, disabled, onchange: (e) => onchange(e.target.checked) }),
                 h('span', null, text, sub ? h('small', { text: sub }) : null)),
-            detailId ? h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-quiet', onclick: () => SC.openEntry(detailId, text), 'aria-label': `Regeltext zu ${text}` }, '?') : null);
+            detailId ? h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-quiet', onclick: () => SC.openEntry(detailId, text), 'aria-label': globalThis.VTTUi("Regeltext zu {p0}",{p0:(text)}) }, '?') : null);
     }
     function countedList(options, selected, max, onchange, group) {
         const full = selected.length >= max;
@@ -52,7 +54,7 @@
             }));
     }
     function counter(have, need) {
-        return h('p', { class: have === need ? 'sc-ok-note' : 'sc-muted', 'aria-live': 'polite', text: `${have} von ${need} gewählt` });
+        return h('p', { class: have === need ? 'sc-ok-note' : 'sc-muted', 'aria-live': 'polite', text: globalThis.VTTUi("{p0} von {p1} gewählt",{p0:(have),p1:(need)}) });
     }
     const panel = (...kids) => h('div', { class: 'sc-panel' }, ...kids);
 
@@ -151,15 +153,15 @@
         return h('div', { class: 'sc-detail' },
             h('h3', { text: c.name }),
             h('dl', null,
-                h('dt', { text: 'Trefferwürfel' }), h('dd', { text: `W${c.hitDie}` }),
-                h('dt', { text: 'Hauptattribut' }), h('dd', { text: c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und ') }),
-                h('dt', { text: 'Rettungswürfe' }), h('dd', { text: c.savingThrows.map(SC.abilityName).join(', ') }),
-                h('dt', { text: 'Rüstungen' }), h('dd', { text: labelList(c.armorProficiencies.map((a) => ARMOR_LABELS[a] || a)) || 'Keine' }),
-                h('dt', { text: 'Waffen' }), h('dd', { text: labelList(weapons) }),
-                h('dt', { text: 'Fertigkeiten' }), h('dd', { text: `${c.skillChoices.count} aus: ${(c.skillChoices.options ? c.skillChoices.options.map(SC.skillName).join(', ') : 'allen Fertigkeiten')}` }),
-                h('dt', { text: 'Zauberwirken' }), h('dd', { text: c.spellcasting ? `Ja (${SC.abilityName(c.spellcasting.ability)})` : 'Nein' }),
-                h('dt', { text: 'Merkmale Stufe 1' }), h('dd', { text: c.levels[0].features.map((f) => f.name).join(', ') })),
-            SC.detailButton(c.id, 'Klassentext lesen', c.name));
+                h('dt', { text: globalThis.VTTUi("Trefferwürfel") }), h('dd', { text: `W${c.hitDie}` }),
+                h('dt', { text: globalThis.VTTUi("Hauptattribut") }), h('dd', { text: c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und ') }),
+                h('dt', { text: globalThis.VTTUi("Rettungswürfe") }), h('dd', { text: c.savingThrows.map(SC.abilityName).join(', ') }),
+                h('dt', { text: globalThis.VTTUi("Rüstungen") }), h('dd', { text: labelList(c.armorProficiencies.map((a) => ARMOR_LABELS[a] || a)) || globalThis.VTTUi("Keine") }),
+                h('dt', { text: globalThis.VTTUi("Waffen") }), h('dd', { text: labelList(weapons) }),
+                h('dt', { text: globalThis.VTTUi("Fertigkeiten") }), h('dd', { text: globalThis.VTTUi("{p0} aus: {p1}",{p0:(c.skillChoices.count),p1:(c.skillChoices.options ? c.skillChoices.options.map(SC.skillName).join(', ') : 'allen Fertigkeiten')}) }),
+                h('dt', { text: globalThis.VTTUi("Zauberwirken") }), h('dd', { text: c.spellcasting ? globalThis.VTTUi("Ja ({p0})",{p0:(SC.abilityName(c.spellcasting.ability))}) : globalThis.VTTUi("Nein") }),
+                h('dt', { text: globalThis.VTTUi("Merkmale Stufe 1") }), h('dd', { text: c.levels[0].features.map((f) => f.name).join(', ') })),
+            SC.detailButton(c.id, globalThis.VTTUi("Klassentext lesen"), c.name));
     }
 
     function setLevelCount(n) {
@@ -178,12 +180,12 @@
         const first = firstClass();
         const wrap = h('div');
         wrap.append(panel(
-            h('h3', { text: 'Klasse wählen' }),
+            h('h3', { text: globalThis.VTTUi("Klasse wählen") }),
             h('div', { class: 'sc-row' },
                 h('button', { type: 'button', class: 'sc-btn', id: 'scRandomize', onclick: () => {
-                    if (!first || window.confirm('Alle bisherigen Auswahlen werden durch einen Zufallscharakter ersetzt. Fortfahren?')) SC.randomize((st().levels || []).length || 1);
-                } }, 'Zufallscharakter würfeln')),
-            h('p', { class: 'sc-muted', text: 'Deine erste Klasse bestimmt Rettungswürfe, Rüstungen und Ausgangsausrüstung.' }),
+                    if (!first || window.confirm(globalThis.VTTUi("Alle bisherigen Auswahlen werden durch einen Zufallscharakter ersetzt. Fortfahren?"))) SC.randomize((st().levels || []).length || 1);
+                } }, globalThis.VTTUi("Zufallscharakter würfeln"))),
+            h('p', { class: 'sc-muted', text: globalThis.VTTUi("Deine erste Klasse bestimmt Rettungswürfe, Rüstungen und Ausgangsausrüstung.") }),
             h('div', { class: 'sc-grid' }, app.data.classes.map((c) => card(c.name, `W${c.hitDie} · ${c.primaryAbilities.abilities.map(SC.abilityAbbr).join(c.primaryAbilities.mode === 'any' ? '/' : '+')}`, first === c.classKey, () => {
                 const oldFirst = firstClass();
                 SC.mutate((state) => {
@@ -196,13 +198,13 @@
         if (first) {
             const rows = levels.map((l, i) => {
                 const die = cls(l.classKey).hitDie;
-                const hpCell = i === 0 ? h('td', { text: `${die} (Maximum)` }) : h('td', null,
-                    select(`scHpMode${i}`, [['fixed', `Fest (${die / 2 + 1})`], ['roll', 'Gewürfelt']], l.hp === 'fixed' ? 'fixed' : 'roll', (v) => {
+                const hpCell = i === 0 ? h('td', { text: globalThis.VTTUi("{p0} (Maximum)",{p0:(die)}) }) : h('td', null,
+                    select(`scHpMode${i}`, [['fixed', globalThis.VTTUi("Fest ({p0})",{p0:(die / 2 + 1)})], ['roll', globalThis.VTTUi("Gewürfelt")]], l.hp === 'fixed' ? 'fixed' : 'roll', (v) => {
                         SC.mutate((state) => { state.levels[i].hp = v === 'fixed' ? 'fixed' : SC.randInt(die) + 1; });
                     }),
-                    l.hp === 'fixed' ? null : [' ', h('input', { type: 'number', min: 1, max: die, value: l.hp, 'aria-label': `Gewürfelter Wert Stufe ${i + 1}`, style: 'width:4.5rem', onchange: (e) => {
+                    l.hp === 'fixed' ? null : [' ', h('input', { type: 'number', min: 1, max: die, value: l.hp, 'aria-label': globalThis.VTTUi("Gewürfelter Wert Stufe {p0}",{p0:(i + 1)}), style: 'width:4.5rem', onchange: (e) => {
                         SC.mutate((state) => { state.levels[i].hp = Math.max(1, Math.min(die, Number(e.target.value) || 1)); });
-                    } }), ' ', h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => SC.mutate((state) => { state.levels[i].hp = SC.randInt(die) + 1; }) }, `W${die} würfeln`)]);
+                    } }), ' ', h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => SC.mutate((state) => { state.levels[i].hp = SC.randInt(die) + 1; }) }, globalThis.VTTUi("W{p0} würfeln",{p0:(die)}))]);
                 const classCell = i === 0 ? h('td', { text: cls(l.classKey).name }) : h('td', null, select(`scLvlClass${i}`, app.data.classes.map((c) => [c.classKey, c.name]), l.classKey, (v) => {
                     SC.mutate((state) => { state.levels[i].classKey = v; prune(state, firstClass()); });
                 }));
@@ -210,15 +212,15 @@
                 const levelData = cls(l.classKey).levels.find((entry) => entry.level === classLevel);
                 const features = (levelData?.features || []).map((feature) => feature.name);
                 return h('tr', null, h('td', { text: i + 1 }), classCell, hpCell,
-                    h('td', { class: 'sc-level-features' }, h('small', { class: 'sc-muted', text: `${cls(l.classKey).name} · Klassenstufe ${classLevel}` }),
-                        h('div', { text: features.join(' · ') || 'Keine neuen Klassenmerkmale' })));
+                    h('td', { class: 'sc-level-features' }, h('small', { class: 'sc-muted', text: globalThis.VTTUi("{p0} · Klassenstufe {p1}",{p0:(cls(l.classKey).name),p1:(classLevel)}) }),
+                        h('div', { text: features.join(' · ') || globalThis.VTTUi("Keine neuen Klassenmerkmale") })));
             });
             wrap.append(panel(
-                h('h3', { text: 'Stufe und Verlauf' }),
-                h('div', { class: 'sc-fields' }, field('Gesamtstufe', h('input', { type: 'number', id: 'scLevel', min: 1, max: app.data.maxLevel, value: levels.length, onchange: (e) => setLevelCount(Math.max(1, Math.min(app.data.maxLevel, Number(e.target.value) || 1))) }), 'scLevel')),
-                h('p', { class: 'sc-muted', text: 'Ab Stufe 2 kannst du pro Stufe die Klasse wechseln (Mehrklassigkeit); der Server prüft die Voraussetzungen.' }),
+                h('h3', { text: globalThis.VTTUi("Stufe und Verlauf") }),
+                h('div', { class: 'sc-fields' }, field(globalThis.VTTUi("Gesamtstufe"), h('input', { type: 'number', id: 'scLevel', min: 1, max: app.data.maxLevel, value: levels.length, onchange: (e) => setLevelCount(Math.max(1, Math.min(app.data.maxLevel, Number(e.target.value) || 1))) }), 'scLevel')),
+                h('p', { class: 'sc-muted', text: globalThis.VTTUi("Ab Stufe 2 kannst du pro Stufe die Klasse wechseln (Mehrklassigkeit); der Server prüft die Voraussetzungen.") }),
                 h('div', { class: 'sc-scroll' }, h('table', { class: 'sc-table' },
-                    h('caption', { class: 'sc-muted', text: 'Stufenverlauf' }),
+                    h('caption', { class: 'sc-muted', text: globalThis.VTTUi("Stufenverlauf") }),
                     h('thead', null, h('tr', null, ['Stufe', 'Klasse', 'Trefferpunkte', 'Neue Merkmale'].map((t) => h('th', { scope: 'col', text: t })))),
                     h('tbody', null, rows)))));
         }
@@ -251,7 +253,7 @@
         } else if (choice.kind === 'size') {
             control = select(id, species.sizes.map((s) => [s, s]), current, set, 'Bitte wählen');
         } else {
-            control = h('span', { text: 'Nicht unterstützt' });
+            control = h('span', { text: globalThis.VTTUi("Nicht unterstützt") });
         }
         return h('div', null, field(choice.label || label(choice.id), control, id), note);
     }
@@ -262,8 +264,8 @@
         const movement = (origin.movement || []).map((m) => `${m.label} ${m.feet} ft (${fmtMeters(m.meters)})`).join(', ');
         const senses = (origin.senses || []).map((s) => `${s.label} ${s.feet} ft`).join(', ') || 'keine Dunkelsicht';
         return [
-            h('p', { class: 'sc-muted', text: `Homebrew · ${scope} · Fassung ${origin.revision || '–'}${origin.author ? ` · von ${origin.author}` : ''}` }),
-            h('p', { text: `Bewegung: ${movement} · Sinne: ${senses}` }),
+            h('p', { class: 'sc-muted', text: globalThis.VTTUi("Homebrew · {p0} · Fassung {p1}{p2}",{p0:(scope),p1:(origin.revision || '–'),p2:(origin.author ? ` · von ${origin.author}` : '')}) }),
+            h('p', { text: globalThis.VTTUi("Bewegung: {p0} · Sinne: {p1}",{p0:(movement),p1:(senses)}) }),
             species.description ? h('p', { class: 'sc-muted', text: species.description }) : null,
             (origin.actions || []).map((a) => h('p', null, h('strong', { text: `${a.name}: ` }), a.summary)),
             (origin.traits || []).map((t) => h('p', null, h('strong', { text: `${t.name}: ` }), t.description)),
@@ -279,21 +281,21 @@
         const mode = triple || (!entries.length && (st().background || {}).bonusMode === 'triple') ? 'triple' : 'split';
         const write = (obj) => SC.mutate((state) => { state.background = state.background || { id: bg.id }; state.background.abilityBonus = obj; });
         const abilityOptions = bg.abilities.map((a) => [a, SC.abilityName(a)]);
-        const wrap = h('div', { class: 'sc-panel' }, h('h3', { text: 'Attributsbonus des Hintergrunds' }),
-            h('div', { class: 'sc-row', role: 'group', 'aria-label': 'Verteilung' },
-                h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(mode === 'split'), onclick: () => write({}) }, '+2 und +1'),
-                h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(mode === 'triple'), onclick: () => write(Object.fromEntries(bg.abilities.map((a) => [a, 1]))) }, 'je +1 auf alle drei')));
+        const wrap = h('div', { class: 'sc-panel' }, h('h3', { text: globalThis.VTTUi("Attributsbonus des Hintergrunds") }),
+            h('div', { class: 'sc-row', role: 'group', 'aria-label': globalThis.VTTUi("Verteilung") },
+                h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(mode === 'split'), onclick: () => write({}) }, globalThis.VTTUi("+2 und +1")),
+                h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(mode === 'triple'), onclick: () => write(Object.fromEntries(bg.abilities.map((a) => [a, 1]))) }, globalThis.VTTUi("je +1 auf alle drei"))));
         if (mode === 'triple') {
-            wrap.append(h('p', { class: 'sc-muted', text: `+1 auf ${bg.abilities.map(SC.abilityName).join(', ')}.` }));
+            wrap.append(h('p', { class: 'sc-muted', text: globalThis.VTTUi("+1 auf {p0}.",{p0:(bg.abilities.map(SC.abilityName).join(', '))}) }));
         } else {
             wrap.append(h('div', { class: 'sc-fields' },
-                field('+2 auf', select('scBgPlus2', abilityOptions, plusTwo, (v) => {
+                field(globalThis.VTTUi("+2 auf"), select('scBgPlus2', abilityOptions, plusTwo, (v) => {
                     const obj = {};
                     if (v) obj[v] = 2;
                     if (plusOne[0] && plusOne[0] !== v) obj[plusOne[0]] = 1;
                     write(obj);
                 }, 'Bitte wählen'), 'scBgPlus2'),
-                field('+1 auf', select('scBgPlus1', abilityOptions.filter(([a]) => a !== plusTwo), plusOne[0] || '', (v) => {
+                field(globalThis.VTTUi("+1 auf"), select('scBgPlus1', abilityOptions.filter(([a]) => a !== plusTwo), plusOne[0] || '', (v) => {
                     const obj = {};
                     if (plusTwo) obj[plusTwo] = 2;
                     if (v) obj[v] = 1;
@@ -307,30 +309,30 @@
         const wrap = h('div');
         const curSpecies = st().species && SC.L.species[st().species.id];
         wrap.append(panel(
-            h('h3', { text: 'Spezies' }),
+            h('h3', { text: globalThis.VTTUi("Spezies") }),
             h('div', { class: 'sc-grid' }, app.data.species.map((s) => card(s.name, `${s.sizes.join('/')} · ${fmtMeters(s.speedMeters)}${s.homebrew ? ` · Homebrew (${(s.origin && s.origin.scope && s.origin.scope.label) || 'veröffentlicht'})` : ''}`, curSpecies && curSpecies.id === s.id, () => {
                 SC.mutate((state) => { if (!state.species || state.species.id !== s.id) state.species = { id: s.id, choices: {} }; });
             }))),
             curSpecies ? h('div', { class: 'sc-detail' },
                 h('h3', { text: curSpecies.name }),
-                h('p', { text: `${curSpecies.creatureType} · Größe ${curSpecies.sizes.join(' oder ')} · Bewegungsrate ${fmtMeters(curSpecies.speedMeters)}${curSpecies.darkvisionMeters ? ` · Dunkelsicht ${curSpecies.darkvisionMeters} m` : ''}` }),
-                h('p', null, h('strong', { text: 'Merkmale: ' }), curSpecies.traits.join(', ')),
-                curSpecies.homebrew ? homebrewSpeciesDetail(curSpecies) : SC.detailButton(curSpecies.id, 'Spezies-Text lesen', curSpecies.name),
+                h('p', { text: globalThis.VTTUi("{p0} · Größe {p1} · Bewegungsrate {p2}{p3}",{p0:(curSpecies.creatureType),p1:(curSpecies.sizes.join(' oder ')),p2:(fmtMeters(curSpecies.speedMeters)),p3:(curSpecies.darkvisionMeters ? ` · Dunkelsicht ${curSpecies.darkvisionMeters} m` : '')}) }),
+                h('p', null, h('strong', { text: globalThis.VTTUi("Merkmale: ") }), curSpecies.traits.join(', ')),
+                curSpecies.homebrew ? homebrewSpeciesDetail(curSpecies) : SC.detailButton(curSpecies.id, globalThis.VTTUi("Spezies-Text lesen"), curSpecies.name),
                 curSpecies.choices.map((c) => speciesChoiceControl(curSpecies, c))) : null));
         const curBg = st().background && SC.L.backgrounds[st().background.id];
         wrap.append(panel(
-            h('h3', { text: 'Hintergrund' }),
+            h('h3', { text: globalThis.VTTUi("Hintergrund") }),
             h('div', { class: 'sc-grid' }, app.data.backgrounds.map((b) => card(b.name, `${b.feat} · ${b.skills.map(SC.skillName).join(', ')}`, curBg && curBg.id === b.id, () => {
                 SC.mutate((state) => { if (!state.background || state.background.id !== b.id) state.background = { id: b.id, abilityBonus: {} }; });
             }))),
             curBg ? h('div', { class: 'sc-detail' },
                 h('h3', { text: curBg.name }),
-                h('p', null, h('strong', { text: 'Attribute: ' }), curBg.abilities.map(SC.abilityName).join(', ')),
-                h('p', null, h('strong', { text: 'Herkunftstalent: ' }), curBg.feat + (curBg.featChoice ? ` (${curBg.featChoice})` : '')),
-                h('p', null, h('strong', { text: 'Fertigkeiten: ' }), curBg.skills.map(SC.skillName).join(', ')),
-                h('p', null, h('strong', { text: 'Werkzeug: ' }), SC.itemName(curBg.tool)),
-                SC.detailButton(curBg.id, 'Hintergrund-Text lesen', curBg.name),
-                curBg.featChoice ? h('p', { class: 'sc-muted', text: 'Die Detailwahl des Herkunftstalents (z. B. die Zauberauswahl) wird noch nicht abgebildet.' }) : null) : null));
+                h('p', null, h('strong', { text: globalThis.VTTUi("Attribute: ") }), curBg.abilities.map(SC.abilityName).join(', ')),
+                h('p', null, h('strong', { text: globalThis.VTTUi("Herkunftstalent: ") }), curBg.feat + (curBg.featChoice ? ` (${curBg.featChoice})` : '')),
+                h('p', null, h('strong', { text: globalThis.VTTUi("Fertigkeiten: ") }), curBg.skills.map(SC.skillName).join(', ')),
+                h('p', null, h('strong', { text: globalThis.VTTUi("Werkzeug: ") }), SC.itemName(curBg.tool)),
+                SC.detailButton(curBg.id, globalThis.VTTUi("Hintergrund-Text lesen"), curBg.name),
+                curBg.featChoice ? h('p', { class: 'sc-muted', text: globalThis.VTTUi("Die Detailwahl des Herkunftstalents (z. B. die Zauberauswahl) wird noch nicht abgebildet.") }) : null) : null));
         if (curBg) wrap.append(backgroundBonusControl(curBg));
         return wrap;
     }
@@ -343,7 +345,7 @@
         const e = ev() && ev().abilities[a];
         if (!e) return null;
         return h('div', { class: 'sc-muted' },
-            e.bonus ? `Basis ${e.base} ${sign(e.bonus)} Boni = ` : null, h('span', { class: 'sc-total' }, `${e.score}`), ` (${sign(e.modifier)})`);
+            e.bonus ? globalThis.VTTUi("Basis {p0} {p1} Boni = ",{p0:(e.base),p1:(sign(e.bonus))}) : null, h('span', { class: 'sc-total' }, `${e.score}`), ` (${sign(e.modifier)})`);
     }
 
     function methodControls(method) {
@@ -368,10 +370,10 @@
                     h('div', { class: 'sc-stepper' },
                         h('button', { type: 'button', class: 'sc-btn sc-btn-small', 'aria-label': `${SC.abilityName(a)} senken`, disabled: v <= d.pointBuy.minScore, onclick: () => setBase(a, v - 1) }, '−'),
                         h('output', { 'aria-label': SC.abilityName(a), text: v }),
-                        h('button', { type: 'button', class: 'sc-btn sc-btn-small', 'aria-label': `${SC.abilityName(a)} erhöhen`, disabled: v >= d.pointBuy.maxScore || spent - (costs[String(v)] || 0) + (costs[String(v + 1)] || 0) > d.pointBuy.budget, onclick: () => setBase(a, v + 1) }, '+')),
+                        h('button', { type: 'button', class: 'sc-btn sc-btn-small', 'aria-label': globalThis.VTTUi("{p0} erhöhen",{p0:(SC.abilityName(a))}), disabled: v >= d.pointBuy.maxScore || spent - (costs[String(v)] || 0) + (costs[String(v + 1)] || 0) > d.pointBuy.budget, onclick: () => setBase(a, v + 1) }, '+')),
                     abilitySummaryCell(a)));
             });
-            grid.prepend(h('p', { class: spent === d.pointBuy.budget ? 'sc-ok-note' : 'sc-muted', role: 'status', text: `${d.pointBuy.budget - spent} von ${d.pointBuy.budget} Punkten übrig`, style: 'grid-column:1/-1' }));
+            grid.prepend(h('p', { class: spent === d.pointBuy.budget ? 'sc-ok-note' : 'sc-muted', role: 'status', text: globalThis.VTTUi("{p0} von {p1} Punkten übrig",{p0:(d.pointBuy.budget - spent),p1:(d.pointBuy.budget)}), style: 'grid-column:1/-1' }));
         } else if (method === 'roll') {
             const rolls = st().abilityRolls || [];
             const totals = rolls.length === 6 ? rolls.map((r) => r.reduce((x, y) => x + y, 0) - Math.min(...r)) : [];
@@ -380,13 +382,13 @@
                     h('button', { type: 'button', class: 'sc-btn sc-btn-primary', id: 'scRollAll', onclick: () => SC.mutate((state) => {
                         state.abilityRolls = Array.from({ length: 6 }, () => Array.from({ length: 4 }, () => SC.randInt(6) + 1));
                         state.abilityBase = {};
-                    }) }, rolls.length ? 'Alles neu würfeln' : 'Sechsmal 4W6 würfeln'),
-                    h('span', { class: 'sc-muted', text: 'Der niedrigste Würfel jedes Wurfs zählt nicht. Du kannst die Würfel auch von echten Würfeln abtippen.' })),
+                    }) }, rolls.length ? globalThis.VTTUi("Alles neu würfeln") : globalThis.VTTUi("Sechsmal 4W6 würfeln")),
+                    h('span', { class: 'sc-muted', text: globalThis.VTTUi("Der niedrigste Würfel jedes Wurfs zählt nicht. Du kannst die Würfel auch von echten Würfeln abtippen.") })),
                 rolls.length ? h('div', { class: 'sc-scroll' }, h('table', { class: 'sc-table' },
-                    h('caption', { class: 'sc-muted', text: 'Würfelergebnisse' }),
+                    h('caption', { class: 'sc-muted', text: globalThis.VTTUi("Würfelergebnisse") }),
                     h('thead', null, h('tr', null, ['Wurf', 'Würfel', 'Summe'].map((t) => h('th', { scope: 'col', text: t })))),
                     h('tbody', null, rolls.map((r, i) => h('tr', null, h('td', { text: i + 1 }),
-                        h('td', null, r.map((die, j) => h('input', { type: 'number', min: 1, max: 6, value: die, style: 'width:3.6rem', 'aria-label': `Wurf ${i + 1}, Würfel ${j + 1}`, onchange: (e) => {
+                        h('td', null, r.map((die, j) => h('input', { type: 'number', min: 1, max: 6, value: die, style: 'width:3.6rem', 'aria-label': globalThis.VTTUi("Wurf {p0}, Würfel {p1}",{p0:(i + 1),p1:(j + 1)}), onchange: (e) => {
                             SC.mutate((state) => { state.abilityRolls[i][j] = Math.max(1, Math.min(6, Number(e.target.value) || 1)); state.abilityBase = {}; });
                         } }))),
                         h('td', { text: totals[i] })))))) : null));
@@ -415,11 +417,11 @@
 
     function renderAttribute() {
         const method = st().abilityMethod;
-        const methods = [['standard-array', 'Standardsatz'], ['point-buy', 'Punktekauf'], ['roll', 'Würfeln (4W6)'], ['manual', 'Manuell']];
+        const methods = [['standard-array', globalThis.VTTUi("Standardsatz")], ['point-buy', globalThis.VTTUi("Punktekauf")], ['roll', globalThis.VTTUi("Würfeln (4W6)")], ['manual', globalThis.VTTUi("Manuell")]];
         const c = firstClass() && cls(firstClass());
         const wrap = panel(
-            h('h3', { text: 'Attributswerte' }),
-            h('div', { class: 'sc-row', role: 'group', 'aria-label': 'Methode' }, methods.map(([id, text]) =>
+            h('h3', { text: globalThis.VTTUi("Attributswerte") }),
+            h('div', { class: 'sc-row', role: 'group', 'aria-label': globalThis.VTTUi("Methode") }, methods.map(([id, text]) =>
                 h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(method === id), onclick: () => SC.mutate((state) => {
                     if (state.abilityMethod === id) return;
                     state.abilityMethod = id;
@@ -427,25 +429,25 @@
                     if (id === 'point-buy') ABIL.forEach((a) => { state.abilityBase[a] = 8; });
                     if (id === 'manual') ABIL.forEach((a) => { state.abilityBase[a] = 10; });
                 }) }, text))),
-            c ? h('p', { class: 'sc-muted', text: `${c.name}: Hauptattribut ${c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und ')}.` }) : null,
-            c && method === 'standard-array' ? h('button', { type: 'button', class: 'sc-btn', id: 'scRecommend', onclick: () => SC.mutate((state) => { state.abilityBase = { ...c.standardAbilityScores }; }) }, `Empfehlung für ${c.name} übernehmen`) : null,
-            method ? methodControls(method) : h('p', { class: 'sc-muted', text: 'Wähle zuerst eine Methode.' }),
-            h('p', { class: 'sc-muted', text: 'Boni aus Hintergrund und Attributswerterhöhungen werden automatisch addiert.' }));
+            c ? h('p', { class: 'sc-muted', text: globalThis.VTTUi("{p0}: Hauptattribut {p1}.",{p0:(c.name),p1:(c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und '))}) }) : null,
+            c && method === 'standard-array' ? h('button', { type: 'button', class: 'sc-btn', id: 'scRecommend', onclick: () => SC.mutate((state) => { state.abilityBase = { ...c.standardAbilityScores }; }) }, globalThis.VTTUi("Empfehlung für {p0} übernehmen",{p0:(c.name)})) : null,
+            method ? methodControls(method) : h('p', { class: 'sc-muted', text: globalThis.VTTUi("Wähle zuerst eine Methode.") }),
+            h('p', { class: 'sc-muted', text: globalThis.VTTUi("Boni aus Hintergrund und Attributswerterhöhungen werden automatisch addiert.") }));
         return wrap;
     }
 
     // ================================================================ WAHLEN
     function renderSkills() {
         const first = firstClass();
-        if (!first) return panel(h('h3', { text: 'Fertigkeiten' }), h('p', { class: 'sc-muted', text: 'Wähle zuerst eine Klasse.' }));
+        if (!first) return panel(h('h3', { text: globalThis.VTTUi("Fertigkeiten") }), h('p', { class: 'sc-muted', text: globalThis.VTTUi("Wähle zuerst eine Klasse.") }));
         const c = cls(first);
         const bg = st().background && SC.L.backgrounds[st().background.id];
         const fromBg = bg ? bg.skills : [];
         const chosen = (st().skills || {}).class || [];
         const set = (key, list) => SC.mutate((state) => { state.skills = state.skills || {}; state.skills[key] = list; });
         const options = SC.util.classSkillOptions(c).map((id) => ({ id, name: SC.skillName(id), sub: fromBg.includes(id) ? 'bereits durch Hintergrund' : null }));
-        const wrap = panel(h('h3', { text: `Fertigkeiten (${c.name})` }),
-            bg ? h('p', null, h('strong', { text: 'Vom Hintergrund: ' }), fromBg.map(SC.skillName).join(', ')) : h('p', { class: 'sc-muted', text: 'Hintergrund noch nicht gewählt.' }),
+        const wrap = panel(h('h3', { text: globalThis.VTTUi("Fertigkeiten ({p0})",{p0:(c.name)}) }),
+            bg ? h('p', null, h('strong', { text: globalThis.VTTUi("Vom Hintergrund: ") }), fromBg.map(SC.skillName).join(', ')) : h('p', { class: 'sc-muted', text: globalThis.VTTUi("Hintergrund noch nicht gewählt.") }),
             counter(chosen.length, c.skillChoices.count),
             countedList(options, chosen, c.skillChoices.count, (next) => set('class', next), 'Klassenfertigkeiten'));
         classOrder().slice(1).forEach((key) => {
@@ -454,7 +456,7 @@
             const picked = ((st().skills || {}).multiclass || {})[key] || [];
             const pool = grant.from === 'class' ? SC.util.classSkillOptions(cls(key)) : Object.keys(SC.L.skills);
             const options = pool.map((id) => ({ id, name: SC.skillName(id) }));
-            wrap.append(h('h3', { text: `Mehrklassigkeit: ${cls(key).name}` }), counter(picked.length, grant.count),
+            wrap.append(h('h3', { text: globalThis.VTTUi("Mehrklassigkeit: {p0}",{p0:(cls(key).name)}) }), counter(picked.length, grant.count),
                 countedList(options, picked, grant.count, (next) => SC.mutate((state) => {
                     state.skills = state.skills || {};
                     state.skills.multiclass = { ...(state.skills.multiclass || {}), [key]: next };
@@ -464,10 +466,10 @@
         if (need) {
             const prof = Object.entries((ev() || { skills: {} }).skills).filter(([, v]) => v.proficiency !== 'none').map(([id, v]) => ({ id, name: v.name }));
             const exp = (st().skills || {}).expertise || [];
-            wrap.append(h('h3', { text: 'Expertise' }), counter(exp.length, need), countedList(prof, exp, need, (next) => set('expertise', next), 'Expertise'));
+            wrap.append(h('h3', { text: globalThis.VTTUi("Expertise") }), counter(exp.length, need), countedList(prof, exp, need, (next) => set('expertise', next), 'Expertise'));
         }
         const other = (st().skills || {}).other || [];
-        wrap.append(h('details', null, h('summary', { text: 'Weitere Fertigkeitsübungen (z. B. aus Talenten)' }),
+        wrap.append(h('details', null, h('summary', { text: globalThis.VTTUi("Weitere Fertigkeitsübungen (z. B. aus Talenten)") }),
             countedList(Object.values(SC.L.skills).map((s) => ({ id: s.id, name: s.name })), other, 99, (next) => set('other', next), 'Weitere Fertigkeiten')));
         return wrap;
     }
@@ -476,14 +478,14 @@
         const lv = levelsByClass();
         const keys = classOrder();
         if (!keys.length) return null;
-        return panel(h('h3', { text: 'Unterklassen' }), keys.map((key) => {
+        return panel(h('h3', { text: globalThis.VTTUi("Unterklassen") }), keys.map((key) => {
             const c = cls(key);
             const unlock = c.subclassLevels[0];
-            if (lv[key] < unlock) return h('p', { class: 'sc-muted', text: `${c.name}: Unterklasse ab Stufe ${unlock}.` });
+            if (lv[key] < unlock) return h('p', { class: 'sc-muted', text: globalThis.VTTUi("{p0}: Unterklasse ab Stufe {p1}.",{p0:(c.name),p1:(unlock)}) });
             const cur = (st().subclasses || {})[key];
             return h('div', null, h('h4', { text: c.name }),
                 h('div', { class: 'sc-grid' }, c.subclasses.map((id) => card(SC.subclassName(id), null, cur === id, () => SC.mutate((state) => { state.subclasses = state.subclasses || {}; state.subclasses[key] = id; })))),
-                cur ? SC.detailButton(cur, 'Unterklassen-Text lesen', SC.subclassName(cur)) : null);
+                cur ? SC.detailButton(cur, globalThis.VTTUi("Unterklassen-Text lesen"), SC.subclassName(cur)) : null);
         }));
     }
 
@@ -496,15 +498,15 @@
         });
         const c = cls(key);
         if (choice.kind === 'option') {
-            return h('div', null, h('h4', { text: `${label(choice.id)} (ab Stufe ${choice.level})` }),
+            return h('div', null, h('h4', { text: globalThis.VTTUi("{p0} (ab Stufe {p1})",{p0:(label(choice.id)),p1:(choice.level)}) }),
                 h('div', { class: 'sc-grid' }, Object.entries(choice.options).map(([id, rule]) => card(OPTION_LABELS[id] || id, null, value === id, () => set(id),
                     null))),
-                value ? SC.detailButton(choice.options[value], 'Regeltext', OPTION_LABELS[value] || value) : null);
+                value ? SC.detailButton(choice.options[value], globalThis.VTTUi("Regeltext"), OPTION_LABELS[value] || value) : null);
         }
         if (choice.kind === 'feat-category') {
             const feats = app.data.feats.filter((f) => f.category.startsWith(choice.category));
             return h('div', null, field(`${label(choice.id)} (${choice.category})`, select(`scFc-${key}-${choice.id}`, feats.map((f) => [f.id, f.name]), value, set, 'Bitte wählen'), `scFc-${key}-${choice.id}`),
-                value ? SC.detailButton(value, 'Regeltext', SC.L.feats[value].name) : null);
+                value ? SC.detailButton(value, globalThis.VTTUi("Regeltext"), SC.L.feats[value].name) : null);
         }
         const need = choiceNeed(choice, classLevel);
         const picks = Array.isArray(value) ? value : [];
@@ -528,7 +530,7 @@
         const blocks = [];
         classOrder().forEach((key) => {
             const list = cls(key).featureChoices.filter((c) => c.kind !== 'expertise' && c.level <= lv[key]);
-            if (list.length) blocks.push(h('div', null, h('h3', { text: `${cls(key).name}: Klassenmerkmale` }), list.map((c) => featureChoiceControl(key, c, lv[key]))));
+            if (list.length) blocks.push(h('div', null, h('h3', { text: globalThis.VTTUi("{p0}: Klassenmerkmale",{p0:(cls(key).name)}) }), list.map((c) => featureChoiceControl(key, c, lv[key]))));
         });
         return blocks.length ? panel(blocks) : null;
     }
@@ -555,10 +557,10 @@
         });
         const idp = `scAdv-${slot.key}-${slot.level}`;
         const kind = adv && adv.kind;
-        const wrap = h('div', { class: 'sc-detail' }, h('h4', { text: `${cls(slot.key).name}, Stufe ${slot.level}: ${slot.epic ? 'Epische Gabe' : 'Attributswerterhöhung oder Talent'}` }),
-            h('div', { class: 'sc-row', role: 'group', 'aria-label': 'Art' },
-                h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(kind === 'asi'), onclick: () => write((e) => { e.kind = 'asi'; e.increases = {}; delete e.featId; delete e.increaseAbility; }) }, 'Attributswerterhöhung'),
-                h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(kind === 'feat'), onclick: () => write((e) => { e.kind = 'feat'; delete e.increases; }) }, slot.epic ? 'Epische Gabe' : 'Talent')));
+        const wrap = h('div', { class: 'sc-detail' }, h('h4', { text: globalThis.VTTUi("{p0}, Stufe {p1}: {p2}",{p0:(cls(slot.key).name),p1:(slot.level),p2:(slot.epic ? 'Epische Gabe' : 'Attributswerterhöhung oder Talent')}) }),
+            h('div', { class: 'sc-row', role: 'group', 'aria-label': globalThis.VTTUi("Art") },
+                h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(kind === 'asi'), onclick: () => write((e) => { e.kind = 'asi'; e.increases = {}; delete e.featId; delete e.increaseAbility; }) }, globalThis.VTTUi("Attributswerterhöhung")),
+                h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(kind === 'feat'), onclick: () => write((e) => { e.kind = 'feat'; delete e.increases; }) }, slot.epic ? globalThis.VTTUi("Epische Gabe") : globalThis.VTTUi("Talent"))));
         if (kind === 'asi') {
             const inc = adv.increases || {};
             const plusTwo = (Object.entries(inc).find(([, v]) => v === 2) || [])[0];
@@ -566,12 +568,12 @@
             const mode = plusTwo ? 'two' : (ones.length ? 'ones' : (adv.mode || 'two'));
             const setInc = (obj, m) => write((e) => { e.increases = obj; e.mode = m; });
             wrap.append(h('div', { class: 'sc-row' },
-                h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-toggle', 'aria-pressed': String(mode === 'two'), onclick: () => setInc({}, 'two') }, '+2 auf ein Attribut'),
-                h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-toggle', 'aria-pressed': String(mode === 'ones'), onclick: () => setInc({}, 'ones') }, '+1 auf zwei Attribute')));
+                h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-toggle', 'aria-pressed': String(mode === 'two'), onclick: () => setInc({}, 'two') }, globalThis.VTTUi("+2 auf ein Attribut")),
+                h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-toggle', 'aria-pressed': String(mode === 'ones'), onclick: () => setInc({}, 'ones') }, globalThis.VTTUi("+1 auf zwei Attribute"))));
             if (mode === 'two') {
-                wrap.append(field('+2 auf', select(`${idp}-a`, ABIL.map((a) => [a, SC.abilityName(a)]), plusTwo, (v) => setInc(v ? { [v]: 2 } : {}, 'two'), 'Bitte wählen'), `${idp}-a`));
+                wrap.append(field(globalThis.VTTUi("+2 auf"), select(`${idp}-a`, ABIL.map((a) => [a, SC.abilityName(a)]), plusTwo, (v) => setInc(v ? { [v]: 2 } : {}, 'two'), 'Bitte wählen'), `${idp}-a`));
             } else {
-                const mk = (n) => field(`+1 auf (${n + 1})`, select(`${idp}-o${n}`, ABIL.filter((a) => a === ones[n] || !ones.includes(a)).map((a) => [a, SC.abilityName(a)]), ones[n], (v) => {
+                const mk = (n) => field(globalThis.VTTUi("+1 auf ({p0})",{p0:(n + 1)}), select(`${idp}-o${n}`, ABIL.filter((a) => a === ones[n] || !ones.includes(a)).map((a) => [a, SC.abilityName(a)]), ones[n], (v) => {
                     const next = ones.slice();
                     if (v) next[n] = v; else next.splice(n, 1);
                     setInc(Object.fromEntries(next.filter(Boolean).map((a) => [a, 1])), 'ones');
@@ -581,13 +583,13 @@
         } else if (kind === 'feat') {
             const category = slot.epic ? 'Epische-Gabe-Talent' : 'Allgemeines Talent';
             const feats = app.data.feats.filter((f) => f.category === category && f.id !== 'feats.descriptions.ability-score-improvement');
-            wrap.append(field('Talent', select(`${idp}-f`, feats.map((f) => [f.id, f.name + (f.prerequisite && f.prerequisite.raw ? ` (${f.prerequisite.raw})` : '')]), adv.featId, (v) => write((e) => { e.featId = v || undefined; delete e.increaseAbility; }), 'Bitte wählen'), `${idp}-f`));
+            wrap.append(field(globalThis.VTTUi("Talent"), select(`${idp}-f`, feats.map((f) => [f.id, f.name + (f.prerequisite && f.prerequisite.raw ? ` (${f.prerequisite.raw})` : '')]), adv.featId, (v) => write((e) => { e.featId = v || undefined; delete e.increaseAbility; }), 'Bitte wählen'), `${idp}-f`));
             const feat = adv.featId && SC.L.feats[adv.featId];
             if (feat) {
-                wrap.append(SC.detailButton(feat.id, 'Talent-Text lesen', feat.name));
+                wrap.append(SC.detailButton(feat.id, globalThis.VTTUi("Talent-Text lesen"), feat.name));
                 if (feat.abilityIncrease) {
                     const allowed = feat.abilityIncrease.abilities === 'any' ? ABIL : feat.abilityIncrease.abilities;
-                    wrap.append(field(`${feat.name}: +1 auf`, select(`${idp}-i`, allowed.map((a) => [a, SC.abilityName(a)]), adv.increaseAbility, (v) => write((e) => { e.increaseAbility = v || undefined; }), 'Bitte wählen'), `${idp}-i`));
+                    wrap.append(field(globalThis.VTTUi("{p0}: +1 auf",{p0:(feat.name)}), select(`${idp}-i`, allowed.map((a) => [a, SC.abilityName(a)]), adv.increaseAbility, (v) => write((e) => { e.increaseAbility = v || undefined; }), 'Bitte wählen'), `${idp}-i`));
                 }
             }
         }
@@ -599,7 +601,7 @@
         wrap.append(renderSkills());
         [renderSubclasses(), renderFeatureChoices()].forEach((n) => { if (n) wrap.append(n); });
         const slots = advancementSlots();
-        if (slots.length) wrap.append(panel(h('h3', { text: 'Attributswerterhöhungen und Talente' }), slots.map(renderAdvancement)));
+        if (slots.length) wrap.append(panel(h('h3', { text: globalThis.VTTUi("Attributswerterhöhungen und Talente") }), slots.map(renderAdvancement)));
         return wrap;
     }
 
@@ -622,7 +624,7 @@
         });
         return h('div', null, h('h4', { text: title }),
             h('div', { class: 'sc-grid' }, Object.keys(source).sort().map((p) => h('div', null,
-                card(`Paket ${p}`, (source[p] || []).every((item) => item.kind === 'coins') ? 'Nur Gold' : 'Ausrüstung', cur === p, () => set(p)), packageContents(source[p] || [])))));
+                card(globalThis.VTTUi("Paket {p0}",{p0:(p)}), (source[p] || []).every((item) => item.kind === 'coins') ? 'Nur Gold' : 'Ausrüstung', cur === p, () => set(p)), packageContents(source[p] || [])))));
     }
 
     function startingItems(state) {
@@ -648,10 +650,10 @@
         const wrap = h('div');
         const first = firstClass();
         const bg = st().background && SC.L.backgrounds[st().background.id];
-        wrap.append(panel(h('h3', { text: 'Ausgangsausrüstung' }),
-            first ? packageChooser(`Klasse: ${cls(first).name}`, cls(first).startingEquipment, 'classPackage') : h('p', { class: 'sc-muted', text: 'Wähle zuerst eine Klasse.' }),
+        wrap.append(panel(h('h3', { text: globalThis.VTTUi("Ausgangsausrüstung") }),
+            first ? packageChooser(`Klasse: ${cls(first).name}`, cls(first).startingEquipment, 'classPackage') : h('p', { class: 'sc-muted', text: globalThis.VTTUi("Wähle zuerst eine Klasse.") }),
             bg ? packageChooser(`Hintergrund: ${bg.name}`, bg.startingEquipment, 'backgroundPackage') : null,
-            h('p', { class: 'sc-muted', text: 'Hinweis: Das Inventar wird erst mit dem Charakterbogen aufgebaut; hier hältst du die Wahl der Pakete fest.' })));
+            h('p', { class: 'sc-muted', text: globalThis.VTTUi("Hinweis: Das Inventar wird erst mit dem Charakterbogen aufgebaut; hier hältst du die Wahl der Pakete fest.") })));
         const equip = st().equipment || {};
         const owned = startingItems(st());
         const armors = app.data.equipment.armor.filter((a) => a.category !== 'shield' && owned.has(a.id));
@@ -661,17 +663,17 @@
             return classOrder().some((k, i) => (i === 0 ? cls(k).armorProficiencies.includes(cat) : (cls(k).multiclassGrants.armor || []).includes(cat)));
         };
         const set = (key, value) => SC.mutate((state) => { state.equipment = state.equipment || {}; if (value === '' || value === false) delete state.equipment[key]; else state.equipment[key] = value; });
-        wrap.append(panel(h('h3', { text: 'Anlegen aus deinen Startpaketen' }),
-            h('p', { class: 'sc-muted', text: 'Hier legst du vorhandene Ausrüstung an; du erhältst keine zusätzliche Rüstung. Weitere Gegenstände kannst du später im Inventar mit deiner Spielleitung verwalten.' }),
+        wrap.append(panel(h('h3', { text: globalThis.VTTUi("Anlegen aus deinen Startpaketen") }),
+            h('p', { class: 'sc-muted', text: globalThis.VTTUi("Hier legst du vorhandene Ausrüstung an; du erhältst keine zusätzliche Rüstung. Weitere Gegenstände kannst du später im Inventar mit deiner Spielleitung verwalten.") }),
             h('div', { class: 'sc-fields' },
-                field('Getragene Rüstung', select('scArmor', armors.map((a) => [a.id, `${a.name} (RK ${a.base}${a.dex === 'none' ? '' : a.dex === 'capped' ? ` + GES max. ${a.dexCap}` : ' + GES'}) · ${owned.get(a.id).join('; ')}${classTrained(a.category) ? '' : ' – ungeübt'}`]), equip.armor, (v) => set('armor', v), 'Keine Rüstung'), 'scArmor')),
-            !armors.length ? h('p', { class: 'sc-muted', text: 'Deine gewählten Startpakete enthalten keine Rüstung.' }) : null,
+                field(globalThis.VTTUi("Getragene Rüstung"), select('scArmor', armors.map((a) => [a.id, `${a.name} (RK ${a.base}${a.dex === 'none' ? '' : a.dex === 'capped' ? ` + GES max. ${a.dexCap}` : ' + GES'}) · ${owned.get(a.id).join('; ')}${classTrained(a.category) ? '' : ' – ungeübt'}`]), equip.armor, (v) => set('armor', v), 'Keine Rüstung'), 'scArmor')),
+            !armors.length ? h('p', { class: 'sc-muted', text: globalThis.VTTUi("Deine gewählten Startpakete enthalten keine Rüstung.") }) : null,
             checkRow('Schild führen (+2 RK)', !!equip.shield, !ownsShield, (checked) => set('shield', checked), !ownsShield ? 'In den gewählten Startpaketen ist kein Schild enthalten.' : classTrained('shield') ? 'Schild aus deinen Startpaketen.' : 'Du bist mit Schilden nicht vertraut.'),
-            ev() ? h('p', null, h('strong', { text: `Rüstungsklasse ${ev().armorClass.value}` }), h('span', { class: 'sc-muted', text: ` · ${ev().armorClass.formula}` })) : null));
+            ev() ? h('p', null, h('strong', { text: globalThis.VTTUi("Rüstungsklasse {p0}",{p0:(ev().armorClass.value)}) }), h('span', { class: 'sc-muted', text: ` · ${ev().armorClass.formula}` })) : null));
         const level = (ev() && ev().level) || 1;
         if (level > 1) {
             const row = app.data.startingEquipmentByLevel.find((r) => level >= r.fromLevel && level <= r.toLevel);
-            if (row) wrap.append(panel(h('h3', { text: `Ausrüstung für Stufe ${level}` }), h('p', { text: `Zusätzliches Gold: ${row.baseGold} GM${row.rolledGold ? ` oder gewürfelt (${row.rolledGold.dice}W${row.rolledGold.sides} × ${row.rolledGold.multiplier})` : ''} · Magische Gegenstände: ${row.magicItems}` })));
+            if (row) wrap.append(panel(h('h3', { text: globalThis.VTTUi("Ausrüstung für Stufe {p0}",{p0:(level)}) }), h('p', { text: globalThis.VTTUi("Zusätzliches Gold: {p0} GM{p1} · Magische Gegenstände: {p2}",{p0:(row.baseGold),p1:(row.rolledGold ? ` oder gewürfelt (${row.rolledGold.dice}W${row.rolledGold.sides} × ${row.rolledGold.multiplier})` : ''),p2:(row.magicItems)}) })));
         }
         return wrap;
     }
@@ -706,15 +708,15 @@
     function renderZauber() {
         const lv = levelsByClass();
         const casters = classOrder().filter((k) => cls(k).spellcasting);
-        if (!casters.length) return panel(h('h3', { text: 'Zauber' }), h('p', { class: 'sc-muted', text: 'Deine gewählten Klassen wirken auf diesen Stufen keine Zauber.' }));
+        if (!casters.length) return panel(h('h3', { text: globalThis.VTTUi("Zauber") }), h('p', { class: 'sc-muted', text: globalThis.VTTUi("Deine gewählten Klassen wirken auf diesen Stufen keine Zauber.") }));
         const wrap = h('div');
         const filters = panel(
-            h('h3', { text: 'Zauber filtern' }),
+            h('h3', { text: globalThis.VTTUi("Zauber filtern") }),
             h('div', { class: 'sc-fields' },
-                field('Suche', h('input', { type: 'search', id: 'scSpellSearch', value: spellFilter.text, oninput: (e) => { spellFilter.text = e.target.value.toLowerCase(); wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); } }), 'scSpellSearch'),
-                field('Grad', select('scSpellLevel', [['0', 'Zaubertricks'], ...Array.from({ length: 9 }, (_, i) => [String(i + 1), `${i + 1}. Grad`])], spellFilter.level, (v) => { spellFilter.level = v; wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); }, 'Alle'), 'scSpellLevel')),
-            ev() && ev().spellcasting.slots ? h('p', null, h('strong', { text: 'Zauberplätze: ' }), ev().spellcasting.slots.map((n, i) => (n ? `${i + 1}. Grad ×${n}` : null)).filter(Boolean).join(' · ')) : null,
-            ev() && ev().spellcasting.pact ? h('p', null, h('strong', { text: 'Paktmagie: ' }), `${ev().spellcasting.pact.slots} Plätze, ${ev().spellcasting.pact.grade}. Grad`) : null);
+                field(globalThis.VTTUi("Suche"), h('input', { type: 'search', id: 'scSpellSearch', value: spellFilter.text, oninput: (e) => { spellFilter.text = e.target.value.toLowerCase(); wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); } }), 'scSpellSearch'),
+                field(globalThis.VTTUi("Grad"), select('scSpellLevel', [['0', 'Zaubertricks'], ...Array.from({ length: 9 }, (_, i) => [String(i + 1), `${i + 1}. Grad`])], spellFilter.level, (v) => { spellFilter.level = v; wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); }, 'Alle'), 'scSpellLevel')),
+            ev() && ev().spellcasting.slots ? h('p', null, h('strong', { text: globalThis.VTTUi("Zauberplätze: ") }), ev().spellcasting.slots.map((n, i) => (n ? `${i + 1}. Grad ×${n}` : null)).filter(Boolean).join(' · ')) : null,
+            ev() && ev().spellcasting.pact ? h('p', null, h('strong', { text: globalThis.VTTUi("Paktmagie: ") }), globalThis.VTTUi("{p0} Plätze, {p1}. Grad",{p0:(ev().spellcasting.pact.slots),p1:(ev().spellcasting.pact.grade)})) : null);
         filters.classList.add('sc-spell-filters');
         wrap.append(filters);
         casters.forEach((key) => {
@@ -729,13 +731,13 @@
             const sel = (st().spells || {})[key] || {};
             const prepPool = book ? leveled.filter((id) => (sel.spellbook || []).includes(id)) : leveled;
             wrap.append(panel(
-                h('h3', { text: `${c.name}: Zauber` }),
-                info ? h('p', { class: 'sc-muted', text: `Zauberattribut ${SC.abilityName(info.ability)} · Zauber-SG ${info.saveDc} · Zauberangriff ${sign(info.attackBonus)}` }) : null,
-                h('h4', { text: 'Zaubertricks' }), spellPicker(key, 'cantrips', row.cantrips, cantrips, row.cantrips),
-                book ? [h('h4', { text: 'Zauberbuch' }), spellPicker(key, 'spellbook', null, leveled, spellbookSize(key, lv[key]))] : null,
-                h('h4', { text: book ? 'Vorbereitete Zauber (aus dem Zauberbuch)' : 'Vorbereitete Zauber' }), spellPicker(key, 'prepared', row.prepared, prepPool, row.prepared)));
+                h('h3', { text: globalThis.VTTUi("{p0}: Zauber",{p0:(c.name)}) }),
+                info ? h('p', { class: 'sc-muted', text: globalThis.VTTUi("Zauberattribut {p0} · Zauber-SG {p1} · Zauberangriff {p2}",{p0:(SC.abilityName(info.ability)),p1:(info.saveDc),p2:(sign(info.attackBonus))}) }) : null,
+                h('h4', { text: globalThis.VTTUi("Zaubertricks") }), spellPicker(key, 'cantrips', row.cantrips, cantrips, row.cantrips),
+                book ? [h('h4', { text: globalThis.VTTUi("Zauberbuch") }), spellPicker(key, 'spellbook', null, leveled, spellbookSize(key, lv[key]))] : null,
+                h('h4', { text: book ? globalThis.VTTUi("Vorbereitete Zauber (aus dem Zauberbuch)") : globalThis.VTTUi("Vorbereitete Zauber") }), spellPicker(key, 'prepared', row.prepared, prepPool, row.prepared)));
         });
-        wrap.append(h('p', { class: 'sc-muted', text: 'Hinweis: Zauber aus Spezies-Abstammungen (z. B. Elf, Tiefling) werden noch nicht automatisch eingetragen.' }));
+        wrap.append(h('p', { class: 'sc-muted', text: globalThis.VTTUi("Hinweis: Zauber aus Spezies-Abstammungen (z. B. Elf, Tiefling) werden noch nicht automatisch eingetragen.") }));
         return wrap;
     }
 
@@ -746,17 +748,17 @@
         const input = (key, text) => field(text, h('input', { type: 'text', id: `scId-${key}`, maxLength: 100, value: idn[key] || '', oninput: setText(key) }), `scId-${key}`);
         const area = (key, text) => field(text, h('textarea', { id: `scId-${key}`, maxLength: 8000, value: idn[key] || '', oninput: setText(key) }), `scId-${key}`);
         return panel(
-            h('h3', { text: 'Wer ist dein Charakter?' }),
+            h('h3', { text: globalThis.VTTUi("Wer ist dein Charakter?") }),
             h('div', { class: 'sc-fields' },
                 input('name', 'Name'), input('pronouns', 'Pronomen'),
-                field('Gesinnung', select('scId-alignment', app.data.alignments.map((a) => [a.id, a.name]), idn.alignment, (v) => SC.mutate((state) => { state.identity = state.identity || {}; if (v) state.identity.alignment = v; else delete state.identity.alignment; }, { render: 'none' }), 'Keine Angabe'), 'scId-alignment'),
+                field(globalThis.VTTUi("Gesinnung"), select('scId-alignment', app.data.alignments.map((a) => [a.id, a.name]), idn.alignment, (v) => SC.mutate((state) => { state.identity = state.identity || {}; if (v) state.identity.alignment = v; else delete state.identity.alignment; }, { render: 'none' }), 'Keine Angabe'), 'scId-alignment'),
                 input('age', 'Alter'), input('height', 'Größe'), input('weight', 'Gewicht'), input('eyes', 'Augen'), input('hair', 'Haare'), input('skin', 'Haut'), input('faith', 'Glaube')),
             area('appearance', 'Aussehen'), area('traits', 'Persönlichkeitsmerkmale'), area('ideals', 'Ideale'), area('bonds', 'Bindungen'), area('flaws', 'Makel'), area('backstory', 'Hintergrundgeschichte'), area('notes', 'Notizen'));
     }
 
     // ================================================================ PRÜFUNG
     const overrideKeys = () => [
-        ['hp.max', 'Maximale Trefferpunkte'], ['armorClass', 'Rüstungsklasse'], ['speed', 'Bewegungsrate (m)'], ['initiative', 'Initiative'],
+        ['hp.max', 'Maximale Trefferpunkte'], ['armorClass', 'Rüstungsklasse'], ['speed', globalThis.VTTUi("Bewegungsrate (m)")], ['initiative', globalThis.VTTUi("Initiative")],
         ['proficiencyBonus', 'Übungsbonus'], ['passivePerception', 'Passive Wahrnehmung'], ['spellSaveDc', 'Zauber-SG'], ['spellAttack', 'Zauberangriff'],
         ...ABIL.map((a) => [`ability.${a}`, `${SC.abilityName(a)} (Wert)`]),
     ];
@@ -775,13 +777,13 @@
             return h('tr', null,
                 h('td', { text: name }),
                 h('td', { text: applied ? applied.computed : '–' }),
-                h('td', null, h('input', { type: 'number', step: key === 'speed' ? '0.5' : '1', value: spec.set != null ? spec.set : '', 'aria-label': `${name}: neuer Wert`, onchange: (e) => write(key, (en) => { en.set = Number(e.target.value); delete en.add; }) })),
-                h('td', null, h('input', { type: 'text', maxLength: 200, value: spec.reason || '', 'aria-label': `${name}: Begründung`, onchange: (e) => write(key, (en) => { en.reason = e.target.value; }) })),
-                h('td', null, h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-danger', onclick: () => SC.mutate((state) => { delete state.overrides[key]; }) }, 'Entfernen')));
+                h('td', null, h('input', { type: 'number', step: key === 'speed' ? '0.5' : '1', value: spec.set != null ? spec.set : '', 'aria-label': globalThis.VTTUi("{p0}: neuer Wert",{p0:(name)}), onchange: (e) => write(key, (en) => { en.set = Number(e.target.value); delete en.add; }) })),
+                h('td', null, h('input', { type: 'text', maxLength: 200, value: spec.reason || '', 'aria-label': globalThis.VTTUi("{p0}: Begründung",{p0:(name)}), onchange: (e) => write(key, (en) => { en.reason = e.target.value; }) })),
+                h('td', null, h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-danger', onclick: () => SC.mutate((state) => { delete state.overrides[key]; }) }, globalThis.VTTUi("Entfernen"))));
         });
         const available = overrideKeys().filter(([k]) => !(k in ov));
-        return panel(h('h3', { text: 'Manuelle Überschreibungen' }),
-            h('p', { class: 'sc-muted', text: 'Nur für Hausregeln und Sonderfälle. Überschriebene Werte werden im Bogen markiert; die berechneten Werte bleiben nachvollziehbar.' }),
+        return panel(h('h3', { text: globalThis.VTTUi("Manuelle Überschreibungen") }),
+            h('p', { class: 'sc-muted', text: globalThis.VTTUi("Nur für Hausregeln und Sonderfälle. Überschriebene Werte werden im Bogen markiert; die berechneten Werte bleiben nachvollziehbar.") }),
             rows.length ? h('div', { class: 'sc-scroll' }, h('table', { class: 'sc-table' },
                 h('thead', null, h('tr', null, ['Wert', 'Berechnet', 'Neuer Wert', 'Begründung', ''].map((t) => h('th', { scope: 'col', text: t })))),
                 h('tbody', null, rows))) : null,
@@ -798,44 +800,44 @@
     }
 
     function renderFinalize() {
-        const box = h('div', { class: 'sc-panel', id: 'scFinalize' }, h('h3', { text: 'Charakter erstellen' }));
+        const box = h('div', { class: 'sc-panel', id: 'scFinalize' }, h('h3', { text: globalThis.VTTUi("Charakter erstellen") }));
         const blockers = app.blockers || [];
         const name = ((st().identity || {}).name || '').trim();
         box.append(
-            field('Name', h('input', { type: 'text', id: 'scFinalName', maxLength: 100, value: name, oninput: (e) => {
+            field(globalThis.VTTUi("Name"), h('input', { type: 'text', id: 'scFinalName', maxLength: 100, value: name, oninput: (e) => {
                 SC.mutate((state) => { state.identity = state.identity || {}; state.identity.name = e.target.value; }, { render: 'none' });
             } }), 'scFinalName'));
-        const campaignSelect = h('select', { id: 'scFinalCampaign' }, h('option', { value: '', text: 'Keiner Kampagne zuordnen' }));
-        SC.loadCampaigns().then((list) => list.forEach((c) => campaignSelect.append(h('option', { value: c.id, text: c.name || c.title || `Kampagne ${c.id}` }))));
-        box.append(field('Kampagne (optional)', campaignSelect, 'scFinalCampaign'));
+        const campaignSelect = h('select', { id: 'scFinalCampaign' }, h('option', { value: '', text: globalThis.VTTUi("Keiner Kampagne zuordnen") }));
+        SC.loadCampaigns().then((list) => list.forEach((c) => campaignSelect.append(h('option', { value: c.id, text: c.name || c.title || globalThis.VTTUi("Kampagne {p0}",{p0:(c.id)}) }))));
+        box.append(field(globalThis.VTTUi("Kampagne (optional)"), campaignSelect, 'scFinalCampaign'));
         const result = h('div', { id: 'scFinalResult', role: 'status', 'aria-live': 'polite' });
         const button = h('button', { type: 'button', class: 'sc-btn sc-btn-primary', id: 'scFinalize-btn', disabled: blockers.length > 0, onclick: async () => {
             button.disabled = true;
-            result.textContent = 'Wird erstellt …';
+            result.textContent = globalThis.VTTUi("Wird erstellt …");
             const res = await SC.finalize(campaignSelect.value || null);
             if (res.ok) {
                 result.textContent = '';
-                result.append(h('p', { class: 'sc-ok-note', text: `Charakter „${res.data.character.name}“ wurde erstellt.` }),
+                result.append(h('p', { class: 'sc-ok-note', text: globalThis.VTTUi("Charakter „{p0}“ wurde erstellt.",{p0:(res.data.character.name)}) }),
                     h('div', { class: 'sc-row' },
-                        h('a', { class: 'sc-btn sc-btn-primary', href: `/character-sheet?id=${res.data.character.id}`, text: 'Zum Charakterbogen' }),
-                        h('a', { class: 'sc-btn', href: '/characters', text: 'Zu meinen Charakteren' }),
-                        h('a', { class: 'sc-btn', href: '/srd-creator', text: 'Weiteren Charakter erstellen' })));
+                        h('a', { class: 'sc-btn sc-btn-primary', href: `/character-sheet?id=${res.data.character.id}`, text: globalThis.VTTUi("Zum Charakterbogen") }),
+                        h('a', { class: 'sc-btn', href: '/characters', text: globalThis.VTTUi("Zu meinen Charakteren") }),
+                        h('a', { class: 'sc-btn', href: '/srd-creator', text: globalThis.VTTUi("Weiteren Charakter erstellen") })));
                 app.draft.status = 'finalized';
             } else {
                 button.disabled = false;
-                result.textContent = res.data.message || 'Der Charakter konnte nicht erstellt werden.';
+                result.textContent = res.data.message || globalThis.VTTUi("Der Charakter konnte nicht erstellt werden.");
                 if (res.data.blockers) result.append(SC.findingList(res.data.blockers.map((b) => ({ ...b, severity: b.severity || 'error' }))));
             }
-        } }, 'Charakter erstellen');
-        box.append(blockers.length ? h('p', { class: 'sc-muted', text: `${blockers.length} offene Punkte verhindern das Erstellen (siehe oben).` }) : h('p', { class: 'sc-ok-note', text: 'Alles vollständig und regelkonform.' }), button, result);
+        } }, globalThis.VTTUi("Charakter erstellen"));
+        box.append(blockers.length ? h('p', { class: 'sc-muted', text: globalThis.VTTUi("{p0} offene Punkte verhindern das Erstellen (siehe oben).",{p0:(blockers.length)}) }) : h('p', { class: 'sc-ok-note', text: globalThis.VTTUi("Alles vollständig und regelkonform.") }), button, result);
         return box;
     }
 
     function renderPruefung() {
         const wrap = h('div');
-        wrap.append(panel(h('h3', { text: 'Alle Befunde' }), SC.findingList(SC.allFindings())));
+        wrap.append(panel(h('h3', { text: globalThis.VTTUi("Alle Befunde") }), SC.findingList(SC.allFindings())));
         wrap.append(renderOverrides());
-        wrap.append(h('div', { class: 'sc-panel' }, h('h3', { text: 'Regelquelle' }), h('p', null, 'SRD 5.2.1 (Deutsch), Lizenz CC BY 4.0. Die Quelle wird mit Version und Prüfsumme am Charakter festgehalten.')));
+        wrap.append(h('div', { class: 'sc-panel' }, h('h3', { text: globalThis.VTTUi("Regelquelle") }), h('p', null, globalThis.VTTUi("SRD 5.2.1 (Deutsch), Lizenz CC BY 4.0. Die Quelle wird mit Version und Prüfsumme am Charakter festgehalten."))));
         wrap.append(renderFinalize());
         return wrap;
     }

@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Browser-local autosave (IndexedDB) and file download helpers.
 
 const DB_NAME = "rd-mapmaker";
@@ -9,7 +11,7 @@ export class AutosaveUnavailable extends Error {}
 function requestToPromise(request) {
     return new Promise((resolve, reject) => {
         request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error || new Error("IndexedDB-Fehler"));
+        request.onerror = () => reject(request.error || new Error(globalThis.VTTUi("IndexedDB-Fehler")));
     });
 }
 
@@ -24,7 +26,7 @@ export class DraftStore {
         this.dbPromise = new Promise((resolve, reject) => {
             let request;
             try {
-                if (typeof indexedDB === "undefined" || !indexedDB) throw new Error("IndexedDB fehlt");
+                if (typeof indexedDB === "undefined" || !indexedDB) throw new Error(globalThis.VTTUi("IndexedDB fehlt"));
                 request = indexedDB.open(DB_NAME, 1);
             } catch (error) {
                 reject(new AutosaveUnavailable(String(error.message || error)));
@@ -56,8 +58,8 @@ export class DraftStore {
                 return;
             }
             tx.oncomplete = () => resolve();
-            tx.onabort = () => reject(tx.error || new Error("Speichern abgebrochen"));
-            tx.onerror = () => reject(tx.error || new Error("Speichern fehlgeschlagen"));
+            tx.onabort = () => reject(tx.error || new Error(globalThis.VTTUi("Speichern abgebrochen")));
+            tx.onerror = () => reject(tx.error || new Error(globalThis.VTTUi("Speichern fehlgeschlagen")));
         });
     }
 }

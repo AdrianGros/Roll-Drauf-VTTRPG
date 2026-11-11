@@ -2,58 +2,62 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charakter erstellen · SRD 5.2.1 · Roll Drauf VTT</title>
+    <title data-ui-key="u_a830aeb004f1">Charakter erstellen · SRD 5.2.1 · Roll Drauf VTT</title>
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-page.css">
     <link rel="stylesheet" href="/static/css/book-scene.css">
     <link rel="stylesheet" href="/static/css/regelwerk.css">
     <link rel="stylesheet" href="/static/css/srd-creator.css">
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="regelwerk-page srd-creator-page">
-    <a class="regelwerk-skip" href="#scMain">Zum Inhalt springen</a>
+    <a class="regelwerk-skip" href="#scMain"><span data-ui-key="u_631c7f98cc78">Zum Inhalt springen</span></a>
     <header class="regelwerk-site-header">
-        <nav class="book-dashboard-ribbon regelwerk-ribbon" aria-label="VTT-Hauptnavigation">
-            <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
-            <a class="book-dashboard-ribbon-btn" href="/campaigns">Kampagnen</a>
-            <a class="book-dashboard-ribbon-btn is-active" href="/characters" aria-current="page">Charaktere</a>
-            <a class="book-dashboard-ribbon-btn" href="/regelwerk">Regelwerk</a>
-            <a class="book-dashboard-ribbon-btn" href="/regelwerk/compendium">Compendium</a>
+        <nav class="book-dashboard-ribbon regelwerk-ribbon" aria-label="VTT-Hauptnavigation" data-ui-aria-label="u_74d3d7c38935">
+            <a class="book-dashboard-ribbon-btn" href="/dashboard"><span data-ui-key="u_cb27327d0207">Übersicht</span></a>
+            <a class="book-dashboard-ribbon-btn" href="/campaigns"><span data-ui-key="u_4538fc5c1596">Kampagnen</span></a>
+            <a class="book-dashboard-ribbon-btn is-active" href="/characters" aria-current="page"><span data-ui-key="u_346a518c3530">Charaktere</span></a>
+            <a class="book-dashboard-ribbon-btn" href="/regelwerk"><span data-ui-key="u_1a2d1786f33e">Regelwerk</span></a>
+            <a class="book-dashboard-ribbon-btn" href="/regelwerk/compendium"><span data-ui-key="u_ddedf884b06c">Compendium</span></a>
         </nav>
         <div class="regelwerk-titlebar">
             <div>
-                <p class="regelwerk-kicker">Roll Drauf VTT · SRD 5.2.1</p>
-                <h1>Charakter erstellen</h1>
+                <p class="regelwerk-kicker"><span data-ui-key="u_7335361e5645">Roll Drauf VTT · SRD 5.2.1</span></p>
+                <h1><span data-ui-key="u_1c2253b1fe62">Charakter erstellen</span></h1>
             </div>
         </div>
     </header>
 
     <main class="sc-main" id="scMain" tabindex="-1">
-        <p id="scStatus" class="regelwerk-status" role="status" aria-live="polite">Wird geladen …</p>
+        <p id="scStatus" class="regelwerk-status" role="status" aria-live="polite"><span data-ui-key="u_c7f82aa6d8b8">Wird geladen …</span></p>
         <section id="scHome" hidden></section>
         <section id="scBuilder" class="sc-builder" hidden>
             <div class="sc-toolbar">
                 <div class="sc-toolbar-left">
-                    <button type="button" id="scBackHome" class="sc-btn sc-btn-quiet">Alle Entwürfe</button>
+                    <button type="button" id="scBackHome" class="sc-btn sc-btn-quiet"><span data-ui-key="u_6bbc8669f6f9">Alle Entwürfe</span></button>
                     <span id="scSave" class="sc-save" role="status" aria-live="polite"></span>
                 </div>
-                <div class="sc-mode" role="group" aria-label="Erstellungsweg">
-                    <button type="button" id="scModeGuided" class="sc-btn sc-btn-toggle">Geführt</button>
-                    <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle">Schnellbau</button>
+                <div class="sc-mode" role="group" aria-label="Erstellungsweg" data-ui-aria-label="u_ba3a385e4658">
+                    <button type="button" id="scModeGuided" class="sc-btn sc-btn-toggle"><span data-ui-key="u_95d4cfead8f1">Geführt</span></button>
+                    <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle"><span data-ui-key="u_b26e8b66bff2">Schnellbau</span></button>
                 </div>
             </div>
             <div id="scConflict" class="sc-banner sc-banner-warn" role="alert" hidden></div>
             <div class="sc-layout">
                 <div class="sc-content">
-                    <nav id="scSteps" class="sc-steps" aria-label="Schritte"></nav>
+                    <nav id="scSteps" class="sc-steps" aria-label="Schritte" data-ui-aria-label="u_7afff4b5103b"></nav>
                     <div id="scStepBody" class="sc-step-body"></div>
                     <div id="scNav" class="sc-nav">
-                        <button type="button" id="scPrev" class="sc-btn">Zurück</button>
-                        <button type="button" id="scNext" class="sc-btn sc-btn-primary">Weiter</button>
+                        <button type="button" id="scPrev" class="sc-btn"><span data-ui-key="u_4080624342b2">Zurück</span></button>
+                        <button type="button" id="scNext" class="sc-btn sc-btn-primary"><span data-ui-key="u_aeff967b37f0">Weiter</span></button>
                     </div>
                 </div>
-                <aside id="scSummary" class="sc-summary" aria-label="Zusammenfassung"></aside>
+                <aside id="scSummary" class="sc-summary" aria-label="Zusammenfassung" data-ui-aria-label="u_dc230696907d"></aside>
             </div>
         </section>
     </main>
@@ -61,14 +65,14 @@
     <dialog id="scDialog" class="sc-dialog" aria-labelledby="scDialogTitle">
         <div class="sc-dialog-head">
             <h2 id="scDialogTitle" tabindex="-1"></h2>
-            <button type="button" id="scDialogClose" class="sc-btn sc-btn-quiet" aria-label="Schließen">Schließen</button>
+            <button type="button" id="scDialogClose" class="sc-btn sc-btn-quiet" aria-label="Schließen" data-ui-aria-label="u_44424b18700e"><span data-ui-key="u_44424b18700e">Schließen</span></button>
         </div>
         <div id="scDialogBody" class="sc-dialog-body"></div>
     </dialog>
 
     <footer class="regelwerk-footer">
-        <p>Quelle: Systemreferenzdokument 5.2.1 (Deutsch).</p>
-        <p><a href="/regelwerk/lizenz">CC BY 4.0 · Quellenangabe und Lizenz</a></p>
+        <p><span data-ui-key="u_c6627fdd13a6">Quelle: Systemreferenzdokument 5.2.1 (Deutsch).</span></p>
+        <p><a href="/regelwerk/lizenz"><span data-ui-key="u_630fe80c048d">CC BY 4.0 · Quellenangabe und Lizenz</span></a></p>
     </footer>
     <script src="/static/js/auth.js"></script>
     <script src="/static/js/srd-creator.js"></script>

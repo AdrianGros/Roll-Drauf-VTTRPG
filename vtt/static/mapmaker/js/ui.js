@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Panels, dialogs and status. All user-provided text is written via
 // textContent/value only.
 
@@ -41,15 +43,15 @@ const ICONS = {
     trash: ["M4 7h16", "M9 7V4h6v3", "M6 7l1 13h10l1-13"],
 };
 
-const KIND_LABEL = { raster: "Malen", paths: "Wege", stamps: "Symbole", labels: "Text", tiles: "Kacheln" };
+const KIND_LABEL = { raster: globalThis.VTTUi("Malen"), paths: globalThis.VTTUi("Wege"), stamps: globalThis.VTTUi("Symbole"), labels: globalThis.VTTUi("Text"), tiles: globalThis.VTTUi("Kacheln") };
 
 const STATUS_TEXT = {
-    idle: "Noch keine Änderungen",
-    pending: "Ungespeicherte Änderungen",
-    saving: "Speichert …",
-    saved: "Lokal gespeichert",
-    failed: "Autosave fehlgeschlagen – bitte als Datei speichern",
-    unavailable: "Autosave nicht verfügbar – bitte als Datei speichern",
+    idle: globalThis.VTTUi("Noch keine Änderungen"),
+    pending: globalThis.VTTUi("Ungespeicherte Änderungen"),
+    saving: globalThis.VTTUi("Speichert …"),
+    saved: globalThis.VTTUi("Lokal gespeichert"),
+    failed: globalThis.VTTUi("Autosave fehlgeschlagen – bitte als Datei speichern"),
+    unavailable: globalThis.VTTUi("Autosave nicht verfügbar – bitte als Datei speichern"),
 };
 
 export class UI {
@@ -148,7 +150,7 @@ export class UI {
         $("addPlaceBtn").addEventListener("click", () => {
             ed.setTool("label");
             this.openPane("tool");
-            this.toast("Tippe auf die Karte, um den Ort zu setzen.");
+            this.toast(globalThis.VTTUi("Tippe auf die Karte, um den Ort zu setzen."));
         });
     }
 
@@ -196,7 +198,7 @@ export class UI {
                 const target = ed.layerById(targetId);
                 if (target && target.kind === "raster" && target.visible && target.id !== ed.activeLayerId) {
                     ed.setActiveLayer(target.id);
-                    this.toast(`Malt jetzt auf „${target.name}“.`);
+                    this.toast(globalThis.VTTUi("Malt jetzt auf „{p0}“.",{p0:(target.name)}));
                 }
             });
             container.appendChild(button);
@@ -309,7 +311,7 @@ export class UI {
         }
         this.renderTilePalette();
         if (tileIds.length) this.chooseTile(tileIds[0]);
-        else $("tileSelected").textContent = "Noch keine Kachelpakete verfügbar.";
+        else $("tileSelected").textContent = globalThis.VTTUi("Noch keine Kachelpakete verfügbar.");
     }
 
     renderTilePalette() {
@@ -325,8 +327,8 @@ export class UI {
         const pageCount = Math.max(1, Math.ceil(ids.length / pageSize));
         this.tilePage = Math.max(0, Math.min(this.tilePage, pageCount - 1));
         $("tileResults").textContent = ids.length
-            ? `${ids.length.toLocaleString("de")} Kacheln · Seite ${this.tilePage + 1} von ${pageCount}`
-            : "Keine Kacheln gefunden. Suche oder Filter ändern.";
+            ? globalThis.VTTUi("{p0} Kacheln · Seite {p1} von {p2}",{p0:(ids.length.toLocaleString("de")),p1:(this.tilePage + 1),p2:(pageCount)})
+            : globalThis.VTTUi("Keine Kacheln gefunden. Suche oder Filter ändern.");
         $("tilePrev").disabled = this.tilePage === 0;
         $("tileNext").disabled = this.tilePage >= pageCount - 1;
         const container = $("tilePalette");
@@ -361,9 +363,9 @@ export class UI {
             ed.tileOpts.erase = false;
             $("tileMode").value = "paint";
         }
-        $("tileSelected").textContent = `Kachel: ${stamp.label} · ${stamp.packName}`;
+        $("tileSelected").textContent = globalThis.VTTUi("Kachel: {p0} · {p1}",{p0:(stamp.label),p1:(stamp.packName)});
         document.querySelectorAll(".mm-tile-btn").forEach((button) => button.setAttribute("aria-checked", String(button.dataset.tile === id)));
-        ed.palette.loadStamp(id).then(() => ed.requestFrame()).catch(() => this.toast("Die Kachel konnte nicht geladen werden."));
+        ed.palette.loadStamp(id).then(() => ed.requestFrame()).catch(() => this.toast(globalThis.VTTUi("Die Kachel konnte nicht geladen werden.")));
     }
 
     bindPath() {
@@ -420,8 +422,8 @@ export class UI {
         const pageCount = Math.max(1, Math.ceil(ids.length / pageSize));
         this.palettePage = Math.max(0, Math.min(this.palettePage, pageCount - 1));
         $("stampResults").textContent = ids.length
-            ? `${ids.length.toLocaleString("de")} Symbole · Seite ${this.palettePage + 1} von ${pageCount}`
-            : "Keine Symbole gefunden. Suche oder Filter ändern.";
+            ? globalThis.VTTUi("{p0} Symbole · Seite {p1} von {p2}",{p0:(ids.length.toLocaleString("de")),p1:(this.palettePage + 1),p2:(pageCount)})
+            : globalThis.VTTUi("Keine Symbole gefunden. Suche oder Filter ändern.");
         $("stampPrev").disabled = this.palettePage === 0;
         $("stampNext").disabled = this.palettePage >= pageCount - 1;
         const container = $("palette");
@@ -445,9 +447,9 @@ export class UI {
                 const thumb = el("img", { src: stamp.src, width: 56, height: 56, alt: "", loading: "lazy", decoding: "async", class: stamp.pixelArt ? "mm-pixel" : null });
                 thumb.addEventListener("error", () => {
                     button.disabled = true;
-                    button.title = `${stamp.label} – Bild konnte nicht geladen werden`;
+                    button.title = globalThis.VTTUi("{p0} – Bild konnte nicht geladen werden",{p0:(stamp.label)});
                     $("packNote").hidden = false;
-                    $("packNote").textContent = "Einige Symbolbilder fehlen. Bitte neu laden oder ein anderes Paket wählen.";
+                    $("packNote").textContent = globalThis.VTTUi("Einige Symbolbilder fehlen. Bitte neu laden oder ein anderes Paket wählen.");
                 });
                 button.appendChild(thumb);
             } else {
@@ -472,18 +474,18 @@ export class UI {
             ed.stampOpts.crop = crop;
             ed.stampOpts.size = crop ? Math.min(256, Math.max(16, crop.w, crop.h)) : stamp.defaultSize;
             this.stampSize.set(ed.stampOpts.size);
-            $("stampSelected").textContent = `Ausgewählt: ${stamp.label} · ${stamp.packName}`;
+            $("stampSelected").textContent = globalThis.VTTUi("Ausgewählt: {p0} · {p1}",{p0:(stamp.label),p1:(stamp.packName)});
             document.querySelectorAll(".mm-stamp").forEach((button) => {
                 button.setAttribute("aria-checked", String(button.dataset.asset === id));
             });
             $("stampCrop").disabled = !stamp.src;
-            if (crop) $("stampSelected").textContent += ` · Ausschnitt ${crop.w}×${crop.h}`;
+            if (crop) $("stampSelected").textContent += globalThis.VTTUi(" · Ausschnitt {p0}×{p1}",{p0:(crop.w),p1:(crop.h)});
             ed.requestFrame();
             if (stamp.sheet && openSheet) this.openSheet(id);
         };
         if (stamp.image) select();
         else ed.palette.loadStamp(id).then(select).catch(() => {
-            this.toast("Das Symbol konnte nicht geladen werden. Bitte ein anderes wählen oder neu laden.");
+            this.toast(globalThis.VTTUi("Das Symbol konnte nicht geladen werden. Bitte ein anderes wählen oder neu laden."));
         });
     }
 
@@ -497,7 +499,7 @@ export class UI {
     updateSymbolOptions(ids) {
         for (const select of [$("placeSymbol"), $("selSymbol")]) {
             const value = select.value;
-            select.replaceChildren(el("option", { value: "" }, "Kein Symbol"));
+            select.replaceChildren(el("option", { value: "" }, globalThis.VTTUi("Kein Symbol")));
             for (const id of new Set([...ids, value, this.ed.labelOpts.symbol].filter(Boolean))) this.ensureSymbolOption(select, id);
             select.value = value;
         }
@@ -580,7 +582,7 @@ export class UI {
         const stamp = this.ed.palette.stamps.get(id);
         if (!stamp || !stamp.image) return;
         this.sheetId = id; this.sheetStart = null;
-        $("sheetName").textContent = `${stamp.label} · ${stamp.w}×${stamp.h} Pixel`;
+        $("sheetName").textContent = globalThis.VTTUi("{p0} · {p1}×{p2} Pixel",{p0:(stamp.label),p1:(stamp.w),p2:(stamp.h)});
         const canvas = $("sheetCanvas"), scale = Math.min(2, 960 / Math.max(stamp.w, stamp.h));
         canvas.width = Math.max(1, Math.round(stamp.w*scale)); canvas.height = Math.max(1, Math.round(stamp.h*scale));
         $("sheetZoom").value = "fit"; canvas.style.width = ""; canvas.style.maxWidth = "100%";
@@ -599,7 +601,7 @@ export class UI {
             for (const [value, def] of Object.entries(LABEL_STYLES)) select.appendChild(el("option", { value }, def.name));
         }
         for (const select of [kindSelect, $("selKind")]) {
-            select.appendChild(el("option", { value: "" }, "Nur Beschriftung"));
+            select.appendChild(el("option", { value: "" }, globalThis.VTTUi("Nur Beschriftung")));
             for (const [value, name] of Object.entries(PLACE_KINDS)) select.appendChild(el("option", { value }, name));
         }
         styleSelect.value = ed.labelOpts.style;
@@ -707,21 +709,21 @@ export class UI {
         $("inspectStamp").hidden = !isStamp;
         $("inspectPath").hidden = !isPath;
         $("inspectLabel").hidden = isStamp || isPath;
-        $("showMapBtn").textContent = isPath ? "Weg auf Karte zeigen" : "Ort auf Karte zeigen";
+        $("showMapBtn").textContent = isPath ? globalThis.VTTUi("Weg auf Karte zeigen") : globalThis.VTTUi("Ort auf Karte zeigen");
         const editing = (id) => document.activeElement === $(id);
         if (isStamp) {
             const stamp = ed.palette.stamps.get(item.asset);
-            $("inspectorTitle").textContent = "Symbol";
+            $("inspectorTitle").textContent = globalThis.VTTUi("Symbol");
             $("selStampName").textContent = stamp ? stamp.label : item.asset;
             if (!editing("selStampSize")) this.selStampSize.set(Math.round(item.size));
             if (!editing("selStampRot")) this.selStampRot.set(Math.round(item.rot));
             $("selStampFlip").checked = !!item.flip;
         } else if (isPath) {
-            $("inspectorTitle").textContent = item.material === "river" ? "Fluss" : "Weg";
+            $("inspectorTitle").textContent = item.material === "river" ? globalThis.VTTUi("Fluss") : globalThis.VTTUi("Weg");
             $("selPathMaterial").value = item.material;
             if (!editing("selPathWidth") && !editing("selPathWidthNumber")) this.selPathWidth.set(item.width);
         } else {
-            $("inspectorTitle").textContent = item.place ? "Ort" : "Beschriftung";
+            $("inspectorTitle").textContent = item.place ? globalThis.VTTUi("Ort") : globalThis.VTTUi("Beschriftung");
             if (!editing("selText")) $("selText").value = item.text;
             $("selStyle").value = item.style;
             if (!editing("selColor")) $("selColor").value = item.color;
@@ -737,7 +739,7 @@ export class UI {
             const lore = $("selLore");
             lore.disabled = !item.place;
             if (!editing("selLore")) lore.value = item.place ? item.place.lore : "";
-            $("selLoreCount").textContent = item.place ? `${lore.value.length}/${LIMITS.lore}` : "(nur für Orte)";
+            $("selLoreCount").textContent = item.place ? `${lore.value.length}/${LIMITS.lore}` : globalThis.VTTUi("(nur für Orte)");
             const bounds = labelBounds(item);
             const replacedTitle = replacedTitleLabel(ed.doc);
             const overlaps = ed.doc.layers.filter((layer) => layer.kind === "labels" && layer.visible)
@@ -750,7 +752,7 @@ export class UI {
                 });
             $("collisionHint").hidden = !overlaps.length;
             $("collisionHint").textContent = overlaps.length
-                ? `Überlappt ${overlaps.length} Beschriftung${overlaps.length === 1 ? "" : "en"}. Mit Auswählen (V) verschieben.` : "";
+                ? globalThis.VTTUi("Überlappt {p0} Beschriftung{p1}. Mit Auswählen (V) verschieben.",{p0:(overlaps.length),p1:(overlaps.length === 1 ? "" : "en")}) : "";
         }
     }
 
@@ -801,24 +803,24 @@ export class UI {
         layers.forEach((layer, row) => {
             const active = layer.id === ed.activeLayerId;
             const li = el("li", { class: `mm-layer${active ? " is-active" : ""}${layer.visible ? "" : " is-hidden"}`, dataset: { layer: layer.id } });
-            const eye = el("button", { type: "button", class: "mm-icon-btn mm-eye", "aria-pressed": String(layer.visible), "aria-label": `${layer.name} ${layer.visible ? "ausblenden" : "einblenden"}`, title: layer.visible ? "Ausblenden" : "Einblenden" });
+            const eye = el("button", { type: "button", class: "mm-icon-btn mm-eye", "aria-pressed": String(layer.visible), "aria-label": `${layer.name} ${layer.visible ? "ausblenden" : "einblenden"}`, title: layer.visible ? globalThis.VTTUi("Ausblenden") : globalThis.VTTUi("Einblenden") });
             eye.appendChild(svgIcon(layer.visible ? ICONS.eyeOn : ICONS.eyeOff));
             eye.addEventListener("click", () => ed.setLayerProp(layer.id, "visible", !layer.visible));
-            const name = el("button", { type: "button", class: "mm-layer-name", "aria-current": active ? "true" : null, title: "Als aktive Ebene wählen" });
+            const name = el("button", { type: "button", class: "mm-layer-name", "aria-current": active ? "true" : null, title: globalThis.VTTUi("Als aktive Ebene wählen") });
             name.append(el("span", { class: "mm-layer-title" }, layer.name), el("span", { class: `mm-kind mm-kind-${layer.kind}` }, KIND_LABEL[layer.kind]));
             name.addEventListener("click", () => ed.setActiveLayer(layer.id));
             name.addEventListener("dblclick", () => this.renameLayer(li, layer));
             const actions = el("div", { class: "mm-layer-actions" });
-            const up = el("button", { type: "button", class: "mm-icon-btn", "aria-label": `${layer.name} nach oben`, title: "Nach oben", disabled: row === 0 });
+            const up = el("button", { type: "button", class: "mm-icon-btn", "aria-label": globalThis.VTTUi("{p0} nach oben",{p0:(layer.name)}), title: globalThis.VTTUi("Nach oben"), disabled: row === 0 });
             up.appendChild(svgIcon(ICONS.up));
             up.addEventListener("click", () => ed.moveLayer(layer.id, 1));
-            const down = el("button", { type: "button", class: "mm-icon-btn", "aria-label": `${layer.name} nach unten`, title: "Nach unten", disabled: row === layers.length - 1 });
+            const down = el("button", { type: "button", class: "mm-icon-btn", "aria-label": globalThis.VTTUi("{p0} nach unten",{p0:(layer.name)}), title: globalThis.VTTUi("Nach unten"), disabled: row === layers.length - 1 });
             down.appendChild(svgIcon(ICONS.down));
             down.addEventListener("click", () => ed.moveLayer(layer.id, -1));
-            const rename = el("button", { type: "button", class: "mm-icon-btn", "aria-label": `${layer.name} umbenennen`, title: "Umbenennen" });
+            const rename = el("button", { type: "button", class: "mm-icon-btn", "aria-label": `${layer.name} umbenennen`, title: globalThis.VTTUi("Umbenennen") });
             rename.appendChild(svgIcon(ICONS.rename));
             rename.addEventListener("click", () => this.renameLayer(li, layer));
-            const remove = el("button", { type: "button", class: "mm-icon-btn mm-danger-icon", "aria-label": `${layer.name} löschen`, title: "Löschen", disabled: ed.doc.layers.length <= 1 });
+            const remove = el("button", { type: "button", class: "mm-icon-btn mm-danger-icon", "aria-label": globalThis.VTTUi("{p0} löschen",{p0:(layer.name)}), title: globalThis.VTTUi("Löschen"), disabled: ed.doc.layers.length <= 1 });
             remove.appendChild(svgIcon(ICONS.trash));
             remove.addEventListener("click", () => ed.deleteLayer(layer.id));
             actions.append(up, down, rename, remove);
@@ -836,7 +838,7 @@ export class UI {
         }
         const addRaster = $("addRaster");
         addRaster.disabled = ed.doc.layers.length >= LIMITS.layers || !ed.canAddRaster();
-        addRaster.title = addRaster.disabled ? "Für diese Kartengröße sind keine weiteren Malebenen möglich." : "";
+        addRaster.title = addRaster.disabled ? globalThis.VTTUi("Für diese Kartengröße sind keine weiteren Malebenen möglich.") : "";
         $("addStamps").disabled = ed.doc.layers.length >= LIMITS.layers;
         $("addTiles").disabled = ed.doc.layers.length >= LIMITS.layers;
         $("addLabels").disabled = ed.doc.layers.length >= LIMITS.layers;
@@ -845,7 +847,7 @@ export class UI {
 
     renameLayer(li, layer) {
         const nameButton = li.querySelector(".mm-layer-name");
-        const input = el("input", { type: "text", class: "mm-layer-input", maxlength: LIMITS.layerName, "aria-label": "Neuer Ebenenname" });
+        const input = el("input", { type: "text", class: "mm-layer-input", maxlength: LIMITS.layerName, "aria-label": globalThis.VTTUi("Neuer Ebenenname") });
         input.value = layer.name;
         nameButton.replaceWith(input);
         input.focus();
@@ -877,7 +879,7 @@ export class UI {
         list.replaceChildren();
         const places = ed.doc.layers.filter((l) => l.kind === "labels").flatMap((l) => l.items.filter((i) => i.place).map((i) => ({ layer: l, item: i })));
         if (!places.length) {
-            list.appendChild(el("li", { class: "mm-empty" }, "Noch keine Orte. Setze einen mit dem Werkzeug „Ort“."));
+            list.appendChild(el("li", { class: "mm-empty" }, globalThis.VTTUi("Noch keine Orte. Setze einen mit dem Werkzeug „Ort“.")));
             return;
         }
         for (const { layer, item } of places) {
@@ -886,8 +888,8 @@ export class UI {
             const head = el("span", { class: "mm-place-head" });
             head.append(el("strong", { class: "mm-place-name" }, item.text), el("span", { class: "mm-place-kind" }, PLACE_KINDS[item.place.kind] || ""));
             button.appendChild(head);
-            button.appendChild(el("span", { class: "mm-place-lore" }, item.place.lore || "Noch keine Beschreibung."));
-            if (!layer.visible) button.appendChild(el("span", { class: "mm-place-kind" }, "Ebene ausgeblendet"));
+            button.appendChild(el("span", { class: "mm-place-lore" }, item.place.lore || globalThis.VTTUi("Noch keine Beschreibung.")));
+            if (!layer.visible) button.appendChild(el("span", { class: "mm-place-kind" }, globalThis.VTTUi("Ebene ausgeblendet")));
             button.addEventListener("click", () => {
                 ed.setTool("select");
                 ed.select(item.id);
@@ -958,7 +960,7 @@ export class UI {
     updateTargets() {
         const ed = this.ed;
         if (!ed.doc) return;
-        $("activeLayerJump").textContent = `Ebene: ${ed.activeLayer()?.name || 'keine'}`;
+        $("activeLayerJump").textContent = globalThis.VTTUi("Ebene: {p0}",{p0:(ed.activeLayer()?.name || 'keine')});
         const name = (kind) => {
             const layer = ed.targetLayer(kind, { quiet: true });
             return layer ? layer.name : "keine passende Ebene";
@@ -966,9 +968,9 @@ export class UI {
         $("brushTarget").textContent = name("raster");
         $("stampTarget").textContent = name("stamps");
         $("labelTarget").textContent = name("labels");
-        $("pathTarget").textContent = ed.doc.layers.some((layer) => layer.kind === "paths") ? name("paths") : "Neue Ebene beim ersten Weg";
+        $("pathTarget").textContent = ed.doc.layers.some((layer) => layer.kind === "paths") ? name("paths") : globalThis.VTTUi("Neue Ebene beim ersten Weg");
         const tiles = ed.targetLayer("tiles", { quiet: true });
-        $("tileTarget").textContent = tiles ? tiles.name : "Neue Kachelebene bei der ersten Kachel";
+        $("tileTarget").textContent = tiles ? tiles.name : globalThis.VTTUi("Neue Kachelebene bei der ersten Kachel");
         $("tileSize").value = String(tiles ? tiles.grid.size : ed.tileOpts.size);
     }
 
@@ -990,9 +992,9 @@ export class UI {
         }
         status.textContent = text;
         status.title = state === "unavailable"
-            ? "Dieser Browser erlaubt keine lokale Speicherung (z. B. privater Modus). Speichere die Karte über „Datei → Als Datei speichern“."
+            ? globalThis.VTTUi("Dieser Browser erlaubt keine lokale Speicherung (z. B. privater Modus). Speichere die Karte über „Datei → Als Datei speichern“.")
             : state === "failed"
-                ? "Die lokale Speicherung ist fehlgeschlagen (z. B. Speicher voll). Speichere die Karte als Datei."
+                ? globalThis.VTTUi("Die lokale Speicherung ist fehlgeschlagen (z. B. Speicher voll). Speichere die Karte als Datei.")
                 : "";
     }
 
@@ -1014,11 +1016,11 @@ export class UI {
 
     openExport() {
         const { w, h } = this.ed.doc.size;
-        $("exportLabel1").textContent = `1× – ${w} × ${h} px`;
+        $("exportLabel1").textContent = globalThis.VTTUi("1× – {p0} × {p1} px",{p0:(w),p1:(h)});
         const tooBig = w * h * 4 > 16777216;
         const two = document.querySelector("input[name=exportScale][value='2']");
         two.disabled = tooBig;
-        $("exportLabel2").textContent = tooBig ? "2× – zu groß für Browser" : `2× – ${w * 2} × ${h * 2} px`;
+        $("exportLabel2").textContent = tooBig ? globalThis.VTTUi("2× – zu groß für Browser") : globalThis.VTTUi("2× – {p0} × {p1} px",{p0:(w * 2),p1:(h * 2)});
         if (tooBig) document.querySelector("input[name=exportScale][value='1']").checked = true;
         $("exportError").hidden = true;
         $("exportGo").disabled = false;
@@ -1033,22 +1035,22 @@ export class UI {
         $("exportCancel").disabled = true;
         $("exportGo").disabled = true;
         $("exportBundle").disabled = true;
-        go.textContent = "Wird erstellt …";
+        go.textContent = globalThis.VTTUi("Wird erstellt …");
         try {
             await new Promise((resolve) => requestAnimationFrame(resolve));
             if (bundle) await this.ed.exportBundle(scale);
             else await this.ed.exportPng(scale);
             $("exportDialog").close();
-            this.toast(bundle ? "PNG und Projekt exportiert." : "PNG exportiert.");
+            this.toast(bundle ? globalThis.VTTUi("PNG und Projekt exportiert.") : globalThis.VTTUi("PNG exportiert."));
         } catch (error) {
             const box = $("exportError");
             box.hidden = false;
-            box.textContent = `Export fehlgeschlagen: ${error.message || error}`;
+            box.textContent = globalThis.VTTUi("Export fehlgeschlagen: {p0}",{p0:(error.message || error)});
         } finally {
             $("exportCancel").disabled = false;
             $("exportGo").disabled = false;
             $("exportBundle").disabled = false;
-            go.textContent = bundle ? "PNG + Projekt (.zip)" : "Exportieren (PNG)";
+            go.textContent = bundle ? globalThis.VTTUi("PNG + Projekt (.zip)") : globalThis.VTTUi("Exportieren (PNG)");
         }
     }
 
@@ -1056,7 +1058,7 @@ export class UI {
         const dialog = $("restoreDialog");
         const when = draft.savedAt ? new Date(draft.savedAt).toLocaleString("de-DE", { dateStyle: "medium", timeStyle: "short" }) : "unbekannt";
         const title = draft.doc && draft.doc.meta && typeof draft.doc.meta.title === "string" ? draft.doc.meta.title.slice(0, LIMITS.title) : "Karte";
-        $("restoreText").textContent = `„${title}“ wurde zuletzt am ${when} in diesem Browser gespeichert. Möchtest du daran weiterarbeiten?`;
+        $("restoreText").textContent = globalThis.VTTUi("„{p0}“ wurde zuletzt am {p1} in diesem Browser gespeichert. Möchtest du daran weiterarbeiten?",{p0:(title),p1:(when)});
         return new Promise((resolve) => {
             const done = (value) => {
                 dialog.close();
@@ -1116,7 +1118,7 @@ export class UI {
         $("app").dataset.state = "error";
         $("loading").hidden = false;
         $("loading").classList.add("is-error");
-        $("loadingText").textContent = `Die Kartenwerkstatt konnte nicht starten: ${error && error.message ? error.message : error}`;
+        $("loadingText").textContent = globalThis.VTTUi("Die Kartenwerkstatt konnte nicht starten: {p0}",{p0:(error && error.message ? error.message : error)});
         $("reloadBtn").hidden = false;
     }
 

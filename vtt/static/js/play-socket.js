@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 class PlaySocketRuntime {
     constructor({ campaignId, sessionId, handlers = {} }) {
         this.campaignId = Number(campaignId);
@@ -11,7 +13,7 @@ class PlaySocketRuntime {
 
     connect() {
         if (typeof io !== "function") {
-            throw new Error("socket.io client not loaded");
+            throw new Error(globalThis.VTTUi("socket.io client not loaded"));
         }
         this.socket = io({
             withCredentials: true,
@@ -22,7 +24,7 @@ class PlaySocketRuntime {
             try {
                 await Auth.resumeTableContext(this.campaignId, this.sessionId);
             } catch (error) {
-                this._fire('error', {message: error.message || 'Tischverbindung konnte nicht wiederaufgenommen werden.'});
+                this._fire('error', {message: error.message || globalThis.VTTUi("Tischverbindung konnte nicht wiederaufgenommen werden.")});
                 this.socket.disconnect();
                 return;
             }
@@ -63,6 +65,7 @@ class PlaySocketRuntime {
         this.socket.on("session:state_changed", (payload) => this._handleSequencedEvent("session:state_changed", payload, "stateChanged"));
         this.socket.on("scene:layer_activated", (payload) => this._handleSequencedEvent("scene:layer_activated", payload, "layerActivated"));
         this.socket.on("scene:layers_updated", (payload) => this._handleSequencedEvent("scene:layers_updated", payload, "layersUpdated"));
+        this.socket.on("scene:scale_updated",(payload)=>this._handleSequencedEvent('scene:scale_updated',payload,'scaleUpdated'));
         this.socket.on("action:executed", (payload) => this._handleSequencedEvent("action:executed", payload, "actionExecuted"));
         this.socket.on("dice_rolled", (payload) => this._handleSequencedEvent("dice_rolled", payload, "diceRolled"));
         this.socket.on("chat:message_sent", (payload) => this._handleSequencedEvent("chat:message_sent", payload, "chatMessageSent"));

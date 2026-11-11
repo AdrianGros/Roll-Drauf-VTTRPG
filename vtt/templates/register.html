@@ -2,8 +2,11 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter the Spellbook - roll drauf vtt</title>
+    <title data-ui-key="u_35b2b5d61e58">Enter the Spellbook - roll drauf vtt</title>
     <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/theme.css">
@@ -11,57 +14,58 @@
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-page.css">
     <link rel="stylesheet" href="/static/css/book-scene.css">
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="spellbook register-route-book-scene">
     <template id="registerSceneTemplate">
         <div class="book-dashboard-camera">
-            <section class="book-dashboard-page" data-book-route="register" role="region" aria-label="Register page">
+            <section class="book-dashboard-page" data-book-route="register" role="region" aria-label="Register page" data-ui-aria-label="u_9d50cdd0e1e4">
                 <div class="book-dashboard-topbar">
-                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Invitation chapter menu">
-                        <a class="book-dashboard-ribbon-btn" href="/login.html">Anmelden</a>
-                        <a class="book-dashboard-ribbon-btn" href="/signup.html">Registrieren</a>
-                        <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page">Key Access</button>
-                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
+                    <div class="book-dashboard-ribbon" role="navigation" aria-label="Invitation chapter menu" data-ui-aria-label="u_38dd9c5e4462">
+                        <a class="book-dashboard-ribbon-btn" href="/login.html"><span data-ui-key="u_a13480ab170c">Anmelden</span></a>
+                        <a class="book-dashboard-ribbon-btn" href="/signup.html"><span data-ui-key="u_1551c98e96c5">Registrieren</span></a>
+                        <button type="button" class="book-dashboard-ribbon-btn is-active" aria-current="page"><span data-ui-key="u_9bf5f103a923">Key Access</span></button>
+                        <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0"><span data-ui-key="u_4230de9147dc">Regelwerk · Vorschau</span></a>
                     </div>
-                    <div class="book-dashboard-crest" aria-label="Reader state">Guest</div>
+                    <div class="book-dashboard-crest" aria-label="Reader state" data-ui-aria-label="u_620a56fe50d7"><span data-ui-key="u_face83ee3014">Guest</span></div>
                 </div>
 
                 <div class="book-spread-shell">
                     <article class="book-spread-page book-spread-page--left">
                         <header class="book-spread-page-header">
-                            <p class="book-spread-page-kicker">Invitation Gate</p>
-                            <h1 class="book-spread-page-title">Register</h1>
-                            <p class="book-spread-page-copy">This chapter redeems a valid key and turns the same book straight toward the authenticated compendium.</p>
+                            <p class="book-spread-page-kicker"><span data-ui-key="u_1186665c16a5">Invitation Gate</span></p>
+                            <h1 class="book-spread-page-title"><span data-ui-key="u_d672995a1465">Register</span></h1>
+                            <p class="book-spread-page-copy"><span data-ui-key="u_5a5a373f9b60">This chapter redeems a valid key and turns the same book straight toward the authenticated compendium.</span></p>
                         </header>
                         <div class="book-spread-page-body">
                             <section class="book-scene-panel">
-                                <span class="book-scene-panel-kicker">Validation Notes</span>
-                                <h2 class="book-scene-panel-title">Redeem Your Key</h2>
-                                <p class="book-scene-panel-copy">The left page keeps the invitation rules stable while the right page performs the actual account redemption.</p>
+                                <span class="book-scene-panel-kicker"><span data-ui-key="u_fc80b6eba263">Validation Notes</span></span>
+                                <h2 class="book-scene-panel-title"><span data-ui-key="u_a3ad6b62d9ec">Redeem Your Key</span></h2>
+                                <p class="book-scene-panel-copy"><span data-ui-key="u_26b18be5c04b">The left page keeps the invitation rules stable while the right page performs the actual account redemption.</span></p>
                                 <div class="book-ledger">
                                     <div class="book-ledger-row">
-                                        <span class="book-ledger-label">Key</span>
-                                        <span class="book-ledger-value">Uppercase spell code</span>
+                                        <span class="book-ledger-label"><span data-ui-key="u_c67dd20ee842">Key</span></span>
+                                        <span class="book-ledger-value"><span data-ui-key="u_313f79b0cb89">Uppercase spell code</span></span>
                                     </div>
                                     <div class="book-ledger-row">
-                                        <span class="book-ledger-label">Username</span>
-                                        <span class="book-ledger-value">Letters, digits, underscore</span>
+                                        <span class="book-ledger-label"><span data-ui-key="u_84c29015de33">Username</span></span>
+                                        <span class="book-ledger-value"><span data-ui-key="u_eb8bb7cf428c">Letters, digits, underscore</span></span>
                                     </div>
                                     <div class="book-ledger-row">
-                                        <span class="book-ledger-label">Password</span>
-                                        <span class="book-ledger-value">8+ chars with symbol mix</span>
+                                        <span class="book-ledger-label"><span data-ui-key="u_8be3c943b160">Password</span></span>
+                                        <span class="book-ledger-value"><span data-ui-key="u_baeb7a1541e5">8+ chars with symbol mix</span></span>
                                     </div>
                                     <div class="book-ledger-row">
-                                        <span class="book-ledger-label">Success</span>
-                                        <span class="book-ledger-value">Immediate dashboard transition</span>
+                                        <span class="book-ledger-label"><span data-ui-key="u_42a8f651d79f">Success</span></span>
+                                        <span class="book-ledger-value"><span data-ui-key="u_6e6adc4f4b32">Immediate dashboard transition</span></span>
                                     </div>
                                 </div>
                             </section>
 
                             <div class="book-scene-note-list">
-                                <div class="book-scene-note">Keys are consumed through the same book runtime, not a detached utility route.</div>
-                                <div class="book-scene-note">A valid key creates the account and opens the authenticated session immediately.</div>
-                                <div class="book-scene-note">The next visible chapter after success is the dashboard, not another standalone page shell.</div>
+                                <div class="book-scene-note"><span data-ui-key="u_d5c66afae07f">Keys are consumed through the same book runtime, not a detached utility route.</span></div>
+                                <div class="book-scene-note"><span data-ui-key="u_fb0b1c50b065">A valid key creates the account and opens the authenticated session immediately.</span></div>
+                                <div class="book-scene-note"><span data-ui-key="u_9ad923685dc2">The next visible chapter after success is the dashboard, not another standalone page shell.</span></div>
                             </div>
                         </div>
                     </article>
@@ -70,65 +74,65 @@
 
                     <article class="book-spread-page book-spread-page--right">
                         <header class="book-spread-page-header">
-                            <p class="book-spread-page-kicker">Key Ritual</p>
-                            <h2 class="book-spread-page-title">Redeem Invitation</h2>
-                            <p class="book-spread-page-copy">The right page stays practical: clear fields, visible rules, and then a direct turn into the main spellbook.</p>
+                            <p class="book-spread-page-kicker"><span data-ui-key="u_acc163d84fc5">Key Ritual</span></p>
+                            <h2 class="book-spread-page-title"><span data-ui-key="u_8e0dfb7dc5ee">Redeem Invitation</span></h2>
+                            <p class="book-spread-page-copy"><span data-ui-key="u_3eeef81f8468">The right page stays practical: clear fields, visible rules, and then a direct turn into the main spellbook.</span></p>
                         </header>
                         <div class="book-spread-page-meta">
-                            <span class="book-dashboard-chip">Invitation Flow</span>
-                            <span class="book-dashboard-chip">Strong Secret</span>
-                            <span class="book-dashboard-chip">Dashboard Next</span>
+                            <span class="book-dashboard-chip"><span data-ui-key="u_e73f8196445e">Invitation Flow</span></span>
+                            <span class="book-dashboard-chip"><span data-ui-key="u_bec8f0ab07b3">Strong Secret</span></span>
+                            <span class="book-dashboard-chip"><span data-ui-key="u_cafc7a54a6ca">Dashboard Next</span></span>
                         </div>
                         <div class="book-spread-page-body">
                             <div id="statusBanner" class="book-form-banner is-info" hidden aria-live="polite"></div>
 
                             <form id="registerForm" class="book-auth-form" novalidate>
                                 <div class="form-group">
-                                    <label for="key">Registrierungsschlüssel</label>
-                                    <input type="text" id="key" name="key" placeholder="SPELL-XXXX-XXXX-XXXX" required autocomplete="off">
-                                    <div class="form-help">Enter the key exactly as issued.</div>
+                                    <label for="key"><span data-ui-key="u_023e07651c0c">Registrierungsschlüssel</span></label>
+                                    <input type="text" id="key" name="key" placeholder="SPELL-XXXX-XXXX-XXXX" data-ui-placeholder="u_9f3515cfd2b0" required autocomplete="off">
+                                    <div class="form-help"><span data-ui-key="u_4e7504790341">Enter the key exactly as issued.</span></div>
                                     <div class="error" id="keyError" role="alert"></div>
                                 </div>
 
                                 <div class="book-inline-fields">
                                     <div class="form-group">
-                                        <label for="username">Benutzername</label>
-                                        <input type="text" id="username" name="username" placeholder="Your table name" required autocomplete="username">
+                                        <label for="username"><span data-ui-key="u_99636bf839dc">Benutzername</span></label>
+                                        <input type="text" id="username" name="username" placeholder="Your table name" data-ui-placeholder="u_fd03e4ee9e00" required autocomplete="username">
                                         <div class="error" id="usernameError" role="alert"></div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="email">E-Mail</label>
-                                        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+                                        <label for="email"><span data-ui-key="u_9eeffe4b7b6e">E-Mail</span></label>
+                                        <input type="email" id="email" name="email" placeholder="you@example.com" data-ui-placeholder="u_50e2b46ef877" required autocomplete="email">
                                         <div class="error" id="emailError" role="alert"></div>
                                     </div>
                                 </div>
 
                                 <div class="book-inline-fields">
                                     <div class="form-group">
-                                        <label for="password">Passwort</label>
-                                        <input type="password" id="password" name="password" placeholder="Choose a strong passphrase" required autocomplete="new-password">
-                                        <div class="book-password-list" aria-label="Password requirements">
-                                            <div class="book-password-item" id="req-length">At least 8 characters</div>
-                                            <div class="book-password-item" id="req-upper">One uppercase letter</div>
-                                            <div class="book-password-item" id="req-lower">One lowercase letter</div>
-                                            <div class="book-password-item" id="req-digit">One digit</div>
-                                            <div class="book-password-item" id="req-special">One special character</div>
+                                        <label for="password"><span data-ui-key="u_0719708d1cc8">Passwort</span></label>
+                                        <input type="password" id="password" name="password" placeholder="Choose a strong passphrase" data-ui-placeholder="u_0c514de2e98a" required autocomplete="new-password">
+                                        <div class="book-password-list" aria-label="Password requirements" data-ui-aria-label="u_a1b02d0a27c5">
+                                            <div class="book-password-item" id="req-length"><span data-ui-key="u_1fe494b252fb">At least 8 characters</span></div>
+                                            <div class="book-password-item" id="req-upper"><span data-ui-key="u_6d8f16065b5d">One uppercase letter</span></div>
+                                            <div class="book-password-item" id="req-lower"><span data-ui-key="u_731c24844cb9">One lowercase letter</span></div>
+                                            <div class="book-password-item" id="req-digit"><span data-ui-key="u_8ce1247bd34f">One digit</span></div>
+                                            <div class="book-password-item" id="req-special"><span data-ui-key="u_45fba4c3116b">One special character</span></div>
                                         </div>
                                         <div class="error" id="passwordError" role="alert"></div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="confirmPassword">Passwort bestätigen</label>
-                                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat the passphrase" required autocomplete="new-password">
+                                        <label for="confirmPassword"><span data-ui-key="u_478b138fb0ae">Passwort bestätigen</span></label>
+                                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat the passphrase" data-ui-placeholder="u_475c2b31cace" required autocomplete="new-password">
                                         <div class="error" id="confirmPasswordError" role="alert"></div>
                                     </div>
                                 </div>
 
-                                <div class="book-page-note">On success the next visible chapter is the dashboard page within the same spellbook.</div>
+                                <div class="book-page-note"><span data-ui-key="u_d5bc14ed521f">On success the next visible chapter is the dashboard page within the same spellbook.</span></div>
 
                                 <div class="book-auth-actions">
-                                    <button type="submit" class="btn btn-primary" id="submitBtn">Redeem Key</button>
+                                    <button type="submit" class="btn btn-primary" id="submitBtn"><span data-ui-key="u_0568b9aac7cb">Redeem Key</span></button>
                                     <div class="error" id="generalError" role="alert"></div>
                                 </div>
                             </form>
@@ -144,7 +148,9 @@
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script src="/static/js/book-routes.js"></script>
-    <script>
+    <script>globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
         window.BookSceneRouteInit = window.BookSceneRouteInit || {};
         window.BookSceneRouteInit.register = function initRegisterScene() {
             const registerForm = document.getElementById('registerForm');
@@ -307,7 +313,7 @@
 
             function showLoading(isLoading) {
                 submitBtn.disabled = isLoading;
-                submitBtn.textContent = isLoading ? 'Redeeming Key...' : 'Redeem Key';
+                submitBtn.textContent = isLoading ? globalThis.VTTUi("Redeeming Key...") : globalThis.VTTUi("Redeem Key");
             }
 
             function showBanner(message, tone) {
@@ -327,7 +333,7 @@
                 }
 
                 if (!window.BookScene) {
-                    throw new Error('Book scene unavailable');
+                    throw new Error(globalThis.VTTUi("Book scene unavailable"));
                 }
 
                 BookScene.create();

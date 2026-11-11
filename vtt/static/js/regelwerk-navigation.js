@@ -1,3 +1,5 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 (function () {
     'use strict';
 
@@ -26,7 +28,7 @@
             node.hidden = false;
             node.href = state.readerUrl || '/regelwerk';
             node.setAttribute('aria-disabled', 'false');
-            node.textContent = state.status === 'preview' ? 'Regelwerk · Vorschau' : 'Regelwerk';
+            node.textContent = state.status === 'preview' ? globalThis.VTTUi("Regelwerk · Vorschau") : globalThis.VTTUi("Regelwerk");
         });
         return Boolean(state.available);
     }

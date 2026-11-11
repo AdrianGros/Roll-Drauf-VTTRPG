@@ -1,18 +1,20 @@
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /* Party overview of a campaign: values of every hero, DM tools (group awards, campaign rules, item handouts). */
 (function () {
   'use strict';
 
   const API = '/api/srd-creator';
-  const ABIL = [['str', 'STÄ'], ['dex', 'GES'], ['con', 'KON'], ['int', 'INT'], ['wis', 'WEI'], ['cha', 'CHA']];
+  const ABIL = [['str', globalThis.VTTUi("STÄ")], ['dex', 'GES'], ['con', 'KON'], ['int', 'INT'], ['wis', 'WEI'], ['cha', 'CHA']];
   const COINS = ['PM', 'GM', 'EM', 'SM', 'KM'];
   const ERRORS = {
-    forbidden: 'Dafür fehlt dir die Berechtigung.',
-    not_found: 'Diese Kampagne gibt es nicht oder du bist kein Mitglied.',
-    invalid_xp: 'Gib ganze Erfahrungspunkte zwischen 1 und 1.000.000 an.',
-    invalid_methods: 'Wähle mindestens eine Methode aus.',
-    not_handed_out: 'Nur ausgegebene Gegenstände kannst du zurücknehmen.',
-    inventory_full: 'Das Inventar ist voll.',
-    not_srd: 'Dieser Charakter hat kein Regelwerk-Inventar.',
+    forbidden: globalThis.VTTUi("Dafür fehlt dir die Berechtigung."),
+    not_found: globalThis.VTTUi("Diese Kampagne gibt es nicht oder du bist kein Mitglied."),
+    invalid_xp: globalThis.VTTUi("Gib ganze Erfahrungspunkte zwischen 1 und 1.000.000 an."),
+    invalid_methods: globalThis.VTTUi("Wähle mindestens eine Methode aus."),
+    not_handed_out: globalThis.VTTUi("Nur ausgegebene Gegenstände kannst du zurücknehmen."),
+    inventory_full: globalThis.VTTUi("Das Inventar ist voll."),
+    not_srd: globalThis.VTTUi("Dieser Charakter hat kein Regelwerk-Inventar."),
   };
 
   const state = { campaignId: null, data: null, selected: new Set(), handout: null };
@@ -84,7 +86,7 @@
       box.checked = state.selected.has(row.id);
       box.setAttribute('aria-label', `${row.name} auswählen`);
       box.addEventListener('change', () => { if (box.checked) state.selected.add(row.id); else state.selected.delete(row.id); });
-      pick.append(box, el('span', 'sp-pick-text', 'Auswählen'));
+      pick.append(box, el('span', 'sp-pick-text', globalThis.VTTUi("Auswählen")));
       head.append(pick);
     }
     node.append(head);
@@ -100,7 +102,7 @@
     fill.style.width = `${percent}%`;
     if (percent <= 25) fill.classList.add('is-low');
     hp.append(fill);
-    node.append(hp, el('p', 'sp-hp-text', `TP ${row.hpCurrent} / ${row.hpMax}`));
+    node.append(hp, el('p', 'sp-hp-text', globalThis.VTTUi("TP {p0} / {p1}",{p0:(row.hpCurrent),p1:(row.hpMax)})));
 
     const stats = el('div', 'sp-stats');
     stats.append(stat('RK', row.ac));
@@ -120,11 +122,11 @@
       const movement = (origin.movement || []).map((m) => `${m.label} ${m.feet} ft`).join(', ');
       const senses = (origin.senses || []).map((s) => `${s.label} ${s.feet} ft`).join(', ') || 'keine Dunkelsicht';
       const box = el('div', 'sp-origin');
-      box.append(el('p', 'sp-card-sub', `${origin.name} (Homebrew, Fassung ${origin.revision}) · ${origin.creatureType?.label || ''} · ${(origin.sizes || []).map((s) => s.label).join('/')}`));
-      box.append(el('p', 'sp-card-sub', `Bewegung: ${movement} · Sinne: ${senses}`));
+      box.append(el('p', 'sp-card-sub', globalThis.VTTUi("{p0} (Homebrew, Fassung {p1}) · {p2} · {p3}",{p0:(origin.name),p1:(origin.revision),p2:(origin.creatureType?.label || ''),p3:((origin.sizes || []).map((s) => s.label).join('/'))})));
+      box.append(el('p', 'sp-card-sub', globalThis.VTTUi("Bewegung: {p0} · Sinne: {p1}",{p0:(movement),p1:(senses)})));
       (origin.actions || []).forEach((action) => {
         const details = el('details', 'sp-origin-action');
-        details.append(el('summary', '', `${action.name} · ${action.rangeFeet} ft · ${action.maxWeightLb} lb`),
+        details.append(el('summary', '', globalThis.VTTUi("{p0} · {p1} ft · {p2} lb",{p0:(action.name),p1:(action.rangeFeet),p2:(action.maxWeightLb)})),
           el('p', 'sp-card-sub', action.summary));
         box.append(details);
       });
@@ -144,10 +146,10 @@
     const conditions = el('ul', 'sp-conditions');
     conditions.setAttribute('aria-label', 'Zustände');
     if (row.conditions.length) row.conditions.forEach((c) => conditions.append(el('li', 'sp-condition', c.label)));
-    else conditions.append(el('li', 'sp-condition is-none', 'Keine Zustände'));
+    else conditions.append(el('li', 'sp-condition is-none', globalThis.VTTUi("Keine Zustände")));
     node.append(conditions);
 
-    if (!row.srd) node.append(el('p', 'sp-note', 'Charakter ohne Regelwerk-Bogen: nur Grundwerte.'));
+    if (!row.srd) node.append(el('p', 'sp-note', globalThis.VTTUi("Charakter ohne Regelwerk-Bogen: nur Grundwerte.")));
     if (row.progress) {
       const p = row.progress;
       const line = p.mode === 'milestone'
@@ -167,7 +169,7 @@
     root.replaceChildren();
     const { characters, isDm } = state.data;
     if (!characters.length) {
-      root.append(el('p', 'sp-empty', 'In dieser Kampagne ist noch kein Charakter eingetragen. Ordne Charaktere auf der Charakterseite einer Kampagne zu.'));
+      root.append(el('p', 'sp-empty', globalThis.VTTUi("In dieser Kampagne ist noch kein Charakter eingetragen. Ordne Charaktere auf der Charakterseite einer Kampagne zu.")));
     } else {
       const grid = el('div', 'sp-grid');
       characters.forEach((row) => grid.append(card(row, isDm)));
@@ -203,20 +205,20 @@
 
   function awardSection() {
     const box = el('section', 'sp-panel');
-    box.append(el('h2', 'sp-panel-title', 'Erfahrung und Meilensteine'));
+    box.append(el('h2', 'sp-panel-title', globalThis.VTTUi("Erfahrung und Meilensteine")));
     const row = el('div', 'sp-form-row');
     const scope = el('select', 'sp-input');
     scope.id = 'spScope';
-    [['all', 'Alle Charaktere mit Regelwerk-Bogen'], ['selected', 'Nur ausgewählte Charaktere']].forEach(([value, text]) => {
+    [['all', globalThis.VTTUi("Alle Charaktere mit Regelwerk-Bogen")], ['selected', globalThis.VTTUi("Nur ausgewählte Charaktere")]].forEach(([value, text]) => {
       const option = el('option', null, text);
       option.value = value;
       scope.append(option);
     });
-    row.append(field('Wer', scope));
+    row.append(field(globalThis.VTTUi("Wer"), scope));
     const xp = input('number', 'spXp', { min: '1', max: '1000000', step: '1', inputmode: 'numeric' });
-    row.append(field('Erfahrungspunkte', xp));
+    row.append(field(globalThis.VTTUi("Erfahrungspunkte"), xp));
     const note = input('text', 'spNote', { maxlength: '200' });
-    row.append(field('Notiz (erscheint im Verlauf)', note));
+    row.append(field(globalThis.VTTUi("Notiz (erscheint im Verlauf)"), note));
     box.append(row);
     const actions = el('div', 'sp-form-row');
     const give = btn('EP vergeben', 'sp-btn sp-primary', () => {
@@ -232,17 +234,17 @@
       award({ milestoneTarget: value, note: note.value }, 'Zielstufe gesetzt:');
     });
     milestone.id = 'spGiveMilestone';
-    actions.append(give, field('Zielstufe (Meilenstein-Modus)', level), milestone);
+    actions.append(give, field(globalThis.VTTUi("Zielstufe (Meilenstein-Modus)"), level), milestone);
     box.append(actions);
-    box.append(el('p', 'sp-hint', 'Die Spieler lösen den Aufstieg selbst auf ihrem Bogen aus; die Spielleitung gibt nur frei.'));
+    box.append(el('p', 'sp-hint', globalThis.VTTUi("Die Spieler lösen den Aufstieg selbst auf ihrem Bogen aus; die Spielleitung gibt nur frei.")));
     return box;
   }
 
   function rulesSection() {
     const box = el('section', 'sp-panel');
-    box.append(el('h2', 'sp-panel-title', 'Regeln der Kampagne'));
+    box.append(el('h2', 'sp-panel-title', globalThis.VTTUi("Regeln der Kampagne")));
     const fieldset = el('fieldset', 'sp-fieldset');
-    fieldset.append(el('legend', 'sp-legend', 'Erlaubte Methoden für die Attributswerte'));
+    fieldset.append(el('legend', 'sp-legend', globalThis.VTTUi("Erlaubte Methoden für die Attributswerte")));
     const allowed = new Set(state.data.rules.attributeMethods);
     state.data.rules.allMethods.forEach((method) => {
       const label = el('label', 'sp-check');
@@ -266,7 +268,7 @@
     });
     save.id = 'spSaveRules';
     box.append(save);
-    box.append(el('p', 'sp-hint', 'Gilt, wenn ein Charakter dieser Kampagne zugeordnet wird oder beim Abschluss im Ersteller. Bereits zugeordnete Charaktere bleiben unverändert.'));
+    box.append(el('p', 'sp-hint', globalThis.VTTUi("Gilt, wenn ein Charakter dieser Kampagne zugeordnet wird oder beim Abschluss im Ersteller. Bereits zugeordnete Charaktere bleiben unverändert.")));
     return box;
   }
 
@@ -274,7 +276,7 @@
     const root = document.getElementById('spDm');
     root.replaceChildren();
     if (!state.data.isDm) { root.hidden = true; return; }
-    root.append(el('h2', 'sp-dm-title', 'Werkzeuge der Spielleitung'), awardSection(), rulesSection());
+    root.append(el('h2', 'sp-dm-title', globalThis.VTTUi("Werkzeuge der Spielleitung")), awardSection(), rulesSection());
     root.hidden = false;
   }
 
@@ -291,7 +293,7 @@
 
   async function openHandout(row) {
     state.handout = { row, kind: 'gear', results: [], inventory: null, message: '' };
-    document.getElementById('spDialogTitle').textContent = `Gegenstand ausgeben an ${row.name}`;
+    document.getElementById('spDialogTitle').textContent = globalThis.VTTUi("Gegenstand ausgeben an {p0}",{p0:(row.name)});
     try {
       state.handout.inventory = await window.Auth.makeAuthRequest(`${API}/characters/${row.id}/inventory`);
     } catch (error) {
@@ -333,7 +335,7 @@
     const h = state.handout;
     try {
       h.inventory = await window.Auth.makeAuthRequest(`${API}/characters/${h.row.id}/handout/${item.id}`, 'DELETE');
-      h.message = `${item.name} zurückgenommen.`;
+      h.message = globalThis.VTTUi("{p0} zurückgenommen.",{p0:(item.name)});
     } catch (error) {
       h.message = failure(error);
     }
@@ -354,7 +356,7 @@
     const kinds = el('div', 'sp-kinds');
     kinds.setAttribute('role', 'group');
     kinds.setAttribute('aria-label', 'Art');
-    [['gear', 'Ausrüstung'], ['magic', 'Magischer Gegenstand'], ['coins', 'Münzen']].forEach(([kind, text]) => {
+    [['gear', globalThis.VTTUi("Ausrüstung")], ['magic', globalThis.VTTUi("Magischer Gegenstand")], ['coins', globalThis.VTTUi("Münzen")]].forEach(([kind, text]) => {
       const tab = btn(text, `sp-btn${h.kind === kind ? ' sp-primary' : ''}`, () => { h.kind = kind; h.message = ''; h.results = []; renderHandout(); search(); });
       tab.setAttribute('aria-pressed', h.kind === kind ? 'true' : 'false');
       tab.dataset.kind = kind;
@@ -368,29 +370,29 @@
       COINS.forEach((code) => {
         const node = input('number', `spCoin${code}`, { step: '1', inputmode: 'numeric' });
         inputs[code] = node;
-        grid.append(field(`${h.inventory.coinNames?.[code] || code} (${code}, jetzt ${h.inventory.coins?.[code] ?? 0})`, node));
+        grid.append(field(globalThis.VTTUi("{p0} ({p1}, jetzt {p2})",{p0:(h.inventory.coinNames?.[code] || code),p1:(code),p2:(h.inventory.coins?.[code] ?? 0)}), node));
       });
       body.append(grid);
       const button = btn('Münzen ausgeben', 'sp-btn sp-primary', () => {
         const coins = {};
         COINS.forEach((code) => { const value = inputs[code].value; if (value !== '') coins[code] = Number(value); });
-        if (!Object.keys(coins).length) { h.message = 'Gib mindestens eine Münzmenge an.'; renderHandout(); return; }
+        if (!Object.keys(coins).length) { h.message = globalThis.VTTUi("Gib mindestens eine Münzmenge an."); renderHandout(); return; }
         give({ coins }, 'Münzen ausgegeben.');
       });
       button.id = 'spGiveCoins';
-      body.append(button, el('p', 'sp-hint', 'Negative Zahlen nehmen Münzen ab.'));
+      body.append(button, el('p', 'sp-hint', globalThis.VTTUi("Negative Zahlen nehmen Münzen ab.")));
     } else {
-      const searchBox = input('search', 'spSearch', { placeholder: 'Name suchen', 'aria-label': 'Name suchen', maxlength: '100' });
+      const searchBox = input('search', 'spSearch', { placeholder: globalThis.VTTUi("Name suchen"), 'aria-label': globalThis.VTTUi("Name suchen"), maxlength: '100' });
       searchBox.value = previousQuery;
       let timer = null;
       searchBox.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(search, 200); });
       const quantity = input('number', 'spQty', { min: '1', max: '999', step: '1', value: '1' });
       const row = el('div', 'sp-form-row');
-      row.append(field('Suche', searchBox), field('Anzahl', quantity));
+      row.append(field(globalThis.VTTUi("Suche"), searchBox), field(globalThis.VTTUi("Anzahl"), quantity));
       body.append(row);
       const list = el('ul', 'sp-results');
       list.id = 'spResults';
-      if (!h.results.length) list.append(el('li', 'sp-result is-empty', 'Keine Treffer.'));
+      if (!h.results.length) list.append(el('li', 'sp-result is-empty', globalThis.VTTUi("Keine Treffer.")));
       h.results.forEach((item) => {
         const li = el('li', 'sp-result');
         const text = el('span', 'sp-result-text');
@@ -400,13 +402,13 @@
         list.append(li);
       });
       body.append(list);
-      if (h.kind === 'magic') body.append(el('p', 'sp-hint', 'Beschreibung aus dem Regelwerk (SRD 5.2.1, CC BY 4.0); Tabellen und Werte stehen im Compendium.'));
+      if (h.kind === 'magic') body.append(el('p', 'sp-hint', globalThis.VTTUi("Beschreibung aus dem Regelwerk (SRD 5.2.1, CC BY 4.0); Tabellen und Werte stehen im Compendium.")));
     }
 
     const given = (h.inventory.items || []).filter((item) => item.handedOut);
     const section = el('div', 'sp-given');
-    section.append(el('h3', 'sp-given-title', 'Von der Spielleitung ausgegeben'));
-    if (!given.length) section.append(el('p', 'sp-hint', 'Noch nichts ausgegeben.'));
+    section.append(el('h3', 'sp-given-title', globalThis.VTTUi("Von der Spielleitung ausgegeben")));
+    if (!given.length) section.append(el('p', 'sp-hint', globalThis.VTTUi("Noch nichts ausgegeben.")));
     given.forEach((item) => {
       const li = el('div', 'sp-given-row');
       li.append(el('span', null, `${item.name}${item.quantity > 1 ? ` ×${item.quantity}` : ''}`), btn('Zurücknehmen', 'sp-btn sp-danger', () => takeBack(item)));
@@ -431,9 +433,9 @@
       say(failure(error), true);
       return;
     }
-    document.getElementById('spTitle').textContent = `Gruppenübersicht · ${state.data.campaign.name}`;
-    document.title = `Gruppenübersicht · ${state.data.campaign.name} · Roll Drauf VTT`;
-    document.getElementById('spKicker').textContent = state.data.isDm ? 'Roll Drauf VTT · Spielleitung' : 'Roll Drauf VTT · Mitglied';
+    document.getElementById('spTitle').textContent = globalThis.VTTUi("Gruppenübersicht · {p0}",{p0:(state.data.campaign.name)});
+    document.title = globalThis.VTTUi("Gruppenübersicht · {p0} · Roll Drauf VTT",{p0:(state.data.campaign.name)});
+    document.getElementById('spKicker').textContent = state.data.isDm ? globalThis.VTTUi("Roll Drauf VTT · Spielleitung") : globalThis.VTTUi("Roll Drauf VTT · Mitglied");
     say('', false);
     renderParty();
     renderDm();

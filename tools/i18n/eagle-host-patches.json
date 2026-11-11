@@ -1,0 +1,14 @@
+{
+  "upstreamCommit": "518b2f9c24c3b0e6e630ecc51dc176c9bdcf1113",
+  "note": "VTT-owned host entry only; no Eagle domain logic changes. Exact original→replacement record for rebuilding the bundle.",
+  "patches": {
+    "documentName:async H=>(await He.read(H).catch(()=>{}))?.name});let r=": "documentName:async H=>(await He.read(H).catch(()=>{}))?.name});window.VTTI18n?.installEagle();let r=",
+    "r.textContent=i?\"In dieser Welt gibt es noch keine Homebrew-Inhalte.\":\"Deine Bibliothek ist noch leer.\"": "r.textContent=i?VTTUi(\"In dieser Welt gibt es noch keine Homebrew-Inhalte.\"):VTTUi(\"Deine Bibliothek ist noch leer.\")",
+    "J.textContent=\"Edit with Eagle Homebrew\"": "J.textContent=window.game.i18n.localize(\"EAGLEHOMEBREW.window.edit.action\")",
+    "P.textContent=\"L\\xF6schen\"": "P.textContent=VTTUi(\"Löschen\")",
+    "H.textContent=\"Abbrechen\"": "H.textContent=VTTUi(\"Abbrechen\")",
+    "V.textContent=`\\u201E${E.name}\\u201C endg\\xFCltig l\\xF6schen`": "V.textContent=VTTUi(\"Endgültig löschen: {name}\",{name:E.name})",
+    "se.status.textContent=`Die Inhalte konnten nicht geladen werden: ${e instanceof Error?e.message:String(e)}`": "se.status.textContent=VTTUi(\"Die Inhalte konnten nicht geladen werden: {detail}\",{detail:e instanceof Error?e.message:String(e)})",
+    "se.status.textContent=`Die Creation Engine konnte nicht gestartet werden: ${e instanceof Error?e.message:String(e)}`": "se.status.textContent=VTTUi(\"Die Creation Engine konnte nicht gestartet werden: {detail}\",{detail:e instanceof Error?e.message:String(e)})"
+  }
+}

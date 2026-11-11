@@ -1,0 +1,1642 @@
+[
+  {
+    "key": "EAGLEHOMEBREW.window.title",
+    "en": "Eagle Homebrew"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notGm",
+    "en": "Only a Gamemaster or Assistant can use Eagle Homebrew."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.back",
+    "en": "Back"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notBuiltYet",
+    "en": "{kind} does not have an editor yet. It comes in a later milestone."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.art.title",
+    "en": "What do you want to create?"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.art.actor",
+    "en": "Actor"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.art.item",
+    "en": "Item"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.art.rolltable",
+    "en": "Roll Table"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.form.nameLabel",
+    "en": "Name"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.form.namePlaceholder",
+    "en": "e.g. Rope, 50 feet"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.form.create",
+    "en": "Create"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.form.save",
+    "en": "Save"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.edit.action",
+    "en": "Edit with Eagle Homebrew"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.edit.editRow",
+    "en": "Edit"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.edit.status",
+    "en": "Editing paired documents — World: {world}; Library: {library}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.edit.rulesFallback",
+    "en": "The document has no valid rules version; the current dnd5e world setting selected its Library pack."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.legend",
+    "en": "Activities"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.manualHint",
+    "en": "Each Activity is a separate dnd5e action. Trigger it yourself; Eagle Homebrew does not check conditions automatically."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.addAction",
+    "en": "Add Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.activationAction",
+    "en": "Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.activationBonus",
+    "en": "Bonus Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.remove",
+    "en": "Remove"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.cancel",
+    "en": "Cancel"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.add",
+    "en": "Add"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.pickType",
+    "en": "What kind of action is this?"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.moreFields",
+    "en": "More fields"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.type.attack",
+    "en": "Attack"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.type.damage",
+    "en": "Damage"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.type.save",
+    "en": "Saving Throw"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.type.check",
+    "en": "Ability Check"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.type.heal",
+    "en": "Healing"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.field.damageNumber",
+    "en": "Number of Dice"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.field.damageDenomination",
+    "en": "Die Size"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.field.damageBonus",
+    "en": "Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.field.damageTypes",
+    "en": "Damage Type(s)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.field.attackRange",
+    "en": "Attack Range"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.field.attackClassification",
+    "en": "Attack Classification"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.field.activationCondition",
+    "en": "Condition (manual check)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.effectToggle",
+    "en": "This action triggers an effect"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.effectName",
+    "en": "Effect Name"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.effectNamePlaceholder",
+    "en": "e.g. Fire Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.changeKey",
+    "en": "Field"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.changeValue",
+    "en": "Value"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.changeMode",
+    "en": "Mode"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.activity.addChange",
+    "en": "Add change"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.legend",
+    "en": "Passive Effects"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.addEffect",
+    "en": "Add Effect"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.draftSummary",
+    "en": "{name} ({count} change(s))"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.confirm",
+    "en": "Add"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.targetLabel",
+    "en": "What does this affect?"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.targetPick",
+    "en": "Choose one..."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.parameterLabel",
+    "en": "Which one?"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.proficiencyLabel",
+    "en": "Proficiency Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.proficiency.none",
+    "en": "Not Proficient"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.proficiency.half",
+    "en": "Half Proficient"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.proficiency.proficient",
+    "en": "Proficient"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.proficiency.expertise",
+    "en": "Expertise"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.armorClass",
+    "en": "Combat: Armor Class Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.abilityScore",
+    "en": "Ability: Score Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.abilityCheck",
+    "en": "Ability: Check Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.allAbilityChecks",
+    "en": "Ability: All Checks Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.savingThrow",
+    "en": "Ability: Saving Throw Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.allSavingThrows",
+    "en": "Ability: All Saving Throws Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.skillCheck",
+    "en": "Skill: Check Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.allSkillChecks",
+    "en": "Skill: All Checks Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.skillProficiency",
+    "en": "Skill: Grant Proficiency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.toolCheck",
+    "en": "Tool: Check Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.toolProficiency",
+    "en": "Tool: Grant Proficiency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.movementSpeed",
+    "en": "Movement: Speed Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.initiative",
+    "en": "Combat: Initiative Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.hitPointMaximum",
+    "en": "Combat: Hit Point Maximum Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.spellSaveDc",
+    "en": "Spellcasting: Save DC Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.meleeWeaponAttack",
+    "en": "Combat: Melee Weapon Attack Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.meleeWeaponDamage",
+    "en": "Combat: Melee Weapon Damage Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.rangedWeaponAttack",
+    "en": "Combat: Ranged Weapon Attack Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.rangedWeaponDamage",
+    "en": "Combat: Ranged Weapon Damage Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.meleeSpellAttack",
+    "en": "Spellcasting: Melee Spell Attack Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.rangedSpellAttack",
+    "en": "Spellcasting: Ranged Spell Attack Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.damageResistance",
+    "en": "Defense: Damage Resistance"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.damageImmunity",
+    "en": "Defense: Damage Immunity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.damageVulnerability",
+    "en": "Defense: Damage Vulnerability"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.conditionImmunity",
+    "en": "Defense: Condition Immunity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.language",
+    "en": "Other: Language"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.effect.target.custom",
+    "en": "Advanced (raw dnd5e path)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.result.legend",
+    "en": "Table Entries"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.result.addResult",
+    "en": "Add Entry"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.result.draftSummary",
+    "en": "{text} (weight {weight})"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.result.confirm",
+    "en": "Add"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.result.textLabel",
+    "en": "Text"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.result.textPlaceholder",
+    "en": "e.g. Nothing happens"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.result.weightLabel",
+    "en": "Weight"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.legend",
+    "en": "Advancement"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.addAdvancement",
+    "en": "Add Advancement"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.draftSummaryWithLevel",
+    "en": "{type} (level {level})"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.pickType",
+    "en": "What kind of advancement is this?"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.level",
+    "en": "Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.add",
+    "en": "Add"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.addRow",
+    "en": "Add row"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.type.hitPoints",
+    "en": "Hit Points"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.type.abilityScoreImprovement",
+    "en": "Ability Score Improvement"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.type.subclass",
+    "en": "Subclass"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.type.itemGrant",
+    "en": "Item Grant"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.type.itemChoice",
+    "en": "Item Choice"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.type.scaleValue",
+    "en": "Scale Value"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.type.size",
+    "en": "Size"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.type.trait",
+    "en": "Trait"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.points",
+    "en": "Points"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.cap",
+    "en": "Cap per Ability"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.max",
+    "en": "Maximum Score"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.locked",
+    "en": "Locked Abilities"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.recommendation",
+    "en": "Recommended Feat"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.fixed",
+    "en": "Fixed Scores (advanced, raw data)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.items",
+    "en": "Items Granted"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.optional",
+    "en": "Optional"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.spell",
+    "en": "Spell Configuration (advanced, raw data)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.pool",
+    "en": "Item Pool"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.allowDrops",
+    "en": "Allow Dropping Items"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.itemType",
+    "en": "Item Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.restrictionType",
+    "en": "Feature Category"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.restrictionSubtype",
+    "en": "Feature Subtype"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.restrictionLevel",
+    "en": "Spell Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.restrictionList",
+    "en": "Spell Lists"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.spellLevelAvailable",
+    "en": "Available to the character"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.distanceUnits",
+    "en": "Distance Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.grants",
+    "en": "Grants"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.allowReplacements",
+    "en": "Allow Replacements"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.mode",
+    "en": "Mode"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.field.sizes",
+    "en": "Allowed Sizes"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.legendItemChoice",
+    "en": "Choices per Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.legendScaleValue",
+    "en": "Scale per Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.legendTrait",
+    "en": "Choice Groups"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.level",
+    "en": "Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.count",
+    "en": "Count"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.replacement",
+    "en": "Replaceable"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.pool",
+    "en": "Pool (comma-separated, e.g. saves:str, skills:ath)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.diceNumber",
+    "en": "Number of Dice"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.diceFaces",
+    "en": "Die Faces"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.table.value",
+    "en": "Value"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.categoryLabel",
+    "en": "Category"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.valueLabel",
+    "en": "Value"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.insert",
+    "en": "Insert"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.category.saves",
+    "en": "Saving Throw"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.category.skills",
+    "en": "Skill"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.category.languages",
+    "en": "Language"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.category.armor",
+    "en": "Armor"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.category.weapon",
+    "en": "Weapon"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.advancement.trait.category.tool",
+    "en": "Tool"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.legend",
+    "en": "Actions"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.addAction",
+    "en": "Add Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.pickItemType",
+    "en": "What kind of item carries this action?"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.itemTypeFeat",
+    "en": "Feature (attacks, traits, legendary actions, ...)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.itemTypeWeapon",
+    "en": "Weapon (a bite, claw, or other natural/manufactured weapon attack)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.confirm",
+    "en": "Add"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.activityHeading",
+    "en": "Activity (optional)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.noActivityHint",
+    "en": "Without an Activity, this becomes a passive Trait (no attack roll, save, or other roll)."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.removeActivity",
+    "en": "Remove Activity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.preview",
+    "en": "Appears in the statblock as: {category}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.category.trait",
+    "en": "Trait (passive)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.category.action",
+    "en": "Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.category.bonus",
+    "en": "Bonus Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.category.reaction",
+    "en": "Reaction"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.category.legendary",
+    "en": "Legendary Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.category.mythic",
+    "en": "Mythic Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.action.category.unlisted",
+    "en": "Not shown in the statblock (dnd5e limitation)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.legend",
+    "en": "Members"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.addMember",
+    "en": "Add Member"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.actor",
+    "en": "Actor"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.quantity",
+    "en": "Quantity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.formula",
+    "en": "Quantity Formula (optional)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.add",
+    "en": "Add"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.cancel",
+    "en": "Cancel"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.remove",
+    "en": "Remove"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.setPrimaryVehicle",
+    "en": "Set as Primary Vehicle"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.clearPrimaryVehicle",
+    "en": "Primary Vehicle (clear)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.encounterSummary",
+    "en": "{name} — quantity {quantity}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.groupSummary",
+    "en": "{name} — {type}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.formulaSummary",
+    "en": "Quantity formula: {formula}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.status.libraryReference",
+    "en": "Eagle Library reference"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.status.libraryPresent",
+    "en": "World actor — Eagle Library entry found"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.status.libraryMissing",
+    "en": "World reference — no Eagle Library entry"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.member.status.worldOnly",
+    "en": "World-only by design"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.core",
+    "en": "Details"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.physical",
+    "en": "Physical"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.description",
+    "en": "Description"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.equippable",
+    "en": "Wearing and Attunement"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.mountable",
+    "en": "Siege Weapon / Vehicle Mount"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.uses",
+    "en": "Uses"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.advanced",
+    "en": "Advanced (raw data)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.abilityScores",
+    "en": "Ability Scores"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.skills",
+    "en": "Skills"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.combat",
+    "en": "Combat"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.movement",
+    "en": "Movement"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.senses",
+    "en": "Senses"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.resistances",
+    "en": "Resistances & Languages"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.currency",
+    "en": "Currency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.travel",
+    "en": "Travel"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.actions",
+    "en": "Actions"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.capacity",
+    "en": "Capacity & Dimensions"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.source",
+    "en": "Source"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.section.identity",
+    "en": "Identity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.toolType",
+    "en": "Tool Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.toolBaseItem",
+    "en": "Tool"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.weaponType",
+    "en": "Weapon Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.weaponBaseItem",
+    "en": "Weapon"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.rangeNormal",
+    "en": "Range (Normal)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.rangeLong",
+    "en": "Range (Long)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.rangeReach",
+    "en": "Reach"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageBase",
+    "en": "Damage (Base)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageVersatile",
+    "en": "Damage (Versatile)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageReplace",
+    "en": "Replace Base Damage"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.armorValue",
+    "en": "Armor Class"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.equipmentType",
+    "en": "Equipment Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.equipmentBaseItem",
+    "en": "Base Item"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.consumableType",
+    "en": "Consumable Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.consumableSubtype",
+    "en": "Consumable Subtype"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.capacityCount",
+    "en": "Item Capacity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.capacityVolume",
+    "en": "Volume Capacity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.capacityVolumeUnits",
+    "en": "Volume Capacity Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.capacityWeight",
+    "en": "Weight Capacity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.capacityWeightUnits",
+    "en": "Weight Capacity Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.currencyPp",
+    "en": "Platinum (pp)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.currencyGp",
+    "en": "Gold (gp)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.currencyEp",
+    "en": "Electrum (ep)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.currencySp",
+    "en": "Silver (sp)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.currencyCp",
+    "en": "Copper (cp)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.featureType",
+    "en": "Feature Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.featureSubtype",
+    "en": "Feature Subtype"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.enchantMax",
+    "en": "Max Enchantments"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.enchantPeriod",
+    "en": "Enchantment Period"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.descriptionChat",
+    "en": "Chat Description"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.prerequisitesHeading",
+    "en": "Prerequisites"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.hasRequirements",
+    "en": "Has Requirements"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.activationType",
+    "en": "Activation Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.activationValue",
+    "en": "Activation Cost"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.activationCondition",
+    "en": "Activation Condition"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.durationValue",
+    "en": "Duration"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.durationUnits",
+    "en": "Duration Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.durationSpecial",
+    "en": "Duration (Special)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.rangeValue",
+    "en": "Range"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.rangeUnitsLabel",
+    "en": "Range Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.rangeSpecial",
+    "en": "Range (Special)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.targetAreaCount",
+    "en": "Target Area Count"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.targetAreaType",
+    "en": "Target Area Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.targetAreaSize",
+    "en": "Target Area Size"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.targetAreaWidth",
+    "en": "Target Area Width"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.targetCount",
+    "en": "Target Count"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.targetType",
+    "en": "Target Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.materialsDescription",
+    "en": "Materials Description"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.spellcastingMethod",
+    "en": "Spellcasting Method"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.creatureType",
+    "en": "Creature Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.creatureSubtype",
+    "en": "Creature Subtype"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.creatureCustom",
+    "en": "Creature Type (Custom)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.movementUnitsLabel",
+    "en": "Movement Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.sensesUnits",
+    "en": "Senses Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.hitDie",
+    "en": "Hit Die"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.hitDieAdditional",
+    "en": "Additional Hit Die Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.primaryAbility",
+    "en": "Primary Ability"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.primaryAbilityAll",
+    "en": "All Abilities Required"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.spellcastingProgression",
+    "en": "Spellcasting Progression"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.spellcastingAbility",
+    "en": "Spellcasting Ability"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.spellcastingPreparationFormula",
+    "en": "Spell Preparation Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.weight",
+    "en": "Weight"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.weightUnits",
+    "en": "Weight Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.price",
+    "en": "Price"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.currency",
+    "en": "Currency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.description",
+    "en": "Description"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.customEnabled",
+    "en": "Use Custom Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.customFormula",
+    "en": "Custom Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.scalingOn",
+    "en": "Scales with Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.scalingMode",
+    "en": "Scaling Speed"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.scalingModeWhole",
+    "en": "Every Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.scalingModeHalf",
+    "en": "Every Other Level"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.scalingNumber",
+    "en": "Scaling Dice"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.scalingFormula",
+    "en": "Scaling Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.facilityType",
+    "en": "Facility Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.facilitySubtype",
+    "en": "Facility Subtype"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.defenderCapacity",
+    "en": "Defender Capacity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.hirelingCapacity",
+    "en": "Hireling Capacity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.tradeCreatureCapacity",
+    "en": "Trade Creature Capacity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.ability.str",
+    "en": "Strength"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.ability.dex",
+    "en": "Dexterity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.ability.con",
+    "en": "Constitution"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.ability.int",
+    "en": "Intelligence"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.ability.wis",
+    "en": "Wisdom"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.ability.cha",
+    "en": "Charisma"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.abilitySave.str",
+    "en": "Strength Save Proficiency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.abilitySave.dex",
+    "en": "Dexterity Save Proficiency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.abilitySave.con",
+    "en": "Constitution Save Proficiency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.abilitySave.int",
+    "en": "Intelligence Save Proficiency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.abilitySave.wis",
+    "en": "Wisdom Save Proficiency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.abilitySave.cha",
+    "en": "Charisma Save Proficiency"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.acr",
+    "en": "Acrobatics"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.ani",
+    "en": "Animal Handling"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.arc",
+    "en": "Arcana"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.ath",
+    "en": "Athletics"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.dec",
+    "en": "Deception"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.his",
+    "en": "History"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.ins",
+    "en": "Insight"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.itm",
+    "en": "Intimidation"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.inv",
+    "en": "Investigation"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.med",
+    "en": "Medicine"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.nat",
+    "en": "Nature"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.prc",
+    "en": "Perception"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.prf",
+    "en": "Performance"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.per",
+    "en": "Persuasion"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.rel",
+    "en": "Religion"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.slt",
+    "en": "Sleight of Hand"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.ste",
+    "en": "Stealth"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.skill.sur",
+    "en": "Survival"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.biography",
+    "en": "Biography"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.biographyPublic",
+    "en": "Public Biography"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.challengeRating",
+    "en": "Challenge Rating"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.acCalc",
+    "en": "Armor Class Calculation"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.acFlat",
+    "en": "Armor Class (Flat Value)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.acFormula",
+    "en": "Armor Class Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.hpFormula",
+    "en": "Hit Points Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.initiativeBonus",
+    "en": "Initiative Bonus"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.attunementCapacity",
+    "en": "Attunement Capacity"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageImmunities",
+    "en": "Damage Immunities"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageImmunitiesCustom",
+    "en": "Damage Immunities (Other)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageResistances",
+    "en": "Damage Resistances"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageResistancesCustom",
+    "en": "Damage Resistances (Other)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageVulnerabilities",
+    "en": "Damage Vulnerabilities"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.damageVulnerabilitiesCustom",
+    "en": "Damage Vulnerabilities (Other)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.conditionImmunitiesLabel",
+    "en": "Condition Immunities"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.conditionImmunitiesCustom",
+    "en": "Condition Immunities (Other)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.languagesLabel",
+    "en": "Languages"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.languagesCustom",
+    "en": "Languages (Other)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.legendaryActionsMax",
+    "en": "Legendary Actions (Max)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.legendaryResistancesMax",
+    "en": "Legendary Resistances (Max)"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.hasLairActions",
+    "en": "Has Lair Actions"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.lairActionInitiative",
+    "en": "Lair Action Initiative Count"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.lairActionInsideOnly",
+    "en": "Lair Action Only Usable Inside Lair"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.descriptionSummary",
+    "en": "Description Summary"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.descriptionFull",
+    "en": "Full Description"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.groupXp",
+    "en": "Experience Points"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelPace",
+    "en": "Travel Pace"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelPaceLand",
+    "en": "Land Pace Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelPaceWater",
+    "en": "Water Pace Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelPaceAir",
+    "en": "Air Pace Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelSpeedLand",
+    "en": "Land Speed Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelSpeedWater",
+    "en": "Water Speed Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelSpeedAir",
+    "en": "Air Speed Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelTime",
+    "en": "Travel Time per Day"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.item.field.travelUnits",
+    "en": "Travel Units"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.nameEmpty",
+    "en": "Enter a name."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.nameTooLong",
+    "en": "The name is too long (200 characters at most)."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.noTarget",
+    "en": "The compendium {collection} does not exist yet. Use the Library's \"Create missing compendia\" first."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.created",
+    "en": "{name} created in the world and in the Library."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.renamed",
+    "en": "That name was already taken; created as {name}."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.failed",
+    "en": "Creating {name} failed ({reason}): {detail}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.editOpenFailed",
+    "en": "Eagle Homebrew could not open this document: {detail}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.editMissing",
+    "en": "One side of this Homebrew pair no longer exists."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.editPairChanged",
+    "en": "The document pair or subtype changed while the editor was open. Reopen it before saving."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.editPreflight",
+    "en": "Nothing was saved because the update failed preflight ({reason}): {detail}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.editFailed",
+    "en": "Saving stopped on {side}, batch {batch} ({reason}): {detail}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.saved",
+    "en": "Saved to the Library and world document."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.noChanges",
+    "en": "No changes."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.activitiesFailed",
+    "en": "{name} was created, but its actions could not be saved ({reason}): {detail}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.facilityLegacyHint",
+    "en": "Facility is part of the 2024 Bastion System; this world is currently set to Legacy (2014) rules."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.sizeOnlyOnce",
+    "en": "A Species can contain only one Size advancement. Remove the existing one before adding another."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.sizeRequired",
+    "en": "Select at least one allowed size."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberActorRequired",
+    "en": "Choose an Actor."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberNotFound",
+    "en": "That Actor could not be found."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberNotActor",
+    "en": "Choose an Actor document."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberAmbiguousLibrary",
+    "en": "More than one Eagle Library entry has this Actor ID. Repair the pair link before adding it."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberNotNpc",
+    "en": "An Encounter member must be an NPC."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberUnsupportedSource",
+    "en": "This Compendium NPC has no Eagle Library entry. Add it through Eagle Library or create a world Actor first."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberInvalidQuantity",
+    "en": "Quantity must be a whole number of 0 or more."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberInvalidGroup",
+    "en": "A Group member must be a Character, NPC, or Vehicle."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberNoWorld",
+    "en": "dnd5e Groups can only contain world Actors. Import this Actor into the world first."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberDuplicate",
+    "en": "That Actor is already a member."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.memberMissingLibrary",
+    "en": "{name} has no Eagle Library entry. The world reference is still allowed."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.membersMissingLibraryCreate",
+    "en": "Creating with world-only member reference(s): {names}."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.primaryVehicleInvalid",
+    "en": "The Primary Vehicle must be a Vehicle that is still in this Group."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.vehicleRosterInvalidActor",
+    "en": "Vehicle rosters accept only Character and NPC Actors."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.vehicleRosterInvalidQuantity",
+    "en": "Quantity must be a whole number of 1 or more."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.vehicleRosterDuplicate",
+    "en": "That Actor is already present in this roster area. Change its one quantity instead."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.vehicleCapacityExceeded",
+    "en": "{area} contains {count}, above the configured capacity of {maximum}. The Vehicle can still be created."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.vehicleDamageTypeRequired",
+    "en": "Choose a damage type for every Damage Modifier row."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.vehicleDamageDuplicate",
+    "en": "Each Damage Modifier damage type can appear only once."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.vehicleComponentCrewInvalid",
+    "en": "Station crew must come from the Vehicle crew and cannot exceed that Actor’s available quantity."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.notify.vehicleStationCapacityExceeded",
+    "en": "Assigned station crew exceeds this station’s configured maximum. The station can still be added."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.damage.legend",
+    "en": "Damage Modifiers"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.damage.add",
+    "en": "Add Damage Modifier"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.damage.remove",
+    "en": "Remove"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.damage.type",
+    "en": "Damage Type"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.damage.formula",
+    "en": "Modifier Formula"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.damage.all",
+    "en": "All Damage Types"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.roster.legend",
+    "en": "Crew, Passengers & Draft Animals"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.roster.add",
+    "en": "Add Actor"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.roster.areaLabel",
+    "en": "Area"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.roster.summary",
+    "en": "{name} — {area}, quantity {quantity}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.roster.area.crew",
+    "en": "Crew"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.roster.area.passengers",
+    "en": "Passengers"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.roster.area.draft",
+    "en": "Draft Animals"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.legend",
+    "en": "Vehicle Actions & Stations"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.add",
+    "en": "Add Feature or Station"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.pickType",
+    "en": "What kind of vehicle component is this?"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.summary",
+    "en": "{name} — {type}; appears as {category}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.preview",
+    "en": "Appears on the Vehicle sheet as: {category}"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.crewLegend",
+    "en": "Station Crew"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.noCrew",
+    "en": "Add Actors to the Vehicle crew before assigning station crew."
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.type.feature",
+    "en": "Feature"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.type.equipmentStation",
+    "en": "Equipment Station"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.type.weaponStation",
+    "en": "Weapon Station"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.category.feature",
+    "en": "Feature"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.category.bonus",
+    "en": "Bonus Action"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.category.reaction",
+    "en": "Reaction"
+  },
+  {
+    "key": "EAGLEHOMEBREW.window.vehicle.component.category.actionStation",
+    "en": "Action Station"
+  }
+]

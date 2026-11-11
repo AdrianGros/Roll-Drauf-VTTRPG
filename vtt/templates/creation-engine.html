@@ -2,8 +2,11 @@
 <html lang="de" class="ce-authoring-root">
 <head>
   <meta charset="utf-8">
+    <script src="/static/js/ui-catalog.js"></script>
+    <script src="/static/js/display-preferences.js"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Creation Engine · Roll Drauf</title>
+  <title data-ui-key="u_8323fd60f521">Creation Engine · Roll Drauf</title>
   <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
@@ -20,120 +23,121 @@
   <script src="{{ url_for('static', filename='js/ce-origin-publish.js') }}" defer></script>
   <script type="module" src="{{ url_for('static', filename='eagle-homebrew/creation-engine.js') }}"></script>
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
+    <link rel="stylesheet" href="/static/css/display-preferences.css">
 </head>
 <body class="ce-authoring">
   <div class="ce-page">
-    <a class="ce-skip" href="#main">Zum Inhalt</a>
+    <a class="ce-skip" href="#main"><span data-ui-key="u_e2b85f019f0d">Zum Inhalt</span></a>
     <header>
       <div class="book-dashboard-topbar">
-        <nav class="book-dashboard-ribbon" aria-label="Buchnavigation">
-          <a class="book-dashboard-ribbon-btn" href="/dashboard">Übersicht</a>
-          <a class="book-dashboard-ribbon-btn" href="/campaigns">Kampagnen</a>
-          <a class="book-dashboard-ribbon-btn" href="/characters">Charaktere</a>
-          <span class="book-dashboard-ribbon-btn" aria-current="page">Creation Engine</span>
-          <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
-          <a id="return-character" class="book-dashboard-ribbon-btn" hidden>Zum Charakterbogen</a>
+        <nav class="book-dashboard-ribbon" aria-label="Buchnavigation" data-ui-aria-label="u_c1626b86894a">
+          <a class="book-dashboard-ribbon-btn" href="/dashboard"><span data-ui-key="u_cb27327d0207">Übersicht</span></a>
+          <a class="book-dashboard-ribbon-btn" href="/campaigns"><span data-ui-key="u_4538fc5c1596">Kampagnen</span></a>
+          <a class="book-dashboard-ribbon-btn" href="/characters"><span data-ui-key="u_346a518c3530">Charaktere</span></a>
+          <span class="book-dashboard-ribbon-btn" aria-current="page"><span data-ui-key="u_b53d2240b5bd">Creation Engine</span></span>
+          <a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0"><span data-ui-key="u_4230de9147dc">Regelwerk · Vorschau</span></a>
+          <a id="return-character" class="book-dashboard-ribbon-btn" hidden><span data-ui-key="u_9def295dc7ae">Zum Charakterbogen</span></a>
         </nav>
       </div>
-      <p class="ce-eyebrow">Inhalte · Homebrew</p>
-      <h1>Creation Engine</h1>
-      <p>Erstelle und bearbeite Homebrew mit <strong>Eagle Homebrew</strong> von MattTheEagle: Gegenstände, Zauber,
-        Merkmale, Völker, Hintergründe, Klassen, NPCs, Fahrzeuge, Begegnungen, Gruppen und Zufallstabellen.</p>
+      <p class="ce-eyebrow"><span data-ui-key="u_1fbaa8effb04">Inhalte · Homebrew</span></p>
+      <h1><span data-ui-key="u_b53d2240b5bd">Creation Engine</span></h1>
+      <p><span data-ui-key="u_2a9512647754">Erstelle und bearbeite Homebrew mit</span> <strong><span data-ui-key="u_786009257e9f">Eagle Homebrew</span></strong> <span data-ui-key="u_0d61191d363b">von MattTheEagle: Gegenstände, Zauber,
+        Merkmale, Völker, Hintergründe, Klassen, NPCs, Fahrzeuge, Begegnungen, Gruppen und Zufallstabellen.</span></p>
     </header>
     <main id="main" tabindex="-1">
-      <section class="ce-toolbar" aria-label="Welt und Erstellen">
-        <label for="ce-world">Welt</label>
+      <section class="ce-toolbar" aria-label="Welt und Erstellen" data-ui-aria-label="u_8fa94fa7c49b">
+        <label for="ce-world"><span data-ui-key="u_83c0512277b2">Welt</span></label>
         <select id="ce-world"></select>
-        <button id="ce-create" type="button">Neu erstellen</button>
+        <button id="ce-create" type="button"><span data-ui-key="u_a333198f8989">Neu erstellen</span></button>
       </section>
       <p id="ce-status" role="status" aria-live="polite"></p>
       <div class="ce-directory">
         <section aria-labelledby="ce-world-heading">
-          <h2 id="ce-world-heading">Inhalte dieser Welt</h2>
+          <h2 id="ce-world-heading"><span data-ui-key="u_d8d959f3b324">Inhalte dieser Welt</span></h2>
           <div id="ce-world-documents"></div>
         </section>
         <section aria-labelledby="ce-library-heading">
-          <h2 id="ce-library-heading">Meine Bibliothek</h2>
-          <p class="ce-help">Jede neue Erstellung landet zusätzlich hier und steht dir in allen deinen Welten zur Verfügung.</p>
+          <h2 id="ce-library-heading"><span data-ui-key="u_0fe078dc2c12">Meine Bibliothek</span></h2>
+          <p class="ce-help"><span data-ui-key="u_f149c76993a8">Jede neue Erstellung landet zusätzlich hier und steht dir in allen deinen Welten zur Verfügung.</span></p>
           <div id="ce-library-documents"></div>
         </section>
       </div>
       <section id="ce-species" class="ce-species" aria-labelledby="ce-species-heading" hidden>
-        <h2 id="ce-species-heading">Spezies spielbar machen</h2>
-        <p class="ce-help">Prüft eine gespeicherte 2024-Spezies, ergänzt, was Eagle nicht ausdrücken kann, und veröffentlicht
-          eine unveränderliche Fassung für den Charakter-Ersteller. Spätere Änderungen in Eagle brauchen eine neue Fassung.</p>
-        <button id="ce-species-example" type="button">Duckfolk-Beispiel anlegen</button>
-        <p id="ce-species-empty" class="ce-help" hidden>In dieser Welt und deiner Bibliothek gibt es noch keine Spezies.</p>
-        <label for="ce-species-source">Spezies</label>
+        <h2 id="ce-species-heading"><span data-ui-key="u_36864b86c274">Spezies spielbar machen</span></h2>
+        <p class="ce-help"><span data-ui-key="u_18888d53745a">Prüft eine gespeicherte 2024-Spezies, ergänzt, was Eagle nicht ausdrücken kann, und veröffentlicht
+          eine unveränderliche Fassung für den Charakter-Ersteller. Spätere Änderungen in Eagle brauchen eine neue Fassung.</span></p>
+        <button id="ce-species-example" type="button"><span data-ui-key="u_e795028dbcf1">Duckfolk-Beispiel anlegen</span></button>
+        <p id="ce-species-empty" class="ce-help" hidden><span data-ui-key="u_0b355ac9249e">In dieser Welt und deiner Bibliothek gibt es noch keine Spezies.</span></p>
+        <label for="ce-species-source"><span data-ui-key="u_768edb4909d9">Spezies</span></label>
         <select id="ce-species-source"></select>
-        <label for="ce-species-scope">Veröffentlichen für</label>
+        <label for="ce-species-scope"><span data-ui-key="u_f837b3071636">Veröffentlichen für</span></label>
         <select id="ce-species-scope"></select>
-        <p class="ce-help">Im VTT-Compendium können alle angemeldeten Nutzer deine spielbare Spezies sehen und für ihre Charaktere wählen.</p>
+        <p class="ce-help"><span data-ui-key="u_a168647de3c3">Im VTT-Compendium können alle angemeldeten Nutzer deine spielbare Spezies sehen und für ihre Charaktere wählen.</span></p>
         <fieldset>
-          <legend>Fertigkeitswahl (Übung, eine Fertigkeit nach Wahl)</legend>
-          <label for="ce-species-skill-label">Bezeichnung</label>
+          <legend><span data-ui-key="u_48fd88862ceb">Fertigkeitswahl (Übung, eine Fertigkeit nach Wahl)</span></legend>
+          <label for="ce-species-skill-label"><span data-ui-key="u_a0b60ec855e9">Bezeichnung</span></label>
           <input id="ce-species-skill-label" type="text" maxlength="60">
           <div id="ce-species-skills" class="ce-species-skills"></div>
         </fieldset>
         <fieldset>
-          <legend><label><input id="ce-species-action-on" type="checkbox"> Aktion: Gegenstand telekinetisch bewegen</label></legend>
-          <label for="ce-species-action-name">Name</label>
+          <legend><label><input id="ce-species-action-on" type="checkbox"> <span data-ui-key="u_8c24011783a4">Aktion: Gegenstand telekinetisch bewegen</span></label></legend>
+          <label for="ce-species-action-name"><span data-ui-key="u_709a23220f2c">Name</span></label>
           <input id="ce-species-action-name" type="text" maxlength="80">
-          <label for="ce-species-action-activation">Aktivierung</label>
-          <select id="ce-species-action-activation"><option value="action">Aktion</option><option value="bonus-action">Bonusaktion</option></select>
-          <label for="ce-species-action-range">Reichweite (ft)</label>
+          <label for="ce-species-action-activation"><span data-ui-key="u_21cc764c244e">Aktivierung</span></label>
+          <select id="ce-species-action-activation"><option value="action" data-ui-key="u_276e2316b951">Aktion</option><option value="bonus-action" data-ui-key="u_c85de05db96d">Bonusaktion</option></select>
+          <label for="ce-species-action-range"><span data-ui-key="u_b2935fa6ac70">Reichweite (ft)</span></label>
           <input id="ce-species-action-range" type="number" min="5" max="120">
-          <label for="ce-species-action-weight">Höchstgewicht (lb)</label>
+          <label for="ce-species-action-weight"><span data-ui-key="u_8835b961aae0">Höchstgewicht (lb)</span></label>
           <input id="ce-species-action-weight" type="number" min="1" max="500">
-          <label for="ce-species-action-move">Bewegung höchstens (ft)</label>
+          <label for="ce-species-action-move"><span data-ui-key="u_a82e576cd0cb">Bewegung höchstens (ft)</span></label>
           <input id="ce-species-action-move" type="number" min="5" max="120">
-          <label for="ce-species-action-description">Regeltext</label>
+          <label for="ce-species-action-description"><span data-ui-key="u_0376a5b7a1eb">Regeltext</span></label>
           <textarea id="ce-species-action-description" maxlength="2000" rows="3"></textarea>
         </fieldset>
-        <button id="ce-species-check" type="button">Spielbarkeit prüfen</button>
-        <button id="ce-species-publish" type="button" disabled>Veröffentlichen</button>
+        <button id="ce-species-check" type="button"><span data-ui-key="u_239e0bfcee05">Spielbarkeit prüfen</span></button>
+        <button id="ce-species-publish" type="button" disabled><span data-ui-key="u_bad11dfaee75">Veröffentlichen</span></button>
         <div id="ce-species-report" role="status" aria-live="polite"></div>
         <section aria-labelledby="ce-species-global-heading">
-          <h3 id="ce-species-global-heading">VTT-Compendium · spielbare Spezies</h3>
+          <h3 id="ce-species-global-heading"><span data-ui-key="u_1580fc1ee30a">VTT-Compendium · spielbare Spezies</span></h3>
           <ul id="ce-species-global-list"></ul>
         </section>
       </section>
       <section id="ce-origins" class="ce-species" aria-labelledby="ce-origins-heading" hidden>
-        <h2 id="ce-origins-heading">Hintergründe und Merkmale spielbar machen</h2>
-        <p class="ce-help">Eagle-Quelle auswählen oder einen eigenen Entwurf anlegen, Regeln ergänzen, prüfen und bewusst veröffentlichen. Fertige Charaktere behalten ihre verwendete Fassung.</p>
+        <h2 id="ce-origins-heading"><span data-ui-key="u_4307646780d6">Hintergründe und Merkmale spielbar machen</span></h2>
+        <p class="ce-help"><span data-ui-key="u_065e93693a72">Eagle-Quelle auswählen oder einen eigenen Entwurf anlegen, Regeln ergänzen, prüfen und bewusst veröffentlichen. Fertige Charaktere behalten ihre verwendete Fassung.</span></p>
         <div class="ce-origin-actions">
-          <button id="ce-origin-new-feat" type="button">Merkmal anlegen</button>
-          <button id="ce-origin-new-background" type="button">Hintergrund anlegen</button>
-          <button id="ce-origin-refresh" type="button">Quellen neu laden</button>
+          <button id="ce-origin-new-feat" type="button"><span data-ui-key="u_9e1642d0ddcb">Merkmal anlegen</span></button>
+          <button id="ce-origin-new-background" type="button"><span data-ui-key="u_94be4978d945">Hintergrund anlegen</span></button>
+          <button id="ce-origin-refresh" type="button"><span data-ui-key="u_ab2659d6e67a">Quellen neu laden</span></button>
         </div>
-        <label for="ce-origin-source">Eagle-Quelle</label><select id="ce-origin-source"></select>
-        <label for="ce-origin-scope">Veröffentlichen für</label><select id="ce-origin-scope"></select>
+        <label for="ce-origin-source"><span data-ui-key="u_ba7545260504">Eagle-Quelle</span></label><select id="ce-origin-source"></select>
+        <label for="ce-origin-scope"><span data-ui-key="u_f837b3071636">Veröffentlichen für</span></label><select id="ce-origin-scope"></select>
         <div id="ce-origin-form" hidden>
-          <label for="ce-origin-name">Name</label><input id="ce-origin-name" maxlength="100">
-          <label for="ce-origin-description">Beschreibung als Klartext</label><textarea id="ce-origin-description" rows="4" maxlength="6000"></textarea>
+          <label for="ce-origin-name"><span data-ui-key="u_709a23220f2c">Name</span></label><input id="ce-origin-name" maxlength="100">
+          <label for="ce-origin-description"><span data-ui-key="u_824d8384af7c">Beschreibung als Klartext</span></label><textarea id="ce-origin-description" rows="4" maxlength="6000"></textarea>
           <fieldset id="ce-origin-background-fields" hidden>
-            <legend>Hintergrund</legend>
-            <fieldset><legend>Drei erlaubte Attribute für +2/+1 oder +1/+1/+1</legend><div id="ce-origin-abilities" class="ce-species-skills"></div></fieldset>
-            <fieldset><legend>Zwei Fertigkeiten mit Übung</legend><div id="ce-origin-bg-skills" class="ce-species-skills"></div></fieldset>
-            <label for="ce-origin-tool">Werkzeug</label><select id="ce-origin-tool"></select>
-            <label for="ce-origin-feat">Veröffentlichtes Herkunftstalent</label><select id="ce-origin-feat"></select>
-            <p class="ce-help">Startausrüstung: Geldpaket B mit 50 GM. Die Attributsverteilung wählt später der Spieler.</p>
+            <legend><span data-ui-key="u_6ea4ea25fb03">Hintergrund</span></legend>
+            <fieldset><legend><span data-ui-key="u_fc0e688d6773">Drei erlaubte Attribute für +2/+1 oder +1/+1/+1</span></legend><div id="ce-origin-abilities" class="ce-species-skills"></div></fieldset>
+            <fieldset><legend><span data-ui-key="u_b1ca511b86f4">Zwei Fertigkeiten mit Übung</span></legend><div id="ce-origin-bg-skills" class="ce-species-skills"></div></fieldset>
+            <label for="ce-origin-tool"><span data-ui-key="u_dfa660bfef7f">Werkzeug</span></label><select id="ce-origin-tool"></select>
+            <label for="ce-origin-feat"><span data-ui-key="u_62d6c5c20c47">Veröffentlichtes Herkunftstalent</span></label><select id="ce-origin-feat"></select>
+            <p class="ce-help"><span data-ui-key="u_206ed5992ed7">Startausrüstung: Geldpaket B mit 50 GM. Die Attributsverteilung wählt später der Spieler.</span></p>
           </fieldset>
           <fieldset id="ce-origin-feat-fields">
-            <legend>Merkmal / Talent</legend>
-            <label for="ce-origin-category">Kategorie</label><select id="ce-origin-category"><option value="origin">Herkunftstalent</option><option value="general">Allgemeines Talent</option></select>
-            <label for="ce-origin-level">Mindeststufe</label><input id="ce-origin-level" type="number" min="1" max="20" value="1">
-            <label for="ce-origin-prerequisite">Attributsvoraussetzung</label><select id="ce-origin-prerequisite"></select>
-            <label for="ce-origin-min-score">Erforderlicher Attributswert</label><input id="ce-origin-min-score" type="number" min="3" max="20" value="13">
-            <fieldset><legend>Feste Fertigkeitsübung</legend><div id="ce-origin-feat-skills" class="ce-species-skills"></div></fieldset>
-            <label><input id="ce-origin-initiative-pb" type="checkbox"> Initiative +Übungsbonus</label>
-            <label for="ce-origin-ac">Zusätzliche Rüstungsklasse</label><input id="ce-origin-ac" type="number" min="0" max="5" step="1" value="0">
-            <label for="ce-origin-initiative">Zusätzliche Initiative</label><input id="ce-origin-initiative" type="number" min="0" max="10" step="1" value="0">
-            <label for="ce-origin-speed">Zusätzliche Bewegung (m)</label><input id="ce-origin-speed" type="number" min="0" max="30" step="0.3" value="0">
-            <label for="ce-origin-hp">Zusätzliche Trefferpunkte je Charakterstufe</label><input id="ce-origin-hp" type="number" min="0" max="10" step="1" value="0">
-            <p class="ce-help">0 bedeutet kein Bonus. Gleiche Talente wirken einmal; verschiedene Boni addieren sich. Fertigkeitsübung wird höchstens einmal gezählt. Regeltext erzeugt keine automatische Wirkung.</p>
+            <legend><span data-ui-key="u_83ad97db598c">Merkmal / Talent</span></legend>
+            <label for="ce-origin-category"><span data-ui-key="u_358210386a4f">Kategorie</span></label><select id="ce-origin-category"><option value="origin" data-ui-key="u_4bb9839be20e">Herkunftstalent</option><option value="general" data-ui-key="u_195082de1e13">Allgemeines Talent</option></select>
+            <label for="ce-origin-level"><span data-ui-key="u_b5b9554a2d0b">Mindeststufe</span></label><input id="ce-origin-level" type="number" min="1" max="20" value="1">
+            <label for="ce-origin-prerequisite"><span data-ui-key="u_db2d6d6e2e59">Attributsvoraussetzung</span></label><select id="ce-origin-prerequisite"></select>
+            <label for="ce-origin-min-score"><span data-ui-key="u_8b266b1fc6ca">Erforderlicher Attributswert</span></label><input id="ce-origin-min-score" type="number" min="3" max="20" value="13">
+            <fieldset><legend><span data-ui-key="u_8c2dce7ec5e6">Feste Fertigkeitsübung</span></legend><div id="ce-origin-feat-skills" class="ce-species-skills"></div></fieldset>
+            <label><input id="ce-origin-initiative-pb" type="checkbox"> <span data-ui-key="u_282a948bf982">Initiative +Übungsbonus</span></label>
+            <label for="ce-origin-ac"><span data-ui-key="u_9a4e7e626d6a">Zusätzliche Rüstungsklasse</span></label><input id="ce-origin-ac" type="number" min="0" max="5" step="1" value="0">
+            <label for="ce-origin-initiative"><span data-ui-key="u_847d6f6f2946">Zusätzliche Initiative</span></label><input id="ce-origin-initiative" type="number" min="0" max="10" step="1" value="0">
+            <label for="ce-origin-speed"><span data-ui-key="u_e4d112e52af7">Zusätzliche Bewegung (m)</span></label><input id="ce-origin-speed" type="number" min="0" max="30" step="0.3" value="0">
+            <label for="ce-origin-hp"><span data-ui-key="u_323cdc34b016">Zusätzliche Trefferpunkte je Charakterstufe</span></label><input id="ce-origin-hp" type="number" min="0" max="10" step="1" value="0">
+            <p class="ce-help"><span data-ui-key="u_f4eff0b61d04">0 bedeutet kein Bonus. Gleiche Talente wirken einmal; verschiedene Boni addieren sich. Fertigkeitsübung wird höchstens einmal gezählt. Regeltext erzeugt keine automatische Wirkung.</span></p>
           </fieldset>
-          <div class="ce-origin-actions"><button id="ce-origin-save" type="button">Entwurf speichern</button><button id="ce-origin-check" type="button">Spielbarkeit und Vorschau prüfen</button><button id="ce-origin-publish" type="button" disabled>Fassung veröffentlichen</button></div>
+          <div class="ce-origin-actions"><button id="ce-origin-save" type="button"><span data-ui-key="u_13f2a82247f4">Entwurf speichern</span></button><button id="ce-origin-check" type="button"><span data-ui-key="u_5a2221c11b55">Spielbarkeit und Vorschau prüfen</span></button><button id="ce-origin-publish" type="button" disabled><span data-ui-key="u_ca6aeacf4838">Fassung veröffentlichen</span></button></div>
         </div>
         <div id="ce-origin-report" role="status" aria-live="polite"></div>
       </section>
