@@ -61,3 +61,16 @@ Recherche: [Socket.IO-Zustellung](https://socket.io/docs/v4/delivery-guarantees/
 und [Python-Server](https://python-socketio.readthedocs.io/en/stable/server.html).
 next_step: Deploy implementiert diese begrenzten Verträge, prüft sie gezielt,
 committet/pusht und liefert mit Live-Nachweisen vor Fortsetzung zu P3.
+
+## Live-Nachtrag: Übergabe einer noch nicht geschlossenen Verbindung
+
+Der Produktionsabgleich ergänzt den Reconnect-Vertrag: ein neuer Transport darf
+nicht auf das verzögerte Schließen des alten TCP-/Polling-Transports angewiesen
+sein. Vor jedem Socket-Join rotiert ein authentifiziertes HTTP-Resume die opake
+Capability desselben Kontextdatensatzes vergleichend. Rolle, Loginbindung,
+Session und Ablauf bleiben serverbestimmt; die alte Capability und SID werden
+ungültig, der alte Socket geschlossen. Parallele unabhängige Kontexte bleiben.
+Request-Quittungen behalten dieselbe context_id, also auch nach dieser Übergabe
+ihre Dedup-Wirkung. Ohne gültige alte Capability keine Wiederaufnahme; kein
+Owner-/DM-Fallback. Autorisierung und Empfängerauswahl verlangen zudem die aktuelle
+SID. Dies ist ein begrenzter Reconnect-Fix im bestehenden P1/P2-Vertrag.

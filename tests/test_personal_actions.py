@@ -148,3 +148,19 @@ def test_second_character_and_other_member_have_independent_layouts(personal, da
     enter_table(play_codm_client,campaign,session)
     assert play_codm_client.get(base + '/hotbar').status_code == 403
     assert play_codm_client.put(base + '/hotbar',json={'revision':1,'slots':[]}).status_code == 403
+
+
+def test_receipt_replays_after_transport_capability_rotation(personal,play_player_client):
+    campaign,session,char,token,base,auth=personal
+    catalog=play_player_client.get(base+'/hotbar').json['catalog']
+    body={'request_id':secrets.token_urlsafe(20),'catalog_revision':catalog['revision'],'action_id':'ability:str'}
+    first=play_player_client.post(base+'/actions/execute',json=body)
+    assert first.status_code==200
+    response=play_player_client.post(f'/api/play/campaigns/{campaign.id}/sessions/{session.id}/contexts',
+        json={'resume':True,'tab':secrets.token_urlsafe(24)})
+    assert response.status_code==201
+    headers={'X-VTT-Context':response.json['token'],'X-VTT-Tab':response.json['tab']}
+    second=play_player_client.post(base+'/actions/execute',json=body,headers=headers)
+    assert second.status_code==200 and second.json==first.json
+    assert second.headers['X-Request-Replayed']=='true'
+    assert ChatMessage.query.filter_by(game_session_id=session.id).count()==1

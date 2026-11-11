@@ -65,3 +65,13 @@ die Veröffentlichung kopiert nur tatsächlich abweichende P2-Dateien auf diese
 Tile-Basis. Das Quellenlabel des fremden Karten-Slices ist kein vollständiger
 Git-Baum der gemeinsam laufenden VTT-Funktionen; tatsächliche Datei-Hashes sind
 deshalb zusätzlich maßgeblich. Kein Rückschritt auf das ältere P1-Ausgangsimage.
+
+Reconnect-Nachtrag umgesetzt: vergleichendes Capability-Resume desselben Kontextes,
+serverbestimmter Modus, SID-Prüfung für Eingänge und Empfänger. Altsocket wird vor
+neuem Join getrennt. Neu geprüft: **35** Kontext-/Aktionsfälle plus **1** explizite
+Würfelquittung nach Capability-Rotation; **6** Browserfälle (beide Crossbrowser-
+Reisen, beide mobilen Größen, parallele Owner-Player/DM-Tabs und Reload).
+Quittungen bleiben bei Rotation identisch; Resume mit gefälschtem DM-Wunsch bleibt
+Player und fehlende Capability wird verweigert. Der Live-Test wird mit einem
+unterbrechbaren, ausschließlich auf den synthetischen Player begrenzten TLS-Tunnel
+wiederholt: unveränderte Nutzdaten, Polling und WebSocket gemeinsam unterbrochen.

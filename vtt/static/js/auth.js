@@ -193,6 +193,17 @@ class Auth {
         return response.json();
     }
 
+    static async resumeTableContext(campaignId, sessionId) {
+        await this.ensureTableContext(campaignId, sessionId);
+        const entry = await this.makeAuthRequest(
+            `/api/play/campaigns/${campaignId}/sessions/${sessionId}/contexts`,
+            'POST', {resume: true, tab: crypto.randomUUID()});
+        const context = {...entry, campaignId, sessionId};
+        window.VTTTableContext = context;
+        try { sessionStorage.setItem(`vtt.table.context.v1.${campaignId}.${sessionId}`, JSON.stringify(context)); } catch (_) {}
+        return context;
+    }
+
     static async ensureTableContext(campaignId, sessionId, mode = 'player', force = false) {
         const key = `vtt.table.context.v1.${campaignId}.${sessionId}`;
         let saved = window.VTTTableContext;

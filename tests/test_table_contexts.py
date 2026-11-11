@@ -275,3 +275,24 @@ def test_auth_refresh_keeps_its_own_contract_with_table_headers(table, play_dm_c
     response = play_dm_client.post('/api/auth/refresh', headers=headers)
     assert response.status_code == 200
     assert play_dm_client.get(f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/bootstrap", headers=headers).json['session_role'] == 'DM'
+
+
+def test_resume_rotates_capability_keeps_mode_and_context_identity(table,play_dm_client,play_app):
+    campaign,session,_=table
+    headers=enter(play_dm_client,campaign,session,'player')
+    old=TableContext.query.filter_by(token_hash=__import__('hashlib').sha256(headers['X-VTT-Context'].encode()).hexdigest()).one()
+    cid=old.id
+    socket=socketio.test_client(play_app,flask_test_client=play_dm_client)
+    join(socket,campaign,session,headers)
+    response=play_dm_client.post(f'/api/play/campaigns/{campaign.id}/sessions/{session.id}/contexts',
+        headers=headers,json={'resume':True,'mode':'dm','tab':secrets.token_urlsafe(24)})
+    assert response.status_code==201 and response.json['mode']=='player'
+    assert not socket.is_connected()
+    db.session.expire_all()
+    assert db.session.get(TableContext,cid).token_hash==__import__('hashlib').sha256(response.json['token'].encode()).hexdigest()
+    endpoint=f'/api/play/campaigns/{campaign.id}/sessions/{session.id}/bootstrap'
+    assert play_dm_client.get(endpoint,headers=headers).status_code==403
+    new={'X-VTT-Context':response.json['token'],'X-VTT-Tab':response.json['tab']}
+    assert play_dm_client.get(endpoint,headers=new).json['session_role']=='PLAYER'
+    assert play_dm_client.post(f'/api/play/campaigns/{campaign.id}/sessions/{session.id}/contexts',
+        json={'resume':True,'mode':'dm','tab':secrets.token_urlsafe(24)}).status_code==403

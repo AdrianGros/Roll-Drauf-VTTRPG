@@ -130,7 +130,7 @@ def _serialize_session_runtime(session):
 @limiter.limit("120 per hour")
 @jwt_required()
 def create_table_context(campaign_id, session_id):
-    from vtt.play.contexts import issue, resolve
+    from vtt.play.contexts import issue, resolve, resume
     from flask import g
     body = request.get_json(silent=True) or {}
     user_id = int(get_jwt_identity())
@@ -138,7 +138,8 @@ def create_table_context(campaign_id, session_id):
                   user_id, campaign_id, session_id)
     if old:
         g.table_context = old
-    payload, error = issue(user_id, campaign_id, session_id, body.get("mode"), body.get("tab"))
+    payload, error = resume(old, body.get("tab")) if body.get("resume") is True else issue(
+        user_id, campaign_id, session_id, body.get("mode"), body.get("tab"))
     if error:
         return error
     response = jsonify(payload)

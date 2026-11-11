@@ -17,7 +17,16 @@ class PlaySocketRuntime {
             withCredentials: true,
         });
 
-        this.socket.on("connect", () => {
+        this.socket.on("connect", async () => {
+            const socketId = this.socket.id;
+            try {
+                await Auth.resumeTableContext(this.campaignId, this.sessionId);
+            } catch (error) {
+                this._fire('error', {message: error.message || 'Tischverbindung konnte nicht wiederaufgenommen werden.'});
+                this.socket.disconnect();
+                return;
+            }
+            if (!this.socket?.connected || this.socket.id !== socketId) return;
             this.isConnected = true;
             this.socket.emit("session:join", {
                 campaign_id: this.campaignId,

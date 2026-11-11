@@ -104,6 +104,25 @@ def issue(user_id, campaign_id, session_id, mode, tab):
             "expires_at": context.expires_at.isoformat() + "Z"}, None
 
 
+
+def resume(context, tab):
+    """Rotate a transport credential without changing role, identity or receipts."""
+    if context is None or not isinstance(tab,str) or not 16 <= len(tab) <= 128:
+        return None, (jsonify(error='table_context_required'),403)
+    old_sid = context.socket_sid
+    token = secrets.token_urlsafe(32)
+    changed = TableContext.query.filter_by(id=context.id,token_hash=context.token_hash).update(
+        {'token_hash':digest(token),'tab_hash':digest(tab),'socket_sid':None},synchronize_session=False)
+    db.session.commit()
+    if changed != 1:
+        return None, (jsonify(error='table_context_required'),409)
+    db.session.refresh(context)
+    if old_sid:
+        from vtt.extensions import socketio
+        socketio.server.disconnect(old_sid,namespace='/')
+    return {'token':token,'tab':tab,'mode':context.mode,
+            'expires_at':context.expires_at.isoformat()+'Z'},None
+
 def install_http_guard(app):
     @app.before_request
     def table_context_boundary():
@@ -164,7 +183,7 @@ def install_socket_guard(socketio):
             for sid, _ in participants:
                 context_id = bindings.get(sid)
                 context = db.session.get(TableContext, context_id, populate_existing=True) if context_id else None
-                valid = validate(context)
+                valid = validate(context) and context.socket_sid == sid
                 if MOD_ROOM.match(audience):
                     if context:
                         valid = valid and context.mode == "dm"
@@ -224,7 +243,7 @@ def install_socket_guard(socketio):
             else:
                 context_id = bindings.get(request.sid)
                 context = db.session.get(TableContext, context_id, populate_existing=True) if context_id else None
-                if not validate(context, user.id, payload.get("campaign_id"), payload.get("session_id")):
+                if not validate(context, user.id, payload.get("campaign_id"), payload.get("session_id")) or context.socket_sid != request.sid:
                     context = None
             if event.startswith("mod:") and context is None and request.sid not in bindings:
                 return handler(*args)  # separate moderator interface, not a table fallback
