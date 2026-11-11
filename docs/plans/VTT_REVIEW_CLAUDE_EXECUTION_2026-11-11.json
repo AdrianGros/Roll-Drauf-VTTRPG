@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
-  "status": "planned_not_started",
-  "phase": "apply",
+  "status": "execution_started",
+  "phase": "deploy_C01",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -16,14 +16,15 @@
     "subscription_type": "pro",
     "auth_verified": true,
     "model_execution_verified": false,
-    "remaining_quota_verified": false,
-    "extra_usage_setting_verified": false,
+    "remaining_quota_verified": true,
+    "extra_usage_setting_verified": true,
     "api_fallback_authorized": false,
     "automatic_extra_usage_authorized": false,
     "model": "inherit",
     "default_concurrent_implementers": 1,
     "maximum_disjoint_implementers": 2,
-    "nested_agents": false
+    "nested_agents": false,
+    "extra_usage_enabled": false
   },
   "roles": {
     "implementation": [
@@ -39,7 +40,7 @@
     {
       "id": "C00",
       "title": "Integrationsbasis und Claude-Handoff",
-      "status": "planned",
+      "status": "complete",
       "implementer": "codex",
       "reviewer": null,
       "depends_on": [],
@@ -57,12 +58,13 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "evidence": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md"
     },
     {
       "id": "C01",
       "title": "Darstellung, UI-Sprache und Buchnavigation",
-      "status": "planned",
+      "status": "ready_for_worker",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -75,10 +77,27 @@
         "R14",
         "R28"
       ],
-      "next_phase": "apply",
+      "next_phase": "deploy",
       "requires_task_specific_apply": true,
       "base_commit": null,
-      "owned_files": null,
+      "owned_files": [
+        "vtt/static/js/book-scene.js",
+        "vtt/static/js/display-preferences.js",
+        "vtt/static/js/vtt-main-nav.js",
+        "vtt/static/js/sheet-feedback.js",
+        "vtt/static/js/srd-shared-ui.js",
+        "vtt/static/css/display-preferences.css",
+        "vtt/static/css/srd-creator.css",
+        "vtt/templates/srd-creator.html",
+        "vtt/templates/character-sheet.html",
+        "vtt/templates/campaigns.html",
+        "vtt/templates/characters.html",
+        "tools/i18n/extra-messages.json",
+        "tools/i18n/build_catalog.py",
+        "tools/i18n/README.md",
+        "tests/test_presentation_browser.py",
+        "tests/test_c01_navigation_browser.py"
+      ],
       "acceptance": [
         "DE/EN und Pergament/Nacht über Hauptwege",
         "320/390/1440 Pixel, Tastatur, Persistenz, Kontrast",
@@ -89,7 +108,8 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md"
     },
     {
       "id": "C02",

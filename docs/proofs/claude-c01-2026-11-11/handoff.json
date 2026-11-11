@@ -1,0 +1,48 @@
+{
+  "task": "C01",
+  "phase": "deploy",
+  "status": "ready_for_worker",
+  "source_checkpoint": "1b2ffc330127ea8eb074532efafa585e562ba911",
+  "launch_base": "supplied explicitly by coordinator after this handoff commit",
+  "apply": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
+  "owned_files": [
+    "vtt/static/js/book-scene.js",
+    "vtt/static/js/display-preferences.js",
+    "vtt/static/js/vtt-main-nav.js",
+    "vtt/static/js/sheet-feedback.js",
+    "vtt/static/js/srd-shared-ui.js",
+    "vtt/static/css/display-preferences.css",
+    "vtt/static/css/srd-creator.css",
+    "vtt/templates/srd-creator.html",
+    "vtt/templates/character-sheet.html",
+    "vtt/templates/campaigns.html",
+    "vtt/templates/characters.html",
+    "tools/i18n/extra-messages.json",
+    "tools/i18n/build_catalog.py",
+    "tools/i18n/README.md",
+    "tests/test_presentation_browser.py",
+    "tests/test_c01_navigation_browser.py"
+  ],
+  "generated_files_coordinator_only": [
+    "vtt/static/js/ui-catalog.js",
+    "vtt/static/i18n/ui.de.json",
+    "vtt/static/i18n/ui.en.json"
+  ],
+  "new_dependency_authorized": false,
+  "server_changes_authorized": false,
+  "production_access_authorized_for_worker": false,
+  "quota": {
+    "usage_probe": "ok",
+    "five_hour": {
+      "utilization": 0.0,
+      "resets_at": null
+    },
+    "seven_day": {
+      "utilization": 76.0,
+      "resets_at": "2026-11-15T09:59:59.854714+00:00"
+    },
+    "extra_usage": {
+      "is_enabled": false
+    }
+  }
+}
