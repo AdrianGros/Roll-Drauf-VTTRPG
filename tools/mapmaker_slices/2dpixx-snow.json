@@ -1,0 +1,168 @@
+{
+ "schemaVersion": 1,
+ "pack": "2dpixx-snow",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "Snow Tileset (32x32).png",
+  "sha256": "abfaf8badcf570cde55e88badcc196a6a8a917ac443aa7d63402e416267ee063"
+ },
+ "grid": {
+  "w": 32,
+  "h": 32,
+  "margin": 0,
+  "spacing": 0
+ },
+ "colorKey": null,
+ "singles": null,
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": []
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Gelände & Tiles",
+  "Referenzen & Szenen"
+ ],
+ "regions": [
+  {
+   "rect": [
+    1,
+    0,
+    3,
+    3
+   ],
+   "label": "Felsfläche im Schnee",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    1,
+    1,
+    4
+   ],
+   "label": "Felsboden mit Schneerand",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    4,
+    0,
+    5,
+    4
+   ],
+   "label": "Tannenteil",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  }
+ ],
+ "cells": {
+  "0,0": {
+   "label": "Schnee",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "3,1": {
+   "label": "Schnee mit Stein",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "4,1": {
+   "label": "Schnee mit Stein",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "3,2": {
+   "label": "Schnee mit Felsbrocken",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "4,2": {
+   "label": "Schnee mit Felsbrocken",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "3,3": {
+   "label": "Baumstamm im Schnee · links",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "3,4": {
+   "label": "Baumstamm im Schnee · rechts",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "4,3": {
+   "label": "Baumstamm im Schnee (2) · links",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "4,4": {
+   "label": "Baumstamm im Schnee (2) · rechts",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  }
+ },
+ "composites": [
+  {
+   "cells": {
+    "rect": [
+     1,
+     0,
+     3,
+     3
+    ]
+   },
+   "label": "Felsfläche im Schnee",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "3,3 3,4",
+   "label": "Baumstamm im Schnee",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "4,3 4,4",
+   "label": "Baumstamm im Schnee (2)",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     4,
+     0,
+     2,
+     3
+    ]
+   },
+   "label": "Verschneite Tanne",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     6,
+     0,
+     3,
+     4
+    ]
+   },
+   "label": "Verschneite Tannengruppe",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  }
+ ]
+}

@@ -1,0 +1,1055 @@
+{
+ "schemaVersion": 1,
+ "pack": "castle-rpg",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "Castle2_5.png",
+  "sha256": "b3222b8bed826043ae11a15c8983af5adbdc4a8bddd04f1171a0b070903991ad"
+ },
+ "grid": {
+  "w": 32,
+  "h": 32,
+  "margin": 0,
+  "spacing": 0
+ },
+ "colorKey": null,
+ "singles": null,
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Erkannte Gruppen getrennt: Laternenpfahl und Ziehbrunnen; Springbrunnen und Kistenturm; Uhrenbaum und Statue.",
+   "Waffengestell, Marktstand, Bücherregal, Tore und Gebäudesets als Rechtecke, weil vollflächige Teile nicht automatisch verbunden werden.",
+   "Mauer-, Dach- und Turmteile werden als Kacheln angeboten; die fertigen Sets zusätzlich als Stempel."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Objekte & Ausstattung",
+  "Burg & Mauern",
+  "Gelände & Tiles",
+  "Referenzen & Szenen"
+ ],
+ "regions": [
+  {
+   "rect": [
+    0,
+    0,
+    6,
+    3
+   ],
+   "label": "Zinnendach",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    3,
+    3,
+    3
+   ],
+   "label": "Burgmauer",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    3,
+    3,
+    3,
+    3
+   ],
+   "label": "Tor mit Fallgitter",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    6,
+    0,
+    4,
+    7
+   ],
+   "label": "Burgturm",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    10,
+    0,
+    3,
+    3
+   ],
+   "label": "Tor mit Fallgitter (2)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    13,
+    0,
+    3,
+    3
+   ],
+   "label": "Mauerblock",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    10,
+    3,
+    3,
+    3
+   ],
+   "label": "Tor mit Fallgitter (3)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    13,
+    3,
+    3,
+    3
+   ],
+   "label": "Tor mit Fallgitter (4)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    9,
+    7,
+    3,
+    1
+   ],
+   "label": "Mauerstück",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    11,
+    8,
+    2,
+    2
+   ],
+   "label": "Torbogen (dunkel)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    11,
+    10,
+    1,
+    3
+   ],
+   "label": "Steinsäule",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    13,
+    6,
+    3,
+    3
+   ],
+   "label": "Große Durchfahrt (Teil)",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    6,
+    10,
+    5,
+    3
+   ],
+   "label": "Pflaster",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    12,
+    6,
+    4
+   ],
+   "label": "Wasser und Grasinsel",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    6,
+    13,
+    1,
+    3
+   ],
+   "label": "Wasserfall",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    6,
+    1,
+    2
+   ],
+   "label": "Waffengestell (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    1,
+    6,
+    1,
+    2
+   ],
+   "label": "Gong (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    2,
+    6,
+    1,
+    2
+   ],
+   "label": "Hängeschild (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    7,
+    7,
+    1,
+    3
+   ],
+   "label": "Banner blau (lang) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    8,
+    7,
+    1,
+    3
+   ],
+   "label": "Banner rot (lang) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    9,
+    8,
+    1,
+    2
+   ],
+   "label": "Banner rot (kurz) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    10,
+    8,
+    1,
+    2
+   ],
+   "label": "Banner blau (kurz) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    2,
+    8,
+    1,
+    3
+   ],
+   "label": "Leiter (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    3,
+    9,
+    2,
+    1
+   ],
+   "label": "Großer Amboss (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    0,
+    9,
+    2,
+    2
+   ],
+   "label": "Marktstand (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    4,
+    10,
+    2,
+    2
+   ],
+   "label": "Großes Bücherregal (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    12,
+    10,
+    2,
+    4
+   ],
+   "label": "Uhrenbaum (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    14,
+    11,
+    1,
+    3
+   ],
+   "label": "Knorriger Baum (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    15,
+    11,
+    1,
+    3
+   ],
+   "label": "Laternenpfahl (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    14,
+    14,
+    2,
+    2
+   ],
+   "label": "Ziehbrunnen (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    9,
+    12,
+    2,
+    2
+   ],
+   "label": "Springbrunnen (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    10,
+    14,
+    1,
+    2
+   ],
+   "label": "Kistenturm (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    11,
+    13,
+    1,
+    3
+   ],
+   "label": "Statue (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    12,
+    14,
+    1,
+    2
+   ],
+   "label": "Steinbecken (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    13,
+    14,
+    1,
+    2
+   ],
+   "label": "Goldener Zierbaum (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    14,
+    9,
+    2,
+    2
+   ],
+   "label": "Holzbank (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    7,
+    14,
+    2,
+    2
+   ],
+   "label": "Kistenhaufen (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ ],
+ "cells": {
+  "4,2": {
+   "label": "Dunkler Durchgang · oben",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  "5,2": {
+   "label": "Dunkler Durchgang · unten",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  "6,5": {
+   "label": "Torbogen mit Treppe · oben",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  "7,5": {
+   "label": "Torbogen mit Treppe · unten",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  "6,10": {
+   "label": "Zinnendach (klein)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  "11,0": {
+   "label": "Wiese",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "6,3": {
+   "label": "Wappenplakette (Schwerter)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "7,3": {
+   "label": "Wappenplakette (Baum)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "6,4": {
+   "label": "Laterne (leuchtend)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "7,4": {
+   "label": "Laterne",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "7,6": {
+   "label": "Turmfenster",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,0": {
+   "label": "Hackklotz mit Axt",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,1": {
+   "label": "Kiste mit Gold",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,3": {
+   "label": "Erzkarren (Kohle)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,4": {
+   "label": "Erzkarren (Gold)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,5": {
+   "label": "Amboss",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,6": {
+   "label": "Kiste mit Erz",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "9,5": {
+   "label": "Amboss auf Sockel",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "9,6": {
+   "label": "Kiste mit rotem Erz",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "10,3": {
+   "label": "Bücherregal (niedrig)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "11,2": {
+   "label": "Kommode",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "11,3": {
+   "label": "Hohe Kommode",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "11,1": {
+   "label": "Skelettreste",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "14,9": {
+   "label": "Wasserfass",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "15,9": {
+   "label": "Holzkiste",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ },
+ "composites": [
+  {
+   "cells": {
+    "rect": [
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "label": "Tor mit Fallgitter",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     6,
+     0,
+     4,
+     7
+    ]
+   },
+   "label": "Burgturm",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     10,
+     0,
+     3,
+     3
+    ]
+   },
+   "label": "Tor mit Fallgitter (2)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     13,
+     0,
+     3,
+     3
+    ]
+   },
+   "label": "Mauerblock",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     10,
+     3,
+     3,
+     3
+    ]
+   },
+   "label": "Tor mit Fallgitter (3)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     13,
+     3,
+     3,
+     3
+    ]
+   },
+   "label": "Tor mit Fallgitter (4)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "4,2 5,2",
+   "label": "Dunkler Durchgang",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "6,5 7,5",
+   "label": "Torbogen mit Treppe",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     11,
+     8,
+     2,
+     2
+    ]
+   },
+   "label": "Torbogen (dunkel)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     11,
+     10,
+     1,
+     3
+    ]
+   },
+   "label": "Steinsäule",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "6,14 7,13 7,14 7,15 8,13 8,14 8,15",
+   "label": "Große Durchfahrt",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     0,
+     13,
+     3,
+     3
+    ]
+   },
+   "label": "Grasinsel",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     3,
+     13,
+     3,
+     3
+    ]
+   },
+   "label": "Steppeninsel",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     6,
+     13,
+     1,
+     3
+    ]
+   },
+   "label": "Wasserfall",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     0,
+     6,
+     1,
+     2
+    ]
+   },
+   "label": "Waffengestell",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     1,
+     6,
+     1,
+     2
+    ]
+   },
+   "label": "Gong",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     2,
+     6,
+     1,
+     2
+    ]
+   },
+   "label": "Hängeschild",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     7,
+     7,
+     1,
+     3
+    ]
+   },
+   "label": "Banner blau (lang)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     8,
+     7,
+     1,
+     3
+    ]
+   },
+   "label": "Banner rot (lang)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     9,
+     8,
+     1,
+     2
+    ]
+   },
+   "label": "Banner rot (kurz)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     10,
+     8,
+     1,
+     2
+    ]
+   },
+   "label": "Banner blau (kurz)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     2,
+     8,
+     1,
+     3
+    ]
+   },
+   "label": "Leiter",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     3,
+     9,
+     2,
+     1
+    ]
+   },
+   "label": "Großer Amboss",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     0,
+     9,
+     2,
+     2
+    ]
+   },
+   "label": "Marktstand",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     4,
+     10,
+     2,
+     2
+    ]
+   },
+   "label": "Großes Bücherregal",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     12,
+     10,
+     2,
+     4
+    ]
+   },
+   "label": "Uhrenbaum",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     14,
+     11,
+     1,
+     3
+    ]
+   },
+   "label": "Knorriger Baum",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     15,
+     11,
+     1,
+     3
+    ]
+   },
+   "label": "Laternenpfahl",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     14,
+     14,
+     2,
+     2
+    ]
+   },
+   "label": "Ziehbrunnen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     9,
+     12,
+     2,
+     2
+    ]
+   },
+   "label": "Springbrunnen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     10,
+     14,
+     1,
+     2
+    ]
+   },
+   "label": "Kistenturm",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     11,
+     13,
+     1,
+     3
+    ]
+   },
+   "label": "Statue",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     12,
+     14,
+     1,
+     2
+    ]
+   },
+   "label": "Steinbecken",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     13,
+     14,
+     1,
+     2
+    ]
+   },
+   "label": "Goldener Zierbaum",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     14,
+     9,
+     2,
+     2
+    ]
+   },
+   "label": "Holzbank",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     7,
+     14,
+     2,
+     2
+    ]
+   },
+   "label": "Kistenhaufen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  }
+ ]
+}

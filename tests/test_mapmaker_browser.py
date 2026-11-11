@@ -1623,7 +1623,8 @@ def test_sheet_initial_selection_contains_visible_art(open_editor, pack_id):
     from PIL import Image
     ed=open_editor();ed.tool('stamp')
     ed.page.locator('#stampPack').select_option(pack_id)
-    entry=json.loads((STATIC/'mapmaker/assets'/pack_id/'manifest.json').read_text())['stamps'][0]
+    # The whole sheet stays available (under references) for custom crops next to its sliced stamps.
+    entry=next(e for e in json.loads((STATIC/'mapmaker/assets'/pack_id/'manifest.json').read_text())['stamps'] if e['sheet'])
     ed.page.locator(f'.mm-stamp[data-asset="{entry["id"]}"]').click()
     expect(ed.page.locator('#sheetDialog')).to_be_visible()
     crop={k:int(ed.page.locator('#sheet'+k.upper()).input_value()) for k in ('x','y','w','h')}
@@ -1636,6 +1637,15 @@ def test_sheet_initial_selection_contains_visible_art(open_editor, pack_id):
     ed.click_doc(*SEA_A)
     assert _diff_count(before,ed.region(SEA_A[0]-130,SEA_A[1]-130,260,260),threshold=4)>5
     ed.assert_clean()
+
+
+def _import_project(ed, path):
+    """Open a project file; restored drafts count as unsaved work, so the editor may ask first."""
+    ed.page.locator('#fileInput').set_input_files(path)
+    _wait_until(ed, "() => document.getElementById('replaceDialog').open || document.getElementById('toast').textContent.includes('geladen')", timeout=20.0)
+    if ed.page.locator('#replaceDialog').is_visible():
+        ed.page.locator('#replaceDiscard').click()
+    expect(ed.page.locator('#toast')).to_contain_text('geladen', timeout=15000)
 
 
 def test_tiny_town_slices_offer_whole_objects_and_still_load_hidden_parts(open_editor, tmp_path):
@@ -1673,8 +1683,7 @@ def test_tiny_town_slices_offer_whole_objects_and_still_load_hidden_parts(open_e
     layer['items'].append({'id': 'legacyCrown', 'asset': crown['id'], 'x': SEA_B[0], 'y': SEA_B[1], 'size': 64, 'rot': 0, 'flip': False})
     project.write_text(json.dumps(raw))
     before = ed.region(SEA_B[0]-40, SEA_B[1]-40, 80, 80)
-    ed.page.locator('#fileInput').set_input_files(project)
-    expect(ed.page.locator('#toast')).to_contain_text('geladen')
+    _import_project(ed, project)
     assets = {i.get('asset') for i in ed.summary()['items']}
     assert {tree['id'], crown['id']} <= assets
     assert _diff_count(before, ed.region(SEA_B[0]-40, SEA_B[1]-40, 80, 80), threshold=4) > 5
@@ -1689,8 +1698,10 @@ WALL = 'color:kenney-tiny_1a2fdb62b6610bca'
 def test_tile_tool_paints_grid_cells_with_undo_size_and_file_roundtrip(open_editor, tmp_path):
     ed = open_editor()
     ed.tool('tile')
-    expect(ed.page.locator('#tileResults')).to_contain_text('97 Kacheln')
+    expect(ed.page.locator('#tileResults')).to_contain_text('717 Kacheln')
     assert ed.page.locator('.mm-tile-btn').count() == 64
+    ed.page.locator('#tilePack').select_option('kenney-tiny')
+    expect(ed.page.locator('#tileResults')).to_contain_text('97 Kacheln')
     expect(ed.page.locator('#tileTarget')).to_contain_text('Neue Kachelebene')
     ed.page.locator('#tileSearch').fill('Gras')
     ed.page.locator(f'.mm-tile-btn[data-tile="{GRASS}"]').click()
@@ -1752,8 +1763,7 @@ def test_tile_tool_paints_grid_cells_with_undo_size_and_file_roundtrip(open_edit
     _wait_until(ed, "() => window.rdMapmaker.summary().layers.some((l) => l.kind === 'tiles')")
     restored = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
     assert sorted((t['col'], t['row'], t['asset']) for t in restored['tiles']) == expected
-    ed.page.locator('#fileInput').set_input_files(project)
-    expect(ed.page.locator('#toast')).to_contain_text('geladen')
+    _import_project(ed, project)
     reloaded = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
     assert sorted((t['col'], t['row'], t['asset']) for t in reloaded['tiles']) == expected
     ed.menu('Als PNG exportieren')
@@ -1797,4 +1807,43 @@ def test_tile_layer_import_contract(open_editor):
     assert result['cells'] == [[0, GRASS], [7 * 1024 + 15, WALL]]
     assert result['accepted'] == []
     assert 'Gelände & Tiles' in result['tileGroups'] and not result['stampHasTiles']
+    ed.assert_clean()
+
+
+@pytest.mark.parametrize('pack_id, stamp_label, tile_label', [
+    ('castle-rpg', 'Laternenpfahl', 'Pflaster 1'),
+    ('lpc-castle', 'Banner rot', 'Steinmauer 1'),
+    ('2dpixx-forest', 'Großer Laubbaum', 'Erdfläche 5'),
+    ('2dpixx-mountain', 'Hängebrücke', 'Felsboden 1'),
+    ('2dpixx-village', 'Ziehbrunnen', None),
+])
+def test_sliced_sheets_offer_whole_stamps_and_grid_tiles(open_editor, pack_id, stamp_label, tile_label):
+    stamps = json.loads((STATIC / 'mapmaker/assets' / pack_id / 'manifest.json').read_text())['stamps']
+    stamp = next(s for s in stamps if s['label'] == stamp_label and not s.get('hidden'))
+    ed = open_editor()
+    ed.tool('stamp')
+    ed.page.locator('#stampPack').select_option(pack_id)
+    ed.page.locator('#stampSearch').fill(stamp_label)
+    ed.page.locator(f'.mm-stamp[data-asset="{stamp["id"]}"]').click()
+    expect(ed.page.locator('#stampSelected')).to_contain_text(stamp_label)
+    assert not ed.page.locator('#sheetDialog').is_visible()
+    before = ed.region(LAND[0] - 60, LAND[1] - 60, 120, 120)
+    ed.click_doc(*LAND)
+    placed = next(i for i in ed.summary()['items'] if i.get('asset') == stamp['id'])
+    assert not placed.get('crop') and placed['size'] == stamp['defaultSize']
+    deadline = time.monotonic() + 10
+    while _diff_count(before, ed.region(LAND[0] - 60, LAND[1] - 60, 120, 120), threshold=4) <= 5:
+        assert time.monotonic() < deadline, 'placed stamp never appeared'
+        ed.page.wait_for_timeout(100)
+    if tile_label:
+        tile = next(s for s in stamps if s['label'] == tile_label and s.get('tile'))
+        ed.tool('tile')
+        ed.page.locator('#tilePack').select_option(pack_id)
+        ed.page.locator('#tileSearch').fill(tile_label)
+        ed.page.locator(f'.mm-tile-btn[data-tile="{tile["id"]}"]').click()
+        ed.click_doc(32 * 20 + 5, 32 * 40 + 5)
+        layer = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
+        assert layer['tiles'] == [{'col': 20, 'row': 40, 'asset': tile['id']}]
+    else:
+        assert not any(s.get('tile') for s in stamps)
     ed.assert_clean()

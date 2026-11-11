@@ -1,0 +1,96 @@
+{
+ "schemaVersion": 1,
+ "pack": "2dpixx-ruins",
+ "detector": "components-v1",
+ "sheet": {
+  "path": "2DRP_CCArt_ForestRuins_Isometric.png",
+  "sha256": "2f2716dc0ff3c24647641d823a489f7f49ac2dda50b94afa0b7cdf17a0fe8e98"
+ },
+ "params": {
+  "gap": 6,
+  "minArea": 64
+ },
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (components-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Freistehende Motive per Pixelzusammenhang (Abstand ≤ 6 px) erkannt; überlappende Umrissrechtecke werden pro Motiv maskiert."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Fertige Häuser",
+  "Objekte & Ausstattung",
+  "Zäune",
+  "Isometrische Blöcke",
+  "Referenzen & Szenen"
+ ],
+ "objects": {
+  "877,139,123,142": {
+   "label": "Grasblock mit Steinplatten",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "1062,245,123,142": {
+   "label": "Grasblock",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "693,246,124,142": {
+   "label": "Grasblock mit vielen Steinplatten",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "79,296,242,221": {
+   "label": "Laubbaum",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "877,351,123,142": {
+   "label": "Grasblock mit Klee",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "508,352,124,143": {
+   "label": "Grasblock mit Trittsteinen",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "325,458,123,143": {
+   "label": "Sandsteinblock",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "692,458,124,142": {
+   "label": "Grasblock mit zwei Steinen",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "1061,458,123,142": {
+   "label": "Grasblock mit Halmen",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "876,564,124,143": {
+   "label": "Grasblock mit dichtem Gras",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "503,600,195,181": {
+   "label": "Steinrampe (nach rechts ansteigend)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "241,608,58,56": {
+   "label": "Schatztruhe",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "749,706,194,181": {
+   "label": "Steinrampe (nach links ansteigend)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  }
+ }
+}

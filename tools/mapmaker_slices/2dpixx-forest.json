@@ -1,0 +1,310 @@
+{
+ "schemaVersion": 1,
+ "pack": "2dpixx-forest",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "Forest Tileset (32x32).png",
+  "sha256": "942c39a5df2f369c61b08051d7005084d5b65182422e8572835f5b93d33ce190"
+ },
+ "grid": {
+  "w": 32,
+  "h": 32,
+  "margin": 0,
+  "spacing": 0
+ },
+ "colorKey": null,
+ "singles": null,
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Großer Laubbaum als 4×4-Rechteck: die Erkennung trennte Krone und Stamm, weil die Kronenmitte vollflächig ist.",
+   "Füllkacheln (eingebackenes Schachbrett) ausgeschlossen."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Objekte & Ausstattung",
+  "Gelände & Tiles",
+  "Referenzen & Szenen"
+ ],
+ "regions": [
+  {
+   "rect": [
+    0,
+    0,
+    1,
+    3
+   ],
+   "label": "Waldgras",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    4,
+    4,
+    1
+   ],
+   "label": "Waldgras",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    1,
+    0,
+    3,
+    3
+   ],
+   "label": "Helle Grasfläche",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    3,
+    4,
+    1
+   ],
+   "label": "Gras mit Blüten",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    5,
+    0,
+    3,
+    3
+   ],
+   "label": "Erdfläche",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    8,
+    0,
+    8,
+    4
+   ],
+   "label": "Baum- und Felsteil",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  }
+ ],
+ "cells": {
+  "3,7": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,4": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,5": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,6": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,7": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,8": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,9": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,10": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,11": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,12": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,13": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,14": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,15": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "0,4": {
+   "label": "Gras mit Pilzen",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "1,4": {
+   "label": "Gras mit Pilzen",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "2,4": {
+   "label": "Gras mit Erdfleck",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "3,4": {
+   "label": "Gras mit Erdfleck",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "3,5": {
+   "label": "Truhe (geschlossen)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "3,6": {
+   "label": "Truhe (offen)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ },
+ "composites": [
+  {
+   "cells": {
+    "rect": [
+     1,
+     0,
+     3,
+     3
+    ]
+   },
+   "label": "Helle Grasfläche",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     5,
+     0,
+     3,
+     3
+    ]
+   },
+   "label": "Erdfläche im Gras",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     8,
+     0,
+     4,
+     4
+    ]
+   },
+   "label": "Großer Laubbaum",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     12,
+     0,
+     2,
+     2
+    ]
+   },
+   "label": "Großer Baumstumpf",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     12,
+     2,
+     2,
+     2
+    ]
+   },
+   "label": "Großer Baumstumpf (2)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     14,
+     0,
+     2,
+     2
+    ]
+   },
+   "label": "Felsbrocken",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     14,
+     2,
+     2,
+     2
+    ]
+   },
+   "label": "Felsbrocken (2)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  }
+ ]
+}

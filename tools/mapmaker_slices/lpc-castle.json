@@ -1,0 +1,657 @@
+{
+ "schemaVersion": 1,
+ "pack": "lpc-castle",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "lpc_castle_2.png",
+  "sha256": "4dd697c44f32ca5b387dfcd5019c952be356cf35ce600ce2ebae1be315fe8669"
+ },
+ "grid": {
+  "w": 32,
+  "h": 32,
+  "margin": 0,
+  "spacing": 0
+ },
+ "colorKey": null,
+ "singles": null,
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Logo und Wappenzeichen-Vorlage ausgeschlossen.",
+   "Tore, Torbögen und Fallgitter als Rechtecke festgelegt: Torflügel und Bogensteine sind teils vollflächig oder berühren Nachbarteile."
+  ]
+ },
+ "groupOrder": [
+  "Objekte & Ausstattung",
+  "Burg & Mauern",
+  "Gelände & Tiles",
+  "Referenzen & Szenen"
+ ],
+ "regions": [
+  {
+   "rect": [
+    4,
+    0,
+    3,
+    2
+   ],
+   "label": "Mauerrahmen",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    7,
+    0,
+    3,
+    2
+   ],
+   "label": "Mauer senkrecht",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    10,
+    0,
+    3,
+    2
+   ],
+   "label": "Rundturm (Aufsicht)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    1,
+    4,
+    3
+   ],
+   "label": "Fallgitterteil",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    1,
+    4,
+    3,
+    3
+   ],
+   "label": "Torbogenteil",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    4,
+    4,
+    3,
+    1
+   ],
+   "label": "Zinnenstein",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    4,
+    5,
+    3,
+    2
+   ],
+   "label": "Kleiner Torbogen",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    7,
+    2,
+    3,
+    2
+   ],
+   "label": "Zinnenmauer (Aufsicht)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    7,
+    4,
+    3,
+    3
+   ],
+   "label": "Burgmauer mit Zinnen",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    8,
+    7,
+    2,
+    3
+   ],
+   "label": "Steinmauer",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    7,
+    1,
+    3
+   ],
+   "label": "Kettenteil",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    7,
+    7,
+    1,
+    3
+   ],
+   "label": "Kettenteil",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    1,
+    7,
+    3,
+    3
+   ],
+   "label": "Holztorteil",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    4,
+    7,
+    3,
+    3
+   ],
+   "label": "Holztorteil",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    10,
+    2,
+    3,
+    2
+   ],
+   "label": "Rundturm-Zinnen (hinten)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    10,
+    4,
+    3,
+    4
+   ],
+   "label": "Rundturm",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    10,
+    8,
+    3,
+    2
+   ],
+   "label": "Turmboden (Holz)",
+   "group": "Burg & Mauern",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    13,
+    3,
+    1,
+    2
+   ],
+   "label": "Banner rot (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    14,
+    3,
+    1,
+    2
+   ],
+   "label": "Banner blau (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    13,
+    5,
+    1,
+    2
+   ],
+   "label": "Banner türkis (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    14,
+    5,
+    1,
+    2
+   ],
+   "label": "Banner violett (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    13,
+    7,
+    1,
+    2
+   ],
+   "label": "Banner grün (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ ],
+ "cells": {
+  "0,0": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Paketlogo mit Versionsangabe, kein Kartenmotiv."
+  },
+  "0,1": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Paketlogo mit Versionsangabe, kein Kartenmotiv."
+  },
+  "7,14": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Vorlage mit Wappenzeichen auf grauem Grund, kein freistehendes Kartenmotiv."
+  },
+  "8,14": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Vorlage mit Wappenzeichen auf grauem Grund, kein freistehendes Kartenmotiv."
+  },
+  "2,4": {
+   "label": "Schießscharte (hoch) · oben",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  "3,4": {
+   "label": "Schießscharte (hoch) · unten",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  "2,5": {
+   "label": "Bogenfenster · oben",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  "3,5": {
+   "label": "Bogenfenster · unten",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  "2,6": {
+   "label": "Schießscharte an Mauerkante (rechts)",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  "3,6": {
+   "label": "Schießscharte an Mauerkante (links)",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  "5,0": {
+   "label": "Schießscharte (klein)",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  "6,0": {
+   "label": "Schießscharte (klein, 2)",
+   "group": "Burg & Mauern",
+   "kind": "object"
+  },
+  "9,13": {
+   "label": "Holzboden",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  }
+ },
+ "composites": [
+  {
+   "cells": {
+    "rect": [
+     4,
+     0,
+     3,
+     2
+    ]
+   },
+   "label": "Mauerrahmen (Aufsicht)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     7,
+     0,
+     2,
+     2
+    ]
+   },
+   "label": "Mauer senkrecht",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     10,
+     0,
+     3,
+     2
+    ]
+   },
+   "label": "Rundturm (Aufsicht)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     0,
+     1,
+     1,
+     3
+    ]
+   },
+   "label": "Fallgitter (schmal)",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     1,
+     1,
+     3,
+     3
+    ]
+   },
+   "label": "Fallgitter (breit)",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "2,4 3,4",
+   "label": "Schießscharte (hoch)",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "2,5 3,5",
+   "label": "Bogenfenster",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     1,
+     4,
+     3,
+     3
+    ]
+   },
+   "label": "Torbogen mit Holztür",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     4,
+     5,
+     3,
+     2
+    ]
+   },
+   "label": "Kleiner Torbogen",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     7,
+     2,
+     3,
+     2
+    ]
+   },
+   "label": "Zinnenmauer (Aufsicht)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     7,
+     4,
+     3,
+     3
+    ]
+   },
+   "label": "Burgmauer mit Zinnen",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     0,
+     7,
+     1,
+     3
+    ]
+   },
+   "label": "Kette",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     7,
+     7,
+     1,
+     3
+    ]
+   },
+   "label": "Kette (2)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     1,
+     7,
+     3,
+     3
+    ]
+   },
+   "label": "Großes Holztor",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     4,
+     7,
+     3,
+     3
+    ]
+   },
+   "label": "Rundes Holztor",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     10,
+     2,
+     3,
+     2
+    ]
+   },
+   "label": "Rundturm-Zinnen (hinten)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     10,
+     4,
+     3,
+     4
+    ]
+   },
+   "label": "Rundturm",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     10,
+     8,
+     3,
+     2
+    ]
+   },
+   "label": "Turmboden (Holz)",
+   "group": "Burg & Mauern",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     13,
+     3,
+     1,
+     2
+    ]
+   },
+   "label": "Banner rot",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     14,
+     3,
+     1,
+     2
+    ]
+   },
+   "label": "Banner blau",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     13,
+     5,
+     1,
+     2
+    ]
+   },
+   "label": "Banner türkis",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     14,
+     5,
+     1,
+     2
+    ]
+   },
+   "label": "Banner violett",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     13,
+     7,
+     1,
+     2
+    ]
+   },
+   "label": "Banner grün",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  }
+ ]
+}

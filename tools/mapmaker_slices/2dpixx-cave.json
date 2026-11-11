@@ -1,0 +1,181 @@
+{
+ "schemaVersion": 1,
+ "pack": "2dpixx-cave",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "Cave Tileset (32x32).png",
+  "sha256": "42dce436872f4d77783f12533485ee39cc27f1aae17f67ee73fcd18c799658e9"
+ },
+ "grid": {
+  "w": 32,
+  "h": 32,
+  "margin": 0,
+  "spacing": 0
+ },
+ "colorKey": null,
+ "singles": null,
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Füllkachel (4,9) ausgeschlossen."
+  ]
+ },
+ "groupOrder": [
+  "Höhle & Gebirge",
+  "Referenzen & Szenen"
+ ],
+ "regions": [
+  {
+   "rect": [
+    0,
+    0,
+    3,
+    5
+   ],
+   "label": "Abgrund mit Felsrand",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    3,
+    0,
+    3,
+    5
+   ],
+   "label": "Höhlenboden",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    6,
+    0,
+    4,
+    4
+   ],
+   "label": "Höhlenwand",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    6,
+    4,
+    3,
+    1
+   ],
+   "label": "Dunkler Höhlenboden",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  }
+ ],
+ "cells": {
+  "4,9": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "0,4": {
+   "label": "Höhlenboden mit Gras",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  "0,5": {
+   "label": "Höhlenboden mit hohem Gras",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  "1,4": {
+   "label": "Höhlenboden mit Pflanze",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  "2,4": {
+   "label": "Fels mit blauem Kristall",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  "3,4": {
+   "label": "Fels mit Kristallsplittern",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  "4,3": {
+   "label": "Höhlenboden mit blauer Blume",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  "4,4": {
+   "label": "Totenschädel im Höhlenboden",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  "4,5": {
+   "label": "Totenschädel im Höhlenboden (gespiegelt)",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  }
+ },
+ "composites": [
+  {
+   "cells": {
+    "rect": [
+     0,
+     0,
+     3,
+     5
+    ]
+   },
+   "label": "Abgrund mit Felsrand",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     6,
+     0,
+     2,
+     2
+    ]
+   },
+   "label": "Höhleneingang",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     6,
+     2,
+     2,
+     2
+    ]
+   },
+   "label": "Höhleneingang (2)",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     8,
+     0,
+     2,
+     2
+    ]
+   },
+   "label": "Spinnennetz an Felswand",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  }
+ ]
+}
