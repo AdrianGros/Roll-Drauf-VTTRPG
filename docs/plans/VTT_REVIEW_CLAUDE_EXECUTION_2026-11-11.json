@@ -141,7 +141,8 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md"
     },
     {
       "id": "C03",
@@ -156,7 +157,7 @@
         "R20",
         "R21"
       ],
-      "next_phase": "discover",
+      "next_phase": "apply",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -169,7 +170,8 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C03_2026-11-11.md"
     },
     {
       "id": "C04",
