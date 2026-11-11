@@ -1,0 +1,27 @@
+{
+ "commit": "bbb793c26581ae7a0fd7badbd71629cea1351b80",
+ "branch": "feat/creation-engine-g1",
+ "pushed": true,
+ "baseImage": "roll-drauf-vtt-app:feedback-origins-20261111-2b4924344",
+ "baseImageId": "sha256:ee80cb353444394f55f642097c2d69be1a30ba996366ab2c04e1dd8a47dbce4b",
+ "rollbackTag": "roll-drauf-vtt-app:sheet-packs-rollback-20261111-ee80cb353444",
+ "image": "roll-drauf-vtt-app:sheet-packs-20261111-bbb793c2",
+ "imageId": "sha256:e51a5ced9f91a9242afedc941444abe903380354884f29f3a14111c0445458e4",
+ "overlayFiles": 1277,
+ "overlayHashesVerifiedInImage": 1277,
+ "liveFilesReconciledBeforeOverlay": 32,
+ "serverKnownAssets": 73622,
+ "switchedAt": "2026-11-11T12:48:55Z",
+ "health": {
+  "now": "2026-11-11T12:49:01.173181",
+  "service": "roll_drauf_vtt",
+  "started_at": "2026-11-11T12:48:58.995293",
+  "status": "ok"
+ },
+ "otherServicesUnchanged": true,
+ "publicHashes": {
+  "jsonCsvHtml": "32/32",
+  "pngSample": "25/25"
+ },
+ "rollback": "/srv/migration/2026-11-11/sheet-packs/rollback.sh"
+}

@@ -1,0 +1,9 @@
+Checks before release (scratch venv: pytest, Pillow 12.3.0, Playwright 1.65, chromium_headless_shell-1243):
+- Unit: tests/test_mapmaker_sheet_slicer.py, test_mapmaker_static.py, test_mapmaker_tiles_server.py -> 43 passed
+  (every slice of all 11 profiles recomposed from its sheet; pinned boundaries; accounting; duplicate tiles).
+- Full run incl. tests/test_mapmaker_browser.py: 97 passed, 3 skipped (Flask-served variants), 1 failed:
+  test_tile_tool_paints_grid_cells... waited for the "geladen" toast while the editor (correctly) asked
+  "Aktuelle Karte behalten?" after a restored draft. Test now answers the prompt via _import_project;
+  3 x 2 repeated runs of the affected tests passed. Product code unchanged by that fix.
+- New browser test test_sliced_sheets_offer_whole_stamps_and_grid_tiles (5 packs) passed.
+- Rebuild of all 11 packs is byte-identical (manifests, palettes, coverage, inventory, credits).
