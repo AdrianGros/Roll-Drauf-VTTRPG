@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "program": "protocol-feedback-2026-11-11",
-  "phase": "deploy_P3",
+  "phase": "apply_P4",
   "status": "in_progress",
   "implementation_started": true,
   "background_execution": false,
@@ -170,11 +170,11 @@
     {
       "id": "P3",
       "title": "Homebrew-Hintergründe/Merkmale und Bonus-Herkunft",
-      "status": "planned",
+      "status": "live_verified",
       "depends_on": [
         "P2"
       ],
-      "next_phase": "discover",
+      "next_phase": "monitor_complete",
       "acceptance_ids": [
         "A01",
         "A02",
@@ -191,16 +191,19 @@
         "Ungültige Mechanik blockiert Veröffentlichung mit Diagnose",
         "Bonusinventar und Herleitungen aus derselben maßgeblichen Berechnung geprüft",
         "Migration, Datenrückweg und UI-zu-Creator-zu-Bogen-Nachweis vorhanden"
-      ]
+      ],
+      "evidence": "docs/proofs/origins-provenance-2026-11-11",
+      "source_commit": "2b4924344e851999a643125df1633ec0ecd06e78",
+      "image_id": "sha256:ee80cb353444394f55f642097c2d69be1a30ba996366ab2c04e1dd8a47dbce4b"
     },
     {
       "id": "P4",
       "title": "Darstellung, DE/EN und kalibrierte Einheiten",
-      "status": "planned",
+      "status": "in_progress",
       "depends_on": [
         "P0"
       ],
-      "next_phase": "discover",
+      "next_phase": "apply",
       "acceptance_ids": [
         "A03",
         "A04",
@@ -547,11 +550,12 @@
     {
       "id": "VTT-19",
       "package": "P3",
-      "status": "partial",
+      "status": "delivered",
       "acceptance_ids": [
         "A03"
       ],
-      "closure": "Inventar aller berechneten Bonusfelder mit nachvollziehbarer maßgeblicher Herleitung"
+      "closure": "Inventar aller berechneten Bonusfelder mit nachvollziehbarer maßgeblicher Herleitung",
+      "scope_note": "Vereinbarter P3-Umfang technisch live geprüft; freie Bogenprogrammierung und weitere Homebrew-Typen bleiben gesondert."
     },
     {
       "id": "VTT-20",
@@ -629,12 +633,13 @@
     {
       "id": "VTT-28",
       "package": "P3",
-      "status": "bounded_proposal",
+      "status": "delivered",
       "acceptance_ids": [
         "A02",
         "A03"
       ],
-      "closure": "Hintergründe/Merkmale typisiert publizierbar und spielbar; weitere Homebrew-Typen gesondert"
+      "closure": "Hintergründe/Merkmale typisiert publizierbar und spielbar; weitere Homebrew-Typen gesondert",
+      "scope_note": "Vereinbarter P3-Umfang technisch live geprüft; freie Bogenprogrammierung und weitere Homebrew-Typen bleiben gesondert."
     },
     {
       "id": "VTT-29",
@@ -686,11 +691,12 @@
     {
       "id": "VTT-34",
       "package": "P3",
-      "status": "bounded_proposal",
+      "status": "delivered",
       "acceptance_ids": [
         "A02"
       ],
-      "closure": "Bestehender visueller Eagle-Arbeitsplatz/Vorschau; freier Sheet-Designer bleibt Produktentscheidung"
+      "closure": "Bestehender visueller Eagle-Arbeitsplatz/Vorschau; freier Sheet-Designer bleibt Produktentscheidung",
+      "scope_note": "Vereinbarter P3-Umfang technisch live geprüft; freie Bogenprogrammierung und weitere Homebrew-Typen bleiben gesondert."
     },
     {
       "id": "VTT-35",
@@ -866,5 +872,5 @@
       "title": "Abgeschlossene Sitzung und strukturiertes Feedback"
     }
   ],
-  "next_step": "P3: geprüfte unveränderliche Hintergründe/Merkmale, Bonusherkunft und Eagle-Companion; P1/P2 live verifiziert."
+  "next_step": "P4-Apply: globale sichere Ansichten und DE/EN-UI, Anzeigeeinheiten und DM-kalibrierte Rasterdistanzen. P1–P3 live verifiziert."
 }

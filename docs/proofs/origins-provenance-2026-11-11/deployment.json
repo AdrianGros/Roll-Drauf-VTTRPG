@@ -1,0 +1,128 @@
+{
+  "status": "live_verified",
+  "releases": [
+    {
+      "commit": "2865250323b9a3c71d7cb51788dddf3885c223ed",
+      "image": "roll-drauf-vtt-app:feedback-origin-readers-20261111-286525032",
+      "image_id": "sha256:73a1e84431b5c512a4bd4c18af6bcfb96cc9b8c6fdb704f519ca67079be17898",
+      "base_image_id": "sha256:506e98ca3feba300f0da305eb5e963c71ce719aa4620e2008ba9b3309794a099",
+      "prior_image": "roll-drauf-vtt-app:feedback-origin-readers-rollback-20261111-506e98ca3feb",
+      "compose_project": "migration-production",
+      "compose_files": [
+        "/srv/migration/2026-10-07/setup/production.compose.json",
+        "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+      ],
+      "overlay_manifest": {
+        "vtt/characters/origin_catalog.py": "8fc1766505dddecf02632d52c94354f41b8ac887bb9b13a30e6da204e114c3bc",
+        "vtt/characters/species_catalog.py": "814a2eaa1d05f5a1d7e1f7b601e925d83635c2555a365aa863e2bf6b9991a571",
+        "vtt/characters/srd_creator.py": "522ac307f1825dce0a689d19cf576d8d656d9c28c9d5ecf60333bf6d579e2783",
+        "vtt/characters/srd_export.py": "4f7a20f53e722598511dca5ff62a38508be44a36bdaa90edd8f31284072b370b",
+        "vtt/characters/srd_inventory.py": "da464f28ae8668ecfb8daa5e74b236004ef9e0d5d2c841c7b058e9136050c93a",
+        "vtt/characters/srd_party.py": "8c7a2dd16add24060fa6e05ed7b163332a8496e82c31a3117d6f4a3ed0d81ed2",
+        "vtt/config.py": "1f58093d8236471296c0b5b856463b813456e24febdc47ce7ec6b93d23e26dae",
+        "vtt/creation_engine/origin_routes.py": "0299a12931d98b50442c964b6c3079aed6a57d41d12b43c809939ee6b41dd315",
+        "vtt/creation_engine/origins.py": "c2f434f273bc7caf7586e8e3cba66a23a88c4e1650394a8d4b15f969d8fa0e71",
+        "vtt/creation_engine/routes.py": "0dcddff4e5b1d0d2900fb6f60cc4ee70614864f3a18f1515a46be2da2aa8d2d7",
+        "vtt/models/__init__.py": "5b7e7ec3fb2a3b482bcd1679e8e56d7a2e78219fb17f7c127a6bad569a8840eb",
+        "vtt/models/ce_rule_revision.py": "5a06989a712f9e3be37cf79b42056d68e2f388dea060f6bcc066d2ab9d5202e9",
+        "vtt/rules_content/creator_rules.py": "750082fb1bf3ad9e09ab908437fdff1bbbce9d5de73b01081da189bb4f994de1",
+        "vtt/rules_content/origin_profiles.py": "12fe4ff7ee675d642e9bbd021e2fca56d131dd51f171e0e8ba79dfce6af20ded",
+        "vtt/rules_content/species_profiles.py": "6333467e9d8e019f24dc56dbc8a7aef07a7e99bd8e874052918d0f081cdde06b"
+      },
+      "database_backup": {
+        "path": "/srv/migration/2026-11-11/feedback-origin-readers/286525032/database-before.dump",
+        "bytes": 413282,
+        "archive_readable": true,
+        "restore_exercised": false
+      },
+      "schema_migration": {
+        "status": "pass",
+        "tables": [
+          "ce_rule_revisions"
+        ],
+        "previously_present": [],
+        "columns_verified": true
+      },
+      "built_source_verification": {
+        "checked": 239,
+        "mismatches": []
+      },
+      "deployed_at": "2026-11-11T12:20:21.444113319Z",
+      "other_services_unchanged": true,
+      "rollback": "/srv/migration/2026-11-11/feedback-origin-readers/286525032/rollback.sh",
+      "rollback_syntax_checked": true,
+      "rollback_executed": false
+    },
+    {
+      "commit": "2b4924344e851999a643125df1633ec0ecd06e78",
+      "image": "roll-drauf-vtt-app:feedback-origins-20261111-2b4924344",
+      "image_id": "sha256:ee80cb353444394f55f642097c2d69be1a30ba996366ab2c04e1dd8a47dbce4b",
+      "base_image_id": "sha256:73a1e84431b5c512a4bd4c18af6bcfb96cc9b8c6fdb704f519ca67079be17898",
+      "prior_image": "roll-drauf-vtt-app:feedback-origins-rollback-20261111-73a1e84431b5",
+      "compose_project": "migration-production",
+      "compose_files": [
+        "/srv/migration/2026-10-07/setup/production.compose.json",
+        "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+      ],
+      "overlay_manifest": {
+        "vtt/characters/srd_inventory.py": "9ce970655a450d3aa1499db944b70971037ce1f8daa86789a3d46d1368cbd02a",
+        "vtt/config.py": "32fd5b4f05dd706c7dfb4ec35c4246766e961dc43714d16e3aa0b1f0ef1e1e9e",
+        "vtt/creation_engine/origin_routes.py": "62af40905617d647f46d151b82f344205636658265a702ba4a1d7e0713b46f73",
+        "vtt/static/css/creation-engine.css": "37ff77fb4cf42bc30bcfdf82af7013cf3c077bd612920030ae270500b43086bf",
+        "vtt/static/js/ce-origin-publish.js": "a60f24e47952ecb3294b2f62644ee6ba21227608b66e91936f192a048c5b90cf",
+        "vtt/static/js/srd-creator.js": "f417ba7c93762e70d6c18c55cabf6313203f66b1ad244428e1ebcd47d686d1f8",
+        "vtt/static/js/srd-inventory-ui.js": "52c4c5519cd4db46103433aab819e78cde0917f53047d9ddf8376cefa4b58bb6",
+        "vtt/templates/character-sheet.html": "ae3c0b27253c2294cf8d8623ecebadbf709a3d74d26edf5b1ed372a7658cdd42",
+        "vtt/templates/creation-engine.html": "5afef527f47115a601c2caf4fc99e49c635f65a621d39302fb701d8479d97657"
+      },
+      "database_backup": {
+        "path": "/srv/migration/2026-11-11/feedback-origins/2b4924344/database-before.dump",
+        "bytes": 417223,
+        "archive_readable": true,
+        "restore_exercised": false
+      },
+      "schema_migration": {
+        "status": "pass",
+        "tables": [],
+        "previously_present": [],
+        "columns_verified": true
+      },
+      "built_source_verification": {
+        "checked": 240,
+        "mismatches": []
+      },
+      "deployed_at": "2026-11-11T12:36:25.68138855Z",
+      "other_services_unchanged": true,
+      "rollback": "/srv/migration/2026-11-11/feedback-origins/2b4924344/rollback.sh",
+      "rollback_syntax_checked": true,
+      "rollback_executed": false
+    }
+  ],
+  "push_status": "pushed",
+  "health": {
+    "now": "2026-11-11T12:45:28.101057",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-11T12:36:31.596165",
+    "status": "ok"
+  },
+  "roles": [
+    "homebrew_author",
+    "campaign_player"
+  ],
+  "ui_journeys": [
+    "Charaktere -> Creation Engine -> Hintergründe und Merkmale spielbar machen",
+    "Charaktere -> Held anlegen -> fortgesetzter Entwurf -> Herkunft -> Prüfung -> Bogen -> Werte und Bonusquellen",
+    "Kampagnen -> eigener Player-Tisch -> Charaktertoken -> Belegen -> Initiative"
+  ],
+  "targeted_checks": {
+    "reader_backend_rules_inventory": 126,
+    "writer_backend_import_inventory": 54,
+    "final_targeted_origin_security_attack_provenance": 29,
+    "browser_cases": 2,
+    "groups_overlap": true
+  },
+  "live_journeys": 3,
+  "rollback_reader_compatibility": "reader-compatibility.json",
+  "owner_acceptance": "not_run",
+  "temporary_credentials_removed": true
+}

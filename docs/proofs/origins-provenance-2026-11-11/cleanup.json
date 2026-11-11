@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "scope": "only synthetic feedback_or users and owned campaign",
+  "removed": {
+    "token_states": 2,
+    "table_request_receipts": 1,
+    "session_states": 1,
+    "play_table_contexts": 2,
+    "chat_messages": 1,
+    "srd_creator_drafts": 1,
+    "game_sessions": 2,
+    "character_hotbars": 1,
+    "characters": 2,
+    "campaign_members": 2,
+    "campaign_maps": 1,
+    "sessions": 2,
+    "ce_rule_revisions": 3,
+    "ce_eagle_documents": 2,
+    "campaigns": 1,
+    "users": 2
+  },
+  "container_credentials_removed": true,
+  "host_credentials_removed": true,
+  "private_character_fixture_removed": true
+}
