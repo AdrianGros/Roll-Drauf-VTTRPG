@@ -58,3 +58,15 @@ Katalogaudit erfasst bekannte lizenzierte IDs ohne unbenannte Inhalte zu erfinde
 UI-Abnahme: Eagle → Beispiel-Merkmal/Hintergrund → prüfen/veröffentlichen → Creator
 → fertiger Bogen → erlaubte persönliche Aktion. Nächster Schritt: Deploy in den
 beiden kompatiblen Schritten, anschließend Live-Nachweis und Monitor.
+
+### Entwurfsbedienung im vorhandenen Eagle-Dokument
+
+Der visuelle Zusatz speichert seinen typisierten Entwurf im vorhandenen Eagle-
+Dokument unter `flags.rollDraufOrigins`, mit dessen Revision und einem vergleichenden
+Quell-Digest. Ein gesonderter Entwurfsspeicher ist nicht erforderlich. Optionale
+Namens-/Klartextänderungen sind ausdrücklich bezeichnet; andere Eagle-Felder
+bleiben erhalten. Quelle/Zusatz müssen vor jeder Veröffentlichung erneut geprüft
+sein. GET lädt den aktuellen gespeicherten Zusatz, PUT verweigert veraltete
+Revision/Digest. Unvollständige typisierte Entwürfe können gespeichert werden,
+blockierende mechanische Befunde verhindern weiterhin die Veröffentlichung.
+Diese Konkretisierung gehört zum bestehenden P3-Entwurfsvertrag.

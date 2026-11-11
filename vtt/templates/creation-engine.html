@@ -17,6 +17,7 @@
   <script src="/static/js/vtt-main-nav.js" defer></script>
   <script src="{{ url_for('static', filename='js/regelwerk-navigation.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/ce-species-publish.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/ce-origin-publish.js') }}" defer></script>
   <script type="module" src="{{ url_for('static', filename='eagle-homebrew/creation-engine.js') }}"></script>
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
 </head>
@@ -96,6 +97,45 @@
           <h3 id="ce-species-global-heading">VTT-Compendium · spielbare Spezies</h3>
           <ul id="ce-species-global-list"></ul>
         </section>
+      </section>
+      <section id="ce-origins" class="ce-species" aria-labelledby="ce-origins-heading" hidden>
+        <h2 id="ce-origins-heading">Hintergründe und Merkmale spielbar machen</h2>
+        <p class="ce-help">Eagle-Quelle auswählen oder einen eigenen Entwurf anlegen, Regeln ergänzen, prüfen und bewusst veröffentlichen. Fertige Charaktere behalten ihre verwendete Fassung.</p>
+        <div class="ce-origin-actions">
+          <button id="ce-origin-new-feat" type="button">Merkmal anlegen</button>
+          <button id="ce-origin-new-background" type="button">Hintergrund anlegen</button>
+          <button id="ce-origin-refresh" type="button">Quellen neu laden</button>
+        </div>
+        <label for="ce-origin-source">Eagle-Quelle</label><select id="ce-origin-source"></select>
+        <label for="ce-origin-scope">Veröffentlichen für</label><select id="ce-origin-scope"></select>
+        <div id="ce-origin-form" hidden>
+          <label for="ce-origin-name">Name</label><input id="ce-origin-name" maxlength="100">
+          <label for="ce-origin-description">Beschreibung als Klartext</label><textarea id="ce-origin-description" rows="4" maxlength="6000"></textarea>
+          <fieldset id="ce-origin-background-fields" hidden>
+            <legend>Hintergrund</legend>
+            <fieldset><legend>Drei erlaubte Attribute für +2/+1 oder +1/+1/+1</legend><div id="ce-origin-abilities" class="ce-species-skills"></div></fieldset>
+            <fieldset><legend>Zwei Fertigkeiten mit Übung</legend><div id="ce-origin-bg-skills" class="ce-species-skills"></div></fieldset>
+            <label for="ce-origin-tool">Werkzeug</label><select id="ce-origin-tool"></select>
+            <label for="ce-origin-feat">Veröffentlichtes Herkunftstalent</label><select id="ce-origin-feat"></select>
+            <p class="ce-help">Startausrüstung: Geldpaket B mit 50 GM. Die Attributsverteilung wählt später der Spieler.</p>
+          </fieldset>
+          <fieldset id="ce-origin-feat-fields">
+            <legend>Merkmal / Talent</legend>
+            <label for="ce-origin-category">Kategorie</label><select id="ce-origin-category"><option value="origin">Herkunftstalent</option><option value="general">Allgemeines Talent</option></select>
+            <label for="ce-origin-level">Mindeststufe</label><input id="ce-origin-level" type="number" min="1" max="20" value="1">
+            <label for="ce-origin-prerequisite">Attributsvoraussetzung</label><select id="ce-origin-prerequisite"></select>
+            <label for="ce-origin-min-score">Erforderlicher Attributswert</label><input id="ce-origin-min-score" type="number" min="3" max="20" value="13">
+            <fieldset><legend>Feste Fertigkeitsübung</legend><div id="ce-origin-feat-skills" class="ce-species-skills"></div></fieldset>
+            <label><input id="ce-origin-initiative-pb" type="checkbox"> Initiative +Übungsbonus</label>
+            <label for="ce-origin-ac">Zusätzliche Rüstungsklasse</label><input id="ce-origin-ac" type="number" min="0" max="5" step="1" value="0">
+            <label for="ce-origin-initiative">Zusätzliche Initiative</label><input id="ce-origin-initiative" type="number" min="0" max="10" step="1" value="0">
+            <label for="ce-origin-speed">Zusätzliche Bewegung (m)</label><input id="ce-origin-speed" type="number" min="0" max="30" step="0.3" value="0">
+            <label for="ce-origin-hp">Zusätzliche Trefferpunkte je Charakterstufe</label><input id="ce-origin-hp" type="number" min="0" max="10" step="1" value="0">
+            <p class="ce-help">0 bedeutet kein Bonus. Gleiche Talente wirken einmal; verschiedene Boni addieren sich. Fertigkeitsübung wird höchstens einmal gezählt. Regeltext erzeugt keine automatische Wirkung.</p>
+          </fieldset>
+          <div class="ce-origin-actions"><button id="ce-origin-save" type="button">Entwurf speichern</button><button id="ce-origin-check" type="button">Spielbarkeit und Vorschau prüfen</button><button id="ce-origin-publish" type="button" disabled>Fassung veröffentlichen</button></div>
+        </div>
+        <div id="ce-origin-report" role="status" aria-live="polite"></div>
       </section>
     </main>
   </div>

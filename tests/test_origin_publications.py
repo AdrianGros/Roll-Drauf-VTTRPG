@@ -65,7 +65,7 @@ def test_publish_background_creator_pin_rebuild_import_and_source_changes(client
     assert rebuilt.status_code==201,rebuilt.json
     imported,_=srd_export.import_character(exported,user_id=client.user_id)
     assert sheet_link.srd_evaluation(imported)['initiative']==before['initiative']
-    with pytest.raises(Exception):srd_export.import_character(exported,user_id=other.user_id)
+    with pytest.raises(__import__('vtt.characters.srd_progression',fromlist=['ProgressionError']).ProgressionError):srd_export.import_character(exported,user_id=other.user_id)
     assert other.post('/api/srd-creator/evaluate',json={'state':state}).status_code==422
     bad=client.post(BASE+'/publish',json={**body,'scope':'global','expectedDigest':checked['source']['digest'],'expectedProfileDigest':checked['profileDigest']})
     assert bad.status_code==422 and bad.json['error']=='linked-scope'
@@ -106,3 +106,44 @@ def test_reader_checkpoint_disables_publication_but_keeps_pinned_evaluation(app,
     state=wizard_state(data);state['background']['id']='homebrew.background.2'
     from vtt.rules_content.species_profiles import rules_data_for_block
     assert evaluate(rules_data_for_block({'state':state,'rulePins':example_pins()}),state)['initiative']==4
+
+
+def test_typed_draft_compare_and_swap_preserves_other_eagle_fields(client):
+    row=document(client);row.source={**row.source,'flags':{'other':{'keep':True}}};db.session.commit()
+    body={'world':'personal','uuid':row.uuid,'supplement':supplement()}
+    check=client.post(BASE+'/check',json=body).json
+    save={**body,'expectedDigest':check['source']['digest'],'expectedRevision':row.revision,'name':'Eigener Entwurf'}
+    response=client.put(BASE+'/draft',json=save)
+    assert response.status_code==200,response.json
+    assert response.json['document']['source']['flags']['other']=={'keep':True}
+    assert response.json['document']['source']['flags']['rollDraufOrigins']['supplement']==supplement()
+    assert response.json['document']['revision']==2
+    assert client.put(BASE+'/draft',json=save).status_code==409
+
+
+def test_foreign_author_cannot_read_check_or_save_draft(client,other):
+    row=document(client)
+    body={'world':'personal','uuid':row.uuid,'supplement':supplement()}
+    assert other.post(BASE+'/check',json=body).status_code==404
+    assert other.put(BASE+'/draft',json={**body,'expectedRevision':1,'expectedDigest':'fake'}).status_code==404
+
+
+def test_campaign_publication_selection_revocation_and_binding(client,other,data):
+    from vtt.models import Campaign,CampaignMember
+    from tests.play_shared import add_member
+    campaign=Campaign(name='Origin campaign',owner_id=client.user_id,status='active');db.session.add(campaign);db.session.commit()
+    member=add_member(campaign,db.session.get(__import__('vtt.models',fromlist=['User']).User,other.user_id),'Player')
+    feat=document(client);result,_,_=publish(client,feat,scope=f'campaign:{campaign.id}')
+    fid='homebrew.feat.'+str(result['revision']['id'])
+    assert other.get('/api/srd-creator/origin-catalog').json['feats'][0]['id']==fid
+    state=wizard_state(data);state['species']={'id':'character-origins.species.human','choices':{'versatile':fid,'skillful':'athletik'}}
+    resolved,rows,problems=origin_catalog.resolve(other.user_id,state)
+    assert not problems and len(rows)==1
+    pins=[origin_catalog.pin_for(row) for row in rows]
+    assert origin_catalog.campaign_problem(pins,None)
+    assert origin_catalog.campaign_problem(pins,campaign.id) is None
+    member.status='removed';db.session.commit()
+    assert origin_catalog.resolve(other.user_id,state)[2]
+    from vtt.rules_content.species_profiles import rules_data_for_block
+    pinned_data=rules_data_for_block({'rulePins':pins},data)
+    assert evaluate(pinned_data,state)['initiative']>evaluate(data,state)['initiative']

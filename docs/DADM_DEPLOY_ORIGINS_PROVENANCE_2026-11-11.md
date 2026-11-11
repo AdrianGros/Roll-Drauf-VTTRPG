@@ -38,3 +38,33 @@ Grants, Importrechte und Bonusgesamtwerte geprüft. Rest: visueller Zusatz,
 Entwurfsrevision, vollständige UI-Reise und technische Live-Abnahme. Nächster
 Schritt: Leser-Image bereitstellen, danach P3-UI/Writes aktivieren und gegen den
 kompatiblen Leser-Rückweg verifizieren.
+
+## Schreibendes Release und Oberfläche
+
+Leser-Zwischenrelease live verifiziert: [Checkpoint](proofs/origins-provenance-2026-11-11/reader-checkpoint.json).
+Neue Tabelle angelegt und reflektiert, Backup-Archiv lesbar; unveränderliche
+Hintergrund-/Merkmalspins bei abgeschalteter Publikation im laufenden Image geprüft.
+Keine Testfigur dafür in die Datenbank geschrieben. Dieses Image ist der Rückweg.
+
+UI umgesetzt: vorhandene Eagle-Navigation → neuer Hintergrund-/Merkmalsbereich,
+Anlegen eines normalen Eagle-Dokuments, beschriftete Felder, Entwurf speichern
+mit Quellrevision/Digest-CAS, sichere Vorschau, bewusstes Veröffentlichen. Creator
+lädt freigegebene Fassungen und zeigt deren Regeltext; Bogen zeigt Pins und
+aufklappbare Herleitungen. Waffenangriffs-/Schadenszusätze entsprechen genau den
+serverseitigen Würfelspezifikationen. Neue Publikation ist im schreibenden Image
+standardmäßig eingeschaltet; kein Produktions-Override dafür gesetzt.
+
+Prüfungen nach UI-Ergänzung: **54** Backend-/Import-/Inventarfälle bestanden;
+abschließend **29** gezielte Herkunfts-/Sicherheits-/Waffen-Provenienzfälle bestanden
+(überlappende Gruppen, nicht addieren). **2** Browserreisen Chromium 1440 px und
+Firefox 390 px bestanden: normaler Charaktere-Menüeinstieg → Eagle → Merkmal und
+Hintergrund speichern/veröffentlichen → Creator-Auswahl → Finalisierung → Bogen
+mit gepinnter Initiative +3 aus dem eigenen Merkmal. Keine Seitenfehler, kein
+horizontaler Überlauf. JS-Syntax mit dem vorhandenen Playwright-Node geprüft;
+Python-Kompilierung und `git diff --check` bestanden. Kein neues Paket installiert.
+
+Noch nicht als Gesamtpaket fertig markiert: Commit/Push und App-Overlay auf den
+verifizierten Leserstand; Live-Reise Autor/Player mit kampagnengebundener
+Veröffentlichung, erlaubter Tischaktion, neuer Publikationsfassung und Beweis,
+dass der kompatible Leser die tatsächlich erzeugten Pins lesen kann; Bereinigung
+und Monitor danach. Frühere Zwischenstände haben keine Owner-Abnahme ersetzt.

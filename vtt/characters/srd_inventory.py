@@ -513,6 +513,7 @@ def attack_rows(char, evaluation, items):
         "key": "unarmed", "inventoryId": None, "name": "Waffenloser Schlag", "equipped": False, "proficient": True,
         "attackBonus": strength + pb, "damage": str(max(0, 1 + strength)), "damageType": "Wucht", "ability": "str",
         "versatile": None, "mastery": None, "masteryActive": False, "properties": [], "summary": "1 + Stärkemodifikator Wucht",
+        "baseDamage":{"dice":0,"sides":0,"flat":1},
     }]
     for item in items:
         meta = _meta(item)
@@ -527,6 +528,7 @@ def attack_rows(char, evaluation, items):
         rows.append({
             "key": str(item.id), "inventoryId": item.id, "name": item.name, "equipped": bool(meta.get("equipped")),
             "proficient": proficient, "attackBonus": modifier + (pb if proficient else 0),
+            "baseDamage":dict(weapon["damage"]),
             "damage": damage_text(weapon["damage"], modifier),
             "damageType": DAMAGE_TYPES.get(weapon["damage"]["type"], weapon["damage"]["type"]),
             "ability": ability,
@@ -536,13 +538,20 @@ def attack_rows(char, evaluation, items):
         })
     for row in rows:
         modifier = abilities[row['ability']]['modifier']
+        base_damage=row.pop('baseDamage');flat=base_damage.get('flat') or 0
+        damage_parts=[{'label':'Waffen-Grundzusatz','value':flat,'source':{'id':'inventory.'+row['key']}},
+            {'label':row['ability'].upper(),'value':modifier,'source':{'id':'modifier.'+row['ability']}}]
+        total_modifier=flat+modifier
+        if row['key']=='unarmed' and total_modifier<0:
+            damage_parts.append({'label':'Mindestens 0 Schaden','value':-total_modifier,'source':{'id':'damage-minimum'}});total_modifier=0
+
         row['provenance'] = {
             'attack': {'label':'Angriffsbonus','total':row['attackBonus'],'stacking':'add',
                 'contributions':[{'label':row['ability'].upper(),'value':modifier,'source':{'id':'modifier.'+row['ability']}},
                     {'label':'Waffenübung','value':pb if row['proficient'] else 0,'source':{'id':'proficiencyBonus','classes':[entry['classKey'] for entry in entries]}}]},
-            'damage': {'label':'Schaden','formula':row['damage'],'stacking':'weapon_dice_plus_ability',
-                'contributions':[{'label':'Waffe','value':row['summary'],'source':{'id':'inventory.'+row['key']}},
-                    {'label':row['ability'].upper(),'value':modifier,'source':{'id':'modifier.'+row['ability']}}]},
+            'damage': {'label':'Schadenszusatz','total':total_modifier,'formula':row['damage'],
+                'dice':f"{base_damage.get('dice') or 0}d{base_damage.get('sides') or 0}",
+                'stacking':'weapon_dice_plus_ability','contributions':damage_parts},
         }
     return rows
 

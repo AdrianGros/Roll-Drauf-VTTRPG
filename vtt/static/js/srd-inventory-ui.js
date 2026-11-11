@@ -192,6 +192,17 @@
         rolls.append(srdRollButton(`Zweihändig ${attack.versatile}`, 'weapon_damage', attack.key, current.character, '', { twoHanded: true }));
       }
       row.append(rolls);
+      if(attack.provenance) {
+        const details=element('details','srd-inv-provenance');details.append(element('summary','','Bonusquellen'));
+        for(const value of Object.values(attack.provenance)) {
+          details.append(element('strong','',`${value.label}: ${value.total}${value.formula?' · '+value.formula:''}`));
+          const list=element('ul','');
+          for(const part of value.contributions)list.append(element('li','',`${part.label}: ${part.value>0?'+':''}${part.value}`));
+          details.append(list);
+        }
+        row.append(details);
+      }
+
       if (attack.properties.length) row.append(element('div', 'srd-inv-meta', attack.properties.join(' · ')));
       table.append(row);
     });

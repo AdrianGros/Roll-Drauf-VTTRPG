@@ -308,3 +308,19 @@ def test_pending_choices_can_be_dismissed(client, data):
     body = client.post(f"{inv(client, char['id'])}/starting-equipment", json={"classPackage": "A", "backgroundPackage": "A"}).get_json()
     pending = body["pending"][0]
     assert client.delete(f"{inv(client, char['id'])}/pending/{pending['id']}").get_json()["pending"] == []
+
+
+def test_weapon_bonus_provenance_equals_authoritative_attack_and_damage_specs(client,data):
+    from vtt.characters import srd_inventory,sheet_link
+    char=finalized(client,data)
+    add(client,char['id'],DAGGER)
+    model=db.session.get(Character,char['id']);evaluation=sheet_link.srd_evaluation(model)
+    payload=client.get(inv(client,char['id'])).json
+    for attack in payload['attacks']:
+        provenance=attack['provenance']
+        attack_spec=srd_inventory.weapon_roll_spec(model,evaluation,'weapon_attack',attack['key'])
+        damage_spec=srd_inventory.weapon_roll_spec(model,evaluation,'weapon_damage',attack['key'])
+        assert provenance['attack']['total']==attack_spec['modifier']
+        assert sum(p['value'] for p in provenance['attack']['contributions'])==attack_spec['modifier']
+        assert provenance['damage']['total']==damage_spec['damage']['modifier']
+        assert sum(p['value'] for p in provenance['damage']['contributions'])==damage_spec['damage']['modifier']

@@ -54,3 +54,22 @@ def test_every_derived_numeric_field_has_reconciled_provenance(class_key):
         assert p[key]['total']==pytest.approx(value),key
         assert sum(c['value'] for c in p[key]['contributions'])==pytest.approx(value),key
         assert p[key]['stacking']
+
+
+def test_unrecognized_feature_selection_cannot_grant_homebrew_bonus():
+    data=load_creator_data();state=wizard_state(data);pins=example_pins()[:1]
+    state['featureChoices']={'wizard':{'invented-homebrew-choice':'homebrew.feat.1'}}
+    before=evaluate(data,state)
+    after=evaluate(rules_data_for_block({'rulePins':pins}),state)
+    assert after['initiative']==before['initiative']
+    assert after['hitPoints']['max']==before['hitPoints']['max']
+
+
+def test_general_feat_minimum_checked_at_acquisition_and_category():
+    data=load_creator_data();state=wizard_state(data);pins=example_pins()[:1]
+    entry=pins[0]['profile']['entry'];entry['category']='Allgemeines Talent';entry['prerequisite']['minLevel']=5
+    state['advancements']=[{'classKey':'wizard','classLevel':4,'kind':'feat','featId':'homebrew.feat.1'}]
+    after=evaluate(rules_data_for_block({'rulePins':pins}),state)
+    assert any(f['code']=='homebrew-prerequisite' for f in after['findings'])
+    entry['prerequisite']['minLevel']=4
+    assert not any(f['code']=='homebrew-prerequisite' for f in evaluate(rules_data_for_block({'rulePins':pins}),state)['findings'])

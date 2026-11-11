@@ -133,6 +133,13 @@
         const body = $('scDialogBody');
         body.textContent = 'Wird geladen …';
         if (!dialog.open) dialog.showModal();
+        const own = [...app.data.backgrounds,...app.data.feats].find(entry=>entry.id===id && entry.homebrew);
+        if (own) {
+            body.replaceChildren(h('p',{class:'sc-muted',text:`Homebrew · Fassung ${own.origin.revision} · ${own.origin.author || ''}`}),
+                h('p',{text:own.description || ''}));
+            if (own.mechanics) own.mechanics.forEach(grant=>body.append(h('p',{text:grant.kind==='skill_proficiency' ? `Übung: ${SC.skillName(grant.skill)}` : `${({initiative_pb:'Initiative',initiative:'Initiative',ac:'Rüstungsklasse',speed_meters:'Bewegung (m)',hp_per_level:'Trefferpunkte je Stufe'})[grant.kind] || 'Regelbeitrag'}: +${grant.kind==='initiative_pb'?'Übungsbonus':grant.value}`})));
+            $('scDialogTitle').focus();return;
+        }
         try {
             const response = await fetch(`${COMP}/entry/${encodeURIComponent(id)}`, { credentials: 'same-origin' });
             if (!response.ok) throw new Error('missing');
@@ -597,6 +604,10 @@
         if (catalogRes.ok && Array.isArray(catalogRes.data.species) && catalogRes.data.species.length) {
             app.data = { ...app.data, species: [...app.data.species, ...catalogRes.data.species] };
         }
+        const originRes = await api('/origin-catalog');
+        if (originRes.ok) app.data = {...app.data,
+            backgrounds:[...app.data.backgrounds,...(originRes.data.backgrounds || [])],
+            feats:[...app.data.feats,...(originRes.data.feats || [])]};
         app.defaultSources = metaRes.data.defaultSources;
         buildLookups(app.data);
         let savedMode = 'guided';

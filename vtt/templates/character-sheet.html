@@ -560,6 +560,10 @@
                 flex: 1 1 100%;
             }
         }
+
+        .srd-sheet-provenance {margin:1rem 0;padding:.8rem;border:1px solid currentColor;border-radius:.6rem;overflow-wrap:anywhere;}
+        .srd-sheet-provenance > details {padding:.5rem 0;border-bottom:1px solid var(--border-color,#b7a383);}
+        .srd-sheet-provenance summary {cursor:pointer;font-weight:600;}
     </style>
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/theme.css">
@@ -1778,13 +1782,45 @@
             return form;
         }
 
+        function buildSrdProvenance(detail) {
+            const root=document.createElement('details');root.id='srdProvenance';root.className='srd-sheet-provenance';
+            appendText(root,'summary','Werte und Bonusquellen');
+            const version=detail.evaluation?.provenanceRuleset;
+            if(version)appendText(root,'p',`Regelpaket ${version.id} · Fassung ${version.version}`,'srd-sheet-label');
+            for(const pin of detail.ruleOrigins || []) {
+                const section=document.createElement('section');section.className='srd-sheet-cell';
+                appendText(section,'strong',`${pin.profile.entry.name} · Homebrew-Fassung ${pin.revision}`);
+                appendText(section,'p',`${pin.author || ''} · ${pin.scope?.label || pin.scope?.kind || ''}`,'srd-sheet-label');
+                appendText(section,'p',pin.profile.description || '');root.append(section);
+            }
+            const stacking={add:'Beiträge addieren',add_then_cap:'Beiträge addieren, Attributsmaximum beachten',
+                best_formula_then_add:'Höchste passende RK-Formel, dann zusätzliche Boni',highest_proficiency_then_add:'Höchste Übung (Expertise ersetzt einfache Übung), dann Attribut',
+                ability_modifier:'Attributsmodifikator aus dem fertigen Attribut',ability_modifier_after_override:'Modifikator nach manueller Attributsänderung',level_table:'Übungsbonus nach Gesamtstufe'};
+            for(const [key,value] of Object.entries(detail.evaluation?.provenance || {})) {
+                const row=document.createElement('details');row.dataset.provenanceKey=key;
+                appendText(row,'summary',`${value.label}: ${value.total}`);
+                appendText(row,'p',(stacking[value.stacking.replace('_then_override','')] || 'Regelbeiträge')+(value.stacking.endsWith('_then_override')?' · danach manuelle Änderung':''),'srd-sheet-label');
+                const list=document.createElement('ul');
+                for(const part of value.contributions) {
+                    const li=document.createElement('li');appendText(li,'span',`${part.label}: ${part.value>0?'+':''}${part.value}`);
+                    const source=part.source;
+                    if(source)appendText(li,'small',` · ${source.name || source.id || source.ruleId || source.sourceId || 'Regelquelle'}${source.revision?' · Fassung '+source.revision:''}`,'srd-sheet-label');
+                    for(const grant of source?.grantedBy || [])appendText(li,'small',` · ${grant.name || grant.id}${grant.revision?' · Fassung '+grant.revision:''}`,'srd-sheet-label');
+                    list.append(li);
+                }
+                row.append(list);root.append(row);
+            }
+            appendText(root,'p','Manuelle Änderungen gelten für den gewählten Wert. Weitere Werte können gesondert geändert werden.','srd-sheet-label');
+            return root;
+        }
+
         function buildSrdSheet(character, detail, data) {
             const ev = detail.evaluation || {};
             const state = detail.srd?.state || {};
             const nodes = [buildSrdRollBar(character, ev)];
 
             const species = srdLookup(data.species, state.species?.id);
-            const background = srdLookup(data.backgrounds, state.background?.id);
+            const background = srdLookup(data.backgrounds, state.background?.id) || (detail.ruleOrigins || []).find(pin=>pin.profile.kind==='background')?.profile.entry;
             const alignment = srdLookup(data.alignments, state.identity?.alignment);
             const classText = (ev.classes || []).map((entry) => {
                 const sub = entry.subclass ? ` · ${srdSubclassNames[entry.subclass] || String(entry.subclass).split('subclass-').pop().replace(/-/g, ' ')}` : '';
@@ -1797,6 +1833,7 @@
                 srdCell('Gesinnung', alignment?.name || '–'),
             ]));
             if (detail.speciesOrigin) nodes.push(buildSrdOrigin(character, detail.speciesOrigin));
+            nodes.push(buildSrdProvenance(detail));
 
             const hp = ev.hitPoints?.max ?? character.hp_max;
             const hitDice = Object.entries(ev.hitDice || {}).map(([die, count]) => `${count}×${die}`).join(' + ');

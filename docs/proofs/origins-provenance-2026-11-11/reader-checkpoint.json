@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "publication_enabled": false,
+  "pinned_initiative": 4,
+  "database_fixture_written": false,
+  "source_commit": "2865250323b9a3c71d7cb51788dddf3885c223ed",
+  "image": "roll-drauf-vtt-app:feedback-origin-readers-20261111-286525032",
+  "image_id": "sha256:73a1e84431b5c512a4bd4c18af6bcfb96cc9b8c6fdb704f519ca67079be17898",
+  "schema": {
+    "status": "pass",
+    "tables": [
+      "ce_rule_revisions"
+    ],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-origin-readers/286525032/database-before.dump",
+    "bytes": 413282,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-origin-readers/286525032/rollback.sh",
+  "other_services_unchanged": true,
+  "health": {
+    "now": "2026-11-11T12:25:32.768643",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-11T12:20:27.201527",
+    "status": "ok"
+  }
+}

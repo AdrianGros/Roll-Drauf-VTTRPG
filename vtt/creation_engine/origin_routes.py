@@ -78,3 +78,34 @@ def origin_publish():
     except IntegrityError:
         db.session.rollback();return error('publish-conflict','Gleichzeitig veröffentlicht. Bitte erneut prüfen.',409)
     return jsonify(created=True,revision=revision.summary(),report=checked['report']),201
+
+
+@blueprint.put('/authoring/origins/draft')
+@limiter.limit('240 per hour')
+def origin_draft():
+    user=current_user();checked,failure=inspect_request(user)
+    if failure:return failure
+    body=checked['body'];row=checked['row']
+    if body.get('expectedDigest')!=checked['digest'] or type(body.get('expectedRevision')) is not int or body['expectedRevision']!=row.revision:
+        return error('source-changed','Der Entwurf wurde zwischenzeitlich geändert. Bitte neu laden.',409)
+    supplement=body.get('supplement')
+    if not isinstance(supplement,dict) or supplement.get('schema')!=origins.SUPPLEMENT_SCHEMA:
+        return error('invalid-supplement','Typisierten VTT-Zusatz verwenden.')
+    source=copy.deepcopy(row.source)
+    if 'name' in body:
+        if not isinstance(body['name'],str) or not 1<=len(body['name'].strip())<=100:return error('name-invalid','Name mit 1 bis 100 Zeichen erwartet.')
+        source['name']=body['name'].strip()
+    if 'description' in body:
+        if not isinstance(body['description'],str) or len(body['description'])>6000:return error('description-invalid','Beschreibung auf 6000 Zeichen kürzen.')
+        source.setdefault('system',{})['description']={'value':body['description']}
+    flags=source.get('flags') if isinstance(source.get('flags'),dict) else {}
+    source['flags']={**flags,'rollDraufOrigins':{'supplement':copy.deepcopy(supplement)}}
+    from .documents import check_document
+    try:check_document(source,row.document_name,row.doc_type)
+    except RequestFailure as failure:return read_failure(failure)
+    changed=type(row).query.filter_by(id=row.id,revision=row.revision).update(
+        {'source':source,'name':source['name'],'revision':row.revision+1,'updated_by':user.id},synchronize_session=False)
+    if changed!=1:
+        db.session.rollback();return error('source-changed','Gleichzeitig geändert. Bitte neu laden.',409)
+    db.session.commit();db.session.refresh(row)
+    return jsonify(document={**row.summary(),'source':row.source},digest=_digest(row),report=checked['report'])
