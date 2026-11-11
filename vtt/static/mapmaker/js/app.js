@@ -2,8 +2,8 @@ import { embedCredits, creditsForDocument } from "./credits.js";
 // Kartenwerkstatt editor controller: document state, commands, view, files, autosave.
 
 import {
-    LIMITS, LABEL_STYLES, ValidationError, cleanText, clamp, collectIds, countItems, countLayers,
-    createLayer, findItem, materialize, newId, serialize, validateDocument,
+    LIMITS, LABEL_STYLES, TILE_GRID_DEFAULT, ValidationError, cellKey, cellOf, cleanText, clamp, collectIds, countItems,
+    countLayers, countTiles, createLayer, findItem, materialize, newId, serialize, tileGridSize, validateDocument,
 } from "./document.js";
 import { History } from "./history.js";
 import { drawStampImage, stampExtent, loadPalette } from "./stamps.js";
@@ -16,7 +16,7 @@ import { UI } from "./ui.js";
 import { zipFiles } from "./zip.js";
 import { Library } from "./library.js";
 
-const KIND_NAMES = { raster: "Malebene", paths: "Wegeebene", stamps: "Symbolebene", labels: "Beschriftungsebene" };
+const KIND_NAMES = { raster: "Malebene", paths: "Wegeebene", stamps: "Symbolebene", labels: "Beschriftungsebene", tiles: "Kachelebene" };
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4;
 export const MAX_EXPORT_PIXELS = 16777216; // same bound as the export dialog (ui.js openExport)
@@ -45,6 +45,8 @@ class Editor {
         this.stampOpts = { asset: null, size: 88, rot: 0, flip: false, vary: false, scatter: false };
         this.labelOpts = { style: "town", kind: "landmark", pin: true, symbol: null, symbolSize: 56 };
         this.pathOpts = { material: "road", width: 14 };
+        this.tileOpts = { asset: null, erase: false, size: TILE_GRID_DEFAULT };
+        this.tileGesture = null;
         this.previewPath = null;
         this.selection = null;
         this.activeLayerId = null;
@@ -320,6 +322,7 @@ class Editor {
             drawPath(ctx, this.previewPath);
             ctx.restore();
         }
+        if (this.tool === "tile") this.drawTileOverlay(ctx, zoom);
         if (!this.cursor || this.strokeActive && this.tool === "stamp") return;
         if (this.tool === "brush" || this.tool === "eraser") {
             ctx.save();
@@ -348,6 +351,178 @@ class Editor {
             drawStampImage(ctx, stamp, this.stampOpts.crop, -w / 2, -h / 2, w, h);
             ctx.restore();
         }
+    }
+
+    /** Grid of the tile layer being painted, and the cell under the cursor with a preview. */
+    drawTileOverlay(ctx, zoom) {
+        const layer = this.targetLayer("tiles", { quiet: true });
+        const size = layer ? layer.grid.size : this.tileOpts.size;
+        const { cols, rows } = tileGridSize(this.doc, size);
+        if (size * zoom >= 6) {
+            const x0 = Math.max(0, Math.floor(-this.view.panX / zoom / size));
+            const y0 = Math.max(0, Math.floor(-this.view.panY / zoom / size));
+            const x1 = Math.min(cols, Math.ceil((this.cssSize.w - this.view.panX) / zoom / size));
+            const y1 = Math.min(rows, Math.ceil((this.cssSize.h - this.view.panY) / zoom / size));
+            ctx.save();
+            ctx.beginPath();
+            for (let c = x0; c <= x1; c += 1) { ctx.moveTo(c * size, y0 * size); ctx.lineTo(c * size, y1 * size); }
+            for (let r = y0; r <= y1; r += 1) { ctx.moveTo(x0 * size, r * size); ctx.lineTo(x1 * size, r * size); }
+            ctx.lineWidth = 1 / zoom;
+            ctx.strokeStyle = "rgba(255,255,255,0.22)";
+            ctx.stroke();
+            ctx.restore();
+        }
+        if (!this.cursor || !this.insideMap(this.cursor)) return;
+        const col = Math.floor(this.cursor.x / size);
+        const row = Math.floor(this.cursor.y / size);
+        const stamp = !this.tileOpts.erase && this.tileOpts.asset ? this.palette.stamps.get(this.tileOpts.asset) : null;
+        ctx.save();
+        if (stamp && stamp.image && !this.tileGesture) {
+            ctx.globalAlpha = 0.6;
+            ctx.imageSmoothingEnabled = !stamp.pixelArt;
+            ctx.drawImage(stamp.image, col * size, row * size, size, size);
+            ctx.globalAlpha = 1;
+        } else if (stamp && !stamp.image) this.palette.loadStamp(stamp.id).catch(() => {});
+        ctx.lineWidth = 2 / zoom;
+        ctx.strokeStyle = this.tileOpts.erase ? "#e0806a" : "#f2c66d";
+        ctx.strokeRect(col * size, row * size, size, size);
+        ctx.restore();
+    }
+
+    // ---- tiles -------------------------------------------------------------
+
+    /** Start painting or erasing grid tiles; the first tile creates a tile layer above the painted land. */
+    beginTiles(point) {
+        if (!this.insideMap(point)) {
+            this.ui.toast("Kacheln lassen sich nur auf der Karte setzen.");
+            return false;
+        }
+        const erase = this.tileOpts.erase;
+        if (!erase && !this.tileOpts.asset) {
+            this.ui.toast("Wähle zuerst eine Kachel aus der Kachelauswahl.");
+            return false;
+        }
+        const exists = this.doc.layers.some((layer) => layer.kind === "tiles");
+        let layer = exists ? this.targetLayer("tiles") : null;
+        if (exists && !layer) return false;
+        let created = null;
+        if (!layer) {
+            if (erase) {
+                this.ui.toast("Es gibt noch keine Kachelebene zum Löschen.");
+                return false;
+            }
+            if (this.doc.layers.length >= LIMITS.layers) {
+                this.ui.toast(`Höchstens ${LIMITS.layers} Ebenen.`);
+                return false;
+            }
+            layer = createLayer("tiles", `Kacheln ${countLayers(this.doc, "tiles") + 1}`, this.doc.size, collectIds(this.doc));
+            layer.grid.size = this.tileOpts.size;
+            created = { layer, index: this.doc.layers.findLastIndex((entry) => entry.kind === "raster") + 1 };
+            this.doc.layers.splice(created.index, 0, layer);
+            this.activeLayerId = layer.id;
+            this.afterLayerChange();
+        }
+        this.commitEdit();
+        this.tileGesture = { layer, created, before: new Map(), last: null, full: false };
+        this.continueTiles(point);
+        return true;
+    }
+
+    continueTiles(point) {
+        const gesture = this.tileGesture;
+        if (!gesture) return;
+        const size = gesture.layer.grid.size;
+        const cell = { col: Math.floor(point.x / size), row: Math.floor(point.y / size) };
+        const from = gesture.last || cell;
+        // Walk every cell between pointer samples so quick drags leave no gaps.
+        const steps = Math.max(Math.abs(cell.col - from.col), Math.abs(cell.row - from.row));
+        for (let i = gesture.last ? 1 : 0; i <= steps; i += 1) {
+            const t = steps ? i / steps : 0;
+            this.setTile(gesture, Math.round(from.col + (cell.col - from.col) * t), Math.round(from.row + (cell.row - from.row) * t));
+        }
+        gesture.last = cell;
+        this.requestFrame();
+    }
+
+    setTile(gesture, col, row) {
+        const { layer } = gesture;
+        const size = layer.grid.size;
+        const { cols, rows } = tileGridSize(this.doc, size);
+        if (col < 0 || row < 0 || col >= cols || row >= rows) return;
+        const key = cellKey(col, row);
+        const before = layer.cells.get(key);
+        const after = this.tileOpts.erase ? undefined : this.tileOpts.asset;
+        if (before === after) return;
+        if (before === undefined && countTiles(this.doc) >= LIMITS.tiles) {
+            if (!gesture.full) this.ui.toast(`Höchstens ${LIMITS.tiles.toLocaleString("de")} Kacheln pro Karte.`);
+            gesture.full = true;
+            return;
+        }
+        if (!gesture.before.has(key)) gesture.before.set(key, before);
+        if (after === undefined) layer.cells.delete(key);
+        else layer.cells.set(key, after);
+        this.invalidate({ x: col * size, y: row * size, w: size, h: size });
+    }
+
+    endTiles() {
+        const gesture = this.tileGesture;
+        this.tileGesture = null;
+        if (!gesture) return;
+        const { layer, created } = gesture;
+        const changed = [...gesture.before.keys()].filter((key) => layer.cells.get(key) !== gesture.before.get(key));
+        if (!changed.length) {
+            if (created) this.removeCreatedTileLayer(created);
+            return;
+        }
+        const before = new Map(changed.map((key) => [key, gesture.before.get(key)]));
+        const after = new Map(changed.map((key) => [key, layer.cells.get(key)]));
+        const put = (values) => {
+            const size = layer.grid.size;
+            for (const [key, asset] of values) {
+                if (asset === undefined) layer.cells.delete(key);
+                else layer.cells.set(key, asset);
+                const { col, row } = cellOf(key);
+                this.invalidate({ x: col * size, y: row * size, w: size, h: size });
+            }
+            this.requestFrame();
+        };
+        const label = this.tileOpts.erase ? "Kacheln löschen" : "Kacheln setzen";
+        this.commit({
+            label,
+            bytes: 512 + changed.length * 48,
+            undo: () => {
+                put(before);
+                if (created) this.removeCreatedTileLayer(created);
+            },
+            redo: () => {
+                if (created) {
+                    this.doc.layers.splice(Math.min(created.index, this.doc.layers.length), 0, layer);
+                    this.activeLayerId = layer.id;
+                    this.afterLayerChange();
+                }
+                put(after);
+            },
+        });
+    }
+
+    cancelTiles() {
+        const gesture = this.tileGesture;
+        this.tileGesture = null;
+        if (!gesture) return;
+        const size = gesture.layer.grid.size;
+        for (const [key, asset] of gesture.before) {
+            if (asset === undefined) gesture.layer.cells.delete(key);
+            else gesture.layer.cells.set(key, asset);
+            const { col, row } = cellOf(key);
+            this.invalidate({ x: col * size, y: row * size, w: size, h: size });
+        }
+        if (gesture.created) this.removeCreatedTileLayer(gesture.created);
+    }
+
+    removeCreatedTileLayer(created) {
+        const index = this.doc.layers.indexOf(created.layer);
+        if (index >= 0) this.doc.layers.splice(index, 1);
+        this.afterLayerChange();
     }
 
     // ---- layers ------------------------------------------------------------
@@ -438,8 +613,9 @@ class Editor {
             this.ui.toast("Die Malebenen wären zusammen zu groß für diese Kartengröße.");
             return;
         }
-        const names = { raster: "Malebene", paths: "Wege & Flüsse", stamps: "Symbole", labels: "Beschriftung" };
+        const names = { raster: "Malebene", paths: "Wege & Flüsse", stamps: "Symbole", labels: "Beschriftung", tiles: "Kacheln" };
         const layer = createLayer(kind, `${names[kind]} ${countLayers(this.doc, kind) + 1}`, this.doc.size, collectIds(this.doc));
+        if (kind === "tiles") layer.grid.size = this.tileOpts.size;
         const active = this.doc.layers.indexOf(this.activeLayer());
         const index = active >= 0 ? active + 1 : this.doc.layers.length;
         const bytes = kind === "raster" ? this.doc.size.w * this.doc.size.h * 4 : 256;
@@ -457,7 +633,7 @@ class Editor {
             return;
         }
         const index = this.doc.layers.indexOf(layer);
-        const bytes = layer.kind === "raster" ? this.doc.size.w * this.doc.size.h * 4 : 256;
+        const bytes = layer.kind === "raster" ? this.doc.size.w * this.doc.size.h * 4 : layer.kind === "tiles" ? 256 + layer.cells.size * 48 : 256;
         this.layerCommand(`Ebene „${layer.name}“ löschen`,
             () => { this.doc.layers.splice(this.doc.layers.indexOf(layer), 1); },
             () => { this.doc.layers.splice(index, 0, layer); this.activeLayerId = layer.id; },
@@ -480,11 +656,24 @@ class Editor {
     setLayerProp(id, key, value) {
         const layer = this.layerById(id);
         if (!layer) return;
-        const get = () => (key === "coast" ? layer.effects.coast : layer[key]);
-        const set = (v) => { if (key === "coast") layer.effects.coast = v; else layer[key] = v; };
+        const get = () => (key === "coast" ? layer.effects.coast : key === "gridSize" ? layer.grid.size : layer[key]);
+        const set = (v) => {
+            if (key === "coast") layer.effects.coast = v;
+            else if (key === "gridSize") layer.grid.size = v;
+            else layer[key] = v;
+        };
         const before = get();
         if (before === value) return;
-        const labels = { visible: value ? "Ebene einblenden" : "Ebene ausblenden", name: "Ebene umbenennen", opacity: "Deckkraft", coast: "Küstenlinie" };
+        if (key === "gridSize") {
+            // Cells keep their column/row; refuse a size that would push used cells off the map.
+            const { cols, rows } = tileGridSize(this.doc, value);
+            if ([...layer.cells.keys()].some((k) => cellOf(k).col >= cols || cellOf(k).row >= rows)) {
+                this.ui.toast("Diese Kachelgröße ist zu groß: belegte Kacheln lägen außerhalb der Karte.");
+                this.ui.refreshLayers();
+                return;
+            }
+        }
+        const labels = { visible: value ? "Ebene einblenden" : "Ebene ausblenden", name: "Ebene umbenennen", opacity: "Deckkraft", coast: "Küstenlinie", gridSize: "Kachelgröße" };
         this.layerCommand(labels[key] || "Ebene ändern", () => set(value), () => set(before));
     }
 
@@ -777,6 +966,7 @@ class Editor {
     cancelInteractions() {
         if (this.input) this.input.cancel();
         this.cancelStroke();
+        this.cancelTiles();
     }
 
     // ---- history & persistence ---------------------------------------------
@@ -1019,7 +1209,8 @@ class Editor {
         this.commitEdit();
         this.tool = tool;
         if (tool !== "select" && tool !== "label") this.selection = null;
-        const kind = tool === "brush" || tool === "eraser" ? "raster" : tool === "stamp" ? "stamps" : tool === "label" ? "labels" : tool === "path" ? "paths" : null;
+        const kind = tool === "brush" || tool === "eraser" ? "raster" : tool === "stamp" ? "stamps" : tool === "label" ? "labels"
+            : tool === "path" ? "paths" : tool === "tile" ? "tiles" : null;
         if (kind) {
             const layer = this.targetLayer(kind, { quiet: true });
             if (layer) this.activeLayerId = layer.id;
@@ -1053,7 +1244,8 @@ function exposeApi(editor, ready) {
                 generation: editor.generation,
                 unsavedFile: editor.hasUnsavedFileChanges(),
                 mutating: editor.isMutating(),
-                layers: doc.layers.map((l) => ({ id: l.id, name: l.name, kind: l.kind, visible: l.visible, opacity: l.opacity, items: l.items ? l.items.length : null })),
+                layers: doc.layers.map((l) => ({ id: l.id, name: l.name, kind: l.kind, visible: l.visible, opacity: l.opacity, items: l.items ? l.items.length : null,
+                    ...(l.kind === "tiles" ? { grid: l.grid.size, tiles: [...l.cells].map(([key, asset]) => ({ ...cellOf(key), asset })) } : {}) })),
                 stamps: doc.layers.filter((l) => l.kind === "stamps").reduce((n, l) => n + l.items.length, 0),
                 labels: labels.length,
                 places: labels.filter((i) => i.place).map((i) => i.text),

@@ -34,6 +34,7 @@ export function attachInput(ed) {
     function cancelGesture() {
         if (!gesture) return;
         if (gesture.type === "stroke") ed.cancelStroke();
+        if (gesture.type === "tiles") ed.cancelTiles();
         if (gesture.type === "drag" && gesture.moved) {
             ed.invalidateItem(gesture.item);
             gesture.item.x = gesture.orig.x;
@@ -56,7 +57,7 @@ export function attachInput(ed) {
     ed.input = {
         cancel: cancelGesture,
         // live, uncommitted document changes (autosave must not persist them)
-        mutating: () => !!gesture && (gesture.type === "stroke" || gesture.type === "scatter"
+        mutating: () => !!gesture && (gesture.type === "stroke" || gesture.type === "scatter" || gesture.type === "tiles"
             || (gesture.type === "drag" && gesture.moved) || (gesture.type === "pathNode" && gesture.moved)),
     };
 
@@ -100,6 +101,8 @@ export function attachInput(ed) {
 
         if (ed.tool === "brush" || ed.tool === "eraser") {
             if (ed.beginStroke(point, pressureOf(event))) gesture = { type: "stroke", pointerId: event.pointerId };
+        } else if (ed.tool === "tile") {
+            if (ed.beginTiles(point)) gesture = { type: "tiles", pointerId: event.pointerId };
         } else if (ed.tool === "path") {
             if (!ed.insideMap(point)) return;
             ed.commitEdit();
@@ -182,7 +185,7 @@ export function attachInput(ed) {
         const point = ed.clientToDoc(event.clientX, event.clientY);
         if (!gesture) {
             ed.cursor = point;
-            if (ed.tool === "brush" || ed.tool === "eraser" || ed.tool === "stamp") ed.requestFrame();
+            if (ed.tool === "brush" || ed.tool === "eraser" || ed.tool === "stamp" || ed.tool === "tile") ed.requestFrame();
             return;
         }
         if (gesture.pointerId !== event.pointerId) return;
@@ -197,6 +200,10 @@ export function attachInput(ed) {
             for (const sample of samples.length ? samples : [event]) {
                 ed.continueStroke(ed.clientToDoc(sample.clientX, sample.clientY), pressureOf(sample));
             }
+            ed.cursor = point;
+        } else if (gesture.type === "tiles") {
+            const samples = typeof event.getCoalescedEvents === "function" ? event.getCoalescedEvents() : [];
+            for (const sample of samples.length ? samples : [event]) ed.continueTiles(ed.clientToDoc(sample.clientX, sample.clientY));
             ed.cursor = point;
         } else if (gesture.type === "path") {
             const at = ed.clampToMap(point.x, point.y);
@@ -271,6 +278,7 @@ export function attachInput(ed) {
         const done = gesture;
         gesture = null;
         if (done.type === "stroke") ed.endStroke();
+        else if (done.type === "tiles") ed.endTiles();
         else if (done.type === "path") {
             ed.previewPath = null;
             const at = ed.clampToMap(ed.clientToDoc(event.clientX, event.clientY).x, ed.clientToDoc(event.clientX, event.clientY).y);
@@ -319,7 +327,7 @@ export function attachInput(ed) {
         ed.zoomAt(factor, p.x, p.y);
     }, { passive: false });
 
-    const toolKeys = { h: "pan", b: "brush", e: "eraser", s: "stamp", t: "label", v: "select", w: "path" };
+    const toolKeys = { h: "pan", b: "brush", e: "eraser", s: "stamp", k: "tile", t: "label", v: "select", w: "path" };
 
     document.addEventListener("keydown", (event) => {
         if (document.querySelector("dialog[open]")) return;

@@ -82,6 +82,10 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-11 4 6 3-4 5 9z"/><circle cx="17" cy="5" r="2"/></svg>
             <span>Stempel</span>
         </button>
+        <button class="mm-tool" type="button" data-tool="tile" aria-pressed="false" title="Kacheln ins Raster malen (K)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3z"/><path d="M13 3h8v8h-8z"/><path d="M3 13h8v8H3z"/><path d="M13 13h8v8h-8z"/></svg>
+            <span>Kacheln</span>
+        </button>
         <button class="mm-tool" type="button" data-tool="label" aria-pressed="false" title="Ort oder Beschriftung setzen (T)">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.4-6-10a6 6 0 0112 0c0 4.6-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
             <span>Ort</span>
@@ -199,6 +203,21 @@
                 <label class="mm-check"><input id="stampScatter" type="checkbox"> Streuen beim Ziehen (Wälder, Gebirge)</label>
             </div>
 
+            <div class="mm-group" data-options="tile">
+                <p class="mm-target">Malt auf: <strong id="tileTarget">Neue Kachelebene bei der ersten Kachel</strong></p>
+                <div class="mm-field-row">
+                    <label class="mm-field"><span>Modus</span><select id="tileMode"><option value="paint">Kacheln setzen</option><option value="erase">Kacheln löschen</option></select></label>
+                    <label class="mm-field"><span>Kachelgröße</span><select id="tileSize"><option value="16">16 px</option><option value="24">24 px</option><option value="32">32 px</option><option value="48">48 px</option><option value="64">64 px</option></select></label>
+                </div>
+                <label class="mm-field"><span>Kacheln suchen</span><input id="tileSearch" type="search" placeholder="Gras, Dach, Mauer …" autocomplete="off"></label>
+                <label class="mm-field"><span>Asset-Paket</span><select id="tilePack"><option value="">Alle Pakete</option></select></label>
+                <p id="tileSelected" class="mm-meta"></p>
+                <p id="tileResults" class="mm-hint" role="status" aria-live="polite"></p>
+                <div class="mm-palette-pages"><button id="tilePrev" type="button" class="mm-btn mm-btn-small">Vorherige</button><button id="tileNext" type="button" class="mm-btn mm-btn-small">Weitere Kacheln</button></div>
+                <div id="tilePalette" class="mm-palette"></div>
+                <p class="mm-hint">Klicken oder ziehen füllt die Rasterzellen, eine Kachel pro Zelle. Transparente Kacheln wie Zäune oder Waldränder auf eine zweite Kachelebene über dem Boden legen. Gegenstände und Bäume setzt du mit <strong>Stempel</strong>.</p>
+            </div>
+
             <div class="mm-group" data-options="label">
                 <p class="mm-target">Setzt auf: <strong id="labelTarget">–</strong></p>
                 <div class="mm-field-row">
@@ -234,11 +253,13 @@
             <div id="layerProps" class="mm-group">
                 <label class="mm-range"><span>Deckkraft</span><input id="layerOpacity" type="range" min="0" max="100" step="1"><output id="layerOpacityOut"></output></label>
                 <label class="mm-check" id="layerCoastRow"><input id="layerCoast" type="checkbox"> Küstenlinie und Brandung</label>
+                <label class="mm-field" id="layerGridRow" hidden><span>Kachelgröße</span><select id="layerGrid"><option value="16">16 px</option><option value="24">24 px</option><option value="32">32 px</option><option value="48">48 px</option><option value="64">64 px</option></select></label>
             </div>
             <div class="mm-add-row">
                 <button id="addRaster" type="button" class="mm-btn mm-btn-small">+ Malebene</button>
                 <button id="addPaths" type="button" class="mm-btn mm-btn-small">+ Wegeebene</button>
                 <button id="addStamps" type="button" class="mm-btn mm-btn-small">+ Symbolebene</button>
+                <button id="addTiles" type="button" class="mm-btn mm-btn-small">+ Kachelebene</button>
                 <button id="addLabels" type="button" class="mm-btn mm-btn-small">+ Beschriftungsebene</button>
             </div>
         </section>
@@ -356,6 +377,7 @@
                 <dt><kbd>E</kbd></dt><dd>Radierer</dd>
                 <dt><kbd>W</kbd></dt><dd>Wege / Flüsse</dd>
                 <dt><kbd>S</kbd></dt><dd>Stempel</dd>
+                <dt><kbd>K</kbd></dt><dd>Kacheln ins Raster malen</dd>
                 <dt><kbd>T</kbd></dt><dd>Ort / Beschriftung</dd>
                 <dt><kbd>V</kbd></dt><dd>Auswählen</dd>
             </dl>

@@ -106,3 +106,19 @@ def test_sheet_without_review_is_refused(tmp_path, monkeypatch):
         assert "reviewed" in str(error)
     else:
         raise AssertionError("an unreviewed profile must not build")
+
+
+def test_tiles_and_stamps_are_classified_from_the_review():
+    manifest = json.loads((ASSETS / "kenney-tiny" / "manifest.json").read_text())
+    palette = json.loads((ASSETS / "kenney-tiny" / "palette.json").read_text())
+    by_label = {s["label"]: s for s in manifest["stamps"]}
+    tiles = {s["id"] for s in manifest["stamps"] if s.get("tile")}
+    assert len(tiles) == 97 and palette["tiles"] == [s["id"] for s in manifest["stamps"] if s.get("tile")]
+    # Ground, roofs, walls, fences and castle parts are grid tiles ...
+    for label in ("Gras", "Erdfläche · Mitte", "Schieferdach · Giebel", "Holzwand · Tür", "Zaungehege · links", "Burghof · Mitte"):
+        assert by_label[label]["id"] in tiles, label
+    # ... trees, items and every assembled object stay stamps; hidden halves are neither.
+    for label in ("Busch", "Axt", "Bienenstock", "Hoher Laubbaum", "Haus mit Schieferdach", "Waldstück", "Brunnen"):
+        assert by_label[label]["id"] not in tiles, label
+    assert not tiles & {s["id"] for s in manifest["stamps"] if s.get("hidden")}
+    assert all(s["w"] == s["h"] == 16 for s in manifest["stamps"] if s.get("tile"))

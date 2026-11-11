@@ -16,6 +16,8 @@ import re
 from PIL import Image
 
 MAX_PROJECT_BYTES = 50 * 1024 * 1024
+MAX_TILES = 65536
+MAX_TILE_PALETTE = 256
 PREFIX = "data:image/png;base64,"
 CONTROL = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")
 
@@ -95,7 +97,7 @@ def normalize_document(raw):
     }
     layers = raw.get("layers")
     require(isinstance(layers, list) and 1 <= len(layers) <= 32, "1 bis 32 Ebenen erwartet.")
-    ids, raster_count, item_count = set(), 0, 0
+    ids, raster_count, item_count, tile_count = set(), 0, 0, 0
     assets = known_assets()
 
     def identifier(value):
@@ -111,7 +113,7 @@ def normalize_document(raw):
     for incoming in layers:
         require(isinstance(incoming, dict), "Ungültige Ebene.")
         kind = incoming.get("kind")
-        require(kind in ("raster", "paths", "stamps", "labels"), "Unbekannte Ebenenart.")
+        require(kind in ("raster", "paths", "stamps", "labels", "tiles"), "Unbekannte Ebenenart.")
         layer = {"id": identifier(incoming.get("id")), "kind": kind,
                  "name": text(incoming.get("name"), 40, "Ebene"),
                  "visible": boolean(incoming.get("visible", True)),
@@ -135,6 +137,29 @@ def normalize_document(raw):
             except (OSError, ValueError, binascii.Error, Image.DecompressionBombError) as error:
                 raise InvalidDocument("Beschädigte oder ungültige PNG-Malebene.") from error
             layer["png"] = png
+        elif kind == "tiles":
+            grid = incoming.get("grid")
+            require(isinstance(grid, dict), "Kachelraster fehlt.")
+            size = integer(grid.get("size"), 8, 256)
+            palette = incoming.get("palette")
+            require(isinstance(palette, list) and len(palette) <= MAX_TILE_PALETTE
+                    and all(isinstance(entry, str) for entry in palette)
+                    and len(set(palette)) == len(palette), "Ungültige Kachelliste.")
+            for entry in palette:
+                asset(entry)
+            cells = incoming.get("cells")
+            require(isinstance(cells, list) and len(cells) % 3 == 0, "Ungültige Kachelzellen.")
+            cols, rows = math.ceil(w / size), math.ceil(h / size)
+            occupied = set()
+            for i in range(0, len(cells), 3):
+                col, row, index = cells[i:i + 3]
+                require(all(type(v) is int for v in (col, row, index))
+                        and 0 <= col < cols and 0 <= row < rows and 0 <= index < len(palette)
+                        and (col, row) not in occupied, "Kachel außerhalb der Karte oder doppelt belegt.")
+                occupied.add((col, row))
+            tile_count += len(occupied)
+            require(tile_count <= MAX_TILES, f"Höchstens {MAX_TILES} Kacheln pro Karte erlaubt.")
+            layer.update(grid={"size": size}, palette=list(palette), cells=list(cells))
         else:
             items = incoming.get("items")
             require(isinstance(items, list), "Elementliste fehlt.")

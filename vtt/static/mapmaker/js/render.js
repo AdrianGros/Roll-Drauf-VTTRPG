@@ -2,7 +2,7 @@
 // labels) → parchment/vignette/frame. The same routine renders the cached
 // map-resolution composite (region by region) and the PNG export.
 
-import { createCanvas } from "./document.js";
+import { cellKey, cellOf, createCanvas } from "./document.js";
 import { stampExtent, drawStampImage } from "./stamps.js";
 import { rectClamp, rectUnion } from "./brush.js";
 
@@ -169,6 +169,42 @@ function drawLabel(ctx, item, palette) {
     ctx.restore();
 }
 
+/** Tiles fill whole grid cells at integer positions, so neighbours meet without seams. */
+export function drawTiles(ctx, layer, region, palette) {
+    const size = layer.grid.size;
+    const c0 = Math.max(0, Math.floor(region.x / size));
+    const r0 = Math.max(0, Math.floor(region.y / size));
+    const c1 = Math.floor((region.x + region.w - 0.001) / size);
+    const r1 = Math.floor((region.y + region.h - 0.001) / size);
+    if (c1 < c0 || r1 < r0) return;
+    const draw = (col, row, asset) => {
+        const stamp = palette.stamps.get(asset);
+        if (!stamp) return;
+        if (!stamp.image) {
+            palette.loadStamp(asset).catch(() => {});
+            return;
+        }
+        ctx.imageSmoothingEnabled = !stamp.pixelArt;
+        ctx.drawImage(stamp.image, col * size, row * size, size, size);
+    };
+    ctx.save();
+    ctx.globalAlpha = layer.opacity;
+    if ((c1 - c0 + 1) * (r1 - r0 + 1) < layer.cells.size) {
+        for (let row = r0; row <= r1; row += 1) {
+            for (let col = c0; col <= c1; col += 1) {
+                const asset = layer.cells.get(cellKey(col, row));
+                if (asset) draw(col, row, asset);
+            }
+        }
+    } else {
+        for (const [key, asset] of layer.cells) {
+            const { col, row } = cellOf(key);
+            if (col >= c0 && col <= c1 && row >= r0 && row <= r1) draw(col, row, asset);
+        }
+    }
+    ctx.restore();
+}
+
 export class Renderer {
     constructor(palette) {
         this.palette = palette;
@@ -268,6 +304,7 @@ export class Renderer {
         for (const layer of doc.layers) {
             if (!layer.visible || layer.opacity <= 0) continue;
             if (layer.kind === "raster") this.drawRaster(ctx, layer, region, scale);
+            else if (layer.kind === "tiles") drawTiles(ctx, layer, region, this.palette);
             else {
                 ctx.globalAlpha = layer.opacity;
                 for (const item of layer.items) {

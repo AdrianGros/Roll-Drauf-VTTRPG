@@ -41,7 +41,7 @@ const ICONS = {
     trash: ["M4 7h16", "M9 7V4h6v3", "M6 7l1 13h10l1-13"],
 };
 
-const KIND_LABEL = { raster: "Malen", paths: "Wege", stamps: "Symbole", labels: "Text" };
+const KIND_LABEL = { raster: "Malen", paths: "Wege", stamps: "Symbole", labels: "Text", tiles: "Kacheln" };
 
 const STATUS_TEXT = {
     idle: "Noch keine Änderungen",
@@ -141,6 +141,7 @@ export class UI {
         this.bindBrush();
         this.bindPath();
         this.bindStamp();
+        this.bindTiles();
         this.bindLabelTool();
         this.bindInspector();
         this.bindLayers();
@@ -281,6 +282,90 @@ export class UI {
         $("stampScatter").addEventListener("change", (event) => { ed.stampOpts.scatter = event.target.checked; });
     }
 
+    bindTiles() {
+        const ed = this.ed;
+        this.tilePage = 0;
+        $("tileMode").addEventListener("change", (event) => { ed.tileOpts.erase = event.target.value === "erase"; ed.requestFrame(); });
+        $("tileSize").value = String(ed.tileOpts.size);
+        $("tileSize").addEventListener("change", (event) => {
+            ed.tileOpts.size = Number(event.target.value);
+            const layer = ed.doc && ed.targetLayer("tiles", { quiet: true });
+            if (layer) ed.setLayerProp(layer.id, "gridSize", ed.tileOpts.size);
+            this.updateTargets();
+            ed.requestFrame();
+        });
+        for (const id of ["tileSearch", "tilePack"]) {
+            $(id).addEventListener(id === "tileSearch" ? "input" : "change", () => { this.tilePage = 0; this.renderTilePalette(); });
+        }
+        $("tilePrev").addEventListener("click", () => { this.tilePage -= 1; this.renderTilePalette(); });
+        $("tileNext").addEventListener("click", () => { this.tilePage += 1; this.renderTilePalette(); });
+    }
+
+    buildTilePalette() {
+        const { palette } = this.ed;
+        const tileIds = palette.tileGroups.flatMap((group) => group.ids);
+        for (const pack of palette.packs) {
+            if (tileIds.some((id) => palette.stamps.get(id).pack === pack.id)) $("tilePack").appendChild(el("option", { value: pack.id }, pack.name));
+        }
+        this.renderTilePalette();
+        if (tileIds.length) this.chooseTile(tileIds[0]);
+        else $("tileSelected").textContent = "Noch keine Kachelpakete verfügbar.";
+    }
+
+    renderTilePalette() {
+        const { palette } = this.ed;
+        const normalize = (text) => text.toLocaleLowerCase("de").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const terms = normalize($("tileSearch").value).trim().split(/\s+/).filter(Boolean);
+        const pack = $("tilePack").value;
+        const ids = palette.tileGroups.flatMap((group) => group.ids).filter((id) => {
+            const stamp = palette.stamps.get(id);
+            return (!pack || stamp.pack === pack) && terms.every((term) => stamp.searchText.includes(term));
+        });
+        const pageSize = 64;
+        const pageCount = Math.max(1, Math.ceil(ids.length / pageSize));
+        this.tilePage = Math.max(0, Math.min(this.tilePage, pageCount - 1));
+        $("tileResults").textContent = ids.length
+            ? `${ids.length.toLocaleString("de")} Kacheln · Seite ${this.tilePage + 1} von ${pageCount}`
+            : "Keine Kacheln gefunden. Suche oder Filter ändern.";
+        $("tilePrev").disabled = this.tilePage === 0;
+        $("tileNext").disabled = this.tilePage >= pageCount - 1;
+        const container = $("tilePalette");
+        container.replaceChildren();
+        let currentGroup = null;
+        let grid = null;
+        for (const id of ids.slice(this.tilePage * pageSize, (this.tilePage + 1) * pageSize)) {
+            const stamp = palette.stamps.get(id);
+            if (stamp.group !== currentGroup) {
+                currentGroup = stamp.group;
+                const section = el("div", { class: "mm-tile-group" });
+                section.appendChild(el("h3", { class: "mm-h3" }, stamp.group));
+                grid = el("div", { class: "mm-palette-grid", role: "radiogroup", "aria-label": stamp.group });
+                section.appendChild(grid);
+                container.appendChild(section);
+            }
+            const button = el("button", { type: "button", class: "mm-tile-btn", role: "radio", "aria-checked": String(this.ed.tileOpts.asset === id),
+                "aria-label": stamp.label, title: `${stamp.label} · ${stamp.packName}`, dataset: { tile: id } });
+            button.appendChild(el("img", { src: stamp.src, width: 48, height: 48, alt: "", loading: "lazy", decoding: "async", class: stamp.pixelArt ? "mm-pixel" : null }));
+            button.appendChild(el("span", {}, stamp.label));
+            button.addEventListener("click", () => this.chooseTile(id));
+            grid.appendChild(button);
+        }
+    }
+
+    chooseTile(id) {
+        const ed = this.ed;
+        const stamp = ed.palette.stamps.get(id);
+        if (!stamp) return;
+        ed.tileOpts.asset = id;
+        if (ed.tileOpts.erase) {
+            ed.tileOpts.erase = false;
+            $("tileMode").value = "paint";
+        }
+        $("tileSelected").textContent = `Kachel: ${stamp.label} · ${stamp.packName}`;
+        document.querySelectorAll(".mm-tile-btn").forEach((button) => button.setAttribute("aria-checked", String(button.dataset.tile === id)));
+        ed.palette.loadStamp(id).then(() => ed.requestFrame()).catch(() => this.toast("Die Kachel konnte nicht geladen werden."));
+    }
+
     bindPath() {
         const ed = this.ed;
         this.pathWidth = this.range("pathWidth", "pathWidthOut", (v) => `${v} px`, (v) => { ed.pathOpts.width = v; });
@@ -317,6 +402,7 @@ export class UI {
         const first = palette.stamps.has("kenney:forest") ? "kenney:forest" : palette.groups.find((g) => g.ids.length).ids[0];
         this.renderPalette();
         this.chooseStamp(first);
+        this.buildTilePalette();
     }
 
     renderPalette() {
@@ -356,7 +442,7 @@ export class UI {
             }
             const button = el("button", { type: "button", class: "mm-stamp", role: "radio", "aria-checked": String(this.ed.stampOpts.asset === id), "aria-label": stamp.label, title: `${stamp.label} · ${stamp.packName}`, dataset: { asset: id } });
             if (stamp.src) {
-                const thumb = el("img", { src: stamp.src, width: 56, height: 56, alt: "", loading: "lazy", decoding: "async" });
+                const thumb = el("img", { src: stamp.src, width: 56, height: 56, alt: "", loading: "lazy", decoding: "async", class: stamp.pixelArt ? "mm-pixel" : null });
                 thumb.addEventListener("error", () => {
                     button.disabled = true;
                     button.title = `${stamp.label} – Bild konnte nicht geladen werden`;
@@ -675,6 +761,11 @@ export class UI {
         $("addRaster").addEventListener("click", () => ed.addLayer("raster"));
         $("addPaths").addEventListener("click", () => ed.addLayer("paths"));
         $("addStamps").addEventListener("click", () => ed.addLayer("stamps"));
+        $("addTiles").addEventListener("click", () => ed.addLayer("tiles"));
+        $("layerGrid").addEventListener("change", (event) => {
+            const layer = ed.activeLayer();
+            if (layer && layer.kind === "tiles") ed.setLayerProp(layer.id, "gridSize", Number(event.target.value));
+        });
         $("addLabels").addEventListener("click", () => ed.addLayer("labels"));
         $("showTitle").addEventListener("change", (event) => ed.setMapStyle("showTitle", event.target.checked));
         $("seaTop").addEventListener("change", (event) => ed.setMapStyle("top", event.target.value));
@@ -740,11 +831,14 @@ export class UI {
             if (!this.opacityEdit) this.layerOpacity.set(Math.round(active.opacity * 100));
             $("layerCoastRow").hidden = active.kind !== "raster";
             $("layerCoast").checked = !!active.effects.coast;
+            $("layerGridRow").hidden = active.kind !== "tiles";
+            if (active.kind === "tiles") $("layerGrid").value = String(active.grid.size);
         }
         const addRaster = $("addRaster");
         addRaster.disabled = ed.doc.layers.length >= LIMITS.layers || !ed.canAddRaster();
         addRaster.title = addRaster.disabled ? "Für diese Kartengröße sind keine weiteren Malebenen möglich." : "";
         $("addStamps").disabled = ed.doc.layers.length >= LIMITS.layers;
+        $("addTiles").disabled = ed.doc.layers.length >= LIMITS.layers;
         $("addLabels").disabled = ed.doc.layers.length >= LIMITS.layers;
         $("addPaths").disabled = ed.doc.layers.length >= LIMITS.layers;
     }
@@ -873,6 +967,9 @@ export class UI {
         $("stampTarget").textContent = name("stamps");
         $("labelTarget").textContent = name("labels");
         $("pathTarget").textContent = ed.doc.layers.some((layer) => layer.kind === "paths") ? name("paths") : "Neue Ebene beim ersten Weg";
+        const tiles = ed.targetLayer("tiles", { quiet: true });
+        $("tileTarget").textContent = tiles ? tiles.name : "Neue Kachelebene bei der ersten Kachel";
+        $("tileSize").value = String(tiles ? tiles.grid.size : ed.tileOpts.size);
     }
 
     updateUndo() {
