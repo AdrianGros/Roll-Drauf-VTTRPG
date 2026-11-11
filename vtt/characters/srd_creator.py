@@ -9,6 +9,7 @@ import re
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
+from vtt.rules_content.origin_profiles import pinned as rule_pins
 from vtt.characters import sheet_link, species_actions, species_catalog, srd_inventory, srd_manage, srd_party, srd_progression
 from vtt.characters.routes import (
     _can_read_character,
@@ -300,6 +301,13 @@ def finalize_draft(draft_id):
     values = character_values(data, state, evaluation, draft_id=draft.id, finalized_at=finalized_at.isoformat() + 'Z')
     if pin:
         values['character_data']['srd']['speciesPin'] = pin
+    from . import origin_catalog
+    _,rule_rows,rule_problems=origin_catalog.resolve(user.id,state,data)
+    rule_pins=[origin_catalog.pin_for(row) for row in rule_rows]
+    binding=origin_catalog.campaign_problem(rule_pins,campaign_id)
+    if rule_problems or binding:
+        return _bad('origin_unavailable',binding or 'Homebrew-Fassung nicht freigegeben.',422)
+    if rule_pins:values['character_data']['srd']['rulePins']=rule_pins
     char = Character(user_id=user.id, campaign_id=campaign_id, mana_max=0, mana_current=0, **values)
     db.session.add(char)
     db.session.flush()
@@ -338,6 +346,7 @@ def get_srd_character(char_id):
         'evaluation': evaluate(data, block.get('state') or {}),
         'sourceStatus': pin_status(data, block.get('sources')),
         'speciesOrigin': origin,
+        'ruleOrigins': rule_pins(block),
     })
 
 
@@ -855,3 +864,14 @@ def put_companions(char_id):
 
 from vtt.characters import srd_party_routes  # noqa: E402,F401  (registers the campaign routes on this blueprint)
 from vtt.characters import srd_export_routes  # noqa: E402,F401  (registers export, import, PDF and theme routes)
+
+
+@srd_creator_bp.get('/origin-catalog')
+@jwt_required()
+def origin_catalog_entries():
+    user,error=_get_current_user()
+    if error:return error
+    from . import origin_catalog
+    response=jsonify({'enabled':origin_catalog.enabled(),**origin_catalog.catalog(user.id)})
+    response.headers['Cache-Control']='private, no-store'
+    return response

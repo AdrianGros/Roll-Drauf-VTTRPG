@@ -51,6 +51,8 @@ def export_document(char):
     companions = [{k: v for k, v in c.items() if k != "id"} for c in srd_manage.companions(char)]
     pin = species_profiles.pinned(block)
     extra = {"speciesPin": {"revisionId": pin["revisionId"], "digest": pin.get("digest"), "name": pin["profile"]["name"]}} if pin else {}
+    from vtt.rules_content.origin_profiles import pinned as rule_pins
+    extra['rulePins']=[{'revisionId':p['revisionId'],'digest':p['digest'],'kind':p['profile']['kind']} for p in rule_pins(block)]
     return {
         **extra,
         "format": FORMAT, "version": VERSION, "ruleset": load_creator_data()["rulesetId"],
@@ -150,6 +152,15 @@ def import_character(doc, *, user_id):
     if problems:
         raise _bad("Der Charakterzustand in der Datei ist ungültig.", problems=problems)
     data, pin = _species_for_import(doc, state, data, user_id)
+    from . import origin_catalog
+    data,rule_rows,rule_problems=origin_catalog.resolve(user_id,state,data)
+    rule_pins=[origin_catalog.pin_for(row) for row in rule_rows]
+    references=[{'revisionId':p['revisionId'],'digest':p['digest'],'kind':p['profile']['kind']} for p in rule_pins]
+    named=doc.get('rulePins',[])
+    named_valid=isinstance(named,list) and len(named)<=32 and all(isinstance(p,dict) and set(p)=={'revisionId','digest','kind'} and type(p['revisionId']) is int and isinstance(p['digest'],str) and p['kind'] in ('feat','background') for p in named)
+    if rule_problems or not named_valid or sorted(references,key=lambda p:p['revisionId'])!=sorted(named,key=lambda p:p['revisionId']):
+        raise _bad('Homebrew-Hintergründe/Merkmale müssen hier in genau dieser Fassung für dich veröffentlicht sein.')
+
     evaluation = evaluate(data, state)
     blockers = finalize_blockers(evaluation, state)
     if blockers:
@@ -175,6 +186,7 @@ def import_character(doc, *, user_id):
     if type(hp) is int:
         values["hp_current"] = max(0, min(hp, values["hp_max"]))
     block = values["character_data"]["srd"]
+    if rule_pins:block["rulePins"]=rule_pins
     if pin:
         block["speciesPin"] = pin
     block["progression"] = {"mode": mode, "milestoneTarget": target}

@@ -116,6 +116,15 @@ class _Findings:
 def evaluate(data: dict, state: dict) -> dict:
     state = _dict(state)
     findings = _Findings()
+    from .origin_profiles import source_ref
+    provenance = {}
+    def part(label,value,source=None):
+        return {'label':label,'value':value,'source':source}
+    def explain(key,label,total,parts,stacking='add'):
+        provenance[key] = {'label':label,'total':total,'contributions':parts,'stacking':stacking}
+    ability_parts = {a:[] for a in ABILITY_IDS}
+    skill_sources = {}
+
     classes = _Lookup({entry["classKey"]: entry for entry in data["classes"]})
     feats = _Lookup({entry["id"]: entry for entry in data["feats"]})
     species_map = _Lookup({entry["id"]: entry for entry in data["species"]})
@@ -196,6 +205,7 @@ def evaluate(data: dict, state: dict) -> dict:
         for a, value in increases.items():
             if a in bonus:
                 bonus[a] += value
+                ability_parts[a].append(part(background['name'],value,source_ref(background)))
 
     # ---- species
     species = species_map.get(_dict(state.get("species")).get("id"))
@@ -224,8 +234,8 @@ def evaluate(data: dict, state: dict) -> dict:
     # ---- advancements (ASI / feats)
     advancements = [_dict(a) for a in _list(state.get("advancements"))]
     taken_feats: list[str] = []
-    if background and background.get("feat"):
-        origin = next((f for f in data["feats"] if f["name"] == background["feat"]), None)
+    if background and (background.get("featId") or background.get("feat")):
+        origin = feats.get(background.get('featId')) if background.get('featId') else next((f for f in data["feats"] if f["name"] == background["feat"]), None)
         if origin:
             taken_feats.append(origin["id"])
     versatile = species_choices.get("versatile")
@@ -264,6 +274,7 @@ def evaluate(data: dict, state: dict) -> dict:
                     findings.add(ERROR, "feat-increase", "Dieses Attribut ist für das Talent nicht erlaubt.", path, feat["abilityIncrease"]["source"])
                 else:
                     bonus[target] += 1
+                    ability_parts[target].append(part(feat['name'],1,source_ref(feat)))
                     if feat["abilityIncrease"]["max"] > 20:
                         boon_targets.add(target)
         elif adv.get("kind") == "asi":
@@ -274,6 +285,7 @@ def evaluate(data: dict, state: dict) -> dict:
             else:
                 for a, value in increases.items():
                     bonus[a] += value
+                    ability_parts[a].append(part('Attributswerterhöhung',value,{'id':f'advancements.{index}','classKey':key,'classLevel':class_level}))
         else:
             findings.add(INCOMPLETE, "advancement-kind", "Wähle Attributswerterhöhung oder Talent.", path)
 
@@ -286,6 +298,11 @@ def evaluate(data: dict, state: dict) -> dict:
             findings.add(WARNING, "ability-cap", f"{ability_names[a]} überschreitet das Maximum von {cap} und wird auf {cap} begrenzt.", f"abilities.{a}", methods["backgroundBonus"]["source"] if cap == 20 else None)
             score = cap
         abilities[a] = {"base": base[a], "bonus": bonus[a], "score": score, "modifier": ability_modifier(score)}
+        parts = [part('Grundwert',base[a],{'id':'abilityBase.'+a})]+ability_parts[a]
+        if score != base[a]+bonus[a]: parts.append(part('Attributsmaximum',score-base[a]-bonus[a],{'id':'ability-cap'}))
+        explain('ability.'+a,ability_names[a],score,parts,'add_then_cap')
+        explain('modifier.'+a,ability_names[a]+' Modifikator',ability_modifier(score),
+                [part('Abrunden((Attribut − 10) / 2)',ability_modifier(score),{'id':'ability.'+a})],'ability_modifier')
     # ---- required advancement slots
     for key, class_level in levels_by_class.items():
         entry = classes[key]
@@ -340,11 +357,13 @@ def evaluate(data: dict, state: dict) -> dict:
         for skill in class_skills:
             if skill in skills:
                 proficiency[skill] = "proficient"
+                skill_sources.setdefault(skill,[]).append({'id':'class.'+first_class,'name':entry['name']})
     if background:
         for skill in background["skills"]:
             if proficiency.get(skill) == "proficient":
                 findings.add(WARNING, "skill-duplicate", f"„{skills[skill]['name']}“ kommt aus Klasse und Hintergrund; wähle für die Klassenfertigkeit eine andere.", "skills.class")
             proficiency[skill] = "proficient"
+            skill_sources.setdefault(skill,[]).append(source_ref(background))
     multiclass_skills = _dict(skill_state.get("multiclass"))
     for key in order[1:]:
         wanted = classes[key]["multiclassGrants"].get("skillChoices")
@@ -361,6 +380,7 @@ def evaluate(data: dict, state: dict) -> dict:
                 if proficiency.get(skill) == "proficient":
                     findings.add(WARNING, "skill-duplicate", f"„{skills[skill]['name']}“ ist schon geübt; wähle für {classes[key]['name']} eine andere Fertigkeit.", f"skills.multiclass.{key}")
                 proficiency[skill] = "proficient"
+                skill_sources.setdefault(skill,[]).append({'id':'class.'+key,'name':classes[key]['name']})
     for skill in _list(skill_state.get("other")):
         if skill in skills:
             proficiency.setdefault(skill, "proficient")
@@ -368,6 +388,7 @@ def evaluate(data: dict, state: dict) -> dict:
         chosen = species_choices.get("keen-senses")
         if chosen in skills:
             proficiency.setdefault(chosen, "proficient")
+        skill_sources.setdefault(chosen,[]).append(source_ref(species))
     if species and species["id"].endswith(".human") and species_choices.get("skillful") in skills:
         proficiency.setdefault(species_choices["skillful"], "proficient")
     # Published homebrew Species declare their grants on the choice itself (species_profiles.species_entry).
@@ -378,6 +399,38 @@ def evaluate(data: dict, state: dict) -> dict:
         if proficiency.get(chosen) == "proficient":
             findings.add(WARNING, "skill-duplicate", f"„{skills[chosen]['name']}“ ist schon geübt; wähle für {species['name']} eine andere Fertigkeit.", f"species.choices.{choice['id']}")
         proficiency.setdefault(chosen, "proficient")
+    feature_state = _dict(state.get("featureChoices"))
+    acquired_at = {fid:1 for fid in taken_feats if fid in feats and feats[fid]['category']=='Herkunftstalent'}
+    for adv in advancements:
+        fid=adv.get('featId');key=adv.get('classKey');nth=_int(adv.get('classLevel'))
+        if adv.get('kind')!='feat' or fid not in feats or not nth:continue
+        class_count=0
+        for index,level in enumerate(history):
+            if level['classKey']==key:class_count+=1
+            if class_count==nth:
+                acquired_at[fid]=index+1;break
+        if feats[fid].get('homebrew') and feats[fid]['category']!='Allgemeines Talent':
+            findings.add(ERROR,'homebrew-category','Für eine Verbesserung ist ein allgemeines Talent erforderlich.','advancements')
+    for key,class_level in levels_by_class.items():
+        for choice in classes[key]['featureChoices']:
+            fid=_dict(feature_state.get(key)).get(choice['id'])
+            if choice['kind']=='feat-category' and choice['level']<=class_level and isinstance(fid,str) and fid in feats and feats[fid]['category'].startswith(choice['category']):
+                acquired_at[fid]=total_level
+    homebrew = [feats[fid] for fid in sorted(acquired_at) if feats[fid].get('homebrew')]
+    grants = []
+    for feat in homebrew:
+        prereq = feat['prerequisite']
+        if acquired_at[feat['id']] < (prereq.get('minLevel') or 1):
+            findings.add(ERROR,'homebrew-prerequisite',f"{feat['name']}: Mindeststufe nicht erreicht.",'advancements',feat.get('source'))
+        need = prereq.get('abilities')
+        if need and abilities[need['ability']]['score'] < need['min']:
+            findings.add(ERROR,'homebrew-prerequisite',f"{feat['name']}: Attributsvoraussetzung nicht erfüllt.",'advancements',feat.get('source'))
+        for grant in feat.get('mechanics',[]):
+            grants.append((grant,source_ref(feat)))
+            if grant['kind']=='skill_proficiency':
+                proficiency.setdefault(grant['skill'],'proficient')
+                skill_sources.setdefault(grant['skill'],[]).append(source_ref(feat))
+
     for skill in _list(skill_state.get("expertise")):
         if proficiency.get(skill) == "proficient" and skill not in expertise:
             expertise.append(skill)
@@ -476,6 +529,13 @@ def evaluate(data: dict, state: dict) -> dict:
             hp_total += extra
             hp_breakdown.append({"level": None, "classKey": None, "gain": extra, "label": rule_bonus["id"], "ref": rule_bonus["source"]})
 
+    for grant,source in grants:
+        if grant['kind']=='hp_per_level':
+            extra = grant['value'] * total_level
+            hp_total += extra
+            hp_breakdown.append({'level':None,'classKey':None,'gain':extra,'label':source['name'],'ref':source})
+    explain('hp.max','Trefferpunkte',hp_total,[part(row['label'],row['gain'],row.get('ref') or {'id':'levels.'+str(row['level']),'classKey':row['classKey']}) for row in hp_breakdown])
+
     # ---- armor class, speed, initiative
     equipment = _dict(state.get("equipment"))
     armor_id = equipment.get("armor") if isinstance(equipment.get("armor"), str) else None
@@ -493,6 +553,7 @@ def evaluate(data: dict, state: dict) -> dict:
     if armor:
         dex_part = {"full": dex, "capped": min(dex, armor["dexCap"] or 0), "none": 0}[armor["dex"]]
         ac_value = armor["base"] + dex_part + (shield_bonus if shield else 0)
+        ac_parts = [part(armor['name'],armor['base'],{'id':armor['id']}),part('GES nach Rüstungslimit',dex_part,{'id':'modifier.dex'})]
         ac_formula = f"{armor['name']}: {armor['base']} + GES (begrenzt: {armor['dex']}) + Schild"
         if armor["strengthRequirement"] and abilities["str"]["score"] < armor["strengthRequirement"]:
             findings.add(WARNING, "armor-strength", f"{armor['name']} verlangt Stärke {armor['strengthRequirement']}; ohne sie sinkt deine Bewegungsrate um 3 m.", "equipment.armor")
@@ -503,6 +564,7 @@ def evaluate(data: dict, state: dict) -> dict:
             findings.add(WARNING, "armor-untrained", f"Du bist mit {armor['name']} nicht vertraut: Nachteil auf Attributs-, Rettungs- und Angriffswürfe mit STÄ/GES, keine Zauber.", "equipment.armor")
     else:
         ac_value = 10 + dex + (shield_bonus if shield else 0)
+        ac_parts = [part('Ungerüstete Basis',10,{'id':'armor.unarmored'}),part('GES',dex,{'id':'modifier.dex'})]
         ac_formula = "10 + GES" + (" + Schild" if shield else "")
         for formula in data["armorClassFormulas"]:
             if levels_by_class.get(formula["classKey"], 0) < formula["minClassLevel"]:
@@ -514,14 +576,22 @@ def evaluate(data: dict, state: dict) -> dict:
             value = formula["base"] + sum(abilities[a]["modifier"] for a in formula["abilities"]) + (shield_bonus if shield else 0)
             if value > ac_value:
                 ac_value = value
+                ac_parts = [part(formula['id'],formula['base'],formula.get('source'))] + [part(a.upper(),abilities[a]['modifier'],{'id':'modifier.'+a}) for a in formula['abilities']]
                 ac_formula = f"{formula['id']}: {formula['base']} + " + " + ".join(a.upper() for a in formula["abilities"]) + (" + Schild" if shield else "")
+    if shield: ac_parts.append(part('Schild',shield_bonus,{'id':'equipment.shield'}))
     chosen_feats = set(taken_feats) | {v for k in feature_state.values() for v in _dict(k).values() if isinstance(v, str)}
     for rule_bonus in data["armorClassBonuses"]:
         if rule_bonus["featId"] in chosen_feats and (armor or not rule_bonus["requiresArmor"]):
             ac_value += rule_bonus["bonus"]
+            ac_parts.append(part(rule_bonus['id'],rule_bonus['bonus'],rule_bonus.get('source')))
             ac_formula += f" + {rule_bonus['bonus']} ({rule_bonus['id']})"
 
+    for grant,source in grants:
+        if grant['kind']=='ac':
+            ac_value += grant['value']; ac_parts.append(part(source['name'],grant['value'],source))
+    explain('armorClass','Rüstungsklasse',ac_value,ac_parts,'best_formula_then_add')
     speed = species["speedMeters"] if species else 9.0
+    speed_parts = [part(species['name'] if species else 'Grundbewegung',speed,source_ref(species) if species else None)]
     for rule_bonus in data["speedBonuses"]:
         class_level = levels_by_class.get(rule_bonus["classKey"], 0)
         if class_level < rule_bonus["minClassLevel"]:
@@ -532,10 +602,22 @@ def evaluate(data: dict, state: dict) -> dict:
             continue
         if "meters" in rule_bonus:
             speed += rule_bonus["meters"]
+            speed_parts.append(part(rule_bonus.get('id') or rule_bonus['classKey'],rule_bonus['meters'],rule_bonus.get('source')))
         else:
             column = next(r for r in classes[rule_bonus["classKey"]]["levels"] if r["level"] == class_level)["columns"].get(rule_bonus["column"])
             speed += _parse_meters(column)
+            speed_parts.append(part(rule_bonus.get('id') or rule_bonus['classKey'],_parse_meters(column),rule_bonus.get('source')))
+    initiative_parts = [part('GES',dex,{'id':'modifier.dex'})] + [part(r.get('id') or r['featId'],pb,r.get('source')) for r in data['initiativeBonuses'] if r['featId'] in chosen_feats]
     initiative = abilities["dex"]["modifier"] + sum(pb for r in data["initiativeBonuses"] if r["featId"] in chosen_feats)
+    for grant,source in grants:
+        if grant['kind']=='speed_meters':
+            speed += grant['value']; speed_parts.append(part(source['name'],grant['value'],source))
+        if grant['kind'] in ('initiative','initiative_pb'):
+            value = pb if grant['kind']=='initiative_pb' else grant['value']
+            initiative += value; initiative_parts.append(part(source['name'],value,source))
+    explain('speed','Bewegung (m)',speed,speed_parts)
+    explain('initiative','Initiative',initiative,initiative_parts)
+    explain('proficiencyBonus','Übungsbonus',pb,[part('Gesamtstufe '+str(total_level),pb,{'id':'levels.proficiencyBonus'})],'level_table')
 
     # ---- saves and skills
     save_profs = set(classes[first_class]["savingThrows"]) if first_class else set()
@@ -547,9 +629,22 @@ def evaluate(data: dict, state: dict) -> dict:
         skill_rows[skill_id] = {"name": skill["name"], "ability": skill["ability"], "proficiency": level, "bonus": abilities[skill["ability"]]["modifier"] + multiplier * pb}
     passive = 10 + skill_rows["wahrnehmung"]["bonus"] if "wahrnehmung" in skill_rows else 10
 
+    for a,row in saves.items():
+        explain('save.'+a,ability_names[a]+' Rettungswurf',row['bonus'],
+                [part(ability_names[a],abilities[a]['modifier'],{'id':'modifier.'+a}),part('Rettungswurf-Übung',pb if row['proficient'] else 0,{'id':'class.'+str(first_class)})])
+    for sid,row in skill_rows.items():
+        multiplier = {'none':0,'proficient':1,'expertise':2}[row['proficiency']]
+        explain('skill.'+sid,row['name'],row['bonus'],[part(ability_names[row['ability']],abilities[row['ability']]['modifier'],{'id':'modifier.'+row['ability']}),
+            part('Expertise' if multiplier==2 else 'Fertigkeitsübung',multiplier*pb,{'id':'proficiency.'+sid,'grantedBy':skill_sources.get(sid,[]),'expertiseSelection':'skills.expertise' if multiplier==2 else None})],'highest_proficiency_then_add')
+    explain('passivePerception','Passive Wahrnehmung',passive,[part('Basis',10),part('Wahrnehmung',passive-10,{'id':'skill.wahrnehmung'})])
+
     # ---- spellcasting
     casting = _spellcasting(data, state, levels_by_class, abilities, pb, findings)
 
+    for key,row in casting['classes'].items():
+        parts = [part(row['ability'].upper(),abilities[row['ability']]['modifier'],{'id':'modifier.'+row['ability']}),part('Übungsbonus',pb,{'id':'proficiencyBonus'})]
+        explain('spellAttack.'+key,'Zauberangriff '+classes[key]['name'],row['attackBonus'],parts)
+        explain('spellSaveDc.'+key,'Zauber-SG '+classes[key]['name'],row['saveDc'],[part('Basis',8)]+parts)
     result = {
         "level": total_level,
         "classes": [
@@ -569,7 +664,22 @@ def evaluate(data: dict, state: dict) -> dict:
         "spellcasting": casting,
         "feats": taken_feats,
     }
+    result['provenance'] = provenance
+    result['provenanceRuleset'] = {'id':data['rulesetId'],'version':data['rulesetVersion']}
     result["overrides"] = _apply_overrides(state, result, findings)
+    for override in result['overrides']:
+        keys = [override['key']]
+        if override['key'] in ('spellAttack','spellSaveDc'): keys = [k for k in provenance if k.startswith(override['key']+'.')]
+        for key in keys:
+            if key in provenance:
+                row = provenance[key]
+                row['contributions'].append(part('Manuell: '+override['reason'],override['value']-row['total'],{'id':'overrides.'+override['key']}))
+                row['total'] = override['value']; row['stacking'] += '_then_override'
+        if override['key'].startswith('ability.'):
+            a=override['key'].split('.')[1];mod=result['abilities'][a]['modifier']
+            explain('modifier.'+a,ability_names[a]+' Modifikator',mod,
+                [part('Abrunden((Attribut − 10) / 2)',mod,{'id':'ability.'+a})],'ability_modifier_after_override')
+
     severities = {item["severity"] for item in findings.items}
     result["findings"] = findings.items
     result["valid"] = ERROR not in severities

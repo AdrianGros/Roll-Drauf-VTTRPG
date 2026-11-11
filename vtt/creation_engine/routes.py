@@ -324,3 +324,5 @@ def delete_document():
 
 
 from . import species_routes  # noqa: E402,F401  (registers the Species check/publish routes on this blueprint)
+
+from . import origin_routes  # noqa: E402,F401

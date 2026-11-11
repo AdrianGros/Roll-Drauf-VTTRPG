@@ -50,6 +50,7 @@ class Config:
     CE_AUTHORING = _parse_bool(os.getenv("CE_AUTHORING"), default=False)
     # Publishing Eagle Species as playable 2024 origins and choosing them in the SRD creator. Switching it off hides
     # publishing, the catalog and new selections; characters that already pin a Species keep evaluating from their pin.
+    CE_PLAYABLE_ORIGINS = _parse_bool(os.getenv("CE_PLAYABLE_ORIGINS"), default=False)
     CE_PLAYABLE_SPECIES = _parse_bool(os.getenv("CE_PLAYABLE_SPECIES"), default=False)
 
     # The incomplete German SRD reader is deliberately opt-in until R7 makes

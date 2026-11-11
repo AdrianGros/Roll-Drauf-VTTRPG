@@ -1,0 +1,157 @@
+{
+  "source": "repository licensed SRD 5.2.1 DE generated creator data",
+  "ruleset": "srd-5.2.1-de",
+  "version": "1.0.0",
+  "classes": [
+    {
+      "id": "barbarian",
+      "subclasses": [
+        "classes.barbarian.subclass-path-of-the-berserker"
+      ]
+    },
+    {
+      "id": "bard",
+      "subclasses": [
+        "classes.bard.subclass-college-of-lore"
+      ]
+    },
+    {
+      "id": "druid",
+      "subclasses": [
+        "classes.druid.subclass-circle-of-the-land"
+      ]
+    },
+    {
+      "id": "warlock",
+      "subclasses": [
+        "classes.warlock.subclass-fiend-patron"
+      ]
+    },
+    {
+      "id": "cleric",
+      "subclasses": [
+        "classes.cleric.subclass-life-domain"
+      ]
+    },
+    {
+      "id": "fighter",
+      "subclasses": [
+        "classes.fighter.subclass-champion"
+      ]
+    },
+    {
+      "id": "wizard",
+      "subclasses": [
+        "classes.wizard.subclass-evoker"
+      ]
+    },
+    {
+      "id": "monk",
+      "subclasses": [
+        "classes.monk.subclass-open-hand"
+      ]
+    },
+    {
+      "id": "paladin",
+      "subclasses": [
+        "classes.paladin.subclass-devotion"
+      ]
+    },
+    {
+      "id": "rogue",
+      "subclasses": [
+        "classes.rogue.subclass-thief"
+      ]
+    },
+    {
+      "id": "ranger",
+      "subclasses": [
+        "classes.ranger.subclass-hunter"
+      ]
+    },
+    {
+      "id": "sorcerer",
+      "subclasses": [
+        "classes.sorcerer.subclass-draconic"
+      ]
+    }
+  ],
+  "feats": [
+    {
+      "id": "feats.descriptions.ability-score-improvement",
+      "category": "Allgemeines Talent"
+    },
+    {
+      "id": "feats.descriptions.skilled",
+      "category": "Herkunftstalent"
+    },
+    {
+      "id": "feats.descriptions.archery",
+      "category": "Kampfstil-Talent"
+    },
+    {
+      "id": "feats.descriptions.magic-initiate",
+      "category": "Herkunftstalent"
+    },
+    {
+      "id": "feats.descriptions.boon-of-combat-prowess",
+      "category": "Epische-Gabe-Talent"
+    },
+    {
+      "id": "feats.descriptions.boon-of-spell-recall",
+      "category": "Epische-Gabe-Talent"
+    },
+    {
+      "id": "feats.descriptions.boon-of-dimensional-travel",
+      "category": "Epische-Gabe-Talent"
+    },
+    {
+      "id": "feats.descriptions.boon-of-the-night-spirit",
+      "category": "Epische-Gabe-Talent"
+    },
+    {
+      "id": "feats.descriptions.boon-of-fate",
+      "category": "Epische-Gabe-Talent"
+    },
+    {
+      "id": "feats.descriptions.boon-of-irresistible-offense",
+      "category": "Epische-Gabe-Talent"
+    },
+    {
+      "id": "feats.descriptions.boon-of-truesight",
+      "category": "Epische-Gabe-Talent"
+    },
+    {
+      "id": "feats.descriptions.great-weapon-fighting",
+      "category": "Kampfstil-Talent"
+    },
+    {
+      "id": "feats.descriptions.grappler",
+      "category": "Allgemeines Talent"
+    },
+    {
+      "id": "feats.descriptions.defense",
+      "category": "Kampfstil-Talent"
+    },
+    {
+      "id": "feats.descriptions.alert",
+      "category": "Herkunftstalent"
+    },
+    {
+      "id": "feats.descriptions.savage-attacker",
+      "category": "Herkunftstalent"
+    },
+    {
+      "id": "feats.descriptions.two-weapon-fighting",
+      "category": "Kampfstil-Talent"
+    }
+  ],
+  "backgrounds": [
+    "character-origins.backgrounds.acolyte",
+    "character-origins.backgrounds.criminal",
+    "character-origins.backgrounds.soldier",
+    "character-origins.backgrounds.sage"
+  ],
+  "status": "all generated catalog entries have stable selectable IDs; no concrete missing noncatalog ID supplied",
+  "missing_input": "I01: exact feat/subclass, source and edition"
+}

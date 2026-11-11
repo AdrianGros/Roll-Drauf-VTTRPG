@@ -244,6 +244,9 @@ def test_weapon_rolls_use_the_sheet_values(client, other, data):
 
 def test_weapon_rolls_land_in_the_table_log(app, client, other, data):
     t = table(app, client, other, data)
+    from tests.play_shared import enter_table
+    from vtt.models import Campaign,GameSession
+    enter_table(client,db.session.get(Campaign,t['campaign']),db.session.get(GameSession,t['session']))
     dagger = row(add(client, t["char"]["id"], DAGGER), DAGGER)["id"]
     body = roll(client, t["char"]["id"], kind="weapon_damage", key=str(dagger), critical=True).get_json()
     assert body["logged"]
@@ -256,6 +259,9 @@ def test_weapon_rolls_land_in_the_table_log(app, client, other, data):
 
 def test_wearing_armor_updates_the_linked_table_token(app, client, other, data):
     t = table(app, client, other, data)
+    from tests.play_shared import enter_table
+    from vtt.models import Campaign,GameSession
+    enter_table(client,db.session.get(Campaign,t['campaign']),db.session.get(GameSession,t['session']))
     token = client.post(_tokens(t), json={"name": "Mira", "x": 1, "y": 1, "character_id": t["char"]["id"]}).get_json()["token"]
     assert token["metadata_json"]["sheet"]["ac"] == 11
     leather = row(add(client, t["char"]["id"], ARMOR), ARMOR)["id"]

@@ -59,3 +59,5 @@ __all__ = [
     'TokenLoot', 'LootTransfer',
     'SceneWall', 'SceneLight', 'FogOfWarState', 'TableSeat',
 ]
+
+from vtt.models.ce_rule_revision import CeRuleRevision

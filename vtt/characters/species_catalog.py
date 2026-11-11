@@ -96,7 +96,7 @@ def catalog(user_id):
     return entries
 
 
-def resolve(user_id, state):
+def _resolve_species(user_id, state):
     """(rules data, revision row or None, problems) for a creator state chosen by `user_id`."""
     data = load_creator_data()
     species = state.get("species") if isinstance(state, dict) else None
@@ -120,3 +120,10 @@ def campaign_problem(pin, campaign_id):
 
 def revision(revision_id):
     return db.session.get(CeSpeciesRevision, revision_id) if type(revision_id) is int else None
+
+
+def resolve(user_id,state):
+    data,row,problems=_resolve_species(user_id,state)
+    from . import origin_catalog
+    data,_,origin_problems=origin_catalog.resolve(user_id,state,data)
+    return data,row,problems+origin_problems

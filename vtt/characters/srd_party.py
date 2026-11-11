@@ -77,7 +77,9 @@ def check_character_for_campaign(char, campaign_id):
     block = (char.character_data or {}).get("srd") if isinstance(char.character_data, dict) else None
     if isinstance(block, dict):
         check_ability_method(block.get("state"), campaign_id)
-        problem = species_catalog.campaign_problem(species_profiles.pinned(block), campaign_id)
+        from . import origin_catalog
+        from vtt.rules_content.origin_profiles import pinned as rule_pins
+        problem = species_catalog.campaign_problem(species_profiles.pinned(block), campaign_id) or origin_catalog.campaign_problem(rule_pins(block),campaign_id)
         if problem:
             raise ProgressionError("species_campaign_only", problem, 409)
 

@@ -534,6 +534,16 @@ def attack_rows(char, evaluation, items):
             "mastery": weapon["mastery"], "masteryActive": weapon["id"] in mastered,
             "properties": weapon_properties(weapon), "summary": summary(entry),
         })
+    for row in rows:
+        modifier = abilities[row['ability']]['modifier']
+        row['provenance'] = {
+            'attack': {'label':'Angriffsbonus','total':row['attackBonus'],'stacking':'add',
+                'contributions':[{'label':row['ability'].upper(),'value':modifier,'source':{'id':'modifier.'+row['ability']}},
+                    {'label':'Waffenübung','value':pb if row['proficient'] else 0,'source':{'id':'proficiencyBonus','classes':[entry['classKey'] for entry in entries]}}]},
+            'damage': {'label':'Schaden','formula':row['damage'],'stacking':'weapon_dice_plus_ability',
+                'contributions':[{'label':'Waffe','value':row['summary'],'source':{'id':'inventory.'+row['key']}},
+                    {'label':row['ability'].upper(),'value':modifier,'source':{'id':'modifier.'+row['ability']}}]},
+        }
     return rows
 
 

@@ -88,9 +88,10 @@ def rules_data_for_block(block, data: dict | None = None) -> dict:
     """The rules data one character is evaluated with: the SRD package plus its pinned Species, if any."""
     data = data or load_creator_data()
     pin = pinned(block)
-    if pin is None:
-        return data
-    return with_species(data, species_entry(pin["profile"], species_id(pin["revisionId"])))
+    if pin is not None:
+        data = with_species(data, species_entry(pin["profile"], species_id(pin["revisionId"])))
+    from .origin_profiles import pinned as rule_pins, with_pins
+    return with_pins(data, rule_pins(block))
 
 
 def action_summary(action: dict) -> str:
