@@ -12,7 +12,9 @@ Two steps keep image recognition reviewable instead of authoritative:
                 Writes a draft profile and a numbered contact sheet for review.
   build PACK    Compile the reviewed profile into normal PNG stamps in the
                 pack's manifest (additive IDs, original pixels, no resampling)
-                and rebuild palette, inventory and credits.
+                and rebuild palette, inventory and credits. Packs that already
+                ship one image per motif use singles-v1: the review names and
+                classifies those originals and hides exact duplicates.
 
 The reviewed profile is the source of truth for a build; detection only
 proposes it. Nothing is generated: every output pixel is copied from the sheet.
@@ -407,29 +409,74 @@ def component_units(profile, img):
     return units, excluded
 
 
+SINGLES = 'singles-v1'
+
+
+def build_singles(args, profile, folder, manifest, coverage, rel):
+    """Name and classify a pack's original single images; no new ids, no new pixels."""
+    singles, hidden = profile['singles'], profile.get('hidden', {})
+    seen, order = set(), {g: n for n, g in enumerate(profile.get('groupOrder', []))}
+    for s in manifest['stamps']:
+        path = s['originalPath']
+        s.pop('hidden', None); s.pop('tile', None)
+        if path in singles:
+            spec = singles[path]
+            s['label'], s['group'] = spec['label'], spec['group']
+            if spec.get('kind') == 'tile' and s['w'] == s['h']: s['tile'] = True
+        elif path in hidden:
+            s['hidden'] = True
+        elif s.get('sheet') or s['group'] == 'Referenzen & Szenen':
+            s['group'] = 'Referenzen & Szenen'
+        else:
+            raise SystemExit(f'{path}: not accounted for in the profile')
+        seen.add(path)
+    unknown = sorted((set(singles) | set(hidden)) - seen)
+    if unknown: raise SystemExit(f'Profile names files the pack does not have: {unknown[:5]}')
+    rank = {'object': 0, 'tile': 1}
+    manifest['stamps'].sort(key=lambda s: (bool(s.get('hidden')), order.get(s['group'], len(order)),
+                                           rank.get(singles.get(s['originalPath'], {}).get('kind'), 2)))
+    manifest['sliceProfiles'] = [rel]
+    coverage['slices'] = dict(profile=rel, detector=SINGLES, review=profile['review'], produced=[],
+                              named=len(singles), hidden=[dict(path=k, reason=v) for k, v in sorted(hidden.items())])
+    write_json(folder / 'manifest.json', manifest, compact=True)
+    write_json(folder / 'coverage.json', coverage, compact=True)
+    tiles = sum(bool(s.get('tile')) for s in manifest['stamps'])
+    print(f'{args.pack}: {len(singles)} originals named, {tiles} grid tiles, {len(hidden)} duplicates hidden')
+    if not args.no_catalog: rebuild()
+
+
 def cmd_build(args):
     profile = json.loads((PROFILES / f'{args.pack}.json').read_text())
     if profile.get('schemaVersion') != 1 or profile.get('pack') != args.pack: raise SystemExit('Unsupported slice profile')
     if profile.get('review', {}).get('status') != 'reviewed': raise SystemExit('Profile has not been reviewed')
     folder = ASSETS / args.pack
+    if profile['detector'] == SINGLES:
+        rel = (PROFILES / f'{args.pack}.json').relative_to(PROFILES.parents[1]).as_posix()
+        return build_singles(args, profile, folder, json.loads((folder / 'manifest.json').read_text()),
+                             json.loads((folder / 'coverage.json').read_text()), rel)
     manifest = json.loads((folder / 'manifest.json').read_text())
     coverage = json.loads((folder / 'coverage.json').read_text())
-    sheet_path = profile['sheet']['path']
-    entry, digest, img = load_sheet(args.pack, sheet_path, profile['sheet']['sha256'], profile.get('colorKey'))
-    if profile['detector'] == COMPONENTS:
-        grid, cells = None, None
-        units, excluded = component_units(profile, img)
-    else:
-        grid = Grid(img, profile['grid'])
-        cells = alpha_cells(img, grid)
-        units, excluded = grid_units(profile, img, cells, grid)
+    # A profile describes one sheet, or several under "sheets" (each with its own detector).
+    units, excluded, sheets = [], [], []
+    for spec in profile.get('sheets', [profile]):
+        entry, digest, img = load_sheet(args.pack, spec['sheet']['path'], spec['sheet']['sha256'], spec.get('colorKey'))
+        if spec['detector'] == COMPONENTS:
+            grid, (found, dropped) = None, component_units(spec, img)
+        else:
+            grid = Grid(img, spec['grid'])
+            found, dropped = grid_units(spec, img, alpha_cells(img, grid), grid)
+        for unit in found: unit.update(sheet=spec['sheet']['path'], digest=digest, grid=grid)
+        if 'sheets' in profile:
+            for record in dropped: record['sheet'] = spec['sheet']['path']
+        units += found; excluded += dropped
+        sheets.append(dict(path=spec['sheet']['path'], sha256=digest, detector=spec['detector'], units=len(found)))
     by_path = {s['originalPath']: s for s in manifest['stamps'] if 'slice' not in s}
     previous = {s['id']: s for s in manifest['stamps'] if 'slice' in s}
     rel = (PROFILES / f'{args.pack}.json').relative_to(PROFILES.parents[1]).as_posix()
     hidden, labelled, produced, records, rank, tiles = set(), {}, [], [], {}, set()
     tile_files, duplicates = set(), 0
 
-    def single_for(k, part):
+    def single_for(k, part, grid):
         """Original single image with the same visible pixels, if the pack ships one."""
         if not profile.get('singles'): return None
         original = by_path.get(profile['singles'].format(index=k[0] * grid.cols + k[1]))
@@ -439,24 +486,25 @@ def cmd_build(args):
         return original
 
     for unit in units:
-        part, layout, kind, single = unit['image'], unit['layout'], unit['kind'], unit.get('single')
+        part, layout, kind, single, grid = unit['image'], unit['layout'], unit['kind'], unit.get('single'), unit['grid']
         # Within a category: assembled objects, then single objects, then building parts and tiles.
         order = 0 if single is None else 1 if kind == 'object' else 2
-        if single and (original := single_for(single, part)):
+        if single and (original := single_for(single, part, grid)):
             asset, file = original['id'], original['file']
             labelled[asset] = (unit['label'], unit['group'])
         else:
             buf = io.BytesIO(); part.save(buf, 'PNG', optimize=False); png = buf.getvalue()
             file = sha(png)[:32] + '.png'
             if not (folder / file).exists(): (folder / file).write_bytes(png)
-            asset = slice_id(args.pack, digest, layout)
-            if any(p['id'] == asset for p in produced): raise SystemExit(f'Duplicate slice {layout}')
-            produced.append(dict(id=asset, file=file, label=unit['label'], group=unit['group'], search=f'{unit["label"]} {sheet_path}',
+            asset = slice_id(args.pack, unit['digest'], layout)
+            if any(p['id'] == asset for p in produced): raise SystemExit(f'Duplicate slice {unit["sheet"]} {layout}')
+            produced.append(dict(id=asset, file=file, label=unit['label'], group=unit['group'], search=f'{unit["label"]} {unit["sheet"]}',
                                  w=part.width, h=part.height, defaultSize=min(256, max(16, part.width, part.height)), sha256=sha(png),
-                                 originalPath=sheet_path, originalSha256=digest, sheet=False, grid=grid.w if grid else 1,
+                                 originalPath=unit['sheet'], originalSha256=unit['digest'], sheet=False, grid=grid.w if grid else 1,
                                  pixelArt=manifest.get('pixelArt', False),
-                                 slice=dict(profile=rel, detector=profile['detector'], kind=kind, layout=layout)))
-            records.append(dict(asset=asset, kind=kind, layout=layout, file=file))
+                                 slice=dict(profile=rel, detector=(COMPONENTS if grid is None else DETECTOR) if 'sheets' in profile else profile['detector'],
+                                            kind=kind, layout=layout)))
+            records.append(dict(asset=asset, kind=kind, layout=layout, file=file, **({'sheet': unit['sheet']} if 'sheets' in profile else {})))
         rank[asset] = order
         if unit.get('hidden'): hidden.add(asset)
         elif unit.get('tile') and file in tile_files:  # identical pixels are offered once; the id still resolves
@@ -484,7 +532,8 @@ def cmd_build(args):
     visible = sorted((s for s in everything if not s.get('hidden')), key=lambda s: (order.get(s['group'], len(order)), rank.get(s['id'], 3)))
     manifest['stamps'] = visible + [s for s in everything if s.get('hidden')] + retired
     manifest['sliceProfiles'] = [rel]
-    coverage['slices'] = dict(profile=rel, detector=profile['detector'], sheet=profile['sheet'], review=profile['review'],
+    source = dict(detector='per-sheet', sheets=sheets) if 'sheets' in profile else dict(detector=profile['detector'], sheet=profile['sheet'])
+    coverage['slices'] = dict(profile=rel, **source, review=profile['review'],
                               produced=records + [dict(asset=s['id'], kind=s['slice']['kind'], layout=s['slice']['layout'], file=s['file'], retired=True) for s in retired])
     if excluded: coverage['slices']['excluded'] = excluded
     write_json(folder / 'manifest.json', manifest, compact=True)
