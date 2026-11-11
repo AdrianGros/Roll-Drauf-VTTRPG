@@ -14,6 +14,8 @@ def rebuild():
             fields=('id','file','label','w','h','group','sheet','grid','pixelArt','defaultSize')
             index={k:m[k] for k in ('name','author','source','license','licenseUrl','exportCredit')}
             index.update(schemaVersion=2,rows=[[e.get(k) for k in fields] for e in m['stamps']],textures=[])
+            # Parts of assembled objects stay resolvable for saved maps but leave the palette.
+            if any(e.get('hidden') for e in m['stamps']):index['hidden']=[e['id'] for e in m['stamps'] if e.get('hidden')]
             (ASSETS/p['id']/'palette.json').write_text(json.dumps(index,ensure_ascii=False,separators=(',',':'))+'\n')
             p['palette']=p['id']+'/palette.json'
         credits=m.get('creditFiles',[])

@@ -140,10 +140,11 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
         }
         return Promise.all([...ids].map(loadStamp));
     };
-    const addStamp = (stamp) => {
+    const addStamp = (stamp, listed = true) => {
         if (stamps.has(stamp.id)) return;
         stamp.searchText = `${stamp.label} ${stamp.group} ${stamp.packName} ${stamp.search}`.toLocaleLowerCase("de").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         stamps.set(stamp.id, stamp);
+        if (!listed) return; // parts of an assembled object: resolvable for saved maps, not offered
         let group = groups.find((g) => g.name === stamp.group);
         if (!group) {
             group = { name: stamp.group, ids: [] };
@@ -178,6 +179,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
                 });
             }
             if (accepted.length !== entries.length) throw new Error("Unvollständiger Palettenkatalog.");
+            const hidden = new Set(Array.isArray(manifest.hidden) ? manifest.hidden : entries.filter((entry) => entry.hidden === true).map((entry) => entry.id));
             if (pack.id === "kenney-cartography") {
                 const loaded = await Promise.all(accepted.map(async (stamp) => {
                     stamp.image = await loadImage(stamp.src).catch(() => null);
@@ -186,7 +188,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
                 for (const stamp of loaded) if (stamp.image) addStamp(stamp);
                 packLoaded = loaded.some((stamp) => stamp.image);
                 if (loaded.some((stamp) => !stamp.image)) errors.push("Einige Kenney-Symbole fehlen.");
-            } else for (const stamp of accepted) addStamp(stamp);
+            } else for (const stamp of accepted) addStamp(stamp, !hidden.has(stamp.id));
             for (const entry of manifest.textures || []) {
                 if (!entry || !FILE_RE.test(entry.file)) continue;
                 const image = await loadImage(`assets/${pack.id}/${entry.file}`).catch(() => null);

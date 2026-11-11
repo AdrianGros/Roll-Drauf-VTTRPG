@@ -1,0 +1,717 @@
+{
+ "schemaVersion": 1,
+ "pack": "kenney-tiny",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "Tilemap/tilemap_packed.png",
+  "sha256": "3a54d99ecde790d4fdea207a3644cf130fc56fa838f1beb1507c185a95b8e902"
+ },
+ "grid": {
+  "w": 16,
+  "h": 16,
+  "margin": 0,
+  "spacing": 0
+ },
+ "colorKey": null,
+ "singles": "Tiles/tile_{index:04d}.png",
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1: Alphakanal je Zelle, Schnitt durch Füllfarbe über Kachelkanten, Bounding-Box-Schluss) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Benennung, Kategorien und Abweichungen; keine generierten Pixel.",
+  "deviations": [
+   "Erkannte Burgfront (8,3–10,4, zehn Zellen) wird in Burgmauer, Burgtor mit Fallgitter und Einzelteile getrennt: Kenney legt hier mehrere Bauteile nebeneinander, kein einzelnes Objekt.",
+   "Häuser, Burghof, Erdfläche und Offenes Burgtor bestehen aus vollflächigen Bauteilen ohne Transparenzgrenze; sie sind als Rezepte aus Originalkacheln nach Kenneys Sample.png festgelegt."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Fertige Häuser",
+  "Objekte & Ausstattung",
+  "Zäune",
+  "Burg & Mauern",
+  "Gebäude & Bauteile",
+  "Gelände & Tiles",
+  "Referenzen & Szenen"
+ ],
+ "cells": {
+  "0,0": {
+   "label": "Gras",
+   "group": "Gelände & Tiles"
+  },
+  "0,1": {
+   "label": "Gras mit Halmen",
+   "group": "Gelände & Tiles"
+  },
+  "0,2": {
+   "label": "Gras mit Blumen",
+   "group": "Gelände & Tiles"
+  },
+  "0,3": {
+   "label": "Hoher Herbstbaum · Krone",
+   "group": "Bäume & Pflanzen"
+  },
+  "1,3": {
+   "label": "Hoher Herbstbaum · Stamm",
+   "group": "Bäume & Pflanzen"
+  },
+  "0,4": {
+   "label": "Hoher Laubbaum · Krone",
+   "group": "Bäume & Pflanzen"
+  },
+  "1,4": {
+   "label": "Hoher Laubbaum · Stamm",
+   "group": "Bäume & Pflanzen"
+  },
+  "0,5": {
+   "label": "Busch",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "1,5": {
+   "label": "Setzling",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,3": {
+   "label": "Kleiner Herbstbaum",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,4": {
+   "label": "Kleiner Laubbaum",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,5": {
+   "label": "Fliegenpilze",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "0,6": {
+   "label": "Waldstück · oben links",
+   "group": "Bäume & Pflanzen"
+  },
+  "0,9": {
+   "label": "Herbstwald · oben links",
+   "group": "Bäume & Pflanzen"
+  },
+  "1,0": {
+   "label": "Erdfläche · oben links",
+   "group": "Gelände & Tiles"
+  },
+  "0,7": {
+   "label": "Waldstück · oben",
+   "group": "Bäume & Pflanzen"
+  },
+  "0,10": {
+   "label": "Herbstwald · oben",
+   "group": "Bäume & Pflanzen"
+  },
+  "1,1": {
+   "label": "Erdfläche · oben",
+   "group": "Gelände & Tiles"
+  },
+  "0,8": {
+   "label": "Waldstück · oben rechts",
+   "group": "Bäume & Pflanzen"
+  },
+  "0,11": {
+   "label": "Herbstwald · oben rechts",
+   "group": "Bäume & Pflanzen"
+  },
+  "1,2": {
+   "label": "Erdfläche · oben rechts",
+   "group": "Gelände & Tiles"
+  },
+  "1,6": {
+   "label": "Waldstück · links",
+   "group": "Bäume & Pflanzen"
+  },
+  "1,9": {
+   "label": "Herbstwald · links",
+   "group": "Bäume & Pflanzen"
+  },
+  "2,0": {
+   "label": "Erdfläche · links",
+   "group": "Gelände & Tiles"
+  },
+  "1,7": {
+   "label": "Waldstück · Mitte",
+   "group": "Bäume & Pflanzen"
+  },
+  "1,10": {
+   "label": "Herbstwald · Mitte",
+   "group": "Bäume & Pflanzen"
+  },
+  "2,1": {
+   "label": "Erdfläche · Mitte",
+   "group": "Gelände & Tiles"
+  },
+  "1,8": {
+   "label": "Waldstück · rechts",
+   "group": "Bäume & Pflanzen"
+  },
+  "1,11": {
+   "label": "Herbstwald · rechts",
+   "group": "Bäume & Pflanzen"
+  },
+  "2,2": {
+   "label": "Erdfläche · rechts",
+   "group": "Gelände & Tiles"
+  },
+  "2,6": {
+   "label": "Waldstück · unten links",
+   "group": "Bäume & Pflanzen"
+  },
+  "2,9": {
+   "label": "Herbstwald · unten links",
+   "group": "Bäume & Pflanzen"
+  },
+  "3,0": {
+   "label": "Erdfläche · unten links",
+   "group": "Gelände & Tiles"
+  },
+  "2,7": {
+   "label": "Waldstück · unten",
+   "group": "Bäume & Pflanzen"
+  },
+  "2,10": {
+   "label": "Herbstwald · unten",
+   "group": "Bäume & Pflanzen"
+  },
+  "3,1": {
+   "label": "Erdfläche · unten",
+   "group": "Gelände & Tiles"
+  },
+  "2,8": {
+   "label": "Waldstück · unten rechts",
+   "group": "Bäume & Pflanzen"
+  },
+  "2,11": {
+   "label": "Herbstwald · unten rechts",
+   "group": "Bäume & Pflanzen"
+  },
+  "3,2": {
+   "label": "Erdfläche · unten rechts",
+   "group": "Gelände & Tiles"
+  },
+  "3,3": {
+   "label": "Erde mit Grasecke oben links",
+   "group": "Gelände & Tiles"
+  },
+  "3,4": {
+   "label": "Erde mit Grasecke oben rechts",
+   "group": "Gelände & Tiles"
+  },
+  "3,5": {
+   "label": "Erde mit Grasecke unten rechts",
+   "group": "Gelände & Tiles"
+  },
+  "3,6": {
+   "label": "Erde mit Grasecke unten links",
+   "group": "Gelände & Tiles"
+  },
+  "3,7": {
+   "label": "Steine im Gras",
+   "group": "Gelände & Tiles"
+  },
+  "3,8": {
+   "label": "Zaungehege · Ecke oben links",
+   "group": "Zäune"
+  },
+  "3,9": {
+   "label": "Zaungehege · oben",
+   "group": "Zäune"
+  },
+  "3,10": {
+   "label": "Zaungehege · Ecke oben rechts",
+   "group": "Zäune"
+  },
+  "4,8": {
+   "label": "Zaungehege · links",
+   "group": "Zäune"
+  },
+  "4,10": {
+   "label": "Zaungehege · rechts",
+   "group": "Zäune"
+  },
+  "5,8": {
+   "label": "Zaungehege · Ecke unten links",
+   "group": "Zäune"
+  },
+  "5,9": {
+   "label": "Zaungehege · unten",
+   "group": "Zäune"
+  },
+  "5,10": {
+   "label": "Zaungehege · Ecke unten rechts",
+   "group": "Zäune"
+  },
+  "4,9": {
+   "label": "Werkzeugkiste",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "3,11": {
+   "label": "Zaun senkrecht · oben",
+   "group": "Zäune"
+  },
+  "4,11": {
+   "label": "Zaun senkrecht · Mitte",
+   "group": "Zäune"
+  },
+  "5,11": {
+   "label": "Zaun senkrecht · unten",
+   "group": "Zäune"
+  },
+  "6,8": {
+   "label": "Zaun waagerecht · links",
+   "group": "Zäune"
+  },
+  "6,9": {
+   "label": "Zaun waagerecht · Mitte",
+   "group": "Zäune"
+  },
+  "6,10": {
+   "label": "Zaun waagerecht · rechts",
+   "group": "Zäune"
+  },
+  "6,11": {
+   "label": "Wegweiser",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "4,0": {
+   "label": "Schieferdach · links oben",
+   "group": "Gebäude & Bauteile"
+  },
+  "4,1": {
+   "label": "Schieferdach · Mitte oben",
+   "group": "Gebäude & Bauteile"
+  },
+  "4,2": {
+   "label": "Schieferdach · rechts oben",
+   "group": "Gebäude & Bauteile"
+  },
+  "4,3": {
+   "label": "Schieferdach · Gaube",
+   "group": "Gebäude & Bauteile"
+  },
+  "5,0": {
+   "label": "Schieferdach · links unten",
+   "group": "Gebäude & Bauteile"
+  },
+  "5,1": {
+   "label": "Schieferdach · Mitte unten",
+   "group": "Gebäude & Bauteile"
+  },
+  "5,2": {
+   "label": "Schieferdach · rechts unten",
+   "group": "Gebäude & Bauteile"
+  },
+  "5,3": {
+   "label": "Schieferdach · Giebel",
+   "group": "Gebäude & Bauteile"
+  },
+  "4,4": {
+   "label": "Ziegeldach · links oben",
+   "group": "Gebäude & Bauteile"
+  },
+  "4,5": {
+   "label": "Ziegeldach · Mitte oben",
+   "group": "Gebäude & Bauteile"
+  },
+  "4,6": {
+   "label": "Ziegeldach · rechts oben",
+   "group": "Gebäude & Bauteile"
+  },
+  "4,7": {
+   "label": "Ziegeldach · Gaube",
+   "group": "Gebäude & Bauteile"
+  },
+  "5,4": {
+   "label": "Ziegeldach · links unten",
+   "group": "Gebäude & Bauteile"
+  },
+  "5,5": {
+   "label": "Ziegeldach · Mitte unten",
+   "group": "Gebäude & Bauteile"
+  },
+  "5,6": {
+   "label": "Ziegeldach · rechts unten",
+   "group": "Gebäude & Bauteile"
+  },
+  "5,7": {
+   "label": "Ziegeldach · Giebel",
+   "group": "Gebäude & Bauteile"
+  },
+  "6,0": {
+   "label": "Holzwand · links",
+   "group": "Gebäude & Bauteile"
+  },
+  "6,1": {
+   "label": "Holzwand · Mitte",
+   "group": "Gebäude & Bauteile"
+  },
+  "6,2": {
+   "label": "Holzwand · offener Durchgang",
+   "group": "Gebäude & Bauteile"
+  },
+  "6,3": {
+   "label": "Holzwand · rechts",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,0": {
+   "label": "Holzwand · Fenster",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,1": {
+   "label": "Holzwand · Tür",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,2": {
+   "label": "Holzwand · Doppeltür links",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,3": {
+   "label": "Holzwand · Doppeltür rechts",
+   "group": "Gebäude & Bauteile"
+  },
+  "6,4": {
+   "label": "Steinwand · links",
+   "group": "Gebäude & Bauteile"
+  },
+  "6,5": {
+   "label": "Steinwand · Mitte",
+   "group": "Gebäude & Bauteile"
+  },
+  "6,6": {
+   "label": "Steinwand · offener Durchgang",
+   "group": "Gebäude & Bauteile"
+  },
+  "6,7": {
+   "label": "Steinwand · rechts",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,4": {
+   "label": "Steinwand · Fenster",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,5": {
+   "label": "Steinwand · Tür",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,6": {
+   "label": "Steinwand · Doppeltür links",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,7": {
+   "label": "Steinwand · Doppeltür rechts",
+   "group": "Gebäude & Bauteile"
+  },
+  "7,8": {
+   "label": "Brunnen · Dach",
+   "group": "Objekte & Ausstattung"
+  },
+  "8,8": {
+   "label": "Brunnen · Schacht",
+   "group": "Objekte & Ausstattung"
+  },
+  "7,9": {
+   "label": "Strohballen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "7,10": {
+   "label": "Bienenstock",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "7,11": {
+   "label": "Zielscheibe",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,0": {
+   "label": "Burghof · oben links",
+   "group": "Burg & Mauern"
+  },
+  "8,1": {
+   "label": "Burghof · oben",
+   "group": "Burg & Mauern"
+  },
+  "8,2": {
+   "label": "Burghof · oben rechts",
+   "group": "Burg & Mauern"
+  },
+  "9,0": {
+   "label": "Burghof · links",
+   "group": "Burg & Mauern"
+  },
+  "9,1": {
+   "label": "Burghof · Mitte",
+   "group": "Burg & Mauern"
+  },
+  "9,2": {
+   "label": "Burghof · rechts",
+   "group": "Burg & Mauern"
+  },
+  "10,0": {
+   "label": "Burghof · unten links",
+   "group": "Burg & Mauern"
+  },
+  "10,1": {
+   "label": "Burghof · unten",
+   "group": "Burg & Mauern"
+  },
+  "10,2": {
+   "label": "Burghof · unten rechts",
+   "group": "Burg & Mauern"
+  },
+  "8,3": {
+   "label": "Burgmauer · links",
+   "group": "Burg & Mauern"
+  },
+  "8,4": {
+   "label": "Burgmauer · Mitte",
+   "group": "Burg & Mauern"
+  },
+  "8,5": {
+   "label": "Burgmauer · rechts",
+   "group": "Burg & Mauern"
+  },
+  "8,6": {
+   "label": "Burgmauer · schmales Stück",
+   "group": "Burg & Mauern"
+  },
+  "8,7": {
+   "label": "Turmtür mit Leiter",
+   "group": "Burg & Mauern"
+  },
+  "9,3": {
+   "label": "Fallgitter · links",
+   "group": "Burg & Mauern"
+  },
+  "9,4": {
+   "label": "Fallgitter · rechts",
+   "group": "Burg & Mauern"
+  },
+  "10,3": {
+   "label": "Torpfeiler links",
+   "group": "Burg & Mauern"
+  },
+  "10,4": {
+   "label": "Torpfeiler rechts",
+   "group": "Burg & Mauern"
+  },
+  "9,5": {
+   "label": "Torbogen · links",
+   "group": "Burg & Mauern"
+  },
+  "9,6": {
+   "label": "Torbogen · rechts",
+   "group": "Burg & Mauern"
+  },
+  "10,5": {
+   "label": "Mauer mit Schießscharte",
+   "group": "Burg & Mauern"
+  },
+  "10,6": {
+   "label": "Steinmauer",
+   "group": "Burg & Mauern"
+  },
+  "8,9": {
+   "label": "Bombe",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,10": {
+   "label": "Holzstamm",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "8,11": {
+   "label": "Tontopf",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "9,7": {
+   "label": "Spitzhacke",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "9,8": {
+   "label": "Heugabel",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "9,9": {
+   "label": "Schlüssel",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "9,10": {
+   "label": "Bogen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "9,11": {
+   "label": "Pfeil",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "10,7": {
+   "label": "Axt",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "10,8": {
+   "label": "Hammer",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "10,9": {
+   "label": "Hacke",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "10,10": {
+   "label": "Fass",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "10,11": {
+   "label": "Wasserfass",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ },
+ "composites": [
+  {
+   "cells": "0,3 1,3",
+   "label": "Hoher Herbstbaum",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "0,4 1,4",
+   "label": "Hoher Laubbaum",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "0,6 0,7 0,8 1,6 1,7 1,8 2,6 2,7 2,8",
+   "label": "Waldstück",
+   "group": "Bäume & Pflanzen",
+   "kind": "set"
+  },
+  {
+   "cells": "0,9 0,10 0,11 1,9 1,10 1,11 2,9 2,10 2,11",
+   "label": "Herbstwald",
+   "group": "Bäume & Pflanzen",
+   "kind": "set"
+  },
+  {
+   "rows": [
+    "4,0 4,3 4,2",
+    "5,0 5,3 5,2",
+    "6,0 7,1 6,3"
+   ],
+   "label": "Haus mit Schieferdach",
+   "group": "Fertige Häuser",
+   "kind": "recipe"
+  },
+  {
+   "rows": [
+    "4,4 4,7 4,6",
+    "5,4 5,7 5,6",
+    "6,4 7,5 6,7"
+   ],
+   "label": "Steinhaus mit Ziegeldach",
+   "group": "Fertige Häuser",
+   "kind": "recipe"
+  },
+  {
+   "rows": [
+    "4,0 4,1 4,1 4,2",
+    "5,0 5,1 5,3 5,2",
+    "6,0 7,0 7,1 6,3"
+   ],
+   "label": "Breites Haus mit Schieferdach",
+   "group": "Fertige Häuser",
+   "kind": "recipe"
+  },
+  {
+   "rows": [
+    "4,4 4,5 4,5 4,6",
+    "5,4 5,5 5,7 5,6",
+    "6,4 7,4 7,5 6,7"
+   ],
+   "label": "Breites Steinhaus mit Ziegeldach",
+   "group": "Fertige Häuser",
+   "kind": "recipe"
+  },
+  {
+   "cells": "7,8 8,8",
+   "label": "Brunnen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "3,8 3,9 3,10 4,8 4,10 5,8 5,9 5,10",
+   "label": "Zaungehege",
+   "group": "Zäune",
+   "kind": "set"
+  },
+  {
+   "cells": "3,11 4,11 5,11",
+   "label": "Zaun senkrecht",
+   "group": "Zäune",
+   "kind": "set"
+  },
+  {
+   "cells": "6,8 6,9 6,10",
+   "label": "Zaun waagerecht",
+   "group": "Zäune",
+   "kind": "set"
+  },
+  {
+   "cells": "8,0 8,1 8,2 9,0 9,1 9,2 10,0 10,1 10,2",
+   "label": "Burghof",
+   "group": "Burg & Mauern",
+   "kind": "set"
+  },
+  {
+   "cells": "8,3 8,4 8,5",
+   "label": "Burgmauer mit Zinnen",
+   "group": "Burg & Mauern",
+   "kind": "set"
+  },
+  {
+   "cells": "9,3 9,4 10,3 10,4",
+   "label": "Burgtor mit Fallgitter",
+   "group": "Burg & Mauern",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "rows": [
+    "9,5 9,6",
+    "10,3 10,4"
+   ],
+   "label": "Offenes Burgtor",
+   "group": "Burg & Mauern",
+   "kind": "recipe",
+   "hideParts": true
+  },
+  {
+   "cells": "1,0 1,1 1,2 2,0 2,1 2,2 3,0 3,1 3,2",
+   "label": "Erdfläche",
+   "group": "Gelände & Tiles",
+   "kind": "set"
+  }
+ ]
+}
