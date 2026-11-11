@@ -1,0 +1,30 @@
+{
+ "commit": "802321cd34dbf9fcc05e6f46a80e00f61c2c8fd9",
+ "branch": "feat/creation-engine-g1",
+ "pushed": true,
+ "baseImage": "roll-drauf-vtt-app:protocol-feedback-20261110-32cc5bfee",
+ "baseImageId": "sha256:f6bc1008f0bb03962fba266d3f3477e5edf7c81fcfe205586dab6bd2cc0b445a",
+ "rollbackTag": "roll-drauf-vtt-app:tilesheet-rollback-20261111-f6bc1008f0bb",
+ "image": "roll-drauf-vtt-app:tilesheet-slicing-20261111-802321cd",
+ "imageId": "sha256:b9cf16b34a11bafce75c0e5c0e03284abb659e91134075d2261f55bdf1075ccc",
+ "overlayFiles": 162,
+ "overlayHashesVerifiedInImage": 162,
+ "liveFilesReconciledBeforeOverlay": 8,
+ "switchedAt": "2026-11-11T00:53:29Z",
+ "health": {
+  "now": "2026-11-11T00:55:01.798111",
+  "service": "roll_drauf_vtt",
+  "started_at": "2026-11-11T00:53:33.831913",
+  "status": "ok"
+ },
+ "otherServicesUnchanged": true,
+ "serverKnownAssets": 72081,
+ "rollback": "/srv/migration/2026-11-11/tilesheet-slicing/rollback.sh",
+ "publicStaticHashesMatchCommit": [
+  "js/stamps.js",
+  "assets/kenney-tiny/palette.json",
+  "assets/kenney-tiny/manifest.json",
+  "credits.html",
+  "assets/inventory.csv"
+ ]
+}

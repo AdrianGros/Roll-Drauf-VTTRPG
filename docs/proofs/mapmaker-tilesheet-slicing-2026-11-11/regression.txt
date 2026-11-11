@@ -1,0 +1,5 @@
+Local checks before release (scratch venv: pytest, Pillow 12.3.0, Playwright 1.65, chromium_headless_shell-1243):
+tests/test_mapmaker_browser.py + tests/test_mapmaker_static.py + tests/test_mapmaker_sheet_slicer.py
+62 passed, 1 skipped in 496.84s (skipped: Flask-served variant, Flask not installed in the scratch venv)
+Build reproducibility: second build of kenney-tiny produced byte-identical manifest, palette, coverage, inventory.csv, credits.html.
+Detection refactor (performance): detector output for kenney-tiny byte-identical before/after.
