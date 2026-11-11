@@ -1,0 +1,276 @@
+{
+ "schemaVersion": 1,
+ "pack": "2dpixx-town",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "2DRP CCArt RPG Town (32x32).png",
+  "sha256": "ae1a561d7700e6cc8d9c0bc8a6e073e2d6e5f38cda945ceb9812746179c005cf"
+ },
+ "grid": {
+  "w": 32,
+  "h": 32,
+  "margin": 0,
+  "spacing": 0
+ },
+ "colorKey": null,
+ "singles": null,
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Fachwerkhaus als 3×3-Rechteck: Dach- und Türmitte sind vollflächig und wurden nicht automatisch verbunden.",
+   "Füllkacheln (eingebackenes Schachbrett) ausgeschlossen."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Fertige Häuser",
+  "Objekte & Ausstattung",
+  "Gelände & Tiles",
+  "Referenzen & Szenen"
+ ],
+ "regions": [
+  {
+   "rect": [
+    3,
+    0,
+    6,
+    2
+   ],
+   "label": "Sandweg mit Graskante",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    3,
+    2,
+    3,
+    3
+   ],
+   "label": "Hausteil",
+   "group": "Fertige Häuser",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    6,
+    2,
+    3,
+    4
+   ],
+   "label": "Wiese mit Erdgrube",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    3,
+    3,
+    3
+   ],
+   "label": "Baumteil",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    3,
+    6,
+    6,
+    1
+   ],
+   "label": "Schildteil",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ ],
+ "cells": {
+  "0,0": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "0,1": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "0,2": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "1,0": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "2,0": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "2,1": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "2,2": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "0,9": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "1,9": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "2,9": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "3,9": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "4,9": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "5,9": {
+   "label": "–",
+   "group": "Referenzen & Szenen",
+   "kind": "exclude",
+   "reason": "Einfarbige Füllkachel (eingebackenes Schachbrett), kein Motiv."
+  },
+  "1,1": {
+   "label": "Wiese",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "1,2": {
+   "label": "Sand",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  "5,4": {
+   "label": "Setzling",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "5,5": {
+   "label": "Steinhaufen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ },
+ "composites": [
+  {
+   "cells": {
+    "rect": [
+     3,
+     2,
+     3,
+     3
+    ]
+   },
+   "label": "Fachwerkhaus",
+   "group": "Fertige Häuser",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     6,
+     2,
+     3,
+     4
+    ]
+   },
+   "label": "Erdgrube in der Wiese",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     0,
+     3,
+     3,
+     3
+    ]
+   },
+   "label": "Großer Laubbaum",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     3,
+     6,
+     2,
+     1
+    ]
+   },
+   "label": "Wirtshausschild",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     5,
+     6,
+     2,
+     1
+    ]
+   },
+   "label": "Holzschild",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     7,
+     6,
+     2,
+     1
+    ]
+   },
+   "label": "Schmiedeschild",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  }
+ ]
+}

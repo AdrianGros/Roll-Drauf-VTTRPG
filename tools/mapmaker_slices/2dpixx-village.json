@@ -1,0 +1,61 @@
+{
+ "schemaVersion": 1,
+ "pack": "2dpixx-village",
+ "detector": "components-v1",
+ "sheet": {
+  "path": "2DRP_CCArt_Village_Addon_Isometric.svg",
+  "sha256": "2ecbdf8bd5ad731ca726209c33c39e84104c937c54dd2dac4fde69e286feb35e"
+ },
+ "params": {
+  "gap": 6,
+  "minArea": 64
+ },
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (components-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Freistehende Motive per Pixelzusammenhang (Abstand ≤ 6 px) erkannt; überlappende Umrissrechtecke werden pro Motiv maskiert."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Fertige Häuser",
+  "Objekte & Ausstattung",
+  "Zäune",
+  "Isometrische Blöcke",
+  "Referenzen & Szenen"
+ ],
+ "objects": {
+  "240,2,323,319": {
+   "label": "Steinhaus mit Kamin",
+   "group": "Fertige Häuser",
+   "kind": "object"
+  },
+  "679,232,96,84": {
+   "label": "Holzzaun",
+   "group": "Zäune",
+   "kind": "object"
+  },
+  "2,286,317,320": {
+   "label": "Steinhaus",
+   "group": "Fertige Häuser",
+   "kind": "object"
+  },
+  "496,309,120,168": {
+   "label": "Ziehbrunnen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "676,356,96,84": {
+   "label": "Holzzaun (2)",
+   "group": "Zäune",
+   "kind": "object"
+  },
+  "328,580,86,78": {
+   "label": "Tonkrüge",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ }
+}

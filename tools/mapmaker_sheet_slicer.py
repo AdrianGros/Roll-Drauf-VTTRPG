@@ -4,10 +4,12 @@
 Two steps keep image recognition reviewable instead of authoritative:
 
   detect PACK   Analyse a sheet named by tools/mapmaker_slices/PACK.json (or by
-                --sheet/--grid for a first draft). Cells are classified by their
-                alpha channel; neighbouring cells whose artwork continues across
-                the shared edge are grouped into one object. Writes a draft
-                profile and a numbered contact sheet for visual review.
+                --sheet/--grid for a first draft). Grid sheets (grid-alpha-v1):
+                cells are classified by their alpha channel; neighbouring cells
+                whose artwork continues across the shared edge are grouped into
+                one object. Gridless sheets (components-v1, --grid 0): connected
+                artwork is found pixel by pixel and nearby parts are joined.
+                Writes a draft profile and a numbered contact sheet for review.
   build PACK    Compile the reviewed profile into normal PNG stamps in the
                 pack's manifest (additive IDs, original pixels, no resampling)
                 and rebuild palette, inventory and credits.
@@ -17,7 +19,7 @@ proposes it. Nothing is generated: every output pixel is copied from the sheet.
 """
 import argparse, hashlib, io, json, re, sys
 from pathlib import Path
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from mapmaker_catalog import ASSETS, rebuild  # noqa: E402
@@ -41,7 +43,8 @@ def load_sheet(pack, original_path, expected_sha=None, color_key=None):
     entry = next((s for s in manifest['stamps'] if s.get('originalPath') == original_path and 'slice' not in s), None)
     if entry is None: raise SystemExit(f'{pack}: sheet {original_path!r} is not in the manifest')
     data = (ASSETS / pack / entry['file']).read_bytes()
-    if sha(data) != entry['originalSha256'] or (expected_sha and sha(data) != expected_sha):
+    # sha256 pins the stored raster (for SVG sources the reviewed rasterisation, otherwise the original PNG).
+    if sha(data) != entry['sha256'] or (expected_sha and sha(data) != expected_sha):
         raise SystemExit(f'{pack}: sheet {original_path!r} does not match its pinned hash')
     img = Image.open(io.BytesIO(data)); img.load(); img = img.convert('RGBA')
     if color_key:
@@ -180,6 +183,13 @@ def parse_cells(text):
     return sorted(tuple(int(v) for v in part.split(',')) for part in text.split())
 
 
+def members_of(spec, cells):
+    """Composite members: listed cells must hold art; a {"rect": …} skips its empty cells."""
+    members = parse_cells(spec)
+    if isinstance(spec, dict): members = [k for k in members if k in cells and cells[k]['state'] != 'empty']
+    return members
+
+
 def compose(img, grid, members):
     """Copy member cells onto one canvas at their grid offsets; gutters are skipped."""
     r0, c0 = min(r for r, _ in members), min(c for _, c in members)
@@ -209,6 +219,62 @@ def visible_rgba(img):
     return b''.join(raw[i:i + 4] if raw[i + 3] else b'\0\0\0\0' for i in range(0, len(raw), 4))
 
 
+COMPONENTS = 'components-v1'
+
+
+def components(img, gap, min_area):
+    """Connected artwork without a grid; parts whose pixels lie within `gap` px join.
+
+    Proximity is measured on pixels, not boxes: staggered isometric blocks have
+    overlapping boxes but separate artwork. Returns groups sorted top-left first,
+    {box: (x, y, w, h), area, runs: [(y, x0, x1)]}, and separately the specks
+    smaller than `min_area` pixels.
+    """
+    w, h = img.size
+    mask = img.getchannel('A').point(lambda a: 255 if a > ALPHA_MIN else 0)
+    grown = mask.filter(ImageFilter.MaxFilter(2 * (gap // 2) + 1)) if gap > 1 else mask
+    solid = re.compile(rb'[^\x00]+')
+    pixels, near = mask.tobytes(), grown.tobytes()
+    parent, prev, rows = [], [], []
+
+    def find(a):
+        while parent[a] != a: parent[a] = parent[parent[a]]; a = parent[a]
+        return a
+
+    for y in range(h):
+        current = []
+        for m in solid.finditer(near[y * w:(y + 1) * w]):
+            x0, x1 = m.span()
+            label = len(parent); parent.append(label)
+            for p0, p1, other in prev:  # 8-neighbourhood between rows
+                if p0 <= x1 and p1 >= x0: parent[find(label)] = find(other)
+            current.append((x0, x1, label))
+        rows.append(current); prev = current
+    comps = {}
+    for y in range(h):
+        grown_runs = rows[y]
+        for m in solid.finditer(pixels[y * w:(y + 1) * w]):
+            x0, x1 = m.span()
+            label = next(label for g0, g1, label in grown_runs if g0 <= x0 and x1 <= g1)
+            c = comps.setdefault(find(label), dict(x0=x0, y0=y, x1=x1, y1=y + 1, area=0, runs=[]))
+            c['x0'], c['x1'], c['y1'] = min(c['x0'], x0), max(c['x1'], x1), y + 1
+            c['area'] += x1 - x0; c['runs'].append((y, x0, x1))
+    out = [dict(box=(c['x0'], c['y0'], c['x1'] - c['x0'], c['y1'] - c['y0']), area=c['area'], runs=c['runs']) for c in comps.values()]
+    out.sort(key=lambda g: (g['box'][1], g['box'][0]))
+    return [g for g in out if g['area'] >= min_area], [g for g in out if g['area'] < min_area]
+
+
+def component_image(img, group):
+    """The group's own pixels inside its box; neighbouring artwork in the box stays transparent."""
+    x, y, w, h = group['box']
+    mask = Image.new('L', (w, h), 0)
+    for ry, x0, x1 in group['runs']: mask.paste(255, (x0 - x, ry - y, x1 - x, ry - y + 1))
+    return Image.composite(img.crop((x, y, x + w, y + h)), Image.new('RGBA', (w, h), (0, 0, 0, 0)), mask)
+
+
+def box_key(box): return ','.join(str(v) for v in box)
+
+
 def contact_sheet(img, grid, units, path, scale=None):
     scale = scale or max(1, min(6, 1600 // max(img.width, img.height)))
     board = Image.new('RGBA', (img.width * scale, img.height * scale), (255, 0, 255, 255))
@@ -234,11 +300,13 @@ def cmd_detect(args):
     g = profile['grid'] if profile else dict(zip(('w', 'h'), map(int, args.grid.split('x'))), margin=args.margin, spacing=args.spacing)
     key = profile.get('colorKey') if profile else args.color_key
     entry, digest, img = load_sheet(args.pack, sheet, color_key=key)
+    out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
+    if (profile and profile['detector'] == COMPONENTS) or (not profile and g['w'] == 0):
+        return detect_components(args, profile, sheet, digest, img, out)
     grid = Grid(img, g)
     cells = alpha_cells(img, grid)
     outline = outline_colours(img)
     groups = detect_groups(cells, grid, outline)
-    out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
     contact_sheet(img, grid, groups, out / f'{args.pack}-detected.png')
     states = {s: sum(c['state'] == s for c in cells.values()) for s in ('empty', 'full', 'partial')}
     multi = [u for u in groups if len(u) > 1]
@@ -247,7 +315,7 @@ def cmd_detect(args):
                   groups=[dict(n=i, cells=fmt_cells(u), states=sorted({cells[k]['state'] for k in u})) for i, u in enumerate(groups)])
     write_json(out / f'{args.pack}-detected.json', report)
     if profile:
-        reviewed = [parse_cells(u['cells']) for u in profile['composites'] if 'cells' in u]
+        reviewed = [members_of(u['cells'], cells) for u in profile['composites'] if 'cells' in u]
         detected = [u for u in multi]
         missing = [fmt_cells(u) for u in detected if u not in reviewed]
         extra = [fmt_cells(u) for u in reviewed if u not in detected]
@@ -261,9 +329,82 @@ def cmd_detect(args):
     print(f'{args.pack}: {grid.cols}x{grid.rows} cells {states}, {len(groups)} units, {len(multi)} multi-cell -> {out}')
 
 
+def detect_components(args, profile, sheet, digest, img, out):
+    params = profile['params'] if profile else dict(gap=args.gap, minArea=args.min_area)
+    groups, specks = components(img, params['gap'], params['minArea'])
+    scale = max(1, min(3, 1800 // max(img.size)))
+    board = Image.new('RGBA', (img.width * scale, img.height * scale), (255, 0, 255, 255))
+    board.alpha_composite(img.resize(board.size, Image.NEAREST))
+    draw = ImageDraw.Draw(board)
+    for i, g in enumerate(groups):
+        x, y, w, h = (v * scale for v in g['box'])
+        draw.rectangle((x, y, x + w - 1, y + h - 1), outline=(255, 220, 0, 255), width=2)
+        draw.rectangle((x + 1, y + 1, x + 26, y + 12), fill=(0, 0, 0, 220)); draw.text((x + 3, y + 1), str(i), fill=(255, 220, 0, 255))
+    board.convert('RGB').save(out / f'{args.pack}-detected.png')
+    report = dict(pack=args.pack, detector=COMPONENTS, sheet=dict(path=sheet, sha256=digest, w=img.width, h=img.height), params=params,
+                  units=len(groups), specks=len(specks), groups=[dict(n=i, box=box_key(g['box']), area=g['area']) for i, g in enumerate(groups)])
+    write_json(out / f'{args.pack}-detected.json', report)
+    if profile:
+        keys = {box_key(g['box']) for g in groups}
+        print(json.dumps(dict(detected=len(keys), notReviewed=sorted(keys - set(profile['objects'])), notDetected=sorted(set(profile['objects']) - keys)), indent=1))
+    else:
+        write_json(out / f'{args.pack}-draft.json', dict(schemaVersion=1, pack=args.pack, detector=COMPONENTS, sheet=dict(path=sheet, sha256=digest),
+                   params=params, review=dict(status='draft'), objects={box_key(g['box']): dict(label=f'Objekt {i}', group='Objekte & Ausstattung') for i, g in enumerate(groups)}))
+    print(f'{args.pack}: {len(groups)} objects, {len(specks)} specks below {params["minArea"]} px -> {out}')
+
+
 def slice_id(pack, digest, layout):
     identity = f'slice-v1|{digest}|{layout}'
     return f'color:{pack}_{sha(identity.encode())[:16]}'
+
+
+def grid_units(profile, img, cells, grid):
+    """Reviewed grid profile → units (composites first, then cells) and excluded cells."""
+    units, excluded, parts_of_objects = [], [], set()
+    for unit in profile['composites']:
+        if 'rows' in unit:
+            layout = parse_rows(unit['rows'])
+            members = sorted({k for row in layout for k in row if k})
+            part, text = compose_rows(img, grid, layout), '/'.join(unit['rows'])
+        else:
+            members = members_of(unit['cells'], cells)
+            part, text = compose(img, grid, members), fmt_cells(members)
+        if not members or any(k not in cells or cells[k]['state'] == 'empty' for k in members): raise SystemExit(f'{unit["label"]}: empty or missing cell')
+        units.append(dict(image=part, layout=text, label=unit['label'], group=unit['group'], kind=unit.get('kind', 'object')))
+        if unit.get('hideParts'): parts_of_objects.update(members)
+    specs = {parse_cells(key)[0]: spec for key, spec in profile.get('cells', {}).items()}
+    for region in profile.get('regions', []):
+        inside = [k for k in parse_cells(region) if k in cells and cells[k]['state'] != 'empty' and k not in specs]
+        for n, k in enumerate(inside, 1):
+            specs[k] = dict(region, label=region['label'] if len(inside) == 1 else f'{region["label"]} {n}', region=True)
+    for k, spec in specs.items():
+        key = fmt_cells([k])
+        if k not in cells or cells[k]['state'] == 'empty': raise SystemExit(f'Cell {key} is empty')
+        kind = spec.get('kind', 'tile')
+        if kind == 'exclude':
+            excluded.append(dict(cells=key, reason=spec['reason'])); continue
+        hide = k in parts_of_objects or spec.get('hidden', False)
+        units.append(dict(image=cells[k]['image'], layout=key, label=spec['label'], group=spec['group'], kind=kind, single=k,
+                          hidden=hide, tile=not hide and kind == 'tile' and grid.w == grid.h))
+    missing = [k for k, c in sorted(cells.items()) if c['state'] != 'empty' and k not in specs]
+    if missing: raise SystemExit(f'Cells not accounted for in the profile: {fmt_cells(missing)}')
+    return units, excluded
+
+
+def component_units(profile, img):
+    """Reviewed gridless profile → one unit per detected object (no tiles: artwork has no grid)."""
+    params = profile['params']
+    groups, specks = components(img, params['gap'], params['minArea'])
+    found = {box_key(g['box']): g for g in groups}
+    if set(found) != set(profile['objects']):
+        raise SystemExit(f'Detection no longer matches the review: {sorted(set(found) ^ set(profile["objects"]))}')
+    units, excluded = [], [dict(box=box_key(g['box']), reason=f'Splitter unter {params["minArea"]} Pixeln') for g in specks]
+    for key, spec in profile['objects'].items():
+        if spec.get('kind') == 'exclude':
+            excluded.append(dict(box=key, reason=spec['reason'])); continue
+        units.append(dict(image=component_image(img, found[key]), layout=f'box:{key}', label=spec['label'], group=spec['group'],
+                          kind=spec.get('kind', 'object')))
+    return units, excluded
 
 
 def cmd_build(args):
@@ -275,12 +416,18 @@ def cmd_build(args):
     coverage = json.loads((folder / 'coverage.json').read_text())
     sheet_path = profile['sheet']['path']
     entry, digest, img = load_sheet(args.pack, sheet_path, profile['sheet']['sha256'], profile.get('colorKey'))
-    grid = Grid(img, profile['grid'])
-    cells = alpha_cells(img, grid)
+    if profile['detector'] == COMPONENTS:
+        grid, cells = None, None
+        units, excluded = component_units(profile, img)
+    else:
+        grid = Grid(img, profile['grid'])
+        cells = alpha_cells(img, grid)
+        units, excluded = grid_units(profile, img, cells, grid)
     by_path = {s['originalPath']: s for s in manifest['stamps'] if 'slice' not in s}
     previous = {s['id']: s for s in manifest['stamps'] if 'slice' in s}
     rel = (PROFILES / f'{args.pack}.json').relative_to(PROFILES.parents[1]).as_posix()
     hidden, labelled, produced, records, rank, tiles = set(), {}, [], [], {}, set()
+    tile_files, duplicates = set(), 0
 
     def single_for(k, part):
         """Original single image with the same visible pixels, if the pack ships one."""
@@ -291,45 +438,31 @@ def cmd_build(args):
             if visible_rgba(single.convert('RGBA')) != visible_rgba(part): raise SystemExit(f'Single for {fmt_cells([k])} differs from the sheet cell')
         return original
 
-    def emit(part, layout, label, group, kind, single=None):
+    for unit in units:
+        part, layout, kind, single = unit['image'], unit['layout'], unit['kind'], unit.get('single')
+        # Within a category: assembled objects, then single objects, then building parts and tiles.
+        order = 0 if single is None else 1 if kind == 'object' else 2
         if single and (original := single_for(single, part)):
-            labelled[original['id']] = (label, group)
-            rank[original['id']] = 1 if kind == 'object' else 2
-            return original['id']
-        buf = io.BytesIO(); part.save(buf, 'PNG', optimize=False); png = buf.getvalue()
-        file = sha(png)[:32] + '.png'
-        if not (folder / file).exists(): (folder / file).write_bytes(png)
-        asset = slice_id(args.pack, digest, layout)
-        if any(p['id'] == asset for p in produced): raise SystemExit(f'Duplicate slice {layout}')
-        produced.append(dict(id=asset, file=file, label=label, group=group, search=f'{label} {sheet_path}',
-                             w=part.width, h=part.height, defaultSize=min(256, max(16, part.width, part.height)), sha256=sha(png),
-                             originalPath=sheet_path, originalSha256=digest, sheet=False, grid=grid.w,
-                             pixelArt=manifest.get('pixelArt', False),
-                             slice=dict(profile=rel, detector=profile['detector'], kind=kind, layout=layout)))
-        records.append(dict(asset=asset, kind=kind, layout=layout, file=file))
-        rank[asset] = 1 if single else 0
-        return asset
-
-    parts_of_objects = set()
-    for unit in profile['composites']:
-        if 'rows' in unit:
-            layout = parse_rows(unit['rows'])
-            members = sorted({k for row in layout for k in row if k})
-            part, text = compose_rows(img, grid, layout), '/'.join(unit['rows'])
+            asset, file = original['id'], original['file']
+            labelled[asset] = (unit['label'], unit['group'])
         else:
-            members = parse_cells(unit['cells'])
-            part, text = compose(img, grid, members), fmt_cells(members)
-        if any(k not in cells or cells[k]['state'] == 'empty' for k in members): raise SystemExit(f'{unit["label"]}: empty or missing cell')
-        emit(part, text, unit['label'], unit['group'], unit.get('kind', 'object'))
-        if unit.get('hideParts'): parts_of_objects.update(members)
-    for key, spec in profile['cells'].items():
-        (k,) = parse_cells(key)
-        if k not in cells or cells[k]['state'] == 'empty': raise SystemExit(f'Cell {key} is empty')
-        asset = emit(cells[k]['image'], key, spec['label'], spec['group'], spec.get('kind', 'tile'), single=k)
-        if k in parts_of_objects or spec.get('hidden'): hidden.add(asset)
-        elif spec.get('kind', 'tile') == 'tile' and grid.w == grid.h: tiles.add(asset)  # painted on the tile grid, not stamped
-    missing = [k for k, c in sorted(cells.items()) if c['state'] != 'empty' and fmt_cells([k]) not in profile['cells']]
-    if missing: raise SystemExit(f'Cells not accounted for in the profile: {fmt_cells(missing)}')
+            buf = io.BytesIO(); part.save(buf, 'PNG', optimize=False); png = buf.getvalue()
+            file = sha(png)[:32] + '.png'
+            if not (folder / file).exists(): (folder / file).write_bytes(png)
+            asset = slice_id(args.pack, digest, layout)
+            if any(p['id'] == asset for p in produced): raise SystemExit(f'Duplicate slice {layout}')
+            produced.append(dict(id=asset, file=file, label=unit['label'], group=unit['group'], search=f'{unit["label"]} {sheet_path}',
+                                 w=part.width, h=part.height, defaultSize=min(256, max(16, part.width, part.height)), sha256=sha(png),
+                                 originalPath=sheet_path, originalSha256=digest, sheet=False, grid=grid.w if grid else 1,
+                                 pixelArt=manifest.get('pixelArt', False),
+                                 slice=dict(profile=rel, detector=profile['detector'], kind=kind, layout=layout)))
+            records.append(dict(asset=asset, kind=kind, layout=layout, file=file))
+        rank[asset] = order
+        if unit.get('hidden'): hidden.add(asset)
+        elif unit.get('tile') and file in tile_files:  # identical pixels are offered once; the id still resolves
+            hidden.add(asset); duplicates += 1
+        elif unit.get('tile'):
+            tile_files.add(file); tiles.add(asset)  # painted on the tile grid, not stamped
 
     new_ids = {p['id'] for p in produced}
     originals = []
@@ -348,17 +481,18 @@ def cmd_build(args):
     retired = [dict(previous[i], hidden=True) for i in previous if i not in new_ids]
     order = {g: n for n, g in enumerate(profile.get('groupOrder', []))}
     everything = originals + produced
-    # Within a category: assembled objects, then single objects, then building parts and tiles.
     visible = sorted((s for s in everything if not s.get('hidden')), key=lambda s: (order.get(s['group'], len(order)), rank.get(s['id'], 3)))
     manifest['stamps'] = visible + [s for s in everything if s.get('hidden')] + retired
     manifest['sliceProfiles'] = [rel]
     coverage['slices'] = dict(profile=rel, detector=profile['detector'], sheet=profile['sheet'], review=profile['review'],
                               produced=records + [dict(asset=s['id'], kind=s['slice']['kind'], layout=s['slice']['layout'], file=s['file'], retired=True) for s in retired])
+    if excluded: coverage['slices']['excluded'] = excluded
     write_json(folder / 'manifest.json', manifest, compact=True)
     write_json(folder / 'coverage.json', coverage, compact=True)
     shown = sum(not s.get('hidden') for s in manifest['stamps'])
-    print(f'{args.pack}: {len(produced)} new slice stamps, {len(labelled)} originals relabelled, {len(hidden)} parts hidden, {len(tiles)} grid tiles, {shown} visible')
-    rebuild()
+    print(f'{args.pack}: {len(produced)} new slice stamps, {len(labelled)} originals relabelled, {len(hidden)} parts hidden, '
+          f'{len(tiles)} grid tiles ({duplicates} duplicates hidden), {len(excluded)} excluded, {shown} visible')
+    if not args.no_catalog: rebuild()
 
 
 if __name__ == '__main__':
@@ -367,7 +501,8 @@ if __name__ == '__main__':
     d = sub.add_parser('detect'); d.add_argument('pack'); d.add_argument('--out', required=True)
     d.add_argument('--sheet'); d.add_argument('--grid', default='16x16'); d.add_argument('--margin', type=int, default=0)
     d.add_argument('--spacing', type=int, default=0); d.add_argument('--color-key')
-    b = sub.add_parser('build'); b.add_argument('pack')
+    d.add_argument('--gap', type=int, default=6); d.add_argument('--min-area', type=int, default=64)
+    b = sub.add_parser('build'); b.add_argument('pack'); b.add_argument('--no-catalog', action='store_true')
     a = ap.parse_args()
     if not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,50}', a.pack): raise SystemExit('Invalid pack id')
     cmd_detect(a) if a.cmd == 'detect' else cmd_build(a)

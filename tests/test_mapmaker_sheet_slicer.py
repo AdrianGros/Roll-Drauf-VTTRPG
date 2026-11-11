@@ -10,6 +10,7 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -122,3 +123,60 @@ def test_tiles_and_stamps_are_classified_from_the_review():
         assert by_label[label]["id"] not in tiles, label
     assert not tiles & {s["id"] for s in manifest["stamps"] if s.get("hidden")}
     assert all(s["w"] == s["h"] == 16 for s in manifest["stamps"] if s.get("tile"))
+
+
+PROFILES = sorted((ROOT / "tools" / "mapmaker_slices").glob("*.json"))
+
+
+@pytest.mark.parametrize("path", PROFILES, ids=lambda p: p.stem)
+def test_every_reviewed_slice_copies_its_sheet_pixels(path):
+    """Grid cells, rectangle composites, recipes and gridless objects all match a fresh recomposition."""
+    profile = json.loads(path.read_text())
+    assert profile["review"]["status"] == "reviewed" and profile["review"]["method"]
+    pack = profile["pack"]
+    digest = profile["sheet"]["sha256"]
+    _entry, _digest, img = slicer.load_sheet(pack, profile["sheet"]["path"], digest)
+    manifest = json.loads((ASSETS / pack / "manifest.json").read_text())
+    slices = [s for s in manifest["stamps"] if "slice" in s]
+    assert slices and all(s["slice"]["profile"] == f"tools/mapmaker_slices/{path.name}" for s in slices)
+    if profile["detector"] == slicer.COMPONENTS:
+        found = {slicer.box_key(g["box"]): g for g in slicer.components(img, profile["params"]["gap"], profile["params"]["minArea"])[0]}
+        assert set(found) == set(profile["objects"])
+    else:
+        grid = slicer.Grid(img, profile["grid"])
+    for stamp in slices:
+        layout = stamp["slice"]["layout"]
+        if layout.startswith("box:"):
+            expected = slicer.component_image(img, found[layout[4:]])
+        elif "/" in layout:
+            expected = slicer.compose_rows(img, grid, slicer.parse_rows(layout.split("/")))
+        else:
+            expected = slicer.compose(img, grid, slicer.parse_cells(layout))
+        with Image.open(ASSETS / pack / stamp["file"]) as png:
+            assert png.convert("RGBA").tobytes() == expected.tobytes(), (pack, stamp["label"])
+        assert stamp["id"] == slicer.slice_id(pack, digest, layout)
+        assert (stamp["w"], stamp["h"]) == expected.size and stamp["originalSha256"] == digest
+        assert not stamp.get("tile") or (stamp["w"] == stamp["h"] and "box:" not in layout and " " not in layout)
+    # Exact duplicates are offered once as tiles; every id stays in the catalogue.
+    tiles = [s for s in manifest["stamps"] if s.get("tile")]
+    assert len({s["file"] for s in tiles}) == len(tiles)
+    palette = json.loads((ASSETS / pack / "palette.json").read_text())
+    assert len(palette["rows"]) == len(manifest["stamps"])
+
+
+def test_reviewed_boundaries_of_complex_sheets():
+    def stamps(pack):
+        return {s["label"]: s for s in json.loads((ASSETS / pack / "manifest.json").read_text())["stamps"] if not s.get("hidden")}
+    castle = stamps("castle-rpg")
+    # Detection glued these together; the review separates them.
+    assert (castle["Laternenpfahl"]["w"], castle["Laternenpfahl"]["h"]) == (32, 96)
+    assert (castle["Ziehbrunnen"]["w"], castle["Ziehbrunnen"]["h"]) == (64, 64)
+    assert (castle["Springbrunnen"]["w"], castle["Springbrunnen"]["h"]) == (64, 64)
+    assert (castle["Uhrenbaum"]["w"], castle["Uhrenbaum"]["h"]) == (64, 128)
+    lpc = stamps("lpc-castle")
+    assert {"Fallgitter (schmal)", "Fallgitter (breit)"} <= set(lpc) and "Fallgitter" not in lpc
+    coverage = json.loads((ASSETS / "lpc-castle" / "coverage.json").read_text())["slices"]
+    assert sorted(e["cells"] for e in coverage["excluded"]) == ["0,0", "0,1", "7,14", "8,14"]
+    ruins = json.loads((ASSETS / "2dpixx-ruins" / "manifest.json").read_text())["stamps"]
+    assert sum("slice" in s for s in ruins) == 13  # staggered blocks overlap as boxes but stay separate
+    assert not any(s.get("tile") for s in ruins)

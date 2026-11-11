@@ -1,0 +1,1557 @@
+{
+ "schemaVersion": 1,
+ "pack": "2dpixx-mountain",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "2dpixx_ccart_dark_mountain_tiles.png",
+  "sha256": "80458856db5158e52a892ad107018e019c966d3396b4ab882bd8c09f16f9add2"
+ },
+ "grid": {
+  "w": 32,
+  "h": 32,
+  "margin": 0,
+  "spacing": 0
+ },
+ "colorKey": null,
+ "singles": null,
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Große Flächen (Plateau, Felsfläche, Schacht, Abgrund, Felswand) als Rechteck-Sets: ihre vollflächigen Innenzellen werden nicht automatisch verbunden; die Teile bleiben Kacheln.",
+   "Bäume, Wurzeln, Brücken und Grasbüschel aus der automatischen Erkennung übernommen; der Felsbrocken als Rechteck, weil seine vollflächige Mitte nicht automatisch verbunden wurde."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Objekte & Ausstattung",
+  "Höhle & Gebirge",
+  "Referenzen & Szenen"
+ ],
+ "regions": [
+  {
+   "rect": [
+    4,
+    5,
+    12,
+    10
+   ],
+   "label": "Dunkles Plateau",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    8,
+    16,
+    8,
+    8
+   ],
+   "label": "Dunkle Felsfläche",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    16,
+    8,
+    8,
+    8
+   ],
+   "label": "Schacht",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    16,
+    20,
+    12,
+    12
+   ],
+   "label": "Abgrund mit Felsrand",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    36,
+    4,
+    4,
+    4
+   ],
+   "label": "Dunkle Felswand",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    0,
+    40,
+    48
+   ],
+   "label": "Felsboden",
+   "group": "Höhle & Gebirge",
+   "kind": "tile"
+  }
+ ],
+ "cells": {
+  "0,27": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "1,25": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "1,26": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "1,27": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "1,28": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "1,29": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "1,30": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,24": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,25": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,26": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,27": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,28": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,29": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,30": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "2,31": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,24": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,25": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,26": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,27": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,28": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,29": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,30": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,31": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,24": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,25": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,26": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,27": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,28": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,29": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,30": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "5,25": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "5,26": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "5,27": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "5,28": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,26": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,27": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,28": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,29": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,25": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,26": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,27": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,28": {
+   "label": "Toter Baum (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,19": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "3,20": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,19": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "4,20": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "5,19": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "5,20": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,18": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,19": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,20": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,21": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,19": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,20": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,21": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,22": {
+   "label": "Abgebrochener Baumstamm (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,22": {
+   "label": "Wurzelstück (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,23": {
+   "label": "Wurzelstück (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,24": {
+   "label": "Wurzelstück (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "6,25": {
+   "label": "Wurzelstück (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,17": {
+   "label": "Wurzelstück (3) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,18": {
+   "label": "Wurzelstück (3) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,29": {
+   "label": "Wurzelstück (4) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "7,30": {
+   "label": "Wurzelstück (4) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "10,26": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "10,27": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "10,28": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "10,29": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "11,25": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "11,26": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "11,27": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "11,28": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "11,29": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "11,30": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "11,31": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "12,25": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "12,26": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "12,27": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "12,28": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "12,29": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "12,30": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "12,31": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "13,25": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "13,26": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "13,27": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "13,28": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "13,29": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "13,30": {
+   "label": "Felsbrocken (Teil)",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  "16,21": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "16,22": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "17,21": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "17,22": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "17,23": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,20": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,21": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,22": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,23": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,20": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,21": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,22": {
+   "label": "Grasbüschel (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "16,25": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "16,26": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "17,24": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "17,25": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "17,26": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,24": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,25": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,26": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,27": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,25": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,26": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,27": {
+   "label": "Grasbüschel (2) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,29": {
+   "label": "Grasbüschel (3) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,30": {
+   "label": "Grasbüschel (3) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "18,31": {
+   "label": "Grasbüschel (3) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,29": {
+   "label": "Grasbüschel (3) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,30": {
+   "label": "Grasbüschel (3) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "19,31": {
+   "label": "Grasbüschel (3) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "22,28": {
+   "label": "Grasbüschel (4) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "22,29": {
+   "label": "Grasbüschel (4) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "22,30": {
+   "label": "Grasbüschel (4) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "23,28": {
+   "label": "Grasbüschel (4) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "23,29": {
+   "label": "Grasbüschel (4) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "23,30": {
+   "label": "Grasbüschel (4) (Teil)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "16,20": {
+   "label": "Grasbüschel (klein)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "16,27": {
+   "label": "Grasbüschel (klein, 2)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  "24,8": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "24,9": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "24,10": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "25,6": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "25,7": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "25,8": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "25,9": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "25,10": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,4": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,5": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,6": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,7": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,8": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,9": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,10": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,11": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,12": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "26,13": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,2": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,3": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,4": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,5": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,6": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,7": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,8": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,9": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,10": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,11": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,12": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "27,13": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,0": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,1": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,2": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,3": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,4": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,5": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,6": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,7": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,8": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,9": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,10": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "28,11": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,0": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,1": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,2": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,3": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,4": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,5": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,6": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,7": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,8": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,9": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "29,10": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "30,2": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "30,3": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "30,4": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "30,5": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "30,6": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "30,7": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "30,8": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "31,2": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "31,3": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "31,4": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "31,5": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "31,6": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "32,3": {
+   "label": "Hängebrücke (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "32,21": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "32,22": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "32,23": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "33,21": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "33,22": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "33,23": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "33,24": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "33,25": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,18": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,19": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,21": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,22": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,23": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,24": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,25": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,26": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "34,27": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,18": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,19": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,20": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,21": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,22": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,23": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,24": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,25": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,26": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,27": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,28": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "35,29": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,20": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,21": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,22": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,23": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,24": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,25": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,26": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,27": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,28": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,29": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,30": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "36,31": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,21": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,22": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,23": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,24": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,25": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,26": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,27": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,28": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,29": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,30": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "37,31": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "38,23": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "38,24": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "38,25": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "38,26": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "38,27": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "38,28": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "38,29": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "39,25": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "39,26": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "39,27": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "39,28": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "39,29": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "40,28": {
+   "label": "Hängebrücke (2) (Teil)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ },
+ "composites": [
+  {
+   "cells": "0,27 1,25 1,26 1,27 1,28 1,29 1,30 2,24 2,25 2,26 2,27 2,28 2,29 2,30 2,31 3,24 3,25 3,26 3,27 3,28 3,29 3,30 3,31 4,24 4,25 4,26 4,27 4,28 4,29 4,30 5,25 5,26 5,27 5,28 6,26 6,27 6,28 6,29 7,25 7,26 7,27 7,28",
+   "label": "Toter Baum",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "3,19 3,20 4,19 4,20 5,19 5,20 6,18 6,19 6,20 6,21 7,19 7,20 7,21 7,22",
+   "label": "Abgebrochener Baumstamm",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "6,22 6,23",
+   "label": "Wurzelstück",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "6,24 6,25",
+   "label": "Wurzelstück (2)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "7,17 7,18",
+   "label": "Wurzelstück (3)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "7,29 7,30",
+   "label": "Wurzelstück (4)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     25,
+     10,
+     7,
+     4
+    ]
+   },
+   "label": "Felsbrocken",
+   "group": "Höhle & Gebirge",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "16,21 16,22 17,21 17,22 17,23 18,20 18,21 18,22 18,23 19,20 19,21 19,22",
+   "label": "Grasbüschel",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "16,25 16,26 17,24 17,25 17,26 18,24 18,25 18,26 18,27 19,25 19,26 19,27",
+   "label": "Grasbüschel (2)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "18,29 18,30 18,31 19,29 19,30 19,31",
+   "label": "Grasbüschel (3)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "22,28 22,29 22,30 23,28 23,29 23,30",
+   "label": "Grasbüschel (4)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "24,8 24,9 24,10 25,6 25,7 25,8 25,9 25,10 26,4 26,5 26,6 26,7 26,8 26,9 26,10 26,11 26,12 26,13 27,2 27,3 27,4 27,5 27,6 27,7 27,8 27,9 27,10 27,11 27,12 27,13 28,0 28,1 28,2 28,3 28,4 28,5 28,6 28,7 28,8 28,9 28,10 28,11 29,0 29,1 29,2 29,3 29,4 29,5 29,6 29,7 29,8 29,9 29,10 30,2 30,3 30,4 30,5 30,6 30,7 30,8 31,2 31,3 31,4 31,5 31,6 32,3",
+   "label": "Hängebrücke",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "32,21 32,22 32,23 33,21 33,22 33,23 33,24 33,25 34,18 34,19 34,21 34,22 34,23 34,24 34,25 34,26 34,27 35,18 35,19 35,20 35,21 35,22 35,23 35,24 35,25 35,26 35,27 35,28 35,29 36,20 36,21 36,22 36,23 36,24 36,25 36,26 36,27 36,28 36,29 36,30 36,31 37,21 37,22 37,23 37,24 37,25 37,26 37,27 37,28 37,29 37,30 37,31 38,23 38,24 38,25 38,26 38,27 38,28 38,29 39,25 39,26 39,27 39,28 39,29 40,28",
+   "label": "Hängebrücke (2)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": {
+    "rect": [
+     4,
+     5,
+     12,
+     10
+    ]
+   },
+   "label": "Dunkles Plateau",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     8,
+     16,
+     8,
+     8
+    ]
+   },
+   "label": "Dunkle Felsfläche",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     16,
+     8,
+     8,
+     8
+    ]
+   },
+   "label": "Schacht",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     16,
+     20,
+     12,
+     12
+    ]
+   },
+   "label": "Abgrund mit Felsrand",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     36,
+     4,
+     4,
+     4
+    ]
+   },
+   "label": "Dunkle Felswand",
+   "group": "Höhle & Gebirge",
+   "kind": "set",
+   "hideParts": false
+  }
+ ]
+}

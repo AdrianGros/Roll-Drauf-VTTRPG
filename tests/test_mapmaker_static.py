@@ -179,4 +179,4 @@ def test_all_four_color_batches_are_available():
     for p in catalog:
         m=json.loads((assets/p['manifest']).read_text())
         totals[m.get('batch',0)]+=len(m['stamps'])
-    assert totals=={0:6456,1:589,2:64310,3:718,4:2}
+    assert totals=={0:6456,1:589,2:64310,3:1826,4:435}

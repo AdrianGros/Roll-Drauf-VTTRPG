@@ -1,0 +1,116 @@
+{
+ "schemaVersion": 1,
+ "pack": "2dpixx-interior",
+ "detector": "components-v1",
+ "sheet": {
+  "path": "2DRP_CCArt_Interior_Isometric.png",
+  "sha256": "edebd0f82dddf7c59cda3ddd4047edb93dc3f8c2f27f2ee769caed43f6f83fa7"
+ },
+ "params": {
+  "gap": 6,
+  "minArea": 64
+ },
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (components-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Freistehende Motive per Pixelzusammenhang (Abstand ≤ 6 px) erkannt; überlappende Umrissrechtecke werden pro Motiv maskiert."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Fertige Häuser",
+  "Objekte & Ausstattung",
+  "Zäune",
+  "Isometrische Blöcke",
+  "Referenzen & Szenen"
+ ],
+ "objects": {
+  "844,209,90,123": {
+   "label": "Bücherregal",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "544,218,123,142": {
+   "label": "Roter Teppichblock mit Goldkante",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "1001,268,90,123": {
+   "label": "Bücherregal (gedreht)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "699,310,123,143": {
+   "label": "Roter Teppichblock mit Goldkante (2)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "390,324,124,142": {
+   "label": "Roter Teppichblock mit Goldkante (3)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "1161,353,38,59": {
+   "label": "Stuhl (gedreht)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "1242,390,38,59": {
+   "label": "Stuhl",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "845,410,123,143": {
+   "label": "Roter Teppichblock",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "1111,412,50,43": {
+   "label": "Kleiner Tisch",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "528,418,124,142": {
+   "label": "Roter Teppichblock mit Goldkante (4)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "266,446,123,107": {
+   "label": "Rote Teppichplatte mit Goldkante",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "1173,448,57,55": {
+   "label": "Schatztruhe",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  "963,509,124,142": {
+   "label": "Steinblock (Schachbrett)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "682,518,124,142": {
+   "label": "Roter Teppichblock (2)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "396,558,124,107": {
+   "label": "Rote Teppichplatte mit Goldkante (2)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "547,646,123,107": {
+   "label": "Rote Teppichplatte",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  },
+  "818,647,123,107": {
+   "label": "Steinplatte (Schachbrett)",
+   "group": "Isometrische Blöcke",
+   "kind": "object"
+  }
+ }
+}
