@@ -1,0 +1,38 @@
+{
+  "scope": "P1 live authenticated journeys",
+  "results": [
+    {
+      "browser": "chromium",
+      "journey": "campaign hub -> owner as Player and independent DM tab -> reload",
+      "status": "pass",
+      "checks": {
+        "role": "PLAYER",
+        "secret": false,
+        "dm_action": 403,
+        "missing_context": 403
+      }
+    },
+    {
+      "browser": "chromium",
+      "journey": "ordinary Player -> campaign hub -> table",
+      "status": "pass"
+    },
+    {
+      "browser": "firefox",
+      "journey": "campaign hub -> owner as Player and independent DM tab -> reload",
+      "status": "pass",
+      "checks": {
+        "role": "PLAYER",
+        "secret": false,
+        "dm_action": 403,
+        "missing_context": 403
+      }
+    },
+    {
+      "browser": "firefox",
+      "journey": "ordinary Player -> campaign hub -> table",
+      "status": "pass"
+    }
+  ],
+  "status": "pass"
+}

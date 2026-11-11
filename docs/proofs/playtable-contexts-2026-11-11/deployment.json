@@ -1,0 +1,73 @@
+{
+  "commit": "721fc1c8c5133b9c6c74154d265f70f1123e8b7f",
+  "image": "roll-drauf-vtt-app:feedback-contexts-20261111-721fc1c8c",
+  "image_id": "sha256:eb81dc1c236e0ecf834084909b7eac0c4b7c393b790886a08860776b473fb610",
+  "base_image_id": "sha256:b9cf16b34a11bafce75c0e5c0e03284abb659e91134075d2261f55bdf1075ccc",
+  "prior_image": "roll-drauf-vtt-app:feedback-contexts-rollback-20261111-b9cf16b34a11",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "overlay_manifest": {
+    "vtt/__init__.py": "c7b963c5684c03d2265c81a7742da2f64c0d22506ccb8d6e7e18959c7e5e7fe4",
+    "vtt/auth/routes.py": "b51c7d4b776307bd3764f2ef1d6b22018d27f461acfcb3a91915560fbdd0ddc8",
+    "vtt/campaigns/routes.py": "3f51d1c5d655488a16ffba0d462c1453329f01a7d180741852cf3098013c10c4",
+    "vtt/characters/sheet_link.py": "d50cff9d5dbd7822d06cdda31027a660c30e5c9a91d784aa7a564167d59946cc",
+    "vtt/community/policy.py": "d4665340741abac6b1d7ba39fd4ba965da13d6df68457ac7844f91ade87248f8",
+    "vtt/community/routes.py": "5d7c24c3975245f878d1851f81084b39512e9164a2be7818a71beb7a73d5d31e",
+    "vtt/endpoints/sessions.py": "f730912fe7e360a0ae1a1d856958ca52021de7fa4a844c379051c72804bdba7a",
+    "vtt/models/__init__.py": "b0514a4cc1c606e614bd22c7aed8fef50a5be19ab31c6f00e08825646605b634",
+    "vtt/models/table_context.py": "e3a088e8c67f10d8d09d6dd798e9ac041f58625961e13576fc309cf0c8175bfd",
+    "vtt/permissions.py": "618cc48716ffcd15449e145c15b285ca2fbdaa9a5fa4b97dd78981350864f4ac",
+    "vtt/play/contexts.py": "475afb18811189e22241272bff13830ad8f4bc9571a1fe96add04ad339e82a62",
+    "vtt/play/routes.py": "d8febd4f3f2f865245817730576dbfc92a6ff75662d59004a4f668fe8e0d8b3b",
+    "vtt/play/service.py": "696fe61d5bbce99087531f6befb71dbe241b82ffd9d01f7ef8d2f54bf6b8965c",
+    "vtt/play/surfaces/dm.json": "686537dbf5aff7386db7704c61fbba3b0a76b5019a633b6c0be9ec098890a9b2",
+    "vtt/socket_handlers.py": "a6d25d5639d69c97847f649226b262bac3adf4fec276dbf8901939daa93504de",
+    "vtt/static/js/auth.js": "5511620c2b12e0ee05557b5de1cfd93cd64801167386a18a34762d1bc23f3ffc",
+    "vtt/static/js/play-client.js": "b112b30fc056e0384f51d887c6861bd04a0f545e2991b293e18463fb173959a1",
+    "vtt/static/js/play-dm.js": "7b24d9cd17a825418309d9bc16b13d367a48e697be089210ee1d4ce9ab5bfb54",
+    "vtt/static/js/play-player.js": "c33e26ce6283a239ddd53f25cea575abbd8d975c125b3495385accb3eab75c51",
+    "vtt/static/js/play-socket.js": "24e9c132f2afbc77c8b3ca9694e65966083b31b3dbade2a694f2aa8be5f8f310",
+    "vtt/static/js/play-ui.js": "146e21db7c2ceddf8f1d0681b79a5a9ffc741bb960d2eacf02aecc07271ea171",
+    "vtt/templates/play.html": "df39087fbbeca277fb992bfb17ad63a163fe3837c205a97acdafe76ed1cab73c"
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-contexts/database-before-contexts.dump",
+    "bytes": 397544,
+    "archive_readable": true,
+    "checked_at": "2026-11-11T07:52:01.133043+00:00"
+  },
+  "schema_migration": {
+    "table": "play_table_contexts",
+    "previously_present": false,
+    "columns_verified": true
+  },
+  "built_source_verification": {
+    "checked": 230,
+    "mismatches": []
+  },
+  "deployed_at": "2026-11-11T07:54:14.370083236Z",
+  "checked_at": "2026-11-11T08:05:26.176299+00:00",
+  "health": {
+    "now": "2026-11-11T08:05:26.166547",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-11T07:54:20.397271",
+    "status": "ok"
+  },
+  "push_status": "pushed",
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-11/feedback-contexts/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "backup_restore_exercised": false,
+  "targeted_checks": {
+    "api_socket_action_distinct_cases": 26,
+    "browser_cases": 2,
+    "live_journeys": 4,
+    "git_diff_check": "pass",
+    "python_compile": "pass"
+  },
+  "temporary_credentials_removed": true
+}
