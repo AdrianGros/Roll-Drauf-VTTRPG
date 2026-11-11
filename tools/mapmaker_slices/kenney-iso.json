@@ -1,0 +1,665 @@
+{
+ "schemaVersion": 1,
+ "pack": "kenney-iso",
+ "detector": "singles-v1",
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Herstellereinzelbilder; Bilderkennung und Sichtprüfung durch Claude Code für Benennung, Kategorie und Art (Kachel oder Stempel); HD-Doppel per Bildvergleich zugeordnet; keine generierten Pixel.",
+  "deviations": [
+   "Isometrische Bauteile sind Stempel; ein quadratisches Kachelraster passt nicht zur Isometrie."
+  ]
+ },
+ "groupOrder": [
+  "Gebäude & Bauteile",
+  "Referenzen & Szenen"
+ ],
+ "singles": {
+  "PNG/buildingTiles_000.png": {
+   "label": "Gebäudeblock mit Glasfront",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_001.png": {
+   "label": "Gebäudeblock (rot)",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_002.png": {
+   "label": "Gebäudeblock (rot) 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_003.png": {
+   "label": "Gebäudeblock mit Glasfront 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_004.png": {
+   "label": "Ladenblock mit Markise",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_005.png": {
+   "label": "Flachdach mit Lüftern",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_006.png": {
+   "label": "Flachdach mit Lüftern 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_007.png": {
+   "label": "Gebäudeblock mit Glasfront 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_008.png": {
+   "label": "Gebäudeblock mit Glasfront 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_009.png": {
+   "label": "Gebäudeblock (rot) 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_010.png": {
+   "label": "Gebäudeblock (rot) 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_011.png": {
+   "label": "Gebäudeblock mit Zierleiste",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_012.png": {
+   "label": "Ladenblock mit Markise 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_013.png": {
+   "label": "Flachdach mit Lüftern 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_014.png": {
+   "label": "Gebäudeblock (Holz)",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_015.png": {
+   "label": "Gebäudeblock mit Glasfront 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_016.png": {
+   "label": "Gebäudeblock mit Glasfront 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_017.png": {
+   "label": "Gebäudeblock (rot) 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_018.png": {
+   "label": "Ladenblock mit Markise 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_019.png": {
+   "label": "Gebäudeblock mit Zierleiste 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_020.png": {
+   "label": "Ladenblock mit Markise 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_021.png": {
+   "label": "Gebäudeblock (Holz) 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_022.png": {
+   "label": "Gebäudeblock (beige)",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_023.png": {
+   "label": "Gebäudeblock mit Glasfront 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_024.png": {
+   "label": "Gebäudeblock mit Glasfront 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_025.png": {
+   "label": "Gebäudeblock (rot) 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_026.png": {
+   "label": "Ladenblock mit Markise 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_027.png": {
+   "label": "Gebäudeblock mit Zierleiste 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_028.png": {
+   "label": "Ladenblock mit Markise 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_029.png": {
+   "label": "Gebäudeblock (beige) 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_030.png": {
+   "label": "Gebäudeblock (rot) 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_031.png": {
+   "label": "Gebäudeblock mit Glasfront 9",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_032.png": {
+   "label": "Gebäudeblock (Holz) 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_033.png": {
+   "label": "Gebäudeblock (rot) 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_034.png": {
+   "label": "Ladenblock mit Markise 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_035.png": {
+   "label": "Gebäudeblock mit Zierleiste 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_036.png": {
+   "label": "Gebäudeblock (rot) 9",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_037.png": {
+   "label": "Gebäudeblock (beige) 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_038.png": {
+   "label": "Gebäudeblock (Holz) 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_039.png": {
+   "label": "Gebäudeblock (beige) 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_040.png": {
+   "label": "Gebäudeblock (rot) 10",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_041.png": {
+   "label": "Ladenblock mit Markise 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_042.png": {
+   "label": "Gebäudeblock (beige) 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_043.png": {
+   "label": "Gebäudeblock (Holz) 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_044.png": {
+   "label": "Gebäudeblock (beige) 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_045.png": {
+   "label": "Gebäudeblock (rot) 11",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_046.png": {
+   "label": "Gebäudeblock (rot) 12",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_047.png": {
+   "label": "Gebäudeblock (Holz) 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_048.png": {
+   "label": "Gebäudeblock (beige) 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_049.png": {
+   "label": "Gebäudeblock (rot) 13",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_050.png": {
+   "label": "Gebäudeblock (grau)",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_051.png": {
+   "label": "Gebäudeblock (beige) 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_052.png": {
+   "label": "Gebäudeblock (rot) 14",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_053.png": {
+   "label": "Gebäudeblock (grau) 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_054.png": {
+   "label": "Gebäudeblock (rot) 15",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_055.png": {
+   "label": "Gebäudeblock (grau) 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_056.png": {
+   "label": "Gebäudeblock (grau) 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_057.png": {
+   "label": "Dach (beige)",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_058.png": {
+   "label": "Dach (beige) 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_059.png": {
+   "label": "Dach (beige) 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_060.png": {
+   "label": "Dach (beige) 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_061.png": {
+   "label": "Dach (beige) 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_062.png": {
+   "label": "Dach (orange)",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_063.png": {
+   "label": "Dach (beige) 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_064.png": {
+   "label": "Dach (beige) 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_065.png": {
+   "label": "Dach (orange) 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_066.png": {
+   "label": "Dach (orange) 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_067.png": {
+   "label": "Dach (beige) 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_068.png": {
+   "label": "Dach (beige) 9",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_069.png": {
+   "label": "Dach (rot)",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_070.png": {
+   "label": "Dach (orange) 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_071.png": {
+   "label": "Dach (orange) 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_072.png": {
+   "label": "Dach (beige) 10",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_073.png": {
+   "label": "Dach (beige) 11",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_074.png": {
+   "label": "Dach (rot) 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_075.png": {
+   "label": "Dach (rot) 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_076.png": {
+   "label": "Dach (orange) 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_077.png": {
+   "label": "Dach (orange) 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_078.png": {
+   "label": "Regenrinne",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_079.png": {
+   "label": "Flachdach",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_080.png": {
+   "label": "Dach (beige) 12",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_081.png": {
+   "label": "Dach (grau)",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_082.png": {
+   "label": "Dach (rot) 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_083.png": {
+   "label": "Dach (rot) 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_084.png": {
+   "label": "Dach (orange) 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_085.png": {
+   "label": "Gebäudeblock (grau) 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_086.png": {
+   "label": "Flachdach 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_087.png": {
+   "label": "Flachdach 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_088.png": {
+   "label": "Dach (grau) 2",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_089.png": {
+   "label": "Dach (grau) 3",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_090.png": {
+   "label": "Dach (rot) 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_091.png": {
+   "label": "Dach (rot) 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_092.png": {
+   "label": "Gebäudeblock (rot) 16",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_093.png": {
+   "label": "Gebäudeblock mit Glasfront 10",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_094.png": {
+   "label": "Flachdach 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_095.png": {
+   "label": "Flachdach 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_096.png": {
+   "label": "Dach (grau) 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_097.png": {
+   "label": "Dach (grau) 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_098.png": {
+   "label": "Dach (rot) 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_099.png": {
+   "label": "Ladenblock mit Markise 9",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_100.png": {
+   "label": "Ladenblock mit Markise 10",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_101.png": {
+   "label": "Gebäudeblock mit Glasfront 11",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_102.png": {
+   "label": "Flachdach 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_103.png": {
+   "label": "Flachdach 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_104.png": {
+   "label": "Dach (grau) 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_105.png": {
+   "label": "Dach (grau) 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_106.png": {
+   "label": "Gebäudeblock (rot) 17",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_107.png": {
+   "label": "Ladenblock mit Markise 11",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_108.png": {
+   "label": "Ladenblock mit Markise 12",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_109.png": {
+   "label": "Gebäudeblock mit Glasfront 12",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_110.png": {
+   "label": "Flachdach 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_111.png": {
+   "label": "Flachdach mit Lüftern 4",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_112.png": {
+   "label": "Dach (grau) 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_113.png": {
+   "label": "Ladenblock mit Markise 13",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_114.png": {
+   "label": "Gebäudeblock (rot) 18",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_115.png": {
+   "label": "Ladenblock mit Markise 14",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_116.png": {
+   "label": "Gebäudeblock mit Glasfront 13",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_117.png": {
+   "label": "Ladenblock mit Markise 15",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_118.png": {
+   "label": "Flachdach mit Lüftern 5",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_119.png": {
+   "label": "Flachdach mit Lüftern 6",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_120.png": {
+   "label": "Flachdach 9",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_121.png": {
+   "label": "Flachdach 10",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_122.png": {
+   "label": "Gebäudeblock (rot) 19",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_123.png": {
+   "label": "Gebäudeblock (rot) 20",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_124.png": {
+   "label": "Ladenblock mit Markise 16",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_125.png": {
+   "label": "Gebäudeblock mit Glasfront 14",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_126.png": {
+   "label": "Flachdach mit Lüftern 7",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_127.png": {
+   "label": "Flachdach mit Lüftern 8",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  "PNG/buildingTiles_128.png": {
+   "label": "Flachdach 11",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  }
+ },
+ "hidden": {}
+}

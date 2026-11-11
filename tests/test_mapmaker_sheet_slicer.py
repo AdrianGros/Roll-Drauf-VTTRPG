@@ -134,6 +134,8 @@ def test_every_reviewed_slice_copies_its_sheet_pixels(path):
     profile = json.loads(path.read_text())
     assert profile["review"]["status"] == "reviewed" and profile["review"]["method"]
     pack = profile["pack"]
+    if profile["detector"] == slicer.SINGLES:
+        return _check_named_singles(profile)
     digest = profile["sheet"]["sha256"]
     _entry, _digest, img = slicer.load_sheet(pack, profile["sheet"]["path"], digest)
     manifest = json.loads((ASSETS / pack / "manifest.json").read_text())
@@ -180,3 +182,36 @@ def test_reviewed_boundaries_of_complex_sheets():
     ruins = json.loads((ASSETS / "2dpixx-ruins" / "manifest.json").read_text())["stamps"]
     assert sum("slice" in s for s in ruins) == 13  # staggered blocks overlap as boxes but stay separate
     assert not any(s.get("tile") for s in ruins)
+
+
+def _check_named_singles(profile):
+    """singles-v1: originals renamed in place, no new ids; hidden duplicates point at a visible twin."""
+    manifest = json.loads((ASSETS / profile["pack"] / "manifest.json").read_text())
+    by_path = {s["originalPath"]: s for s in manifest["stamps"]}
+    assert not any("slice" in s for s in manifest["stamps"])
+    for path, spec in profile["singles"].items():
+        stamp = by_path[path]
+        assert (stamp["label"], stamp["group"]) == (spec["label"], spec["group"]) and not stamp.get("hidden")
+        assert bool(stamp.get("tile")) == (spec.get("kind") == "tile" and stamp["w"] == stamp["h"])
+    for path, reason in profile.get("hidden", {}).items():
+        twin = reason.split(" von ", 1)[1].split(" (", 1)[0]
+        assert by_path[path].get("hidden") and not by_path[twin].get("hidden")
+    assert all(s["originalPath"] in profile["singles"] or s["originalPath"] in profile.get("hidden", {})
+               or s["group"] == "Referenzen & Szenen" for s in manifest["stamps"])
+
+
+def test_rts_hd_twins_match_their_standard_images():
+    """The HD set is hidden only because every HD image has its own standard twin."""
+    from PIL import ImageChops, ImageStat
+    profile = json.loads((ROOT / "tools" / "mapmaker_slices" / "kenney-rts.json").read_text())
+    manifest = {s["originalPath"]: s for s in json.loads((ASSETS / "kenney-rts" / "manifest.json").read_text())["stamps"]}
+    twins = [reason.split(" von ", 1)[1].split(" (", 1)[0] for reason in profile["hidden"].values()]
+    assert len(profile["hidden"]) == len(set(twins)) == 126
+    for hd_path, twin in zip(profile["hidden"], twins):
+        def flat(path, size=None):
+            img = Image.open(ASSETS / "kenney-rts" / manifest[path]["file"]).convert("RGBA")
+            img = img.resize(size, Image.LANCZOS) if size else img
+            base = Image.new("RGBA", img.size, (255, 0, 255, 255)); base.alpha_composite(img)
+            return base.convert("RGB")
+        diff = ImageChops.difference(flat(hd_path, (64, 64)), flat(twin))
+        assert sum(ImageStat.Stat(diff).mean) < 8, hd_path

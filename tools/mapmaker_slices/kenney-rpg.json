@@ -1,0 +1,591 @@
+{
+ "schemaVersion": 1,
+ "pack": "kenney-rpg",
+ "detector": "grid-alpha-v1",
+ "sheet": {
+  "path": "Spritesheet/roguelikeSheet_transparent.png",
+  "sha256": "808c8d734480bc949b284f3bcc252e87e1ee53b24178791a6838cce6a319c439"
+ },
+ "grid": {
+  "w": 16,
+  "h": 16,
+  "margin": 0,
+  "spacing": 1
+ },
+ "colorKey": null,
+ "singles": null,
+ "review": {
+  "status": "reviewed",
+  "date": "2026-11-11",
+  "method": "Automatische Erkennung (grid-alpha-v1) als Vorschlag; Bilderkennung und Sichtprüfung durch Claude Code für Grenzen, Benennung, Kategorien und Art (Kachel oder Stempel); keine generierten Pixel.",
+  "deviations": [
+   "Grünes Banner als Rechteck: die Spitze war nicht mit dem Banner verbunden.",
+   "Sechs zwei Kacheln hohe Bäume (Krone und Stamm) als Ganzes; die Erkennung hatte sie seitlich miteinander verbunden.",
+   "Die Grafik hat keine einheitliche Umrisslinie und reicht bis an die Zellkanten; die automatische Gruppierung verklebte Nachbarmotive (Betten, Bäume, Gegenstandsreihen). Übernommen wurden nur sichtgeprüfte Mehrzellobjekte und Flächen-Sets; alles Übrige bleibt wie vom Hersteller vorgesehen als einzelne 16×16-Kachel bzw. Stempel.",
+   "Module wie Betten-, Marktstand- und Mauerteile bleiben Einzelteile, weil sie in mehreren Kombinationen gebaut werden."
+  ]
+ },
+ "groupOrder": [
+  "Bäume & Pflanzen",
+  "Objekte & Ausstattung",
+  "Gebäude & Bauteile",
+  "Gelände & Tiles",
+  "Höhle & Gebirge",
+  "Referenzen & Szenen"
+ ],
+ "regions": [
+  {
+   "rect": [
+    0,
+    0,
+    10,
+    25
+   ],
+   "label": "Gelände",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    10,
+    7,
+    3,
+    18
+   ],
+   "label": "Becken & Teppich",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    13,
+    12,
+    16,
+    13
+   ],
+   "label": "Mauer & Dach",
+   "group": "Gebäude & Bauteile",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    29,
+    12,
+    12,
+    13
+   ],
+   "label": "Mauer & Dach",
+   "group": "Gebäude & Bauteile",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    0,
+    25,
+    41,
+    6
+   ],
+   "label": "Wandfläche",
+   "group": "Gebäude & Bauteile",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    41,
+    25,
+    9,
+    6
+   ],
+   "label": "Teppich",
+   "group": "Gelände & Tiles",
+   "kind": "tile"
+  },
+  {
+   "rect": [
+    10,
+    0,
+    19,
+    7
+   ],
+   "label": "Möbel & Hausrat",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    13,
+    7,
+    16,
+    2
+   ],
+   "label": "Leuchter & Wandschmuck",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    13,
+    9,
+    16,
+    3
+   ],
+   "label": "Baum & Strauch",
+   "group": "Bäume & Pflanzen",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    29,
+    0,
+    3,
+    12
+   ],
+   "label": "Schrank & Hausrat",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    32,
+    0,
+    9,
+    9
+   ],
+   "label": "Tür & Tor",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    41,
+    0,
+    8,
+    9
+   ],
+   "label": "Fenster",
+   "group": "Gebäude & Bauteile",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    49,
+    0,
+    5,
+    9
+   ],
+   "label": "Banner & Wappen",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    54,
+    0,
+    3,
+    6
+   ],
+   "label": "Wimpel",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    54,
+    6,
+    3,
+    5
+   ],
+   "label": "Kamin",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    29,
+    9,
+    20,
+    3
+   ],
+   "label": "Hausrat & Schätze",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    49,
+    9,
+    5,
+    3
+   ],
+   "label": "Grabstein & Denkmal",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    41,
+    12,
+    13,
+    6
+   ],
+   "label": "Regal & Vorrat",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    54,
+    11,
+    3,
+    7
+   ],
+   "label": "Speise & Trank",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    41,
+    18,
+    13,
+    7
+   ],
+   "label": "Zaun, Leiter & Hausrat",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    54,
+    18,
+    3,
+    7
+   ],
+   "label": "Felsen",
+   "group": "Höhle & Gebirge",
+   "kind": "object"
+  },
+  {
+   "rect": [
+    50,
+    25,
+    7,
+    6
+   ],
+   "label": "Markierung",
+   "group": "Objekte & Ausstattung",
+   "kind": "object"
+  }
+ ],
+ "cells": {},
+ "composites": [
+  {
+   "cells": "0,49 1,49 2,49",
+   "label": "Banner (orange)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "0,50 1,50 2,50",
+   "label": "Banner mit Schwert (orange)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "3,49 4,49 5,49",
+   "label": "Banner (türkis)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "3,50 4,50 5,50",
+   "label": "Banner mit Schwert (türkis)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "6,50 7,50 8,50",
+   "label": "Banner mit Schwert (grün)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,46 10,47 11,46 11,47",
+   "label": "Zelt (grün)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,48 10,49 11,48 11,49",
+   "label": "Zelt (beige)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "7,25 8,25",
+   "label": "Standspiegel",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,36 11,36",
+   "label": "Hoher Schrank",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,50 11,50",
+   "label": "Denkmal",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "18,41 18,42 19,41 19,42",
+   "label": "Rosette",
+   "group": "Gebäude & Bauteile",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "20,47 20,48 21,47 21,48",
+   "label": "Holzrahmen",
+   "group": "Gebäude & Bauteile",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "7,7 7,8 8,7 8,8",
+   "label": "Erdkreis",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "7,10 7,11 7,12 8,10 8,11 8,12 9,10 9,11 9,12",
+   "label": "Wasserbecken",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "9,7 9,8 9,9 10,7 10,8 10,9 11,7 11,8 11,9",
+   "label": "Erdfläche",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "10,10 10,11 10,12 11,10 11,11 11,12 12,10 12,11 12,12",
+   "label": "Grüne Fläche mit Rand",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "13,7 13,8 14,7 14,8",
+   "label": "Steinkreis",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "13,10 13,11 13,12 14,10 14,11 14,12 15,10 15,11 15,12",
+   "label": "Lehmfläche mit Rand",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "15,0 15,1 16,0 16,1",
+   "label": "Graskreis",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "15,2 15,3 15,4 16,2 16,3 16,4 17,2 17,3 17,4",
+   "label": "Grasfläche",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "15,7 15,8 15,9 16,7 16,8 16,9 17,7 17,8 17,9",
+   "label": "Steinfläche",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "16,10 16,11 16,12 17,10 17,11 17,12 18,10 18,11 18,12",
+   "label": "Teppich grün",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "18,0 18,1 19,0 19,1",
+   "label": "Erdkreis (dunkel)",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "18,2 18,3 18,4 19,2 19,3 19,4 20,2 20,3 20,4",
+   "label": "Erdfläche (dunkel)",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "19,7 19,8 20,7 20,8",
+   "label": "Sandkreis",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "19,10 19,11 19,12 20,10 20,11 20,12 21,10 21,11 21,12",
+   "label": "Teppich orange",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "21,0 21,1 22,0 22,1",
+   "label": "Kreis violett",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "21,2 21,3 21,4 22,2 22,3 22,4 23,2 23,3 23,4",
+   "label": "Fläche violett",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "21,7 21,8 21,9 22,7 22,8 22,9 23,7 23,8 23,9",
+   "label": "Sandfläche",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "22,10 22,11 22,12 23,10 23,11 23,12 24,10 24,11 24,12",
+   "label": "Teppich türkis",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "25,41 25,42 25,43 26,41 26,42 26,43 27,41 27,42 27,43",
+   "label": "Teppich braun",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "25,44 25,45 25,46 26,44 26,45 26,46 27,44 27,45 27,46",
+   "label": "Teppich weiß",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "25,47 25,48 25,49 26,47 26,48 26,49 27,47 27,48 27,49",
+   "label": "Teppich hell",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "28,41 28,42 28,43 29,41 29,42 29,43 30,41 30,42 30,43",
+   "label": "Teppich grün (2)",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "28,44 28,45 28,46 29,44 29,45 29,46 30,44 30,45 30,46",
+   "label": "Teppich orange (2)",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": "28,47 28,48 28,49 29,47 29,48 29,49 30,47 30,48 30,49",
+   "label": "Teppich türkis (2)",
+   "group": "Gelände & Tiles",
+   "kind": "set",
+   "hideParts": false
+  },
+  {
+   "cells": {
+    "rect": [
+     49,
+     6,
+     1,
+     3
+    ]
+   },
+   "label": "Banner (grün)",
+   "group": "Objekte & Ausstattung",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,13 11,13",
+   "label": "Hoher Laubbaum (grün)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,14 11,14",
+   "label": "Hoher Laubbaum (herbstlich)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,15 11,15",
+   "label": "Hoher Laubbaum (dunkel)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,16 11,16",
+   "label": "Hohe Tanne (grün)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,17 11,17",
+   "label": "Hohe Tanne (herbstlich)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  },
+  {
+   "cells": "10,18 11,18",
+   "label": "Hohe Tanne (dunkel)",
+   "group": "Bäume & Pflanzen",
+   "kind": "object",
+   "hideParts": true
+  }
+ ]
+}

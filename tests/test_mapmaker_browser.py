@@ -1519,6 +1519,8 @@ def test_color_sheet_crop_roundtrip_and_credit_export(open_editor, tmp_path, wid
     ed.page.locator('#stampPack').select_option('kenney-rpg')
     manifest = json.loads((STATIC/'mapmaker/assets/kenney-rpg/manifest.json').read_text())
     entry = next(e for e in manifest['stamps'] if e['sheet'] and 'transparent' in e['originalPath'].lower())
+    # The whole sheet sits under references behind the sliced stamps; find it like a user would.
+    ed.page.locator('#stampSearch').fill('roguelikeSheet_transparent')
     ed.page.locator(f'.mm-stamp[data-asset="{entry["id"]}"]').click()
     expect(ed.page.locator('#sheetDialog')).to_be_visible()
     ed.page.locator('#sheetZoom').select_option('2')
@@ -1698,7 +1700,10 @@ WALL = 'color:kenney-tiny_1a2fdb62b6610bca'
 def test_tile_tool_paints_grid_cells_with_undo_size_and_file_roundtrip(open_editor, tmp_path):
     ed = open_editor()
     ed.tool('tile')
-    expect(ed.page.locator('#tileResults')).to_contain_text('717 Kacheln')
+    catalog = json.loads((STATIC / 'mapmaker/assets/packs.json').read_text())['packs']
+    offered = sum(1 for p in catalog for s in json.loads((STATIC / 'mapmaker/assets' / p['manifest']).read_text())['stamps']
+                  if s.get('tile') and not s.get('hidden'))
+    expect(ed.page.locator('#tileResults')).to_contain_text(f'{offered:,} Kacheln'.replace(',', '.'))
     assert ed.page.locator('.mm-tile-btn').count() == 64
     ed.page.locator('#tilePack').select_option('kenney-tiny')
     expect(ed.page.locator('#tileResults')).to_contain_text('97 Kacheln')
@@ -1816,6 +1821,8 @@ def test_tile_layer_import_contract(open_editor):
     ('2dpixx-forest', 'Großer Laubbaum', 'Erdfläche 5'),
     ('2dpixx-mountain', 'Hängebrücke', 'Felsboden 1'),
     ('2dpixx-village', 'Ziehbrunnen', None),
+    ('kenney-rpg', 'Hohe Tanne (grün)', 'Gelände 1'),
+    ('kenney-rts', 'Burg', 'Sand'),
 ])
 def test_sliced_sheets_offer_whole_stamps_and_grid_tiles(open_editor, pack_id, stamp_label, tile_label):
     stamps = json.loads((STATIC / 'mapmaker/assets' / pack_id / 'manifest.json').read_text())['stamps']
