@@ -1,0 +1,19 @@
+{
+  "task": "C01",
+  "phase": "deploy",
+  "worktree": "/home/admin/projects/roll-drauf-vtt-claude-c01-20261111",
+  "base_commit": "fb9642e32b4533b617df15291e5c5a1cb572b499",
+  "agent": "vtt-ui-implementer",
+  "model": "inherit (configured opus)",
+  "implementation_started": true,
+  "uses_subscription": true,
+  "extra_usage_enabled": false,
+  "session_id": "9194c947-691f-431c-b8e0-1ab43cd95531",
+  "status": "running",
+  "baseline_checks": {
+    "command": "pytest tests/test_map_scale_contexts.py tests/test_table_contexts.py tests/test_presentation_browser.py",
+    "result": "40 passed",
+    "elapsed_seconds": 223.68,
+    "log": "/tmp/vtt-c01-baseline.log"
+  }
+}

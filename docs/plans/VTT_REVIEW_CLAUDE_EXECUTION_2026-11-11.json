@@ -15,7 +15,7 @@
     "api_provider": "firstParty",
     "subscription_type": "pro",
     "auth_verified": true,
-    "model_execution_verified": false,
+    "model_execution_verified": true,
     "remaining_quota_verified": true,
     "extra_usage_setting_verified": true,
     "api_fallback_authorized": false,
@@ -64,7 +64,7 @@
     {
       "id": "C01",
       "title": "Darstellung, UI-Sprache und Buchnavigation",
-      "status": "ready_for_worker",
+      "status": "running",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -79,7 +79,7 @@
       ],
       "next_phase": "deploy",
       "requires_task_specific_apply": true,
-      "base_commit": null,
+      "base_commit": "fb9642e32b4533b617df15291e5c5a1cb572b499",
       "owned_files": [
         "vtt/static/js/book-scene.js",
         "vtt/static/js/display-preferences.js",
@@ -105,7 +105,7 @@
         "Kein alter Bogen beim Laden, keine doppelte Navigation",
         "P1-Rollentrennung und Kartenmaßstab erhalten"
       ],
-      "execution_session_id": null,
+      "execution_session_id": "9194c947-691f-431c-b8e0-1ab43cd95531",
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
@@ -142,7 +142,8 @@
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
-      "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md"
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md"
     },
     {
       "id": "C03",
@@ -157,7 +158,7 @@
         "R20",
         "R21"
       ],
-      "next_phase": "apply",
+      "next_phase": "deploy",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -171,7 +172,8 @@
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
-      "discovery": "docs/DADM_DISCOVER_CLAUDE_C03_2026-11-11.md"
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C03_2026-11-11.md",
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C03_2026-11-11.md"
     },
     {
       "id": "C04",

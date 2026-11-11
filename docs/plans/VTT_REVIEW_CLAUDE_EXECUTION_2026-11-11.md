@@ -1,15 +1,15 @@
 # Verbindlicher Ausführungsplan – VTT-Reviews mit Claude Code
 
-Status: **Apply / geplant, Implementierungsagenten noch nicht gestartet**.
+Status: **Umsetzung autorisiert und begonnen; C00 abgeschlossen, Claude C01 läuft**.
 Auftrag: neue Protokolle aufnehmen und Claude-Agenten fest für die Umsetzung
 verwenden, weil bereits ein Claude-Abo vorhanden ist. Aufbewahrung: dauerhaft.
 Grundlage: [Discover/Kategorisierung](../DADM_DISCOVER_VTT_REVIEWS_2026-11-11.md),
 [bisheriges Programm](PROTOCOL_FEEDBACK_PROGRAM_2026-11-11.md),
 [maschinenlesbare Aufträge](VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.json).
 
-Dieser Plan ergänzt den bestehenden Gesamtauftrag. Er bezeichnet keine bereits
-laufende Hintergrundarbeit und keine neue Live-Lieferung. Das jüngste Anliegen
-ist Planung; aus diesem Planungsschritt wird keine Anwendung veröffentlicht.
+Dieser Plan ergänzt den bestehenden Gesamtauftrag. Nach dem Owner-„Go ahead“
+ist die Umsetzung gestartet. Laufende Aufträge werden in der maschinenlesbaren
+Datei und ihren Belegen geführt; ein gestarteter Agent ist keine Live-Lieferung.
 
 ## Festgelegter Einsatz von Claude
 
