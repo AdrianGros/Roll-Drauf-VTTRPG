@@ -54,4 +54,14 @@ Keine bestehenden Charakterwerte werden migriert. Ein offener Claim nach einem
 Prozessabbruch erfordert Zustandsabgleich statt blindem erneuten Ausführen.
 Das ist die dokumentierte begrenzte Ausführungsgarantie, kein Exactly-once-Transport.
 next_step: Commit/Push → Backup und gezielte Tabellenerstellung → app-only
-Overlay auf aktuellem P1-Image → angemeldete Live-Hotbar-/Firefox-Reise → P3.
+Overlay auf dem tatsächlich aktuellen Image → angemeldete Live-Hotbar-/Firefox-Reise → P3.
+
+Quellenabgleich vor Veröffentlichung: Produktion wechselte während der P2-Arbeit
+auf `tile-layer-20261111-f526e937` mit
+`sha256:d32dd25233615598d03020860f1f0c9a81d79b5b357d0e2eadf02c0b13d76895`.
+Alle 22 P1-Pfade stimmen dort unverändert mit dem P1-Manifest überein. Die bereits
+laufenden Kartencommits `cb6c7d136`/`f526e937b` werden im Feedbackbranch erhalten;
+die Veröffentlichung kopiert nur tatsächlich abweichende P2-Dateien auf diese
+Tile-Basis. Das Quellenlabel des fremden Karten-Slices ist kein vollständiger
+Git-Baum der gemeinsam laufenden VTT-Funktionen; tatsächliche Datei-Hashes sind
+deshalb zusätzlich maßgeblich. Kein Rückschritt auf das ältere P1-Ausgangsimage.
