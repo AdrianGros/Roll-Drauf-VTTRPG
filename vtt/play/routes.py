@@ -88,8 +88,8 @@ def _emit_scoped_state_snapshot(campaign, game_session, state):
         if token.owner_user_id is not None
     }
     for owner_id in owner_ids:
-        if is_operator_role(get_table_role(campaign, owner_id, game_session.id)):
-            continue  # operators already hold the full view
+        # Also deliver the Player projection to an operator's independent
+        # Player tab. Its DM tab already accepted the full variant's sequence.
         owner_view = serialize_state_payload(game_session, state,
                                              role="PLAYER",
                                              viewer_id=owner_id)
@@ -125,6 +125,41 @@ def _serialize_session_runtime(session):
     return payload
 
 
+@play_bp.post("/campaigns/<int:campaign_id>/sessions/<int:session_id>/contexts")
+@limiter.limit("120 per hour")
+@jwt_required()
+def create_table_context(campaign_id, session_id):
+    from vtt.play.contexts import issue, resolve
+    from flask import g
+    body = request.get_json(silent=True) or {}
+    user_id = int(get_jwt_identity())
+    old = resolve(request.headers.get("X-VTT-Context"), request.headers.get("X-VTT-Tab"),
+                  user_id, campaign_id, session_id)
+    if old:
+        g.table_context = old
+    payload, error = issue(user_id, campaign_id, session_id, body.get("mode"), body.get("tab"))
+    if error:
+        return error
+    response = jsonify(payload)
+    response.headers["Cache-Control"] = "no-store"
+    return response, 201
+
+
+@play_bp.get("/campaigns/<int:campaign_id>/sessions/<int:session_id>/surface")
+@jwt_required()
+def table_surface(campaign_id, session_id):
+    import json
+    from pathlib import Path
+    user, campaign, game_session, role = _get_context(campaign_id, session_id)
+    if isinstance(role, tuple):
+        return role
+    if not is_operator_role(role):
+        return jsonify(error="forbidden"), 403
+    response = jsonify(fragments=json.loads((Path(__file__).parent / "surfaces/dm.json").read_text()))
+    response.headers["Cache-Control"] = "private, no-store"
+    return response
+
+
 def _get_context(campaign_id: int, session_id: int):
     user_id = get_jwt_identity()
     user, error = get_current_user(user_id)
@@ -143,6 +178,8 @@ def _get_context(campaign_id: int, session_id: int):
         return None, None, None, (jsonify({"error": "forbidden"}), 403)
 
     session_role = get_table_role(campaign, user.id, game_session.id)
+    if session_role == "DENIED":
+        return None, None, None, (jsonify(error="table_context_required"), 403)
     return user, campaign, game_session, session_role
 
 
@@ -273,18 +310,11 @@ def play_linkable_characters(campaign_id, session_id):
 @jwt_required()
 def play_set_table_seat(campaign_id, session_id):
     """Sit at this table as DM or as player (only DMs and CO-DMs can choose)."""
-    from vtt.socket_handlers import apply_table_seat_change
-
-    user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
-    if isinstance(session_role, tuple):
-        return session_role
-    seat = str((request.get_json(silent=True) or {}).get("seat") or "").strip().lower()
-    table_role, error = set_table_seat(campaign, user.id, game_session, seat)
-    if error:
-        return error
-    if table_role != session_role:
-        apply_table_seat_change(campaign.id, game_session.id, user.id, table_role)
-    return jsonify({"session_role": table_role, **table_seat_view(campaign, user.id, game_session.id)}), 200
+    from vtt.play.contexts import issue
+    body = request.get_json(silent=True) or {}
+    payload, error = issue(int(get_jwt_identity()), campaign_id, session_id,
+                           body.get("seat"), request.headers.get("X-VTT-Tab"))
+    return error if error else (jsonify(payload), 200)
 
 
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/scene-stack/init", methods=["POST"])
@@ -651,6 +681,14 @@ def play_execute_action(campaign_id, session_id):
     is_operator = is_operator_role(session_role)
     if not is_operator and token.owner_user_id != user.id:
         return jsonify({"error": "forbidden"}), 403
+
+    if target_token_id is not None:
+        target = TokenState.query.filter_by(id=target_token_id, game_session_id=game_session.id,
+                                            deleted_at=None).first()
+        if target is None or (not is_operator and (
+                target.visibility == "dm_only" or
+                target.visibility == "owner_only" and target.owner_user_id != user.id)):
+            return jsonify(error="forbidden_target"), 403
 
     result, action_error = execute_action(
         action_code=action_code,

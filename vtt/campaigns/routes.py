@@ -135,6 +135,9 @@ def _is_active_member(campaign: Campaign, user_id: int) -> bool:
 
 
 def _is_dm(campaign: Campaign, user_id: int) -> bool:
+    from vtt.play.contexts import restrict_campaign_role
+    if restrict_campaign_role(campaign.id, user_id):
+        return False
     if campaign.owner_id == user_id:
         return True
 
@@ -193,7 +196,7 @@ def _get_campaign_character_or_404(campaign_id: int, character_id: int):
 def _is_table_dm(campaign: Campaign, user_id: int, session_id: int) -> bool:
     """DM rights at one session's table: none while the DM or CO-DM sits there
     as a player (vtt.play.service.get_table_role)."""
-    return _is_dm(campaign, user_id) and not scene_service.sits_as_player(user_id, session_id)
+    return scene_service.is_operator_role(scene_service.get_table_role(campaign, user_id, session_id))
 
 
 def _can_manage_session_assignment(campaign: Campaign, user_id: int, character: Character) -> bool:
@@ -289,9 +292,7 @@ def _emit_combat_event(campaign_id: int, session_id: int, event_name: str, paylo
     if owner_ids:
         campaign = db.session.get(Campaign, campaign_id)
         for owner_id in owner_ids:
-            role = scene_service.get_table_role(campaign, owner_id, session_id)
-            if scene_service.is_operator_role(role):
-                continue
+            # An operator can independently participate in a Player tab.
             owner_view = scene_service.filter_combat_payload(
                 payload, "PLAYER", owner_id)
             socketio.emit(event_name, sibling_envelope(envelope, owner_view),

@@ -8,7 +8,7 @@ class PlayClient {
     }
 
     setTableSeat(campaignId, sessionId, seat) {
-        return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/seat`, "PUT", { seat });
+        return Auth.ensureTableContext(Number(campaignId), Number(sessionId), seat, true);
     }
 
     readyCheck(campaignId, sessionId) {

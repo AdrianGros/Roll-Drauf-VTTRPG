@@ -131,6 +131,9 @@ def can_edit_campaign(user, campaign):
     - DM/Headmaster who owns it: Own campaign
     - CO_DM: Co-edit capability
     """
+    from vtt.play.contexts import restrict_campaign_role
+    if user and campaign and restrict_campaign_role(campaign.id, user.id):
+        return False
     if not _is_authenticated_user(user):
         return False
 

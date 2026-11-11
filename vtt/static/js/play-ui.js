@@ -156,7 +156,7 @@
             // The DM layer is only mounted for a DM seat; a player seat (or
             // a failed first load) never gets DM controls or their handlers.
             const initial = await this._prepareTableSeat();
-            this._composeTableSurface(initial);
+            await this._composeTableSurface(initial);
             this._bindControls();
             await this.loadBootstrap(initial);
             this._connectSocket();
@@ -185,33 +185,32 @@
             try {
                 return await this.api.bootstrap(this.campaignId, this.sessionId);
             } catch (error) {
-                return null;
+                if (error.apiError !== "table_context_required") throw error;
+                window.VTTTableContext = null;
+                try { sessionStorage.removeItem(`vtt.table.context.v1.${this.campaignId}.${this.sessionId}`); } catch (_) {}
+                await Auth.ensureTableContext(this.campaignId, this.sessionId, "player", true);
+                return this.api.bootstrap(this.campaignId, this.sessionId);
             }
         }
 
-        _composeTableSurface(initialPayload) {
-            const operator = isOperatorRole(initialPayload?.session_role || "");
-            document.querySelectorAll("template[data-dm-layer]").forEach((template) => {
-                if (operator) {
-                    template.replaceWith(template.content.cloneNode(true));
-                } else {
-                    template.remove();
-                }
-            });
-            const seatSwitch = document.querySelector("template[data-seat-switch]");
-            if (seatSwitch) {
-                if (initialPayload?.can_switch_seat) {
-                    seatSwitch.replaceWith(seatSwitch.content.cloneNode(true));
-                } else {
-                    seatSwitch.remove();
-                }
-            }
-            if (!operator) {
-                // Verdeckt/Privat are DM roll modes; a player seat lists only its own.
-                document.querySelectorAll('#rollVisibility option[value="blind"], #rollVisibility option[value="self"]')
-                    .forEach((option) => option.remove());
-            }
+        async _composeTableSurface(initialPayload) {
+            if (!initialPayload) throw new Error("Kein autorisierter Tischkontext.");
+            const operator = isOperatorRole(initialPayload.session_role);
             this._composedOperator = operator;
+            if (operator) {
+                const surface = await this.auth.makeAuthRequest(`/api/play/campaigns/${this.campaignId}/sessions/${this.sessionId}/surface`);
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement("script");
+                    script.src = "/static/js/play-dm.js";
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.append(script);
+                });
+                window.PlayDMSurface.compose(this, surface.fragments);
+            } else {
+                window.PlayPlayerSurface.compose(this);
+            }
+            window.PlayPlayerSurface.composeSeatSwitch(initialPayload);
             document.body.dataset.tableSeat = operator ? "dm" : "player";
         }
 
@@ -514,7 +513,7 @@
         // The sheet carries this table's session, so its rolls land here
         // and nowhere else -- in the drawer and in a tab of its own.
         _sheetUrl(characterId) {
-            const query = new URLSearchParams({ id: String(characterId), session_id: String(this.sessionId) });
+            const query = new URLSearchParams({ id: String(characterId), campaign_id: String(this.campaignId), session_id: String(this.sessionId) });
             return `/character-sheet?${query}`;
         }
 
@@ -945,51 +944,7 @@
             this._bindTableActions();
         }
 
-        _bindSessionControls() {
-            // DM layer only: these buttons exist only in a DM seat.
-            document.getElementById("btnInitStack").addEventListener("click", async () => {
-                try {
-                    await this.api.initSceneStack(this.campaignId, this.sessionId);
-                    this._showMessage("Kartenstapel initialisiert.");
-                    await this.loadBootstrap();
-                } catch (error) {
-                    this._showMessage(error.message || "Kartenstapel konnte nicht initialisiert werden.", true);
-                }
-            });
 
-            document.getElementById("btnReadyCheck").addEventListener("click", async () => {
-                await this._runReadyCheck();
-            });
-
-            document.getElementById("btnToReady").addEventListener("click", async () => {
-                await this._transition("ready");
-            });
-
-            document.getElementById("btnStart").addEventListener("click", async () => {
-                const report = await this._runReadyCheck();
-                if (!report) return;
-                if (report.blocking_issues && report.blocking_issues.length) return;
-                if (report.warnings && report.warnings.length) {
-                    const ok = window.confirm("Start-Check hat Warnungen. Trotzdem live starten?");
-                    if (!ok) return;
-                }
-                await this._transition("in_progress", true);
-            });
-
-            document.getElementById("btnPause").addEventListener("click", async () => {
-                await this._transition("paused");
-            });
-
-            document.getElementById("btnResume").addEventListener("click", async () => {
-                await this._transition("in_progress", true);
-            });
-
-            document.getElementById("btnEnd").addEventListener("click", async () => {
-                const ok = window.confirm("Session wirklich beenden?");
-                if (!ok) return;
-                await this._transition("ended", true);
-            });
-        }
 
         _bindWorkspaceControls() {
             // M3: the right sidebar (Journal/Chat/Tools/Session) is an overlay
@@ -2399,63 +2354,7 @@
             }
         }
 
-        _bindVisionControls() {
-            const visionToggle = document.getElementById("btnVisionToggle");
-            if (visionToggle) {
-                visionToggle.addEventListener("click", () => {
-                    const svg = document.getElementById("visionLayer");
-                    if (!svg) return;
-                    svg.hidden = !svg.hidden;
-                    visionToggle.classList.toggle("active", !svg.hidden);
-                    visionToggle.setAttribute("aria-pressed", String(!svg.hidden));
-                });
-            }
 
-            const wallEditPopover = document.getElementById("wallEditPopover");
-            document.getElementById("btnWallEditClose")?.addEventListener("click", () => this._closeWallEditPopover());
-            document.getElementById("wallEditSight")?.addEventListener("change", () => this._saveWallEdit());
-            document.getElementById("wallEditLight")?.addEventListener("change", () => this._saveWallEdit());
-            document.getElementById("btnWallDelete")?.addEventListener("click", () => this._deleteSelectedWall());
-            wallEditPopover?.addEventListener("keydown", (event) => {
-                if (event.key === "Escape") {
-                    event.preventDefault();
-                    this._closeWallEditPopover();
-                }
-            });
-
-            const lightEditPopover = document.getElementById("lightEditPopover");
-            document.getElementById("btnLightEditClose")?.addEventListener("click", () => this._closeLightEditPopover());
-            document.getElementById("lightEditType")?.addEventListener("change", () => this._saveLightEdit());
-            document.getElementById("lightEditBright")?.addEventListener("change", () => this._saveLightEdit());
-            document.getElementById("lightEditDim")?.addEventListener("change", () => this._saveLightEdit());
-            document.getElementById("lightEditProvidesVision")?.addEventListener("change", () => this._saveLightEdit());
-            document.getElementById("btnLightDelete")?.addEventListener("click", () => this._deleteSelectedLight());
-            lightEditPopover?.addEventListener("keydown", (event) => {
-                if (event.key === "Escape") {
-                    event.preventDefault();
-                    this._closeLightEditPopover();
-                }
-            });
-
-            document.getElementById("btnTokenSightRangeSet")?.addEventListener("click", () => this._setSelectedTokenSightRange());
-
-            const visibleTokensPopover = document.getElementById("visibleTokensPopover");
-            document.getElementById("btnTokenVisible")?.addEventListener("click", () => this._showVisibleTokensForSelected());
-            document.getElementById("btnVisibleTokensClose")?.addEventListener("click", () => { if (visibleTokensPopover) visibleTokensPopover.hidden = true; });
-            visibleTokensPopover?.addEventListener("keydown", (event) => {
-                if (event.key === "Escape") {
-                    event.preventDefault();
-                    visibleTokensPopover.hidden = true;
-                }
-            });
-
-            document.getElementById("btnFogEnabledToggle")?.addEventListener("click", () => this._toggleFogEnabled());
-            document.getElementById("btnFogReset")?.addEventListener("click", () => this._resetFogOfWar());
-
-            this._bindFocusTrap(wallEditPopover);
-            this._bindFocusTrap(lightEditPopover);
-            this._bindFocusTrap(visibleTokensPopover);
-        }
 
         // S07: personal action hotbar. A pure UI trigger layer over the
         // already-existing, already-fully-permission-checked
@@ -2924,7 +2823,7 @@
             if (nameBtn) nameBtn.addEventListener("click", () => this._setSelectedTokenName());
             this._bindConditionsPopover();
             this._bindLootPopover();
-            this._bindVisionControls();
+            if (this._composedOperator) this._bindVisionControls();
 
             // Token art: one picker on the create panel (image applied when
             // the token is placed) and one on the selected-token detail
@@ -3042,7 +2941,7 @@
                 }
             });
 
-            this._bindMapUpload();
+            if (this._composedOperator) this._bindMapUpload();
         }
 
         // Upload a map image straight from the table: asset upload ->
@@ -3050,19 +2949,7 @@
         // stack layer -> activate. This is the same three-endpoint
         // choreography the campaign hub uses; before this the play table
         // had no upload path at all (robot audit 2026-08-23).
-        _bindMapUpload() {
-            // Der Upload wird aus dem Hinzufügen-Dialog heraus gestartet
-            // (#layerAddUpload in _renderLayerAddControl); hier hängt nur
-            // noch der Datei-Handler am versteckten Input.
-            const fileInput = document.getElementById("mapUploadFile");
-            if (!fileInput) return;
-            fileInput.addEventListener("change", async () => {
-                const file = fileInput.files && fileInput.files[0];
-                fileInput.value = "";
-                if (!file) return;
-                await this._uploadMapFromTable(file);
-            });
-        }
+
 
         // One multipart uploader for every table asset (maps, token art).
         async _uploadAssetFile(file, assetType) {

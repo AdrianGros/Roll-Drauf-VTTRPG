@@ -22,6 +22,8 @@ class PlaySocketRuntime {
             this.socket.emit("session:join", {
                 campaign_id: this.campaignId,
                 session_id: this.sessionId,
+                context_token: window.VTTTableContext?.token,
+                tab_id: window.VTTTableContext?.tab,
             });
             this._fire("connect");
         });
@@ -29,6 +31,14 @@ class PlaySocketRuntime {
         this.socket.on("disconnect", () => {
             this.isConnected = false;
             this._fire("disconnect");
+        });
+        this.socket.on("table:context_revoked", () => {
+            // Discard the privileged DOM/data before requesting a fresh entry.
+            this.socket.disconnect();
+            window.VTTTableContext = null;
+            try { sessionStorage.removeItem(`vtt.table.context.v1.${this.campaignId}.${this.sessionId}`); } catch (_) {}
+            document.body.replaceChildren();
+            window.location.replace(`/campaigns?campaign_id=${this.campaignId}`);
         });
         this.socket.on("session:joined", (payload) => {
             this._acceptEventSeq(payload?.event_seq);

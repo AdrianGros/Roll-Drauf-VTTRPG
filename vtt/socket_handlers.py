@@ -400,7 +400,21 @@ def _parse_authenticated_user():
     try:
         decoded = decode_token(access_token)
     except Exception:
-        return None, {"code": "unauthorized", "message": "invalid token"}
+        # The server-issued table delegation can outlive the access JWT, but
+        # never its own TTL, account/membership rights or issuing login.
+        from vtt.models import TableContext
+        from vtt.play.contexts import validate
+        bindings = getattr(socketio.server, "table_context_bindings", {})
+        context_id = bindings.get(getattr(request, "sid", None))
+        context = db.session.get(TableContext, context_id) if context_id else None
+        if not validate(context):
+            return None, {"code": "unauthorized", "message": "invalid token"}
+        try:
+            decoded = decode_token(access_token, allow_expired=True)
+            if int(decoded.get("sub")) != context.user_id:
+                raise ValueError("context identity mismatch")
+        except Exception:
+            return None, {"code": "unauthorized", "message": "invalid token"}
 
     identity = decoded.get("sub")
     if not identity:
@@ -450,6 +464,9 @@ def _is_active_member(campaign_id: int, user_id: int) -> bool:
 
 
 def _is_dm(campaign_id: int, user_id: int) -> bool:
+    from vtt.play.contexts import restrict_campaign_role
+    if restrict_campaign_role(campaign_id, user_id):
+        return False
     campaign = db.session.get(Campaign, campaign_id)
     if not campaign:
         return False
@@ -467,7 +484,8 @@ def _is_dm(campaign_id: int, user_id: int) -> bool:
 def _is_table_dm(campaign_id: int, user_id: int, session_id: int) -> bool:
     """DM rights at one session's table: a DM or CO-DM who sits there as a
     player has none (see vtt.play.service.get_table_role)."""
-    return _is_dm(campaign_id, user_id) and not sits_as_player(user_id, session_id)
+    from vtt.play.contexts import current_role
+    return is_operator_role(current_role(campaign_id, user_id, session_id))
 
 
 def _normalize_session_status(raw_status: str | None) -> str:

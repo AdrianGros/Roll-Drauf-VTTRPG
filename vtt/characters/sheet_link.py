@@ -103,8 +103,10 @@ def can_roll_for(user, char):
         return True
     if not char.campaign_id:
         return False
-    from vtt.socket_handlers import _is_dm
-    return _is_dm(char.campaign_id, user.id)
+    from flask import g
+    from vtt.play.contexts import current_role
+    context = getattr(g, "table_context", None)
+    return bool(context and current_role(char.campaign_id, user.id, context.game_session_id) in {"DM", "CO_DM"})
 
 
 def _rolls_for_other_at(user, char, game_session):
@@ -145,17 +147,21 @@ def roll_destination(user, char, session_id=None):
     from vtt.socket_handlers import _is_active_member, _reject_read_only
 
     if session_id is None:
-        sessions = rollable_sessions(user, char)
-        if len(sessions) == 1:
-            return {"session": sessions[0], "sessions": sessions, "reason": None}
-        reason = "choose_session" if sessions else ("no_session" if char.campaign_id else "no_campaign")
-        return {"session": None, "sessions": sessions, "reason": reason}
+        from flask import g
+        context = getattr(g, "table_context", None)
+        if context is not None:
+            return roll_destination(user, char, context.game_session_id)
+        # A standalone sheet has no table authority. Its own rolls stay local.
+        return {"session": None, "sessions": [], "reason": "no_table_context"}
     campaign = db.session.get(Campaign, char.campaign_id) if char.campaign_id else None
     game_session = db.session.get(GameSession, session_id)
     if campaign is None or game_session is None or game_session.campaign_id != campaign.id:
         raise RollTargetError("session_mismatch", "Dieser Tisch gehört nicht zur Kampagne des Charakters.", 409)
     if not _is_active_member(campaign.id, user.id):
         raise RollTargetError("session_forbidden", "Du sitzt nicht an diesem Tisch.", 403)
+    from vtt.play.contexts import current_role
+    if current_role(campaign.id, user.id, game_session.id) is None:
+        raise RollTargetError("table_context_required", "Bitte tritt zuerst diesem Tisch bei.", 403)
     if game_session.status != "in_progress":
         state = NOT_RUNNING.get(game_session.status, "hat noch nicht begonnen")
         raise RollTargetError("session_not_live", f"Die Sitzung „{game_session.name}“ {state}.", 409,

@@ -133,23 +133,18 @@ def sits_as_player(user_id: int, session_id: int | None) -> bool:
 
 
 def get_table_role(campaign: Campaign, user_id: int, session_id: int | None) -> str | None:
-    """Role at one session's table.
-
-    The campaign role, except that a DM or CO-DM who sits there as a player
-    acts as PLAYER. The seat is re-read on every call, so a revoked campaign
-    role takes effect at once and a seat row can only ever lower rights.
-    """
-    role = get_session_role(campaign, user_id)
-    if is_operator_role(role) and sits_as_player(user_id, session_id):
-        return "PLAYER"
-    return role
+    """Effective role of this request's independently authorized table context."""
+    from vtt.play.contexts import current_role
+    # None is an internal serializer's historical "full projection" default;
+    # never pass that sentinel on an unprivileged external entry path.
+    return current_role(campaign.id, user_id, session_id) or "DENIED"
 
 
 def table_seat_view(campaign: Campaign, user_id: int, session_id: int) -> dict:
     """Seat facts for the table UI: which seat is taken and whether switching is allowed."""
     campaign_role = get_session_role(campaign, user_id)
     can_switch = is_operator_role(campaign_role)
-    seat = "player" if not can_switch or sits_as_player(user_id, session_id) else "dm"
+    seat = "dm" if is_operator_role(get_table_role(campaign, user_id, session_id)) else "player"
     return {"seat": seat, "can_switch_seat": can_switch}
 
 
@@ -182,7 +177,7 @@ def set_table_seat(campaign: Campaign, user_id: int, game_session: GameSession, 
 def is_read_only_mode(session_status, role: str | None) -> bool:
     """Return whether runtime should be read-only for this role."""
     mode = play_mode_from_session_status(session_status)
-    if role is None:
+    if role not in {"DM", "CO_DM", "PLAYER", "OBSERVER"}:
         return True
     if role == "OBSERVER":
         return True

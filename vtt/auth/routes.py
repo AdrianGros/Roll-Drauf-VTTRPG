@@ -612,6 +612,9 @@ def logout():
         now = utcnow()
         for session in sessions:
             session.revoked_at = now
+        from vtt.models import TableContext
+        TableContext.query.filter_by(user_id=int(user_id), revoked_at=None).update(
+            {"revoked_at": now}, synchronize_session=False)
         db.session.commit()
 
     response = jsonify({"success": True})

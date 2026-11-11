@@ -286,6 +286,9 @@ def create_app(config_name=None):
     from vtt.creation_engine.routes import blueprint as creation_engine_bp
     app.register_blueprint(creation_engine_bp, url_prefix='/api/ce')
 
+    from vtt.play.contexts import install_http_guard, install_socket_guard
+    install_http_guard(app)
+
     # Create database tables
     if app.config.get("AUTO_CREATE_SCHEMA", False):
         with app.app_context():
@@ -303,6 +306,7 @@ def create_app(config_name=None):
     # Socket.IO event handlers
     from vtt.socket_handlers import register_socket_handlers
     register_socket_handlers(socketio)
+    install_socket_guard(socketio)
 
     # REST endpoints for static files
     @app.route('/')

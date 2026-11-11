@@ -25,8 +25,8 @@ def _is_gm(session, user):
     """Check if user is GM of the session's campaign."""
     if not user or not session:
         return False
-    campaign = Campaign.query.get(session.campaign_id)
-    return campaign and campaign.dm_id == user.id
+    from vtt.play.contexts import current_role
+    return current_role(session.campaign_id, user.id, session.id) in {"DM", "CO_DM"}
 
 
 def _audit_log(action, resource_id, details=None, resource_type='session'):

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "program": "protocol-feedback-2026-11-11",
-  "phase": "apply_program",
-  "status": "planned",
-  "implementation_started": false,
+  "phase": "deploy_P1",
+  "status": "in_progress",
+  "implementation_started": true,
   "background_execution": false,
   "owner_acceptance": "not_run",
   "input_summary": "40 Protokollkarten, veröffentlichte erste Lieferung und Owner-Auftrag für geordnete autonome Restarbeit bis zu einer gemeinsamen Live-Abnahme",
@@ -11,12 +11,12 @@
   "branch": "feat/protocol-feedback-20261110",
   "environment": "https://vtt.roll-drauf.de",
   "baseline": {
-    "source_commit": "32cc5bfee66419176d38248f68d5941144dad79f",
+    "source_commit": "802321cd34dbf9fcc05e6f46a80e00f61c2c8fd9",
     "documentation_commit": "f942c74eb53b59a3849a9c88e2b558ee912fbc86",
-    "image": "roll-drauf-vtt-app:protocol-feedback-20261110-32cc5bfee",
-    "image_id": "sha256:f6bc1008f0bb03962fba266d3f3477e5edf7c81fcfe205586dab6bd2cc0b445a",
+    "image": "roll-drauf-vtt-app:tilesheet-slicing-20261111-802321cd",
+    "image_id": "sha256:b9cf16b34a11bafce75c0e5c0e03284abb659e91134075d2261f55bdf1075ccc",
     "verified_date": "2026-11-11",
-    "evidence": "../DADM_MONITOR_PROTOCOL_FEEDBACK_2026-11-10.md",
+    "evidence": "../DADM_DISCOVER_PLAYTABLE_CONTEXTS_2026-11-11.md",
     "recheck_before_each_release": true
   },
   "artifacts": {
@@ -56,9 +56,9 @@
     {
       "id": "P0",
       "title": "Live-Basis und offene Angaben",
-      "status": "planned",
+      "status": "verified",
       "depends_on": [],
-      "next_phase": "discover",
+      "next_phase": "monitor",
       "acceptance_ids": ["A08", "A11"],
       "gates": [
         "Aktuelle Quelle, Image, Compose und Unterschiede zu neuerer Arbeit abgeglichen",
@@ -70,9 +70,9 @@
     {
       "id": "P1",
       "title": "Getrennte Tischkontexte und Player-/DM-Komposition",
-      "status": "planned",
+      "status": "implemented_pending_live",
       "depends_on": ["P0"],
-      "next_phase": "discover",
+      "next_phase": "deploy",
       "planned_design_artifact": "../DADM_APPLY_PLAYTABLE_CONTEXTS_2026-11-11.md",
       "acceptance_ids": ["A05", "A07", "A12"],
       "gates": [
@@ -270,5 +270,5 @@
     {"id": "A11", "status": "not_run", "roles": ["author", "player"], "title": "Assets, Quellen und offene Zusätze"},
     {"id": "A12", "status": "not_run", "roles": ["human_dm", "human_player_firefox"], "title": "Abgeschlossene Sitzung und strukturiertes Feedback"}
   ],
-  "next_step": "P0-Basis erneut abgleichen; P1-Discover-Pfadinventur, danach Paket-Apply mit Kontextvertrag und Negativmatrix vor Implementierung abschließen"
+  "next_step": "P1: Browserfinalprüfung, Commit/Push, additive Tabelle und Overlayrelease auf aktueller Tilesheet-Basis, angemeldete Live-Verifikation; danach P2."
 }

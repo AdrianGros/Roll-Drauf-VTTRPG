@@ -34,6 +34,9 @@ def is_dm_or_owner(campaign: Campaign, user_id: int) -> bool:
 
 
 def can_moderate_campaign(campaign: Campaign, user: User) -> bool:
+    from vtt.play.contexts import restrict_campaign_role
+    if user and restrict_campaign_role(campaign.id, user.id):
+        return False
     return is_admin(user) or is_dm_or_owner(campaign, user.id)
 
 

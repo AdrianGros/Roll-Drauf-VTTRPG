@@ -50,6 +50,16 @@ def _require_active_member(campaign: Campaign, user: User):
 
 
 def _emit_member_event(campaign_id: int, session_id: int, event_name: str, payload: dict):
+    message = payload.get("message")
+    if isinstance(message, dict) and message.get("visibility", "public") != "public":
+        from vtt.utils.realtime import dm_room, players_room
+        socketio.emit(event_name, payload, room=dm_room(campaign_id, session_id))
+        row = db.session.get(ChatMessage, message.get("id"))
+        if row:
+            filtered = service.message_for_viewer(row, None, False, False)
+            if filtered is not None:
+                socketio.emit(event_name, {**payload, "message": filtered}, room=players_room(campaign_id, session_id))
+        return
     socketio.emit(event_name, payload, room=service.session_room_name(campaign_id, session_id))
 
 

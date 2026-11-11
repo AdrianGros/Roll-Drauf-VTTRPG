@@ -85,6 +85,18 @@ def create_session(campaign, name="M10 Session", status="scheduled", map_id=None
     return session
 
 
+def enter_table(client, campaign, game_session, mode="player"):
+    """Explicit table entry for legacy regression scenarios after P1."""
+    import secrets
+    tab = secrets.token_urlsafe(24)
+    response = client.post(f"/api/play/campaigns/{campaign.id}/sessions/{game_session.id}/contexts",
+                           json={"mode": mode, "tab": tab})
+    assert response.status_code == 201, response.get_json()
+    client.environ_base["HTTP_X_VTT_CONTEXT"] = response.json["token"]
+    client.environ_base["HTTP_X_VTT_TAB"] = tab
+    return response.json
+
+
 def create_token(campaign, session, state, owner_user_id, name="Hero", token_type="player", x=1, y=1):
     token = TokenState(
         session_state_id=state.id,

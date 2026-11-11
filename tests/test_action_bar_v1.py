@@ -2,7 +2,7 @@
 
 pytest_plugins = ["tests.play_shared"]
 
-from tests.play_shared import add_map, add_member, create_campaign, create_session
+from tests.play_shared import add_map, add_member, create_campaign, create_session, enter_table
 
 
 class TestActionBarV1:
@@ -11,6 +11,7 @@ class TestActionBarV1:
         add_member(campaign, play_player_user, "Player")
         campaign_map = add_map(campaign, play_dm_user, "Action Map")
         session = create_session(campaign, "Action Session", status="in_progress", map_id=campaign_map.id)
+        enter_table(play_player_client, campaign, session)
 
         create_token = play_player_client.post(
             f"/api/campaigns/{campaign.id}/sessions/{session.id}/tokens",
@@ -37,6 +38,8 @@ class TestActionBarV1:
         add_member(campaign, play_player_user, "Player")
         campaign_map = add_map(campaign, play_dm_user, "Foreign Action Map")
         session = create_session(campaign, "Foreign Action Session", status="in_progress", map_id=campaign_map.id)
+        enter_table(play_dm_client, campaign, session, "dm")
+        enter_table(play_player_client, campaign, session)
 
         create_token = play_dm_client.post(
             f"/api/campaigns/{campaign.id}/sessions/{session.id}/tokens",
@@ -59,6 +62,7 @@ class TestActionBarV1:
         add_member(campaign, play_player_user, "Player")
         campaign_map = add_map(campaign, play_dm_user, "Target Action Map")
         session = create_session(campaign, "Target Action Session", status="in_progress", map_id=campaign_map.id)
+        enter_table(play_player_client, campaign, session)
 
         create_token = play_player_client.post(
             f"/api/campaigns/{campaign.id}/sessions/{session.id}/tokens",

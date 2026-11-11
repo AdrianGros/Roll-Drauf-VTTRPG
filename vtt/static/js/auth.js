@@ -19,6 +19,10 @@ class Auth {
 
     static buildHeaders(method = 'GET', includeJson = false, csrfCookieName = 'csrf_access_token') {
         const headers = {};
+        if (window.VTTTableContext) {
+            headers['X-VTT-Context'] = window.VTTTableContext.token;
+            headers['X-VTT-Tab'] = window.VTTTableContext.tab;
+        }
         if (includeJson) {
             headers['Content-Type'] = 'application/json';
         }
@@ -113,12 +117,40 @@ class Auth {
     }
 
     static async makeAuthRequest(url, method = 'GET', body = null, retryOn401 = true) {
+        if (!window.VTTTableContext && !String(url).endsWith('/contexts') && !String(url).startsWith('/api/auth/')) {
+            try {
+                if (window.parent !== window && window.parent.location.origin === window.location.origin) {
+                    window.VTTTableContext = window.parent.VTTTableContext || null;
+                }
+            } catch (_) { /* cross-origin parent has no table authority */ }
+            const params = new URLSearchParams(window.location.search);
+            if (!window.VTTTableContext && /\/character-sheet(?:\.html)?$/.test(window.location.pathname)
+                && Number(params.get('campaign_id')) > 0 && Number(params.get('session_id')) > 0) {
+                await this.ensureTableContext(Number(params.get('campaign_id')), Number(params.get('session_id')));
+            }
+        }
         const includeJson = body !== null;
         const options = {
             method,
             credentials: 'include',
             headers: this.buildHeaders(method, includeJson)
         };
+        if (String(url).startsWith('/api/auth/')) {
+            delete options.headers['X-VTT-Context'];
+            delete options.headers['X-VTT-Tab'];
+        }
+
+        const table = String(url).match(/^\/api\/(?:play\/)?campaigns\/(\d+)\/sessions\/(\d+)(?:\/|$)/);
+        if (table && !String(url).endsWith('/contexts')) {
+            await this.ensureTableContext(Number(table[1]), Number(table[2]),
+                /^(GET|HEAD)$/i.test(method) || /\/play(?:\.html)?$/.test(window.location.pathname)
+                    ? 'player' : 'dm');
+        }
+        const context = window.VTTTableContext;
+        if (context && !String(url).startsWith('/api/auth/')) {
+            options.headers['X-VTT-Context'] = context.token;
+            options.headers['X-VTT-Tab'] = context.tab;
+        }
 
         if (body !== null) {
             options.body = JSON.stringify(body);
@@ -159,6 +191,25 @@ class Auth {
         }
 
         return response.json();
+    }
+
+    static async ensureTableContext(campaignId, sessionId, mode = 'player', force = false) {
+        const key = `vtt.table.context.v1.${campaignId}.${sessionId}`;
+        let saved = window.VTTTableContext;
+        if (!saved || saved.campaignId !== campaignId || saved.sessionId !== sessionId) {
+            try { saved = JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (_) { saved = null; }
+        }
+        if (saved && !force) {
+            window.VTTTableContext = saved;
+            return saved;
+        }
+        const tab = crypto.randomUUID();
+        const entry = await this.makeAuthRequest(
+            `/api/play/campaigns/${campaignId}/sessions/${sessionId}/contexts`, 'POST', {mode, tab});
+        const context = {...entry, campaignId, sessionId};
+        window.VTTTableContext = context;
+        try { sessionStorage.setItem(key, JSON.stringify(context)); } catch (_) { /* memory-only works */ }
+        return context;
     }
 }
 
