@@ -43,6 +43,7 @@ from vtt.models.scene_light import SceneLight  # S10
 from vtt.models.fog_of_war_state import FogOfWarState  # S10
 from vtt.models.table_seat import TableSeat
 from vtt.models.table_context import TableContext
+from vtt.models.character_hotbar import CharacterHotbar, TableRequestReceipt
 
 __all__ = [
     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',

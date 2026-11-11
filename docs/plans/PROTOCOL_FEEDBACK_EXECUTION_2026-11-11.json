@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "program": "protocol-feedback-2026-11-11",
-  "phase": "discover_P2",
+  "phase": "deploy_P2",
   "status": "in_progress",
   "implementation_started": true,
   "background_execution": false,
@@ -87,9 +87,9 @@
     {
       "id": "P2",
       "title": "Persönliche Charakteraktionen und Würfelübertragung",
-      "status": "planned",
+      "status": "implemented_pending_live",
       "depends_on": ["P1"],
-      "next_phase": "discover",
+      "next_phase": "deploy",
       "acceptance_ids": ["A06", "A07", "A12"],
       "gates": [
         "Deklarative persönliche Belegung je Nutzer/Charakter speicherbar und zugänglich bedienbar",

@@ -31,6 +31,7 @@ from vtt.rules_content.creator_rules import evaluate, load_creator_data
 from vtt.rules_content.creator_sources import default_source_ids, pin_status, registered_sources
 from vtt.rules_content.species_profiles import origin_view, pinned
 from vtt.utils.time import utcnow
+from vtt.play.receipts import idempotent_table_request
 
 srd_creator_bp = Blueprint('srd_creator', __name__)
 
@@ -381,6 +382,7 @@ def use_species_action(char_id, action_id):
 @srd_creator_bp.post('/characters/<int:char_id>/roll')
 @limiter.limit('240 per hour')
 @jwt_required()
+@idempotent_table_request
 def roll_from_sheet(char_id):
     user, error = _get_current_user()
     if error:
@@ -396,46 +398,15 @@ def roll_from_sheet(char_id):
     session_id, error = _session_id(body.get('sessionId'))
     if error:
         return error
-    evaluation = sheet_link.srd_evaluation(char)
-    if evaluation is None:
-        return _bad('not_srd', 'Kein SRD-Charakter.', 422)
-    kind, key = body.get('kind'), body.get('key')
-    if kind not in sheet_link.ROLL_KINDS:
-        return _bad('invalid_roll', 'Unbekannte Wurfart.', 422)
-    key = key if isinstance(key, str) else None
-    if kind in ('weapon_attack', 'weapon_damage'):
-        spec = srd_inventory.weapon_roll_spec(
-            char, evaluation, kind, key, critical=body.get('critical') is True, two_handed=body.get('twoHanded') is True)
-    else:
-        spec = sheet_link.roll_spec(evaluation, kind, key)
-    if spec is None:
-        return _bad('invalid_roll', 'Dieser Wurf existiert auf dem Bogen nicht.', 422)
-    # The destination is settled before any die is rolled: a refused table means no roll at all.
     try:
-        target = sheet_link.roll_destination(user, char, session_id)
+        result = sheet_link.execute_sheet_roll(
+            user, char, body.get('kind'), body.get('key') if isinstance(body.get('key'), str) else None,
+            session_id=session_id, mode=body.get('mode') if isinstance(body.get('mode'), str) else 'normal',
+            visibility=body.get('visibility') if isinstance(body.get('visibility'), str) else 'public',
+            critical=body.get('critical') is True, two_handed=body.get('twoHanded') is True)
     except sheet_link.RollTargetError as exc:
         return _bad(exc.code, f'{exc.message} Es wurde nicht gewürfelt.', exc.status, **exc.extra)
-    if target['reason'] == 'choose_session':
-        return _bad('session_required',
-                    'In dieser Kampagne laufen mehrere Sitzungen. Wähle am Bogen den Tisch, an dem du spielst. Es wurde nicht gewürfelt.',
-                    409, sessions=[sheet_link.session_view(s) for s in target['sessions']])
-    if spec.get('damage'):
-        result = srd_inventory.roll_damage(spec['damage'])
-        dice = spec['dice']
-    else:
-        result = sheet_link.roll_d20(spec['modifier'], body.get('mode') if isinstance(body.get('mode'), str) else 'normal')
-        dice = sheet_link.dice_text(spec['modifier'])
-    visibility = body.get('visibility') if isinstance(body.get('visibility'), str) else 'public'
-    message_id = sheet_link.log_roll(user, char, target['session'], spec, result, visibility)
-    return jsonify({
-        'label': spec['label'],
-        'dice': dice,
-        'result': result,
-        'logged': message_id is not None,
-        'messageId': message_id,
-        'session': sheet_link.session_view(target['session']),
-        'reason': target['reason'],
-    })
+    return jsonify(result)
 
 
 @srd_creator_bp.get('/characters/<int:char_id>/roll-context')

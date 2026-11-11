@@ -41,7 +41,9 @@ class PlaySocketRuntime {
             window.location.replace(`/campaigns?campaign_id=${this.campaignId}`);
         });
         this.socket.on("session:joined", (payload) => {
-            this._acceptEventSeq(payload?.event_seq);
+            // A new server process may restart its in-memory sequence.
+            // The initial snapshot must still be accepted at this sequence.
+            this.lastEventSeq = Math.max(0, (Number(payload?.event_seq) || 0) - 1);
             this._fire("joined", payload);
         });
         this.socket.on("state:snapshot", (payload) => {
@@ -100,7 +102,10 @@ class PlaySocketRuntime {
     }
 
     rollDice(dice, player = "player", callback = null, mode = "normal", visibility = "public") {
-        if (!this.socket) return;
+        if (!this.socket || !this.isConnected) {
+            callback?.({error: 'Keine Verbindung. Bitte zuerst wieder verbinden.'});
+            return;
+        }
         this.socket.emit(
             "roll_dice",
             {
@@ -110,6 +115,7 @@ class PlaySocketRuntime {
                 player,
                 mode,
                 visibility,
+                client_event_id: this._makeClientEventId('roll'),
             },
             callback
         );
@@ -221,6 +227,11 @@ class PlaySocketRuntime {
             return;
         }
 
+        if (allowGap && seq >= this.lastEventSeq) {
+            this.lastEventSeq = seq;
+            this._fire(handlerName, payload);
+            return;
+        }
         if (seq <= this.lastEventSeq) {
             this._fire("staleEventDropped", {
                 event_name: eventName,

@@ -1549,7 +1549,7 @@
             }
             button.disabled = true;
             try {
-                const body = { ...(extraBody || {}), kind, key, mode: srdRollMode };
+                const body = { ...(extraBody || {}), kind, key, mode: srdRollMode, request_id: crypto.randomUUID() };
                 if (srdTableSession) body.sessionId = srdTableSession;
                 const answer = await srdTableRequest(`/api/srd-creator/characters/${character.id}/roll`, 'POST', body);
                 if (!answer) return;

@@ -1422,13 +1422,15 @@ def register_socket_handlers(socketio):
             return {"error": error["message"]}
 
         dice_str = _normalize_payload(data).get("dice", "1d20")
-        match = re.match(r"(\d+)d(\d+)([+-]\d+)?", dice_str)
+        match = re.fullmatch(r"([1-9]\d{0,2})d([1-9]\d{0,5})([+-]\d{1,6})?", dice_str.strip()) if isinstance(dice_str, str) else None
         if not match:
             return {"error": "Invalid dice format"}
 
         num = int(match.group(1))
         sides = int(match.group(2))
         mod = int(match.group(3)) if match.group(3) else 0
+        if num > 100 or sides > 100000 or abs(mod) > 100000:
+            return {"error": "Dice limits: up to 100 dice, 100000 sides and modifier magnitude 100000."}
 
         # S08: ADV/DIS is a distinct roll mechanic (roll twice, take
         # highest/lowest), never an arithmetic modifier -- kept as its own
@@ -1509,7 +1511,7 @@ def register_socket_handlers(socketio):
              "message_id": chat_message.id, "visibility": visibility},
             visibility=visibility,
         )
-        return result
+        return {**result, "message_id": chat_message.id}
 
     @socketio.on("chat:message_sent")
     def handle_chat_message(data):

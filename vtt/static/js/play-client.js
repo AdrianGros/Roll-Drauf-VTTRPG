@@ -79,6 +79,7 @@ class PlayClient {
 
     executeAction(campaignId, sessionId, tokenId, actionCode, targetTokenId = null, payload = {}) {
         const body = {
+            request_id: crypto.randomUUID(),
             token_id: tokenId,
             action_code: actionCode,
             payload: payload && typeof payload === "object" ? payload : {},

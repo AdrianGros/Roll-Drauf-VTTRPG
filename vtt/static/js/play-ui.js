@@ -78,6 +78,7 @@
             this.returnTransitionInFlight = false;
             this.activityRows = [];
             this.chatRows = [];
+            this._seenDiceIds = new Set();
             this.selectedTokenId = null;
             // Playtable-Vordermann 2026-08-25: server-backed combat state
             // ({encounter, participants, events}) for the table.
@@ -394,15 +395,7 @@
                 // Persisted chat history arrives with the bootstrap payload
                 // (newest first, same shape the live broadcast uses), so a
                 // reload no longer wipes the table conversation.
-                if (Array.isArray(payload.chat_history) && !this.chatRows.length) {
-                    this.chatRows = payload.chat_history.map((entry) => ({
-                        time: String(entry.created_at || entry.timestamp || "").slice(11, 19),
-                        user: entry.sender_name || "player",
-                        sender_name: entry.sender_name || "player",
-                        text: entry.message || entry.content || "",
-                        message: entry.message || entry.content || "",
-                    }));
-                }
+                if (Array.isArray(payload.chat_history)) this._mergeChatHistory(payload.chat_history);
                 await this._refreshCombatState();
                 this._render();
             } catch (error) {
@@ -547,6 +540,7 @@
                 sessionId: this.sessionId,
                 handlers: {
                     snapshot: (payload) => this._handleSnapshot(payload),
+                    joined: () => this._recoverTable(),
                     mode: (payload) => this._handleMode(payload),
                     stateChanged: (payload) => this._handleStateChanged(payload),
                     layerActivated: () => this.loadBootstrap(),
@@ -584,7 +578,7 @@
                     sessionEnded: (payload) => this._handleLifecycleBroadcast("ended", payload),
                     conflict: (payload) => this._handleSocketConflict(payload),
                     duplicate: (payload) => this._logActivity(`Doppelte Socket-Aktion erkannt: ${payload?.client_event_id || "unknown"}.`, "info"),
-                    resyncRequested: (payload) => this._logActivity(`Resync requested (${payload?.reason || "unknown"}).`, "info"),
+                    resyncRequested: (payload) => { this._logActivity(`Resync requested (${payload?.reason || "unknown"}).`, "info"); this._recoverTable(); },
                     staleEventDropped: (payload) =>
                         this._logActivity(
                             `Dropped stale event ${payload?.event_name || "unknown"} seq=${payload?.event_seq || "?"}.`,
@@ -595,8 +589,8 @@
                     // indicator instead of silently going stale while the
                     // socket is down. No other part of this app surfaced
                     // connect/disconnect at all before this.
-                    connect: () => { this._connectionLost = false; this._renderState(); this._announceTableReady(); },
-                    disconnect: () => { this._connectionLost = true; this._renderState(); },
+                    connect: () => { this._connectionLost = false; this._renderState(); this._renderActionHotbar(); this._announceTableReady(); },
+                    disconnect: () => { this._connectionLost = true; this._renderState(); this._renderActionHotbar(); },
                 },
             });
             this.socket.connect();
@@ -2372,10 +2366,10 @@
                 bar.hidden = true;
                 return;
             }
-            bar.hidden = false;
-
             const token = this._findStateToken(this.selectedTokenId);
-            const canAct = !this.readOnly && token && this._canMoveToken(token);
+            const canAct = !this.readOnly && !this._connectionLost && token && this._canMoveToken(token);
+            this.personalActions?.update(token, Boolean(canAct));
+            bar.hidden = Boolean(this.personalActions?.active && !this.personalActions.showGeneric);
             bar.setAttribute("aria-disabled", String(!canAct));
 
             if (bar.childElementCount !== catalog.length) {
@@ -2476,6 +2470,7 @@
         }
 
         _bindActionHotbar() {
+            this.personalActions = new window.PersonalActionBar(this);
             document.addEventListener("keydown", (event) => {
                 const key = event.key;
                 if (key === "Escape" && this._pendingTarget) {
@@ -2484,6 +2479,8 @@
                     return;
                 }
                 if (!/^[0-9]$/.test(key)) return;
+                if (event.defaultPrevented || this.personalActions.active) return;
+                if (event.ctrlKey || event.altKey || event.metaKey || event.repeat) return;
                 // Acceptance (HIGH risk in the research doc): never fire
                 // while focus is in an input/textarea/select/contenteditable
                 // or a dialog is open -- verified specifically against
@@ -3109,6 +3106,13 @@
             this._renderChat();
         }
 
+        async _recoverTable() {
+            if (this._recovery) return this._recovery;
+            this._recovery = this.loadBootstrap();
+            try { await this._recovery; }
+            finally { this._recovery = null; }
+        }
+
         _handleMode(payload) {
             this.mode = payload?.mode || this.mode;
             this._renderMeta();
@@ -3141,6 +3145,7 @@
 
         _handleChatBroadcast(payload) {
             this._appendChatMessage({
+                message_id: payload?.message_id,
                 time: String(payload?.timestamp || new Date().toISOString()).slice(11, 19),
                 sender_name: payload?.sender_name || payload?.sender || "player",
                 message: payload?.message || "",
@@ -3279,6 +3284,7 @@
             }
             this._showRollFeed(roll, payload);
             this._appendChatMessage({
+                message_id: payload?.message_id,
                 time: String(payload?.timestamp || new Date().toISOString()).slice(11, 19),
                 sender_name: roll.character || payload?.sender_name || "external",
                 message: summary,
@@ -3415,6 +3421,12 @@
         }
 
         _handleDiceBroadcast(payload) {
+            if (payload?.message_id) {
+                const id = Number(payload.message_id);
+                if (this._seenDiceIds.has(id)) return;
+                this._seenDiceIds.add(id);
+                if (this._seenDiceIds.size > 1000) this._seenDiceIds.delete(this._seenDiceIds.values().next().value);
+            }
             // S08: blind/self rolls arrive as an anonymized placeholder
             // for non-DM/non-roller clients (server-enforced in
             // _emit_scoped_roll -- the payload genuinely contains no
@@ -3428,7 +3440,7 @@
                     log.prepend(line);
                     while (log.children.length > 8) log.removeChild(log.lastChild);
                 }
-                this._appendChatMessage({ sender_name: "Tisch", message: hiddenText, rollHidden: true });
+                this._appendChatMessage({ message_id: payload?.message_id, sender_name: "Tisch", message: hiddenText, rollHidden: true });
                 this._logActivity(hiddenText, "info");
                 return;
             }
@@ -3461,6 +3473,7 @@
             // players only saw the roll after a reload backfilled chat from
             // the DB. Same fan-out as the external-roll sibling handler.
             this._appendChatMessage({
+                message_id: payload?.message_id,
                 sender_name: player,
                 message: summary,
                 rollBreakdown: breakdown,
@@ -4482,7 +4495,7 @@
                        <div class="chat-roll-breakdown" id="chatRollBreakdown-${index}">${escapeHtml(entry.rollBreakdown)}</div>`
                     : `<div class="${entry.rollHidden ? "chat-roll-hidden" : ""}">${escapeHtml(text)}</div>`;
                 return `
-                <div class="chat-entry">
+                <div class="chat-entry" ${entry.message_id ? `data-message-id="${Number(entry.message_id)}"` : ''}>
                     <div class="chat-meta">[${escapeHtml(entry.time)}] ${escapeHtml(entry.user || entry.sender_name || "player")}</div>
                     ${body}
                 </div>
@@ -4490,8 +4503,36 @@
             }).join("");
         }
 
+        _mergeChatHistory(entries) {
+            const persisted = new Map(this.chatRows.filter(row => row.message_id).map(row => [row.message_id, row]));
+            for (const entry of entries) {
+                const id = Number(entry.message_id);
+                if (!id) continue;
+                const previous = persisted.get(id);
+                persisted.set(id, previous && !entry.edited_at ? previous : {
+                    message_id: id, time: String(entry.created_at || entry.timestamp || '').slice(11, 19),
+                    user: entry.sender_name || 'Tisch', sender_name: entry.sender_name || 'Tisch',
+                    text: entry.hidden ? 'Jemand würfelt verdeckt.' : entry.message || entry.content || '',
+                    message: entry.hidden ? 'Jemand würfelt verdeckt.' : entry.message || entry.content || '',
+                    rollHidden: Boolean(entry.hidden)
+                });
+            }
+            const incomingIds = entries.map(row => Number(row.message_id)).filter(Boolean);
+            if (incomingIds.length) {
+                const low = Math.min(...incomingIds), high = Math.max(...incomingIds);
+                for (const id of persisted.keys()) {
+                    if (id >= low && id <= high && !incomingIds.includes(id)) persisted.delete(id);
+                }
+            }
+            this.chatRows = [...Array.from(persisted.values()).sort((a, b) => b.message_id - a.message_id),
+                ...this.chatRows.filter(row => !row.message_id).slice(0, 10)].slice(0, 100);
+        }
+
         _appendChatMessage(entry) {
+            const messageId = Number(entry?.message_id) || null;
+            if (messageId && this.chatRows.some(row => row.message_id === messageId)) return;
             const normalized = {
+                message_id: messageId,
                 time: String(entry?.time || new Date().toISOString()).slice(11, 19),
                 user: entry?.user || entry?.sender_name || "player",
                 sender_name: entry?.sender_name || entry?.user || "player",
@@ -4501,8 +4542,8 @@
                 rollHidden: Boolean(entry?.rollHidden),
             };
             this.chatRows.unshift(normalized);
-            if (this.chatRows.length > 50) {
-                this.chatRows = this.chatRows.slice(0, 50);
+            if (this.chatRows.length > 100) {
+                this.chatRows = this.chatRows.slice(0, 100);
             }
             this._renderChat();
         }

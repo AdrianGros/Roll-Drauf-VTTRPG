@@ -213,6 +213,37 @@ def log_roll(user, char, game_session, spec, result, visibility):
     return message.id
 
 
+def execute_sheet_roll(user, char, kind, key=None, *, session_id=None, mode="normal",
+                       visibility="public", critical=False, two_handed=False):
+    """Shared authorized roll seam for the sheet and personal table actions."""
+    from vtt.characters import srd_inventory
+    if not can_roll_for(user, char):
+        raise RollTargetError("forbidden", "Dieser Charakter gehört nicht zu deinen erlaubten Aktionen.", 403)
+    evaluation = srd_evaluation(char)
+    if evaluation is None:
+        raise RollTargetError("not_srd", "Kein SRD-Charakter.", 422)
+    if kind not in ROLL_KINDS:
+        raise RollTargetError("invalid_roll", "Dieser Wurf existiert auf dem Bogen nicht.", 422)
+    if kind in {"weapon_attack", "weapon_damage"}:
+        spec = srd_inventory.weapon_roll_spec(char, evaluation, kind, key,
+                                              critical=critical, two_handed=two_handed)
+    else:
+        spec = roll_spec(evaluation, kind, key)
+    if spec is None:
+        raise RollTargetError("invalid_roll", "Dieser Wurf existiert auf dem Bogen nicht.", 422)
+    target = roll_destination(user, char, session_id)
+    if spec.get("damage"):
+        result = srd_inventory.roll_damage(spec["damage"])
+        dice = spec["dice"]
+    else:
+        result = roll_d20(spec["modifier"], mode)
+        dice = dice_text(spec["modifier"])
+    message_id = log_roll(user, char, target["session"], spec, result, visibility)
+    return {"label": spec["label"], "dice": dice, "result": result,
+            "logged": message_id is not None, "messageId": message_id,
+            "session": session_view(target["session"]), "reason": target["reason"]}
+
+
 def sheet_snapshot(char):
     """Values shown on a linked token; derived from the rules for SRD characters."""
     snapshot = {"ac": char.ac, "level": char.level}

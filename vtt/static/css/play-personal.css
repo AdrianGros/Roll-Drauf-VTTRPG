@@ -1,0 +1,37 @@
+.personal-action-bar {
+    position: fixed; left: 50%; bottom: 68px; transform: translateX(-50%);
+    z-index: 31; max-width: calc(100vw - 2rem); display: flex; align-items: center;
+    gap: .4rem; padding: .5rem; border: 1px solid #bda16b; border-radius: .6rem;
+    background: #181326; color: #f6ebd8; box-shadow: 0 4px 18px #0005;
+}
+.personal-action-bar[hidden] { display: none; }
+.personal-action-bar .pa-name { font-size: .75rem; max-width: 8rem; }
+.personal-action-bar .pa-slots { display: flex; gap: .3rem; overflow-x: auto; }
+.personal-action-bar button, .pa-dialog button, .pa-dialog select {
+    color: #f6ebd8; background: #302438; border: 1px solid #bda16b;
+    border-radius: .3rem; padding: .4rem; font: inherit;
+}
+.personal-action-bar button { font-size: .75rem; min-height: 40px; min-width: 48px; max-width: 10rem; }
+.personal-action-bar button:disabled { opacity: .65; }
+.personal-action-bar button:focus-visible, .pa-dialog :focus-visible { outline: 3px solid #ebcb80; outline-offset: 2px; }
+.personal-action-bar kbd { font-weight: bold; }
+body[data-personal-hotbar="true"] #actionHotbar { bottom: 140px; }
+.pa-dialog { color: #f6ebd8; background: #181326; border: 1px solid #bda16b; border-radius: .7rem;
+    width: min(720px, 92vw); max-height: 90vh; overflow-y: auto; padding: 1rem; }
+.pa-dialog::backdrop { background: #0008; }
+.pa-edit-row { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr) 2.5rem 2.5rem; gap: .4rem; margin: .5rem 0; align-items: center; }
+.pa-edit-row select { min-width: 0; width: 100%; }
+@media (max-width: 1040px) {
+    /* Selecting a token opens the existing mobile table sheet (z=60).
+       Personal actions stay reachable above it; its bottom controls can scroll
+       clear of the action strip rather than becoming covered permanently. */
+    .personal-action-bar { z-index: 70; }
+    body[data-personal-hotbar="true"] #actionHotbar { z-index: 71; }
+    body[data-personal-hotbar="true"] .table-sheet { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 620px) {
+    .personal-action-bar { bottom: 64px; gap: .2rem; padding: .3rem; }
+    .personal-action-bar .pa-name { display: none; }
+    .personal-action-bar button { padding: .3rem; min-width: 42px; }
+    .pa-edit-row { grid-template-columns: 3.5rem minmax(0, 1fr) 2rem 2rem; gap: .2rem; }
+}

@@ -189,6 +189,7 @@ def create_app(config_name=None):
         app,
         cors_allowed_origins=app.config['CORS_ORIGINS'],
         message_queue=app.config.get("SOCKETIO_MESSAGE_QUEUE") or None,
+        async_mode=app.config.get("SOCKETIO_ASYNC_MODE"),
     )
     # Outermost, so rate limits (and Socket.IO) see the client, not the proxy.
     if app.config['TRUSTED_PROXY_HOPS']:

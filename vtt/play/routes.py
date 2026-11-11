@@ -21,6 +21,7 @@ from vtt.models import (
 )
 from vtt.play import play_bp
 from vtt.play.actions import execute_action, get_action_catalog
+from vtt.play.receipts import idempotent_table_request
 from vtt.models.scene_wall import LIGHT_VALUES, SIGHT_VALUES
 from vtt.models.scene_light import LIGHT_TYPES
 from vtt.play.vision import visible_token_ids
@@ -195,6 +196,8 @@ def _chat_row_for_role(row, session_role: str | None):
     if is_operator_role(session_role) or row.visibility == "public":
         return {
             "message_id": row.id,
+            "content_type": row.content_type,
+            "edited_at": row.edited_at.isoformat() if row.edited_at else None,
             "message": row.content,
             "sender_id": row.author_user_id,
             "sender_name": row.author.username if row.author else "player",
@@ -249,7 +252,7 @@ def bootstrap_play_runtime(campaign_id, session_id):
         "state_payload": serialize_state_payload(
             game_session, state, role=session_role, viewer_id=user.id),
         "action_catalog": get_action_catalog(),
-        # Last 30 visible chat messages, newest first (same shape the live
+        # Last 100 visible chat messages, newest first (same shape the live
         # "chat:message_sent" broadcast uses), so a page reload no longer
         # wipes the table conversation (robot audit 2026-08-23).
         # Fixed 2026-09-02: this used to return row.content unconditionally,
@@ -268,7 +271,7 @@ def bootstrap_play_runtime(campaign_id, session_id):
                 )
                 .filter(ChatMessage.moderation_state == "visible")
                 .order_by(ChatMessage.created_at.desc())
-                .limit(30)
+                .limit(100)
                 .all()
             )
             if row_payload is not None
@@ -648,6 +651,7 @@ def play_transition_session(campaign_id, session_id):
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/actions/execute", methods=["POST"])
 @limiter.limit("240 per hour")
 @jwt_required()
+@idempotent_table_request
 def play_execute_action(campaign_id, session_id):
     """Execute action-bar action with server-side permission checks."""
     user, campaign, game_session, session_role = _get_context(campaign_id, session_id)
