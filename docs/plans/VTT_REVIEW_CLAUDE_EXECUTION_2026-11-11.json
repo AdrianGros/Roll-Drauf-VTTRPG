@@ -1,0 +1,393 @@
+{
+  "schema": "vtt.claude-execution-plan.v1",
+  "status": "planned_not_started",
+  "phase": "apply",
+  "retention": "durable",
+  "date": "2026-11-11",
+  "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
+  "discovery": "../DADM_DISCOVER_VTT_REVIEWS_2026-11-11.md",
+  "human_plan": "VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.md",
+  "previous_program": "PROTOCOL_FEEDBACK_EXECUTION_2026-11-11.json",
+  "engine": {
+    "provider": "Claude Code CLI",
+    "installed_version": "2.1.312",
+    "auth_method": "claude.ai",
+    "api_provider": "firstParty",
+    "subscription_type": "pro",
+    "auth_verified": true,
+    "model_execution_verified": false,
+    "remaining_quota_verified": false,
+    "extra_usage_setting_verified": false,
+    "api_fallback_authorized": false,
+    "automatic_extra_usage_authorized": false,
+    "model": "inherit",
+    "default_concurrent_implementers": 1,
+    "maximum_disjoint_implementers": 2,
+    "nested_agents": false
+  },
+  "roles": {
+    "implementation": [
+      "vtt-ui-implementer",
+      "vtt-domain-implementer",
+      "vtt-maps-implementer"
+    ],
+    "review": "vtt-reviewer",
+    "integration_tests_push_deployment_live_evidence": "codex",
+    "human_acceptance": "owner_and_DM_Player"
+  },
+  "tasks": [
+    {
+      "id": "C00",
+      "title": "Integrationsbasis und Claude-Handoff",
+      "status": "planned",
+      "implementer": "codex",
+      "reviewer": null,
+      "depends_on": [],
+      "review_ids": [],
+      "next_phase": "discover",
+      "requires_task_specific_apply": false,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Live- und Branchabgleich",
+        "Offene P4-Änderungen erhalten und prüfen",
+        "Auth/Abo-Routing und Kontingent klären",
+        "Exakter Basiscommit und Dateibesitz vor Workerstart"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C01",
+      "title": "Darstellung, UI-Sprache und Buchnavigation",
+      "status": "planned",
+      "implementer": "vtt-ui-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C00"
+      ],
+      "review_ids": [
+        "R07",
+        "R08",
+        "R11",
+        "R14",
+        "R28"
+      ],
+      "next_phase": "apply",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "DE/EN und Pergament/Nacht über Hauptwege",
+        "320/390/1440 Pixel, Tastatur, Persistenz, Kontrast",
+        "Benutzer-/Regeltext unverändert",
+        "Kein alter Bogen beim Laden, keine doppelte Navigation",
+        "P1-Rollentrennung und Kartenmaßstab erhalten"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C02",
+      "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
+      "status": "planned",
+      "implementer": "vtt-ui-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C01"
+      ],
+      "review_ids": [
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "next_phase": "apply",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Echter Avatar-/Token-Upload vom Bogen",
+        "Nur erlaubte Felder standardmäßig editierbar",
+        "Unabhängige Kopie mit neuer ID, Original unverändert",
+        "Keine erfundene Slot-Obergrenze",
+        "Prüfung führt zum Feld; Talentwiederholung geprüft"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C03",
+      "title": "Absolute sechs Stunden pro Anmeldung",
+      "status": "planned",
+      "implementer": "vtt-domain-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C00"
+      ],
+      "review_ids": [
+        "R20",
+        "R21"
+      ],
+      "next_phase": "discover",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Eigenes Discover/Apply einschließlich Bestandsvertrag",
+        "Access/Refresh/Login/Discord/Socket respektieren dasselbe absolute Ende",
+        "Refresh verlängert nicht über sechs Stunden",
+        "Regelwerk-Zugriff verursacht keinen eigenen Logout"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C04",
+      "title": "2D-Kartenbedienung und Bibliothek zum Spieltisch",
+      "status": "planned",
+      "implementer": "vtt-maps-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C01"
+      ],
+      "review_ids": [
+        "R15",
+        "R16",
+        "R17",
+        "R19",
+        "R25",
+        "R26",
+        "R27",
+        "R28"
+      ],
+      "next_phase": "apply",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Sichtbare Speichern-/Import-/Kartenwechselwege",
+        "Bibliothekskarte mit Vorschau direkt zum berechtigten Tisch",
+        "Radierer für Raster/Kacheln/Symbole und bewusste Ebenenauswahl",
+        "Undo/Redo je Geste und unverwandte Ebenen erhalten",
+        "Optionales Stempelraster, Kachelpinselgröße, aktuelle Assets/Credits erhalten"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C05",
+      "title": "Seedbasierte Landmassen im bestehenden Editor",
+      "status": "planned",
+      "implementer": "vtt-maps-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C04"
+      ],
+      "review_ids": [
+        "R29"
+      ],
+      "next_phase": "apply",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Seed/Parameter/Generatorversion deterministisch",
+        "Vorschau und Abbrechen verändern kein Projekt",
+        "Übernahme ist eine Undo-Aktion",
+        "Speichern/Laden/Export/Import erhalten"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C06",
+      "title": "Kampagnen-Hub, Kalender und Sessionplanung",
+      "status": "planned",
+      "implementer": "vtt-domain-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C00",
+        "C01"
+      ],
+      "review_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04"
+      ],
+      "next_phase": "discover",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Vorhandenen Kalender-WIP abgleichen",
+        "Eigene Sessions, Kampagnenfilter, Zeitzone/Status korrekt",
+        "Schreibrechte serverseitig, gleiche Kalenderpräsentation",
+        "Offene DM-Termine und eigene fehlende Abstimmung sichtbar",
+        "Brauchbare Vorbereitung weiterhin erreichbar"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C07",
+      "title": "Private Gespräche und Mitgliederaktionen",
+      "status": "planned",
+      "implementer": "vtt-domain-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C02",
+        "C06"
+      ],
+      "review_ids": [
+        "R05",
+        "R06"
+      ],
+      "next_phase": "discover",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Eigenes Discover/Apply für Teilnehmer/Verlauf/Widerruf",
+        "Charakter/Chat/Entfernen nur passend berechtigt",
+        "Private Inhalte nicht über fremde IDs/Suche/Events sichtbar",
+        "Unterhaltung nach Reload vorhanden",
+        "Kein externer Nachrichtenversand; Sessionchat bleibt separat"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C08",
+      "title": "Compendium zum Charakter und Fortschrittsentscheidungen",
+      "status": "planned",
+      "implementer": "vtt-domain-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C02"
+      ],
+      "review_ids": [
+        "R22",
+        "R23",
+        "R24"
+      ],
+      "next_phase": "apply",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Bestehende Fortschritts- und Katalogregeln weiterverwenden",
+        "Unterstützten Inhalt zur berechtigten Figur ohne Doppelbeitrag hinzufügen",
+        "Fremde Figuren/Kampagnen abgewiesen",
+        "Offene Zauber-/Stufenwahl über geprüften Fortschrittsweg",
+        "Keine ungeklärten Regel-/Bildquellen ergänzen"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C09",
+      "title": "Atlas mit geschützter Leserprojektion",
+      "status": "planned",
+      "implementer": "vtt-maps-implementer",
+      "reviewer": "vtt-reviewer",
+      "depends_on": [
+        "C01",
+        "C04",
+        "C05"
+      ],
+      "review_ids": [
+        "R29"
+      ],
+      "next_phase": "discover",
+      "requires_task_specific_apply": true,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Editor-zu-Tisch-Gate vor Atlas",
+        "Eigenes Atlas-Discover/Apply",
+        "Owner/Editor/Reader und private Lore strikt getrennt",
+        "Stabile Links, Revision/Lease und Backup-Rundlauf",
+        "Welt ohne Karte erlaubt; kein 3D-Renderer"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    },
+    {
+      "id": "C10",
+      "title": "Gesamt-Liveprüfung und Owner-Testcheckliste",
+      "status": "planned",
+      "implementer": "codex",
+      "reviewer": null,
+      "depends_on": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "review_ids": [],
+      "next_phase": "apply",
+      "requires_task_specific_apply": false,
+      "base_commit": null,
+      "owned_files": null,
+      "acceptance": [
+        "Alle Slices über normale UI geliefert",
+        "Source/Push/Image/Compose/Prüfungen/Rückweg belegt",
+        "Eigene Testdaten, keine Zugangsdaten in Belegen",
+        "Erweiterte A01–A12 und reale DM/Firefox-Player-Runde",
+        "Offene Inputs und menschliche NOT_RUN-Fälle ehrlich ausgewiesen"
+      ],
+      "execution_session_id": null,
+      "source_commit": null,
+      "deployed_image_id": null,
+      "live_verification": null
+    }
+  ],
+  "deferred": [
+    {
+      "review_id": "R18",
+      "scope": "3D/2.5D/Godot renderer",
+      "reason": "R2 explicitly prioritizes 2D"
+    },
+    {
+      "scope": "Additional unprovided brushes/monster art/rule texts",
+      "reason": "Files and exact source/license inputs missing"
+    },
+    {
+      "scope": "New numerical character slot cap",
+      "reason": "No numerical product decision"
+    },
+    {
+      "scope": "Discord ticket cleanup and Rift statistics",
+      "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
+    }
+  ],
+  "next_step": "C00: preserve and review pending P4, reconcile live/new work, verify Claude subscription usage and set exact worker base/file ownership. No implementation started by this plan."
+}

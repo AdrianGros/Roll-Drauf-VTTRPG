@@ -312,3 +312,19 @@ Es sind keine neuen Anwendungstests für diese Dokumentationsänderung nötig.
 Autorisierungs-/Ereignispfadregister abschließen, danach P1-Paket-Apply mit konkretem
 Kontextlebenszyklus. Erst nach Auflösung seiner mittleren Risiken wechselt P1 zu Deploy.
 Der nächste Fachschritt ist damit konkret; diese Dokumente allein deployen keine Funktion.
+
+## Owner-Steuerung nach den Reviews vom 11.11.
+
+Die neuen Reviews sind in [Discover/Kategorisierung](../DADM_DISCOVER_VTT_REVIEWS_2026-11-11.md)
+erfasst. Die Implementierung ist nun ausdrücklich mit **Claude-Code-Agenten über
+das vorhandene Abo** eingeplant; Codex koordiniert, führt Tests aus, integriert
+und liefert live. Verbindliche Aufträge und neue Reihenfolge stehen im
+[Claude-Ausführungsplan](VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.md).
+
+P1–P3 bleiben technisch geliefert. P4 wurde lokal implementiert/teilweise geprüft,
+aber noch nicht aktiviert; zusätzliche UI-Quellen und neue Reviewkriterien brauchen
+Nacharbeit. Die aktuelle Planungsrunde ist kein Abschluss des Gesamtpakets.
+Kartenbedienung und Bibliothek→Tisch kommen vor Generator und Atlas; P6 hängt
+nun ausdrücklich auch von P5 ab. Kalender, private Gespräche und Compendium-Wege
+sind als eigene neue Pakete mit vorgeschaltetem Discover/Apply sichtbar. Keine
+stille Mitlieferung, keine 3D-Erweiterung und keine bloße Wiederaufnahme überholten G1.

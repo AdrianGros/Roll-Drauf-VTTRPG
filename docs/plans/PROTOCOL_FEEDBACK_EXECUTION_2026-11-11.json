@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "program": "protocol-feedback-2026-11-11",
-  "phase": "deploy_P4",
+  "phase": "apply_review_claude_handoff",
   "status": "in_progress",
   "implementation_started": true,
   "background_execution": false,
@@ -203,7 +203,7 @@
       "depends_on": [
         "P0"
       ],
-      "next_phase": "deploy",
+      "next_phase": "apply",
       "acceptance_ids": [
         "A03",
         "A04",
@@ -221,7 +221,8 @@
         "Anzeigepräferenzen verändern keine gespeicherten Spielwerte",
         "Spätere neue Oberflächen in gemeinsamer P7-Prüfung einbezogen"
       ],
-      "implementation_evidence": "../DADM_DEPLOY_PRESENTATION_UNITS_2026-11-11.md"
+      "implementation_evidence": "../DADM_DEPLOY_PRESENTATION_UNITS_2026-11-11.md",
+      "review_update": "Neue R07/R08/R11/R14 und zusätzliche UI-Quellen vor Freigabe prüfen; vorbereitetes Image nicht aktiviert."
     },
     {
       "id": "P5",
@@ -248,7 +249,8 @@
       "title": "Atlas mit verknüpften Karten, Orten und Leserpublikation",
       "status": "planned",
       "depends_on": [
-        "P1"
+        "P1",
+        "P5"
       ],
       "next_phase": "discover",
       "acceptance_ids": [
@@ -873,5 +875,7 @@
       "title": "Abgeschlossene Sitzung und strukturiertes Feedback"
     }
   ],
-  "next_step": "P4-Apply: globale sichere Ansichten und DE/EN-UI, Anzeigeeinheiten und DM-kalibrierte Rasterdistanzen. P1–P3 live verifiziert."
+  "next_step": "C00: preserve and review pending P4, reconcile live/new work, verify Claude subscription usage and set exact worker base/file ownership. No implementation started by this plan.",
+  "latest_review_plan": "VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.json",
+  "implementation_provider_preference": "Claude Code via existing subscription"
 }

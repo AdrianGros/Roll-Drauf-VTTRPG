@@ -55,3 +55,11 @@ die neue Tabelle nicht und bleibt ein kompatibler Rückweg. Danach normale
 Live-UI-Reise mit getrennten DM-/Player-Browsern, eigene temporäre Daten bereinigen,
 öffentliche Nachweise ohne Zugangsdaten und Monitor erfassen. Owner-A01–A12 bleiben
 bis zum gemeinsamen menschlichen Test ausdrücklich NOT_RUN.
+
+## Nachtrag – noch keine Live-Freigabe
+
+Nach den beschriebenen lokalen Zwischenprüfungen wurden fehlende Buch-Builder-
+UI-Quellen ergänzt. Diese Nacharbeit und die neuen Owner-Reviews werden vor
+Auslieferung erneut abgeglichen. Das gebaute Image `8d77cab47` ist nicht aktiviert.
+Diese Datei dokumentiert die Zwischenprüfungen; sie ist keine Bereitmeldung.
+Aktueller Handoff: `docs/plans/VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.md`.
