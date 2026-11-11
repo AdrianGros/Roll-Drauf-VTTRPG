@@ -27,10 +27,12 @@ widerruft nur den bisherigen Kontext, parallele Tabs bleiben unabhängig.
 
 ## proofs und acceptance_checklist
 
-- 25 API-/Socket-/Aktionsfälle bestanden: `tests/test_table_contexts.py` und
+- 26 verschiedene API-/Socket-/Aktionsfälle bestanden: `tests/test_table_contexts.py` und
   `tests/test_action_bar_v1.py`. Enthält dynamische Prüfung aller sessionbezogenen
   aktuellen und Legacy-HTTP-Routen bei fehlendem Kontext, sieben ungültige
   Kontextvarianten, Owner-Player, Moderation, Logout/Widerruf und Sessionziele.
+  Die zusätzliche Refresh-/Logout-Prüfung bestand mit 2 Fällen; Logout war bereits
+  im 25er-Lauf enthalten und ist nicht doppelt gezählt.
 - Browserreise im endgültigen Stand in Firefox und Chromium erneut bestanden:
   2 Fälle in 40,21 Sekunden; unabhängige Modi, geladene Module, Reload und
   Playerprojektion ohne versteckten Token, keine JS-Ausnahmen.

@@ -108,6 +108,10 @@ def install_http_guard(app):
     @app.before_request
     def table_context_boundary():
         g.pop("table_context", None)
+        # Authentication endpoints have their own access/refresh JWT contracts.
+        # In particular a table header must not turn refresh into an access-JWT check.
+        if request.path.startswith("/api/auth/"):
+            return None
         match = SESSION_PATH.match(request.path)
         legacy = LEGACY_PATH.match(request.path)
         entry = bool(match and request.path.endswith("/contexts"))

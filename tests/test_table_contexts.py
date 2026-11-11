@@ -267,3 +267,11 @@ def test_logout_revokes_outstanding_table_delegations(table, play_dm_client, pla
         assert TableContext.query.filter(TableContext.revoked_at.is_(None)).count() == 0
     finally:
         socket.disconnect()
+
+
+def test_auth_refresh_keeps_its_own_contract_with_table_headers(table, play_dm_client):
+    campaign, session, _ = table
+    headers = enter(play_dm_client, campaign, session, "dm")
+    response = play_dm_client.post('/api/auth/refresh', headers=headers)
+    assert response.status_code == 200
+    assert play_dm_client.get(f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/bootstrap", headers=headers).json['session_role'] == 'DM'
