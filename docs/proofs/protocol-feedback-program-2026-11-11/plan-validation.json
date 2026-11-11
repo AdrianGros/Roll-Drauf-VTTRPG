@@ -1,0 +1,72 @@
+{
+  "checked_at_utc": "2026-11-11T00:33:00.703494+00:00",
+  "scope": "planning_artifacts_only",
+  "application_tests_run": false,
+  "application_deployed": false,
+  "status": "pass",
+  "card_count": 40,
+  "package_count": 8,
+  "acceptance_case_count": 12,
+  "input_count": 5,
+  "card_status_counts": {
+    "baseline_verified": 20,
+    "input_required": 4,
+    "partial": 5,
+    "open": 3,
+    "bounded_proposal": 5,
+    "human_acceptance_pending": 1,
+    "decision_required": 1,
+    "optional": 1
+  },
+  "checks": [
+    {
+      "group": "cards",
+      "description": "40 eindeutige Karten mit Zuständigkeit, Status und Abschlusskriterium",
+      "status": "pass"
+    },
+    {
+      "group": "packages",
+      "description": "8 eindeutige geplante Pakete mit Freigabekriterien",
+      "status": "pass"
+    },
+    {
+      "group": "dependencies",
+      "description": "Vollständige topologische Reihenfolge ohne Zyklus",
+      "status": "pass"
+    },
+    {
+      "group": "acceptance",
+      "description": "12 Fälle in Testskript und Ausführungsdatei identisch",
+      "status": "pass"
+    },
+    {
+      "group": "inputs",
+      "description": "5 explizite Eingaben mit gültigen Vor- und Rückverweisen",
+      "status": "pass"
+    },
+    {
+      "group": "references",
+      "description": "Alle Karten-/Paket-/Artefakt-/Dokumentverweise gültig",
+      "status": "pass"
+    },
+    {
+      "group": "honest_status",
+      "description": "Keine neue Implementierung, Abnahme oder Releaseevidenz behauptet",
+      "status": "pass"
+    },
+    {
+      "group": "dadm_fields",
+      "description": "Pflichtfelder, dauerhafte Artefakte und sechs eingestufte Risiken vorhanden",
+      "status": "pass"
+    }
+  ],
+  "local_links_checked": 20,
+  "artifact_sha256": {
+    "docs/DADM_DISCOVER_PROTOCOL_FEEDBACK_PROGRAM_2026-11-11.md": "663fa35357a0a8cdb53388808932eabca9d64d733aa0376b336b179846d3468c",
+    "docs/plans/PROTOCOL_FEEDBACK_PROGRAM_2026-11-11.md": "bee63edac1f0cd153da0bde6650a471dc550d85aad549d55712827b478b02da3",
+    "docs/plans/../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-11.md": "49a1dafbe661c68fea496a58364972a8872ac6a3fcaea51113fb5b7bfbc7923b",
+    "docs/PROTOCOL_FEEDBACK_SPECIFICATIONS_2026-11-10.md": "e07a8057b6c626a90dc70c668564b521372f8000f03ec4ce254e7305068a6dde",
+    "docs/proofs/protocol-feedback-program-2026-11-11/README.md": "956ed8bc7d7121faeaf42c91a3048cbc4ff9e5cf9c74dba730d3663421c606c6",
+    "docs/plans/PROTOCOL_FEEDBACK_EXECUTION_2026-11-11.json": "28cb912978f9c3391e904dc45d3a15a0d56a9ecf48c7daa7ffb15dbf5011722a"
+  }
+}

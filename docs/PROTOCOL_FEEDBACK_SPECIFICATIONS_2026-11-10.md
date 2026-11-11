@@ -68,3 +68,8 @@ bereits laufende Funktionen. „Teilumfang“ lässt ausdrücklich weitere Arbei
 
 Diese Matrix dokumentiert verbleibende Arbeit ausdrücklich. Paket 1 ist keine
 Vollständigkeitsbehauptung über alle 40 Karten.
+
+Fortsetzung vom 11.11.: Der [autonome Programmplan](plans/PROTOCOL_FEEDBACK_PROGRAM_2026-11-11.md)
+ordnet die Restarbeit in P0–P7 und verbindet alle Karten mit einem gemeinsamen
+[Live-Abnahmelauf](acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-11.md).
+Das ist ein Planungsstand; neue Pakete sind dadurch nicht implementiert oder abgenommen.
