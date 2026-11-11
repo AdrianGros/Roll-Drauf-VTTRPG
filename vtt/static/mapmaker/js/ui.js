@@ -76,6 +76,10 @@ export class UI {
         $("zoomIn").addEventListener("click", () => ed.zoomStep(1.25));
         $("zoomOut").addEventListener("click", () => ed.zoomStep(0.8));
         $("zoomFit").addEventListener("click", () => ed.fit());
+        $("activeLayerJump").addEventListener("click", () => {
+            this.openPane("layers");
+            $("layerList").querySelector('.mm-layer.is-active .mm-layer-name')?.focus();
+        });
         $("helpBtn").addEventListener("click", () => $("helpDialog").showModal());
         $("helpClose").addEventListener("click", () => $("helpDialog").close());
         $("errorClose").addEventListener("click", () => $("errorDialog").close());
@@ -795,6 +799,7 @@ export class UI {
                 ed.select(item.id);
                 this.openPane("tool");
                 ed.centerOn(item.x, item.y);
+                this.focusLabelName();
             });
             li.appendChild(button);
             list.appendChild(li);
@@ -859,6 +864,7 @@ export class UI {
     updateTargets() {
         const ed = this.ed;
         if (!ed.doc) return;
+        $("activeLayerJump").textContent = `Ebene: ${ed.activeLayer()?.name || 'keine'}`;
         const name = (kind) => {
             const layer = ed.targetLayer(kind, { quiet: true });
             return layer ? layer.name : "keine passende Ebene";

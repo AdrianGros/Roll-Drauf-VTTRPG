@@ -577,6 +577,30 @@ def test_space_drag_pans_from_focused_toolbar_button(open_editor):
     ed.assert_clean()
 
 
+def test_right_drag_keeps_brush_document_and_undo_unchanged(open_editor):
+    ed = open_editor()
+    ed.tool('brush')
+    before = ed.summary()
+    start = ed.client(650, 450)
+    ed.page.mouse.move(*start)
+    ed.page.mouse.down(button='right')
+    ed.page.mouse.move(start[0] + 90, start[1] + 40, steps=8)
+    ed.page.mouse.up(button='right')
+    after = ed.summary()
+    assert after['tool'] == 'brush'
+    assert after['generation'] == before['generation']
+    assert after['historySteps'] == before['historySteps']
+    moved = ed.client(650, 450)
+    assert abs(moved[0] - start[0] - 90) < 2
+    assert abs(moved[1] - start[1] - 40) < 2
+    ed.drag([(1500, 290), (1530, 290)])
+    assert ed.summary()['generation'] > after['generation']
+    assert ed.summary()['historySteps'] == after['historySteps'] + 1
+    ed.page.locator('#activeLayerJump').click()
+    expect(ed.page.get_by_role('tab', name='Ebenen', exact=True)).to_have_attribute('aria-selected','true')
+    ed.assert_clean()
+
+
 def test_wheel_zoom_and_fit(open_editor):
     ed = open_editor()
     fit = ed.summary()["fitZoom"]
@@ -1318,6 +1342,23 @@ def test_flask_serves_entry_redirect_and_static_app(flask_origin, open_editor):
     assert ed.summary()["title"] == "Die Silbermark"
     assert _is_sea(ed.pixel(*SEA_A)) and not _is_sea(ed.pixel(*LAND))
     ed.proof("flask")
+    ed.assert_clean()
+
+
+@pytest.mark.parametrize('width', [1440, 390])
+def test_map_account_action_fits_its_navigation_row(flask_origin, open_editor, width):
+    origin, _ = flask_origin
+    ed = open_editor(width=width, origin=origin, path='/mapmaker')
+    # Guest previews hide the session counter. Exercise the full three-row
+    # account memo too, without introducing authentication into this fixture.
+    ed.page.locator('.vtt-account-count').evaluate("node => { node.hidden = false; node.textContent = '0 Sessions gespielt'; }")
+    action = ed.page.locator('.vtt-account-action')
+    expect(action).to_be_visible()
+    box = action.bounding_box()
+    nav = ed.page.locator('.mm-global-nav').bounding_box()
+    assert box['height'] >= 32
+    assert box['y'] >= nav['y']
+    assert box['y'] + box['height'] <= nav['y'] + nav['height'] + 1
     ed.assert_clean()
 
 
