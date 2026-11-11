@@ -1432,6 +1432,8 @@
     <script src="/static/js/book-scene.js"></script>
     <script>globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
         const auth = new Auth();
         const community = new CommunityClient(auth);
@@ -1730,7 +1732,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         function buildMembersList(members) {
             if (!members || members.length === 0) {
-                return "<div class='muted'>Noch keine Mitglieder.</div>";
+                return `<div class='muted'>${globalThis.VTTUiHTML("Noch keine Mitglieder.")}</div>`;
             }
 
             return members.map(member => `
@@ -1746,7 +1748,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         function buildSessionsList(campaign, sessions) {
             if (!sessions || sessions.length === 0) {
-                return "<div class='muted'>Noch keine Session vorhanden.</div>";
+                return `<div class='muted'>${globalThis.VTTUiHTML("Noch keine Session vorhanden.")}</div>`;
             }
 
             const canManage = campaign.is_owner || campaign.your_role === "DM" || campaign.your_role === "CO_DM";
@@ -1755,59 +1757,59 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 let primaryAction = "";
                 let prepNote = "";
                 let entryHint = "";
-                const supportActions = [`<button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${session.id})">Prep öffnen</button>`];
+                const supportActions = [`<button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Prep öffnen")}</button>`];
 
                 if (canManage) {
                     if (phase.tone === "scheduled" || phase.tone === "ready") {
-                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="startSession(${campaign.id}, ${session.id})">Session starten</button>`;
-                        supportActions.push(`<button class="btn btn-secondary btn-sm" onclick="focusMapPrepSurface()">Kartenvorbereitung prüfen</button>`);
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="startSession(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session starten")}</button>`;
+                        supportActions.push(`<button class="btn btn-secondary btn-sm" onclick="focusMapPrepSurface()">${globalThis.VTTUiHTML("Kartenvorbereitung prüfen")}</button>`);
                         prepNote = "Diese Session ist vorbereitet, aber noch nicht live. Der Start aus dem Hub bleibt der kontrollierte Weg in den Tisch.";
                         entryHint = "Startet hier";
                     } else if (phase.tone === "paused") {
-                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`;
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session fortsetzen")}</button>`;
                         prepNote = "Die Session ist pausiert. Fortsetzen führt direkt über den akzeptierten Buch-zu-Play-Übergang zurück an den Tisch.";
                         entryHint = "Kann fortgesetzt werden";
                     } else if (phase.tone === "live") {
-                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Zu Play</button>`;
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Zu Play")}</button>`;
                         prepNote = "Die Session läuft bereits. Hub und Tisch bleiben verbunden, ohne den Einstiegspfad zu wechseln.";
                         entryHint = "Live";
                     } else {
-                        primaryAction = `<button class="btn btn-secondary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Play erneut öffnen</button>`;
-                        supportActions.push(`<button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">Nächste Session anlegen</button>`);
+                        primaryAction = `<button class="btn btn-secondary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Play erneut öffnen")}</button>`;
+                        supportActions.push(`<button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">${globalThis.VTTUiHTML("Nächste Session anlegen")}</button>`);
                         prepNote = "Diese Session ist beendet. Der nächste produktive Schritt ist meist eine neue Session für dieselbe Kampagne.";
                         entryHint = "Abgeschlossen";
                     }
                 } else {
                     if (phase.tone === "scheduled" || phase.tone === "ready") {
-                        primaryAction = `<span class="session-action-status">Warte auf den Start durch die Spielleitung</span>`;
+                        primaryAction = `<span class="session-action-status">${globalThis.VTTUiHTML("Warte auf den Start durch die Spielleitung")}</span>`;
                         prepNote = "Die Session ist sichtbar, aber erst nach dem DM-Start für Spieler betretbar.";
                         entryHint = "Wartet auf DM";
                     } else if (phase.tone === "paused") {
-                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`;
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session fortsetzen")}</button>`;
                         prepNote = "Die Session kann direkt aus dem Hub wieder betreten werden.";
                         entryHint = "Kann fortgesetzt werden";
                     } else if (phase.tone === "live") {
-                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">Session betreten</button>`;
+                        primaryAction = `<button class="btn btn-primary btn-sm" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session betreten")}</button>`;
                         prepNote = "Die Session ist live und kann jetzt über denselben Hub-Pfad betreten werden.";
                         entryHint = "Live";
                     } else {
-                        primaryAction = `<span class="session-action-status">Keine aktive Session</span>`;
+                        primaryAction = `<span class="session-action-status">${globalThis.VTTUiHTML("Keine aktive Session")}</span>`;
                         prepNote = "Diese Session ist abgeschlossen. Die nächste freigegebene Session erscheint wieder hier im Hub.";
                         entryHint = "Abgeschlossen";
                     }
                 }
 
                 const endButton = canManage && session.status === "in_progress"
-                    ? `<button class="btn btn-danger btn-sm" onclick="endSession(${campaign.id}, ${session.id})">Session beenden</button>`
+                    ? `<button class="btn btn-danger btn-sm" onclick="endSession(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session beenden")}</button>`
                     : "";
-                const combatStateButton = `<button class="btn btn-secondary btn-sm" onclick="viewCombatState(${campaign.id}, ${session.id})">Kampfstatus</button>`;
+                const combatStateButton = `<button class="btn btn-secondary btn-sm" onclick="viewCombatState(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Kampfstatus")}</button>`;
                 const combatManageButtons = canManage && session.status === "in_progress"
                     ? `
-                        <button class="btn btn-primary btn-sm" onclick="startCombat(${campaign.id}, ${session.id})">Kampf starten</button>
-                        <button class="btn btn-secondary btn-sm" onclick="setCombatInitiative(${campaign.id}, ${session.id})">Initiative setzen</button>
-                        <button class="btn btn-secondary btn-sm" onclick="advanceCombatTurn(${campaign.id}, ${session.id})">Nächster Zug</button>
-                        <button class="btn btn-secondary btn-sm" onclick="adjustCombatHp(${campaign.id}, ${session.id})">HP aendern</button>
-                        <button class="btn btn-danger btn-sm" onclick="endCombat(${campaign.id}, ${session.id})">Kampf beenden</button>
+                        <button class="btn btn-primary btn-sm" onclick="startCombat(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Kampf starten")}</button>
+                        <button class="btn btn-secondary btn-sm" onclick="setCombatInitiative(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Initiative setzen")}</button>
+                        <button class="btn btn-secondary btn-sm" onclick="advanceCombatTurn(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Nächster Zug")}</button>
+                        <button class="btn btn-secondary btn-sm" onclick="adjustCombatHp(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("HP aendern")}</button>
+                        <button class="btn btn-danger btn-sm" onclick="endCombat(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Kampf beenden")}</button>
                     `
                     : "";
 
@@ -2352,21 +2354,21 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return `
                     <div class="hub-card session-prep-surface" id="campaignSessionPrepSurface">
                         <div class="hub-card-topline">
-                            <h3>Vorbereitungsbereich</h3>
-                            <span class="hub-pill">Vor dem Spielabend</span>
+                            <h3>${globalThis.VTTUiHTML("Vorbereitungsbereich")}</h3>
+                            <span class="hub-pill">${globalThis.VTTUiHTML("Vor dem Spielabend")}</span>
                         </div>
                         <div class="session-prep-hero">
                             <div>
-                                <div class="session-prep-title">Noch keine Session im Fokus</div>
-                                <div class="session-prep-copy">Diese Fläche sitzt bewusst zwischen Kampagnen-Hub und Play. Sobald eine Session existiert, wird sie hier als der konkrete Vorbereitungskontext vor dem Tisch sichtbar.</div>
+                                <div class="session-prep-title">${globalThis.VTTUiHTML("Noch keine Session im Fokus")}</div>
+                                <div class="session-prep-copy">${globalThis.VTTUiHTML("Diese Fläche sitzt bewusst zwischen Kampagnen-Hub und Play. Sobald eine Session existiert, wird sie hier als der konkrete Vorbereitungskontext vor dem Tisch sichtbar.")}</div>
                             </div>
                             <div class="session-prep-next">
-                                <div class="session-prep-next-label">Nächster Schritt</div>
+                                <div class="session-prep-next-label">${globalThis.VTTUiHTML("Nächster Schritt")}</div>
                                 <div class="session-prep-next-title">${escapeHtml(sessionAction.label)}</div>
                                 <div class="session-prep-next-copy">${escapeHtml(sessionAction.hint)}</div>
                                 <div class="session-prep-actions">
                                     ${sessionAction.action}
-                                    <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">Zurück zur Sessionliste</button>
+                                    <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">${globalThis.VTTUiHTML("Zurück zur Sessionliste")}</button>
                                 </div>
                             </div>
                         </div>
@@ -2430,127 +2432,127 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             return `
                 <div class="hub-card session-prep-surface" id="campaignSessionPrepSurface">
                     <div class="hub-card-topline">
-                        <h3>Vorbereitungsbereich</h3>
-                        <span class="hub-pill">Vor dem Spielabend</span>
+                        <h3>${globalThis.VTTUiHTML("Vorbereitungsbereich")}</h3>
+                        <span class="hub-pill">${globalThis.VTTUiHTML("Vor dem Spielabend")}</span>
                     </div>
                     <div class="session-prep-hero">
                         <div>
                             <div class="session-prep-title">${escapeHtml(prepSession.name)}</div>
-                            <div class="session-prep-copy">Diese Oberfläche ist der letzte Buchstopp vor dem Tisch. Hier wird genau diese Session lesbar: Status, fehlende Vorbereitung und der korrekte nächste Schritt nach Play.</div>
+                            <div class="session-prep-copy">${globalThis.VTTUiHTML("Diese Oberfläche ist der letzte Buchstopp vor dem Tisch. Hier wird genau diese Session lesbar: Status, fehlende Vorbereitung und der korrekte nächste Schritt nach Play.")}</div>
                             <div class="session-prep-toolbar">
                                 <select id="sessionPrepSelect" onchange="selectPrepSession(${campaign.id}, this.value)">
                                     ${sessionOptions}
                                 </select>
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Zurück zum Kampagnen-Hub</button>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">${globalThis.VTTUiHTML("Zurück zum Kampagnen-Hub")}</button>
                             </div>
                             <div class="hub-pill-row" style="margin-top:0.8rem;">
-                                <span class="hub-badge"><strong>Status:</strong> ${escapeHtml(phase.label)}</span>
-                                <span class="hub-badge"><strong>Readiness:</strong> ${escapeHtml(readinessLabel)}</span>
-                                <span class="hub-badge"><strong>Spieler:</strong> ${escapeHtml(String(playerCount))}</span>
-                                <span class="hub-badge"><strong>Karten:</strong> ${escapeHtml(String(maps ? maps.length : 0))}</span>
-                                <span class="hub-badge"><strong>Session-Charaktere:</strong> ${escapeHtml(String(characterBuckets.assigned.length))}</span>
+                                <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Status:")}</strong> ${escapeHtml(phase.label)}</span>
+                                <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Readiness:")}</strong> ${escapeHtml(readinessLabel)}</span>
+                                <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Spieler:")}</strong> ${escapeHtml(String(playerCount))}</span>
+                                <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Karten:")}</strong> ${escapeHtml(String(maps ? maps.length : 0))}</span>
+                                <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Session-Charaktere:")}</strong> ${escapeHtml(String(characterBuckets.assigned.length))}</span>
                             </div>
                             <div class="hub-callout">
-                                <strong>Welche Session ist das?</strong> ${escapeHtml(prepSession.name)}. <strong>Was fehlt noch?</strong> ${escapeHtml(sessionAction.hint)}
+                                <strong>${globalThis.VTTUiHTML("Welche Session ist das?")}</strong> ${escapeHtml(prepSession.name)}. <strong>${globalThis.VTTUiHTML("Was fehlt noch?")}</strong> ${escapeHtml(sessionAction.hint)}
                             </div>
                         </div>
                         <div class="session-prep-next">
-                            <div class="session-prep-next-label">Nächster Schritt</div>
+                            <div class="session-prep-next-label">${globalThis.VTTUiHTML("Nächster Schritt")}</div>
                             <div class="session-prep-next-title">${escapeHtml(sessionAction.label)}</div>
                             <div class="session-prep-next-copy">${escapeHtml(sessionAction.hint)}</div>
                             <div class="session-prep-actions">
                                 ${sessionAction.action}
-                                <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">Sessionliste</button>
-                                <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignMapsCard')">Kartenvorbereitung</button>
+                                <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignSessionsCard')">${globalThis.VTTUiHTML("Sessionliste")}</button>
+                                <button class="btn btn-secondary" type="button" onclick="scrollToHubSurface('campaignMapsCard')">${globalThis.VTTUiHTML("Kartenvorbereitung")}</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="session-prep-grid">
                         <div class="session-prep-card">
-                            <div class="session-prep-card-title">Teilnehmer / Einladungen</div>
+                            <div class="session-prep-card-title">${globalThis.VTTUiHTML("Teilnehmer / Einladungen")}</div>
                             <div class="session-prep-card-copy">${canManage ? `Die Kampagne hat aktuell ${playerCount} Spieler neben der DM. Invite- und Join-Kontext bleibt Teil derselben Vorbereitung vor Tischstart.` : "Dein Kampagnenbeitritt ist sichtbar. Sobald die DM startet, führt diese Session-Vorbereitung direkt zum Tisch."}</div>
                             <div class="session-prep-card-actions">
-                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="focusInviteControls()">Spieler einladen</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">Einladungs-Kontext</button>`}
+                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="focusInviteControls()">${globalThis.VTTUiHTML("Spieler einladen")}</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">${globalThis.VTTUiHTML("Einladungs-Kontext")}</button>`}
                             </div>
                         </div>
 
                         <div class="session-prep-card" id="sessionPrepCharacterCard">
-                            <div class="session-prep-card-title">Charakter-Kontext</div>
+                            <div class="session-prep-card-title">${globalThis.VTTUiHTML("Charakter-Kontext")}</div>
                             <div class="session-prep-card-copy">${canManage
                                 ? "Nur kampagnengebundene Helden erscheinen hier. Weise sie direkt dieser Session zu oder entferne sie wieder, bevor der Hub nach Play übergibt."
                                 : "Hier wird sichtbar, welche kampagnengebundenen Helden schon direkt zu dieser Session gehören. Eigene Helden kannst du selbst zuweisen, andere bleiben lesbar, aber nicht direkt von dir editierbar."}</div>
                             <div class="hub-pill-row" style="margin-top:0.75rem;">
-                                <span class="hub-badge"><strong>Zugewiesen:</strong> ${escapeHtml(String(characterBuckets.assigned.length))}</span>
-                                <span class="hub-badge"><strong>Verfügbar:</strong> ${escapeHtml(String(characterBuckets.available.length))}</span>
-                                <span class="hub-badge"><strong>Direkt zuweisbar:</strong> ${escapeHtml(String(characterBuckets.assignable.length))}</span>
+                                <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Zugewiesen:")}</strong> ${escapeHtml(String(characterBuckets.assigned.length))}</span>
+                                <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Verfügbar:")}</strong> ${escapeHtml(String(characterBuckets.available.length))}</span>
+                                <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Direkt zuweisbar:")}</strong> ${escapeHtml(String(characterBuckets.assignable.length))}</span>
                             </div>
                             <div class="hub-callout" style="margin-top:0.75rem;">
-                                <strong>Eligibility:</strong> Nur Charaktere, die bereits mit dieser Kampagne verknuepft sind, können hier als Session-Besetzung genutzt werden.
+                                <strong>${globalThis.VTTUiHTML("Eligibility:")}</strong> ${globalThis.VTTUiHTML("Nur Charaktere, die bereits mit dieser Kampagne verknuepft sind, können hier als Session-Besetzung genutzt werden.")}
                             </div>
                             <div class="session-prep-toolbar" style="margin-top:0.85rem; display:block;">
-                                <strong>Zugewiesen</strong>
+                                <strong>${globalThis.VTTUiHTML("Zugewiesen")}</strong>
                                 <div class="hub-step-list" style="margin-top:0.55rem;">
                                     ${renderSessionCharacterRows(characterBuckets.assigned, "assigned")}
                                 </div>
                             </div>
                             <div class="session-prep-toolbar" style="margin-top:0.85rem; display:block;">
-                                <strong>Verfügbar für diese Session</strong>
+                                <strong>${globalThis.VTTUiHTML("Verfügbar für diese Session")}</strong>
                                 <div class="hub-step-list" style="margin-top:0.55rem;">
                                     ${renderSessionCharacterRows(characterBuckets.assignable, "available")}
                                 </div>
                             </div>
                             ${characterBuckets.restricted.length ? `
                                 <div class="hub-callout" style="margin-top:0.75rem;">
-                                    <strong>Nur sichtbar:</strong> ${escapeHtml(String(characterBuckets.restricted.length))} weitere kampagnengebundene Charaktere gehören anderen Spielern und bleiben deshalb für dich read-only.
+                                    <strong>${globalThis.VTTUiHTML("Nur sichtbar:")}</strong> ${escapeHtml(String(characterBuckets.restricted.length))} weitere kampagnengebundene Charaktere gehören anderen Spielern und bleiben deshalb für dich read-only.
                                 </div>
                             ` : ""}
                             <div class="session-prep-card-actions">
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere öffnen</button>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">${globalThis.VTTUiHTML("Charaktere öffnen")}</button>
                                 ${characterBuckets.assigned.length
-                                    ? `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${characterBuckets.assigned[0].id})">Zugewiesenes Sheet</button>`
-                                    : `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Archiv für neue Helden</button>`}
+                                    ? `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterSheetFromPrep(${characterBuckets.assigned[0].id})">${globalThis.VTTUiHTML("Zugewiesenes Sheet")}</button>`
+                                    : `<button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">${globalThis.VTTUiHTML("Archiv für neue Helden")}</button>`}
                             </div>
                         </div>
 
                         <div class="session-prep-card">
-                            <div class="session-prep-card-title">Karten-Kontext</div>
+                            <div class="session-prep-card-title">${globalThis.VTTUiHTML("Karten-Kontext")}</div>
                             <div class="session-prep-card-copy">${activeMap ? `Diese Session nutzt aktuell "${escapeHtml(activeMap.name)}" als aktive Karte. Die Kartenvorbereitung bleibt der nächste Ort für Kontrolle, Aktivierung und Feinvorbereitung vor Play.` : (mapReady ? "Es gibt Kartenmaterial in der Kampagne, aber für diese Session ist noch keine aktive Karte gesetzt." : "Noch keine Karte im Kampagnenkontext sichtbar. Vor Tischstart sollte zuerst der Kartenvorbereitungs-Bereich genutzt werden.")}</div>
                             ${canManage && maps && maps.length ? `
                                 <div class="session-prep-toolbar" style="margin-top:0.65rem;">
                                     <select id="sessionPrepMapSelect">
                                         ${mapOptions}
                                     </select>
-                                    <button class="btn btn-primary btn-sm" type="button" onclick="activatePrepSessionMap(${campaign.id}, ${prepSession.id})">Als Session-Karte setzen</button>
+                                    <button class="btn btn-primary btn-sm" type="button" onclick="activatePrepSessionMap(${campaign.id}, ${prepSession.id})">${globalThis.VTTUiHTML("Als Session-Karte setzen")}</button>
                                 </div>
                             ` : ""}
                             <div class="session-prep-card-actions">
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Kartenvorbereitung ansehen</button>
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">${globalThis.VTTUiHTML("Kartenvorbereitung ansehen")}</button>
                             </div>
                         </div>
 
                         <div class="session-prep-card">
-                            <div class="session-prep-card-title">Material-Kontext</div>
-                            <div class="session-prep-card-copy">Assets, Uploads und Vorschau sind verfügbar. Filtere die Bibliothek oder bereite einen Upload direkt für diese Session vor.</div>
+                            <div class="session-prep-card-title">${globalThis.VTTUiHTML("Material-Kontext")}</div>
+                            <div class="session-prep-card-copy">${globalThis.VTTUiHTML("Assets, Uploads und Vorschau sind verfügbar. Filtere die Bibliothek oder bereite einen Upload direkt für diese Session vor.")}</div>
                             <div id="sessionPrepAssetStats">
                                 ${assetStats ? `
                                     <div class="hub-pill-row">
-                                        <span class="hub-badge"><strong>Session-Assets:</strong> ${escapeHtml(String(assetStats.total || 0))}</span>
-                                        <span class="hub-badge"><strong>Karten:</strong> ${escapeHtml(String(assetStats.maps || 0))}</span>
-                                        <span class="hub-badge"><strong>Handouts:</strong> ${escapeHtml(String(assetStats.handouts || 0))}</span>
-                                        <span class="hub-badge"><strong>Tokens:</strong> ${escapeHtml(String(assetStats.tokens || 0))}</span>
+                                        <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Session-Assets:")}</strong> ${escapeHtml(String(assetStats.total || 0))}</span>
+                                        <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Karten:")}</strong> ${escapeHtml(String(assetStats.maps || 0))}</span>
+                                        <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Handouts:")}</strong> ${escapeHtml(String(assetStats.handouts || 0))}</span>
+                                        <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Tokens:")}</strong> ${escapeHtml(String(assetStats.tokens || 0))}</span>
                                     </div>
-                                ` : `<div class="muted">Session-Assets werden geladen...</div>`}
+                                ` : `<div class="muted">${globalThis.VTTUiHTML("Session-Assets werden geladen...")}</div>`}
                             </div>
                             <div class="session-prep-card-actions">
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="focusSessionScopedAssetLibrary(${prepSession.id})">Session-Assets ansehen</button>
-                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="prepareSessionAssetUpload(${prepSession.id}, 'handout')">Session-Upload vorbereiten</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Materialbibliothek</button>`}
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="focusSessionScopedAssetLibrary(${prepSession.id})">${globalThis.VTTUiHTML("Session-Assets ansehen")}</button>
+                                ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="prepareSessionAssetUpload(${prepSession.id}, 'handout')">${globalThis.VTTUiHTML("Session-Upload vorbereiten")}</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">${globalThis.VTTUiHTML("Materialbibliothek")}</button>`}
                             </div>
                         </div>
 
                         <div class="session-prep-card">
-                            <div class="session-prep-card-title">Noch offen vor Play</div>
-                            <div class="session-prep-card-copy">Diese Kontrolle zeigt die Bedingungen, die vor dem Wechsel an den Spieltisch erfüllt sein müssen.</div>
+                            <div class="session-prep-card-title">${globalThis.VTTUiHTML("Noch offen vor Play")}</div>
+                            <div class="session-prep-card-copy">${globalThis.VTTUiHTML("Diese Kontrolle zeigt die Bedingungen, die vor dem Wechsel an den Spieltisch erfüllt sein müssen.")}</div>
                             <div class="hub-step-list" style="margin-top:0.75rem;">
                                 ${blockers.blocking.length
                                     ? blockers.blocking.map(blocker => hubStep(blocker, "Vor Play noch offen.", false)).join("")
@@ -2558,7 +2560,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             </div>
                             ${blockers.deferred.length ? `
                                 <div class="hub-callout" style="margin-top:0.75rem;">
-                                    <strong>Weitere Hinweise:</strong> ${escapeHtml(blockers.deferred.join(" · "))}
+                                    <strong>${globalThis.VTTUiHTML("Weitere Hinweise:")}</strong> ${escapeHtml(blockers.deferred.join(" · "))}
                                 </div>
                             ` : ""}
                         </div>
@@ -2792,7 +2794,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         function buildMapList(maps) {
             if (!maps || maps.length === 0) {
-                return `<div class="muted">Noch keine Karte angelegt.</div>`;
+                return `<div class="muted">${globalThis.VTTUiHTML("Noch keine Karte angelegt.")}</div>`;
             }
 
             return maps.map(map => `
@@ -2994,43 +2996,43 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             const inviteControls = canManage ? `
                 <div class="inline-controls">
-                    <input id="inviteUsername" type="text" placeholder="Spielername" data-testid="invite-username">
-                    <button class="btn btn-primary btn-sm" data-testid="invite-create" onclick="invitePlayer(${campaign.id})">Einladung erzeugen</button>
+                    <input id="inviteUsername" type="text" placeholder="${globalThis.VTTUiHTML("Spielername")}" data-testid="invite-username">
+                    <button class="btn btn-primary btn-sm" data-testid="invite-create" onclick="invitePlayer(${campaign.id})">${globalThis.VTTUiHTML("Einladung erzeugen")}</button>
                 </div>
                 <div id="inviteLinkRow" class="inline-controls" hidden data-testid="invite-link-row">
-                    <input id="inviteLinkField" type="text" readonly aria-label="Einladungslink">
-                    <button class="btn btn-secondary btn-sm" id="btnCopyInviteLink" data-testid="invite-copy" onclick="copyInviteLink()">Kopieren</button>
+                    <input id="inviteLinkField" type="text" readonly aria-label="${globalThis.VTTUiHTML("Einladungslink")}">
+                    <button class="btn btn-secondary btn-sm" id="btnCopyInviteLink" data-testid="invite-copy" onclick="copyInviteLink()">${globalThis.VTTUiHTML("Kopieren")}</button>
                 </div>
             ` : `
                 <div class="hub-callout">
-                    Als Spieler kannst du hier eine Einladung eingeben, wenn du einen Code von der Spielleitung erhalten hast.
+                    ${globalThis.VTTUiHTML("Als Spieler kannst du hier eine Einladung eingeben, wenn du einen Code von der Spielleitung erhalten hast.")}
                 </div>
                 <div class="inline-controls">
-                    <button class="btn btn-primary btn-sm" onclick="joinCampaign(${campaign.id})">Einladung eingeben</button>
+                    <button class="btn btn-primary btn-sm" onclick="joinCampaign(${campaign.id})">${globalThis.VTTUiHTML("Einladung eingeben")}</button>
                 </div>
             `;
 
             const sessionControls = canManage ? `
                 <div class="inline-controls">
-                    <input id="sessionName" type="text" placeholder="Session-Name">
-                    <input id="sessionSchedule" type="datetime-local" placeholder="Startzeit">
-                    <input id="sessionDuration" type="number" min="30" step="30" placeholder="Dauer (min)">
-                    <button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">Session anlegen</button>
+                    <input id="sessionName" type="text" placeholder="${globalThis.VTTUiHTML("Session-Name")}">
+                    <input id="sessionSchedule" type="datetime-local" placeholder="${globalThis.VTTUiHTML("Startzeit")}">
+                    <input id="sessionDuration" type="number" min="30" step="30" placeholder="${globalThis.VTTUiHTML("Dauer (min)")}">
+                    <button class="btn btn-primary btn-sm" onclick="createSession(${campaign.id})">${globalThis.VTTUiHTML("Session anlegen")}</button>
                 </div>
                 <div class="hub-quickstart">
-                    <div class="quickstart-title">Schnellstart für Nicht-Techniker</div>
-                    <div class="quickstart-help">Ein Klick: Session anlegen, Karte hochladen, Session starten, Play öffnen.</div>
+                    <div class="quickstart-title">${globalThis.VTTUiHTML("Schnellstart für Nicht-Techniker")}</div>
+                    <div class="quickstart-help">${globalThis.VTTUiHTML("Ein Klick: Session anlegen, Karte hochladen, Session starten, Play öffnen.")}</div>
                     <div class="inline-controls">
-                        <input id="quickSessionName" type="text" placeholder="z.B. Erste Taverne" value="Erste Session">
+                        <input id="quickSessionName" type="text" placeholder="${globalThis.VTTUiHTML("z.B. Erste Taverne")}" value="Erste Session">
                         <input id="quickMapFile" type="file" accept="image/png,image/jpeg,image/webp" />
                         <button id="quickStartButton" class="btn btn-primary btn-sm" onclick="startSessionWithFirstMap(${campaign.id})">
-                            Session + Karte jetzt starten
+                            ${globalThis.VTTUiHTML("Session + Karte jetzt starten")}
                         </button>
                     </div>
                 </div>
             ` : `
                 <div class="hub-callout">
-                    Die DM kann hier die Session-Historie sehen und den Startstatus verfolgen. Karten und Sessions sind nur für berechtigte Rollen bearbeitbar.
+                    ${globalThis.VTTUiHTML("Die DM kann hier die Session-Historie sehen und den Startstatus verfolgen. Karten und Sessions sind nur für berechtigte Rollen bearbeitbar.")}
                 </div>
             `;
 
@@ -3038,7 +3040,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 <div class="hub-shell">
                     <div class="hub-hero">
                         <div class="hub-identity">
-                            <div class="hub-eyebrow">Kampagnen-Vorbereitung / Session-Hub</div>
+                            <div class="hub-eyebrow">${globalThis.VTTUiHTML("Kampagnen-Vorbereitung / Session-Hub")}</div>
                             <h2>${escapeHtml(campaign.name)}</h2>
                             <div class="hub-pill-row">
                                 ${statusPill("Rolle", roleLabel)}
@@ -3052,29 +3054,29 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                                 ${escapeHtml(campaign.description || "Keine Beschreibung vorhanden.")}
                             </div>
                             <div class="hub-callout">
-                                <strong>Prep-Status:</strong> ${escapeHtml(prepState.label)}. ${escapeHtml(prepState.summary)}
+                                <strong>${globalThis.VTTUiHTML("Prep-Status:")}</strong> ${escapeHtml(prepState.label)}. ${escapeHtml(prepState.summary)}
                             </div>
                             <div class="hub-badges">
-                                <span class="hub-badge">Kampagnen-Vorbereitung</span>
-                                <span class="hub-badge">Vorbereitungs-Zentrale</span>
-                                <span class="hub-badge">Session-Ablauf</span>
-                                <span class="hub-badge">Karten + Material</span>
+                                <span class="hub-badge">${globalThis.VTTUiHTML("Kampagnen-Vorbereitung")}</span>
+                                <span class="hub-badge">${globalThis.VTTUiHTML("Vorbereitungs-Zentrale")}</span>
+                                <span class="hub-badge">${globalThis.VTTUiHTML("Session-Ablauf")}</span>
+                                <span class="hub-badge">${globalThis.VTTUiHTML("Karten + Material")}</span>
                             </div>
                         </div>
 
                         <div class="hub-primary">
                             <div>
-                                <div class="hub-next-label">Nächster Schritt</div>
+                                <div class="hub-next-label">${globalThis.VTTUiHTML("Nächster Schritt")}</div>
                                 <div class="hub-next-title">${escapeHtml(primaryAction.label)}</div>
                                 <div class="hub-next-hint">${escapeHtml(primaryAction.hint)}</div>
                                 <div class="hub-next-hint">Aktueller Stand: ${escapeHtml(prepState.nextStep)}</div>
-                                <div class="hub-next-hint">Hauptweg: Home -> Kampagnen-Hub -> Session-Prep -> Session starten oder fortsetzen -> Play.</div>
+                                <div class="hub-next-hint">${globalThis.VTTUiHTML("Hauptweg: Home -> Kampagnen-Hub -> Session-Prep -> Session starten oder fortsetzen -> Play.")}</div>
                             </div>
                             <div class="hub-primary-actions">
                                 ${primaryAction.action}
-                                ${canManage && !String(primaryAction.action).includes("focusInviteControls") ? `<button class="btn btn-secondary" onclick="focusInviteControls()">Spieler einladen</button>` : ""}
-                                ${canManage ? `<button class="btn btn-secondary" onclick="focusSessionsSurface()">Sessions prüfen</button>` : ""}
-                                ${sessions && sessions.length ? `<button class="btn btn-secondary" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">Session-Prep</button>` : ""}
+                                ${canManage && !String(primaryAction.action).includes("focusInviteControls") ? `<button class="btn btn-secondary" onclick="focusInviteControls()">${globalThis.VTTUiHTML("Spieler einladen")}</button>` : ""}
+                                ${canManage ? `<button class="btn btn-secondary" onclick="focusSessionsSurface()">${globalThis.VTTUiHTML("Sessions prüfen")}</button>` : ""}
+                                ${sessions && sessions.length ? `<button class="btn btn-secondary" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">${globalThis.VTTUiHTML("Session-Prep")}</button>` : ""}
                             </div>
                         </div>
                     </div>
@@ -3082,49 +3084,48 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     <div class="hub-grid">
                         <div class="hub-card">
                             <div class="hub-card-topline">
-                                <h3>Vorbereitungs-Überblick</h3>
+                                <h3>${globalThis.VTTUiHTML("Vorbereitungs-Überblick")}</h3>
                                 <span class="hub-pill">${escapeHtml(roleLabel)}</span>
                             </div>
                             <div class="hub-stat-row">
                                 <div class="hub-stat">
-                                    <div class="hub-stat-label">Kampagnenstatus</div>
+                                    <div class="hub-stat-label">${globalThis.VTTUiHTML("Kampagnenstatus")}</div>
                                     <div class="hub-stat-value">${escapeHtml(campaign.status)}</div>
                                 </div>
                                 <div class="hub-stat">
-                                    <div class="hub-stat-label">Hub-Status</div>
+                                    <div class="hub-stat-label">${globalThis.VTTUiHTML("Hub-Status")}</div>
                                     <div class="hub-stat-value">${escapeHtml(sessionPhase ? sessionPhase.label : "Kein Tisch")}</div>
                                 </div>
                                 <div class="hub-stat">
-                                    <div class="hub-stat-label">Letzte Session</div>
+                                    <div class="hub-stat-label">${globalThis.VTTUiHTML("Letzte Session")}</div>
                                     <div class="hub-stat-value">${escapeHtml(currentSessionLabel)}</div>
                                 </div>
                                 <div class="hub-stat">
-                                    <div class="hub-stat-label">Letzte Karte</div>
+                                    <div class="hub-stat-label">${globalThis.VTTUiHTML("Letzte Karte")}</div>
                                     <div class="hub-stat-value">${escapeHtml(mapLabel)}</div>
                                 </div>
                             </div>
                             <div class="hub-callout">
-                                Diese Seite ist der Einstiegspunkt vor dem Tisch. Hier siehst du, was bereits bereit ist und was als nächstes passieren soll.
+                                ${globalThis.VTTUiHTML("Diese Seite ist der Einstiegspunkt vor dem Tisch. Hier siehst du, was bereits bereit ist und was als nächstes passieren soll.")}
                             </div>
                         </div>
 
                         <div class="hub-card">
                             <div class="hub-card-topline">
-                                <h3>Einladen / Beitreten</h3>
+                                <h3>${globalThis.VTTUiHTML("Einladen / Beitreten")}</h3>
                                 <span class="hub-pill">${canManage ? "DM" : "Spieler"}</span>
                             </div>
                             ${inviteControls}
                             <div class="hub-callout">
                                 ${canManage
                                     ? "Die Spielleitung erzeugt hier Einladungen für Spieler."
-                                    : "Spieler geben hier ihren Invite-Code ein und betreten danach den Tisch über Session betreten."
-                                }
+                                    : "Spieler geben hier ihren Invite-Code ein und betreten danach den Tisch über Session betreten."}
                             </div>
                         </div>
 
                         <div class="hub-card" id="campaignSessionsCard">
                             <div class="hub-card-topline">
-                                <h3>Sessions</h3>
+                                <h3>${globalThis.VTTUiHTML("Sessions")}</h3>
                                 <span class="hub-pill">${sessionCount} Session${sessionCount === 1 ? "" : "en"}</span>
                             </div>
                             <div class="hub-callout">
@@ -3140,7 +3141,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
                         <div class="hub-card" id="campaignMapsCard">
                             <div class="hub-card-topline">
-                                <h3>Karten</h3>
+                                <h3>${globalThis.VTTUiHTML("Karten")}</h3>
                                 <span class="hub-pill">${mapCount} Karte${mapCount === 1 ? "" : "n"}</span>
                             </div>
                             <div class="hub-map-list">
@@ -3153,12 +3154,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             </div>
                             ${canManage ? `
                                 <div class="book-shell-placeholder" style="margin-top:0.85rem;">
-                                    <div class="book-shell-placeholder-title">Karte hochladen</div>
-                                    <div class="book-shell-placeholder-copy">Bild von deinem PC hochladen - wird der Kampagne als wiederverwendbare Karte hinzugefügt, ohne gleich eine Session zu starten.</div>
+                                    <div class="book-shell-placeholder-title">${globalThis.VTTUiHTML("Karte hochladen")}</div>
+                                    <div class="book-shell-placeholder-copy">${globalThis.VTTUiHTML("Bild von deinem PC hochladen - wird der Kampagne als wiederverwendbare Karte hinzugefügt, ohne gleich eine Session zu starten.")}</div>
                                     <div class="book-shell-placeholder-actions" style="flex-direction:column; align-items:stretch; gap:0.5rem;">
-                                        <input type="text" id="newMapName_${campaign.id}" placeholder="Kartenname" maxlength="255" class="form-input">
+                                        <input type="text" id="newMapName_${campaign.id}" placeholder="${globalThis.VTTUiHTML("Kartenname")}" maxlength="255" class="form-input">
                                         <input type="file" id="newMapFile_${campaign.id}" accept="image/png,image/jpeg,image/webp">
-                                        <button class="btn btn-secondary btn-sm" type="button" id="newMapUploadBtn_${campaign.id}" onclick="uploadStandaloneMap(${campaign.id})">Karte hinzufügen</button>
+                                        <button class="btn btn-secondary btn-sm" type="button" id="newMapUploadBtn_${campaign.id}" onclick="uploadStandaloneMap(${campaign.id})">${globalThis.VTTUiHTML("Karte hinzufügen")}</button>
                                     </div>
                                 </div>
                             ` : ""}
@@ -3166,35 +3167,35 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
                         <div class="hub-card">
                             <div class="hub-card-topline">
-                                <h3>Vorbereitungs-Links</h3>
-                                <span class="hub-pill">Characters + Assets</span>
+                                <h3>${globalThis.VTTUiHTML("Vorbereitungs-Links")}</h3>
+                                <span class="hub-pill">${globalThis.VTTUiHTML("Characters + Assets")}</span>
                             </div>
                                 <div class="hub-callout">
-                                    Vor dem Tisch greifen Charaktere, Karten und Assets zusammen. Diese Oberflächen bleiben im Buch sichtbar und führen vorbereitet in die Session hinein.
+                                    ${globalThis.VTTUiHTML("Vor dem Tisch greifen Charaktere, Karten und Assets zusammen. Diese Oberflächen bleiben im Buch sichtbar und führen vorbereitet in die Session hinein.")}
                                 </div>
                                 <div class="hub-link-grid">
                                 <div class="hub-surface-link">
-                                    <div class="hub-surface-link-title">Charaktere</div>
-                                    <div class="hub-surface-link-copy">Archive, Sheets und Identität weiterführen, bevor die Session live geht.</div>
-                                    <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">Charaktere öffnen</button>
+                                    <div class="hub-surface-link-title">${globalThis.VTTUiHTML("Charaktere")}</div>
+                                    <div class="hub-surface-link-copy">${globalThis.VTTUiHTML("Archive, Sheets und Identität weiterführen, bevor die Session live geht.")}</div>
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="openCharacterPrepSurface()">${globalThis.VTTUiHTML("Charaktere öffnen")}</button>
                                 </div>
                                 <div class="hub-surface-link">
-                                    <div class="hub-surface-link-title">Kartenvorbereitung</div>
-                                    <div class="hub-surface-link-copy">Kartenstand prüfen und den sichtbaren Vorbereitungsbereich im Hub weiter nutzen.</div>
-                                    <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">Kartenvorbereitung ansehen</button>
+                                    <div class="hub-surface-link-title">${globalThis.VTTUiHTML("Kartenvorbereitung")}</div>
+                                    <div class="hub-surface-link-copy">${globalThis.VTTUiHTML("Kartenstand prüfen und den sichtbaren Vorbereitungsbereich im Hub weiter nutzen.")}</div>
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="focusMapPrepSurface()">${globalThis.VTTUiHTML("Kartenvorbereitung ansehen")}</button>
                                 </div>
                                 <div class="hub-surface-link">
-                                    <div class="hub-surface-link-title">Materialbibliothek</div>
-                                    <div class="hub-surface-link-copy">Originale, Uploads und Vorschau bleiben Teil derselben Vorbereitung vor Play.</div>
-                                        <button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">Materialbibliothek</button>
+                                    <div class="hub-surface-link-title">${globalThis.VTTUiHTML("Materialbibliothek")}</div>
+                                    <div class="hub-surface-link-copy">${globalThis.VTTUiHTML("Originale, Uploads und Vorschau bleiben Teil derselben Vorbereitung vor Play.")}</div>
+                                        <button class="btn btn-secondary btn-sm" type="button" onclick="focusAssetPrepSurface()">${globalThis.VTTUiHTML("Materialbibliothek")}</button>
                                     </div>
                                 </div>
                             <div class="hub-callout" style="margin-top:0.85rem;">
-                                <strong>Session-Besetzung:</strong> Direkte Charakter-Zuweisung lebt jetzt in der fokussierten Session-Prep-Fläche. Von hier führt derselbe Buchweg in die konkrete Besetzung vor Play.
+                                <strong>${globalThis.VTTUiHTML("Session-Besetzung:")}</strong> ${globalThis.VTTUiHTML("Direkte Charakter-Zuweisung lebt jetzt in der fokussierten Session-Prep-Fläche. Von hier führt derselbe Buchweg in die konkrete Besetzung vor Play.")}
                             </div>
                             ${sessions && sessions.length ? `
                                 <div class="book-shell-placeholder-actions" style="margin-top:0.75rem;">
-                                    <button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">Session-Besetzung öffnen</button>
+                                    <button class="btn btn-secondary btn-sm" type="button" onclick="selectPrepSession(${campaign.id}, ${getFocusedPrepSession(sessions)?.id || getLatestSession(sessions)?.id || 0})">${globalThis.VTTUiHTML("Session-Besetzung öffnen")}</button>
                                 </div>
                             ` : ""}
                         </div>
@@ -3202,8 +3203,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
                     <div class="hub-card">
                         <div class="hub-card-topline">
-                            <h3>Vorbereitungs-Checkliste</h3>
-                            <span class="hub-pill">Hub-Ablauf</span>
+                            <h3>${globalThis.VTTUiHTML("Vorbereitungs-Checkliste")}</h3>
+                            <span class="hub-pill">${globalThis.VTTUiHTML("Hub-Ablauf")}</span>
                         </div>
                         ${buildHubChecklist(campaign, sessions, maps, characters, assignments)}
                     </div>
@@ -3224,8 +3225,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!sessions || sessions.length === 0) {
                 return `
                     <div class="detail-box" style="margin-top:1rem;">
-                        <h3>Community</h3>
-                        <div class="muted">Lege zuerst eine Session an, damit Chat und Meldungen aktiv werden.</div>
+                        <h3>${globalThis.VTTUiHTML("Community")}</h3>
+                        <div class="muted">${globalThis.VTTUiHTML("Lege zuerst eine Session an, damit Chat und Meldungen aktiv werden.")}</div>
                     </div>
                 `;
             }
@@ -3237,7 +3238,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             const moderationPanel = canModerate ? `
                 <div class="detail-box">
-                    <h3>Moderation</h3>
+                    <h3>${globalThis.VTTUiHTML("Moderation")}</h3>
                     <div class="inline-controls">
                         <select id="modActionType">
                             <option value="warn">warn</option>
@@ -3248,39 +3249,39 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         </select>
                         <input id="modTargetUserId" type="number" min="1" placeholder="subject_user_id">
                         <input id="modTargetMessageId" type="number" min="1" placeholder="subject_message_id">
-                        <input id="modReason" type="text" placeholder="reason (optional)">
-                        <input id="modDuration" type="number" min="1" max="10080" placeholder="mute minutes">
-                        <button class="btn btn-primary btn-sm" onclick="applyModerationActionFromUI(${campaign.id})">Anwenden</button>
+                        <input id="modReason" type="text" placeholder="${globalThis.VTTUiHTML("reason (optional)")}">
+                        <input id="modDuration" type="number" min="1" max="10080" placeholder="${globalThis.VTTUiHTML("mute minutes")}">
+                        <button class="btn btn-primary btn-sm" onclick="applyModerationActionFromUI(${campaign.id})">${globalThis.VTTUiHTML("Anwenden")}</button>
                     </div>
                     <div class="inline-controls">
-                        <button class="btn btn-secondary btn-sm" onclick="loadModerationQueue(${campaign.id})">Neu laden</button>
+                        <button class="btn btn-secondary btn-sm" onclick="loadModerationQueue(${campaign.id})">${globalThis.VTTUiHTML("Neu laden")}</button>
                         <input id="modRevokeActionId" type="number" min="1" placeholder="action_id">
-                        <button class="btn btn-secondary btn-sm" onclick="revokeModerationActionFromUI(${campaign.id})">Widerrufen</button>
+                        <button class="btn btn-secondary btn-sm" onclick="revokeModerationActionFromUI(${campaign.id})">${globalThis.VTTUiHTML("Widerrufen")}</button>
                     </div>
-                    <div id="modQueue" class="mod-queue muted" style="margin-top:0.5rem;">Noch keine Meldungen geladen.</div>
+                    <div id="modQueue" class="mod-queue muted" style="margin-top:0.5rem;">${globalThis.VTTUiHTML("Noch keine Meldungen geladen.")}</div>
                 </div>
             ` : `
                 <div class="detail-box">
-                    <h3>Moderation</h3>
-                    <div class="muted">Melden pro Nachricht ist aktiv. Moderations-Queue ist nur für DM/Admin.</div>
+                    <h3>${globalThis.VTTUiHTML("Moderation")}</h3>
+                    <div class="muted">${globalThis.VTTUiHTML("Melden pro Nachricht ist aktiv. Moderations-Queue ist nur für DM/Admin.")}</div>
                 </div>
             `;
 
             return `
                 <div class="detail-box" style="margin-top:1rem;">
-                    <h3>Community</h3>
+                    <h3>${globalThis.VTTUiHTML("Community")}</h3>
                     <div class="inline-controls">
                         <select id="communitySessionSelect" onchange="loadCommunityPanel(${campaign.id})">${options}</select>
-                        <button class="btn btn-secondary btn-sm" onclick="loadCommunityPanel(${campaign.id})">Chat neu laden</button>
+                        <button class="btn btn-secondary btn-sm" onclick="loadCommunityPanel(${campaign.id})">${globalThis.VTTUiHTML("Chat neu laden")}</button>
                     </div>
                     <div class="community-shell" style="margin-top:0.75rem;">
                         <div class="detail-box">
-                            <h3>Session-Chat</h3>
-                            <div id="communityVoice" class="muted" style="margin-bottom:0.5rem;">Voice: laedt...</div>
-                            <div id="communityChatFeed" class="chat-feed muted">Nachrichten werden geladen...</div>
+                            <h3>${globalThis.VTTUiHTML("Session-Chat")}</h3>
+                            <div id="communityVoice" class="muted" style="margin-bottom:0.5rem;">${globalThis.VTTUiHTML("Voice: laedt...")}</div>
+                            <div id="communityChatFeed" class="chat-feed muted">${globalThis.VTTUiHTML("Nachrichten werden geladen...")}</div>
                             <div class="chat-input-row">
-                                <input id="communityMessageInput" type="text" maxlength="1000" placeholder="Nachricht schreiben...">
-                                <button class="btn btn-primary btn-sm" onclick="sendCommunityMessage(${campaign.id})">Senden</button>
+                                <input id="communityMessageInput" type="text" maxlength="1000" placeholder="${globalThis.VTTUiHTML("Nachricht schreiben...")}">
+                                <button class="btn btn-primary btn-sm" onclick="sendCommunityMessage(${campaign.id})">${globalThis.VTTUiHTML("Senden")}</button>
                             </div>
                         </div>
                         ${moderationPanel}
@@ -3354,62 +3355,62 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             return `
                 <div class="hub-card" id="campaignAssetLibraryPanel">
                     <div class="hub-card-topline">
-                        <h3>Materialbibliothek</h3>
-                        <span class="hub-pill">Originale + Vorschau</span>
+                        <h3>${globalThis.VTTUiHTML("Materialbibliothek")}</h3>
+                        <span class="hub-pill">${globalThis.VTTUiHTML("Originale + Vorschau")}</span>
                     </div>
                     <div class="hub-callout">
-                        Die Bibliothek zeigt die Originaldateien. Karten, Token und Handouts bleiben unverändert und können hier als sichtbarer Vorbereitungsschritt für Sessions geordnet, geprüft und später weiterverwendet werden.
+                        ${globalThis.VTTUiHTML("Die Bibliothek zeigt die Originaldateien. Karten, Token und Handouts bleiben unverändert und können hier als sichtbarer Vorbereitungsschritt für Sessions geordnet, geprüft und später weiterverwendet werden.")}
                     </div>
                     <div class="asset-library-toolbar">
-                        <input id="assetLibrarySearch" type="text" placeholder="Suche nach Dateiname...">
+                        <input id="assetLibrarySearch" type="text" placeholder="${globalThis.VTTUiHTML("Suche nach Dateiname...")}">
                         <select id="assetLibraryTypeFilter">
-                            <option value="">Alle Typen</option>
-                            <option value="map">Karten</option>
-                            <option value="token">Tokens</option>
-                            <option value="handout">Handouts</option>
-                            <option value="image">Bilder</option>
+                            <option value="">${globalThis.VTTUiHTML("Alle Typen")}</option>
+                            <option value="map">${globalThis.VTTUiHTML("Karten")}</option>
+                            <option value="token">${globalThis.VTTUiHTML("Tokens")}</option>
+                            <option value="handout">${globalThis.VTTUiHTML("Handouts")}</option>
+                            <option value="image">${globalThis.VTTUiHTML("Bilder")}</option>
                         </select>
                         <select id="assetLibraryScopeFilter">
-                            <option value="all">Alle Scopes</option>
-                            <option value="campaign">Kampagne</option>
-                            <option value="session">Session</option>
+                            <option value="all">${globalThis.VTTUiHTML("Alle Scopes")}</option>
+                            <option value="campaign">${globalThis.VTTUiHTML("Kampagne")}</option>
+                            <option value="session">${globalThis.VTTUiHTML("Session")}</option>
                         </select>
                         <select id="assetLibrarySessionFilter">
-                            <option value="">Alle Sessions</option>
+                            <option value="">${globalThis.VTTUiHTML("Alle Sessions")}</option>
                             ${sessionOptions}
                         </select>
-                        <button class="btn btn-secondary btn-sm" onclick="loadAssetLibrary(${campaign.id})">Filter anwenden</button>
+                        <button class="btn btn-secondary btn-sm" onclick="loadAssetLibrary(${campaign.id})">${globalThis.VTTUiHTML("Filter anwenden")}</button>
                     </div>
                     <div class="asset-library-stats" id="assetLibraryStats"></div>
                     ${canManage ? `
                         <div class="asset-library-upload">
                             <input id="assetLibraryFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,text/plain">
                             <select id="assetLibraryUploadType">
-                                <option value="image">Bild</option>
-                                <option value="map">Karte</option>
-                                <option value="token">Token</option>
-                                <option value="handout">Handout</option>
+                                <option value="image">${globalThis.VTTUiHTML("Bild")}</option>
+                                <option value="map">${globalThis.VTTUiHTML("Karte")}</option>
+                                <option value="token">${globalThis.VTTUiHTML("Token")}</option>
+                                <option value="handout">${globalThis.VTTUiHTML("Handout")}</option>
                             </select>
                             <select id="assetLibraryUploadScope" onchange="syncAssetLibraryUploadScope()">
-                                <option value="campaign">Kampagne</option>
-                                <option value="session">Session</option>
+                                <option value="campaign">${globalThis.VTTUiHTML("Kampagne")}</option>
+                                <option value="session">${globalThis.VTTUiHTML("Session")}</option>
                             </select>
                             <select id="assetLibraryUploadSession">
-                                <option value="">Session wählen</option>
+                                <option value="">${globalThis.VTTUiHTML("Session wählen")}</option>
                                 ${sessionOptions}
                             </select>
                             <div class="upload-actions">
-                                <button class="btn btn-primary btn-sm" onclick="uploadLibraryAsset(${campaign.id})">Upload</button>
-                                <button class="btn btn-secondary btn-sm" onclick="resetAssetLibraryUpload()">Zurücksetzen</button>
+                                <button class="btn btn-primary btn-sm" onclick="uploadLibraryAsset(${campaign.id})">${globalThis.VTTUiHTML("Upload")}</button>
+                                <button class="btn btn-secondary btn-sm" onclick="resetAssetLibraryUpload()">${globalThis.VTTUiHTML("Zurücksetzen")}</button>
                             </div>
                         </div>
                     ` : `
                         <div class="hub-callout" style="margin-top:0.8rem;">
-                            Spieler sehen die Bibliothek, können sie aber noch nicht selbst befuellen. Upload und Löschen bleiben der Spielleitung vorbehalten.
+                            ${globalThis.VTTUiHTML("Spieler sehen die Bibliothek, können sie aber noch nicht selbst befuellen. Upload und Löschen bleiben der Spielleitung vorbehalten.")}
                         </div>
                     `}
                     <div id="assetLibraryGrid" class="asset-library-grid">
-                        <div class="asset-empty-state">Bibliothek wird geladen...</div>
+                        <div class="asset-empty-state">${globalThis.VTTUiHTML("Bibliothek wird geladen...")}</div>
                     </div>
                 </div>
             `;

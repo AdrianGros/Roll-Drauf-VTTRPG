@@ -1,5 +1,7 @@
 globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Compositing: sea → layers (raster with optional coast effect, stamps,
 // labels) → parchment/vignette/frame. The same routine renders the cached
 // map-resolution composite (region by region) and the PNG export.
@@ -13,12 +15,12 @@ export const COAST_PAD = 64;
 const PARCHMENT = "#efe2c0";
 
 export const LABEL_FONTS = {
-    realm: { weight: "700", family: "Cinzel, 'Times New Roman', serif", spacing: 0.16, upper: true },
-    region: { weight: "400", family: "Cinzel, 'Times New Roman', serif", spacing: 0.22, upper: true },
-    city: { weight: "400", family: "BadScript, 'Segoe Script', cursive", spacing: 0.02, upper: false },
-    town: { weight: "400", family: "BadScript, 'Segoe Script', cursive", spacing: 0.02, upper: false },
-    water: { weight: "italic 400", family: "Literata, Georgia, serif", spacing: 0.12, upper: false },
-    feature: { weight: "italic 400", family: "Literata, Georgia, serif", spacing: 0.05, upper: false },
+    realm: { weight: "700", family: globalThis.VTTUi("Cinzel, 'Times New Roman', serif"), spacing: 0.16, upper: true },
+    region: { weight: "400", family: globalThis.VTTUi("Cinzel, 'Times New Roman', serif"), spacing: 0.22, upper: true },
+    city: { weight: "400", family: globalThis.VTTUi("BadScript, 'Segoe Script', cursive"), spacing: 0.02, upper: false },
+    town: { weight: "400", family: globalThis.VTTUi("BadScript, 'Segoe Script', cursive"), spacing: 0.02, upper: false },
+    water: { weight: globalThis.VTTUi("italic 400"), family: globalThis.VTTUi("Literata, Georgia, serif"), spacing: 0.12, upper: false },
+    feature: { weight: globalThis.VTTUi("italic 400"), family: globalThis.VTTUi("Literata, Georgia, serif"), spacing: 0.05, upper: false },
 };
 
 function labelFont(item) {

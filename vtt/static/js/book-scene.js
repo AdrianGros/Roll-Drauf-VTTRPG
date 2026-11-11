@@ -1,5 +1,7 @@
 globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
+globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /**
  * BookScene v2
  * Persistent spellbook scene for login, auth chapters, dashboard, campaigns,
@@ -567,8 +569,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const active = routeKeyForPath(route.href) === activeRouteKey ? ' is-active' : '';
                 return `<button type="button" class="book-dashboard-ribbon-btn${active}" data-dashboard-route="${route.href}">${escapeHtml(route.label)}</button>`;
             }).join('')
-                + '<a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>'
-                + '<a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>'
+                + `<a class="book-dashboard-ribbon-btn" data-creation-engine-nav aria-disabled="true" tabindex="0">${globalThis.VTTUiHTML("Creation Engine · wird geprüft")}</a>`
+                + `<a class="book-dashboard-ribbon-btn" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">${globalThis.VTTUiHTML("Regelwerk · Vorschau")}</a>`
                 + `<button type="button" class="book-dashboard-ribbon-btn book-dashboard-ribbon-btn--play" data-dashboard-action="play-launch">${escapeHtml(this.content('ribbon.play_button', '▶ Spieltisch'))}</button>`
                 + `<button type="button" class="book-dashboard-ribbon-btn" data-dashboard-action="logout">${escapeHtml(this.content('ribbon.logout_button', 'Abmelden'))}</button>`;
         },
@@ -577,7 +579,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!Array.isArray(campaigns) || campaigns.length === 0) {
                 return `
                     <div class="book-dashboard-preview-empty">
-                        Noch keine Kampagnen. Lege die erste Runde an.
+                        ${globalThis.VTTUiHTML("Noch keine Kampagnen. Lege die erste Runde an.")}
                     </div>
                 `;
             }
@@ -598,7 +600,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!Array.isArray(characters) || characters.length === 0) {
                 return `
                     <div class="book-dashboard-preview-empty">
-                        Noch keine Charaktere. Lege den ersten Helden an.
+                        ${globalThis.VTTUiHTML("Noch keine Charaktere. Lege den ersten Helden an.")}
                     </div>
                 `;
             }
@@ -655,7 +657,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!Array.isArray(campaigns) || campaigns.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
-                        <div>Noch keine Kampagne angelegt. Starte hier mit deiner ersten Runde und ihrer Vorbereitung.</div>
+                        <div>${globalThis.VTTUiHTML("Noch keine Kampagne angelegt. Starte hier mit deiner ersten Runde und ihrer Vorbereitung.")}</div>
                         ${this.buildActionButtons([
                             {
                                 label: globalThis.VTTUi("Erste Kampagne anlegen"),
@@ -674,13 +676,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // 403-Hub-Link für Nicht-Mitglieder (D07/B1) entfällt damit.
             return `
                 <div data-campaign-list>
-                <label class="book-scene-campaign-search">Kampagnen suchen
-                    <input type="search" data-campaign-search placeholder="Name oder Beschreibung" autocomplete="off">
+                <label class="book-scene-campaign-search">${globalThis.VTTUiHTML("Kampagnen suchen")}
+                    <input type="search" data-campaign-search placeholder="${globalThis.VTTUiHTML("Name oder Beschreibung")}" autocomplete="off">
                 </label>
-                <div class="book-scene-campaign-pages" aria-label="Kampagnenseiten">
-                    <button type="button" class="btn btn-secondary" data-campaign-prev>Vorherige</button>
+                <div class="book-scene-campaign-pages" aria-label="${globalThis.VTTUiHTML("Kampagnenseiten")}">
+                    <button type="button" class="btn btn-secondary" data-campaign-prev>${globalThis.VTTUiHTML("Vorherige")}</button>
                     <span data-campaign-count role="status" aria-live="polite"></span>
-                    <button type="button" class="btn btn-secondary" data-campaign-next>Nächste</button>
+                    <button type="button" class="btn btn-secondary" data-campaign-next>${globalThis.VTTUiHTML("Nächste")}</button>
                 </div>
                 <div class="book-scene-ledger">
                     ${campaigns.map((campaign) => {
@@ -703,15 +705,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             : `
                                 <div class="book-scene-join" data-campaign-id="${Number(campaign.id)}">
                                     ${campaign.your_membership_status === 'pending'
-                                        ? '<p role="status">Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.</p>'
+                                        ? `<p role="status">${globalThis.VTTUiHTML("Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.")}</p>`
                                         : campaign.can_request_join ? `
-                                            <p>Diese Runde sucht Spieler. Die Spielleitung bestätigt deinen Beitritt.</p>
-                                            <button type="button" class="btn btn-primary book-scene-action-btn" data-dashboard-action="request-campaign-join">Beitritt anfragen</button>
-                                        ` : '<p>Für diese Runde ist derzeit keine neue öffentliche Beitrittsanfrage möglich.</p>'}
-                                    <div class="book-scene-ledger-meta">Einladung von der Spielleitung? Öffne ihren Einladungslink — oder löse den Code hier ein:</div>
+                                            <p>${globalThis.VTTUiHTML("Diese Runde sucht Spieler. Die Spielleitung bestätigt deinen Beitritt.")}</p>
+                                            <button type="button" class="btn btn-primary book-scene-action-btn" data-dashboard-action="request-campaign-join">${globalThis.VTTUiHTML("Beitritt anfragen")}</button>
+                                        ` : `<p>${globalThis.VTTUiHTML("Für diese Runde ist derzeit keine neue öffentliche Beitrittsanfrage möglich.")}</p>`}
+                                    <div class="book-scene-ledger-meta">${globalThis.VTTUiHTML("Einladung von der Spielleitung? Öffne ihren Einladungslink — oder löse den Code hier ein:")}</div>
                                     <div class="book-scene-join-row">
-                                        <input type="text" data-join-input placeholder="Einladungscode" aria-label="Einladungscode" data-testid="join-code-input">
-                                        <button type="button" class="btn btn-primary book-scene-action-btn" data-dashboard-action="join-campaign" data-testid="join-code-submit">Beitreten</button>
+                                        <input type="text" data-join-input placeholder="${globalThis.VTTUiHTML("Einladungscode")}" aria-label="${globalThis.VTTUiHTML("Einladungscode")}" data-testid="join-code-input">
+                                        <button type="button" class="btn btn-primary book-scene-action-btn" data-dashboard-action="join-campaign" data-testid="join-code-submit">${globalThis.VTTUiHTML("Beitreten")}</button>
                                     </div>
                                     <div class="book-scene-ledger-meta" data-join-status role="status" hidden></div>
                                 </div>
@@ -743,8 +745,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const id = Number(character.id);
             const button = (action, label) => `<button type="button" class="btn btn-secondary book-scene-action-btn" data-character-action="${action}" data-character-id="${id}" data-character-name="${escapeHtml(character.name || '')}">${label}</button>`;
             const buttons = mode === 'archived'
-                ? [button('restore', 'Wiederherstellen'), button('delete', 'Endgültig löschen')]
-                : [button('duplicate', 'Duplizieren'), button('archive', 'Archivieren')];
+                ? [button('restore', globalThis.VTTUi("Wiederherstellen")), button('delete', globalThis.VTTUi("Endgültig löschen"))]
+                : [button('duplicate', globalThis.VTTUi("Duplizieren")), button('archive', globalThis.VTTUi("Archivieren"))];
             return `<div class="book-scene-action-row book-scene-action-row--inline">${buttons.join('')}</div>`;
         },
 
@@ -755,7 +757,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             return `
                 <details class="book-scene-panel" data-archived-characters>
                     <summary class="book-scene-panel-title">Archiv (${archived.length})</summary>
-                    <p>Archivierte Helden sind aus der Liste ausgeblendet. Wiederherstellen holt sie zurück, endgültiges Löschen entfernt sie.</p>
+                    <p>${globalThis.VTTUiHTML("Archivierte Helden sind aus der Liste ausgeblendet. Wiederherstellen holt sie zurück, endgültiges Löschen entfernt sie.")}</p>
                     ${this.buildCharacterLedger(archived, null, 'archived')}
                 </details>
             `;
@@ -776,7 +778,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                                 </div>
                                 <div class="book-scene-ledger-meta">Zuletzt bearbeitet: ${escapeHtml(draft.updated_at ? new Date(draft.updated_at).toLocaleString('de-DE') : '–')}</div>
                                 <div class="book-scene-action-row book-scene-action-row--inline">
-                                    <a class="btn btn-primary book-scene-action-btn" data-draft-continue="${Number(draft.id)}" href="/srd-creator?draft=${Number(draft.id)}">Weiterführen</a>
+                                    <a class="btn btn-primary book-scene-action-btn" data-draft-continue="${Number(draft.id)}" href="/srd-creator?draft=${Number(draft.id)}">${globalThis.VTTUiHTML("Weiterführen")}</a>
                                 </div>
                             </div>
                         `).join('')}
@@ -789,7 +791,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!Array.isArray(characters) || characters.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
-                        <div>Noch kein Held im Archiv. Lege hier den ersten Charakter an und führe ihn danach über Bogen und Kampagne in die Vorbereitung.</div>
+                        <div>${globalThis.VTTUiHTML("Noch kein Held im Archiv. Lege hier den ersten Charakter an und führe ihn danach über Bogen und Kampagne in die Vorbereitung.")}</div>
                     </div>
                 `;
             }
@@ -824,15 +826,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             ${Array.isArray(campaigns) || mode === 'archived' ? this.buildCharacterManageActions(character, mode) : ''}
                             ${Array.isArray(campaigns) && !character.is_party_stash ? `
                                 <form data-character-campaign="${Number(character.id)}" class="book-scene-panel">
-                                    <label for="characterCampaign_${Number(character.id)}">Mit einer Kampagne teilen</label>
+                                    <label for="characterCampaign_${Number(character.id)}">${globalThis.VTTUiHTML("Mit einer Kampagne teilen")}</label>
                                     <select id="characterCampaign_${Number(character.id)}" aria-label="Kampagne für ${escapeHtml(character.name)}" style="width:100%;min-width:0">
-                                        <option value="">Nur für mich</option>
+                                        <option value="">${globalThis.VTTUiHTML("Nur für mich")}</option>
                                         ${character.campaign_id && !campaigns.some(c => Number(c.id) === Number(character.campaign_id))
-                                            ? `<option value="${Number(character.campaign_id)}" selected>Bisherige Kampagne (kein aktiver Zugang)</option>` : ''}
+                                            ? `<option value="${Number(character.campaign_id)}" selected>${globalThis.VTTUiHTML("Bisherige Kampagne (kein aktiver Zugang)")}</option>` : ''}
                                         ${campaigns.map(c => `<option value="${Number(c.id)}"${Number(c.id) === Number(character.campaign_id) ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}
                                     </select>
-                                    <p>Mitglieder der gewählten Kampagne können diesen Charakter im Archiv, im Bogen und in der Vorbereitung sehen.</p>
-                                    <button class="btn btn-secondary" type="submit">Zuordnung speichern</button>
+                                    <p>${globalThis.VTTUiHTML("Mitglieder der gewählten Kampagne können diesen Charakter im Archiv, im Bogen und in der Vorbereitung sehen.")}</p>
+                                    <button class="btn btn-secondary" type="submit">${globalThis.VTTUiHTML("Zuordnung speichern")}</button>
                                     <p data-character-campaign-status role="status" hidden></p>
                                 </form>
                             ` : ''}
@@ -899,7 +901,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             ];
 
             return `
-                <nav class="book-toc" aria-label="Inhaltsverzeichnis">
+                <nav class="book-toc" aria-label="${globalThis.VTTUiHTML("Inhaltsverzeichnis")}">
                     <div class="book-toc-kicker">${escapeHtml(this.content('home.toc_kicker', 'Inhaltsverzeichnis'))}</div>
                     ${tocRows.map((row) => `
                         <a class="book-toc-row" href="${row.href || '#'}" ${row.action ? `data-dashboard-action="${row.action}"` : `data-book-route="${row.href}"`}>
@@ -909,8 +911,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             <span class="book-toc-count">${escapeHtml(row.countLabel || String(row.count))}</span>
                         </a>
                     `).join('')}
-                    <a class="book-toc-row" data-creation-engine-nav aria-disabled="true" tabindex="0">Creation Engine · wird geprüft</a>
-                    <a class="book-toc-row" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">Regelwerk · Vorschau</a>
+                    <a class="book-toc-row" data-creation-engine-nav aria-disabled="true" tabindex="0">${globalThis.VTTUiHTML("Creation Engine · wird geprüft")}</a>
+                    <a class="book-toc-row" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">${globalThis.VTTUiHTML("Regelwerk · Vorschau")}</a>
                 </nav>
                 ${homeState.authoring_available === true ? `
                     <div class="book-scene-panel">
@@ -971,10 +973,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 <div class="book-dashboard-camera">
                     <section class="book-dashboard-page" data-book-route="${routeKey}" role="region" aria-label="${leftTitle} page">
                         <div class="book-dashboard-topbar">
-                            <div class="book-dashboard-ribbon" role="navigation" aria-label="Buchnavigation">
+                            <div class="book-dashboard-ribbon" role="navigation" aria-label="${globalThis.VTTUiHTML("Buchnavigation")}">
                                 ${this.buildRibbon(routeKey)}
                             </div>
-                            <div class="book-dashboard-crest" aria-label="Current reader">${displayName}</div>
+                            <div class="book-dashboard-crest" aria-label="${globalThis.VTTUiHTML("Current reader")}">${displayName}</div>
                         </div>
 
                         ${options.showRunningHead !== false ? `
@@ -1076,9 +1078,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         { value: String(ownedCount), label: globalThis.VTTUi("Eigene Kampagnen") },
                     ])}
                     <section class="book-scene-panel">
-                        <span class="book-scene-panel-kicker">Kampagnenliste</span>
-                        <h2 class="book-scene-panel-title">Meine Kampagnen</h2>
-                        <p class="book-scene-panel-copy">Öffne von hier aus bestehende Kampagnen oder starte eine neue. Der produktive Weg danach bleibt derselbe: Hub, Session-Prep und erst dann Play.</p>
+                        <span class="book-scene-panel-kicker">${globalThis.VTTUiHTML("Kampagnenliste")}</span>
+                        <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Meine Kampagnen")}</h2>
+                        <p class="book-scene-panel-copy">${globalThis.VTTUiHTML("Öffne von hier aus bestehende Kampagnen oder starte eine neue. Der produktive Weg danach bleibt derselbe: Hub, Session-Prep und erst dann Play.")}</p>
                         ${this.buildActionButtons([
                             {
                                 label: globalThis.VTTUi("Neue Kampagne anlegen"),
@@ -1092,28 +1094,28 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 rightPage: `
                     <section class="book-spread-footer">
                         <div class="book-dashboard-widget-header">
-                            <h2>Kampagnen-Werkzeuge</h2>
-                            <span class="book-dashboard-widget-tag">Hub, Vorbereitung, Karten, Assets</span>
+                            <h2>${globalThis.VTTUiHTML("Kampagnen-Werkzeuge")}</h2>
+                            <span class="book-dashboard-widget-tag">${globalThis.VTTUiHTML("Hub, Vorbereitung, Karten, Assets")}</span>
                         </div>
                         <p class="book-dashboard-widget-copy">
-                            Die wichtigsten Folgeflächen sind bereits nutzbar und hängen am Kampagnen-Hub: Session-Prep, Karten, Assets und die nächsten Schritte Richtung Play.
+                            ${globalThis.VTTUiHTML("Die wichtigsten Folgeflächen sind bereits nutzbar und hängen am Kampagnen-Hub: Session-Prep, Karten, Assets und die nächsten Schritte Richtung Play.")}
                         </p>
                         <div class="book-scene-widget-stack">
                             <div class="book-scene-widget-card">
-                                <span>Einladungen</span>
-                                <small>Mitspieler aufnehmen und Kampagnen sauber für die gemeinsame Vorbereitung öffnen.</small>
+                                <span>${globalThis.VTTUiHTML("Einladungen")}</span>
+                                <small>${globalThis.VTTUiHTML("Mitspieler aufnehmen und Kampagnen sauber für die gemeinsame Vorbereitung öffnen.")}</small>
                             </div>
                             <div class="book-scene-widget-card">
-                                <span>Session-Prep</span>
-                                <small>Sessionstatus lesen, Charaktere zuweisen und entscheiden, ob Start, Fortsetzen oder Warten dran ist.</small>
+                                <span>${globalThis.VTTUiHTML("Session-Prep")}</span>
+                                <small>${globalThis.VTTUiHTML("Sessionstatus lesen, Charaktere zuweisen und entscheiden, ob Start, Fortsetzen oder Warten dran ist.")}</small>
                             </div>
                             <div class="book-scene-widget-card">
-                                <span>Karten</span>
-                                <small>Session-Karte setzen und den Kartenkontext für die nächste Runde vorbereiten.</small>
+                                <span>${globalThis.VTTUiHTML("Karten")}</span>
+                                <small>${globalThis.VTTUiHTML("Session-Karte setzen und den Kartenkontext für die nächste Runde vorbereiten.")}</small>
                             </div>
                             <div class="book-scene-widget-card">
-                                <span>Assets</span>
-                                <small>Sessionbezogene Assets öffnen, Upload vorbereiten und den Vorbereitungsstand vor dem Spielabend prüfen.</small>
+                                <span>${globalThis.VTTUiHTML("Assets")}</span>
+                                <small>${globalThis.VTTUiHTML("Sessionbezogene Assets öffnen, Upload vorbereiten und den Vorbereitungsstand vor dem Spielabend prüfen.")}</small>
                             </div>
                         </div>
                     </section>
@@ -1157,10 +1159,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             && Number(member.user_id) !== Number(campaign.owner_id)
                             && Number(member.user_id) !== Number(user?.id)
                             && ['PLAYER', 'OBSERVER'].includes(String(member.campaign_role || '').toUpperCase())
-                            ? `<button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="kick-player" data-member-id="${Number(member.user_id)}" data-member-name="${escapeHtml(member.username || 'Spieler')}">Spieler entfernen</button>` : ''}
+                            ? `<button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="kick-player" data-member-id="${Number(member.user_id)}" data-member-name="${escapeHtml(member.username || 'Spieler')}">${globalThis.VTTUiHTML("Spieler entfernen")}</button>` : ''}
                     </div>
                 `).join('')
-                : '<div class="book-scene-ledger-item is-empty">Noch keine Mitglieder.</div>';
+                : `<div class="book-scene-ledger-item is-empty">${globalThis.VTTUiHTML("Noch keine Mitglieder.")}</div>`;
 
             let sessionSummary;
             let sessionActions;
@@ -1210,21 +1212,21 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             const inviteSection = canManage ? `
                 <section class="book-scene-panel" id="campaignHubInvite">
-                    <span class="book-scene-panel-kicker">Spieler einladen</span>
-                    <h2 class="book-scene-panel-title">Einladen</h2>
-                    <p class="book-scene-panel-copy">Ein Link für bis zu 5 Beitritte - schick ihn an alle, die mitspielen sollen. Jede Anfrage darüber musst du unten bestätigen, bevor die Person Zugriff bekommt.</p>
+                    <span class="book-scene-panel-kicker">${globalThis.VTTUiHTML("Spieler einladen")}</span>
+                    <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Einladen")}</h2>
+                    <p class="book-scene-panel-copy">${globalThis.VTTUiHTML("Ein Link für bis zu 5 Beitritte - schick ihn an alle, die mitspielen sollen. Jede Anfrage darüber musst du unten bestätigen, bevor die Person Zugriff bekommt.")}</p>
                     <div class="book-scene-action-row book-scene-action-row--inline">
-                        <button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="generate-invite" data-testid="hub-invite-create">Einladungslink erzeugen</button>
+                        <button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="generate-invite" data-testid="hub-invite-create">${globalThis.VTTUiHTML("Einladungslink erzeugen")}</button>
                     </div>
                     <div class="play-launch-status" data-hub-invite-status role="status" hidden></div>
                     <div data-hub-invite-link-box data-testid="hub-invite-link-box">
-                        <div class="book-scene-ledger-item is-empty">Lädt …</div>
+                        <div class="book-scene-ledger-item is-empty">${globalThis.VTTUiHTML("Lädt …")}</div>
                     </div>
                 </section>
 
                 <section class="book-scene-panel" id="campaignHubJoinRequests">
-                    <span class="book-scene-panel-kicker">Beitrittsanfragen</span>
-                    <h2 class="book-scene-panel-title">Warten auf Bestätigung</h2>
+                    <span class="book-scene-panel-kicker">${globalThis.VTTUiHTML("Beitrittsanfragen")}</span>
+                    <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Warten auf Bestätigung")}</h2>
                     <div class="book-scene-ledger" data-hub-join-requests data-testid="hub-join-requests">
                         ${pendingMembers.length
                             ? pendingMembers.map((member) => `
@@ -1234,12 +1236,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                                         <span>wartet</span>
                                     </div>
                                     <div class="book-scene-action-row book-scene-action-row--inline">
-                                        <button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="approve-join-request" data-testid="hub-join-request-approve">Annehmen</button>
-                                        <button type="button" class="btn btn-secondary book-scene-action-btn" data-hub-action="deny-join-request" data-testid="hub-join-request-deny">Ablehnen</button>
+                                        <button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="approve-join-request" data-testid="hub-join-request-approve">${globalThis.VTTUiHTML("Annehmen")}</button>
+                                        <button type="button" class="btn btn-secondary book-scene-action-btn" data-hub-action="deny-join-request" data-testid="hub-join-request-deny">${globalThis.VTTUiHTML("Ablehnen")}</button>
                                     </div>
                                 </div>
                             `).join('')
-                            : '<div class="book-scene-ledger-item is-empty">Keine offenen Beitrittsanfragen.</div>'}
+                            : `<div class="book-scene-ledger-item is-empty">${globalThis.VTTUiHTML("Keine offenen Beitrittsanfragen.")}</div>`}
                     </div>
                 </section>
             ` : '';
@@ -1260,20 +1262,20 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     ${inviteSection}
                     <section class="book-scene-panel">
                         <div class="book-scene-ledger-head">
-                            <span class="book-scene-panel-kicker">Kampagnen-Hub</span>
+                            <span class="book-scene-panel-kicker">${globalThis.VTTUiHTML("Kampagnen-Hub")}</span>
                             <span class="play-launch-status-dot${campaignStatusTone ? ` is-${escapeHtml(campaignStatusTone)}` : ''}">${escapeHtml(campaignStatus)}</span>
                         </div>
-                        <h2 class="book-scene-panel-title">Übersicht</h2>
+                        <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Übersicht")}</h2>
                         <p class="book-scene-panel-copy">${escapeHtml(campaign.description || 'Noch keine Beschreibung hinterlegt.')}</p>
                         <div class="book-scene-ledger">${memberRows}</div>
-                        ${canLeave ? '<div class="book-scene-action-row"><button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="leave-campaign">Kampagne verlassen</button></div>' : ''}
+                        ${canLeave ? `<div class="book-scene-action-row"><button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="leave-campaign">${globalThis.VTTUiHTML("Kampagne verlassen")}</button></div>` : ''}
                         <p data-hub-membership-status role="status" aria-live="polite" hidden></p>
                     </section>
                 `,
                 rightPage: `
                     <section class="book-scene-panel" id="campaignHubSessionPrep">
-                        <span class="book-scene-panel-kicker">Vor dem Spielabend</span>
-                        <h2 class="book-scene-panel-title">Session-Vorbereitung</h2>
+                        <span class="book-scene-panel-kicker">${globalThis.VTTUiHTML("Vor dem Spielabend")}</span>
+                        <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Session-Vorbereitung")}</h2>
                         ${sessionSummary}
                         <div class="book-scene-action-row book-scene-action-row--inline">${sessionActions}</div>
                         <div class="play-launch-status" data-hub-status role="status" hidden></div>
@@ -1584,18 +1586,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     <div id="charactersMessageBox" class="book-scene-note" role="status" hidden></div>
                     <div id="charactersJourneyNote" class="book-scene-note" hidden></div>
                     <section class="book-scene-panel">
-                        <p>Übernimm einen exportierten Roll-Drauf-Light- oder D&amp;D-5e-Charakter in dein Archiv.</p>
+                        <p>${globalThis.VTTUiHTML("Übernimm einen exportierten Roll-Drauf-Light- oder D")}&amp;${globalThis.VTTUiHTML("D-5e-Charakter in dein Archiv.")}</p>
                         ${this.buildActionButtons([
                             { label: globalThis.VTTUi("Charakter importieren"), href: buildIntentHref('/characters', { intent: 'import' }), primary: true },
                         ])}
                         <p class="book-form-banner is-success" data-character-import-status role="status" aria-live="polite" hidden></p>
                     </section>
                     <section class="book-scene-panel" data-shared-characters>
-                        <h2 class="book-scene-panel-title">Charaktere deiner Runden</h2>
+                        <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Charaktere deiner Runden")}</h2>
                         ${snapshot?.shared_characters_error
-                            ? '<p role="status">Geteilte Charaktere konnten nicht geladen werden. Bitte lade die Seite erneut.</p>'
+                            ? `<p role="status">${globalThis.VTTUiHTML("Geteilte Charaktere konnten nicht geladen werden. Bitte lade die Seite erneut.")}</p>`
                             : sharedCharacters.length ? this.buildCharacterLedger(sharedCharacters)
-                            : '<p>Noch keine geteilten Charaktere. Andere Mitglieder können ihre Helden über die Kampagnen-Zuordnung in ihrem Archiv mit deiner Runde teilen.</p>'}
+                            : `<p>${globalThis.VTTUiHTML("Noch keine geteilten Charaktere. Andere Mitglieder können ihre Helden über die Kampagnen-Zuordnung in ihrem Archiv mit deiner Runde teilen.")}</p>`}
                     </section>
                 `,
                 leftPage: `
@@ -1605,8 +1607,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         { value: String(highestLevel), label: globalThis.VTTUi("Höchstes Level") },
                     ])}
                     <section class="book-scene-panel">
-                        <span class="book-scene-panel-kicker">Archiv</span>
-                        <h2 class="book-scene-panel-title">Heldenarchiv</h2>
+                        <span class="book-scene-panel-kicker">${globalThis.VTTUiHTML("Archiv")}</span>
+                        <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Heldenarchiv")}</h2>
                         ${this.buildActionButtons([
                             { label: globalThis.VTTUi("Held anlegen"), href: '/srd-creator', primary: true },
                         ])}

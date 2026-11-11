@@ -24,6 +24,7 @@ function candidate(node,parent,ancestors){
   if(['alert','confirm','Error','_showMessage','_logActivity','setStatus','showStatus','showToast','toast','setError','notify','announce','literal','status'].includes(n) && i===0)return true;
   if(['appendText','srdCell'].includes(n) && i===(n==='appendText'?2:0))return true;
   if(['h'].includes(n) && tags.has(tag) && i>=2)return true;
+  if(n==='button' && i===1 && ancestors.file.endsWith('book-scene.js'))return true;
   if(['text'].includes(n) && tags.has(tag) && i===1)return true;
   if(['el','element'].includes(n) && tags.has(tag)){
    const file=ancestors.file;
@@ -59,7 +60,7 @@ function visit(node,parent,ancestors,file,scriptOffset=0){
    item.refs.push({file,start:node.start+scriptOffset,end:node.end+scriptOffset,line:node.loc.start.line,kind:node.type,
     expressions:node.type==='TemplateLiteral'?node.expressions.map(e=>({start:e.start+scriptOffset,end:e.end+scriptOffset})):[], explicit:parent?.type==='CallExpression' && name(parent.callee)==='literal'});
    collected.set(key,item);
-  }else if(/[<>]/.test(source) && (candidate(node,parent,ancestors) || ancestors.some(a=>a.type==='AssignmentExpression' && name(a.left)==='innerHTML') || ancestors.some(a=>/render/i.test(name(a.id || a.key))))){
+  }else if(/[<>]/.test(source) && (candidate(node,parent,ancestors) || ancestors.some(a=>a.type==='AssignmentExpression' && name(a.left)==='innerHTML') || ancestors.some(a=>/(?:render|build)/i.test(name(a.id || a.key))))){
    const key='html_'+file+'_'+(node.start+scriptOffset);
    collected.set(key,{key,de:source,html:true,refs:[{file,start:node.start+scriptOffset,end:node.end+scriptOffset,line:node.loc.start.line,kind:node.type,
       expressions:node.type==='TemplateLiteral'?node.expressions.map(e=>({start:e.start+scriptOffset,end:e.end+scriptOffset})):[]} ]});
