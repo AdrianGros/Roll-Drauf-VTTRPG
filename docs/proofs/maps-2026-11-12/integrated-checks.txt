@@ -1,0 +1,114 @@
+....................................                                     [100%]
+=============================== warnings summary ===============================
+../usr/local/lib/python3.12/site-packages/_pytest/config/__init__.py:858
+  /usr/local/lib/python3.12/site-packages/_pytest/config/__init__.py:858: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; tests.play_shared
+    self.import_plugin(import_spec)
+
+tests/test_c04_map_library.py::test_dm_snapshot_creates_asset_map_and_receipt_atomically
+  /usr/local/lib/python3.12/site-packages/engineio/async_drivers/eventlet.py:1: EventletDeprecationWarning: 
+  Eventlet is deprecated. It is currently being maintained in bugfix mode, and
+  we strongly recommend against using it for new projects.
+  
+  If you are already using Eventlet, we recommend migrating to a different
+  framework.  For more detail see
+  https://eventlet.readthedocs.io/en/latest/asyncio/migration.html
+  
+    from eventlet.green.threading import Event
+
+tests/test_c04_map_library.py::test_dm_snapshot_creates_asset_map_and_receipt_atomically
+  /usr/local/lib/python3.12/site-packages/reportlab/lib/rl_safe_eval.py:11: DeprecationWarning: ast.NameConstant is deprecated and will be removed in Python 3.14; use ast.Constant instead
+    haveNameConstant = hasattr(ast,'NameConstant')
+
+tests/test_c04_map_library.py::test_dm_snapshot_creates_asset_map_and_receipt_atomically
+  /usr/local/lib/python3.12/site-packages/flask_sqlalchemy/model.py:30: SAWarning: relationship 'User.owned_campaigns' will copy column users.id to column campaigns.owner_id, which conflicts with relationship(s): 'Campaign.dm' (copies users.id to campaigns.owner_id), 'User.campaigns_as_dm' (copies users.id to campaigns.owner_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="campaigns_as_dm,dm"' to the 'User.owned_campaigns' relationship. (Background on this warning at: https://sqlalche.me/e/20/qzyx) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
+    return cls.query_class(
+
+tests/test_c04_map_library.py::test_dm_snapshot_creates_asset_map_and_receipt_atomically
+  /usr/local/lib/python3.12/site-packages/flask_sqlalchemy/model.py:30: SAWarning: relationship 'Campaign.owner' will copy column users.id to column campaigns.owner_id, which conflicts with relationship(s): 'Campaign.dm' (copies users.id to campaigns.owner_id), 'User.campaigns_as_dm' (copies users.id to campaigns.owner_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="campaigns_as_dm,dm"' to the 'Campaign.owner' relationship. (Background on this warning at: https://sqlalche.me/e/20/qzyx) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
+    return cls.query_class(
+
+tests/test_c04_map_library.py::test_dm_snapshot_creates_asset_map_and_receipt_atomically
+  /usr/local/lib/python3.12/site-packages/flask_sqlalchemy/model.py:30: SAWarning: relationship 'Campaign.member_records' will copy column campaigns.id to column campaign_members.campaign_id, which conflicts with relationship(s): 'Campaign.members' (copies campaigns.id to campaign_members.campaign_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="members"' to the 'Campaign.member_records' relationship. (Background on this warning at: https://sqlalche.me/e/20/qzyx) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
+    return cls.query_class(
+
+tests/test_c04_map_library.py::test_dm_snapshot_creates_asset_map_and_receipt_atomically
+  /usr/local/lib/python3.12/site-packages/flask_sqlalchemy/model.py:30: SAWarning: relationship 'CampaignMember.campaign' will copy column campaigns.id to column campaign_members.campaign_id, which conflicts with relationship(s): 'Campaign.members' (copies campaigns.id to campaign_members.campaign_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="members"' to the 'CampaignMember.campaign' relationship. (Background on this warning at: https://sqlalche.me/e/20/qzyx) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
+    return cls.query_class(
+
+tests/test_c04_map_library.py::test_dm_snapshot_creates_asset_map_and_receipt_atomically
+  /usr/local/lib/python3.12/site-packages/flask_sqlalchemy/model.py:30: SAWarning: relationship 'Campaign.game_sessions' will copy column campaigns.id to column game_sessions.campaign_id, which conflicts with relationship(s): 'Campaign.sessions' (copies campaigns.id to game_sessions.campaign_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="sessions"' to the 'Campaign.game_sessions' relationship. (Background on this warning at: https://sqlalche.me/e/20/qzyx) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
+    return cls.query_class(
+
+tests/test_c04_map_library.py::test_dm_snapshot_creates_asset_map_and_receipt_atomically
+  /usr/local/lib/python3.12/site-packages/flask_sqlalchemy/model.py:30: SAWarning: relationship 'GameSession.campaign' will copy column campaigns.id to column game_sessions.campaign_id, which conflicts with relationship(s): 'Campaign.sessions' (copies campaigns.id to game_sessions.campaign_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="sessions"' to the 'GameSession.campaign' relationship. (Background on this warning at: https://sqlalche.me/e/20/qzyx) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
+    return cls.query_class(
+
+tests/test_c04_map_library.py: 106 warnings
+tests/test_c04_mapmaker_browser.py: 18 warnings
+tests/test_play_presentation_browser.py: 45 warnings
+  /usr/local/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:3627: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    return util.wrap_callable(lambda ctx: fn(), fn)  # type: ignore
+
+tests/test_c04_map_library.py: 20 warnings
+tests/test_c04_mapmaker_browser.py: 1 warning
+tests/test_play_presentation_browser.py: 5 warnings
+  /app/tests/play_shared.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    joined_at=datetime.utcnow(),
+
+tests/test_c04_map_library.py: 20 warnings
+tests/test_c04_mapmaker_browser.py: 1 warning
+tests/test_play_presentation_browser.py: 5 warnings
+  /app/tests/play_shared.py:38: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    invited_at=datetime.utcnow(),
+
+tests/test_c04_map_library.py: 20 warnings
+tests/test_c04_mapmaker_browser.py: 1 warning
+tests/test_play_presentation_browser.py: 5 warnings
+  /app/tests/play_shared.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    accepted_at=datetime.utcnow(),
+
+tests/test_c04_map_library.py: 20 warnings
+tests/test_c04_mapmaker_browser.py: 1 warning
+tests/test_play_presentation_browser.py: 5 warnings
+  /app/tests/play_shared.py:53: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    joined_at=datetime.utcnow(),
+
+tests/test_c04_map_library.py: 20 warnings
+tests/test_c04_mapmaker_browser.py: 1 warning
+tests/test_play_presentation_browser.py: 5 warnings
+  /app/tests/play_shared.py:54: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    invited_at=datetime.utcnow(),
+
+tests/test_c04_map_library.py: 20 warnings
+tests/test_c04_mapmaker_browser.py: 1 warning
+tests/test_play_presentation_browser.py: 5 warnings
+  /app/tests/play_shared.py:55: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    accepted_at=datetime.utcnow(),
+
+tests/test_c04_map_library.py: 40 warnings
+tests/test_c04_mapmaker_browser.py: 27 warnings
+  /app/vtt/security.py:26: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    user = User.query.get(user_id)
+
+tests/test_c04_map_library.py: 20 warnings
+tests/test_c04_mapmaker_browser.py: 1 warning
+  /app/vtt/endpoints/mapmaker.py:189: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    project.updated_at = datetime.utcnow()
+
+tests/test_c04_map_library.py: 20 warnings
+  /usr/local/lib/python3.12/site-packages/flask_sqlalchemy/extension.py:868: SAWarning: Can't sort tables for DROP; an unresolvable foreign key dependency exists between tables: moderation_actions, moderation_reports; and backend does not support ALTER.  To restore at least a partial sort, apply use_alter=True to ForeignKey and ForeignKeyConstraint objects involved in the cycle to mark these as known cycles that will be ignored.
+    getattr(metadata, op_name)(bind=engine)
+
+tests/test_c04_mapmaker_browser.py::test_dm_library_to_table_firefox_player_sees_card_source_unchanged_and_retry_uploads_once
+tests/test_c04_mapmaker_browser.py::test_dm_library_to_table_firefox_player_sees_card_source_unchanged_and_retry_uploads_once
+  /app/vtt/endpoints/assets.py:208: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    asset = Asset.query.get(asset_id)
+
+tests/test_c04_mapmaker_browser.py::test_dm_library_to_table_firefox_player_sees_card_source_unchanged_and_retry_uploads_once
+tests/test_c04_mapmaker_browser.py::test_dm_library_to_table_firefox_player_sees_card_source_unchanged_and_retry_uploads_once
+tests/test_c04_mapmaker_browser.py::test_dm_library_to_table_firefox_player_sees_card_source_unchanged_and_retry_uploads_once
+  /app/vtt/endpoints/assets.py:173: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    asset = Asset.query.get(asset_id)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+36 passed, 447 warnings in 345.14s (0:05:45)

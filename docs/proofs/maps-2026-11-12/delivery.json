@@ -1,0 +1,85 @@
+{
+  "commit": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
+  "base_source": "5ce0721096f80decfe4036755cf5d3782596a08d",
+  "running_revision_label": "5ce0721096f80decfe4036755cf5d3782596a08d",
+  "image": "roll-drauf-vtt-app:feedback-maps-20261111-8848c621c",
+  "base_image_id": "sha256:b502136aa78190636823e9685042731375aa74cf9f0a114c9a8455309b98e7da",
+  "prior_image": "roll-drauf-vtt-app:feedback-maps-rollback-20261111-b502136aa781",
+  "overlay_manifest": {
+    "vtt/play/__init__.py": "1480c7fb315a0dc82773faf1ec44cfc67029cdbddd3d4619ec6a8a6349ab6ca2",
+    "vtt/play/map_library.py": "d9cc34a7449fbf7759ddd19d22cd55b2905d2b3f7b63e0e9ab66dba6d470f732",
+    "vtt/play/surfaces/dm.json": "af868d3abf115c2d22d063b6e892a06c9ed595a46bb2ef1e3c97c7c2fcfefb08",
+    "vtt/static/i18n/ui.de.json": "c59b5944f3077896c752cc593480844f15d888667b486cb4847b1e2d3b06c29f",
+    "vtt/static/i18n/ui.en.json": "b6d5a3e358dea20748b657095ab3d9bd49ac710d893146c9d59d75d23d2038dd",
+    "vtt/static/js/play-dm.js": "a2afb5852957e8c2522ac3d50adaef225fba6d6d3753913e5a3d6ccfd53a338e",
+    "vtt/static/js/play-map-library.js": "09dba4c5c1bef7c4d80a0c87ebc06da9b1cc7f65d60178f4ebeceba3438a1f15",
+    "vtt/static/js/play-ui.js": "4bc51c11cdd0c05ca4f6c97c08a9de7760220fa21aa770c2b9fb01a7ae809ce2",
+    "vtt/static/js/ui-catalog.js": "b8585f325e7f6e4cc823c7695c3196556786087d2c0025f46464438ca75222ae",
+    "vtt/static/mapmaker/index.html": "5a68c7e8afa4e4210b3751ac4c45cbebf51860bebc937199e703d904a59fb454",
+    "vtt/static/mapmaker/js/app.js": "8763cae7966a3089fe38a40091e73f7b15e3abd71c4433c8749d09f7b9fef83b",
+    "vtt/static/mapmaker/js/history.js": "30fcbefbe8562b5a13d2c7ba80bfbd9f797ec46341065104d5ff750952bcdf1c",
+    "vtt/static/mapmaker/js/snapshot.js": "7aab7697bf14b8bf117063f888591bfbc4e2db7861faef4d2a65d53cf2f42ab8",
+    "vtt/static/mapmaker/js/stamps.js": "94d01e52b31a49d13eec1abc081e8dc8a72473fef80bd74fb51314ddfcf43dd2",
+    "vtt/static/mapmaker/js/tools.js": "25d7e1fa2ead6673e8ea29d0d335174351a581761a8b6553c239fc1758052d95",
+    "vtt/static/mapmaker/js/ui.js": "f5765b8b6be31dddac4635e4191e5f42df7c203bb7f41a55eb9a3dc613a197d4",
+    "vtt/static/mapmaker/mapmaker.css": "b9784f3dae49a030e1b82c5ccfac31fac79568d3a74ff3c8889193fb616c3da5"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_before": {
+    "/roll-drauf-vtt-mailserver-1": {
+      "id": "d17377aeced889c1b8f7179bac736196c8985f3440036ea09568b8c7db088743",
+      "started_at": "2026-11-10T16:17:34.845940374Z"
+    },
+    "/roll-drauf-vtt-db-1": {
+      "id": "75d0b239cd1d6a8f2f791e78028aa6c42142a55f679cf663a49c0a731be62a49",
+      "started_at": "2026-11-10T16:17:34.827250527Z"
+    },
+    "/roll-drauf-vtt-redis-1": {
+      "id": "37ac298892f547099b3844172945475c17e206996b6596d68a3189fd240ead4c",
+      "started_at": "2026-11-10T16:17:34.8087529Z"
+    }
+  },
+  "prepared_at": "2026-11-12T14:07:19.515332+00:00",
+  "image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
+  "built_source_verification": {
+    "checked": 252,
+    "mismatches": []
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "deployed_at": "2026-11-12T14:08:51.278492795Z",
+  "health": {
+    "now": "2026-11-12T14:09:00.174436",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-12T14:08:57.187835",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-11/feedback-maps/8848c621c/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "database_backup": {
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "status": "functional_live_pass_mobile_medium_rework_required",
+  "remote_push": "origin/feat/protocol-feedback-20261110 8848c621c successful",
+  "live_journeys": "live-maps-result.json",
+  "checks": "checks.json",
+  "pending_medium": [
+    "390px Import/Export centre is covered by existing main navigation; native layout rework required"
+  ],
+  "cleanup": "cleanup-result.json",
+  "not_run": [
+    "Human complete acceptance",
+    "Actual rollback execution"
+  ]
+}

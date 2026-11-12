@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
-  "status": "execution_started",
-  "phase": "deploy_C01_C02_rework_C04",
+  "status": "native_subscription_quota_blocked",
+  "phase": "deploy_rework_C02_C04_C06",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -28,27 +28,26 @@
     "model_policy_reason": "Subscription quota conservation after optional preference window; extra usage disabled",
     "latest_quota_probe": {
       "date": "2026-11-12",
-      "five_hour_percent": 53,
-      "seven_day_percent": 87,
+      "five_hour_percent": 100,
+      "seven_day_percent": 97,
       "extra_usage_enabled": false
     },
     "latest_quota": {
       "five_hour": {
-        "utilization": 0.0,
-        "resets_at": null
+        "utilization": 100.0,
+        "resets_at": "2026-11-12T18:10:00.034352+00:00"
       },
       "seven_day": {
-        "utilization": 91.0,
-        "resets_at": "2026-11-15T09:59:59.989572+00:00"
+        "utilization": 97.0,
+        "resets_at": "2026-11-15T10:00:00.034373+00:00"
       },
       "extra_usage": {
-        "is_enabled": false,
-        "utilization": null
+        "is_enabled": false
       }
     },
     "quota_evidence": "docs/proofs/claude-program-2026-11-12/execution-state.json",
     "resumed_at": "2026-11-12T13:12:26Z",
-    "implementation_choice": "Owner confirmed Claude is available; continuing original Claude workflow, no provider fallback."
+    "implementation_choice": "Continue native Claude subscription as explicitly requested; no engine-choice question pending, no API/extrausage fallback"
   },
   "roles": {
     "implementation": [
@@ -88,7 +87,7 @@
     {
       "id": "C01",
       "title": "Darstellung, UI-Sprache und Buchnavigation",
-      "status": "reviewed_checks_passed_delivery_pending",
+      "status": "complete_live_verified",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -101,7 +100,7 @@
         "R14",
         "R28"
       ],
-      "next_phase": "deploy",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": "fb9642e32b4533b617df15291e5c5a1cb572b499",
       "owned_files": [
@@ -130,13 +129,13 @@
         "P1-Rollentrennung und Kartenmaßstab erhalten"
       ],
       "execution_session_id": "9194c947-691f-431c-b8e0-1ab43cd95531",
-      "source_commit": "f5790c2400b92a0dd490658ebd3d2a887601183d",
-      "deployed_image_id": "sha256:86ac41ff39eb8deaedc7bc4836102a1427df0621a1201434175f797ff48cc270",
-      "live_verification": "docs/proofs/presentation-2026-11-12/delivery.json",
+      "source_commit": "5ce0721096f80decfe4036755cf5d3782596a08d",
+      "deployed_image_id": "sha256:b502136aa78190636823e9685042731375aa74cf9f0a114c9a8455309b98e7da",
+      "live_verification": "docs/proofs/characters-presentation-2026-11-12/live-contrast-result.json",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
       "candidate_commit": "4dca29475",
       "review_model": "sonnet",
-      "known_gap": "Five real PlayChrome role/theme/mapcolor tests pass; independent source review ready, live follow-up pending.",
+      "known_gap": null,
       "review_findings": [
         "F1: remaining authored hub literals",
         "F2: EN data-boundary acceptance"
@@ -149,12 +148,14 @@
         "vtt/templates/regelwerk-compendium.html",
         "tests/test_c01_rulebook_browser.py",
         "tests/test_play_presentation_browser.py"
-      ]
+      ],
+      "current_runtime_image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
+      "preserved_in_source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0"
     },
     {
       "id": "C02",
       "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
-      "status": "integrated_reviewed_delivery_pending",
+      "status": "live_medium_rework_required",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -192,15 +193,17 @@
         "Prüfung führt zum Feld; Talentwiederholung geprüft"
       ],
       "execution_session_id": "bf179ad0-fa5c-431a-a44a-56d286808cb2",
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "5ce0721096f80decfe4036755cf5d3782596a08d",
+      "deployed_image_id": "sha256:b502136aa78190636823e9685042731375aa74cf9f0a114c9a8455309b98e7da",
+      "live_verification": "docs/proofs/characters-presentation-2026-11-12/live-findings.md",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
       "handoff": "docs/proofs/claude-c02-2026-11-12/handoff.json",
       "candidate_commit": "94b8b78ef",
       "execution_model": "sonnet",
-      "known_gap": "Final lock3cases pass; legacy SRD5cases pass across initial4+explicit-view1. Independent review ready; live journey pending."
+      "known_gap": "Firefox real different-image replace stores new image but current DOM retains old decoded image; next picker/recomposition needs bounded native follow-up; remaining full live character journey incomplete",
+      "current_runtime_image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
+      "preserved_in_source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0"
     },
     {
       "id": "C03",
@@ -255,7 +258,7 @@
     {
       "id": "C04",
       "title": "2D-Kartenbedienung und Bibliothek zum Spieltisch",
-      "status": "rework_checks_running",
+      "status": "functional_live_pass_mobile_medium_rework_required",
       "implementer": "vtt-maps-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -303,14 +306,14 @@
         "Optionales Stempelraster, Kachelpinselgröße, aktuelle Assets/Credits erhalten"
       ],
       "execution_session_id": "735da98a-2ade-4535-8e75-bf97251a8652",
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
+      "deployed_image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
+      "live_verification": "docs/proofs/maps-2026-11-12/delivery.json",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C04_2026-11-11.md",
       "handoff": "docs/proofs/claude-c04-2026-11-12/handoff.json",
-      "candidate_commit": "c516d2272",
+      "candidate_commit": "7474692d5",
       "execution_model": "sonnet",
-      "known_gap": "Native remaining source fixes/new real browser cases written, targeted API/browser run pending; not integrated/live."
+      "known_gap": "390px Import/Export wrapped header controls covered by main navigation; desktop editor, real two-stage retry and Firefox390 Player sharing pass"
     },
     {
       "id": "C05",
@@ -344,7 +347,7 @@
     {
       "id": "C06",
       "title": "Kampagnen-Hub, Kalender und Sessionplanung",
-      "status": "planned",
+      "status": "partial_native_quota_blocked_not_deployed",
       "implementer": "vtt-domain-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -368,12 +371,15 @@
         "Offene DM-Termine und eigene fehlende Abstimmung sichtbar",
         "Brauchbare Vorbereitung weiterhin erreichbar"
       ],
-      "execution_session_id": null,
-      "source_commit": null,
+      "execution_session_id": "b6847237-26f2-4df4-818f-4916f0e9e965",
+      "source_commit": "df9e3cc5ff92fba0f4f15ea3301baa500f41ef6b",
       "deployed_image_id": null,
       "live_verification": null,
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C06_2026-11-11.md",
-      "apply_contract": "docs/DADM_APPLY_CLAUDE_C06_2026-11-11.md"
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C06_2026-11-11.md",
+      "candidate_branch": "claude/vtt-c06-20261112",
+      "known_gap": "76passed4failed cancellation403; new full browser/PG concurrency/review/migration/live pending",
+      "evidence": "docs/proofs/claude-program-2026-11-12/c06-partial-state.json"
     },
     {
       "id": "C07",
@@ -523,5 +529,5 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "Resume bounded C01/C02/C04 through Claude after12Nov12:40Europe/Berlin, or after explicit pending user choice of Codex implementation; keep independent review and live gates. No automatic API/ExtraUsage fallback."
+  "next_step": "After native quota reset19:10Europe/Berlin: close C02 Firefox identity refresh and C04 mobile header Medium findings; finish C06 four403 cases/browser/PG/review/live; then remaining C05/C07/C08/C09 and C10 combined checklist. No background job scheduled."
 }

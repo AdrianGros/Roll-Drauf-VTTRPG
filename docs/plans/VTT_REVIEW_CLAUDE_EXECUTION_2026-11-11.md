@@ -175,3 +175,24 @@ Abo-Anmeldung und API-Key-Vorrang:
 [Anthropic-Hilfe](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-max-or-ultra-plan).
 Diese Quellen belegen verfügbare Funktionen, nicht einen bereits erfolgreichen
 Implementierungslauf. Noch kein neuer Gesamt-Livezustand, kein ausgeführter Rollback.
+
+
+## Ausführungsstand nach nativer Fortsetzung am12.11.
+
+Claude war erneut verfügbar und hat C01/C02-Nacharbeit, C04-Editor-/Snapshotcode
+und den größten Teil von C06 implementiert. Aktuelle Livequelle8848c621c,
+Image75338d7e…, erfolgreich gepusht;36 gemeinsame Karten-/PlayChromechecks,
+7 integrierte Bogenrechtechecks und echte Chromium-DM/Firefox-Player-Reisen.
+C01/C03 vollständig technisch geprüft. C02 bleibt wegen belegtem veraltetem
+Firefox-Bild nach erfolgreichem Austausch offen. C04-Bibliothek→Tisch samt
+Aktivierungsretry besteht;390px Import/Export liegen unter der Navigation und
+brauchen begrenzte Nacharbeit. Synthetische Daten/Dateien/Zugangsdaten entfernt.
+
+C06 ist in origin/claude/vtt-c06-20261112 gesichert:76pass4fail403 bei Terminabsagen;
+volle neue Browser-/PostgreSQL-/Review-/Liveabnahme fehlt. C05/C07/C08/C09/C10
+sind weiterhin unvollständig. Claude erreicht erneut das Fünfstundenlimit100%,
+Reset19:10Europe/Berlin; Wochenstand97%, ExtraUsageaus. Die frühere optionale
+Enginefrage ist erledigt: Owner bestätigte Claude, kein Providerwechsel.
+Kein Hintergrund- oder Zeitauftrag eingerichtet. Nächster Schritt ist ausdrücklich
+begrenzte C02/C04-Livefehlernacharbeit, danach C06 und die übrigen Gates.
+[Exakter Fortsetzungsstand](../DADM_DEPLOY_CLAUDE_HANDOFF_2026-11-12.md).

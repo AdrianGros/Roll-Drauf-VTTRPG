@@ -321,9 +321,15 @@ das vorhandene Abo** eingeplant; Codex koordiniert, führt Tests aus, integriert
 und liefert live. Verbindliche Aufträge und neue Reihenfolge stehen im
 [Claude-Ausführungsplan](VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.md).
 
-P1–P3 bleiben technisch geliefert. P4 wurde lokal implementiert/teilweise geprüft,
-aber noch nicht aktiviert; zusätzliche UI-Quellen und neue Reviewkriterien brauchen
-Nacharbeit. Die aktuelle Planungsrunde ist kein Abschluss des Gesamtpakets.
+P1–P3 bleiben technisch geliefert. C01-Darstellung/Sprachen einschließlich der
+PlayChrome-Kontrastnacharbeit und C03-Loginfrist sind live geprüft. C02-Bogen und
+C04-Kartenfunktionen sind in Quelle8848c621c live; zwei mittlere Live-Befunde
+(Firefox-Bildaktualisierung und mobiler Import-/Export-Kopf) verhindern deren Abschluss.
+C06-Kalender ist separat als teilweise implementierter Branch gesichert,76pass4fail,
+noch nicht integriert oder live. Claude-Abo-Kontingent ist erneut ausgeschöpft,
+Reset12.11.19:10Europe/Berlin, kein automatischer API-/Zusatznutzungsfallback.
+Der verbindliche Fortsetzungsstand steht im
+[Handoff](../DADM_DEPLOY_CLAUDE_HANDOFF_2026-11-12.md). Das Gesamtpaket ist nicht testbereit.
 Kartenbedienung und Bibliothek→Tisch kommen vor Generator und Atlas; P6 hängt
 nun ausdrücklich auch von P5 ab. Kalender, private Gespräche und Compendium-Wege
 sind als eigene neue Pakete mit vorgeschaltetem Discover/Apply sichtbar. Keine

@@ -1,0 +1,93 @@
+{
+  "commit": "5ce0721096f80decfe4036755cf5d3782596a08d",
+  "base_source": "f5790c2400b92a0dd490658ebd3d2a887601183d",
+  "running_revision_label": "f5790c2400b92a0dd490658ebd3d2a887601183d",
+  "image": "roll-drauf-vtt-app:feedback-characters-presentation-20261111-5ce072109",
+  "base_image_id": "sha256:86ac41ff39eb8deaedc7bc4836102a1427df0621a1201434175f797ff48cc270",
+  "prior_image": "roll-drauf-vtt-app:feedback-characters-presentation-rollback-20261111-86ac41ff39eb",
+  "overlay_manifest": {
+    "vtt/characters/routes.py": "9e1cdd57f5126d6080389f6c92a5a04ba034ef607b4c9c71b8bd07e3d1872f33",
+    "vtt/static/css/display-preferences.css": "a6e11783286743f29ce4e8e699a9c4409f82009c6162a79e80a3aa374a437377",
+    "vtt/static/css/sheet-feedback.css": "20c55b9f3a27098a300e47e302f8a82acc1a2c3c71f92185ce1ed369c950d99a",
+    "vtt/static/i18n/ui.de.json": "46f554436286068b83acffd973a612b3597a2c6f57ab253d9c650ea683a3e56a",
+    "vtt/static/i18n/ui.en.json": "315269b5cc011f6647601536b67d96e115ac56e2b2024647cafd31c40426242e",
+    "vtt/static/js/sheet-feedback.js": "784c6c5d855187407d4bf5eed5e8880d80d55125620e22cdee5302977e3a10e0",
+    "vtt/static/js/srd-creator-steps.js": "6b141e58c4651810c6585d4fbd777ada737a8c3be33a3f983ccf990a41b96cd9",
+    "vtt/static/js/srd-creator.js": "8922964863fbae30139f27aa4dfe704f440f3d1fcb9b3a5fd6596b6d965ef701",
+    "vtt/static/js/srd-inventory-ui.js": "118f4520ba53d932d822aadef297d420924c76515083983678f94ab427074437",
+    "vtt/static/js/srd-manage-ui.js": "fe5bcbdaf34c7252093551c3e62b427f242af40b08e88c08c4243021a4c2cae5",
+    "vtt/static/js/srd-progression-ui.js": "6aab1ab4450169e7717a5f882432ef2ece82feeb1caa4d3fbe48b6ef98e9fd18",
+    "vtt/static/js/ui-catalog.js": "1c76c4782134bf2e87eb0e2abafbc4792c4c53f3aca88f12e8c2a41300bbff7a",
+    "vtt/templates/character-sheet.html": "ed90a47e3b58255fe8ff78c9843b097f7a3cf862e100753703f0904db851d616"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_before": {
+    "/roll-drauf-vtt-mailserver-1": {
+      "id": "d17377aeced889c1b8f7179bac736196c8985f3440036ea09568b8c7db088743",
+      "started_at": "2026-11-10T16:17:34.845940374Z"
+    },
+    "/roll-drauf-vtt-db-1": {
+      "id": "75d0b239cd1d6a8f2f791e78028aa6c42142a55f679cf663a49c0a731be62a49",
+      "started_at": "2026-11-10T16:17:34.827250527Z"
+    },
+    "/roll-drauf-vtt-redis-1": {
+      "id": "37ac298892f547099b3844172945475c17e206996b6596d68a3189fd240ead4c",
+      "started_at": "2026-11-10T16:17:34.8087529Z"
+    }
+  },
+  "prepared_at": "2026-11-12T13:37:51.491715+00:00",
+  "image_id": "sha256:b502136aa78190636823e9685042731375aa74cf9f0a114c9a8455309b98e7da",
+  "built_source_verification": {
+    "checked": 248,
+    "mismatches": []
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "deployed_at": "2026-11-12T13:40:22.740729758Z",
+  "health": {
+    "now": "2026-11-12T13:40:31.353811",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-12T13:40:29.364546",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-11/feedback-characters-presentation/5ce072109/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "database_backup": {
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "remote_push": "origin/feat/protocol-feedback-20261110 5ce072109, verified successful with existing admin repository key",
+  "checks": {
+    "play_chrome": "5 passed integrated after async initialization wait",
+    "character_permissions": "7 passed integrated",
+    "integrated_owner_lock_and_nonowners": "3 passed in mixed run (contrast click-before-init failed, separately fixed and rechecked)",
+    "legacy_srd_browser": "5 unique desktop cases pass across focused runs; explicit mode=view inventory entry matched changed default editing design",
+    "catalog": "2818 authored sources complete DE/EN, --check passed",
+    "independent_reviews": "c01-review.md and c02-review.md; no Medium or higher findings"
+  },
+  "status": "C01_live_pass_C02_live_rework_required",
+  "navigation": {
+    "owner": "Characters → Open sheet; own sheet defaults editable; Manage tab images/copy, local lock; explicit read-only available",
+    "dm_player": "Campaign hub → explicit DM or Player entry → normal toolbar/sidebar"
+  },
+  "not_run": [
+    "Full program C01-C09 combined acceptance",
+    "Human DM/Player game session",
+    "Actual rollback execution"
+  ],
+  "live_journeys": "live-contrast-result.json",
+  "pending_medium": [
+    "C02 Firefox replaces stored image but current DOM keeps previously decoded image; repeat picker/recomposition investigation pending"
+  ],
+  "cleanup": "cleanup-result.json"
+}

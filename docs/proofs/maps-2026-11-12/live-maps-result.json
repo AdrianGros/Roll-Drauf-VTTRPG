@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "checks": {
+    "source_digest_before": "42c416a9203eff6f5d0da0517505787572dd2fb3829c111e5cbd4d90f4fc7bcc",
+    "one_snapshot_upload_after_activation_retry": true,
+    "private_source_unchanged": true,
+    "player_no_private_source_or_dm_controller": true,
+    "player_shared_png_visible": true
+  },
+  "journeys": [
+    "Normal Maps navigation→empty own project→visible save/library/import/export→optional stamp grid placement→one undo/redo→save editable project; editor390 no horizontal overflow (hit-test verified separately)",
+    "Normal DM hub→pages Add→own library→real preview and sharing consent→failed activation→retry uploads once; Firefox390 Player sees same active map, cannot get private source"
+  ],
+  "errors": [],
+  "project_id": "afd7f784-6c9d-487a-826a-a76ed349a5e1",
+  "map_id": 33,
+  "asset_id": 82
+}

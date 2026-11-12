@@ -1,14 +1,14 @@
 {
-  "status": "native_implementation_resumed",
+  "status": "native_subscription_quota_blocked_with_two_live_medium_findings",
   "date": "2026-11-12",
   "quota": {
     "five_hour": {
-      "utilization": 48.0,
-      "resets_at": "2026-11-12T18:09:59.871332+00:00"
+      "utilization": 100.0,
+      "resets_at": "2026-11-12T18:10:00.034352+00:00"
     },
     "seven_day": {
-      "utilization": 94.0,
-      "resets_at": "2026-11-15T09:59:59.871389+00:00"
+      "utilization": 97.0,
+      "resets_at": "2026-11-15T10:00:00.034373+00:00"
     },
     "extra_usage": {
       "is_enabled": false
@@ -16,45 +16,50 @@
   },
   "automatic_api_or_extra_usage": false,
   "live": {
-    "source": "f5790c2400b92a0dd490658ebd3d2a887601183d",
-    "image_id": "sha256:86ac41ff39eb8deaedc7bc4836102a1427df0621a1201434175f797ff48cc270",
-    "C01": "functional_pass_medium_contrast_rework_open",
+    "source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
+    "image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
+    "C01": "complete_live_verified",
     "C03": "complete_live_verified",
-    "proof": "../presentation-2026-11-12/delivery.json"
+    "proof": "../maps-2026-11-12/delivery.json",
+    "C02": "live_medium_identity_refresh_rework_required",
+    "C04": "functional_live_pass_mobile_medium_rework_required"
   },
   "workers": {
     "C01": {
       "path": "/home/admin/projects/roll-drauf-vtt-claude-c01-20261111",
       "source": "4dca29475",
       "rework_session": "7a861752-f9c5-4618-b978-ac7875806182",
-      "remaining": "Integrated browser5pass after initialization wait; source reviewready, production contrast verification pending"
+      "remaining": "None for C01; new integrated/live contrast passes"
     },
     "C02": {
       "path": "/home/admin/projects/roll-drauf-vtt-claude-c02-20261112",
       "branch": "claude/vtt-c02-20261112",
-      "source": "dab01217b",
+      "source": "0d89fc4e7",
       "implementation_source": "76bfc2436",
       "session": "bf179ad0-fa5c-431a-a44a-56d286808cb2",
-      "remaining": "Integrated; native reviewready; legacy regression5unique pass; production delivery pending",
+      "remaining": "Native live-rework.md pinned; different-image Firefox refresh and repeated picker, then complete live copy/reader journeys",
       "checks": "22passed1failed; valid image decode targeted1passed;6JS+1inline parse;2818catalog"
     },
     "C04": {
       "path": "/home/admin/projects/roll-drauf-vtt-claude-c04-20261112",
       "branch": "claude/vtt-c04-20261112",
-      "source": "c516d2272",
+      "source": "7474692d5",
       "implementation_source": "41a708c80",
       "session": "735da98a-2ade-4535-8e75-bf97251a8652",
-      "remaining": "Native source rework complete; API20pass/static6pass; corrected4newbrowser harness cases rechecking; independent review/live pending",
+      "remaining": "Native live-rework.md pinned:390px header/import-export overlap; required source fix/review/actualclick/live",
       "checks": "22API/static passed;5existing real browser cases passed after exact optional branding route fixture;2823catalog"
     },
     "C06": {
       "path": "/home/admin/projects/roll-drauf-vtt-claude-c06-20261112",
       "source_base": "0ebf1242affedac61f29f70036f85a4576cb3cbc",
-      "remaining": "Native implementation launched from integrated C01/C02 base; seeded selective recurrence source, shared WIP diffs referenceonly",
-      "handoff": "docs/proofs/claude-c06-2026-11-12/handoff.json"
+      "remaining": "76passed4failed403; full browser/concurrency/review/live notrun",
+      "handoff": "docs/proofs/claude-c06-2026-11-12/handoff.json",
+      "source": "df9e3cc5ff92fba0f4f15ea3301baa500f41ef6b",
+      "session": "b6847237-26f2-4df4-818f-4916f0e9e965",
+      "evidence": "c06-partial-state.json"
     }
   },
-  "further_tasks": "C05ApplyreadyafterC04;C06-C08Applyready;C09gatepending;C10overallNOT_RUN",
+  "further_tasks": "C05ApplyreadybutC04gateopen;C07requiresC06;C08Applyreadyhandoffpreparednotstarted;C09gatepending;C10overallNOT_RUN",
   "secrets_recorded": false,
-  "engine_choice": "User confirmed Claude availability; continue existing native subscription, no API or extra usage"
+  "engine_choice": "Existing Claude subscription required and resumed; now exhausted again, no unanswered engine choice"
 }

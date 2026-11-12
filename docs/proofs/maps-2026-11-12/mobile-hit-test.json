@@ -1,0 +1,46 @@
+[
+  {
+    "id": "libraryBtn",
+    "rect": {
+      "x": 6,
+      "y": 40,
+      "width": 121.3125,
+      "height": 34
+    },
+    "centerReceivesClick": true,
+    "covering": ""
+  },
+  {
+    "id": "cloudSave",
+    "rect": {
+      "x": 205.109375,
+      "y": 40,
+      "width": 178.890625,
+      "height": 34
+    },
+    "centerReceivesClick": true,
+    "covering": ""
+  },
+  {
+    "id": "importActionBtn",
+    "rect": {
+      "x": 6,
+      "y": 74,
+      "width": 87.609375,
+      "height": 34
+    },
+    "centerReceivesClick": false,
+    "covering": "mm-global-nav vtt-main-topbar"
+  },
+  {
+    "id": "exportActionBtn",
+    "rect": {
+      "x": 95.90625,
+      "y": 74,
+      "width": 86.484375,
+      "height": 34
+    },
+    "centerReceivesClick": false,
+    "covering": "mm-global-nav vtt-main-topbar"
+  }
+]
