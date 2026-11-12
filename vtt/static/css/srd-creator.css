@@ -155,3 +155,76 @@ body.srd-creator-page { background: radial-gradient(circle at 12% 4%, rgba(255, 
 .sc-import-file input { max-width: 100%; }
 .sc-import-error { color: #9c2a2a; font-weight: 700; }
 .sc-home-links { margin-top: 1rem; }
+
+/* C01 book framing: the creator keeps its controllers, IDs and steps and sits on
+   the same dark BookScene stage as one continuous paper sheet (topbar, page,
+   footer). Creator tokens follow the semantic display tokens in both themes. */
+html[data-vtt-theme] .srd-creator-page {
+    --sc-paper: var(--ui-panel); --sc-paper-deep: var(--ui-soft); --sc-ink: var(--ui-ink); --sc-muted: var(--ui-muted);
+    --sc-border: var(--ui-line); --sc-accent: var(--ui-accent); --sc-accent-soft: var(--ui-soft);
+    --regelwerk-ink: var(--ui-ink); --regelwerk-muted: var(--ui-muted); --regelwerk-accent: var(--ui-accent);
+    --regelwerk-paper: var(--ui-panel); --regelwerk-paper-deep: var(--ui-soft); --regelwerk-border: var(--ui-line);
+}
+html[data-vtt-theme] body.srd-creator-page {
+    background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%) fixed;
+    color: var(--ui-ink);
+    padding-block: clamp(10px, 2vw, 28px);
+}
+html[data-vtt-theme] .srd-creator-page :is(.regelwerk-site-header, .sc-main, .regelwerk-footer) {
+    width: min(1180px, calc(100% - 2 * clamp(8px, 2vw, 24px)));
+    margin-inline: auto;
+    margin-block: 0;
+    background: var(--ui-paper);
+    color: var(--ui-ink);
+    border-inline: 1px solid var(--ui-line);
+    box-shadow: 0 24px 52px rgba(0, 0, 0, 0.45);
+}
+html[data-vtt-theme] .srd-creator-page .regelwerk-site-header {
+    padding: clamp(8px, 1.5vw, 14px) clamp(8px, 2vw, 22px) 0;
+    border-top: 1px solid var(--ui-line);
+    border-radius: 6px 6px 0 0;
+}
+html[data-vtt-theme] .srd-creator-page .sc-main {
+    padding: clamp(0.75rem, 2.5vw, 2rem) clamp(0.6rem, 2.5vw, 2rem);
+}
+html[data-vtt-theme] .srd-creator-page .regelwerk-footer {
+    padding: 0.4rem clamp(0.6rem, 2.5vw, 2rem) 1.4rem;
+    border-bottom: 1px solid var(--ui-line);
+    border-radius: 0 0 6px 6px;
+    color: var(--ui-muted);
+}
+html[data-vtt-theme] .srd-creator-page .regelwerk-titlebar {
+    background: var(--ui-panel);
+    border-color: var(--ui-line);
+    border-radius: 6px;
+}
+html[data-vtt-theme] .srd-creator-page .regelwerk-kicker { color: var(--ui-accent); }
+html[data-vtt-theme] .srd-creator-page .regelwerk-titlebar h1 {
+    color: var(--ui-ink);
+    font-family: var(--vtt-font-heading, Georgia, serif);
+    overflow-wrap: anywhere;
+}
+html[data-vtt-theme] .srd-creator-page :is(.regelwerk-status, .sc-toolbar .sc-save) { color: var(--ui-muted); }
+html[data-vtt-theme] .srd-creator-page .regelwerk-footer a { color: var(--ui-accent); }
+
+/* Surfaces that hard-coded white paper follow the semantic panel in both themes. */
+html[data-vtt-theme] .srd-creator-page :is(.sc-ability, .sc-abil, .sc-draft, .sc-step, .sc-btn-quiet) {
+    background: var(--ui-panel); color: var(--ui-ink); border-color: var(--ui-line);
+}
+html[data-vtt-theme] .srd-creator-page .sc-finding { background-color: var(--ui-panel); color: var(--ui-ink); }
+html[data-vtt-theme] .srd-creator-page .sc-banner { background: var(--ui-soft); color: var(--ui-ink); border-color: var(--ui-warning); }
+html[data-vtt-theme] .srd-creator-page .sc-check.is-selected {
+    background: var(--ui-soft); border-color: var(--ui-line); box-shadow: inset 4px 0 var(--ui-accent);
+}
+/* Active states: action colors plus weight/underline, never color alone. */
+html[data-vtt-theme] .srd-creator-page :is(.sc-step[aria-current="step"], .sc-btn-toggle[aria-pressed="true"]) {
+    background: var(--ui-action-bg); color: var(--ui-action-text); border: 2px solid var(--ui-line);
+    font-weight: 700; text-decoration: underline; text-underline-offset: 0.25em;
+}
+html[data-vtt-theme] .srd-creator-page .sc-card[aria-pressed="true"] :is(strong, span) { color: inherit; }
+html[data-vtt-theme] .srd-creator-page .sc-btn-danger { color: var(--ui-danger); border-color: var(--ui-danger); }
+html[data-vtt-theme] .srd-creator-page .sc-ok-note { color: var(--ui-success); }
+html[data-vtt-theme] .srd-creator-page .sc-import-error { color: var(--ui-danger); }
+@media (max-width: 900px) {
+    html[data-vtt-theme] .srd-creator-page .sc-nav { background: var(--ui-panel); border-top-color: var(--ui-line); }
+}

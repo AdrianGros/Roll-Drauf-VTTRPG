@@ -40,6 +40,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             .replace(/'/g, '&#39;');
     }
 
+    // Campaign status is a server enum (active/paused/archived); only known
+    // values get a UI label, anything else stays as delivered.
+    function campaignStatusLabel(status) {
+        const value = String(status || 'active');
+        const label = { active: 'Aktiv', paused: 'Pausiert', archived: 'Archiviert', invited: 'Eingeladen' }[value.toLowerCase()];
+        return label ? globalThis.VTTUi(label) : value;
+    }
+
     function buildIntentHref(path, params = {}) {
         const href = new URL(path, window.location.origin);
         Object.entries(params).forEach(([key, value]) => {
@@ -249,13 +257,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this.sceneCreated = true;
 
             const bookHTML = `
-                <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="Buchoberfläche">
+                <div id="book-scene-wrapper" class="book-scene-wrapper" role="region" aria-label="${globalThis.VTTUiHTML('Buchoberfläche')}">
                     <div class="book-scene-backdrop" aria-hidden="true"></div>
                     <div class="book-scene-stage">
-                        <div id="book" class="book-scene-book" role="doc-cover" aria-label="Interactive spellbook">
+                        <div id="book" class="book-scene-book" role="doc-cover" aria-label="${globalThis.VTTUiHTML('Interactive spellbook')}">
                             <div class="book-element book-cover is-open" aria-hidden="true"></div>
-                            <div class="book-element book-pages" role="doc-pagebreak" aria-label="Buchseiten"></div>
-                            <div class="book-element book-back" role="doc-cover" aria-label="Buchrückseite"></div>
+                            <div class="book-element book-pages" role="doc-pagebreak" aria-label="${globalThis.VTTUiHTML('Buchseiten')}"></div>
+                            <div class="book-element book-back" role="doc-cover" aria-label="${globalThis.VTTUiHTML('Buchrückseite')}"></div>
                             <div class="book-shell-page-stack book-shell-page-stack--left" aria-hidden="true"></div>
                             <div class="book-shell-page-stack book-shell-page-stack--right" aria-hidden="true"></div>
                             <div class="book-shell-spine" aria-hidden="true">
@@ -435,18 +443,20 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             return toIndex >= fromIndex ? 1 : -1;
         },
 
+        // Spread titles and chapter copy are repository-authored UI labels.
         getSpreadTitle(routeKey) {
-            if (routeKey === 'login') return 'Buchzugang';
-            if (routeKey === 'signup') return 'Registrierung';
-            if (routeKey === 'register') return 'Einladung';
-            if (routeKey === 'dashboard') return 'Übersicht';
-            if (routeKey === 'campaigns') return 'Kampagnen';
-            if (routeKey === 'characters') return 'Charaktere';
-            if (routeKey === 'character-sheet') return 'Charakterbogen';
-            return 'Buch';
+            const title = {
+                login: 'Buchzugang', signup: 'Registrierung', register: 'Einladung', dashboard: 'Übersicht',
+                campaigns: 'Kampagnen', characters: 'Charaktere', 'character-sheet': 'Charakterbogen',
+            }[routeKey] || 'Buch';
+            return globalThis.VTTUi(title);
         },
 
         getSpreadCopy(routeKey, side = 'front') {
+            return globalThis.VTTUi(this.getSpreadCopySource(routeKey, side));
+        },
+
+        getSpreadCopySource(routeKey, side = 'front') {
             if (routeKey === 'login' && side === 'front') {
                 return 'Der Buchzugang öffnet ruhig, bevor das erste Kapitel sichtbar wird.';
             }
@@ -485,9 +495,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         buildTurnFaceMarkup(routeKey, side = 'front') {
             const meta = this.getRouteMeta(routeKey);
+            const chapter = globalThis.VTTUi(meta.chapter);
             const kicker = side === 'back'
-                ? `${meta.chapter} verso`
-                : `${meta.chapter} folio`;
+                ? `${chapter} verso`
+                : `${chapter} folio`;
 
             return `
                 <div class="book-scene-turn-kicker">${escapeHtml(kicker)}</div>
@@ -588,8 +599,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 <div class="book-dashboard-preview-list">
                     ${campaigns.slice(0, 3).map((campaign) => `
                         <div class="book-dashboard-preview-item">
-                            <span class="book-dashboard-preview-name">${escapeHtml(campaign.name || 'Unbenannte Kampagne')}</span>
-                                <span class="book-dashboard-preview-meta">${escapeHtml(campaign.status || 'aktiv')} · ${Number(campaign.member_count || 0)} Mitglieder</span>
+                            <span class="book-dashboard-preview-name">${escapeHtml(campaign.name || globalThis.VTTUi('Unbenannte Kampagne'))}</span>
+                                <span class="book-dashboard-preview-meta">${escapeHtml(campaignStatusLabel(campaign.status))} · ${escapeHtml(globalThis.VTTUi('{count} Mitglieder', { count: Number(campaign.member_count || 0) }))}</span>
                         </div>
                     `).join('')}
                 </div>
@@ -609,8 +620,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 <div class="book-dashboard-preview-list">
                     ${characters.slice(0, 3).map((character) => `
                         <div class="book-dashboard-preview-item">
-                            <span class="book-dashboard-preview-name">${escapeHtml(character.name || 'Unbekannt')}</span>
-                            <span class="book-dashboard-preview-meta">Stufe ${Number(character.level || 1)} ${escapeHtml(character.class || 'Abenteurer')} · ${escapeHtml(character.race || 'Volk offen')}</span>
+                            <span class="book-dashboard-preview-name">${escapeHtml(character.name || globalThis.VTTUi('Unbekannt'))}</span>
+                            <span class="book-dashboard-preview-meta">${escapeHtml(globalThis.VTTUi('Stufe {level}', { level: Number(character.level || 1) }))} ${escapeHtml(character.class || globalThis.VTTUi('Abenteurer'))} · ${escapeHtml(character.race || globalThis.VTTUi('Volk offen'))}</span>
                         </div>
                     `).join('')}
                 </div>
@@ -647,7 +658,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         const sceneRoute = action.route ? ` data-dashboard-route="${escapeHtml(action.route)}"` : '';
                         const sectionTarget = action.section ? ` data-dashboard-section="${escapeHtml(action.section)}"` : '';
                         const disabled = action.disabled ? ' disabled' : '';
-                        return `<button type="button" class="btn ${isPrimary ? 'btn-primary' : 'btn-secondary'} book-scene-action-btn"${directHref}${detailTarget}${sceneRoute}${sectionTarget}${disabled}>${escapeHtml(action.label || 'Weiter')}</button>`;
+                        return `<button type="button" class="btn ${isPrimary ? 'btn-primary' : 'btn-secondary'} book-scene-action-btn"${directHref}${detailTarget}${sceneRoute}${sectionTarget}${disabled}>${escapeHtml(action.label || globalThis.VTTUi('Weiter'))}</button>`;
                     }).join('')}
                 </div>
             `;
@@ -721,14 +732,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         return `
                         <div class="book-scene-ledger-item"${rowAttrs}>
                             <div class="book-scene-ledger-head">
-                                <strong>${escapeHtml(campaign.name || 'Unbenannte Kampagne')}</strong>
-                                <span>${escapeHtml(campaign.status || 'active')}</span>
+                                <strong>${escapeHtml(campaign.name || globalThis.VTTUi('Unbenannte Kampagne'))}</strong>
+                                <span>${escapeHtml(campaignStatusLabel(campaign.status))}</span>
                             </div>
-                            <div class="book-scene-ledger-meta">${Number(campaign.member_count || 0)} Mitglieder · ${campaign.is_owner ? 'Eigene Kampagne' : 'Geteilte Kampagne'}</div>
+                            <div class="book-scene-ledger-meta">${escapeHtml(globalThis.VTTUi('{count} Mitglieder', { count: Number(campaign.member_count || 0) }))} · ${escapeHtml(globalThis.VTTUi(campaign.is_owner ? 'Eigene Kampagne' : 'Geteilte Kampagne'))}</div>
                             ${Number(campaign.pending_join_request_count || 0) > 0 ? `
-                                <div class="book-scene-ledger-meta"><strong>${Number(campaign.pending_join_request_count)} Beitrittsanfrage${Number(campaign.pending_join_request_count) === 1 ? '' : 'n'}</strong> ${Number(campaign.pending_join_request_count) === 1 ? 'wartet' : 'warten'} auf Bestätigung</div>
+                                <div class="book-scene-ledger-meta"><strong>${escapeHtml(globalThis.VTTUi(Number(campaign.pending_join_request_count) === 1 ? '{count} Beitrittsanfrage' : '{count} Beitrittsanfragen', { count: Number(campaign.pending_join_request_count) }))}</strong> ${escapeHtml(globalThis.VTTUi(Number(campaign.pending_join_request_count) === 1 ? 'wartet auf Bestätigung' : 'warten auf Bestätigung'))}</div>
                             ` : ''}
-                            <div class="book-scene-ledger-copy">${escapeHtml(campaign.description || 'Bereit für Vorbereitung, Charaktere und Karte vor dem Spielabend.')}</div>
+                            <div class="book-scene-ledger-copy">${escapeHtml(campaign.description || globalThis.VTTUi('Bereit für Vorbereitung, Charaktere und Karte vor dem Spielabend.'))}</div>
                             ${actions}
                         </div>
                         `;
@@ -756,7 +767,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
             return `
                 <details class="book-scene-panel" data-archived-characters>
-                    <summary class="book-scene-panel-title">Archiv (${archived.length})</summary>
+                    <summary class="book-scene-panel-title">${escapeHtml(globalThis.VTTUi('Archiv ({count})', { count: archived.length }))}</summary>
                     <p>${globalThis.VTTUiHTML("Archivierte Helden sind aus der Liste ausgeblendet. Wiederherstellen holt sie zurück, endgültiges Löschen entfernt sie.")}</p>
                     ${this.buildCharacterLedger(archived, null, 'archived')}
                 </details>
@@ -769,14 +780,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
             return `
                 <section class="book-scene-panel" data-open-drafts>
-                    <h2 class="book-scene-panel-title">Offene Entwürfe (${drafts.length})</h2>
+                    <h2 class="book-scene-panel-title">${escapeHtml(globalThis.VTTUi('Offene Entwürfe ({count})', { count: drafts.length }))}</h2>
                     <div class="book-scene-ledger">
                         ${drafts.map((draft) => `
                             <div class="book-scene-ledger-item">
                                 <div class="book-scene-ledger-head">
-                                    <strong>${escapeHtml(draft.name || 'Unbenannter Entwurf')}</strong>
+                                    <strong>${escapeHtml(draft.name || globalThis.VTTUi('Unbenannter Entwurf'))}</strong>
                                 </div>
-                                <div class="book-scene-ledger-meta">Zuletzt bearbeitet: ${escapeHtml(draft.updated_at ? new Date(draft.updated_at).toLocaleString('de-DE') : '–')}</div>
+                                <div class="book-scene-ledger-meta">${escapeHtml(globalThis.VTTUi('Zuletzt bearbeitet: {date}', { date: draft.updated_at ? new Date(draft.updated_at).toLocaleString(window.VTTI18n?.locale?.() === 'en' ? 'en-US' : 'de-DE') : '–' }))}</div>
                                 <div class="book-scene-action-row book-scene-action-row--inline">
                                     <a class="btn btn-primary book-scene-action-btn" data-draft-continue="${Number(draft.id)}" href="/srd-creator?draft=${Number(draft.id)}">${globalThis.VTTUiHTML("Weiterführen")}</a>
                                 </div>
@@ -801,12 +812,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     ${characters.map((character) => `
                         <div class="book-scene-ledger-item">
                             <div class="book-scene-ledger-head">
-                                <strong>${escapeHtml(character.name || 'Unbekannt')}</strong>
-                                <span>Stufe ${Number(character.level || 1)}</span>
+                                <strong>${escapeHtml(character.name || globalThis.VTTUi('Unbekannt'))}</strong>
+                                <span>${escapeHtml(globalThis.VTTUi('Stufe {level}', { level: Number(character.level || 1) }))}</span>
                             </div>
-                            <div class="book-scene-ledger-meta">${escapeHtml(character.class || 'Abenteurer')} · ${escapeHtml(character.race || 'Volk offen')}</div>
+                            <div class="book-scene-ledger-meta">${escapeHtml(character.class || globalThis.VTTUi('Abenteurer'))} · ${escapeHtml(character.race || globalThis.VTTUi('Volk offen'))}</div>
                             ${character.owner_username ? `<div class="book-scene-ledger-meta">${escapeHtml(character.owner_username)} · ${escapeHtml(character.campaign_name || '')}</div>` : ''}
-                            <div class="book-scene-ledger-copy">${escapeHtml(character.background || 'Bereit für Bogen, Identität und die spätere Zuweisung in eine Runde.')}</div>
+                            <div class="book-scene-ledger-copy">${escapeHtml(character.background || globalThis.VTTUi('Bereit für Bogen, Identität und die spätere Zuweisung in eine Runde.'))}</div>
                             ${this.buildActionButtons([
                                 {
                                     label: globalThis.VTTUi("Bogen öffnen"),
@@ -827,7 +838,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             ${Array.isArray(campaigns) && !character.is_party_stash ? `
                                 <form data-character-campaign="${Number(character.id)}" class="book-scene-panel">
                                     <label for="characterCampaign_${Number(character.id)}">${globalThis.VTTUiHTML("Mit einer Kampagne teilen")}</label>
-                                    <select id="characterCampaign_${Number(character.id)}" aria-label="Kampagne für ${escapeHtml(character.name)}" style="width:100%;min-width:0">
+                                    <select id="characterCampaign_${Number(character.id)}" aria-label="${escapeHtml(globalThis.VTTUi('Kampagne für {name}', { name: character.name || '' }))}" style="width:100%;min-width:0">
                                         <option value="">${globalThis.VTTUiHTML("Nur für mich")}</option>
                                         ${character.campaign_id && !campaigns.some(c => Number(c.id) === Number(character.campaign_id))
                                             ? `<option value="${Number(character.campaign_id)}" selected>${globalThis.VTTUiHTML("Bisherige Kampagne (kein aktiver Zugang)")}</option>` : ''}
@@ -934,8 +945,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 <section class="book-home-feed">
                     ${feedItems.map((item) => `
                         <article class="book-home-feed-item" data-dashboard-section-target="${escapeHtml(item.section || 'campaigns')}">
-                            <div class="book-home-feed-kicker">${escapeHtml(item.kicker || 'Chronik')}</div>
-                            <h3 class="book-home-feed-title">${escapeHtml(item.title || 'Eintrag')}</h3>
+                            <div class="book-home-feed-kicker">${escapeHtml(item.kicker || globalThis.VTTUi('Chronik'))}</div>
+                            <h3 class="book-home-feed-title">${escapeHtml(item.title || globalThis.VTTUi('Eintrag'))}</h3>
                             ${item.meta ? `<div class="book-home-feed-meta">${escapeHtml(item.meta)}</div>` : ''}
                             <p class="book-home-feed-copy">${escapeHtml(item.copy || '')}</p>
                             ${(item.action_href || item.action_section)
@@ -947,7 +958,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                                         ${item.action_href ? `data-dashboard-href="${escapeHtml(item.action_href)}"` : ''}
                                         ${item.action_section ? `data-dashboard-section="${escapeHtml(item.action_section)}"` : ''}
                                     >
-                                        ${escapeHtml(item.action_label || 'Weiter')}
+                                        ${escapeHtml(item.action_label || globalThis.VTTUi('Weiter'))}
                                     </button>
                                 </div>
                             `
@@ -962,16 +973,17 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         buildPageShell(routeKey, user, options) {
             const displayName = options.loading ? '' : escapeHtml(user?.username || 'Donut');
             const chips = Array.isArray(options.chips) ? options.chips : [];
-            const leftTitle = escapeHtml(options.title || 'Übersicht');
+            const leftTitle = escapeHtml(options.title || globalThis.VTTUi('Übersicht'));
             const leftCopy = escapeHtml(options.copy || '');
             const leftEyebrow = escapeHtml(options.eyebrow || '');
-            const rightTitle = escapeHtml(options.rightTitle || 'Marginalia');
+            const rightTitle = escapeHtml(options.rightTitle || globalThis.VTTUi('Marginalia'));
             const rightCopy = escapeHtml(options.rightCopy || '');
-            const rightEyebrow = escapeHtml(options.rightEyebrow || 'Reader Notes');
+            const rightEyebrow = escapeHtml(options.rightEyebrow || globalThis.VTTUi('Reader Notes'));
+            const pageLabel = escapeHtml(globalThis.VTTUi('Seite {title}', { title: options.title || globalThis.VTTUi('Übersicht') }));
 
             return `
                 <div class="book-dashboard-camera">
-                    <section class="book-dashboard-page" data-book-route="${routeKey}" role="region" aria-label="${leftTitle} page">
+                    <section class="book-dashboard-page" data-book-route="${routeKey}" role="region" aria-label="${pageLabel}">
                         <div class="book-dashboard-topbar">
                             <div class="book-dashboard-ribbon" role="navigation" aria-label="${globalThis.VTTUiHTML("Buchnavigation")}">
                                 ${this.buildRibbon(routeKey)}
@@ -1065,12 +1077,17 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const activeCount = campaigns.filter((campaign) => String(campaign.status || '').toLowerCase() === 'active').length;
 
             return this.buildPageShell('campaigns', user, {
-                eyebrow: 'Kapitel II',
+                eyebrow: globalThis.VTTUi('Kapitel II'),
                 title: globalThis.VTTUi("Kampagnen"),
                 showRunningHead: false,
                 copy: '',
                 showRightHeader: false,
-                chips: [`${campaigns.length} Kampagnen`, `${ownedCount} Eigene`, `${joinedCount} Beigetreten`, `${activeCount} Aktiv`],
+                chips: [
+                    globalThis.VTTUi('{count} Kampagnen', { count: campaigns.length }),
+                    globalThis.VTTUi('{count} Eigene', { count: ownedCount }),
+                    globalThis.VTTUi('{count} Beigetreten', { count: joinedCount }),
+                    globalThis.VTTUi('{count} Aktiv', { count: activeCount }),
+                ],
                 leftPage: `
                     ${this.buildStatStrip([
                         { value: String(campaigns.length), label: globalThis.VTTUi("Kampagnen") },
@@ -1151,15 +1168,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 ? settledMembers.map((member) => `
                     <div class="book-scene-ledger-item" data-campaign-member="${Number(member.user_id)}">
                         <div class="book-scene-ledger-head">
-                            <strong>${escapeHtml(member.username || 'Unbekannt')}</strong>
-                            <span>${escapeHtml(member.campaign_role || 'Spieler')}</span>
+                            <strong>${escapeHtml(member.username || globalThis.VTTUi('Unbekannt'))}</strong>
+                            <span>${escapeHtml(member.campaign_role || globalThis.VTTUi('Spieler'))}</span>
                         </div>
-                        <div class="book-scene-ledger-meta">${escapeHtml(member.status || 'active')}</div>
+                        <div class="book-scene-ledger-meta">${escapeHtml(campaignStatusLabel(member.status))}</div>
                         ${canKick && member.status === 'active'
                             && Number(member.user_id) !== Number(campaign.owner_id)
                             && Number(member.user_id) !== Number(user?.id)
                             && ['PLAYER', 'OBSERVER'].includes(String(member.campaign_role || '').toUpperCase())
-                            ? `<button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="kick-player" data-member-id="${Number(member.user_id)}" data-member-name="${escapeHtml(member.username || 'Spieler')}">${globalThis.VTTUiHTML("Spieler entfernen")}</button>` : ''}
+                            ? `<button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="kick-player" data-member-id="${Number(member.user_id)}" data-member-name="${escapeHtml(member.username || globalThis.VTTUi('Spieler'))}">${globalThis.VTTUiHTML("Spieler entfernen")}</button>` : ''}
                     </div>
                 `).join('')
                 : `<div class="book-scene-ledger-item is-empty">${globalThis.VTTUiHTML("Noch keine Mitglieder.")}</div>`;
@@ -1167,10 +1184,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             let sessionSummary;
             let sessionActions;
             if (!focusedSession) {
-                sessionSummary = `<p class="book-scene-panel-copy">Noch keine Session angelegt. ${canManage ? 'Lege die erste Session an und starte direkt in die Vorbereitung.' : 'Die Spielleitung hat noch keine Session eröffnet.'}</p>`;
+                sessionSummary = `<p class="book-scene-panel-copy">${globalThis.VTTUiHTML('Noch keine Session angelegt.')} ${globalThis.VTTUiHTML(canManage ? 'Lege die erste Session an und starte direkt in die Vorbereitung.' : 'Die Spielleitung hat noch keine Session eröffnet.')}</p>`;
                 sessionActions = canManage
-                    ? buildHubActionButton('Session erstellen & zu Play', 'new-session', { primary: true })
-                    : buildHubActionButton('Wartet auf DM', 'noop', { disabled: true, primary: false });
+                    ? buildHubActionButton(globalThis.VTTUi('Session erstellen & zu Play'), 'new-session', { primary: true })
+                    : buildHubActionButton(globalThis.VTTUi('Wartet auf DM'), 'noop', { disabled: true, primary: false });
             } else {
                 const phase = this.getPlayLaunchSessionPhase(focusedSession);
                 const activeMap = maps.find((map) => Number(map.id) === Number(focusedSession.map_id)) || null;
@@ -1184,29 +1201,29 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 // line), which is already built to hold arbitrary text.
                 sessionSummary = `
                     <div class="book-scene-ledger-head">
-                        <strong>${escapeHtml(focusedSession.name || 'Session')}</strong>
+                        <strong>${escapeHtml(focusedSession.name || globalThis.VTTUi('Session'))}</strong>
                         <span class="play-launch-status-dot is-${escapeHtml(phase.tone)}">${escapeHtml(phase.label)}</span>
                     </div>
-                    <div class="book-scene-ledger-meta">Aktive Karte: ${escapeHtml(activeMap ? activeMap.name : 'Keine')} · Zugewiesene Helden: ${assignedCount}</div>
+                    <div class="book-scene-ledger-meta">${escapeHtml(globalThis.VTTUi('Aktive Karte: {map} · Zugewiesene Helden: {count}', { map: activeMap ? activeMap.name : globalThis.VTTUi('Keine'), count: assignedCount }))}</div>
                 `;
 
                 if ((phase.tone === 'live' || phase.tone === 'paused') && canManage) {
                     // Tischplatz: the Spielleitung picks a seat; "Als Spieler"
                     // gives exactly a player's view and rights at this table.
-                    const label = phase.tone === 'live' ? 'Als Spielleitung an den Tisch' : 'Als Spielleitung fortsetzen';
+                    const label = globalThis.VTTUi(phase.tone === 'live' ? 'Als Spielleitung an den Tisch' : 'Als Spielleitung fortsetzen');
                     sessionActions = buildHubActionButton(label, 'open-session-dm', { primary: true, sessionId: Number(focusedSession.id) })
-                        + buildHubActionButton('Als Spieler an den Tisch', 'open-session-player', { primary: false, sessionId: Number(focusedSession.id) });
+                        + buildHubActionButton(globalThis.VTTUi('Als Spieler an den Tisch'), 'open-session-player', { primary: false, sessionId: Number(focusedSession.id) });
                 } else if (phase.tone === 'live' || phase.tone === 'paused') {
-                    const label = phase.tone === 'live' ? 'Zu Play' : 'Fortsetzen';
+                    const label = globalThis.VTTUi(phase.tone === 'live' ? 'Zu Play' : 'Fortsetzen');
                     sessionActions = buildHubActionButton(label, 'open-session', { primary: true, sessionId: Number(focusedSession.id) });
                 } else if ((phase.tone === 'scheduled' || phase.tone === 'ready') && canManage) {
-                    sessionActions = buildHubActionButton('Session starten', 'start-session', { primary: true, sessionId: Number(focusedSession.id) });
+                    sessionActions = buildHubActionButton(globalThis.VTTUi('Session starten'), 'start-session', { primary: true, sessionId: Number(focusedSession.id) });
                 } else if (phase.tone === 'scheduled' || phase.tone === 'ready') {
-                    sessionActions = buildHubActionButton('Wartet auf DM', 'noop', { disabled: true, primary: false });
+                    sessionActions = buildHubActionButton(globalThis.VTTUi('Wartet auf DM'), 'noop', { disabled: true, primary: false });
                 } else if (canManage) {
-                    sessionActions = buildHubActionButton('Nächste Session anlegen', 'new-session', { primary: true });
+                    sessionActions = buildHubActionButton(globalThis.VTTUi('Nächste Session anlegen'), 'new-session', { primary: true });
                 } else {
-                    sessionActions = buildHubActionButton('Abgeschlossen', 'noop', { disabled: true, primary: false });
+                    sessionActions = buildHubActionButton(globalThis.VTTUi('Abgeschlossen'), 'noop', { disabled: true, primary: false });
                 }
             }
 
@@ -1232,8 +1249,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             ? pendingMembers.map((member) => `
                                 <div class="book-scene-ledger-item" data-join-request data-user-id="${Number(member.user_id)}">
                                     <div class="book-scene-ledger-head">
-                                        <strong>${escapeHtml(member.username || 'Unbekannt')}</strong>
-                                        <span>wartet</span>
+                                        <strong>${escapeHtml(member.username || globalThis.VTTUi('Unbekannt'))}</strong>
+                                        <span>${globalThis.VTTUiHTML('wartet')}</span>
                                     </div>
                                     <div class="book-scene-action-row book-scene-action-row--inline">
                                         <button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="approve-join-request" data-testid="hub-join-request-approve">${globalThis.VTTUiHTML("Annehmen")}</button>
@@ -1247,7 +1264,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             ` : '';
 
             return this.buildPageShell('campaigns', user, {
-                eyebrow: 'Kapitel II',
+                eyebrow: globalThis.VTTUi('Kapitel II'),
                 title: campaign.name || globalThis.VTTUi("Kampagnen-Hub"),
                 showRunningHead: false,
                 copy: '',
@@ -1263,10 +1280,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     <section class="book-scene-panel">
                         <div class="book-scene-ledger-head">
                             <span class="book-scene-panel-kicker">${globalThis.VTTUiHTML("Kampagnen-Hub")}</span>
-                            <span class="play-launch-status-dot${campaignStatusTone ? ` is-${escapeHtml(campaignStatusTone)}` : ''}">${escapeHtml(campaignStatus)}</span>
+                            <span class="play-launch-status-dot${campaignStatusTone ? ` is-${escapeHtml(campaignStatusTone)}` : ''}">${escapeHtml(campaignStatusLabel(campaignStatus))}</span>
                         </div>
                         <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Übersicht")}</h2>
-                        <p class="book-scene-panel-copy">${escapeHtml(campaign.description || 'Noch keine Beschreibung hinterlegt.')}</p>
+                        <p class="book-scene-panel-copy">${escapeHtml(campaign.description || globalThis.VTTUi('Noch keine Beschreibung hinterlegt.'))}</p>
                         <div class="book-scene-ledger">${memberRows}</div>
                         ${canLeave ? `<div class="book-scene-action-row"><button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="leave-campaign">${globalThis.VTTUiHTML("Kampagne verlassen")}</button></div>` : ''}
                         <p data-hub-membership-status role="status" aria-live="polite" hidden></p>
@@ -1303,25 +1320,26 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         },
 
         async startCampaignHubSession(campaignId, sessionId) {
-            this.setCampaignHubStatus('Session wird gestartet …');
+            this.setCampaignHubStatus(globalThis.VTTUi('Session wird gestartet …'));
             try {
                 await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
                 this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat: 'dm' });
             } catch (error) {
-                this.setCampaignHubStatus(error.message || 'Session konnte nicht gestartet werden.', true);
+                this.setCampaignHubStatus(error.message || globalThis.VTTUi('Session konnte nicht gestartet werden.'), true);
             }
         },
 
         async createCampaignHubSession(campaignId) {
-            this.setCampaignHubStatus('Neue Session wird angelegt …');
+            this.setCampaignHubStatus(globalThis.VTTUi('Neue Session wird angelegt …'));
             try {
+                // The stored session name stays the existing data format.
                 const session = await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, 'POST', {
                     name: 'Session ' + new Date().toLocaleDateString('de-DE'),
                 });
                 await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
                 this.enterPlay({ campaignId, sessionId: session.id, sourceRoute: 'campaigns', seat: 'dm' });
             } catch (error) {
-                this.setCampaignHubStatus(error.message || 'Session konnte nicht erstellt werden.', true);
+                this.setCampaignHubStatus(error.message || globalThis.VTTUi('Session konnte nicht erstellt werden.'), true);
             }
         },
 
@@ -1336,13 +1354,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         },
 
         async generateCampaignHubInvite(campaignId) {
-            this.setCampaignHubInviteStatus('Einladungslink wird erzeugt …');
+            this.setCampaignHubInviteStatus(globalThis.VTTUi('Einladungslink wird erzeugt …'));
             try {
                 await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/invite`, 'POST', {});
                 this.setCampaignHubInviteStatus('');
                 await this.loadCampaignHubInvites(campaignId);
             } catch (error) {
-                this.setCampaignHubInviteStatus(error.message || 'Einladungslink konnte nicht erzeugt werden.', true);
+                this.setCampaignHubInviteStatus(error.message || globalThis.VTTUi('Einladungslink konnte nicht erzeugt werden.'), true);
             }
         },
 
@@ -1364,7 +1382,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         <div class="book-scene-ledger-item">
                             <div class="book-scene-ledger-head">
                                 <strong>${globalThis.VTTUiHTML("Einladungslink")}</strong>
-                                <span>${Number(link.use_count)}/${Number(link.max_uses)} genutzt</span>
+                                <span>${escapeHtml(globalThis.VTTUi('{used}/{max} genutzt', { used: Number(link.use_count), max: Number(link.max_uses) }))}</span>
                             </div>
                             <div class="book-scene-invite-row">
                                 <input type="text" readonly data-hub-invite-link-field
@@ -1381,7 +1399,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         },
 
         async decideCampaignHubJoinRequest(campaignId, userId, decision) {
-            this.setCampaignHubInviteStatus(decision === 'approve' ? 'Anfrage wird angenommen …' : 'Anfrage wird abgelehnt …');
+            this.setCampaignHubInviteStatus(globalThis.VTTUi(decision === 'approve' ? 'Anfrage wird angenommen …' : 'Anfrage wird abgelehnt …'));
             try {
                 await window.Auth.makeAuthRequest(
                     `/api/campaigns/${campaignId}/join-requests/${userId}/${decision}`, 'POST');
@@ -1391,23 +1409,23 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 // status message along with everything else).
                 await this.renderCampaignHubDetail(campaignId);
             } catch (error) {
-                this.setCampaignHubInviteStatus(error.message || 'Aktion fehlgeschlagen.', true);
+                this.setCampaignHubInviteStatus(error.message || globalThis.VTTUi('Aktion fehlgeschlagen.'), true);
             }
         },
 
         async changeCampaignMembership(campaignId, button) {
             const leave = button.dataset.hubAction === 'leave-campaign';
-            const name = button.dataset.memberName || 'Spieler';
+            const name = button.dataset.memberName || globalThis.VTTUi('Spieler');
             const prompt = leave
-                ? 'Diese Kampagne wirklich verlassen? Dein Zugang zur Runde endet sofort.'
-                : `${name} wirklich aus dieser Kampagne entfernen? Der Zugang zur Runde endet sofort.`;
+                ? globalThis.VTTUi('Diese Kampagne wirklich verlassen? Dein Zugang zur Runde endet sofort.')
+                : globalThis.VTTUi('{name} wirklich aus dieser Kampagne entfernen? Der Zugang zur Runde endet sofort.', { name });
             if (!window.confirm(prompt)) return;
             const status = this.sceneSurface.querySelector('[data-hub-membership-status]');
             const say = (message) => {
                 if (status) { status.hidden = false; status.textContent = message; }
             };
             button.disabled = true;
-            say(leave ? 'Kampagne wird verlassen …' : 'Spieler wird entfernt …');
+            say(globalThis.VTTUi(leave ? 'Kampagne wird verlassen …' : 'Spieler wird entfernt …'));
             try {
                 if (leave) {
                     await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/leave`, 'POST');
@@ -1423,7 +1441,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     if (updated) { updated.hidden = false; updated.textContent = globalThis.VTTUi("{p0} wurde aus der Kampagne entfernt.",{p0:(name)}); }
                 }
             } catch (error) {
-                say(error.message || 'Aktion fehlgeschlagen. Bitte versuche es erneut.');
+                say(error.message || globalThis.VTTUi('Aktion fehlgeschlagen. Bitte versuche es erneut.'));
                 button.disabled = false;
             }
         },
@@ -1527,7 +1545,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             window.history.replaceState({ book_scene: 'campaigns' }, '', `/campaigns?campaign_id=${id}`);
             this.sceneSurface.dataset.bookRoute = 'campaigns';
             this.sceneSurface.innerHTML = this.buildPageShell('campaigns', this.sceneUser, {
-                eyebrow: 'Kapitel II',
+                eyebrow: globalThis.VTTUi('Kapitel II'),
                 title: globalThis.VTTUi("Kampagnen-Hub"),
                 showRunningHead: false,
                 copy: '',
@@ -1552,13 +1570,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             } catch (error) {
                 if (this.sceneRenderVersion !== renderVersion) return;
                 this.sceneSurface.innerHTML = this.buildPageShell('campaigns', this.sceneUser, {
-                    eyebrow: 'Kapitel II',
+                    eyebrow: globalThis.VTTUi('Kapitel II'),
                     title: globalThis.VTTUi("Kampagnen-Hub"),
                     showRunningHead: false,
                     copy: '',
                     showRightHeader: false,
                     leftPage: `
-                        <p class="book-scene-panel-copy">${escapeHtml(error?.message || 'Kampagnen-Hub konnte nicht geladen werden.')}</p>
+                        <p class="book-scene-panel-copy">${escapeHtml(error?.message || globalThis.VTTUi('Kampagnen-Hub konnte nicht geladen werden.'))}</p>
                         ${this.buildActionButtons([{ label: globalThis.VTTUi("Zur Kampagnenliste"), route: '/campaigns', primary: true }])}
                     `,
                 });
@@ -1574,14 +1592,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const highestLevel = characters.reduce((highest, character) => Math.max(highest, Number(character.level || 1)), 1);
 
             return this.buildPageShell('characters', user, {
-                eyebrow: 'Kapitel III',
+                eyebrow: globalThis.VTTUi('Kapitel III'),
                 title: globalThis.VTTUi("Charaktere"),
                 showRunningHead: false,
                 copy: '',
-                rightEyebrow: 'Nächste Schritte',
-                rightTitle: 'Helden vorbereiten',
+                rightEyebrow: globalThis.VTTUi('Nächste Schritte'),
+                rightTitle: globalThis.VTTUi('Helden vorbereiten'),
                 rightCopy: '',
-                chips: [`${characters.length} Helden`, `${distinctClasses} Klassen`, `Höchstes Level ${highestLevel}`],
+                chips: [
+                    globalThis.VTTUi('{count} Helden', { count: characters.length }),
+                    globalThis.VTTUi('{count} Klassen', { count: distinctClasses }),
+                    globalThis.VTTUi('Höchstes Level {level}', { level: highestLevel }),
+                ],
                 rightPage: `
                     <div id="charactersMessageBox" class="book-scene-note" role="status" hidden></div>
                     <div id="charactersJourneyNote" class="book-scene-note" hidden></div>
@@ -1793,7 +1815,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     };
                     const code = input ? input.value.trim() : '';
                     if (!code) {
-                        say('Bitte zuerst den Einladungscode einfügen.');
+                        say(globalThis.VTTUi('Bitte zuerst den Einladungscode einfügen.'));
                         if (input) {
                             input.focus();
                         }
@@ -1811,15 +1833,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             // files a join request, not instant membership - the
                             // DM approves it from the hub, so there is no hub to
                             // open yet. Don't navigate anywhere.
-                            say('Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.');
+                            say(globalThis.VTTUi('Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.'));
                             node.disabled = false;
                         } else {
-                            say('Beigetreten! Der Kampagnen-Hub öffnet sich …');
+                            say(globalThis.VTTUi('Beigetreten! Der Kampagnen-Hub öffnet sich …'));
                             window.location.href = `/campaigns?campaign_id=${campaignId}`;
                         }
                     } catch (error) {
                         node.disabled = false;
-                        say(error.message || 'Beitritt fehlgeschlagen. Bitte prüfe den Code.');
+                        say(error.message || globalThis.VTTUi('Beitritt fehlgeschlagen. Bitte prüfe den Code.'));
                     }
                 });
             });
@@ -1902,6 +1924,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const routeMap = (this.pageContent && this.currentView && this.pageContent[this.currentView]) || {};
             const sharedMap = (this.pageContent && this.pageContent.shared) || {};
             let text = routeMap[key] ?? sharedMap[key] ?? fallback;
+            // The seeded default equals this repository fallback and follows
+            // the UI language. Copy changed by an editor is shown as written.
+            if (text === fallback) {
+                return globalThis.VTTUi(fallback, vars || {});
+            }
 
             if (vars) {
                 Object.entries(vars).forEach(([token, value]) => {
@@ -1930,10 +1957,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     <div class="play-launch-box">
                         <div class="play-launch-header">
                             <div>
-                                <h2 id="playLaunchTitle">${escapeHtml(this.content('play_launch.title', 'Play'))}</h2>
+                                <h2 id="playLaunchTitle">${escapeHtml(this.content('play_launch.title', 'Spieltisch'))}</h2>
                                 <p>${escapeHtml(this.content('play_launch.subtitle', 'Wähle eine Session oder starte in wenigen Schritten eine neue.'))}</p>
                             </div>
-                            <button type="button" class="play-launch-close" data-play-launch-close aria-label="Schließen">&times;</button>
+                            <button type="button" class="play-launch-close" data-play-launch-close aria-label="${globalThis.VTTUiHTML('Schließen')}">&times;</button>
                         </div>
                         <div class="play-launch-body">
                             <div id="playLaunchStatus" class="play-launch-status" hidden></div>
@@ -1994,7 +2021,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             content.textContent = this.content('play_launch.loading', 'Lade Kampagnen...');
 
             if (!window.Auth || typeof window.Auth.makeAuthRequest !== 'function') {
-                this.setPlayLaunchStatus('Nicht angemeldet.', true);
+                this.setPlayLaunchStatus(globalThis.VTTUi('Nicht angemeldet.'), true);
                 return;
             }
 
@@ -2006,7 +2033,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this.renderPlayLaunch(snapshot.campaigns || [], snapshot.sessions || []);
             } catch (error) {
                 content.innerHTML = '';
-                this.setPlayLaunchStatus(error.message || 'Kampagnen konnten nicht geladen werden.', true);
+                this.setPlayLaunchStatus(error.message || globalThis.VTTUi('Kampagnen konnten nicht geladen werden.'), true);
             }
         },
 
@@ -2157,32 +2184,34 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         },
 
         async quickStartSessionAndPlay(campaignId, sessionId) {
-            this.setPlayLaunchStatus('Session wird gestartet...');
+            this.setPlayLaunchStatus(globalThis.VTTUi('Session wird gestartet...'));
             try {
                 await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
                 this.openPlayFromLaunch(campaignId, sessionId, 'dm');
             } catch (error) {
-                this.setPlayLaunchStatus(error.message || 'Session konnte nicht gestartet werden.', true);
+                this.setPlayLaunchStatus(error.message || globalThis.VTTUi('Session konnte nicht gestartet werden.'), true);
             }
         },
 
         async quickCreateSessionAndPlay(campaignId) {
-            this.setPlayLaunchStatus('Schritt 1/2: Session wird erstellt...');
+            this.setPlayLaunchStatus(globalThis.VTTUi('Schritt 1/2: Session wird erstellt...'));
             try {
+                // Stored session names keep their existing data format.
                 const session = await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, 'POST', {
                     name: 'Session ' + new Date().toLocaleDateString('de-DE'),
                 });
-                this.setPlayLaunchStatus('Schritt 2/2: Session wird gestartet...');
+                this.setPlayLaunchStatus(globalThis.VTTUi('Schritt 2/2: Session wird gestartet...'));
                 await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
                 this.openPlayFromLaunch(campaignId, session.id, 'dm');
             } catch (error) {
-                this.setPlayLaunchStatus(error.message || 'Session konnte nicht erstellt werden.', true);
+                this.setPlayLaunchStatus(error.message || globalThis.VTTUi('Session konnte nicht erstellt werden.'), true);
             }
         },
 
         async quickCreateCampaignAndPlay() {
             const nameField = document.getElementById('playLaunchNewCampaignName');
             const button = document.getElementById('playLaunchQuickCreateBtn');
+            // The default becomes the stored campaign name, so it stays data, not UI.
             const name = (nameField?.value || '').trim() || 'Meine erste Kampagne';
 
             if (button) {
@@ -2190,20 +2219,20 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
 
             try {
-                this.setPlayLaunchStatus('Schritt 1/3: Kampagne wird erstellt...');
+                this.setPlayLaunchStatus(globalThis.VTTUi('Schritt 1/3: Kampagne wird erstellt...'));
                 const campaign = await window.Auth.makeAuthRequest('/api/campaigns', 'POST', { name });
 
-                this.setPlayLaunchStatus('Schritt 2/3: Erste Session wird erstellt...');
+                this.setPlayLaunchStatus(globalThis.VTTUi('Schritt 2/3: Erste Session wird erstellt...'));
                 const session = await window.Auth.makeAuthRequest(`/api/campaigns/${campaign.id}/sessions`, 'POST', {
                     name: 'Session 1',
                 });
 
-                this.setPlayLaunchStatus('Schritt 3/3: Session wird gestartet...');
+                this.setPlayLaunchStatus(globalThis.VTTUi('Schritt 3/3: Session wird gestartet...'));
                 await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
 
                 this.openPlayFromLaunch(campaign.id, session.id);
             } catch (error) {
-                this.setPlayLaunchStatus(error.message || 'Schnellstart fehlgeschlagen.', true);
+                this.setPlayLaunchStatus(error.message || globalThis.VTTUi('Schnellstart fehlgeschlagen.'), true);
                 if (button) {
                     button.disabled = false;
                 }
@@ -2213,16 +2242,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         async runCharacterAction(node) {
             const id = Number(node.dataset.characterId);
             const action = node.dataset.characterAction;
-            const name = node.dataset.characterName || 'Held';
+            const name = node.dataset.characterName || globalThis.VTTUi('Held');
             if (action === 'delete' && !window.confirm(globalThis.VTTUi("„{p0}“ endgültig löschen? Das kann nicht rückgängig gemacht werden.",{p0:(name)}))) {
                 return;
             }
             node.disabled = true;
             const messages = {
-                duplicate: 'Kopie angelegt.',
-                archive: 'Held archiviert.',
-                restore: 'Held wiederhergestellt.',
-                delete: 'Held gelöscht.',
+                duplicate: globalThis.VTTUi('Kopie angelegt.'),
+                archive: globalThis.VTTUi('Held archiviert.'),
+                restore: globalThis.VTTUi('Held wiederhergestellt.'),
+                delete: globalThis.VTTUi('Held gelöscht.'),
             };
             try {
                 if (action === 'duplicate') {

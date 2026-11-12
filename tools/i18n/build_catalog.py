@@ -34,7 +34,20 @@ def compile_catalog(check=False):
                 raise ValueError('Placeholder mismatch at ' + str(i))
         messages[key] = {'source': source, 'de': de, 'en': en}
     for source, row in json.loads((HERE / 'extra-messages.json').read_text()).items():
+        if not isinstance(source, str) or not source.strip() or not isinstance(row, dict):
+            raise ValueError('Invalid extra message')
+        if set(row) != {'de', 'en'}:
+            raise ValueError('Incomplete extra message: ' + source)
+        placeholders = set(re.findall(r'\{[a-zA-Z0-9_]+\}', source))
+        for language in ('de', 'en'):
+            value = row[language]
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError('Empty extra translation: ' + language + ': ' + source)
+            if set(re.findall(r'\{[a-zA-Z0-9_]+\}', value)) != placeholders:
+                raise ValueError('Extra placeholder mismatch: ' + language + ': ' + source)
         key = 'u_' + hashlib.sha1(source.encode()).hexdigest()[:12]
+        if key in messages and messages[key]['source'] != source:
+            raise ValueError('Extra source key collision: ' + source)
         messages[key] = {'source':source, **row}
     eagle = json.loads((HERE / 'eagle-sources.json').read_text())
     eagle_de = json.loads((HERE / 'translations/eagle-de.json').read_text())

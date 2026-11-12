@@ -5,7 +5,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   'use strict';
 
   const ABIL = [['str', globalThis.VTTUi("Stärke")], ['dex', globalThis.VTTUi("Geschicklichkeit")], ['con', globalThis.VTTUi("Konstitution")], ['int', globalThis.VTTUi("Intelligenz")], ['wis', globalThis.VTTUi("Weisheit")], ['cha', globalThis.VTTUi("Charisma")]];
-  const PROFICIENCY = { proficient: 'geübt', expertise: 'Expertise' };
+  const PROFICIENCY = { proficient: globalThis.VTTUi("geübt"), expertise: globalThis.VTTUi("Expertise") };
 
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -37,29 +37,33 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     document.getElementById('ssTitle').textContent = sheet.name;
     document.title = globalThis.VTTUi("{p0} · Geteilter Charakter · Roll Drauf VTT",{p0:(sheet.name)});
 
-    const overview = section('Überblick');
+    const overview = section(globalThis.VTTUi("Überblick"));
     const classes = sheet.classes.map((c) => `${c.name} ${c.level}`).join(' / ');
-    overview.append(el('p', null, [sheet.species, sheet.background, classes, `Stufe ${sheet.level}`].filter(Boolean).join(' · ')));
+    overview.append(el('p', null, [sheet.species, sheet.background, classes, globalThis.VTTUi("Stufe {level}", { level: sheet.level })].filter(Boolean).join(' · ')));
     overview.append(tags([
-      `TP ${sheet.hitPoints.current} / ${sheet.hitPoints.max}`, `RK ${sheet.armorClass}`, `Initiative ${signed(sheet.initiative)}`,
-      `Bewegung ${sheet.speedMeters} m`, `Passive Wahrnehmung ${sheet.passivePerception}`, `Übungsbonus ${signed(sheet.proficiencyBonus)}`,
+      globalThis.VTTUi("TP {current} / {max}", { current: sheet.hitPoints.current, max: sheet.hitPoints.max }),
+      globalThis.VTTUi("RK {value}", { value: sheet.armorClass }),
+      globalThis.VTTUi("Initiative {value}", { value: signed(sheet.initiative) }),
+      globalThis.VTTUi("Bewegung {value} m", { value: sheet.speedMeters }),
+      globalThis.VTTUi("Passive Wahrnehmung {value}", { value: sheet.passivePerception }),
+      globalThis.VTTUi("Übungsbonus {value}", { value: signed(sheet.proficiencyBonus) }),
     ]));
     root.append(overview);
 
-    const abilities = section('Attribute und Rettungswürfe');
+    const abilities = section(globalThis.VTTUi("Attribute und Rettungswürfe"));
     const grid = el('div', 'ss-abilities');
     ABIL.forEach(([key, label]) => {
       const ability = sheet.abilities[key];
       const save = sheet.saves[key];
       const box = el('div', 'ss-ability');
       box.append(el('span', 'ss-ability-name', label), el('span', 'ss-ability-mod', signed(ability.modifier)), el('span', 'ss-ability-score', globalThis.VTTUi("Wert {p0}",{p0:(ability.score)})),
-        el('span', 'ss-ability-save', globalThis.VTTUi("Rettungswurf {p0}{p1}",{p0:(signed(save.bonus)),p1:(save.proficient ? ' (geübt)' : '')})));
+        el('span', 'ss-ability-save', globalThis.VTTUi("Rettungswurf {p0}{p1}",{p0:(signed(save.bonus)),p1:(save.proficient ? globalThis.VTTUi(" (geübt)") : '')})));
       grid.append(box);
     });
     abilities.append(grid);
     root.append(abilities);
 
-    const skills = section('Fertigkeiten');
+    const skills = section(globalThis.VTTUi("Fertigkeiten"));
     const list = el('ul', 'ss-list');
     Object.values(sheet.skills).forEach((skill) => {
       const li = el('li', skill.proficiency !== 'none' ? 'is-proficient' : '');
@@ -70,25 +74,25 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     root.append(skills);
 
     if (sheet.feats.length) {
-      const feats = section('Talente');
+      const feats = section(globalThis.VTTUi("Talente"));
       feats.append(tags(sheet.feats));
       root.append(feats);
     }
 
     const casting = Object.values(sheet.spellcasting.classes);
     if (casting.length || sheet.spells.length) {
-      const spells = section('Zauberwirken');
+      const spells = section(globalThis.VTTUi("Zauberwirken"));
       if (casting.length) {
-        spells.append(tags(casting.map((c) => `Zauber-SG ${c.saveDc}`).concat(casting.map((c) => `Zauberangriff ${signed(c.attackBonus)}`))));
-        const slots = sheet.spellcasting.slots.map((count, index) => (count ? `Grad ${index + 1}: ${count}` : null)).filter(Boolean);
+        spells.append(tags(casting.map((c) => globalThis.VTTUi("Zauber-SG {value}", { value: c.saveDc })).concat(casting.map((c) => globalThis.VTTUi("Zauberangriff {value}", { value: signed(c.attackBonus) })))));
+        const slots = sheet.spellcasting.slots.map((count, index) => (count ? globalThis.VTTUi("Grad {grade}: {count}", { grade: index + 1, count }) : null)).filter(Boolean);
         if (slots.length) spells.append(el('p', null, globalThis.VTTUi("Zauberplätze: {p0}",{p0:(slots.join(' · '))})));
       }
-      if (sheet.spells.length) spells.append(tags(sheet.spells.map((s) => `${s.name}${s.level === 0 ? ' (Zaubertrick)' : ` (Grad ${s.level})`}`)));
+      if (sheet.spells.length) spells.append(tags(sheet.spells.map((s) => `${s.name}${s.level === 0 ? globalThis.VTTUi(" (Zaubertrick)") : globalThis.VTTUi(" (Grad {grade})", { grade: s.level })}`)));
       root.append(spells);
     }
 
-    const gear = section('Ausrüstung');
-    if (sheet.equipment.length) gear.append(tags(sheet.equipment.map((i) => `${i.name}${i.quantity > 1 ? ` ×${i.quantity}` : ''}${i.equipped ? ' (angelegt)' : ''}`)));
+    const gear = section(globalThis.VTTUi("Ausrüstung"));
+    if (sheet.equipment.length) gear.append(tags(sheet.equipment.map((i) => `${i.name}${i.quantity > 1 ? ` ×${i.quantity}` : ''}${i.equipped ? globalThis.VTTUi(" (angelegt)") : ''}`)));
     else gear.append(el('p', null, globalThis.VTTUi("Keine Gegenstände.")));
     const coins = Object.entries(sheet.coins || {}).filter(([, amount]) => amount > 0).map(([code, amount]) => `${amount} ${code}`);
     if (coins.length) gear.append(el('p', null, globalThis.VTTUi("Münzen: {p0}",{p0:(coins.join(', '))})));

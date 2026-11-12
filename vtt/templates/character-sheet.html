@@ -639,7 +639,38 @@
 
         .sheet-journey-nav .sheet-split-actions {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+        }
+
+        .sheet-load-state {
+            display: grid;
+            gap: 0.8rem;
+            justify-items: start;
+            padding: 1.5rem;
+            border: 1px dashed var(--ui-line, rgba(130, 89, 52, 0.4));
+            border-radius: 16px;
+            background: var(--ui-panel, #fffaf1);
+            color: var(--ui-ink, #342b25);
+        }
+
+        .sheet-load-state[hidden] {
+            display: none !important;
+        }
+
+        .sheet-load-state p {
+            margin: 0;
+            font-style: italic;
+        }
+
+        .sheet-load-state[data-state="error"] {
+            border-style: solid;
+            border-color: var(--ui-danger, #8b2929);
+        }
+
+        .sheet-load-state[data-state="error"] p {
+            color: var(--ui-danger, #8b2929);
+            font-style: normal;
+            font-weight: 600;
         }
 
         .sheet-journey-nav .sheet-split-actions .btn {
@@ -769,7 +800,14 @@
                         <button class="btn btn-primary" type="button" onclick="goBack()"><span data-ui-key="u_86af65ec58d7">Zum Charakterarchiv</span></button>
                     </section>
 
-                    <div class="book-spread" id="sheetSpread">
+                    <!-- C01: the spread stays hidden until the character profile is
+                         resolved, so the legacy form never flashes during loading. -->
+                    <section id="sheetLoadState" class="sheet-load-state" role="status" aria-live="polite" data-state="loading">
+                        <p id="sheetLoadMessage"><span data-ui-key="u_ced1b5bd9dd5">Charakterbogen wird geladen …</span></p>
+                        <button class="btn btn-secondary" type="button" id="sheetLoadRetry" onclick="loadSheet()" hidden><span data-ui-key="u_00e5baddf108">Neu laden</span></button>
+                    </section>
+
+                    <div class="book-spread" id="sheetSpread" hidden>
                         <section class="book-page book-page--index">
                     <div class="sheet-pane sheet-character-heading">
                         <div class="sheet-pane-header">
@@ -815,15 +853,13 @@
                         </div>
                     </div>
 
+                    <!-- C01: archive, campaign list and Creation Engine stay in the one
+                         main navigation; this pane keeps the single edit toggle and the
+                         contextual link to this character's own campaign. -->
                     <div class="sheet-pane sheet-journey-nav">
-                        <div class="sheet-pane-header">
-                        <div class="sheet-pane-title"><span data-ui-key="u_cf03cf2e9cdf">Navigation</span></div>
-                        </div>
                         <div class="sheet-split-actions">
                             <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()"><span data-ui-key="u_34f16d12a82e">Bogen bearbeiten</span></button>
                             <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden><span data-ui-key="u_7435de3f95bb">Kampagnen-Kontext</span></button>
-                            <button class="btn btn-secondary" type="button" data-book-route="/characters" onclick="goBack()"><span data-ui-key="u_de4007287294">Zurück zum Archiv</span></button>
-                            <a class="btn btn-secondary" data-creation-engine-nav aria-disabled="true" tabindex="0" title="Creation Engine wird geprüft" data-ui-title="u_614b051099b2"><span data-ui-key="u_8e0ac23811b8">Creation Engine · wird geprüft</span></a>
                         </div>
                         <!-- Robot audit, 2026-08-23, Arc 0.7: a second,
                              static "next step" element (id=sheetNextStepNote,
@@ -1153,7 +1189,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 routeKey: 'character-sheet',
                 auth,
                 statusElementId: 'characterSheetSceneStatus',
-                statusMessage: 'Charakterbogen wird geladen …',
+                statusMessage: globalThis.VTTUi('Charakterbogen wird geladen …'),
             });
         }
 
@@ -1187,14 +1223,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const hintEl = document.getElementById('sheetNextHint');
 
             if (contextButton) {
+                // Only the character's own campaign is a contextual target; the
+                // general campaign list is already in the main navigation.
+                contextButton.hidden = !character?.campaign_id;
                 if (character?.campaign_id) {
-                    contextButton.hidden = false;
                     contextButton.textContent = globalThis.VTTUi("Kampagnen-Kontext");
                     contextButton.dataset.bookRoute = `/campaigns?campaign_id=${character.campaign_id}`;
-                } else {
-                    contextButton.hidden = false;
-                    contextButton.textContent = globalThis.VTTUi("Kampagnen-Hub");
-                    contextButton.dataset.bookRoute = '/campaigns';
                 }
             }
 
@@ -1217,7 +1251,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 hint = 'Charakter vollständig. Kehre zum Kampagnen-Kontext zurück, wenn du bereit für die Session bist.';
             }
 
-            hintEl.textContent = hint;
+            hintEl.textContent = globalThis.VTTUi(hint);
             hintEl.hidden = false;
         }
 
@@ -1845,13 +1879,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const hitDice = Object.entries(ev.hitDice || {}).map(([die, count]) => `${count}×${die}`).join(' + ');
             const acCell = srdCell(globalThis.VTTUi("Rüstungsklasse"), String(ev.armorClass?.value ?? character.ac), ev.armorClass?.formula || '');
             acCell.id = 'srdAcCell';
+            // Stable semantic hook for the display unit; the label text is localized.
+            const speedCell = srdCell(globalThis.VTTUi("Bewegung"), `${String(ev.speedMeters ?? '–').replace('.', ',')} m`);
+            speedCell.dataset.sheetStat = 'speed';
             nodes.push(srdGrid('srd-sheet-vitals', [
                 acCell,
                 srdCell(globalThis.VTTUi("Trefferpunkte"), `${character.hp_current ?? hp} / ${hp}`),
                 srdCell(globalThis.VTTUi("Trefferwürfel"), hitDice || '–'),
                 srdCell(globalThis.VTTUi("Übungsbonus"), signed(ev.proficiencyBonus)),
                 srdCell(globalThis.VTTUi("Initiative"), signed(ev.initiative)),
-                srdCell(globalThis.VTTUi("Bewegung"), `${String(ev.speedMeters ?? '–').replace('.', ',')} m`),
+                speedCell,
                 srdCell(globalThis.VTTUi("Passive Wahrnehmung"), String(ev.passivePerception ?? '–')),
                 srdCell(globalThis.VTTUi("Stufe"), String(ev.level ?? character.level)),
             ]));
@@ -2019,10 +2056,30 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
         }
 
+        // C01: one explicit load state. Until the first profile is resolved only the
+        // loading note is visible; a failed first load keeps a visible error and retry.
+        function setSheetLoadState(state, message = '') {
+            const box = document.getElementById('sheetLoadState');
+            if (!box) return;
+            document.body.dataset.sheetLoad = state;
+            box.dataset.state = state;
+            box.hidden = state === 'ready';
+            box.setAttribute('role', state === 'error' ? 'alert' : 'status');
+            const text = document.getElementById('sheetLoadMessage');
+            if (text && state !== 'ready') {
+                text.textContent = state === 'error'
+                    ? (message || globalThis.VTTUi('Der Charakterbogen konnte nicht geladen werden.'))
+                    : globalThis.VTTUi('Charakterbogen wird geladen …');
+            }
+            const retry = document.getElementById('sheetLoadRetry');
+            if (retry) retry.hidden = state !== 'error';
+        }
+
         function renderSheet() {
             if (!sheet) return;
             document.body.dataset.sheetHasSrd = isSrdCharacter(sheet.character) ? 'true' : 'false';
             document.getElementById('sheetEmptyState').hidden = true;
+            setSheetLoadState('ready');
             document.getElementById('sheetSpread').hidden = false;
             renderCore(sheet.character);
             renderIdentity(sheet.character);
@@ -2037,19 +2094,26 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!Number.isInteger(characterId) || characterId <= 0) {
                 document.body.dataset.sheetEmpty = 'true';
                 document.getElementById('sheetCharacterChip').textContent = globalThis.VTTUi("Kein Charakter gewählt");
+                setSheetLoadState('ready');
                 document.getElementById('sheetEmptyState').hidden = false;
                 document.getElementById('sheetSpread').hidden = true;
                 return;
             }
 
+            // Later reloads (save, upload, retry after success) keep the current sheet visible.
+            const firstLoad = !sheet;
+            if (firstLoad) setSheetLoadState('loading');
             try {
                 delete document.body.dataset.sheetEmpty;
                 currentUser = await auth.requireAuth('/login.html');
                 document.getElementById('sheetReaderBadge').textContent = currentUser?.username || globalThis.VTTUi("Sheet Focus");
-                sheet = await auth.makeAuthRequest(`/api/characters/${characterId}/sheet`);
+                const loaded = await auth.makeAuthRequest(`/api/characters/${characterId}/sheet`);
+                if (!loaded) return; // makeAuthRequest already redirected to login.
+                sheet = loaded;
                 renderSheet();
             } catch (error) {
-                showMessage(error.message || 'Failed to load character sheet', true);
+                if (firstLoad) setSheetLoadState('error', error.message || '');
+                else showMessage(error.message || 'Failed to load character sheet', true);
             }
         }
 
