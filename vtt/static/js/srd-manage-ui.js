@@ -362,6 +362,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     }
   }
 
+  /* Redraws from the loaded state after the sheet's lock changed; nothing is fetched or saved. */
+  window.renderSrdManage = () => { if (state) render(); };
+
   window.loadSrdManage = async function (character) {
     const root = document.getElementById('srdManage');
     if (!root) return;
