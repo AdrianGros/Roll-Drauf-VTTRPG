@@ -25,3 +25,14 @@ preferences before navigation, all affected cases rerun. Self-review: nonce is
 render-only and changes after successful upload; picker is rebound once; header
 CSS covers existing global ribbon and responsive tools. No independent reviewer
 is claimed. Live evidence is still pending deployment.
+
+Live C04 mobile Import chooser + Export dialog passed on image 4871cb32; all
+four header action centers receive clicks. C04 Medium is closed. C02 nonce
+refresh is proven live (2/3/4 pixel Firefox images); a subsequent chooser race
+remained because loadSheet returned before asynchronous SRD recomposition.
+Await the composition before reporting upload success. Expanded actual chooser
+sequence avatar/upload, avatar/replace, token/upload passes in both engines
+(2 cases). Calendar integration is selective from df9e3cc5f on the latest root;
+no previous WIP navigation or existing context guards replaced. Its API, both
+role/engine poll journeys, series browser journeys and PostgreSQL checks pass;
+see calendar proof. Live calendar acceptance remains pending.

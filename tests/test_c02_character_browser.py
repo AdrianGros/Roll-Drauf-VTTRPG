@@ -445,19 +445,20 @@ def test_replacing_different_identity_pixels_refreshes_all_portraits(site, data,
         browser, page, errors, _ = _context(p, origin, info['token'], 390, engine=engine)
         page.on('dialog', lambda d: d.accept())
         page.goto(f'{origin}/character-sheet?id={char_id}&section=identity')
-        for size in (2, 3):
+        for kind,size in (('avatar',2),('avatar',3),('token',2)):
             image = BytesIO(); Image.new('RGB', (size, size), (size * 60, 80, 120)).save(image, format='PNG')
             page.locator('#messageBox').evaluate("n=>n.textContent=''")
             with page.expect_file_chooser() as chooser:
-                page.locator('#sheetIdentityUpload-avatar').click()
-            with page.expect_response(lambda r: r.request.method == 'POST' and '/identity/avatar' in r.url) as response:
-                chooser.value.set_files({'name':f'avatar-{size}.png','mimeType':'image/png','buffer':image.getvalue()})
+                page.locator('#sheetIdentityUpload-'+kind).click()
+            with page.expect_response(lambda r: r.request.method == 'POST' and '/identity/'+kind in r.url) as response:
+                chooser.value.set_files({'name':f'{kind}-{size}.png','mimeType':'image/png','buffer':image.getvalue()})
             assert response.value.status == 200
             expect(page.locator('#messageBox')).to_contain_text('gespeichert')
-            page.wait_for_function('''size=>{const a=Array.from(document.querySelectorAll('img[src*="/identity/avatar"]'));return a.length>=2&&a.every(i=>i.complete&&i.naturalWidth===size)}''', arg=size)
+            page.wait_for_function('''([kind,size])=>{const a=Array.from(document.querySelectorAll('img[src*="/identity/'+kind+'"]'));return a.length>=2&&a.every(i=>i.complete&&i.naturalWidth===size)}''', arg=[kind,size])
         with app.app_context():
             assert db.session.get(Character, char_id).avatar_url == f'/api/characters/{char_id}/identity/avatar'
         page.locator('#sheetIdentityRemove-avatar').click()
+        page.locator('#sheetIdentityRemove-token').click()
         expect(page.locator('#sheetIdentityGrid img')).to_have_count(0)
         assert not errors, errors
         browser.close()

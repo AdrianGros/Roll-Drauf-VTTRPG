@@ -2202,14 +2202,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         // throwing render must not leave a half-filled form behind the ready state.
         let sheetRendered = false;
         let sheetLoadSeq = 0;
-        function renderSheet() {
+        async function renderSheet() {
             if (!sheet) return;
             document.body.dataset.sheetHasSrd = isSrdCharacter(sheet.character) ? 'true' : 'false';
             document.getElementById('sheetEmptyState').hidden = true;
             renderCore(sheet.character);
             renderIdentity(sheet.character);
             renderHomebrewOrigin(sheet.character);
-            renderSrdSheet(sheet.character);
+            await renderSrdSheet(sheet.character);
             renderSpells(sheet.spells || []);
             renderEquipment(sheet.equipment || []);
             renderInventory(sheet.inventory || []);
@@ -2247,7 +2247,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 // Permissions come from the loaded sheet; handlers and forms follow them.
                 applySheetPermissions(sheet.character);
                 setEditMode();
-                renderSheet();
+                await renderSheet();
             } catch (error) {
                 if (seq !== sheetLoadSeq) return;
                 if (firstLoad) {

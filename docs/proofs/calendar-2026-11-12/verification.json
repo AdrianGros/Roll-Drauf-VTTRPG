@@ -1,0 +1,42 @@
+{
+  "status": "local_checks_passed_live_pending",
+  "implementer": "Claude df9e3cc5ff92fba0f4f15ea3301baa500f41ef6b; Codex takeover verification and tests",
+  "checks": {
+    "integrated_api": {
+      "passed": 80,
+      "log": "/tmp/vtt-c06-integrated-api.log"
+    },
+    "series_browsers": {
+      "passed": 4,
+      "engines": [
+        "Chromium",
+        "Firefox"
+      ],
+      "widths": [
+        390,
+        1440
+      ]
+    },
+    "poll_browser_roundtrip": {
+      "passed": 2,
+      "engines": [
+        "Chromium DM",
+        "Firefox Player"
+      ],
+      "cases": [
+        "1440/de/paper",
+        "390/en/night"
+      ]
+    },
+    "postgres": [
+      "four concurrent series creates: one row and identical calendars",
+      "competing poll finalizers: 200/409, same winner retry, one session"
+    ]
+  },
+  "test_corrections": [
+    "Calendar cancellation must use calendar appointment route; legacy table route remains protected",
+    "Series labels include option text, use non-exact label lookup",
+    "29-day series fixture fits actual rolling30 boundary"
+  ],
+  "review": "Structured Codex self-review, no independent review claimed. Read access and all nested writers checked; pure GET, current membership, campaign lock then fresh data, poll CAS, immutable UTC options, no table role fallback. Additive five tables only."
+}

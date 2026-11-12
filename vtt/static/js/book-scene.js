@@ -87,7 +87,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const status = String(session?.runtime_status || session?.session_state || session?.status || '').trim().toLowerCase();
             return status === 'in_progress' || status === 'active';
         });
-        return active || list[0] || null;
+        // C06: the next dated, not cancelled session comes first. A cancelled appointment is
+        // identified by the original `status` (runtime_status maps it to "paused" for play).
+        const upcoming = list.filter((session) => ['scheduled', 'ready'].includes(session?.status)
+            && session.scheduled_at && Date.parse(session.scheduled_at + (/Z$|[+-]\d\d:\d\d$/.test(session.scheduled_at) ? '' : 'Z')) >= Date.now())
+            .sort((a, b) => String(a.scheduled_at).localeCompare(String(b.scheduled_at)));
+        return active || upcoming[0] || list.find((session) => session?.status !== 'cancelled') || null;
     }
 
     function buildHubActionButton(label, hubAction, opts = {}) {
@@ -664,7 +669,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             `;
         },
 
-        buildCampaignLedger(campaigns) {
+        buildCampaignLedger(campaigns, mode = 'own') {
+            // C06: own/joined rounds and the public directory are separate lists. The public
+            // one has its own marker attributes so the existing own-list controls stay unique.
+            const isPublic = mode === 'public';
+            const marks = isPublic
+                ? { list: 'data-public-campaign-list', search: 'data-public-search', prev: 'data-public-prev', next: 'data-public-next', count: 'data-public-count' }
+                : { list: 'data-campaign-list', search: 'data-campaign-search', prev: 'data-campaign-prev', next: 'data-campaign-next', count: 'data-campaign-count' };
+            if (isPublic && (!Array.isArray(campaigns) || campaigns.length === 0)) {
+                return `<div class="book-scene-ledger-item is-empty">${globalThis.VTTUiHTML("Keine öffentlichen Runden gefunden.")}</div>`;
+            }
             if (!Array.isArray(campaigns) || campaigns.length === 0) {
                 return `
                     <div class="book-scene-ledger-item is-empty">
@@ -686,14 +700,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // der Buch-Ansicht komplett fehlte (F4-Loch). Der garantierte
             // 403-Hub-Link für Nicht-Mitglieder (D07/B1) entfällt damit.
             return `
-                <div data-campaign-list>
+                <div ${marks.list}>
                 <label class="book-scene-campaign-search">${globalThis.VTTUiHTML("Kampagnen suchen")}
-                    <input type="search" data-campaign-search placeholder="${globalThis.VTTUiHTML("Name oder Beschreibung")}" autocomplete="off">
+                    <input type="search" ${marks.search} placeholder="${globalThis.VTTUiHTML("Name oder Beschreibung")}" autocomplete="off">
                 </label>
                 <div class="book-scene-campaign-pages" aria-label="${globalThis.VTTUiHTML("Kampagnenseiten")}">
-                    <button type="button" class="btn btn-secondary" data-campaign-prev>${globalThis.VTTUiHTML("Vorherige")}</button>
-                    <span data-campaign-count role="status" aria-live="polite"></span>
-                    <button type="button" class="btn btn-secondary" data-campaign-next>${globalThis.VTTUiHTML("Nächste")}</button>
+                    <button type="button" class="btn btn-secondary" ${marks.prev}>${globalThis.VTTUiHTML("Vorherige")}</button>
+                    <span ${marks.count} role="status" aria-live="polite"></span>
+                    <button type="button" class="btn btn-secondary" ${marks.next}>${globalThis.VTTUiHTML("Nächste")}</button>
                 </div>
                 <div class="book-scene-ledger">
                     ${campaigns.map((campaign) => {
@@ -1075,6 +1089,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const ownedCount = campaigns.filter((campaign) => Boolean(campaign.is_owner)).length;
             const joinedCount = campaigns.filter((campaign) => Boolean(campaign.is_member) && !campaign.is_owner).length;
             const activeCount = campaigns.filter((campaign) => String(campaign.status || '').toLowerCase() === 'active').length;
+            const ownCampaigns = campaigns.filter((campaign) => Boolean(campaign.is_member));
+            const publicCampaigns = campaigns.filter((campaign) => !campaign.is_member);
 
             return this.buildPageShell('campaigns', user, {
                 eyebrow: globalThis.VTTUi('Kapitel II'),
@@ -1105,11 +1121,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                                 primary: true,
                             },
                         ])}
-                        ${this.buildCampaignLedger(campaigns)}
+                        ${this.buildCampaignLedger(ownCampaigns, 'own')}
                     </section>
-                `,
-                rightPage: `
-                    <section class="book-spread-footer">
+                    <details class="book-scene-panel" data-public-campaigns data-testid="public-campaigns">
+                        <summary class="book-scene-panel-title">${escapeHtml(globalThis.VTTUi('Öffentliche Runden ({count})', { count: publicCampaigns.length }))}</summary>
+                        <p class="book-scene-panel-copy">${globalThis.VTTUiHTML("Offene Runden zum Anfragen oder Beitreten mit Einladungscode. Es werden jeweils nur wenige Einträge pro Seite gezeigt.")}</p>
+                        ${this.buildCampaignLedger(publicCampaigns, 'public')}
+                    </details>
+                    <section class="book-spread-footer" data-campaign-tools>
                         <div class="book-dashboard-widget-header">
                             <h2>${globalThis.VTTUiHTML("Kampagnen-Werkzeuge")}</h2>
                             <span class="book-dashboard-widget-tag">${globalThis.VTTUiHTML("Hub, Vorbereitung, Karten, Assets")}</span>
@@ -1136,6 +1155,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             </div>
                         </div>
                     </section>
+                `,
+                rightPage: `
+                    <section class="book-scene-panel" data-own-calendar data-testid="own-calendar"></section>
                 `,
             });
         },
@@ -1301,6 +1323,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             href: buildIntentHref('/campaigns', { campaign_id: campaign.id, workspace: 1 }),
                         }]) : ''}
                     </section>
+                    <section class="book-scene-panel" data-campaign-planner data-testid="campaign-planner"></section>
                 `,
             });
         },
@@ -1466,39 +1489,41 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
         },
 
-        bindCampaignHubDetailActions(campaignId) {
-            if (!this.sceneSurface) {
+        // `root` lets C06 rebind only a replaced fragment (the session-prep panel) after the
+        // planner changed a session, without duplicating listeners on untouched nodes.
+        bindCampaignHubDetailActions(campaignId, root = this.sceneSurface) {
+            if (!root) {
                 return;
             }
-            this.sceneSurface.querySelectorAll('[data-hub-action="leave-campaign"], [data-hub-action="kick-player"]').forEach((button) => {
+            root.querySelectorAll('[data-hub-action="leave-campaign"], [data-hub-action="kick-player"]').forEach((button) => {
                 button.addEventListener('click', () => this.changeCampaignMembership(campaignId, button));
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="open-session"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="open-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const sessionId = Number(node.getAttribute('data-hub-session-id'));
                     this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns' });
                 });
             });
             [['open-session-dm', 'dm'], ['open-session-player', 'player']].forEach(([hubAction, seat]) => {
-                this.sceneSurface.querySelectorAll(`[data-hub-action="${hubAction}"]`).forEach((node) => {
+                root.querySelectorAll(`[data-hub-action="${hubAction}"]`).forEach((node) => {
                     node.addEventListener('click', () => {
                         const sessionId = Number(node.getAttribute('data-hub-session-id'));
                         this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat });
                     });
                 });
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="start-session"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="start-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const sessionId = Number(node.getAttribute('data-hub-session-id'));
                     this.startCampaignHubSession(campaignId, sessionId);
                 });
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="new-session"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="new-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     this.createCampaignHubSession(campaignId);
                 });
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="generate-invite"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="generate-invite"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     this.generateCampaignHubInvite(campaignId);
                 });
@@ -1506,7 +1531,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // The invite link box renders async (loadCampaignHubInvites), so
             // its copy button doesn't exist yet at bind time - delegate from
             // the static box container instead of binding it directly.
-            this.sceneSurface.querySelectorAll('[data-hub-invite-link-box]').forEach((node) => {
+            root.querySelectorAll('[data-hub-invite-link-box]').forEach((node) => {
                 node.addEventListener('click', (event) => {
                     const button = event.target.closest('[data-hub-action="copy-invite-link"]');
                     if (!button) {
@@ -1517,7 +1542,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     this.copyInviteLinkField(field, button);
                 });
             });
-            this.sceneSurface.querySelectorAll('[data-hub-action="approve-join-request"], [data-hub-action="deny-join-request"]').forEach((node) => {
+            root.querySelectorAll('[data-hub-action="approve-join-request"], [data-hub-action="deny-join-request"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const row = node.closest('[data-join-request]');
                     const userId = row ? Number(row.getAttribute('data-user-id')) : null;
@@ -1567,6 +1592,33 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this.bindSceneNavigation();
                 this.bindCampaignHubDetailActions(id);
                 this.loadCampaignHubInvites(id);
+                const plannerRoot = this.sceneSurface.querySelector('[data-campaign-planner]');
+                if (plannerRoot) {
+                    // Planner failures must never take the preparation panel down with them.
+                    try {
+                        const { mountCampaignPlanner } = await import('/static/js/session-calendar.js');
+                        if (this.sceneRenderVersion === renderVersion && plannerRoot.isConnected) {
+                            const notice = this.hubPlannerNotice || '';
+                            this.hubPlannerNotice = '';
+                            await mountCampaignPlanner(plannerRoot, {
+                                campaignId: id,
+                                campaignName: data.campaign?.name || '',
+                                canManage: Boolean(data.campaign?.is_owner) || ['DM', 'CO_DM', 'CODM'].includes(data.campaign?.your_role),
+                                sessions: Array.isArray(data.sessions) ? data.sessions : [],
+                                notice,
+                                // The preparation panel derives from sessions, so re-render the hub after a change.
+                                onChanged: async (message) => {
+                                    this.hubPlannerNotice = message || '';
+                                    await this.renderCampaignHubDetail(id);
+                                },
+                            });
+                        }
+                    } catch (_error) {
+                        if (plannerRoot.isConnected) {
+                            plannerRoot.textContent = globalThis.VTTUi('Der Session-Kalender konnte nicht geladen werden. Bitte die Seite neu laden.');
+                        }
+                    }
+                }
             } catch (error) {
                 if (this.sceneRenderVersion !== renderVersion) return;
                 this.sceneSurface.innerHTML = this.buildPageShell('campaigns', this.sceneUser, {
@@ -1642,6 +1694,25 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             });
         },
 
+        // C06: one shared calendar of the user's own sessions, identical for DM and Player.
+        async mountOwnCalendar() {
+            const root = this.sceneSurface ? this.sceneSurface.querySelector('[data-own-calendar]') : null;
+            if (!root || root.dataset.mounted === 'true') {
+                return;
+            }
+            root.dataset.mounted = 'true';
+            try {
+                const { mountOwnCalendar } = await import('/static/js/session-calendar.js');
+                if (root.isConnected) {
+                    await mountOwnCalendar(root);
+                }
+            } catch (_error) {
+                if (root.isConnected) {
+                    root.textContent = globalThis.VTTUi('Der Session-Kalender konnte nicht geladen werden. Bitte die Seite neu laden.');
+                }
+            }
+        },
+
         buildRouteMarkup(routeKey, user, snapshot) {
             if (routeKey === 'campaigns') {
                 return this.buildCampaignsMarkup(user, snapshot);
@@ -1657,14 +1728,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return;
             }
 
-            this.sceneSurface.querySelectorAll('[data-campaign-list]').forEach((list) => {
+            this.sceneSurface.querySelectorAll('[data-campaign-list], [data-public-campaign-list]').forEach((list) => {
                 if (list.dataset.bound === 'true') return;
                 list.dataset.bound = 'true';
+                const prefix = list.hasAttribute('data-public-campaign-list') ? 'public' : 'campaign';
                 const rows = [...list.querySelectorAll('[data-testid="campaign-ledger-item"]')];
-                const search = list.querySelector('[data-campaign-search]');
-                const previous = list.querySelector('[data-campaign-prev]');
-                const next = list.querySelector('[data-campaign-next]');
-                const count = list.querySelector('[data-campaign-count]');
+                const search = list.querySelector(`[data-${prefix}-search]`);
+                const previous = list.querySelector(`[data-${prefix}-prev]`);
+                const next = list.querySelector(`[data-${prefix}-next]`);
+                const count = list.querySelector(`[data-${prefix}-count]`);
                 const searchable = new Map(rows.map((row) => [row, [row.querySelector('.book-scene-ledger-head strong')?.textContent, row.querySelector('.book-scene-ledger-copy')?.textContent].join(' ').toLocaleLowerCase('de')]));
                 let page = 0;
                 const refresh = () => {
@@ -1685,6 +1757,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             window.CreationEngineNavigation?.hydrate(this.sceneSurface);
             window.RegelwerkNavigation?.hydrate(this.sceneSurface);
+            this.mountOwnCalendar();
 
             this.sceneSurface.querySelectorAll('[data-dashboard-route]').forEach((node) => {
                 node.addEventListener('click', () => {
@@ -2039,6 +2112,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         getPlayLaunchSessionPhase(session) {
             const status = String(session?.runtime_status || '').trim().toLowerCase();
+            // C06: runtime_status shows a cancelled appointment as "paused"; the original status wins here.
+            if (String(session?.status || '').trim().toLowerCase() === 'cancelled') {
+                return { label: globalThis.VTTUi('Abgesagt'), tone: 'cancelled' };
+            }
             if (status === 'in_progress' || status === 'active' || status === 'live') {
                 return { label: this.content('play_launch.phase_live', 'Live'), tone: 'live' };
             }
