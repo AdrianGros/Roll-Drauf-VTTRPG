@@ -274,13 +274,58 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     };
     SC.findingsFor = (stepId) => SC.allFindings().filter((f) => stepOf(f.path) === stepId);
 
+    // Known finding paths that have a dedicated control. The path is only ever compared with
+    // the data-focus-path of controls the steps render; it never becomes a selector or code.
+    const FOCUS_PATHS = [
+        /^advancements\[\d+\]$/,
+        /^featureChoices\.[a-z0-9-]+(\.[a-z0-9-]+)?$/,
+        /^skills\.multiclass\.[a-z0-9-]+$/,
+        /^levels\.[a-z0-9-]+$/,
+    ];
+    const FOCUSABLE = 'select, input, button, a[href], textarea';
+    const knownFocusPath = (path) => typeof path === 'string' && FOCUS_PATHS.some((re) => re.test(path));
+
+    function focusPath(path) {
+        if (!knownFocusPath(path)) return false;
+        let target = null;
+        const level = /^levels\.([a-z0-9-]+)$/.exec(path);
+        if (level) {
+            const levels = (app.draft && app.draft.state.levels) || [];
+            const index = levels.findIndex((l, i) => i > 0 && l.classKey === level[1]);
+            target = index > 0 ? $(`scLvlClass${index}`) : null;
+        } else {
+            target = Array.from(document.querySelectorAll('[data-focus-path]')).find((node) => node.getAttribute('data-focus-path') === path) || null;
+        }
+        if (!target) return false;
+        const inner = target.matches(FOCUSABLE) ? target : (target.querySelector('select') || target.querySelector(FOCUSABLE));
+        const node = inner || target;
+        if (!inner) node.tabIndex = -1;
+        node.focus({ preventScroll: true });
+        node.scrollIntoView({ block: 'center' });
+        return true;
+    }
+
+    // Open the step that owns the finding, then focus the exact control when we know it.
+    // An unknown field still lands on the step's content; nothing is written or evaluated here.
+    SC.correctFinding = function (finding) {
+        const step = stepOf(finding && finding.path);
+        if (app.mode === 'guided') goStep(step); else scrollToSection(step);
+        return focusPath(finding && finding.path);
+    };
+
     SC.findingList = function (findings) {
         if (!findings.length) return h('p', { class: 'sc-ok-note', text: globalThis.VTTUi("Hier ist alles in Ordnung.") });
         const order = { error: 0, incomplete: 1, warning: 2, info: 3 };
-        return h('ul', { class: 'sc-findings' }, findings.slice().sort((a, b) => order[a.severity] - order[b.severity]).map((f) =>
-            h('li', { class: 'sc-finding', 'data-sev': f.severity },
+        return h('ul', { class: 'sc-findings' }, findings.slice().sort((a, b) => order[a.severity] - order[b.severity]).map((f) => {
+            const step = stepOf(f.path);
+            const stepLabel = (STEPS.find(([id]) => id === step) || [])[1];
+            const fixable = f.severity !== 'info' && (step !== 'pruefung' || knownFocusPath(f.path));
+            return h('li', { class: 'sc-finding', 'data-sev': f.severity },
                 h('span', { class: 'sc-sev', text: SEV_LABEL[f.severity] || f.severity }), f.message,
-                f.ref && f.ref.quote ? h('blockquote', null, `Regel: „${f.ref.quote}“`) : null)));
+                f.ref && f.ref.quote ? h('blockquote', null, `Regel: „${f.ref.quote}“`) : null,
+                fixable ? h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-finding-fix', 'data-finding-fix': step,
+                    onclick: () => SC.correctFinding(f) }, globalThis.VTTUi("Zur Korrektur: {step}", { step: stepLabel || step })) : null);
+        }));
     };
 
     function renderFindings() {

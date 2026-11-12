@@ -173,6 +173,21 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const node = document.getElementById(id);
             if (node) panels.get('manage').append(id === 'sheetIdentityGrid' ? node.closest('.sheet-pane') : node);
         }
+        // Owner-only shortcut to the existing avatar/token controls in the management tab.
+        // The server projection decides; the upload/replace/remove endpoints re-check ownership.
+        if (character.permissions?.editIdentity === true && document.getElementById('sheetIdentityGrid')) {
+            const images = el('button', 'sf-tab sf-images-action', globalThis.VTTUi("Bilder verwalten"));
+            images.type = 'button'; images.id = 'sfManageImages';
+            images.addEventListener('click', () => {
+                show('manage');
+                const grid = document.getElementById('sheetIdentityGrid');
+                const target = grid?.querySelector('button:not([disabled])') || grid;
+                if (target === grid) grid.tabIndex = -1;
+                target?.focus();
+                grid?.scrollIntoView({ block: 'center' });
+            });
+            identity.append(images);
+        }
         revealSection = (id) => {
             const target = document.getElementById(id);
             for (const [key, panel] of panels) {

@@ -859,6 +859,7 @@
                     <div class="sheet-pane sheet-journey-nav">
                         <div class="sheet-split-actions">
                             <button class="btn btn-primary" type="button" id="sheetModeActionBtn" onclick="toggleSheetMode()"><span data-ui-key="u_34f16d12a82e">Bogen bearbeiten</span></button>
+                            <button class="btn btn-secondary" type="button" id="sheetLockBtn" aria-pressed="false" onclick="toggleSheetLock()" hidden></button>
                             <button class="btn btn-secondary" type="button" id="campaignContextBtn" data-book-route="/campaigns" onclick="openCampaignContext()" hidden><span data-ui-key="u_7435de3f95bb">Kampagnen-Kontext</span></button>
                         </div>
                         <!-- Robot audit, 2026-08-23, Arc 0.7: a second,
@@ -1096,11 +1097,77 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const auth = new Auth();
         const params = new URLSearchParams(window.location.search);
         const characterId = Number(params.get('id'));
-        const mode = (params.get('mode') || 'view').toLowerCase();
-        const editable = mode === 'edit';
+        // C02: the server's owner-only permissions projection decides what the UI offers;
+        // PUT/POST/DELETE re-check ownership on their own. Without an explicit mode=view
+        // an owner opens an editable sheet; readers never get mutation handlers.
+        const requestedMode = (params.get('mode') || '').toLowerCase();
+        const explicitView = requestedMode === 'view';
+        // Fixed section links (C08): known keys only, never used as a selector or code.
+        const SHEET_SECTIONS = { identity: 'sheetIdentityGrid', progression: 'srdProgression' };
+        const requestedSection = Object.prototype.hasOwnProperty.call(SHEET_SECTIONS, params.get('section') || '')
+            ? params.get('section') : null;
+        const SHEET_IDENTITY_KINDS = { avatar: true, token: true };
+        let sectionOpened = false;
+        let editLocked = false;
+        let editable = false;
+        let canEditIdentity = false;
         let currentUser = null;
         let sheet = null;
         let pendingIdentityKind = null;
+
+        function resolveSheetPermissions(character) {
+            const permissions = character?.permissions;
+            if (permissions && typeof permissions === 'object') {
+                return { editCore: permissions.editCore === true, editIdentity: permissions.editIdentity === true, known: true };
+            }
+            // Older projection: keep the previous explicit mode=edit behaviour.
+            return { editCore: requestedMode === 'edit', editIdentity: false, known: false };
+        }
+
+        function applySheetPermissions(character) {
+            const permissions = resolveSheetPermissions(character);
+            // An explicit view entry and the local lock keep the whole sheet read-only, images included.
+            canEditIdentity = permissions.known && permissions.editIdentity && !explicitView && !editLocked;
+            document.body.dataset.sheetImages = canEditIdentity ? 'true' : 'false';
+            editable = permissions.editCore && !explicitView && !editLocked;
+            return permissions;
+        }
+
+        function toggleSheetLock() {
+            editLocked = !editLocked;
+            applySheetPermissions(sheet?.character);
+            setEditMode();
+            if (sheet) {
+                // Only the controls that depend on the lock are redrawn; nothing is saved or reloaded.
+                renderHomebrewOrigin(sheet.character);
+                renderIdentity(sheet.character);
+                renderSpells(sheet.spells || []);
+                renderEquipment(sheet.equipment || []);
+                renderInventory(sheet.inventory || []);
+            }
+        }
+
+        function sheetUrlWith(change) {
+            // Every campaign/session/context parameter survives a mode switch.
+            const query = new URLSearchParams(window.location.search);
+            query.set('id', String(characterId));
+            change(query);
+            return `/character-sheet?${query}`;
+        }
+
+        function openRequestedSection() {
+            if (!requestedSection || sectionOpened) return;
+            const target = document.getElementById(SHEET_SECTIONS[requestedSection]);
+            if (!target) return;
+            sectionOpened = true;
+            window.SheetFeedback?.reveal(SHEET_SECTIONS[requestedSection]);
+            const focusable = target.matches('button,a,input,select,textarea') ? target
+                : target.querySelector('button,a[href],input,select,textarea');
+            const anchor = focusable || target;
+            if (!focusable) target.tabIndex = -1;
+            anchor.focus({ preventScroll: true });
+            anchor.scrollIntoView({ block: 'center' });
+        }
 
         function showMessage(text, isError = false) {
             const box = document.getElementById('messageBox');
@@ -1153,10 +1220,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         // The table this sheet rolls to travels with the sheet through view/edit.
         function toggleSheetMode() {
-            const query = new URLSearchParams({ id: String(characterId) });
-            if (!editable) query.set('mode', 'edit');
-            if (srdTableSession) query.set('session_id', srdTableSession);
-            goTo(`/character-sheet?${query}`);
+            const toView = editable;
+            goTo(sheetUrlWith((query) => {
+                query.set('mode', toView ? 'view' : 'edit');
+                if (srdTableSession) query.set('session_id', srdTableSession);
+            }));
         }
 
         function openCampaignContext() {
@@ -1199,7 +1267,22 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             document.getElementById('modeLabel').textContent = editable
                 ? globalThis.VTTUi("Bearbeitungsmodus: Kernwerte und Ressourcen können geändert werden.")
                 : globalThis.VTTUi("Ansicht: Der Charakterbogen ist schreibgeschützt.");
-            document.getElementById('sheetModeActionBtn').textContent = editable ? globalThis.VTTUi("Bogen ansehen") : globalThis.VTTUi("Bogen bearbeiten");
+            const permissions = resolveSheetPermissions(sheet?.character);
+            const ownerSheet = permissions.editCore;
+            document.body.dataset.sheetOwner = !sheet || !permissions.known ? 'unknown' : (ownerSheet ? 'true' : 'false');
+            if (ownerSheet && editLocked) {
+                document.getElementById('modeLabel').textContent = globalThis.VTTUi("Bogen lokal gesperrt: Änderungen sind ausgeschaltet, bis du ihn wieder entsperrst.");
+            }
+            const modeButton = document.getElementById('sheetModeActionBtn');
+            modeButton.textContent = editable ? globalThis.VTTUi("Bogen ansehen") : globalThis.VTTUi("Bogen bearbeiten");
+            // A shared reader has nothing to switch to; the server decides, the button only follows.
+            modeButton.hidden = permissions.known && !ownerSheet;
+            const lockButton = document.getElementById('sheetLockBtn');
+            if (lockButton) {
+                lockButton.hidden = !(sheet && ownerSheet && !explicitView);
+                lockButton.textContent = editLocked ? globalThis.VTTUi("Bogen entsperren") : globalThis.VTTUi("Bogen sperren");
+                lockButton.setAttribute('aria-pressed', String(editLocked));
+            }
             document.getElementById('saveCoreBtn').style.display = editable ? 'inline-flex' : 'none';
             document.getElementById('spellsForm').style.display = editable ? 'grid' : 'none';
             document.getElementById('equipmentForm').style.display = editable ? 'grid' : 'none';
@@ -1237,6 +1320,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // State-based hint: pick the most actionable next step
             const hasAvatar = !!character?.avatar_url;
             const hasToken = !!character?.token_url;
+            if (character?.permissions && !character.permissions.editIdentity) {
+                // The image/campaign next steps are owner actions; a reader gets no prompt.
+                hintEl.hidden = true;
+                return;
+            }
 
             let hint = '';
             if (!hasAvatar && !hasToken) {
@@ -1292,32 +1380,39 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             updateJourneyContext(character);
         }
 
+        function identityLabel(identityKind) {
+            return identityKind === 'avatar' ? globalThis.VTTUi("Avatar") : globalThis.VTTUi("Token");
+        }
+
         function renderIdentityCard(character, identityKind) {
             const isAvatar = identityKind === 'avatar';
-            const label = isAvatar ? 'Avatar' : 'Token';
+            const label = identityLabel(identityKind);
             const url = isAvatar ? character.avatar_url : character.token_url;
-            const uploadLabel = url ? `${label} ersetzen` : `${label} hochladen`;
-            const removeButton = url
-                ? `<button class="btn btn-danger" type="button" onclick="removeIdentity('${identityKind}')">${label} entfernen</button>`
+            const uploadLabel = escapeHtml(url
+                ? globalThis.VTTUi("{label} ersetzen", { label })
+                : globalThis.VTTUi("{label} hochladen", { label }));
+            // Only the character's owner gets the existing picker/replace/remove actions;
+            // POST/DELETE identity still check ownership on the server.
+            const actions = canEditIdentity
+                ? `<div class="sheet-identity-actions">
+                        <button class="btn btn-secondary" type="button" id="sheetIdentityUpload-${identityKind}" onclick="openIdentityPicker('${identityKind}')">${uploadLabel}</button>
+                        ${url ? `<button class="btn btn-danger" type="button" id="sheetIdentityRemove-${identityKind}" onclick="removeIdentity('${identityKind}')">${escapeHtml(globalThis.VTTUi("{label} entfernen", { label }))}</button>` : ''}
+                    </div>`
                 : '';
+            const copy = escapeHtml(url
+                ? globalThis.VTTUi("{label} ist im Archiv und am Spieltisch verfügbar.", { label })
+                : globalThis.VTTUi("Noch kein {label} vorhanden.", { label }));
 
             return `
-                <div class="sheet-identity-card">
-                    <div class="sheet-identity-label">${label}</div>
+                <div class="sheet-identity-card" data-identity-kind="${identityKind}">
+                    <div class="sheet-identity-label">${escapeHtml(label)}</div>
                     <div class="sheet-identity-preview">
                         ${url
-                            ? `<img src="${escapeHtml(url)}" alt="${escapeHtml(character.name || 'Character')} ${label}">`
+                            ? `<img src="${escapeHtml(url)}" alt="${escapeHtml(globalThis.VTTUi("{label} von {name}", { label, name: character.name || '' }))}">`
                             : escapeHtml(isAvatar ? '🙂' : '🛡️')}
                     </div>
-                    <div class="sheet-identity-copy">
-                        ${url
-                            ? `${label} ist im Archiv und am Spieltisch verfügbar.`
-                            : `Noch kein ${label} vorhanden.`}
-                    </div>
-                    <div class="sheet-identity-actions">
-                        <button class="btn btn-secondary" type="button" onclick="openIdentityPicker('${identityKind}')">${uploadLabel}</button>
-                        ${removeButton}
-                    </div>
+                    <div class="sheet-identity-copy">${copy}</div>
+                    ${actions}
                 </div>
             `;
         }
@@ -1728,12 +1823,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             loadSrdRollContext(character, true);
             loadSrdInventory(character, updateSrdArmorClass);
             loadSrdManage(character);
-            loadSrdProgression(character, detail.evaluation, (info) => {
+            const progressionLoaded = loadSrdProgression(character, detail.evaluation, (info) => {
                 if (info?.reload) {
                     Promise.resolve(loadSheet()).then(() => { if (info.message) showMessage(info.message); });
                 } else if (info?.xp != null) {
                     document.getElementById('charXp').value = info.xp;
                 }
+            });
+            // The fixed section link waits for the composed tabs (and the progression root's content).
+            Promise.resolve(progressionLoaded).catch(() => {}).then(() => {
+                if (token === srdRenderToken) openRequestedSection();
             });
         }
 
@@ -2093,6 +2192,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             sheetRendered = true;
             document.getElementById('sheetSpread').hidden = false;
             setSheetLoadState('ready');
+            // A composed SRD sheet opens its section after the async render instead.
+            if (!isSrdCharacter(sheet.character)) openRequestedSection();
         }
 
         async function loadSheet() {
@@ -2119,6 +2220,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (seq !== sheetLoadSeq) return; // a stale response must not overlay a newer one
                 if (!loaded) throw new Error(globalThis.VTTUi('Der Charakterbogen konnte nicht geladen werden.'));
                 sheet = loaded;
+                // Permissions come from the loaded sheet; handlers and forms follow them.
+                applySheetPermissions(sheet.character);
+                setEditMode();
                 renderSheet();
             } catch (error) {
                 if (seq !== sheetLoadSeq) return;
@@ -2140,6 +2244,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         function openIdentityPicker(identityKind) {
+            if (!canEditIdentity || !Object.prototype.hasOwnProperty.call(SHEET_IDENTITY_KINDS, identityKind)) return;
             pendingIdentityKind = identityKind;
             const picker = document.getElementById('sheetIdentityFilePicker');
             if (!picker) return;
@@ -2149,7 +2254,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         async function handleIdentityFilePicked(event) {
             const file = event.target.files && event.target.files[0];
-            if (!file || !pendingIdentityKind) {
+            if (!file || !pendingIdentityKind || !canEditIdentity) {
                 return;
             }
 
@@ -2165,27 +2270,30 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     formData,
                 );
                 await loadSheet();
-                const label = identityKind === 'avatar' ? 'Avatar' : 'Token';
+                const label = identityLabel(identityKind);
+                const otherKind = identityKind === 'avatar' ? 'token' : 'avatar';
                 const other = identityKind === 'avatar' ? sheet?.character?.token_url : sheet?.character?.avatar_url;
-                const bothSet = !!other;
-                const hint = bothSet ? ' Beide Identitätsbilder sind gesetzt.' : ` ${identityKind === 'avatar' ? 'Token' : 'Avatar'} fehlt noch.`;
-                showMessage(`${label} gespeichert.${hint}`);
+                const hint = other
+                    ? globalThis.VTTUi("Beide Identitätsbilder sind gesetzt.")
+                    : globalThis.VTTUi("Das Bild „{label}“ fehlt noch.", { label: identityLabel(otherKind) });
+                showMessage(`${globalThis.VTTUi("Bild „{label}“ gespeichert.", { label })} ${hint}`);
             } catch (error) {
-                showMessage(error.message || 'Upload fehlgeschlagen — bitte erneut versuchen.', true);
+                showMessage(error.message || globalThis.VTTUi("Upload fehlgeschlagen — bitte erneut versuchen."), true);
             } finally {
                 event.target.value = '';
             }
         }
 
         async function removeIdentity(identityKind) {
-            const label = identityKind === 'avatar' ? 'Avatar' : 'Token';
+            if (!canEditIdentity || !Object.prototype.hasOwnProperty.call(SHEET_IDENTITY_KINDS, identityKind)) return;
+            const label = identityLabel(identityKind);
             if (!window.confirm(globalThis.VTTUi("{p0} entfernen?",{p0:(label)}))) return;
             try {
                 await auth.makeAuthRequest(`/api/characters/${characterId}/identity/${identityKind}`, 'DELETE');
                 await loadSheet();
-                showMessage(`${label} entfernt.`);
+                showMessage(globalThis.VTTUi("Bild „{label}“ entfernt.", { label }));
             } catch (error) {
-                showMessage(error.message || `${label} konnte nicht entfernt werden.`, true);
+                showMessage(error.message || globalThis.VTTUi("Das Bild „{label}“ konnte nicht entfernt werden.", { label }), true);
             }
         }
 

@@ -11,6 +11,11 @@ body[data-sheet-has-srd="true"] .sheet-journey-nav .sheet-split-actions .btn { w
 .sf-portrait { width: 56px; height: 56px; object-fit: cover; border: 1px solid #886529; border-radius: 9px; }
 .sf-portrait-empty { display: grid; place-items: center; font-size: 0.65rem; background: #eadbbd; color: #4a3325; }
 .sf-wallet { color: #5b4026; font-weight: 600; }
+.sf-images-action { margin-top: 0.4rem; max-width: 100%; }
+body[data-sheet-images="false"] .sf-images-action { display: none; }
+#sheetLockBtn[aria-pressed="true"] { color: #fff6e3; background: #492255; }
+#sheetIdentityGrid:focus-visible, #srdProgression:focus-visible { outline: 3px solid #97701e; outline-offset: 3px; }
+#sheetIdentityGrid .sheet-identity-actions .btn { min-height: 38px; white-space: normal; overflow-wrap: anywhere; }
 .sf-controls { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 0.5rem 0; }
 .sf-preference { display: flex; gap: 0.4rem; align-items: center; font-size: 0.8rem; color: #5d4839; min-width: 0; }
 .sf-preference select, .sf-preference input { border: 1px solid #91734e; border-radius: 5px; background: #fff8e9; color: #38203f; font: inherit; padding: 0.35rem; min-height: 34px; min-width: 0; max-width: 100%; }
