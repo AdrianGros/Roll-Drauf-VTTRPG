@@ -5,38 +5,45 @@ import { materialize, validateDocument } from "./document.js";
 import { Renderer } from "./render.js";
 import { registerMaterialTextures } from "./brush.js";
 import { creditsForDocument, embedCredits } from "./credits.js";
+import { loadPalette } from "./stamps.js";
 
 export const MAX_SNAPSHOT_PIXELS = 64 * 1024 * 1024;
-const ASSET_BASE = new URL("../", import.meta.url).pathname; // /static/mapmaker/
 
-/**
- * stamps.js resolves "assets/..." relative to the *page*. In the editor that is
- * /static/mapmaker/; on the play table it is not. When this helper runs outside the
- * editor page, narrowly rewrite exactly the relative "assets/" prefix (fetch + Image.src)
- * to the module-relative location. Editor pages are untouched.
- */
-export function ensureAssetBase() {
-    if (new URL("assets/", document.baseURI).pathname === ASSET_BASE + "assets/" || ensureAssetBase.installed) return;
-    ensureAssetBase.installed = true;
-    const rewrite = (value) => (typeof value === "string" && value.startsWith("assets/") ? ASSET_BASE + value : value);
-    const nativeFetch = globalThis.fetch.bind(globalThis);
-    globalThis.fetch = (input, init) => nativeFetch(rewrite(input), init);
-    const descriptor = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, "src");
-    Object.defineProperty(HTMLImageElement.prototype, "src", {
-        ...descriptor, set(value) { descriptor.set.call(this, rewrite(value)); },
-    });
+// The editor's five existing local faces (see mapmaker.css). The table page does not
+// load the editor stylesheet, so the snapshot helper loads exactly these faces itself.
+const FONT_FACES = [
+    ["Literata", "literata-var.woff2", { weight: "200 900", style: "normal" }],
+    ["Literata", "literata-italic-var.woff2", { weight: "200 900", style: "italic" }],
+    ["Cinzel", "cinzel-regular.woff2", { weight: "400", style: "normal" }],
+    ["Cinzel", "cinzel-bold.woff2", { weight: "700", style: "normal" }],
+    ["BadScript", "badscript-regular.woff2", { weight: "400", style: "normal" }],
+];
+
+/** Await all five faces before any label is drawn; reuse faces the page already declares. */
+export async function loadSnapshotFonts() {
+    const declared = [...document.fonts];
+    try {
+        await Promise.all(FONT_FACES.map(([family, file, descriptor]) => {
+            let face = declared.find((entry) => entry.family.replace(/["']/g, "") === family
+                && entry.style === descriptor.style && entry.weight === descriptor.weight);
+            if (!face) {
+                face = new FontFace(family, `url("${new URL(`../../fonts/${file}`, import.meta.url).href}")`, descriptor);
+                document.fonts.add(face);
+            }
+            return face.load();
+        }));
+    } catch (_error) {
+        throw new Error(globalThis.VTTUi("Schriften für die Vorschau konnten nicht geladen werden. Bitte erneut versuchen."));
+    }
 }
 
 /**
  * Palette loader that is safe on any page: same catalog and material textures the
- * editor registers. An incomplete pack catalog aborts visibly instead of rendering a
- * wrong preview. (Web fonts come from the page; the editor stylesheet is not loaded
- * on the table, so label glyphs may use fallback fonts there.)
+ * editor registers (own asset URLs are module-relative inside stamps.js).
  */
-export async function loadSnapshotPalette(loadPalette) {
-    ensureAssetBase();
+export async function loadSnapshotPalette() {
     const palette = await loadPalette(() => {}, () => {});
-    if (palette.packError) throw new Error(globalThis.VTTUi("Symbolpakete konnten nicht vollständig geladen werden. Bitte erneut versuchen."));
+    if (!palette.packLoaded) throw new Error(globalThis.VTTUi("Symbolpakete konnten nicht vollständig geladen werden. Bitte erneut versuchen."));
     registerMaterialTextures(palette.materialTextures);
     return palette;
 }
@@ -74,6 +81,7 @@ export async function renderPngBlob({ doc, palette, renderer, scale = 1, maxPixe
  * Returns an immutable selection bound to project id and saved revision.
  */
 export async function snapshotFromProject({ project, document, palette, isCurrent = () => true }) {
+    await loadSnapshotFonts();
     const validated = validateDocument(document, { knownAssets: palette.stamps });
     await palette.ensureDocumentImages(validated);
     const doc = await materialize(validated);

@@ -260,9 +260,17 @@ export function attachInput(ed) {
             if (ed.stampOpts.scatter) {
                 const spacing = Math.max(12, ed.stampOpts.size * 0.75);
                 if (ed.insideMap(point) && Math.hypot(point.x - gesture.last.x, point.y - gesture.last.y) >= spacing) {
-                    const item = ed.createStamp(point, ed.stampOpts.asset);
-                    if (ed.placeLive(gesture.layer, item)) gesture.items.push(item);
-                    gesture.last = point;
+                    // With the optional stamp grid, several pointer positions snap to one cell:
+                    // never stack a second stamp on a grid position already used in this gesture.
+                    // (Same stampPoint() as the preview and createStamp; normal scatter is unchanged.)
+                    const snapped = ed.stampOpts.grid ? ed.stampPoint(point) : null;
+                    if (snapped && gesture.items.some((placed) => placed.x === snapped.x && placed.y === snapped.y)) {
+                        // keep gesture.last so the next sample in a fresh cell is placed at once
+                    } else {
+                        const item = ed.createStamp(point, ed.stampOpts.asset);
+                        if (ed.placeLive(gesture.layer, item)) gesture.items.push(item);
+                        gesture.last = point;
+                    }
                 }
             }
             ed.requestFrame();

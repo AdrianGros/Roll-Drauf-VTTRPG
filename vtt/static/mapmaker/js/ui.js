@@ -302,8 +302,17 @@ export class UI {
         this.tilePage = 0;
         $("tileMode").addEventListener("change", (event) => { ed.tileOpts.erase = event.target.value === "erase"; ed.requestFrame(); });
         $("tileRadius").addEventListener("input", (event) => { ed.tileOpts.radius = Math.max(0, Math.min(6, Math.round(Number(event.target.value)) || 0)); ed.requestFrame(); });
-        // Only asset IDs already present in the loaded catalog are accepted as variants.
-        $("tileVariants").addEventListener("input", (event) => { ed.setTileVariants(event.target.value); });
+        // Variants are chosen visually from known catalog tiles: the currently selected palette
+        // tile is added with "+"; chips remove single variants; "×" clears the list.
+        const addLabel = globalThis.VTTUi("Gewählte Kachel als Variante hinzufügen");
+        $("tileVariantAdd").setAttribute("aria-label", addLabel);
+        $("tileVariantAdd").title = addLabel;
+        const clearLabel = globalThis.VTTUi("Alle Varianten entfernen");
+        $("tileVariantClear").setAttribute("aria-label", clearLabel);
+        $("tileVariantClear").title = clearLabel;
+        $("tileVariantAdd").addEventListener("click", () => { ed.addTileVariant(ed.tileOpts.asset); this.renderTileVariants(); });
+        $("tileVariantClear").addEventListener("click", () => { ed.tileOpts.variants = []; this.renderTileVariants(); });
+        this.renderTileVariants();
         $("tileSize").value = String(ed.tileOpts.size);
         $("tileSize").addEventListener("change", (event) => {
             ed.tileOpts.size = Number(event.target.value);
@@ -367,6 +376,22 @@ export class UI {
             button.appendChild(el("span", {}, stamp.label));
             button.addEventListener("click", () => this.chooseTile(id));
             grid.appendChild(button);
+        }
+    }
+
+    renderTileVariants() {
+        const ed = this.ed, list = $("tileVariantList");
+        list.replaceChildren();
+        $("tileVariantClear").disabled = !ed.tileOpts.variants.length;
+        for (const id of ed.tileOpts.variants) {
+            const stamp = ed.palette.stamps.get(id);
+            if (!stamp) continue;
+            const item = el("li", { class: "mm-variant-chip", dataset: { tile: id } });
+            item.appendChild(el("img", { src: stamp.src, width: 32, height: 32, alt: stamp.label, class: stamp.pixelArt ? "mm-pixel" : null }));
+            const remove = el("button", { type: "button", class: "mm-btn mm-btn-small", "aria-label": globalThis.VTTUi("Variante „{p0}“ entfernen", { p0: stamp.label }) }, "×");
+            remove.addEventListener("click", () => { ed.tileOpts.variants = ed.tileOpts.variants.filter((entry) => entry !== id); this.renderTileVariants(); });
+            item.appendChild(remove);
+            list.appendChild(item);
         }
     }
 
@@ -960,6 +985,7 @@ export class UI {
     setTool(tool) {
         $("app").dataset.tool = tool;
         $("eraseScopeField").hidden = $("eraseScopeHint").hidden = tool !== "eraser";
+        $("eraseScopeHint").textContent = globalThis.VTTUi("Der Radierer wirkt nur auf Raster, Kacheln und Symbole; Beschriftungen und Wege bleiben erhalten.");
         document.querySelectorAll(".mm-tool").forEach((button) => {
             button.setAttribute("aria-pressed", String(button.dataset.tool === tool));
         });

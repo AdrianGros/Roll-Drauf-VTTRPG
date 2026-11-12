@@ -22,7 +22,9 @@
     "vtt/static/js/play-map-library.js",
     "tools/i18n/tasks/c04.json",
     "tests/test_c04_map_library.py",
-    "tests/test_c04_mapmaker_browser.py"
+    "tests/test_c04_mapmaker_browser.py",
+    "vtt/static/mapmaker/js/stamps.js",
+    "tests/test_mapmaker_browser.py"
   ],
   "source_seams": [
     "vtt/endpoints/mapmaker.py",

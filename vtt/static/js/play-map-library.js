@@ -3,7 +3,6 @@ globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(sourc
 // composition never imports this file. No Editor instance, iframe or hidden draw handler:
 // the preview is the shared pure snapshot helper over the saved project.
 import { loadSnapshotPalette, snapshotFromProject } from "/static/mapmaker/js/snapshot.js";
-import { loadPalette } from "/static/mapmaker/js/stamps.js";
 
 const LIBRARY = "/api/assets/mapmaker/projects";
 
@@ -140,7 +139,6 @@ export class MapLibraryController {
         this.selectSequence += 1;
         this.selection = null;
         this.pending = null;
-        if (this.previewUrl) URL.revokeObjectURL(this.previewUrl);
         this.previewUrl = null;
         this.preview.hidden = true;
         this.preview.removeAttribute("src");
@@ -159,13 +157,21 @@ export class MapLibraryController {
         try {
             const data = await this.libraryRequest(`/${project.id}`);
             if (!isCurrent()) return;
-            this.palette ||= await loadSnapshotPalette(loadPalette);
+            this.palette ||= await loadSnapshotPalette();
             if (!isCurrent()) return;
             const selection = await snapshotFromProject({ project: data.project, document: data.document, palette: this.palette, isCurrent });
             if (!isCurrent()) return;
+            // The app CSP allows data: but not blob: images; the preview is the exact PNG to be shared.
+            const dataUrl = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(reader.error);
+                reader.readAsDataURL(selection.blob);
+            });
+            if (!isCurrent()) return;
             this.selection = selection;
-            this.previewUrl = URL.createObjectURL(selection.blob);
-            this.preview.src = this.previewUrl;
+            this.previewUrl = dataUrl;
+            this.preview.src = dataUrl;
             this.preview.alt = globalThis.VTTUi("Vorschau von „{p0}“", { p0: selection.title });
             this.preview.hidden = false;
             this.previewInfo.textContent = `${selection.width} × ${selection.height} · ${globalThis.VTTUi("Revision {p0}", { p0: selection.revision })}`;

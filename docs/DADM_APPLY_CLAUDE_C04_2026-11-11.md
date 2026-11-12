@@ -104,3 +104,42 @@ Claude implementiert ausschließlich den festgelegten Dateibesitz. Die Koordinat
 führt Tests aus, lässt einen separaten Claude-Diffreview durchführen, integriert,
 pusht und liefert mit erhaltenem Vorimage app-only nach der Live-Regel. C05 beginnt
 erst auf dem geprüften C04-Editor. Neue Architektur-/Schemafragen gehen nach Apply.
+
+## Nacharbeit nach erstem C04-Check am 12.11.
+
+22 API-/statische Fälle bestehen; die Datei mit Browsernamen enthält bislang
+keine echten Pointer-/Tischreisen. Das erfüllt die Browserabnahme nicht.
+Medium: Snapshothelper verändert derzeit global fetch und Image.prototype.src,
+um relative Assetpfade umzuleiten. Diese primitive Browser-Umleitung wird
+entfernt. Dateibesitz ausdrücklich um static/mapmaker/js/stamps.js erweitern:
+dessen eigene Katalog-Fetch-/Bild-URLs lösen sich an einer festen Modulbasis über
+new URL(relative, import.meta.url) auf, im Editor und am Tisch gleich. Keine
+Veränderung globaler Browserfunktionen oder fremder URLs.
+
+Die fünf schon vorhandenen Fontdateien aus static/fonts werden vor Snapshotrender
+über gecachte FontFace-Registrierung im Helper geladen/abgewartet. Kein kompletter
+Editor-Stylesheetimport am Tisch, keine neuen Schriftquellen oder Dependencies.
+Fehler führen sichtbar zum Abbruch statt zu einer unbemerkt anderen Beschriftung.
+
+Eigene neue HTML-/DM-Fragmentlabels erhalten explizite data-ui-key/Attributmarker
+mit vorhandenen Hashschlüsseln oder neue Quellen in tasks/c04.json. Der einmalige
+mark-ui-Migrationslauf und gefrorene Inventare werden nicht neu ausgeführt.
+Kachelvarianten werden aus bekannten Kacheln der bestehenden Palette visuell
+gewählt; kein Eingeben von technischen Asset-IDs im Produktablauf.
+
+Optionales Multipartfeld credits ist ausdrücklich bis600 Zeichen Klartext
+erlaubt, wird normalisiert in den Requestdigest aufgenommen und als kurzer
+Quellenhinweis gespeichert. Die vollständigen PNG-Credits bleiben erhalten.
+Der Hinweis ist keine serverseitige Pixelherkunftsbehauptung.
+
+Vor Integration fehlen echte Browserbelege: aktive/alle sichtbaren Ebenen für
+Raster/Tile/Symbol, cancel und ein Undo/Redo, Stempelraster, Kachelradius/Varianten;
+Bibliothek über normale DM-Seitenaktion → Vorschau → aktive Karte beim Firefox-
+Player, keine private Quelle/DM-Initialisierung beim Player; Aktivierungsretry
+mit nur einem Upload; DE/EN,390px sowie Save/JSON/ZIP/PNG/Credits. Separater
+Claude-Diffreview bleibt erforderlich. Quelle41a708c80 ist nur ein WIP-Checkpoint.
+
+Primärquellen am12.11. geprüft: [import.meta](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta)
+für die Modul-URL als Basis und [FontFace](https://developer.mozilla.org/en-US/docs/Web/API/FontFace)
+für explizites Laden vorhandener Schriftdateien. Die gewählte begrenzte Korrektur
+ist eine Repo-Entscheidung auf Basis dieser Seams.

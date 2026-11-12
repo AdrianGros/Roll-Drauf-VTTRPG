@@ -51,7 +51,8 @@ def _text(value, low, high):
 
 
 def _int(value, low, high):
-    if not isinstance(value, str) or not re.fullmatch(r"-?\d{1,9}", value.strip()):
+    # Up to 10 digits so the whole approved range (revision <= 2**31 - 1) is accepted.
+    if not isinstance(value, str) or not re.fullmatch(r"\d{1,10}", value.strip()):
         return None
     number = int(value)
     return number if low <= number <= high else None
@@ -184,15 +185,18 @@ def create_map_library_snapshot(campaign_id, session_id):
         storage = get_storage_adapter()
         base = f"campaigns/{campaign.id}/assets/library-{uuid.uuid4().hex}"
         file_key = base + "-" + _safe_filename(fields["name"])
-        storage.upload(file_key, checked["content"])
+        # Register the prospective key first: a write that stores bytes and then raises
+        # must still be cleaned up by the failure path.
         keys.append(file_key)
-        thumbnail_key = None
+        storage.upload(file_key, checked["content"])
+        thumbnail_key = base + "-thumb.jpg"
+        keys.append(thumbnail_key)
         try:
-            thumbnail_key = base + "-thumb.jpg"
             storage.upload(thumbnail_key, generate_thumbnail(checked["content"]))
-            keys.append(thumbnail_key)
         except Exception:
             current_app.logger.warning("Map library thumbnail failed", exc_info=True)
+            keys.remove(thumbnail_key)
+            cleanup(storage, thumbnail_key)  # a partial write must not stay behind
             thumbnail_key = None
 
         asset = Asset(

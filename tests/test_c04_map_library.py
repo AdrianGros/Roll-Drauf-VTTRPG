@@ -157,3 +157,43 @@ def test_storage_failure_cleans_up_and_releases_claim(table, play_dm_client, mon
     result = post(play_dm_client, table, headers)
     assert result.status_code == 503
     assert Asset.query.filter_by(asset_type="map").count() == 0 and TableRequestReceipt.query.count() == 0
+
+
+@pytest.mark.parametrize("fail_on", ["image", "thumbnail"])
+def test_write_then_raise_cleans_up_the_prospective_keys(table, play_dm_client, monkeypatch, fail_on):
+    """A storage write that stores bytes and THEN raises must not leave an orphan."""
+    campaign, session, _ = table
+    headers = enter(play_dm_client, campaign, session, "dm")
+    stored, deleted = {}, []
+
+    class WritesThenRaises:
+        def upload(self, key, data):
+            stored[key] = data  # the object exists now ...
+            if (fail_on == "image") == (not key.endswith("-thumb.jpg")):
+                raise OSError("connection dropped after the write")  # ... but the call raises
+
+        def delete(self, key):
+            deleted.append(key)
+            stored.pop(key, None)
+    monkeypatch.setattr("vtt.play.map_library.get_storage_adapter", lambda: WritesThenRaises())
+    result = post(play_dm_client, table, headers)
+    if fail_on == "image":
+        assert result.status_code == 503
+        assert Asset.query.filter_by(asset_type="map").count() == 0
+        assert stored == {} and deleted  # the image key was registered before the upload
+    else:
+        # A thumbnail is best effort: the map is created, but the half-written thumbnail is removed.
+        assert result.status_code == 201
+        asset = db.session.get(Asset, result.get_json()["asset_id"])
+        assert asset.thumbnail_key is None
+        assert set(stored) == {asset.storage_key}
+
+
+def test_revision_bound_matches_the_integer_range(table, play_dm_client):
+    campaign, session, _ = table
+    headers = enter(play_dm_client, campaign, session, "dm")
+    top = post(play_dm_client, table, headers, revision=str(2**31 - 1))
+    assert top.status_code == 409 and top.get_json()["error"] == "revision_conflict"  # accepted, then stale
+    assert post(play_dm_client, table, headers, revision=str(2**31)).status_code == 400
+    assert post(play_dm_client, table, headers, revision="-1").status_code == 400
+    assert Asset.query.filter_by(asset_type="map").count() == 0

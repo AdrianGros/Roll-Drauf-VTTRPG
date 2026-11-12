@@ -476,11 +476,20 @@ class Editor {
         return gesture.choice.get(key);
     }
 
-    setTileVariants(text) {
-        const ids = [...new Set(String(text).split(",").map((id) => id.trim()).filter(Boolean))].slice(0, 16);
-        const known = ids.filter((id) => this.palette.stamps.has(id));
-        if (known.length !== ids.length) this.ui.toast(globalThis.VTTUi("Unbekannte Kachel-IDs wurden ignoriert."));
-        this.tileOpts.variants = known;
+    /** Only tiles already present in the loaded catalog can become variants (max. 16). */
+    addTileVariant(id) {
+        const stamp = id && this.palette.stamps.get(id);
+        if (!stamp || !stamp.tile) {
+            this.ui.toast(globalThis.VTTUi("Wähle zuerst eine Kachel aus der Kachelauswahl."));
+            return false;
+        }
+        if (this.tileOpts.variants.includes(id)) return true;
+        if (this.tileOpts.variants.length >= 16) {
+            this.ui.toast(globalThis.VTTUi("Höchstens 16 Kachelvarianten."));
+            return false;
+        }
+        this.tileOpts.variants = [...this.tileOpts.variants, id];
+        return true;
     }
 
     setTile(gesture, col, row) {
@@ -1137,28 +1146,53 @@ class Editor {
         }
     }
 
+    /** Release the canvases of a per-gesture StrokeEngine (never the editor's shared engine). */
+    disposeGestureEngines(gesture) {
+        for (const { engine } of gesture.rasters) {
+            if (engine === this.engine) continue;
+            for (const canvas of [engine.base, engine.mask, engine.work]) {
+                canvas.width = 0;
+                canvas.height = 0;
+            }
+            engine.active = null;
+        }
+    }
+
     cancelErase() {
         const gesture = this.eraseGesture;
         this.eraseGesture = null;
         if (!gesture) return;
-        for (const { layer, engine } of gesture.rasters) {
-            const rect = engine.cancel();
-            if (rect) this.invalidate(pad(rect, layer.effects.coast ? COAST_PAD : 0));
+        try {
+            for (const { layer, engine } of gesture.rasters) {
+                const rect = engine.cancel(); // restores the layer from engine.base first
+                if (rect) this.invalidate(pad(rect, layer.effects.coast ? COAST_PAD : 0));
+            }
+            this.restoreErased(gesture);
+        } finally {
+            this.disposeGestureEngines(gesture); // only after the restore has read the base copies
         }
-        this.restoreErased(gesture);
         this.requestFrame();
     }
 
     endErase() {
         const gesture = this.eraseGesture;
         this.eraseGesture = null;
-        if (!gesture || gesture.refused) return;
+        if (!gesture) return;
         const rasters = [];
-        for (const { layer, engine } of gesture.rasters) {
-            const result = engine.end();
-            this.invalidate(pad({ x: 0, y: 0, w: layer.canvas.width, h: layer.canvas.height }, 0));
-            if (result) rasters.push({ layer, ...result });
+        try {
+            if (gesture.refused) {
+                for (const { engine } of gesture.rasters) engine.cancel();
+                return;
+            }
+            for (const { layer, engine } of gesture.rasters) {
+                const result = engine.end(); // before/after are independent ImageData copies
+                this.invalidate(pad({ x: 0, y: 0, w: layer.canvas.width, h: layer.canvas.height }, 0));
+                if (result) rasters.push({ layer, ...result });
+            }
+        } finally {
+            this.disposeGestureEngines(gesture);
         }
+        if (gesture.refused) return;
         const tiles = [...gesture.tiles].map(([layer, { before }]) =>
             ({ layer, before, after: new Map([...before.keys()].map((key) => [key, undefined])) }));
         const stamps = [...gesture.stamps].map(([layer, entry]) =>
