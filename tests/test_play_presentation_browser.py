@@ -63,6 +63,8 @@ def test_play_chrome_text_contrasts_with_its_painted_surface(action_site, role, 
         page.goto(f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}&seat={role}")
         expect(page.locator('html')).to_have_attribute('data-vtt-theme', theme)
         expect(page.locator('#presenceRoster')).to_be_visible()
+        # The roster container is in static HTML; controls are bound only after async seat composition.
+        page.wait_for_function('() => !!window.RollDraufTable')
 
         # Toolbar at rest.
         contrast(page, TOOLBAR)
