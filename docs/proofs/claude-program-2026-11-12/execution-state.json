@@ -1,18 +1,17 @@
 {
-  "status": "native_implementation_quota_blocked_engine_choice_pending",
+  "status": "native_implementation_resumed",
   "date": "2026-11-12",
   "quota": {
     "five_hour": {
-      "utilization": 100.0,
-      "resets_at": "2026-11-12T11:39:59.774865+00:00"
+      "utilization": 48.0,
+      "resets_at": "2026-11-12T18:09:59.871332+00:00"
     },
     "seven_day": {
-      "utilization": 91.0,
-      "resets_at": "2026-11-15T09:59:59.774884+00:00"
+      "utilization": 94.0,
+      "resets_at": "2026-11-15T09:59:59.871389+00:00"
     },
     "extra_usage": {
-      "is_enabled": false,
-      "utilization": null
+      "is_enabled": false
     }
   },
   "automatic_api_or_extra_usage": false,
@@ -26,17 +25,17 @@
   "workers": {
     "C01": {
       "path": "/home/admin/projects/roll-drauf-vtt-claude-c01-20261111",
-      "source": "da9fcca53",
+      "source": "4dca29475",
       "rework_session": "7a861752-f9c5-4618-b978-ac7875806182",
-      "remaining": "Scoped PlayChrome contrast CSS and real browser test; latest CLI stopped before source edits"
+      "remaining": "Integrated browser5pass after initialization wait; source reviewready, production contrast verification pending"
     },
     "C02": {
       "path": "/home/admin/projects/roll-drauf-vtt-claude-c02-20261112",
       "branch": "claude/vtt-c02-20261112",
-      "source": "176cb69c3",
+      "source": "dab01217b",
       "implementation_source": "76bfc2436",
       "session": "bf179ad0-fa5c-431a-a44a-56d286808cb2",
-      "remaining": "Wire SheetLock state/rerender existing SRD panels; independent review/regression/live",
+      "remaining": "Integrated; native reviewready; legacy regression5unique pass; production delivery pending",
       "checks": "22passed1failed; valid image decode targeted1passed;6JS+1inline parse;2818catalog"
     },
     "C04": {
@@ -45,10 +44,17 @@
       "source": "c516d2272",
       "implementation_source": "41a708c80",
       "session": "735da98a-2ade-4535-8e75-bf97251a8652",
-      "remaining": "Remove global browser shim via module-relative assets, fonts, explicit locale markers, visual variants, full new feature browser cases/review/live",
+      "remaining": "Native source rework complete; API20pass/static6pass; corrected4newbrowser harness cases rechecking; independent review/live pending",
       "checks": "22API/static passed;5existing real browser cases passed after exact optional branding route fixture;2823catalog"
+    },
+    "C06": {
+      "path": "/home/admin/projects/roll-drauf-vtt-claude-c06-20261112",
+      "source_base": "0ebf1242affedac61f29f70036f85a4576cb3cbc",
+      "remaining": "Native implementation launched from integrated C01/C02 base; seeded selective recurrence source, shared WIP diffs referenceonly",
+      "handoff": "docs/proofs/claude-c06-2026-11-12/handoff.json"
     }
   },
   "further_tasks": "C05ApplyreadyafterC04;C06-C08Applyready;C09gatepending;C10overallNOT_RUN",
-  "secrets_recorded": false
+  "secrets_recorded": false,
+  "engine_choice": "User confirmed Claude availability; continue existing native subscription, no API or extra usage"
 }
