@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import re
+import sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
@@ -33,6 +34,7 @@ def compile_catalog(check=False):
             if set(re.findall(r'\{[a-zA-Z0-9_]+\}', value)) != placeholders:
                 raise ValueError('Placeholder mismatch at ' + str(i))
         messages[key] = {'source': source, 'de': de, 'en': en}
+    extra_overrides = []
     for source, row in json.loads((HERE / 'extra-messages.json').read_text()).items():
         if not isinstance(source, str) or not source.strip() or not isinstance(row, dict):
             raise ValueError('Invalid extra message')
@@ -48,7 +50,16 @@ def compile_catalog(check=False):
         key = 'u_' + hashlib.sha1(source.encode()).hexdigest()[:12]
         if key in messages and messages[key]['source'] != source:
             raise ValueError('Extra source key collision: ' + source)
+        previous = messages.get(key)
+        if previous and any(previous[language] != row[language] for language in ('de', 'en')):
+            # Same source, deliberately overridden: allowed, but never silent.
+            extra_overrides.append((source, previous, row))
         messages[key] = {'source':source, **row}
+    for source, previous, row in extra_overrides:
+        print('NOTE extra-messages override differs from inventory translation: ' + json.dumps(source, ensure_ascii=False)
+              + ' de ' + json.dumps(previous['de'], ensure_ascii=False) + ' -> ' + json.dumps(row['de'], ensure_ascii=False)
+              + '; en ' + json.dumps(previous['en'], ensure_ascii=False) + ' -> ' + json.dumps(row['en'], ensure_ascii=False),
+              file=sys.stderr)
     eagle = json.loads((HERE / 'eagle-sources.json').read_text())
     eagle_de = json.loads((HERE / 'translations/eagle-de.json').read_text())
     if set(eagle_de) != {str(i) for i in range(len(eagle))}:

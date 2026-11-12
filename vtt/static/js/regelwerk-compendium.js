@@ -3,12 +3,17 @@
 
     const API = '/api/rulesets/srd-5.2.1-de/compendium';
     const PAGE = 50;
+    // Only authored controls, headings and status text go through the explicit UI catalog.
+    // Entity names, facet values and rule blocks from the API always stay source text.
+    const ui = (source, parameters) => globalThis.VTTUi(source, parameters || {});
+    const uiLocale = () => (globalThis.VTTI18n && globalThis.VTTI18n.locale ? globalThis.VTTI18n.locale() : 'de');
+    class UiMessageError extends Error {}
     const TYPES = {
         spell: {
             label: 'Zauber',
             columns: [
                 ['Name', (e) => e.name, true],
-                ['Grad', (e) => (e.level === 0 ? 'Zaubertrick' : String(e.level))],
+                ['Grad', (e) => (e.level === 0 ? ui('Zaubertrick') : String(e.level))],
                 ['Schule', (e) => e.school],
                 ['Zeitaufwand', (e) => e.castingTime],
                 ['Reichweite', (e) => e.range],
@@ -17,7 +22,7 @@
                 ['Klassen', (e) => e.classes.join(', ')],
             ],
             filters: [
-                { key: 'level', label: 'Grad', type: 'select', format: (v) => (v === 0 ? 'Zaubertrick' : `Grad ${v}`) },
+                { key: 'level', label: 'Grad', type: 'select', format: (v) => (v === 0 ? ui('Zaubertrick') : ui('Grad {level}', { level: v })) },
                 { key: 'school', label: 'Schule', type: 'select' },
                 { key: 'class', facet: 'classes', label: 'Klasse', type: 'select' },
                 { key: 'concentration', label: 'Konzentration', type: 'tri' },
@@ -40,7 +45,7 @@
             filters: [
                 { key: 'creatureType', label: 'Typ', type: 'select' },
                 { key: 'size', label: 'Größe', type: 'select' },
-                { key: 'origin', label: 'Herkunft', type: 'select', format: (v) => (v === 'animal' ? 'Tiere' : 'Monster') },
+                { key: 'origin', label: 'Herkunft', type: 'select', format: (v) => (v === 'animal' ? ui('Tiere') : ui('Monster')) },
                 { key: 'cr_min', label: 'HG von', type: 'text', size: 4 },
                 { key: 'cr_max', label: 'HG bis', type: 'text', size: 4 },
                 { key: 'legendary', label: 'Legendär', type: 'tri' },
@@ -53,7 +58,7 @@
                 ['Name', (e) => e.name, true],
                 ['Art', (e) => e.category],
                 ['Seltenheit', (e) => e.rarity],
-                ['Einstimmung', (e) => (e.attunement ? 'ja' : 'nein')],
+                ['Einstimmung', (e) => (e.attunement ? ui('ja') : ui('nein'))],
                 ['Details', (e) => e.detail],
             ],
             filters: [
@@ -110,15 +115,15 @@
             label: 'Klassen',
             columns: [
                 ['Name', (e) => e.name, true],
-                ['Trefferwürfel', (e) => `W${e.hitDie}`],
+                ['Trefferwürfel', (e) => ui('W{die}', { die: e.hitDie })],
                 ['Hauptattribut', (e) => e.primaryAbility],
                 ['Rettungswürfe', (e) => e.savingThrows.join(', ')],
-                ['Zauberwirker', (e) => (e.spellcaster ? 'ja' : 'nein')],
+                ['Zauberwirker', (e) => (e.spellcaster ? ui('ja') : ui('nein'))],
                 ['Rüstungen', (e) => e.armorTraining],
             ],
             filters: [
                 { key: 'primaryAbility', label: 'Hauptattribut', type: 'select' },
-                { key: 'hitDie', label: 'Trefferwürfel', type: 'select', format: (v) => `W${v}` },
+                { key: 'hitDie', label: 'Trefferwürfel', type: 'select', format: (v) => ui('W{die}', { die: v }) },
                 { key: 'spellcaster', label: 'Zauberwirker', type: 'tri' },
             ],
             sorts: [['name', 'Name']],
@@ -144,7 +149,7 @@
             ],
             filters: [
                 { key: 'className', label: 'Klasse', type: 'select' },
-                { key: 'level', label: 'Stufe', type: 'select', format: (v) => `Stufe ${v}` },
+                { key: 'level', label: 'Stufe', type: 'select', format: (v) => ui('Stufe {level}', { level: v }) },
                 { key: 'subclass', label: 'Unterklasse', type: 'select' },
             ],
             sorts: [['name', 'Name'], ['level', 'Stufe']],
@@ -314,7 +319,7 @@
 
     function select(options, includeAny = true) {
         const s = document.createElement('select');
-        if (includeAny) s.appendChild(new Option('Alle', ''));
+        if (includeAny) s.appendChild(new Option(ui('Alle'), ''));
         options.forEach(([value, label]) => s.appendChild(new Option(label, value)));
         return s;
     }
@@ -328,7 +333,7 @@
                 const values = facets[spec.facet || spec.key] || [];
                 control = select(values.map((v) => [String(v), spec.format ? spec.format(v) : String(v)]));
             } else if (spec.type === 'tri') {
-                control = select([['true', 'Ja'], ['false', 'Nein']]);
+                control = select([['true', ui('Ja')], ['false', ui('Nein')]]);
             } else if (spec.type === 'options') {
                 control = select(spec.options.map((v) => [v, v]));
             } else {
@@ -339,10 +344,10 @@
             }
             control.name = spec.key;
             control.dataset.filter = spec.key;
-            els.filters.appendChild(field(spec.label, control, id));
+            els.filters.appendChild(field(ui(spec.label), control, id));
         });
         els.sort.textContent = '';
-        TYPES[typeKey].sorts.forEach(([value, label]) => els.sort.appendChild(new Option(label, value)));
+        TYPES[typeKey].sorts.forEach(([value, label]) => els.sort.appendChild(new Option(ui(label), value)));
     }
 
     function currentParams() {
@@ -366,7 +371,7 @@
         els.head.textContent = '';
         const tr = document.createElement('tr');
         TYPES[typeKey].columns.forEach(([title]) => {
-            const th = node('th', title);
+            const th = node('th', ui(title));
             th.scope = 'col';
             tr.appendChild(th);
         });
@@ -460,12 +465,14 @@
             });
             return box;
         }
-        return node('p', `Blocktyp ${block.type} wird nicht angezeigt.`);
+        return node('p', ui('Blocktyp {type} wird nicht angezeigt.', { type: block.type }));
     }
 
     function pageText(pages) {
         if (!pages || !pages.length) return '';
-        return pages.length === 1 ? `S. ${pages[0]}` : `S. ${pages[0]}–${pages[pages.length - 1]}`;
+        return pages.length === 1
+            ? ui('S. {page}', { page: pages[0] })
+            : ui('S. {from}–{to}', { from: pages[0], to: pages[pages.length - 1] });
     }
 
     let detailPushed = false;
@@ -477,15 +484,15 @@
 
     async function openDetail(id, historyMode) {
         const response = await fetch(ENTRY_API + encodeURIComponent(id), { credentials: 'same-origin' });
-        if (!response.ok) throw new Error('Eintrag nicht gefunden.');
+        if (!response.ok) throw new UiMessageError(ui('Eintrag nicht gefunden.'));
         const data = await response.json();
         const entity = data.entity;
         els.detailTitle.textContent = entity.name;
         els.detailMeta.textContent = '';
-        const label = TYPES[entity.type] ? TYPES[entity.type].label : entity.type;
+        const label = TYPES[entity.type] ? ui(TYPES[entity.type].label) : entity.type;
         const pages = pageText(entity.sourcePages);
         els.detailMeta.appendChild(node('span', `${label} · SRD 5.2.1${pages ? `, ${pages}` : ''} · `));
-        const link = node('a', 'Im Regelwerk lesen');
+        const link = node('a', ui('Im Regelwerk lesen'));
         link.href = entity.url;
         els.detailMeta.appendChild(link);
         els.detailBody.textContent = '';
@@ -540,22 +547,26 @@
             const response = await fetch(`${API}?${params.toString()}`, { credentials: 'same-origin' });
             const data = await response.json();
             if (mine !== requestId) return;
-            if (!response.ok) throw new Error(data.error || 'Anfrage fehlgeschlagen.');
+            if (!response.ok) {
+                // Server diagnostics are German; keep them only in the German UI.
+                throw new UiMessageError(uiLocale() === 'de' && data.error ? data.error : ui('Anfrage fehlgeschlagen.'));
+            }
             const typeKey = data.type;
+            const typeLabel = ui(TYPES[typeKey].label);
             if (!append) {
                 els.body.textContent = '';
                 renderHead(typeKey);
-                els.caption.textContent = `${TYPES[typeKey].label} (${data.total})`;
+                els.caption.textContent = `${typeLabel} (${data.total})`;
             }
             renderRows(typeKey, data.items);
             offset += data.items.length;
             els.table.hidden = data.total === 0;
             els.more.hidden = offset >= data.total;
             els.status.textContent = data.total === 0
-                ? 'Keine Treffer für diese Filter.'
-                : `${offset} von ${data.total} ${TYPES[typeKey].label} angezeigt.`;
+                ? ui('Keine Treffer für diese Filter.')
+                : ui('{shown} von {total} {label} angezeigt.', { shown: offset, total: data.total, label: typeLabel });
         } catch (error) {
-            els.status.textContent = error.message || 'Compendium nicht verfügbar.';
+            showError(error);
         } finally {
             if (mine === requestId) els.results.setAttribute('aria-busy', 'false');
         }
@@ -564,7 +575,7 @@
     async function switchType(typeKey, preset) {
         els.type.value = typeKey;
         const response = await fetch(`${API}?type=${encodeURIComponent(typeKey)}&limit=1`, { credentials: 'same-origin' });
-        if (!response.ok) throw new Error('Compendium nicht verfügbar.');
+        if (!response.ok) throw new UiMessageError(ui('Compendium nicht verfügbar.'));
         facets = (await response.json()).facets;
         buildFilters(typeKey);
         if (preset) {
@@ -583,7 +594,7 @@
     }
 
     async function init() {
-        Object.entries(TYPES).forEach(([key, spec]) => els.type.appendChild(new Option(spec.label, key)));
+        Object.entries(TYPES).forEach(([key, spec]) => els.type.appendChild(new Option(ui(spec.label), key)));
         const preset = new URLSearchParams(window.location.search);
         const typeKey = TYPES[preset.get('type')] ? preset.get('type') : 'spell';
         els.type.addEventListener('change', () => switchType(els.type.value, null).catch(showError));
@@ -604,7 +615,10 @@
     }
 
     function showError(error) {
-        els.status.textContent = error.message || 'Compendium nicht verfügbar.';
+        // Only our own localized messages are shown; raw browser/JSON errors are not.
+        els.status.textContent = error instanceof UiMessageError && error.message
+            ? error.message
+            : ui('Compendium nicht verfügbar.');
         els.results.setAttribute('aria-busy', 'false');
     }
 

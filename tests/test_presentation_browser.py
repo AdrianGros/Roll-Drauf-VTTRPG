@@ -10,15 +10,26 @@ from vtt.models.campaign_map_scale import CampaignMapScale
 PREFS='vtt.display.v1'
 
 def preferences(context,**values):
-    context.add_init_script('localStorage.setItem('+json.dumps(PREFS)+','+json.dumps(json.dumps({'schema':1,'theme':'paper','language':'de','unit':'m','accent':'default','stickyPortrait':False,**values}))+')')
+    context.add_init_script('if (!localStorage.getItem('+json.dumps(PREFS)+')) localStorage.setItem('+json.dumps(PREFS)+','+json.dumps(json.dumps({'schema':1,'theme':'paper','language':'de','unit':'m','accent':'default','stickyPortrait':False,**values}))+')')
 
 
 def contrast(page, selector):
     rows=page.locator(selector).evaluate_all('''nodes=>nodes.filter(n=>n.getClientRects().length && !n.disabled).map(n=>{
-      const s=getComputedStyle(n);let bg=n;while(bg && getComputedStyle(bg).backgroundColor==='rgba(0, 0, 0, 0)')bg=bg.parentElement;
-      const hex=c=>{const v=c.match(/[\\d.]+/g);return '#'+v.slice(0,3).map(x=>Math.round(+x).toString(16).padStart(2,'0')).join('')};
-      const back=bg?getComputedStyle(bg).backgroundColor:'rgb(255, 255, 255)';
-      return {text:n.textContent.trim().slice(0,60),ratio:VTTDisplay.contrast(hex(s.color),hex(back)),fg:s.color,bg:back};
+      const rgba=c=>{const v=c.match(/[\\d.]+/g).map(Number);return [...v.slice(0,3),v.length>3?v[3]:1]};
+      const over=(c,b)=>c.slice(0,3).map((v,i)=>v*c[3]+b[i]*(1-c[3]));
+      const hex=c=>'#'+c.slice(0,3).map(x=>Math.round(x).toString(16).padStart(2,'0')).join('');
+      const chain=[];for(let p=n;p;p=p.parentElement)chain.unshift(p);
+      let backs=[[255,255,255]];
+      for(const p of chain){
+        const s=getComputedStyle(p),color=rgba(s.backgroundColor);
+        const stops=/gradient\\(/.test(s.backgroundImage)?s.backgroundImage.match(/rgba?\\([^)]+\\)/g)||[]:[];
+        backs=backs.flatMap(b=>{const base=over(color,b);return stops.length?stops.map(c=>over(rgba(c),base)):[base]});
+        backs=[...new Map(backs.map(c=>[hex(c),c])).values()];
+      }
+      const fg=rgba(getComputedStyle(n).color);
+      const samples=backs.map(b=>({bg:hex(b),ratio:VTTDisplay.contrast(hex(over(fg,b)),hex(b))}));
+      const worst=samples.reduce((a,b)=>a.ratio<b.ratio?a:b);
+      return {text:n.textContent.trim().slice(0,60),...worst,fg:hex(fg)};
     })''')
     assert rows
     assert not [r for r in rows if r['ratio']<4.5], rows

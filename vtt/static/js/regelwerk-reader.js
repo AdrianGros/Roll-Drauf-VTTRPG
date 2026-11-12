@@ -13,6 +13,18 @@
     const searchResults = document.getElementById('regelwerkSearchResults');
     let navigation = null;
 
+    // Explicit UI catalog for authored controls/status/errors only. Rule blocks, book and
+    // document titles, search excerpts and facet values are source text; element() below
+    // intentionally never translates what it is given.
+    const ui = (source, parameters) => globalThis.VTTUi(source, parameters || {});
+    class UiMessageError extends Error {}
+
+    function uiErrorText(error) {
+        return error instanceof UiMessageError && error.message
+            ? error.message
+            : ui('Inhalt konnte nicht geladen werden.');
+    }
+
     function element(tag, className = '', text = null) {
         const node = document.createElement(tag);
         if (className) node.className = className;
@@ -22,7 +34,9 @@
 
     async function getJson(url) {
         const response = await fetch(url, { credentials: 'same-origin' });
-        if (!response.ok) throw new Error(response.status === 404 ? 'Nicht gefunden.' : 'Inhalt konnte nicht geladen werden.');
+        if (!response.ok) {
+            throw new UiMessageError(response.status === 404 ? ui('Nicht gefunden.') : ui('Inhalt konnte nicht geladen werden.'));
+        }
         return response.json();
     }
 
@@ -108,7 +122,7 @@
             note.appendChild(element('p', '', block.text));
             return note;
         }
-        throw new Error(`Unbekannter Blocktyp: ${block.type}`);
+        throw new UiMessageError(ui('Unbekannter Blocktyp: {type}', { type: block.type }));
     }
 
     function focusHashTarget() {
@@ -157,15 +171,17 @@
 
     function pageRange(pages) {
         const sorted = [...pages].sort((a, b) => a - b);
-        if (!sorted.length) return 'Seiten unbekannt';
-        if (sorted.length === 1) return `Seite ${sorted[0]}`;
+        if (!sorted.length) return ui('Seiten unbekannt');
+        if (sorted.length === 1) return ui('Seite {page}', { page: sorted[0] });
         const consecutive = sorted.every((page, index) => index === 0 || page - sorted[index - 1] === 1);
-        return consecutive ? `Seiten ${sorted[0]}–${sorted[sorted.length - 1]}` : `Seiten ${sorted.join(', ')}`;
+        return consecutive
+            ? ui('Seiten {from}–{to}', { from: sorted[0], to: sorted[sorted.length - 1] })
+            : ui('Seiten {pages}', { pages: sorted.join(', ') });
     }
 
     function renderToc(data) {
         clear(toc);
-        toc.appendChild(element('p', 'regelwerk-toc-heading', 'Inhaltsverzeichnis'));
+        toc.appendChild(element('p', 'regelwerk-toc-heading', ui('Inhaltsverzeichnis')));
         const current = selectedDocument();
         const link = (item) => {
             const anchor = element('a', '', item.label);
@@ -190,7 +206,7 @@
                 details.appendChild(anchor);
             });
         });
-        const license = element('a', '', 'Quelle & Lizenz');
+        const license = element('a', '', ui('Quelle & Lizenz'));
         license.href = data.licenseUrl;
         toc.appendChild(license);
     }
@@ -207,7 +223,7 @@
 
     async function showDocument() {
         const entry = selectedDocument();
-        if (!entry) throw new Error('Noch kein Regelkapitel verfügbar.');
+        if (!entry) throw new UiMessageError(ui('Noch kein Regelkapitel verfügbar.'));
         const documentData = await getJson(`${API_ROOT}/documents/${encodeURIComponent(entry.documentId)}`);
         clear(article);
         const trail = [documentData.navigationPath[0]];
@@ -217,57 +233,57 @@
         trail.push(item ? item.label : documentData.title);
         const breadcrumbs = element('p', 'regelwerk-breadcrumbs', trail.join(' › '));
         article.appendChild(breadcrumbs);
-        const status = navigation.status === 'preview' ? 'Vorschau' : navigation.status;
+        const status = navigation.status === 'preview' ? ui('Vorschau') : navigation.status;
         article.appendChild(element(
             'p',
             'regelwerk-document-meta',
             book.kind === 'original'
-                ? `${navigation.title} · eigenes Werk von Roll Drauf · ${status}`
-                : `SRD 5.2.1 · ${pageRange(documentData.sourcePages)} · ${status}`,
+                ? ui('{title} · eigenes Werk von Roll Drauf · {status}', { title: navigation.title, status })
+                : ui('SRD 5.2.1 · {pages} · {status}', { pages: pageRange(documentData.sourcePages), status }),
         ));
         documentData.blocks.forEach((block) => article.appendChild(renderBlock(block)));
         article.setAttribute('aria-busy', 'false');
-        document.title = `${documentData.title} · ${book.kind === 'original' ? navigation.title : 'Regelwerk'} · Roll Drauf VTT`;
+        document.title = `${documentData.title} · ${book.kind === 'original' ? navigation.title : ui('Regelwerk')} · Roll Drauf VTT`;
         window.requestAnimationFrame(focusHashTarget);
     }
 
     async function showOwnLicense() {
         const data = await getJson(`${API_ROOT}/license`);
         clear(article);
-        article.appendChild(element('h2', '', 'Quelle & Lizenz'));
-        article.appendChild(element('p', 'regelwerk-document-meta', `${data.title} · eigenes Werk von Roll Drauf`));
+        article.appendChild(element('h2', '', ui('Quelle & Lizenz')));
+        article.appendChild(element('p', 'regelwerk-document-meta', ui('{title} · eigenes Werk von Roll Drauf', { title: data.title })));
         data.attribution.split(/\n\s*\n/).filter((part) => part.trim()).forEach((part) => {
             article.appendChild(element('p', 'regelwerk-license-text', part.trim()));
         });
-        const srdLink = element('a', '', 'Quelle und Lizenz des SRD 5.2.1');
+        const srdLink = element('a', '', ui('Quelle und Lizenz des SRD 5.2.1'));
         srdLink.href = '/regelwerk/lizenz';
         const srdParagraph = element('p');
         srdParagraph.appendChild(srdLink);
         article.appendChild(srdParagraph);
         article.setAttribute('aria-busy', 'false');
-        document.title = `Quelle & Lizenz · ${data.title} · Roll Drauf VTT`;
+        document.title = `${ui('Quelle & Lizenz')} · ${data.title} · Roll Drauf VTT`;
     }
 
     async function showLicense() {
         if (book.kind === 'original') return showOwnLicense();
         const data = await getJson(`${API_ROOT}/license`);
         clear(article);
-        article.appendChild(element('h2', '', 'Quelle & Lizenz'));
+        article.appendChild(element('h2', '', ui('Quelle & Lizenz')));
         article.appendChild(element('p', 'regelwerk-document-meta', `${data.source.title} · ${data.license.id}`));
-        const sourceLink = element('a', '', 'Offizielles deutsches SRD 5.2.1 öffnen');
+        const sourceLink = element('a', '', ui('Offizielles deutsches SRD 5.2.1 öffnen'));
         sourceLink.href = data.source.url;
         sourceLink.rel = 'noreferrer';
         article.appendChild(sourceLink);
-        const licenseLink = element('a', '', 'Creative Commons Namensnennung 4.0');
+        const licenseLink = element('a', '', ui('Creative Commons Namensnennung 4.0'));
         licenseLink.href = data.license.url;
         licenseLink.rel = 'license noreferrer';
         const licenseParagraph = element('p');
         licenseParagraph.appendChild(licenseLink);
         article.appendChild(licenseParagraph);
-        article.appendChild(element('h3', '', 'Vorgeschriebene Quellenangabe'));
+        article.appendChild(element('h3', '', ui('Vorgeschriebene Quellenangabe')));
         article.appendChild(element('p', 'regelwerk-license-text', data.attribution));
         article.setAttribute('aria-busy', 'false');
-        document.title = 'Quelle & Lizenz · Regelwerk · Roll Drauf VTT';
+        document.title = `${ui('Quelle & Lizenz')} · ${ui('Regelwerk')} · Roll Drauf VTT`;
     }
 
     async function renderRoute() {
@@ -277,9 +293,9 @@
             else await showDocument();
         } catch (error) {
             clear(article);
-            const heading = element('h2', '', 'Regelwerk nicht verfügbar');
+            const heading = element('h2', '', ui('Regelwerk nicht verfügbar'));
             article.appendChild(heading);
-            article.appendChild(element('p', 'regelwerk-status', error.message || 'Inhalt konnte nicht geladen werden.'));
+            article.appendChild(element('p', 'regelwerk-status', uiErrorText(error)));
             article.setAttribute('aria-busy', 'false');
         }
     }
@@ -289,15 +305,15 @@
         const query = searchInput.value.trim();
         clear(searchResults);
         if (query.length < 2) {
-            searchStatus.textContent = 'Bitte mindestens zwei Zeichen eingeben.';
+            searchStatus.textContent = ui('Bitte mindestens zwei Zeichen eingeben.');
             return;
         }
-        searchStatus.textContent = 'Suche läuft …';
+        searchStatus.textContent = ui('Suche läuft …');
         try {
             const data = await getJson(`${API_ROOT}/search?q=${encodeURIComponent(query)}`);
             searchStatus.textContent = data.results.length
-                ? `${data.results.length} Treffer gefunden.`
-                : 'Keine Treffer gefunden.';
+                ? ui('{count} Treffer gefunden.', { count: data.results.length })
+                : ui('Keine Treffer gefunden.');
             data.results.forEach((result) => {
                 const link = element('a', 'regelwerk-search-result');
                 link.href = result.url;
@@ -308,7 +324,9 @@
             const first = searchResults.querySelector('a');
             if (first) first.focus();
         } catch (error) {
-            searchStatus.textContent = error.message || 'Suche nicht verfügbar.';
+            searchStatus.textContent = error instanceof UiMessageError && error.message
+                ? error.message
+                : ui('Suche nicht verfügbar.');
         }
     }
 
@@ -323,7 +341,7 @@
         clear(nav);
         nav.hidden = books.length < 2;
         books.forEach((entry) => {
-            const link = element('a', '', entry.status === 'preview' ? `${entry.title} · Vorschau` : entry.title);
+            const link = element('a', '', entry.status === 'preview' ? ui('{title} · Vorschau', { title: entry.title }) : entry.title);
             link.href = entry.readerUrl;
             if (entry.rulesetId === book.rulesetId) link.setAttribute('aria-current', 'page');
             nav.appendChild(link);
@@ -352,13 +370,13 @@
         if (licenseLink) licenseLink.href = navigation.licenseUrl;
         if (book.kind !== 'original') return;
         setText('regelwerkTitle', navigation.title);
-        setText('regelwerkSearchLabel', 'In diesem Buch suchen');
-        setText('regelwerkPreviewNote', `${navigation.title} ist ein eigenes Erweiterungsbuch von Roll Drauf und entsteht schrittweise. Diese Vorschau enthält erst einen Teil.`);
-        setText('regelwerkFooterSource', `${navigation.title} · eigenes Werk von Roll Drauf · nutzt Regelbegriffe aus dem SRD 5.2.1.`);
+        setText('regelwerkSearchLabel', ui('In diesem Buch suchen'));
+        setText('regelwerkPreviewNote', ui('{title} ist ein eigenes Erweiterungsbuch von Roll Drauf und entsteht schrittweise. Diese Vorschau enthält erst einen Teil.', { title: navigation.title }));
+        setText('regelwerkFooterSource', ui('{title} · eigenes Werk von Roll Drauf · nutzt Regelbegriffe aus dem SRD 5.2.1.', { title: navigation.title }));
         const footerLicense = document.getElementById('regelwerkFooterLicense');
         if (footerLicense) {
             footerLicense.href = navigation.licenseUrl;
-            footerLicense.textContent = 'Quelle & Lizenz';
+            footerLicense.textContent = ui('Quelle & Lizenz');
         }
     }
 
@@ -376,8 +394,8 @@
             await renderRoute();
         } catch (error) {
             clear(article);
-            article.appendChild(element('h2', '', 'Regelwerk nicht verfügbar'));
-            article.appendChild(element('p', 'regelwerk-status', error.message || 'Inhalt konnte nicht geladen werden.'));
+            article.appendChild(element('h2', '', ui('Regelwerk nicht verfügbar')));
+            article.appendChild(element('p', 'regelwerk-status', uiErrorText(error)));
             article.setAttribute('aria-busy', 'false');
         }
     }
