@@ -53,3 +53,15 @@ was created and edited; full English journey caught an existing unwrapped
 German save confirmation. Wrap that one literal and provide its EN task entry
 with the landmass integration. The earlier prepared 6b65c5181 landmass image is
 superseded before activation; prepare a fresh current-source image instead.
+
+C05 fully live verified on 1b5a90549 / 39a1f08e: normal Maps entry, 512 seeded
+preview (desktop0.467s,390px0.5789s), no preview/cancel mutation, one raster and
+one undo/redo, private save, normal DM library snapshot/consent, activation retry
+without reupload, Firefox390 sees generated land pixels and no private source.
+C02 additional finding: the previous 3500ms banner timer could erase a later
+confirmation. Cancel the previous timer before each confirmation. Two browser
+cases pass including delayed management, three actual uploads, then controlled
+clock proving the second confirmation survives the first timer's deadline.
+Clock checks run after real uploads to avoid altering their network timing.
+C07: 9 API privacy/retry/membership cases and isolated PostgreSQL opposing pair
+creation/message replay contention pass; UI and live delivery remain pending.

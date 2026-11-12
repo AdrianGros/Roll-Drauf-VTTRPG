@@ -229,7 +229,7 @@
     {
       "id": "P5",
       "title": "Seedbasierte Landmassen im Karteneditor",
-      "status": "planned",
+      "status": "live_verified",
       "depends_on": [
         "P0"
       ],
@@ -244,7 +244,8 @@
         "Vorschau/Abbruch ohne Projektmutation; Übernehmen als eine Undo-Operation",
         "Auflösung, Abbruch und Laufzeitbudget vor Implementierung begründet",
         "Bestehende Ebenen, Bibliothek und Import/Export erhalten"
-      ]
+      ],
+      "evidence": "docs/proofs/landmass-2026-11-12/live.json"
     },
     {
       "id": "P6",
@@ -877,9 +878,13 @@
       "title": "Abgeschlossene Sitzung und strukturiertes Feedback"
     }
   ],
-  "next_step": "Current Claude execution plan is authoritative: C01/C03 verified live; C02 Firefox image refresh and C04 mobile header Medium findings open; C06 partial pushed isolated branch76pass4fail; native quota100% resets12Nov19:10Europe/Berlin, no engine choice pending or API fallback. C05/C07-C10 incomplete.",
+  "next_step": "Finish C02 confirmation live follow-up, private conversations, compendium actions, atlas and combined owner checklist.",
   "latest_review_plan": "VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.json",
-  "implementation_provider_preference": "Claude Code via existing subscription",
+  "implementation_provider_preference": {
+    "current": "Codex takeover",
+    "reason": "Owner explicitly asks to finish Claude work",
+    "prior": "Claude subscription implementation; no paid API fallback"
+  },
   "current_delivery": {
     "source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
     "image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",

@@ -465,5 +465,13 @@ def test_replacing_different_identity_pixels_refreshes_all_portraits(site, data,
         page.locator('#sheetIdentityRemove-avatar').click()
         page.locator('#sheetIdentityRemove-token').click()
         expect(page.locator('#sheetIdentityGrid img')).to_have_count(0)
+        page.clock.install()
+        page.evaluate("showMessage('first confirmation')")
+        page.clock.fast_forward(2000)
+        page.evaluate("showMessage('new confirmation')")
+        page.clock.fast_forward(2000)
+        expect(page.locator('#messageBox')).to_have_text('new confirmation')
+        page.clock.fast_forward(1600)
+        expect(page.locator('#messageBox')).to_be_hidden()
         assert not errors, errors
         browser.close()

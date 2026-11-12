@@ -1,6 +1,6 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
-  "status": "native_subscription_quota_blocked",
+  "status": "in_progress_codex_takeover",
   "phase": "deploy_rework_C02_C04_C06",
   "retention": "durable",
   "date": "2026-11-11",
@@ -9,45 +9,12 @@
   "human_plan": "VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.md",
   "previous_program": "PROTOCOL_FEEDBACK_EXECUTION_2026-11-11.json",
   "engine": {
-    "provider": "Claude Code CLI",
-    "installed_version": "2.1.312",
-    "auth_method": "claude.ai",
-    "api_provider": "firstParty",
-    "subscription_type": "pro",
-    "auth_verified": true,
-    "model_execution_verified": true,
-    "remaining_quota_verified": true,
-    "extra_usage_setting_verified": true,
-    "api_fallback_authorized": false,
-    "automatic_extra_usage_authorized": false,
-    "model": "sonnet (explicit for subsequent implementation and independent review; original C01 used configured Opus)",
-    "default_concurrent_implementers": 1,
-    "maximum_disjoint_implementers": 2,
-    "nested_agents": false,
-    "extra_usage_enabled": false,
-    "model_policy_reason": "Subscription quota conservation after optional preference window; extra usage disabled",
-    "latest_quota_probe": {
-      "date": "2026-11-12",
-      "five_hour_percent": 100,
-      "seven_day_percent": 97,
-      "extra_usage_enabled": false
-    },
-    "latest_quota": {
-      "five_hour": {
-        "utilization": 100.0,
-        "resets_at": "2026-11-12T18:10:00.034352+00:00"
-      },
-      "seven_day": {
-        "utilization": 97.0,
-        "resets_at": "2026-11-15T10:00:00.034373+00:00"
-      },
-      "extra_usage": {
-        "is_enabled": false
-      }
-    },
-    "quota_evidence": "docs/proofs/claude-program-2026-11-12/execution-state.json",
-    "resumed_at": "2026-11-12T13:12:26Z",
-    "implementation_choice": "Continue native Claude subscription as explicitly requested; no engine-choice question pending, no API/extrausage fallback"
+    "provider": "Codex",
+    "authorization": "Owner: Die Arbeit fertig stellen; Codex takeover of Claude work",
+    "subagents_spawned": false,
+    "claude_api_fallback": false,
+    "additional_provider_fees": false,
+    "review": "Structured self-review and focused verification; no independent review claimed"
   },
   "roles": {
     "implementation": [
@@ -155,9 +122,9 @@
     {
       "id": "C02",
       "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
-      "status": "live_medium_rework_required",
-      "implementer": "vtt-ui-implementer",
-      "reviewer": "vtt-reviewer",
+      "status": "live_uploads_verified_confirmation_rework_pending",
+      "implementer": "Codex (owner takeover; existing Claude source preserved)",
+      "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
         "C01"
       ],
@@ -195,7 +162,7 @@
       "execution_session_id": "bf179ad0-fa5c-431a-a44a-56d286808cb2",
       "source_commit": "5ce0721096f80decfe4036755cf5d3782596a08d",
       "deployed_image_id": "sha256:b502136aa78190636823e9685042731375aa74cf9f0a114c9a8455309b98e7da",
-      "live_verification": "docs/proofs/characters-presentation-2026-11-12/live-findings.md",
+      "live_verification": "docs/DADM_DEPLOY_CODEX_TAKEOVER_2026-11-12.md",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
       "handoff": "docs/proofs/claude-c02-2026-11-12/handoff.json",
@@ -258,9 +225,9 @@
     {
       "id": "C04",
       "title": "2D-Kartenbedienung und Bibliothek zum Spieltisch",
-      "status": "functional_live_pass_mobile_medium_rework_required",
-      "implementer": "vtt-maps-implementer",
-      "reviewer": "vtt-reviewer",
+      "status": "complete_live_verified",
+      "implementer": "Codex (owner takeover; existing Claude source preserved)",
+      "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
         "C01"
       ],
@@ -308,19 +275,20 @@
       "execution_session_id": "735da98a-2ade-4535-8e75-bf97251a8652",
       "source_commit": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
       "deployed_image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
-      "live_verification": "docs/proofs/maps-2026-11-12/delivery.json",
+      "live_verification": "docs/proofs/landmass-2026-11-12/live.json",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C04_2026-11-11.md",
       "handoff": "docs/proofs/claude-c04-2026-11-12/handoff.json",
       "candidate_commit": "7474692d5",
       "execution_model": "sonnet",
-      "known_gap": "390px Import/Export wrapped header controls covered by main navigation; desktop editor, real two-stage retry and Firefox390 Player sharing pass"
+      "known_gap": "390px Import/Export wrapped header controls covered by main navigation; desktop editor, real two-stage retry and Firefox390 Player sharing pass",
+      "rework_resolution": "All four actual mobile header actions tested; existing sharing flow preserved and reverified with generated map."
     },
     {
       "id": "C05",
       "title": "Seedbasierte Landmassen im bestehenden Editor",
-      "status": "planned",
-      "implementer": "vtt-maps-implementer",
-      "reviewer": "vtt-reviewer",
+      "status": "complete_live_verified",
+      "implementer": "Codex (owner takeover; existing Claude source preserved)",
+      "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
         "C04"
       ],
@@ -338,18 +306,18 @@
         "Speichern/Laden/Export/Import erhalten"
       ],
       "execution_session_id": null,
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "1b5a90549",
+      "deployed_image_id": "sha256:39a1f08ec4b8a0fca0453a6ceea85dd0bc097ae587d8ff4af200878136dd082d",
+      "live_verification": "docs/proofs/landmass-2026-11-12/live.json",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C05_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C05_2026-11-12.md"
     },
     {
       "id": "C06",
       "title": "Kampagnen-Hub, Kalender und Sessionplanung",
-      "status": "partial_native_quota_blocked_not_deployed",
-      "implementer": "vtt-domain-implementer",
-      "reviewer": "vtt-reviewer",
+      "status": "complete_live_verified",
+      "implementer": "Codex (owner takeover; existing Claude source preserved)",
+      "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
         "C00",
         "C01"
@@ -372,9 +340,9 @@
         "Brauchbare Vorbereitung weiterhin erreichbar"
       ],
       "execution_session_id": "b6847237-26f2-4df4-818f-4916f0e9e965",
-      "source_commit": "df9e3cc5ff92fba0f4f15ea3301baa500f41ef6b",
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "cc215beaa",
+      "deployed_image_id": "sha256:3f5f0ad96d380a01a310413aec5ebf5e3192e7f0cb6c417dc9269c6c9283be8b",
+      "live_verification": "docs/proofs/calendar-2026-11-12/live.json",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C06_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C06_2026-11-11.md",
       "candidate_branch": "claude/vtt-c06-20261112",
@@ -384,9 +352,9 @@
     {
       "id": "C07",
       "title": "Private Gespräche und Mitgliederaktionen",
-      "status": "planned",
-      "implementer": "vtt-domain-implementer",
-      "reviewer": "vtt-reviewer",
+      "status": "in_progress_codex_local_not_deployed",
+      "implementer": "Codex (owner takeover; existing Claude source preserved)",
+      "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
         "C02",
         "C06"
@@ -411,14 +379,15 @@
       "deployed_image_id": null,
       "live_verification": null,
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C07_2026-11-11.md",
-      "apply_contract": "docs/DADM_APPLY_CLAUDE_C07_2026-11-11.md"
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C07_2026-11-11.md",
+      "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c07-20261112"
     },
     {
       "id": "C08",
       "title": "Compendium zum Charakter und Fortschrittsentscheidungen",
       "status": "planned",
-      "implementer": "vtt-domain-implementer",
-      "reviewer": "vtt-reviewer",
+      "implementer": "Codex (owner takeover; existing Claude source preserved)",
+      "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
         "C02"
       ],
@@ -449,8 +418,8 @@
       "id": "C09",
       "title": "Atlas mit geschützter Leserprojektion",
       "status": "planned",
-      "implementer": "vtt-maps-implementer",
-      "reviewer": "vtt-reviewer",
+      "implementer": "Codex (owner takeover; existing Claude source preserved)",
+      "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
         "C01",
         "C04",
@@ -479,8 +448,8 @@
       "id": "C10",
       "title": "Gesamt-Liveprüfung und Owner-Testcheckliste",
       "status": "planned",
-      "implementer": "codex",
-      "reviewer": null,
+      "implementer": "Codex (owner takeover; existing Claude source preserved)",
+      "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
         "C01",
         "C02",
@@ -529,5 +498,46 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "After native quota reset19:10Europe/Berlin: close C02 Firefox identity refresh and C04 mobile header Medium findings; finish C06 four403 cases/browser/PG/review/live; then remaining C05/C07/C08/C09 and C10 combined checklist. No background job scheduled."
+  "next_step": "Finish live confirmation follow-up, deliver C07/C08/C09, then C10 combined acceptance checklist.",
+  "claude_subscription_history": {
+    "provider": "Claude Code CLI",
+    "installed_version": "2.1.312",
+    "auth_method": "claude.ai",
+    "api_provider": "firstParty",
+    "subscription_type": "pro",
+    "auth_verified": true,
+    "model_execution_verified": true,
+    "remaining_quota_verified": true,
+    "extra_usage_setting_verified": true,
+    "api_fallback_authorized": false,
+    "automatic_extra_usage_authorized": false,
+    "model": "sonnet (explicit for subsequent implementation and independent review; original C01 used configured Opus)",
+    "default_concurrent_implementers": 1,
+    "maximum_disjoint_implementers": 2,
+    "nested_agents": false,
+    "extra_usage_enabled": false,
+    "model_policy_reason": "Subscription quota conservation after optional preference window; extra usage disabled",
+    "latest_quota_probe": {
+      "date": "2026-11-12",
+      "five_hour_percent": 100,
+      "seven_day_percent": 97,
+      "extra_usage_enabled": false
+    },
+    "latest_quota": {
+      "five_hour": {
+        "utilization": 100.0,
+        "resets_at": "2026-11-12T18:10:00.034352+00:00"
+      },
+      "seven_day": {
+        "utilization": 97.0,
+        "resets_at": "2026-11-15T10:00:00.034373+00:00"
+      },
+      "extra_usage": {
+        "is_enabled": false
+      }
+    },
+    "quota_evidence": "docs/proofs/claude-program-2026-11-12/execution-state.json",
+    "resumed_at": "2026-11-12T13:12:26Z",
+    "implementation_choice": "Continue native Claude subscription as explicitly requested; no engine-choice question pending, no API/extrausage fallback"
+  }
 }

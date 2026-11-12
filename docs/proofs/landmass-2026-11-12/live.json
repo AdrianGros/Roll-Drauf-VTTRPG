@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "checks": {
+    "preview_seconds_desktop": 0.467,
+    "preview_seconds_390": 0.5789000000059604,
+    "preview_resolution": 512,
+    "preview_unchanged": true,
+    "one_layer_one_undo_redo": true,
+    "seed_version_persisted": true,
+    "source_digest_before": "2416b481671f9fb818760925dfcaeb6dedb2abdbb773d1862ff7f92d59250331",
+    "one_snapshot_upload_after_activation_retry": true,
+    "private_source_unchanged": true,
+    "player_no_private_source_or_dm_controller": true,
+    "player_shared_png_visible": true
+  },
+  "journeys": [
+    "Normal Maps\u2192own empty project\u2192seeded 512 preview without mutation\u2192one new raster\u2192one undo/redo\u2192mobile preview/cancel unchanged\u2192save private editable project",
+    "Normal DM hub\u2192pages Add\u2192own library\u2192real preview and sharing consent\u2192failed activation\u2192retry uploads once; Firefox390 Player sees same active map, cannot get private source"
+  ],
+  "errors": [],
+  "project_id": "72498d55-4c18-4e1a-987c-8e21820f7bcd",
+  "map_id": 38,
+  "asset_id": 83,
+  "commit": "1b5a905492089194191f30a95da62d5d844fe270",
+  "image": "roll-drauf-vtt-app:feedback-landmass-20261111-1b5a90549",
+  "image_id": "sha256:39a1f08ec4b8a0fca0453a6ceea85dd0bc097ae587d8ff4af200878136dd082d",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "rollback": "/srv/migration/2026-11-11/feedback-landmass/1b5a90549/rollback.sh"
+}

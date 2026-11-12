@@ -1,5 +1,5 @@
 {
-  "status": "native_subscription_quota_blocked_with_two_live_medium_findings",
+  "status": "codex_takeover_in_progress",
   "date": "2026-11-12",
   "quota": {
     "five_hour": {
@@ -61,5 +61,6 @@
   },
   "further_tasks": "C05ApplyreadybutC04gateopen;C07requiresC06;C08Applyreadyhandoffpreparednotstarted;C09gatepending;C10overallNOT_RUN",
   "secrets_recorded": false,
-  "engine_choice": "Existing Claude subscription required and resumed; now exhausted again, no unanswered engine choice"
+  "engine_choice": "Owner explicitly directed Codex to finish; native quota no longer blocks authorized implementation.",
+  "takeover_record": "docs/DADM_DEPLOY_CODEX_TAKEOVER_2026-11-12.md"
 }

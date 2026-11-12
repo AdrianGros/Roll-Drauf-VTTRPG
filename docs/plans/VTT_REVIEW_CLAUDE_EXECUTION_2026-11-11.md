@@ -1,6 +1,6 @@
 # Verbindlicher Ausführungsplan – VTT-Reviews mit Claude Code
 
-Status: **C03 (sechs Stunden Anmeldung) live ausgeliefert und geprüft; C01 in letzter Nacharbeit. Gesamtpaket noch nicht vollständig ausgeliefert.**.
+Status: **Codex führt auf ausdrücklichen Owner-Auftrag fort. C01/C03/C04/C05/C06 live geprüft; C02-Bestätigung in Nacharbeit, C07 in Umsetzung; C08/C09/C10 offen.**
 Auftrag: neue Protokolle aufnehmen und Claude-Agenten fest für die Umsetzung
 verwenden, weil bereits ein Claude-Abo vorhanden ist. Aufbewahrung: dauerhaft.
 Grundlage: [Discover/Kategorisierung](../DADM_DISCOVER_VTT_REVIEWS_2026-11-11.md),
@@ -11,7 +11,13 @@ Dieser Plan ergänzt den bestehenden Gesamtauftrag. Nach dem Owner-„Go ahead�
 ist die Umsetzung gestartet. Laufende Aufträge werden in der maschinenlesbaren
 Datei und ihren Belegen geführt; ein gestarteter Agent ist keine Live-Lieferung.
 
-## Festgelegter Einsatz von Claude
+## Engine-Übernahme und bisheriger Claude-Einsatz
+
+Der jüngste Owner-Auftrag „Die Arbeit fertig stellen“ überträgt die Fertigstellung
+an Codex. Frühere Claude-Vorgaben unten dokumentieren die ursprüngliche Ausführung.
+Aktuell implementiert und prüft Codex selbst; es wurden keine GPT-Unteragenten
+gestartet. Ein unabhängiger Review wird nicht behauptet. Siehe
+[Übernahme und Nachweise](../DADM_DEPLOY_CODEX_TAKEOVER_2026-11-12.md).
 
 Claude Code `2.1.312` ist vorhanden, mit `claude.ai`/First Party/Pro angemeldet.
 Die drei geprüften API-/Auth-Token-Umgebungsvariablen sind nicht gesetzt. Deshalb
