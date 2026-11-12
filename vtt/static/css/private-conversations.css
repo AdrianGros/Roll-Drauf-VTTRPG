@@ -1,0 +1,16 @@
+.private-layout { width:min(1180px,calc(100% - 2rem));margin:1rem auto;display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,2fr);gap:1rem;color:var(--ui-ink); }
+.private-panel { border:1px solid var(--ui-line);border-radius:10px;background:var(--ui-panel);padding:1rem;min-width:0; }
+.private-layout h1,.private-layout h2 { margin-top:0; }
+.private-list { list-style:none;padding:0;display:grid;gap:.5rem; }
+.private-list button { width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere;padding:.65rem;background:var(--ui-soft);color:var(--ui-ink);border:1px solid var(--ui-line);border-radius:6px;cursor:pointer; }
+.private-list button[aria-current=true] { outline:2px solid var(--ui-accent); }
+.private-list small { display:block;color:var(--ui-muted); }
+.private-history { list-style:none;margin:1rem 0;padding:0;max-height:52vh;overflow:auto;display:grid;gap:.7rem;overflow-anchor:none; }
+.private-message { border-left:3px solid var(--ui-line);padding:.5rem .75rem;background:var(--ui-soft);overflow-wrap:anywhere; }
+.private-message p { white-space:pre-wrap;margin:.4rem 0 0; }
+.private-message time { margin-left:.6rem;font-size:.8rem;color:var(--ui-muted); }
+.private-layout textarea { display:block;resize:vertical;width:100%;padding:.75rem;border:1px solid var(--ui-line);border-radius:6px;font:inherit; }
+.private-layout button { font:inherit; }
+.private-layout form button { margin-top:.6rem; }
+.private-status { color:var(--ui-muted);overflow-wrap:anywhere; }
+@media(max-width:760px) { .private-layout { grid-template-columns:minmax(0,1fr); }.private-history { max-height:48vh; } }

@@ -1194,11 +1194,17 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             <span>${escapeHtml(member.campaign_role || globalThis.VTTUi('Spieler'))}</span>
                         </div>
                         <div class="book-scene-ledger-meta">${escapeHtml(campaignStatusLabel(member.status))}</div>
+                        <div class="book-scene-member-actions">
+                        ${member.status === 'active' ? characters.filter(character => Number(character.user_id) === Number(member.user_id))
+                            .map(character => `<a class="btn btn-secondary book-scene-action-btn" href="/character-sheet?id=${Number(character.id)}&mode=view">${escapeHtml(globalThis.VTTUi('Charakter: {name}', {name: character.name}))}</a>`).join('') : ''}
+                        ${member.status === 'active' && Number(member.user_id) !== Number(user?.id)
+                            ? `<a class="btn btn-secondary book-scene-action-btn" data-member-chat="${Number(member.user_id)}" href="/conversations?campaign_id=${Number(campaign.id)}&recipient_user_id=${Number(member.user_id)}">${globalThis.VTTUiHTML('Chat')}</a>` : ''}
                         ${canKick && member.status === 'active'
                             && Number(member.user_id) !== Number(campaign.owner_id)
                             && Number(member.user_id) !== Number(user?.id)
                             && ['PLAYER', 'OBSERVER'].includes(String(member.campaign_role || '').toUpperCase())
                             ? `<button type="button" class="btn btn-primary book-scene-action-btn" data-hub-action="kick-player" data-member-id="${Number(member.user_id)}" data-member-name="${escapeHtml(member.username || globalThis.VTTUi('Spieler'))}">${globalThis.VTTUiHTML("Spieler entfernen")}</button>` : ''}
+                        </div>
                     </div>
                 `).join('')
                 : `<div class="book-scene-ledger-item is-empty">${globalThis.VTTUiHTML("Noch keine Mitglieder.")}</div>`;

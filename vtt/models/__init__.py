@@ -13,6 +13,7 @@ from vtt.models.campaign_map import CampaignMap
 from vtt.models.campaign_member import CampaignMember
 from vtt.models.game_session import GameSession
 from vtt.models.session_series import SessionSeries, SessionOccurrence
+from vtt.models.private_conversation import PrivateConversation, PrivateMessage
 from vtt.models.session_date_poll import SessionDatePoll, SessionDateOption, SessionDateVote
 from vtt.models.session_state import SessionState
 from vtt.models.token_state import TokenState
@@ -50,6 +51,7 @@ from vtt.models.character_hotbar import CharacterHotbar, TableRequestReceipt
 __all__ = [
     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',
     'Campaign', 'CampaignMap', 'CampaignMember', 'GameSession', 'SessionState', 'TokenState', 'InviteToken',
+    'PrivateConversation', 'PrivateMessage',
     'SessionSeries', 'SessionOccurrence', 'SessionDatePoll', 'SessionDateOption', 'SessionDateVote',
     'Character', 'Spell', 'Equipment', 'InventoryItem',
     'CombatEncounter', 'CombatEvent',
