@@ -1,0 +1,49 @@
+{
+  "task": "C04",
+  "phase": "deploy",
+  "source_base": "f5790c2400b92a0dd490658ebd3d2a887601183d",
+  "launch_base": "Explicit full commit supplied in coordinator prompt after this handoff commit",
+  "apply": "docs/DADM_APPLY_CLAUDE_C04_2026-11-11.md",
+  "discover": "docs/DADM_DISCOVER_CLAUDE_C04_2026-11-11.md",
+  "owned_files": [
+    "vtt/static/mapmaker/js/app.js",
+    "vtt/static/mapmaker/js/ui.js",
+    "vtt/static/mapmaker/js/tools.js",
+    "vtt/static/mapmaker/js/history.js",
+    "vtt/static/mapmaker/js/library.js",
+    "vtt/static/mapmaker/js/snapshot.js",
+    "vtt/static/mapmaker/index.html",
+    "vtt/static/mapmaker/mapmaker.css",
+    "vtt/play/map_library.py",
+    "vtt/play/__init__.py",
+    "vtt/play/surfaces/dm.json",
+    "vtt/static/js/play-dm.js",
+    "vtt/static/js/play-ui.js",
+    "vtt/static/js/play-map-library.js",
+    "tools/i18n/tasks/c04.json",
+    "tests/test_c04_map_library.py",
+    "tests/test_c04_mapmaker_browser.py"
+  ],
+  "source_seams": [
+    "vtt/endpoints/mapmaker.py",
+    "vtt/mapmaker_document.py",
+    "vtt/play/contexts.py",
+    "vtt/play/receipts.py",
+    "vtt/play/routes.py",
+    "vtt/endpoints/assets.py",
+    "vtt/utils/file_upload.py",
+    "tests/test_mapmaker_library.py",
+    "tests/test_table_contexts.py"
+  ],
+  "new_dependencies": false,
+  "new_schema": false,
+  "generated_files": "coordinator only",
+  "constraints": [
+    "Player must not mount or initialize DM library controller",
+    "Existing context before-request guard covers new route; explicitly require operator in route",
+    "No layer lock field exists; all visible only",
+    "One 64MiB bounded undo for raster/tile/stamp eraser, cancellation restores",
+    "Shared locale main/build generated files coordinator only; use tasks/c04.json",
+    "No Bash/git/production/credentials/nested agents"
+  ]
+}

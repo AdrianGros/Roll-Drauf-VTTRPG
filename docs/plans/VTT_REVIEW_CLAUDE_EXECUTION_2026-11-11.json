@@ -231,7 +231,7 @@
     {
       "id": "C04",
       "title": "2D-Kartenbedienung und Bibliothek zum Spieltisch",
-      "status": "planned",
+      "status": "ready_for_worker",
       "implementer": "vtt-maps-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -249,8 +249,26 @@
       ],
       "next_phase": "deploy",
       "requires_task_specific_apply": true,
-      "base_commit": null,
-      "owned_files": null,
+      "base_commit": "f5790c2400b92a0dd490658ebd3d2a887601183d",
+      "owned_files": [
+        "vtt/static/mapmaker/js/app.js",
+        "vtt/static/mapmaker/js/ui.js",
+        "vtt/static/mapmaker/js/tools.js",
+        "vtt/static/mapmaker/js/history.js",
+        "vtt/static/mapmaker/js/library.js",
+        "vtt/static/mapmaker/js/snapshot.js",
+        "vtt/static/mapmaker/index.html",
+        "vtt/static/mapmaker/mapmaker.css",
+        "vtt/play/map_library.py",
+        "vtt/play/__init__.py",
+        "vtt/play/surfaces/dm.json",
+        "vtt/static/js/play-dm.js",
+        "vtt/static/js/play-ui.js",
+        "vtt/static/js/play-map-library.js",
+        "tools/i18n/tasks/c04.json",
+        "tests/test_c04_map_library.py",
+        "tests/test_c04_mapmaker_browser.py"
+      ],
       "acceptance": [
         "Sichtbare Speichern-/Import-/Kartenwechselwege",
         "Bibliothekskarte mit Vorschau direkt zum berechtigten Tisch",
@@ -262,7 +280,8 @@
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
-      "apply_contract": "docs/DADM_APPLY_CLAUDE_C04_2026-11-11.md"
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C04_2026-11-11.md",
+      "handoff": "docs/proofs/claude-c04-2026-11-12/handoff.json"
     },
     {
       "id": "C05",
