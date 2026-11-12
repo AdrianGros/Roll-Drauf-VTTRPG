@@ -122,7 +122,7 @@
     {
       "id": "C02",
       "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
-      "status": "live_uploads_verified_confirmation_rework_pending",
+      "status": "functional_live_verified_monitor_followup",
       "implementer": "Codex (owner takeover; existing Claude source preserved)",
       "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
@@ -170,7 +170,8 @@
       "execution_model": "sonnet",
       "known_gap": "Firefox real different-image replace stores new image but current DOM retains old decoded image; next picker/recomposition needs bounded native follow-up; remaining full live character journey incomplete",
       "current_runtime_image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
-      "preserved_in_source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0"
+      "preserved_in_source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
+      "residual_monitor": "Low: capture a Firefox operation-aborted pageerror from the table contrast journey; character/upload/copy/reader journey itself passed. Empty-tab contrast harness corrected."
     },
     {
       "id": "C03",
@@ -352,7 +353,7 @@
     {
       "id": "C07",
       "title": "Private Gespräche und Mitgliederaktionen",
-      "status": "in_progress_codex_local_not_deployed",
+      "status": "complete_live_verified",
       "implementer": "Codex (owner takeover; existing Claude source preserved)",
       "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
@@ -375,9 +376,9 @@
         "Kein externer Nachrichtenversand; Sessionchat bleibt separat"
       ],
       "execution_session_id": null,
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "2371e3a1fa259871d015c8bdf498efb5672c2b9a",
+      "deployed_image_id": "sha256:a73fd9fb12c9c7df0cc40a26c966efb4e7e5d59b8cfce75c21098540087a40ef",
+      "live_verification": "docs/proofs/private-conversations-2026-11-12/live.json",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C07_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C07_2026-11-11.md",
       "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c07-20261112"
@@ -385,7 +386,7 @@
     {
       "id": "C08",
       "title": "Compendium zum Charakter und Fortschrittsentscheidungen",
-      "status": "planned",
+      "status": "in_progress_codex_local_not_deployed",
       "implementer": "Codex (owner takeover; existing Claude source preserved)",
       "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
@@ -412,7 +413,8 @@
       "deployed_image_id": null,
       "live_verification": null,
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C08_2026-11-11.md",
-      "apply_contract": "docs/DADM_APPLY_CLAUDE_C08_2026-11-11.md"
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C08_2026-11-11.md",
+      "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c08-20261112"
     },
     {
       "id": "C09",

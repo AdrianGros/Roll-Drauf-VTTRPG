@@ -65,3 +65,19 @@ clock proving the second confirmation survives the first timer's deadline.
 Clock checks run after real uploads to avoid altering their network timing.
 C07: 9 API privacy/retry/membership cases and isolated PostgreSQL opposing pair
 creation/message replay contention pass; UI and live delivery remain pending.
+
+C02 live on a935a3ca0/d9bf26c7: all three uploads, fresh pixels/confirmations,
+independent copy changed without original/media/campaign leakage, removal,
+read-only switch and nonowner DM permissions passed. The subsequent contrast
+harness asserted that an intentionally empty tab must have text; corrected that
+check. Standalone contrast reached all numeric checks but caught one Firefox
+"operation was aborted" pageerror without a stack in that run. This is a Low
+Monitor follow-up for C10; do not claim that diagnostic run entirely clean.
+
+C07 live on2371e3a1f/a73fd9fb: actual hub Character/Chat -> Chrome DM/Firefox390
+EN/night pair, plaintext, reply/reload, lost response after commit -> same UUID
+retry -> exactly3 messages, normal existing DM kick -> Player history cleared,
+remaining participant read-only. No pageerrors. Shared navigation still passes
+all3 actual map-header click cases. Additive2-table schema/backup and rollback
+recorded in release directory; normal UI and source/image in private chat proof.
+C08 active under its original Apply plus explicit writer inventory/addendum.

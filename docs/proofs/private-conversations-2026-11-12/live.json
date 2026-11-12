@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "errors": [],
+  "journeys": [
+    "Normal hub member Character/Chat\u2192private pair\u2192Chrome DM/Firefox390 Player plaintext/reply\u2192reload\u2192lost POST response and same UUID retry\u2192exactly three confirmed messages\u2192existing DM kick\u2192Player history disappears; remaining participant reads but cannot send"
+  ],
+  "checks": {
+    "normal_hub_and_nav": true,
+    "plaintext": true,
+    "reply_reload": true,
+    "one_message_after_lost_ack": true,
+    "revoked_player_history_cleared": true,
+    "remaining_partner_readonly": true,
+    "firefox390_english_night_no_overflow": true
+  },
+  "conversation_id": 1,
+  "commit": "2371e3a1fa259871d015c8bdf498efb5672c2b9a",
+  "image": "roll-drauf-vtt-app:feedback-private-conversations-20261111-2371e3a1f",
+  "image_id": "sha256:a73fd9fb12c9c7df0cc40a26c966efb4e7e5d59b8cfce75c21098540087a40ef",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "rollback": "/srv/migration/2026-11-11/feedback-private-conversations/2371e3a1f/rollback.sh"
+}
