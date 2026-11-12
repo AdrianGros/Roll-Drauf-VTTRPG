@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
   "status": "execution_started",
-  "phase": "deploy_C01_monitor_C03",
+  "phase": "deploy_C01_C02",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -71,7 +71,7 @@
     {
       "id": "C01",
       "title": "Darstellung, UI-Sprache und Buchnavigation",
-      "status": "rework_running",
+      "status": "integrated_checks_running",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -117,14 +117,14 @@
       "deployed_image_id": null,
       "live_verification": null,
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
-      "candidate_commit": "32bade3f291a4957f8d9713317f9e377bd154fbe",
+      "candidate_commit": "08f380253",
       "review_model": "sonnet",
-      "known_gap": "No C01/P4 live delivery; first 40 plus five focused checks pass, expanded locale scope and review rework running",
+      "known_gap": "Final integrated checks and live P4/C01 delivery pending",
       "review_findings": [
         "F1: remaining authored hub literals",
         "F2: EN data-boundary acceptance"
       ],
-      "review_evidence": "docs/proofs/claude-c01-2026-11-11/review-01.md",
+      "review_evidence": "docs/proofs/claude-c01-2026-11-11/review-03.md",
       "additional_owned_files": [
         "vtt/static/js/regelwerk-compendium.js",
         "vtt/static/js/regelwerk-reader.js",
@@ -136,7 +136,7 @@
     {
       "id": "C02",
       "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
-      "status": "planned",
+      "status": "ready_for_worker",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -149,10 +149,20 @@
         "R12",
         "R13"
       ],
-      "next_phase": "apply",
+      "next_phase": "deploy",
       "requires_task_specific_apply": true,
-      "base_commit": null,
-      "owned_files": null,
+      "base_commit": "1dc8386546ea6fe615af13e66ec3ea7fa1d1548d",
+      "owned_files": [
+        "vtt/characters/routes.py",
+        "vtt/templates/character-sheet.html",
+        "vtt/static/js/sheet-feedback.js",
+        "vtt/static/js/srd-creator.js",
+        "vtt/static/js/srd-creator-steps.js",
+        "vtt/static/css/sheet-feedback.css",
+        "tools/i18n/tasks/c02.json",
+        "tests/test_c02_character_browser.py",
+        "tests/test_c02_character_permissions.py"
+      ],
       "acceptance": [
         "Echter Avatar-/Token-Upload vom Bogen",
         "Nur erlaubte Felder standardmäßig editierbar",
@@ -165,7 +175,8 @@
       "deployed_image_id": null,
       "live_verification": null,
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
-      "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md"
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
+      "handoff": "docs/proofs/claude-c02-2026-11-12/handoff.json"
     },
     {
       "id": "C03",

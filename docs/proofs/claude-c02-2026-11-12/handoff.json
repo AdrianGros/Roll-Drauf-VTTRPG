@@ -1,0 +1,35 @@
+{
+  "task": "C02",
+  "phase": "deploy",
+  "source_base": "1dc8386546ea6fe615af13e66ec3ea7fa1d1548d",
+  "launch_base": "Explicit full commit supplied in coordinator prompt after this handoff commit",
+  "apply": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
+  "discover": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
+  "owned_files": [
+    "vtt/characters/routes.py",
+    "vtt/templates/character-sheet.html",
+    "vtt/static/js/sheet-feedback.js",
+    "vtt/static/js/srd-creator.js",
+    "vtt/static/js/srd-creator-steps.js",
+    "vtt/static/css/sheet-feedback.css",
+    "tools/i18n/tasks/c02.json",
+    "tests/test_c02_character_browser.py",
+    "tests/test_c02_character_permissions.py"
+  ],
+  "new_dependencies": false,
+  "new_schema": false,
+  "generated_files": "coordinator only",
+  "source_lookup": [
+    "tests/test_character_identity_productization.py",
+    "tests/test_srd_manage_browser.py",
+    "tests/test_srd_creator_browser.py",
+    "vtt/characters/srd_manage.py",
+    "vtt/characters/srd_creator.py"
+  ],
+  "constraints": [
+    "No new rights or numerical character cap",
+    "Reuse actual APIs and owner permission; preserve strict contexts",
+    "Source labels tools/i18n/tasks/c02.json only; do not change main catalog",
+    "No Bash/git/production/credentials/nested agents"
+  ]
+}
