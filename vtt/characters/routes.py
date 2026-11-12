@@ -87,8 +87,12 @@ def _coerce_int(raw_value, field_name):
         return None, (jsonify({'error': f'{field_name} must be a number'}), 400)
 
 
-def _get_character_or_404(char_id):
-    char = db.session.get(Character, char_id)
+def _get_character_or_404(char_id, *, write_lock=False):
+    if write_lock:
+        from vtt.characters.writes import lock_character
+        char = lock_character(char_id)
+    else:
+        char = db.session.get(Character, char_id)
     if not char or char.deleted_at:
         return None, (jsonify({'error': 'Character not found'}), 404)
     return char, None
@@ -924,7 +928,7 @@ def create_character_inventory_item(char_id):
     user, error = _get_current_user()
     if error:
         return error
-    char, error = _get_character_or_404(char_id)
+    char, error = _get_character_or_404(char_id, write_lock=True)
     if error:
         return error
     if char.user_id != user.id:
@@ -966,7 +970,7 @@ def update_character_inventory_item(char_id, item_id):
     user, error = _get_current_user()
     if error:
         return error
-    char, error = _get_character_or_404(char_id)
+    char, error = _get_character_or_404(char_id, write_lock=True)
     if error:
         return error
     if char.user_id != user.id:
@@ -1015,7 +1019,7 @@ def delete_character_inventory_item(char_id, item_id):
     user, error = _get_current_user()
     if error:
         return error
-    char, error = _get_character_or_404(char_id)
+    char, error = _get_character_or_404(char_id, write_lock=True)
     if error:
         return error
     if char.user_id != user.id:

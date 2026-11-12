@@ -12,6 +12,8 @@ from datetime import datetime
 
 import pytest
 
+from tests.play_shared import enter_table
+
 from vtt import create_app
 from vtt.extensions import db
 from vtt.models import (
@@ -218,6 +220,8 @@ class TestTransferHappyPath:
         db.session.add(InventoryItem(character_id=character.id, name="Heiltrank", quantity=2))
         db.session.commit()
 
+        enter_table(player_client, campaign, session, mode="player")
+
         response = player_client.post(
             _transfer_url(campaign, session),
             json={
@@ -253,6 +257,8 @@ class TestTransferHappyPath:
         item = _add_loot_item(token, name="Pfeil", quantity=3)
         character = _add_character(player_user, campaign, "Held")
 
+        enter_table(player_client, campaign, session, mode="player")
+
         response = player_client.post(
             _transfer_url(campaign, session),
             json={
@@ -275,6 +281,8 @@ class TestTransferHappyPath:
         token = _add_loot_token(state, campaign, session, campaign_map)
         item = _add_loot_item(token, name="Goldmünzen", quantity=100)
         stash = _add_character(player_user, campaign, "Truhe", is_party_stash=True)
+
+        enter_table(dm_client, campaign, session, mode="dm")
 
         response = dm_client.post(
             _transfer_url(campaign, session),
@@ -306,6 +314,8 @@ class TestIdempotency:
             "recipient_character_id": character.id,
             "items": [{"token_loot_id": item.id, "quantity": 1}],
         }
+        enter_table(player_client, campaign, session, mode="player")
+
         first = player_client.post(_transfer_url(campaign, session), json=payload)
         assert first.status_code == 201, first.get_json()
 
@@ -329,6 +339,8 @@ class TestQuantityAndPermissionGuards:
         token = _add_loot_token(state, campaign, session, campaign_map)
         item = _add_loot_item(token, name="Trank", quantity=2)
         character = _add_character(player_user, campaign, "Held")
+
+        enter_table(player_client, campaign, session, mode="player")
 
         response = player_client.post(
             _transfer_url(campaign, session),
@@ -356,6 +368,8 @@ class TestQuantityAndPermissionGuards:
         item = _add_loot_item(token, name="Ring", quantity=1)
         foreign_character = _add_character(other_player_user, campaign, "Fremder Held")
 
+        enter_table(player_client, campaign, session, mode="player")
+
         response = player_client.post(
             _transfer_url(campaign, session),
             json={
@@ -382,6 +396,8 @@ class TestQuantityAndPermissionGuards:
         item = _add_loot_item(token, name="Amulett", quantity=1)
         character = _add_character(player_user, campaign, "Held")
 
+        enter_table(player_client, campaign, session, mode="player")
+
         response = player_client.post(
             _transfer_url(campaign, session),
             json={
@@ -403,6 +419,8 @@ class TestQuantityAndPermissionGuards:
         token = _add_loot_token(state, campaign, session, campaign_map)
         item = _add_loot_item(token, name="Karte", quantity=1)
         character = _add_character(player_user, campaign, "Held")
+
+        enter_table(player_client, campaign, session, mode="player")
 
         response = player_client.post(
             _transfer_url(campaign, session),
@@ -435,6 +453,8 @@ class TestAddTokenLootItem:
         db.session.commit()
         assert token.is_loot_source is False
 
+        enter_table(dm_client, campaign, session, mode="dm")
+
         response = dm_client.post(
             f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/loot/{token.id}/items",
             json={"name": "Diamant", "quantity": 1},
@@ -450,6 +470,8 @@ class TestAddTokenLootItem:
         campaign_map, session = _add_map_and_session(campaign, dm_user)
         state = ensure_session_state(campaign, session)
         token = _add_loot_token(state, campaign, session, campaign_map)
+
+        enter_table(player_client, campaign, session, mode="player")
 
         response = player_client.post(
             f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/loot/{token.id}/items",
@@ -474,6 +496,8 @@ class TestGetTokenLoot:
         own_character = _add_character(player_user, campaign, "Eigener Held")
         stash = _add_character(dm_user, campaign, "Gemeinsame Truhe", is_party_stash=True)
         _add_character(other_player_user, campaign, "Fremder Held")
+
+        enter_table(player_client, campaign, session, mode="player")
 
         response = player_client.get(
             f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/loot/{token.id}"

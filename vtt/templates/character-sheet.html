@@ -1104,7 +1104,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const requestedMode = (params.get('mode') || '').toLowerCase();
         const explicitView = requestedMode === 'view';
         // Fixed section links (C08): known keys only, never used as a selector or code.
-        const SHEET_SECTIONS = { identity: 'sheetIdentityGrid', progression: 'srdProgression' };
+        const SHEET_SECTIONS = { identity: 'sheetIdentityGrid', progression: 'srdProgression', inventory: 'srdInventory' };
         const requestedSection = Object.prototype.hasOwnProperty.call(SHEET_SECTIONS, params.get('section') || '')
             ? params.get('section') : null;
         const SHEET_IDENTITY_KINDS = { avatar: true, token: true };

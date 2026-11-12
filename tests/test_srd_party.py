@@ -44,6 +44,9 @@ def test_party_is_visible_to_members_only_and_shows_values(app, client, other, d
 
 def test_party_shows_conditions_of_live_tokens_and_skips_archived(app, client, other, data):
     t = table(app, client, other, data)
+    from tests.play_shared import enter_table
+    from vtt.models import Campaign, GameSession
+    enter_table(client, db.session.get(Campaign, t['campaign']), db.session.get(GameSession, t['session']))
     token = client.post(_tokens(t), json={"name": "Mira", "x": 1, "y": 1, "character_id": t["char"]["id"]}).get_json()["token"]
     row = db.session.get(TokenState, token["id"])
     row.metadata_json = {**(row.metadata_json or {}), "conditions": ["poisoned", "frightened", "unbekannt", 7]}

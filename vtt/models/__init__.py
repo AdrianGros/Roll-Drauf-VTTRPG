@@ -17,6 +17,7 @@ from vtt.models.session_date_poll import SessionDatePoll, SessionDateOption, Ses
 from vtt.models.session_state import SessionState
 from vtt.models.token_state import TokenState
 from vtt.models.invite_token import InviteToken
+from vtt.models.character_catalog_receipt import CharacterCatalogReceipt
 from vtt.models.character import Character
 from vtt.models.spell import Spell
 from vtt.models.equipment import Equipment
@@ -51,6 +52,7 @@ __all__ = [
     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',
     'Campaign', 'CampaignMap', 'CampaignMember', 'GameSession', 'SessionState', 'TokenState', 'InviteToken',
     'SessionSeries', 'SessionOccurrence', 'SessionDatePoll', 'SessionDateOption', 'SessionDateVote',
+    'CharacterCatalogReceipt',
     'Character', 'Spell', 'Equipment', 'InventoryItem',
     'CombatEncounter', 'CombatEvent',
     'ChatMessage', 'ModerationReport', 'ModerationAction',

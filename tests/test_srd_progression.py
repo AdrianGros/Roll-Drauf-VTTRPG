@@ -342,6 +342,9 @@ def test_level_up_refreshes_the_open_table_token(app, client, other, data):
     from tests.test_srd_rolls import _tokens
 
     t = table(app, client, other, data)
+    from tests.play_shared import enter_table
+    from vtt.models import Campaign, GameSession
+    enter_table(client, db.session.get(Campaign, t['campaign']), db.session.get(GameSession, t['session']))
     cid = t["char"]["id"]
     award(t["dm"], cid, addXp=7500)
     state = db.session.get(Character, cid).character_data["srd"]["state"]

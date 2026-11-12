@@ -13,11 +13,11 @@ from vtt.characters.sheet_link import srd_evaluation
 from vtt.extensions import db, limiter
 
 
-def _character(char_id, *, owner):
+def _character(char_id, *, owner, write=False):
     user, error = _get_current_user()
     if error:
         return None, None, error
-    char, error = _get_character_or_404(char_id)
+    char, error = _get_character_or_404(char_id, write_lock=write)
     if error:
         return None, None, error
     if owner and char.user_id != user.id:
@@ -103,7 +103,7 @@ def get_appearance(char_id):
 @limiter.limit('120 per hour')
 @jwt_required()
 def put_appearance(char_id):
-    _, char, error = _character(char_id, owner=True)
+    _, char, error = _character(char_id, owner=True, write=True)
     if error:
         return error
     body = _body()

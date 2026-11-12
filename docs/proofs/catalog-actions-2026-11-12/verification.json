@@ -1,0 +1,41 @@
+{
+  "status": "local_targeted_pass",
+  "review": "Codex structured self-review; no independent reviewer",
+  "api": {
+    "passed": 8,
+    "log": "/tmp/vtt-c08-api.log"
+  },
+  "postgres": {
+    "passed": 3,
+    "log": "/tmp/vtt-c08-pg.log",
+    "database": "guarded disposable schema, PostgreSQL16",
+    "cases": [
+      "9 competing catalog/old-inventory/DM-handout writes and four identical retries",
+      "coins JSON alongside DM progression",
+      "authorized Player loot alongside catalog addition"
+    ]
+  },
+  "existing_inventory_party_progression": {
+    "passed": 61,
+    "log": "/tmp/vtt-c08-existing-writers-recheck.log"
+  },
+  "browser": {
+    "passed": 3,
+    "log": "/tmp/vtt-c08-browser-final.log",
+    "cases": [
+      "Chromium1440 DE paper and Firefox390 EN night: lost acknowledgment/retry -> inventory -> real level5to6 choices",
+      "late confirmation ignored after changing entry and figure"
+    ]
+  },
+  "js_catalog": {
+    "authored_literal_calls": 61,
+    "missing": 0,
+    "sources": 3055
+  },
+  "live": "PENDING",
+  "loot_and_P1_contexts": {
+    "passed": 35,
+    "log": "/tmp/vtt-c08-context-loot-exact-routes.log",
+    "harness": "Explicit table entry in old loot tests; enumerate exact rule URL rather than canonical endpoint alias. No guard weakened."
+  }
+}

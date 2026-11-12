@@ -435,3 +435,12 @@ body.regelwerk-page {
 .regelwerk-toc-group > a { padding-left: 1.1rem; }
 .regelwerk-toc a[aria-current="page"] { font-weight: 800; color: #2f1638; text-decoration: none; border-left: 3px solid #4b235a; padding-left: 0.5rem; }
 .regelwerk-toc-group > a[aria-current="page"] { padding-left: 0.85rem; }
+
+.cp-character-dialog { width:min(92vw,38rem);max-height:88vh;overflow:auto;border:2px solid var(--ui-line);border-radius:10px;background:var(--ui-panel);color:var(--ui-ink);padding:1rem;font:1rem/1.5 system-ui,sans-serif; }
+.cp-character-fields { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem; }
+.cp-character-dialog label { display:flex;flex-direction:column;gap:.25rem;min-width:0;margin-bottom:.75rem; }
+.cp-character-dialog input,.cp-character-dialog select { width:100%;min-width:0;padding:.5rem;font:inherit;border:1px solid var(--ui-line); }
+.cp-character-actions { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem; }
+.cp-character-help { color:var(--ui-muted); }
+.cp-character-actions-entry { margin-block:.75rem; }
+@media(max-width:600px) { .cp-character-fields { grid-template-columns:minmax(0,1fr); } }
