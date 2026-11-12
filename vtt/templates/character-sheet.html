@@ -2330,7 +2330,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         hp_current: Number(document.getElementById('charHpCurrent').value),
                     });
                     await loadSheet();
-                    showMessage('Name und aktuelle Trefferpunkte gespeichert.');
+                    showMessage(globalThis.VTTUi('Name und aktuelle Trefferpunkte gespeichert.'));
                     return;
                 }
                 const payload = {

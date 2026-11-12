@@ -46,3 +46,10 @@ C02 upload must also await roll/inventory/management/progression loads, since
 they affect layout after SRD composition. Delayed appearance request + EN/night
 management entry + all three chooser/upload operations pass in both engines
 (2 cases). Exact live follow-up remains open until verified after this release.
+
+All three actual Firefox390 upload/replace/token chooser operations now pass
+live on 3770ff112/aaf50b17 after awaiting all panels. Subsequent independent copy
+was created and edited; full English journey caught an existing unwrapped
+German save confirmation. Wrap that one literal and provide its EN task entry
+with the landmass integration. The earlier prepared 6b65c5181 landmass image is
+superseded before activation; prepare a fresh current-source image instead.
