@@ -62,6 +62,20 @@ def _app_csp():
 class _PreviewHandler(SimpleHTTPRequestHandler):
     csp = ""
 
+    def do_GET(self):
+        # This server intentionally has no Flask API. Supply the public optional
+        # branding projection used by the shared display preferences; production
+        # behavior is exercised by the Flask/live journeys separately.
+        if self.path.split('?', 1)[0] == '/api/theme/settings':
+            payload = b'{"theme":null}'
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+            return
+        return super().do_GET()
+
     def end_headers(self):
         self.send_header("Content-Security-Policy", self.csp)
         self.send_header("Cache-Control", "no-store")

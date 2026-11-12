@@ -128,6 +128,10 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 /* flex: none keeps every header action at its own size; the title absorbs the squeeze. */
 .mm-top-actions { display: flex; align-items: center; gap: 6px; margin-left: auto; flex: none; }
 
+/* Visible, labelled library/save/import/export actions (C04); wrap rather than overflow at 390 px. */
+.mm-labeled-action { display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
+.mm-labeled-action svg { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; }
+.mm-top-actions { flex-wrap: wrap; }
 .mm-icon-btn {
     display: inline-flex; align-items: center; justify-content: center;
     width: 34px; height: 34px; padding: 0;
@@ -328,6 +332,10 @@ input[type=range] { width: 100%; accent-color: var(--plum); min-height: 28px; }
 .mm-stamp canvas { width: 44px; height: 44px; }
 .mm-stamp span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mm-stamp[aria-checked="true"] { border-color: var(--plum); box-shadow: 0 0 0 2px var(--gold); background: var(--selected-bg); font-weight: 600; }
+.mm-variant-row { display: flex; gap: 6px; }
+.mm-variant-list { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 0; padding: 0; list-style: none; }
+.mm-variant-chip { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--line, #8885); border-radius: 6px; padding: 2px; }
+.mm-variant-chip img { width: 32px; height: 32px; object-fit: contain; }
 .mm-tile-btn {
     display: flex; flex-direction: column; align-items: center; gap: 2px;
     padding: 4px 2px; border: 1px solid var(--parchment-line); border-radius: 7px;

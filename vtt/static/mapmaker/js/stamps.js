@@ -95,6 +95,12 @@ function drawBuiltin(kind) {
     return canvas;
 }
 
+/** Own asset URLs resolve against this module, never against the embedding page (editor or table). */
+const ASSET_ROOT = new URL("../assets/", import.meta.url);
+export function assetUrl(path) {
+    return new URL(path, ASSET_ROOT).href;
+}
+
 const BUILTINS = [
     { id: "builtin:compass", label: globalThis.VTTUi("Windrose (einfach)"), always: true, kind: "compass", defaultSize: 160 },
     { id: "builtin:pin", label: globalThis.VTTUi("Ortsnadel"), always: true, kind: "pin", defaultSize: 48 },
@@ -161,7 +167,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
     };
     const readPack = async (pack) => {
         try {
-            const response = await fetch(`assets/${pack.palette || `${pack.id}/manifest.json`}`, { cache: "no-cache" });
+            const response = await fetch(assetUrl(pack.palette || `${pack.id}/manifest.json`), { cache: "no-cache" });
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const manifest = await response.json();
             const entries = manifest.schemaVersion === 2 && Array.isArray(manifest.rows)
@@ -180,7 +186,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
                     group: String(entry.group || "Symbole").slice(0, 50),
                     pack: pack.id, packName: pack.name,
                     search: String(entry.search || entry.label || "").slice(0, 500),
-                    src: `assets/${pack.id}/${entry.file}`, image: null,
+                    src: assetUrl(`${pack.id}/${entry.file}`), image: null,
                     sheet: entry.sheet === true, grid: Number.isInteger(entry.grid) ? Math.max(1, Math.min(128, entry.grid)) : 1, pixelArt: entry.pixelArt === true,
                     w: entry.w, h: entry.h, defaultSize: clampSize(entry.defaultSize),
                 });
@@ -200,7 +206,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
             } else for (const stamp of accepted) addStamp(stamp, !hidden.has(stamp.id));
             for (const entry of manifest.textures || []) {
                 if (!entry || !FILE_RE.test(entry.file)) continue;
-                const image = await loadImage(`assets/${pack.id}/${entry.file}`).catch(() => null);
+                const image = await loadImage(assetUrl(`${pack.id}/${entry.file}`)).catch(() => null);
                 if (!image) {
                     errors.push(`Textur „${entry.label || entry.id}“ fehlt.`);
                     continue;
@@ -217,7 +223,7 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
     };
     await readPack({ id: "kenney-cartography", name: "Kenney · Cartography" });
     try {
-        const response = await fetch("assets/packs.json", { cache: "no-cache" });
+        const response = await fetch(assetUrl("packs.json"), { cache: "no-cache" });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const catalog = await response.json();
         // Sequential insertion keeps catalogue ordering stable across connections.

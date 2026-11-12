@@ -33,8 +33,17 @@ export class History {
      * Returns false when the step alone exceeds the budget (history is
      * cleared because older steps could no longer be replayed safely).
      */
+    /** True when a step of this size can be retained without discarding the whole history. */
+    canFit(bytes) {
+        return (bytes || 256) <= this.maxBytes;
+    }
+
     push(command) {
         const bytes = command.bytes || 256;
+        // Callers that mutate before recording must preflight with canFit() and revert.
+        // A command asking for strict handling is refused untouched, so the existing
+        // undo/redo stacks stay valid and no "undo available" claim is made falsely.
+        if (command.strict && bytes > this.maxBytes) return false;
         for (const dropped of this.redoStack) this.bytes -= dropped.bytes || 256;
         this.redoStack = [];
         if (bytes > this.maxBytes) {

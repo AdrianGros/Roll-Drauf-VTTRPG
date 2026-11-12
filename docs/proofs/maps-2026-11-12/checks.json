@@ -1,0 +1,29 @@
+{
+  "task": "C04",
+  "status": "integrated_checks_passed_delivery_pending",
+  "implementation_engine": "Native Claude Code Sonnet via existing subscription, no API fallback or extra usage",
+  "worker_source": "7474692d5",
+  "base": "65b0f7ff2139e17c1f96e986271646a6f6d72971",
+  "checks": {
+    "integrated": "36 passed (20 API +11 new editor/library browser +5 PlayChrome)",
+    "authored_js": "9 files parsed,396 authored literal calls,0 missing DE/EN entries",
+    "catalog": "2855 sources complete"
+  },
+  "review": [
+    "../claude-c04-2026-11-12/review-01.md",
+    "../claude-c04-2026-11-12/review-final.md"
+  ],
+  "medium_findings": "Scatter/grid dedup closed; new dense pointer undo/redo/cancel and mixed layer tests pass",
+  "remaining_low": [
+    "Variant pool retains configured variants after selecting a different palette tile",
+    "Retry freezes original title/grid after definitive stage1 failure until selection reopened",
+    "Snapshot replay after project resize/deletion may reject before old receipt"
+  ],
+  "navigation": {
+    "author": "Main navigation Maps → empty project → Library/Save/Import/Export; optional stamp grid, eraser scope and visual tile variants",
+    "dm": "Campaign hub explicit DM seat → Pages Add → Own library → preview → sharing consent",
+    "player": "Campaign hub Player seat → active shared image; no DM library controller/private source"
+  },
+  "schema_changes": false,
+  "live_verification": "Pending deployment and own fixture journey"
+}
