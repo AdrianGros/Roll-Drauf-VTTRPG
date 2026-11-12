@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
   "status": "execution_started",
-  "phase": "deploy_review_C01_C03",
+  "phase": "deploy_rework_C01_C03",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -71,7 +71,7 @@
     {
       "id": "C01",
       "title": "Darstellung, UI-Sprache und Buchnavigation",
-      "status": "review_running",
+      "status": "rework_running",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -119,7 +119,19 @@
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
       "candidate_commit": "32bade3f291a4957f8d9713317f9e377bd154fbe",
       "review_model": "sonnet",
-      "known_gap": "Five focused browser checks rerunning after test harness corrections; no live delivery"
+      "known_gap": "No C01/P4 live delivery; first 40 plus five focused checks pass, expanded locale scope and review rework running",
+      "review_findings": [
+        "F1: remaining authored hub literals",
+        "F2: EN data-boundary acceptance"
+      ],
+      "review_evidence": "docs/proofs/claude-c01-2026-11-11/review-01.md",
+      "additional_owned_files": [
+        "vtt/static/js/regelwerk-compendium.js",
+        "vtt/static/js/regelwerk-reader.js",
+        "vtt/templates/regelwerk.html",
+        "vtt/templates/regelwerk-compendium.html",
+        "tests/test_c01_rulebook_browser.py"
+      ]
     },
     {
       "id": "C02",
@@ -158,7 +170,7 @@
     {
       "id": "C03",
       "title": "Absolute sechs Stunden pro Anmeldung",
-      "status": "review_running",
+      "status": "rework_review_running",
       "implementer": "vtt-domain-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -196,9 +208,14 @@
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C03_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C03_2026-11-11.md",
       "execution_model": "sonnet",
-      "candidate_commit": "ec5727312712fd06d5269e8ec1cab6405a4b081d",
+      "candidate_commit": "166234b038d44e0eef20805db3e5cd1f740a6c46",
       "review_model": "sonnet",
-      "known_gap": "Worker stopped on subscription 429; independent review resumed after reset; live/browser acceptance outstanding"
+      "known_gap": "Expanded cookie/CSRF browser suite and independent re-review running; not integrated/live",
+      "review_findings": [
+        "M1: signed-expiry second-boundary race",
+        "M2: preserve current device refresh on password change"
+      ],
+      "review_evidence": "docs/proofs/claude-c03-2026-11-11/review-01.md"
     },
     {
       "id": "C04",
@@ -344,7 +361,7 @@
         "R23",
         "R24"
       ],
-      "next_phase": "apply",
+      "next_phase": "deploy",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -358,7 +375,9 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C08_2026-11-11.md",
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C08_2026-11-11.md"
     },
     {
       "id": "C09",

@@ -63,12 +63,13 @@ zwischen Schritten wird durch jeden bestehenden Endpunkt erneut geprüft.
 ## Werkzeugvertrag
 
 Radierer bietet „Aktive Ebene“ als Standard und eine ausdrückliche Auswahl
-„Alle sichtbaren, entsperrten Ebenen“. Standard radiert die aktive unterstützte
-Ebene oder erklärt die Sperre; kein stiller Wechsel auf irgendeine Rasterebene.
+„Alle sichtbaren Ebenen“. Standard radiert die aktive unterstützte
+Ebene; kein stiller Wechsel auf irgendeine Rasterebene.
 Raster nutzt bestehende StrokeEngine, Tiles entfernen berührte Zellen, Symbole
 entfernen berührte Stempel anhand vorhandener Geometrie. Beschriftungen und Wege
 bleiben erhalten; die UI nennt den begrenzten Wirkbereich Raster/Kacheln/Symbole.
-Versteckte/gesperrte Ebenen bleiben immer erhalten. Pointer-Cancel stellt den
+Versteckte Ebenen bleiben immer erhalten. Das Dokument besitzt bisher kein
+locked-Feld; C04 erfindet kein neues Sperr-/Importformat. Pointer-Cancel stellt den
 Zustand vor der Geste her. Eine Geste ist eine gemeinsame Undo-/Redo-Aktion.
 Vor Mutation wird das benötigte Historybudget begrenzt; zu große Aktionen werden
 vorher verweigert oder die laufende Geste vollständig zurückgesetzt. Kein
@@ -90,7 +91,7 @@ Player-Kontext eines Owners, falsche Session, Widerruf, alte Revision, falsches 
 Quota/Storagefehler, identisches Retry und Nutzlasttausch. Browserprüfung: Bibliothek
 über normalen DM-Weg, echte Vorschau→aktive Karte auch beim Firefox-Player,
 unveränderte Quelle, Fehler/Retry und keine DM-Initialisierung beim Player.
-Editorprüfung über Pointergesten: Raster/Tile/Symbol, aktive/alle Ebenen, Locks,
+Editorprüfung über Pointergesten: Raster/Tile/Symbol, aktive/alle sichtbaren Ebenen,
 Cancel und genau ein Undo/Redo, Kachelpinsel und Stempelraster; JSON/ZIP/PNG-Credits
 und bestehende Assetpakete bleiben erhalten. DE/EN, Papier/Nacht und 390 px.
 

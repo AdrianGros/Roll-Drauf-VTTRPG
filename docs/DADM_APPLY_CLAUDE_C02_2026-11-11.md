@@ -49,3 +49,13 @@ keine Tests bloßer CSS-Implementierungsdetails. Kein neues Schema/Dependency,
 keine Änderung von P1/P2/P3. Alter Präsentationsstand liest die additive Projektion
 nicht. Getesteten C01 als Rückweg behalten. Vor Deploy Quell-/Live-Abgleich, separater
 Claude-Review und normale Live-Reise mit eigenen Testfiguren; danach Monitor.
+
+## Fester Abschnittslink für C08
+
+Zusätzlich zum sichtbaren Identitätsweg versteht der Bogen den begrenzten
+Parameter `section=identity|progression`. Die feste Map verweist auf die
+vorhandenen Identitäts-/Fortschrittswurzeln; nach asynchroner Komposition wird
+der richtige Tab geöffnet und der Bereich fokussiert. Unbekannte Werte werden
+ignoriert, nicht als Selector/Code interpretiert. Vorhandene Kampagnen-/Session-
+und Kontextparameter bleiben beim Moduswechsel erhalten. Der Link gewährt
+keine Schreibrechte und löst keine automatische Charakteränderung aus.

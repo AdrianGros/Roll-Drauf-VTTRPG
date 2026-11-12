@@ -67,3 +67,61 @@ Owner braucht keinen sechsstündigen Warte-Test. Separater Claude-Review vor Rel
 Die Medium-Risiken aus Discover werden durch die gemeinsame signierte Zeitgrenze,
 expliziten Legacy-Vertrag und Transportmatrix behandelt. Wenn die Implementierung
 ein neues Schema oder einen anderen Bestandsvertrag benötigt, zurück zu Apply.
+
+## Präzisierung nach unabhängigem Review am 2026-11-12
+
+M1: Die endgültige JWT-exp wird ausdrücklich aus dem gemeinsamen ganzzahligen
+Anker berechnet: Refresh exp=until, Access exp=min(now+Accessdauer,until).
+Kein erneutes relatives Ableiten von einer zweiten Bibliotheksuhr. Ein kontrollierter
+Sekundenwechsel zwischen Helper und JWT-Bibliothek darf keinen exp>until erzeugen.
+
+M2: Passwortänderung erhält das aktuelle Login einschließlich eines gültigen
+aktuellen Refreshpfads, während andere Geräte widerrufen werden. Ausgenommen
+werden nur konkrete geprüfte JTI-Werte, niemals pauschal alle Zeilen mit gleicher
+expires_at (zwei Logins in derselben Sekunde teilen diesen Wert). Ein zum
+aktuellen Login gehörender Refresh-Cookie muss signatur-/typ-/user-/lifetime-
+geprüft werden; neue Claims müssen denselben Anker tragen. Fehlende/fremde/
+ungültige Cookies verleihen keine Ausnahme. Ein gültiger Legacy-Refresh darf
+vor dem Widerruf explizit als geprüfter eigener JTI bis zu seiner ursprünglichen
+iat+6h-Grenze registriert werden, sodass der Legacy-Logout-Cutoff ihn nicht
+versehentlich zur fremden Sitzung macht. Kein neuer Startanker. Das aktuelle
+Access-JTI und daran gebundene Kontexte bleiben erhalten. Reset ohne aktuelle
+Passwortauthentifizierung und Logout behalten ihre vollständige Widerrufspolitik.
+
+Zusatzabnahme: Sekundenwechsel beim Signieren; aktuelles Gerät nach Passwort-
+änderung und Accessablauf kann refreshen, zweites auch in derselben Sekunde
+angemeldetes Gerät nicht; fremder/fehlender/ungültiger Cookie wird nicht geschont;
+gültiger Legacy-Refresh bleibt am ursprünglichen Ende begrenzt. Der bestehende
+Low-Befund Logout mit bereits abgelaufenem Access wird separat verfolgt und hier
+nicht als zusätzliche Featurearbeit eingeschoben.
+
+### Browser-Cookies gehören zur M2-Grenze
+
+Der Worker hat den noch nicht im ersten Review berücksichtigten Istzustand
+bestätigt: Refresh-JWT **und** Refresh-CSRF-Cookie haben aktuell Path
+`/api/auth/refresh`. Daher erhält `/api/auth/password/change` keinen Refresh-JWT;
+die normale Seite kann den für Auth.refreshAccessToken benötigten CSRF-Wert
+ebenfalls nicht über document.cookie lesen. Ein Testclient mit Cookies auf `/`
+beweist diesen Browserweg nicht.
+
+Festlegung: Refresh-JWT bleibt HttpOnly/Secure/SameSite nach bestehender Policy
+und bekommt den begrenzten Path `/api/auth`. Refresh-CSRF bekommt Path `/`, damit
+die vorhandenen Seiten den Double-Submit-Header lesen können. Kein JWT in JS,
+LocalStorage, URL oder Antwort-JSON. Die normalen Auth-Endpunkte prüfen weiter
+Tokenart und CSRF. Beim Ausstellen eines neuen Refreshpaars werden die alten
+beiden Cookies mit Path `/api/auth/refresh` ausdrücklich gelöscht, damit sie
+nicht durch längeres Path-Matching die neuen Cookies verdecken. Logout löscht
+auch diese alten Pfadvarianten. Domain-/Secure-/SameSite-Konfiguration erhalten.
+
+Neue Browserprüfung mit aktiviertem JWT_COOKIE_CSRF_PROTECT und tatsächlich vom
+Server ausgestellten Cookies: normale Regelwerkseite kann refreshen, Passwort-
+änderung schont aktuelles Gerät, zweites Gerät wird abgewiesen, alte Pathvarianten
+werden beseitigt. Access-Cookie darf zur Simulation seines Ablaufs entfernt
+werden; die absolute Zeitgrenze bleibt separat kontrolliert geprüft. Die alten
+laufenden Anmeldungen erhalten keinen stillen neuen Zeitanker; die bereits
+beschriebene normale Wiederanmeldung bleibt der Bestandsübergang.
+
+Primärquellen am 2026-11-12 geprüft: [JWT-Cookie-Konfiguration](https://flask-jwt-extended.readthedocs.io/en/stable/options.html#JWT_REFRESH_COOKIE_PATH),
+[Cookie-/Double-Submit-Beispiel](https://flask-jwt-extended.readthedocs.io/en/stable/token_locations.html)
+und [Cookie-Path](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie).
+Die konkrete Pfadwahl ist die hier begründete Repo-Entscheidung.

@@ -71,3 +71,36 @@ integriert und liefert P4 samt additiver Maßstabstabelle nach dessen bestehende
 Backup-/Rollbackvertrag. Medium-Risiken der unvollständigen UI und des Ladeblitzes
 sind durch diese expliziten Quell-/Ladeverträge und Abnahmetests behandelt; technische
 Befunde im Deploy vor Live nacharbeiten. Anschließend Monitor und C02.
+
+## Präzisierung nach Review und Quellenabgleich am 2026-11-12
+
+Der unabhängige Review fordert die verbleibenden unmarkierten primären Hub-
+Aktionen/namenshaltigen Hinweise sowie echte EN-/Benutzertext-Prüfung auf den
+neu übersetzten Übersichten. Diese sind Teil der bestehenden C01-Grenze und
+werden vor Live nachgearbeitet. Die fünf ergänzten Lade-/Fehler-/Bewegungs- und
+Creatorprüfungen bestehen inzwischen; das ersetzt diese zusätzliche Abnahme nicht.
+
+Zusätzlich zeigt der Quellabgleich: regelwerk-compendium.js und regelwerk-reader.js
+verwenden noch keine UI-Katalogaufrufe für ihre selbst formulierten dynamischen
+Bedienelemente. Da diese Hauptwege schon zur C01-EN-Abnahme gehören, werden genau
+diese beiden Dateien, ihre bestehenden Templates regelwerk.html und
+regelwerk-compendium.html sowie tests/test_c01_rulebook_browser.py zum Dateibesitz
+hinzugefügt. Das ist eine ausdrückliche Korrektur der unvollständigen UI-Inventur,
+keine neue Compendium-Featurearbeit (die bleibt C08).
+
+Übersetzt werden ausschließlich eigene Controls, Tabellen-/Filterüberschriften,
+Status-/Fehlertexte und bewusste UI-Formatlabels. Regelblöcke, Suchauszüge,
+Dokument-/Buchtitel aus Quellen, Facetwerte, Entitätsnamen und Benutzertexte
+bleiben unverändert. Reader-Renderer/DOM-Helfer dürfen nicht pauschal alle
+eingehenden Strings übersetzen. Vorhandene explizite Katalogfunktionen benutzen,
+neue DE/EN-Einträge ergänzen; gefrorene Inventare und generierte Dateien nicht
+vom Worker ändern. Die Nachweise prüfen eine EN-Tabellenüberschrift/Filter und
+gleichzeitig den unveränderten deutschen Entitäts-/Regeltext.
+
+Ladezustand erst nach erfolgreichem synchronem Rendern bereit setzen; anfänglicher
+Render-/Nicht-JSON-Fehler lässt keine halbe alte Fläche sichtbar. Überholte
+Antworten dürfen einen inzwischen bereiten Stand nicht überdecken. Keine neuen
+Controller oder Rechte. Zusatzkatalog darf denselben Quellschlüssel weiterhin
+bewusst übersteuern, muss abweichende Übersetzungen dabei mindestens sichtbar
+melden; Hashkollisionen anderer Quellen bleiben Fehler. Hauptnavigation genau
+einmal und Draftstand nach Sprachreload ausdrücklich prüfen.
