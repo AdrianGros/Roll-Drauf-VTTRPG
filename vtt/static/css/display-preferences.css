@@ -93,3 +93,43 @@ html[data-vtt-theme] .ce-species-ok {color:var(--ui-success);}
 html[data-vtt-theme] :is(.ce-species-blocked,.ce-authoring button.ce-danger) {color:var(--ui-danger);}
 html[data-vtt-theme=night] :is(.eh-window,.eh-window .window-header,.eh-window .window-content,.eh-window .standard-form,.eh-window fieldset,.eh-window nav) {background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);}
 html[data-vtt-theme=night] .eh-window :is(label,legend,h1,h2,h3,p,small,.hint) {color:var(--ui-ink);opacity:1;}
+/* Play table chrome (toolbar, sidebar, panels, controls). Play paints its own dark navy and plum
+   surfaces in BOTH themes, so inside .tabletop-shell the semantic tokens are re-bound to a matching
+   dark pair: text is always resolved against the surface that is actually painted. Without this the
+   paper theme put dark-brown text on navy, and the night theme resolved --vtt-paper-panel (the
+   text color of plum buttons) to a dark panel color. Canvas, grid, SVG layers and map/token/user
+   content are outside these selectors and keep their own colors. */
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell {
+  --ui-paper:#050b16; --ui-panel:#0f1a2e; --ui-soft:#1b2842; --ui-ink:#eef3ff; --ui-muted:#c3cee6; --ui-line:#7d8db0;
+  --ui-danger:#ffb8b1; --ui-success:#ace0b8; --ui-warning:#f0d29a;
+  --vtt-paper:var(--ui-paper); --vtt-paper-card:var(--ui-soft); --vtt-paper-panel:#fdfaf3; --vtt-paper-panel-soft:var(--ui-soft);
+  --vtt-ink:var(--ui-ink); --vtt-ink-muted:var(--ui-muted); --vtt-ink-soft:var(--ui-muted);
+  --vtt-field-bg:var(--ui-panel); --vtt-field-text:var(--ui-ink); --vtt-field-placeholder:var(--ui-muted); --vtt-field-border:var(--ui-line); --vtt-field-border-strong:var(--ui-line);
+  --vtt-text:var(--ui-ink); --vtt-bg:var(--ui-paper); --vtt-sidecar-text:var(--ui-ink); --vtt-sidecar-bg:var(--ui-panel);
+}
+/* Surfaces: book-skin cards force cream backgrounds with !important; bind them to the dark pair. */
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(.right-sidebar,.floating) :is(.panel,.subpanel,.list-item,.detail-box,.detail-panel,.empty-state,.workflow-copy-box) {
+  background:var(--ui-panel) !important;background-image:none !important;color:var(--ui-ink) !important;border-color:var(--ui-line) !important;box-shadow:none;
+}
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(.right-sidebar,.floating) :is(.subpanel,.list-item,.detail-box) {background:var(--ui-soft) !important;}
+/* The sidebar's scroll-shadow gradients keep their affordance but use the same solid pair. */
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell .right-sidebar .tab-panel {
+  background-color:var(--ui-paper);
+  background-image:linear-gradient(var(--ui-paper) 30%,rgba(0,0,0,0)),linear-gradient(rgba(0,0,0,0),var(--ui-paper) 70%),radial-gradient(farthest-side at 50% 0,rgba(0,0,0,.12),rgba(0,0,0,0)),radial-gradient(farthest-side at 50% 100%,rgba(0,0,0,.12),rgba(0,0,0,0));
+}
+/* Text on those surfaces. !important beats inline-style color, play.html #id rules and book-skin !important. */
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(.right-sidebar,.floating) :is(h1,h2,h3,h4,h5,h6,label,legend,summary,p,dt,dd,th,td) {color:var(--ui-ink) !important;text-shadow:none;}
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(.right-sidebar,.floating) :is(.muted,small,.hint,#mapScaleName) {color:var(--ui-muted) !important;}
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(#diceResult,#diceLog,.chat-roll-summary) {color:var(--ui-ink) !important;}
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(.chat-roll-breakdown,.chat-roll-hidden) {color:var(--ui-muted) !important;}
+/* Form fields: the book skin paints a light field background with !important, which left light
+   text on a light field. Bind color, background and border to the same dark pair. Color pickers,
+   checkboxes and radios keep their native rendering. */
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(input:not([type=color]):not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select) {
+  color:var(--ui-ink) !important;background-color:var(--ui-panel) !important;background-image:none !important;border-color:var(--ui-line) !important;
+}
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(input,textarea)::placeholder {color:var(--ui-muted) !important;opacity:1;}
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell select option {color:var(--ui-ink);background-color:var(--ui-panel);}
+/* Plum / selected / danger controls: light text on the painted plum at rest, hover, focus and active. */
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(.tool-btn,.sidebar-tab):is(.active,:hover,:focus-visible) {color:#fdfaf3 !important;}
+html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(button,.mini-control,button.secondary,button.danger):is(:hover,:focus-visible) {color:#fdfaf3;}
