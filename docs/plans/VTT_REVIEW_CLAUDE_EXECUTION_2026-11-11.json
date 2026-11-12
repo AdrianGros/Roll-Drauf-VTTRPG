@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
   "status": "execution_started",
-  "phase": "deploy_C01",
+  "phase": "deploy_review_C01_C03",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -20,12 +20,18 @@
     "extra_usage_setting_verified": true,
     "api_fallback_authorized": false,
     "automatic_extra_usage_authorized": false,
-    "model": "sonnet for subsequent implementation; current C01 Opus session retained",
+    "model": "sonnet (explicit for subsequent implementation and independent review; original C01 used configured Opus)",
     "default_concurrent_implementers": 1,
     "maximum_disjoint_implementers": 2,
     "nested_agents": false,
     "extra_usage_enabled": false,
-    "model_policy_reason": "Subscription quota conservation after optional preference window; extra usage disabled"
+    "model_policy_reason": "Subscription quota conservation after optional preference window; extra usage disabled",
+    "latest_quota_probe": {
+      "date": "2026-11-12T06:50:40Z",
+      "five_hour_percent": 12,
+      "seven_day_percent": 84,
+      "extra_usage_enabled": false
+    }
   },
   "roles": {
     "implementation": [
@@ -65,7 +71,7 @@
     {
       "id": "C01",
       "title": "Darstellung, UI-Sprache und Buchnavigation",
-      "status": "running",
+      "status": "review_running",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -110,7 +116,10 @@
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
-      "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md"
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
+      "candidate_commit": "32bade3f291a4957f8d9713317f9e377bd154fbe",
+      "review_model": "sonnet",
+      "known_gap": "Five focused browser checks rerunning after test harness corrections; no live delivery"
     },
     {
       "id": "C02",
@@ -149,7 +158,7 @@
     {
       "id": "C03",
       "title": "Absolute sechs Stunden pro Anmeldung",
-      "status": "running",
+      "status": "review_running",
       "implementer": "vtt-domain-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -180,13 +189,16 @@
         "Refresh verlängert nicht über sechs Stunden",
         "Regelwerk-Zugriff verursacht keinen eigenen Logout"
       ],
-      "execution_session_id": "pending CLI result",
+      "execution_session_id": "fa80e28c-3a14-4654-a725-368f6bbe24f7",
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C03_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C03_2026-11-11.md",
-      "execution_model": "sonnet"
+      "execution_model": "sonnet",
+      "candidate_commit": "ec5727312712fd06d5269e8ec1cab6405a4b081d",
+      "review_model": "sonnet",
+      "known_gap": "Worker stopped on subscription 429; independent review resumed after reset; live/browser acceptance outstanding"
     },
     {
       "id": "C04",
@@ -268,7 +280,7 @@
         "R03",
         "R04"
       ],
-      "next_phase": "apply",
+      "next_phase": "deploy",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -283,7 +295,8 @@
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
-      "discovery": "docs/DADM_DISCOVER_CLAUDE_C06_2026-11-11.md"
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C06_2026-11-11.md",
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C06_2026-11-11.md"
     },
     {
       "id": "C07",
@@ -299,7 +312,7 @@
         "R05",
         "R06"
       ],
-      "next_phase": "discover",
+      "next_phase": "deploy",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -313,7 +326,9 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C07_2026-11-11.md",
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C07_2026-11-11.md"
     },
     {
       "id": "C08",
@@ -429,5 +444,5 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "Finish active C01/C03 Claude work, integrate after exact diff review and targeted checks, then live verify before marking slices delivered."
+  "next_step": "Finish C01 focused browser checks and independent Claude reviews for C01/C03; bounded rework, integration and live verification before dependent C02/C04. Continue remaining task contracts."
 }

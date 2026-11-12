@@ -105,3 +105,8 @@ beide Darstellungen und 390 px prüfen. Migrations-Handoff nur neue Kalender-/
 Pollmodelle, Schemaabbild prüfen und vorher DB-Dump. Altes Image kann zusätzliche
 Tabellen ignorieren; vorhandene GameSessions bleiben der Rückweg. Exakten
 Dateibesitz, Quellencommit, Prüfnachweise und getrennten Claude-Review vor Deploy.
+
+Primärquellen am 2026-11-12 geprüft: [Python ZoneInfo](https://docs.python.org/3/library/zoneinfo.html)
+für IANA-Zonen und fold; [SQLAlchemy FOR UPDATE](https://docs.sqlalchemy.org/en/20/core/selectable.html#sqlalchemy.sql.expression.Select.with_for_update)
+für zeilenbezogene Writer-Locks. Konkrete Projektions-/Materialisierungsgrenzen
+sind Repo-Entscheidungen aus Discover, keine Zusage eines externen Kalenders.

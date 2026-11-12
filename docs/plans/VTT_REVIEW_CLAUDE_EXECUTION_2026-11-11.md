@@ -1,6 +1,6 @@
 # Verbindlicher Ausführungsplan – VTT-Reviews mit Claude Code
 
-Status: **Umsetzung autorisiert und begonnen; C00 abgeschlossen, Claude C01 läuft**.
+Status: **Umsetzung läuft; C01/C03 als Quellen-Checkpoints gesichert, unabhängige Claude-Reviews laufen. Noch keine Live-Lieferung dieser beiden Pakete.**.
 Auftrag: neue Protokolle aufnehmen und Claude-Agenten fest für die Umsetzung
 verwenden, weil bereits ein Claude-Abo vorhanden ist. Aufbewahrung: dauerhaft.
 Grundlage: [Discover/Kategorisierung](../DADM_DISCOVER_VTT_REVIEWS_2026-11-11.md),
@@ -17,9 +17,10 @@ Claude Code `2.1.312` ist vorhanden, mit `claude.ai`/First Party/Pro angemeldet.
 Die drei geprüften API-/Auth-Token-Umgebungsvariablen sind nicht gesetzt. Deshalb
 wird die vorhandene Abo-Anmeldung als Ausführungsweg festgelegt. Vor jedem Lauf
 Auth-Methode erneut prüfen; keine API-, Provider- oder automatische Extra-Usage-
-Ausweichlösung. Abo-Limits führen zu einem dokumentierten Checkpoint. Restkontingent
-und kontoseitig aktivierte Extra-Usage sind noch zu prüfen; der Loginstatus beweist
-weder freies Kontingent noch eine harte Ausgabengrenze.
+Ausweichlösung. Abo-Limits führen zu einem dokumentierten Checkpoint. Kontingent wird vor Läufen read-only geprüft; Extra Usage ist ausgeschaltet.
+Ein 429 am 2026-11-11 wurde als unvollständiger Checkpoint erhalten. Am
+2026-11-12 nach dem Reset wieder 12 %/84 % (fünf Stunden/Woche) ausgelastet.
+Der Loginstatus alleine beweist kein freies Kontingent.
 
 | Verantwortung | Ausführender | Feste Aufgabe |
 | --- | --- | --- |
@@ -32,8 +33,10 @@ weder freies Kontingent noch eine harte Ausgabengrenze.
 | Gemeinsame fachliche Endabnahme | Owner + DM/Player | Ein zusammenhängender Testlauf mit Checkliste; menschlichen Spieltest nicht durch Agentprüfung ersetzen. |
 
 Die vier nativen Definitionen liegen unter `.claude/agents/`; `CLAUDE.md` verweist
-auf die bestehenden `AGENTS.md`- und DAD-M-Regeln. Modelle erben die vorhandene
-Claude-Sitzung (`model: inherit`); keine ungefragte Modell-/Tarifumstellung.
+auf die bestehenden `AGENTS.md`- und DAD-M-Regeln. Die Agentdefinitionen erben ohne CLI-Override das konfigurierte Modell. Nach
+der angekündigten Kontingentschonung laufen folgende Aufträge explizit mit
+Sonnet im vorhandenen Abo; der ursprüngliche C01-Lauf nutzte Opus. Kein Tarif-,
+Provider- oder Extra-Usage-Wechsel.
 Implementierer erhalten Read/Grep/Glob/Edit/Write, Reviewer nur Read/Grep/Glob.
 Kein Bash-/MCP-/Agent-Werkzeug in diesen Rollen: keine eigene Verschachtelung,
 Commit-/Deploymentbefehle oder Kontakte nach außen. Tests und Git übernimmt die
