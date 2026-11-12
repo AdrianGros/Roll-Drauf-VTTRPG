@@ -54,6 +54,17 @@ html[data-vtt-theme=night] :is(.book-spread-page-copy,.book-scene-panel-copy,.bo
 html[data-vtt-theme=night] :is(.book-dashboard-ribbon-btn.is-active,.book-dashboard-ribbon-btn[aria-current=page],.vtt-map-nav .book-dashboard-ribbon-btn.is-active) {background:var(--ui-action-bg);color:var(--ui-action-text);border-color:var(--ui-line);}
 html[data-vtt-theme=night] :is(.play-launch-status.is-error,.book-form-banner.is-error) {color:var(--ui-danger);border-color:var(--ui-danger);}
 html[data-vtt-theme=night] .book-form-banner.is-success {color:var(--ui-success);}
+/* Campaign hub and required session-preparation surface (night only; paper keeps the page's own
+   rules). The page paints light text over translucent gradients; night binds these surfaces to
+   solid semantic tokens so no light gradient stays behind text. */
+html[data-vtt-theme=night] #book-dashboard-scene :is(.hub-hero,.session-prep-surface,.session-prep-hero) {background:var(--ui-panel) !important;background-image:none !important;border-color:var(--ui-line) !important;box-shadow:none;color:var(--ui-ink) !important;}
+html[data-vtt-theme=night] #book-dashboard-scene :is(.hub-primary,.hub-card,.hub-stat,.hub-step,.hub-map-item,.hub-callout,.hub-session-note,.hub-surface-link,.hub-quickstart,.session-prep-next,.session-prep-card,.hub-badge,.hub-pill) {background:var(--ui-soft) !important;background-image:none !important;border-color:var(--ui-line) !important;box-shadow:none;color:var(--ui-ink) !important;}
+html[data-vtt-theme=night] #book-dashboard-scene :is(.hub-identity h2,.hub-next-title,.hub-stat-value,.hub-step-title,.hub-map-title,.hub-surface-link-title,.session-prep-title,.session-prep-next-title,.session-prep-card-title,.hub-badge strong,.hub-card :is(h3,h4),.session-prep-surface :is(h3,h4)) {color:var(--ui-ink) !important;}
+html[data-vtt-theme=night] #book-dashboard-scene :is(.hub-eyebrow,.hub-summary,.hub-next-label,.hub-next-hint,.hub-stat-label,.hub-step-desc,.hub-map-meta,.hub-session-meta,.hub-surface-link-copy,.session-prep-copy,.session-prep-next-label,.session-prep-next-copy,.session-prep-card-copy) {color:var(--ui-muted) !important;}
+html[data-vtt-theme=night] #book-dashboard-scene .hub-step-state {background:var(--ui-panel) !important;background-image:none !important;}
+html[data-vtt-theme=night] #book-dashboard-scene .hub-step-state.state-done {color:var(--ui-success) !important;border-color:var(--ui-success) !important;}
+html[data-vtt-theme=night] #book-dashboard-scene .hub-step-state.state-todo {color:var(--ui-warning) !important;border-color:var(--ui-warning) !important;}
+html[data-vtt-theme=night] #book-dashboard-scene .hub-step-state.state-live {color:var(--ui-accent) !important;border-color:var(--ui-accent) !important;}
 html[data-vtt-theme] .play-launch-status-dot.is-live {color:var(--ui-success);}
 html[data-vtt-theme] .play-launch-status-dot.is-paused {color:var(--ui-warning);}
 .vtt-display-open {white-space:nowrap;min-height:40px;}

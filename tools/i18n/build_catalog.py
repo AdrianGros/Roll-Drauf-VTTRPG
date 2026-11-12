@@ -35,7 +35,15 @@ def compile_catalog(check=False):
                 raise ValueError('Placeholder mismatch at ' + str(i))
         messages[key] = {'source': source, 'de': de, 'en': en}
     extra_overrides = []
-    for source, row in json.loads((HERE / 'extra-messages.json').read_text()).items():
+    def reject_duplicate_sources(pairs):
+        seen = set()
+        for source, _row in pairs:
+            if source in seen:
+                raise ValueError('Duplicate extra source (a later entry would silently win): ' + source)
+            seen.add(source)
+        return dict(pairs)
+    extra_rows = json.loads((HERE / 'extra-messages.json').read_text(), object_pairs_hook=reject_duplicate_sources)
+    for source, row in extra_rows.items():
         if not isinstance(source, str) or not source.strip() or not isinstance(row, dict):
             raise ValueError('Invalid extra message')
         if set(row) != {'de', 'en'}:
