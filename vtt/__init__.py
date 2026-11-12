@@ -246,6 +246,7 @@ def create_app(config_name=None):
     from vtt.auth import auth_bp
     from vtt.campaigns import campaigns_bp
     from vtt.conversations import conversations_bp
+    from vtt.atlas import atlas_bp
     from vtt.characters import characters_bp
     from vtt.community import community_bp
     from vtt.ops import ops_bp
@@ -265,6 +266,7 @@ def create_app(config_name=None):
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(campaigns_bp, url_prefix='/api')
     app.register_blueprint(conversations_bp)
+    app.register_blueprint(atlas_bp)
     app.register_blueprint(characters_bp, url_prefix='/api')
     app.register_blueprint(community_bp, url_prefix='/api')
     app.register_blueprint(play_bp, url_prefix='/api/play')

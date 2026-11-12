@@ -1,0 +1,7 @@
+# Apply C09 addendum – restore identity and retained-byte budget
+
+Status complete, immutable; bounded rework before delivery. Self-review found that restoring a user-edited backup over an existing publication could reuse its UUID for different pixels. This conflicts with immutable reader versions even though Owner authorization remains intact. Resolve before release: preserve world/map/place IDs and graph links, but always mint a NEW publication UUID on restore. Old version asset URLs return404. The imported version UUID is validated as interchange metadata and never becomes authority or overwrites another world's publication. No grants imported. Add an explicit same-world modified-backup regression case.
+
+Retain64KiB headroom inside the stated64MiB world cap for bounded backup wrapper/IDs; map/place limits unchanged. Preserve reviewed full attribution paragraphs without personal document-title header in attached/edited map credits, and continue PNG reencoding. This prevents source title metadata from entering Reader assets; it does not classify intentionally published pixels/lore.
+
+Atlas editor pagehide clears canvas/document/history and remaining private DOM, pageshow reloads and reauthorizes. Lease renewal response started before a completed save must not mistake that save's new revision for another author's change. These are lifecycle/contract fixes, not a new renderer or authority path. Re-run browser/targeted API validation, then Deploy with four additive tables and live evidence.

@@ -18,6 +18,7 @@ import { attachInput } from "./tools.js";
 import { UI } from "./ui.js";
 import { zipFiles } from "./zip.js";
 import { Library } from "./library.js";
+import { AtlasLibrary } from "./atlas-bridge.js";
 import { LandmassDialog } from "./landmass-dialog.js";
 
 const KIND_NAMES = { raster: globalThis.VTTUi("Malebene"), paths: globalThis.VTTUi("Wegeebene"), stamps: globalThis.VTTUi("Symbolebene"), labels: globalThis.VTTUi("Beschriftungsebene"), tiles: globalThis.VTTUi("Kachelebene") };
@@ -71,7 +72,7 @@ class Editor {
         this.generation = 0;
         this.fileGeneration = 0;
         this.ui = new UI(this);
-        this.library = new Library(this);
+        this.library = new URLSearchParams(location.search).has("atlas_world") ? new AtlasLibrary(this) : new Library(this);
         this.mapOpened = false;
     }
 
@@ -110,6 +111,7 @@ class Editor {
         });
 
         await this.library.initialize();
+        if (this.library.atlas) { this.ui.ready(); return; }
         let draft = null;
         try {
             if (this.drafts) draft = await this.drafts.load();
@@ -1541,6 +1543,6 @@ function exposeApi(editor, ready) {
 const editor = new Editor();
 const ready = editor.init().catch((error) => {
     editor.ui.fatal(error);
-    throw error;
+    if (!(editor.library.atlas && error.status)) throw error;
 });
 exposeApi(editor, ready);

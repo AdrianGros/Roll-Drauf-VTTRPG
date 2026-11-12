@@ -1,0 +1,36 @@
+{
+  "status": "targeted_local_pass_live_pending",
+  "api_and_browser": {
+    "passed": 11,
+    "log": "/tmp/vtt-c09-final.log",
+    "api": 10,
+    "browser": 1,
+    "journey": "Two authors + Firefox390 EN/night Reader; three map copies; hierarchy/cross-map links; explicit publication; actual existing editor lease conflict, landmass/Undo/Redo/save; private source and old reader pixels unchanged; new publication; ZIP download; revoke clears Reader; no pageerrors"
+  },
+  "postgres": {
+    "passed": 2,
+    "logs": [
+      "/tmp/vtt-c09-pg.log (first case pass; quota fixture corrected)",
+      "/tmp/vtt-c09-quota.log"
+    ],
+    "scope": "Guarded disposable PostgreSQL16 schema; simultaneous author CAS, map lease, fresh revoke and shared owner quota across two worlds"
+  },
+  "authored_UI": {
+    "literal_calls": 73,
+    "helper_and_conditional_sources": 85,
+    "missing": 0,
+    "evidence": "/tmp/vtt-c09-js.log and /tmp/vtt-c09-i18n-audit.log"
+  },
+  "main_header": {
+    "passed": 3,
+    "log": "/tmp/vtt-c09-header-final.log",
+    "cases": [
+      "390 DE paper",
+      "390 EN night",
+      "1440 DE paper"
+    ],
+    "actual_import_chooser_and_export_dialog": true
+  },
+  "review": "Codex structured self-review, no independent review claimed",
+  "live": "PENDING"
+}

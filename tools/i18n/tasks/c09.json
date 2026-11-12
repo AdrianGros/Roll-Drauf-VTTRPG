@@ -1,0 +1,498 @@
+{
+  "Atlas": {
+    "de": "Atlas",
+    "en": "Atlas"
+  },
+  "Atlas-Anfrage fehlgeschlagen. Bitte erneut versuchen.": {
+    "de": "Atlas-Anfrage fehlgeschlagen. Bitte erneut versuchen.",
+    "en": "Atlas request failed. Please try again."
+  },
+  "Die Sicherung ist größer als 64 MiB.": {
+    "de": "Die Sicherung ist größer als 64 MiB.",
+    "en": "The backup exceeds 64 MiB."
+  },
+  "Orte suchen": {
+    "de": "Orte suchen",
+    "en": "Search places"
+  },
+  "Kartenansicht": {
+    "de": "Kartenansicht",
+    "en": "Map view"
+  },
+  "Verknüpfte Orte": {
+    "de": "Verknüpfte Orte",
+    "en": "Linked places"
+  },
+  "Kein physischer Maßstab festgelegt.": {
+    "de": "Kein physischer Maßstab festgelegt.",
+    "en": "No physical scale set."
+  },
+  "{distance} km pro Kartenpixel.": {
+    "de": "{distance} km pro Kartenpixel.",
+    "en": "{distance} km per map pixel."
+  },
+  "Diese Welt hat noch keine veröffentlichte Karte.": {
+    "de": "Diese Welt hat noch keine veröffentlichte Karte.",
+    "en": "This world has no published map yet."
+  },
+  "Der Zugriff auf diese Welt ist nicht verfügbar.": {
+    "de": "Der Zugriff auf diese Welt ist nicht verfügbar.",
+    "en": "Access to this world is unavailable."
+  },
+  "Verbindung unterbrochen. Erneute Prüfung folgt.": {
+    "de": "Verbindung unterbrochen. Erneute Prüfung folgt.",
+    "en": "Connection interrupted. Access will be checked again."
+  },
+  "Alle Welten": {
+    "de": "Alle Welten",
+    "en": "All worlds"
+  },
+  "Eigene Welten und ausdrücklich mit dir geteilte Leserfassungen.": {
+    "de": "Eigene Welten und ausdrücklich mit dir geteilte Leserfassungen.",
+    "en": "Your worlds and reader editions explicitly shared with you."
+  },
+  "Neue Welt": {
+    "de": "Neue Welt",
+    "en": "New world"
+  },
+  "Welt anlegen": {
+    "de": "Welt anlegen",
+    "en": "Create world"
+  },
+  "Sicherung importieren (JSON oder ZIP)": {
+    "de": "Sicherung importieren (JSON oder ZIP)",
+    "en": "Import backup (JSON or ZIP)"
+  },
+  "Weitere Welten": {
+    "de": "Weitere Welten",
+    "en": "More worlds"
+  },
+  "Noch nicht veröffentlicht": {
+    "de": "Noch nicht veröffentlicht",
+    "en": "Not published yet"
+  },
+  "Besitzer": {
+    "de": "Besitzer",
+    "en": "Owner"
+  },
+  "Autor": {
+    "de": "Autor",
+    "en": "Editor"
+  },
+  "Leser": {
+    "de": "Leser",
+    "en": "Reader"
+  },
+  "Atlas wird gespeichert …": {
+    "de": "Atlas wird gespeichert …",
+    "en": "Saving Atlas …"
+  },
+  "Gespeichert.": {
+    "de": "Gespeichert.",
+    "en": "Saved."
+  },
+  "Atlas speichern": {
+    "de": "Atlas speichern",
+    "en": "Save Atlas"
+  },
+  "Aktuellen Stand laden": {
+    "de": "Aktuellen Stand laden",
+    "en": "Load current version"
+  },
+  "Ungespeicherte Eingaben verwerfen und den aktuellen Stand laden?": {
+    "de": "Ungespeicherte Eingaben verwerfen und den aktuellen Stand laden?",
+    "en": "Discard unsaved entries and load the current version?"
+  },
+  "Leservorschau": {
+    "de": "Leservorschau",
+    "en": "Reader preview"
+  },
+  "JSON-Sicherung": {
+    "de": "JSON-Sicherung",
+    "en": "JSON backup"
+  },
+  "ZIP-Sicherung": {
+    "de": "ZIP-Sicherung",
+    "en": "ZIP backup"
+  },
+  "Eigene Welt aus Sicherung wiederherstellen": {
+    "de": "Eigene Welt aus Sicherung wiederherstellen",
+    "en": "Restore your world from backup"
+  },
+  "Diese eigene Welt durch die Sicherung ersetzen? Freigaben bleiben erhalten.": {
+    "de": "Diese eigene Welt durch die Sicherung ersetzen? Freigaben bleiben erhalten.",
+    "en": "Replace this world with the backup? Existing grants are preserved."
+  },
+  "Welt löschen": {
+    "de": "Welt löschen",
+    "en": "Delete world"
+  },
+  "Diese Welt und ihre Atlaskarten dauerhaft löschen? Sichere sie bei Bedarf zuerst.": {
+    "de": "Diese Welt und ihre Atlaskarten dauerhaft löschen? Sichere sie bei Bedarf zuerst.",
+    "en": "Permanently delete this world and its Atlas maps? Back it up first if needed."
+  },
+  "Weltname": {
+    "de": "Weltname",
+    "en": "World name"
+  },
+  "Öffentliche Beschreibung": {
+    "de": "Öffentliche Beschreibung",
+    "en": "Public description"
+  },
+  "Private Welt-Lore": {
+    "de": "Private Welt-Lore",
+    "en": "Private world lore"
+  },
+  "Ort auswählen": {
+    "de": "Ort auswählen",
+    "en": "Select place"
+  },
+  "Ort anlegen": {
+    "de": "Ort anlegen",
+    "en": "Create place"
+  },
+  "Ortsname": {
+    "de": "Ortsname",
+    "en": "Place name"
+  },
+  "Übergeordneter Ort": {
+    "de": "Übergeordneter Ort",
+    "en": "Parent place"
+  },
+  "Kein übergeordneter Ort": {
+    "de": "Kein übergeordneter Ort",
+    "en": "No parent place"
+  },
+  "Ortskarte": {
+    "de": "Ortskarte",
+    "en": "Place map"
+  },
+  "Ort ohne Karte": {
+    "de": "Ort ohne Karte",
+    "en": "Place without a map"
+  },
+  "X (Kartenpixel)": {
+    "de": "X (Kartenpixel)",
+    "en": "X (map pixels)"
+  },
+  "Y (Kartenpixel)": {
+    "de": "Y (Kartenpixel)",
+    "en": "Y (map pixels)"
+  },
+  "Veröffentlichbare Orts-Lore": {
+    "de": "Veröffentlichbare Orts-Lore",
+    "en": "Publishable place lore"
+  },
+  "Private Orts-Lore": {
+    "de": "Private Orts-Lore",
+    "en": "Private place lore"
+  },
+  "Ort für Leser sichtbar": {
+    "de": "Ort für Leser sichtbar",
+    "en": "Place visible to readers"
+  },
+  "Ort entfernen": {
+    "de": "Ort entfernen",
+    "en": "Remove place"
+  },
+  "Löse zuerst übergeordnete Ortsverweise und Verknüpfungen.": {
+    "de": "Löse zuerst übergeordnete Ortsverweise und Verknüpfungen.",
+    "en": "Remove parent references and links first."
+  },
+  "Stabiler Ortslink": {
+    "de": "Stabiler Ortslink",
+    "en": "Stable place link"
+  },
+  "Eine Welt kann ohne Karte angelegt und genutzt werden.": {
+    "de": "Eine Welt kann ohne Karte angelegt und genutzt werden.",
+    "en": "A world can be created and used without a map."
+  },
+  "Karte für Leser sichtbar": {
+    "de": "Karte für Leser sichtbar",
+    "en": "Map visible to readers"
+  },
+  "Kilometer pro Kartenpixel": {
+    "de": "Kilometer pro Kartenpixel",
+    "en": "Kilometres per map pixel"
+  },
+  "Für Ortskoordinaten zuerst einen Ort auswählen und auf die Karte klicken.": {
+    "de": "Für Ortskoordinaten zuerst einen Ort auswählen und auf die Karte klicken.",
+    "en": "To set coordinates, select a place and click the map."
+  },
+  "Im Karteneditor bearbeiten": {
+    "de": "Im Karteneditor bearbeiten",
+    "en": "Edit in map editor"
+  },
+  "Karte aus Atlas entfernen": {
+    "de": "Karte aus Atlas entfernen",
+    "en": "Remove map from Atlas"
+  },
+  "Bitte zuerst die Atlas-Eingaben speichern.": {
+    "de": "Bitte zuerst die Atlas-Eingaben speichern.",
+    "en": "Please save your Atlas entries first."
+  },
+  "Eigene Kartenbibliothek": {
+    "de": "Eigene Kartenbibliothek",
+    "en": "Your map library"
+  },
+  "Bibliothek laden": {
+    "de": "Bibliothek laden",
+    "en": "Load library"
+  },
+  "Weitere Bibliothekskarten": {
+    "de": "Weitere Bibliothekskarten",
+    "en": "More library maps"
+  },
+  "Bibliothekskarte als Kopie übernehmen": {
+    "de": "Bibliothekskarte als Kopie übernehmen",
+    "en": "Copy library map into Atlas"
+  },
+  "Bitte eine Bibliothekskarte auswählen.": {
+    "de": "Bitte eine Bibliothekskarte auswählen.",
+    "en": "Please select a library map."
+  },
+  "Kartenkopie übernehmen": {
+    "de": "Kartenkopie übernehmen",
+    "en": "Attach map copy"
+  },
+  "Diese Kopie bleibt zunächst privat. Das persönliche Original bleibt unabhängig.": {
+    "de": "Diese Kopie bleibt zunächst privat. Das persönliche Original bleibt unabhängig.",
+    "en": "This copy remains private initially. Your personal original stays independent."
+  },
+  "Kopie in Atlas übernehmen": {
+    "de": "Kopie in Atlas übernehmen",
+    "en": "Attach copy to Atlas"
+  },
+  "Neue Karte in der Kartenwerkstatt anlegen": {
+    "de": "Neue Karte in der Kartenwerkstatt anlegen",
+    "en": "Create a new map in the map workshop"
+  },
+  "Alle sichtbaren Kartenpixel und angezeigten Ortsinformationen für die eingeladenen Leser freigeben.": {
+    "de": "Alle sichtbaren Kartenpixel und angezeigten Ortsinformationen für die eingeladenen Leser freigeben.",
+    "en": "Share all visible map pixels and displayed place information with invited readers."
+  },
+  "Leserfassung veröffentlichen": {
+    "de": "Leserfassung veröffentlichen",
+    "en": "Publish reader edition"
+  },
+  "Bitte die sichtbaren Kartenbilder ausdrücklich freigeben.": {
+    "de": "Bitte die sichtbaren Kartenbilder ausdrücklich freigeben.",
+    "en": "Please explicitly approve sharing the visible map images."
+  },
+  "Persönliche Freigaben": {
+    "de": "Persönliche Freigaben",
+    "en": "Personal grants"
+  },
+  "Nur diese ausdrücklich eingeladenen VTT-Konten erhalten Zugriff.": {
+    "de": "Nur diese ausdrücklich eingeladenen VTT-Konten erhalten Zugriff.",
+    "en": "Only these explicitly invited VTT accounts receive access."
+  },
+  "VTT-Benutzername": {
+    "de": "VTT-Benutzername",
+    "en": "VTT username"
+  },
+  "Weltrolle": {
+    "de": "Weltrolle",
+    "en": "World role"
+  },
+  "Zugriff entfernen": {
+    "de": "Zugriff entfernen",
+    "en": "Remove access"
+  },
+  "Zurück zum Atlas": {
+    "de": "Zurück zum Atlas",
+    "en": "Back to Atlas"
+  },
+  "Atlas-Karte speichern": {
+    "de": "Atlas-Karte speichern",
+    "en": "Save Atlas map"
+  },
+  "Atlaskarte gespeichert.": {
+    "de": "Atlaskarte gespeichert.",
+    "en": "Atlas map saved."
+  },
+  "Atlas: Änderungen offen.": {
+    "de": "Atlas: Änderungen offen.",
+    "en": "Atlas: unsaved changes."
+  },
+  "Atlas – private Bearbeitung": {
+    "de": "Atlas – private Bearbeitung",
+    "en": "Atlas – private editing"
+  },
+  "Die lokale Karte kann weiterhin als Datei gesichert werden.": {
+    "de": "Die lokale Karte kann weiterhin als Datei gesichert werden.",
+    "en": "You can still save the local map as a file."
+  },
+  "Kartenwechsel und Freigaben erfolgen im Atlas.": {
+    "de": "Kartenwechsel und Freigaben erfolgen im Atlas.",
+    "en": "Switch maps and manage grants in Atlas."
+  },
+  "Die Karte wurde inzwischen geändert.": {
+    "de": "Die Karte wurde inzwischen geändert.",
+    "en": "The map has changed in the meantime."
+  },
+  "Ungültige Atlas-Daten.": {
+    "de": "Ungültige Atlas-Daten.",
+    "en": "Invalid Atlas data."
+  },
+  "Ungültige Atlas-Kennung.": {
+    "de": "Ungültige Atlas-Kennung.",
+    "en": "Invalid Atlas identifier."
+  },
+  "Ungültiger Text.": {
+    "de": "Ungültiger Text.",
+    "en": "Invalid text."
+  },
+  "Die Kartenliste hat sich geändert. Bitte den Atlas neu laden.": {
+    "de": "Die Kartenliste hat sich geändert. Bitte den Atlas neu laden.",
+    "en": "The map list has changed. Please reload Atlas."
+  },
+  "Orte dürfen keinen Hierarchiekreis bilden.": {
+    "de": "Orte dürfen keinen Hierarchiekreis bilden.",
+    "en": "Places must not form a hierarchy cycle."
+  },
+  "Der Atlastext ist zu groß.": {
+    "de": "Der Atlastext ist zu groß.",
+    "en": "The Atlas text is too large."
+  },
+  "Ungültiges Kartenbild.": {
+    "de": "Ungültiges Kartenbild.",
+    "en": "Invalid map image."
+  },
+  "Diese Atlaskarte ist größer als 16 MiB.": {
+    "de": "Diese Atlaskarte ist größer als 16 MiB.",
+    "en": "This Atlas map exceeds 16 MiB."
+  },
+  "Ein sichtbarer Ort hat einen privaten übergeordneten Ort.": {
+    "de": "Ein sichtbarer Ort hat einen privaten übergeordneten Ort.",
+    "en": "A visible place has a private parent place."
+  },
+  "Ein sichtbarer Ort verweist auf eine private Karte.": {
+    "de": "Ein sichtbarer Ort verweist auf eine private Karte.",
+    "en": "A visible place refers to a private map."
+  },
+  "Die ZIP-Sicherung muss genau atlas.json enthalten.": {
+    "de": "Die ZIP-Sicherung muss genau atlas.json enthalten.",
+    "en": "The ZIP backup must contain exactly atlas.json."
+  },
+  "Die entpackte Sicherung ist zu groß.": {
+    "de": "Die entpackte Sicherung ist zu groß.",
+    "en": "The uncompressed backup is too large."
+  },
+  "Ungültige Atlas-Sicherung.": {
+    "de": "Ungültige Atlas-Sicherung.",
+    "en": "Invalid Atlas backup."
+  },
+  "Die Anfrage ist zu groß.": {
+    "de": "Die Anfrage ist zu groß.",
+    "en": "The request is too large."
+  },
+  "JSON-Objekt erwartet.": {
+    "de": "JSON-Objekt erwartet.",
+    "en": "A JSON object is required."
+  },
+  "Der Speicheranbieter ist nicht verfügbar.": {
+    "de": "Der Speicheranbieter ist nicht verfügbar.",
+    "en": "The storage provider is unavailable."
+  },
+  "Die gespeicherte Karte ist momentan nicht erreichbar.": {
+    "de": "Die gespeicherte Karte ist momentan nicht erreichbar.",
+    "en": "The saved map is currently unavailable."
+  },
+  "Der Atlas konnte nicht gespeichert werden.": {
+    "de": "Der Atlas konnte nicht gespeichert werden.",
+    "en": "Atlas could not be saved."
+  },
+  "Welt nicht gefunden.": {
+    "de": "Welt nicht gefunden.",
+    "en": "World not found."
+  },
+  "Der Atlas wurde inzwischen geändert. Sichere deine Eingaben und lade den aktuellen Stand.": {
+    "de": "Der Atlas wurde inzwischen geändert. Sichere deine Eingaben und lade den aktuellen Stand.",
+    "en": "Atlas has changed in the meantime. Save your entries and load the current version."
+  },
+  "Der Atlas überschreitet 64 MiB. Sichere oder verkleinere ihn.": {
+    "de": "Der Atlas überschreitet 64 MiB. Sichere oder verkleinere ihn.",
+    "en": "Atlas exceeds 64 MiB. Back it up or reduce its size."
+  },
+  "Karte nicht gefunden.": {
+    "de": "Karte nicht gefunden.",
+    "en": "Map not found."
+  },
+  "Höchstens 20 eigene Welten erlaubt.": {
+    "de": "Höchstens 20 eigene Welten erlaubt.",
+    "en": "You can own at most 20 worlds."
+  },
+  "Konto nicht gefunden.": {
+    "de": "Konto nicht gefunden.",
+    "en": "Account not found."
+  },
+  "Der Weltbesitzer bleibt Besitzer.": {
+    "de": "Der Weltbesitzer bleibt Besitzer.",
+    "en": "The world owner remains the owner."
+  },
+  "Höchstens 32 Freigaben erlaubt.": {
+    "de": "Höchstens 32 Freigaben erlaubt.",
+    "en": "At most 32 grants are allowed."
+  },
+  "Höchstens zwölf Karten pro Welt erlaubt.": {
+    "de": "Höchstens zwölf Karten pro Welt erlaubt.",
+    "en": "At most twelve maps are allowed per world."
+  },
+  "Eigene Bibliothekskarte nicht gefunden.": {
+    "de": "Eigene Bibliothekskarte nicht gefunden.",
+    "en": "Your library map was not found."
+  },
+  "Die Bibliothekskarte hat sich geändert. Vorschau neu öffnen.": {
+    "de": "Die Bibliothekskarte hat sich geändert. Vorschau neu öffnen.",
+    "en": "The library map has changed. Open a fresh preview."
+  },
+  "Diese Karte wird bereits in einem anderen Fenster bearbeitet. Später erneut öffnen.": {
+    "de": "Diese Karte wird bereits in einem anderen Fenster bearbeitet. Später erneut öffnen.",
+    "en": "This map is being edited in another window. Open it again later."
+  },
+  "Die Bearbeitungsfreigabe ist abgelaufen. Sichere die Datei und öffne die Karte neu.": {
+    "de": "Die Bearbeitungsfreigabe ist abgelaufen. Sichere die Datei und öffne die Karte neu.",
+    "en": "The editing lease expired. Save a file and reopen the map."
+  },
+  "Atlas-Kartengröße beim Bearbeiten beibehalten.": {
+    "de": "Atlas-Kartengröße beim Bearbeiten beibehalten.",
+    "en": "Keep the Atlas map dimensions when editing."
+  },
+  "Löse zuerst die Ortsverweise auf diese Karte.": {
+    "de": "Löse zuerst die Ortsverweise auf diese Karte.",
+    "en": "Remove place references to this map first."
+  },
+  "Die Karte wird gerade bearbeitet.": {
+    "de": "Die Karte wird gerade bearbeitet.",
+    "en": "The map is being edited."
+  },
+  "Diese Welt wurde noch nicht veröffentlicht.": {
+    "de": "Diese Welt wurde noch nicht veröffentlicht.",
+    "en": "This world has not been published yet."
+  },
+  "Für das Überschreiben ist die aktuelle Atlasrevision erforderlich.": {
+    "de": "Für das Überschreiben ist die aktuelle Atlasrevision erforderlich.",
+    "en": "The current Atlas revision is required to overwrite it."
+  },
+  "Eine Kartenkennung gehört bereits zu einer anderen Welt.": {
+    "de": "Eine Kartenkennung gehört bereits zu einer anderen Welt.",
+    "en": "A map identifier already belongs to another world."
+  },
+  "Die Veröffentlichungskennung ist bereits belegt.": {
+    "de": "Die Veröffentlichungskennung ist bereits belegt.",
+    "en": "The publication identifier is already in use."
+  },
+  "Der Atlas überschreitet 64 MiB.": {
+    "de": "Der Atlas überschreitet 64 MiB.",
+    "en": "Atlas exceeds 64 MiB."
+  },
+  "Bitte erneut anmelden.": {
+    "de": "Bitte erneut anmelden.",
+    "en": "Please sign in again."
+  },
+  "Zugriff speichern": {
+    "de": "Zugriff speichern",
+    "en": "Save access"
+  }
+}
