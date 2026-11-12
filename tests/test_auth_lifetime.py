@@ -97,11 +97,20 @@ def claims_of(token):
     return pyjwt.decode(token, options={"verify_signature": False})
 
 
+def _is_deletion(header):
+    return "Max-Age=0" in header or header.split(";", 1)[0].endswith("=")
+
+
 def cookie_from(response, name):
+    """The live (non-deleting) Set-Cookie for ``name``; legacy-path deletions are skipped."""
     for header in response.headers.getlist("Set-Cookie"):
-        if header.startswith(name + "="):
+        if header.startswith(name + "=") and not _is_deletion(header):
             return header
     return None
+
+
+def deletion_cookies(response, name):
+    return [h for h in response.headers.getlist("Set-Cookie") if h.startswith(name + "=") and _is_deletion(h)]
 
 
 def cookie_value(response, name):
@@ -793,3 +802,58 @@ def test_password_reset_and_logout_still_revoke_everything(app, client, user):
     _revoke_user_sessions(user.id)
     db.session.commit()
     assert all(row.revoked_at for row in Session.query.filter_by(user_id=user.id))
+
+
+# ------------------------------------------------------ cookie path policy
+
+
+def test_refresh_cookie_paths_and_legacy_deletions_on_login_and_logout(app, client, user):
+    app.config["JWT_COOKIE_CSRF_PROTECT"] = True
+    app.config["JWT_CSRF_IN_COOKIES"] = True
+    response = client.post("/api/auth/login", json={"username": "lifetime", "password": PASSWORD})
+    assert response.status_code == 200
+    refresh = cookie_from(response, "refresh_token_cookie")
+    csrf = cookie_from(response, "csrf_refresh_token")
+    assert "Path=/api/auth;" in refresh + ";" and "HttpOnly" in refresh
+    assert "Path=/;" in csrf + ";" and "HttpOnly" not in csrf
+    assert LIFE - 5 <= max_age(refresh) <= LIFE and LIFE - 5 <= max_age(csrf) <= LIFE
+    # both pre-C03 cookies at /api/auth/refresh are expired explicitly
+    for name in ("refresh_token_cookie", "csrf_refresh_token"):
+        deletions = deletion_cookies(response, name)
+        assert len(deletions) == 1 and "Path=/api/auth/refresh" in deletions[0]
+    # the JWT itself never appears in the body
+    assert cookie_value(response, "refresh_token_cookie") not in response.get_data(as_text=True)
+    app.config["JWT_COOKIE_CSRF_PROTECT"] = False  # logout itself is not under test for CSRF
+    out = client.post("/api/auth/logout")
+    for name in ("refresh_token_cookie", "csrf_refresh_token"):
+        paths = " ".join(deletion_cookies(out, name))
+        assert "Path=/api/auth/refresh" in paths
+
+
+def test_register_and_discord_paths_use_the_same_cookie_policy(app, client, monkeypatch):
+    response = client.post("/api/auth/register", json={
+        "username": "pathy", "email": "pathy@example.com", "password": PASSWORD})
+    assert response.status_code == 201
+    assert "Path=/api/auth;" in cookie_from(response, "refresh_token_cookie") + ";"
+    assert len(deletion_cookies(response, "refresh_token_cookie")) == 1
+    discord, _ = _discord_login(app.test_client(), app, monkeypatch, False)
+    assert "Path=/api/auth;" in cookie_from(discord, "refresh_token_cookie") + ";"
+    assert len(deletion_cookies(discord, "csrf_refresh_token")) == 1
+
+
+def test_legacy_migration_refresh_replaces_old_path_cookies(app, client, user, clock):
+    now = int(time.time())
+    clock.at(now)
+    use_cookies(client, refresh=mint(app, user.id, "refresh", with_claims=False, register=False,
+                                     iat=now - 60, exp=now + 86400))
+    response = client.post("/api/auth/refresh")
+    assert response.status_code == 200
+    assert "Path=/api/auth;" in cookie_from(response, "refresh_token_cookie") + ";"
+    assert len(deletion_cookies(response, "refresh_token_cookie")) == 1
+    # a plain new-style refresh only replaces the access cookie
+    fresh = app.test_client()
+    use_cookies(fresh, refresh=mint(app, user.id, "refresh", started=now))
+    again = fresh.post("/api/auth/refresh")
+    assert again.status_code == 200
+    assert cookie_from(again, "refresh_token_cookie") is None
+    assert deletion_cookies(again, "refresh_token_cookie") == []

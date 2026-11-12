@@ -230,9 +230,26 @@ def cookie_max_age(until) -> int:
     return max(1, int(until - now_ts()))
 
 
+def expire_legacy_refresh_cookies(response):
+    """Delete the pre-C03 refresh JWT/CSRF cookies (path /api/auth/refresh).
+
+    A cookie with the longer old path would otherwise be sent first and shadow
+    the new ones.  Name, domain, Secure and SameSite come from the JWT config.
+    """
+    config = current_app.config
+    old_path = config.get("LEGACY_REFRESH_COOKIE_PATH") or "/api/auth/refresh"
+    for name in (config.get("JWT_REFRESH_COOKIE_NAME", "refresh_token_cookie"),
+                 config.get("JWT_REFRESH_CSRF_COOKIE_NAME", "csrf_refresh_token")):
+        response.delete_cookie(name, path=old_path, domain=config.get("JWT_COOKIE_DOMAIN"),
+                               secure=config.get("JWT_COOKIE_SECURE", False),
+                               samesite=config.get("JWT_COOKIE_SAMESITE"))
+    return response
+
+
 def set_login_cookies(response, tokens: LoginTokens, *, refresh=True):
     max_age = cookie_max_age(tokens.until)
     set_access_cookies(response, tokens.access, max_age=max_age)
     if refresh and tokens.refresh:
         set_refresh_cookies(response, tokens.refresh, max_age=max_age)
+        expire_legacy_refresh_cookies(response)
     return response

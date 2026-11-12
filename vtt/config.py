@@ -81,9 +81,14 @@ class Config:
     JWT_COOKIE_CSRF_PROTECT = True
     JWT_CSRF_IN_COOKIES = True
     JWT_ACCESS_COOKIE_PATH = '/'
-    JWT_REFRESH_COOKIE_PATH = '/api/auth/refresh'
+    # C03: the refresh JWT must reach /api/auth/password/change (current-device
+    # check) -> HttpOnly cookie on /api/auth.  Its double-submit CSRF value is
+    # not a secret and must be readable by Auth.refreshAccessToken on normal pages.
+    JWT_REFRESH_COOKIE_PATH = '/api/auth'
     JWT_ACCESS_CSRF_COOKIE_PATH = '/'
-    JWT_REFRESH_CSRF_COOKIE_PATH = '/api/auth/refresh'
+    JWT_REFRESH_CSRF_COOKIE_PATH = '/'
+    # Pre-C03 location of both refresh cookies; expired explicitly on new logins/logout.
+    LEGACY_REFRESH_COOKIE_PATH = '/api/auth/refresh'
     JWT_SESSION_COOKIE = True
 
     # Discord OAuth2 / Bot-backed login

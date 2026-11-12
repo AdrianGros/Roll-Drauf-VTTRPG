@@ -621,6 +621,7 @@ def logout():
 
     response = jsonify({"success": True})
     unset_jwt_cookies(response)
+    lifetime.expire_legacy_refresh_cookies(response)
     return response, 200
 
 
