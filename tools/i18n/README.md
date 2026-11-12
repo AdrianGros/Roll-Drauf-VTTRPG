@@ -17,6 +17,13 @@ API diagnostic adapters in display-preferences.js use code/path contracts and ke
 user content separate. Future locales can move these bounded diagnostic messages
 into additional catalogs. UI DE/EN does not translate rulebooks (open input I04).
 
+An extra message may deliberately override an inventory entry with the same source;
+`build_catalog.py` then prints a `NOTE extra-messages override differs …` line to stderr
+(a different source hashing to the same key still fails). Name-bearing text uses
+placeholders (`VTTUi('Die Session "{name}" …', { name })`), never string concatenation.
+The rulebook scripts translate only their authored controls/status/headings; rule blocks,
+entity/document names, facet values and search excerpts stay source text.
+
 Eagle's 410 existing UI keys are pinned to upstream commit 518b2f9c… in
 `eagle-sources.json`; original EN plus our DE translation is compiled alongside
 VTT labels. `installEagle()` adapts the existing shim i18n API, not arbitrary DOM.

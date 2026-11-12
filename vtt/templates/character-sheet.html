@@ -2075,12 +2075,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (retry) retry.hidden = state !== 'error';
         }
 
+        // The book only becomes visible after the whole synchronous render succeeded; a
+        // throwing render must not leave a half-filled form behind the ready state.
+        let sheetRendered = false;
+        let sheetLoadSeq = 0;
         function renderSheet() {
             if (!sheet) return;
             document.body.dataset.sheetHasSrd = isSrdCharacter(sheet.character) ? 'true' : 'false';
             document.getElementById('sheetEmptyState').hidden = true;
-            setSheetLoadState('ready');
-            document.getElementById('sheetSpread').hidden = false;
             renderCore(sheet.character);
             renderIdentity(sheet.character);
             renderHomebrewOrigin(sheet.character);
@@ -2088,6 +2090,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             renderSpells(sheet.spells || []);
             renderEquipment(sheet.equipment || []);
             renderInventory(sheet.inventory || []);
+            sheetRendered = true;
+            document.getElementById('sheetSpread').hidden = false;
+            setSheetLoadState('ready');
         }
 
         async function loadSheet() {
@@ -2101,19 +2106,31 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
 
             // Later reloads (save, upload, retry after success) keep the current sheet visible.
-            const firstLoad = !sheet;
+            const firstLoad = !sheetRendered;
+            const seq = ++sheetLoadSeq;
             if (firstLoad) setSheetLoadState('loading');
             try {
                 delete document.body.dataset.sheetEmpty;
-                currentUser = await auth.requireAuth('/login.html');
+                const user = await auth.requireAuth('/login.html');
+                if (seq !== sheetLoadSeq) return; // superseded by a newer load
+                currentUser = user;
                 document.getElementById('sheetReaderBadge').textContent = currentUser?.username || globalThis.VTTUi("Sheet Focus");
                 const loaded = await auth.makeAuthRequest(`/api/characters/${characterId}/sheet`);
-                if (!loaded) return; // makeAuthRequest already redirected to login.
+                if (seq !== sheetLoadSeq) return; // a stale response must not overlay a newer one
+                if (!loaded) throw new Error(globalThis.VTTUi('Der Charakterbogen konnte nicht geladen werden.'));
                 sheet = loaded;
                 renderSheet();
             } catch (error) {
-                if (firstLoad) setSheetLoadState('error', error.message || '');
-                else showMessage(error.message || 'Failed to load character sheet', true);
+                if (seq !== sheetLoadSeq) return;
+                if (firstLoad) {
+                    // Non-JSON or render failure: show error + retry, never a partial old form.
+                    sheet = null;
+                    sheetRendered = false;
+                    document.getElementById('sheetSpread').hidden = true;
+                    setSheetLoadState('error', error instanceof SyntaxError ? '' : (error.message || ''));
+                } else {
+                    showMessage(error.message || 'Failed to load character sheet', true);
+                }
             }
         }
 

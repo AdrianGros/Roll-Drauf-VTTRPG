@@ -1952,41 +1952,41 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     return {
                         label: globalThis.VTTUi("Wartet auf Session"),
                         summary: globalThis.VTTUi("Die Kampagne ist sichtbar, aber noch gibt es keine freigegebene Session zum Betreten."),
-                        nextStep: "Warte auf die erste Session der Spielleitung oder nutze deinen Kampagnenkontext weiter von hier.",
+                        nextStep: globalThis.VTTUi("Warte auf die erste Session der Spielleitung oder nutze deinen Kampagnenkontext weiter von hier."),
                     };
                 }
                 if (phase?.tone === "scheduled" || phase?.tone === "ready") {
                     if (!hasAssignedCharacters) {
                         return {
                             label: globalThis.VTTUi("Charakter fehlt"),
-                            summary: `Die Session "${latestSession.name}" ist sichtbar, aber noch ohne zugewiesenen Charakterkontext.`,
-                            nextStep: "Verknuepfe zuerst einen kampagnengebundenen Helden in der Session-Prep-Fläche und warte dann auf den DM-Start.",
+                            summary: globalThis.VTTUi('Die Session "{name}" ist sichtbar, aber noch ohne zugewiesenen Charakterkontext.', { name: latestSession.name }),
+                            nextStep: globalThis.VTTUi("Verknuepfe zuerst einen kampagnengebundenen Helden in der Session-Prep-Fläche und warte dann auf den DM-Start."),
                         };
                     }
                     return {
                         label: globalThis.VTTUi("Bereit zum Start"),
-                        summary: `Die Session "${latestSession.name}" ist angelegt, aber noch nicht live freigegeben.`,
-                        nextStep: "Sobald die DM startet, wird derselbe Hub zur Eintrittsstelle in den Tisch.",
+                        summary: globalThis.VTTUi('Die Session "{name}" ist angelegt, aber noch nicht live freigegeben.', { name: latestSession.name }),
+                        nextStep: globalThis.VTTUi("Sobald die DM startet, wird derselbe Hub zur Eintrittsstelle in den Tisch."),
                     };
                 }
                 if (phase?.tone === "paused") {
                     return {
                         label: globalThis.VTTUi("Fortsetzen bereit"),
-                        summary: `Die Session "${latestSession.name}" ist pausiert und kann direkt aus dem Hub fortgesetzt werden.`,
-                        nextStep: "Nutze Session fortsetzen, um über denselben Übergang wieder in Play zu gehen.",
+                        summary: globalThis.VTTUi('Die Session "{name}" ist pausiert und kann direkt aus dem Hub fortgesetzt werden.', { name: latestSession.name }),
+                        nextStep: globalThis.VTTUi("Nutze Session fortsetzen, um über denselben Übergang wieder in Play zu gehen."),
                     };
                 }
                 if (activeSession) {
                     return {
                         label: globalThis.VTTUi("Live"),
-                        summary: `Die Session "${activeSession.name}" läuft bereits im Tisch.`,
-                        nextStep: "Session betreten führt direkt in die laufende Runde.",
+                        summary: globalThis.VTTUi('Die Session "{name}" läuft bereits im Tisch.', { name: activeSession.name }),
+                        nextStep: globalThis.VTTUi("Session betreten führt direkt in die laufende Runde."),
                     };
                 }
                 return {
                     label: globalThis.VTTUi("Abgeschlossen"),
-                    summary: `Die letzte Session "${latestSession.name}" ist beendet.`,
-                    nextStep: "Warte auf die nächste freigegebene Session der Spielleitung.",
+                    summary: globalThis.VTTUi('Die letzte Session "{name}" ist beendet.', { name: latestSession.name }),
+                    nextStep: globalThis.VTTUi("Warte auf die nächste freigegebene Session der Spielleitung."),
                 };
             }
 
@@ -1994,62 +1994,62 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return {
                     label: globalThis.VTTUi("Kickoff"),
                     summary: globalThis.VTTUi("Die Kampagne ist angelegt, aber noch ohne weitere Spieler im Hub."),
-                    nextStep: "Lade zuerst Spieler ein, damit Session-Prep und Play-Entry für die Gruppe Sinn ergeben.",
+                    nextStep: globalThis.VTTUi("Lade zuerst Spieler ein, damit Session-Prep und Play-Entry für die Gruppe Sinn ergeben."),
                 };
             }
             if (!hasMap && !latestSession) {
                 return {
                     label: globalThis.VTTUi("Prep startet jetzt"),
                     summary: globalThis.VTTUi("Weder erste Karte noch erste Session sind vorbereitet."),
-                    nextStep: "Lege zuerst Karte und Session an oder nutze den Schnellstart für beides zusammen.",
+                    nextStep: globalThis.VTTUi("Lege zuerst Karte und Session an oder nutze den Schnellstart für beides zusammen."),
                 };
             }
             if (!hasMap) {
                 return {
                     label: globalThis.VTTUi("Map fehlt"),
-                    summary: `Die Session-Vorbereitung hat begonnen, aber für "${latestSession.name}" fehlt noch eine sichtbare Kartenbasis.`,
-                    nextStep: "Gehe als Nächstes in die Karten-Vorbereitung, bevor du in Play wechselst.",
+                    summary: globalThis.VTTUi('Die Session-Vorbereitung hat begonnen, aber für "{name}" fehlt noch eine sichtbare Kartenbasis.', { name: latestSession.name }),
+                    nextStep: globalThis.VTTUi("Gehe als Nächstes in die Karten-Vorbereitung, bevor du in Play wechselst."),
                 };
             }
             if (!latestSession) {
                 return {
                     label: globalThis.VTTUi("Session fehlt"),
-                    summary: `Die Karte "${latestMap.name}" ist bereit, aber es gibt noch keine Session für die Gruppe.`,
-                    nextStep: "Lege jetzt die erste Session an, damit der Weg nach Play kontrolliert sichtbar wird.",
+                    summary: globalThis.VTTUi('Die Karte "{name}" ist bereit, aber es gibt noch keine Session für die Gruppe.', { name: latestMap.name }),
+                    nextStep: globalThis.VTTUi("Lege jetzt die erste Session an, damit der Weg nach Play kontrolliert sichtbar wird."),
                 };
             }
             if ((phase?.tone === "scheduled" || phase?.tone === "ready") && !hasAssignedCharacters) {
                 return {
                     label: globalThis.VTTUi("Charaktere fehlen"),
-                    summary: `Die Session "${latestSession.name}" hat bereits Kampagnenkontext, aber noch keine direkte Session-Besetzung.`,
-                    nextStep: "Öffne jetzt die Session-Prep-Fläche und weise mindestens einen kampagnengebundenen Charakter zu.",
+                    summary: globalThis.VTTUi('Die Session "{name}" hat bereits Kampagnenkontext, aber noch keine direkte Session-Besetzung.', { name: latestSession.name }),
+                    nextStep: globalThis.VTTUi("Öffne jetzt die Session-Prep-Fläche und weise mindestens einen kampagnengebundenen Charakter zu."),
                 };
             }
             if (phase?.tone === "scheduled" || phase?.tone === "ready") {
                 return {
                     label: globalThis.VTTUi("Bereit zum Start"),
-                    summary: `Die Session "${latestSession.name}" ist vorbereitet und wartet auf den Start im Hub.`,
-                    nextStep: "Starte die Session hier im Hub und gehe anschließend über denselben Pfad nach Play.",
+                    summary: globalThis.VTTUi('Die Session "{name}" ist vorbereitet und wartet auf den Start im Hub.', { name: latestSession.name }),
+                    nextStep: globalThis.VTTUi("Starte die Session hier im Hub und gehe anschließend über denselben Pfad nach Play."),
                 };
             }
             if (phase?.tone === "paused") {
                 return {
                     label: globalThis.VTTUi("Fortsetzen bereit"),
-                    summary: `Die Session "${latestSession.name}" ist pausiert und kann kontrolliert wieder aufgenommen werden.`,
-                    nextStep: "Session fortsetzen führt direkt über den akzeptierten Übergang zurück in den Tisch.",
+                    summary: globalThis.VTTUi('Die Session "{name}" ist pausiert und kann kontrolliert wieder aufgenommen werden.', { name: latestSession.name }),
+                    nextStep: globalThis.VTTUi("Session fortsetzen führt direkt über den akzeptierten Übergang zurück in den Tisch."),
                 };
             }
             if (activeSession) {
                 return {
                     label: globalThis.VTTUi("Live"),
-                    summary: `Die Session "${activeSession.name}" ist bereits live.`,
-                    nextStep: "Der Hub bleibt deine Zentrale für Rückkehr, Übersicht und vorbereitende Folgeaktionen.",
+                    summary: globalThis.VTTUi('Die Session "{name}" ist bereits live.', { name: activeSession.name }),
+                    nextStep: globalThis.VTTUi("Der Hub bleibt deine Zentrale für Rückkehr, Übersicht und vorbereitende Folgeaktionen."),
                 };
             }
             return {
                 label: globalThis.VTTUi("Nachbereitung"),
-                summary: `Die letzte Session "${latestSession.name}" ist beendet.`,
-                nextStep: "Lege von hier aus die nächste Session an oder aktualisiere Karten, Assets und Charakter-Kontext für die Fortsetzung.",
+                summary: globalThis.VTTUi('Die letzte Session "{name}" ist beendet.', { name: latestSession.name }),
+                nextStep: globalThis.VTTUi("Lege von hier aus die nächste Session an oder aktualisiere Karten, Assets und Charakter-Kontext für die Fortsetzung."),
             };
         }
 
@@ -2100,8 +2100,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     return {
                         label: globalThis.VTTUi("Session-Map setzen"),
                         hint: hasCampaignMap
-                            ? `Für "${session.name}" ist noch keine aktive Karte gewählt. Wähle zuerst die Session-Karte, bevor du startest.`
-                            : `Für "${session.name}" fehlt noch jede Kartenbasis. Nutze zuerst den Map-Prep-Bereich.`,
+                            ? globalThis.VTTUi('Für "{name}" ist noch keine aktive Karte gewählt. Wähle zuerst die Session-Karte, bevor du startest.', { name: session.name })
+                            : globalThis.VTTUi('Für "{name}" fehlt noch jede Kartenbasis. Nutze zuerst den Map-Prep-Bereich.', { name: session.name }),
                         action: hasCampaignMap
                             ? `<button class="btn btn-primary" type="button" onclick="focusSessionPrepMapSelect()">${globalThis.VTTUiHTML("Map wählen")}</button>`
                             : `<button class="btn btn-primary" type="button" onclick="focusMapPrepSurface()">${globalThis.VTTUiHTML("Kartenvorbereitung ansehen")}</button>`,
@@ -2110,34 +2110,34 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if ((phase.tone === "scheduled" || phase.tone === "ready") && !hasAssignedCharacters) {
                     return {
                         label: globalThis.VTTUi("Charaktere zuweisen"),
-                        hint: `Für "${session.name}" ist noch kein Charakter direkt zugeordnet. Weise zuerst die Session-Besetzung zu, bevor du startest.`,
+                        hint: globalThis.VTTUi('Für "{name}" ist noch kein Charakter direkt zugeordnet. Weise zuerst die Session-Besetzung zu, bevor du startest.', { name: session.name }),
                         action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">${globalThis.VTTUiHTML("Session-Besetzung öffnen")}</button>`,
                     };
                 }
                 if (phase.tone === "scheduled" || phase.tone === "ready") {
                     return {
                         label: globalThis.VTTUi("Session starten"),
-                        hint: `Die Session "${session.name}" ist vorbereitet und kann von hier kontrolliert live geschaltet werden.`,
+                        hint: globalThis.VTTUi('Die Session "{name}" ist vorbereitet und kann von hier kontrolliert live geschaltet werden.', { name: session.name }),
                         action: `<button class="btn btn-primary" type="button" onclick="startSession(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session starten")}</button>`,
                     };
                 }
                 if (phase.tone === "paused") {
                     return {
                         label: globalThis.VTTUi("Session fortsetzen"),
-                        hint: `Die Session "${session.name}" ist pausiert und führt über denselben Übergang wieder in den Tisch.`,
+                        hint: globalThis.VTTUi('Die Session "{name}" ist pausiert und führt über denselben Übergang wieder in den Tisch.', { name: session.name }),
                         action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session fortsetzen")}</button>`,
                     };
                 }
                 if (phase.tone === "live") {
                     return {
                         label: globalThis.VTTUi("Zu Play"),
-                        hint: `Die Session "${session.name}" läuft bereits. Die Prep-Oberfläche bleibt der letzte Buchstopp davor.`,
+                        hint: globalThis.VTTUi('Die Session "{name}" läuft bereits. Die Prep-Oberfläche bleibt der letzte Buchstopp davor.', { name: session.name }),
                         action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Zu Play")}</button>`,
                     };
                 }
                 return {
                     label: globalThis.VTTUi("Nächste Session anlegen"),
-                    hint: `Die Session "${session.name}" ist abgeschlossen. Für die Fortsetzung ist jetzt wieder Vorbereitung statt Tisch angesagt.`,
+                    hint: globalThis.VTTUi('Die Session "{name}" ist abgeschlossen. Für die Fortsetzung ist jetzt wieder Vorbereitung statt Tisch angesagt.', { name: session.name }),
                     action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">${globalThis.VTTUiHTML("Nächste Session anlegen")}</button>`,
                 };
             }
@@ -2152,27 +2152,27 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 }
                 return {
                     label: globalThis.VTTUi("Auf Sessionstart warten"),
-                    hint: `Die Session "${session.name}" ist sichtbar, wird aber erst nach dem DM-Start betretbar.`,
+                    hint: globalThis.VTTUi('Die Session "{name}" ist sichtbar, wird aber erst nach dem DM-Start betretbar.', { name: session.name }),
                     action: `<span class="session-action-status">${globalThis.VTTUiHTML("Warte auf den Start durch die Spielleitung")}</span>`,
                 };
             }
             if (phase.tone === "paused") {
                 return {
                     label: globalThis.VTTUi("Session fortsetzen"),
-                    hint: `Die Session "${session.name}" kann jetzt direkt aus der Vorbereitung wieder betreten werden.`,
+                    hint: globalThis.VTTUi('Die Session "{name}" kann jetzt direkt aus der Vorbereitung wieder betreten werden.', { name: session.name }),
                     action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session fortsetzen")}</button>`,
                 };
             }
             if (phase.tone === "live") {
                 return {
                     label: globalThis.VTTUi("Session betreten"),
-                    hint: `Die Session "${session.name}" läuft bereits live.`,
+                    hint: globalThis.VTTUi('Die Session "{name}" läuft bereits live.', { name: session.name }),
                     action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session betreten")}</button>`,
                 };
             }
             return {
                 label: globalThis.VTTUi("Warte auf nächste Session"),
-                hint: `Die Session "${session.name}" ist abgeschlossen. Die nächste freigegebene Runde erscheint wieder hier.`,
+                hint: globalThis.VTTUi('Die Session "{name}" ist abgeschlossen. Die nächste freigegebene Runde erscheint wieder hier.', { name: session.name }),
                     action: `<span class="session-action-status">${globalThis.VTTUiHTML("Keine aktive Session")}</span>`,
             };
         }
@@ -2655,13 +2655,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     ${hubStep(
                         "Zu Play",
                         sessionLive
-                            ? `Die Session "${activeSession.name}" läuft bereits.`
+                            ? globalThis.VTTUi('Die Session "{name}" läuft bereits.', { name: activeSession.name })
                             : (latestSession
                                 ? (latestSessionMap
                                     ? (hasSessionCharacters
-                                        ? `Die Session "${latestSession.name}" ist bereit für Start oder Fortsetzung.`
-                                        : `Die Session "${latestSession.name}" braucht noch direkte Session-Charaktere im Session-Prep.`)
-                                    : `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte im Session-Prep.`)
+                                        ? globalThis.VTTUi('Die Session "{name}" ist bereit für Start oder Fortsetzung.', { name: latestSession.name })
+                                        : globalThis.VTTUi('Die Session "{name}" braucht noch direkte Session-Charaktere im Session-Prep.', { name: latestSession.name }))
+                                    : globalThis.VTTUi('Die Session "{name}" braucht noch eine aktive Session-Karte im Session-Prep.', { name: latestSession.name }))
                                 : globalThis.VTTUi("Erst Session und Karte anlegen.")),
                         sessionLive || (hasSession && !!latestSessionMap && hasSessionCharacters),
                         sessionLive ? "live" : "todo"
@@ -2684,7 +2684,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return {
                     label: globalThis.VTTUi("Einladung eingeben"),
                     hint: globalThis.VTTUi("Spieler sehen hier die schnellste Route in die Kampagne."),
-                    action: `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">Einladung eingeben</button>`,
+                    action: `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">${globalThis.VTTUiHTML("Einladung eingeben")}</button>`,
                 };
             }
 
@@ -2693,7 +2693,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     return {
                         label: globalThis.VTTUi("Spieler einladen"),
                         hint: globalThis.VTTUi("Die DM-Route startet mit der ersten Einladung."),
-                        action: `<button class="btn btn-primary" onclick="focusInviteControls()">Spieler einladen</button>`,
+                        action: `<button class="btn btn-primary" onclick="focusInviteControls()">${globalThis.VTTUiHTML("Spieler einladen")}</button>`,
                     };
                 }
 
@@ -2702,13 +2702,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         return {
                             label: globalThis.VTTUi("Session vorbereiten"),
                             hint: globalThis.VTTUi("Erste Karte und erste Session fehlen noch. Der Schnellstart verbindet beides im selben Hub-Schritt."),
-                            action: `<button class="btn btn-primary" onclick="focusQuickStart()">Karte + Session vorbereiten</button>`,
+                            action: `<button class="btn btn-primary" onclick="focusQuickStart()">${globalThis.VTTUiHTML("Karte + Session vorbereiten")}</button>`,
                         };
                     }
                     return {
                         label: globalThis.VTTUi("Erste Session anlegen"),
                         hint: globalThis.VTTUi("Karte und Gruppe sind sichtbar. Jetzt fehlt nur noch die erste Session als kontrollierter Weg nach Play."),
-                        action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Session anlegen</button>`,
+                        action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">${globalThis.VTTUiHTML("Session anlegen")}</button>`,
                     };
                 }
 
@@ -2718,46 +2718,46 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         return {
                             label: globalThis.VTTUi("Session-Prep öffnen"),
                             hint: latestMap
-                                ? `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte. Öffne zuerst die fokussierte Session-Vorbereitung.`
-                                : `Die Session "${latestSession.name}" braucht vor dem Start noch sichtbares Kartenmaterial.`,
+                                ? globalThis.VTTUi('Die Session "{name}" braucht noch eine aktive Session-Karte. Öffne zuerst die fokussierte Session-Vorbereitung.', { name: latestSession.name })
+                                : globalThis.VTTUi('Die Session "{name}" braucht vor dem Start noch sichtbares Kartenmaterial.', { name: latestSession.name }),
                             action: latestMap
-                                ? `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`
-                                : `<button class="btn btn-primary" onclick="focusMapPrepSurface()">Kartenvorbereitung ansehen</button>`,
+                                ? `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">${globalThis.VTTUiHTML("Session-Prep öffnen")}</button>`
+                                : `<button class="btn btn-primary" onclick="focusMapPrepSurface()">${globalThis.VTTUiHTML("Kartenvorbereitung ansehen")}</button>`,
                         };
                     }
                     if (!hasSessionCharacters) {
                         return {
                             label: globalThis.VTTUi("Session-Prep öffnen"),
-                            hint: `Die Session "${latestSession.name}" braucht vor dem Start noch direkte Session-Charaktere.`,
-                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`,
+                            hint: globalThis.VTTUi('Die Session "{name}" braucht vor dem Start noch direkte Session-Charaktere.', { name: latestSession.name }),
+                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">${globalThis.VTTUiHTML("Session-Prep öffnen")}</button>`,
                         };
                     }
                     return {
                         label: globalThis.VTTUi("Session starten"),
-                        hint: `Die letzte Session "${latestSession.name}" ist vorbereitet und kann live geschaltet werden.`,
-                        action: `<button class="btn btn-primary" onclick="startSession(${campaign.id}, ${latestSession.id})">Session starten</button>`,
+                        hint: globalThis.VTTUi('Die letzte Session "{name}" ist vorbereitet und kann live geschaltet werden.', { name: latestSession.name }),
+                        action: `<button class="btn btn-primary" onclick="startSession(${campaign.id}, ${latestSession.id})">${globalThis.VTTUiHTML("Session starten")}</button>`,
                     };
                 }
 
                 if (phase.tone === "paused") {
                     return {
                         label: globalThis.VTTUi("Session fortsetzen"),
-                        hint: `Die Session "${latestSession.name}" ist pausiert. Im Tisch kann sie weitergeführt werden.`,
-                        action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">Session fortsetzen</button>`,
+                        hint: globalThis.VTTUi('Die Session "{name}" ist pausiert. Im Tisch kann sie weitergeführt werden.', { name: latestSession.name }),
+                        action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">${globalThis.VTTUiHTML("Session fortsetzen")}</button>`,
                     };
                 }
 
                 if (activeSession) {
                     return {
                         label: globalThis.VTTUi("Zu Play"),
-                        hint: `Die Session "${activeSession.name}" läuft bereits im Tisch und kann direkt weitergeführt werden.`,
-                        action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${activeSession.id})">Zu Play</button>`,
+                        hint: globalThis.VTTUi('Die Session "{name}" läuft bereits im Tisch und kann direkt weitergeführt werden.', { name: activeSession.name }),
+                        action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${activeSession.id})">${globalThis.VTTUiHTML("Zu Play")}</button>`,
                     };
                 }
 
                 return {
                     label: globalThis.VTTUi("Nächste Session anlegen"),
-                    hint: `Die letzte Session "${latestSession.name}" ist beendet. Von hier aus beginnt die Vorbereitung für die nächste Runde.`,
+                    hint: globalThis.VTTUi('Die letzte Session "{name}" ist beendet. Von hier aus beginnt die Vorbereitung für die nächste Runde.', { name: latestSession.name }),
                     action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">${globalThis.VTTUiHTML("Nächste Session anlegen")}</button>`,
                 };
             }
@@ -2769,34 +2769,34 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     if (!latestBuckets.currentUserAssigned.length && latestBuckets.assignable.length) {
                         return {
                             label: globalThis.VTTUi("Session-Prep öffnen"),
-                            hint: `Bevor die Session "${latestSession.name}" startet, kannst du hier noch deinen Helden direkt zuweisen.`,
-                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">Session-Prep öffnen</button>`,
+                            hint: globalThis.VTTUi('Bevor die Session "{name}" startet, kannst du hier noch deinen Helden direkt zuweisen.', { name: latestSession.name }),
+                            action: `<button class="btn btn-primary" onclick="selectPrepSession(${campaign.id}, ${latestSession.id})">${globalThis.VTTUiHTML("Session-Prep öffnen")}</button>`,
                         };
                     }
                     return {
                         label: globalThis.VTTUi("Auf Sessionstart warten"),
-                        hint: `Die Session "${latestSession.name}" ist angelegt, wird aber erst nach dem DM-Start betretbar.`,
-                        action: `<span class="session-action-status">Warte auf den Start durch die Spielleitung</span>`,
+                        hint: globalThis.VTTUi('Die Session "{name}" ist angelegt, wird aber erst nach dem DM-Start betretbar.', { name: latestSession.name }),
+                        action: `<span class="session-action-status">${globalThis.VTTUiHTML("Warte auf den Start durch die Spielleitung")}</span>`,
                     };
                 }
                 if (phase.tone === "ended") {
                     return {
                         label: globalThis.VTTUi("Warte auf nächste Session"),
-                        hint: `Die letzte Session "${latestSession.name}" ist beendet. Die nächste freigegebene Session erscheint wieder hier im Hub.`,
+                        hint: globalThis.VTTUi('Die letzte Session "{name}" ist beendet. Die nächste freigegebene Session erscheint wieder hier im Hub.', { name: latestSession.name }),
                         action: `<span class="session-action-status">${globalThis.VTTUiHTML("Keine aktive Session")}</span>`,
                     };
                 }
                 return {
                     label: globalThis.VTTUi("Session betreten"),
-                    hint: `Als Spieler gelangst du von hier direkt in die Session "${latestSession.name}".`,
-                    action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">Session betreten</button>`,
+                    hint: globalThis.VTTUi('Als Spieler gelangst du von hier direkt in die Session "{name}".', { name: latestSession.name }),
+                    action: `<button class="btn btn-primary" onclick="openPlay(${campaign.id}, ${latestSession.id})">${globalThis.VTTUiHTML("Session betreten")}</button>`,
                 };
             }
 
             return {
                 label: globalThis.VTTUi("Warte auf DM"),
                 hint: globalThis.VTTUi("Du bist Teil der Kampagne, aber noch gibt es keine Session zum Betreten."),
-                action: `<span class="session-action-status">Warte auf die Spielleitung</span>`,
+                action: `<span class="session-action-status">${globalThis.VTTUiHTML("Warte auf die Spielleitung")}</span>`,
             };
         }
 
@@ -2912,7 +2912,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     grid_size: 70
                 });
 
-                showMessage(`Karte "${name}" hinzugefügt.`);
+                showMessage(globalThis.VTTUi('Karte "{name}" hinzugefügt.', { name }));
                 await viewCampaign(campaignId, false);
             } catch (error) {
                 reportUploadFailure("uploadStandaloneMap", file, error);
@@ -3463,7 +3463,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const downloadUrl = asset.download_url || `/api/assets/${asset.id}/download`;
                 const canPreview = !!asset.previewable;
                 const sessionMeta = asset.session_name
-                    ? `<div class="asset-card-meta">Session: ${escapeHtml(asset.session_name)}</div>`
+                    ? `<div class="asset-card-meta">${globalThis.VTTUiHTML("Session: {name}").replace("{name}", () => escapeHtml(asset.session_name))}</div>`
                     : "";
                 const deleteButton = canManage
                     ? `<button class="btn btn-danger btn-sm" onclick="deleteLibraryAsset(${asset.id}, ${campaignId})">${globalThis.VTTUiHTML("Löschen")}</button>`
