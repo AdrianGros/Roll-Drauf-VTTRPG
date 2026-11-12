@@ -1,0 +1,23 @@
+{
+ "commit": "447774d57",
+ "branch": "feat/creation-engine-g1",
+ "pushed": true,
+ "baseImage": "roll-drauf-vtt-app:sheet-packs-20261111-bbb793c2",
+ "image": "roll-drauf-vtt-app:kenney-packs-20261111-447774d5",
+ "imageId": "sha256:1f436745bdf81759abfa6500b6bb5543bfcfad58b6e7446c5ba8f2e6403cb74d",
+ "rollbackTag": "roll-drauf-vtt-app:kenney-packs-rollback-20261111-e51a5ced9f91",
+ "overlayFiles": 1742,
+ "overlayHashesVerifiedInImage": 1742,
+ "serverKnownAssets": 75369,
+ "switchedAt": "2026-11-11T13:38:42Z",
+ "health": {
+  "now": "2026-11-11T13:38:50.226224",
+  "service": "roll_drauf_vtt",
+  "started_at": "2026-11-11T13:38:47.364193",
+  "status": "ok"
+ },
+ "otherServicesUnchanged": true,
+ "publicHashes": "all non-PNG + 25 sampled PNGs",
+ "rollback": "/srv/migration/2026-11-11/kenney-packs/rollback.sh",
+ "laterState": "Superseded by other teams' feedback-* images that cherry-picked this commit (8d77cab47 on feat/protocol-feedback-20261110); on 2026-11-12 the live image feedback-catalog-actions-20261111-8fb56ccc3 still serves all Kenney catalogue files byte-identical to 447774d57."
+}
