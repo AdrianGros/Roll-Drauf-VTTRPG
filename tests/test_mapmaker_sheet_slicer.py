@@ -136,29 +136,35 @@ def test_every_reviewed_slice_copies_its_sheet_pixels(path):
     pack = profile["pack"]
     if profile["detector"] == slicer.SINGLES:
         return _check_named_singles(profile)
-    digest = profile["sheet"]["sha256"]
-    _entry, _digest, img = slicer.load_sheet(pack, profile["sheet"]["path"], digest)
     manifest = json.loads((ASSETS / pack / "manifest.json").read_text())
     slices = [s for s in manifest["stamps"] if "slice" in s]
     assert slices and all(s["slice"]["profile"] == f"tools/mapmaker_slices/{path.name}" for s in slices)
-    if profile["detector"] == slicer.COMPONENTS:
-        found = {slicer.box_key(g["box"]): g for g in slicer.components(img, profile["params"]["gap"], profile["params"]["minArea"])[0]}
-        assert set(found) == set(profile["objects"])
-    else:
-        grid = slicer.Grid(img, profile["grid"])
-    for stamp in slices:
-        layout = stamp["slice"]["layout"]
-        if layout.startswith("box:"):
-            expected = slicer.component_image(img, found[layout[4:]])
-        elif "/" in layout:
-            expected = slicer.compose_rows(img, grid, slicer.parse_rows(layout.split("/")))
+    by_sheet = {}
+    for stamp in slices: by_sheet.setdefault(stamp["originalPath"], []).append(stamp)
+    specs = profile.get("sheets", [profile])
+    assert set(by_sheet) == {spec["sheet"]["path"] for spec in specs}
+    for spec in specs:
+        digest = spec["sheet"]["sha256"]
+        _entry, _digest, img = slicer.load_sheet(pack, spec["sheet"]["path"], digest)
+        if spec["detector"] == slicer.COMPONENTS:
+            params = spec["params"]
+            found = {slicer.box_key(g["box"]): g for g in slicer.components(img, params["gap"], params["minArea"], params.get("split"), params.get("gridSplits"))[0]}
+            assert set(found) == set(spec["objects"])
         else:
-            expected = slicer.compose(img, grid, slicer.parse_cells(layout))
-        with Image.open(ASSETS / pack / stamp["file"]) as png:
-            assert png.convert("RGBA").tobytes() == expected.tobytes(), (pack, stamp["label"])
-        assert stamp["id"] == slicer.slice_id(pack, digest, layout)
-        assert (stamp["w"], stamp["h"]) == expected.size and stamp["originalSha256"] == digest
-        assert not stamp.get("tile") or (stamp["w"] == stamp["h"] and "box:" not in layout and " " not in layout)
+            grid = slicer.Grid(img, spec["grid"])
+        for stamp in by_sheet[spec["sheet"]["path"]]:
+            layout = stamp["slice"]["layout"]
+            if layout.startswith("box:"):
+                expected = slicer.component_image(img, found[layout[4:]])
+            elif "/" in layout:
+                expected = slicer.compose_rows(img, grid, slicer.parse_rows(layout.split("/")))
+            else:
+                expected = slicer.compose(img, grid, slicer.parse_cells(layout))
+            with Image.open(ASSETS / pack / stamp["file"]) as png:
+                assert png.convert("RGBA").tobytes() == expected.tobytes(), (pack, stamp["label"])
+            assert stamp["id"] == slicer.slice_id(pack, digest, layout)
+            assert (stamp["w"], stamp["h"]) == expected.size and stamp["originalSha256"] == digest
+            assert not stamp.get("tile") or (stamp["w"] == stamp["h"] and "box:" not in layout and " " not in layout)
     # Exact duplicates are offered once as tiles; every id stays in the catalogue.
     tiles = [s for s in manifest["stamps"] if s.get("tile")]
     assert len({s["file"] for s in tiles}) == len(tiles)
@@ -215,3 +221,17 @@ def test_rts_hd_twins_match_their_standard_images():
             return base.convert("RGB")
         diff = ImageChops.difference(flat(hd_path, (64, 64)), flat(twin))
         assert sum(ImageStat.Stat(diff).mean) < 8, hd_path
+
+
+def test_lpc_slices_only_static_sheets_and_keeps_character_sheets_in_place():
+    profile = json.loads((ROOT / "tools" / "mapmaker_slices" / "lpc-revised.json").read_text())
+    paths = [spec["sheet"]["path"] for spec in profile["sheets"]]
+    assert not any(p.startswith("Characters/") or "Emission" in p or "Shadows" in p or "Waterfall" in p for p in paths)
+    assert not any(p.endswith(("12 Panel Door A.png", "15 Panel Door A.png", "Fire, Camp.png")) for p in paths)  # animation strips
+    manifest = json.loads((ASSETS / "lpc-revised" / "manifest.json").read_text())
+    characters = [s for s in manifest["stamps"] if s["originalPath"].startswith("Characters/")]
+    assert len(characters) == 63972 and all(s["group"] == "Figuren & Kleidung" and s["sheet"] for s in characters)
+    by_label = {s["label"]: s for s in manifest["stamps"] if "slice" in s and not s.get("hidden")}
+    assert by_label["Baumschatten (Sommer)"]["h"] <= 32
+    trees = [s for s in by_label.values() if s["originalPath"] == "Terrain/trees_summer.png" and s["label"].startswith("Baum (")]
+    assert len(trees) >= 16 and all(s["w"] <= 96 for s in trees)  # packed crowns are split into single trees

@@ -1823,6 +1823,7 @@ def test_tile_layer_import_contract(open_editor):
     ('2dpixx-village', 'Ziehbrunnen', None),
     ('kenney-rpg', 'Hohe Tanne (grün)', 'Gelände 1'),
     ('kenney-rts', 'Burg', 'Sand'),
+    ('lpc-revised', 'Standuhr 1', 'Holzdielen A 1'),
 ])
 def test_sliced_sheets_offer_whole_stamps_and_grid_tiles(open_editor, pack_id, stamp_label, tile_label):
     stamps = json.loads((STATIC / 'mapmaker/assets' / pack_id / 'manifest.json').read_text())['stamps']
