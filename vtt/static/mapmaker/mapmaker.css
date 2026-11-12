@@ -525,3 +525,14 @@ img.mm-pixel { image-rendering: pixelated; }
     .mm-tools .mm-tool span { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .mm-tools .mm-tool { padding: 10px 1px; }
 }
+
+/* Header actions can wrap in every UI language. Keep their entire height above
+   the global ribbon, including the authenticated account memo. */
+.mm-app { grid-template-rows: max-content minmax(0, 1fr); }
+.mm-top { min-height: var(--top-h); }
+.mm-app:has(> .mm-global-nav) { grid-template-rows: max-content 84px minmax(0, 1fr); }
+@media (max-width: 760px) {
+    .mm-app { grid-template-rows: max-content minmax(0, 1fr) var(--tools-h); }
+    .mm-app:has(> .mm-global-nav) { grid-template-rows: max-content 84px minmax(0, 1fr) var(--tools-h); }
+    .mm-top-actions { height: auto; min-height: 36px; row-gap: 4px; padding-block: 4px; }
+}

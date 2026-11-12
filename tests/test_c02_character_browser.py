@@ -20,8 +20,8 @@ from vtt.models import Campaign, CampaignMember, Character, Role, User
 PNG = bytes.fromhex("89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000d49444154789c6360f8ffff3f0005fe02fe5fcc519a0000000049454e44ae426082")
 
 
-def _context(p, origin, token, width, language=None):
-    browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+def _context(p, origin, token, width, language=None, engine="chromium"):
+    browser = getattr(p, engine).launch(headless=True, **({"args": ["--no-sandbox"]} if engine == "chromium" else {}))
     context = browser.new_context(viewport={"width": width, "height": 1000}, reduced_motion="reduce")
     context.add_cookies([{"name": "access_token_cookie", "value": token, "url": origin, "httpOnly": True}])
     page = context.new_page()
@@ -429,5 +429,35 @@ def test_local_lock_and_explicit_view_remove_srd_manage_mutations(site, data):
         page.get_by_role('tab', name='Verwaltung', exact=True).click()
         expect(add).not_to_be_visible()
         expect(page.locator('#srdManageDuplicate')).not_to_be_visible()
+        assert not errors, errors
+        browser.close()
+
+
+@pytest.mark.parametrize('engine', ['chromium', 'firefox'])
+def test_replacing_different_identity_pixels_refreshes_all_portraits(site, data, tmp_path, engine):
+    from io import BytesIO
+    from PIL import Image
+    from playwright.sync_api import expect, sync_playwright
+    app, origin, info = site
+    app.config['LOCAL_STORAGE_PATH'] = str(tmp_path / 'storage')
+    char_id = _character(app, info, data)
+    with sync_playwright() as p:
+        browser, page, errors, _ = _context(p, origin, info['token'], 390, engine=engine)
+        page.on('dialog', lambda d: d.accept())
+        page.goto(f'{origin}/character-sheet?id={char_id}&section=identity')
+        for size in (2, 3):
+            image = BytesIO(); Image.new('RGB', (size, size), (size * 60, 80, 120)).save(image, format='PNG')
+            page.locator('#messageBox').evaluate("n=>n.textContent=''")
+            with page.expect_file_chooser() as chooser:
+                page.locator('#sheetIdentityUpload-avatar').click()
+            with page.expect_response(lambda r: r.request.method == 'POST' and '/identity/avatar' in r.url) as response:
+                chooser.value.set_files({'name':f'avatar-{size}.png','mimeType':'image/png','buffer':image.getvalue()})
+            assert response.value.status == 200
+            expect(page.locator('#messageBox')).to_contain_text('gespeichert')
+            page.wait_for_function('''size=>{const a=Array.from(document.querySelectorAll('img[src*="/identity/avatar"]'));return a.length>=2&&a.every(i=>i.complete&&i.naturalWidth===size)}''', arg=size)
+        with app.app_context():
+            assert db.session.get(Character, char_id).avatar_url == f'/api/characters/{char_id}/identity/avatar'
+        page.locator('#sheetIdentityRemove-avatar').click()
+        expect(page.locator('#sheetIdentityGrid img')).to_have_count(0)
         assert not errors, errors
         browser.close()

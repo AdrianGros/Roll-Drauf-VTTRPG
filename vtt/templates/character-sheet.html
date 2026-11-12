@@ -1116,6 +1116,19 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         let currentUser = null;
         let sheet = null;
         let pendingIdentityKind = null;
+        // A new URL makes browsers discard decoded media after an in-place replacement.
+        // Revision is display-only: canonical URLs in the API and storage never change.
+        const identityMediaRevisions = {};
+        window.SheetIdentityMedia = {
+            url(character, kind) {
+                const source = character?.[kind + '_url'];
+                const revision = identityMediaRevisions[kind];
+                if (!source || !revision) return source;
+                const url = new URL(source, location.href);
+                url.searchParams.set('v', revision);
+                return url.href;
+            },
+        };
 
         function resolveSheetPermissions(character) {
             const permissions = character?.permissions;
@@ -1398,7 +1411,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         function renderIdentityCard(character, identityKind) {
             const isAvatar = identityKind === 'avatar';
             const label = identityLabel(identityKind);
-            const url = isAvatar ? character.avatar_url : character.token_url;
+            const url = window.SheetIdentityMedia.url(character, identityKind);
             const uploadLabel = escapeHtml(url
                 ? globalThis.VTTUi("{label} ersetzen", { label })
                 : globalThis.VTTUi("{label} hochladen", { label }));
@@ -2280,6 +2293,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     'POST',
                     formData,
                 );
+                identityMediaRevisions[identityKind] = crypto.randomUUID();
                 await loadSheet();
                 const label = identityLabel(identityKind);
                 const otherKind = identityKind === 'avatar' ? 'token' : 'avatar';
@@ -2449,6 +2463,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         document.addEventListener('DOMContentLoaded', () => {
             const picker = document.getElementById('sheetIdentityFilePicker');
             if (picker) {
+                // Keep the native picker outside BookScene's moved/replaced content.
+                document.body.appendChild(picker);
                 picker.addEventListener('change', handleIdentityFilePicked);
             }
             watchSrdRollContext();

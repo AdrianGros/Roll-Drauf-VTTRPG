@@ -41,11 +41,14 @@ def site(tmp_path):
     def cookie_values(index):
         return [{'name': 'access_token_cookie', 'value': tokens[index], 'url': origin, 'httpOnly': True},
                 {'name': 'csrf_access_token', 'value': csrf[index], 'url': origin}]
-    def open_page(browser, index=0, width=1440):
+    def open_page(browser, index=0, width=1440, preferences=None):
         context = browser.new_context(viewport={'width': width, 'height': 900 if width > 600 else 844}, accept_downloads=True)
         contexts.append(context)
         context.add_cookies(cookie_values(index))
         context.add_init_script(CSP_PROBE)
+        if preferences:
+            from tests.test_presentation_browser import preferences as install_preferences
+            install_preferences(context, **preferences)
         page = context.new_page()
         page.set_default_timeout(25000)
         errors = []
@@ -234,4 +237,22 @@ def test_edits_during_save_remain_unsaved(site, browser):
     save(page)
     with site[0].app_context():
         assert MapmakerProject.query.one().title == 'Änderung während des Speicherns'
+    clean(page, errors)
+
+
+@pytest.mark.parametrize('width,theme,language', [(390, 'paper', 'de'), (390, 'night', 'en'), (1440, 'paper', 'de')])
+def test_labelled_actions_receive_real_clicks_with_main_navigation(site, browser, width, theme, language):
+    page, errors = site[3](browser, width=width, preferences={'theme':theme,'language':language})
+    page.locator('#newEmpty').click()
+    expect(page.locator('html')).to_have_attribute('lang', language)
+    for id in ('libraryBtn', 'cloudSave', 'importActionBtn', 'exportActionBtn'):
+        button = page.locator('#' + id)
+        expect(button).to_be_visible()
+        assert button.evaluate("n=>{const r=n.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return hit===n||n.contains(hit)}"), id
+    with page.expect_file_chooser():
+        page.locator('#importActionBtn').click()
+    page.locator('#exportActionBtn').click()
+    expect(page.locator('#exportDialog')).to_be_visible()
+    page.locator('#exportCancel').click()
+    assert page.evaluate('document.documentElement.scrollWidth') <= width + 1
     clean(page, errors)

@@ -41,7 +41,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         for (const [key, label] of [['avatar_url', globalThis.VTTUi("Avatar")], ['token_url', globalThis.VTTUi("Token")]]) {
             if (character[key]) {
                 const image = el('img', 'sf-portrait');
-                image.src = character[key];
+                image.src = window.SheetIdentityMedia?.url(character, key.replace('_url', '')) || character[key];
                 image.alt = globalThis.VTTUi("{label} von {name}", { label, name: character.name || '' });
                 image.width = image.height = 56;
                 wrap.append(image);
