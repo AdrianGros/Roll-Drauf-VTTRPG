@@ -1108,6 +1108,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const requestedSection = Object.prototype.hasOwnProperty.call(SHEET_SECTIONS, params.get('section') || '')
             ? params.get('section') : null;
         const SHEET_IDENTITY_KINDS = { avatar: true, token: true };
+        globalThis.SheetLock = { locked: explicitView };
         let sectionOpened = false;
         let editLocked = false;
         let editable = false;
@@ -1131,6 +1132,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             canEditIdentity = permissions.known && permissions.editIdentity && !explicitView && !editLocked;
             document.body.dataset.sheetImages = canEditIdentity ? 'true' : 'false';
             editable = permissions.editCore && !explicitView && !editLocked;
+            // Read by the SRD inventory/progression/manage panels. It can only remove actions
+            // they already get from the server (e.g. a DM's XP caps stay when it is false).
+            globalThis.SheetLock = { locked: explicitView || editLocked };
             return permissions;
         }
 
@@ -1145,6 +1149,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 renderSpells(sheet.spells || []);
                 renderEquipment(sheet.equipment || []);
                 renderInventory(sheet.inventory || []);
+                window.renderSrdInventory?.();
+                window.renderSrdProgression?.();
+                window.renderSrdManage?.();
             }
         }
 
