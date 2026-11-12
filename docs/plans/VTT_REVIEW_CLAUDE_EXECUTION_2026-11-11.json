@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
-  "status": "native_quota_blocked_engine_choice_pending",
-  "phase": "monitor_C01_deploy_C02_rework_C04",
+  "status": "execution_started",
+  "phase": "deploy_C01_C02_rework_C04",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -34,19 +34,21 @@
     },
     "latest_quota": {
       "five_hour": {
-        "utilization": 100.0,
-        "resets_at": "2026-11-12T11:39:59.774865+00:00"
+        "utilization": 0.0,
+        "resets_at": null
       },
       "seven_day": {
         "utilization": 91.0,
-        "resets_at": "2026-11-15T09:59:59.774884+00:00"
+        "resets_at": "2026-11-15T09:59:59.989572+00:00"
       },
       "extra_usage": {
         "is_enabled": false,
         "utilization": null
       }
     },
-    "quota_evidence": "docs/proofs/claude-program-2026-11-12/execution-state.json"
+    "quota_evidence": "docs/proofs/claude-program-2026-11-12/execution-state.json",
+    "resumed_at": "2026-11-12T13:12:26Z",
+    "implementation_choice": "Owner confirmed Claude is available; continuing original Claude workflow, no provider fallback."
   },
   "roles": {
     "implementation": [
@@ -86,7 +88,7 @@
     {
       "id": "C01",
       "title": "Darstellung, UI-Sprache und Buchnavigation",
-      "status": "live_monitor_rework_required",
+      "status": "reviewed_checks_passed_delivery_pending",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -132,9 +134,9 @@
       "deployed_image_id": "sha256:86ac41ff39eb8deaedc7bc4836102a1427df0621a1201434175f797ff48cc270",
       "live_verification": "docs/proofs/presentation-2026-11-12/delivery.json",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
-      "candidate_commit": "08f380253",
+      "candidate_commit": "4dca29475",
       "review_model": "sonnet",
-      "known_gap": "Functional live pass, Medium PlayChrome contrast open. Claude retry stopped before edits at5hourlimit; scoped handoff ready.",
+      "known_gap": "Five real PlayChrome role/theme/mapcolor tests pass; independent source review ready, live follow-up pending.",
       "review_findings": [
         "F1: remaining authored hub literals",
         "F2: EN data-boundary acceptance"
@@ -152,7 +154,7 @@
     {
       "id": "C02",
       "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
-      "status": "local_rework_quota_interrupted",
+      "status": "integrated_reviewed_delivery_pending",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -196,9 +198,9 @@
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
       "handoff": "docs/proofs/claude-c02-2026-11-12/handoff.json",
-      "candidate_commit": "176cb69c3",
+      "candidate_commit": "94b8b78ef",
       "execution_model": "sonnet",
-      "known_gap": "22passed1failed: SRD Manage local lock still active; valid-image targeted1passed. Native state/rerender wiring unfinished, no review/integration/live."
+      "known_gap": "Final lock3cases pass; legacy SRD5cases pass across initial4+explicit-view1. Independent review ready; live journey pending."
     },
     {
       "id": "C03",
@@ -253,7 +255,7 @@
     {
       "id": "C04",
       "title": "2D-Kartenbedienung und Bibliothek zum Spieltisch",
-      "status": "local_candidate_rework_required",
+      "status": "rework_checks_running",
       "implementer": "vtt-maps-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -308,7 +310,7 @@
       "handoff": "docs/proofs/claude-c04-2026-11-12/handoff.json",
       "candidate_commit": "c516d2272",
       "execution_model": "sonnet",
-      "known_gap": "22API/static+5existing browser pass,2823catalog. New feature browser cases and module-relative asset/font/locale/visual variants rework pending; no review/integration/live."
+      "known_gap": "Native remaining source fixes/new real browser cases written, targeted API/browser run pending; not integrated/live."
     },
     {
       "id": "C05",
