@@ -52,11 +52,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   }
 
   function numberText(value) {
-    return Number(value || 0).toLocaleString('de-DE');
+    return Number(value || 0).toLocaleString(document.documentElement.lang === 'en' ? 'en-GB' : 'de-DE');
   }
 
   function failureText(error) {
-    return ERRORS[error?.apiError] || error?.message || 'Die Änderung ist fehlgeschlagen.';
+    return ERRORS[error?.apiError] || error?.message || globalThis.VTTUi('Die Änderung ist fehlgeschlagen.');
   }
 
   function label(id) {
@@ -86,7 +86,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
   function progressBar(status) {
     const wrap = element('div', 'srd-prog-bar');
-    let text = `Stufe ${status.level} · ${numberText(status.xp)} EP`;
+    let text = globalThis.VTTUi('Stufe {level} · {xp} EP', {level: status.level, xp: numberText(status.xp)});
     let percent = 100;
     if (status.nextLevelXp != null) {
       const span = Math.max(status.nextLevelXp - status.currentLevelXp, 1);
@@ -103,7 +103,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     track.setAttribute('aria-label', text);
     wrap.append(track);
     if (status.canLevelUp) {
-      wrap.append(element('div', 'srd-prog-ready', globalThis.VTTUi("Bereit für Stufe {p0}{p1}.",{p0:(status.level + 1),p1:(status.targetLevel > status.level + 1 ? ` (freigegeben bis Stufe ${status.targetLevel})` : '')})));
+      wrap.append(element('div', 'srd-prog-ready', globalThis.VTTUi("Bereit für Stufe {p0}{p1}.",{p0:(status.level + 1),p1:(status.targetLevel > status.level + 1 ? globalThis.VTTUi(' (freigegeben bis Stufe {level})', {level: status.targetLevel}) : '')})));
     } else if (status.mode === 'milestone' && status.level < status.maxLevel) {
       wrap.append(element('div', 'srd-prog-hint', globalThis.VTTUi("Der nächste Stufenaufstieg wird von der Spielleitung freigegeben.")));
     }
@@ -124,7 +124,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     });
     mode.value = status.mode;
     mode.addEventListener('change', () => save({ mode: mode.value }, 'Modus gespeichert.'));
-    wrap.append(labelled('Stufenaufstieg nach', mode));
+    wrap.append(labelled(globalThis.VTTUi('Stufenaufstieg nach'), mode));
 
     if (status.mode === 'xp') {
       const amount = element('input', 'srd-prog-input');
@@ -138,11 +138,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       note.id = 'srdProgXpNote';
       note.placeholder = globalThis.VTTUi("Notiz (optional)");
       const row = element('div', 'srd-prog-row');
-      row.append(labelled('EP vergeben (negativ zieht ab)', amount), labelled('Notiz', note));
-      row.append(button('EP vergeben', 'srd-prog-btn srd-prog-primary', () => {
+      row.append(labelled(globalThis.VTTUi('EP vergeben (negativ zieht ab)'), amount), labelled(globalThis.VTTUi('Notiz'), note));
+      row.append(button(globalThis.VTTUi('EP vergeben'), 'srd-prog-btn srd-prog-primary', () => {
         const value = Number(amount.value);
         if (!amount.value || !Number.isInteger(value)) { setStatus(globalThis.VTTUi("Gib eine ganze Zahl ein."), true); return; }
-        save({ addXp: value, note: note.value }, `${value >= 0 ? '+' : ''}${numberText(value)} EP gespeichert.`);
+        save({ addXp: value, note: note.value }, globalThis.VTTUi('{sign}{xp} EP gespeichert.', {sign: value >= 0 ? '+' : '', xp: numberText(value)}));
       }));
       wrap.append(row);
     } else {
@@ -155,8 +155,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       }
       target.value = String(status.milestoneTarget || status.level);
       const row = element('div', 'srd-prog-row');
-      row.append(labelled('Freigegeben bis', target));
-      row.append(button('Freigabe speichern', 'srd-prog-btn srd-prog-primary', () => save({ milestoneTarget: Number(target.value) }, 'Freigabe gespeichert.')));
+      row.append(labelled(globalThis.VTTUi('Freigegeben bis'), target));
+      row.append(button(globalThis.VTTUi('Freigabe speichern'), 'srd-prog-btn srd-prog-primary', () => save({ milestoneTarget: Number(target.value) }, 'Freigabe gespeichert.')));
       wrap.append(row);
     }
     return wrap;
@@ -174,9 +174,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       else if (entry.type === 'mode') text = entry.mode === 'xp' ? globalThis.VTTUi("Modus: Erfahrungspunkte") : globalThis.VTTUi("Modus: Meilensteine");
       else if (entry.type === 'milestone') text = globalThis.VTTUi("Freigabe bis Stufe {p0}",{p0:(entry.target ?? '–')});
       else if (entry.type === 'level-down') text = globalThis.VTTUi("Stufe {p0} → {p1} (zurückgenommen)",{p0:(entry.fromLevel),p1:(entry.toLevel)});
-      else if (entry.type === 'level-up') text = globalThis.VTTUi("Stufe {p0} → {p1}{p2}",{p0:(entry.fromLevel),p1:(entry.toLevel),p2:(entry.hpGain != null ? ` (${entry.hpGain >= 0 ? '+' : ''}${entry.hpGain} TP)` : '')});
-      else if (entry.type === 'handout') text = globalThis.VTTUi("Von der Spielleitung ausgegeben: {p0}",{p0:(entry.label || 'Gegenstand')});
-      else if (entry.type === 'take-back') text = globalThis.VTTUi("Von der Spielleitung zurückgenommen: {p0}",{p0:(entry.label || 'Gegenstand')});
+      else if (entry.type === 'level-up') text = globalThis.VTTUi("Stufe {p0} → {p1}{p2}",{p0:(entry.fromLevel),p1:(entry.toLevel),p2:(entry.hpGain != null ? globalThis.VTTUi(' ({sign}{hp} TP)', {sign: entry.hpGain >= 0 ? '+' : '', hp: entry.hpGain}) : '')});
+      else if (entry.type === 'handout') text = globalThis.VTTUi("Von der Spielleitung ausgegeben: {p0}",{p0:(entry.label || globalThis.VTTUi('Gegenstand'))});
+      else if (entry.type === 'take-back') text = globalThis.VTTUi("Von der Spielleitung zurückgenommen: {p0}",{p0:(entry.label || globalThis.VTTUi('Gegenstand'))});
       else return;
       if (entry.note) text += ` – ${entry.note}`;
       const item = element('li', null, text);
@@ -191,16 +191,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const last = payload.lastLevel;
     const wrap = element('div', 'srd-prog-down');
     if (!current.confirmDown) {
-      const open = button('Letzte Stufe rückgängig machen', 'srd-prog-btn', () => { current.confirmDown = true; render(); });
+      const open = button(globalThis.VTTUi('Letzte Stufe rückgängig machen'), 'srd-prog-btn', () => { current.confirmDown = true; render(); });
       open.id = 'srdProgDown';
       wrap.append(open);
       return wrap;
     }
     wrap.append(element('div', 'srd-prog-warn', globalThis.VTTUi("Stufe {p0} ({p1} {p2}) wird zurückgenommen: Trefferpunkte, Wahlen, Zauber und Erfahrung dieser Stufe entfallen. Erfahrungspunkte werden unter die Schwelle der nächsten Stufe gesetzt.",{p0:(payload.status.level),p1:(last.className),p2:(last.classLevel)})));
     const row = element('div', 'srd-prog-row');
-    const yes = button(`Ja, Stufe ${payload.status.level} rückgängig machen`, 'srd-prog-btn srd-prog-primary', confirmLevelDown);
+    const yes = button(globalThis.VTTUi('Ja, Stufe {level} rückgängig machen', {level: payload.status.level}), 'srd-prog-btn srd-prog-primary', confirmLevelDown);
     yes.id = 'srdProgDownConfirm';
-    row.append(yes, button('Abbrechen', 'srd-prog-btn', () => { current.confirmDown = false; render(); }));
+    row.append(yes, button(globalThis.VTTUi('Abbrechen'), 'srd-prog-btn', () => { current.confirmDown = false; render(); }));
     wrap.append(row);
     return wrap;
   }
@@ -215,7 +215,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       current.confirmDown = false;
       current.wizard = null;
       current.payload = result;
-      current.notice = `Stufe ${result.removed.totalLevel} zurückgenommen, der Charakter ist jetzt Stufe ${result.level}.`;
+      current.notice = globalThis.VTTUi('Stufe {removed} zurückgenommen, der Charakter ist jetzt Stufe {level}.', {removed: result.removed.totalLevel, level: result.level});
       render();
       current.onChange?.({ reload: true, level: result.level, message: current.notice });
     } catch (error) {
@@ -272,7 +272,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       current.confirmDown = false;
     }
     if (!readOnly && payload.canLevelUp && payload.status.canLevelUp) {
-      root.append(button(`Stufe ${payload.status.level + 1} aufsteigen`, 'srd-prog-btn srd-prog-primary srd-prog-levelup', startWizard));
+      root.append(button(globalThis.VTTUi('Stufe {level} aufsteigen', {level: payload.status.level + 1}), 'srd-prog-btn srd-prog-primary srd-prog-levelup', startWizard));
     }
     if (!readOnly && payload.canLevelDown) root.append(levelDownBlock(payload));
     if (!readOnly && payload.canManage) root.append(manageBlock(payload));
@@ -394,15 +394,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   }
 
   function hpStep(w, need) {
-    const box = section('Trefferpunkte');
+    const box = section(globalThis.VTTUi('Trefferpunkte'));
     const info = `W${need.hp.die} · Konstitutionsmodifikator ${need.hp.conModifier >= 0 ? '+' : ''}${need.hp.conModifier}`;
     box.append(element('p', 'srd-prog-hint', info));
     const group = element('div', 'srd-prog-row');
     group.setAttribute('role', 'group');
-    group.setAttribute('aria-label', 'Trefferpunkte');
+    group.setAttribute('aria-label', globalThis.VTTUi('Trefferpunkte'));
     const fixed = button(`Fest: ${need.hp.fixed}`, 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.hpMode = 'fixed'; }, true));
     fixed.setAttribute('aria-pressed', String(w.hpMode === 'fixed'));
-    const rolled = button('Gewürfelt', 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.hpMode = 'rolled'; }, true));
+    const rolled = button(globalThis.VTTUi('Gewürfelt'), 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.hpMode = 'rolled'; }, true));
     rolled.setAttribute('aria-pressed', String(w.hpMode === 'rolled'));
     group.append(fixed, rolled);
     box.append(group);
@@ -420,7 +420,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   }
 
   function subclassStep(w, need) {
-    const box = section('Unterklasse');
+    const box = section(globalThis.VTTUi('Unterklasse'));
     const select = element('select', 'srd-prog-select');
     select.id = 'srdWizSubclass';
     const blank = element('option', null, globalThis.VTTUi("Bitte wählen"));
@@ -433,20 +433,20 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     });
     select.value = w.subclass;
     select.addEventListener('change', () => change((x) => { x.subclass = select.value; }, false));
-    box.append(labelled('Wähle deine Unterklasse', select));
+    box.append(labelled(globalThis.VTTUi('Wähle deine Unterklasse'), select));
     return box;
   }
 
   function advancementStep(w, need) {
     const epic = need.advancement.epicBoon;
-    const box = section(epic ? 'Epische Gabe' : 'Attributswerterhöhung oder Talent');
+    const box = section(epic ? globalThis.VTTUi('Epische Gabe') : globalThis.VTTUi('Attributswerterhöhung oder Talent'));
     const adv = w.advancement;
     const group = element('div', 'srd-prog-row');
     group.setAttribute('role', 'group');
-    group.setAttribute('aria-label', 'Art der Verbesserung');
-    const asi = button('Attributswerterhöhung', 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.advancement = { kind: 'asi', mode: 'two', increases: {} }; }, true));
+    group.setAttribute('aria-label', globalThis.VTTUi('Art der Verbesserung'));
+    const asi = button(globalThis.VTTUi('Attributswerterhöhung'), 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.advancement = { kind: 'asi', mode: 'two', increases: {} }; }, true));
     asi.setAttribute('aria-pressed', String(adv.kind === 'asi'));
-    const feat = button(epic ? 'Epische Gabe' : 'Talent', 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.advancement = { kind: 'feat' }; }, true));
+    const feat = button(epic ? globalThis.VTTUi('Epische Gabe') : globalThis.VTTUi('Talent'), 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.advancement = { kind: 'feat' }; }, true));
     feat.setAttribute('aria-pressed', String(adv.kind === 'feat'));
     group.append(asi, feat);
     box.append(group);
@@ -470,9 +470,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     if (adv.kind === 'asi') {
       const mode = adv.mode || 'two';
       const modes = element('div', 'srd-prog-row');
-      const two = button('+2 auf ein Attribut', 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.advancement = { kind: 'asi', mode: 'two', increases: {} }; }, true));
+      const two = button(globalThis.VTTUi('+2 auf ein Attribut'), 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.advancement = { kind: 'asi', mode: 'two', increases: {} }; }, true));
       two.setAttribute('aria-pressed', String(mode === 'two'));
-      const ones = button('+1 auf zwei Attribute', 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.advancement = { kind: 'asi', mode: 'ones', increases: {} }; }, true));
+      const ones = button(globalThis.VTTUi('+1 auf zwei Attribute'), 'srd-prog-btn srd-prog-toggle', () => change((x) => { x.advancement = { kind: 'asi', mode: 'ones', increases: {} }; }, true));
       ones.setAttribute('aria-pressed', String(mode === 'ones'));
       modes.append(two, ones);
       box.append(modes);
@@ -506,7 +506,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       });
       select.value = adv.featId || '';
       select.addEventListener('change', () => change((x) => { x.advancement.featId = select.value || undefined; delete x.advancement.increaseAbility; }, true));
-      box.append(labelled('Talent', select));
+      box.append(labelled(globalThis.VTTUi('Talent'), select));
       const chosen = srdCreatorData.feats.find((f) => f.id === adv.featId);
       if (chosen?.abilityIncrease) {
         const allowed = chosen.abilityIncrease.abilities === 'any' ? ABILITIES : chosen.abilityIncrease.abilities;
@@ -550,7 +550,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       const search = element('input', 'srd-prog-input');
       search.type = 'search';
       search.placeholder = globalThis.VTTUi("Suchen");
-      search.setAttribute('aria-label', 'Liste durchsuchen');
+      search.setAttribute('aria-label', globalThis.VTTUi('Liste durchsuchen'));
       search.addEventListener('input', () => {
         const needle = search.value.trim().toLowerCase();
         list.querySelectorAll('.srd-prog-check').forEach((row) => { row.hidden = Boolean(needle) && !row.dataset.search.includes(needle); });
@@ -630,14 +630,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         ? info.skillChoices.options.map((id) => ({ id, name: current.evaluation?.skills?.[id]?.name || srdCreatorData.skills.find((s) => s.id === id)?.name || id }))
         : srdCreatorData.skills.map((s) => ({ id: s.id, name: s.name }));
       const picked = w.multiclassSkills || [];
-      box.append(element('h5', 'srd-prog-sub', 'Fertigkeit'), counter(picked.length, info.skillChoices.count));
+      box.append(element('h5', 'srd-prog-sub', globalThis.VTTUi('Fertigkeit')), counter(picked.length, info.skillChoices.count));
       box.append(checklist(options, picked, info.skillChoices.count, (next) => change((x) => { x.multiclassSkills = next; }, true)));
     }
     return box;
   }
 
   function expertiseStep(w, need) {
-    const box = section('Expertise');
+    const box = section(globalThis.VTTUi('Expertise'));
     const skills = current.evaluation?.skills || {};
     const gained = w.multiclassSkills || [];
     const pool = Object.entries(skills)
@@ -651,21 +651,21 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   }
 
   function spellsStep(w, need) {
-    const box = section(`${need.className}: Zauber`);
+    const box = section(globalThis.VTTUi('{className}: Zauber', {className: need.className}));
     const spells = need.spells;
     const lists = srdCreatorData.spellLists[w.classKey] || [];
     const meta = srdCreatorData.spells;
-    const entryOf = (id) => ({ id, name: meta[id].name, sub: meta[id].level === 0 ? 'Zaubertrick' : `${meta[id].level}. Grad` });
+    const entryOf = (id) => ({ id, name: meta[id].name, sub: meta[id].level === 0 ? globalThis.VTTUi('Zaubertrick') : globalThis.VTTUi('Grad {level}', {level: meta[id].level}) });
     const cantrips = lists.filter((id) => meta[id].level === 0).map(entryOf);
     const leveled = lists.filter((id) => meta[id].level >= 1 && meta[id].level <= spells.maxGrade).map(entryOf);
     const set = (field, next) => change((x) => { x.spells[field] = next; }, true);
 
     if (spells.cantrips.count) {
-      box.append(element('h5', 'srd-prog-sub', 'Zaubertricks'), counter(w.spells.cantrips.length, spells.cantrips.count));
+      box.append(element('h5', 'srd-prog-sub', globalThis.VTTUi('Zaubertricks')), counter(w.spells.cantrips.length, spells.cantrips.count));
       box.append(filterable(checklist(cantrips, w.spells.cantrips, spells.cantrips.count, (next) => set('cantrips', next))));
     }
     if (spells.spellbook) {
-      box.append(element('h5', 'srd-prog-sub', 'Zauberbuch'), counter(w.spells.spellbook.length, spells.spellbook.count));
+      box.append(element('h5', 'srd-prog-sub', globalThis.VTTUi('Zauberbuch')), counter(w.spells.spellbook.length, spells.spellbook.count));
       box.append(element('p', 'srd-prog-hint', globalThis.VTTUi("Zauber im Zauberbuch bleiben erhalten.")));
       box.append(filterable(checklist(leveled, w.spells.spellbook, spells.spellbook.count, (next) => change((x) => {
         x.spells.spellbook = next;
@@ -674,7 +674,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     }
     if (spells.prepared.count) {
       const pool = spells.spellbook ? leveled.filter((entry) => w.spells.spellbook.includes(entry.id)) : leveled;
-      box.append(element('h5', 'srd-prog-sub', spells.spellbook ? 'Vorbereitete Zauber (aus dem Zauberbuch)' : 'Vorbereitete Zauber'), counter(w.spells.prepared.length, spells.prepared.count));
+      box.append(element('h5', 'srd-prog-sub', spells.spellbook ? globalThis.VTTUi('Vorbereitete Zauber (aus dem Zauberbuch)') : globalThis.VTTUi('Vorbereitete Zauber')), counter(w.spells.prepared.length, spells.prepared.count));
       box.append(filterable(checklist(pool, w.spells.prepared, spells.prepared.count, (next) => set('prepared', next))));
     }
     return box;
@@ -685,16 +685,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const panel = element('div', 'srd-prog-wizard');
     panel.id = 'srdWizard';
     panel.setAttribute('role', 'region');
-    panel.setAttribute('aria-label', 'Stufenaufstieg');
+    panel.setAttribute('aria-label', globalThis.VTTUi('Stufenaufstieg'));
     const need = w.result?.needs;
     if (!need) {
       panel.append(element('p', 'srd-prog-hint', w.error || globalThis.VTTUi("Lade Stufenaufstieg…")));
-      if (w.error) panel.append(button('Schließen', 'srd-prog-btn', closeWizard));
+      if (w.error) panel.append(button(globalThis.VTTUi('Schließen'), 'srd-prog-btn', closeWizard));
       return panel;
     }
     const head = element('div', 'srd-prog-wizard-head');
     head.append(element('h3', 'srd-prog-wizard-title', globalThis.VTTUi("Stufe {p0}: {p1} {p2}",{p0:(need.newTotalLevel),p1:(need.className),p2:(need.newClassLevel)})));
-    head.append(chip(`Übungsbonus +${need.proficiencyBonus}`));
+    head.append(chip(globalThis.VTTUi('Übungsbonus +{bonus}', {bonus: need.proficiencyBonus})));
     panel.append(head);
 
     const options = current.payload.multiclassOptions || [];
@@ -702,7 +702,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       const select = element('select', 'srd-prog-select');
       select.id = 'srdWizClass';
       options.forEach((c) => {
-        const option = element('option', null, c.owned ? `${c.name} ${c.level}` : globalThis.VTTUi("{p0} (neue Klasse){p1}",{p0:(c.name),p1:(c.eligible ? '' : ' – nicht verfügbar')}));
+        const option = element('option', null, c.owned ? `${c.name} ${c.level}` : globalThis.VTTUi("{p0} (neue Klasse){p1}",{p0:(c.name),p1:(c.eligible ? '' : globalThis.VTTUi(' – nicht verfügbar'))}));
         option.value = c.classKey;
         option.disabled = !c.eligible;
         if (c.reason) option.title = c.reason;
@@ -714,7 +714,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         render();
         refreshPreview(true);
       });
-      panel.append(labelled('Klasse', select));
+      panel.append(labelled(globalThis.VTTUi('Klasse'), select));
       const blocked = options.filter((o) => !o.eligible);
       if (blocked.length) {
         const details = element('details', 'srd-prog-history');
@@ -763,10 +763,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       footer.append(element('div', 'srd-prog-summary', globalThis.VTTUi("Trefferpunkte: {p0} ({p1}{p2}) · Übungsbonus +{p3} · Rüstungsklasse {p4}",{p0:(result.evaluation.hitPoints.max),p1:(gain >= 0 ? '+' : ''),p2:(gain),p3:(result.evaluation.proficiencyBonus),p4:(result.evaluation.armorClass.value)})));
       ready = !blockers.length && !w.error && (w.hpMode === 'fixed' || Number(w.rolled) >= 1) && !w.busy;
     }
-    const confirm = button(w.busy ? 'Speichere…' : `Stufe ${result?.needs?.newTotalLevel ?? ''} bestätigen`, 'srd-prog-btn srd-prog-primary', confirmLevelUp);
+    const confirm = button(w.busy ? globalThis.VTTUi('Speichere…') : globalThis.VTTUi('Stufe {level} bestätigen', {level: result?.needs?.newTotalLevel ?? ''}), 'srd-prog-btn srd-prog-primary', confirmLevelUp);
     confirm.id = 'srdWizConfirm';
     confirm.disabled = !ready;
-    footer.append(confirm, button('Abbrechen', 'srd-prog-btn', closeWizard));
+    footer.append(confirm, button(globalThis.VTTUi('Abbrechen'), 'srd-prog-btn', closeWizard));
   }
 
   async function confirmLevelUp() {
@@ -779,7 +779,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       const result = await auth.makeAuthRequest(base('/level-up'), 'POST', body);
       current.wizard = null;
       current.payload = result;
-      current.notice = `Aufgestiegen auf Stufe ${result.level} (${result.hpGain >= 0 ? '+' : ''}${result.hpGain} Trefferpunkte).`;
+      current.notice = globalThis.VTTUi('Aufgestiegen auf Stufe {level} ({sign}{hp} Trefferpunkte).', {level: result.level, sign: result.hpGain >= 0 ? '+' : '', hp: result.hpGain});
       render();
       current.onChange?.({ reload: true, level: result.level, message: current.notice });
     } catch (error) {

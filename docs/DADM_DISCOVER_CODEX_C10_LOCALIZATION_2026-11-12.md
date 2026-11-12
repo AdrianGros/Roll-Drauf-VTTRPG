@@ -1,0 +1,5 @@
+# Discover C10 – progression UI monitor
+
+Status complete, immutable, standard/durable. Input: real C08 Firefox390 EN/night level-up passed, but a bounded authored UI gap was observed in existing srd-progression-ui.js. Dynamic level/XP/confirm notices and literal labels passed through button/labelled/section/element helpers are not all explicitly wrapped. The helpers also receive rule/user data, so globally translating helper arguments would cross the C01 data boundary. Inventory: that one JS file, existing explicit task catalog/build script, C08 real wizard browser test and legacy progression browser helper. Frozen source inventory must remain unchanged.
+
+Low risk: mixed UI language, not a permission or rule mutation. Medium risk to avoid: treating class/spell names, user notes or server rule content as translatable UI. No new rules/number/level cap needed. Current source C08 8fb56ccc3, Atlas branch independent. Next Apply: explicit authored literal/parameter wrappers only, test actual EN and DE wizard path. Existing Firefox operation-aborted monitor rechecked live with no pageerrors, no speculative suppression.

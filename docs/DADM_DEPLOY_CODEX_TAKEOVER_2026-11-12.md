@@ -81,3 +81,5 @@ remaining participant read-only. No pageerrors. Shared navigation still passes
 all3 actual map-header click cases. Additive2-table schema/backup and rollback
 recorded in release directory; normal UI and source/image in private chat proof.
 C08 active under its original Apply plus explicit writer inventory/addendum.
+
+C10 monitor follow-up after C08: fresh active synthetic pair completed normal hub -> Chrome DM paper / Firefox390 Player EN night, all toolbar/sidebar/scale contrast checks >=4.5, Player no DM controller, and zero pageerrors. Previous Firefox operation-aborted event was not reproduced; no speculative code suppression. Scope-specific fixture cleanup (including new inventory/receipt children) passed, credentials removed from container. Final test account confirmed by owner: Donutarian.

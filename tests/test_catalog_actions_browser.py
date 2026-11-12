@@ -62,9 +62,11 @@ def test_compendium_receipt_retry_inventory_link_and_real_level_choices(action_s
         expect(page.locator('#cpCharacterHint')).to_contain_text('5 → 6')
         page.locator('#cpCharacterProgression').click()
         expect(page.locator('#srdProgression')).to_be_visible(timeout=30000)
+        expect(page.locator('.srd-prog-levelup')).to_have_text('Stufe 6 aufsteigen' if language=='de' else 'Advance to level 6')
         page.locator('.srd-prog-levelup').click()
         expect(page.locator('#srdWizard')).to_be_visible();expect(page.locator('#srdWizConfirm')).to_be_disabled()
         _fill_open_steps(page);expect(page.locator('#srdWizConfirm')).to_be_enabled(timeout=30000)
+        expect(page.locator('#srdWizConfirm')).to_have_text('Stufe 6 bestätigen' if language=='de' else 'Confirm level 6')
         assert page.evaluate('document.documentElement.scrollWidth')<=width+1
         with page.expect_response(lambda r:r.request.method=='POST' and r.url.endswith('/level-up')) as level:
             page.locator('#srdWizConfirm').click()
