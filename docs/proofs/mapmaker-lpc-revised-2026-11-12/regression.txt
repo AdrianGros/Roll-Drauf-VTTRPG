@@ -1,0 +1,3 @@
+Full run before release: tests/test_mapmaker_browser.py tests/test_mapmaker_static.py tests/test_mapmaker_sheet_slicer.py tests/test_mapmaker_tiles_server.py
+107 passed, 3 skipped in 1094.78s (skipped: Flask-served variants; Flask not installed in the scratch venv).
+The slicer test recomposes all 15,697 LPC slices (191 sheets) plus every other profile from the pinned sheets.

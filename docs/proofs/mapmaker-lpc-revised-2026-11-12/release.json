@@ -1,0 +1,25 @@
+{
+ "commit": "b1d5543c2e96de14484f6d841fd49e817b86e86d",
+ "branch": "feat/creation-engine-g1",
+ "pushed": true,
+ "baseImage": "roll-drauf-vtt-app:feedback-atlas-final-20261111-af633057f",
+ "baseImageId": "sha256:42ee9f94d99f3c38c1f83005dc3aa0a7c1d77296cb6ec810f2bbd26d5f0755ab",
+ "rollbackTag": "roll-drauf-vtt-app:lpc-revised-rollback-20261112-42ee9f94d99f",
+ "image": "roll-drauf-vtt-app:lpc-revised-20261112-b1d5543c",
+ "imageId": "sha256:480d646fc769aef7093472ae6d7662bc8ec966dbe4d3582423312d8f629edd1e",
+ "overlayFiles": 14270,
+ "overlayHashesVerifiedInImage": 14270,
+ "liveFilesReconciledBeforeOverlay": 5,
+ "newPngsAlreadyLive": 0,
+ "serverKnownAssets": 91066,
+ "switchedAt": "2026-11-12T21:39:20Z",
+ "health": {
+  "now": "2026-11-12T21:39:28.434653",
+  "service": "roll_drauf_vtt",
+  "started_at": "2026-11-12T21:39:26.159689",
+  "status": "ok"
+ },
+ "otherServicesUnchanged": true,
+ "publicHashes": "5/5 non-PNG, 30/30 sampled PNGs",
+ "rollback": "/srv/migration/2026-11-12/lpc-revised/rollback.sh"
+}
