@@ -9,6 +9,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         ['/dashboard', globalThis.VTTUi("Übersicht")],
         ['/campaigns', globalThis.VTTUi("Kampagnen")],
         ['/characters', globalThis.VTTUi("Charaktere")],
+        ['/conversations', globalThis.VTTUi("Gespräche")],
         ['/mapmaker', globalThis.VTTUi("Karten")],
         ['/api/ce/authoring', globalThis.VTTUi("Creation Engine")],
         ['/regelwerk', globalThis.VTTUi("Regelwerk")],

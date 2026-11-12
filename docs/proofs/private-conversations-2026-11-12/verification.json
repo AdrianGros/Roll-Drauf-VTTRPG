@@ -1,0 +1,45 @@
+{
+  "status": "local_checks_pass_live_pending",
+  "design": "docs/DADM_APPLY_CLAUDE_C07_2026-11-11.md",
+  "implementation": "Codex owner takeover",
+  "checks": {
+    "api_and_browser": {
+      "passed": 14,
+      "log": "/tmp/vtt-c07-full-check.log",
+      "cases": [
+        "Owner/Admin/DM nonparticipants never read/list/send",
+        "Current active membership on every request; revoked member hidden, remaining partner read-only",
+        "UUID replay and changed-text conflict",
+        "Bounded message/list cursors and plaintext/strict payloads",
+        "No session-chat rows, campaign payload content or socket emits",
+        "1440 DE paper +390 EN night: Chrome DM/Firefox Player, normal hub Chat, reply/reload, commit then lost response -> same UUID -> one confirmed message",
+        "Switch while old read delayed; hidden page stops polling"
+      ]
+    },
+    "focused_recheck": {
+      "passed": 2,
+      "log": "/tmp/vtt-c07-lifecycle-recheck.log",
+      "changes": [
+        "Reject invalid Unicode before storage",
+        "Pagehide clears cached history/drafts and aborts; persisted pageshow reauthorizes before showing history"
+      ]
+    },
+    "postgres": {
+      "passed": 1,
+      "log": "/tmp/vtt-c07-pg.log",
+      "cases": [
+        "Four opposing pair opens -> one conversation",
+        "Four simultaneous same author/event sends -> one message, same confirmed ID"
+      ]
+    }
+  },
+  "self_review": [
+    "Fresh participant+usable user+campaign membership, no DM/owner/Admin override for third-party conversations",
+    "One fixed sorted pair per campaign, current authority before UUID replay, shared conversation row lock for send",
+    "No private socket rooms or table data changes; API response cache private/no-store",
+    "TextContent only, typed same-origin paths, CSRF, rate and page bounds, cancellation/version guards on reads and sends",
+    "Pagehide clears history and pending drafts; stale list replies also invalidated on denied access",
+    "Two additive tables only; old images ignore them, no retention rewrite"
+  ],
+  "independent_review": false
+}
