@@ -13,6 +13,7 @@ import secrets
 from flask import g, has_request_context, jsonify, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, verify_jwt_in_request
 
+from vtt.auth.lifetime import AuthLifetimeError, context_deadline, now_dt
 from vtt.extensions import db
 from vtt.models import Campaign, GameSession, User
 from vtt.models.table_context import TableContext
@@ -33,7 +34,7 @@ def validate(context, user_id=None, campaign_id=None, session_id=None):
         return False
     from vtt.models import Session
     login = Session.query.filter_by(token_jti=context.auth_jti).first()
-    if login and login.revoked_at is not None:
+    if login and (login.revoked_at is not None or login.expires_at <= now_dt()):
         return False
     try:
         if user_id is not None and context.user_id != int(user_id):
@@ -88,10 +89,15 @@ def restrict_campaign_role(campaign_id, user_id):
 def issue(user_id, campaign_id, session_id, mode, tab):
     if mode not in {"player", "dm"} or not isinstance(tab, str) or not 16 <= len(tab) <= 128:
         return None, (jsonify(error="invalid_context_request"), 400)
+    try:
+        deadline = context_deadline(get_jwt())
+    except AuthLifetimeError:
+        return None, (jsonify(error="context_forbidden"), 403)
     token = secrets.token_urlsafe(32)
+    # Never outlive the signed absolute login end (legacy access: its own exp).
     context = TableContext(token_hash=digest(token), tab_hash=digest(tab), auth_jti=get_jwt()["jti"], user_id=user_id,
                            campaign_id=campaign_id, game_session_id=session_id, mode=mode,
-                           expires_at=utcnow() + timedelta(hours=8))
+                           expires_at=min(utcnow() + timedelta(hours=8), deadline))
     if not validate(context, user_id, campaign_id, session_id):
         return None, (jsonify(error="context_forbidden"), 403)
     old = getattr(g, "table_context", None)

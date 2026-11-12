@@ -29,6 +29,7 @@ from vtt.models import (
     User,
 )
 from vtt.auth import auth_bp
+from vtt.auth import lifetime
 from vtt.auth.discord_oauth import (
     DiscordAuthError,
     build_unique_username,
@@ -56,18 +57,6 @@ PASSWORD_RESET_GENERIC_MESSAGE = (
 
 def _parse_bool(value) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes", "on"}
-
-
-def _refresh_cookie_max_age(remember_me: bool) -> int:
-    # JWT_SESSION_COOKIE=True means a cookie Max-Age of None makes the
-    # browser drop it as soon as the browser session ends, even though the
-    # refresh JWT itself stays valid server-side for JWT_REFRESH_TOKEN_EXPIRES.
-    # That mismatch silently logs users out well before their token actually
-    # expires, so every login path gives the cookie a real lifetime matching
-    # whichever token expiry actually applies.
-    if remember_me:
-        return int(REMEMBER_ME_REFRESH_EXPIRES.total_seconds())
-    return int(current_app.config["JWT_REFRESH_TOKEN_EXPIRES"].total_seconds())
 
 
 def _sanitize_relative_path(value: str | None, fallback: str = "/dashboard") -> str:
@@ -272,23 +261,6 @@ def _bind_assignment_to_user(assignment: RegistrationKey, user: User) -> None:
     assignment.used_at = assignment.used_at or utcnow()
 
 
-def _create_session_from_access_token(user_id: int, access_token: str) -> None:
-    """Persist session metadata for audit + revocation checks."""
-    decoded = decode_token(access_token)
-    exp_timestamp = decoded.get("exp")
-    expires_at = datetime.fromtimestamp(exp_timestamp, tz=timezone.utc).replace(tzinfo=None)
-
-    session = Session(
-        user_id=user_id,
-        token_jti=decoded.get("jti"),
-        expires_at=expires_at,
-        ip_address=request.remote_addr,
-        user_agent=request.headers.get("User-Agent"),
-    )
-    db.session.add(session)
-    db.session.commit()
-
-
 def _register_user(data: dict, *, require_registration_key: bool = False):
     """Create a standard account, optionally applying an invitation tier.
 
@@ -370,15 +342,11 @@ def _register_user(data: dict, *, require_registration_key: bool = False):
         performed_by=user,
     )
 
-    access_token = create_access_token(identity=str(user.id))
-    refresh_token = create_refresh_token(identity=str(user.id))
-    _create_session_from_access_token(user.id, access_token)
+    tokens = lifetime.issue_tokens(user.id)
     user.update_last_login()
 
     response = jsonify({"user": user.serialize(include_email=True)})
-    cookie_max_age = _refresh_cookie_max_age(remember_me=False)
-    set_access_cookies(response, access_token, max_age=cookie_max_age)
-    set_refresh_cookies(response, refresh_token, max_age=cookie_max_age)
+    lifetime.set_login_cookies(response, tokens)
     return response, 201
 
 
@@ -429,19 +397,13 @@ def login():
             return jsonify({"mfa_required": True}), 401
         return jsonify({"error": "invalid MFA code"}), 401
 
-    access_token = create_access_token(identity=str(user.id))
-    refresh_token = create_refresh_token(
-        identity=str(user.id),
-        expires_delta=REMEMBER_ME_REFRESH_EXPIRES if remember_me else None,
-    )
-
     user.update_last_login()
-    _create_session_from_access_token(user.id, access_token)
+    # remember_me is parsed for API compatibility but never extends the
+    # absolute login limit.
+    tokens = lifetime.issue_tokens(user.id)
 
     response = jsonify({"user": user.serialize(include_email=True)})
-    cookie_max_age = _refresh_cookie_max_age(remember_me)
-    set_access_cookies(response, access_token, max_age=cookie_max_age)
-    set_refresh_cookies(response, refresh_token, max_age=cookie_max_age)
+    lifetime.set_login_cookies(response, tokens)
     return response, 200
 
 
@@ -584,16 +546,11 @@ def discord_callback():
         user.last_login = utcnow()
         db.session.commit()
 
-        access_token = create_access_token(identity=str(user.id))
-        refresh_token = create_refresh_token(
-            identity=str(user.id),
-            expires_delta=REMEMBER_ME_REFRESH_EXPIRES if remember_me else None,
-        )
+        # remember_me is accepted for the OAuth round trip but does not extend
+        # the absolute login limit.
+        tokens = lifetime.issue_tokens(user.id)
         response = redirect(next_path)
-        cookie_max_age = _refresh_cookie_max_age(remember_me)
-        set_access_cookies(response, access_token, max_age=cookie_max_age)
-        set_refresh_cookies(response, refresh_token, max_age=cookie_max_age)
-        _create_session_from_access_token(user.id, access_token)
+        lifetime.set_login_cookies(response, tokens)
         return response
 
     except DiscordAuthError as exc:
@@ -658,14 +615,22 @@ def refresh():
     if not user or not user.is_usable():
         return jsonify({"error": "user not found or inactive"}), 401
 
-    new_access_token = create_access_token(identity=str(user.id))
-    _create_session_from_access_token(user.id, new_access_token)
+    # The blocklist seam already ran check_payload; repeat to learn the anchor
+    # (and to fail closed if the seam is ever bypassed).
+    try:
+        info = lifetime.check_payload(get_jwt(), expected_type="refresh")
+        if info.legacy:
+            # One-time migration: the signed original iat is the anchor, never
+            # "now"; remember-me's 30 days are not honoured.
+            tokens = lifetime.issue_tokens(user.id, started=info.started, refresh=True)
+        else:
+            # Same anchor, same refresh token; only a new bounded access token.
+            tokens = lifetime.issue_tokens(user.id, started=info.started, refresh=False)
+    except lifetime.AuthLifetimeError:
+        return jsonify({"error": "login expired"}), 401
 
     response = jsonify({"success": True})
-    # Match the access cookie's Max-Age to the refresh cookie's so a refresh
-    # never downgrades it back to a browser-session-only cookie (see
-    # _refresh_cookie_max_age for why that matters).
-    set_access_cookies(response, new_access_token, max_age=_refresh_cookie_max_age(remember_me=False))
+    lifetime.set_login_cookies(response, tokens, refresh=info.legacy)
     return response, 200
 
 

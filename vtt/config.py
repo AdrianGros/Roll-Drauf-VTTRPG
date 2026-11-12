@@ -69,6 +69,10 @@ class Config:
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'dev-secret-change-in-prod-immediately')
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=7)
+    # Absolute login limit (C03): signed into every new access/refresh token.
+    # Refresh and remember-me never extend it; JWT_REFRESH_TOKEN_EXPIRES is only
+    # the fallback for legacy tokens and is always capped by this limit.
+    AUTH_ABSOLUTE_LIFETIME = timedelta(hours=6)
     JWT_TOKEN_LOCATION = ['cookies']
     JWT_HEADER_NAME = 'Authorization'
     JWT_HEADER_TYPE = 'Bearer'

@@ -397,8 +397,11 @@ def _parse_authenticated_user():
     if not access_token:
         return None, {"code": "unauthorized", "message": "authentication required"}
 
+    from vtt.auth import lifetime
     try:
         decoded = decode_token(access_token)
+        # A successful pure decode is not a lifetime/revocation check.
+        lifetime.check_payload(decoded, expected_type="access")
     except Exception:
         # The server-issued table delegation can outlive the access JWT, but
         # never its own TTL, account/membership rights or issuing login.
@@ -411,6 +414,9 @@ def _parse_authenticated_user():
             return None, {"code": "unauthorized", "message": "invalid token"}
         try:
             decoded = decode_token(access_token, allow_expired=True)
+            # Short access exp is waived for the delegation only; absolute
+            # end, claims, type and revocation are still enforced.
+            lifetime.check_payload(decoded, expected_type="access", allow_expired=True)
             if int(decoded.get("sub")) != context.user_id:
                 raise ValueError("context identity mismatch")
         except Exception:

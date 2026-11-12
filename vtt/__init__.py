@@ -221,12 +221,10 @@ def create_app(config_name=None):
 
     @jwt.token_in_blocklist_loader
     def is_token_revoked(_jwt_header, jwt_payload):
-        from vtt.models import Session
-        token_jti = jwt_payload.get("jti")
-        if not token_jti:
-            return False
-        session = Session.query.filter_by(token_jti=token_jti).first()
-        return bool(session and session.revoked_at is not None)
+        # Central C03 seam: absolute login end, strict claims, token type,
+        # registered-JTI revocation and legacy logout cutoff in one helper.
+        from vtt.auth.lifetime import token_rejected
+        return token_rejected(jwt_payload)
 
     @jwt.unauthorized_loader
     def handle_missing_token(reason):
