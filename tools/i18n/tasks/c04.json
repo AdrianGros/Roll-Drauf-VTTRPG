@@ -1,33 +1,110 @@
 {
-  "task": "C04",
-  "note": "Authored VTTUi literals only; compiler and shared bundles are coordinator-owned. Static HTML labels without data-ui-key (Importieren, Exportieren, Stempelraster, Rasterweite (px), Radierer wirkt auf, Aktive Ebene, Alle sichtbaren Ebenen, Pinselradius (Zellen), Kachelvarianten, Eigene Bibliothek) need the existing mark-ui pass.",
-  "messages": {
-    "Eigene Bibliothek": "Own library",
-    "Eigene Karten durchsuchen": "Search your maps",
-    "Titel der Tischkarte": "Table map title",
-    "Raster in Pixel": "Grid size in pixels",
-    "Zurück": "Back",
-    "Weiter": "Next",
-    "Titel": "Title",
-    "Raster": "Grid",
-    "Ich bestätige: Dieses Bild wird für alle am Tisch sichtbar. Das private Projekt wird nicht geteilt.": "I confirm: this image becomes visible to everyone at the table. The private project is not shared.",
-    "Bibliothek wird geladen …": "Loading library …",
-    "Vorschau von „{p0}“": "Preview of “{p0}”",
-    "Seite {p0} von {p1}": "Page {p0} of {p1}",
-    "Keine eigenen Karten gefunden.": "No maps of your own found.",
-    "Vorschau wird erzeugt …": "Rendering preview …",
-    "Revision {p0}": "Revision {p0}",
-    "Karte wird übernommen …": "Adding map …",
-    "Zum Tisch hinzufügen": "Add to table",
-    "Die Karte wurde angelegt, aber noch nicht aktiviert. „Zum Tisch hinzufügen“ wiederholt nur diesen Schritt.": "The map was created but not activated yet. “Add to table” repeats only this step.",
-    "Karte \"{p0}\" übernommen und aktiviert.": "Map \"{p0}\" added and activated.",
-    "Die Karte konnte nicht übernommen werden.": "The map could not be added.",
-    "Die Kartenbibliothek konnte nicht geladen werden.": "The map library could not be loaded.",
-    "Die Auswahl hat sich geändert. Bitte die Vorschau erneut öffnen.": "The selection changed. Please open the preview again.",
-    "Der Radierer wirkt nur auf sichtbare Raster-, Kachel- und Symbolebenen. Wähle eine solche Ebene oder „Alle sichtbaren Ebenen“.": "The eraser only works on visible raster, tile and symbol layers. Pick such a layer or “All visible layers”.",
-    "Diese Radierfläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten radieren.": "This erase area is too large for the history and was reverted. Please erase in smaller steps.",
-    "Diese Fläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten malen.": "This area is too large for the history and was reverted. Please paint in smaller steps.",
-    "Unbekannte Kachel-IDs wurden ignoriert.": "Unknown tile IDs were ignored.",
-    "Symbolpakete konnten nicht vollständig geladen werden. Bitte erneut versuchen.": "Asset packs could not be loaded completely. Please try again."
+  "Eigene Bibliothek": {
+    "de": "Eigene Bibliothek",
+    "en": "Own library"
+  },
+  "Eigene Karten durchsuchen": {
+    "de": "Eigene Karten durchsuchen",
+    "en": "Search your maps"
+  },
+  "Titel der Tischkarte": {
+    "de": "Titel der Tischkarte",
+    "en": "Table map title"
+  },
+  "Raster in Pixel": {
+    "de": "Raster in Pixel",
+    "en": "Grid size in pixels"
+  },
+  "Zurück": {
+    "de": "Zurück",
+    "en": "Back"
+  },
+  "Weiter": {
+    "de": "Weiter",
+    "en": "Next"
+  },
+  "Titel": {
+    "de": "Titel",
+    "en": "Title"
+  },
+  "Raster": {
+    "de": "Raster",
+    "en": "Grid"
+  },
+  "Ich bestätige: Dieses Bild wird für alle am Tisch sichtbar. Das private Projekt wird nicht geteilt.": {
+    "de": "Ich bestätige: Dieses Bild wird für alle am Tisch sichtbar. Das private Projekt wird nicht geteilt.",
+    "en": "I confirm: this image becomes visible to everyone at the table. The private project is not shared."
+  },
+  "Bibliothek wird geladen …": {
+    "de": "Bibliothek wird geladen …",
+    "en": "Loading library …"
+  },
+  "Vorschau von „{p0}“": {
+    "de": "Vorschau von „{p0}“",
+    "en": "Preview of “{p0}”"
+  },
+  "Seite {p0} von {p1}": {
+    "de": "Seite {p0} von {p1}",
+    "en": "Page {p0} of {p1}"
+  },
+  "Keine eigenen Karten gefunden.": {
+    "de": "Keine eigenen Karten gefunden.",
+    "en": "No maps of your own found."
+  },
+  "Vorschau wird erzeugt …": {
+    "de": "Vorschau wird erzeugt …",
+    "en": "Rendering preview …"
+  },
+  "Revision {p0}": {
+    "de": "Revision {p0}",
+    "en": "Revision {p0}"
+  },
+  "Karte wird übernommen …": {
+    "de": "Karte wird übernommen …",
+    "en": "Adding map …"
+  },
+  "Zum Tisch hinzufügen": {
+    "de": "Zum Tisch hinzufügen",
+    "en": "Add to table"
+  },
+  "Die Karte wurde angelegt, aber noch nicht aktiviert. „Zum Tisch hinzufügen“ wiederholt nur diesen Schritt.": {
+    "de": "Die Karte wurde angelegt, aber noch nicht aktiviert. „Zum Tisch hinzufügen“ wiederholt nur diesen Schritt.",
+    "en": "The map was created but not activated yet. “Add to table” repeats only this step."
+  },
+  "Karte \"{p0}\" übernommen und aktiviert.": {
+    "de": "Karte \"{p0}\" übernommen und aktiviert.",
+    "en": "Map \"{p0}\" added and activated."
+  },
+  "Die Karte konnte nicht übernommen werden.": {
+    "de": "Die Karte konnte nicht übernommen werden.",
+    "en": "The map could not be added."
+  },
+  "Die Kartenbibliothek konnte nicht geladen werden.": {
+    "de": "Die Kartenbibliothek konnte nicht geladen werden.",
+    "en": "The map library could not be loaded."
+  },
+  "Die Auswahl hat sich geändert. Bitte die Vorschau erneut öffnen.": {
+    "de": "Die Auswahl hat sich geändert. Bitte die Vorschau erneut öffnen.",
+    "en": "The selection changed. Please open the preview again."
+  },
+  "Der Radierer wirkt nur auf sichtbare Raster-, Kachel- und Symbolebenen. Wähle eine solche Ebene oder „Alle sichtbaren Ebenen“.": {
+    "de": "Der Radierer wirkt nur auf sichtbare Raster-, Kachel- und Symbolebenen. Wähle eine solche Ebene oder „Alle sichtbaren Ebenen“.",
+    "en": "The eraser only works on visible raster, tile and symbol layers. Pick such a layer or “All visible layers”."
+  },
+  "Diese Radierfläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten radieren.": {
+    "de": "Diese Radierfläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten radieren.",
+    "en": "This erase area is too large for the history and was reverted. Please erase in smaller steps."
+  },
+  "Diese Fläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten malen.": {
+    "de": "Diese Fläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten malen.",
+    "en": "This area is too large for the history and was reverted. Please paint in smaller steps."
+  },
+  "Unbekannte Kachel-IDs wurden ignoriert.": {
+    "de": "Unbekannte Kachel-IDs wurden ignoriert.",
+    "en": "Unknown tile IDs were ignored."
+  },
+  "Symbolpakete konnten nicht vollständig geladen werden. Bitte erneut versuchen.": {
+    "de": "Symbolpakete konnten nicht vollständig geladen werden. Bitte erneut versuchen.",
+    "en": "Asset packs could not be loaded completely. Please try again."
   }
 }
