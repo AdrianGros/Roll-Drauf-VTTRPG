@@ -169,18 +169,20 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (group !== 'discard-spells') panels.get(group).append(node);
         }
         panels.get('spells').append(spellPanel(detail, data));
+        // The panels are not in the document yet, so keep a reference to the moved grid.
+        const identityGrid = document.getElementById('sheetIdentityGrid');
         for (const id of ['sheetIdentityGrid', 'dndExportSection']) {
             const node = document.getElementById(id);
             if (node) panels.get('manage').append(id === 'sheetIdentityGrid' ? node.closest('.sheet-pane') : node);
         }
         // Owner-only shortcut to the existing avatar/token controls in the management tab.
         // The server projection decides; the upload/replace/remove endpoints re-check ownership.
-        if (character.permissions?.editIdentity === true && document.getElementById('sheetIdentityGrid')) {
+        if (character.permissions?.editIdentity === true && identityGrid) {
             const images = el('button', 'sf-tab sf-images-action', globalThis.VTTUi("Bilder verwalten"));
             images.type = 'button'; images.id = 'sfManageImages';
             images.addEventListener('click', () => {
                 show('manage');
-                const grid = document.getElementById('sheetIdentityGrid');
+                const grid = identityGrid;
                 const target = grid?.querySelector('button:not([disabled])') || grid;
                 if (target === grid) grid.tabIndex = -1;
                 target?.focus();

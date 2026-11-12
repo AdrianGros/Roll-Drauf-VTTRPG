@@ -349,6 +349,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   }
 
   /* Loads the inventory into #srdInventory; `onChange(payload)` lets the sheet refresh derived values like the armor class. */
+  /* Redraws from the loaded payload after the sheet's `editable` changed (lock); nothing is fetched or saved. */
+  window.renderSrdInventory = () => { if (current) render(); };
+
   window.loadSrdInventory = async function (character, onChange) {
     const root = document.getElementById('srdInventory');
     if (!root) return;

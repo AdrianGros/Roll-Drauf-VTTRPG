@@ -385,3 +385,50 @@ def test_creator_offers_no_second_nonrepeatable_feat_and_explains_a_saved_repeat
             assert page.evaluate("window.SrdCreator.app.draft.state.advancements.find((a) => a.classLevel === 4).featId") == feat
         assert not errors, errors
         browser.close()
+
+
+def test_missing_sheet_permission_projection_keeps_edit_entry_read_only(site, data):
+    from playwright.sync_api import expect, sync_playwright
+    app, origin, info = site
+    char_id = _character(app, info, data)
+    with sync_playwright() as p:
+        browser, page, errors, writes = _context(p, origin, info['token'], 1440)
+        def without_projection(route):
+            response = route.fetch()
+            payload = response.json()
+            payload['character'].pop('permissions', None)
+            route.fulfill(response=response, json=payload)
+        page.route(f'**/api/characters/{char_id}/sheet', without_projection)
+        page.goto(f'{origin}/character-sheet?id={char_id}&mode=edit')
+        expect(page.locator('#srdSheetBody')).to_be_visible()
+        expect(page.locator('#charName')).to_be_disabled()
+        expect(page.locator('#sheetModeActionBtn')).to_be_hidden()
+        expect(page.locator('#sfManageImages')).to_have_count(0)
+        assert not [w for w in writes if '/api/characters/' in w[1]], writes
+        assert not errors, errors
+        browser.close()
+
+
+def test_local_lock_and_explicit_view_remove_srd_manage_mutations(site, data):
+    from playwright.sync_api import expect, sync_playwright
+    app, origin, info = site
+    char_id = _character(app, info, data)
+    with sync_playwright() as p:
+        browser, page, errors, writes = _context(p, origin, info['token'], 1440)
+        page.goto(f'{origin}/character-sheet?id={char_id}')
+        page.get_by_role('tab', name='Verwaltung', exact=True).click()
+        add = page.get_by_role('button', name='Begleiter hinzufügen', exact=True)
+        expect(add).to_be_visible()
+        before = len(writes)
+        page.locator('#sheetLockBtn').click()
+        expect(add).not_to_be_visible()
+        expect(page.locator('#srdManageDuplicate')).not_to_be_visible()
+        assert len(writes) == before
+        page.locator('#sheetLockBtn').click()
+        expect(add).to_be_visible()
+        page.goto(f'{origin}/character-sheet?id={char_id}&mode=view')
+        page.get_by_role('tab', name='Verwaltung', exact=True).click()
+        expect(add).not_to_be_visible()
+        expect(page.locator('#srdManageDuplicate')).not_to_be_visible()
+        assert not errors, errors
+        browser.close()

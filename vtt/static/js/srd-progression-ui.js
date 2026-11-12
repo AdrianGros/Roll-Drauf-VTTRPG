@@ -205,7 +205,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     return wrap;
   }
 
+  // The sheet's local lock / explicit view only ever removes actions; the server stays the authority.
+  const locked = () => globalThis.SheetLock?.locked === true;
+
   async function confirmLevelDown() {
+    if (locked()) return;
     try {
       const result = await auth.makeAuthRequest(base('/level-down'), 'POST', { expectedLevel: current.payload.status.level });
       current.confirmDown = false;
@@ -222,6 +226,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   }
 
   async function save(body, notice) {
+    if (locked()) return;
     try {
       current.payload = await auth.makeAuthRequest(base('/progression'), 'PUT', body);
       current.notice = notice;
@@ -261,11 +266,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     status.setAttribute('aria-live', 'polite');
     root.append(status);
     root.append(progressBar(payload.status));
-    if (payload.canLevelUp && payload.status.canLevelUp) {
+    const readOnly = locked();
+    if (readOnly) {
+      current.wizard = null;
+      current.confirmDown = false;
+    }
+    if (!readOnly && payload.canLevelUp && payload.status.canLevelUp) {
       root.append(button(`Stufe ${payload.status.level + 1} aufsteigen`, 'srd-prog-btn srd-prog-primary srd-prog-levelup', startWizard));
     }
-    if (payload.canLevelDown) root.append(levelDownBlock(payload));
-    if (payload.canManage) root.append(manageBlock(payload));
+    if (!readOnly && payload.canLevelDown) root.append(levelDownBlock(payload));
+    if (!readOnly && payload.canManage) root.append(manageBlock(payload));
     const history = historyBlock(payload);
     if (history) root.append(history);
     if (current.wizard) root.append(wizardPanel());
@@ -275,6 +285,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   // ------------------------------------------------------------------- wizard
 
   async function startWizard() {
+    if (locked()) return;
     const classes = current.evaluation?.classes || [];
     if (!classes.length) return;
     current.wizard = {
@@ -760,7 +771,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
   async function confirmLevelUp() {
     const w = current.wizard;
-    if (!w?.result) return;
+    if (!w?.result || locked()) return;
     w.busy = true;
     updateFooter();
     try {
@@ -779,6 +790,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   }
 
   /* Loads level/XP into #srdProgression; `onChange({reload})` lets the sheet refresh after the level changed. */
+  /* Redraws from the loaded payload after the sheet's lock changed; nothing is fetched or saved. */
+  window.renderSrdProgression = () => { if (current?.payload) render(); };
+
   window.loadSrdProgression = async function (character, evaluation, onChange) {
     const root = document.getElementById('srdProgression');
     if (!root) return;
