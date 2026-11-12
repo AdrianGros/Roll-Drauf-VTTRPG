@@ -32,3 +32,11 @@ VTT labels. `installEagle()` adapts the existing shim i18n API, not arbitrary DO
 `eagle-host-patches.json` records the exact changes to the VTT-owned host entry
 in the existing compiled bundle so a rebuild can preserve them. Imported dnd5e
 catalog names and document content remain source-language data.
+
+Independent workers add new authored labels only in their assigned
+`tools/i18n/tasks/<task>.json` (the same source → `{de,en}` format). The compiler
+loads these files in filename order. Identical existing translations are accepted;
+conflicting translations are rejected, including conflicts with the inventory or
+main extras. Duplicate keys, missing/empty locales and placeholder mismatches keep
+the same strict checks. Reuse existing labels rather than overriding another task.
+Generated bundles and the compiler remain coordinator-owned.

@@ -43,6 +43,22 @@ def compile_catalog(check=False):
             seen.add(source)
         return dict(pairs)
     extra_rows = json.loads((HERE / 'extra-messages.json').read_text(), object_pairs_hook=reject_duplicate_sources)
+    # Disjoint task files let workers add labels without sharing a mutable catalog.
+    # Only the reviewed main extras may override an existing translation.
+    for fragment in sorted((HERE / 'tasks').glob('*.json')):
+        rows = json.loads(fragment.read_text(), object_pairs_hook=reject_duplicate_sources)
+        if not isinstance(rows, dict):
+            raise ValueError('Invalid task catalog: ' + fragment.name)
+        for source, row in rows.items():
+            existing = extra_rows.get(source)
+            if existing is None:
+                key = 'u_' + hashlib.sha1(source.encode()).hexdigest()[:12]
+                previous = messages.get(key)
+                if previous and previous.get('source') == source:
+                    existing = {language: previous[language] for language in ('de', 'en')}
+            if existing is not None and existing != row:
+                raise ValueError('Conflicting task translation: ' + fragment.name + ': ' + source)
+            extra_rows[source] = row
     for source, row in extra_rows.items():
         if not isinstance(source, str) or not source.strip() or not isinstance(row, dict):
             raise ValueError('Invalid extra message')
