@@ -12,3 +12,5 @@ Owner-authorized Codex takeover. No independent reviewer claimed. Reviewed all A
 - Low: storage object deletion failure can leave a scoped orphan; logged, no live URL or grant emitted. Existing adapter operational cleanup remains applicable. No public publishing, CRDT, 3D or unprovided assets introduced.
 
 No unresolved medium-or-higher finding. Four additive tables only. Live source/image/backup/normal-navigation evidence required before completion.
+
+Final recovery review found the Atlas beforeunload idle-autosave condition omitted unsaved shared drafts. Bounded Apply recovery addendum implemented one existing-handler condition; actual Firefox reload dialog dismissed, exact working document retained, then lease/CAS save passed. /tmp/vtt-c09-recovery-browser.log:1passed117.17s. No unresolved medium finding; first image pending acceptance superseded by recovery follow-up.

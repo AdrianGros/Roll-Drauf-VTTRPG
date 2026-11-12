@@ -1,0 +1,5 @@
+# Apply C09 recovery addendum
+
+Status complete, immutable, bounded pre-acceptance rework. First Atlas image is deployed pending live acceptance. Final lifecycle review found that disabling personal autosave in Atlas mode leaves the existing beforeunload handler's `unprotected` condition false. Thus an unsaved Atlas map could be left without warning. Medium data-loss risk; resolve before calling delivery complete.
+
+Use the existing editor unsaved-generation/file-save calculation and existing beforeunload handler. Treat Atlas mode as needing that warning, even with autosave idle. A successful shared save or exported recovery file remains protected; no new autosave or authority path. Verify an actual Firefox beforeunload dialog can be dismissed after landmass/Undo/Redo, retaining the working document, then save through the same lease/CAS path. Roll the one-line change into a bounded app-only follow-up and run the combined live journey on the final image. Other domain/API checks need no repetition for this presentation-only change.

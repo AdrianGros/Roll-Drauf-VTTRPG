@@ -20,8 +20,9 @@ def test_atlas_three_map_author_reader_editor_and_revocation(action_site,tmp_pat
  with sync_playwright() as p:
   chrome=p.chromium.launch(headless=True,args=['--no-sandbox']);ff=p.firefox.launch(headless=True)
   contexts=[];pages=[];errors=[];reader_requests=[]
+  def accept_dialog(dialog):dialog.accept()
   for browser,token,width,language,theme in [(chrome,info['dm_auth'],1440,'de','paper'),(ff,info['player_auth'],390,'en','night'),(ff,reader_auth,390,'en','night')]:
-   context=browser.new_context(viewport={'width':width,'height':1000},reduced_motion='reduce');contexts.append(context);preferences(context,language=language,theme=theme);context.add_cookies([{'name':'access_token_cookie','value':token,'url':origin,'httpOnly':True}]);page=context.new_page();page.set_default_timeout(30000);page.on('dialog',lambda dialog:dialog.accept());page.on('pageerror',lambda error:errors.append({'message':str(error),'stack':error.stack}));pages.append(page)
+   context=browser.new_context(viewport={'width':width,'height':1000},reduced_motion='reduce');contexts.append(context);preferences(context,language=language,theme=theme);context.add_cookies([{'name':'access_token_cookie','value':token,'url':origin,'httpOnly':True}]);page=context.new_page();page.set_default_timeout(30000);page.on('dialog',accept_dialog);page.on('pageerror',lambda error:errors.append({'message':str(error),'stack':error.stack}));pages.append(page)
   owner,editor,reader=pages;reader.on('request',lambda request:reader_requests.append(request.url))
   owner.goto(origin+'/characters');owner.locator('a[href="/atlas"]').click();owner.locator('#atlasNewTitle').fill('Three map Atlas');owner.locator('#atlasCreate').click();expect(owner.locator('#atlasTitle')).to_be_visible();world=owner.url.split('world=')[-1]
   owner.locator('#atlasPrivateLore').fill('SECRET-WORLD');owner.locator('#atlasSummary').fill('A navigable world');owner.locator('#atlasSave').click();expect(owner.locator('#atlasAuthorStatus')).to_have_text('Gespeichert.')
@@ -47,6 +48,17 @@ def test_atlas_three_map_author_reader_editor_and_revocation(action_site,tmp_pat
   expect(editor.locator('#cloudSave')).to_have_text('Save Atlas map');expect(editor.locator('#libraryBtn')).to_be_hidden();expect(editor.locator('#atlasEditorStatus')).to_have_text('Atlas map saved.')
   owner_map=contexts[0].new_page();owner_map.set_default_timeout(30000);owner_map.on('pageerror',lambda error:errors.append({'message':str(error)}));owner_map.goto(editor.url);expect(owner_map.locator('#app')).to_have_attribute('data-state','error',timeout=60000);expect(owner_map.locator('#loadingText')).to_contain_text('anderen Fenster')
   editor.locator('#landmassBtn').click();editor.locator('#landmassPreview').click();expect(editor.locator('#landmassAdopt')).to_be_enabled(timeout=30000);editor.locator('#landmassAdopt').click();expect(editor.locator('#undoBtn')).to_be_enabled();editor.locator('#undoBtn').click();expect(editor.locator('#redoBtn')).to_be_enabled();editor.locator('#redoBtn').click()
+  # The private Atlas working copy has no personal autosave: actual reload must warn.
+  warnings=[]
+  def keep_unsaved(dialog):warnings.append(dialog.type);dialog.dismiss()
+  editor.remove_listener('dialog',accept_dialog);editor.on('dialog',keep_unsaved)
+  before=editor.evaluate('window.rdMapmaker.summary()')
+  from playwright.sync_api import Error
+  try:editor.reload(timeout=5000)
+  except Error:pass  # browsers report a canceled navigation differently
+  assert warnings==['beforeunload'],warnings
+  assert editor.evaluate('window.rdMapmaker.summary()')==before
+  editor.remove_listener('dialog',keep_unsaved);editor.on('dialog',accept_dialog)
   with editor.expect_response(lambda r:r.request.method=='PUT' and '/maps/' in r.url) as saved:editor.locator('#cloudSave').click()
   assert saved.value.status==200,saved.value.text();expect(editor.locator('#atlasEditorStatus')).to_have_text('Atlas map saved.')
   assert reader.request.get(image_url).body()==published_pixels

@@ -103,7 +103,7 @@ class Editor {
         this.observeSize();
         attachInput(this);
         window.addEventListener("beforeunload", (event) => {
-            const unprotected = this.autosave.state === "failed" || this.autosave.state === "unavailable";
+            const unprotected = this.library.atlas || this.autosave.state === "failed" || this.autosave.state === "unavailable";
             if (unprotected && this.hasUnsavedChanges()) {
                 event.preventDefault();
                 event.returnValue = "";

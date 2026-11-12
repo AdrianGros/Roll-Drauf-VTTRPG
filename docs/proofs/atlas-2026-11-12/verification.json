@@ -32,5 +32,19 @@
     "actual_import_chooser_and_export_dialog": true
   },
   "review": "Codex structured self-review, no independent review claimed",
-  "live": "PENDING"
+  "live": "PENDING",
+  "integrated_browser": {
+    "passed": 1,
+    "log": "/tmp/vtt-c09-integrated-browser.log",
+    "private_document_title_absent": true
+  },
+  "actual_unsaved_recovery": {
+    "passed": 1,
+    "log": "/tmp/vtt-c09-recovery-browser.log",
+    "case": "Firefox real beforeunload dialog dismissed -> exact unsaved document retained -> normal Atlas save"
+  },
+  "integrated_program_API": {
+    "passed": 135,
+    "log": "/tmp/vtt-c10-integrated-api.log"
+  }
 }
