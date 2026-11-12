@@ -1,6 +1,6 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
-  "status": "execution_started",
+  "status": "native_quota_blocked_engine_choice_pending",
   "phase": "monitor_C01_deploy_C02_rework_C04",
   "retention": "durable",
   "date": "2026-11-11",
@@ -31,7 +31,22 @@
       "five_hour_percent": 53,
       "seven_day_percent": 87,
       "extra_usage_enabled": false
-    }
+    },
+    "latest_quota": {
+      "five_hour": {
+        "utilization": 100.0,
+        "resets_at": "2026-11-12T11:39:59.774865+00:00"
+      },
+      "seven_day": {
+        "utilization": 91.0,
+        "resets_at": "2026-11-15T09:59:59.774884+00:00"
+      },
+      "extra_usage": {
+        "is_enabled": false,
+        "utilization": null
+      }
+    },
+    "quota_evidence": "docs/proofs/claude-program-2026-11-12/execution-state.json"
   },
   "roles": {
     "implementation": [
@@ -119,7 +134,7 @@
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
       "candidate_commit": "08f380253",
       "review_model": "sonnet",
-      "known_gap": "Functional journeys pass, Medium PlayChrome contrast finding requires bounded follow-up; not complete",
+      "known_gap": "Functional live pass, Medium PlayChrome contrast open. Claude retry stopped before edits at5hourlimit; scoped handoff ready.",
       "review_findings": [
         "F1: remaining authored hub literals",
         "F2: EN data-boundary acceptance"
@@ -130,13 +145,14 @@
         "vtt/static/js/regelwerk-reader.js",
         "vtt/templates/regelwerk.html",
         "vtt/templates/regelwerk-compendium.html",
-        "tests/test_c01_rulebook_browser.py"
+        "tests/test_c01_rulebook_browser.py",
+        "tests/test_play_presentation_browser.py"
       ]
     },
     {
       "id": "C02",
       "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
-      "status": "rework_in_progress",
+      "status": "local_rework_quota_interrupted",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -161,7 +177,10 @@
         "vtt/static/css/sheet-feedback.css",
         "tools/i18n/tasks/c02.json",
         "tests/test_c02_character_browser.py",
-        "tests/test_c02_character_permissions.py"
+        "tests/test_c02_character_permissions.py",
+        "vtt/static/js/srd-inventory-ui.js",
+        "vtt/static/js/srd-manage-ui.js",
+        "vtt/static/js/srd-progression-ui.js"
       ],
       "acceptance": [
         "Echter Avatar-/Token-Upload vom Bogen",
@@ -177,9 +196,9 @@
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
       "handoff": "docs/proofs/claude-c02-2026-11-12/handoff.json",
-      "candidate_commit": "a1cfe6864",
+      "candidate_commit": "176cb69c3",
       "execution_model": "sonnet",
-      "known_gap": "42passed8failed; actual mode URL, hidden Reader control, absent image entry plus local lock/failclosed rework. No integration/live/review yet"
+      "known_gap": "22passed1failed: SRD Manage local lock still active; valid-image targeted1passed. Native state/rerender wiring unfinished, no review/integration/live."
     },
     {
       "id": "C03",
@@ -270,7 +289,9 @@
         "vtt/static/js/play-map-library.js",
         "tools/i18n/tasks/c04.json",
         "tests/test_c04_map_library.py",
-        "tests/test_c04_mapmaker_browser.py"
+        "tests/test_c04_mapmaker_browser.py",
+        "vtt/static/mapmaker/js/stamps.js",
+        "tests/test_mapmaker_browser.py"
       ],
       "acceptance": [
         "Sichtbare Speichern-/Import-/Kartenwechselwege",
@@ -285,9 +306,9 @@
       "live_verification": null,
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C04_2026-11-11.md",
       "handoff": "docs/proofs/claude-c04-2026-11-12/handoff.json",
-      "candidate_commit": "41a708c80",
+      "candidate_commit": "c516d2272",
       "execution_model": "sonnet",
-      "known_gap": "22 API/static cases passed; no actual browser journeys yet. Global asset shim, fonts, explicit locale markers and visual tile variants need bounded rework. No integration/live/review"
+      "known_gap": "22API/static+5existing browser pass,2823catalog. New feature browser cases and module-relative asset/font/locale/visual variants rework pending; no review/integration/live."
     },
     {
       "id": "C05",
@@ -500,5 +521,5 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "Close Medium C01 PlayChrome contrast and C02 real browser failures through Claude; C04 module-relative assets/real browser acceptance, then continue remaining C05–C10."
+  "next_step": "Resume bounded C01/C02/C04 through Claude after12Nov12:40Europe/Berlin, or after explicit pending user choice of Codex implementation; keep independent review and live gates. No automatic API/ExtraUsage fallback."
 }

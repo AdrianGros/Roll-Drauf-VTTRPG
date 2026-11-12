@@ -1,0 +1,54 @@
+{
+  "status": "native_implementation_quota_blocked_engine_choice_pending",
+  "date": "2026-11-12",
+  "quota": {
+    "five_hour": {
+      "utilization": 100.0,
+      "resets_at": "2026-11-12T11:39:59.774865+00:00"
+    },
+    "seven_day": {
+      "utilization": 91.0,
+      "resets_at": "2026-11-15T09:59:59.774884+00:00"
+    },
+    "extra_usage": {
+      "is_enabled": false,
+      "utilization": null
+    }
+  },
+  "automatic_api_or_extra_usage": false,
+  "live": {
+    "source": "f5790c2400b92a0dd490658ebd3d2a887601183d",
+    "image_id": "sha256:86ac41ff39eb8deaedc7bc4836102a1427df0621a1201434175f797ff48cc270",
+    "C01": "functional_pass_medium_contrast_rework_open",
+    "C03": "complete_live_verified",
+    "proof": "../presentation-2026-11-12/delivery.json"
+  },
+  "workers": {
+    "C01": {
+      "path": "/home/admin/projects/roll-drauf-vtt-claude-c01-20261111",
+      "source": "da9fcca53",
+      "rework_session": "7a861752-f9c5-4618-b978-ac7875806182",
+      "remaining": "Scoped PlayChrome contrast CSS and real browser test; latest CLI stopped before source edits"
+    },
+    "C02": {
+      "path": "/home/admin/projects/roll-drauf-vtt-claude-c02-20261112",
+      "branch": "claude/vtt-c02-20261112",
+      "source": "176cb69c3",
+      "implementation_source": "76bfc2436",
+      "session": "bf179ad0-fa5c-431a-a44a-56d286808cb2",
+      "remaining": "Wire SheetLock state/rerender existing SRD panels; independent review/regression/live",
+      "checks": "22passed1failed; valid image decode targeted1passed;6JS+1inline parse;2818catalog"
+    },
+    "C04": {
+      "path": "/home/admin/projects/roll-drauf-vtt-claude-c04-20261112",
+      "branch": "claude/vtt-c04-20261112",
+      "source": "c516d2272",
+      "implementation_source": "41a708c80",
+      "session": "735da98a-2ade-4535-8e75-bf97251a8652",
+      "remaining": "Remove global browser shim via module-relative assets, fonts, explicit locale markers, visual variants, full new feature browser cases/review/live",
+      "checks": "22API/static passed;5existing real browser cases passed after exact optional branding route fixture;2823catalog"
+    }
+  },
+  "further_tasks": "C05ApplyreadyafterC04;C06-C08Applyready;C09gatepending;C10overallNOT_RUN",
+  "secrets_recorded": false
+}

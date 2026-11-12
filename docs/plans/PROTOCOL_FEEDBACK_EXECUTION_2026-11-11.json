@@ -199,7 +199,7 @@
     {
       "id": "P4",
       "title": "Darstellung, DE/EN und kalibrierte Einheiten",
-      "status": "in_progress",
+      "status": "partially_deployed_monitor_rework",
       "depends_on": [
         "P0"
       ],
@@ -222,7 +222,9 @@
         "Spätere neue Oberflächen in gemeinsamer P7-Prüfung einbezogen"
       ],
       "implementation_evidence": "../DADM_DEPLOY_PRESENTATION_UNITS_2026-11-11.md",
-      "review_update": "Neue R07/R08/R11/R14 und zusätzliche UI-Quellen vor Freigabe prüfen; vorbereitetes Image nicht aktiviert."
+      "review_update": "Neue R07/R08/R11/R14 und zusätzliche UI-Quellen vor Freigabe prüfen; vorbereitetes Image nicht aktiviert.",
+      "delivery_evidence": "docs/proofs/presentation-2026-11-12/delivery.json",
+      "known_gap": "Functional live journeys pass; Medium PlayChrome contrast remains; complete package not ready"
     },
     {
       "id": "P5",
@@ -875,7 +877,7 @@
       "title": "Abgeschlossene Sitzung und strukturiertes Feedback"
     }
   ],
-  "next_step": "C00: preserve and review pending P4, reconcile live/new work, verify Claude subscription usage and set exact worker base/file ownership. No implementation started by this plan.",
+  "next_step": "See current Claude execution plan: C01 functional live with contrast rework, C02/C04 local candidates, native quota100% until12Nov12:40Europe/Berlin; implementation engine choice pending.",
   "latest_review_plan": "VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.json",
   "implementation_provider_preference": "Claude Code via existing subscription"
 }
