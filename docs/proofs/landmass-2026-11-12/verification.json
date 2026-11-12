@@ -1,0 +1,55 @@
+{
+  "status": "focused_checks_pass_live_pending",
+  "phase": "deploy",
+  "implementation": "Codex owner takeover",
+  "checks": {
+    "pure_generator_and_job": {
+      "passed": 2,
+      "contracts": [
+        "three golden SHA256 vectors",
+        "exact target and four-connectivity",
+        "seed/parameter/border limits",
+        "stale reply, cancel, timeout and recovery"
+      ]
+    },
+    "budget_and_stale_project": {
+      "passed": 5,
+      "contracts": [
+        "4096 squared plus history header refused before canvas allocation",
+        "32 layers",
+        "8 raster layers",
+        "32 million raster pixels",
+        "project changed after preview"
+      ]
+    },
+    "browser_roundtrip": {
+      "passed": 2,
+      "cases": [
+        "1440/de/paper",
+        "390/en/night"
+      ],
+      "contracts": [
+        "real worker, preview without mutation, invalidation/cancel",
+        "one layer, one undo/redo, old layers/pixels preserved",
+        "private save, JSON+ZIP+PNG and reload/import"
+      ]
+    },
+    "preview_seconds": {
+      "1440": 0.1663,
+      "390": 0.4618,
+      "resolution": 512,
+      "method": "browser click capture to adoption button enabled; excludes Playwright transport/auto-wait"
+    }
+  },
+  "self_review": [
+    "Same-origin fixed ES worker; max 262144 cells, transferable mask, one job, 10 second timeout",
+    "Normalized/versioned deterministic frontier, stable tie ordering, exact count and water border",
+    "Budget preflight before full raster allocation; retained canvas counted once with 512 byte header; strict history push",
+    "No backend/schema/new document fields or renderer; native material/coast/export pipeline",
+    "Localized task file, no catalog migration or arbitrary script/URL input"
+  ],
+  "limitations": [
+    "Technical self-review, no independent reviewer claimed",
+    "Landmass is a bounded artistic generator; climate/rivers/settlements outside approved design"
+  ]
+}

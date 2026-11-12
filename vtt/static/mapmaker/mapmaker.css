@@ -536,3 +536,11 @@ img.mm-pixel { image-rendering: pixelated; }
     .mm-app:has(> .mm-global-nav) { grid-template-rows: max-content 84px minmax(0, 1fr) var(--tools-h); }
     .mm-top-actions { height: auto; min-height: 36px; row-gap: 4px; padding-block: 4px; }
 }
+
+.mm-landmass-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-block:12px; }
+.mm-landmass-fields label { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.mm-landmass-fields input,.mm-landmass-fields select { width:100%; min-width:0; }
+.mm-landmass canvas { max-width:100%; max-height:35vh; object-fit:contain; background:#79a3b1; display:block; margin-inline:auto; }
+.mm-landmass canvas[hidden] { display:none; }
+.mm-landmass .mm-dialog-actions { flex-wrap:wrap; }
+@media(max-width:480px) { .mm-landmass-fields { grid-template-columns:minmax(0,1fr); } }

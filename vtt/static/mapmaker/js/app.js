@@ -18,6 +18,7 @@ import { attachInput } from "./tools.js";
 import { UI } from "./ui.js";
 import { zipFiles } from "./zip.js";
 import { Library } from "./library.js";
+import { LandmassDialog } from "./landmass-dialog.js";
 
 const KIND_NAMES = { raster: globalThis.VTTUi("Malebene"), paths: globalThis.VTTUi("Wegeebene"), stamps: globalThis.VTTUi("Symbolebene"), labels: globalThis.VTTUi("Beschriftungsebene"), tiles: globalThis.VTTUi("Kachelebene") };
 const MIN_ZOOM = 0.1;
@@ -86,6 +87,7 @@ class Editor {
         });
         registerMaterialTextures(this.palette.materialTextures);
         this.ui.bind();
+        this.landmass = new LandmassDialog(this);
         this.renderer = new Renderer(this.palette);
         this.ui.buildPalette();
         await Promise.race([
@@ -152,6 +154,7 @@ class Editor {
     }
 
     loadDocument(doc) {
+        this.landmass?.close();
         this.cancelInteractions();
         this.doc = doc;
         // A replaced document is a new generation; it starts "clean" relative to
