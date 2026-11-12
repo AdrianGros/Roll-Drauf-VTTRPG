@@ -17,10 +17,7 @@ from tests.test_srd_sheet import QuietHandler, site  # noqa: F401
 from vtt.extensions import db
 from vtt.models import Campaign, CampaignMember, Character, Role, User
 
-PNG = bytes.fromhex(
-    "89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c489"
-    "0000000d49444154789c6360f8ffff3f0005fe02fea7d6a3e10000000049454e44ae426082"
-)
+PNG = bytes.fromhex("89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000d49444154789c6360f8ffff3f0005fe02fe5fcc519a0000000049454e44ae426082")
 
 
 def _context(p, origin, token, width, language=None):
@@ -196,6 +193,7 @@ def test_owner_uploads_replaces_and_removes_images_in_the_book(site, data, tmp_p
         chooser.value.set_files(str(image))
         expect(page.locator("#messageBox")).to_contain_text(text["saved"])
         expect(page.locator("#sheetIdentityGrid img")).to_have_count(1)
+        page.wait_for_function("() => document.querySelector('#sheetIdentityGrid img')?.naturalWidth === 1")
         expect(page.locator("#sheetIdentityUpload-avatar")).to_have_text(text["replace"])
         with app.app_context():
             assert db.session.get(Character, char_id).avatar_url == f"/api/characters/{char_id}/identity/avatar"
@@ -205,6 +203,7 @@ def test_owner_uploads_replaces_and_removes_images_in_the_book(site, data, tmp_p
         chooser.value.set_files(str(image))
         expect(page.locator("#messageBox")).to_contain_text(text["saved"])
         expect(page.locator("#sheetIdentityGrid img")).to_have_count(1)
+        page.wait_for_function("() => document.querySelector('#sheetIdentityGrid img')?.naturalWidth === 1")
 
         page.locator("#sheetIdentityRemove-avatar").click()
         expect(page.locator("#sheetIdentityGrid img")).to_have_count(0)
