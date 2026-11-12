@@ -224,7 +224,24 @@ def visible_rgba(img):
 COMPONENTS = 'components-v1'
 
 
-def components(img, gap, min_area):
+def runs_group(runs):
+    x0, y0 = min(r[1] for r in runs), min(r[0] for r in runs)
+    x1, y1 = max(r[2] for r in runs), max(r[0] for r in runs) + 1
+    return dict(box=(x0, y0, x1 - x0, y1 - y0), area=sum(r[2] - r[1] for r in runs), runs=runs)
+
+
+def split_grid(group, cw, ch):
+    """Reviewed override for a packed block: cut it along the sheet's own cw×ch cells."""
+    cells = {}
+    for ry, x0, x1 in group['runs']:
+        x = x0
+        while x < x1:
+            edge = min(x1, (x // cw + 1) * cw)
+            cells.setdefault((ry // ch, x // cw), []).append((ry, x, edge)); x = edge
+    return [runs_group(runs) for _, runs in sorted(cells.items())]
+
+
+def components(img, gap, min_area, split=None, grid_splits=None):
     """Connected artwork without a grid; parts whose pixels lie within `gap` px join.
 
     Proximity is measured on pixels, not boxes: staggered isometric blocks have
@@ -262,8 +279,44 @@ def components(img, gap, min_area):
             c['x0'], c['x1'], c['y1'] = min(c['x0'], x0), max(c['x1'], x1), y + 1
             c['area'] += x1 - x0; c['runs'].append((y, x0, x1))
     out = [dict(box=(c['x0'], c['y0'], c['x1'] - c['x0'], c['y1'] - c['y0']), area=c['area'], runs=c['runs']) for c in comps.values()]
+    if grid_splits:  # keyed by the box found before any split
+        out = [part for g in out for part in (split_grid(g, *grid_splits[box_key(g['box'])]) if box_key(g['box']) in grid_splits else [g])]
+    if split: out = [part for g in out for part in split_valleys(g, split['ratio'], split['minSize'])]
     out.sort(key=lambda g: (g['box'][1], g['box'][0]))
     return [g for g in out if g['area'] >= min_area], [g for g in out if g['area'] < min_area]
+
+
+def split_valleys(group, ratio=0.12, min_size=20):
+    """Split artwork that only touches its neighbour (tree crowns in a packed row).
+
+    Projection profiles, as in text segmentation: count opaque pixels per
+    column (then per row) and cut at the deepest valley whose count is at most
+    `ratio` of the peak, keeping at least `min_size` px on both sides. Parts are
+    split recursively. Opt-in per reviewed sheet; a cut never adds pixels.
+    """
+    x, y, w, h = group['box']
+    for axis in (0, 1):
+        size = w if axis == 0 else h
+        counts = [0] * size
+        for ry, x0, x1 in group['runs']:
+            if axis == 0:
+                for cx in range(x0 - x, x1 - x): counts[cx] += 1
+            else:
+                counts[ry - y] += x1 - x0
+        peak = max(counts) or 1
+        best = None
+        for i in range(min_size, size - min_size):
+            if counts[i] <= ratio * peak and (best is None or counts[i] < counts[best]): best = i
+        if best is None: continue
+        cut = (x if axis == 0 else y) + best
+        first, second = [], []
+        for ry, x0, x1 in group['runs']:
+            if axis == 1: (first if ry < cut else second).append((ry, x0, x1))
+            else:
+                if x0 < cut: first.append((ry, x0, min(x1, cut)))
+                if x1 > cut: second.append((ry, max(x0, cut), x1))
+        return [part for runs in (first, second) if runs for part in split_valleys(runs_group(runs), ratio, min_size)]
+    return [group]
 
 
 def component_image(img, group):
@@ -396,7 +449,7 @@ def grid_units(profile, img, cells, grid):
 def component_units(profile, img):
     """Reviewed gridless profile → one unit per detected object (no tiles: artwork has no grid)."""
     params = profile['params']
-    groups, specks = components(img, params['gap'], params['minArea'])
+    groups, specks = components(img, params['gap'], params['minArea'], params.get('split'), params.get('gridSplits'))
     found = {box_key(g['box']): g for g in groups}
     if set(found) != set(profile['objects']):
         raise SystemExit(f'Detection no longer matches the review: {sorted(set(found) ^ set(profile["objects"]))}')
@@ -513,11 +566,13 @@ def cmd_build(args):
             tile_files.add(file); tiles.add(asset)  # painted on the tile grid, not stamped
 
     new_ids = {p['id'] for p in produced}
+    sliced = {sheet['path'] for sheet in sheets}
     originals = []
     for s in manifest['stamps']:
         if 'slice' in s: continue
         if s['id'] in labelled: s['label'], s['group'] = labelled[s['id']]
-        if s.get('sheet'): s['group'] = 'Referenzen & Szenen'
+        # A sliced sheet moves to references; other sheets of a multi-sheet pack keep their place.
+        if s.get('sheet') and ('sheets' not in profile or s['originalPath'] in sliced): s['group'] = 'Referenzen & Szenen'
         s.pop('hidden', None); s.pop('tile', None)
         if s['id'] in hidden: s['hidden'] = True
         if s['id'] in tiles: s['tile'] = True

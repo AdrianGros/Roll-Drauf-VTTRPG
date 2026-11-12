@@ -163,7 +163,7 @@ def test_color_sources_have_lossless_palette_projection_and_complete_coverage():
             assert hashlib.sha256((folder/c['file']).read_bytes()).hexdigest()==c['sha256']
         assert m['license']==source['license'] and m['archiveSha256']==source['archiveSha256']
         if source['id']=='lpc-revised':
-            assert len(entries)==64310
+            assert len(entries)-len(sliced)==64310
             assert len(coverage['defects'])==1 and coverage['defects'][0]['bytes']==0
             assert sum('credits' in c['sourcePath'].lower() for c in m['creditFiles'])==35
 
@@ -179,4 +179,4 @@ def test_all_four_color_batches_are_available():
     for p in catalog:
         m=json.loads((assets/p['manifest']).read_text())
         totals[m.get('batch',0)]+=len(m['stamps'])
-    assert totals=={0:6456,1:2336,2:64310,3:1826,4:435}
+    assert totals=={0:6456,1:2336,2:80007,3:1826,4:435}
