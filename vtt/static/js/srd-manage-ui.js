@@ -19,6 +19,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   };
 
   let state = null;
+  // Server `canEdit` stays the authority; the sheet's local lock / explicit view can only remove it.
+  const canEdit = () => Boolean(state && state.canEdit) && globalThis.SheetLock?.locked !== true;
 
   function element(tag, className, text) {
     const node = document.createElement(tag);
@@ -65,7 +67,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       input.dataset.field = key;
       if (type === 'number') { input.min = '0'; input.max = String(limit); input.step = '1'; } else input.maxLength = limit;
       input.value = companion[key] ?? '';
-      input.disabled = !state.canEdit;
+      input.disabled = !canEdit();
       input.addEventListener('input', () => { companion[key] = type === 'number' ? (input.value === '' ? 0 : Number(input.value)) : input.value; });
       field.append(input);
       grid.append(field);
@@ -79,12 +81,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       area.maxLength = limit;
       area.dataset.field = key;
       area.value = companion[key] || '';
-      area.disabled = !state.canEdit;
+      area.disabled = !canEdit();
       area.addEventListener('input', () => { companion[key] = area.value; });
       field.append(area);
       card.append(field);
     });
-    if (state.canEdit) {
+    if (canEdit()) {
       card.append(button('Begleiter entfernen', 'srd-man-btn srd-man-danger', () => {
         state.companions.splice(index, 1);
         render();
@@ -295,13 +297,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const pdf = button('Als PDF drucken', 'srd-man-btn srd-man-primary', () => runDownload('/pdf', 'charakterbogen.pdf', 'PDF erstellt.'));
     pdf.id = 'srdManagePdf';
     row.append(pdf);
-    if (state.canEdit) {
+    if (canEdit()) {
       const json = button('Als Datei sichern (JSON)', 'srd-man-btn', () => runDownload('/export', 'charakter.rollcharakter.json', 'Sicherung erstellt. Du kannst sie unter „Charaktere erstellen“ wieder einlesen.'));
       json.id = 'srdManageExport';
       row.append(json);
     }
     block.append(row);
-    if (state.canEdit && state.appearance) {
+    if (canEdit() && state.appearance) {
       const field = element('div', 'srd-man-field');
       field.append(element('span', 'srd-man-field-label', globalThis.VTTUi("Farbe des Bogens auf dem Bildschirm")));
       const swatches = element('div', 'srd-man-swatches');
@@ -336,7 +338,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     if (!state.companions.length) list.append(element('div', 'srd-man-hint', globalThis.VTTUi("Keine Begleiter eingetragen (Tierbegleiter, Vertraute, Beschworene, Gefolge).")));
     root.append(list);
     root.append(appearanceBlock());
-    if (state.canEdit) {
+    if (canEdit()) {
       const row = element('div', 'srd-man-actions');
       const add = button('Begleiter hinzufügen', 'srd-man-btn', () => {
         if (state.companions.length >= state.max) { setStatus(ERRORS.too_many_companions, true); return; }

@@ -11,6 +11,8 @@ body[data-sheet-has-srd="true"] .sheet-journey-nav .sheet-split-actions .btn { w
 .sf-portrait { width: 56px; height: 56px; object-fit: cover; border: 1px solid #886529; border-radius: 9px; }
 .sf-portrait-empty { display: grid; place-items: center; font-size: 0.65rem; background: #eadbbd; color: #4a3325; }
 .sf-wallet { color: #5b4026; font-weight: 600; }
+/* The book's .btn display rule must not paint a button the sheet has hidden (reader, view, lock). */
+.sheet-split-actions .btn[hidden], #sheetModeActionBtn[hidden], #sheetLockBtn[hidden] { display: none !important; }
 .sf-images-action { margin-top: 0.4rem; max-width: 100%; }
 body[data-sheet-images="false"] .sf-images-action { display: none; }
 #sheetLockBtn[aria-pressed="true"] { color: #fff6e3; background: #492255; }

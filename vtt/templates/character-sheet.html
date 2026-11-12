@@ -1096,6 +1096,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         const auth = new Auth();
         const params = new URLSearchParams(window.location.search);
+        const entryParams = new URLSearchParams(window.location.search);
         const characterId = Number(params.get('id'));
         // C02: the server's owner-only permissions projection decides what the UI offers;
         // PUT/POST/DELETE re-check ownership on their own. Without an explicit mode=view
@@ -1120,8 +1121,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (permissions && typeof permissions === 'object') {
                 return { editCore: permissions.editCore === true, editIdentity: permissions.editIdentity === true, known: true };
             }
-            // Older projection: keep the previous explicit mode=edit behaviour.
-            return { editCore: requestedMode === 'edit', editIdentity: false, known: false };
+            // Fail closed: without the server projection nothing is editable, whatever the URL says.
+            return { editCore: false, editIdentity: false, known: false };
         }
 
         function applySheetPermissions(character) {
@@ -1149,7 +1150,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         function sheetUrlWith(change) {
             // Every campaign/session/context parameter survives a mode switch.
-            const query = new URLSearchParams(window.location.search);
+            // The entry URL is the source: BookScene rewrites the visible query to id/mode only
+            // while composing the book, so window.location.search has already lost the context.
+            const query = new URLSearchParams(entryParams);
             query.set('id', String(characterId));
             change(query);
             return `/character-sheet?${query}`;
@@ -1223,7 +1226,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const toView = editable;
             goTo(sheetUrlWith((query) => {
                 query.set('mode', toView ? 'view' : 'edit');
-                if (srdTableSession) query.set('session_id', srdTableSession);
+                // The table chosen on this sheet wins over the entry URL; unbinding removes it.
+                if (srdTableSession) query.set('session_id', srdTableSession); else query.delete('session_id');
             }));
         }
 
@@ -1269,14 +1273,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 : globalThis.VTTUi("Ansicht: Der Charakterbogen ist schreibgeschützt.");
             const permissions = resolveSheetPermissions(sheet?.character);
             const ownerSheet = permissions.editCore;
-            document.body.dataset.sheetOwner = !sheet || !permissions.known ? 'unknown' : (ownerSheet ? 'true' : 'false');
+            document.body.dataset.sheetOwner = !sheet ? 'unknown' : (ownerSheet ? 'true' : 'false');
             if (ownerSheet && editLocked) {
                 document.getElementById('modeLabel').textContent = globalThis.VTTUi("Bogen lokal gesperrt: Änderungen sind ausgeschaltet, bis du ihn wieder entsperrst.");
             }
             const modeButton = document.getElementById('sheetModeActionBtn');
             modeButton.textContent = editable ? globalThis.VTTUi("Bogen ansehen") : globalThis.VTTUi("Bogen bearbeiten");
             // A shared reader has nothing to switch to; the server decides, the button only follows.
-            modeButton.hidden = permissions.known && !ownerSheet;
+            modeButton.hidden = !ownerSheet;
             const lockButton = document.getElementById('sheetLockBtn');
             if (lockButton) {
                 lockButton.hidden = !(sheet && ownerSheet && !explicitView);
