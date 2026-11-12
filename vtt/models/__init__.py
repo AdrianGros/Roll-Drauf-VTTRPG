@@ -70,3 +70,5 @@ __all__ = [
 from vtt.models.ce_rule_revision import CeRuleRevision
 
 from vtt.models.campaign_map_scale import CampaignMapScale
+
+from vtt.models.atlas import AtlasWorld, AtlasMember, AtlasMap, AtlasPublication
