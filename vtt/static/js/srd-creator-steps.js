@@ -221,7 +221,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 h('p', { class: 'sc-muted', text: globalThis.VTTUi("Ab Stufe 2 kannst du pro Stufe die Klasse wechseln (Mehrklassigkeit); der Server prüft die Voraussetzungen.") }),
                 h('div', { class: 'sc-scroll' }, h('table', { class: 'sc-table' },
                     h('caption', { class: 'sc-muted', text: globalThis.VTTUi("Stufenverlauf") }),
-                    h('thead', null, h('tr', null, ['Stufe', 'Klasse', 'Trefferpunkte', 'Neue Merkmale'].map((t) => h('th', { scope: 'col', text: t })))),
+                    h('thead', null, h('tr', null, [globalThis.VTTUi('Stufe'), globalThis.VTTUi('Klasse'), globalThis.VTTUi('Trefferpunkte'), globalThis.VTTUi('Neue Merkmale')].map((t) => h('th', { scope: 'col', text: t })))),
                     h('tbody', null, rows)))));
         }
         return wrap;
@@ -750,17 +750,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         return panel(
             h('h3', { text: globalThis.VTTUi("Wer ist dein Charakter?") }),
             h('div', { class: 'sc-fields' },
-                input('name', 'Name'), input('pronouns', 'Pronomen'),
-                field(globalThis.VTTUi("Gesinnung"), select('scId-alignment', app.data.alignments.map((a) => [a.id, a.name]), idn.alignment, (v) => SC.mutate((state) => { state.identity = state.identity || {}; if (v) state.identity.alignment = v; else delete state.identity.alignment; }, { render: 'none' }), 'Keine Angabe'), 'scId-alignment'),
-                input('age', 'Alter'), input('height', 'Größe'), input('weight', 'Gewicht'), input('eyes', 'Augen'), input('hair', 'Haare'), input('skin', 'Haut'), input('faith', 'Glaube')),
-            area('appearance', 'Aussehen'), area('traits', 'Persönlichkeitsmerkmale'), area('ideals', 'Ideale'), area('bonds', 'Bindungen'), area('flaws', 'Makel'), area('backstory', 'Hintergrundgeschichte'), area('notes', 'Notizen'));
+                input('name', globalThis.VTTUi("Name")), input('pronouns', globalThis.VTTUi("Pronomen")),
+                field(globalThis.VTTUi("Gesinnung"), select('scId-alignment', app.data.alignments.map((a) => [a.id, a.name]), idn.alignment, (v) => SC.mutate((state) => { state.identity = state.identity || {}; if (v) state.identity.alignment = v; else delete state.identity.alignment; }, { render: 'none' }), globalThis.VTTUi("Keine Angabe")), 'scId-alignment'),
+                // "Körpergröße" is a catalog source whose German text is "Größe" (a person's height, not a creature size).
+                input('age', globalThis.VTTUi("Alter")), input('height', globalThis.VTTUi("Körpergröße")), input('weight', globalThis.VTTUi("Gewicht")), input('eyes', globalThis.VTTUi("Augen")), input('hair', globalThis.VTTUi("Haare")), input('skin', globalThis.VTTUi("Haut")), input('faith', globalThis.VTTUi("Glaube"))),
+            area('appearance', globalThis.VTTUi("Aussehen")), area('traits', globalThis.VTTUi("Persönlichkeitsmerkmale")), area('ideals', globalThis.VTTUi("Ideale")), area('bonds', globalThis.VTTUi("Bindungen")), area('flaws', globalThis.VTTUi("Makel")), area('backstory', globalThis.VTTUi("Hintergrundgeschichte")), area('notes', globalThis.VTTUi("Notizen")));
     }
 
     // ================================================================ PRÜFUNG
     const overrideKeys = () => [
-        ['hp.max', 'Maximale Trefferpunkte'], ['armorClass', 'Rüstungsklasse'], ['speed', globalThis.VTTUi("Bewegungsrate (m)")], ['initiative', globalThis.VTTUi("Initiative")],
-        ['proficiencyBonus', 'Übungsbonus'], ['passivePerception', 'Passive Wahrnehmung'], ['spellSaveDc', 'Zauber-SG'], ['spellAttack', 'Zauberangriff'],
-        ...ABIL.map((a) => [`ability.${a}`, `${SC.abilityName(a)} (Wert)`]),
+        ['hp.max', globalThis.VTTUi("Maximale Trefferpunkte")], ['armorClass', globalThis.VTTUi("Rüstungsklasse")], ['speed', globalThis.VTTUi("Bewegungsrate (m)")], ['initiative', globalThis.VTTUi("Initiative")],
+        ['proficiencyBonus', globalThis.VTTUi("Übungsbonus")], ['passivePerception', globalThis.VTTUi("Passive Wahrnehmung")], ['spellSaveDc', globalThis.VTTUi("Zauber-SG")], ['spellAttack', globalThis.VTTUi("Zauberangriff")],
+        ...ABIL.map((a) => [`ability.${a}`, globalThis.VTTUi("{p0} (Wert)", { p0: SC.abilityName(a) })]),
     ];
 
     function renderOverrides() {

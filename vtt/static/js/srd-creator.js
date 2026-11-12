@@ -139,7 +139,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         if (own) {
             body.replaceChildren(h('p',{class:'sc-muted',text:globalThis.VTTUi("Homebrew · Fassung {p0} · {p1}",{p0:(own.origin.revision),p1:(own.origin.author || '')})}),
                 h('p',{text:own.description || ''}));
-            if (own.mechanics) own.mechanics.forEach(grant=>body.append(h('p',{text:grant.kind==='skill_proficiency' ? globalThis.VTTUi("Übung: {p0}",{p0:(SC.skillName(grant.skill))}) : `${({initiative_pb:'Initiative',initiative:'Initiative',ac:'Rüstungsklasse',speed_meters:'Bewegung (m)',hp_per_level:'Trefferpunkte je Stufe'})[grant.kind] || 'Regelbeitrag'}: +${grant.kind==='initiative_pb'?'Übungsbonus':grant.value}`})));
+            if (own.mechanics) own.mechanics.forEach(grant=>body.append(h('p',{text:grant.kind==='skill_proficiency' ? globalThis.VTTUi("Übung: {p0}",{p0:(SC.skillName(grant.skill))}) : `${({initiative_pb:globalThis.VTTUi('Initiative'),initiative:globalThis.VTTUi('Initiative'),ac:globalThis.VTTUi('Rüstungsklasse'),speed_meters:globalThis.VTTUi('Bewegung (m)'),hp_per_level:globalThis.VTTUi('Trefferpunkte je Stufe')})[grant.kind] || globalThis.VTTUi('Regelbeitrag')}: +${grant.kind==='initiative_pb'?globalThis.VTTUi('Übungsbonus'):grant.value}`})));
             $('scDialogTitle').focus();return;
         }
         try {
@@ -158,7 +158,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     SC.detailButton = (id, label, name) => h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => SC.openEntry(id, name) }, label || globalThis.VTTUi("Regeltext"));
 
     // ---------------------------------------------------------------- state & saving
-    function setSaveText(text) { $('scSave').textContent = text; }
+    // Callers pass only authored lifecycle literals; they are the catalog sources.
+    function setSaveText(text) { $('scSave').textContent = globalThis.VTTUi(text); }
 
     function applyView(view) {
         app.draft.version = view.draft.version;
@@ -321,7 +322,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         box.textContent = '';
         box.append(h('h2', { text: (app.draft.state.identity && app.draft.state.identity.name) || globalThis.VTTUi("Unbenannter Charakter") }));
         if (!ev) { box.append(h('p', { class: 'sc-muted', text: globalThis.VTTUi("Wird berechnet …") })); return; }
-        const classLine = ev.classes.length ? ev.classes.map((c) => `${c.name} ${c.level}${c.subclass ? ` (${SC.subclassName(c.subclass)})` : ''}`).join(' / ') : 'Noch keine Klasse';
+        const classLine = ev.classes.length ? ev.classes.map((c) => `${c.name} ${c.level}${c.subclass ? ` (${SC.subclassName(c.subclass)})` : ''}`).join(' / ') : globalThis.VTTUi("Noch keine Klasse");
         const state = app.draft.state;
         const species = state.species && SC.L.species[state.species.id];
         const background = state.background && SC.L.backgrounds[state.background.id];
@@ -332,18 +333,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         more.append(h('div', { class: 'sc-abilities' }, ABIL.map((a) => h('div', { class: 'sc-ability' },
             h('span', { text: SC.abilityAbbr(a) }), h('b', { text: ev.abilities[a].score }), h('span', { text: sign(ev.abilities[a].modifier) })))));
         const rows = [
-            ['Stufe', ev.level], ['Trefferpunkte', ev.hitPoints.max], ['Rüstungsklasse', ev.armorClass.value],
-            ['Initiative', sign(ev.initiative)], ['Bewegung', fmtMeters(ev.speedMeters)], ['Übungsbonus', sign(ev.proficiencyBonus)],
-            ['Passive Wahrnehmung', ev.passivePerception],
+            [globalThis.VTTUi("Stufe"), ev.level], [globalThis.VTTUi("Trefferpunkte"), ev.hitPoints.max], [globalThis.VTTUi("Rüstungsklasse"), ev.armorClass.value],
+            [globalThis.VTTUi("Initiative"), sign(ev.initiative)], [globalThis.VTTUi("Bewegung"), fmtMeters(ev.speedMeters)], [globalThis.VTTUi("Übungsbonus"), sign(ev.proficiencyBonus)],
+            [globalThis.VTTUi("Passive Wahrnehmung"), ev.passivePerception],
         ];
         const casting = Object.values(ev.spellcasting.classes)[0];
-        if (casting) rows.push(['Zauber-SG', casting.saveDc], ['Zauberangriff', sign(casting.attackBonus)]);
+        if (casting) rows.push([globalThis.VTTUi("Zauber-SG"), casting.saveDc], [globalThis.VTTUi("Zauberangriff"), sign(casting.attackBonus)]);
         more.append(h('dl', null, rows.map(([k, v]) => [h('dt', { text: k }), h('dd', { text: v })])));
         const all = SC.allFindings();
         const count = (s) => all.filter((f) => f.severity === s).length;
         box.append(h('p', null,
             count('error') ? h('span', { class: 'sc-tag', text: globalThis.VTTUi("{p0} Fehler",{p0:(count('error'))}) }) : null,
-            count('incomplete') ? h('span', { class: 'sc-tag', text: `${count('incomplete')} offen` }) : null,
+            count('incomplete') ? h('span', { class: 'sc-tag', text: globalThis.VTTUi("{p0} offen", { p0: count('incomplete') }) }) : null,
             count('warning') ? h('span', { class: 'sc-tag', text: globalThis.VTTUi("{p0} Hinweise",{p0:(count('warning'))}) }) : null,
             !count('error') && !count('incomplete') ? h('span', { class: 'sc-ok-note', text: globalThis.VTTUi("Bereit zum Erstellen") }) : null));
     }

@@ -17,6 +17,8 @@ API diagnostic adapters in display-preferences.js use code/path contracts and ke
 user content separate. Future locales can move these bounded diagnostic messages
 into additional catalogs. UI DE/EN does not translate rulebooks (open input I04).
 
+`extra-messages.json` is parsed with a duplicate-key check: the same source twice fails the
+build instead of letting the later entry win silently. English uses "DM" consistently.
 An extra message may deliberately override an inventory entry with the same source;
 `build_catalog.py` then prints a `NOTE extra-messages override differs …` line to stderr
 (a different source hashing to the same key still fails). Name-bearing text uses
