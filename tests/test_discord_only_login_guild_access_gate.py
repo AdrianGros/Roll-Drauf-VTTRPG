@@ -1,6 +1,7 @@
 """M19 tests: Discord-only login and guild access gate."""
 
 from datetime import timedelta
+import re
 from urllib.parse import unquote, urlparse
 
 import pytest
@@ -75,7 +76,7 @@ def test_login_page_exposes_standard_auth_and_optional_discord(client):
 
     assert 'aria-label="Mit Discord anmelden"' in html
     assert '<img src="/static/images/discord-symbol.svg" alt="" class="login-discord-button-icon">' in html
-    assert "<span>Mit Discord anmelden</span>" in html
+    assert re.search(r"<span\b[^>]*>Mit Discord anmelden</span>", html)
     assert "Optional mit Discord anmelden" not in html
     assert "Roll drauf im Discord" in html
     assert 'href="https://discord.gg/rolldrauf"' in html

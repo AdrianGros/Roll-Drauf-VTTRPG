@@ -37,7 +37,7 @@ def login(context, origin, username="action-player", password=PASSWORD):
     page.fill("#loginUsername", username)
     page.fill("#loginPassword", password)
     page.click("#passwordLoginSubmitBtn")
-    page.wait_for_function("!location.pathname.includes('login')")
+    page.wait_for_function("() => !location.pathname.includes('login')")
     return page
 
 

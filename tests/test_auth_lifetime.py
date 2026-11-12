@@ -293,7 +293,8 @@ def test_refresh_before_and_after_absolute_end_keeps_anchor(app, client, user, c
     assert response.status_code == 200
     new_access = claims_of(cookie_value(response, "access_token_cookie"))
     assert (new_access[CLAIM_STARTED], new_access[CLAIM_UNTIL]) == (started, started + LIFE)
-    assert new_access["exp"] - new_access["iat"] <= 31  # remaining time, not one hour
+    # Signing uses the library's real clock; the application clock is controlled.
+    assert 0 < new_access["exp"] - clock.now() <= 31
     assert cookie_from(response, "refresh_token_cookie") is None  # same refresh token
     assert max_age(cookie_from(response, "access_token_cookie")) == 30
 
@@ -315,7 +316,7 @@ def test_repeated_refresh_never_moves_the_anchor(app, client, user, clock):
         assert payload["exp"] <= started + LIFE
         assert Session.query.filter_by(token_jti=payload["jti"]).one().expires_at == ts_to_naive(started + LIFE)
     # 30 minutes left at the last refresh -> access bounded to it
-    assert payload["exp"] - payload["iat"] <= 30 * 60 + 1
+    assert 0 < payload["exp"] - clock.now() <= 30 * 60 + 1
 
 
 # --------------------------------------------------------------- legacy tokens
