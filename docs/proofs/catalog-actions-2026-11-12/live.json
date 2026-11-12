@@ -1,0 +1,41 @@
+{
+  "status": "pass",
+  "errors": [],
+  "checks": {
+    "normal_nav": true,
+    "firefox390_EN_night": true,
+    "source_rule_stays_German": true,
+    "lost_ack_same_uuid_retry": true,
+    "inventory_reload": true,
+    "actual_level5_to6_choices": true,
+    "foreign_DM_not_target": true
+  },
+  "delivery": {
+    "commit": "8fb56ccc38ca8cfd0d17ddc3fce06525565036f6",
+    "image": "roll-drauf-vtt-app:feedback-catalog-actions-20261111-8fb56ccc3",
+    "image_id": "sha256:92a401f19bb467bdf4e368d22b6bcdeb39a6fdb0930464b7c049c34b8f60be1c",
+    "base_image_id": "sha256:a73fd9fb12c9c7df0cc40a26c966efb4e7e5d59b8cfce75c21098540087a40ef",
+    "compose_project": "migration-production",
+    "compose_files": [
+      "/srv/migration/2026-10-07/setup/production.compose.json",
+      "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+    ],
+    "rollback": "/srv/migration/2026-11-11/feedback-catalog-actions/8fb56ccc3/rollback.sh",
+    "health": {
+      "now": "2026-11-12T19:18:36.599090",
+      "service": "roll_drauf_vtt",
+      "started_at": "2026-11-12T19:18:30.837010",
+      "status": "ok"
+    },
+    "other_services_unchanged": true,
+    "schema_migration": {
+      "status": "pass",
+      "tables": [
+        "character_catalog_receipts"
+      ],
+      "previously_present": [],
+      "columns_verified": true
+    }
+  },
+  "push": "origin feat/protocol-feedback-20261110 succeeded"
+}

@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
   "status": "in_progress_codex_takeover",
-  "phase": "deploy_rework_C02_C04_C06",
+  "phase": "deploy_C09",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -386,7 +386,7 @@
     {
       "id": "C08",
       "title": "Compendium zum Charakter und Fortschrittsentscheidungen",
-      "status": "in_progress_codex_local_not_deployed",
+      "status": "complete_live_verified",
       "implementer": "Codex (owner takeover; existing Claude source preserved)",
       "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
@@ -409,9 +409,9 @@
         "Keine ungeklärten Regel-/Bildquellen ergänzen"
       ],
       "execution_session_id": null,
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "8fb56ccc38ca8cfd0d17ddc3fce06525565036f6",
+      "deployed_image_id": "sha256:92a401f19bb467bdf4e368d22b6bcdeb39a6fdb0930464b7c049c34b8f60be1c",
+      "live_verification": "docs/proofs/catalog-actions-2026-11-12/live.json",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C08_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C08_2026-11-11.md",
       "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c08-20261112"
@@ -419,7 +419,7 @@
     {
       "id": "C09",
       "title": "Atlas mit geschützter Leserprojektion",
-      "status": "planned",
+      "status": "discover_apply_complete_implementation_active",
       "implementer": "Codex (owner takeover; existing Claude source preserved)",
       "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
@@ -444,7 +444,10 @@
       "execution_session_id": null,
       "source_commit": null,
       "deployed_image_id": null,
-      "live_verification": null
+      "live_verification": null,
+      "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c09-20261112",
+      "discovery": "docs/DADM_DISCOVER_CODEX_C09_2026-11-12.md",
+      "apply_contract": "docs/DADM_APPLY_CODEX_C09_2026-11-12.md"
     },
     {
       "id": "C10",
@@ -500,7 +503,7 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "Finish live confirmation follow-up, deliver C07/C08/C09, then C10 combined acceptance checklist.",
+  "next_step": "Implement and live-deliver C09 Atlas, resolve bounded C10 monitors and prepare Donutarian acceptance campaign/checklist.",
   "claude_subscription_history": {
     "provider": "Claude Code CLI",
     "installed_version": "2.1.312",
@@ -541,5 +544,6 @@
     "quota_evidence": "docs/proofs/claude-program-2026-11-12/execution-state.json",
     "resumed_at": "2026-11-12T13:12:26Z",
     "implementation_choice": "Continue native Claude subscription as explicitly requested; no engine-choice question pending, no API/extrausage fallback"
-  }
+  },
+  "test_campaign_owner": "Donutarian"
 }
