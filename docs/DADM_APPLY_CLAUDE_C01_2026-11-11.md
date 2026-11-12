@@ -104,3 +104,28 @@ Controller oder Rechte. Zusatzkatalog darf denselben Quellschlüssel weiterhin
 bewusst übersteuern, muss abweichende Übersetzungen dabei mindestens sichtbar
 melden; Hashkollisionen anderer Quellen bleiben Fehler. Hauptnavigation genau
 einmal und Draftstand nach Sprachreload ausdrücklich prüfen.
+
+Nach dem zweiten Review wird der Draftnachweis verstärkt: ein tatsächlich
+geänderter Name mit noch ausstehendem Autosave muss beim Sprachreload entweder
+erhalten bleiben oder durch den vorhandenen beforeunload-Dialog geschützt sein.
+Der Test bricht das Verlassen ab, lässt den echten Save abschließen und prüft
+anschließend Serverwert und wiederhergestelltes Eingabefeld nach Sprachreload.
+Kein zusätzlicher Creator-Speichermechanismus wird eingeführt.
+
+Zusatzkatalog liest JSON mit Duplicate-Key-Verweigerung; vorhandene doppelte
+Quellschlüssel werden bewusst konsolidiert und englische Rollenbezeichnung DM
+vereinheitlicht. Nach mathematischer Alpha-/Gradientkomposition bestehen 26 von
+27 Browserfällen. Der verbleibende echte Nacht-Kontrastbefund betrifft die
+Kampagnen-Vorbereitung (Hub-Badges: 3,18:1). Nur deren vorhandene Flächen werden
+an die schon gewählten semantischen Nacht-Tokens gebunden; Canvas und Quellen
+bleiben unverändert. Fokusprüfung wiederholt den betroffenen Fall und den
+verstärkten Draftfall; keine pauschale erneute Inventur.
+
+Letzter konkreter UI-Inventurbefund: Creator-Beschreibungsfelder werden über
+lokale input/area-Helfer aus eigenen statischen Labels gebaut; Alter/Pronomen/
+Augen/Haut/Glaube/Hintergrundgeschichte fehlen deshalb noch im Katalog. Die
+Dateien srd-creator.js und srd-creator-steps.js werden für genau diese eigenen
+Feld-/Speicher-/Zusammenfassungslabels zum C01-Besitz ergänzt. Übersetzung am
+eigenen Labelaufruf, niemals pauschal am generischen h/field/DOM-Helfer oder an
+Regel-/Benutzerwerten. EN-Beschreibungs- und Speicherlabel sowie unveränderten
+eingegebenen Namen prüfen. Creator-Regeln und Wahlmechanik bleiben C02.
