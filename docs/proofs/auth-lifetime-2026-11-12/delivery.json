@@ -1,0 +1,84 @@
+{
+  "commit": "7df79fb3f6ef31f739afb4095552ce6abe1a1fb4",
+  "base_source": "a13d6f1a62d7a0cbc0f84501c5567823adb8807f",
+  "running_revision_label": "447774d57f2ae9c7ebcd5ba77bb391b65937cc1b",
+  "image": "roll-drauf-vtt-app:feedback-auth-lifetime-20261111-7df79fb3f",
+  "image_id": "sha256:e5d675977e9b86b7a421d34d007e86683339b1f1215dbd3240c3c470227fde16",
+  "base_image_id": "sha256:1f436745bdf81759abfa6500b6bb5543bfcfad58b6e7446c5ba8f2e6403cb74d",
+  "prior_image": "roll-drauf-vtt-app:feedback-auth-lifetime-rollback-20261111-1f436745bdf8",
+  "overlay_manifest": {
+    "vtt/__init__.py": "5e5f34a950aca695d69c134a48f2e971fc1dfb53b6d2137142d0bc93173ac8a5",
+    "vtt/auth/lifetime.py": "bef0b843c2f87157f3bb7cc0739555897d4b259944a2426f14243332d9165a78",
+    "vtt/auth/routes.py": "4536d75305126149039c39eb306d3a4cbca29a03c153c08cc11bae2a0a3d645b",
+    "vtt/config.py": "f3dbd3f03194b345c61c14a97b489df37939977b9a01207ac8d4e3444d53d2ff",
+    "vtt/play/contexts.py": "50b746ded6b26557ba7e10c08d05acff222e4dd40d7b35b33b577ea1b12fcae9",
+    "vtt/socket_handlers.py": "45a90a703916967a1ff8633a95ffb4b881e8a7975e60408e4f6cd7c334013c16"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "deployed_at": "2026-11-12T07:21:58.853455271Z",
+  "health": {
+    "now": "2026-11-12T07:22:10.273723",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-12T07:22:07.670311",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-11/feedback-auth-lifetime/7df79fb3f/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "built_source_verification": {
+    "checked": 241,
+    "mismatches": []
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-auth-lifetime/7df79fb3f/database-before.dump",
+    "bytes": 421122,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "package": "C03",
+  "status": "delivered_live_verified",
+  "pushed": true,
+  "ui_entry": "Loginformular; Kampagnen → eigene Runde → DM/Session-Einstieg; Regelwerk über Hauptnavigation",
+  "roles": [
+    "DM",
+    "Player"
+  ],
+  "scope": "Six auth source files over the preserved running image; pending local P4/C01 UI was not included",
+  "targeted_checks": {
+    "initial_expanded_run": {
+      "passed": 109,
+      "failed": 9
+    },
+    "targeted_recheck_after_test_harness_corrections": {
+      "passed": 9,
+      "failed": 0
+    },
+    "application_code_changed_between_runs": false,
+    "unique_successful_cases": 118,
+    "browser_engines": [
+      "Firefox",
+      "Chromium"
+    ],
+    "csrf_enabled_in_browser_cases": true
+  },
+  "live_evidence": "live-auth-result.json",
+  "cleanup": "cleanup.json",
+  "residuals": [
+    "Last-second slow token signing may yield 500 instead of clean 401; no extension of authorization",
+    "Existing legacy logins may require normal reauthentication/table re-entry",
+    "Expired-access logout behavior predates C03 and remains a follow-up",
+    "Real external Discord OAuth callback not exercised; local mocked callback checks passed",
+    "Rollback script syntax checked, not executed; rollback removes the six-hour policy and may require re-login"
+  ]
+}

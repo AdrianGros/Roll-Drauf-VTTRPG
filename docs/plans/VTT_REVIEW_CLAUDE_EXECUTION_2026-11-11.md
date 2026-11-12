@@ -1,6 +1,6 @@
 # Verbindlicher Ausführungsplan – VTT-Reviews mit Claude Code
 
-Status: **Umsetzung läuft; C01/C03 als Quellen-Checkpoints gesichert, unabhängige Claude-Reviews laufen. Noch keine Live-Lieferung dieser beiden Pakete.**.
+Status: **C03 (sechs Stunden Anmeldung) live ausgeliefert und geprüft; C01 in letzter Nacharbeit. Gesamtpaket noch nicht vollständig ausgeliefert.**.
 Auftrag: neue Protokolle aufnehmen und Claude-Agenten fest für die Umsetzung
 verwenden, weil bereits ein Claude-Abo vorhanden ist. Aufbewahrung: dauerhaft.
 Grundlage: [Discover/Kategorisierung](../DADM_DISCOVER_VTT_REVIEWS_2026-11-11.md),

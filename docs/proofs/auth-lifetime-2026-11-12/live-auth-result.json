@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "journey": [
+    "Real DM/Player login forms; secure signed six-hour cookies and legacy path cleanup",
+    "Campaign hub buttons → authorized DM and Firefox Player compositions, both online",
+    "Rulebook remains logged in; actual JS refresh with CSRF preserves anchor; Player reload stays Player",
+    "Password change preserves current browser refresh; other browser rejected; absolute anchor unchanged",
+    "Logout removes current and legacy cookie variants"
+  ],
+  "role_checks": {
+    "normal_hub_entries": true,
+    "dm_mode": "dm",
+    "player_mode": "player",
+    "player_dm_controller_mounted": false,
+    "both_present": true
+  },
+  "cookie_checks": {
+    "dm": {
+      "refresh_path": "/api/auth",
+      "refresh_http_only": true,
+      "csrf_path": "/",
+      "secure": true,
+      "same_site": "Lax",
+      "absolute_lifetime_seconds": 21600
+    },
+    "player": {
+      "refresh_path": "/api/auth",
+      "refresh_http_only": true,
+      "csrf_path": "/",
+      "secure": true,
+      "same_site": "Lax",
+      "absolute_lifetime_seconds": 21600
+    }
+  },
+  "secrets_recorded": false
+}

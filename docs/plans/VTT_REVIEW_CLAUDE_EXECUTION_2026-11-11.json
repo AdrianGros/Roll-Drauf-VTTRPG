@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
   "status": "execution_started",
-  "phase": "deploy_rework_C01_C03",
+  "phase": "deploy_C01_monitor_C03",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -27,9 +27,9 @@
     "extra_usage_enabled": false,
     "model_policy_reason": "Subscription quota conservation after optional preference window; extra usage disabled",
     "latest_quota_probe": {
-      "date": "2026-11-12T06:50:40Z",
-      "five_hour_percent": 12,
-      "seven_day_percent": 84,
+      "date": "2026-11-12",
+      "five_hour_percent": 53,
+      "seven_day_percent": 87,
       "extra_usage_enabled": false
     }
   },
@@ -170,7 +170,7 @@
     {
       "id": "C03",
       "title": "Absolute sechs Stunden pro Anmeldung",
-      "status": "rework_review_running",
+      "status": "complete",
       "implementer": "vtt-domain-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -202,15 +202,15 @@
         "Regelwerk-Zugriff verursacht keinen eigenen Logout"
       ],
       "execution_session_id": "fa80e28c-3a14-4654-a725-368f6bbe24f7",
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "7df79fb3f6ef31f739afb4095552ce6abe1a1fb4",
+      "deployed_image_id": "sha256:e5d675977e9b86b7a421d34d007e86683339b1f1215dbd3240c3c470227fde16",
+      "live_verification": "docs/proofs/auth-lifetime-2026-11-12/delivery.json",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C03_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C03_2026-11-11.md",
       "execution_model": "sonnet",
       "candidate_commit": "166234b038d44e0eef20805db3e5cd1f740a6c46",
       "review_model": "sonnet",
-      "known_gap": "Expanded cookie/CSRF browser suite and independent re-review running; not integrated/live",
+      "known_gap": "Low residuals and external Discord/live rollback NOT_RUN recorded in delivery evidence; no missing required C03 implementation",
       "review_findings": [
         "M1: signed-expiry second-boundary race",
         "M2: preserve current device refresh on password change"
@@ -463,5 +463,5 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "Finish C01 focused browser checks and independent Claude reviews for C01/C03; bounded rework, integration and live verification before dependent C02/C04. Continue remaining task contracts."
+  "next_step": "Close final C01 draft-protection/catalog/contrast findings and browser reruns, review then deploy P4/C01; continue C02/C04 and remaining authorized tasks."
 }
