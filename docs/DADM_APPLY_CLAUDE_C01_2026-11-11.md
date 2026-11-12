@@ -129,3 +129,19 @@ Feld-/Speicher-/Zusammenfassungslabels zum C01-Besitz ergänzt. Übersetzung am
 eigenen Labelaufruf, niemals pauschal am generischen h/field/DOM-Helfer oder an
 Regel-/Benutzerwerten. EN-Beschreibungs- und Speicherlabel sowie unveränderten
 eingegebenen Namen prüfen. Creator-Regeln und Wahlmechanik bleiben C02.
+
+## Live-Monitor: Spieltisch-Kontrast (12.11.)
+
+Die Funktionsreise mit DM/Firefox-Player besteht; Screenshotprüfung zeigt einen
+mittleren noch offenen Darstellungsfehler: dunkle Label-/Buttontexte auf fest
+dunklem Tisch-Chrome, auch beim Kartenmaßstab. Die bisherigen Prüfselektoren
+deckten diese Flächen nicht ab. C01 bleibt bis zur Korrektur unvollständig.
+
+Begrenztes Apply: bestehende Spieltisch-Chromeflächen (Panels, Werkzeugleiste,
+Menüs, beschriftete Controls, aktive Zustände) für Pergament und Nacht an dieselben
+UI-Tokens binden, Text/Fläche gemeinsam. Canvas, SVG-/Dokumentfarben und Geometrie
+bleiben erhalten. Keine Controller-/Rechteänderung. Dateibesitz zusätzlich
+tests/test_play_presentation_browser.py. Reale DM-/Player-Kompositionen, beide
+Themes, schmale Ansicht und 4,5:1 für sichtbare normale Beschriftungen prüfen.
+Separate kleine Nachlieferung mit eigenem Vorimage, gezieltem Review und Live-
+Sichtprüfung statt das bekannte Problem als fertig auszugeben.

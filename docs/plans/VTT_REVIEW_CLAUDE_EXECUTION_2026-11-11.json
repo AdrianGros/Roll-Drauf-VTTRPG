@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
   "status": "execution_started",
-  "phase": "deploy_C01_C02",
+  "phase": "monitor_C01_deploy_C02_rework_C04",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -71,7 +71,7 @@
     {
       "id": "C01",
       "title": "Darstellung, UI-Sprache und Buchnavigation",
-      "status": "integrated_checks_running",
+      "status": "live_monitor_rework_required",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -113,13 +113,13 @@
         "P1-Rollentrennung und Kartenmaßstab erhalten"
       ],
       "execution_session_id": "9194c947-691f-431c-b8e0-1ab43cd95531",
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "f5790c2400b92a0dd490658ebd3d2a887601183d",
+      "deployed_image_id": "sha256:86ac41ff39eb8deaedc7bc4836102a1427df0621a1201434175f797ff48cc270",
+      "live_verification": "docs/proofs/presentation-2026-11-12/delivery.json",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
       "candidate_commit": "08f380253",
       "review_model": "sonnet",
-      "known_gap": "Final integrated checks and live P4/C01 delivery pending",
+      "known_gap": "Functional journeys pass, Medium PlayChrome contrast finding requires bounded follow-up; not complete",
       "review_findings": [
         "F1: remaining authored hub literals",
         "F2: EN data-boundary acceptance"
@@ -136,7 +136,7 @@
     {
       "id": "C02",
       "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
-      "status": "ready_for_worker",
+      "status": "rework_in_progress",
       "implementer": "vtt-ui-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -170,13 +170,16 @@
         "Keine erfundene Slot-Obergrenze",
         "Prüfung führt zum Feld; Talentwiederholung geprüft"
       ],
-      "execution_session_id": null,
+      "execution_session_id": "bf179ad0-fa5c-431a-a44a-56d286808cb2",
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
-      "handoff": "docs/proofs/claude-c02-2026-11-12/handoff.json"
+      "handoff": "docs/proofs/claude-c02-2026-11-12/handoff.json",
+      "candidate_commit": "a1cfe6864",
+      "execution_model": "sonnet",
+      "known_gap": "42passed8failed; actual mode URL, hidden Reader control, absent image entry plus local lock/failclosed rework. No integration/live/review yet"
     },
     {
       "id": "C03",
@@ -231,7 +234,7 @@
     {
       "id": "C04",
       "title": "2D-Kartenbedienung und Bibliothek zum Spieltisch",
-      "status": "ready_for_worker",
+      "status": "local_candidate_rework_required",
       "implementer": "vtt-maps-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -276,12 +279,15 @@
         "Undo/Redo je Geste und unverwandte Ebenen erhalten",
         "Optionales Stempelraster, Kachelpinselgröße, aktuelle Assets/Credits erhalten"
       ],
-      "execution_session_id": null,
+      "execution_session_id": "735da98a-2ade-4535-8e75-bf97251a8652",
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C04_2026-11-11.md",
-      "handoff": "docs/proofs/claude-c04-2026-11-12/handoff.json"
+      "handoff": "docs/proofs/claude-c04-2026-11-12/handoff.json",
+      "candidate_commit": "41a708c80",
+      "execution_model": "sonnet",
+      "known_gap": "22 API/static cases passed; no actual browser journeys yet. Global asset shim, fonts, explicit locale markers and visual tile variants need bounded rework. No integration/live/review"
     },
     {
       "id": "C05",
@@ -295,7 +301,7 @@
       "review_ids": [
         "R29"
       ],
-      "next_phase": "apply",
+      "next_phase": "deploy",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -309,7 +315,8 @@
       "source_commit": null,
       "deployed_image_id": null,
       "live_verification": null,
-      "discovery": "docs/DADM_DISCOVER_CLAUDE_C05_2026-11-11.md"
+      "discovery": "docs/DADM_DISCOVER_CLAUDE_C05_2026-11-11.md",
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C05_2026-11-12.md"
     },
     {
       "id": "C06",
@@ -493,5 +500,5 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "Close final C01 draft-protection/catalog/contrast findings and browser reruns, review then deploy P4/C01; continue C02/C04 and remaining authorized tasks."
+  "next_step": "Close Medium C01 PlayChrome contrast and C02 real browser failures through Claude; C04 module-relative assets/real browser acceptance, then continue remaining C05–C10."
 }

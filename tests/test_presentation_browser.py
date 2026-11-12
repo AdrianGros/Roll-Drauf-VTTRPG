@@ -103,18 +103,19 @@ def test_dm_calibration_updates_player_ruler_without_granting_controls(action_si
         assert not player.evaluate('!!window.PlayDMSurface')
         player.locator('[data-tool="measure"]').click()
         world=player.locator('#mapWorld');box=world.bounding_box()
+        screen_step=pixels*box['width']/float(world.get_attribute('data-map-width'))
         # Two actual pointer waypoints on the map. Snap yields a one-square segment.
-        player.mouse.click(box['x']+pixels*3,box['y']+pixels*3)
-        player.mouse.click(box['x']+pixels*4,box['y']+pixels*3)
-        player.mouse.move(10,10)
-        expect(player.locator('#measureLayer')).to_contain_text('1 squares')
+        player.mouse.click(box['x']+screen_step*3,box['y']+screen_step*3)
+        player.mouse.click(box['x']+screen_step*4,box['y']+screen_step*3)
+        segment=player.locator('#measureLayer .measure-label').first
+        expect(segment).to_have_text('1 squares')
         dm.locator('#btnSidebarToggle').click();dm.locator('.sidebar-tab[data-tab="session"]').click()
         expect(dm.locator('#mapScaleMeters')).to_be_visible();dm.locator('#mapScaleMeters').fill('1.5');dm.locator('#mapScaleSave').click()
-        expect(player.locator('#measureLayer')).to_contain_text('5 ft')
+        expect(segment).to_have_text('5 ft')
         # Current unit changes redraw the same geometry without another save.
         player.locator('#btnBack').click();player.locator('#appMenuDisplay').click();player.locator('#vttDisplay-unit').select_option('m');player.locator('.vtt-display-actions button').last.click()
-        expect(player.locator('#measureLayer')).to_contain_text('1.5 m')
-        dm.locator('#mapScaleClear').click();expect(player.locator('#measureLayer')).to_contain_text('1 squares')
+        expect(segment).to_have_text('1.5 m')
+        dm.locator('#mapScaleClear').click();expect(segment).to_have_text('1 squares')
         with app.app_context():
             db.session.expire_all();assert db.session.get(CampaignMap,map_id).grid_size==pixels
             assert db.session.get(CampaignMapScale,map_id).meters_per_square is None

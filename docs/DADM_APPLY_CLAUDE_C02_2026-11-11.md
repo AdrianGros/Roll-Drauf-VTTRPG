@@ -59,3 +59,22 @@ der richtige Tab geöffnet und der Bereich fokussiert. Unbekannte Werte werden
 ignoriert, nicht als Selector/Code interpretiert. Vorhandene Kampagnen-/Session-
 und Kontextparameter bleiben beim Moduswechsel erhalten. Der Link gewährt
 keine Schreibrechte und löst keine automatische Charakteränderung aus.
+
+## Konkretisierung nach erstem C02-Check am 12.11.
+
+42 Prüfungen bestehen, acht Browserfälle zeigen echte Integrationslücken:
+SheetFeedback überschreibt den Modusbutton noch mit einer URL ohne campaign_id
+und unbekannte Parameter; das CSS macht den hidden-Readerbutton sichtbar; der
+neue Bilder-einstieg wird nicht tatsächlich in die fertige Komposition eingesetzt.
+Diese vorhandenen Seams werden innerhalb C02 korrigiert.
+
+Außerdem muss die Rechteprojektion bei fehlenden/ungültigen permissions geschlossen
+bleiben. Kein Rückfall auf mode=edit als Eigentümernachweis. Der lokale Bogenlock
+und explizites mode=view müssen auch bereits komponierte Inventar-/Fortschritts-/
+Verwaltungsaktionen sperren, ohne serverseitige Fähigkeiten zu erfinden oder
+bestehende zulässige DM-XP-Aktionen im normalen Einstieg pauschal zu entfernen.
+Dazu wird der C02-Besitz um srd-inventory-ui.js, srd-progression-ui.js und
+srd-manage-ui.js erweitert. Vorhandene Komponenten neu zeichnen/ihre bestehenden
+Capabilities mit dem lokalen Ansichtszustand verknüpfen; kein neuer Controller.
+Unbekannte Rechte liefern false; lokale Sperre ist nur UI, jede Mutation bleibt
+serverseitig unabhängig geprüft. Lock-/View-Test muss auch SRD-Panels abdecken.

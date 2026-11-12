@@ -1,0 +1,127 @@
+{
+  "commit": "f5790c2400b92a0dd490658ebd3d2a887601183d",
+  "base_source": "2b4924344e851999a643125df1633ec0ecd06e78",
+  "running_revision_label": "7df79fb3f6ef31f739afb4095552ce6abe1a1fb4",
+  "image": "roll-drauf-vtt-app:feedback-presentation-20261111-f5790c240",
+  "image_id": "sha256:86ac41ff39eb8deaedc7bc4836102a1427df0621a1201434175f797ff48cc270",
+  "base_image_id": "sha256:e5d675977e9b86b7a421d34d007e86683339b1f1215dbd3240c3c470227fde16",
+  "prior_image": "roll-drauf-vtt-app:feedback-presentation-rollback-20261111-e5d675977e9b",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "overlay_manifest": {
+    "vtt/models/__init__.py": "48080a6959750c62f80f42ee34eb2d53a77589c7b7912159075448e86b1a862b",
+    "vtt/models/campaign_map.py": "02f1b374aa873715dceeef4894c43ab6b2804a8de521104fa41c74e3def65f82",
+    "vtt/models/campaign_map_scale.py": "17671b85cb8df94f7db5ceabfdb90e02d4a8753a53f1c0558946f85a4cee2b6a",
+    "vtt/play/__init__.py": "8f02ab220790a3e5621faa37c26e9125da5a5e6b9dc407786b54781269ac0db9",
+    "vtt/play/presentation.py": "627528a35e55f6c8f8663dc51bf0282f40e9b6ea38b55e7e19bb6f60bb2fd29e",
+    "vtt/play/surfaces/dm.json": "08d1b70990fd07472930f6094a318278b6e138e0485437b91e801a7b5db5f762",
+    "vtt/static/css/display-preferences.css": "d245f33e04b387f624fc6052c3f3b0433e9309edd2dbd49322c920f92aada644",
+    "vtt/static/css/srd-creator.css": "8b0e1b5dea502b741772e5259efdb520b5a815924cf3aa9ba8cefe3e91329acd",
+    "vtt/static/eagle-homebrew/creation-engine.js": "ac8e912cf8bdfab1b50690d92942e76c3cea92f7b2d11ec4a5eba266c07ce738",
+    "vtt/static/i18n/ui.de.json": "7fe131ea994dac3455b7391a622b7a67066c1b5c2853794f9aacbcd65be8835d",
+    "vtt/static/i18n/ui.en.json": "f0fc44af7783ccc391ec33ca5419539e4b1907039c7e526472a7d5f2ba2fb794",
+    "vtt/static/js/auth.js": "c67bd614cb1e29937447ebc4d21b6985ff7e63621f1203978824d26256c91c50",
+    "vtt/static/js/book-scene.js": "e34e86254b965aa9ecc5c14809af561349e70c0d6720c6eccea72433b2f4c72c",
+    "vtt/static/js/ce-origin-publish.js": "d76ab4df202c3e890174530bbff60a3cd9bd9d6d8f0994a1bb65769c9b4a789b",
+    "vtt/static/js/ce-species-publish.js": "b4c000b14135d3305146ad4afab8c063f49abc8710a8f10d516d96d277e5439f",
+    "vtt/static/js/creation-engine-nav.js": "b26401306ff70d5c695335cfb5a5b5b24edaa7da06462bf84020b8ecc80ddb10",
+    "vtt/static/js/display-preferences.js": "0e136f3850acccf263c0fe433eac88fa52388fcf8271b573d2d40cde6d13df7a",
+    "vtt/static/js/main.js": "a3b91a467b45d8ac598b7d4cbdae01751b2819d12cbe00ae0eaae93b968578cc",
+    "vtt/static/js/play-dm.js": "cbeca36fcf3b98efd8c75aa81b08daca4ebe159948b3fa2cfe160bd85a0e74b8",
+    "vtt/static/js/play-personal.js": "fff226277d02c8de2e138ca58e28afdd6630509d6eb955de1642a1e40acfbdc9",
+    "vtt/static/js/play-socket.js": "abcffee6f031075f4b99579a95f2b1a72427098330e60e7fbec5735e1e653ef8",
+    "vtt/static/js/play-ui.js": "8fe79c39b79aaff7d5940b8e8b7f3ba7db74dddc9fd001933399c90fc789239b",
+    "vtt/static/js/regelwerk-compendium.js": "7733b8bd19485ff920a712ce27f12ef0eac79c13d8bfad0d7bedec8fc2f1d1cd",
+    "vtt/static/js/regelwerk-navigation.js": "cb99a55a8b0a524c879123990cad974ea1de4300e0f2e4b551752769701ac0e2",
+    "vtt/static/js/regelwerk-reader.js": "2dec2e011d21cbbe1df52b4f0162a32e159d72d5ff6ac1bc96f1d6879ade2622",
+    "vtt/static/js/sheet-feedback.js": "05790d0e0889b046b167372dd1785c71ae4fefc8c02a0e3801769aa1cd458856",
+    "vtt/static/js/srd-creator-steps.js": "448db65b3e76a4a82f644e8db223fa95b96e7dac96800c9613ea9aa0cccf7a85",
+    "vtt/static/js/srd-creator.js": "98b7d9356dba0f0b6c89c68abeb6b1d0b10f26883e52bb60d073351127093f10",
+    "vtt/static/js/srd-inventory-ui.js": "e1c49d7c834c88db6b359179ade32c3c1b0e47e479ade02dbea3a58e266c5608",
+    "vtt/static/js/srd-manage-ui.js": "7c56b9de97ae6401edee7567a2c9c28858bb861ee0500228318229a1f91e3504",
+    "vtt/static/js/srd-party-ui.js": "dbea1413a187146c808fb0f7d483c64c38a82b22c9287260ba96261ac4ac34aa",
+    "vtt/static/js/srd-progression-ui.js": "80c8ad8d4405ace270ad0ed3d6e95faaa58d0c6b6e15083e4ef77b324fc5b288",
+    "vtt/static/js/srd-shared-ui.js": "c1a4e07cff79dafe1d238241aac4988f4e83943d8c109a04faf6e11076988bbd",
+    "vtt/static/js/ui-catalog.js": "499b326675bd58eb79373530e5ebd8296e4b2e3f2c35227b32680cd68b026d3f",
+    "vtt/static/js/vtt-main-nav.js": "11076cd4cf9b9b9fbfda83a91d3ffa9a43984b29a5844688ad44b7eed0cfcd1c",
+    "vtt/static/mapmaker/credits.html": "08422241c6ee73d0255d9f2b0529a4411ec49fed6f926d511bf723af66f9e09f",
+    "vtt/static/mapmaker/index.html": "2a79bfab92ead6a246efc2b08f98d12d6d1e34d12252608258ecb69baf962fc1",
+    "vtt/static/mapmaker/js/app.js": "d9c5668ba8f1a59fccddee5c3f2b88ea7d319ab98ecc742c0675a5c5fe0069dc",
+    "vtt/static/mapmaker/js/credits.js": "dbbc2609abe914cb0dc4bf6c995453bdc7a43af8ce2367350409914fa3f73429",
+    "vtt/static/mapmaker/js/document.js": "07a82f46ac979a5ed9aebeae32d32cd8dcc3eed1fcb80e5f412c10203ec453b8",
+    "vtt/static/mapmaker/js/library.js": "38241711c64b10d6171a46a8199aea889bb87305b8ee29477461164079dfd93c",
+    "vtt/static/mapmaker/js/render.js": "a09774070a647d90bea1a13b503c0aac86768afd0a66e4a8b6c61e794b07aeaf",
+    "vtt/static/mapmaker/js/stamps.js": "1a7d59745a1404d2a1d6e010913ddcfe822de4aeb74913d207da5ecfd6391b22",
+    "vtt/static/mapmaker/js/storage.js": "182ec84e3ed54edcc3f678cab5faeb6b71e16d4d63d51fa7c78111688ab57793",
+    "vtt/static/mapmaker/js/tools.js": "b23e4a1873e49fbd584f97c2367d622220a14c50349049fa30d46a29dadf6bcc",
+    "vtt/static/mapmaker/js/ui.js": "f7da1547d007a2a81738ddd839e7c90ce5295ba5cfe0215d46a0bfa2a9a2f603",
+    "vtt/static/mapmaker/js/zip.js": "a04348fae7c9e1bfd259123018679a438cb16253deff76a0d1bde3b5bcd41089",
+    "vtt/templates/campaigns.html": "2247e6410eb29c6f0a705157ae8a71cd919cb3c3dd14328b8b613e75e37a9228",
+    "vtt/templates/character-sheet.html": "7b578428b93585001fa2b1c95dc5b7ffcdf2dac5742991d8a09bcca54d96271f",
+    "vtt/templates/characters.html": "e3820590d8410e2436eb984682bc2ce532a19be667e5b27100f6ba70209c25e4",
+    "vtt/templates/creation-engine.html": "26038a251f52f49e84ae263b3cb44a424ce82a1fe1bd25155b2b1d5d8baefadc",
+    "vtt/templates/dashboard.html": "fc284f538b0835634f11eefb7ef6ca79565b9af61bc748845cf982c471306e36",
+    "vtt/templates/forgot-password.html": "3511da43092449a72e7d64a33caca33cf9d4a27298b3593fb2c531474c9c24d3",
+    "vtt/templates/invite.html": "6893b864fe3624f8d1335bc9de4d1d8163e08db1e2a3c36f27012c3e97ecbd3c",
+    "vtt/templates/login.html": "25e47300800b93c2ce07b9d7315f78d14979f79475747daceb1d1254fe7d7139",
+    "vtt/templates/play.html": "a18e91a3a44a906add2efa0e5afb8fbf4f8a0d403f28e443302ff8889c98fe1d",
+    "vtt/templates/regelwerk-compendium.html": "739adb1a55280772b7fd0d1973dc192c758bc0aeb557feb013c0b0db104a75e0",
+    "vtt/templates/regelwerk.html": "51e3579dc4582c2c9907e3c5d5955727e850440048f2e97b49531c08d7da7ad2",
+    "vtt/templates/register.html": "f3e192b6e1ce718babb7b44fd8822f3c7abee9c595d3295369fccce24c58de8b",
+    "vtt/templates/reset-password.html": "7778227d427ab3ac9b3167c9e831d5ed9e06a70f9cdff416e52afc6cf023e2b8",
+    "vtt/templates/signup.html": "df4ee62c11f5a62262777a10f1cece9dbe526a578907f9e9d8bebd41e9c5fe6d",
+    "vtt/templates/srd-creator.html": "fdb0463b672d9379831fbd52bc08a1701a97996de0aba0f5e4936491c6150ef2"
+  },
+  "built_source_verification": {
+    "checked": 249,
+    "mismatches": []
+  },
+  "deployed_at": "2026-11-12T08:06:28.399990341Z",
+  "health": {
+    "now": "2026-11-12T08:06:35.826667",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-12T08:06:33.637571",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "schema_migration": {
+    "status": "pass",
+    "tables": [
+      "campaign_map_scales"
+    ],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-presentation/f5790c240/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "status": "functional_live_pass_monitor_rework_required",
+  "checks": {
+    "integrated_suite": "62 passed in 631.03s",
+    "exact_committed_measurement_segment": "1 passed,4deselected in24.77s",
+    "catalog": "2800 sources complete, compiler negative cases rejected",
+    "literal_syntax": "8 files,590 marked calls,0 missing"
+  },
+  "database_backup": {
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "live_journeys": "live-presentation-result.json",
+  "cleanup": "cleanup-result.json",
+  "pending_medium": [
+    "PlayChrome headings/labels/buttons fail visual contrast in paper/night; bounded C01 rework underway"
+  ],
+  "not_run": [
+    "Human acceptance session",
+    "Actual rollback execution"
+  ],
+  "push": {
+    "status": "passed",
+    "branch": "feat/protocol-feedback-20261110",
+    "contains_source": true
+  },
+  "secrets_recorded": false
+}

@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "journeys": [
+    "Archive appearance dialog → EN/night/ft → own sheet at Firefox 390 px, authored labels translated and name Speichern unchanged",
+    "Normal Creator, Maps, Compendium, Eagle navigation retains browser preferences; Eagle EN creation dialog opens without saving a document",
+    "Campaign hub → authorized DM/Player table; existing pointer measurement updates after DM calibration, ft/m change redraws without geometry mutation; clear restores squares"
+  ],
+  "checks": {
+    "firefox_390_hub_navigation_night_min_contrast": 10.488551512880623,
+    "player_dm_controller_mounted": false,
+    "dm_calibration_broadcast": true,
+    "unit_change_redraw": true,
+    "uncalibrated_fallback": true
+  },
+  "errors": [],
+  "secrets_recorded": false
+}
