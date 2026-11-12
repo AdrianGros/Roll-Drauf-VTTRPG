@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "errors": [],
+  "journeys": [
+    "Normal campaigns book\u2192shared month calendar\u2192own hub\u2192new unstarted session\u2192date poll\u2192Firefox390 alert and own votes\u2192reload persists\u2192DM named answers and finalize\u2192both own calendars one scheduled session"
+  ],
+  "commit": "cc215beaa95c38c6c8ee1fcc2113a9829205c7b1",
+  "image": "roll-drauf-vtt-app:feedback-calendar-20261111-cc215beaa",
+  "image_id": "sha256:3f5f0ad96d380a01a310413aec5ebf5e3192e7f0cb6c417dc9269c6c9283be8b",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "rollback": "/srv/migration/2026-11-11/feedback-calendar/cc215beaa/rollback.sh"
+}

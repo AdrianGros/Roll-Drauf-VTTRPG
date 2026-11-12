@@ -1844,9 +1844,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
             if (token !== srdRenderToken) return;
             body.replaceChildren(...buildSrdSheet(character, detail, srdCreatorData));
-            loadSrdRollContext(character, true);
-            loadSrdInventory(character, updateSrdArmorClass);
-            loadSrdManage(character);
+            const rollLoaded = loadSrdRollContext(character, true);
+            const inventoryLoaded = loadSrdInventory(character, updateSrdArmorClass);
+            const manageLoaded = loadSrdManage(character);
             const progressionLoaded = loadSrdProgression(character, detail.evaluation, (info) => {
                 if (info?.reload) {
                     Promise.resolve(loadSheet()).then(() => { if (info.message) showMessage(info.message); });
@@ -1855,9 +1855,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 }
             });
             // The fixed section link waits for the composed tabs (and the progression root's content).
-            Promise.resolve(progressionLoaded).catch(() => {}).then(() => {
-                if (token === srdRenderToken) openRequestedSection();
-            });
+            await Promise.all([rollLoaded, inventoryLoaded, manageLoaded, progressionLoaded]);
+            if (token === srdRenderToken) openRequestedSection();
         }
 
         function updateSrdArmorClass(payload) {

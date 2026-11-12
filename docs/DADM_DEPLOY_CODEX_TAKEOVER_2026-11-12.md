@@ -36,3 +36,13 @@ sequence avatar/upload, avatar/replace, token/upload passes in both engines
 no previous WIP navigation or existing context guards replaced. Its API, both
 role/engine poll journeys, series browser journeys and PostgreSQL checks pass;
 see calendar proof. Live calendar acceptance remains pending.
+
+C06 live journey passed on cc215beaa / image 3f5f0ad9: own calendar month,
+normal campaign-ledger row to hub, create unstarted session/poll, Firefox390
+alert -> own votes -> reload -> DM sees named votes/finalizes -> both calendars
+show one scheduled session. First harness assumed an anchor where the actual
+book uses an accessible campaign-ledger row; corrected that selector.
+C02 upload must also await roll/inventory/management/progression loads, since
+they affect layout after SRD composition. Delayed appearance request + EN/night
+management entry + all three chooser/upload operations pass in both engines
+(2 cases). Exact live follow-up remains open until verified after this release.

@@ -444,7 +444,12 @@ def test_replacing_different_identity_pixels_refreshes_all_portraits(site, data,
     with sync_playwright() as p:
         browser, page, errors, _ = _context(p, origin, info['token'], 390, engine=engine)
         page.on('dialog', lambda d: d.accept())
-        page.goto(f'{origin}/character-sheet?id={char_id}&section=identity')
+        from tests.test_presentation_browser import preferences
+        from time import sleep
+        preferences(page.context,theme='night',language='en')
+        page.route('**/appearance',lambda route:(sleep(.4),route.continue_()))
+        page.goto(f'{origin}/character-sheet?id={char_id}')
+        page.locator('#sfManageImages').click()
         for kind,size in (('avatar',2),('avatar',3),('token',2)):
             image = BytesIO(); Image.new('RGB', (size, size), (size * 60, 80, 120)).save(image, format='PNG')
             page.locator('#messageBox').evaluate("n=>n.textContent=''")
@@ -453,7 +458,7 @@ def test_replacing_different_identity_pixels_refreshes_all_portraits(site, data,
             with page.expect_response(lambda r: r.request.method == 'POST' and '/identity/'+kind in r.url) as response:
                 chooser.value.set_files({'name':f'{kind}-{size}.png','mimeType':'image/png','buffer':image.getvalue()})
             assert response.value.status == 200
-            expect(page.locator('#messageBox')).to_contain_text('gespeichert')
+            expect(page.locator('#messageBox')).to_contain_text('saved')
             page.wait_for_function('''([kind,size])=>{const a=Array.from(document.querySelectorAll('img[src*="/identity/'+kind+'"]'));return a.length>=2&&a.every(i=>i.complete&&i.naturalWidth===size)}''', arg=[kind,size])
         with app.app_context():
             assert db.session.get(Character, char_id).avatar_url == f'/api/characters/{char_id}/identity/avatar'
