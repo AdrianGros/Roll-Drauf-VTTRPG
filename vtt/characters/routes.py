@@ -346,7 +346,27 @@ def get_character_sheet(char_id):
     if not _can_read_character(user.id, char):
         return jsonify({'error': 'Unauthorized'}), 403
 
-    return jsonify(_serialize_character_sheet(char)), 200
+    payload = _serialize_character_sheet(char)
+    _attach_sheet_permissions(payload, user.id, char)
+    return jsonify(payload), 200
+
+
+def _sheet_permissions(user_id, char):
+    """Read-only UI hint derived from character ownership alone.
+
+    Mirrors the PUT/POST/DELETE owner checks; it grants nothing (those routes
+    re-check on every write) and is never stored. A campaign owner, DM or
+    shared reader who is not the character's owner always gets false.
+    """
+    is_owner = char.user_id == user_id
+    return {'editCore': is_owner, 'editIdentity': is_owner, 'copy': is_owner}
+
+
+def _attach_sheet_permissions(payload, user_id, char):
+    character = payload.get('character') if isinstance(payload, dict) else None
+    if isinstance(character, dict):
+        character['permissions'] = _sheet_permissions(user_id, char)
+    return payload
 
 
 @characters_bp.route('/characters/<int:char_id>', methods=['PUT'])

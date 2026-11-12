@@ -456,7 +456,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const picked = ((st().skills || {}).multiclass || {})[key] || [];
             const pool = grant.from === 'class' ? SC.util.classSkillOptions(cls(key)) : Object.keys(SC.L.skills);
             const options = pool.map((id) => ({ id, name: SC.skillName(id) }));
-            wrap.append(h('h3', { text: globalThis.VTTUi("Mehrklassigkeit: {p0}",{p0:(cls(key).name)}) }), counter(picked.length, grant.count),
+            wrap.append(h('h3', { 'data-focus-path': `skills.multiclass.${key}`, tabindex: '-1', text: globalThis.VTTUi("Mehrklassigkeit: {p0}",{p0:(cls(key).name)}) }), counter(picked.length, grant.count),
                 countedList(options, picked, grant.count, (next) => SC.mutate((state) => {
                     state.skills = state.skills || {};
                     state.skills.multiclass = { ...(state.skills.multiclass || {}), [key]: next };
@@ -498,14 +498,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         });
         const c = cls(key);
         if (choice.kind === 'option') {
-            return h('div', null, h('h4', { text: globalThis.VTTUi("{p0} (ab Stufe {p1})",{p0:(label(choice.id)),p1:(choice.level)}) }),
+            return h('div', { 'data-focus-path': `featureChoices.${key}.${choice.id}` }, h('h4', { text: globalThis.VTTUi("{p0} (ab Stufe {p1})",{p0:(label(choice.id)),p1:(choice.level)}) }),
                 h('div', { class: 'sc-grid' }, Object.entries(choice.options).map(([id, rule]) => card(OPTION_LABELS[id] || id, null, value === id, () => set(id),
                     null))),
                 value ? SC.detailButton(choice.options[value], globalThis.VTTUi("Regeltext"), OPTION_LABELS[value] || value) : null);
         }
         if (choice.kind === 'feat-category') {
             const feats = app.data.feats.filter((f) => f.category.startsWith(choice.category));
-            return h('div', null, field(`${label(choice.id)} (${choice.category})`, select(`scFc-${key}-${choice.id}`, feats.map((f) => [f.id, f.name]), value, set, 'Bitte wählen'), `scFc-${key}-${choice.id}`),
+            return h('div', { 'data-focus-path': `featureChoices.${key}.${choice.id}` }, field(`${label(choice.id)} (${choice.category})`, select(`scFc-${key}-${choice.id}`, feats.map((f) => [f.id, f.name]), value, set, 'Bitte wählen'), `scFc-${key}-${choice.id}`),
                 value ? SC.detailButton(value, globalThis.VTTUi("Regeltext"), SC.L.feats[value].name) : null);
         }
         const need = choiceNeed(choice, classLevel);
@@ -521,7 +521,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
         const elsewhere = Object.entries((st().featureChoices || {})[key] || {}).filter(([id, v]) => id !== choice.id && Array.isArray(v)).flatMap(([, v]) => v);
         options = options.filter((o) => !elsewhere.includes(o.id));
-        return h('div', null, h('h4', { text: label(choice.id) }), counter(picks.length, need),
+        return h('div', { 'data-focus-path': `featureChoices.${key}.${choice.id}` }, h('h4', { text: label(choice.id) }), counter(picks.length, need),
             countedList(options, picks, need, (next) => set(next), label(choice.id)));
     }
 
@@ -545,6 +545,24 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         return slots;
     }
 
+    // Non-repeatable feats already used by the background, a Human's versatile choice or another
+    // improvement slot (the same sources the server checks); `self` is the slot being rendered.
+    // `earlierOnly` mirrors the server, which flags the later entry in saved order (feat-repeat).
+    function takenFeatIds(self, earlierOnly = false) {
+        const taken = new Set();
+        const list = st().advancements || [];
+        const own = list.indexOf(self);
+        const state = st();
+        const bg = state.background && app.data.backgrounds.find((b) => b.id === state.background.id);
+        const origin = bg && app.data.feats.find((f) => f.name === bg.feat);
+        if (origin) taken.add(origin.id);
+        const versatile = ((state.species || {}).choices || {}).versatile;
+        if (versatile) taken.add(versatile);
+        list.forEach((a, i) => { if (a !== self && a.kind === 'feat' && a.featId && (!earlierOnly || own < 0 || i < own)) taken.add(a.featId); });
+        return taken;
+    }
+    SC.takenFeatIds = takenFeatIds;
+
     function renderAdvancement(slot) {
         const list = st().advancements || [];
         const idx = list.findIndex((a) => a.classKey === slot.key && a.classLevel === slot.level);
@@ -557,7 +575,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         });
         const idp = `scAdv-${slot.key}-${slot.level}`;
         const kind = adv && adv.kind;
-        const wrap = h('div', { class: 'sc-detail' }, h('h4', { text: globalThis.VTTUi("{p0}, Stufe {p1}: {p2}",{p0:(cls(slot.key).name),p1:(slot.level),p2:(slot.epic ? 'Epische Gabe' : 'Attributswerterhöhung oder Talent')}) }),
+        const wrap = h('div', { class: 'sc-detail', 'data-focus-path': idx >= 0 ? `advancements[${idx}]` : null }, h('h4', { text: globalThis.VTTUi("{p0}, Stufe {p1}: {p2}",{p0:(cls(slot.key).name),p1:(slot.level),p2:(slot.epic ? 'Epische Gabe' : 'Attributswerterhöhung oder Talent')}) }),
             h('div', { class: 'sc-row', role: 'group', 'aria-label': globalThis.VTTUi("Art") },
                 h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(kind === 'asi'), onclick: () => write((e) => { e.kind = 'asi'; e.increases = {}; delete e.featId; delete e.increaseAbility; }) }, globalThis.VTTUi("Attributswerterhöhung")),
                 h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(kind === 'feat'), onclick: () => write((e) => { e.kind = 'feat'; delete e.increases; }) }, slot.epic ? globalThis.VTTUi("Epische Gabe") : globalThis.VTTUi("Talent"))));
@@ -583,7 +601,23 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         } else if (kind === 'feat') {
             const category = slot.epic ? 'Epische-Gabe-Talent' : 'Allgemeines Talent';
             const feats = app.data.feats.filter((f) => f.category === category && f.id !== 'feats.descriptions.ability-score-improvement');
-            wrap.append(field(globalThis.VTTUi("Talent"), select(`${idp}-f`, feats.map((f) => [f.id, f.name + (f.prerequisite && f.prerequisite.raw ? ` (${f.prerequisite.raw})` : '')]), adv.featId, (v) => write((e) => { e.featId = v || undefined; delete e.increaseAbility; }), 'Bitte wählen'), `${idp}-f`));
+            // The server stays the authority (feat-repeat); the picker just stops offering a
+            // non-repeatable feat that the origin or another improvement already took.
+            const taken = takenFeatIds(adv);
+            const optionFor = (f) => {
+                const base = f.name + (f.prerequisite && f.prerequisite.raw ? ` (${f.prerequisite.raw})` : '');
+                const blocked = !f.repeatable && taken.has(f.id);
+                if (!blocked || (f.id === adv.featId && !takenFeatIds(adv, true).has(f.id))) return [f.id, base];
+                // A feat saved earlier stays visible (never silently dropped) but is explained.
+                return [f.id, `${base} ${globalThis.VTTUi("(bereits gewählt)")}`, f.id !== adv.featId];
+            };
+            wrap.append(field(globalThis.VTTUi("Talent"), select(`${idp}-f`, feats.map(optionFor), adv.featId, (v) => write((e) => { e.featId = v || undefined; delete e.increaseAbility; }), 'Bitte wählen'), `${idp}-f`));
+            const current = adv.featId && SC.L.feats[adv.featId];
+            const currentFeat = current && app.data.feats.find((f) => f.id === adv.featId);
+            if (currentFeat && !currentFeat.repeatable && takenFeatIds(adv, true).has(currentFeat.id)) {
+                wrap.append(h('p', { class: 'sc-finding-note', role: 'status', 'data-feat-repeat': adv.featId,
+                    text: globalThis.VTTUi("„{name}“ kann nicht mehrfach gewählt werden und ist bereits vergeben. Wähle hier ein anderes Talent; andere Entscheidungen bleiben unverändert.", { name: currentFeat.name }) }));
+            }
             const feat = adv.featId && SC.L.feats[adv.featId];
             if (feat) {
                 wrap.append(SC.detailButton(feat.id, globalThis.VTTUi("Talent-Text lesen"), feat.name));
