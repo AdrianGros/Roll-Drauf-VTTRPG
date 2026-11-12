@@ -1,0 +1,51 @@
+{
+  "task": "C06",
+  "phase": "deploy",
+  "source_base": "0ebf1242affedac61f29f70036f85a4576cb3cbc",
+  "apply": "docs/DADM_APPLY_CLAUDE_C06_2026-11-11.md",
+  "discover": "docs/DADM_DISCOVER_CLAUDE_C06_2026-11-11.md",
+  "seed_source": "e2a7a5859",
+  "seed_files": [
+    "tests/test_session_calendar.py",
+    "tests/test_session_calendar_browser.py",
+    "tests/test_session_calendar_postgres.py",
+    "tools/migrate_session_calendar.py",
+    "vtt/campaigns/calendar_routes.py",
+    "vtt/campaigns/session_calendar.py",
+    "vtt/models/session_series.py",
+    "vtt/static/css/session-calendar.css",
+    "vtt/static/js/session-calendar.js"
+  ],
+  "reference_only_shared_diffs": "docs/proofs/claude-c06-2026-11-12/wip-reference",
+  "owned_files": [
+    "tests/test_session_calendar.py",
+    "tests/test_session_calendar_browser.py",
+    "tests/test_session_calendar_postgres.py",
+    "tools/migrate_session_calendar.py",
+    "vtt/campaigns/calendar_routes.py",
+    "vtt/campaigns/session_calendar.py",
+    "vtt/models/session_series.py",
+    "vtt/static/css/session-calendar.css",
+    "vtt/static/js/session-calendar.js",
+    "vtt/campaigns/date_polls.py",
+    "vtt/models/session_date_poll.py",
+    "vtt/static/js/book-scene.js",
+    "vtt/templates/campaigns.html",
+    "vtt/endpoints/dashboard_home.py",
+    "vtt/campaigns/__init__.py",
+    "vtt/models/__init__.py",
+    "tools/i18n/tasks/c06.json",
+    "tests/test_c06_calendar.py",
+    "tests/test_c06_calendar_browser.py",
+    "tests/test_c06_calendar_postgres.py"
+  ],
+  "new_dependencies": false,
+  "new_schema": "Only additive SessionSeries/Occurrence and SessionDatePoll/Option/Vote; no existing-column changes",
+  "constraints": [
+    "No private chat C07",
+    "No legacy runtime status change; calendar projects original status",
+    "No full WIP book-scene/template overwrite",
+    "Locale source fragment only; explicit UI markers where needed, no migration script",
+    "No Bash/git/prod/credentials/agents; coordinator tests/generator/review/integration/migration/deployment"
+  ]
+}

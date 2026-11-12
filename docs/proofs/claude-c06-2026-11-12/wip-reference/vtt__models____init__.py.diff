@@ -1,0 +1,20 @@
+diff --git a/vtt/models/__init__.py b/vtt/models/__init__.py
+index 8af958635..568ab2fff 100644
+--- a/vtt/models/__init__.py
++++ b/vtt/models/__init__.py
+@@ -12,6 +12,7 @@ from vtt.models.campaign import Campaign
+ from vtt.models.campaign_map import CampaignMap
+ from vtt.models.campaign_member import CampaignMember
+ from vtt.models.game_session import GameSession
++from vtt.models.session_series import SessionSeries, SessionOccurrence
+ from vtt.models.session_state import SessionState
+ from vtt.models.token_state import TokenState
+ from vtt.models.invite_token import InviteToken
+@@ -46,6 +47,7 @@ from vtt.models.table_seat import TableSeat
+ __all__ = [
+     'Role', 'User', 'Session', 'MFABackupCode', 'AuditLog', 'Asset',
+     'Campaign', 'CampaignMap', 'CampaignMember', 'GameSession', 'SessionState', 'TokenState', 'InviteToken',
++    'SessionSeries', 'SessionOccurrence',
+     'Character', 'Spell', 'Equipment', 'InventoryItem',
+     'CombatEncounter', 'CombatEvent',
+     'ChatMessage', 'ModerationReport', 'ModerationAction',

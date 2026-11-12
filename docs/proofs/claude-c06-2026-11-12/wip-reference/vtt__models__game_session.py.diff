@@ -1,0 +1,13 @@
+diff --git a/vtt/models/game_session.py b/vtt/models/game_session.py
+index a250057e1..475ffc2d4 100644
+--- a/vtt/models/game_session.py
++++ b/vtt/models/game_session.py
+@@ -74,7 +74,7 @@ class GameSession(db.Model):
+         if status == "completed":
+             return "ended"
+         if status == "cancelled":
+-            return "paused"
++            return "cancelled"
+         return status or "scheduled"
+ 
+     # M41: State machine methods

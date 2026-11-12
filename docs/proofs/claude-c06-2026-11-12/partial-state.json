@@ -1,0 +1,42 @@
+{
+  "task": "C06",
+  "status": "partial_native_quota_blocked_not_integrated_not_deployed",
+  "source_base": "0ebf1242affedac61f29f70036f85a4576cb3cbc",
+  "native_session": "b6847237-26f2-4df4-818f-4916f0e9e965",
+  "native_stop": "five-hour Claude subscription limit; reset2026-11-12T18:10:00Z (19:10 Europe/Berlin)",
+  "quota": {
+    "five_hour": {
+      "utilization": 100.0,
+      "resets_at": "2026-11-12T18:10:00.034352+00:00"
+    },
+    "seven_day": {
+      "utilization": 97.0,
+      "resets_at": "2026-11-15T10:00:00.034373+00:00"
+    },
+    "extra_usage": {
+      "is_enabled": false
+    }
+  },
+  "no_api_fallback_or_extra_usage": true,
+  "checks": {
+    "python_compile": "six assigned calendar/poll/model/test modules compile",
+    "catalog": "2968 complete DE/EN sources generated, worker outputs coordinator-owned",
+    "api_and_recurrence": "76passed4failed in69.05s; all four failures at existing-style cancel-appointment endpoint return403",
+    "failed_tests": [
+      "test_cancel_occurrence_stays_cancelled_and_cannot_start",
+      "test_stopping_series_preserves_past_and_running_sessions",
+      "test_cross_campaign_ids_and_revoked_access_are_rejected",
+      "test_calendar_get_is_pure_and_explicit_post_rolls_forward"
+    ]
+  },
+  "gaps": [
+    "Native final completeness report absent (CLI result is quota message)",
+    "Resolve four403 regressions without bypassing current table context/role boundary; inspect middleware plus route context",
+    "Reconcile old runtime-cancelled assertion with approved original-status-only calendar projection",
+    "New real C06 browser journey not authored/completed at stop; seeded older one not equivalent",
+    "Disposable PostgreSQL materialization/poll concurrency not run",
+    "Independent source review not run",
+    "Additive model schema/backup/deployment/live NOT_RUN"
+  ],
+  "next_step": "Resume same native session with exact failures, only owned files; preserve source, finish bounded tests and reviewer before integration"
+}

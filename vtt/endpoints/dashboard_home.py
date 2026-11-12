@@ -85,6 +85,9 @@ def _build_session_summaries(campaigns: list[Campaign]) -> list[dict]:
     sessions = (
         GameSession.query.filter(GameSession.campaign_id.in_(campaign_ids))
         .filter(GameSession.is_archived.is_(False))
+        # A cancelled appointment is not "the next session" in the personal overview;
+        # the shared calendar still shows it as cancelled.
+        .filter(or_(GameSession.status.is_(None), GameSession.status != 'cancelled'))
         .order_by(
             GameSession.started_at.desc().nullslast(),
             GameSession.scheduled_at.asc().nullsfirst(),

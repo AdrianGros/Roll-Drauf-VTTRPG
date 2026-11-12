@@ -1,0 +1,12 @@
+diff --git a/vtt/endpoints/dashboard_home.py b/vtt/endpoints/dashboard_home.py
+index e24aded50..36e427216 100644
+--- a/vtt/endpoints/dashboard_home.py
++++ b/vtt/endpoints/dashboard_home.py
+@@ -85,6 +85,7 @@ def _build_session_summaries(campaigns: list[Campaign]) -> list[dict]:
+     sessions = (
+         GameSession.query.filter(GameSession.campaign_id.in_(campaign_ids))
+         .filter(GameSession.is_archived.is_(False))
++        .filter(GameSession.status != 'cancelled')
+         .order_by(
+             GameSession.started_at.desc().nullslast(),
+             GameSession.scheduled_at.asc().nullsfirst(),
