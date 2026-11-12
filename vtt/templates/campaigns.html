@@ -1663,18 +1663,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const isDiscoverable = discoverableField ? discoverableField.checked : false;
 
             if (!name) {
-                setCampaignCreationState("Bitte zuerst einen Kampagnennamen eingeben.", "error");
+                setCampaignCreationState(globalThis.VTTUi("Bitte zuerst einen Kampagnennamen eingeben."), "error");
                 if (nameField) nameField.focus();
                 return;
             }
 
             if (!Number.isInteger(maxPlayers) || maxPlayers < 2 || maxPlayers > 20) {
-                setCampaignCreationState("Die maximale Spielerzahl muss als ganze Zahl zwischen 2 und 20 angegeben werden.", "error");
+                setCampaignCreationState(globalThis.VTTUi("Die maximale Spielerzahl muss als ganze Zahl zwischen 2 und 20 angegeben werden."), "error");
                 if (maxPlayersField) maxPlayersField.focus();
                 return;
             }
 
-            setCampaignCreationState("Kampagne wird angelegt. Danach öffnet sich direkt der Kampagnen-Hub.", "info");
+            setCampaignCreationState(globalThis.VTTUi("Kampagne wird angelegt. Danach öffnet sich direkt der Kampagnen-Hub."), "info");
             setCampaignCreateBusy(true);
 
             try {
@@ -1690,8 +1690,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     return;
                 }
                 renderCampaignCreateSuccess();
-                showMessage("Kampagne erstellt.");
-                setCampaignCreationState("Kampagne erstellt. Öffne jetzt den Hub oder lege direkt die nächste Kampagne an.", "success");
+                showMessage(globalThis.VTTUi("Kampagne erstellt."));
+                setCampaignCreationState(globalThis.VTTUi("Kampagne erstellt. Öffne jetzt den Hub oder lege direkt die nächste Kampagne an."), "success");
                 resetCampaignCreationForm();
                 closeCampaignCreationPanel();
                 currentTab = "my";
@@ -1700,15 +1700,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     await viewCampaign(created.id);
                 }
             } catch (error) {
-                setCampaignCreationState(error.message || "Kampagne konnte nicht erstellt werden.", "error");
-                showMessage(error.message || "Kampagne konnte nicht erstellt werden.", true);
+                setCampaignCreationState(error.message || globalThis.VTTUi("Kampagne konnte nicht erstellt werden."), "error");
+                showMessage(error.message || globalThis.VTTUi("Kampagne konnte nicht erstellt werden."), true);
             } finally {
                 setCampaignCreateBusy(false);
             }
         }
 
         async function joinCampaign(campaignId) {
-            const token = window.prompt("Einladungs-Code für diese Kampagne eingeben:");
+            const token = window.prompt(globalThis.VTTUi("Einladungs-Code für diese Kampagne eingeben:"));
             if (!token || !token.trim()) return;
 
             try {
@@ -1720,13 +1720,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     // Generic multi-use link (2026-09-22): a redemption files a
                     // join request, not instant membership - the DM has to
                     // approve it first, so there is no hub to open yet.
-                    showMessage("Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen.");
+                    showMessage(globalThis.VTTUi("Beitrittsanfrage gesendet. Die Spielleitung muss sie noch bestätigen."));
                 } else {
-                    showMessage("Du bist der Kampagne beigetreten.");
+                    showMessage(globalThis.VTTUi("Du bist der Kampagne beigetreten."));
                     await viewCampaign(campaignId);
                 }
             } catch (error) {
-                showMessage(error.message || "Beitritt fehlgeschlagen.", true);
+                showMessage(error.message || globalThis.VTTUi("Beitritt fehlgeschlagen."), true);
             }
         }
 
@@ -1741,7 +1741,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         <strong>${escapeHtml(member.username)}</strong>
                         <span>${escapeHtml(member.campaign_role)} (${escapeHtml(member.status)})</span>
                     </div>
-                    <div class="muted">Beigetreten: ${formatDate(member.joined_at)}</div>
+                    <div class="muted">${escapeHtml(globalThis.VTTUi("Beigetreten: {date}", { date: formatDate(member.joined_at) }))}</div>
                 </div>
             `).join("");
         }
@@ -1817,11 +1817,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     <div class="list-item">
                         <div class="list-item-top">
                             <strong>${escapeHtml(session.name)}</strong>
-                            <span>${escapeHtml(phase.label)} · ${escapeHtml(entryHint)}</span>
+                            <span>${escapeHtml(phase.label)} · ${escapeHtml(globalThis.VTTUi(entryHint))}</span>
                         </div>
-                        <div class="muted">Geplant: ${formatDate(session.scheduled_at)}</div>
-                        <div class="muted">Gestartet: ${formatDate(session.started_at)}</div>
-                        <div class="hub-session-note">${escapeHtml(prepNote)}</div>
+                        <div class="muted">${escapeHtml(globalThis.VTTUi("Geplant: {date}", { date: formatDate(session.scheduled_at) }))}</div>
+                        <div class="muted">${escapeHtml(globalThis.VTTUi("Gestartet: {date}", { date: formatDate(session.started_at) }))}</div>
+                        <div class="hub-session-note">${escapeHtml(globalThis.VTTUi(prepNote))}</div>
                         <div class="hub-session-actions">${primaryAction}${endButton}${combatStateButton}</div>
                         ${supportActions.length ? `<div class="hub-session-support">${supportActions.join("")}</div>` : ""}
                         ${combatManageButtons ? `<div class="hub-session-support">${combatManageButtons}</div>` : ""}
@@ -1951,7 +1951,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (!latestSession) {
                     return {
                         label: globalThis.VTTUi("Wartet auf Session"),
-                        summary: "Die Kampagne ist sichtbar, aber noch gibt es keine freigegebene Session zum Betreten.",
+                        summary: globalThis.VTTUi("Die Kampagne ist sichtbar, aber noch gibt es keine freigegebene Session zum Betreten."),
                         nextStep: "Warte auf die erste Session der Spielleitung oder nutze deinen Kampagnenkontext weiter von hier.",
                     };
                 }
@@ -1993,14 +1993,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!hasPlayers) {
                 return {
                     label: globalThis.VTTUi("Kickoff"),
-                    summary: "Die Kampagne ist angelegt, aber noch ohne weitere Spieler im Hub.",
+                    summary: globalThis.VTTUi("Die Kampagne ist angelegt, aber noch ohne weitere Spieler im Hub."),
                     nextStep: "Lade zuerst Spieler ein, damit Session-Prep und Play-Entry für die Gruppe Sinn ergeben.",
                 };
             }
             if (!hasMap && !latestSession) {
                 return {
                     label: globalThis.VTTUi("Prep startet jetzt"),
-                    summary: "Weder erste Karte noch erste Session sind vorbereitet.",
+                    summary: globalThis.VTTUi("Weder erste Karte noch erste Session sind vorbereitet."),
                     nextStep: "Lege zuerst Karte und Session an oder nutze den Schnellstart für beides zusammen.",
                 };
             }
@@ -2070,28 +2070,28 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     if (!hasPlayers) {
                         return {
                             label: globalThis.VTTUi("Spieler einladen"),
-                            hint: "Bevor eine Session Sinn ergibt, sollte zuerst die Gruppe sichtbar in der Kampagne sein.",
-                            action: `<button class="btn btn-primary" type="button" onclick="focusInviteControls()">Spieler einladen</button>`,
+                            hint: globalThis.VTTUi("Bevor eine Session Sinn ergibt, sollte zuerst die Gruppe sichtbar in der Kampagne sein."),
+                            action: `<button class="btn btn-primary" type="button" onclick="focusInviteControls()">${globalThis.VTTUiHTML("Spieler einladen")}</button>`,
                         };
                     }
                     if (!hasCampaignMap) {
                         return {
                             label: globalThis.VTTUi("Session vorbereiten"),
-                            hint: "Es fehlt noch die erste Session und eine sichtbare Kartenbasis für den Weg nach Play.",
-                            action: `<button class="btn btn-primary" type="button" onclick="focusQuickStart()">Karte + Session vorbereiten</button>`,
+                            hint: globalThis.VTTUi("Es fehlt noch die erste Session und eine sichtbare Kartenbasis für den Weg nach Play."),
+                            action: `<button class="btn btn-primary" type="button" onclick="focusQuickStart()">${globalThis.VTTUiHTML("Karte + Session vorbereiten")}</button>`,
                         };
                     }
                     return {
                         label: globalThis.VTTUi("Erste Session anlegen"),
-                        hint: "Die Kampagne ist bereit für ihre erste Sitzung. Der Hub bleibt danach der Rücksprungpunkt vor dem Spieltisch.",
-                        action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Session anlegen</button>`,
+                        hint: globalThis.VTTUi("Die Kampagne ist bereit für ihre erste Sitzung. Der Hub bleibt danach der Rücksprungpunkt vor dem Spieltisch."),
+                        action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">${globalThis.VTTUiHTML("Session anlegen")}</button>`,
                     };
                 }
 
                 return {
                     label: globalThis.VTTUi("Warte auf Session"),
-                    hint: "Sobald die Spielleitung eine Session vorbereitet, erscheint sie hier als nächster Schritt vor dem Tisch.",
-                            action: `<span class="session-action-status">Warte auf die Spielleitung</span>`,
+                    hint: globalThis.VTTUi("Sobald die Spielleitung eine Session vorbereitet, erscheint sie hier als nächster Schritt vor dem Tisch."),
+                            action: `<span class="session-action-status">${globalThis.VTTUiHTML("Warte auf die Spielleitung")}</span>`,
                 };
             }
 
@@ -2103,42 +2103,42 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             ? `Für "${session.name}" ist noch keine aktive Karte gewählt. Wähle zuerst die Session-Karte, bevor du startest.`
                             : `Für "${session.name}" fehlt noch jede Kartenbasis. Nutze zuerst den Map-Prep-Bereich.`,
                         action: hasCampaignMap
-                            ? `<button class="btn btn-primary" type="button" onclick="focusSessionPrepMapSelect()">Map wählen</button>`
-                            : `<button class="btn btn-primary" type="button" onclick="focusMapPrepSurface()">Kartenvorbereitung ansehen</button>`,
+                            ? `<button class="btn btn-primary" type="button" onclick="focusSessionPrepMapSelect()">${globalThis.VTTUiHTML("Map wählen")}</button>`
+                            : `<button class="btn btn-primary" type="button" onclick="focusMapPrepSurface()">${globalThis.VTTUiHTML("Kartenvorbereitung ansehen")}</button>`,
                     };
                 }
                 if ((phase.tone === "scheduled" || phase.tone === "ready") && !hasAssignedCharacters) {
                     return {
                         label: globalThis.VTTUi("Charaktere zuweisen"),
                         hint: `Für "${session.name}" ist noch kein Charakter direkt zugeordnet. Weise zuerst die Session-Besetzung zu, bevor du startest.`,
-                        action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">Session-Besetzung öffnen</button>`,
+                        action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">${globalThis.VTTUiHTML("Session-Besetzung öffnen")}</button>`,
                     };
                 }
                 if (phase.tone === "scheduled" || phase.tone === "ready") {
                     return {
                         label: globalThis.VTTUi("Session starten"),
                         hint: `Die Session "${session.name}" ist vorbereitet und kann von hier kontrolliert live geschaltet werden.`,
-                        action: `<button class="btn btn-primary" type="button" onclick="startSession(${campaign.id}, ${session.id})">Session starten</button>`,
+                        action: `<button class="btn btn-primary" type="button" onclick="startSession(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session starten")}</button>`,
                     };
                 }
                 if (phase.tone === "paused") {
                     return {
                         label: globalThis.VTTUi("Session fortsetzen"),
                         hint: `Die Session "${session.name}" ist pausiert und führt über denselben Übergang wieder in den Tisch.`,
-                        action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`,
+                        action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session fortsetzen")}</button>`,
                     };
                 }
                 if (phase.tone === "live") {
                     return {
                         label: globalThis.VTTUi("Zu Play"),
                         hint: `Die Session "${session.name}" läuft bereits. Die Prep-Oberfläche bleibt der letzte Buchstopp davor.`,
-                        action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Zu Play</button>`,
+                        action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Zu Play")}</button>`,
                     };
                 }
                 return {
                     label: globalThis.VTTUi("Nächste Session anlegen"),
                     hint: `Die Session "${session.name}" ist abgeschlossen. Für die Fortsetzung ist jetzt wieder Vorbereitung statt Tisch angesagt.`,
-                    action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">Nächste Session anlegen</button>`,
+                    action: `<button class="btn btn-primary" type="button" onclick="createSession(${campaign.id})">${globalThis.VTTUiHTML("Nächste Session anlegen")}</button>`,
                 };
             }
 
@@ -2146,34 +2146,34 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (!hasSelfAssignedCharacter && hasAssignableCharacters) {
                     return {
                         label: globalThis.VTTUi("Eigenen Charakter zuweisen"),
-                        hint: `Du kannst jetzt einen deiner kampagnengebundenen Helden direkt dieser Session zuordnen und danach auf den Sessionstart warten.`,
-                        action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">Charakter zuweisen</button>`,
+                        hint: globalThis.VTTUi("Du kannst jetzt einen deiner kampagnengebundenen Helden direkt dieser Session zuordnen und danach auf den Sessionstart warten."),
+                        action: `<button class="btn btn-primary" type="button" onclick="focusSessionCharacterAssignment()">${globalThis.VTTUiHTML("Charakter zuweisen")}</button>`,
                     };
                 }
                 return {
                     label: globalThis.VTTUi("Auf Sessionstart warten"),
                     hint: `Die Session "${session.name}" ist sichtbar, wird aber erst nach dem DM-Start betretbar.`,
-                    action: `<span class="session-action-status">Warte auf den Start durch die Spielleitung</span>`,
+                    action: `<span class="session-action-status">${globalThis.VTTUiHTML("Warte auf den Start durch die Spielleitung")}</span>`,
                 };
             }
             if (phase.tone === "paused") {
                 return {
                     label: globalThis.VTTUi("Session fortsetzen"),
                     hint: `Die Session "${session.name}" kann jetzt direkt aus der Vorbereitung wieder betreten werden.`,
-                    action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session fortsetzen</button>`,
+                    action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session fortsetzen")}</button>`,
                 };
             }
             if (phase.tone === "live") {
                 return {
                     label: globalThis.VTTUi("Session betreten"),
                     hint: `Die Session "${session.name}" läuft bereits live.`,
-                    action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">Session betreten</button>`,
+                    action: `<button class="btn btn-primary" type="button" onclick="openPlay(${campaign.id}, ${session.id})">${globalThis.VTTUiHTML("Session betreten")}</button>`,
                 };
             }
             return {
                 label: globalThis.VTTUi("Warte auf nächste Session"),
                 hint: `Die Session "${session.name}" ist abgeschlossen. Die nächste freigegebene Runde erscheint wieder hier.`,
-                    action: `<span class="session-action-status">Keine aktive Session</span>`,
+                    action: `<span class="session-action-status">${globalThis.VTTUiHTML("Keine aktive Session")}</span>`,
             };
         }
 
@@ -2193,15 +2193,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const deferred = [];
 
             if (!activeMap) {
-                blocking.push("Keine aktive Session-Karte gewählt");
+                blocking.push(globalThis.VTTUi("Keine aktive Session-Karte gewählt"));
             }
             if (!buckets.assigned.length) {
-                blocking.push("Noch kein Session-Charakter zugewiesen");
+                blocking.push(globalThis.VTTUi("Noch kein Session-Charakter zugewiesen"));
             }
 
             if (canManage) {
             } else {
-                blocking.push("Spieler warten weiter auf die Freigabe durch die Spielleitung");
+                blocking.push(globalThis.VTTUi("Spieler warten weiter auf die Freigabe durch die Spielleitung"));
             }
 
             return { blocking, deferred };
@@ -2293,7 +2293,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const select = document.getElementById("sessionPrepMapSelect");
             const mapId = Number(select?.value || 0);
             if (!Number.isInteger(mapId) || mapId <= 0) {
-                showMessage("Bitte zuerst eine Karte für diese Session wählen.", true);
+                showMessage(globalThis.VTTUi("Bitte zuerst eine Karte für diese Session wählen."), true);
                 return;
             }
 
@@ -2301,11 +2301,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/maps/activate`, "POST", {
                     map_id: mapId,
                 });
-                showMessage("Session-Karte gesetzt.");
+                showMessage(globalThis.VTTUi("Session-Karte gesetzt."));
                 await viewCampaign(campaignId, false);
                 scrollToHubSurface("campaignSessionPrepSurface");
             } catch (error) {
-                showMessage(error.message || "Session-Karte konnte nicht gesetzt werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Session-Karte konnte nicht gesetzt werden."), true);
             }
         }
 
@@ -2314,22 +2314,22 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/characters`, "POST", {
                     character_id: characterId,
                 });
-                showMessage("Charakter zur Session zugewiesen.");
+                showMessage(globalThis.VTTUi("Charakter zur Session zugewiesen."));
                 await viewCampaign(campaignId, false);
                 scrollToHubSurface("campaignSessionPrepSurface");
             } catch (error) {
-                showMessage(error.message || "Charakter konnte nicht zugewiesen werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Charakter konnte nicht zugewiesen werden."), true);
             }
         }
 
         async function unassignCharacterFromPrepSession(campaignId, sessionId, characterId) {
             try {
                 await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/characters/${characterId}`, "DELETE");
-                showMessage("Charakter aus der Session entfernt.");
+                showMessage(globalThis.VTTUi("Charakter aus der Session entfernt."));
                 await viewCampaign(campaignId, false);
                 scrollToHubSurface("campaignSessionPrepSurface");
             } catch (error) {
-                showMessage(error.message || "Charakter konnte nicht entfernt werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Charakter konnte nicht entfernt werden."), true);
             }
         }
 
@@ -2377,7 +2377,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
 
             const phase = getSessionPhase(prepSession);
-            const readinessLabel = canManage
+            // Readiness is one of these repository labels; it is localized once here.
+            const readinessLabel = globalThis.VTTUi(canManage
                 ? (phase.tone === "scheduled" || phase.tone === "ready"
                     ? (!activeMap
                         ? (mapReady ? "Session-Karte wählen" : "Map fehlt noch")
@@ -2387,7 +2388,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     ? (!activeMap
                         ? "Wartet auf Karte"
                         : (characterBuckets.currentUserAssigned.length || !characterBuckets.assignable.length ? "Wartet auf Start" : "Charakter wählen"))
-                    : (phase.tone === "paused" ? "Fortsetzen bereit" : (phase.tone === "live" ? "Live" : "Abgeschlossen")));
+                    : (phase.tone === "paused" ? "Fortsetzen bereit" : (phase.tone === "live" ? "Live" : "Abgeschlossen"))));
 
             const mapOptions = (maps || []).map(map => `
                 <option value="${map.id}" ${activeMap && Number(activeMap.id) === Number(map.id) ? "selected" : ""}>${escapeHtml(map.name)}</option>
@@ -2395,15 +2396,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             const renderSessionCharacterRows = (items, mode) => {
                 if (!items.length) {
-                    return `<div class="muted">${mode === "assigned" ? "Noch kein Charakter direkt dieser Session zugeordnet." : "Keine weiteren kampagnengebundenen Charaktere direkt verfügbar."}</div>`;
+                    return `<div class="muted">${globalThis.VTTUiHTML(mode === "assigned" ? "Noch kein Charakter direkt dieser Session zugeordnet." : "Keine weiteren kampagnengebundenen Charaktere direkt verfügbar.")}</div>`;
                 }
 
                 return items.map(character => {
                     const ownerLabel = Number(character.user_id) === Number(currentUser?.id)
-                        ? "Dein Charakter"
-                        : `Besitz: ${character.owner_username || "Unbekannt"}`;
-                    const classLabel = `${character.class || "Unbekannt"} · Level ${character.level || 1}`;
-                    const identityLabel = character.avatar_url ? "Avatar bereit" : (character.token_url ? "Token bereit" : "Identität optional");
+                        ? globalThis.VTTUi("Dein Charakter")
+                        : globalThis.VTTUi("Besitz: {name}", { name: character.owner_username || globalThis.VTTUi("Unbekannt") });
+                    const classLabel = globalThis.VTTUi("{class} · Level {level}", { class: character.class || globalThis.VTTUi("Unbekannt"), level: character.level || 1 });
+                    const identityLabel = globalThis.VTTUi(character.avatar_url ? "Avatar bereit" : (character.token_url ? "Token bereit" : "Identität optional"));
                     const canEditAssignment = canCurrentUserManageSessionCharacter(campaign, character);
                     const assignmentButton = mode === "assigned"
                         ? (canEditAssignment
@@ -2471,7 +2472,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     <div class="session-prep-grid">
                         <div class="session-prep-card">
                             <div class="session-prep-card-title">${globalThis.VTTUiHTML("Teilnehmer / Einladungen")}</div>
-                            <div class="session-prep-card-copy">${canManage ? `Die Kampagne hat aktuell ${playerCount} Spieler neben der DM. Invite- und Join-Kontext bleibt Teil derselben Vorbereitung vor Tischstart.` : "Dein Kampagnenbeitritt ist sichtbar. Sobald die DM startet, führt diese Session-Vorbereitung direkt zum Tisch."}</div>
+                            <div class="session-prep-card-copy">${canManage ? escapeHtml(globalThis.VTTUi("Die Kampagne hat aktuell {count} Spieler neben der DM. Invite- und Join-Kontext bleibt Teil derselben Vorbereitung vor Tischstart.", { count: playerCount })) : globalThis.VTTUiHTML("Dein Kampagnenbeitritt ist sichtbar. Sobald die DM startet, führt diese Session-Vorbereitung direkt zum Tisch.")}</div>
                             <div class="session-prep-card-actions">
                                 ${canManage ? `<button class="btn btn-secondary btn-sm" type="button" onclick="focusInviteControls()">${globalThis.VTTUiHTML("Spieler einladen")}</button>` : `<button class="btn btn-secondary btn-sm" type="button" onclick="scrollToHubSurface('campaignDetail')">${globalThis.VTTUiHTML("Einladungs-Kontext")}</button>`}
                             </div>
@@ -2479,9 +2480,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
                         <div class="session-prep-card" id="sessionPrepCharacterCard">
                             <div class="session-prep-card-title">${globalThis.VTTUiHTML("Charakter-Kontext")}</div>
-                            <div class="session-prep-card-copy">${canManage
+                            <div class="session-prep-card-copy">${globalThis.VTTUiHTML(canManage
                                 ? "Nur kampagnengebundene Helden erscheinen hier. Weise sie direkt dieser Session zu oder entferne sie wieder, bevor der Hub nach Play übergibt."
-                                : "Hier wird sichtbar, welche kampagnengebundenen Helden schon direkt zu dieser Session gehören. Eigene Helden kannst du selbst zuweisen, andere bleiben lesbar, aber nicht direkt von dir editierbar."}</div>
+                                : "Hier wird sichtbar, welche kampagnengebundenen Helden schon direkt zu dieser Session gehören. Eigene Helden kannst du selbst zuweisen, andere bleiben lesbar, aber nicht direkt von dir editierbar.")}</div>
                             <div class="hub-pill-row" style="margin-top:0.75rem;">
                                 <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Zugewiesen:")}</strong> ${escapeHtml(String(characterBuckets.assigned.length))}</span>
                                 <span class="hub-badge"><strong>${globalThis.VTTUiHTML("Verfügbar:")}</strong> ${escapeHtml(String(characterBuckets.available.length))}</span>
@@ -2555,8 +2556,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             <div class="session-prep-card-copy">${globalThis.VTTUiHTML("Diese Kontrolle zeigt die Bedingungen, die vor dem Wechsel an den Spieltisch erfüllt sein müssen.")}</div>
                             <div class="hub-step-list" style="margin-top:0.75rem;">
                                 ${blockers.blocking.length
-                                    ? blockers.blocking.map(blocker => hubStep(blocker, "Vor Play noch offen.", false)).join("")
-                                    : hubStep("Keine harten Vorbedingungen offen", "Diese Session kann über den nächsten Schritt in den Tisch wechseln.", true, "live")}
+                                    ? blockers.blocking.map(blocker => hubStep(blocker, globalThis.VTTUi("Vor Play noch offen."), false)).join("")
+                                    : hubStep("Keine harten Vorbedingungen offen", globalThis.VTTUi("Diese Session kann über den nächsten Schritt in den Tisch wechseln."), true, "live")}
                             </div>
                             ${blockers.deferred.length ? `
                                 <div class="hub-callout" style="margin-top:0.75rem;">
@@ -2569,16 +2570,23 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             `;
         }
 
+        // Step titles are repository labels; descriptions are localized by their callers.
+        // Campaign status is a server enum; known values get a UI label.
+        function campaignStatusText(status) {
+            const label = { active: "Aktiv", paused: "Pausiert", archived: "Archiviert" }[String(status || "").toLowerCase()];
+            return label ? globalThis.VTTUi(label) : String(status || "");
+        }
+
         function hubStep(title, description, done, state = "todo") {
-            const stateLabel = done ? "Fertig" : "Offen";
+            const stateLabel = globalThis.VTTUi(done ? "Fertig" : "Offen");
             const stateClass = done ? "state-done" : (state === "live" ? "state-live" : "state-todo");
             return `
                 <div class="hub-step">
                     <div>
-                        <div class="hub-step-title">${escapeHtml(title)}</div>
+                        <div class="hub-step-title">${escapeHtml(globalThis.VTTUi(title))}</div>
                         <div class="hub-step-desc">${escapeHtml(description)}</div>
                     </div>
-                    <span class="hub-step-state ${stateClass}">${stateLabel}</span>
+                    <span class="hub-step-state ${stateClass}">${escapeHtml(stateLabel)}</span>
                 </div>
             `;
         }
@@ -2602,24 +2610,24 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     <div class="hub-step-list">
                         ${hubStep(
                             "Invite annehmen",
-                            "Der Link oder Code muss zuerst zur Kampagne führen.",
+                            globalThis.VTTUi("Der Link oder Code muss zuerst zur Kampagne führen."),
                             !!campaign.is_member
                         )}
                         ${hubStep(
                             "Kampagne öffnen",
-                            "Die Detailsseite ist der Einstiegspunkt vor dem Tisch.",
+                            globalThis.VTTUi("Die Detailsseite ist der Einstiegspunkt vor dem Tisch."),
                             true,
                             "live"
                         )}
                         ${hubStep(
                             "Zu Play",
-                            latestSession ? `Die Session "${latestSession.name}" ist verfügbar.` : "Warte auf die erste Session der Spielleitung.",
+                            latestSession ? globalThis.VTTUi('Die Session "{name}" ist verfügbar.', { name: latestSession.name }) : globalThis.VTTUi("Warte auf die erste Session der Spielleitung."),
                             !!latestSession,
                             latestSession ? "live" : "todo"
                         )}
                         ${hubStep(
                             "Erste Aktion im Tisch",
-                            "Chat senden, Token bewegen oder einfach den Tisch anschauen.",
+                            globalThis.VTTUi("Chat senden, Token bewegen oder einfach den Tisch anschauen."),
                             sessionLive,
                             sessionLive ? "live" : "todo"
                         )}
@@ -2631,17 +2639,17 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 <div class="hub-step-list">
                     ${hubStep(
                         "Spieler einladen",
-                        hasMembers ? `${memberCount - 1} Spieler sind bereits in der Kampagne.` : "Noch keine Spieler eingeladen.",
+                        hasMembers ? globalThis.VTTUi("{count} Spieler sind bereits in der Kampagne.", { count: memberCount - 1 }) : globalThis.VTTUi("Noch keine Spieler eingeladen."),
                         hasMembers
                     )}
                     ${hubStep(
                         "Erste Karte bereitstellen",
-                        hasMap ? `Zuletzt angelegte Karte: ${latestMap.name}.` : "Noch keine Karte hochgeladen.",
+                        hasMap ? globalThis.VTTUi("Zuletzt angelegte Karte: {name}.", { name: latestMap.name }) : globalThis.VTTUi("Noch keine Karte hochgeladen."),
                         hasMap
                     )}
                     ${hubStep(
                         "Session anlegen",
-                        hasSession ? `Zuletzt angelegte Session: ${latestSession.name}.` : "Noch keine Session angelegt.",
+                        hasSession ? globalThis.VTTUi("Zuletzt angelegte Session: {name}.", { name: latestSession.name }) : globalThis.VTTUi("Noch keine Session angelegt."),
                         hasSession
                     )}
                     ${hubStep(
@@ -2654,7 +2662,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                                         ? `Die Session "${latestSession.name}" ist bereit für Start oder Fortsetzung.`
                                         : `Die Session "${latestSession.name}" braucht noch direkte Session-Charaktere im Session-Prep.`)
                                     : `Die Session "${latestSession.name}" braucht noch eine aktive Session-Karte im Session-Prep.`)
-                                : "Erst Session und Karte anlegen."),
+                                : globalThis.VTTUi("Erst Session und Karte anlegen.")),
                         sessionLive || (hasSession && !!latestSessionMap && hasSessionCharacters),
                         sessionLive ? "live" : "todo"
                     )}
@@ -2675,7 +2683,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!campaign.is_member && !canManage) {
                 return {
                     label: globalThis.VTTUi("Einladung eingeben"),
-                    hint: "Spieler sehen hier die schnellste Route in die Kampagne.",
+                    hint: globalThis.VTTUi("Spieler sehen hier die schnellste Route in die Kampagne."),
                     action: `<button class="btn btn-primary" onclick="joinCampaign(${campaign.id})">Einladung eingeben</button>`,
                 };
             }
@@ -2684,7 +2692,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (!hasMembers) {
                     return {
                         label: globalThis.VTTUi("Spieler einladen"),
-                        hint: "Die DM-Route startet mit der ersten Einladung.",
+                        hint: globalThis.VTTUi("Die DM-Route startet mit der ersten Einladung."),
                         action: `<button class="btn btn-primary" onclick="focusInviteControls()">Spieler einladen</button>`,
                     };
                 }
@@ -2693,13 +2701,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     if (!latestMap) {
                         return {
                             label: globalThis.VTTUi("Session vorbereiten"),
-                            hint: "Erste Karte und erste Session fehlen noch. Der Schnellstart verbindet beides im selben Hub-Schritt.",
+                            hint: globalThis.VTTUi("Erste Karte und erste Session fehlen noch. Der Schnellstart verbindet beides im selben Hub-Schritt."),
                             action: `<button class="btn btn-primary" onclick="focusQuickStart()">Karte + Session vorbereiten</button>`,
                         };
                     }
                     return {
                         label: globalThis.VTTUi("Erste Session anlegen"),
-                        hint: "Karte und Gruppe sind sichtbar. Jetzt fehlt nur noch die erste Session als kontrollierter Weg nach Play.",
+                        hint: globalThis.VTTUi("Karte und Gruppe sind sichtbar. Jetzt fehlt nur noch die erste Session als kontrollierter Weg nach Play."),
                         action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Session anlegen</button>`,
                     };
                 }
@@ -2750,7 +2758,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return {
                     label: globalThis.VTTUi("Nächste Session anlegen"),
                     hint: `Die letzte Session "${latestSession.name}" ist beendet. Von hier aus beginnt die Vorbereitung für die nächste Runde.`,
-                    action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">Nächste Session anlegen</button>`,
+                    action: `<button class="btn btn-primary" onclick="createSession(${campaign.id})">${globalThis.VTTUiHTML("Nächste Session anlegen")}</button>`,
                 };
             }
 
@@ -2775,7 +2783,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     return {
                         label: globalThis.VTTUi("Warte auf nächste Session"),
                         hint: `Die letzte Session "${latestSession.name}" ist beendet. Die nächste freigegebene Session erscheint wieder hier im Hub.`,
-                        action: `<span class="session-action-status">Keine aktive Session</span>`,
+                        action: `<span class="session-action-status">${globalThis.VTTUiHTML("Keine aktive Session")}</span>`,
                     };
                 }
                 return {
@@ -2787,7 +2795,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             return {
                 label: globalThis.VTTUi("Warte auf DM"),
-                hint: "Du bist Teil der Kampagne, aber noch gibt es keine Session zum Betreten.",
+                hint: globalThis.VTTUi("Du bist Teil der Kampagne, aber noch gibt es keine Session zum Betreten."),
                 action: `<span class="session-action-status">Warte auf die Spielleitung</span>`,
             };
         }
@@ -2864,7 +2872,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return;
             }
             if (!file) {
-                showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswählen.", true);
+                showMessage(globalThis.VTTUi("Bitte zuerst eine PNG/JPEG/WebP Karte auswählen."), true);
                 return;
             }
             if (!isAllowedMapImageFile(file)) {
@@ -2872,7 +2880,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return;
             }
             if (file.size > 50 * 1024 * 1024) {
-                showMessage("Datei ist zu gross. Maximum sind 50MB.", true);
+                showMessage(globalThis.VTTUi("Datei ist zu gross. Maximum sind 50MB."), true);
                 return;
             }
 
@@ -2908,7 +2916,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 await viewCampaign(campaignId, false);
             } catch (error) {
                 reportUploadFailure("uploadStandaloneMap", file, error);
-                showMessage(error.message || "Karte konnte nicht hinzugefügt werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Karte konnte nicht hinzugefügt werden."), true);
             } finally {
                 if (button) {
                     button.disabled = false;
@@ -2989,10 +2997,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             const currentSessionLabel = latestSession
                 ? `${latestSession.name} · ${getSessionPhase(latestSession).label}`
-                : "Noch keine Session";
+                : globalThis.VTTUi("Noch keine Session");
             const mapLabel = latestMap
                 ? `${latestMap.name} · ${latestMap.width}x${latestMap.height}`
-                : "Noch keine Karte";
+                : globalThis.VTTUi("Noch keine Karte");
 
             const inviteControls = canManage ? `
                 <div class="inline-controls">
@@ -3043,15 +3051,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             <div class="hub-eyebrow">${globalThis.VTTUiHTML("Kampagnen-Vorbereitung / Session-Hub")}</div>
                             <h2>${escapeHtml(campaign.name)}</h2>
                             <div class="hub-pill-row">
-                                ${statusPill("Rolle", roleLabel)}
-                                ${statusPill("Kampagne", campaign.status)}
-                                ${statusPill("Mitglieder", `${memberCount}`)}
-                                ${statusPill("Spieler", `${playerCount}`)}
-                                ${statusPill("Sessions", `${sessionCount}`)}
-                                ${statusPill("Karten", `${mapCount}`)}
+                                ${statusPill(globalThis.VTTUi("Rolle"), roleLabel)}
+                                ${statusPill(globalThis.VTTUi("Kampagne"), campaignStatusText(campaign.status))}
+                                ${statusPill(globalThis.VTTUi("Mitglieder"), `${memberCount}`)}
+                                ${statusPill(globalThis.VTTUi("Spieler"), `${playerCount}`)}
+                                ${statusPill(globalThis.VTTUi("Sessions"), `${sessionCount}`)}
+                                ${statusPill(globalThis.VTTUi("Karten"), `${mapCount}`)}
                             </div>
                             <div class="hub-summary">
-                                ${escapeHtml(campaign.description || "Keine Beschreibung vorhanden.")}
+                                ${escapeHtml(campaign.description || globalThis.VTTUi("Keine Beschreibung vorhanden."))}
                             </div>
                             <div class="hub-callout">
                                 <strong>${globalThis.VTTUiHTML("Prep-Status:")}</strong> ${escapeHtml(prepState.label)}. ${escapeHtml(prepState.summary)}
@@ -3069,7 +3077,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                                 <div class="hub-next-label">${globalThis.VTTUiHTML("Nächster Schritt")}</div>
                                 <div class="hub-next-title">${escapeHtml(primaryAction.label)}</div>
                                 <div class="hub-next-hint">${escapeHtml(primaryAction.hint)}</div>
-                                <div class="hub-next-hint">Aktueller Stand: ${escapeHtml(prepState.nextStep)}</div>
+                                <div class="hub-next-hint">${escapeHtml(globalThis.VTTUi("Aktueller Stand: {state}", { state: globalThis.VTTUi(prepState.nextStep) }))}</div>
                                 <div class="hub-next-hint">${globalThis.VTTUiHTML("Hauptweg: Home -> Kampagnen-Hub -> Session-Prep -> Session starten oder fortsetzen -> Play.")}</div>
                             </div>
                             <div class="hub-primary-actions">
@@ -3090,11 +3098,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                             <div class="hub-stat-row">
                                 <div class="hub-stat">
                                     <div class="hub-stat-label">${globalThis.VTTUiHTML("Kampagnenstatus")}</div>
-                                    <div class="hub-stat-value">${escapeHtml(campaign.status)}</div>
+                                    <div class="hub-stat-value">${escapeHtml(campaignStatusText(campaign.status))}</div>
                                 </div>
                                 <div class="hub-stat">
                                     <div class="hub-stat-label">${globalThis.VTTUiHTML("Hub-Status")}</div>
-                                    <div class="hub-stat-value">${escapeHtml(sessionPhase ? sessionPhase.label : "Kein Tisch")}</div>
+                                    <div class="hub-stat-value">${escapeHtml(sessionPhase ? sessionPhase.label : globalThis.VTTUi("Kein Tisch"))}</div>
                                 </div>
                                 <div class="hub-stat">
                                     <div class="hub-stat-label">${globalThis.VTTUiHTML("Letzte Session")}</div>
@@ -3113,25 +3121,25 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         <div class="hub-card">
                             <div class="hub-card-topline">
                                 <h3>${globalThis.VTTUiHTML("Einladen / Beitreten")}</h3>
-                                <span class="hub-pill">${canManage ? "DM" : "Spieler"}</span>
+                                <span class="hub-pill">${canManage ? "DM" : globalThis.VTTUiHTML("Spieler")}</span>
                             </div>
                             ${inviteControls}
                             <div class="hub-callout">
-                                ${canManage
+                                ${globalThis.VTTUiHTML(canManage
                                     ? "Die Spielleitung erzeugt hier Einladungen für Spieler."
-                                    : "Spieler geben hier ihren Invite-Code ein und betreten danach den Tisch über Session betreten."}
+                                    : "Spieler geben hier ihren Invite-Code ein und betreten danach den Tisch über Session betreten.")}
                             </div>
                         </div>
 
                         <div class="hub-card" id="campaignSessionsCard">
                             <div class="hub-card-topline">
                                 <h3>${globalThis.VTTUiHTML("Sessions")}</h3>
-                                <span class="hub-pill">${sessionCount} Session${sessionCount === 1 ? "" : "en"}</span>
+                                <span class="hub-pill">${escapeHtml(globalThis.VTTUi(sessionCount === 1 ? "{count} Session" : "{count} Sessionen", { count: sessionCount }))}</span>
                             </div>
                             <div class="hub-callout">
-                                ${canManage
+                                ${globalThis.VTTUiHTML(canManage
                                     ? "Hier entscheidest du, ob eine Session neu angelegt, gestartet, fortgesetzt oder für die nächste Runde vorbereitet werden muss."
-                                    : "Hier siehst du, ob du warten, fortsetzen oder direkt in die laufende Session wechseln kannst."}
+                                    : "Hier siehst du, ob du warten, fortsetzen oder direkt in die laufende Session wechseln kannst.")}
                             </div>
                             <div class="hub-session-list">
                                 ${buildSessionsList(campaign, sessions)}
@@ -3142,15 +3150,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         <div class="hub-card" id="campaignMapsCard">
                             <div class="hub-card-topline">
                                 <h3>${globalThis.VTTUiHTML("Karten")}</h3>
-                                <span class="hub-pill">${mapCount} Karte${mapCount === 1 ? "" : "n"}</span>
+                                <span class="hub-pill">${escapeHtml(globalThis.VTTUi(mapCount === 1 ? "{count} Karte" : "{count} Karten", { count: mapCount }))}</span>
                             </div>
                             <div class="hub-map-list">
                                 ${buildMapList(maps)}
                             </div>
                             <div class="hub-callout">
-                                ${canManage
+                                ${globalThis.VTTUiHTML(canManage
                                     ? "Die Kartenliste und der Schnellstart sind live. Nutze die Kartenvorbereitung, um Karten zu prüfen und für eine Session zu aktivieren."
-                                    : "Spieler sehen hier den aktuellen Kartenstand read-only. Tieferes Map-Prep bleibt der Spielleitung vorbehalten."}
+                                    : "Spieler sehen hier den aktuellen Kartenstand read-only. Tieferes Map-Prep bleibt der Spielleitung vorbehalten.")}
                             </div>
                             ${canManage ? `
                                 <div class="book-shell-placeholder" style="margin-top:0.85rem;">
@@ -3550,7 +3558,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const scopeField = document.getElementById("assetLibraryUploadScope");
             const sessionField = document.getElementById("assetLibraryUploadSession");
             if (!fileInput || !fileInput.files || !fileInput.files[0]) {
-                showMessage("Bitte zuerst eine Datei auswählen.", true);
+                showMessage(globalThis.VTTUi("Bitte zuerst eine Datei auswählen."), true);
                 return;
             }
 
@@ -3560,7 +3568,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const sessionId = sessionField?.value || "";
 
             if (scope === "session" && !sessionId) {
-                showMessage("Bitte zuerst eine Session für den Upload wählen.", true);
+                showMessage(globalThis.VTTUi("Bitte zuerst eine Session für den Upload wählen."), true);
                 return;
             }
 
@@ -3614,10 +3622,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!window.confirm(globalThis.VTTUi("Asset wirklich löschen?"))) return;
             try {
                 await auth.makeAuthRequest(`/api/assets/${assetId}/delete`, "DELETE");
-                showMessage("Asset gelöscht.");
+                showMessage(globalThis.VTTUi("Asset gelöscht."));
                 await viewCampaign(campaignId, false);
             } catch (error) {
-                showMessage(error.message || "Asset konnte nicht gelöscht werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Asset konnte nicht gelöscht werden."), true);
             }
         }
 
@@ -3626,7 +3634,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!feed) return;
             if (!messages || messages.length === 0) {
                 feed.className = "chat-feed muted";
-                feed.innerHTML = "Noch keine Nachrichten.";
+                feed.innerHTML = globalThis.VTTUiHTML("Noch keine Nachrichten.");
                 return;
             }
 
@@ -3713,9 +3721,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             try {
                 await community.deleteMessage(campaignId, sessionId, messageId);
                 await loadCommunityPanel(campaignId);
-                showMessage("Nachricht gelöscht.");
+                showMessage(globalThis.VTTUi("Nachricht gelöscht."));
             } catch (error) {
-                showMessage(error.message || "Löschen fehlgeschlagen.", true);
+                showMessage(error.message || globalThis.VTTUi("Löschen fehlgeschlagen."), true);
             }
         }
 
@@ -3760,7 +3768,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             try {
                 await community.createModerationAction(campaignId, payload);
-                showMessage("Moderationsaktion ausgeführt.");
+                showMessage(globalThis.VTTUi("Moderationsaktion ausgeführt."));
                 await loadModerationQueue(campaignId);
                 await loadCommunityPanel(campaignId);
             } catch (error) {
@@ -3793,7 +3801,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 ? campaigns.find((c) => c.id === Number(campaignId))
                 : null;
             if (known && !known.is_member) {
-                showMessage("Du bist noch nicht Mitglied dieser Kampagne. Löse zuerst deine Einladung ein.", true);
+                showMessage(globalThis.VTTUi("Du bist noch nicht Mitglied dieser Kampagne. Löse zuerst deine Einladung ein."), true);
                 joinCampaign(campaignId);
                 return;
             }
@@ -3888,7 +3896,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 await viewCampaign(campaignId, false);
                 showInviteLink(`${window.location.origin}/invite/${invite.invite_token}`);
             } catch (error) {
-                showMessage(error.message || "Einladung fehlgeschlagen.", true);
+                showMessage(error.message || globalThis.VTTUi("Einladung fehlgeschlagen."), true);
             }
         }
 
@@ -3936,7 +3944,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             const name = nameField ? nameField.value.trim() : "";
             if (!name) {
-                showMessage("Bitte einen Session-Namen eingeben.", true);
+                showMessage(globalThis.VTTUi("Bitte einen Session-Namen eingeben."), true);
                 return;
             }
 
@@ -3953,11 +3961,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (nameField) nameField.value = "";
                 if (scheduleField) scheduleField.value = "";
                 if (durationField) durationField.value = "";
-                showMessage("Session angelegt.");
+                showMessage(globalThis.VTTUi("Session angelegt."));
                 await viewCampaign(campaignId, false);
                 await loadCampaigns();
             } catch (error) {
-                showMessage(error.message || "Session konnte nicht angelegt werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Session konnte nicht angelegt werden."), true);
             }
         }
 
@@ -4018,7 +4026,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const file = mapField?.files?.[0];
 
             if (!file) {
-                showMessage("Bitte zuerst eine PNG/JPEG/WebP Karte auswählen.", true);
+                showMessage(globalThis.VTTUi("Bitte zuerst eine PNG/JPEG/WebP Karte auswählen."), true);
                 return;
             }
             if (!isAllowedMapImageFile(file)) {
@@ -4026,7 +4034,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return;
             }
             if (file.size > 50 * 1024 * 1024) {
-                showMessage("Datei ist zu gross. Maximum sind 50MB.", true);
+                showMessage(globalThis.VTTUi("Datei ist zu gross. Maximum sind 50MB."), true);
                 return;
             }
 
@@ -4036,13 +4044,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
 
             try {
-                showMessage("Schritt 1/4: Session wird erstellt...");
+                showMessage(globalThis.VTTUi("Schritt 1/4: Session wird erstellt..."));
                 const createdSession = await auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, "POST", {
                     name: sessionName,
                     duration_minutes: 180
                 });
 
-                showMessage("Schritt 2/4: Karte wird hochgeladen...");
+                showMessage(globalThis.VTTUi("Schritt 2/4: Karte wird hochgeladen..."));
                 const formData = new FormData();
                 formData.append("file", file);
                 formData.append("asset_type", "map");
@@ -4060,7 +4068,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     }
                 }
 
-                showMessage("Schritt 3/4: Karte wird der Kampagne hinzugefügt...");
+                showMessage(globalThis.VTTUi("Schritt 3/4: Karte wird der Kampagne hinzugefügt..."));
                 const campaignMap = await auth.makeAuthRequest(`/api/campaigns/${campaignId}/maps`, "POST", {
                     name: sessionName,
                     background_url: `/api/assets/${uploaded.asset_id}/preview`,
@@ -4074,11 +4082,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     { map_ids: [campaignMap.id] }
                 );
 
-                showMessage("Schritt 4/4: Session wird gestartet...");
+                showMessage(globalThis.VTTUi("Schritt 4/4: Session wird gestartet..."));
                 await auth.makeAuthRequest(`/api/sessions/${createdSession.id}/start`, "POST");
 
                 if (mapField) mapField.value = "";
-                showMessage("Fertig. Session ist live und Karte ist geladen.");
+                showMessage(globalThis.VTTUi("Fertig. Session ist live und Karte ist geladen."));
                 await viewCampaign(campaignId, false);
                 await loadCampaigns();
                 openPlay(campaignId, createdSession.id);
@@ -4096,11 +4104,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         async function startSession(campaignId, sessionId) {
             try {
                 await auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, "POST");
-                showMessage("Session gestartet.");
+                showMessage(globalThis.VTTUi("Session gestartet."));
                 await viewCampaign(campaignId, false);
                 await loadCampaigns();
             } catch (error) {
-                showMessage(error.message || "Session konnte nicht gestartet werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Session konnte nicht gestartet werden."), true);
             }
         }
 
@@ -4111,17 +4119,17 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!ok) return;
             try {
                 await auth.makeAuthRequest(`/api/sessions/${sessionId}/end`, "POST");
-                showMessage("Session beendet.");
+                showMessage(globalThis.VTTUi("Session beendet."));
                 await viewCampaign(campaignId, false);
                 await loadCampaigns();
             } catch (error) {
-                showMessage(error.message || "Session konnte nicht beendet werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Session konnte nicht beendet werden."), true);
             }
         }
 
         function summarizeCombatState(payload) {
             const encounter = payload?.encounter;
-            if (!encounter) return "Noch kein Kampf gestartet.";
+            if (!encounter) return globalThis.VTTUi("Noch kein Kampf gestartet.");
             const participants = payload?.participants || [];
             const activeToken = participants.find(token => token.id === encounter.active_token_id);
             const activeName = activeToken ? activeToken.name : "none";
@@ -4169,7 +4177,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             try {
                 const state = await fetchCombatState(campaignId, sessionId);
                 if (!state.encounter) {
-                    showMessage("Kein aktiver Kampf für Initiative vorhanden.", true);
+                    showMessage(globalThis.VTTUi("Kein aktiver Kampf für Initiative vorhanden."), true);
                     return;
                 }
 
@@ -4207,7 +4215,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             try {
                 const state = await fetchCombatState(campaignId, sessionId);
                 if (!state.encounter) {
-                    showMessage("Kein aktiver Kampf vorhanden.", true);
+                    showMessage(globalThis.VTTUi("Kein aktiver Kampf vorhanden."), true);
                     return;
                 }
 
@@ -4220,7 +4228,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 );
                 showMessage(`Zug weitergeschaltet. ${summarizeCombatState(payload)}`);
             } catch (error) {
-                showMessage(error.message || "Nächster Zug fehlgeschlagen.", true);
+                showMessage(error.message || globalThis.VTTUi("Nächster Zug fehlgeschlagen."), true);
             }
         }
 
@@ -4228,7 +4236,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             try {
                 const state = await fetchCombatState(campaignId, sessionId);
                 if (!state.encounter) {
-                    showMessage("Kein aktiver Kampf vorhanden.", true);
+                    showMessage(globalThis.VTTUi("Kein aktiver Kampf vorhanden."), true);
                     return;
                 }
 
@@ -4270,7 +4278,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             try {
                 const state = await fetchCombatState(campaignId, sessionId);
                 if (!state.encounter) {
-                    showMessage("Kein aktiver Kampf vorhanden.", true);
+                    showMessage(globalThis.VTTUi("Kein aktiver Kampf vorhanden."), true);
                     return;
                 }
 
@@ -4295,10 +4303,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (selectedCampaignId === campaignId) {
                     closeCampaignDetail();
                 }
-                showMessage("Kampagne gelöscht.");
+                showMessage(globalThis.VTTUi("Kampagne gelöscht."));
                 await loadCampaigns();
             } catch (error) {
-                showMessage(error.message || "Kampagne konnte nicht gelöscht werden.", true);
+                showMessage(error.message || globalThis.VTTUi("Kampagne konnte nicht gelöscht werden."), true);
             }
         }
 

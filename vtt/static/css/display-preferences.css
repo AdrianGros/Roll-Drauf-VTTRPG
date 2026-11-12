@@ -36,6 +36,26 @@ html[data-vtt-theme=night] :is(.book-page,.sheet-focus-page,.sc-builder,.ce-page
 html[data-vtt-theme=night] :is(.sc-card,.sc-detail,.sc-table,.sc-control,.sheet-empty,.srd-sheet-note,.srd-inv-item,.srd-inv-attack,.srd-sheet-origin) {background-color:var(--ui-soft);color:var(--ui-ink);border-color:var(--ui-line);}
 html[data-vtt-theme=night] :is(.srd-sheet-value,.srd-sheet-ability-score,.srd-sheet-label,.srd-inv-meta,.sheet-identity-value,.is-proficient,.srd-roll-destination) {color:var(--ui-ink) !important;}
 html[data-vtt-theme=night] .book-dashboard-shell {background-color:var(--ui-paper);}
+/* C01 book overviews, hub, quick launch and ribbon: text uses semantic tokens on the
+   surface actually painted (solid colors, no gradient behind text) in both themes. */
+html[data-vtt-theme] :is(.book-scene-panel-kicker,.book-dashboard-eyebrow,.book-scene-ledger-head span:not(.play-launch-status-dot),.book-home-hero-kicker,.book-home-section-kicker,.book-home-feed-kicker,.book-frame-eyebrow) {color:var(--ui-muted);}
+html[data-vtt-theme] :is(.book-dashboard-ribbon-btn.is-active,.book-dashboard-ribbon-btn[aria-current=page]) {font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.3em;}
+html[data-vtt-theme] .vtt-account-memo .vtt-account-action {background:var(--ui-soft);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme] .sheet-load-state[data-state=error] p {color:var(--ui-danger);}
+html[data-vtt-theme=night] :is(.book-dashboard-topbar,.book-running-head) {background:var(--ui-paper);background-image:none;}
+html[data-vtt-theme=night] :is(.book-spread-page,.book-spread-footer,.book-scene-panel,.book-home-hero,.book-home-feed-item,.book-toc,.play-launch-box,.book-dashboard-ribbon,.vtt-map-nav,.mm-global-nav) {
+  background:var(--ui-panel);background-image:none;border-color:var(--ui-line);color:var(--ui-ink);
+}
+html[data-vtt-theme=night] :is(.book-scene-ledger-item,.book-scene-note,.book-scene-stat,.book-scene-widget-card,.book-dashboard-chip,.book-dashboard-crest,.book-dashboard-ribbon-btn,.book-toc-row,.book-home-hero-note,.book-home-hero-notice,.book-home-hero-meta span,.book-home-feed-meta,.play-launch-card,.play-launch-status,.play-launch-status-dot,.book-form-banner,.btn-secondary) {
+  background:var(--ui-soft);background-image:none;border-color:var(--ui-line);color:var(--ui-ink);
+}
+html[data-vtt-theme=night] :is(.book-spread-page-title,.book-dashboard-title,.book-scene-panel-title,.book-scene-stat-value,.book-scene-ledger-head strong,.book-scene-widget-card span,.book-home-hero-title,.book-home-section-title,.book-home-feed-title,.book-shell-placeholder-title,.play-launch-header h2,.play-launch-close,.play-launch-card-title,.play-launch-empty h3,.book-toc-row,.book-toc-row:hover,.book-toc-row:focus-visible) {color:var(--ui-ink);}
+html[data-vtt-theme=night] :is(.book-spread-page-copy,.book-scene-panel-copy,.book-scene-ledger-meta,.book-scene-ledger-copy,.book-scene-stat-label,.book-scene-widget-card small,.book-home-hero-copy,.book-home-feed-copy,.book-toc-count,.book-page-folio,.book-scene-loading,.play-launch-header p,.play-launch-card-meta,.play-launch-card-session,.play-launch-empty p,.book-scene-ledger-item.is-empty) {color:var(--ui-muted);}
+html[data-vtt-theme=night] :is(.book-dashboard-ribbon-btn.is-active,.book-dashboard-ribbon-btn[aria-current=page],.vtt-map-nav .book-dashboard-ribbon-btn.is-active) {background:var(--ui-action-bg);color:var(--ui-action-text);border-color:var(--ui-line);}
+html[data-vtt-theme=night] :is(.play-launch-status.is-error,.book-form-banner.is-error) {color:var(--ui-danger);border-color:var(--ui-danger);}
+html[data-vtt-theme=night] .book-form-banner.is-success {color:var(--ui-success);}
+html[data-vtt-theme] .play-launch-status-dot.is-live {color:var(--ui-success);}
+html[data-vtt-theme] .play-launch-status-dot.is-paused {color:var(--ui-warning);}
 .vtt-display-open {white-space:nowrap;min-height:40px;}
 .vtt-display-dialog {width:min(92vw,34rem);max-height:88vh;overflow:auto;border:2px solid var(--ui-line);border-radius:12px;background:var(--ui-panel);color:var(--ui-ink);padding:1.2rem;font:1rem/1.5 var(--vtt-font-ui,system-ui,sans-serif);}
 .vtt-display-dialog::backdrop {background:rgba(0,0,0,.65);}

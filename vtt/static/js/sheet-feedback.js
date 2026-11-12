@@ -42,7 +42,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (character[key]) {
                 const image = el('img', 'sf-portrait');
                 image.src = character[key];
-                image.alt = `${label} von ${character.name}`;
+                image.alt = globalThis.VTTUi("{label} von {name}", { label, name: character.name || '' });
                 image.width = image.height = 56;
                 wrap.append(image);
             } else {
@@ -74,8 +74,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         for (const [key, info] of Object.entries(casting.classes || {})) {
             box.append(el('p', 'sf-caster', globalThis.VTTUi("{p0}: Zauber-SG {p1} · Zauberangriff {p2}{p3}",{p0:(classes.get(key) || key),p1:(info.saveDc),p2:(info.attackBonus >= 0 ? '+' : ''),p3:(info.attackBonus)})));
         }
-        const slots = (casting.slots || []).flatMap((count, index) => count ? [`Grad ${index + 1}: ${count}`] : []);
-        if (casting.pact) slots.push(`Paktmagie: ${casting.pact.slots} Plätze · Grad ${casting.pact.grade}`);
+        const slots = (casting.slots || []).flatMap((count, index) => count ? [globalThis.VTTUi("Grad {grade}: {count}", { grade: index + 1, count })] : []);
+        if (casting.pact) slots.push(globalThis.VTTUi("Paktmagie: {slots} Plätze · Grad {grade}", { slots: casting.pact.slots, grade: casting.pact.grade }));
         if (slots.length) box.append(el('p', 'sf-caster', globalThis.VTTUi("Zauberplätze · {p0}",{p0:(slots.join(' · '))})));
         const grades = [...new Set([...memberships.keys()].map((id) => data.spells[id]?.level).filter(Number.isInteger))].sort((a, b) => a - b);
         let grade = '';
@@ -92,14 +92,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             for (const row of rows) row.node.hidden = !((grade === '' || String(row.grade) === grade) && row.name.includes(term));
             count.textContent = globalThis.VTTUi("{p0} von {p1} Zaubern",{p0:(rows.filter((row) => !row.node.hidden).length),p1:(rows.length)});
         };
-        filter.append(searchLabel, select(globalThis.VTTUi("Zaubergrad"), 'sfSpellGrade', [['', 'Alle Grade'], ...grades.map((g) => [String(g), g === 0 ? 'Zaubertricks' : `${g}. Grad`])], '', (value) => { grade = value; apply(); }));
+        filter.append(searchLabel, select(globalThis.VTTUi("Zaubergrad"), 'sfSpellGrade', [['', globalThis.VTTUi("Alle Grade")], ...grades.map((g) => [String(g), g === 0 ? globalThis.VTTUi("Zaubertricks") : globalThis.VTTUi("{grade}. Grad", { grade: g })])], '', (value) => { grade = value; apply(); }));
         search.addEventListener('input', apply);
         box.append(filter, count);
         const list = el('div', 'sf-spell-list');
         for (const [id, groups] of [...memberships].sort(([a], [b]) => (data.spells[a]?.level || 0) - (data.spells[b]?.level || 0) || (data.spells[a]?.name || a).localeCompare(data.spells[b]?.name || b, 'de'))) {
             const spell = data.spells[id];
             const card = el('article', 'sf-spell-card');
-            card.append(el('strong', '', spell?.name || id), el('small', '', `${spell?.level === 0 ? 'Zaubertrick' : `${spell?.level ?? '?'}. Grad`}${spell?.ritual ? ' · Ritual' : ''}`), el('small', '', groups.join(' · ')));
+            card.append(el('strong', '', spell?.name || id), el('small', '', `${spell?.level === 0 ? globalThis.VTTUi("Zaubertrick") : globalThis.VTTUi("{grade}. Grad", { grade: spell?.level ?? '?' })}${spell?.ritual ? ' · Ritual' : ''}`), el('small', '', groups.join(' · ')));
             rows.push({ node: card, grade: spell?.level, name: (spell?.name || id).toLocaleLowerCase('de') });
             list.append(card);
         }
@@ -130,7 +130,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }));
         const tablist = el('div', 'sf-tabs');
         tablist.setAttribute('role', 'tablist');
-        tablist.setAttribute('aria-label', 'Charakterbogenbereiche');
+        tablist.setAttribute('aria-label', globalThis.VTTUi("Charakterbogenbereiche"));
         const panels = new Map();
         const buttons = new Map();
         const show = (key, focus = false) => {
@@ -183,8 +183,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const updateDistance = (value) => {
             const meters = detail.evaluation?.speedMeters;
             if (typeof meters !== 'number') return;
+            // The movement stat carries a semantic marker; the localized label is
+            // only a fallback for an older composition without that marker.
+            const movement = globalThis.VTTUi("Bewegung");
             for (const cell of panels.get('play').querySelectorAll('.srd-sheet-cell')) {
-                if (cell.querySelector('.srd-sheet-label')?.textContent !== 'Bewegung') continue;
+                const isSpeed = cell.dataset.sheetStat === 'speed'
+                    || (!cell.dataset.sheetStat && cell.querySelector('.srd-sheet-label')?.textContent === movement);
+                if (!isSpeed) continue;
                 cell.querySelector('.srd-sheet-value').textContent = `${(value === 'ft' ? Math.round(meters / 0.3 * 100) / 100 : meters).toLocaleString(window.VTTI18n?.locale()==='en'?'en-US':'de-DE')} ${value}`;
             }
         };
