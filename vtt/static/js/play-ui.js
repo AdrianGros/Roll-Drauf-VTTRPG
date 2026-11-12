@@ -2940,7 +2940,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 }
             });
 
-            if (this._composedOperator) this._bindMapUpload();
+            if (this._composedOperator) { this._bindMapUpload(); this._bindMapLibrary?.(); }
         }
 
         // Upload a map image straight from the table: asset upload ->

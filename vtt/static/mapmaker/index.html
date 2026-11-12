@@ -26,12 +26,14 @@
             <input id="mapTitle" type="text" maxlength="80" autocomplete="off" spellcheck="false" value="">
         </label>
         <div class="mm-top-actions">
-            <button id="libraryBtn" class="mm-icon-btn" type="button" title="Meine Karten" data-ui-title="u_97f5caccf84d" aria-label="Meine Karten" data-ui-aria-label="u_97f5caccf84d">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7v16H3zM10 4h7v16h-7M18 4l3 15"/></svg>
+            <button id="libraryBtn" class="mm-btn mm-labeled-action" type="button" title="Meine Karten" data-ui-title="u_97f5caccf84d" aria-label="Meine Karten" data-ui-aria-label="u_97f5caccf84d">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7v16H3zM10 4h7v16h-7M18 4l3 15"/></svg> <span data-ui-key="u_97f5caccf84d">Meine Karten</span>
             </button>
-            <button id="cloudSave" class="mm-icon-btn" type="button" title="In Bibliothek speichern" data-ui-title="u_8de49c7c2b4a" aria-label="In Bibliothek speichern" data-ui-aria-label="u_8de49c7c2b4a" disabled>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13l4 4v14H3V3zM7 3v7h10V3M7 21v-7h10v7"/></svg>
+            <button id="cloudSave" class="mm-btn mm-labeled-action" type="button" title="In Bibliothek speichern" data-ui-title="u_8de49c7c2b4a" aria-label="In Bibliothek speichern" data-ui-aria-label="u_8de49c7c2b4a" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13l4 4v14H3V3zM7 3v7h10V3M7 21v-7h10v7"/></svg> <span data-ui-key="u_8de49c7c2b4a">In Bibliothek speichern</span>
             </button>
+            <button id="importActionBtn" class="mm-btn mm-labeled-action" type="button">Importieren</button>
+            <button id="exportActionBtn" class="mm-btn mm-labeled-action" type="button">Exportieren</button>
             <span id="cloudStatus" class="mm-status"><span data-ui-key="u_89393ffb9ce5">Noch nicht in Bibliothek</span></span>
             <button id="undoBtn" class="mm-icon-btn" type="button" title="Rückgängig (Strg+Z)" data-ui-title="u_81767f193e4b" aria-label="Rückgängig" data-ui-aria-label="u_b626f2e45925" disabled>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg>
@@ -172,6 +174,8 @@
                     <h3 class="mm-h3"><span data-ui-key="u_d8169782b57c">Material</span></h3>
                     <div id="materials" class="mm-swatches" role="radiogroup" aria-label="Material" data-ui-aria-label="u_d8169782b57c"></div>
                 </div>
+                <label class="mm-field" id="eraseScopeField"><span>Radierer wirkt auf</span><select id="eraseScope"><option value="active">Aktive Ebene</option><option value="visible">Alle sichtbaren Ebenen</option></select></label>
+                <p id="eraseScopeHint" class="mm-hint">Der Radierer wirkt nur auf Raster, Kacheln und Symbole; Beschriftungen und Wege bleiben erhalten.</p>
                 <div class="mm-range mm-range-edit"><label for="brushSize"><span data-ui-key="u_d9130ae841c9">Größe</span></label><input id="brushSize" type="range" min="2" max="800" step="1"><output id="brushSizeOut"></output><input id="brushSizeNumber" class="mm-number" type="number" min="2" max="800" step="1" aria-label="Pinselgröße in Pixel" data-ui-aria-label="u_118420276fa1"></div>
                 <label class="mm-range"><span><span data-ui-key="u_3c11c68b55b1">Deckkraft</span></span><input id="brushOpacity" type="range" min="1" max="100" step="1"><output id="brushOpacityOut"></output></label>
                 <label class="mm-range"><span><span data-ui-key="u_ea1b9ed680db">Weichheit</span></span><input id="brushSoftness" type="range" min="0" max="100" step="1"><output id="brushSoftnessOut"></output></label>
@@ -204,6 +208,8 @@
                 <label class="mm-range"><span><span data-ui-key="u_bb151d57d178">Drehung</span></span><input id="stampRot" type="range" min="-180" max="180" step="1"><output id="stampRotOut"></output></label>
                 <label class="mm-check"><input id="stampFlip" type="checkbox"> <span data-ui-key="u_254cb97a9f54">Spiegeln</span></label>
                 <label class="mm-check"><input id="stampVary" type="checkbox"> <span data-ui-key="u_41cff9ab1c37">Leichte Variation (Größe, Drehung)</span></label>
+                <label class="mm-check"><input id="stampGridOn" type="checkbox"> <span>Stempelraster</span></label>
+                <label class="mm-field"><span>Rasterweite (px)</span><input id="stampGridSize" class="mm-number" type="number" min="8" max="256" step="1" value="32" disabled></label>
                 <label class="mm-check"><input id="stampScatter" type="checkbox"> <span data-ui-key="u_dc2d7aed6213">Streuen beim Ziehen (Wälder, Gebirge)</span></label>
             </div>
 
@@ -211,6 +217,8 @@
                 <p class="mm-target"><span data-ui-key="u_27ac40f67979">Malt auf:</span> <strong id="tileTarget"><span data-ui-key="u_8ee634ecfae2">Neue Kachelebene bei der ersten Kachel</span></strong></p>
                 <div class="mm-field-row">
                     <label class="mm-field"><span><span data-ui-key="u_a7f116c3648a">Modus</span></span><select id="tileMode"><option value="paint" data-ui-key="u_a7f2eb381743">Setzen</option><option value="erase" data-ui-key="u_ffa5a8a7e21d">Löschen</option></select></label>
+                    <label class="mm-field"><span>Pinselradius (Zellen)</span><input id="tileRadius" class="mm-number" type="number" min="0" max="6" step="1" value="0"></label>
+                    <label class="mm-field"><span>Kachelvarianten (komma-getrennte Kachel-IDs)</span><input id="tileVariants" type="text" maxlength="400" placeholder="bekannte Kachel-IDs"></label>
                     <label class="mm-field"><span><span data-ui-key="u_0d609b774049">Kachelgröße</span></span><select id="tileSize"><option value="16" data-ui-key="u_d1a28f9461fd">16 px</option><option value="24" data-ui-key="u_d2eda2f9d68e">24 px</option><option value="32" data-ui-key="u_1c4fb1334e30">32 px</option><option value="48" data-ui-key="u_414bbf0cac0d">48 px</option><option value="64" data-ui-key="u_0fd548f3aac9">64 px</option></select></label>
                 </div>
                 <label class="mm-field"><span><span data-ui-key="u_45532b2b8e85">Kacheln suchen</span></span><input id="tileSearch" type="search" placeholder="Gras, Dach, Mauer …" data-ui-placeholder="u_43b9d7f4100d" autocomplete="off"></label>

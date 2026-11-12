@@ -1,0 +1,33 @@
+{
+  "task": "C04",
+  "note": "Authored VTTUi literals only; compiler and shared bundles are coordinator-owned. Static HTML labels without data-ui-key (Importieren, Exportieren, Stempelraster, Rasterweite (px), Radierer wirkt auf, Aktive Ebene, Alle sichtbaren Ebenen, Pinselradius (Zellen), Kachelvarianten, Eigene Bibliothek) need the existing mark-ui pass.",
+  "messages": {
+    "Eigene Bibliothek": "Own library",
+    "Eigene Karten durchsuchen": "Search your maps",
+    "Titel der Tischkarte": "Table map title",
+    "Raster in Pixel": "Grid size in pixels",
+    "Zurück": "Back",
+    "Weiter": "Next",
+    "Titel": "Title",
+    "Raster": "Grid",
+    "Ich bestätige: Dieses Bild wird für alle am Tisch sichtbar. Das private Projekt wird nicht geteilt.": "I confirm: this image becomes visible to everyone at the table. The private project is not shared.",
+    "Bibliothek wird geladen …": "Loading library …",
+    "Vorschau von „{p0}“": "Preview of “{p0}”",
+    "Seite {p0} von {p1}": "Page {p0} of {p1}",
+    "Keine eigenen Karten gefunden.": "No maps of your own found.",
+    "Vorschau wird erzeugt …": "Rendering preview …",
+    "Revision {p0}": "Revision {p0}",
+    "Karte wird übernommen …": "Adding map …",
+    "Zum Tisch hinzufügen": "Add to table",
+    "Die Karte wurde angelegt, aber noch nicht aktiviert. „Zum Tisch hinzufügen“ wiederholt nur diesen Schritt.": "The map was created but not activated yet. “Add to table” repeats only this step.",
+    "Karte \"{p0}\" übernommen und aktiviert.": "Map \"{p0}\" added and activated.",
+    "Die Karte konnte nicht übernommen werden.": "The map could not be added.",
+    "Die Kartenbibliothek konnte nicht geladen werden.": "The map library could not be loaded.",
+    "Die Auswahl hat sich geändert. Bitte die Vorschau erneut öffnen.": "The selection changed. Please open the preview again.",
+    "Der Radierer wirkt nur auf sichtbare Raster-, Kachel- und Symbolebenen. Wähle eine solche Ebene oder „Alle sichtbaren Ebenen“.": "The eraser only works on visible raster, tile and symbol layers. Pick such a layer or “All visible layers”.",
+    "Diese Radierfläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten radieren.": "This erase area is too large for the history and was reverted. Please erase in smaller steps.",
+    "Diese Fläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten malen.": "This area is too large for the history and was reverted. Please paint in smaller steps.",
+    "Unbekannte Kachel-IDs wurden ignoriert.": "Unknown tile IDs were ignored.",
+    "Symbolpakete konnten nicht vollständig geladen werden. Bitte erneut versuchen.": "Asset packs could not be loaded completely. Please try again."
+  }
+}

@@ -282,12 +282,28 @@ export class UI {
         $("stampFlip").addEventListener("change", (event) => { ed.stampOpts.flip = event.target.checked; ed.requestFrame(); });
         $("stampVary").addEventListener("change", (event) => { ed.stampOpts.vary = event.target.checked; });
         $("stampScatter").addEventListener("change", (event) => { ed.stampOpts.scatter = event.target.checked; });
+        // Optional stamp grid: off by default; preview and placement share ed.stampPoint().
+        $("stampGridOn").addEventListener("change", (event) => {
+            ed.stampOpts.grid = event.target.checked ? ed.stampGridSize(Number($("stampGridSize").value)) : 0;
+            $("stampGridSize").disabled = !event.target.checked;
+            ed.requestFrame();
+        });
+        $("stampGridSize").addEventListener("input", (event) => {
+            if (ed.stampOpts.grid) ed.stampOpts.grid = ed.stampGridSize(Number(event.target.value));
+            ed.requestFrame();
+        });
+        $("eraseScope").addEventListener("change", (event) => { ed.eraseScope = event.target.value === "visible" ? "visible" : "active"; });
+        $("importActionBtn").addEventListener("click", () => $("fileInput").click());
+        $("exportActionBtn").addEventListener("click", () => this.openExport());
     }
 
     bindTiles() {
         const ed = this.ed;
         this.tilePage = 0;
         $("tileMode").addEventListener("change", (event) => { ed.tileOpts.erase = event.target.value === "erase"; ed.requestFrame(); });
+        $("tileRadius").addEventListener("input", (event) => { ed.tileOpts.radius = Math.max(0, Math.min(6, Math.round(Number(event.target.value)) || 0)); ed.requestFrame(); });
+        // Only asset IDs already present in the loaded catalog are accepted as variants.
+        $("tileVariants").addEventListener("input", (event) => { ed.setTileVariants(event.target.value); });
         $("tileSize").value = String(ed.tileOpts.size);
         $("tileSize").addEventListener("change", (event) => {
             ed.tileOpts.size = Number(event.target.value);
@@ -943,6 +959,7 @@ export class UI {
 
     setTool(tool) {
         $("app").dataset.tool = tool;
+        $("eraseScopeField").hidden = $("eraseScopeHint").hidden = tool !== "eraser";
         document.querySelectorAll(".mm-tool").forEach((button) => {
             button.setAttribute("aria-pressed", String(button.dataset.tool === tool));
         });

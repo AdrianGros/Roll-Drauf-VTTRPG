@@ -142,6 +142,22 @@ _bindVisionControls() {
             this._bindFocusTrap(lightEditPopover);
             this._bindFocusTrap(visibleTokensPopover);
         },
+async _bindMapLibrary() {
+            // DM composition only: this module is never requested for a Player seat.
+            const button = document.getElementById("layerAddLibrary");
+            if (!button || this._mapLibraryBound) return;
+            this._mapLibraryBound = true;
+            button.addEventListener("click", async () => {
+                try {
+                    const module = await import("/static/js/play-map-library.js");
+                    module.mount(this).open();
+                    const choice = document.getElementById("layerAddChoice");
+                    if (choice) choice.hidden = true;
+                } catch (error) {
+                    this._showMessage(globalThis.VTTUi("Die Kartenbibliothek konnte nicht geladen werden."), true);
+                }
+            });
+        },
 _bindMapUpload() {
             // Der Upload wird aus dem Hinzufügen-Dialog heraus gestartet
             // (#layerAddUpload in _renderLayerAddControl); hier hängt nur

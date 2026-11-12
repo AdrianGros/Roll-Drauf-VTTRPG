@@ -37,6 +37,7 @@ export function attachInput(ed) {
         if (!gesture) return;
         if (gesture.type === "stroke") ed.cancelStroke();
         if (gesture.type === "tiles") ed.cancelTiles();
+        if (gesture.type === "erase") ed.cancelErase();
         if (gesture.type === "drag" && gesture.moved) {
             ed.invalidateItem(gesture.item);
             gesture.item.x = gesture.orig.x;
@@ -59,7 +60,7 @@ export function attachInput(ed) {
     ed.input = {
         cancel: cancelGesture,
         // live, uncommitted document changes (autosave must not persist them)
-        mutating: () => !!gesture && (gesture.type === "stroke" || gesture.type === "scatter" || gesture.type === "tiles"
+        mutating: () => !!gesture && (gesture.type === "stroke" || gesture.type === "erase" || gesture.type === "scatter" || gesture.type === "tiles"
             || (gesture.type === "drag" && gesture.moved) || (gesture.type === "pathNode" && gesture.moved)),
     };
 
@@ -101,7 +102,9 @@ export function attachInput(ed) {
         }
         if (event.button !== 0) return;
 
-        if (ed.tool === "brush" || ed.tool === "eraser") {
+        if (ed.tool === "eraser") {
+            if (ed.beginErase(point, pressureOf(event))) gesture = { type: "erase", pointerId: event.pointerId };
+        } else if (ed.tool === "brush") {
             if (ed.beginStroke(point, pressureOf(event))) gesture = { type: "stroke", pointerId: event.pointerId };
         } else if (ed.tool === "tile") {
             if (ed.beginTiles(point)) gesture = { type: "tiles", pointerId: event.pointerId };
@@ -203,6 +206,12 @@ export function attachInput(ed) {
                 ed.continueStroke(ed.clientToDoc(sample.clientX, sample.clientY), pressureOf(sample));
             }
             ed.cursor = point;
+        } else if (gesture.type === "erase") {
+            const samples = typeof event.getCoalescedEvents === "function" ? event.getCoalescedEvents() : [];
+            for (const sample of samples.length ? samples : [event]) {
+                ed.continueErase(ed.clientToDoc(sample.clientX, sample.clientY), pressureOf(sample));
+            }
+            ed.cursor = point;
         } else if (gesture.type === "tiles") {
             const samples = typeof event.getCoalescedEvents === "function" ? event.getCoalescedEvents() : [];
             for (const sample of samples.length ? samples : [event]) ed.continueTiles(ed.clientToDoc(sample.clientX, sample.clientY));
@@ -280,6 +289,7 @@ export function attachInput(ed) {
         const done = gesture;
         gesture = null;
         if (done.type === "stroke") ed.endStroke();
+        else if (done.type === "erase") ed.endErase();
         else if (done.type === "tiles") ed.endTiles();
         else if (done.type === "path") {
             ed.previewPath = null;

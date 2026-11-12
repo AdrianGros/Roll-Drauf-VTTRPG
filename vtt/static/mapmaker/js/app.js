@@ -1,6 +1,7 @@
 globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-import { embedCredits, creditsForDocument } from "./credits.js";
+import { creditsForDocument } from "./credits.js";
+import { renderPngBlob } from "./snapshot.js";
 // Kartenwerkstatt editor controller: document state, commands, view, files, autosave.
 
 import {
@@ -10,7 +11,7 @@ import {
 import { History } from "./history.js";
 import { drawStampImage, stampExtent, loadPalette } from "./stamps.js";
 import { COAST_PAD, Renderer, drawPath, itemBounds, pathHit, replacedTitleLabel } from "./render.js";
-import { StrokeEngine, rectUnion, registerMaterialTextures } from "./brush.js";
+import { StrokeEngine, rectClamp, rectUnion, registerMaterialTextures } from "./brush.js";
 import { createEmptyMap, createStarterMap } from "./starter.js";
 import { AutosaveUnavailable, DraftStore, downloadBlob, slugify } from "./storage.js";
 import { attachInput } from "./tools.js";
@@ -44,11 +45,13 @@ class Editor {
         this.dpr = 1;
         this.tool = "brush";
         this.brush = { material: "forest", size: 64, opacity: 0.9, softness: 45, pressureEnabled: true };
-        this.stampOpts = { asset: null, size: 88, rot: 0, flip: false, vary: false, scatter: false };
+        this.stampOpts = { asset: null, size: 88, rot: 0, flip: false, vary: false, scatter: false, grid: 0 };
         this.labelOpts = { style: "town", kind: "landmark", pin: true, symbol: null, symbolSize: 56 };
         this.pathOpts = { material: "road", width: 14 };
-        this.tileOpts = { asset: null, erase: false, size: TILE_GRID_DEFAULT };
+        this.tileOpts = { asset: null, erase: false, size: TILE_GRID_DEFAULT, radius: 0, variants: [] };
         this.tileGesture = null;
+        this.eraseScope = "active"; // "active" (default) or explicit "visible"
+        this.eraseGesture = null;
         this.previewPath = null;
         this.selection = null;
         this.activeLayerId = null;
@@ -347,7 +350,8 @@ class Editor {
             const { w, h } = stampExtent(stamp, this.stampOpts.size, this.stampOpts.crop);
             ctx.save();
             ctx.globalAlpha = 0.55;
-            ctx.translate(this.cursor.x, this.cursor.y);
+            const at = this.stampPoint(this.cursor); // same rounded position as the placement
+            ctx.translate(at.x, at.y);
             ctx.rotate((this.stampOpts.rot * Math.PI) / 180);
             if (this.stampOpts.flip) ctx.scale(-1, 1);
             drawStampImage(ctx, stamp, this.stampOpts.crop, -w / 2, -h / 2, w, h);
@@ -400,7 +404,7 @@ class Editor {
             return false;
         }
         const erase = this.tileOpts.erase;
-        if (!erase && !this.tileOpts.asset) {
+        if (!erase && !this.tileOpts.asset && !this.tileOpts.variants.length) {
             this.ui.toast(globalThis.VTTUi("Wähle zuerst eine Kachel aus der Kachelauswahl."));
             return false;
         }
@@ -440,10 +444,43 @@ class Editor {
         const steps = Math.max(Math.abs(cell.col - from.col), Math.abs(cell.row - from.row));
         for (let i = gesture.last ? 1 : 0; i <= steps; i += 1) {
             const t = steps ? i / steps : 0;
-            this.setTile(gesture, Math.round(from.col + (cell.col - from.col) * t), Math.round(from.row + (cell.row - from.row) * t));
+            this.paintTileBrush(gesture, Math.round(from.col + (cell.col - from.col) * t), Math.round(from.row + (cell.row - from.row) * t));
         }
         gesture.last = cell;
         this.requestFrame();
+    }
+
+    /** Brush coverage in whole cells; independent of the pixel grid and physical scale. */
+    tileBrushCells(col, row) {
+        const radius = Math.max(0, Math.min(6, Math.round(this.tileOpts.radius) || 0));
+        const cells = [];
+        for (let dr = -radius; dr <= radius; dr += 1) {
+            for (let dc = -radius; dc <= radius; dc += 1) {
+                if (dc * dc + dr * dr <= radius * radius + radius) cells.push({ col: col + dc, row: row + dr });
+            }
+        }
+        return cells;
+    }
+
+    paintTileBrush(gesture, col, row) {
+        for (const cell of this.tileBrushCells(col, row)) this.setTile(gesture, cell.col, cell.row);
+    }
+
+    /** At most one random pick per cell and gesture, so dragging back and forth never flickers. */
+    chooseTile(gesture, key) {
+        if (this.tileOpts.erase) return undefined;
+        const pool = this.tileOpts.variants.length ? this.tileOpts.variants : [this.tileOpts.asset];
+        if (pool.length === 1) return pool[0];
+        gesture.choice ||= new Map();
+        if (!gesture.choice.has(key)) gesture.choice.set(key, pool[Math.floor(Math.random() * pool.length)]);
+        return gesture.choice.get(key);
+    }
+
+    setTileVariants(text) {
+        const ids = [...new Set(String(text).split(",").map((id) => id.trim()).filter(Boolean))].slice(0, 16);
+        const known = ids.filter((id) => this.palette.stamps.has(id));
+        if (known.length !== ids.length) this.ui.toast(globalThis.VTTUi("Unbekannte Kachel-IDs wurden ignoriert."));
+        this.tileOpts.variants = known;
     }
 
     setTile(gesture, col, row) {
@@ -453,7 +490,7 @@ class Editor {
         if (col < 0 || row < 0 || col >= cols || row >= rows) return;
         const key = cellKey(col, row);
         const before = layer.cells.get(key);
-        const after = this.tileOpts.erase ? undefined : this.tileOpts.asset;
+        const after = this.chooseTile(gesture, key);
         if (before === after) return;
         if (before === undefined && countTiles(this.doc) >= LIMITS.tiles) {
             if (!gesture.full) this.ui.toast(globalThis.VTTUi("Höchstens {p0} Kacheln pro Karte.",{p0:(LIMITS.tiles.toLocaleString("de"))}));
@@ -873,11 +910,23 @@ class Editor {
         return this.hitTestAll(point, kinds)[0] || null;
     }
 
+    stampGridSize(value) {
+        return Math.max(8, Math.min(256, Math.round(Number(value)) || 32));
+    }
+
+    /** Single source for stamp preview and placement; grid is optional and off by default. */
+    stampPoint(point) {
+        const grid = this.stampOpts.grid;
+        const x = grid ? Math.round(point.x / grid) * grid : point.x;
+        const y = grid ? Math.round(point.y / grid) * grid : point.y;
+        return this.clampToMap(x, y);
+    }
+
     createStamp(point, assetId) {
         const opts = this.stampOpts;
         const vary = opts.vary ? 1 + (Math.random() - 0.5) * 0.24 : 1;
         const rot = opts.vary ? opts.rot + (Math.random() - 0.5) * 12 : opts.rot;
-        const at = this.clampToMap(point.x, point.y);
+        const at = this.stampPoint(point);
         return {
             id: newId("s", collectIds(this.doc)),
             asset: assetId,
@@ -929,6 +978,14 @@ class Editor {
     continueStroke(point, pressure) {
         if (!this.strokeActive) return;
         this.engine.addPoint(point.x, point.y, pressure);
+        const active = this.engine.active;
+        const rect = active && rectClamp(rectUnion(active.total, active.pending), this.doc.size.w, this.doc.size.h);
+        if (rect && !this.history.canFit(rect.w * rect.h * 8 + 256)) {
+            // Preflight: revert the whole stroke instead of clearing earlier undo steps.
+            this.cancelStroke();
+            this.ui.toast(globalThis.VTTUi("Diese Fläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten malen."));
+            return;
+        }
         this.requestFrame();
     }
 
@@ -965,9 +1022,191 @@ class Editor {
         if (rect) this.invalidate(pad(rect, layer.effects.coast ? COAST_PAD : 0));
     }
 
+    // ---- general eraser (raster, tiles, stamps; paths and labels are never touched) ----
+
+    eraseTargets() {
+        const supported = new Set(["raster", "tiles", "stamps"]);
+        if (this.eraseScope === "visible") return this.doc.layers.filter((layer) => layer.visible && supported.has(layer.kind));
+        const layer = this.activeLayer(); // no silent switch to another layer
+        return layer && layer.visible && supported.has(layer.kind) ? [layer] : [];
+    }
+
+    beginErase(point, pressure) {
+        const targets = this.eraseTargets();
+        if (!targets.length) {
+            this.ui.toast(globalThis.VTTUi("Der Radierer wirkt nur auf sichtbare Raster-, Kachel- und Symbolebenen. Wähle eine solche Ebene oder „Alle sichtbaren Ebenen“."));
+            return false;
+        }
+        this.commitEdit();
+        const gesture = { rasters: [], tiles: new Map(), stamps: new Map(), last: null, refused: false };
+        for (const layer of targets.filter((entry) => entry.kind === "raster")) {
+            const engine = new StrokeEngine(this.doc.size.w, this.doc.size.h);
+            engine.begin(layer, { ...this.brush, erase: true });
+            gesture.rasters.push({ layer, engine });
+        }
+        this.eraseGesture = gesture;
+        gesture.targets = targets;
+        this.continueErase(point, pressure);
+        return true;
+    }
+
+    eraseEstimate(gesture) {
+        let bytes = 512;
+        for (const { layer, engine } of gesture.rasters) {
+            const rect = rectClamp(rectUnion(engine.active?.total, engine.active?.pending), layer.canvas.width, layer.canvas.height);
+            if (rect) bytes += rect.w * rect.h * 8; // before + after ImageData
+        }
+        for (const cells of gesture.tiles.values()) bytes += cells.before.size * 96;
+        for (const entry of gesture.stamps.values()) bytes += entry.removed.size * 512;
+        return bytes;
+    }
+
+    continueErase(point, pressure) {
+        const gesture = this.eraseGesture;
+        if (!gesture || gesture.refused) return;
+        const radius = Math.max(1, this.brush.size / 2);
+        const from = gesture.last || point;
+        const steps = Math.max(1, Math.ceil(Math.hypot(point.x - from.x, point.y - from.y) / Math.max(1, radius / 2)));
+        for (let i = gesture.last ? 1 : 0; i <= steps; i += 1) {
+            const t = i / steps;
+            this.eraseAt(gesture, { x: from.x + (point.x - from.x) * t, y: from.y + (point.y - from.y) * t }, radius);
+        }
+        for (const { layer, engine } of gesture.rasters) {
+            engine.addPoint(point.x, point.y, pressure);
+            const rect = engine.flush();
+            if (rect) this.invalidate(pad(rect, layer.effects.coast ? COAST_PAD : 0));
+        }
+        gesture.last = point;
+        // Preflight against the 64 MiB history budget: refuse and fully revert instead of
+        // letting push() discard the user's earlier undo steps.
+        if (!this.history.canFit(this.eraseEstimate(gesture))) {
+            this.cancelErase();
+            this.ui.toast(globalThis.VTTUi("Diese Radierfläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten radieren."));
+            return;
+        }
+        this.requestFrame();
+    }
+
+    eraseAt(gesture, at, radius) {
+        const near = (rect) => {
+            const dx = Math.max(rect.x - at.x, 0, at.x - (rect.x + rect.w));
+            const dy = Math.max(rect.y - at.y, 0, at.y - (rect.y + rect.h));
+            return dx * dx + dy * dy <= radius * radius;
+        };
+        for (const layer of gesture.targets) {
+            if (layer.kind === "tiles") {
+                const size = layer.grid.size;
+                const record = gesture.tiles.get(layer) || { before: new Map() };
+                for (let row = Math.floor((at.y - radius) / size); row <= Math.floor((at.y + radius) / size); row += 1) {
+                    for (let col = Math.floor((at.x - radius) / size); col <= Math.floor((at.x + radius) / size); col += 1) {
+                        const key = cellKey(col, row);
+                        if (!layer.cells.has(key) || !near({ x: col * size, y: row * size, w: size, h: size })) continue;
+                        if (!record.before.has(key)) record.before.set(key, layer.cells.get(key));
+                        layer.cells.delete(key);
+                        this.invalidate({ x: col * size, y: row * size, w: size, h: size });
+                    }
+                }
+                if (record.before.size) gesture.tiles.set(layer, record);
+            } else if (layer.kind === "stamps") {
+                const entry = gesture.stamps.get(layer) || { original: layer.items.slice(), removed: new Set() };
+                for (const item of [...layer.items]) {
+                    const bounds = itemBounds(item, this.palette);
+                    if (!near(bounds)) continue;
+                    entry.removed.add(item);
+                    layer.items.splice(layer.items.indexOf(item), 1);
+                    this.invalidate(pad(bounds, 4));
+                }
+                if (entry.removed.size) gesture.stamps.set(layer, entry);
+            }
+        }
+    }
+
+    /** Restore tiles/stamps of a gesture (cancel or refused commit). */
+    restoreErased(gesture) {
+        for (const [layer, { before }] of gesture.tiles) {
+            const size = layer.grid.size;
+            for (const [key, asset] of before) {
+                layer.cells.set(key, asset);
+                const { col, row } = cellOf(key);
+                this.invalidate({ x: col * size, y: row * size, w: size, h: size });
+            }
+        }
+        for (const [layer, { original }] of gesture.stamps) {
+            layer.items.splice(0, layer.items.length, ...original);
+            this.invalidate({ x: 0, y: 0, w: this.doc.size.w, h: this.doc.size.h });
+        }
+    }
+
+    cancelErase() {
+        const gesture = this.eraseGesture;
+        this.eraseGesture = null;
+        if (!gesture) return;
+        for (const { layer, engine } of gesture.rasters) {
+            const rect = engine.cancel();
+            if (rect) this.invalidate(pad(rect, layer.effects.coast ? COAST_PAD : 0));
+        }
+        this.restoreErased(gesture);
+        this.requestFrame();
+    }
+
+    endErase() {
+        const gesture = this.eraseGesture;
+        this.eraseGesture = null;
+        if (!gesture || gesture.refused) return;
+        const rasters = [];
+        for (const { layer, engine } of gesture.rasters) {
+            const result = engine.end();
+            this.invalidate(pad({ x: 0, y: 0, w: layer.canvas.width, h: layer.canvas.height }, 0));
+            if (result) rasters.push({ layer, ...result });
+        }
+        const tiles = [...gesture.tiles].map(([layer, { before }]) =>
+            ({ layer, before, after: new Map([...before.keys()].map((key) => [key, undefined])) }));
+        const stamps = [...gesture.stamps].map(([layer, entry]) =>
+            ({ layer, original: entry.original, kept: entry.original.filter((item) => !entry.removed.has(item)) }));
+        if (!rasters.length && !tiles.length && !stamps.length) return;
+        const bytes = rasters.reduce((sum, r) => sum + r.before.data.length + r.after.data.length, 512)
+            + tiles.reduce((sum, t) => sum + t.before.size * 96, 0) + stamps.reduce((sum, s) => sum + (s.original.length - s.kept.length) * 512, 0);
+        const putRaster = (r, image) => {
+            r.layer.canvas.getContext("2d").putImageData(image, r.rect.x, r.rect.y);
+            r.layer.rev += 1;
+            this.invalidate(pad(r.rect, r.layer.effects.coast ? COAST_PAD : 0));
+        };
+        const putTiles = (t, values) => {
+            const size = t.layer.grid.size;
+            for (const [key, asset] of values) {
+                if (asset === undefined) t.layer.cells.delete(key);
+                else t.layer.cells.set(key, asset);
+                const { col, row } = cellOf(key);
+                this.invalidate({ x: col * size, y: row * size, w: size, h: size });
+            }
+        };
+        const putStamps = (s, items) => {
+            s.layer.items.splice(0, s.layer.items.length, ...items);
+            this.invalidate({ x: 0, y: 0, w: this.doc.size.w, h: this.doc.size.h });
+        };
+        const undo = () => {
+            rasters.forEach((r) => putRaster(r, r.before));
+            tiles.forEach((t) => putTiles(t, t.before));
+            stamps.forEach((s) => putStamps(s, s.original));
+            this.requestFrame();
+        };
+        const command = { label: globalThis.VTTUi("Radieren"), bytes, strict: true, undo, redo: () => {
+            rasters.forEach((r) => putRaster(r, r.after));
+            tiles.forEach((t) => putTiles(t, t.after));
+            stamps.forEach((s) => putStamps(s, s.kept));
+            this.requestFrame();
+        } };
+        // Refuse rather than clear: the gesture is reverted and earlier history stays intact.
+        if (!this.history.push(command)) {
+            undo();
+            this.ui.toast(globalThis.VTTUi("Diese Radierfläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten radieren."));
+        }
+    }
+
     cancelInteractions() {
         if (this.input) this.input.cancel();
         this.cancelStroke();
+        this.cancelErase();
         this.cancelTiles();
     }
 
@@ -1018,7 +1257,7 @@ class Editor {
 
     /** True while a gesture has live, not yet committed document changes. */
     isMutating() {
-        return this.strokeActive || !!(this.input && this.input.mutating());
+        return this.strokeActive || !!this.eraseGesture || !!(this.input && this.input.mutating());
     }
 
     /** Called by the input layer whenever a gesture ends or is cancelled. */
@@ -1161,21 +1400,15 @@ class Editor {
     }
 
     async renderPngBlob(scale) {
-        if (this.doc.size.w * scale * this.doc.size.h * scale > MAX_EXPORT_PIXELS) {
-            throw new Error(globalThis.VTTUi("Diese Auflösung ist zu groß für den Browser."));
-        }
         const doc = this.doc;
-        const credits = creditsForDocument(doc, this.palette);
         const generation = this.generation;
-        await this.palette.ensureDocumentImages(doc);
-        if (doc !== this.doc || generation !== this.generation) throw new Error(globalThis.VTTUi("Die Karte wurde während des Exports geändert. Bitte erneut exportieren."));
-        this.flushRender();
-        const canvas = this.renderer.renderExport(scale);
-        const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
-        canvas.width = 0;
-        canvas.height = 0;
-        if (!blob) throw new Error(globalThis.VTTUi("Der Browser konnte das Bild nicht erzeugen (zu groß?)."));
-        return embedCredits(blob, credits);
+        // Same pure helper the DM table uses for its library preview.
+        const { blob } = await renderPngBlob({
+            doc, palette: this.palette, renderer: this.renderer, scale, maxPixels: MAX_EXPORT_PIXELS,
+            isStale: () => doc !== this.doc || generation !== this.generation,
+            beforeRender: () => this.flushRender(),
+        });
+        return blob;
     }
 
     async exportBundle(scale) {
@@ -1211,7 +1444,8 @@ class Editor {
         this.commitEdit();
         this.tool = tool;
         if (tool !== "select" && tool !== "label") this.selection = null;
-        const kind = tool === "brush" || tool === "eraser" ? "raster" : tool === "stamp" ? "stamps" : tool === "label" ? "labels"
+        // The eraser follows the active layer or the explicit all-visible scope; no silent layer switch.
+        const kind = tool === "brush" ? "raster" : tool === "stamp" ? "stamps" : tool === "label" ? "labels"
             : tool === "path" ? "paths" : tool === "tile" ? "tiles" : null;
         if (kind) {
             const layer = this.targetLayer(kind, { quiet: true });
