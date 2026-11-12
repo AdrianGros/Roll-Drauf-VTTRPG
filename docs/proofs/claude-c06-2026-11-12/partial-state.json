@@ -27,7 +27,8 @@
       "test_stopping_series_preserves_past_and_running_sessions",
       "test_cross_campaign_ids_and_revoked_access_are_rejected",
       "test_calendar_get_is_pure_and_explicit_post_rolls_forward"
-    ]
+    ],
+    "javascript": "2 files parse,234 authored literal calls,0 missing DE/EN entries"
   },
   "gaps": [
     "Native final completeness report absent (CLI result is quota message)",
@@ -38,5 +39,7 @@
     "Independent source review not run",
     "Additive model schema/backup/deployment/live NOT_RUN"
   ],
-  "next_step": "Resume same native session with exact failures, only owned files; preserve source, finish bounded tests and reviewer before integration"
+  "next_step": "Resume same native session with exact failures, only owned files; preserve source, finish bounded tests and reviewer before integration",
+  "source_checkpoint": "df9e3cc5ff92fba0f4f15ea3301baa500f41ef6b",
+  "remote_push": "origin/claude/vtt-c06-20261112 successful"
 }
