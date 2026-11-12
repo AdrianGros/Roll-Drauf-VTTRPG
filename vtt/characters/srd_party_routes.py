@@ -31,11 +31,11 @@ def _failure(exc):
     return _bad(exc.code, exc.message, exc.status, **getattr(exc, 'extra', {}))
 
 
-def _owner_character(char_id):
+def _owner_character(char_id, *, write=False):
     user, error = _get_current_user()
     if error:
         return None, None, error
-    char, error = _get_character_or_404(char_id)
+    char, error = _get_character_or_404(char_id, write_lock=write)
     if error:
         return None, None, error
     if char.user_id != user.id:
@@ -49,7 +49,7 @@ def _dm_character(char_id):
     user, error = _get_current_user()
     if error:
         return None, None, error
-    char, error = _get_character_or_404(char_id)
+    char, error = _get_character_or_404(char_id, write_lock=True)
     if error:
         return None, None, error
     if not char.campaign_id or not _is_dm(char.campaign_id, user.id):
@@ -134,7 +134,7 @@ def get_sharing(char_id):
 @limiter.limit('60 per hour')
 @jwt_required()
 def put_sharing(char_id):
-    _, char, error = _owner_character(char_id)
+    _, char, error = _owner_character(char_id, write=True)
     if error:
         return error
     body = _body() or {}

@@ -299,6 +299,8 @@
     let offset = 0;
     let timer = null;
     let requestId = 0;
+    let typeRequestId = 0;
+    let switchingType = false;
 
     function node(tag, text, className) {
         const n = document.createElement(tag);
@@ -476,16 +478,24 @@
     }
 
     let detailPushed = false;
+    let characterActionCleanup = null;
+    let detailVersion = 0;
 
     function hideDetail() {
+        detailVersion++; characterActionCleanup?.(); characterActionCleanup = null;
         els.detail.hidden = true;
         els.list.hidden = false;
     }
 
     async function openDetail(id, historyMode) {
+        window.clearTimeout(timer); requestId++;
+        els.results.setAttribute('aria-busy', 'false');
+        const version = ++detailVersion;
+        characterActionCleanup?.(); characterActionCleanup = null;
         const response = await fetch(ENTRY_API + encodeURIComponent(id), { credentials: 'same-origin' });
         if (!response.ok) throw new UiMessageError(ui('Eintrag nicht gefunden.'));
         const data = await response.json();
+        if (version !== detailVersion) return;
         const entity = data.entity;
         els.detailTitle.textContent = entity.name;
         els.detailMeta.textContent = '';
@@ -496,6 +506,11 @@
         link.href = entity.url;
         els.detailMeta.appendChild(link);
         els.detailBody.textContent = '';
+        const actionRoot = node('div'); actionRoot.className = 'cp-character-actions-entry';
+        els.detailBody.appendChild(actionRoot);
+        import('/static/js/compendium-character.js').then(({mountCatalogAction}) => {
+            if (version === detailVersion && actionRoot.isConnected) characterActionCleanup = mountCatalogAction(actionRoot, entity);
+        }).catch(() => { if (version === detailVersion) actionRoot.textContent = ui('Charakteraktion konnte nicht geladen werden.'); });
         data.blocks.forEach((block) => els.detailBody.appendChild(renderBlock(block)));
         els.list.hidden = true;
         els.detail.hidden = false;
@@ -533,6 +548,7 @@
     });
 
     async function load(append) {
+        if (switchingType) return;
         const mine = ++requestId;
         const params = currentParams();
         if (!append) {
@@ -566,26 +582,42 @@
                 ? ui('Keine Treffer für diese Filter.')
                 : ui('{shown} von {total} {label} angezeigt.', { shown: offset, total: data.total, label: typeLabel });
         } catch (error) {
-            showError(error);
+            if (mine === requestId) showError(error);
         } finally {
             if (mine === requestId) els.results.setAttribute('aria-busy', 'false');
         }
     }
 
     async function switchType(typeKey, preset) {
+        const mine = ++typeRequestId;
+        switchingType = true;
+        window.clearTimeout(timer); requestId++;
+        els.table.hidden = true; els.more.hidden = true;
+        els.results.setAttribute('aria-busy', 'true');
         els.type.value = typeKey;
-        const response = await fetch(`${API}?type=${encodeURIComponent(typeKey)}&limit=1`, { credentials: 'same-origin' });
-        if (!response.ok) throw new UiMessageError(ui('Compendium nicht verfügbar.'));
-        facets = (await response.json()).facets;
-        buildFilters(typeKey);
-        if (preset) {
-            els.q.value = preset.get('q') || '';
-            els.filters.querySelectorAll('[data-filter]').forEach((control) => {
-                control.value = preset.get(control.dataset.filter) || '';
-            });
-            els.sort.value = preset.get('sort') || 'name';
+        try {
+            const response = await fetch(`${API}?type=${encodeURIComponent(typeKey)}&limit=1`, { credentials: 'same-origin' });
+            if (!response.ok) throw new UiMessageError(ui('Compendium nicht verfügbar.'));
+            const data = await response.json();
+            if (mine !== typeRequestId) return false;
+            facets = data.facets;
+            buildFilters(typeKey);
+            if (preset) {
+                els.q.value = preset.get('q') || '';
+                els.filters.querySelectorAll('[data-filter]').forEach((control) => {
+                    control.value = preset.get(control.dataset.filter) || '';
+                });
+                els.sort.value = preset.get('sort') || 'name';
+            }
+            switchingType = false;
+            await load(false);
+            return mine === typeRequestId;
+        } catch (error) {
+            if (mine === typeRequestId) {
+                switchingType = false; els.results.setAttribute('aria-busy', 'false'); throw error;
+            }
+            return false;
         }
-        return load(false);
     }
 
     function debounce() {
@@ -607,8 +639,8 @@
         els.form.addEventListener('submit', (event) => event.preventDefault());
         els.detailBack.addEventListener('click', closeDetail);
         try {
-            await switchType(typeKey, preset);
-            if (preset.get('entry')) await openDetail(preset.get('entry'), 'replace');
+            const currentType = await switchType(typeKey, preset);
+            if (currentType && preset.get('entry')) await openDetail(preset.get('entry'), 'replace');
         } catch (error) {
             showError(error);
         }

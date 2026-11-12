@@ -151,7 +151,13 @@ def award(campaign, body, *, user_id):
         raise ProgressionError("invalid_ids", "characterIds muss eine Liste von Charakter-IDs sein.", 400)
     data = load_creator_data()
     changed = []
-    for char in Character.query.filter_by(campaign_id=campaign.id, deleted_at=None).order_by(Character.id).all():
+    from vtt.characters.writes import lock_character
+    for candidate in Character.query.filter_by(campaign_id=campaign.id, deleted_at=None).order_by(Character.id).all():
+        if ids is not None and candidate.id not in ids:
+            continue
+        char = lock_character(candidate.id)
+        if char is None or char.deleted_at or char.campaign_id != campaign.id:
+            continue
         if (ids is not None and char.id not in ids) or srd_manage.is_archived(char) or sheet_link.srd_evaluation(char) is None:
             continue
         if srd_progression.set_progression(char, data, payload, user_id=user_id)["changed"]:

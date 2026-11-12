@@ -455,7 +455,7 @@ def _inventory_character(char_id, *, write):
     user, error = _get_current_user()
     if error:
         return None, None, error
-    char, error = _get_character_or_404(char_id)
+    char, error = _get_character_or_404(char_id, write_lock=write)
     if error:
         return None, None, error
     if write and char.user_id != user.id:
@@ -622,12 +622,12 @@ def seed_inventory(char_id):
 
 # ------------------------------------------------------------------ progression: XP, milestones, level-up
 
-def _progression_character(char_id, *, write):
+def _progression_character(char_id, *, write, lock=True):
     """(user, char, can_manage, error); XP and milestones are managed by the campaign's DM, else by the owner."""
     user, error = _get_current_user()
     if error:
         return None, None, False, error
-    char, error = _get_character_or_404(char_id)
+    char, error = _get_character_or_404(char_id, write_lock=bool(write) and lock)
     if error:
         return None, None, False, error
     if not _can_read_character(user.id, char):
@@ -699,7 +699,7 @@ def put_progression(char_id):
 @limiter.limit('600 per hour')
 @jwt_required()
 def preview_level_up(char_id):
-    _, char, _, error = _progression_character(char_id, write='owner')
+    _, char, _, error = _progression_character(char_id, write='owner', lock=False)
     if error:
         return error
     body = _body()
@@ -875,3 +875,5 @@ def origin_catalog_entries():
     response=jsonify({'enabled':origin_catalog.enabled(),**origin_catalog.catalog(user.id)})
     response.headers['Cache-Control']='private, no-store'
     return response
+
+from vtt.characters import catalog_actions  # noqa: E402,F401 (owner catalog actions)

@@ -778,8 +778,9 @@ def play_transfer_loot(campaign_id, session_id):
     # this app uses. There is no per-token "restrict to certain players"
     # flag in the data model; that is out of scope for this slice.
 
-    recipient = Character.query.get(recipient_character_id)
-    if not recipient or recipient.campaign_id != campaign.id:
+    from vtt.characters.writes import lock_character
+    recipient = lock_character(recipient_character_id)
+    if not recipient or recipient.deleted_at or recipient.campaign_id != campaign.id:
         return jsonify({"error": "recipient character not found"}), 404
     is_operator = is_operator_role(session_role)
     if not (recipient.user_id == user.id or recipient.is_party_stash or is_operator):

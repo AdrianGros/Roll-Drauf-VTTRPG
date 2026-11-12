@@ -98,7 +98,10 @@ def test_all_session_http_routes_have_missing_context_guard(table, play_dm_clien
             continue
         args = {name: 1 for name in rule.arguments}
         args.update(campaign_id=campaign.id, session_id=session.id)
-        path = play_app.url_map.bind("localhost").build(rule.endpoint, args)
+        # Build this exact rule: url_for(endpoint) may select a non-table alias
+        # (calendar appointment cancellation shares its endpoint with one).
+        import re
+        path = re.sub(r"<(?:[^:<>]+:)?([^<>]+)>", lambda match: str(args[match[1]]), rule.rule)
         method = next(m for m in rule.methods if m not in {"HEAD", "OPTIONS"})
         response = play_dm_client.open(path, method=method, json={} if method != "GET" else None)
         assert response.status_code == 403, (method, path, response.status_code)
