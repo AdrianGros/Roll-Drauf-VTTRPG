@@ -190,6 +190,22 @@ def test_issue_tokens_never_exceed_absolute_end_and_anchor_is_kept(app, user, cl
         lifetime.issue_tokens(user.id, started=int(time.time()) - LIFE)
 
 
+@pytest.mark.parametrize("remaining", [600, LIFE])
+def test_exp_is_signed_from_the_integer_anchor_even_if_signing_clock_is_ahead(app, user, clock, remaining):
+    """M1: helper clock one second behind the JWT library's clock must not push exp past until."""
+    helper_now = int(time.time()) - 1  # library signs "iat" ~1s later than the helper's view
+    clock.at(helper_now)
+    started = helper_now - (LIFE - remaining)
+    with app.test_request_context():
+        tokens = lifetime.issue_tokens(user.id, started=started)
+    until = started + LIFE
+    access, refresh = claims_of(tokens.access), claims_of(tokens.refresh)
+    assert refresh["exp"] == until
+    assert access["exp"] == min(helper_now + 3600, until)  # exact, not relative to library time
+    assert access["exp"] <= until
+    assert check_payload(access, expected_type="access", now=helper_now).until == until
+
+
 def _discord_login(client, app, monkeypatch, remember):
     user = User(username="disc", email="disc@example.test", role_id=1)
     user.set_password(PASSWORD)
@@ -605,3 +621,175 @@ def test_outbound_delivery_checks_issuing_session_expiry(table, play_dm_client, 
         assert not any(e["name"] == "test:private" for e in received)
     finally:
         socket.disconnect()
+
+
+# ------------------------------------------- M2: password change keeps current login
+
+NEW_PASSWORD = "BrandNewPass456!"
+
+
+def _real_login(app, username="lifetime"):
+    """Login through the route; return (access, refresh, claims-of-access)."""
+    response = app.test_client().post("/api/auth/login", json={"username": username, "password": PASSWORD})
+    assert response.status_code == 200
+    access, refresh = cookie_value(response, "access_token_cookie"), cookie_value(response, "refresh_token_cookie")
+    return access, refresh, claims_of(access)
+
+
+def _change_password(app, access, refresh=None):
+    """Fresh client carrying the cookies on path '/' (the refresh cookie is
+    path-scoped in browsers; here the contract with a *presented* cookie is tested)."""
+    device = app.test_client()
+    use_cookies(device, access=access, refresh=refresh)
+    response = device.post("/api/auth/password/change",
+                           json={"current_password": PASSWORD, "new_password": NEW_PASSWORD})
+    return device, response
+
+
+def test_password_change_keeps_current_device_refresh_and_revokes_same_second_second_device(app, user, clock):
+    access, refresh, claims = _real_login(app)
+    started = claims[CLAIM_STARTED]
+    # second device: same anchor => identical expires_at on its rows
+    other_access = mint(app, user.id, "access", started=started)
+    other_refresh = mint(app, user.id, "refresh", started=started)
+    assert len({row.expires_at for row in Session.query.filter_by(user_id=user.id)}) == 1
+
+    device, response = _change_password(app, access, refresh)
+    assert response.status_code == 200
+    assert device.get("/api/auth/me").status_code == 200
+
+    other = app.test_client()
+    use_cookies(other, access=other_access, refresh=other_refresh)
+    assert other.get("/api/auth/me").status_code == 401
+    assert other.post("/api/auth/refresh").status_code == 401
+
+    # one hour later the current access has expired; the kept refresh still works
+    clock.at(started + 61 * 60)
+    assert device.get("/api/auth/me").status_code == 401
+    refreshed = device.post("/api/auth/refresh")
+    assert refreshed.status_code == 200
+    new_access = claims_of(cookie_value(refreshed, "access_token_cookie"))
+    assert (new_access[CLAIM_STARTED], new_access[CLAIM_UNTIL]) == (started, started + LIFE)
+    # ... but never beyond the original absolute end
+    clock.at(started + LIFE)
+    assert device.post("/api/auth/refresh").status_code == 401
+
+
+@pytest.mark.parametrize("case", ["missing", "garbage", "bad_signature", "foreign_user", "other_anchor",
+                                  "access_as_refresh", "revoked_row"])
+def test_password_change_grants_no_exception_for_missing_or_invalid_refresh(app, user, case):
+    access, refresh, claims = _real_login(app)
+    started = claims[CLAIM_STARTED]
+    other_user = User(username="stranger", email="stranger@example.test", role_id=1)
+    other_user.set_password(PASSWORD)
+    db.session.add(other_user)
+    db.session.commit()
+    if case == "missing":
+        presented = None
+    elif case == "garbage":
+        presented = "not.a.jwt"
+    elif case == "bad_signature":
+        head, body, _ = refresh.split(".")
+        presented = f"{head}.{body}.{'A' * 43}"
+    elif case == "foreign_user":
+        presented = mint(app, other_user.id, "refresh", started=started)
+    elif case == "other_anchor":
+        presented = mint(app, user.id, "refresh", started=started - 100)
+    elif case == "access_as_refresh":
+        presented = mint(app, user.id, "access", started=started)
+    else:
+        presented = mint(app, user.id, "refresh", started=started)
+        Session.query.filter_by(token_jti=claims_of(presented)["jti"]).one().revoked_at = ts_to_naive(time.time())
+        db.session.commit()
+
+    device, response = _change_password(app, access, presented)
+    assert response.status_code == 200
+    assert device.get("/api/auth/me").status_code == 200  # current access is always kept
+    # the real current refresh was not presented/valid here -> no shelter
+    assert Session.query.filter_by(token_jti=claims_of(refresh)["jti"]).one().revoked_at is not None
+    stale = app.test_client()
+    use_cookies(stale, refresh=refresh)
+    assert stale.post("/api/auth/refresh").status_code == 401
+    if case in {"other_anchor", "access_as_refresh", "revoked_row"}:
+        row = Session.query.filter_by(token_jti=claims_of(presented)["jti"]).one()
+        assert row.revoked_at is not None
+    if case == "foreign_user":
+        # the stranger's login is never touched by someone else's password change
+        assert Session.query.filter_by(user_id=other_user.id, revoked_at=None).count() == 1
+
+
+def test_password_change_legacy_refresh_stays_bound_to_original_deadline(app, user, clock):
+    now = int(time.time())
+    clock.at(now)
+    iat = now - 3600
+    legacy_access = mint(app, user.id, "access", with_claims=False, register=False, iat=iat, exp=now + 1800)
+    legacy_refresh = mint(app, user.id, "refresh", with_claims=False, register=False, iat=iat, exp=now + 30 * 86400)
+    # another device: legacy login with a registered access row and its own refresh
+    mint(app, user.id, "access", with_claims=False, iat=iat - 500, exp=now + 1000)
+    other_refresh = mint(app, user.id, "refresh", with_claims=False, register=False, iat=iat - 500,
+                         exp=now + 30 * 86400)
+
+    device, response = _change_password(app, legacy_access, legacy_refresh)
+    assert response.status_code == 200
+    kept = Session.query.filter_by(token_jti=claims_of(legacy_refresh)["jti"]).one()
+    assert kept.revoked_at is None
+    assert kept.expires_at == ts_to_naive(iat + LIFE)  # original deadline, no new start
+
+    other = app.test_client()
+    use_cookies(other, refresh=other_refresh)
+    assert other.post("/api/auth/refresh").status_code == 401  # legacy cutoff still hits other devices
+
+    refreshed = device.post("/api/auth/refresh")
+    assert refreshed.status_code == 200
+    payload = claims_of(cookie_value(refreshed, "access_token_cookie"))
+    assert (payload[CLAIM_STARTED], payload[CLAIM_UNTIL]) == (iat, iat + LIFE)
+    clock.at(iat + LIFE)
+    assert device.post("/api/auth/refresh").status_code == 401
+
+
+def test_password_change_rejects_legacy_refresh_from_another_login(app, user, clock):
+    now = int(time.time())
+    clock.at(now)
+    legacy_access = mint(app, user.id, "access", with_claims=False, register=False, iat=now - 3600, exp=now + 1800)
+    foreign_refresh = mint(app, user.id, "refresh", with_claims=False, register=False, iat=now - 7000,
+                           exp=now + 86400)
+    # the other login's registered legacy access row gives the revocation cutoff something to bite on
+    mint(app, user.id, "access", with_claims=False, iat=now - 7000, exp=now + 900)
+    _, response = _change_password(app, legacy_access, foreign_refresh)
+    assert response.status_code == 200
+    # a legacy refresh from a different login (iat too far from the access) is not adopted ...
+    assert Session.query.filter_by(token_jti=claims_of(foreign_refresh)["jti"]).count() == 0
+    stale = app.test_client()
+    use_cookies(stale, refresh=foreign_refresh)
+    # ... and is cut off by the logout/revocation cutoff
+    assert stale.post("/api/auth/refresh").status_code == 401
+
+
+def test_password_change_keeps_current_table_context(table, play_dm_client, play_dm_user, play_app):
+    campaign, session = table
+    headers = _enter(play_dm_client, campaign, session, "dm")
+    context = TableContext.query.one()
+    before = (context.id, context.mode, context.auth_jti, context.expires_at, context.revoked_at)
+    response = play_dm_client.post("/api/auth/password/change",
+                                   json={"current_password": "Password123!", "new_password": NEW_PASSWORD})
+    assert response.status_code == 200
+    db.session.expire_all()
+    context = TableContext.query.one()
+    assert (context.id, context.mode, context.auth_jti, context.expires_at, context.revoked_at) == before
+    assert contexts.validate(context)
+    base = f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/bootstrap"
+    assert play_dm_client.get(base, headers=headers).json["session_role"] == "DM"
+
+
+def test_password_reset_and_logout_still_revoke_everything(app, client, user):
+    access, refresh, claims = _real_login(app)
+    device = app.test_client()
+    use_cookies(device, access=access, refresh=refresh)
+    assert device.post("/api/auth/logout").status_code == 200
+    assert all(row.revoked_at for row in Session.query.filter_by(user_id=user.id))
+    # reset path: _revoke_user_sessions without keep arguments revokes every row
+    from vtt.auth.routes import _revoke_user_sessions
+    access, refresh, claims = _real_login(app)
+    _revoke_user_sessions(user.id)
+    db.session.commit()
+    assert all(row.revoked_at for row in Session.query.filter_by(user_id=user.id))

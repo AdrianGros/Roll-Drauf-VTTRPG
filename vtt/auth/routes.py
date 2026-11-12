@@ -82,13 +82,58 @@ def _password_reset_url(token: str) -> str:
     return f"{base}/reset-password.html?token={quote(token)}"
 
 
-def _revoke_user_sessions(user_id: int, *, keep_jti: str | None = None) -> None:
+def _revoke_user_sessions(user_id: int, *, keep_jti: str | None = None, keep_jtis=()) -> None:
+    keep = {j for j in (keep_jti, *keep_jtis) if j}
     sessions = Session.query.filter_by(user_id=user_id, revoked_at=None).all()
     now = utcnow()
     for session_row in sessions:
-        if keep_jti and session_row.token_jti == keep_jti:
+        if session_row.token_jti in keep:
             continue
         session_row.revoked_at = now
+
+
+def _current_refresh_jti_to_keep(user_id: int, access_payload: dict) -> str | None:
+    """JTI of the *current* device's refresh token, or None (no exception).
+
+    The refresh cookie must verify (signature, expiry, type), belong to this
+    user, pass the shared lifetime/revocation check and carry the same anchor
+    as the already validated access token.  A valid legacy refresh (unregistered)
+    is registered here with its original iat+lifetime deadline, never a new
+    start, so the legacy logout cutoff does not mistake it for another device.
+    """
+    token = request.cookies.get("refresh_token_cookie")
+    if not token:
+        return None
+    try:
+        refresh_payload = decode_token(token)
+        refresh_info = lifetime.check_payload(refresh_payload, expected_type="refresh")
+        access_info = lifetime.check_payload(access_payload, expected_type="access")
+        if int(refresh_payload.get("sub")) != user_id:
+            return None
+    except Exception:
+        return None
+    if refresh_info.legacy != access_info.legacy:
+        return None
+    if refresh_info.legacy:
+        # Legacy pair: both signed by the same login (iat within a couple of seconds).
+        try:
+            if abs(int(access_payload["iat"]) - int(refresh_payload["iat"])) > 2:
+                return None
+        except (KeyError, TypeError, ValueError):
+            return None
+        jti = refresh_payload["jti"]
+        if Session.query.filter_by(token_jti=jti).first() is None:
+            db.session.add(Session(
+                user_id=user_id,
+                token_jti=jti,
+                expires_at=lifetime.ts_to_naive(refresh_info.until),  # original iat + 6h
+                ip_address=request.remote_addr,
+                user_agent=request.headers.get("User-Agent"),
+            ))
+            db.session.flush()
+    elif (refresh_info.started, refresh_info.until) != (access_info.started, access_info.until):
+        return None
+    return refresh_payload["jti"]
 
 
 def _discord_login_redirect(message: str, status_code: int = 302):
@@ -729,7 +774,10 @@ def change_password():
         return jsonify({"error": error}), 400
 
     user.set_password(new_password)
-    _revoke_user_sessions(user.id, keep_jti=get_jwt().get("jti"))
+    access_payload = get_jwt()
+    keep_refresh = _current_refresh_jti_to_keep(user.id, access_payload)
+    # Only concrete verified JTIs are spared; never "all rows with the same expiry".
+    _revoke_user_sessions(user.id, keep_jti=access_payload.get("jti"), keep_jtis=(keep_refresh,))
     db.session.commit()
     return jsonify({"message": "Passwort geändert. Andere Sitzungen wurden beendet."}), 200
 

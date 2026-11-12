@@ -209,13 +209,16 @@ def issue_tokens(user_id, *, started=None, refresh=True) -> LoginTokens:
     if remaining <= 0:
         raise AuthLifetimeError("login_expired")
     claims = {CLAIM_STARTED: started, CLAIM_UNTIL: until}
-    access_ttl = min(int(current_app.config["JWT_ACCESS_TOKEN_EXPIRES"].total_seconds()), remaining)
-    access = create_access_token(identity=str(user_id), additional_claims=claims,
-                                 expires_delta=timedelta(seconds=access_ttl))
+    access_ttl = int(current_app.config["JWT_ACCESS_TOKEN_EXPIRES"].total_seconds())
+    # The final exp is computed here from the one integer anchor and signed
+    # explicitly (expires_delta=False: the library adds no relative exp of its
+    # own, so a second-boundary between two clocks cannot yield exp > until).
+    access = create_access_token(identity=str(user_id), expires_delta=False,
+                                 additional_claims={**claims, "exp": min(now + access_ttl, until)})
     refresh_token = None
     if refresh:
-        refresh_token = create_refresh_token(identity=str(user_id), additional_claims=claims,
-                                             expires_delta=timedelta(seconds=remaining))
+        refresh_token = create_refresh_token(identity=str(user_id), expires_delta=False,
+                                             additional_claims={**claims, "exp": until})
     _register(user_id, _jti(access), until)
     if refresh_token:
         _register(user_id, _jti(refresh_token), until)
