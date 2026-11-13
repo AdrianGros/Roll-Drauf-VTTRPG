@@ -1,0 +1,54 @@
+{
+  "scope": "Actual source methods evaluated without browser, server, DB or production writes; these are diagnostic facts, not live UI acceptance.",
+  "back_menu_maps": {
+    "finding": "Confirmed: /mapmaker normalizes to null although the app menu advertises that target; control routes are accepted.",
+    "cases": [
+      {
+        "target": "/dashboard",
+        "result": {
+          "routeKey": "dashboard",
+          "href": "/dashboard"
+        }
+      },
+      {
+        "target": "/characters",
+        "result": {
+          "routeKey": "characters",
+          "href": "/characters"
+        }
+      },
+      {
+        "target": "/mapmaker",
+        "result": null
+      },
+      {
+        "target": "/api/ce/authoring",
+        "result": {
+          "routeKey": "creation-engine",
+          "href": "/api/ce/authoring"
+        }
+      }
+    ]
+  },
+  "empty_month_renderer": {
+    "result": "pass",
+    "cases": [
+      {
+        "lang": "de",
+        "start": "2026-11-01",
+        "end": "2026-12-01",
+        "entries": 0,
+        "days": 30,
+        "weekdays": 7
+      },
+      {
+        "lang": "en",
+        "start": "2028-02-01",
+        "end": "2028-03-01",
+        "entries": 0,
+        "days": 29,
+        "weekdays": 7
+      }
+    ]
+  }
+}

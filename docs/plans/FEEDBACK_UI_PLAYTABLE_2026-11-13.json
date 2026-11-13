@@ -1,0 +1,449 @@
+{
+  "schema": "vtt.feedback-intake.v1",
+  "status": "discover_complete",
+  "retention": "permanent",
+  "received": "2026-11-13",
+  "source": {
+    "file": "2026-11-12-1803-vtt-oberflache-und-karteneditor-1.txt",
+    "sha256": "b1d113d0c39bf934d1e65951acea9f026c231b43db749970387b42c11603e5ef",
+    "started": "2026-11-12T18:03:37.973Z",
+    "duration": "13:13"
+  },
+  "baseline": {
+    "checkout": "8e16b3cc4e27765988808db6a03723611bcfe822",
+    "runtime_source": "4b2a57332909668b52af0d182e9ea544d76f442f",
+    "image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+    "matched_relevant_files": 15
+  },
+  "intended_owner": "Donutarian",
+  "external_kanban_write": false,
+  "scope": "New intake and current-state Discover; no application implementation, production writes or release from this pass.",
+  "cards": [
+    {
+      "id": "S01",
+      "category": "Einstellungen/Navigation",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "owner_decision",
+      "title": "Einstellungen im Zahnrad rechts bündeln",
+      "timecodes": "00:40–03:02;08:42–10:25",
+      "current_facts": "Ansicht und Sprache steht als Textbutton in der Hauptnavigation und als Menüeintrag am Tisch. Ein gemeinsamer Präferenzdialog existiert.",
+      "acceptance_input": "Textbutton durch rechts erreichbares Zahnrad ersetzen; Darstellung, Sprache und weitere Anpassungen bleiben dort auffindbar. Back-Menü verwendet denselben verständlichen Einstellungsbegriff. Beschriftung Einstellungen/Options noch nicht endgültig entschieden.",
+      "evidence": "vtt/static/js/vtt-main-nav.js:105; vtt/static/js/display-preferences.js:72; vtt/templates/play.html:2777",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S02",
+      "category": "Buchoptik",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "owner_decision",
+      "title": "Nachtmodus als verbranntes Buch mit roten Akzenten",
+      "timecodes": "00:40–02:06;03:23–04:00",
+      "current_facts": "Der gelieferte Nachtmodus benutzt dunkle Oberflächen und einen goldenen sicheren Standardakzent. Auf Buchflächen werden Hintergrundbilder im Nachtmodus teilweise ausgeblendet; neue verbrannte Buchgestaltung ist damit nicht vorhanden.",
+      "acceptance_input": "Buchrücken/Schriftzug und Buchcharakter erkennbar erhalten, dunkles verbranntes Pergament mit roten Akzenten gestalten. Lesbarkeit, Fokus und persönliche Akzentpräferenzen im Apply berücksichtigen. Keine konkrete Texturtechnik oder Farbwerte sind beschlossen.",
+      "evidence": "vtt/static/css/display-preferences.css:12,31; vtt/static/js/display-preferences.js:46",
+      "related_cards": [
+        "N19"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S03",
+      "category": "Regelinhalte/Sprache",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "owner_scope_now_explicit",
+      "title": "Englisches SRD 5.2.1 als sprachabhängige Inhaltsfassung",
+      "timecodes": "04:11–04:58",
+      "current_facts": "Der vorhandene SRD-Inhaltskatalog ist de-DE; die UI-Sprachwahl übersetzt ausdrücklich keine Regeltexte. Die offizielle englische Originalfassung derselben SRD-Version ist verfügbar.",
+      "acceptance_input": "Bei englischer Inhaltswahl passende originale SRD-Texte/Namen in Regelwerk, Compendium und den betroffenen CE-/Creator-Ansichten bereitstellen. Inhalte, Quellenverweise und Spielwerte müssen konsistent bleiben; eigene Namen werden nicht automatisch übersetzt. Bestehende deutsche Charakterdaten schützen.",
+      "evidence": "vtt/rules_content/srd-5.2.1-de/manifest.json; vtt/rules_content/generator.py:16; vtt/static/js/display-preferences.js:85",
+      "related_cards": [
+        "N04"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S04",
+      "category": "Kalender",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "existing_grid_default_differs",
+      "title": "Vollen Monatskalender als reguläre Ansicht zeigen",
+      "timecodes": "03:23–04:00",
+      "current_facts": "Monatsraster mit Wochentagen und allen Monatstagen existiert auch bei null Einträgen. Tatsächlicher Renderer erzeugte 30 Tage/7 Überschriften sowie 29 Tage im Schaltfebruar. Standard ist derzeit rolling30, nicht Monat.",
+      "acceptance_input": "Monatsübersicht mit Wochenzeilen und Wochentagsköpfen ist der erwartete sichtbare Kalender; leere Monate bleiben voll dargestellt. Vorhandene Termin-/Zeitzonen-/Filterwege weiterverwenden.",
+      "evidence": "vtt/static/js/session-calendar.js:43,83; vtt/static/css/session-calendar.css:11",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S05",
+      "category": "Kartenbibliothek",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed_partial_preview",
+      "title": "Vorschaubild und kurzes Label in Own Library",
+      "timecodes": "05:11–05:41",
+      "current_facts": "Die Liste enthält Titelbuttons und Größenangaben. Erst nach Auswahl wird eine eigene größere Vorschau erzeugt; eine Bildkachel je Listeneintrag fehlt.",
+      "acceptance_input": "Karten lassen sich visuell anhand kleiner Vorschauen auswählen; darunter kurze Bezeichnung. Bestehende ausdrückliche Freigabe sichtbarer Bildinhalte und private Projektquelle bleiben getrennt.",
+      "evidence": "vtt/static/js/play-map-library.js:118,153",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S06",
+      "category": "Licht",
+      "priority": "P1",
+      "status": "needs_reproduction",
+      "evidence_level": "reported_not_reproduced",
+      "title": "Gemeldete Lichtfunktion im tatsächlichen DM-Kontext prüfen",
+      "timecodes": "05:14–05:41",
+      "current_facts": "DM-Lichtwerkzeuge und ihre Handler sind vorhanden. Das Protokoll nennt keinen konkreten Klickweg, Karten-/Sichtmodus oder Fehlerstatus; kein frischer Defekt nachgewiesen.",
+      "acceptance_input": "Im expliziten DM-Kontext Platzieren, Bearbeiten, sichtbare Wirkung und Wiederladen reproduzieren; Player-Ansicht und aktive Sicht-/Nebelkonfiguration berücksichtigen. Rollenprüfungen nicht zur Fehlerbehebung lockern.",
+      "evidence": "vtt/static/js/play-dm.js:112; vtt/templates/play.html:1030; tests/test_playtable_vision_fog.py",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S07",
+      "category": "Wände",
+      "priority": "P1",
+      "status": "needs_reproduction",
+      "evidence_level": "reported_not_reproduced",
+      "title": "Gemeldete Wandfunktion mit Sicht-/Lichtwirkung prüfen",
+      "timecodes": "05:41–06:08",
+      "current_facts": "Wandwerkzeuge, Editierhandler und vorhandene Geometrie-/Sichttests existieren. Pauschale Aussage scheint nicht zu funktionieren belegt noch keine Ursache.",
+      "acceptance_input": "Im DM-Kontext Wand zeichnen, ändern, löschen, speichern und tatsächliche Sicht-/Lichtbegrenzung prüfen; Beobachtung und erwarteten Modus festhalten. Player erhält keine DM-Geometriewerkzeuge.",
+      "evidence": "vtt/static/js/play-dm.js:100; vtt/templates/play.html:1030; tests/test_playtable_vision_fog.py",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S08",
+      "category": "Messen",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed",
+      "title": "Measure-Auswahl für Kegel, Kreis/Kugel und Quadrat",
+      "timecodes": "05:41–06:08",
+      "current_facts": "Das vorhandene Messwerkzeug speichert Wegpunkte und zeichnet Strecken mit Entfernungslabels. Ein Formauswahlmenü ist nicht vorhanden.",
+      "acceptance_input": "Beim Messen sind die gewünschten Flächenformen über ein einfaches Menü erreichbar; Maße, Ausrichtung und Abbruch sind verständlich. Bisherige kalibrierte Distanzen und getrennte Player-/DM-Kontexte erhalten. Ob Formen geteilt werden, ist im Apply abzugrenzen.",
+      "evidence": "vtt/static/js/play-ui.js:104,1328,1454; vtt/templates/play.html:2738",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S09",
+      "category": "Tisch-Navigation",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "usability_feedback",
+      "title": "Hamburger, Zurück und App-Menü unterscheidbar machen",
+      "timecodes": "06:08–06:49;08:42–10:25",
+      "current_facts": "Hamburger öffnet Arbeitsbereiche; Zurück öffnet ein eigenes Sitzungs-/Navigationsmenü. Die Funktionen sind getrennt, ihre optische Unterscheidung wird als unklar erlebt.",
+      "acceptance_input": "Einheitliche, unterscheidbare Bedienelemente für Spielarbeitsbereiche und Navigation/Sitzungsaustritt. Einstellungseinstieg und Hilfe bleiben erreichbar. Konkrete Benennung/Icons im Apply festlegen.",
+      "evidence": "vtt/templates/play.html:2753,2754,2762; vtt/static/js/play-ui.js:845",
+      "related_cards": [
+        "S01"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S10",
+      "category": "Navigation/Fehler",
+      "priority": "P1",
+      "status": "ready_for_apply",
+      "evidence_level": "confirmed_by_actual_source_method",
+      "title": "Toten Back-Maps-Einstieg korrigieren",
+      "timecodes": "06:49–07:04",
+      "current_facts": "App-Menü bietet /mapmaker als Ziel an. _normalizeBookReturnTarget lässt genau dieses Ziel nicht zu; die originale Methode liefert null, während Kontrollziele akzeptiert werden. returnToBook wirft anschließend Invalid book return target.",
+      "acceptance_input": "Back → Karten erreicht den vorgesehenen Karteneditor über den normalen Einstieg. Gültige bisherige Rückwege, Sitzungsgrenzen und Entwurfsschutz bleiben erhalten; normaler DM- und Player-Klickweg gesondert prüfen.",
+      "evidence": "vtt/templates/play.html:2769; vtt/static/js/play-ui.js:726,830",
+      "related_cards": [
+        "N18"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S11",
+      "category": "Tisch-Arbeitsbereiche",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "owner_decision_with_wording_sequence",
+      "title": "Chat links und Journal rechts einordnen",
+      "timecodes": "07:19–08:29",
+      "current_facts": "Reihenfolge ist derzeit Journal, Chat, Tools, Session. Session enthält Hinweise und einen rollenabhängigen DM-Steuerungsbereich; die Rubrik ist nicht generell funktionslos. Zunächst nennt das Protokoll Tools als Ersatz für Session, anschließend Journal als Ersatz und rechten Einstieg. Daraus ist keine zusätzliche doppelte Tools-Leiste abzuleiten.",
+      "acceptance_input": "Chat steht links, Journal rechts. Die leer wirkende Session-Rubrik entfällt als unnötiger Einstieg; erforderliche Hinweise und DM-Sessionsteuerung bleiben passend erreichbar, ebenso die bestehenden Tools. Endgültige Reihenfolge im Apply am aktuellen Rollenlayout festlegen.",
+      "evidence": "vtt/templates/play.html:2819",
+      "related_cards": [
+        "S12",
+        "S09"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S12",
+      "category": "Journal/Dateien",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "owner_decision",
+      "title": "Journal als zentralen Datei- und Assetzugang nutzen",
+      "timecodes": "07:19–08:29",
+      "current_facts": "Journal zeigt derzeit Aktivität und Map-Notizen. Bestehende Asset-/Tokenwege sind andere Oberflächen, kein zentraler Journal-Intake.",
+      "acceptance_input": "Sessionbezogene Dateien/Assets/Tokens sind im Journal auffindbar und berechtigt verwaltbar, hochladbar und bearbeitbar. Sichtbarkeit und Besitz bleiben je Rolle/Ressource wirksam. Roll20 dient als genannte Bedienreferenz, nicht als beschlossener Nachbau.",
+      "evidence": "vtt/templates/play.html:2829; vtt/static/js/play-ui.js",
+      "related_cards": [
+        "S11"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S13",
+      "category": "DM-Arbeitsfläche",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "owner_requested_presentation",
+      "title": "DM-Bereiche als Karteireiter unten links bündeln",
+      "timecodes": "08:29–09:20",
+      "current_facts": "Seiten, Turn Order und Tokens werden über den Tischbereich geöffnet. Gewünscht ist eine feste Karteireiter-Navigation unten links, unabhängig von der Playbar; auch Layerwechsel ist genannt.",
+      "acceptance_input": "DM erreicht diese Bereiche an einer klaren Stelle ohne verteilte leere Menüs. Player-Komposition initialisiert weiterhin keine DM-Werkzeuge oder Handler. MMO-/Gamification-Anregung ist optional, kein zusätzliches Spielsystem.",
+      "evidence": "vtt/templates/play.html:2752; vtt/static/js/play-dm.js; vtt/static/js/play-player.js",
+      "related_cards": [
+        "S11"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S14",
+      "category": "Konto/Komfort",
+      "priority": "P3",
+      "status": "ready_for_apply",
+      "evidence_level": "optional_feature_request",
+      "title": "Discord-Profilbild im Kontobereich anzeigen",
+      "timecodes": "09:20–10:25",
+      "current_facts": "Der gemeinsame Kontobereich baut derzeit Name, Sessionanzahl und An-/Abmeldeaktion auf; kein Bild wird dort angelegt.",
+      "acceptance_input": "Vorhandenes berechtigtes Discord-Profilbild kann ergänzend angezeigt werden; ohne Bild bleibt der Kontobereich nutzbar. Kein neuer Loginanbieter oder Profilzwang.",
+      "evidence": "vtt/static/js/vtt-main-nav.js:148",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S15",
+      "category": "Kampagnen/Kontingent",
+      "priority": "P2",
+      "status": "needs_product_boundary",
+      "evidence_level": "request_without_numeric_authorization",
+      "title": "Erweiterung der Kampagnenplätze erreichbar machen",
+      "timecodes": "09:20–10:25",
+      "current_facts": "Kampagnenkontingent ist am Konto vorhanden und wird bei Erstellung beachtet. Das Protokoll wünscht einen Erweiterungsweg, nennt jedoch weder neue Anzahl noch Berechtigung oder Tarifmodell.",
+      "acceptance_input": "Produktgrenze und berechtigten Erweiterungsweg festlegen. Kein neues Zahlenlimit erfinden oder Kontingente still erhöhen. Die offene Freigabe eines vierten Donutarian-Testplatzes wird durch diese allgemeine Anforderung nicht beantwortet.",
+      "evidence": "vtt/models/user.py:46,163; vtt/auth/routes.py:191; docs/proofs/feedback-final-2026-11-13/owner-campaign-status.json",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S16",
+      "category": "Charakterübersicht/Texte",
+      "priority": "P2",
+      "status": "needs_reproduction",
+      "evidence_level": "source_context_found_exact_complaint_unclear",
+      "title": "Gruppen- und Leerzustandstexte passend anzeigen",
+      "timecodes": "10:31–10:55",
+      "current_facts": "Die Rubrik Characters in your groups entspricht dem Bereich geteilter Kampagnencharaktere; für leere Ergebnisse gibt es einen eigenen Hinweis. Der Ausdruck no check lässt sich keinem eindeutigen Literal zuordnen.",
+      "acceptance_input": "Eigene und geteilte Charaktere sowie leere/fehlerhafte Ladezustände sind verständlich unterschieden. Konkreten störenden Zustand reproduzieren, keine Rubrik allein wegen leerer Inhalte entfernen.",
+      "evidence": "vtt/static/js/book-scene.js:1645; tools/i18n/extra-messages.json:302",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S17",
+      "category": "Editor/Buchoptik",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "owner_direction_refines_previous_positive",
+      "title": "Karteneditor visuell in die übrige VTT-Oberfläche einordnen",
+      "timecodes": "10:55–11:10",
+      "current_facts": "Werkstattlayout wird auch hier grundsätzlich gelobt, aber als Stilbruch beschrieben. N19 enthält das frühere positive Feedback dazu, keine Pflicht zum dauerhaft abweichenden Design.",
+      "acceptance_input": "Gemeinsame Navigation/Markenelemente und Papier-/Nachtgestaltung sind erkennbar. Gelobte Werkstattfunktionen, Bedienfläche und aktuelles Speichern bleiben erreichbar. Keine neue Editor-Engine allein für die Optik.",
+      "evidence": "vtt/static/mapmaker/index.html; vtt/static/js/vtt-main-nav.js; docs/plans/FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "related_cards": [
+        "N19",
+        "S01",
+        "S02"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S18",
+      "category": "Pinsel/Bildmaterial",
+      "priority": "P2",
+      "status": "ready_for_apply_with_bounded_design_question",
+      "evidence_level": "new_extension_to_existing_brush_cards",
+      "title": "Stempel oder Kachelausschnitte als weichen Bildpinsel verwenden",
+      "timecodes": "11:10–12:19",
+      "current_facts": "Bilder können als Stempel/Kacheln gesetzt werden. Normales Stempelbildladen ist teilweise bereits bedarfsgesteuert und merkt ausstehende Ladevorgänge; das ist noch keine Umwandlung eines Bildausschnitts in eine Pinselspitze.",
+      "acceptance_input": "Ein gewähltes Bild bzw. ein Ausschnitt ist als anpassbarer weicher Pinsel nutzbar. Kontur/Weichheit und bestehende Projektwege berücksichtigen. Umwandlung bei Erstnutzung statt Vorberechnung ist eine vorgeschlagene Optimierung, noch keine gewählte Cache-/Speicherarchitektur.",
+      "evidence": "vtt/static/mapmaker/js/stamps.js:127; vtt/static/mapmaker/js/brush.js:138",
+      "related_cards": [
+        "N08",
+        "N09"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S19",
+      "category": "Landmasse/Layer",
+      "priority": "P3",
+      "status": "answered_existing_delivery",
+      "evidence_level": "source_and_prior_live_evidence",
+      "title": "Layer-Verhalten von Generate Landmass klären",
+      "timecodes": "12:19–12:47",
+      "current_facts": "Übernehmen legt eine neue Rasterebene an und macht sie aktiv; Undo entfernt diese Ebene und stellt die vorherige aktive Ebene wieder her. Vorschau/Abbruch verändern keine Ebene. Das wurde im bestehenden finalen Live-Lauf geprüft.",
+      "acceptance_input": "Offene Frage beantwortet: Funktion ist bereits layerbezogen. Übermalen einer bestehenden ausgewählten Ebene wäre ein anderer, noch nicht konkret verlangter Umfang.",
+      "evidence": "vtt/static/mapmaker/js/landmass-dialog.js:124; docs/proofs/feedback-final-2026-11-13/live-landmass.json",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "S20",
+      "category": "Kampagnenhub/Karten",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "new_entry_point_request",
+      "title": "Karten im Kampagnenhub übernehmen und verwalten",
+      "timecodes": "12:29–13:03",
+      "current_facts": "Der Hub kennt Kampagnenkarten und zeigt die aktive Karte. Die private Projektbibliothek und bestätigte Snapshot-Übernahme existieren am DM-Tisch; ein gleichwertiger Bibliotheks-/Verwaltungsweg im Hub ist in dessen aktuellem Markup nicht vorhanden.",
+      "acceptance_input": "DM erreicht die Kartenverwaltung und Übernahme direkt im Hub. Bestehende Bibliotheksprojekte, freizugebende Bildfassung und Kampagnenkarten bleiben klar unterschieden; keine versteckten privaten Quellen mitveröffentlichen.",
+      "evidence": "vtt/static/js/book-scene.js:1168; vtt/static/js/play-map-library.js; docs/proofs/feedback-final-2026-11-13/live-landmass.json",
+      "related_cards": [
+        "S05"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-12-1803",
+      "phase": "discover",
+      "implementation_started": false
+    }
+  ],
+  "duplicate_requirements": [
+    {
+      "existing_card": "N08",
+      "timecodes": "11:10–11:26",
+      "requirement": "Pinselspitzen/Formen erweitern",
+      "action": "Anforderung aus zweiter Quelle mit derselben vorhandenen Karte verknüpft; keine doppelte Implementierungsaufgabe."
+    }
+  ],
+  "latest_explicit_directions": [
+    "S01: Zahnrad rechts als gemeinsamer Einstellungseinstieg",
+    "S02: verbrannte Buchoptik mit roten statt goldenen Standardakzenten",
+    "S03: vollständige englische SRD-5.2.1-Inhaltsfassung passend zur Sprachwahl",
+    "S04: voller Monatskalender auch ohne Termine, nicht nur eine Terminliste",
+    "S11/S12: Chat links, Journal rechts und Journal als Datei-/Assetzugang",
+    "S17/S20: Editor in gemeinsame Oberfläche einordnen und Karten im Kampagnenhub verwalten"
+  ],
+  "sources": [
+    {
+      "title": "Official SRD downloads",
+      "url": "https://www.dndbeyond.com/srd",
+      "verified": "2026-11-13",
+      "fact": "Original English SRD 5.2.1 and German localized edition linked; content available under CC-BY4.0 with attribution."
+    },
+    {
+      "title": "English SRD 5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf"
+    }
+  ],
+  "checks": "../proofs/feedback-round-1803-2026-11-13/checks.json",
+  "open_questions": [
+    {
+      "card": "S06/S07",
+      "need": "Licht/Wand-Klickfolge, aktiver DM-Kontext, Karten-/Sichtmodus und tatsächlich erwartete Wirkung reproduzieren."
+    },
+    {
+      "card": "S09/S01",
+      "need": "Einheitliche Beschriftung des Einstellungseintrags sowie Menü-/Back-Unterscheidung im Apply festlegen; kein unbenanntes neues System."
+    },
+    {
+      "card": "S15",
+      "need": "Zulässiger Erweiterungsweg und Berechtigung; keine neue numerische Grenze beschlossen."
+    },
+    {
+      "card": "S16",
+      "need": "Konkreter leerer oder fehlerhafter Charakter-Gruppenzustand und Bedeutung von no check."
+    },
+    {
+      "card": "S18",
+      "need": "Erstnutzung/Cache und Größen-/Speichergrenzen in Apply abwägen, nicht aus der Anregung als Architekturentscheidung ableiten."
+    }
+  ],
+  "protected_behavior": [
+    "Serverautorisierte getrennte Player-/DM-Oberflächen einschließlich Daten-/Eventgrenzen",
+    "Bisherige kalibrierte Messstrecken und gespeicherte Spielwerte",
+    "Bestehende persönliche Präferenzen und eigene Namen/Inhalte",
+    "Private Kartenquellen gegenüber ausdrücklich freigegebenen Snapshots",
+    "Landmassen-Vorschau/Abbruch, neue Ebene und Undo/Redo",
+    "Funktionierendes Fit, Hilfe und Tastenkürzel; Hilfe bei späteren Änderungen aktualisieren",
+    "Bestehende gespielte Sitzungen und Kampagnenkontingente bleiben unverändert"
+  ],
+  "next_phase": "apply_per_bounded_slice",
+  "combined_index": "FEEDBACK_NEXT_ROUND_2026-11-13.md"
+}

@@ -1,0 +1,23 @@
+{
+  "scope": "Discover diagnostics only",
+  "actual_methods_evaluated": [
+    "PlayUI._normalizeBookReturnTarget",
+    "mountOwnCalendar.renderGrid"
+  ],
+  "observed": {
+    "maps_target": "/mapmaker rejected as null; dashboard, characters and CE control routes accepted",
+    "empty_month": "November 2026 DE:30 day buttons +7 weekday labels; February 2028 EN:29 day buttons +7 weekday labels; zero entries in each case"
+  },
+  "runtime_file_hashes_verified": 15,
+  "browser_run_this_pass": false,
+  "production_data_writes": false,
+  "application_code_changed": false,
+  "deployment_performed": false,
+  "not_reproduced": [
+    "Light failure",
+    "Wall failure",
+    "Ambiguous character-copy complaint"
+  ],
+  "existing_evidence_reused": "Same final image already passed live landmass/new-layer/Undo/Redo; no redundant broad regression rerun",
+  "implementation_status": "All new canonical cards implementation_started=false"
+}

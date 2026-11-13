@@ -365,12 +365,22 @@
     },
     {
       "id": "I04",
-      "status": "missing",
+      "status": "scope_defined_pending_apply",
       "cards": [
         "VTT-40"
       ],
-      "need": "Ausgangsregelwerk, Nutzungsrechte und Zielsprachumfang",
-      "blocks": "Regeltextübersetzung; UI-DE/EN ist unabhängig"
+      "need": "Englische Originalfassung SRD 5.2.1 in die sprachabhängigen Inhaltswege integrieren; Apply für Quellzuordnung/Datenkompatibilität ausstehend.",
+      "blocks": "Keine fehlende Quellen-/Sprachangabe mehr für dieses SRD-Paket; Funktionsumsetzung bleibt ausstehend. UI-DE/EN bereits getrennt geliefert.",
+      "historical_status": "missing",
+      "historical_need": "Ausgangsregelwerk, Nutzungsrechte und Zielsprachumfang",
+      "provided": {
+        "protocol": "2026-11-12-1803",
+        "timecodes": "04:11–04:58",
+        "source": "https://www.dndbeyond.com/srd",
+        "english_original": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+        "follow_up_card": "S03",
+        "follow_up_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json"
+      }
     },
     {
       "id": "I05",
@@ -779,14 +789,17 @@
     {
       "id": "VTT-40",
       "package": "P4",
-      "status": "input_required",
+      "status": "scoped_follow_up_pending_apply",
       "input_ids": [
         "I04"
       ],
       "acceptance_ids": [
         "A11"
       ],
-      "closure": "Regelquelle/Rechte/Sprachfassung klären; UI-Übersetzung schließt diese Karte nicht"
+      "closure": "Regelquelle/Rechte/Sprachfassung klären; UI-Übersetzung schließt diese Karte nicht",
+      "historical_status": "input_required",
+      "follow_up_card": "S03",
+      "scope_update": "Owner benennt vollständige englische SRD 5.2.1-Inhalte, Quellenfassung geprüft. Noch keine neue Inhaltsauslieferung."
     }
   ],
   "final_acceptance": [
@@ -991,5 +1004,6 @@
     "overall_ready": true,
     "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
   },
-  "updated_at": "2026-11-13T06:41:22.592064+00:00"
+  "updated_at": "2026-11-13T07:35:35.842667+00:00",
+  "follow_up_index": "FEEDBACK_NEXT_ROUND_2026-11-13.md"
 }
