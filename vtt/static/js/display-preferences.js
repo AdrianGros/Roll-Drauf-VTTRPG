@@ -69,7 +69,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   function open(){
     let dialog=document.getElementById('vttDisplayDialog');if(dialog){dialog.showModal();return;}
     dialog=element('dialog');dialog.id='vttDisplayDialog';dialog.className='vtt-display-dialog';dialog.setAttribute('aria-labelledby','vttDisplayTitle');
-    const title=element('h2',globalThis.VTTUi("Ansicht und Sprache"));title.id='vttDisplayTitle';dialog.append(title);
+    const title=element('h2',globalThis.VTTUi('Einstellungen'));title.id='vttDisplayTitle';dialog.append(title);
     const values={};
     for(const [key,label,options] of [
       ['theme',globalThis.VTTUi("Darstellung"),[['paper',globalThis.VTTUi("Pergament")],['night',globalThis.VTTUi("Nacht")]]],

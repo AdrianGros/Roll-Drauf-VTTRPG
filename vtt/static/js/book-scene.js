@@ -1673,11 +1673,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         <p class="book-form-banner is-success" data-character-import-status role="status" aria-live="polite" hidden></p>
                     </section>
                     <section class="book-scene-panel" data-shared-characters>
-                        <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML("Charaktere deiner Runden")}</h2>
+                        <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML('Geteilte Kampagnencharaktere')}</h2>
                         ${snapshot?.shared_characters_error
                             ? `<p role="status">${globalThis.VTTUiHTML("Geteilte Charaktere konnten nicht geladen werden. Bitte lade die Seite erneut.")}</p>`
                             : sharedCharacters.length ? this.buildCharacterLedger(sharedCharacters)
-                            : `<p>${globalThis.VTTUiHTML("Noch keine geteilten Charaktere. Andere Mitglieder können ihre Helden über die Kampagnen-Zuordnung in ihrem Archiv mit deiner Runde teilen.")}</p>`}
+                            : `<p>${campaigns.length
+                                ? globalThis.VTTUiHTML('In deinen Kampagnen wurden noch keine Charaktere mit dir geteilt. Mitglieder können ihre Helden im Charakterarchiv einer gemeinsamen Kampagne zuordnen.')
+                                : globalThis.VTTUiHTML('Du bist noch keiner Kampagne zugeordnet. Tritt einer Runde bei, um die mit dir geteilten Charaktere hier zu sehen.')}</p>`}
                     </section>
                 `,
                 leftPage: `

@@ -104,8 +104,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         const display=document.createElement('button');
         display.type='button';display.className='book-dashboard-ribbon-btn vtt-display-open';display.id='vttDisplayOpen';
-        display.textContent=globalThis.VTTUi("Ansicht und Sprache");display.addEventListener('click',()=>window.VTTDisplay?.open());
-        fragment.appendChild(display);
+        display.setAttribute('aria-label',globalThis.VTTUi('Einstellungen'));
+        display.title=globalThis.VTTUi('Einstellungen');
+        display.setAttribute('aria-haspopup','dialog');
+        const gear=document.createElement('span');gear.textContent='⚙';gear.setAttribute('aria-hidden','true');display.appendChild(gear);
+        display.addEventListener('click',()=>window.VTTDisplay?.open());
 
         const play = document.createElement('button');
         play.type = 'button';
@@ -120,6 +123,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         fragment.appendChild(play);
         extras.forEach((node) => fragment.appendChild(node));
         nav.replaceChildren(fragment);
+        (isPlay ? document.querySelector('.play-status-strip') || accountHost(nav) : accountHost(nav)).appendChild(display);
         nav.dataset.vttMainNav = 'true';
         nav.setAttribute('aria-label', 'VTT-Hauptnavigation');
         if (!staticPreview && !anonymousMap) {
@@ -180,6 +184,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             return;
         }
         name.textContent = data.user.username || globalThis.VTTUi("Konto");
+        if (data.user.avatar_url) {
+            const avatar = document.createElement('img');avatar.className='vtt-account-avatar';
+            avatar.alt='';avatar.width=32;avatar.height=32;avatar.referrerPolicy='no-referrer';
+            avatar.addEventListener('error',()=>avatar.remove(),{once:true});
+            avatar.src=data.user.avatar_url;memo.prepend(avatar);
+        }
         const total = Number(data.completed_session_count) || 0;
         count.textContent = VTTUi(total===1?'{total} Session gespielt':'{total} Sessions gespielt',{total});
     }

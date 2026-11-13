@@ -31,6 +31,7 @@ def test_plan_recurrence_calendar_navigation_and_cancel(balu_browser,width):
     page.goto(origin+'/campaigns')
     own=page.locator('[data-own-calendar]')
     expect(own.locator('[data-calendar-content]')).to_have_attribute('aria-busy','false',timeout=30000)
+    own.locator('[data-scope=rolling30]').click()
     events=own.locator('[data-session-id]').filter(has_text='Regelmäßiger Spielabend')
     expect(events).to_have_count(3)
     own.locator('[data-scope=month]').click()

@@ -8,7 +8,11 @@ window.PlayDMSurface = {
             if (!slot) continue;
             const template = document.createElement("template");
             template.innerHTML = html;
-            slot.replaceWith(template.content.cloneNode(true));
+            if (name === 'session-controls') {
+                const details = document.createElement('details');details.id='journalSessionControls';details.className='journal-session-controls';
+                const summary = document.createElement('summary');summary.textContent=globalThis.VTTUi('Sitzung verwalten');
+                details.append(summary,template.content.cloneNode(true));slot.replaceWith(details);
+            } else slot.replaceWith(template.content.cloneNode(true));
         }
         for (const name of Object.keys(this.methods)) ui[name] = this.methods[name].bind(ui);
     },

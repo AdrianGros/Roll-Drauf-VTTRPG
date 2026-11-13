@@ -166,6 +166,7 @@ def test_discord_callback_auto_provisions_user_after_guild_and_key_validation(cl
             "username": "GuildRunner",
             "global_name": "Guild Runner",
             "email": "guild.runner@example.com",
+            "avatar": "a_0123456789abcdef0123456789abcdef",
         },
     )
     monkeypatch.setattr(
@@ -192,6 +193,8 @@ def test_discord_callback_auto_provisions_user_after_guild_and_key_validation(cl
         assert link is not None
         assert link.user_id == user.id
         assert link.link_status == "linked"
+        assert link.avatar_hash == "a_0123456789abcdef0123456789abcdef"
+        assert link.avatar_url() == "https://cdn.discordapp.com/avatars/323456789012345678/a_0123456789abcdef0123456789abcdef.png?size=64"
 
         assignment = RegistrationKey.query.filter_by(key_batch_id="discord-assign-323456789012345678").first()
         assert assignment is not None

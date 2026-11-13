@@ -23,7 +23,7 @@ class QuietHandler(WSGIRequestHandler):
 def dice_table(tmp_path, monkeypatch):
     monkeypatch.setattr(TestingConfig, "SQLALCHEMY_DATABASE_URI", f"sqlite:///{tmp_path}/dice.db")
     # This fixture serves Flask through threaded Werkzeug, not eventlet.
-    monkeypatch.setitem(socketio.server_options, "async_mode", "threading")
+    monkeypatch.setattr(TestingConfig, "SOCKETIO_ASYNC_MODE", "threading", raising=False)
     app = create_app("testing")
     with app.app_context():
         db.create_all()
@@ -58,6 +58,7 @@ def dice_table(tmp_path, monkeypatch):
             browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
             context = browser.new_context(viewport={"width": 1440, "height": 1000},
                                           reduced_motion="reduce")
+            context.add_init_script("window.__diceTableReady=0;window.addEventListener('rolldrauf:table-ready',()=>window.__diceTableReady++);")
             context.add_cookies([{"name": "access_token_cookie", "value": token,
                                  "url": origin, "httpOnly": True}])
             page = context.new_page()
@@ -66,7 +67,10 @@ def dice_table(tmp_path, monkeypatch):
             page.on("pageerror", lambda error: errors.append(str(error)))
             page.goto(origin + route)
             expect(page.locator("#btnRoll")).to_be_enabled()
+            page.wait_for_function('() => window.__diceTableReady>=2')
+            expect(page.locator('#presenceRoster')).to_contain_text('Dice DM',timeout=15000)
             page.locator("#btnSidebarToggle").click()
+            page.locator('.sidebar-tab[data-tab="tools"]').click()
             expect(page.locator("#diceInput")).to_be_visible()
             yield page, context, origin + route
             browser.close()
@@ -98,7 +102,9 @@ def test_roll_results_visible_for_roller_peer_and_after_reload(
     peer = context.new_page()
     peer.goto(url)
     expect(peer.locator("#btnRoll")).to_be_enabled()
+    peer.wait_for_function('() => window.__diceTableReady>=2')
     peer.locator("#btnSidebarToggle").click()
+    peer.locator('.sidebar-tab[data-tab="tools"]').click()
     rolls = iter(values)
     monkeypatch.setattr("random.randint", lambda _low, _high: next(rolls))
     page.locator("#diceInput").fill(formula)
@@ -113,6 +119,7 @@ def test_roll_results_visible_for_roller_peer_and_after_reload(
         expect(client.locator("#chatLog .chat-roll-breakdown").first).to_be_visible()
         expect(client.locator("#chatLog .chat-roll-summary").first).to_contain_text(f": {total}")
     page.reload()
+    page.wait_for_function('() => window.__diceTableReady>=2')
     page.locator("#btnSidebarToggle").click()
     page.locator('[data-tab="chat"]').click()
     expect(page.locator("#chatLog")).to_contain_text(persisted)

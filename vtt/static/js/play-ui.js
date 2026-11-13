@@ -11,7 +11,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     // (everything still edge-pinned -- the sidebar tabs and #sheetDrawer --
     // is explicitly out of scope, see _bindWidgetDragging).
     const WIDGET_POSITION_STORAGE_PREFIX = "vtt.play.widget-pos.";
-    const DRAGGABLE_WIDGET_IDS = ["layersWidget", "turnOrderWidget", "tokenWidget", "tokenCreatePanel"];
+    const DRAGGABLE_WIDGET_IDS = ["tokenCreatePanel"];
 
     // S05: mirrors vtt/play/conditions.py's CONDITION_CATALOG exactly (id
     // + label) -- the server is the source of truth/validator, this is
@@ -948,21 +948,54 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
 
         _bindWorkspaceControls() {
-            // M3: the right sidebar (Journal/Chat/Tools/Session) is an overlay
-            // toggled on demand now, closed by default, so the map keeps the
-            // large majority of the screen instead of a permanently reserved
-            // 370px column.
+            // Independent chat on the left; journal/tools on the right. Reuse the
+            // same log/composer and the already authorized role composition.
             const sidebar = document.querySelector(".right-sidebar");
+            const chat = document.getElementById('chatSidebar');
+            document.getElementById('chatSidebarBody').appendChild(document.getElementById('panel-chat'));
+            document.getElementById('panel-chat').classList.add('active');
+            document.querySelector('.right-sidebar [data-tab="chat"]')?.remove();
+            const session = document.getElementById('panel-session');
+            document.getElementById('panel-journal').append(...Array.from(session.children));
+            session.remove();
+            document.querySelector('.right-sidebar [data-tab="session"]')?.remove();
+            document.getElementById('appMenuDisplay').textContent = globalThis.VTTUi('Einstellungen');
+            const back = document.getElementById('btnBack');
+            back.querySelector('.tool-label').textContent = globalThis.VTTUi('App-Menü');
+            const chatToggle = document.getElementById('btnChatToggle');
+            const sync = () => {
+                document.getElementById('btnSidebarToggle')?.setAttribute('aria-expanded',String(sidebar.classList.contains('is-open')));
+                chatToggle.setAttribute('aria-expanded',String(chat.classList.contains('is-open')));
+            };
+            const small = () => window.matchMedia('(max-width: 1040px)').matches;
+            const closeChat = () => { chat.classList.remove('is-open'); sync(); };
+            chatToggle.addEventListener('click', () => {
+                chat.classList.toggle('is-open');
+                if (small() && chat.classList.contains('is-open')) sidebar.classList.remove('is-open');
+                sync();
+            });
+            document.getElementById('btnChatClose').setAttribute('aria-label',globalThis.VTTUi('Chat schließen'));
+            document.getElementById('btnChatClose').addEventListener('click',closeChat);
+            for (const [drawer,trigger] of [[chat,chatToggle],[sidebar,document.getElementById('btnSidebarToggle')]]) {
+                drawer.addEventListener('keydown',event=>{
+                    if(event.key!=='Escape')return;
+                    event.preventDefault();event.stopPropagation();drawer.classList.remove('is-open');sync();trigger.focus();
+                });
+            }
             const sidebarToggle = document.getElementById("btnSidebarToggle");
             if (sidebarToggle && sidebar) {
                 sidebarToggle.addEventListener("click", () => {
                     sidebar.classList.toggle("is-open");
+                    if (small() && sidebar.classList.contains('is-open')) closeChat();
+                    this._activateSidebarTab('journal');
+                    sync();
                 });
             }
             const sidebarClose = document.getElementById("btnSidebarClose");
             if (sidebarClose && sidebar) {
                 sidebarClose.addEventListener("click", () => {
                     sidebar.classList.remove("is-open");
+                    sync();
                 });
             }
 
@@ -972,6 +1005,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     this._activateSidebarTab(tab);
                     if (sidebar) {
                         sidebar.classList.add("is-open");
+                        if (small()) closeChat();
+                        sync();
                     }
                 });
             });
@@ -1074,12 +1109,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _activateSidebarTab(tabName) {
+            if (tabName === 'chat') { document.getElementById('btnChatToggle')?.click(); return; }
+            if (tabName === 'session') tabName = 'journal';
             this.activeSidebarTab = tabName;
-            document.querySelectorAll(".sidebar-tab").forEach((button) => {
+            document.querySelectorAll(".right-sidebar .sidebar-tab").forEach((button) => {
                 const isActive = button.getAttribute("data-tab") === tabName;
                 button.classList.toggle("active", isActive);
             });
-            document.querySelectorAll(".tab-panel").forEach((panel) => {
+            document.querySelectorAll(".right-sidebar .tab-panel").forEach((panel) => {
                 const isActive = panel.id === `panel-${tabName}`;
                 panel.classList.toggle("active", isActive);
             });
@@ -1132,6 +1169,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         _revealTokenWidget() {
             const tokenWidget = document.getElementById("tokenWidget");
             if (!tokenWidget) return;
+            const dockTab = document.getElementById('dock-tokenWidget');
+            if (dockTab) { dockTab.click(); return; }
 
             tokenWidget.classList.remove("collapsed");
             tokenWidget.querySelector(".widget-toggle")?.setAttribute("aria-expanded", "true");
@@ -2748,44 +2787,67 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _setupTableSheet() {
-            // GD-Sheet-Muster: unterhalb 1040px wandern die drei Panels in
-            // ein Bottom-Sheet, das aus dem Ribbon öffnet; auf dem Desktop
-            // bleiben sie schwebende Widgets. IDs bleiben stabil — die
-            // Desktop-Robots (fullsession/flows) greifen weiter direkt zu.
+            // One bottom-left dock at every width. The widgets are the existing
+            // authorized composition, never a second privileged copy.
             const sheet = document.getElementById("tableSheet");
             const backdrop = document.getElementById("tableSheetBackdrop");
             const btn = document.getElementById("btnTableSheet");
             const body = document.getElementById("tableSheetBody");
             if (!sheet || !btn || !body) return;
-            const stage = document.querySelector(".stage");
-            const media = window.matchMedia("(max-width: 1040px)");
-            const widgetIds = ["layersWidget", "turnOrderWidget", "tokenWidget"];
-            const place = () => {
-                widgetIds.forEach((id) => {
-                    const el = document.getElementById(id);
-                    if (!el) return;
-                    if (media.matches && el.parentElement !== body) {
-                        body.appendChild(el);
-                    } else if (!media.matches && el.parentElement === body && stage) {
-                        stage.appendChild(el);
-                    }
+            const entries = [['layersWidget',globalThis.VTTUi('Seiten')],['turnOrderWidget',globalThis.VTTUi('Initiative')],['tokenWidget',globalThis.VTTUi('Tokens')]];
+            const tabs = document.createElement('div');tabs.id='tableDockTabs';tabs.className='table-dock-tabs';
+            tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label',globalThis.VTTUi('Tischbereiche'));
+            let active = entries[0][0];
+            const select = (id) => {
+                active=id;
+                tabs.querySelectorAll('button').forEach(button => {
+                    const on=button.dataset.dockTarget===id;
+                    button.setAttribute('aria-selected',String(on));button.tabIndex=on?0:-1;
+                });
+                entries.forEach(([widgetId]) => {
+                    const widget=document.getElementById(widgetId);
+                    widget.hidden=widgetId!==id;widget.classList.remove('collapsed');
+                    widget.querySelector('.widget-toggle')?.setAttribute('aria-expanded','true');
                 });
             };
             const setOpen = (open) => {
                 sheet.hidden = !open;
-                if (backdrop) backdrop.hidden = !open;
+                if (backdrop) backdrop.hidden = !open || !window.matchMedia('(max-width: 1040px)').matches;
                 btn.classList.toggle("active", open);
                 btn.setAttribute("aria-expanded", String(open));
             };
+            this._closeTableDock = () => setOpen(false);
+            entries.forEach(([id,label],index) => {
+                const widget=document.getElementById(id);
+                body.appendChild(widget);widget.setAttribute('role','tabpanel');widget.setAttribute('aria-labelledby','dock-'+id);
+                const heading=widget.querySelector('.widget-toggle');
+                if(heading){const plain=heading.cloneNode(true);plain.removeAttribute('role');plain.removeAttribute('tabindex');plain.removeAttribute('aria-expanded');plain.removeAttribute('aria-controls');heading.replaceWith(plain);}
+                const button=document.createElement('button');button.type='button';button.id='dock-'+id;
+                button.dataset.dockTarget=id;button.setAttribute('role','tab');button.setAttribute('aria-controls',id);
+                button.textContent=label;
+                button.addEventListener('click',() => {select(id);setOpen(true);});
+                button.addEventListener('keydown',event => {
+                    let next=index;
+                    if(event.key==='ArrowRight')next=(index+1)%entries.length;
+                    else if(event.key==='ArrowLeft')next=(index+entries.length-1)%entries.length;
+                    else if(event.key==='Home')next=0;
+                    else if(event.key==='End')next=entries.length-1;
+                    else return;
+                    event.preventDefault();tabs.children[next].focus();tabs.children[next].click();
+                });
+                tabs.appendChild(button);
+            });
+            document.querySelector('.tabletop-shell').appendChild(tabs);
+            const close=document.createElement('button');close.type='button';close.className='table-dock-close';
+            close.textContent='×';close.setAttribute('aria-label',globalThis.VTTUi('Tischbereich schließen'));
+            close.addEventListener('click',()=>{setOpen(false);tabs.querySelector('[aria-selected="true"]')?.focus();});
+            sheet.prepend(close);
             btn.addEventListener("click", () => setOpen(sheet.hidden));
             if (backdrop) backdrop.addEventListener("click", () => setOpen(false));
             document.getElementById("btnTableSheetBack")?.addEventListener("click", () => {
                 document.getElementById("btnBack")?.click();
             });
-            place();
-            if (typeof media.addEventListener === "function") {
-                media.addEventListener("change", place);
-            }
+            select(active);setOpen(false);
         }
 
         _bindTableActions() {
@@ -3782,6 +3844,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 // Acceptance: opening the menu closes the sidebar rather
                 // than stacking overlays.
                 document.querySelector(".right-sidebar")?.classList.remove("is-open");
+                document.getElementById('chatSidebar')?.classList.remove('is-open');
+                document.getElementById('btnChatToggle')?.setAttribute('aria-expanded','false');
+                document.getElementById('btnSidebarToggle')?.setAttribute('aria-expanded','false');
+                this._closeTableDock?.();
                 menu.hidden = false;
                 trigger.setAttribute("aria-expanded", "true");
                 items()[0]?.focus();
@@ -4518,7 +4584,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const id = Number(entry.message_id);
                 if (!id) continue;
                 const previous = persisted.get(id);
-                persisted.set(id, previous && !entry.edited_at ? previous : {
+                persisted.set(id, previous && !entry.edited_at && !entry.hidden ? previous : {
                     message_id: id, time: String(entry.created_at || entry.timestamp || '').slice(11, 19),
                     user: entry.sender_name || 'Tisch', sender_name: entry.sender_name || 'Tisch',
                     text: entry.hidden ? globalThis.VTTUi("Jemand würfelt verdeckt.") : entry.message || entry.content || '',
@@ -4539,7 +4605,19 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         _appendChatMessage(entry) {
             const messageId = Number(entry?.message_id) || null;
-            if (messageId && this.chatRows.some(row => row.message_id === messageId)) return;
+            const previous = messageId && this.chatRows.find(row => row.message_id === messageId);
+            if (previous) {
+                // History may arrive before the authorized detailed roll event.
+                // Enrich that same row; never duplicate it or retain details of a hidden roll.
+                if (entry?.rollHidden || entry?.rollBreakdown) {
+                    previous.rollHidden = Boolean(entry.rollHidden);
+                    previous.rollBreakdown = previous.rollHidden ? null : entry.rollBreakdown;
+                    previous.text = previous.rollHidden ? globalThis.VTTUi('Jemand würfelt verdeckt.') : entry.text || entry.message || previous.text;
+                    previous.message = previous.text;
+                    this._renderChat();
+                }
+                return;
+            }
             const normalized = {
                 message_id: messageId,
                 time: String(entry?.time || new Date().toISOString()).slice(11, 19),

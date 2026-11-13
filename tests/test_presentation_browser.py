@@ -54,10 +54,14 @@ def test_preferences_main_paths_and_user_text(action_site,engine,width,language,
         page.locator('#vttDisplay-theme').select_option(theme);page.locator('#vttDisplay-language').select_option(language)
         page.locator('#vttDisplay-unit').select_option('ft');page.locator('#vttDisplay-accent').select_option('teal');page.locator('#vttDisplay-stickyPortrait').check()
         contrast(page,'#vttDisplayDialog button, #vttDisplayDialog select, #vttDisplayDialog h2')
-        page.locator('.vtt-display-actions button').last.click()
+        if language != 'de':
+            with page.expect_navigation(wait_until='load'):
+                page.locator('.vtt-display-actions button').last.click()
+        else:
+            page.locator('.vtt-display-actions button').last.click()
         expect(page.locator('html')).to_have_attribute('lang',language)
         expect(page.locator('html')).to_have_attribute('data-vtt-theme',theme)
-        expect(page.locator('#vttDisplayOpen')).to_have_text('Appearance and language' if language=='en' else 'Ansicht und Sprache')
+        expect(page.locator('#vttDisplayOpen')).to_have_attribute('aria-label','Settings' if language=='en' else 'Einstellungen')
         page.goto(f"{origin}/character-sheet?id={info['character']}")
         expect(page.locator('#srdSheetSection')).to_be_visible();expect(page.locator('#charName')).to_have_value('Speichern')
         expect(page.locator('#sfUnits')).to_have_value('ft')
@@ -70,7 +74,7 @@ def test_preferences_main_paths_and_user_text(action_site,engine,width,language,
         # Normal navigation keeps preferences across separate page compositions.
         for path in ('/srd-creator','/mapmaker','/regelwerk/compendium','/api/ce/authoring'):
             page.goto(origin+path)
-            expect(page.locator('#vttDisplayOpen')).to_have_text('Appearance and language' if language=='en' else 'Ansicht und Sprache')
+            expect(page.locator('#vttDisplayOpen')).to_have_attribute('aria-label','Settings' if language=='en' else 'Einstellungen')
             expect(page.locator('html')).to_have_attribute('data-vtt-theme',theme)
             assert page.evaluate('document.documentElement.scrollWidth')<=width+1,(path,width)
         expect(page.locator('#ce-origins')).to_be_visible()
@@ -109,7 +113,7 @@ def test_dm_calibration_updates_player_ruler_without_granting_controls(action_si
         player.mouse.click(box['x']+screen_step*4,box['y']+screen_step*3)
         segment=player.locator('#measureLayer .measure-label').first
         expect(segment).to_have_text('1 squares')
-        dm.locator('#btnSidebarToggle').click();dm.locator('.sidebar-tab[data-tab="session"]').click()
+        dm.locator('#btnSidebarToggle').click();dm.locator('#journalSessionControls summary').click()
         expect(dm.locator('#mapScaleMeters')).to_be_visible();dm.locator('#mapScaleMeters').fill('1.5');dm.locator('#mapScaleSave').click()
         expect(segment).to_have_text('5 ft')
         # Current unit changes redraw the same geometry without another save.

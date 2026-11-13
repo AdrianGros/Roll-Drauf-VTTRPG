@@ -110,6 +110,7 @@ def _dice_roll_flow(stack, workdir: Path) -> list[str]:
             # _map_token_table_flow already uses for this drawer.
             page.click("#btnSidebarToggle")
             page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
+            page.click('.sidebar-tab[data-tab="tools"]')
             page.wait_for_selector("#diceInput", state="visible", timeout=15_000)
             # The socket join (session:join, emitted automatically on
             # connect by play-socket.js) is itself a round trip -- give it
@@ -240,10 +241,7 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
             if body_route_leak:
                 findings.append("[click-defaults] body carries data-book-route again - "
                                 "the app-wide preventDefault bug is back")
-            layer_widget_classes = page.locator("#layersWidget").get_attribute("class") or ""
-            if "collapsed" in layer_widget_classes.split():
-                findings.append("[menu] layer menu is collapsed on first DM render")
-                page.click('#layersWidget .widget-toggle')
+            page.click('#dock-layersWidget')
             if page.locator("#layerAddBtn").inner_text().strip() != "Hinzufügen":
                 findings.append("[menu] map file action does not expose 'Hinzufügen'")
             if not page.locator("#btnTokenUpload").count():
@@ -264,10 +262,13 @@ def _map_token_table_flow(stack, workdir: Path) -> list[str]:
                     "replacement action when no unused campaign map exists")
             page.click("#btnSidebarToggle")
             page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
-            for tab in ("journal", "chat", "tools", "session"):
+            for tab in ("journal", "tools"):
                 page.click(f'.sidebar-tab[data-tab="{tab}"]')
                 if not page.locator(f"#panel-{tab}.active").count():
                     findings.append(f"[menu] sidebar tab {tab!r} did not activate its panel")
+            page.click('#btnChatToggle')
+            page.wait_for_selector('#chatSidebar.is-open',timeout=15_000)
+            page.click('#btnChatClose')
             page.click("#btnSidebarToggle")
             page.click("#layerAddBtn")
             page.wait_for_selector("#layerAddChoice", state="visible", timeout=15_000)
@@ -491,8 +492,7 @@ def _scene_directory_flow(stack, workdir: Path) -> list[str]:
         try:
             page.wait_for_function("() => window.RollDraufTable", timeout=15_000)
             page.wait_for_timeout(1_000)
-            if "collapsed" in (page.locator("#layersWidget").get_attribute("class") or "").split():
-                page.click('#layersWidget .widget-toggle')
+            page.click('#dock-layersWidget')
             page.click("#layerAddBtn")
             page.wait_for_selector("#layerAddChoice", state="visible", timeout=15_000)
             with page.expect_file_chooser(timeout=10_000) as chooser_info:
@@ -838,7 +838,7 @@ def _roll_composer_flow(stack, workdir: Path) -> list[str]:
             # #chatLog lives in a different sidebar tab (#panel-chat) than
             # the dice composer (#panel-tools) -- switch tabs, it's
             # display:none (genuinely hidden, not a bug) until we do.
-            page.click('.sidebar-tab[data-tab="chat"]')
+            if not page.locator('#chatSidebar.is-open').count(): page.click('#btnChatToggle')
             page.wait_for_selector("#panel-chat.active", timeout=10_000)
             page.wait_for_selector("#chatLog details", timeout=10_000)
             page.click("#chatLog details summary")
@@ -1025,7 +1025,7 @@ def _action_hotbar_flow(stack, workdir: Path) -> list[str]:
             # Keyboard shortcuts must NOT fire while focus is in chat input.
             page.click("#btnSidebarToggle")
             page.wait_for_selector(".right-sidebar.is-open", timeout=10_000)
-            page.click('.sidebar-tab[data-tab="chat"]')
+            if not page.locator('#chatSidebar.is-open').count(): page.click('#btnChatToggle')
             page.fill("#chatInput", "")
             page.click("#chatInput")
             chat_message_count_before = page.locator("#chatLog .chat-entry").count()
@@ -1469,8 +1469,7 @@ def _measure_tool_flow(stack, workdir: Path) -> list[str]:
         try:
             page.wait_for_function("() => window.RollDraufTable", timeout=15_000)
             page.wait_for_timeout(1_000)
-            if "collapsed" in (page.locator("#layersWidget").get_attribute("class") or "").split():
-                page.click('#layersWidget .widget-toggle')
+            page.click('#dock-layersWidget')
             page.click("#layerAddBtn")
             page.wait_for_selector("#layerAddChoice", state="visible", timeout=15_000)
             with page.expect_file_chooser(timeout=10_000) as chooser_info:
@@ -2255,7 +2254,7 @@ def _loot_transfer_flow(stack, workdir: Path) -> list[str]:
             # roll composer flow already needed.
             page.click("#btnSidebarToggle")
             page.wait_for_selector(".right-sidebar.is-open", timeout=15_000)
-            page.click('.sidebar-tab[data-tab="chat"]')
+            if not page.locator('#chatSidebar.is-open').count(): page.click('#btnChatToggle')
             page.wait_for_selector("#panel-chat.active", timeout=10_000)
             page.wait_for_function(
                 "() => (document.getElementById('chatLog')?.textContent || '').includes('Heiltrank')",

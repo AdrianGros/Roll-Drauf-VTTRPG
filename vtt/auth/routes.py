@@ -582,6 +582,7 @@ def discord_callback():
             or discord_profile.get("display_name")
             or user.username
         )
+        link.set_avatar_snapshot(discord_profile.get('avatar'))
         link.bot_verified_role = str(bot_result.get("role") or ("player" if bot_result.get("player") else "player"))
         link.link_status = "linked"
         link.linked_at = link.linked_at or utcnow()

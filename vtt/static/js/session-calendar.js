@@ -43,7 +43,7 @@ function ensureStylesheet() {
 export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
     ensureStylesheet();
     root.setAttribute('data-session-calendar', '');
-    const state = {scope: 'rolling30', anchor: todayIn(timezone), campaign: '', day: '', entries: [], cursor: null, data: null,
+    const state = {scope: 'month', anchor: todayIn(timezone), campaign: '', day: '', entries: [], cursor: null, data: null,
                    version: 0, alertVersion: 0, busy: false, materialized: false};
     root.innerHTML = `
         <div class="sc-heading"><div><span class="book-scene-panel-kicker">${esc(ui('Gemeinsam spielen'))}</span>
@@ -88,6 +88,7 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
         state.entries.filter(e => !e.cancelled).forEach(e => counts.set(e.local_date, (counts.get(e.local_date) || 0) + 1));
         const lead = (parseDay(data.start).getUTCDay() + 6) % 7;
         const total = Math.round((parseDay(data.end) - parseDay(data.start)) / 86400000);
+        const trailing = (7 - ((lead + total) % 7)) % 7;
         const weekdays = Array.from({length: 7}, (_, i) => new Intl.DateTimeFormat(intlLocale(), {weekday: 'short', timeZone: 'UTC'}).format(new Date(Date.UTC(2024, 0, 1 + i, 12))));
         box.innerHTML = `<div class="sc-month-grid">${weekdays.map(d => `<span class="sc-weekday">${esc(d)}</span>`).join('')}
             ${Array.from({length: lead}, () => '<span class="sc-blank"></span>').join('')}
@@ -95,7 +96,7 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
                 const day = shiftDays(data.start, i), n = counts.get(day) || 0;
                 return `<button type="button" class="sc-day${day === todayIn(timezone) ? ' is-today' : ''}${state.day === day ? ' is-selected' : ''}" data-day="${day}"
                     aria-pressed="${state.day === day}" aria-label="${esc(ui('{date}: {count} Termine', {date: dayLabel(day), count: n}))}"><span>${Number(day.slice(8, 10))}</span><small>${n ? `${n} ●` : '&nbsp;'}</small></button>`;
-            }).join('')}</div>`;
+            }).join('')}${Array.from({length: trailing}, () => '<span class="sc-blank"></span>').join('')}</div>`;
     }
 
     function render() {

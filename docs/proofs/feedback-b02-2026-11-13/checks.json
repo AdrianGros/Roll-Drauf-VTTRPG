@@ -1,0 +1,86 @@
+{
+  "status": "targeted_checks_passed_pending_live",
+  "retention": "permanent",
+  "groups": [
+    {
+      "scope": "Avatar validation/migration/OAuth plus server table-context permissions",
+      "status": "pass",
+      "summary": "39 passed, 296 warnings in 75.12s (0:01:15)",
+      "log": "/tmp/feedback-b02-api.log"
+    },
+    {
+      "scope": "Final DM and Player drawers/dock/gear, keyboard and app-menu closing",
+      "status": "pass",
+      "summary": "2 passed, 41 warnings in 79.23s (0:01:19)",
+      "log": "/tmp/feedback-b02-drawers-final.log"
+    },
+    {
+      "scope": "Player mobile and complete empty month plus avatar/fallback",
+      "status": "pass",
+      "summary": "2 passed, 1 deselected, 39 warnings in 59.48s",
+      "log": "/tmp/feedback-b02-browser-followup.log"
+    },
+    {
+      "scope": "DM workspace and editor navigation at desktop/mobile",
+      "status": "pass",
+      "summary": "3 passed, 25 warnings in 80.50s (0:01:20)",
+      "log": "/tmp/feedback-b02-dm-mapnav.log"
+    },
+    {
+      "scope": "Preferences across main routes and DM/player calibration",
+      "status": "pass",
+      "summary": "5 passed, 86 warnings in 203.36s (0:03:23)",
+      "log": "/tmp/feedback-b02-preferences-followup.log"
+    },
+    {
+      "scope": "Five native dice cases for roller, peer and persisted reload",
+      "status": "pass",
+      "summary": "5 passed, 37 warnings in 192.54s (0:03:12)",
+      "log": "/tmp/feedback-b02-dice-confirmation.log"
+    }
+  ],
+  "earlier_passing_groups": {
+    "scope": "Play contrast, owner parallel contexts/reload and both calendar suites",
+    "passed_before_preferences_reload_race": 14,
+    "preferences_followup": "Explicit navigation wait fixes test synchronization; all five preference cases passed afterward"
+  },
+  "personal_bar_and_reconnect": "Passed before focused dice follow-up; no role guards weakened",
+  "chat_merge": {
+    "status": "pass",
+    "orders": [
+      "history-first",
+      "event-first"
+    ],
+    "deduplicated": true,
+    "hidden_details_removed": true
+  },
+  "source_sha256": {
+    "vtt/auth/routes.py": "16967dcc86074d774c3c341f2b6b14d70d2c7ee133feb762dc803298bf981d9b",
+    "vtt/endpoints/dashboard_home.py": "cf627451556053329f7e88ca143f42b80fd3f27646714c8c0221bff340344147",
+    "vtt/models/discord_identity_link.py": "32afd368588ce8f7b26c69117e5066100530a68282c4398e77bace28681609c3",
+    "vtt/static/css/play-workspace.css": "3a13630ee50b368e8c889bd9b6e31603618a3021057d3fcbf31e3f3aae319c81",
+    "vtt/static/css/vtt-main-nav.css": "1f985a46322918c15b2ab2d2fed54b05261ddd7d9a37c7b58753cabf939b94d8",
+    "vtt/static/i18n/ui.de.json": "0b3064327073070872ed2a43de35c47b99d348354a0122ad921d02b6af9a2bb0",
+    "vtt/static/i18n/ui.en.json": "61db3266857caa850535c9b0ce76b7f5d728d5ce5c9d5872640bc7f09d41b56d",
+    "vtt/static/js/book-scene.js": "0e165b4fd8c86029ea9f60543085465c1ca5a811dbd42372f3183a70997a871e",
+    "vtt/static/js/display-preferences.js": "2f955509ce888f485f5f53f8cf9d41248c2264834e15084c24e67ec52d6f5528",
+    "vtt/static/js/play-dm.js": "d137ec453779961d6634533ea34270f4f9c40ec33d72c724b0e18b7981e12247",
+    "vtt/static/js/play-ui.js": "718ca6991236a726ba51838276dc7a278b8fc831749796ff2cef5c9d9b96e01e",
+    "vtt/static/js/session-calendar.js": "224c5a2e3b5619e2d08bb825ff71c3a6fb784334618d5805c496afba89664a56",
+    "vtt/static/js/ui-catalog.js": "06fd6bc1f3ec8422bd08af25d929285a279cbd958d96765c18db2ca595059051",
+    "vtt/static/js/vtt-main-nav.js": "97bbe9cafb670b84cfcb7aa3dacb4b4f85b250410527e7be148f21d00a07c0ac",
+    "vtt/templates/play.html": "5daceb38c21fab1282585ee9033e29995e419cd4fb091ef7993b5444384e0a64"
+  },
+  "i18n": "3232 UI sources: DE/EN complete, placeholders and generated files verified",
+  "robot_flows": "UI selectors updated; Python compilation only, complete legacy robot program NOT_RUN",
+  "live": "NOT_RUN",
+  "schema": "NOT_APPLIED",
+  "resolved_findings": [
+    "Left chat header placed below the fullscreen status strip",
+    "Gear mounted in the visible table status strip",
+    "Mobile Journal uses its existing full-width sheet; corrected desktop-only test assumption",
+    "Detailed roll enriches an existing history row; hidden event/history removes details",
+    "Dice browser fixture uses the actual threading config and waits for transport readiness, with CSP-compatible predicates"
+  ],
+  "verification_note": "Focused follow-ups cover the final changes; earlier passing unrelated groups were not unnecessarily rerun."
+}

@@ -307,7 +307,7 @@ def get_navigation_memo():
         )
 
     response = jsonify({
-        "user": {"username": user.username},
+        "user": {"username": user.username, "avatar_url": user.discord_identity_link.avatar_url() if user.discord_identity_link else None},
         "completed_session_count": int(completed),
     })
     response.headers["Cache-Control"] = "private, no-store"

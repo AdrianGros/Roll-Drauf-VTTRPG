@@ -84,7 +84,8 @@ def test_play_chrome_text_contrasts_with_its_painted_surface(action_site, role, 
 
         if role == 'dm':
             # Actual map-scale labels (paper default used dark brown on navy).
-            page.locator('.sidebar-tab[data-tab="session"]').click()
+            page.locator('.sidebar-tab[data-tab="journal"]').click()
+            page.locator('#journalSessionControls summary').click()
             expect(page.locator('#mapScaleMeters')).to_be_visible()
             # Exercise the actual displayed value (typed only, no save and no API call).
             page.locator('#mapScaleMeters').fill('1.5')

@@ -92,7 +92,7 @@ def test_personal_bar_and_firefox_reconnect_delivery(action_site, dm_engine):
         expect(isolated.locator('#chatLog .chat-entry[data-message-id]')).to_have_count(0)
         # Typing must not trigger another hotbar command.
         player.locator('#btnSidebarToggle').click()
-        player.locator('.sidebar-tab[data-tab="chat"]').click()
+        player.locator('#btnChatToggle').click()
         player.locator('#chatInput').press_sequentially('1234567890')
         player.locator('#chatInput').fill('')
         player.reload()

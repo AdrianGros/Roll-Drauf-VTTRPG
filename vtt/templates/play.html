@@ -2750,7 +2750,8 @@
             <span data-dm-slot="map-tools"></span>
             <div class="spacer">
                 <button type="button" id="btnTableSheet" class="tool-btn" title="Seiten, Turn Order und Tokens" data-ui-title="u_e154500c2731" aria-expanded="false" aria-controls="tableSheet"><span class="tool-ico" aria-hidden="true">🗂</span><span class="tool-label"><span data-ui-key="u_a78441065292">Tisch</span></span></button>
-                <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal / Chat / Tools / Session" data-ui-title="u_b642b1e0fc89" aria-label="Menü öffnen" data-ui-aria-label="u_7241c6309388"><span class="tool-ico" aria-hidden="true">☰</span><span class="tool-label"><span data-ui-key="u_0ebbd1b8c8ae">Menü</span></span></button>
+                <button type="button" id="btnChatToggle" class="tool-btn" data-tab="chat" aria-controls="chatSidebar" aria-expanded="false" aria-label="Chat" data-ui-aria-label="u_2ced57f12591"><span class="tool-ico" aria-hidden="true">◌</span><span class="tool-label" data-ui-key="u_2ced57f12591">Chat</span></button>
+                <button type="button" id="btnSidebarToggle" class="tool-btn" title="Journal" data-ui-title="u_57d7f743bbd1" aria-label="Journal" data-ui-aria-label="u_57d7f743bbd1" aria-controls="journalSidebar" aria-expanded="false"><span class="tool-ico" aria-hidden="true">▤</span><span class="tool-label"><span data-ui-key="u_57d7f743bbd1">Journal</span></span></button>
                 <button type="button" id="btnBack" class="tool-btn" title="Sitzungsmenü: Kampagne, Hilfe, Sitzung verlassen" data-ui-title="u_ec19c008ddda" aria-haspopup="true" aria-expanded="false" aria-controls="appMenu"><span class="tool-ico" aria-hidden="true">↩</span><span class="tool-label"><span data-ui-key="u_4080624342b2">Zurück</span></span><span class="tool-caret" aria-hidden="true">▾</span></button>
             </div>
         </aside>
@@ -2815,7 +2816,11 @@
             </form>
         </dialog>
 
-        <aside class="right-sidebar">
+        <aside class="left-chat-sidebar" id="chatSidebar" aria-label="Chat" data-ui-aria-label="u_2ced57f12591">
+            <div class="chat-sidebar-heading"><strong data-ui-key="u_2ced57f12591">Chat</strong><button type="button" id="btnChatClose" aria-label="Chat schließen">×</button></div>
+            <div id="chatSidebarBody" class="sidebar-content"></div>
+        </aside>
+        <aside class="right-sidebar" id="journalSidebar">
             <div class="sidebar-tabs">
                 <button type="button" class="sidebar-tab" data-tab="journal"><span data-ui-key="u_57d7f743bbd1">Journal</span></button>
                 <button type="button" class="sidebar-tab" data-tab="chat"><span data-ui-key="u_2ced57f12591">Chat</span></button>
@@ -3069,6 +3074,7 @@
     <script src="/static/js/play-client.js"></script>
     <script src="/static/js/play-socket.js"></script>
     <link rel="stylesheet" href="/static/css/play-personal.css">
+    <link rel="stylesheet" href="/static/css/play-workspace.css">
     <script src="/static/js/play-personal.js"></script>
     <script src="/static/js/play-player.js"></script>
     <script src="/static/js/play-ui.js"></script>
