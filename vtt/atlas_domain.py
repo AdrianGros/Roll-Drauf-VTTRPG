@@ -13,6 +13,7 @@ from vtt.mapmaker_document import normalize_document,InvalidDocument
 MIB=1024*1024
 MAX_BACKUP=64*MIB
 MAX_MAP=16*MIB
+MAX_CREDITS=200000
 
 class AtlasError(ValueError):
     def __init__(self,message,status=400,code='invalid_atlas'):
@@ -97,7 +98,7 @@ def png(value,width,height,credits):
 
 def bundle(raw):
     need(isinstance(raw,dict) and set(raw)=={'document','png','credits'})
-    credits=text(raw['credits'],20000)
+    credits=text(raw['credits'],MAX_CREDITS)
     try:document,_=normalize_document(raw['document'])
     except (InvalidDocument,OverflowError,RecursionError,UnicodeError) as error:raise AtlasError(str(error)) from error
     width,height=document['size']['w'],document['size']['h']

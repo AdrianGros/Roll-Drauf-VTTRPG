@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "retention": "permanent",
+  "command": "pytest tests/test_feedback_b06_atlas_credits.py tests/test_atlas.py::test_two_authors_map_lease_save_revocation_and_original_unchanged tests/test_atlas.py::test_three_map_backup_roundtrip_preserves_ids_graph_assets_without_grants -x -q --tb=short --show-capture=no",
+  "runtime": "roll-drauf-vtt-feedback-tests:20261110; network none",
+  "summary": "4 passed, 115 warnings in 16.19s",
+  "proof": "Full reviewed collection in Atlas bundle and PNG metadata, excessive text rejected, author lease/CAS and JSON/ZIP backups preserved",
+  "log": "checks.log"
+}

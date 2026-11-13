@@ -291,7 +291,7 @@ def validated_publication(raw):
     for row in projection['maps']:
         need(isinstance(row,dict) and set(row)=={'id','title','km_per_pixel','width','height','credits'})
         map_id=domain.uid(row['id']);need(map_id not in info and map_id in images)
-        width=domain.integer(row['width'],256,4096);height=domain.integer(row['height'],256,4096);credits=domain.text(row['credits'],20000)
+        width=domain.integer(row['width'],256,4096);height=domain.integer(row['height'],256,4096);credits=domain.text(row['credits'],domain.MAX_CREDITS)
         info[map_id]=dict(width=width,height=height,credits=credits)
         metadata.append(dict(id=map_id,title=row['title'],reader_visible=True,km_per_pixel=row['km_per_pixel']))
         clean_images[map_id]=domain.png(images[map_id],width,height,credits)
