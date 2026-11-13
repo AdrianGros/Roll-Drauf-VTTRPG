@@ -1,14 +1,14 @@
 .......                                                                  [100%]
 =============================== warnings summary ===============================
 tests/test_feedback_b05_schema.py::test_library_keeps_curve_and_nameless_symbol_without_exposing_private_map
-  /usr/local/lib/python3.12/site-packages/engineio/async_drivers/eventlet.py:1: EventletDeprecationWarning: 
+  /usr/local/lib/python3.12/site-packages/engineio/async_drivers/eventlet.py:1: EventletDeprecationWarning:
   Eventlet is deprecated. It is currently being maintained in bugfix mode, and
   we strongly recommend against using it for new projects.
-  
+
   If you are already using Eventlet, we recommend migrating to a different
   framework.  For more detail see
   https://eventlet.readthedocs.io/en/latest/asyncio/migration.html
-  
+
     from eventlet.green.threading import Event
 
 tests/test_feedback_b05_schema.py::test_library_keeps_curve_and_nameless_symbol_without_exposing_private_map
