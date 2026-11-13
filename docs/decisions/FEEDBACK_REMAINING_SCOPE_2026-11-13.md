@@ -20,7 +20,9 @@ Execution checkpoint:
 2. B06b brushes, independent eraser values, coastline controls and draft/auth
    protection are live as `c7f620f92`, with DM/Player browser proof and scoped
    cleanup in `docs/proofs/feedback-b06b-2026-11-13/delivery.json`.
-3. B07–B10 and N07 each require their bounded Discover/Apply output before code,
+3. B07 is live as `ea3fb25a6`, with PostgreSQL ID repair `6297593cd`,
+   role journeys and scoped cleanup in `docs/proofs/feedback-b07-2026-11-13/delivery.json`.
+   B08–B10 and N07 each require their bounded Discover/Apply output before code,
    then focused checks, a source commit/push, the guarded existing production
    release workflow, live role journeys and scoped test-data cleanup.
 4. B11 ends with a combined live validation and owner checklist. Owner acceptance

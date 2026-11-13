@@ -1,0 +1,61 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "S06",
+    "S07",
+    "S08"
+  ],
+  "source_commit": "ea3fb25a647a4e6a02081d175e6b8ee131c85ec1",
+  "schema_commit": "6297593cd",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b07-vision-delivery-20261111-ea3fb25a6",
+  "image_id": "sha256:4ae7707913d4cf0561cc9857d1d75ff75f27e59bf60b5ea180c4d39a95760ab7",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "source_verification": {
+    "checked": 284,
+    "mismatches": []
+  },
+  "deployed_at": "2026-11-13T23:19:29.587805872Z",
+  "health": {
+    "now": "2026-11-13T23:19:35.208126",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T23:19:33.399604",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "schema_repair": "schema-repair.json",
+  "schema_backup": "schema-backup.json",
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "cleanup": "cleanup.json",
+  "roles": [
+    "DM table context",
+    "Player table context"
+  ],
+  "user_journey": "Campaign hub \u2192 session entry by role \u2192 Measure shapes; DM Light/Wall tools \u2192 edit \u2192 reload \u2192 delete; Player own fog changes and restores after reload.",
+  "rollback": "/srv/migration/2026-11-11/feedback-b07-vision-delivery/ea3fb25a6/rollback.sh",
+  "prior_image": "roll-drauf-vtt-app:feedback-b07-vision-delivery-rollback-20261111-904f468493ba",
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "schema_rollback_note": "Keep additive ID generators on app rollback; older app remains compatible.",
+  "acceptance_checklist": [
+    "Square, circle/sphere projection and SRD cone geometry; existing waypoint distance and physical scale preserved",
+    "Desktop DM and mobile English/night Player controls, cancellation and no token-dock interference",
+    "Player composition initializes no DM wall/light viewport bindings",
+    "Production PostgreSQL light/wall/fog IDs generate automatically; migration preserves existing rows/generators and is repeatable",
+    "Private fog delivery fills shared sequence positions without private contents for other users",
+    "Actual light expands own Player vision (164 cells), wall blocks it (120); edit/reload/delete work",
+    "Player geometry GET and vision writes denied; own fog restored after reload",
+    "Scoped synthetic users/campaign/storage and host/container credentials removed"
+  ],
+  "residual": [
+    "Owner acceptance open",
+    "B08\u2013B11 and N07 remain in the authorized program; N11 deferred by owner",
+    "Native schema backup archive validated; database restore and app rollback were not executed"
+  ]
+}

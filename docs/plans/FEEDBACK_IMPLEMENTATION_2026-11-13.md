@@ -14,7 +14,7 @@ Fortschritt und Lieferbelege werden hier sowie in den jeweiligen Paketbelegen ge
 | B04 | N02, N03, N04, N05, N06, N07 | Creator-Übersicht, einzelne Würfelergebnisse, vorhandene eigene Hintergründe, Merkmale, Zaubersortierung; getrennte DM-Freigabe | [N02–N06 live geliefert](../proofs/feedback-b04-2026-11-13/delivery.json); N07 separat offen |
 | B05 | N12, N13, N14, N15, N16, N17 | Objekt-/Kachelauswahl, gemeinsame Bearbeitung, namenlose Symbole, Werkzeugordnung, Wegkurven, Undo/Redo | [Live geliefert](../proofs/feedback-b05-2026-11-13/delivery.json); Owner-Abnahme offen |
 | B06 | N08, N09, N10, N11, N18, S18 | Pinselspitzen und Materialwahl, eigener Radierer, Bildpinsel, nachvollziehbarer Entwurfs-/Anmeldestatus | [N08–N10/N18/S18 live geliefert](../proofs/feedback-b06b-2026-11-13/delivery.json); N11 ausdrücklich vom Owner zurückgestellt |
-| B07 | S06, S07, S08 | Licht/Wände im berechtigten Kontext prüfen, bestätigte Fehler beheben, Messformen | geplant |
+| B07 | S06, S07, S08 | Licht/Wände im berechtigten Kontext prüfen, bestätigte Fehler beheben, Messformen | [Live geliefert](../proofs/feedback-b07-2026-11-13/delivery.json); PostgreSQL-/Ereignisfehler behoben; Owner-Abnahme offen |
 | B08 | S05, S12, S20 | Bibliotheksvorschauen, Journal-Dateizugang, Kartenübernahme im Kampagnenhub | geplant |
 | B09 | S03 | Englisches Original-SRD mit stabiler Zuordnung zur bestehenden Mechanik und Sprachwahl | geplant |
 | B10 | S15 | Vorhandenen berechtigten Weg zur Kontingenterweiterung prüfen und erreichbar machen; keine automatische Kontingentänderung | geplant; Produktgrenze vor Deploy festhalten |
@@ -56,8 +56,8 @@ Retention: dauerhaft. Am 13.11. nach Sitzungsunterbrechung wieder aufgenommen;
 [Recovery-Beleg](../DADM_DISCOVER_SESSION_RECOVERY_2026-11-13.md).
 B05 ist committed, gepusht und auf dem Live-VTT über den normalen Karten-Einstieg
 für DM und Player geprüft; die synthetischen Testdaten sind entfernt.
-Nächster Schritt: B07 gemäß [separatem Apply-Vertrag](FEEDBACK_B07_APPLY_2026-11-13.md);
-B07–B11 und N07 bleiben offen. N07 ist durch die Owner-Antwort als Freigabe
+Nächster Schritt: B08 gemäß [separatem Apply-Vertrag](FEEDBACK_B08_APPLY_2026-11-14.md);
+B08–B11 und N07 bleiben offen. N07 ist durch die Owner-Antwort als Freigabe
 konkreter veröffentlichter Homebrew-Optionen je Kampagne eingegrenzt. N11 bleibt
 bis zur Identifikation des ursprünglichen Reglers zurückgestellt.
 Der gesamte Feedbackauftrag ist noch nicht abgeschlossen.

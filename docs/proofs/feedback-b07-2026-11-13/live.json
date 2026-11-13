@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "journeys": [
+    "dm: campaign hub \u2192 session \u2192 Measure \u2192 square/circle/cone \u2192 cancel/tool switch; no unexpected token dock; independent authorized surface",
+    "player: campaign hub \u2192 session \u2192 Measure \u2192 square/circle/cone \u2192 cancel/tool switch; no unexpected token dock; independent authorized surface",
+    "DM light placement \u2192 radius edit \u2192 Player fog expands; blocking wall \u2192 Player visibility contracts \u2192 edit sight \u2192 reload persists \u2192 delete wall/light; Player cannot read raw geometry or write vision"
+  ],
+  "checks": {
+    "own_fog_restored_after_reload": true,
+    "fog_visible_before": 0,
+    "fog_visible_with_light": 164,
+    "fog_visible_behind_wall": 120,
+    "player_geometry_and_write_denials": true
+  },
+  "errors": []
+}
