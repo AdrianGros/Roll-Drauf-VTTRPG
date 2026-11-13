@@ -35,6 +35,8 @@ export function attachInput(ed) {
 
     function cancelGesture() {
         if (!gesture) return;
+        if (gesture.type === "groupDrag") ed.selectionSet.restoreMove(gesture.move);
+        if (gesture.type === "marquee") ed.selectionSet.marquee=null;
         if (gesture.type === "stroke") ed.cancelStroke();
         if (gesture.type === "tiles") ed.cancelTiles();
         if (gesture.type === "erase") ed.cancelErase();
@@ -61,7 +63,7 @@ export function attachInput(ed) {
         cancel: cancelGesture,
         // live, uncommitted document changes (autosave must not persist them)
         mutating: () => !!gesture && (gesture.type === "stroke" || gesture.type === "erase" || gesture.type === "scatter" || gesture.type === "tiles"
-            || (gesture.type === "drag" && gesture.moved) || (gesture.type === "pathNode" && gesture.moved)),
+            || (gesture.type === "groupDrag" && gesture.moved) || (gesture.type === "drag" && gesture.moved) || (gesture.type === "pathNode" && gesture.moved)),
     };
 
     function startPinch() {
@@ -113,7 +115,7 @@ export function attachInput(ed) {
             ed.commitEdit();
             const at = ed.clampToMap(point.x, point.y);
             const item = { id: null, x: at.x, y: at.y, material: ed.pathOpts.material,
-                width: ed.pathOpts.width, points: [{ x: 0, y: 0 }] };
+                width: ed.pathOpts.width, curve: ed.pathOpts.curve, points: [{ x: 0, y: 0 }] };
             ed.previewPath = item;
             gesture = { type: "path", pointerId: event.pointerId, item, spacing: 28 };
         } else if (ed.tool === "stamp") {
@@ -144,11 +146,11 @@ export function attachInput(ed) {
             const item = ed.createLabel(point);
             if (ed.addItems(layer, [item], "Ort setzen")) {
                 ed.select(item.id);
-                ed.ui.focusLabelName();
+                if(item.text)ed.ui.focusLabelName();
             }
         } else if (ed.tool === "select") {
             const selected = ed.selection && ed.doc.layers.flatMap((layer) => layer.items || []).find((item) => item.id === ed.selection);
-            if (selected && selected.points && event.shiftKey && !event.altKey) {
+            if (selected && selected.points && ed.selectionSet.count===1 && (event.shiftKey || ed.editPathNodes) && !event.altKey) {
                 const node = selected.points.findIndex((p) => Math.hypot(selected.x + p.x - point.x, selected.y + p.y - point.y) <= 9 / ed.view.zoom);
                 if (node >= 0) {
                     gesture = { type: "pathNode", pointerId: event.pointerId, item: selected, node,
@@ -156,16 +158,21 @@ export function attachInput(ed) {
                     return;
                 }
             }
+            if (ed.selectionSet.tileAt(point,event.shiftKey)) {
+                if(!event.shiftKey)gesture={type:'groupDrag',pointerId:event.pointerId,start:point,startLocal:local(event),move:ed.selectionSet.beginMove(),moved:false};
+                return;
+            }
             const hits = ed.hitTestAll(point);
             const current = hits.findIndex(({ item }) => item.id === ed.selection);
             const hit = event.altKey && hits.length ? hits[(current + 1) % hits.length] : hits[0];
             if (hit) {
-                ed.select(hit.item.id);
-                if (!event.altKey) gesture = { type: "drag", pointerId: event.pointerId, item: hit.item, start: point, orig: { x: hit.item.x, y: hit.item.y }, moved: false, startLocal: local(event) };
+                if(event.shiftKey){ed.select(hit.item.id,true);return;}
+                if(event.altKey || !ed.selectionSet.ids.includes(hit.item.id))ed.select(hit.item.id);
+                if(!event.altKey)gesture={type:'groupDrag',pointerId:event.pointerId,start:point,startLocal:local(event),move:ed.selectionSet.beginMove(),moved:false};
             } else {
-                ed.select(null);
-                gesture = { type: "pan", pointerId: event.pointerId, last: local(event) };
-                updateCursorClass();
+                if(!event.shiftKey)ed.select(null);
+                gesture={type:'marquee',pointerId:event.pointerId,start:point,add:event.shiftKey};
+                ed.selectionSet.marquee={a:point,b:point};ed.requestFrame();
             }
         }
     });
@@ -245,6 +252,12 @@ export function attachInput(ed) {
                 gesture.item.points[gesture.node] = { x: at.x - gesture.item.x, y: at.y - gesture.item.y };
             }
             ed.invalidateItem(gesture.item);
+        } else if (gesture.type === 'marquee') {
+            ed.selectionSet.marquee={a:gesture.start,b:point};ed.requestFrame();
+        } else if (gesture.type === 'groupDrag') {
+            const now=local(event);
+            if(!gesture.moved && Math.hypot(now.x-gesture.startLocal.x,now.y-gesture.startLocal.y)<3)return;
+            gesture.moved=true;ed.selectionSet.previewMove(gesture.move,point.x-gesture.start.x,point.y-gesture.start.y);
         } else if (gesture.type === "drag") {
             const now = local(event);
             if (!gesture.moved && Math.hypot(now.x - gesture.startLocal.x, now.y - gesture.startLocal.y) < 3) return;
@@ -296,7 +309,14 @@ export function attachInput(ed) {
         if (gesture.pointerId !== event.pointerId) return;
         const done = gesture;
         gesture = null;
-        if (done.type === "stroke") ed.endStroke();
+        if (done.type === 'marquee') {
+            ed.selectionSet.marquee=null;
+            const p=ed.clientToDoc(event.clientX,event.clientY);
+            if(Math.hypot(p.x-done.start.x,p.y-done.start.y)*ed.view.zoom>=3)ed.selectionSet.rectangle(done.start,p,done.add);
+            ed.requestFrame();
+        }
+        else if (done.type === 'groupDrag' && done.moved) ed.selectionSet.finishMove(done.move);
+        else if (done.type === "stroke") ed.endStroke();
         else if (done.type === "erase") ed.endErase();
         else if (done.type === "tiles") ed.endTiles();
         else if (done.type === "path") {
@@ -394,7 +414,7 @@ export function attachInput(ed) {
             return;
         }
         if (event.key === "Delete" || event.key === "Backspace") {
-            if (ed.selection) {
+            if (ed.selectionSet.count) {
                 event.preventDefault();
                 ed.deleteSelection();
             }

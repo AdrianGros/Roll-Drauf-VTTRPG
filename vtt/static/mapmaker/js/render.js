@@ -81,19 +81,19 @@ export function pathBounds(item) {
         w: Math.max(...xs) - Math.min(...xs) + pad * 2, h: Math.max(...ys) - Math.min(...ys) + pad * 2 };
 }
 
-export function pathHit(item, point, tolerance) {
-    for (let i = 1; i < item.points.length; i += 1) {
-        const a = item.points[i - 1];
-        const b = item.points[i];
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-        const length2 = dx * dx + dy * dy;
-        const px = point.x - item.x - a.x;
-        const py = point.y - item.y - a.y;
-        const t = length2 ? Math.max(0, Math.min(1, (px * dx + py * dy) / length2)) : 0;
-        if (Math.hypot(px - dx * t, py - dy * t) <= item.width / 2 + tolerance) return true;
+export function pathShape(item) {
+    const path = new Path2D();
+    path.moveTo(item.x+item.points[0].x,item.y+item.points[0].y);
+    for(let i=1;i<item.points.length;i++){
+        const p=item.points[i],next=item.points[i+1];
+        if(item.curve)path.quadraticCurveTo(item.x+p.x,item.y+p.y,item.x+(next?(p.x+next.x)/2:p.x),item.y+(next?(p.y+next.y)/2:p.y));
+        else path.lineTo(item.x+p.x,item.y+p.y);
     }
-    return false;
+    return path;
+}
+export function pathHit(item, point, tolerance) {
+    measureCtx.save();measureCtx.lineWidth=item.width+2*tolerance;measureCtx.lineCap='round';measureCtx.lineJoin='round';
+    const hit=measureCtx.isPointInStroke(pathShape(item),point.x,point.y);measureCtx.restore();return hit;
 }
 
 export function drawPath(ctx, item) {
@@ -101,15 +101,13 @@ export function drawPath(ctx, item) {
     ctx.save();
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.beginPath();
-    ctx.moveTo(item.x + item.points[0].x, item.y + item.points[0].y);
-    for (const point of item.points.slice(1)) ctx.lineTo(item.x + point.x, item.y + point.y);
+    const path=pathShape(item);
     ctx.strokeStyle = item.material === "river" ? "#294d5b" : "#4d3527";
     ctx.lineWidth = item.width + (item.material === "river" ? 3 : 4);
-    ctx.stroke();
+    ctx.stroke(path);
     ctx.strokeStyle = item.material === "river" ? "#5d93a0" : "#ab8759";
     ctx.lineWidth = item.width;
-    ctx.stroke();
+    ctx.stroke(path);
     ctx.restore();
 }
 

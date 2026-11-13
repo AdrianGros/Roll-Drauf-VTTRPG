@@ -504,7 +504,7 @@ export class UI {
         }
     }
 
-    chooseStamp(id, { crop = null, openSheet = true } = {}) {
+    chooseStamp(id, { crop = null, openSheet = true, size = null } = {}) {
         const ed = this.ed;
         const stamp = ed.palette.stamps.get(id);
         if (!stamp) return;
@@ -513,7 +513,7 @@ export class UI {
             if (this.pendingStamp !== id) return;
             ed.stampOpts.asset = id;
             ed.stampOpts.crop = crop;
-            ed.stampOpts.size = crop ? Math.min(256, Math.max(16, crop.w, crop.h)) : stamp.defaultSize;
+            ed.stampOpts.size = size !== null ? clamp(size,16,320) : crop ? Math.min(256, Math.max(16, crop.w, crop.h)) : stamp.defaultSize;
             this.stampSize.set(ed.stampOpts.size);
             $("stampSelected").textContent = globalThis.VTTUi("Ausgewählt: {p0} · {p1}",{p0:(stamp.label),p1:(stamp.packName)});
             document.querySelectorAll(".mm-stamp").forEach((button) => {
@@ -657,6 +657,26 @@ export class UI {
 
     bindInspector() {
         const ed = this.ed;
+        const labels={undoVisible:globalThis.VTTUi('Rückgängig'),redoVisible:globalThis.VTTUi('Wiederholen'),
+            groupScaleLabel:globalThis.VTTUi('Gemeinsame Größe (%)'),groupScaleApply:globalThis.VTTUi('Größe anwenden'),
+            groupDelete:globalThis.VTTUi('Auswahl löschen'),groupClear:globalThis.VTTUi('Auswahl aufheben'),
+            selPathCurveLabel:globalThis.VTTUi('Geglätteter Verlauf'),pathCurveLabel:globalThis.VTTUi('Geglätteter Verlauf'),
+            pathNodeModeLabel:globalThis.VTTUi('Wegpunkte bearbeiten'),labelNamedLabel:globalThis.VTTUi('Name anzeigen'),
+            tileAsSymbol:globalThis.VTTUi('Gewählte Kachel frei als Symbol platzieren'),
+            pathEditHint:globalThis.VTTUi('Wegpunkte bearbeiten einschalten und einen sichtbaren Punkt ziehen. Umschalt + Ziehen funktioniert ebenfalls.'),
+            selectionHint:globalThis.VTTUi('Auf freier Fläche einen Auswahlrahmen ziehen. Umschalt-Klick erweitert die Auswahl. Ziehen verschiebt die Auswahl; Entf löscht sie. Leertaste verschiebt die Ansicht.')};
+        Object.entries(labels).forEach(([id,text])=>$(id).textContent=text);
+        $('undoVisible').addEventListener('click',()=>ed.undo());$('redoVisible').addEventListener('click',()=>ed.redo());
+        $('groupClear').addEventListener('click',()=>ed.select(null));$('groupDelete').addEventListener('click',()=>ed.deleteSelection());
+        $('groupScaleApply').addEventListener('click',()=>{const f=Number($('groupScale').value)/100;if(Number.isFinite(f)&&f>=.1&&f<=5)ed.selectionSet.scale(f);$('groupScale').value='100';});
+        $('selPathCurve').addEventListener('change',e=>{ed.liveEdit({curve:e.target.checked});ed.commitEdit();});
+        $('pathNodeMode').addEventListener('change',e=>{ed.editPathNodes=e.target.checked;});
+        $('pathCurve').addEventListener('change',e=>{ed.pathOpts.curve=e.target.checked;});
+        $('labelNamed').addEventListener('change',e=>{ed.labelOpts.named=e.target.checked;});
+        $('tileAsSymbol').addEventListener('click',()=>{
+            if(!ed.tileOpts.asset){this.toast(globalThis.VTTUi('Wähle zuerst eine Kachel.'));return;}
+            this.chooseStamp(ed.tileOpts.asset,{openSheet:false,size:ed.activeLayer()?.kind==='tiles'?ed.activeLayer().grid.size:ed.tileOpts.size});ed.setTool('stamp');
+        });
         const commit = () => ed.commitEdit();
         this.selStampSize = this.range("selStampSize", "selStampSizeOut", (v) => `${v} px`, (v) => ed.liveEdit({ size: v }));
         this.selStampRot = this.range("selStampRot", "selStampRotOut", (v) => `${v}°`, (v) => ed.liveEdit({ rot: v }));
@@ -677,7 +697,8 @@ export class UI {
         $("selPin").addEventListener("change", (event) => { ed.liveEdit({ pin: event.target.checked }); commit(); });
         $("selText").addEventListener("input", (event) => {
             const text = event.target.value.slice(0, LIMITS.labelText);
-            if (text.trim()) ed.liveEdit({ text });
+            const found=ed.selection && findItem(ed.doc,ed.selection);
+            if(text.trim() || found?.item.pin || found?.item.symbol)ed.liveEdit({text});
         });
         $("selText").addEventListener("blur", (event) => {
             if (!event.target.value.trim()) this.refreshInspector();
@@ -739,6 +760,15 @@ export class UI {
         const ed = this.ed;
         const box = $("inspector");
         const found = ed.selection && ed.doc ? findItem(ed.doc, ed.selection) : null;
+        const count=ed.doc?ed.selectionSet.count:0,group=count>1||!!ed.selectionSet.tiles;
+        $('groupInspector').hidden=!group;
+        if(group){
+            $('groupTitle').textContent=globalThis.VTTUi('{count} ausgewählt',{count});
+            $('groupHint').textContent=ed.selectionSet.tiles?globalThis.VTTUi('Kacheln bewegen sich in ganzen Rasterzellen. Belegte Zielzellen bleiben geschützt.'):globalThis.VTTUi('Die Auswahl gemeinsam ziehen oder löschen. Größe ändert die einzelnen Symbole und Beschriftungen.');
+            const canScale=!ed.selectionSet.tiles && ed.selectionSet.objects.every(({item})=>!('points' in item));
+            $('groupScaleRow').hidden=!canScale;$('groupScaleApply').hidden=!canScale;
+            box.hidden=true;return;
+        }
         if (!found) {
             box.hidden = true;
             return;
@@ -762,6 +792,7 @@ export class UI {
         } else if (isPath) {
             $("inspectorTitle").textContent = item.material === "river" ? globalThis.VTTUi("Fluss") : globalThis.VTTUi("Weg");
             $("selPathMaterial").value = item.material;
+            $("selPathCurve").checked=!!item.curve;$("pathNodeMode").checked=ed.editPathNodes;
             if (!editing("selPathWidth") && !editing("selPathWidthNumber")) this.selPathWidth.set(item.width);
         } else {
             $("inspectorTitle").textContent = item.place ? globalThis.VTTUi("Ort") : globalThis.VTTUi("Beschriftung");
@@ -927,7 +958,7 @@ export class UI {
             const li = el("li");
             const button = el("button", { type: "button", class: `mm-place${item.id === ed.selection ? " is-selected" : ""}`, dataset: { item: item.id } });
             const head = el("span", { class: "mm-place-head" });
-            head.append(el("strong", { class: "mm-place-name" }, item.text), el("span", { class: "mm-place-kind" }, PLACE_KINDS[item.place.kind] || ""));
+            head.append(el("strong", { class: "mm-place-name" }, item.text || globalThis.VTTUi("Symbol ohne Namen")), el("span", { class: "mm-place-kind" }, PLACE_KINDS[item.place.kind] || ""));
             button.appendChild(head);
             button.appendChild(el("span", { class: "mm-place-lore" }, item.place.lore || globalThis.VTTUi("Noch keine Beschreibung.")));
             if (!layer.visible) button.appendChild(el("span", { class: "mm-place-kind" }, globalThis.VTTUi("Ebene ausgeblendet")));
@@ -1020,6 +1051,7 @@ export class UI {
     updateUndo() {
         $("undoBtn").disabled = !this.ed.history.canUndo;
         $("redoBtn").disabled = !this.ed.history.canRedo;
+        $("undoVisible").disabled=!this.ed.history.canUndo;$("redoVisible").disabled=!this.ed.history.canRedo;
     }
 
     updateZoom() {

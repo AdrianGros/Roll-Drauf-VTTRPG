@@ -16,6 +16,7 @@ import { createEmptyMap, createStarterMap } from "./starter.js";
 import { AutosaveUnavailable, DraftStore, downloadBlob, slugify } from "./storage.js";
 import { attachInput } from "./tools.js";
 import { UI } from "./ui.js";
+import { Selection } from "./selection.js";
 import { zipFiles } from "./zip.js";
 import { Library } from "./library.js";
 import { AtlasLibrary } from "./atlas-bridge.js";
@@ -35,6 +36,8 @@ function snapshot(item) {
 }
 
 class Editor {
+    get selection() { return this._selection || null; }
+    set selection(id) { this._selection=id;this.selectionSet?.reset(id); }
     constructor() {
         this.canvas = document.getElementById("mapCanvas");
         this.stage = document.getElementById("stage");
@@ -48,14 +51,16 @@ class Editor {
         this.tool = "brush";
         this.brush = { material: "forest", size: 64, opacity: 0.9, softness: 45, pressureEnabled: true };
         this.stampOpts = { asset: null, size: 88, rot: 0, flip: false, vary: false, scatter: false, grid: 0 };
-        this.labelOpts = { style: "town", kind: "landmark", pin: true, symbol: null, symbolSize: 56 };
-        this.pathOpts = { material: "road", width: 14 };
+        this.labelOpts = { named: true, style: "town", kind: "landmark", pin: true, symbol: null, symbolSize: 56 };
+        this.pathOpts = { material: "road", width: 14, curve: true };
         this.tileOpts = { asset: null, erase: false, size: TILE_GRID_DEFAULT, radius: 0, variants: [] };
         this.tileGesture = null;
         this.eraseScope = "active"; // "active" (default) or explicit "visible"
         this.eraseGesture = null;
         this.previewPath = null;
+        this.selectionSet = new Selection(this);
         this.selection = null;
+        this.editPathNodes = false;
         this.activeLayerId = null;
         this.cursor = null;
         this.strokeActive = false;
@@ -301,6 +306,7 @@ class Editor {
     }
 
     drawOverlay(ctx, zoom) {
+        this.selectionSet.draw(ctx,zoom);
         if (this.selection) {
             const found = findItem(this.doc, this.selection);
             if (found) {
@@ -820,25 +826,8 @@ class Editor {
     }
 
     deleteSelection() {
-        if (!this.selection) return;
         this.commitEdit();
-        const found = findItem(this.doc, this.selection);
-        if (!found) return;
-        const { layer, item, index } = found;
-        const apply = () => {
-            const i = layer.items.indexOf(item);
-            if (i >= 0) layer.items.splice(i, 1);
-            this.invalidateItem(item);
-            this.afterItemChange();
-        };
-        const revert = () => {
-            layer.items.splice(Math.min(index, layer.items.length), 0, item);
-            this.invalidateItem(item);
-            this.afterItemChange();
-        };
-        this.selection = null;
-        apply();
-        this.commit({ label: globalThis.VTTUi("Löschen"), bytes: 256, undo: revert, redo: apply });
+        if (this.selectionSet.count) this.selectionSet.remove();
     }
 
     updateItem(item, before, after, label) {
@@ -859,9 +848,9 @@ class Editor {
         this.requestFrame();
     }
 
-    select(itemId) {
-        if (this.selection !== itemId) this.commitEdit();
-        this.selection = itemId;
+    select(itemId,add=false) {
+        if (this.selection !== itemId || add) this.commitEdit();
+        this.selectionSet.choose(itemId,add);
         if (itemId) {
             const found = findItem(this.doc, itemId);
             if (found && found.layer.id !== this.activeLayerId) {
@@ -879,6 +868,12 @@ class Editor {
     liveEdit(patch) {
         const found = this.selection && findItem(this.doc, this.selection);
         if (!found) return;
+        if('text' in found.item){
+            const next={...found.item,...patch};
+            if(!next.text.trim() && !next.pin && !next.symbol){
+                this.ui.toast(globalThis.VTTUi('Ohne Namen muss ein Symbol oder eine Ortsnadel sichtbar bleiben.'));this.ui.refreshInspector();return;
+            }
+        }
         if (!this.pendingEdit || this.pendingEdit.item !== found.item) {
             this.commitEdit();
             this.pendingEdit = { item: found.item, before: snapshot(found.item) };
@@ -965,7 +960,7 @@ class Editor {
             id: newId("p", collectIds(this.doc)),
             x: at.x,
             y: at.y,
-            text: globalThis.VTTUi("Neuer Ort"),
+            text: this.labelOpts.named || (!this.labelOpts.pin && !this.labelOpts.symbol) ? globalThis.VTTUi("Neuer Ort") : "",
             style,
             size: LABEL_STYLES[style].size,
             rot: 0,
@@ -1512,6 +1507,9 @@ function exposeApi(editor, ready) {
                 fitZoom: editor.view.fit,
                 activeLayer: editor.activeLayerId,
                 selection: editor.selection,
+                selectionCount: editor.selectionSet.count,
+                selectedIds: editor.selectionSet.ids.slice(),
+                selectedTiles: editor.selectionSet.tiles ? snapshot(editor.selectionSet.tiles) : null,
                 canUndo: editor.history.canUndo,
                 canRedo: editor.history.canRedo,
                 historySteps: editor.history.undoStack.length,

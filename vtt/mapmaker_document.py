@@ -189,10 +189,10 @@ def normalize_document(raw):
                         require(isinstance(point, dict), "Ungültiger Wegpunkt.")
                         clean_points.append({"x": number(point.get("x"), -2*w, 2*w), "y": number(point.get("y"), -2*h, 2*h)})
                     require(clean_points[0] == {"x": 0, "y": 0}, "Erster Wegpunkt muss 0,0 sein.")
-                    item.update(material=entry["material"], width=number(entry.get("width"), 2, 80), points=clean_points)
+                    item.update(material=entry["material"], width=number(entry.get("width"), 2, 80), points=clean_points, curve=boolean(entry.get("curve", False)))
                 else:
                     label = text(entry.get("text"), 80)
-                    require(label and entry.get("style") in ("realm", "region", "city", "town", "water", "feature"), "Ungültige Beschriftung.")
+                    require(entry.get("style") in ("realm", "region", "city", "town", "water", "feature"), "Ungültige Beschriftung.")
                     item.update(text=label, style=entry["style"], size=number(entry.get("size"), 8, 200),
                                 rot=number(entry.get("rot", 0), -360, 360), color=color(entry.get("color", "#3b2a1a")),
                                 pin=boolean(entry.get("pin", False)), place=None, symbol=None)
@@ -204,6 +204,7 @@ def normalize_document(raw):
                     if symbol is not None:
                         require(place is not None and isinstance(symbol, dict), "Ungültiges Ortssymbol.")
                         item["symbol"] = {"asset": asset(symbol.get("asset")), "size": number(symbol.get("size"), 16, 320)}
+                    require(label or item["pin"] or item["symbol"], "Leere Beschriftung braucht ein Symbol oder eine Ortsnadel.")
                 layer["items"].append(item)
         result["layers"].append(layer)
     data = json.dumps(result, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode("utf-8")

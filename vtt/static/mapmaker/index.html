@@ -87,15 +87,15 @@
         </button>
         <button class="mm-tool" type="button" data-tool="stamp" aria-pressed="false" title="Stempel – Symbole setzen (S)" data-ui-title="u_67a9da424e70">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-11 4 6 3-4 5 9z"/><circle cx="17" cy="5" r="2"/></svg>
-            <span><span data-ui-key="u_cf577b827b3a">Stempel</span></span>
+            <span><span data-ui-key="u_1030a110aa74">Symbole</span></span>
         </button>
         <button class="mm-tool" type="button" data-tool="tile" aria-pressed="false" title="Kacheln ins Raster malen (K)" data-ui-title="u_9217d9c40cfc">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3z"/><path d="M13 3h8v8h-8z"/><path d="M3 13h8v8H3z"/><path d="M13 13h8v8h-8z"/></svg>
-            <span><span data-ui-key="u_d06fb212c619">Kacheln</span></span>
+            <span><span data-ui-key="u_75db23dedd99">Kacheln (Raster)</span></span>
         </button>
         <button class="mm-tool" type="button" data-tool="label" aria-pressed="false" title="Ort oder Beschriftung setzen (T)" data-ui-title="u_e704d3b61b71">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.4-6-10a6 6 0 0112 0c0 4.6-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
-            <span><span data-ui-key="u_d95f9e67114d">Ort</span></span>
+            <span><span data-ui-key="u_559aa577b0f7">Orte und Text</span></span>
         </button>
         <button class="mm-tool" type="button" data-tool="select" aria-pressed="false" title="Auswählen und verschieben (V)" data-ui-title="u_6bdb6eda0e18">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z"/></svg>
@@ -134,6 +134,13 @@
         </div>
 
         <section class="mm-pane" id="pane-tool" role="tabpanel" aria-labelledby="tab-tool">
+            <div class="mm-history-actions"><button id="undoVisible" type="button" class="mm-btn" disabled>Rückgängig</button><button id="redoVisible" type="button" class="mm-btn" disabled>Wiederholen</button></div>
+            <div id="groupInspector" class="mm-group" hidden>
+                <h2 id="groupTitle"></h2><p id="groupHint" class="mm-hint"></p>
+                <label id="groupScaleRow" class="mm-field"><span id="groupScaleLabel">Gemeinsame Größe (%)</span><input id="groupScale" type="number" min="10" max="500" value="100" step="10"></label>
+                <button id="groupScaleApply" type="button" class="mm-btn">Größe anwenden</button>
+                <button id="groupDelete" type="button" class="mm-btn mm-btn-danger">Auswahl löschen</button><button id="groupClear" type="button" class="mm-btn">Auswahl aufheben</button>
+            </div>
             <div id="inspector" class="mm-group mm-inspector" hidden>
                 <div class="mm-group-head">
                     <h2 id="inspectorTitle"><span data-ui-key="u_0177f6dca0b7">Auswahl</span></h2>
@@ -163,7 +170,9 @@
                 <div id="inspectPath" hidden>
                     <label class="mm-field"><span><span data-ui-key="u_308e17d2200a">Art</span></span><select id="selPathMaterial"><option value="road" data-ui-key="u_d5c00e9a2be3">Weg</option><option value="river" data-ui-key="u_200b8c04671b">Fluss</option></select></label>
                     <div class="mm-range mm-range-edit"><label for="selPathWidth"><span data-ui-key="u_861387c8ffe9">Breite</span></label><input id="selPathWidth" type="range" min="2" max="80" step="1"><output id="selPathWidthOut"></output><input id="selPathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel" data-ui-aria-label="u_85804ab92648"></div>
-                    <p class="mm-hint"><span data-ui-key="u_f61a8b6b7361">Ziehen verschiebt den ganzen Verlauf. Umschalt + Ziehen an einem Punkt ändert eine Biegung.</span></p>
+                    <label class="mm-check"><input id="selPathCurve" type="checkbox"><span id="selPathCurveLabel">Geglätteter Verlauf</span></label>
+                    <label class="mm-check"><input id="pathNodeMode" type="checkbox"><span id="pathNodeModeLabel">Wegpunkte bearbeiten</span></label>
+                    <p id="pathEditHint" class="mm-hint">Wegpunkte bearbeiten einschalten und einen sichtbaren Punkt ziehen. Umschalt + Ziehen funktioniert ebenfalls.</p>
                 </div>
                 <button id="showMapBtn" type="button" class="mm-btn mm-show-map"><span data-ui-key="u_5d10fb7dbb20">Ort auf Karte zeigen</span></button>
                 <button id="selDelete" type="button" class="mm-btn mm-btn-danger"><span data-ui-key="u_e65c67367259">Auswahl löschen</span></button>
@@ -189,6 +198,7 @@
             <div class="mm-group" data-options="path">
                 <p class="mm-target"><span data-ui-key="u_71cb4043fe52">Zeichnet auf:</span> <strong id="pathTarget"><span data-ui-key="u_ce8c8bb5c91b">Neue Ebene beim ersten Weg</span></strong></p>
                 <label class="mm-field"><span><span data-ui-key="u_308e17d2200a">Art</span></span><select id="pathMaterial"><option value="road" data-ui-key="u_d5c00e9a2be3">Weg</option><option value="river" data-ui-key="u_200b8c04671b">Fluss</option></select></label>
+                <label class="mm-check"><input id="pathCurve" type="checkbox" checked><span id="pathCurveLabel">Geglätteter Verlauf</span></label>
                 <div class="mm-range mm-range-edit"><label for="pathWidth"><span data-ui-key="u_861387c8ffe9">Breite</span></label><input id="pathWidth" type="range" min="2" max="80" step="1"><output id="pathWidthOut"></output><input id="pathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel" data-ui-aria-label="u_85804ab92648"></div>
                 <p class="mm-hint"><span data-ui-key="u_42afd96dfc30">Ziehen zeichnet einen editierbaren Verlauf. Mit Auswählen (V) kannst du ihn oder einzelne Punkte verschieben.</span></p>
             </div>
@@ -227,6 +237,7 @@
                 <label class="mm-field"><span><span data-ui-key="u_45532b2b8e85">Kacheln suchen</span></span><input id="tileSearch" type="search" placeholder="Gras, Dach, Mauer …" data-ui-placeholder="u_43b9d7f4100d" autocomplete="off"></label>
                 <label class="mm-field"><span><span data-ui-key="u_acb5ce20a410">Asset-Paket</span></span><select id="tilePack"><option value="" data-ui-key="u_346513e2c8e9">Alle Pakete</option></select></label>
                 <p id="tileSelected" class="mm-meta"></p>
+                <button id="tileAsSymbol" type="button" class="mm-btn">Gewählte Kachel frei als Symbol platzieren</button>
                 <p id="tileResults" class="mm-hint" role="status" aria-live="polite"></p>
                 <div class="mm-palette-pages"><button id="tilePrev" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_045733db2fe1">Vorherige</span></button><button id="tileNext" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_d92f7cbe4bbb">Weitere Kacheln</span></button></div>
                 <div id="tilePalette" class="mm-palette"></div>
@@ -234,6 +245,7 @@
             </div>
 
             <div class="mm-group" data-options="label">
+                <label class="mm-check"><input id="labelNamed" type="checkbox" checked><span id="labelNamedLabel">Name anzeigen</span></label>
                 <p class="mm-target"><span data-ui-key="u_45cb873b428e">Setzt auf:</span> <strong id="labelTarget">–</strong></p>
                 <div class="mm-field-row">
                     <label class="mm-field"><span><span data-ui-key="u_820cfc2922d6">Stil</span></span><select id="labelStyle"></select></label>
@@ -245,9 +257,7 @@
                 <p class="mm-hint"><span data-ui-key="u_c2a6118cc49f">Tippe auf die Karte, um immer einen neuen Ort zu setzen. Zum Bearbeiten vorhandener Orte nutze Auswählen (V) oder die Ortsliste.</span></p>
             </div>
 
-            <div class="mm-group" data-options="select">
-                <p class="mm-hint"><span data-ui-key="u_72dfc90b8106">Symbole, Wege oder Beschriftungen antippen, um sie auszuwählen; ziehen verschiebt sie. Bei Wegen ändert</span> <kbd>Umschalt</kbd> <span data-ui-key="u_7d7139fc6b22">+ Ziehen einen Punkt.</span> <kbd>Entf</kbd> <span data-ui-key="u_cb955275b5f1">löscht die Auswahl.</span></p>
-            </div>
+            <div class="mm-group" data-options="select"><p id="selectionHint" class="mm-hint">Auf freier Fläche einen Auswahlrahmen ziehen. Umschalt-Klick erweitert die Auswahl. Ziehen verschiebt die Auswahl; Entf löscht sie. Leertaste verschiebt die Ansicht.</p></div>
             <div class="mm-group" data-options="pan">
                 <p class="mm-hint"><span data-ui-key="u_1183b369f48d">Ziehen verschiebt die Karte. Mausrad oder zwei Finger zoomen. In jedem Werkzeug:</span> <kbd>Leertaste</kbd> <span data-ui-key="u_a1c7235a87b1">halten oder mittlere Maustaste zum Verschieben.</span></p>
             </div>

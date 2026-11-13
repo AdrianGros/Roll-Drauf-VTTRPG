@@ -1,0 +1,48 @@
+{
+  "status": "targeted_checks_passed_pending_live",
+  "retention": "permanent",
+  "groups": [
+    {
+      "scope": "Desktop marquee/group movement/cancel/scale/delete/undo; tile collision/move/delete",
+      "summary": "2 passed in /tmp/feedback-b05-first.log before the roundtrip found missing curve serialization"
+    },
+    {
+      "scope": "Corrected curve and nameless-pin file roundtrip, shared native path hit geometry, existing path editing and tile server contracts",
+      "summary": "17 passed in 60.67s",
+      "log": "/tmp/feedback-b05-roundtrip.log"
+    },
+    {
+      "scope": "Final mobile group journey, grid-to-free-symbol, protected tile moves, strict optional fields and nameless visible label constraints",
+      "summary": "4 passed in 52.72s",
+      "log": "/tmp/feedback-b05-mobile-confirmation.log"
+    },
+    {
+      "scope": "Own/foreign private library curved/nameless format; real other-device copy/delete browser regression",
+      "summary": "4 passed, 49 warnings in 53.19s",
+      "log": "/tmp/feedback-b05-library.log"
+    }
+  ],
+  "resolved_findings": [
+    "Curve flag was absent from file serializer; now retained in file/library/IndexedDB serialization",
+    "Mobile test now opens/closes the existing tool sheet through its normal tab",
+    "Grid offsets checked before packed coordinate encoding",
+    "Invisible replaced title excluded; group object lookup linear in document size"
+  ],
+  "source_sha256": {
+    "vtt/mapmaker_document.py": "722dbde80fd3ede3484bb381ce97456f2dcb215a8b232129bdef7f843ed3e2f7",
+    "vtt/static/i18n/ui.de.json": "d427c90d5fac8ebcc5222ab69614e108106c8d9856116acc3160d04fe12596a7",
+    "vtt/static/i18n/ui.en.json": "419f35a8d7dfe51ba30b25a3bc0955643438c1457f9f757322f12e00b0721187",
+    "vtt/static/js/ui-catalog.js": "a58d7c8f27083eba2c791904c867011440a024fbdb73635e16b38ca55385fb99",
+    "vtt/static/mapmaker/index.html": "dae1de7524da6cdc08ac0b5566c08d502d0ebfc49ab22a4c40fcd0bbb750efe7",
+    "vtt/static/mapmaker/js/app.js": "79d58ecf03cd27e86b4f9157b70a5444a0eaffd17a564ef49a5c785cd58a22c2",
+    "vtt/static/mapmaker/js/document.js": "0c46a3e4d0d4eeea482328a3edfd9014c35cba09df8ca8ea928f430b138e7309",
+    "vtt/static/mapmaker/js/render.js": "a1e5ce65e200fd513b1d9174053a4c5d1250d113cee39e1defc016a1e72091e9",
+    "vtt/static/mapmaker/js/tools.js": "bfcd847ec10485e2b6049330b08901bff1b44f5635faabe22c193e1f5403a7c9",
+    "vtt/static/mapmaker/js/ui.js": "b9724092c07e1d17bcf498b4af4a5a0bd6d4539c663e2cc066c068b683fd594e",
+    "vtt/static/mapmaker/mapmaker.css": "bf185d51bbb4ee760572a96616025fe4e197d2e3e7c0e43d2023096e089d0dde",
+    "vtt/static/mapmaker/js/selection.js": "c57aaea0475b7c1ff8b4b2b928919f6dc9b6a117c94aaeca20d2d35812ce7484"
+  },
+  "i18n": "3271 UI sources DE/EN complete",
+  "live": "NOT_RUN",
+  "rollback_note": "Earlier image reads the preserved path points as a straight path and does not implement group controls. Do not resave a new curved file in that older editor if retaining the new curve flag is required."
+}

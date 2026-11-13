@@ -379,6 +379,7 @@ function validatePath(itemIn, ids, w, h) {
         y: num(itemIn.y, -h, 2 * h, "Position"),
         material: itemIn.material,
         width: num(itemIn.width, 2, 80, "Wegbreite"),
+        curve: bool(itemIn.curve,false),
         points,
     };
 }
@@ -386,7 +387,6 @@ function validatePath(itemIn, ids, w, h) {
 function validateLabel(itemIn, ids, knownAssets, w, h) {
     if (!isPlainObject(itemIn)) fail("Ungültige Beschriftung.");
     const text = cleanText(itemIn.text, LIMITS.labelText);
-    if (!text) fail("Beschriftung ohne Text.");
     if (!Object.hasOwn(LABEL_STYLES, itemIn.style)) fail("Unbekannter Beschriftungsstil.");
     let place = null;
     if (itemIn.place !== undefined && itemIn.place !== null) {
@@ -402,6 +402,7 @@ function validateLabel(itemIn, ids, knownAssets, w, h) {
         }
         symbol = { asset: itemIn.symbol.asset, size: num(itemIn.symbol.size, 16, 320, "Ortssymbolgröße") };
     }
+    if(!text && !symbol && !bool(itemIn.pin,false))fail("Leere Beschriftung braucht ein Symbol oder eine Ortsnadel.");
     return {
         id: id(itemIn.id, ids),
         x: num(itemIn.x, -w, 2 * w, "Position"),
@@ -494,7 +495,7 @@ function bytesToBase64(bytes) {
 
 function plainItem(item) {
     if ("points" in item) return { id: item.id, x: round(item.x), y: round(item.y), material: item.material,
-        width: round(item.width), points: item.points.map((p) => ({ x: round(p.x), y: round(p.y) })) };
+        width: round(item.width), curve: !!item.curve, points: item.points.map((p) => ({ x: round(p.x), y: round(p.y) })) };
     if ("asset" in item) {
         return { id: item.id, asset: item.asset, x: round(item.x), y: round(item.y), size: round(item.size), rot: round(item.rot), flip: item.flip, ...(item.crop ? { crop: { ...item.crop } } : {}) };
     }

@@ -544,3 +544,6 @@ img.mm-pixel { image-rendering: pixelated; }
 .mm-landmass canvas[hidden] { display:none; }
 .mm-landmass .mm-dialog-actions { flex-wrap:wrap; }
 @media(max-width:480px) { .mm-landmass-fields { grid-template-columns:minmax(0,1fr); } }
+
+.mm-history-actions {display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+#groupInspector h2 {font-size:1rem;}
