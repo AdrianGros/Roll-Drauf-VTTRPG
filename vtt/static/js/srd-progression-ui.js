@@ -440,8 +440,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       select.append(option);
     });
     select.value = w.subclass;
-    select.addEventListener('change', () => change((x) => { x.subclass = select.value; }, false));
+    select.addEventListener('change', () => change((x) => { x.subclass = select.value; }, true));
     box.append(labelled(globalThis.VTTUi('Wähle deine Unterklasse'), select));
+    if (w.subclass) box.append(window.SrdRulePreview.subclass(w.subclass,need.newClassLevel));
     return box;
   }
 
@@ -547,6 +548,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       row.append(box, element('span', null, entry.name));
       if (entry.sub || entry.classOption) row.append(element('small', null, entry.sub || ''));
       row.dataset.search = `${entry.name} ${entry.sub || ''}`.toLowerCase();
+      row.dataset.sortName = entry.name;
+      if(entry.level != null) row.dataset.level = String(entry.level);
       wrap.append(row);
     });
     return wrap;
@@ -575,8 +578,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     return node;
   }
 
-  function filterable(list) {
+  function filterable(list, spells = false) {
     const wrap = element('div', 'srd-prog-filterable');
+    if(spells){
+      const sort=element('select','srd-prog-select');
+      [['level',globalThis.VTTUi('Grad, dann Name')],['name',globalThis.VTTUi('Name')]].forEach(([value,text]) => {const o=element('option',null,text);o.value=value;sort.append(o);});
+      const reorder=() => [...list.children].sort((a,b) => (sort.value === 'level' ? Number(a.dataset.level)-Number(b.dataset.level) : 0) || a.dataset.sortName.localeCompare(b.dataset.sortName,document.documentElement.lang)).forEach(row => list.append(row));
+      sort.value=current.wizard.spellSort || 'level';
+      sort.addEventListener('change',()=>{current.wizard.spellSort=sort.value;reorder();});reorder();wrap.append(labelled(globalThis.VTTUi('Zaubersortierung'),sort));
+    }
     if (list.children.length > 12) {
       const search = element('input', 'srd-prog-input');
       search.type = 'search';
@@ -686,14 +696,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const spells = need.spells;
     const lists = srdCreatorData.spellLists[w.classKey] || [];
     const meta = srdCreatorData.spells;
-    const entryOf = (id) => ({ id, name: meta[id].name, sub: meta[id].level === 0 ? globalThis.VTTUi('Zaubertrick') : globalThis.VTTUi('Grad {level}', {level: meta[id].level}) });
+    const entryOf = (id) => ({ id, level:meta[id].level, name: meta[id].name, sub: meta[id].level === 0 ? globalThis.VTTUi('Zaubertrick') : globalThis.VTTUi('Grad {level}', {level: meta[id].level}) });
     const cantrips = lists.filter((id) => meta[id].level === 0).map(entryOf);
     const leveled = lists.filter((id) => meta[id].level >= 1 && meta[id].level <= spells.maxGrade).map(entryOf);
     const set = (field, next) => change((x) => { x.spells[field] = next; }, true);
 
     if (spells.cantrips.count) {
       box.append(element('h5', 'srd-prog-sub', globalThis.VTTUi('Zaubertricks')), counter(w.spells.cantrips.length, spells.cantrips.count));
-      box.append(filterable(checklist(cantrips, w.spells.cantrips, spells.cantrips.count, (next) => set('cantrips', next))));
+      box.append(filterable(checklist(cantrips, w.spells.cantrips, spells.cantrips.count, (next) => set('cantrips', next)),true));
     }
     if (spells.spellbook) {
       box.append(element('h5', 'srd-prog-sub', globalThis.VTTUi('Zauberbuch')), counter(w.spells.spellbook.length, spells.spellbook.count));
@@ -701,12 +711,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       box.append(filterable(checklist(leveled, w.spells.spellbook, spells.spellbook.count, (next) => change((x) => {
         x.spells.spellbook = next;
         x.spells.prepared = x.spells.prepared.filter((id) => next.includes(id));
-      }, true), spells.spellbook.current)));
+      }, true), spells.spellbook.current),true));
     }
     if (spells.prepared.count) {
       const pool = spells.spellbook ? leveled.filter((entry) => w.spells.spellbook.includes(entry.id)) : leveled;
       box.append(element('h5', 'srd-prog-sub', spells.spellbook ? globalThis.VTTUi('Vorbereitete Zauber (aus dem Zauberbuch)') : globalThis.VTTUi('Vorbereitete Zauber')), counter(w.spells.prepared.length, spells.prepared.count));
-      box.append(filterable(checklist(pool, w.spells.prepared, spells.prepared.count, (next) => set('prepared', next))));
+      box.append(filterable(checklist(pool, w.spells.prepared, spells.prepared.count, (next) => set('prepared', next)),true));
     }
     return box;
   }
@@ -767,6 +777,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     panel.append(hpStep(w, need));
     if (need.multiclass) panel.append(multiclassStep(w, need));
     if (need.subclass) panel.append(subclassStep(w, need));
+    else if (need.subclassId) panel.append(window.SrdRulePreview.subclass(need.subclassId,need.newClassLevel,true));
     if (need.advancement) panel.append(advancementStep(w, need));
     need.featureChoices.forEach((pending) => panel.append(featureChoiceStep(w, need, pending)));
     if (need.expertise && w.expertise) panel.append(expertiseStep(w, need));

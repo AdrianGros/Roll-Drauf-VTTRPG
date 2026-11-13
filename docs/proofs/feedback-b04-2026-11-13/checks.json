@@ -1,0 +1,49 @@
+{
+  "status": "targeted_checks_passed_pending_live",
+  "retention": "permanent",
+  "groups": [
+    {
+      "scope": "Duplicate roll assignment/save/reload",
+      "summary": "1 passed in /tmp/feedback-b04-second.log before a test-only focus assumption failed"
+    },
+    {
+      "scope": "Inline subclass/current-future boundary, preserved draft and spell picks; progression API",
+      "summary": "31 passed, 116 warnings in 55.81s",
+      "log": "/tmp/feedback-b04-confirmation.log"
+    },
+    {
+      "scope": "Actual later wizard level-up and guided fighter finalization",
+      "summary": "2 passed, 12 warnings in 61.34s",
+      "log": "/tmp/feedback-b04-levelup.log"
+    },
+    {
+      "scope": "Final origin refresh, mobile quick creator, fully loaded night pages in both engines",
+      "summary": "4 passed, 38 warnings in 123.20s",
+      "log": "/tmp/feedback-b04-final-browser.log"
+    },
+    {
+      "scope": "Final progression sort selection retained through wizard state",
+      "summary": "1 passed, 10 warnings in 36.46s",
+      "log": "/tmp/feedback-b04-sort-persistence.log"
+    }
+  ],
+  "source_sha256": {
+    "vtt/characters/srd_progression.py": "5960e0202b33aff4ec70ad61d9a88b9e3e32e210c9f623abd438f685e0ff0e53",
+    "vtt/static/css/srd-creator.css": "7fe860c9a58f20b6fbbdc7fbf8d9e5779c23333f40bd0e2e26fde37d2077ddee",
+    "vtt/static/css/srd-progression.css": "64ca320bb7f75abd05b6253476f74eacb253d82b4263a39a15ed4e03e1b915a1",
+    "vtt/static/i18n/ui.de.json": "2ef7a9a1b9233503f5abc53a47cd58d85b2ba6ef95427c7d12bda43b8f4e4913",
+    "vtt/static/i18n/ui.en.json": "8be44a413fbe565de78d962cf856250845ad2c18aad7f9b097a3f36403cc1485",
+    "vtt/static/js/srd-creator-steps.js": "61a06be1ef4f2fcd6e072249c365749fb6a5b7f90168cf53029a59e5cc324b1a",
+    "vtt/static/js/srd-creator.js": "d4dc340f12536b83e16606f694601d998d1673c7a87f28f880d0e9d2f44b80fc",
+    "vtt/static/js/srd-progression-ui.js": "0ab405f25e5454444641764d9e266db77f160f6dc88db51d414cc05ac0a32bd7",
+    "vtt/static/js/ui-catalog.js": "1b24499201f4653e8285be4d3ac6eba07759daf4f94fb9ed16633fee56ce6136",
+    "vtt/templates/character-sheet.html": "941a11bbc62ac9d8f0518e6db17e91cf395f65b354176cb1086527bdb47b44f8",
+    "vtt/templates/srd-creator.html": "a2b78b8c68063ee1a20da6ddc7be0b9fbbfa12fe68b5f92442c09b03d8bb42d3",
+    "vtt/static/js/srd-rule-preview.js": "ae2de9e7c946fa36ca6abdb57b73d5fd95481dc3ab4ad0db6799be125ac8cedb"
+  },
+  "i18n": "3249 UI sources DE/EN verified",
+  "live": "NOT_RUN",
+  "residual": [
+    "N07 DM grants remains a separately bounded implementation within B04"
+  ]
+}

@@ -228,3 +228,11 @@ html[data-vtt-theme] .srd-creator-page .sc-import-error { color: var(--ui-danger
 @media (max-width: 900px) {
     html[data-vtt-theme] .srd-creator-page .sc-nav { background: var(--ui-panel); border-top-color: var(--ui-line); }
 }
+
+/* Compact class facts and the six physical roll results. */
+.sc-class-facts {display:grid;grid-template-columns:minmax(8rem,1fr) minmax(0,3fr);gap:.45rem 1rem;}
+.sc-class-facts dt {font-weight:700;}.sc-class-facts dd {margin:0;overflow-wrap:anywhere;}
+.sc-roll-results {display:grid;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));gap:.5rem;}
+.sc-roll-result {display:flex;flex-direction:column;padding:.55rem;border:1px solid var(--sc-border);border-radius:6px;}
+.srd-rule-preview {margin-block:1rem;}.srd-rule-preview details {margin-block:.6rem;}.srd-rule-preview summary {cursor:pointer;font-weight:600;}
+@media(max-width:480px){.sc-class-facts {grid-template-columns:1fr;}.sc-class-facts dd {margin-bottom:.5rem;}}

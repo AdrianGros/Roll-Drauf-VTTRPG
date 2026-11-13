@@ -48,3 +48,7 @@
   .srd-prog-checks { grid-template-columns: 1fr; }
 }
 .srd-prog-down { margin: 0.4rem 0; display: grid; gap: 0.4rem; }
+
+.srd-rule-preview {margin-block:1rem;}
+.srd-rule-preview details {margin-block:.6rem;}
+.srd-rule-preview summary {cursor:pointer;font-weight:600;}

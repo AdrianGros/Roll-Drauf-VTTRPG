@@ -253,7 +253,7 @@ def test_quick_mode_and_mobile_layout(wiz):
     page.goto(f"{origin}/srd-creator")
     page.locator("#scNewQuick").click()
     expect(page.locator("#scBuilder")).to_be_visible()
-    for heading in ["Klasse", "Herkunft", "Attribute", "Wahlen", "Ausrüstung", "Zauber", "Beschreibung", "Prüfung"]:
+    for heading in ["Klasse", "Herkunft", "Attribute", "Merkmale und Talente", "Ausrüstung", "Zauber", "Beschreibung", "Prüfung"]:
         expect(page.locator(".sc-section h2", has_text=heading).first).to_be_visible() if heading == "Klasse" else expect(page.locator(".sc-section h2", has_text=heading).first).to_be_attached()
     page.set_viewport_size({"width": 390, "height": 844})
     page.get_by_role("button", name="Paladin", exact=False).first.click()

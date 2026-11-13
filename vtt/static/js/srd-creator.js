@@ -7,7 +7,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const COMP = '/api/rulesets/srd-5.2.1-de/compendium';
     const ABIL = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
     const STEPS = [
-        ['klasse', globalThis.VTTUi("Klasse")], ['herkunft', globalThis.VTTUi("Herkunft")], ['attribute', globalThis.VTTUi("Attribute")], ['wahlen', globalThis.VTTUi("Wahlen")],
+        ['klasse', globalThis.VTTUi("Klasse")], ['herkunft', globalThis.VTTUi("Herkunft")], ['attribute', globalThis.VTTUi("Attribute")], ['wahlen', globalThis.VTTUi("Merkmale und Talente")],
         ['ausruestung', globalThis.VTTUi("Ausrüstung")], ['zauber', globalThis.VTTUi("Zauber")], ['beschreibung', globalThis.VTTUi("Beschreibung")], ['pruefung', globalThis.VTTUi("Prüfung")],
     ];
     const SEV_LABEL = { error: globalThis.VTTUi("Fehler"), incomplete: globalThis.VTTUi("Offen"), warning: globalThis.VTTUi("Hinweis"), info: globalThis.VTTUi("Info") };
@@ -111,6 +111,24 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (response.ok) (await response.json()).items.forEach((e) => { app.extras.subclasses[e.id] = e; });
         } catch (error) { /* names fall back to ids */ }
     }
+
+    SC.refreshOrigins = async function () {
+        const result = await api('/origin-catalog');
+        if (!result.ok) { setStatus(globalThis.VTTUi('Die eigenen Hintergründe konnten nicht aktualisiert werden.')); return; }
+        // Retain selected old immutable revisions; the server still validates their access.
+        const state = app.draft.state;
+        const chosen = new Set([state.background?.id, ...Object.values(state.species?.choices || {}),
+            ...(state.advancements || []).map(a => a.featId),
+            ...Object.values(state.featureChoices || {}).flatMap(choices => Object.values(choices))]);
+        const background = app.data.backgrounds.find(b => b.id === state.background?.id);
+        if (background?.featId) chosen.add(background.featId);
+        for (const key of ['backgrounds','feats']) {
+            const rows = new Map(app.data[key].filter(e => !e.homebrew || chosen.has(e.id)).map(e => [e.id,e]));
+            (result.data[key] || []).forEach(e => rows.set(e.id,e));
+            app.data[key] = [...rows.values()];
+        }
+        buildLookups(app.data); renderAll();
+    };
 
     // ---------------------------------------------------------------- detail dialog
     function renderBlock(block) {

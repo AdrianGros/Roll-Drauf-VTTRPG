@@ -174,6 +174,7 @@ def needs(data, state, evaluation, class_key):
         "hp": {"die": entry["hitDie"], "fixed": entry["hitDie"] // 2 + 1, "conModifier": con},
         "features": [{"id": f["id"], "name": f["name"]} for f in row.get("features") or []],
         "subclass": None,
+        "subclassId": subclasses.get(class_key),
         "advancement": None,
         "featureChoices": [],
         "expertise": None,

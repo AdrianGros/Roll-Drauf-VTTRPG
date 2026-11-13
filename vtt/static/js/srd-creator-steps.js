@@ -152,7 +152,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const weapons = c.weaponProficiencies.map((g) => (g.category === 'martial' ? 'Kriegswaffen' : 'Einfache Waffen') + (g.requiresProperty ? ` (mit ${g.requiresProperty.join('/')})` : ''));
         return h('div', { class: 'sc-detail' },
             h('h3', { text: c.name }),
-            h('dl', null,
+            h('dl', {class:'sc-class-facts'},
                 h('dt', { text: globalThis.VTTUi("Trefferwürfel") }), h('dd', { text: `W${c.hitDie}` }),
                 h('dt', { text: globalThis.VTTUi("Hauptattribut") }), h('dd', { text: c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und ') }),
                 h('dt', { text: globalThis.VTTUi("Rettungswürfe") }), h('dd', { text: c.savingThrows.map(SC.abilityName).join(', ') }),
@@ -160,7 +160,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 h('dt', { text: globalThis.VTTUi("Waffen") }), h('dd', { text: labelList(weapons) }),
                 h('dt', { text: globalThis.VTTUi("Fertigkeiten") }), h('dd', { text: globalThis.VTTUi("{p0} aus: {p1}",{p0:(c.skillChoices.count),p1:(c.skillChoices.options ? c.skillChoices.options.map(SC.skillName).join(', ') : 'allen Fertigkeiten')}) }),
                 h('dt', { text: globalThis.VTTUi("Zauberwirken") }), h('dd', { text: c.spellcasting ? globalThis.VTTUi("Ja ({p0})",{p0:(SC.abilityName(c.spellcasting.ability))}) : globalThis.VTTUi("Nein") }),
-                h('dt', { text: globalThis.VTTUi("Merkmale Stufe 1") }), h('dd', { text: c.levels[0].features.map((f) => f.name).join(', ') })),
+                h('dt', { text: globalThis.VTTUi("Merkmale Stufe 1") }), h('dd', null, h('ul', null, c.levels[0].features.map(f => h('li', {text:f.name}))))),
             SC.detailButton(c.id, globalThis.VTTUi("Klassentext lesen"), c.name));
     }
 
@@ -322,7 +322,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const curBg = st().background && SC.L.backgrounds[st().background.id];
         wrap.append(panel(
             h('h3', { text: globalThis.VTTUi("Hintergrund") }),
-            h('div', { class: 'sc-grid' }, app.data.backgrounds.map((b) => card(b.name, `${b.feat} · ${b.skills.map(SC.skillName).join(', ')}`, curBg && curBg.id === b.id, () => {
+            h('p', {class:'sc-muted',text:globalThis.VTTUi('Wähle einen SRD-Hintergrund oder veröffentliche einen eigenen Hintergrund mit der vereinbarten Attributauswahl.')}),
+            h('div', {class:'sc-row'}, h('a',{class:'sc-btn',href:'/api/ce/authoring#ce-origins',target:'_blank',rel:'noopener',text:globalThis.VTTUi('Eigenen Hintergrund erstellen')}),
+                h('button',{type:'button',class:'sc-btn',id:'scRefreshOrigins',onclick:SC.refreshOrigins,text:globalThis.VTTUi('Eigene Hintergründe aktualisieren')})),
+            h('div', { class: 'sc-grid' }, app.data.backgrounds.map((b) => card(b.name, `${b.abilities.map(SC.abilityAbbr).join(' / ')} · ${b.feat} · ${b.skills.map(SC.skillName).join(', ')}`, curBg && curBg.id === b.id, () => {
                 SC.mutate((state) => { if (!state.background || state.background.id !== b.id) state.background = { id: b.id, abilityBonus: {} }; });
             }))),
             curBg ? h('div', { class: 'sc-detail' },
@@ -393,16 +396,22 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         } }))),
                         h('td', { text: totals[i] })))))) : null));
             if (totals.length) {
-                const remaining = totals.slice();
-                ABIL.forEach((a) => { const idx = remaining.indexOf(base[a]); if (idx >= 0) remaining.splice(idx, 1); });
+                const owners = Array(totals.length).fill(null);
+                const assigned = {};
+                ABIL.forEach(a => {
+                    const index = totals.findIndex((value,i) => value === base[a] && owners[i] === null);
+                    if (index >= 0) { owners[index] = a; assigned[a] = index; }
+                });
+                grid.append(h('div',{class:'sc-roll-results',role:'list','aria-label':globalThis.VTTUi('Einzelne Würfelergebnisse'),style:'grid-column:1/-1'},
+                    totals.map((value,i) => h('div',{class:'sc-roll-result',role:'listitem','data-roll-index':i},
+                        h('strong',{text:globalThis.VTTUi('Wurf {number}: {value}',{number:i+1,value})}),
+                        h('span',{text:owners[i] ? SC.abilityName(owners[i]) : globalThis.VTTUi('Noch verfügbar')})))));
                 ABIL.forEach((a) => {
-                    const options = Array.from(new Set(totals)).sort((x, y) => y - x).map((value) => {
-                        const count = totals.filter((v) => v === value).length;
-                        const available = remaining.filter((v) => v === value).length + (base[a] === value ? 1 : 0);
-                        return [value, `${value} · ${count}× gewürfelt${available ? ` · ${available} zuweisbar` : ' · bereits vergeben'}`, !available];
-                    });
+                    const options = totals.map((value,i) => [String(i),
+                        globalThis.VTTUi('Wurf {number}: {value}',{number:i+1,value}) + (owners[i] && owners[i] !== a ? ` · ${SC.abilityName(owners[i])}` : ''),
+                        owners[i] !== null && owners[i] !== a]);
                     grid.append(h('div', { class: 'sc-abil' }, h('h4', { text: SC.abilityName(a) }),
-                        select(`scBase-${a}`, options, base[a], (v) => setBase(a, v === '' ? undefined : Number(v)), '–'), abilitySummaryCell(a)));
+                        select(`scBase-${a}`, options, assigned[a], (v) => setBase(a, v === '' ? undefined : totals[Number(v)]), '–'), abilitySummaryCell(a)));
                 });
             }
         } else if (method === 'manual') {
@@ -485,7 +494,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const cur = (st().subclasses || {})[key];
             return h('div', null, h('h4', { text: c.name }),
                 h('div', { class: 'sc-grid' }, c.subclasses.map((id) => card(SC.subclassName(id), null, cur === id, () => SC.mutate((state) => { state.subclasses = state.subclasses || {}; state.subclasses[key] = id; })))),
-                cur ? SC.detailButton(cur, globalThis.VTTUi("Unterklassen-Text lesen"), SC.subclassName(cur)) : null);
+                cur ? SC.detailButton(cur, globalThis.VTTUi("Unterklassen-Text lesen"), SC.subclassName(cur)) : null,
+                cur ? window.SrdRulePreview.subclass(cur, lv[key]) : null);
         }));
     }
 
@@ -719,13 +729,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     }
 
     // ================================================================ ZAUBER
-    let spellFilter = { text: '', level: '' };
+    let spellFilter = { text: '', level: '', sort: 'level' };
 
     function spellPicker(key, listName, count, options, max) {
         const sel = ((st().spells || {})[key] || {})[listName] || [];
         const set = (next) => SC.mutate((state) => { state.spells = state.spells || {}; state.spells[key] = state.spells[key] || {}; state.spells[key][listName] = next; });
         const full = sel.length >= max;
-        const items = options.map((id) => {
+        const items = options.slice().sort((a,b) => (spellFilter.sort === 'level' ? app.data.spells[a].level - app.data.spells[b].level : 0) || app.data.spells[a].name.localeCompare(app.data.spells[b].name,document.documentElement.lang)).map((id) => {
             const s = app.data.spells[id];
             const on = sel.includes(id);
             const row = checkRow(s.name, on, !on && full, (checked) => set(checked ? sel.concat(id) : sel.filter((x) => x !== id)), `${s.level === 0 ? 'Zaubertrick' : `${s.level}. Grad`}${s.ritual ? ' · Ritual' : ''}`, id);
@@ -754,7 +764,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             h('h3', { text: globalThis.VTTUi("Zauber filtern") }),
             h('div', { class: 'sc-fields' },
                 field(globalThis.VTTUi("Suche"), h('input', { type: 'search', id: 'scSpellSearch', value: spellFilter.text, oninput: (e) => { spellFilter.text = e.target.value.toLowerCase(); wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); } }), 'scSpellSearch'),
-                field(globalThis.VTTUi("Grad"), select('scSpellLevel', [['0', 'Zaubertricks'], ...Array.from({ length: 9 }, (_, i) => [String(i + 1), `${i + 1}. Grad`])], spellFilter.level, (v) => { spellFilter.level = v; wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); }, 'Alle'), 'scSpellLevel')),
+                field(globalThis.VTTUi("Grad"), select('scSpellLevel', [['0', 'Zaubertricks'], ...Array.from({ length: 9 }, (_, i) => [String(i + 1), `${i + 1}. Grad`])], spellFilter.level, (v) => { spellFilter.level = v; wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); }, 'Alle'), 'scSpellLevel'),
+                field(globalThis.VTTUi('Sortierung'),select('scSpellSort',[['level',globalThis.VTTUi('Grad, dann Name')],['name',globalThis.VTTUi('Name')]],spellFilter.sort,v => {spellFilter.sort=v;wrap.querySelectorAll('.sc-choice-list').forEach(list => {
+                    [...list.children].sort((a,b) => (v === 'level' ? Number(a.dataset.level)-Number(b.dataset.level) : 0) || a.dataset.name.localeCompare(b.dataset.name,document.documentElement.lang)).forEach(row => list.append(row));
+                });}), 'scSpellSort')),
             ev() && ev().spellcasting.slots ? h('p', null, h('strong', { text: globalThis.VTTUi("Zauberplätze: ") }), ev().spellcasting.slots.map((n, i) => (n ? `${i + 1}. Grad ×${n}` : null)).filter(Boolean).join(' · ')) : null,
             ev() && ev().spellcasting.pact ? h('p', null, h('strong', { text: globalThis.VTTUi("Paktmagie: ") }), globalThis.VTTUi("{p0} Plätze, {p1}. Grad",{p0:(ev().spellcasting.pact.slots),p1:(ev().spellcasting.pact.grade)})) : null);
         filters.classList.add('sc-spell-filters');
