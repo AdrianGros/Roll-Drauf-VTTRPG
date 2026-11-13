@@ -9,10 +9,11 @@
       "id": "N01",
       "title": "Anrufungsvoraussetzungen tatsächlich prüfen",
       "priority": "P1",
-      "status": "deploy_in_progress",
+      "status": "delivered_for_owner_acceptance",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
       "implementation_started": true,
-      "package": "B01"
+      "package": "B01",
+      "delivery": "../proofs/feedback-b01-2026-11-13/delivery.json"
     },
     {
       "id": "N02",
@@ -189,9 +190,9 @@
       "id": "S01",
       "title": "Einstellungen im Zahnrad rechts bündeln",
       "priority": "P2",
-      "status": "planned",
+      "status": "deploy_in_progress",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B02"
     },
     {
@@ -216,9 +217,9 @@
       "id": "S04",
       "title": "Vollen Monatskalender als reguläre Ansicht zeigen",
       "priority": "P2",
-      "status": "planned",
+      "status": "deploy_in_progress",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B02"
     },
     {
@@ -261,27 +262,28 @@
       "id": "S09",
       "title": "Hamburger, Zurück und App-Menü unterscheidbar machen",
       "priority": "P2",
-      "status": "planned",
+      "status": "deploy_in_progress",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B02"
     },
     {
       "id": "S10",
       "title": "Toten Back-Maps-Einstieg korrigieren",
       "priority": "P1",
-      "status": "deploy_in_progress",
+      "status": "delivered_for_owner_acceptance",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
       "implementation_started": true,
-      "package": "B01"
+      "package": "B01",
+      "delivery": "../proofs/feedback-b01-2026-11-13/delivery.json"
     },
     {
       "id": "S11",
       "title": "Chat links und Journal rechts einordnen",
       "priority": "P2",
-      "status": "planned",
+      "status": "deploy_in_progress",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B02"
     },
     {
@@ -297,18 +299,18 @@
       "id": "S13",
       "title": "DM-Bereiche als Karteireiter unten links bündeln",
       "priority": "P2",
-      "status": "planned",
+      "status": "deploy_in_progress",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B02"
     },
     {
       "id": "S14",
       "title": "Discord-Profilbild im Kontobereich anzeigen",
       "priority": "P3",
-      "status": "planned",
+      "status": "deploy_in_progress",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B02"
     },
     {
@@ -324,9 +326,9 @@
       "id": "S16",
       "title": "Gruppen- und Leerzustandstexte passend anzeigen",
       "priority": "P2",
-      "status": "planned",
+      "status": "deploy_in_progress",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B02"
     },
     {

@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "journeys": [
+    "dm: campaign hub → own session → Back → Maps → editor",
+    "player: campaign hub → own session → Back → Maps → editor",
+    "Player archive → creator → dependent selection → sheet management → level-up prerequisites"
+  ],
+  "checks": {
+    "creator_selection_updates_and_keeps_invalid_selection_removable": true,
+    "direct_finalize_rejected": {
+      "create": 201,
+      "finalize": 422,
+      "codes": [
+        "class-option-prerequisite"
+      ]
+    },
+    "progression_uses_current_server_preview": true
+  },
+  "errors": []
+}

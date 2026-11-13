@@ -1,0 +1,10 @@
+{
+  "status": "fail",
+  "journeys": [
+    "dm: campaign hub → own session → Back → Maps → editor",
+    "player: campaign hub → own session → Back → Maps → editor"
+  ],
+  "checks": {},
+  "errors": [],
+  "failure": "Locator.click: Timeout 45000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href*=\\\"/srd-creator\\\"]\").first\n"
+}

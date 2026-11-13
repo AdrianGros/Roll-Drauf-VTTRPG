@@ -1,0 +1,68 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "N01",
+    "S10"
+  ],
+  "source_commit": "2c173957283be76e14108e3250df5333cb684ad2",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b01-prerequisites-maps-20261111-2c1739572",
+  "image_id": "sha256:7b227c661ee48eeb9a9bab8bcdfab245317aacd4aa72496f18537cfbd21c5038",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "release_record": "/srv/migration/2026-11-11/feedback-b01-prerequisites-maps/2c1739572/release.json",
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "source_verification": {
+    "checked": 281,
+    "mismatches": []
+  },
+  "health": {
+    "now": "2026-11-13T09:01:08.119716",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T09:01:04.495027",
+    "status": "ok"
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-b01-prerequisites-maps/2c1739572/rollback.sh",
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "cleanup": {
+    "status": "pass",
+    "scope": "only synthetic feedback_p4 users and owned campaign",
+    "removed": {
+      "token_states": 1,
+      "session_states": 1,
+      "play_table_contexts": 4,
+      "srd_creator_drafts": 3,
+      "game_sessions": 2,
+      "characters": 2,
+      "campaign_members": 2,
+      "campaign_maps": 1,
+      "sessions": 8,
+      "mapmaker_projects": 1,
+      "campaigns": 1,
+      "users": 3
+    },
+    "identity_storage_removed": 1,
+    "container_credentials_removed": true
+  },
+  "roles": [
+    "character owner",
+    "DM table context",
+    "Player table context"
+  ],
+  "acceptance": [
+    "Server prerequisite checks block invalid direct finalization",
+    "Both creator and level-up controls reflect server eligibility and allow explicit correction",
+    "Normal campaign hub → table → Back → Maps works for DM and Player"
+  ],
+  "residual": [
+    "Owner acceptance NOT_RUN",
+    "Other feedback packages remain in progress",
+    "Repeatable spell bindings are outside the prerequisite slice"
+  ]
+}
