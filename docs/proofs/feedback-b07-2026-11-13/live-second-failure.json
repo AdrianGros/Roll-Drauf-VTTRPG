@@ -1,0 +1,10 @@
+{
+  "status": "fail",
+  "journeys": [
+    "dm: campaign hub \u2192 session \u2192 Measure \u2192 square/circle/cone \u2192 cancel/tool switch; no unexpected token dock; independent authorized surface",
+    "player: campaign hub \u2192 session \u2192 Measure \u2192 square/circle/cone \u2192 cancel/tool switch; no unexpected token dock; independent authorized surface"
+  ],
+  "checks": {},
+  "errors": [],
+  "failure": "Locator expected to have attribute '300'\nActual value: 100 \nCall log:\n  - Expect \"to_have_attribute\" with timeout 60000ms\n  - waiting for locator(\".vision-light-bright\")\n    121 \u00d7 locator resolved to <circle r=\"100\" cx=\"199\" cy=\"199\" class=\"vision-light-bright\"></circle>\n        - unexpected value \"100\"\n"
+}

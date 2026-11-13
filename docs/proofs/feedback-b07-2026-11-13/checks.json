@@ -3,7 +3,7 @@
   "retention": "permanent",
   "groups": [
     {
-      "command": "pytest tests/test_playtable_vision_fog.py -q",
+      "command": "pytest tests/test_playtable_vision_fog.py tests/test_vision_engine.py -q",
       "summary": "25 passed, 231 warnings in 35.61s",
       "log": "vision.log"
     },
@@ -11,6 +11,21 @@
       "command": "pytest tests/test_feedback_b07_browser.py tests/test_table_contexts.py tests/test_map_scale_contexts.py tests/test_public_surface_and_playtable_contract.py::test_playtable_measure_tool_is_available_read_only_and_clears_on_switch -q",
       "summary": "39 passed, 462 warnings in 153.11s (0:02:33)",
       "log": "targeted.log"
+    },
+    {
+      "command": "pytest tests/test_playtable_vision_fog.py tests/test_feedback_b07_browser.py -x -q",
+      "summary": "19 passed, 324 warnings in 89.83s (0:01:29)",
+      "log": "delivery-fix.log"
+    },
+    {
+      "command": "pytest five table-context delivery/composition/revocation cases and tests/test_vision_engine.py -q",
+      "summary": "16 passed, 63 warnings in 17.24s",
+      "log": "delivery-boundaries.log"
+    },
+    {
+      "command": "VTT_B07_TEST_POSTGRES=dedicated disposable PostgreSQL 16 database pytest tests/test_feedback_b07_postgres_migration.py -q",
+      "summary": "3 passed in 1.33s",
+      "log": "postgres.log"
     }
   ],
   "runtime": "roll-drauf-vtt-feedback-tests:20261110; network none",
@@ -18,8 +33,12 @@
     "Host node unavailable; source JavaScript executes under Chromium and Firefox in the browser checks."
   ],
   "source_sha256": {
-    "vtt/static/js/play-ui.js": "5f85000711213a80620badf7ec0b6bbd691312dd65809484ac6b87cbfee1e0d7",
+    "vtt/static/js/play-ui.js": "befdad0c72c55f5f736842f863165c738ea2741ba81e8ad5f60f0660fc06db99",
     "vtt/static/js/play-dm.js": "bbd0828b8ef0db8ccd63a96cc3b6d2bf08d66570133b9ea8ef3c03d88c7f571d",
-    "vtt/templates/play.html": "48a8ef41a7258bc8c0aef4500908c2c5d4b017e0b7a80b6fae2ec4d11467de34"
+    "vtt/templates/play.html": "48a8ef41a7258bc8c0aef4500908c2c5d4b017e0b7a80b6fae2ec4d11467de34",
+    "vtt/play/routes.py": "98f95d738815d7d0cf490bcc0b921986a4fe3798e1848288de2b74f2ba29b27e",
+    "vtt/socket_handlers.py": "cfd858325d5365086c8872f20a0f76a83b216375d21a60fc21b1d7f1586abfc6",
+    "vtt/play/fog_delivery.py": "6ce7e0c2ec7a792b020b2543ded9680a05d6c0387e5b59f01ec726b9930dac55",
+    "tools/migrate_vision_postgres_ids.py": "9e3b44f4502d740174ddaca347a965103f6350c92c160f8db0e315f5f58b83e4"
   }
 }

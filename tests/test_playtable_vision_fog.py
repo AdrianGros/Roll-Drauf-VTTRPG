@@ -385,3 +385,32 @@ class TestVisibleTokensDebugEndpoint:
         visible_ids = {row["id"] for row in response.get_json()["visible_tokens"]}
         assert near.id in visible_ids
         assert far.id not in visible_ids
+
+
+def test_private_fog_has_contiguous_ticks_without_leaking_contents(app, dm_user, player_user, dm_client, player_client):
+    from vtt.play.service import ensure_session_state
+    campaign = _create_campaign(dm_user, 'Fog sequence')
+    _add_member(campaign, player_user)
+    campaign_map, session = _add_map_and_live_session(campaign, dm_user)
+    _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+    enter_table(player_client, campaign, session, 'player')
+    state = ensure_session_state(campaign, session)
+    _add_token(state.id, campaign, session, campaign_map, 'Owner', x=200, y=200,
+               owner_user_id=player_user.id, sight_range=100)
+    sockets = []
+    for client in [dm_client, player_client]:
+        socket = socketio.test_client(app, flask_test_client=client)
+        socket.emit('session:join', {'campaign_id':campaign.id,'session_id':session.id,
+                    'context_token':client.environ_base['HTTP_X_VTT_CONTEXT'],'tab_id':client.environ_base['HTTP_X_VTT_TAB']})
+        sockets.append(socket)
+    for socket in sockets:socket.get_received()
+    assert dm_client.post(_vision_url(campaign, session, 'lights'), json={'x':200,'y':200,'bright_radius':300,'dim_radius':350}).status_code == 201
+    light = SceneLight.query.one()
+    assert dm_client.patch(_vision_url(campaign,session,f'lights/{light.id}'),json={'bright_radius':250}).status_code == 200
+    deliveries = [socket.get_received() for socket in sockets]
+    for events in deliveries:
+        sequence = sorted({e['args'][0]['event_seq'] for e in events if e['name'] in {'vision:geometry_changed','fog:updated','state:tick'}})
+        assert len(sequence) == 4 and sequence == list(range(sequence[0],sequence[0]+4))
+    assert not [e for e in deliveries[0] if e['name']=='fog:updated']
+    assert len([e for e in deliveries[1] if e['name']=='fog:updated']) == 2
+    assert all('fog' not in e['args'][0] for e in deliveries[0] if e['name']=='state:tick')

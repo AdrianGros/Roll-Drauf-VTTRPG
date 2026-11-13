@@ -20,6 +20,7 @@ from vtt.play.service import (
     recalculate_fog_for_owner,
     sits_as_player,
 )
+from vtt.play.fog_delivery import emit_private_fog
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
 from vtt.utils.realtime import (
     build_event_envelope,
@@ -1302,11 +1303,7 @@ def register_socket_handlers(socketio):
             campaign_map = db.session.get(CampaignMap, token.map_id)
             fog = recalculate_fog_for_owner(token.owner_user_id, campaign_map, state)
             if fog is not None:
-                emit(
-                    "fog:updated",
-                    build_event_envelope(campaign.id, game_session.id, {"fog": fog.serialize()}),
-                    room=user_room(campaign.id, game_session.id, token.owner_user_id),
-                )
+                emit_private_fog(campaign.id, game_session.id, token.owner_user_id, fog)
 
     @socketio.on("token:delete")
     def handle_token_delete(data):

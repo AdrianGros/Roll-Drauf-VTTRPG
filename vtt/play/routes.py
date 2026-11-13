@@ -25,6 +25,7 @@ from vtt.play.receipts import idempotent_table_request
 from vtt.models.scene_wall import LIGHT_VALUES, SIGHT_VALUES
 from vtt.models.scene_light import LIGHT_TYPES
 from vtt.play.vision import visible_token_ids
+from vtt.play.fog_delivery import emit_private_fog
 from vtt.utils.metrics import increment_counter, increment_labeled_counter
 from vtt.utils.realtime import (
     build_event_envelope,
@@ -1022,11 +1023,7 @@ def _broadcast_vision_geometry_changed(campaign, game_session, state, campaign_m
         room=room,
     )
     for owner_id, fog in recalculate_fog_for_all_owners(campaign_map, state).items():
-        socketio.emit(
-            "fog:updated",
-            build_event_envelope(campaign.id, game_session.id, {"fog": fog.serialize()}),
-            room=user_room(campaign.id, game_session.id, owner_id),
-        )
+        emit_private_fog(campaign.id, game_session.id, owner_id, fog)
 
 
 @play_bp.route("/campaigns/<int:campaign_id>/sessions/<int:session_id>/vision/walls", methods=["POST"])
@@ -1390,11 +1387,7 @@ def play_reset_fog(campaign_id, session_id):
     # away, not go dark until the next unrelated token move -- only the
     # cumulative explored history was meant to be wiped.
     for owner_id, fog in recalculate_fog_for_all_owners(campaign_map, state).items():
-        socketio.emit(
-            "fog:updated",
-            build_event_envelope(campaign.id, game_session.id, {"fog": fog.serialize()}),
-            room=user_room(campaign.id, game_session.id, owner_id),
-        )
+        emit_private_fog(campaign.id, game_session.id, owner_id, fog)
 
     return jsonify({"reset": True, "affected_user_ids": affected_user_ids}), 200
 

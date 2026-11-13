@@ -7,7 +7,7 @@ from playwright.sync_api import expect, sync_playwright
 from tests.test_personal_actions_browser import action_site  # noqa:F401
 from tests.test_presentation_browser import preferences, contrast
 from vtt.extensions import db
-from vtt.models import CampaignMap
+from vtt.models import CampaignMap, TokenState
 from vtt.models.campaign_map_scale import CampaignMapScale
 
 PROBE = """window.__dmViewportBindings=[];
@@ -98,3 +98,38 @@ def test_dm_light_wall_edit_reload_and_delete_through_ui(action_site):
         page.locator('.vision-light-dot').click();page.locator('#btnLightDelete').click();expect(page.locator('.vision-light-marker')).to_have_count(0)
         assert not errors,errors
         ctx.close();browser.close()
+
+
+def test_two_clients_with_fog_receive_successive_edits_and_reload(action_site):
+    app,origin,info=action_site
+    with app.app_context():
+        map_=CampaignMap.query.filter_by(campaign_id=info['campaign']).one()
+        map_.width=1200;map_.height=900;map_.grid_size=50;map_.fog_enabled=True
+        token=db.session.get(TokenState,info['token']);token.x=200;token.y=200;token.sight_range=100;token.metadata_json={'position_mode':'pixels'};db.session.commit()
+    with sync_playwright() as p:
+        browser=p.chromium.launch(headless=True,args=['--no-sandbox'])
+        contexts=[];pages={};errors=[]
+        for role in ['dm','player']:
+            ctx=browser.new_context(viewport={'width':1440,'height':1000},reduced_motion='reduce');contexts.append(ctx)
+            ctx.add_cookies([{'name':'access_token_cookie','value':info[role+'_auth'],'url':origin,'httpOnly':True}])
+            page=ctx.new_page();page.set_default_timeout(30000);page.on('pageerror',lambda e:errors.append(str(e)))
+            page.goto(f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}&seat={role}")
+            expect(page.locator('#tableDockTabs')).to_be_visible(timeout=30000);pages[role]=page
+        dm,player=pages['dm'],pages['player']
+        expect(player.locator('.fog-cell')).to_have_count(432)
+        dm.locator('#toolLight').click();click_world(dm,400,300);expect(dm.locator('.vision-light-marker')).to_have_count(1)
+        player.wait_for_function('() => document.querySelectorAll(".fog-cell").length<432')
+        dm.locator('.vision-light-dot').click()
+        dm.locator('#lightEditDim').fill('350');dm.locator('#lightEditDim').press('Tab');expect(dm.locator('.vision-light-dim')).to_have_attribute('r','350')
+        dm.locator('#lightEditBright').fill('300');dm.locator('#lightEditBright').press('Tab');expect(dm.locator('.vision-light-bright')).to_have_attribute('r','300')
+        dm.locator('#btnLightEditClose').click()
+        before=player.locator('.fog-cell').count()
+        dm.locator('#toolWall').click();click_world(dm,300,100);click_world(dm,300,800);expect(dm.locator('.vision-wall-line')).to_have_count(1)
+        player.wait_for_function('(before) => document.querySelectorAll(".fog-cell").length>before',arg=before)
+        after=player.locator('.fog-cell').count();player.reload();expect(player.locator('.fog-cell')).to_have_count(after,timeout=30000)
+        expect(player.locator('.vision-light-marker,.vision-wall-line,#toolLight,#toolWall')).to_have_count(0)
+        assert 'sequence_gap' not in dm.locator('#activityLog').inner_text()
+        assert 'sequence_gap' not in player.locator('#activityLog').inner_text()
+        assert not errors,errors
+        for ctx in contexts:ctx.close()
+        browser.close()

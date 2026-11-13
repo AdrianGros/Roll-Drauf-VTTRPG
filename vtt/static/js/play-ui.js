@@ -574,7 +574,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     // no fog-mask renderer existed yet. Now it must also
                     // re-render, or fog stays stale until some UNRELATED
                     // vision-layer trigger happens to fire next.
-                    fogUpdated: (payload) => { this._fog = payload?.fog || null; this._renderVisionLayer(); },
+                    fogUpdated: (payload) => this._acceptOwnFog(payload?.fog),
                     fogReset: () => this._logActivity(globalThis.VTTUi("Die Spielleitung hat die Aufklärung zurückgesetzt."), "info"),
                     tick: () => {},
                     sessionPaused: (payload) => this._handleLifecycleBroadcast("paused", payload),
@@ -2035,6 +2035,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         // and edit what they placed, a materially smaller, distinct thing.
         async _loadVisionGeometry() {
             const activeMap = this.bootstrap?.state_payload?.active_map;
+            const sequence = this._visionRequestSequence = (this._visionRequestSequence || 0) + 1;
+            const isCurrent = () => sequence === this._visionRequestSequence
+                && activeMap?.id === this.bootstrap?.state_payload?.active_map?.id;
+            if (this._fogMapId !== activeMap?.id) {
+                this._fogMapId = activeMap?.id;
+                this._fog = null;
+                this._walls = [];
+                this._lights = [];
+                this._renderVisionLayer();
+            }
             if (!activeMap) {
                 this._walls = [];
                 this._lights = [];
@@ -2051,8 +2061,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!isOperatorRole(this.bootstrap?.session_role || "")) {
                 this._walls = [];
                 this._lights = [];
-                this._visionGeometryLoadedForMapId = activeMap.id;
-                this._renderVisionLayer();
+                try {
+                    const response = await this.api.getFog(this.campaignId, this.sessionId);
+                    if (!isCurrent()) return;
+                    this._acceptOwnFog(response?.fog, activeMap.id);
+                    this._visionGeometryLoadedForMapId = activeMap.id;
+                } catch (_error) {
+                    if (isCurrent()) this._showMessage(globalThis.VTTUi('Sichtdaten konnten nicht geladen werden. Bitte erneut verbinden.'), true);
+                }
                 return;
             }
             try {
@@ -2060,13 +2076,22 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     this.api.listWalls(this.campaignId, this.sessionId),
                     this.api.listLights(this.campaignId, this.sessionId),
                 ]);
+                if (!isCurrent()) return;
                 this._walls = Array.isArray(wallsResponse?.walls) ? wallsResponse.walls : [];
                 this._lights = Array.isArray(lightsResponse?.lights) ? lightsResponse.lights : [];
                 this._visionGeometryLoadedForMapId = activeMap.id;
                 this._renderVisionLayer();
             } catch (error) {
-                this._showMessage(error.message || globalThis.VTTUi("Wand-/Lichtdaten konnten nicht geladen werden."), true);
+                if (isCurrent()) this._showMessage(error.message || globalThis.VTTUi("Wand-/Lichtdaten konnten nicht geladen werden."), true);
             }
+        }
+
+        _acceptOwnFog(fog, mapId = fog?.campaign_map_id) {
+            if (mapId !== this.bootstrap?.state_payload?.active_map?.id) return;
+            if (this._fogMapId === mapId && Number(this._fog?.version || 0) > Number(fog?.version || 0)) return;
+            this._fogMapId = mapId;
+            this._fog = fog || null;
+            this._renderVisionLayer();
         }
 
         // Roll20-parity work packet, 2026-09-03: the fog-of-war MASK.
@@ -2086,15 +2111,15 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (isOperatorRole(this.bootstrap?.session_role || "")) return [];
             const activeMap = this.bootstrap?.state_payload?.active_map;
             const gridSize = this._measureGridSize();
-            if (!activeMap || !gridSize || !this._fog) return [];
+            if (!activeMap || !gridSize || !activeMap.fog_enabled) return [];
 
             const cols = Math.max(0, Math.ceil((Number(activeMap.width) || 0) / gridSize));
             const rows = Math.max(0, Math.ceil((Number(activeMap.height) || 0) / gridSize));
             if (!cols || !rows) return [];
 
             const key = (col, row) => `${col},${row}`;
-            const exploredKeys = new Set((this._fog.explored_cells || []).map(([c, r]) => key(c, r)));
-            const visibleKeys = new Set((this._fog.visible_cells || []).map(([c, r]) => key(c, r)));
+            const exploredKeys = new Set((this._fog?.explored_cells || []).map(([c, r]) => key(c, r)));
+            const visibleKeys = new Set((this._fog?.visible_cells || []).map(([c, r]) => key(c, r)));
 
             const parts = [];
             for (let row = 0; row < rows; row++) {
@@ -3155,7 +3180,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         async _recoverTable() {
             if (this._recovery) return this._recovery;
-            this._recovery = this.loadBootstrap();
+            this._recovery = (async () => {
+                await this.loadBootstrap();
+                await this._loadVisionGeometry();
+            })();
             try { await this._recovery; }
             finally { this._recovery = null; }
         }

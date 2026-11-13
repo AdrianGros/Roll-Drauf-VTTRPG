@@ -1,0 +1,10 @@
+{
+  "status": "fail",
+  "journeys": [
+    "dm: campaign hub \u2192 session \u2192 Measure \u2192 square/circle/cone \u2192 cancel/tool switch; no unexpected token dock; independent authorized surface",
+    "player: campaign hub \u2192 session \u2192 Measure \u2192 square/circle/cone \u2192 cancel/tool switch; no unexpected token dock; independent authorized surface"
+  ],
+  "checks": {},
+  "errors": [],
+  "failure": "Locator expected to have count '1'\nActual value: 0 \nCall log:\n  - Expect \"to_have_count\" with timeout 60000ms\n  - waiting for locator(\".vision-light-marker\")\n    121 \u00d7 locator resolved to 0 elements\n        - unexpected value \"0\"\n"
+}
