@@ -401,6 +401,34 @@ body.regelwerk-page {
     cursor: pointer;
 }
 
+@media screen {
+    html[data-vtt-theme="night"] {
+        --regelwerk-ink: var(--ui-ink);
+        --regelwerk-muted: var(--ui-muted);
+        --regelwerk-accent: var(--ui-accent);
+        --regelwerk-gold: var(--ui-accent);
+        --regelwerk-paper: var(--ui-panel);
+        --regelwerk-paper-deep: var(--ui-soft);
+        --regelwerk-border: var(--ui-line);
+    }
+    html[data-vtt-theme="night"] body.regelwerk-page {
+        background-image: none;
+        background-color: var(--ui-paper);
+    }
+    html[data-vtt-theme="night"] :is(.compendium-back, #cpReset, .compendium-more, .regelwerk-search button, .regelwerk-sidebar-actions button, .regelwerk-books a[aria-current="page"]) {
+        color: var(--ui-action-text);
+        background: var(--ui-action-bg);
+        border-color: var(--ui-line);
+    }
+    html[data-vtt-theme="night"] :is(.regelwerk-toc a, .regelwerk-search-result, .regelwerk-sidebar-actions a, .regelwerk-toc-group > summary) {
+        color: var(--ui-accent);
+    }
+    html[data-vtt-theme="night"] :is(.regelwerk-preview-note, .compendium-field input, .compendium-field select) {
+        color: var(--ui-ink);
+        background: var(--ui-soft);
+    }
+}
+
 @media print {
     @page { margin: 16mm; }
 

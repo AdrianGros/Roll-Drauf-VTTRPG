@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "scope": "UI-only final search/contrast correction; existing backend unchanged",
+  "checks": [
+    {
+      "command": "pytest tests/test_catalog_actions_browser.py tests/test_atlas_browser.py -x -q",
+      "result": "Three existing catalog browser cases passed; new test harness failed waiting for route.fetch completion. Not counted as full pass.",
+      "log": "/tmp/vtt-c10-final-ui.log"
+    },
+    {
+      "command": "pytest tests/test_catalog_actions_browser.py::test_pending_search_hides_stale_rows_then_real_click_opens_entry_once tests/test_atlas_browser.py -x -q",
+      "result": "3 passed in 110.50s; Firefox390/night and Chromium1440/paper stale results/real click/contrast, plus complete Atlas author-reader-editor journey",
+      "log": "/tmp/vtt-c10-final-ui-focused.log"
+    },
+    {
+      "command": "python3 tools/i18n/build_catalog.py --check",
+      "result": "3222 DE/EN sources complete"
+    },
+    {
+      "command": "check-authored-js.cjs regelwerk-compendium.js srd-progression-ui.js",
+      "result": "146 literal calls; zero missing messages; syntax parsed"
+    },
+    {
+      "command": "pytest test_auth_lifetime.py test_table_contexts.py test_catalog_actions.py test_private_conversations.py test_session_calendar.py (prior final integration)",
+      "result": "135 passed in 182.69s; no backend edits since",
+      "log": "/tmp/vtt-c10-integrated-api.log"
+    }
+  ],
+  "review": "Codex structured self-review and focused tests; no independent reviewer",
+  "baseline": "Delayed-search test demonstrated old visible stale-row failure; /tmp/vtt-c10-stale-baseline.log",
+  "new_dependencies": false,
+  "schema_changes": false
+}

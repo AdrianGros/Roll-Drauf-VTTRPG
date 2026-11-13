@@ -122,3 +122,34 @@ def test_late_confirmation_cannot_enter_a_different_entity_or_character_dialog(a
             assert InventoryItem.query.filter_by(character_id=other_id).one().quantity==1
             assert CharacterCatalogReceipt.query.count()==2
         browser.close()
+
+@pytest.mark.parametrize('engine,width,theme',[('firefox',390,'night'),('chromium',1440,'paper')])
+def test_pending_search_hides_stale_rows_then_real_click_opens_entry_once(action_site,engine,width,theme):
+    import time
+    from tests.test_presentation_browser import contrast
+    app,origin,info=action_site
+    with sync_playwright() as p:
+        browser=getattr(p,engine).launch(headless=True,**({'args':['--no-sandbox']} if engine=='chromium' else {}))
+        context=browser.new_context(viewport={'width':width,'height':1000},reduced_motion='reduce');preferences(context,language='en',theme=theme)
+        context.add_cookies([{'name':'access_token_cookie','value':info['player_auth'],'url':origin,'httpOnly':True}])
+        page=context.new_page();page.set_default_timeout(30000);errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+        page.goto(origin+'/regelwerk/compendium?type=weapon');expect(page.locator('#cpBody a').filter(has_text='Dolch')).to_have_count(1)
+        held=[];pattern='**/api/rulesets/*/compendium?*'
+        def delay(route):
+            if 'q=Dolch' in route.request.url:held.append((route,route.fetch()))
+            else:route.continue_()
+        page.route(pattern,delay)
+        with page.expect_request(lambda request:'q=Dolch' in request.url):page.locator('#cpQ').fill('Dolch')
+        expect(page.locator('#cpTable')).to_be_hidden()
+        deadline=time.monotonic()+10
+        while not held and time.monotonic()<deadline:page.wait_for_timeout(20)
+        assert held
+        for route,response in held:route.fulfill(response=response)
+        expect(page.locator('#cpTable')).to_be_visible();expect(page.locator('#cpBody tr')).to_have_count(1)
+        contrast(page,'.compendium-field label,#cpCaption,#cpHead th,#cpBody td,#cpStatus,#cpReset')
+        entries=[];page.on('request',lambda request:entries.append(request.url) if '/compendium/entry/' in request.url else None)
+        page.locator('#cpBody a').filter(has_text='Dolch').click();expect(page.locator('#cpCharacterOpen')).to_be_visible()
+        expect(page.locator('#cpDetailTitle')).to_have_text('Dolch');assert len(entries)==1
+        contrast(page,'#cpDetailTitle,#cpDetailMeta,#cpDetailBack')
+        page.locator('#cpCharacterOpen').click();expect(page.locator('#cpCharacterDialog')).to_be_visible()
+        assert not errors,errors;browser.close()

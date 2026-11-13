@@ -553,6 +553,7 @@
         const params = currentParams();
         if (!append) {
             offset = 0;
+            els.table.hidden = true; els.more.hidden = true;
             hideDetail();
             syncUrl(params);
         }
@@ -622,6 +623,9 @@
 
     function debounce() {
         window.clearTimeout(timer);
+        requestId++;
+        els.table.hidden = true; els.more.hidden = true;
+        els.results.setAttribute('aria-busy', 'true');
         timer = window.setTimeout(() => load(false), 200);
     }
 

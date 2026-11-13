@@ -4,7 +4,7 @@ import pytest
 from flask_jwt_extended import create_access_token
 from playwright.sync_api import sync_playwright,expect
 from tests.test_personal_actions_browser import action_site  # noqa:F401
-from tests.test_presentation_browser import preferences
+from tests.test_presentation_browser import preferences,contrast
 from tests.test_mapmaker_library import document
 from vtt.extensions import db
 from vtt.models import User,Role
@@ -39,6 +39,7 @@ def test_atlas_three_map_author_reader_editor_and_revocation(action_site,tmp_pat
    owner.locator('#atlasMemberName').fill(username);owner.locator('#atlasMemberRole').select_option(role);owner.locator('#atlasGrant').click();expect(owner.locator('#atlasMembers')).to_contain_text(username)
   owner.locator('#atlasPreview').click();expect(owner.locator('dialog #atlasPlaces')).to_contain_text('Visible coast');expect(owner.locator('dialog')).not_to_contain_text('SECRET');owner.locator('#atlasPublishConsent').check();owner.locator('#atlasPublish').click();expect(owner.locator('dialog.atlas-dialog')).to_have_count(0)
   reader.goto(origin+f'/atlas?world={world}&place={second_place}');expect(reader.locator('#atlasPlaceDetail')).to_contain_text('Public harbour');expect(reader.locator('#atlasMapSelect')).to_have_value(map_ids[1]);reader.locator('#atlasPlaceDetail nav a').click();expect(reader.locator('#atlasMapSelect')).to_have_value(map_ids[0]);expect(reader.locator('#atlasScale')).to_contain_text('1.5 km')
+  contrast(reader,'#atlasRoot h1,#atlasRoot label,#atlasScale')
   expect(reader.locator('#atlasRoot')).not_to_contain_text('SECRET');expect(reader.locator('#atlasSave')).to_have_count(0);assert not any('/atlas-author.js' in url or '/maps/'+map_ids[0]+'?' in url for url in reader_requests)
   reader.locator('#atlasSearch').fill('SECRET');expect(reader.locator('#atlasPlaces a')).to_have_count(0);reader.locator('#atlasSearch').fill('')
   assert reader.evaluate('document.documentElement.scrollWidth')<=391
