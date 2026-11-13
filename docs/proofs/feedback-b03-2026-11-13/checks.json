@@ -1,0 +1,22 @@
+{
+  "status": "targeted_checks_passed_pending_live",
+  "retention": "permanent",
+  "groups": [
+    {
+      "scope": "Night materials in Chrome1440 DE / Firefox390 EN; existing DM/Player contrast and unchanged canvas",
+      "summary": "7 passed, 112 warnings in 240.79s",
+      "log": "/tmp/feedback-b03-browser.log"
+    },
+    {
+      "scope": "Final warm outer pages, active tool labels and ready editor; both engines",
+      "summary": "2 passed, 37 warnings in 77.22s",
+      "log": "/tmp/feedback-b03-final-followup.log"
+    }
+  ],
+  "visual_review": "Initial screenshots revealed light outer page stack and low-contrast active editor labels; corrected and covered by final follow-up. First follow-up needed test to close the normal new-map modal before opening gear.",
+  "source_sha256": {
+    "vtt/static/css/display-preferences.css": "87ae028377489e64430c3a95724eeed2e9194810370974436e728970b65a5c1c",
+    "vtt/static/js/display-preferences.js": "b9c9dee0791992951e19d89dda2fb5a8c5d4fcc600f175b228a80a49436ab707"
+  },
+  "live": "NOT_RUN"
+}

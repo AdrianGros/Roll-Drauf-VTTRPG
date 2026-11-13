@@ -10,8 +10,9 @@ html[data-vtt-theme] {
   --vtt-text:var(--ui-ink); --vtt-bg:var(--ui-paper); --vtt-sidecar-text:var(--ui-ink); --vtt-sidecar-bg:var(--ui-panel);
 }
 html[data-vtt-theme=night] {
-  --ui-paper:#211b28; --ui-panel:#2d2534; --ui-soft:#392f40; --ui-ink:#f5ecda; --ui-muted:#d4c6b2;
-  --ui-line:#af956c; --ui-danger:#ffb8b1; --ui-success:#ace0b8; --ui-warning:#f0d29a;
+  --ui-paper:#211a17; --ui-panel:#2b221d; --ui-soft:#352b25; --ui-ink:#f5ecda; --ui-muted:#d4c6b2;
+  --ui-line:#b38d7b; --ui-danger:#ffb8b1; --ui-success:#ace0b8; --ui-warning:#f0d29a;
+  --vtt-plum:#6f292c; --vtt-plum-deep:#381a1b; --vtt-gold:var(--ui-accent); --vtt-gold-deep:var(--ui-accent);
 }
 html[data-vtt-theme] body { color:var(--ui-ink); }
 html[data-vtt-theme] :is(input:not([type=color]):not([type=checkbox]):not([type=radio]),textarea,select) {
@@ -36,6 +37,31 @@ html[data-vtt-theme=night] :is(.book-page,.sheet-focus-page,.sc-builder,.ce-page
 html[data-vtt-theme=night] :is(.sc-card,.sc-detail,.sc-table,.sc-control,.sheet-empty,.srd-sheet-note,.srd-inv-item,.srd-inv-attack,.srd-sheet-origin) {background-color:var(--ui-soft);color:var(--ui-ink);border-color:var(--ui-line);}
 html[data-vtt-theme=night] :is(.srd-sheet-value,.srd-sheet-ability-score,.srd-sheet-label,.srd-inv-meta,.sheet-identity-value,.is-proficient,.srd-roll-destination) {color:var(--ui-ink) !important;}
 html[data-vtt-theme=night] .book-dashboard-shell {background-color:var(--ui-paper);}
+/* Warm charred edges and a darker binding; content panels keep their quiet ink/paper pair. */
+html[data-vtt-theme=night] :is(.book-dashboard-page,.book-spread-page,.book-page,.sheet-focus-page,.sc-builder,.ce-page) {
+  background-color:var(--ui-panel) !important;
+  background-image:linear-gradient(90deg,rgba(8,5,4,.88),rgba(8,5,4,0) 26px,rgba(8,5,4,0) calc(100% - 26px),rgba(8,5,4,.88)),linear-gradient(0deg,rgba(8,5,4,.6),rgba(8,5,4,0) 24px,rgba(8,5,4,0) calc(100% - 24px),rgba(8,5,4,.6)),repeating-linear-gradient(12deg,rgba(192,138,93,.025) 0 1px,rgba(192,138,93,0) 1px 7px) !important;
+  border-color:#79534a;
+  box-shadow:inset 0 0 0 1px #50342b,inset 0 0 24px #100906,0 12px 32px #0005;
+}
+html[data-vtt-theme=night] .book-spread-page--left {border-right:3px solid #110b08;}
+html[data-vtt-theme=night] .book-spread-page--right {border-left:3px solid #110b08;}
+html[data-vtt-theme=night] :is(.book-cover,.book-spine,.book-scene-backdrop) {background:linear-gradient(135deg,#1b0f0c,#3c211b,#130c0a);border-color:#8d4b45;}
+html[data-vtt-theme=night] :is(.book-pages,.book-shell-page-stack) {background:linear-gradient(90deg,#120b08,#3b2c22 12%,#3b2c22 88%,#120b08);border-color:#79534a;}
+html[data-vtt-theme=night] .book-back {background:linear-gradient(135deg,#381a1b,#1b0f0c);border-color:#8d4b45;}
+/* The editor shares the book's materials and type, while its canvas remains its own document. */
+html[data-vtt-theme] .mm-app {
+  --parchment:var(--ui-paper);--parchment-panel:var(--ui-panel);--parchment-deep:var(--ui-soft);--parchment-soft:var(--ui-soft);
+  --ink:var(--ui-ink);--ink-soft:var(--ui-muted);--field-border:var(--ui-line);
+  --selected-bg:var(--ui-soft);--parchment-line:var(--ui-line);
+}
+html[data-vtt-theme] .mm-global-nav {background:var(--ui-paper);border-color:var(--ui-line);}
+html[data-vtt-theme] .vtt-map-nav {background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme] .vtt-map-nav .book-dashboard-ribbon-btn {background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme] .vtt-map-nav .book-dashboard-ribbon-btn.is-active {background:var(--ui-action-bg);color:var(--ui-action-text);border-color:var(--ui-accent);}
+html[data-vtt-theme=night] .mm-app {--chrome:#211310;--chrome-2:#442822;--chrome-hover:#59322c;--chrome-text:#f5ecda;--chrome-muted:#d4c6b2;--chrome-line:#9e7465;--gold-on-chrome:var(--ui-accent);--gold:var(--ui-accent);}
+html[data-vtt-theme=night] :is(.mm-top,.mm-tools,.mm-panel,.mm-sheet,.mm-dialog) {border-color:var(--ui-line);box-shadow:inset 0 0 16px #100906;}
+html[data-vtt-theme=night] .mm-app :is(.mm-tool[aria-pressed=true],.mm-tabs [role=tab][aria-selected=true],.mm-group-head h2,.mm-dialog h2) {color:var(--ui-accent);}
 /* C01 book overviews, hub, quick launch and ribbon: text uses semantic tokens on the
    surface actually painted (solid colors, no gradient behind text) in both themes. */
 html[data-vtt-theme] :is(.book-scene-panel-kicker,.book-dashboard-eyebrow,.book-scene-ledger-head span:not(.play-launch-status-dot),.book-home-hero-kicker,.book-home-section-kicker,.book-home-feed-kicker,.book-frame-eyebrow) {color:var(--ui-muted);}
@@ -133,3 +159,10 @@ html[data-vtt-theme] body.play-workspace-realign .tabletop-shell select option {
 /* Plum / selected / danger controls: light text on the painted plum at rest, hover, focus and active. */
 html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(.tool-btn,.sidebar-tab):is(.active,:hover,:focus-visible) {color:#fdfaf3 !important;}
 html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(button,.mini-control,button.secondary,button.danger):is(:hover,:focus-visible) {color:#fdfaf3;}
+/* Warm night materials on table chrome, preserving the scene and the proven light text pair. */
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell {
+  --ui-paper:#211a17;--ui-panel:#2b221d;--ui-soft:#352b25;--ui-ink:#f5ecda;--ui-muted:#d4c6b2;--ui-line:#b38d7b;
+}
+html[data-vtt-theme=night] .tabletop-shell :is(.right-sidebar,.left-chat-sidebar,.table-sheet,.app-menu) {background-color:var(--ui-paper);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme=night] body.play-fullscreen .tabletop-shell > .left-toolbar {background:rgba(33,26,23,.94);}
+html[data-vtt-theme=night] body.play-fullscreen .play-status-strip :is(.book-dashboard-chip,.mini-control) {background:rgba(43,34,29,.94);color:var(--ui-ink);border-color:var(--ui-line);}

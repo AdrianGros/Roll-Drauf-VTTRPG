@@ -43,9 +43,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   function apply(){
     const root=document.documentElement;root.dataset.vttTheme=prefs.theme;root.dataset.vttAccent=prefs.accent;root.dataset.vttStickyPortrait=String(prefs.stickyPortrait);root.lang=language;
     root.style.colorScheme=prefs.theme==='night'?'dark':'light';
-    const night=prefs.theme==='night',paper=night?'#211b28':'#f8f3e9';
-    const safe={default:night?'#e4c17f':'#713536',bronze:night?'#e4c17f':'#754c19',teal:night?'#96dac8':'#245b50'};
-    const candidate=prefs.accent==='default'?(branding?.primary_color || branding?.accent_color):null;
+    const night=prefs.theme==='night',paper=night?'#211a17':'#f8f3e9';
+    const safe={default:night?'#f29a90':'#713536',bronze:night?'#e4c17f':'#754c19',teal:night?'#96dac8':'#245b50'};
+    const candidate=!night && prefs.accent==='default'?(branding?.primary_color || branding?.accent_color):null;
     const accent=candidate && contrast(candidate,paper)>=4.5?candidate:safe[prefs.accent];
     root.style.setProperty('--ui-accent',accent);
     root.style.setProperty('--ui-action-bg',accent);
