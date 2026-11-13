@@ -1016,6 +1016,10 @@
             stroke: #241a12;
             stroke-width: 1.5;
         }
+        .measure-shape { fill: rgba(190,130,75,.22);stroke: var(--accent, #8b5e34);stroke-width: 3; }
+        .measure-options { position: absolute;left: 84px;bottom: 104px;z-index: 1200;padding: .5rem .75rem;max-width: calc(100% - 104px);background: var(--panel, #f4ead4);color: var(--text, #342717);border: 1px solid var(--line, #997850);border-radius: .5rem; }
+        .measure-options label { display: flex;gap: .5rem;align-items: center;flex-wrap: wrap; }
+        .measure-options select { max-width: 180px;background: inherit;color: inherit;font: inherit; }
         .measure-label {
             font-size: 12px;
             font-weight: 600;
@@ -2521,6 +2525,9 @@
                     </div>
                 </div>
                 <div id="measureAnnounce" class="sr-only" role="status" aria-live="polite"></div>
+            </div>
+            <div id="measureOptions" class="floating measure-options" hidden>
+                <label><span id="measureShapeLabel" data-ui-key="u_dcfd9d37ad4d">Messform</span><select id="measureShape"><option value="line" data-ui-key="u_abbb630b50c8">Strecke / Wegpunkte</option><option value="cone" data-ui-key="u_18b74ae9793e">Kegel</option><option value="circle" data-ui-key="u_7b6d7edb4b85">Kreis / Kugelprojektion</option><option value="square" data-ui-key="u_92a0712ccce5">Quadrat</option></select></label>
             </div>
 
             <!-- S10: click-to-edit popovers for a placed wall/light --

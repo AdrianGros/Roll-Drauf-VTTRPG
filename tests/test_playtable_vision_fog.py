@@ -11,6 +11,7 @@ from datetime import datetime
 
 import pytest
 
+from tests.play_shared import enter_table
 from vtt import create_app
 from vtt.extensions import db, socketio
 from vtt.models import (
@@ -67,6 +68,7 @@ def _add_map_and_live_session(campaign, creator_user, grid_size=50, fog_enabled=
 
 
 def _init_active_map(client, campaign_id, session_id, map_ids):
+    enter_table(client, db.session.get(Campaign,campaign_id), db.session.get(GameSession,session_id), "dm")
     response = client.post(
         f"/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack/init",
         json={"map_ids": map_ids})
@@ -139,6 +141,7 @@ class TestWallPermissions:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         response = player_client.post(_vision_url(campaign, session, "walls"),
                                       json={"x0": 0, "y0": 0, "x1": 100, "y1": 0})
@@ -150,6 +153,7 @@ class TestWallPermissions:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         create = dm_client.post(_vision_url(campaign, session, "walls"),
                                 json={"x0": 0, "y0": 0, "x1": 100, "y1": 0, "sight": "normal"})
@@ -168,6 +172,7 @@ class TestWallPermissions:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         create = dm_client.post(_vision_url(campaign, session, "walls"),
                                 json={"x0": 0, "y0": 0, "x1": 100, "y1": 0, "sight": "normal"})
@@ -193,6 +198,7 @@ class TestLightPermissions:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         response = player_client.post(_vision_url(campaign, session, "lights"),
                                       json={"x": 10, "y": 10, "bright_radius": 50, "dim_radius": 100})
@@ -221,6 +227,7 @@ class TestLightPermissions:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         create = dm_client.post(_vision_url(campaign, session, "lights"),
                                 json={"x": 10, "y": 10, "bright_radius": 50, "dim_radius": 100})
@@ -238,6 +245,7 @@ class TestFogPersistenceAndIsolation:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user, grid_size=50)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         from vtt.play.service import ensure_session_state
         state = ensure_session_state(campaign, session)
@@ -246,12 +254,13 @@ class TestFogPersistenceAndIsolation:
 
         dm_socket = socketio.test_client(app, flask_test_client=dm_client)
         player_socket = socketio.test_client(app, flask_test_client=player_client)
-        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
-        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id, "context_token":dm_client.environ_base["HTTP_X_VTT_CONTEXT"], "tab_id":dm_client.environ_base["HTTP_X_VTT_TAB"]})
+        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id, "context_token":player_client.environ_base["HTTP_X_VTT_CONTEXT"], "tab_id":player_client.environ_base["HTTP_X_VTT_TAB"]})
         dm_socket.get_received()
         player_socket.get_received()
 
         player_socket.emit("token:update", {
+            "context_token":player_client.environ_base["HTTP_X_VTT_CONTEXT"], "tab_id":player_client.environ_base["HTTP_X_VTT_TAB"],
             "campaign_id": campaign.id, "session_id": session.id, "token_id": token.id,
             "base_version": token.version, "client_event_id": "vision-move-1",
             "patch": {"x": 150, "y": 150},
@@ -273,15 +282,17 @@ class TestFogPersistenceAndIsolation:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user, fog_enabled=False)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
         from vtt.play.service import ensure_session_state
         state = ensure_session_state(campaign, session)
         token = _add_token(state.id, campaign, session, campaign_map, "Held", x=100, y=100,
                            owner_user_id=player_user.id)
 
         player_socket = socketio.test_client(app, flask_test_client=player_client)
-        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id, "context_token":player_client.environ_base["HTTP_X_VTT_CONTEXT"], "tab_id":player_client.environ_base["HTTP_X_VTT_TAB"]})
         player_socket.get_received()
         player_socket.emit("token:update", {
+            "context_token":player_client.environ_base["HTTP_X_VTT_CONTEXT"], "tab_id":player_client.environ_base["HTTP_X_VTT_TAB"],
             "campaign_id": campaign.id, "session_id": session.id, "token_id": token.id,
             "base_version": token.version, "client_event_id": "no-fog-move-1",
             "patch": {"x": 150, "y": 150},
@@ -294,6 +305,7 @@ class TestFogPersistenceAndIsolation:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         db.session.add(FogOfWarState(user_id=dm_user.id, campaign_map_id=campaign_map.id,
                                      explored_cells=[[1, 1]], visible_cells=[[1, 1]]))
@@ -310,6 +322,7 @@ class TestFogReset:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         response = player_client.post(_vision_url(campaign, session, "fog/reset"), json={"confirm": True})
         assert response.status_code == 403
@@ -329,6 +342,7 @@ class TestFogReset:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
 
         db.session.add(FogOfWarState(user_id=player_user.id, campaign_map_id=campaign_map.id,
                                      explored_cells=[[1, 1], [2, 2]], visible_cells=[[1, 1]]))
@@ -355,6 +369,7 @@ class TestVisibleTokensDebugEndpoint:
         _add_member(campaign, player_user)
         campaign_map, session = _add_map_and_live_session(campaign, dm_user, grid_size=50)
         _init_active_map(dm_client, campaign.id, session.id, [campaign_map.id])
+        enter_table(player_client, campaign, session, "player")
         from vtt.play.service import ensure_session_state
         state = ensure_session_state(campaign, session)
 

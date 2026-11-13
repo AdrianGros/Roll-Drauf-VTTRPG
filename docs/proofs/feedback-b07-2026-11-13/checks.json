@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "retention": "permanent",
+  "groups": [
+    {
+      "command": "pytest tests/test_playtable_vision_fog.py -q",
+      "summary": "25 passed, 231 warnings in 35.61s",
+      "log": "vision.log"
+    },
+    {
+      "command": "pytest tests/test_feedback_b07_browser.py tests/test_table_contexts.py tests/test_map_scale_contexts.py tests/test_public_surface_and_playtable_contract.py::test_playtable_measure_tool_is_available_read_only_and_clears_on_switch -q",
+      "summary": "39 passed, 462 warnings in 153.11s (0:02:33)",
+      "log": "targeted.log"
+    }
+  ],
+  "runtime": "roll-drauf-vtt-feedback-tests:20261110; network none",
+  "notes": [
+    "Host node unavailable; source JavaScript executes under Chromium and Firefox in the browser checks."
+  ],
+  "source_sha256": {
+    "vtt/static/js/play-ui.js": "5f85000711213a80620badf7ec0b6bbd691312dd65809484ac6b87cbfee1e0d7",
+    "vtt/static/js/play-dm.js": "bbd0828b8ef0db8ccd63a96cc3b6d2bf08d66570133b9ea8ef3c03d88c7f571d",
+    "vtt/templates/play.html": "48a8ef41a7258bc8c0aef4500908c2c5d4b017e0b7a80b6fae2ec4d11467de34"
+  }
+}

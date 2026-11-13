@@ -102,6 +102,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // single-active-measurement state (Apply decision: not
             // persisted, not broadcast to other clients).
             this.measurement = { waypoints: [] };
+            this.measureShape = 'line';
             this._measurePreviewPoint = null;
             this.measureSnapEnabled = true;
             this._measurePointerIsTouch = false;
@@ -1023,6 +1024,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             });
 
             const measureSnapBtn = document.getElementById("btnMeasureSnap");
+            document.getElementById('measureShape')?.addEventListener('change', event => {
+                this.measureShape = ['line', 'cone', 'circle', 'square'].includes(event.target.value) ? event.target.value : 'line';
+                this._cancelMeasurement();
+            });
             if (measureSnapBtn) {
                 measureSnapBtn.addEventListener("click", () => {
                     this.measureSnapEnabled = !this.measureSnapEnabled;
@@ -1155,6 +1160,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
             const snapBtn = document.getElementById("btnMeasureSnap");
             if (snapBtn) snapBtn.hidden = toolName !== "measure";
+            const measureOptions = document.getElementById('measureOptions');
+            if (measureOptions) measureOptions.hidden = toolName !== 'measure';
         }
 
         // F4: shared "make the token panel visible" step -- expand
@@ -1320,53 +1327,6 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this._openTokenCreatePanel(worldX, worldY, event);
             });
 
-            // S10: light placement -- a single click places a light with
-            // sensible defaults; refinement (radius/type/color) happens
-            // afterward via the click-to-edit popover, same "place first,
-            // refine after" split as everywhere else in this file. Apply
-            // decision: no freehand draw-tool UI this slice.
-            viewport.addEventListener("click", (event) => {
-                if (this.currentTool !== "light") return;
-                if (event.target.closest?.(".floating, .stage-topbar, .vision-light-marker, .vision-wall-line")) return;
-                const point = this._worldPointFromEvent(event);
-                if (!point) return;
-                this._placeLight(point.x, point.y);
-            });
-
-            // S10: wall placement -- two clicks define a segment (first
-            // click arms the draft and shows a rubber-band preview
-            // following the pointer, mirroring the measure tool's own
-            // preview mechanics; second click commits). Right-click
-            // cancels an armed draft instead of placing anything.
-            viewport.addEventListener("click", (event) => {
-                if (this.currentTool !== "wall") return;
-                if (event.target.closest?.(".floating, .stage-topbar, .vision-light-marker, .vision-wall-line")) return;
-                const point = this._worldPointFromEvent(event);
-                if (!point) return;
-                if (!this._wallDraftStart) {
-                    this._wallDraftStart = point;
-                    this._renderVisionLayer();
-                    return;
-                }
-                this._placeWall(this._wallDraftStart, point);
-                this._wallDraftStart = null;
-                this._renderVisionLayer();
-            });
-            viewport.addEventListener("pointermove", (event) => {
-                if (this.currentTool !== "wall" || !this._wallDraftStart) return;
-                const point = this._worldPointFromEvent(event);
-                if (!point) return;
-                this._wallDraftPreviewPoint = point;
-                this._renderVisionLayer();
-            });
-            viewport.addEventListener("contextmenu", (event) => {
-                if (this.currentTool !== "wall" || !this._wallDraftStart) return;
-                event.preventDefault();
-                this._wallDraftStart = null;
-                this._wallDraftPreviewPoint = null;
-                this._renderVisionLayer();
-            });
-
             // S03 measurement tool. Available to read-only users too (no
             // server mutation, client-only state) -- unlike token placement
             // above, none of what follows may gate on the read-only flag.
@@ -1475,7 +1435,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _addMeasureWaypoint(point) {
+            if (this.measureShape !== 'line' && this.measurement.waypoints.length >= 2) this.measurement.waypoints = [];
             this.measurement.waypoints.push(point);
+            this._measurePreviewPoint = null;
             this._renderMeasurement();
         }
 
@@ -1498,7 +1460,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!svg) return;
             const waypoints = this.measurement.waypoints || [];
             const points = waypoints.slice();
-            if (this._measurePreviewPoint && this.currentTool === "measure" && waypoints.length) {
+            if (this._measurePreviewPoint && this.currentTool === "measure" && waypoints.length && (this.measureShape === 'line' || waypoints.length < 2)) {
                 points.push(this._measurePreviewPoint);
             }
             if (!points.length) {
@@ -1507,6 +1469,23 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return;
             }
             const parts = [];
+            if (this.measureShape !== 'line' && points.length >= 2) {
+                const a = points[0], b = points[1], dx = b.x - a.x, dy = b.y - a.y;
+                const length = Math.hypot(dx, dy), side = Math.max(Math.abs(dx), Math.abs(dy));
+                let geometry, label, pixels;
+                if (this.measureShape === 'circle') {
+                    geometry = `<circle cx="${a.x}" cy="${a.y}" r="${length}"/>`;label = globalThis.VTTUi('Radius');pixels = length;
+                } else if (this.measureShape === 'square') {
+                    geometry = `<rect x="${dx < 0 ? a.x - side : a.x}" y="${dy < 0 ? a.y - side : a.y}" width="${side}" height="${side}"/>`;label = globalThis.VTTUi('Seitenlänge');pixels = side;
+                } else {
+                    geometry = `<polygon points="${a.x},${a.y} ${b.x - dy / 2},${b.y + dx / 2} ${b.x + dy / 2},${b.y - dx / 2}"/>`;label = globalThis.VTTUi('Kegellänge');pixels = length;
+                }
+                const distance = this._formatMeasureDistance(pixels / (this._measureGridSize() || 1));
+                const safeLabel = label.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+                svg.innerHTML = `<g class="measure-shape" data-shape="${this.measureShape}">${geometry}</g><text class="measure-label" x="${a.x + 10}" y="${a.y - 10}">${safeLabel}: ${distance}</text>`;
+                if (announce) announce.textContent = `${label}: ${distance}`;
+                return;
+            }
             let cumulative = 0;
             for (let i = 0; i < points.length; i += 1) {
                 const point = points[i];
@@ -4778,7 +4757,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _selectToken(tokenId, repaintMap = false) {
-            const searchId = Number(tokenId);
+            const searchId = tokenId == null ? NaN : Number(tokenId);
             if (this._pendingTarget && Number.isInteger(searchId)) {
                 this._completeTargeting(searchId);
                 return;
@@ -4822,6 +4801,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!tokenLayer || this.mapInteractionsBound) return;
 
             tokenLayer.addEventListener("pointerdown", (event) => {
+                if (this.currentTool === "measure") return;
                 const marker = event.target.closest?.(".token-marker");
                 if (!marker) {
                     return;
@@ -4884,6 +4864,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             });
 
             tokenLayer.addEventListener("click", (event) => {
+                if (this.currentTool === "measure") return;
                 const marker = event.target.closest?.(".token-marker");
                 if (!marker) {
                     this._selectToken(null);

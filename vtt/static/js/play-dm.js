@@ -89,7 +89,61 @@ _bindSessionControls() {
                 await this._transition("ended", true);
             });
         },
+_bindVisionViewport() {
+            if (this._visionViewportBound) return;
+            this._visionViewportBound = true;
+            const viewport = document.getElementById('mapViewport');
+            if (!viewport) return;
+            // S10: light placement -- a single click places a light with
+            // sensible defaults; refinement (radius/type/color) happens
+            // afterward via the click-to-edit popover, same "place first,
+            // refine after" split as everywhere else in this file. Apply
+            // decision: no freehand draw-tool UI this slice.
+            viewport.addEventListener("click", (event) => {
+                if (this.currentTool !== "light") return;
+                if (event.target.closest?.(".floating, .stage-topbar, .vision-light-marker, .vision-wall-line")) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                this._placeLight(point.x, point.y);
+            });
+
+            // S10: wall placement -- two clicks define a segment (first
+            // click arms the draft and shows a rubber-band preview
+            // following the pointer, mirroring the measure tool's own
+            // preview mechanics; second click commits). Right-click
+            // cancels an armed draft instead of placing anything.
+            viewport.addEventListener("click", (event) => {
+                if (this.currentTool !== "wall") return;
+                if (event.target.closest?.(".floating, .stage-topbar, .vision-light-marker, .vision-wall-line")) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                if (!this._wallDraftStart) {
+                    this._wallDraftStart = point;
+                    this._renderVisionLayer();
+                    return;
+                }
+                this._placeWall(this._wallDraftStart, point);
+                this._wallDraftStart = null;
+                this._renderVisionLayer();
+            });
+            viewport.addEventListener("pointermove", (event) => {
+                if (this.currentTool !== "wall" || !this._wallDraftStart) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                this._wallDraftPreviewPoint = point;
+                this._renderVisionLayer();
+            });
+            viewport.addEventListener("contextmenu", (event) => {
+                if (this.currentTool !== "wall" || !this._wallDraftStart) return;
+                event.preventDefault();
+                this._wallDraftStart = null;
+                this._wallDraftPreviewPoint = null;
+                this._renderVisionLayer();
+            });
+
+        },
 _bindVisionControls() {
+            this._bindVisionViewport();
             const visionToggle = document.getElementById("btnVisionToggle");
             if (visionToggle) {
                 visionToggle.addEventListener("click", () => {
