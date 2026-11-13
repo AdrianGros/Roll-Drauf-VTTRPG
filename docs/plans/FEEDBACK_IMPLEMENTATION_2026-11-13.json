@@ -19,45 +19,45 @@
       "id": "N02",
       "title": "Klassenauswahl beruhigen und Details lesbar gliedern",
       "priority": "P2",
-      "status": "planned",
+      "status": "targeted_checks_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B04"
     },
     {
       "id": "N03",
       "title": "Gewürfelte Werte als einzelne verfügbare Ergebnisse zeigen",
       "priority": "P2",
-      "status": "planned",
+      "status": "targeted_checks_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B04"
     },
     {
       "id": "N04",
       "title": "Hintergrundauswahl und erlaubte Attributkombinationen erweitern",
       "priority": "P2",
-      "status": "planned",
+      "status": "targeted_checks_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B04"
     },
     {
       "id": "N05",
       "title": "Unterklassenmerkmale beim Aufstieg verständlich einblenden",
       "priority": "P2",
-      "status": "planned",
+      "status": "targeted_checks_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B04"
     },
     {
       "id": "N06",
       "title": "Zauber nach Grad und Name sortieren können",
       "priority": "P2",
-      "status": "planned",
+      "status": "targeted_checks_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B04"
     },
     {
@@ -172,10 +172,11 @@
       "id": "N19",
       "title": "Kartenwerkstatt-Optik als positive Referenz erhalten",
       "priority": "P3",
-      "status": "targeted_checks_passed",
+      "status": "delivered_for_owner_acceptance",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
       "implementation_started": true,
-      "package": "B03"
+      "package": "B03",
+      "delivery": "../proofs/feedback-b03-2026-11-13/delivery.json"
     },
     {
       "id": "N20",
@@ -200,10 +201,11 @@
       "id": "S02",
       "title": "Nachtmodus als verbranntes Buch mit roten Akzenten",
       "priority": "P2",
-      "status": "targeted_checks_passed",
+      "status": "delivered_for_owner_acceptance",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
       "implementation_started": true,
-      "package": "B03"
+      "package": "B03",
+      "delivery": "../proofs/feedback-b03-2026-11-13/delivery.json"
     },
     {
       "id": "S03",
@@ -342,10 +344,11 @@
       "id": "S17",
       "title": "Karteneditor visuell in die übrige VTT-Oberfläche einordnen",
       "priority": "P2",
-      "status": "targeted_checks_passed",
+      "status": "delivered_for_owner_acceptance",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
       "implementation_started": true,
-      "package": "B03"
+      "package": "B03",
+      "delivery": "../proofs/feedback-b03-2026-11-13/delivery.json"
     },
     {
       "id": "S18",

@@ -17,6 +17,7 @@ def test_night_materials_red_default_and_editor_controls(action_site,engine,widt
         page.on('pageerror',lambda e:errors.append(str(e)))
         page.goto(origin+'/characters')
         expect(page.locator('.book-spread-page').first).to_be_visible()
+        expect(page.locator('.book-scene-panel-title').first).to_be_visible()
         expect(page.locator('.book-scene-loading')).to_have_count(0)
         assert page.locator('html').evaluate("e=>getComputedStyle(e).getPropertyValue('--ui-accent').trim()")=='#f29a90'
         assert page.locator('.book-spread-page').first.evaluate("e=>getComputedStyle(e).backgroundImage!=='none'")

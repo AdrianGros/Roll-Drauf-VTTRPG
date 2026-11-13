@@ -1,0 +1,76 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "S02",
+    "S17",
+    "N19"
+  ],
+  "source_commit": "87239fcc5fd329f03242271efe10535f10673268",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b03-night-book-20261111-87239fcc5",
+  "image_id": "sha256:9a2adcd29aa3c4b0e74f21b4e873e60d9596793cc8a09a1047729f4e8009a258",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "release_record": "/srv/migration/2026-11-11/feedback-b03-night-book/87239fcc5/release.json",
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "source_verification": {
+    "checked": 279,
+    "mismatches": []
+  },
+  "health": {
+    "now": "2026-11-13T12:43:39.796119",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T12:43:36.860969",
+    "status": "ok"
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-b03-night-book/87239fcc5/rollback.sh",
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "cleanup": {
+    "status": "pass",
+    "scope": "only synthetic feedback_p4 users and owned campaign",
+    "removed": {
+      "token_states": 1,
+      "session_states": 1,
+      "game_sessions": 2,
+      "characters": 1,
+      "campaign_members": 2,
+      "campaign_maps": 1,
+      "sessions": 10,
+      "mapmaker_projects": 1,
+      "discord_identity_links": 1,
+      "campaigns": 1,
+      "users": 3
+    },
+    "identity_storage_removed": 1,
+    "container_credentials_removed": true
+  },
+  "roles": [
+    "authenticated account",
+    "DM",
+    "Player"
+  ],
+  "acceptance": [
+    "Warm charred page stack and binding; red default accent",
+    "Personal bronze/teal remain available",
+    "Book and map workshop share materials; active tool text readable",
+    "Live DE desktop Chrome and EN mobile Firefox contrast and navigation",
+    "Theme switch preserves map document and page width"
+  ],
+  "residual": [
+    "Owner acceptance NOT_RUN",
+    "Remaining functional feedback packages in progress"
+  ],
+  "first_live_attempt": "Measured mid-transition colors immediately after preference change. Diagnostic showed correct target variables and temporary transition values; final assertions wait for painted colors, no product fix needed. Public CSS hash equals source.",
+  "screenshots": [
+    "/srv/migration/2026-11-13/feedback-b03/dm-night-book.png",
+    "/srv/migration/2026-11-13/feedback-b03/dm-night-editor.png",
+    "/srv/migration/2026-11-13/feedback-b03/player-night-book.png",
+    "/srv/migration/2026-11-13/feedback-b03/player-night-editor.png"
+  ]
+}
