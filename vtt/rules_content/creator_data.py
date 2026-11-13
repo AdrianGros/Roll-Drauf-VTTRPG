@@ -1020,14 +1020,29 @@ def _feats(src: Source, entities: list[dict]) -> list[dict]:
     return result
 
 
-def _class_options(entities: list[dict]) -> list[dict]:
+def _class_options(entities: list[dict], src: Source) -> list[dict]:
     result = []
+    by_name = {e["name"]: e["id"] for e in entities if e["type"] == "class-option"}
     for entity in sorted((e for e in entities if e["type"] == "class-option"), key=lambda e: e["id"]):
         prerequisite = entity.get("prerequisite")
-        level = re.match(r"Ab (\d+)\. ", prerequisite) if prerequisite else None
+        requirements = {}
+        for part in re.split(r", (?=Anrufung |ein Hexenmeisterzaubertrick)", prerequisite) if prerequisite else []:
+            level = re.fullmatch(r"Ab (\d+)\. Hexenmeisterstufe", part)
+            if level:
+                requirements["minClassLevel"] = int(level.group(1))
+            elif part.startswith("Anrufung ") and part.removeprefix("Anrufung ") in by_name:
+                requirements["optionId"] = by_name[part.removeprefix("Anrufung ")]
+            elif part == "ein Hexenmeisterzaubertrick, der Schaden bewirkt":
+                requirements["knownCantrip"] = "damage"
+            elif part == "ein Hexenmeisterzaubertrick, der Schaden über einen Angriffswurf bewirkt":
+                requirements["knownCantrip"] = "attack-damage"
+            else:
+                raise ValueError(f"{entity['id']}: unparsed class-option prerequisite {part!r}")
         result.append({
             "id": entity["id"], "name": entity["name"], "classKey": entity["classKey"], "kind": entity["optionKind"],
-            "minClassLevel": int(level.group(1)) if level else None, "prerequisite": prerequisite, "cost": entity.get("cost"),
+            "minClassLevel": requirements.get("minClassLevel"), "prerequisite": prerequisite, "cost": entity.get("cost"),
+            "requirements": requirements,
+            "prerequisiteSource": src.ref(entity["id"] + "-prerequisite", prerequisite) if prerequisite else None,
         })
     return result
 
@@ -1133,15 +1148,35 @@ def _modifiers(src: Source, classes: list[dict]) -> dict:
     }
 
 
-def _spell_lists(entities: list[dict], classes: list[dict]) -> dict:
+def _spell_lists(entities: list[dict], classes: list[dict], src: Source) -> dict:
     key_by_name = {entry["name"]: entry["classKey"] for entry in classes}
     spells = [e for e in entities if e["type"] == "spell"]
     lists: dict[str, list[str]] = {key: [] for key in key_by_name.values()}
     for spell in sorted(spells, key=lambda e: e["id"]):
         for name in spell["classes"]:
             lists[key_by_name[name]].append(spell["id"])
+    # Explicit classifications, verified against the source text. Never infer damage from
+    # a stray word in a description (or count another class's known cantrip).
+    warlock_cantrips = {
+        "spells.c-e.einfache-illusion": (False, False, "ein Geräusch oder das Abbild eines Gegenstands"),
+        "spells.f-g.gift-verspruehen": (True, True, "Führe einen Fernkampf-Zauberangriff"),
+        "spells.h-l.kalte-hand": (True, True, "führst einen Nahkampf-Zauberangriff"),
+        "spells.m-p.magierhand": (False, False, "Die Hand kann nicht angreifen"),
+        "spells.r-s.schauriger-strahl": (True, True, "Führe einen Fernkampf-Zauberangriff"),
+        "spells.t-v.taschenspielerei": (False, False, "Diese Schöpfung kann keinen Schaden bewirken"),
+        "spells.w-z.zielsicherer-schlag": (True, True, "führst du einen Angriff mit der Waffe"),
+    }
+    actual = {s["id"] for s in spells if s["level"] == 0 and s["id"] in lists["warlock"]}
+    if actual != set(warlock_cantrips):
+        raise ValueError("Warlock cantrip eligibility classifications need source review")
+    spell_data = {s["id"]: {"level": s["level"], "ritual": bool(s["ritual"]), "name": s["name"]} for s in sorted(spells, key=lambda e: e["id"])}
+    for spell_id, (damage, attack, quote) in warlock_cantrips.items():
+        rule = next((key for key in src.blocks if key.startswith(spell_id + ".") and quote in src.text(key)), None)
+        if rule is None:
+            raise ValueError(f"{spell_id}: eligibility quote not found: {quote!r}")
+        spell_data[spell_id]["invocationCantrip"] = {"damage": damage, "attack": attack, "source": src.ref(rule, quote)}
     return {
-        "spells": {s["id"]: {"level": s["level"], "ritual": bool(s["ritual"]), "name": s["name"]} for s in sorted(spells, key=lambda e: e["id"])},
+        "spells": spell_data,
         "spellLists": lists,
     }
 
@@ -1175,8 +1210,8 @@ def build_creator_data(manifest: dict, documents: list[dict], compendium: dict, 
         "startingEquipmentByLevel": _starting_levels(src),
         "classes": classes,
         **_modifiers(src, classes),
-        **_spell_lists(entities, classes),
-        "classOptions": _class_options(entities),
+        **_spell_lists(entities, classes, src),
+        "classOptions": _class_options(entities, src),
         "species": _species(src, entities, spells),
         "backgrounds": _backgrounds(entities, items),
         "feats": _feats(src, entities),

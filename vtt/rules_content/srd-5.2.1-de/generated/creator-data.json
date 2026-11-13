@@ -486,7 +486,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Bedachter Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -495,7 +497,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Weitreichender Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -504,7 +508,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Mächtiger Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -513,7 +519,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Verlängerter Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -522,7 +530,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Konzentrierter Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -531,7 +541,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Beschleunigter Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -540,7 +552,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Zielsuchzauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -549,7 +563,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Subtiler Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -558,7 +574,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Verwandelter Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "sorcerer",
@@ -567,7 +585,9 @@
       "kind": "Metamagie",
       "minClassLevel": null,
       "name": "Gespiegelter Zauber",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "warlock",
@@ -576,7 +596,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Qualvoller Strahl",
-      "prerequisite": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden bewirkt"
+      "prerequisite": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden bewirkt",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden bewirkt",
+        "ruleId": "classes.warlock.invocation-agonizing-blast-prerequisite"
+      },
+      "requirements": {
+        "knownCantrip": "damage",
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -585,7 +613,9 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": null,
       "name": "Schattenrüstung",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "warlock",
@@ -594,7 +624,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 5,
       "name": "Aufsteigender Schritt",
-      "prerequisite": "Ab 5. Hexenmeisterstufe"
+      "prerequisite": "Ab 5. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 5. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-ascendant-step-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 5
+      }
     },
     {
       "classKey": "warlock",
@@ -603,7 +640,9 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": null,
       "name": "Pakt des Buches",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "warlock",
@@ -612,7 +651,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 5,
       "name": "Gabe des Kettenmeisters",
-      "prerequisite": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Kette"
+      "prerequisite": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Kette",
+      "prerequisiteSource": {
+        "quote": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Kette",
+        "ruleId": "classes.warlock.invocation-chains-blessing-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 5,
+        "optionId": "classes.warlock.invocation-pact-of-the-chain"
+      }
     },
     {
       "classKey": "warlock",
@@ -621,7 +668,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Teufelssicht",
-      "prerequisite": "Ab 2. Hexenmeisterstufe"
+      "prerequisite": "Ab 2. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-devils-sight-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -630,7 +684,9 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": null,
       "name": "Schauerlicher Verstand",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "warlock",
@@ -639,7 +695,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 5,
       "name": "Schauerliches Niederstrecken",
-      "prerequisite": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Klinge"
+      "prerequisite": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Klinge",
+      "prerequisiteSource": {
+        "quote": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Klinge",
+        "ruleId": "classes.warlock.invocation-eldritch-smite-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 5,
+        "optionId": "classes.warlock.invocation-pact-of-the-blade"
+      }
     },
     {
       "classKey": "warlock",
@@ -648,7 +712,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Unheimlicher Speer",
-      "prerequisite": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden bewirkt"
+      "prerequisite": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden bewirkt",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden bewirkt",
+        "ruleId": "classes.warlock.invocation-eldritch-spear-prerequisite"
+      },
+      "requirements": {
+        "knownCantrip": "damage",
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -657,7 +729,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 9,
       "name": "Visionen von fernen Gefilden",
-      "prerequisite": "Ab 9. Hexenmeisterstufe"
+      "prerequisite": "Ab 9. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 9. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-far-scribe-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 9
+      }
     },
     {
       "classKey": "warlock",
@@ -666,7 +745,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Unholdische Vitalität",
-      "prerequisite": "Ab 2. Hexenmeisterstufe"
+      "prerequisite": "Ab 2. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-fiendish-vigor-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -675,7 +761,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 5,
       "name": "Gabe der Tiefen",
-      "prerequisite": "Ab 5. Hexenmeisterstufe"
+      "prerequisite": "Ab 5. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 5. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-gift-of-the-depths-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 5
+      }
     },
     {
       "classKey": "warlock",
@@ -684,7 +777,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 9,
       "name": "Gabe der Beschützer",
-      "prerequisite": "Ab 9. Hexenmeisterstufe, Anrufung Pakt des Buches"
+      "prerequisite": "Ab 9. Hexenmeisterstufe, Anrufung Pakt des Buches",
+      "prerequisiteSource": {
+        "quote": "Ab 9. Hexenmeisterstufe, Anrufung Pakt des Buches",
+        "ruleId": "classes.warlock.invocation-gift-of-the-protectors-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 9,
+        "optionId": "classes.warlock.invocation-book-of-shadows"
+      }
     },
     {
       "classKey": "warlock",
@@ -693,7 +794,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 7,
       "name": "Grabesflüstern",
-      "prerequisite": "Ab 7. Hexenmeisterstufe"
+      "prerequisite": "Ab 7. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 7. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-gravewhispers-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 7
+      }
     },
     {
       "classKey": "warlock",
@@ -702,7 +810,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 12,
       "name": "Verschlingende Klinge",
-      "prerequisite": "Ab 12. Hexenmeisterstufe, Anrufung Dürstende Klinge"
+      "prerequisite": "Ab 12. Hexenmeisterstufe, Anrufung Dürstende Klinge",
+      "prerequisiteSource": {
+        "quote": "Ab 12. Hexenmeisterstufe, Anrufung Dürstende Klinge",
+        "ruleId": "classes.warlock.invocation-improved-pact-weapon-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 12,
+        "optionId": "classes.warlock.invocation-thirsting-blade"
+      }
     },
     {
       "classKey": "warlock",
@@ -711,7 +827,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Lektionen der Ältesten",
-      "prerequisite": "Ab 2. Hexenmeisterstufe"
+      "prerequisite": "Ab 2. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-lessons-of-the-first-ones-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -720,7 +843,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 9,
       "name": "Lebenstrinker",
-      "prerequisite": "Ab 9. Hexenmeisterstufe, Anrufung Pakt der Klinge"
+      "prerequisite": "Ab 9. Hexenmeisterstufe, Anrufung Pakt der Klinge",
+      "prerequisiteSource": {
+        "quote": "Ab 9. Hexenmeisterstufe, Anrufung Pakt der Klinge",
+        "ruleId": "classes.warlock.invocation-lifedrinker-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 9,
+        "optionId": "classes.warlock.invocation-pact-of-the-blade"
+      }
     },
     {
       "classKey": "warlock",
@@ -729,7 +860,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Maske der vielen Gesichter",
-      "prerequisite": "Ab 2. Hexenmeisterstufe"
+      "prerequisite": "Ab 2. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-mask-of-many-faces-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -738,7 +876,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 5,
       "name": "Meister der myriaden Formen",
-      "prerequisite": "Ab 5. Hexenmeisterstufe"
+      "prerequisite": "Ab 5. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 5. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-master-of-myriad-forms-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 5
+      }
     },
     {
       "classKey": "warlock",
@@ -747,7 +892,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 5,
       "name": "Gedankenblick",
-      "prerequisite": "Ab 5. Hexenmeisterstufe"
+      "prerequisite": "Ab 5. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 5. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-mind-sight-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 5
+      }
     },
     {
       "classKey": "warlock",
@@ -756,7 +908,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Neblige Visionen",
-      "prerequisite": "Ab 2. Hexenmeisterstufe"
+      "prerequisite": "Ab 2. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-misty-visions-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -765,7 +924,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 5,
       "name": "Mit den Schatten verschmelzen",
-      "prerequisite": "Ab 5. Hexenmeisterstufe"
+      "prerequisite": "Ab 5. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 5. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-one-with-shadows-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 5
+      }
     },
     {
       "classKey": "warlock",
@@ -774,7 +940,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Außerweltlicher Sprung",
-      "prerequisite": "Ab 2. Hexenmeisterstufe"
+      "prerequisite": "Ab 2. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-otherworldly-leap-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -783,7 +956,9 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": null,
       "name": "Pakt der Klinge",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "warlock",
@@ -792,7 +967,9 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": null,
       "name": "Pakt der Kette",
-      "prerequisite": null
+      "prerequisite": null,
+      "prerequisiteSource": null,
+      "requirements": {}
     },
     {
       "classKey": "warlock",
@@ -801,7 +978,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 2,
       "name": "Zurückdrängender Strahl",
-      "prerequisite": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden über einen Angriffswurf bewirkt"
+      "prerequisite": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden über einen Angriffswurf bewirkt",
+      "prerequisiteSource": {
+        "quote": "Ab 2. Hexenmeisterstufe, ein Hexenmeisterzaubertrick, der Schaden über einen Angriffswurf bewirkt",
+        "ruleId": "classes.warlock.invocation-repelling-blast-prerequisite"
+      },
+      "requirements": {
+        "knownCantrip": "attack-damage",
+        "minClassLevel": 2
+      }
     },
     {
       "classKey": "warlock",
@@ -810,7 +995,15 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 5,
       "name": "Dürstende Klinge",
-      "prerequisite": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Klinge"
+      "prerequisite": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Klinge",
+      "prerequisiteSource": {
+        "quote": "Ab 5. Hexenmeisterstufe, Anrufung Pakt der Klinge",
+        "ruleId": "classes.warlock.invocation-thirsting-blade-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 5,
+        "optionId": "classes.warlock.invocation-pact-of-the-blade"
+      }
     },
     {
       "classKey": "warlock",
@@ -819,7 +1012,14 @@
       "kind": "Schauerliche Anrufung",
       "minClassLevel": 15,
       "name": "Hexensicht",
-      "prerequisite": "Ab 15. Hexenmeisterstufe"
+      "prerequisite": "Ab 15. Hexenmeisterstufe",
+      "prerequisiteSource": {
+        "quote": "Ab 15. Hexenmeisterstufe",
+        "ruleId": "classes.warlock.invocation-witch-sight-prerequisite"
+      },
+      "requirements": {
+        "minClassLevel": 15
+      }
     }
   ],
   "classes": [
@@ -15281,6 +15481,14 @@
       "ritual": false
     },
     "spells.c-e.einfache-illusion": {
+      "invocationCantrip": {
+        "attack": false,
+        "damage": false,
+        "source": {
+          "quote": "ein Geräusch oder das Abbild eines Gegenstands",
+          "ruleId": "spells.c-e.einfache-illusion.text-1"
+        }
+      },
       "level": 0,
       "name": "Einfache Illusion",
       "ritual": false
@@ -15576,6 +15784,14 @@
       "ritual": true
     },
     "spells.f-g.gift-verspruehen": {
+      "invocationCantrip": {
+        "attack": true,
+        "damage": true,
+        "source": {
+          "quote": "Führe einen Fernkampf-Zauberangriff",
+          "ruleId": "spells.f-g.gift-verspruehen.text-1"
+        }
+      },
       "level": 0,
       "name": "Gift versprühen",
       "ritual": false
@@ -15726,6 +15942,14 @@
       "ritual": false
     },
     "spells.h-l.kalte-hand": {
+      "invocationCantrip": {
+        "attack": true,
+        "damage": true,
+        "source": {
+          "quote": "führst einen Nahkampf-Zauberangriff",
+          "ruleId": "spells.h-l.kalte-hand.text-1"
+        }
+      },
       "level": 0,
       "name": "Kalte Hand",
       "ritual": false
@@ -15826,6 +16050,14 @@
       "ritual": true
     },
     "spells.m-p.magierhand": {
+      "invocationCantrip": {
+        "attack": false,
+        "damage": false,
+        "source": {
+          "quote": "Die Hand kann nicht angreifen",
+          "ruleId": "spells.m-p.magierhand.text-4"
+        }
+      },
       "level": 0,
       "name": "Magierhand",
       "ritual": false
@@ -16046,6 +16278,14 @@
       "ritual": true
     },
     "spells.r-s.schauriger-strahl": {
+      "invocationCantrip": {
+        "attack": true,
+        "damage": true,
+        "source": {
+          "quote": "Führe einen Fernkampf-Zauberangriff",
+          "ruleId": "spells.r-s.schauriger-strahl.text-1"
+        }
+      },
       "level": 0,
       "name": "Schauriger Strahl",
       "ritual": false
@@ -16306,6 +16546,14 @@
       "ritual": false
     },
     "spells.t-v.taschenspielerei": {
+      "invocationCantrip": {
+        "attack": false,
+        "damage": false,
+        "source": {
+          "quote": "Diese Schöpfung kann keinen Schaden bewirken",
+          "ruleId": "spells.t-v.taschenspielerei.text-7"
+        }
+      },
       "level": 0,
       "name": "Taschenspielerei",
       "ritual": false
@@ -16721,6 +16969,14 @@
       "ritual": false
     },
     "spells.w-z.zielsicherer-schlag": {
+      "invocationCantrip": {
+        "attack": true,
+        "damage": true,
+        "source": {
+          "quote": "führst du einen Angriff mit der Waffe",
+          "ruleId": "spells.w-z.zielsicherer-schlag.text-1"
+        }
+      },
       "level": 0,
       "name": "Zielsicherer Schlag",
       "ritual": false

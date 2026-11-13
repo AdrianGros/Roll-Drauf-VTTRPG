@@ -44,7 +44,8 @@ def payload_from_needs(data, need, evaluation, state):
                 pool = [l["id"] for l in data["languages"] if not l.get("automatic")]
             else:
                 pool = [o["id"] for o in data["classOptions"]
-                        if o["classKey"] == key and o["kind"] == choice["optionKind"] and (o["minClassLevel"] or 1) <= need["newClassLevel"]]
+                        if o["classKey"] == key and o["kind"] == choice["optionKind"] and (o["minClassLevel"] or 1) <= need["newClassLevel"]
+                        and not o["requirements"].get("optionId") and not o["requirements"].get("knownCantrip")]
             picks += [p for p in pool if p not in picks and p not in taken][: pending["need"] - len(picks)]
             assert len(picks) == pending["need"], (key, pending["id"])
             choices[pending["id"]] = picks

@@ -1,0 +1,45 @@
+{
+  "status": "targeted_checks_passed_pending_live",
+  "retention": "permanent",
+  "groups": [
+    {
+      "scope": "Rules, generator data, creator/progression APIs",
+      "status": "pass",
+      "summary": "178 passed, 165 warnings in 77.82s (0:01:17)",
+      "raw_log": "/tmp/feedback-b01-tests.log"
+    },
+    {
+      "scope": "Attack vs damage predicate",
+      "status": "pass",
+      "summary": "1 passed in 3.54s",
+      "raw_log": "/tmp/feedback-b01-predicate.log"
+    },
+    {
+      "scope": "Creator, progression and DM/Player Back→Maps browsers",
+      "status": "pass",
+      "summary": "15 passed, 60 warnings in 354.01s (0:05:54)",
+      "raw_log": "/tmp/feedback-b01-browser.log"
+    }
+  ],
+  "i18n_check": "3223 UI sources: DE/EN complete, placeholders and generated files verified",
+  "source_sha256": {
+    "vtt/rules_content/creator_data.py": "7ac0bd8be0d05fd86cfe9772056605ff8c6c46d1818274eed1b70b877d0d03d3",
+    "vtt/rules_content/creator_rules.py": "ee347669373a2a0b929f5829555e605a70fc7e3158eda4d2ce7fc86b9ec472ef",
+    "vtt/rules_content/srd-5.2.1-de/generated/creator-data.json": "bda8334e8eed613357801a0302cf491537f7fb1fd4f36991fb463b453ffa43e1",
+    "vtt/static/i18n/ui.de.json": "a5dd4178839ba82c2466186f4145ec948a31481792735cd9beeb6a953fc03006",
+    "vtt/static/i18n/ui.en.json": "29982c23635064878f684bc604dde7717537d21cabebdee690d292111f58433b",
+    "vtt/static/js/play-ui.js": "1c16ee118621c21425efc1a60afcfb4874929b21f179892cfba6fd575bee7291",
+    "vtt/static/js/srd-creator-random.js": "0e635cd3090b92a57ad8fc25749bcce8c00c9518e5d5f317a92dfc453383ad27",
+    "vtt/static/js/srd-creator-steps.js": "a4d2959b1b5b98e567da483967e03900c8471585dc936f815baa917161bfd786",
+    "vtt/static/js/srd-progression-ui.js": "38ad86ba61c4ea33ed242bbad18e70ee241d7c799e2e9e0151db1efa7936f11c",
+    "vtt/static/js/ui-catalog.js": "68c7fac646f84fe37a4645020397f2ee26ec71ca4ead4521e421817522d64b3a"
+  },
+  "live_status": "NOT_RUN",
+  "rollback_status": "NOT_PREPARED",
+  "test_harness_adjustments": [
+    "Wait for asynchronous new-draft opening before arranging state",
+    "Use complete accessible checkbox names including prerequisite text",
+    "Scope Back menu item to appMenu instead of matching its sibling main navigation",
+    "Follow the existing /mapmaker entry redirect to /static/mapmaker/index.html"
+  ]
+}

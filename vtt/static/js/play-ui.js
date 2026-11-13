@@ -729,6 +729,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
 
             const url = new URL(String(targetHref), window.location.origin);
+            if (url.origin !== window.location.origin) return null;
             const path = url.pathname;
             let routeKey = null;
             if (path === "/dashboard" || path === "/dashboard.html") {
@@ -739,6 +740,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 routeKey = "characters";
             } else if (path === "/api/ce/authoring") {
                 routeKey = "creation-engine";
+            } else if (path === "/mapmaker") {
+                routeKey = "mapmaker";
             } else if (path === "/character-sheet" || path === "/character-sheet.html") {
                 routeKey = "character-sheet";
             }

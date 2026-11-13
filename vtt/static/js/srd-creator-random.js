@@ -64,7 +64,9 @@
                 const n = U.choiceNeed(ch, L);
                 let pool = [];
                 if (ch.kind === 'weapon-mastery') pool = data.equipment.weapons.filter((w) => U.weaponAllowed(c, w) && (!/-melee$/.test(ch.weapons || '') || w.kind === 'melee')).map((w) => w.id);
-                else if (ch.kind === 'class-option') pool = data.classOptions.filter((o) => o.classKey === c.classKey && o.kind === ch.optionKind && (o.minClassLevel || 1) <= L).map((o) => o.id);
+                // The quick generator chooses independent options. Dependent options remain
+                // available through the server-checked manual selection after generation.
+                else if (ch.kind === 'class-option') pool = data.classOptions.filter((o) => o.classKey === c.classKey && o.kind === ch.optionKind && (o.minClassLevel || 1) <= L && !o.requirements.optionId && !o.requirements.knownCantrip).map((o) => o.id);
                 else if (ch.kind === 'language') pool = data.languages.filter((l) => !l.automatic).map((l) => l.id);
                 const used = Object.values(fc).filter(Array.isArray).flat();
                 fc[ch.id] = shuffle(pool.filter((id) => !used.includes(id))).slice(0, n);

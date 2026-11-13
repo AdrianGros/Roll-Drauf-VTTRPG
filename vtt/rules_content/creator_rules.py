@@ -82,6 +82,50 @@ def _list(value) -> list:
     return value if isinstance(value, list) else []
 
 
+def class_option_eligibility(data: dict, state: dict, class_key: str, class_level: int) -> dict:
+    """One source of truth for creator, progression and their selection UIs."""
+    options = {o["id"]: o for o in data["classOptions"] if o["classKey"] == class_key}
+    selections = _dict(_dict(state.get("featureChoices")).get(class_key))
+    definitions = next((c["featureChoices"] for c in data["classes"] if c["classKey"] == class_key), [])
+    # Only active, correctly typed class-option buckets can satisfy a dependency.
+    selected = {
+        pick for choice in definitions if choice["kind"] == "class-option" and choice["level"] <= class_level
+        for pick in _list(selections.get(choice["id"]))
+        if isinstance(pick, str) and pick in options and options[pick]["kind"] == choice["optionKind"]
+    }
+    cantrips = _list(_dict(_dict(state.get("spells")).get(class_key)).get("cantrips"))
+    known = [data["spells"][s] for s in cantrips if isinstance(s, str)
+             and s in data["spellLists"].get(class_key, []) and data["spells"][s]["level"] == 0]
+    result = {}
+
+    def judge(option_id, visiting=()):
+        if option_id in result:
+            return result[option_id]
+        option = options[option_id]
+        rule = option["requirements"]
+        reasons = []
+        minimum = rule.get("minClassLevel", 1)
+        if class_level < minimum:
+            reasons.append(f"Erfordert Klassenstufe {minimum}.")
+        dependency = rule.get("optionId")
+        if dependency:
+            if dependency not in options or option_id in visiting:
+                reasons.append("Ungültige Regelabhängigkeit.")
+            elif dependency not in selected or not judge(dependency, (*visiting, option_id))["eligible"]:
+                reasons.append(f"Erfordert die gültige Anrufung „{options[dependency]['name']}“.")
+        kind = rule.get("knownCantrip")
+        if kind and not any(s.get("invocationCantrip", {}).get("damage") and
+                            (kind != "attack-damage" or s["invocationCantrip"]["attack"]) for s in known):
+            reasons.append("Erfordert einen bekannten Hexenmeister-Zaubertrick, der Schaden " +
+                           ("über einen Angriffswurf bewirkt." if kind == "attack-damage" else "bewirkt."))
+        result[option_id] = {"eligible": not reasons, "reasons": reasons}
+        return result[option_id]
+
+    for option_id in options:
+        judge(option_id)
+    return result
+
+
 def _parse_meters(text) -> float:
     match = re.fullmatch(r"\+?([\d,]+) m", str(text).strip())
     return float(match.group(1).replace(",", ".")) if match else 0.0
@@ -450,6 +494,7 @@ def evaluate(data: dict, state: dict) -> dict:
 
     # ---- feature choices
     feature_state = _dict(state.get("featureChoices"))
+    option_eligibility = {key: class_option_eligibility(data, state, key, level) for key, level in levels_by_class.items()}
     for key, class_level in levels_by_class.items():
         entry = classes[key]
         chosen = _dict(feature_state.get(key))
@@ -489,6 +534,8 @@ def evaluate(data: dict, state: dict) -> dict:
                         option = options.get(pick)
                         if option is None or option["classKey"] != key or option["kind"] != choice["optionKind"] or (option["minClassLevel"] or 1) > class_level:
                             findings.add(ERROR, "choice-invalid", "Diese Option ist für deine Klassenstufe nicht verfügbar.", path, choice["source"])
+                        elif not option_eligibility[key][pick]["eligible"]:
+                            findings.add(ERROR, "class-option-prerequisite", f"{option['name']}: " + " ".join(option_eligibility[key][pick]["reasons"]), path, option["prerequisiteSource"])
 
     for key in levels_by_class:
         picks = [str(p) for value in _dict(feature_state.get(key)).values() if isinstance(value, list) for p in value]
@@ -663,6 +710,7 @@ def evaluate(data: dict, state: dict) -> dict:
         "passivePerception": passive,
         "spellcasting": casting,
         "feats": taken_feats,
+        "classOptionEligibility": option_eligibility,
     }
     result['provenance'] = provenance
     result['provenanceRuleset'] = {'id':data['rulesetId'],'version':data['rulesetVersion']}

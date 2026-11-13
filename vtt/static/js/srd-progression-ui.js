@@ -279,6 +279,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const history = historyBlock(payload);
     if (history) root.append(history);
     if (current.wizard) root.append(wizardPanel());
+    updateClassOptionControls();
     restoreFocus(focus, root);
   }
 
@@ -359,26 +360,33 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const w = current.wizard;
     if (!w) return;
     const token = ++previewToken;
+    w.validating = true;
+    updateClassOptionControls();
+    updateFooter();
     try {
       const result = await auth.makeAuthRequest(base('/level-up/preview'), 'POST', first ? { classKey: w.classKey } : payloadFromWizard());
       if (token !== previewToken || !current.wizard) return;
       w.result = result;
       w.error = '';
+      w.validating = false;
       seedFromNeeds(w, result.needs);
       if (first) {
         render();
       } else {
+        updateClassOptionControls();
         updateFooter();
       }
     } catch (error) {
       if (token !== previewToken || !current.wizard) return;
       w.error = failureText(error);
+      // Keep new dependent selections disabled until a successful server check.
       updateFooter();
     }
   }
 
   function change(mutator, rerender) {
     mutator(current.wizard);
+    current.wizard.validating = true;
     if (rerender) render();
     refreshPreview(false);
   }
@@ -526,16 +534,39 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       box.checked = picked.includes(entry.id);
       const isLocked = locked?.includes(entry.id);
       box.disabled = Boolean(isLocked) || (!box.checked && limit != null && picked.length >= limit);
+      if (entry.classOption) {
+        row.dataset.classOption = entry.id;
+        row.dataset.optionBaseText = entry.sub || '';
+        row.dataset.optionLimit = String(limit);
+        row.dataset.optionLocked = String(Boolean(isLocked));
+      }
       box.addEventListener('change', () => {
         const next = box.checked ? picked.concat(entry.id) : picked.filter((id) => id !== entry.id);
         onChange(next);
       });
       row.append(box, element('span', null, entry.name));
-      if (entry.sub) row.append(element('small', null, entry.sub));
+      if (entry.sub || entry.classOption) row.append(element('small', null, entry.sub || ''));
       row.dataset.search = `${entry.name} ${entry.sub || ''}`.toLowerCase();
       wrap.append(row);
     });
     return wrap;
+  }
+
+  function updateClassOptionControls() {
+    const w = current?.wizard;
+    if (!w) return;
+    const verdicts = w.result?.evaluation?.classOptionEligibility?.[w.classKey] || {};
+    document.querySelectorAll('[data-class-option]').forEach((row) => {
+      const box = row.querySelector('input');
+      const verdict = verdicts[row.dataset.classOption];
+      const picked = row.parentElement.querySelectorAll('input:checked').length;
+      // Previously invalid choices must remain removable for an explicit repair.
+      const locked = row.dataset.optionLocked === 'true' && verdict?.eligible;
+      box.disabled = Boolean(locked) || (!box.checked && (w.validating || !verdict?.eligible || picked >= Number(row.dataset.optionLimit)));
+      row.querySelector('small').textContent = [row.dataset.optionBaseText,
+        w.validating ? globalThis.VTTUi('Voraussetzungen werden geprüft …') : verdict?.reasons?.join(' ')
+      ].filter(Boolean).join(' · ');
+    });
   }
 
   function counter(have, need) {
@@ -605,7 +636,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     } else if (pending.kind === 'class-option') {
       options = srdCreatorData.classOptions
         .filter((o) => o.classKey === w.classKey && o.kind === definition.optionKind && (o.minClassLevel || 1) <= classLevel)
-        .map((o) => ({ id: o.id, name: o.name, sub: [o.prerequisite, o.cost].filter(Boolean).join(' · ') || null }));
+        .map((o) => ({ id: o.id, name: o.name, sub: [o.prerequisite, o.cost].filter(Boolean).join(' · ') || null, classOption: true }));
     } else if (pending.kind === 'language') {
       options = srdCreatorData.languages.filter((l) => !l.automatic).map((l) => ({ id: l.id, name: l.name }));
     }
@@ -761,7 +792,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       blockers.forEach((b) => footer.append(element('div', 'srd-prog-warn', b.message)));
       const gain = result.hpGain;
       footer.append(element('div', 'srd-prog-summary', globalThis.VTTUi("Trefferpunkte: {p0} ({p1}{p2}) · Übungsbonus +{p3} · Rüstungsklasse {p4}",{p0:(result.evaluation.hitPoints.max),p1:(gain >= 0 ? '+' : ''),p2:(gain),p3:(result.evaluation.proficiencyBonus),p4:(result.evaluation.armorClass.value)})));
-      ready = !blockers.length && !w.error && (w.hpMode === 'fixed' || Number(w.rolled) >= 1) && !w.busy;
+      ready = !blockers.length && !w.error && !w.validating && (w.hpMode === 'fixed' || Number(w.rolled) >= 1) && !w.busy;
     }
     const confirm = button(w.busy ? globalThis.VTTUi('Speichere…') : globalThis.VTTUi('Stufe {level} bestätigen', {level: result?.needs?.newTotalLevel ?? ''}), 'srd-prog-btn srd-prog-primary', confirmLevelUp);
     confirm.id = 'srdWizConfirm';
@@ -771,7 +802,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
   async function confirmLevelUp() {
     const w = current.wizard;
-    if (!w?.result || locked()) return;
+    if (!w?.result || w.validating || locked()) return;
     w.busy = true;
     updateFooter();
     try {

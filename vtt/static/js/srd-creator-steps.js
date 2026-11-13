@@ -47,7 +47,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         return h('div', { class: 'sc-choice-list', role: 'group', 'aria-label': group || null },
             options.map((o) => {
                 const on = selected.includes(o.id);
-                return checkRow(o.name, on, !on && full, (checked) => {
+                return checkRow(o.name, on, !on && (full || o.disabled), (checked) => {
                     const next = checked ? selected.concat(o.id) : selected.filter((x) => x !== o.id);
                     onchange(next);
                 }, o.sub, o.detail);
@@ -515,7 +515,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             options = app.data.equipment.weapons.filter((w) => weaponAllowed(c, w) && (!/-melee$/.test(choice.weapons || '') || w.kind === 'melee')).map((w) => ({ id: w.id, name: w.name, sub: w.mastery }));
         } else if (choice.kind === 'class-option') {
             options = app.data.classOptions.filter((o) => o.classKey === key && o.kind === choice.optionKind && (o.minClassLevel || 1) <= classLevel)
-                .map((o) => ({ id: o.id, name: o.name, sub: [o.prerequisite, o.cost].filter(Boolean).join(' · ') || null, detail: o.id }));
+                .map((o) => {
+                    const verdict = app.evaluation?.classOptionEligibility?.[key]?.[o.id];
+                    const pending = app.dirty || app.saving;
+                    return { id: o.id, name: o.name,
+                        sub: [o.prerequisite, o.cost, pending ? globalThis.VTTUi('Voraussetzungen werden geprüft …') : verdict?.reasons?.join(' ')].filter(Boolean).join(' · ') || null,
+                        disabled: pending || !verdict?.eligible, detail: o.id };
+                });
         } else if (choice.kind === 'language') {
             options = app.data.languages.filter((l) => !l.automatic).map((l) => ({ id: l.id, name: l.name }));
         }

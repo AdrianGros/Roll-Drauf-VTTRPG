@@ -1,0 +1,369 @@
+{
+  "schema": "vtt.feedback-implementation.v1",
+  "status": "in_progress",
+  "retention": "permanent",
+  "input": "FEEDBACK_NEXT_ROUND_2026-11-13.json",
+  "plan": "FEEDBACK_IMPLEMENTATION_2026-11-13.md",
+  "cards": [
+    {
+      "id": "N01",
+      "title": "Anrufungsvoraussetzungen tatsächlich prüfen",
+      "priority": "P1",
+      "status": "deploy_in_progress",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": true,
+      "package": "B01"
+    },
+    {
+      "id": "N02",
+      "title": "Klassenauswahl beruhigen und Details lesbar gliedern",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B04"
+    },
+    {
+      "id": "N03",
+      "title": "Gewürfelte Werte als einzelne verfügbare Ergebnisse zeigen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B04"
+    },
+    {
+      "id": "N04",
+      "title": "Hintergrundauswahl und erlaubte Attributkombinationen erweitern",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B04"
+    },
+    {
+      "id": "N05",
+      "title": "Unterklassenmerkmale beim Aufstieg verständlich einblenden",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B04"
+    },
+    {
+      "id": "N06",
+      "title": "Zauber nach Grad und Name sortieren können",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B04"
+    },
+    {
+      "id": "N07",
+      "title": "DM-Freigaben für zusätzliche Bauoptionen abgrenzen",
+      "priority": "P3",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B04"
+    },
+    {
+      "id": "N08",
+      "title": "Mehr Pinselspitzen und abwechslungsreiche Striche",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B06"
+    },
+    {
+      "id": "N09",
+      "title": "Farbe, Textur und Kontur bewusst beeinflussen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B06"
+    },
+    {
+      "id": "N10",
+      "title": "Radierer mit sinnvollen eigenen Startwerten",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B06"
+    },
+    {
+      "id": "N11",
+      "title": "Skalieren auf 0 % einem konkreten Regler zuordnen",
+      "priority": "P3",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B06"
+    },
+    {
+      "id": "N12",
+      "title": "Wegpunkte auffindbar bearbeiten und Kurven ermöglichen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B05"
+    },
+    {
+      "id": "N13",
+      "title": "Freie Assetplatzierung und Kachelgröße verständlich trennen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B05"
+    },
+    {
+      "id": "N14",
+      "title": "Auswahlrahmen und gemeinsame Bearbeitung ermöglichen",
+      "priority": "P1",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B05"
+    },
+    {
+      "id": "N15",
+      "title": "Dekosymbole ohne erzwungenen Ortsnamen setzen",
+      "priority": "P1",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B05"
+    },
+    {
+      "id": "N16",
+      "title": "Ort, Symbol, Kachel und Beschriftung verständlich organisieren",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B05"
+    },
+    {
+      "id": "N17",
+      "title": "Rückgängig und Wiederholen leichter finden",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B05"
+    },
+    {
+      "id": "N18",
+      "title": "Editor-Ausstieg, Anmeldung und Entwurfsstatus unterscheiden",
+      "priority": "P1",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B06"
+    },
+    {
+      "id": "N19",
+      "title": "Kartenwerkstatt-Optik als positive Referenz erhalten",
+      "priority": "P3",
+      "status": "planned",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B03"
+    },
+    {
+      "id": "N20",
+      "title": "Assetbestand gegen nur Kenney abgleichen",
+      "priority": "P3",
+      "status": "existing_evidence",
+      "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
+      "implementation_started": false,
+      "package": "existing"
+    },
+    {
+      "id": "S01",
+      "title": "Einstellungen im Zahnrad rechts bündeln",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B02"
+    },
+    {
+      "id": "S02",
+      "title": "Nachtmodus als verbranntes Buch mit roten Akzenten",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B03"
+    },
+    {
+      "id": "S03",
+      "title": "Englisches SRD 5.2.1 als sprachabhängige Inhaltsfassung",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B09"
+    },
+    {
+      "id": "S04",
+      "title": "Vollen Monatskalender als reguläre Ansicht zeigen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B02"
+    },
+    {
+      "id": "S05",
+      "title": "Vorschaubild und kurzes Label in Own Library",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B08"
+    },
+    {
+      "id": "S06",
+      "title": "Gemeldete Lichtfunktion im tatsächlichen DM-Kontext prüfen",
+      "priority": "P1",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B07"
+    },
+    {
+      "id": "S07",
+      "title": "Gemeldete Wandfunktion mit Sicht-/Lichtwirkung prüfen",
+      "priority": "P1",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B07"
+    },
+    {
+      "id": "S08",
+      "title": "Measure-Auswahl für Kegel, Kreis/Kugel und Quadrat",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B07"
+    },
+    {
+      "id": "S09",
+      "title": "Hamburger, Zurück und App-Menü unterscheidbar machen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B02"
+    },
+    {
+      "id": "S10",
+      "title": "Toten Back-Maps-Einstieg korrigieren",
+      "priority": "P1",
+      "status": "deploy_in_progress",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": true,
+      "package": "B01"
+    },
+    {
+      "id": "S11",
+      "title": "Chat links und Journal rechts einordnen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B02"
+    },
+    {
+      "id": "S12",
+      "title": "Journal als zentralen Datei- und Assetzugang nutzen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B08"
+    },
+    {
+      "id": "S13",
+      "title": "DM-Bereiche als Karteireiter unten links bündeln",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B02"
+    },
+    {
+      "id": "S14",
+      "title": "Discord-Profilbild im Kontobereich anzeigen",
+      "priority": "P3",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B02"
+    },
+    {
+      "id": "S15",
+      "title": "Erweiterung der Kampagnenplätze erreichbar machen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B10"
+    },
+    {
+      "id": "S16",
+      "title": "Gruppen- und Leerzustandstexte passend anzeigen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B02"
+    },
+    {
+      "id": "S17",
+      "title": "Karteneditor visuell in die übrige VTT-Oberfläche einordnen",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B03"
+    },
+    {
+      "id": "S18",
+      "title": "Stempel oder Kachelausschnitte als weichen Bildpinsel verwenden",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B06"
+    },
+    {
+      "id": "S19",
+      "title": "Layer-Verhalten von Generate Landmass klären",
+      "priority": "P3",
+      "status": "existing_evidence",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "existing"
+    },
+    {
+      "id": "S20",
+      "title": "Karten im Kampagnenhub übernehmen und verwalten",
+      "priority": "P2",
+      "status": "planned",
+      "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
+      "implementation_started": false,
+      "package": "B08"
+    }
+  ]
+}
