@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "retention": "permanent",
+  "scope": "Conservative reviewed raster source collection retained in file roundtrip, bundle credits and PNG metadata; vector-only export remains precise.",
+  "command": "pytest tests/test_feedback_b06_browser.py::test_raster_sources_survive_file_roundtrip_and_png_bundle -x -q --tb=short --show-capture=no",
+  "runtime": "roll-drauf-vtt-feedback-tests:20261110; network none",
+  "summary": "1 passed in 21.09s",
+  "log": "checks.log"
+}

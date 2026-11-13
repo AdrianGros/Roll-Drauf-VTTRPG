@@ -16,13 +16,16 @@ export function creditsForDocument(doc, palette) {
             if (stamp) used.add(stamp.pack);
         }
     }
-    // Photographic brush pixels cannot be traced back after raster painting;
-    // include every available material source rather than lose their attribution.
-    for (const pack of palette.packs) if (pack.id === "polyhaven-terrain") used.add(pack.id);
+    // Raster pixels retain no asset provenance after painting/import. Keep the
+    // reviewed source collection, including image brush sources, across saves
+    // and rollbacks rather than guess which artist supplied a pixel.
+    const raster = doc.layers.some((layer) => layer.kind === "raster");
+    for (const pack of palette.packs) if (raster || pack.id === "polyhaven-terrain") used.add(pack.id);
     return [
         `Künstler-Credits – ${doc.meta.title}`,
         "Bearbeitung: Ausschnitte, Skalierung, Spiegelung und Komposition in der Roll-Drauf-Kartenwerkstatt. Die Originalkünstler unterstützen dieses Projekt nicht automatisch.",
         "Bei Veröffentlichung diese Angaben auch in einem Begleittext oder einer Credits-Seite nennen; Bilddienste können eingebettete Metadaten entfernen.",
+        ...(raster ? ["Rasterquellensammlung: Alle freigegebenen lokalen Katalogquellen sind aufgeführt. Dies bedeutet nicht, dass jedes Paket in dieser Karte sichtbar verwendet wurde."] : []),
         ...palette.packs.filter((pack) => used.has(pack.id) && pack.credit).map((pack) => pack.credit),
     ].join("\n\n");
 }
