@@ -1,5 +1,5 @@
 {
-  "status": "targeted_checks_passed_pending_live",
+  "status": "pass",
   "retention": "permanent",
   "groups": [
     {
@@ -42,7 +42,7 @@
     "vtt/static/js/srd-rule-preview.js": "ae2de9e7c946fa36ca6abdb57b73d5fd95481dc3ab4ad0db6799be125ac8cedb"
   },
   "i18n": "3249 UI sources DE/EN verified",
-  "live": "NOT_RUN",
+  "live": "live.json",
   "residual": [
     "N07 DM grants remains a separately bounded implementation within B04"
   ]

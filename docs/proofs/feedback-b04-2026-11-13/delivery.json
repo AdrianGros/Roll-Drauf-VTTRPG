@@ -1,0 +1,74 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "N02",
+    "N03",
+    "N04",
+    "N05",
+    "N06"
+  ],
+  "source_commit": "0558013b84226997c0cf12a6114d34463955e504",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b04-creator-clarity-20261111-0558013b8",
+  "image_id": "sha256:85d5b804b1dee6785bf9c590a825015a07dc3f07d14ed679e58a5ce7e404626a",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "release_record": "/srv/migration/2026-11-11/feedback-b04-creator-clarity/0558013b8/release.json",
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "source_verification": {
+    "checked": 282,
+    "mismatches": []
+  },
+  "health": {
+    "now": "2026-11-13T12:56:25.150508",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T12:56:22.336212",
+    "status": "ok"
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-b04-creator-clarity/0558013b8/rollback.sh",
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "cleanup": {
+    "status": "pass",
+    "scope": "only synthetic feedback_p4 users and owned campaign",
+    "removed": {
+      "token_states": 1,
+      "session_states": 1,
+      "srd_creator_drafts": 1,
+      "game_sessions": 2,
+      "characters": 1,
+      "campaign_members": 2,
+      "campaign_maps": 1,
+      "sessions": 4,
+      "mapmaker_projects": 1,
+      "discord_identity_links": 1,
+      "campaigns": 1,
+      "users": 3
+    },
+    "identity_storage_removed": 1,
+    "container_credentials_removed": true
+  },
+  "roles": [
+    "character owner",
+    "campaign DM",
+    "Player"
+  ],
+  "acceptance": [
+    "Class facts structured; compact cards",
+    "Six individual roll occurrences with duplicates, guarded reuse and persistent assignment",
+    "Existing published custom backgrounds reachable in separate workshop; refresh preserves draft",
+    "Source-backed current/reached subclass features in creator and later level-up",
+    "Spell sort by level/name preserving choices and focus"
+  ],
+  "residual": [
+    "N07 trusted DM extra build grants remains planned separately",
+    "Owner acceptance NOT_RUN",
+    "Unnamed proprietary extra backgrounds not imported",
+    "Later feedback packages remain in progress"
+  ]
+}
