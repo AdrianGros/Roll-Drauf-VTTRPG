@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "retention": "permanent",
+  "checked_at": "2026-11-13T17:24:06.473072+00:00",
+  "source_commit": "6aa3e81271e304af4351e66ce298411dea2aceac",
+  "command": "docker run --rm --network none -v /home/admin/projects/roll-drauf-vtt-feedback-20261110:/app -v /root/.cache/ms-playwright/chromium_headless_shell-1234:/root/.cache/ms-playwright/chromium_headless_shell-1234 -w /app --entrypoint python roll-drauf-vtt-feedback-tests:20261110 -m pytest tests/test_feedback_b05_schema.py tests/test_feedback_b05_browser.py -x -q --tb=short --show-capture=no",
+  "summary": "7 passed, 17 warnings in 115.31s",
+  "log": "recovery-checks.log",
+  "i18n": "3271 UI sources: DE/EN complete, placeholders and generated files verified",
+  "overlay_verification": {
+    "checked": 12,
+    "mismatches": []
+  },
+  "prior_targeted_checks": "checks.json",
+  "warnings": "Existing SQLAlchemy/UTC deprecations and test teardown foreign-key table ordering warning; no test failures."
+}

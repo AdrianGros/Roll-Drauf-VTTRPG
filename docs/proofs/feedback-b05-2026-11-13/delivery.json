@@ -1,0 +1,136 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "N12",
+    "N13",
+    "N14",
+    "N15",
+    "N16",
+    "N17"
+  ],
+  "source_commit": "6aa3e81271e304af4351e66ce298411dea2aceac",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b05-map-objects-20261111-6aa3e8127",
+  "image_id": "sha256:da5d549376173b7938008ccb3530e701919729ec852e46c36b98f6fb5ea5bb82",
+  "deployed_at": "2026-11-13T17:24:01.141165116Z",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "release_record": "/srv/migration/2026-11-11/feedback-b05-map-objects/6aa3e8127/release.json",
+  "targeted_checks": [
+    "checks.json",
+    "recovery-checks.json"
+  ],
+  "live": "live.json",
+  "live_script": "live-journeys.py",
+  "screenshots": [
+    "group-desktop.png",
+    "restored-mobile.png"
+  ],
+  "source_verification": {
+    "checked": 283,
+    "mismatches": []
+  },
+  "running_overlay": "running-overlay.json",
+  "health": {
+    "now": "2026-11-13T17:24:12.110931",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T17:24:08.670085",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "schema": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-b05-map-objects/6aa3e8127/database-before.dump",
+    "bytes": 460168,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-b05-map-objects/6aa3e8127/rollback.sh",
+  "prior_image": "roll-drauf-vtt-app:feedback-b05-map-objects-rollback-20261111-85d5b804b1de",
+  "prior_image_id": "sha256:85d5b804b1dee6785bf9c590a825015a07dc3f07d14ed679e58a5ce7e404626a",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "cleanup": {
+    "status": "pass",
+    "scope": "only synthetic feedback_b05 users and owned campaign",
+    "removed": {
+      "token_states": 1,
+      "session_states": 1,
+      "game_sessions": 2,
+      "characters": 1,
+      "campaign_members": 2,
+      "campaign_maps": 1,
+      "sessions": 6,
+      "mapmaker_projects": 3,
+      "discord_identity_links": 1,
+      "campaigns": 1,
+      "users": 3
+    },
+    "identity_storage_removed": 3,
+    "container_credentials_removed": true,
+    "host_credentials_removed": true
+  },
+  "roles": [
+    "map owner with DM profile",
+    "map owner with Player profile"
+  ],
+  "user_journey": "Character archive → Maps in shared navigation → empty map or own library → editor tools → Save to library; the same navigation on mobile opens the saved map.",
+  "acceptance_checklist": [
+    {
+      "criterion": "Object marquee, group movement, cancel, scale, delete and undo/redo on desktop and mobile",
+      "status": "pass",
+      "evidence": "recovery-checks.json; movement/delete/undo also live.json"
+    },
+    {
+      "criterion": "Tile group movement stays on grid, rejects occupied targets and supports undo",
+      "status": "pass",
+      "evidence": "recovery-checks.json; collision and movement also live.json"
+    },
+    {
+      "criterion": "Grid tile can be explicitly placed as a free symbol",
+      "status": "pass",
+      "evidence": "recovery-checks.json"
+    },
+    {
+      "criterion": "Curved paths and visible node editing; old paths remain straight",
+      "status": "pass",
+      "evidence": "recovery-checks.json; curve/node control and fresh mobile restoration also live.json"
+    },
+    {
+      "criterion": "Nameless visible pin accepted; invisible empty label rejected; strict curve flag",
+      "status": "pass",
+      "evidence": "recovery-checks.json; nameless pin creation also live.json"
+    },
+    {
+      "criterion": "Private map roundtrip preserves curves, pins and cells; selection is transient",
+      "status": "pass",
+      "evidence": "live.json"
+    },
+    {
+      "criterion": "Normal Maps navigation works for DM and Player; private foreign map absent and HTTP 404",
+      "status": "pass",
+      "evidence": "live.json"
+    },
+    {
+      "criterion": "No JavaScript or CSP errors in tested live journeys",
+      "status": "pass",
+      "evidence": "live.json and live-journeys.py"
+    }
+  ],
+  "residual": [
+    "Owner acceptance NOT_RUN",
+    "Rollback image renders curve points as a straight path; resaving in the old editor may drop the curve flag. Keep new map files if rolling back.",
+    "B04 N07 and B06–B11 remain open; N11 still needs the original control identified.",
+    "Original cause of the earlier editor exit is not reproduced or established by this release."
+  ]
+}
