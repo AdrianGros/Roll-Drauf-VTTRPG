@@ -83,6 +83,12 @@ export class Library {
         }
         const data = await response.json().catch(() => ({}));
         if (!response.ok) {
+            if (response.status === 401) {
+                this.loginRequired = true;
+                $('libraryLogin').hidden = false;
+                $('libraryLogin').textContent = globalThis.VTTUi('Erneut anmelden');
+                this.updateStatus();
+            }
             const error = new Error(data.error || (response.status === 401
                 ? globalThis.VTTUi("Bitte erneut anmelden, um deine Kartenbibliothek zu öffnen.")
                 : globalThis.VTTUi("Die Kartenbibliothek ist momentan nicht erreichbar. Bitte erneut versuchen.")));
@@ -90,6 +96,8 @@ export class Library {
             error.status = response.status;
             throw error;
         }
+        this.loginRequired = false;
+        $('libraryLogin').hidden = true;
         return data;
     }
 
@@ -174,7 +182,7 @@ export class Library {
         $("cloudSave").disabled = !enabled;
         $("cloudSaveMenu").disabled = !enabled;
         $("saveCopyBtn").disabled = !enabled;
-        const label = this.busy ? "Bibliothek speichert …" : this.accountId === null ? "Bibliothek: Anmeldung nötig"
+        const label = this.loginRequired ? globalThis.VTTUi('Bibliothek: Anmeldung abgelaufen – Karte bleibt geöffnet') : this.busy ? "Bibliothek speichert …" : this.accountId === null ? "Bibliothek: Anmeldung nötig"
             : this.project && this.savedGeneration === this.ed.generation ? "In Bibliothek gespeichert"
                 : this.project ? "Bibliothek: Änderungen offen" : "Noch nicht in Bibliothek";
         $("cloudStatus").textContent = label;

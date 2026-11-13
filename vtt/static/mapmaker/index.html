@@ -57,6 +57,7 @@
                 </div>
             </div>
             <span id="saveStatus" class="mm-status" role="status" data-state="idle"><span data-ui-key="u_dcc3edaf4fa2">Noch keine Änderungen</span></span>
+            <a id="libraryLogin" class="mm-btn" href="/login.html" target="_blank" rel="noopener" hidden data-ui-key="u_fcf9ff4b3c24">Erneut anmelden</a>
             <a class="mm-link mm-credits-link" href="credits.html" target="_blank" rel="noopener"><span data-ui-key="u_ed8e1ac48fc4">Künstler</span> &amp; <span data-ui-key="u_bfac50d6424b">Credits</span></a>
             <button id="helpBtn" class="mm-icon-btn" type="button" title="Tastenkürzel und Hilfe" data-ui-title="u_26706744e7c1" aria-label="Hilfe" data-ui-aria-label="u_b74af50bb9c6">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 114 2c-1 .6-1.5 1.2-1.5 2.5"/><path d="M12 17h.01"/></svg>
@@ -186,6 +187,19 @@
                 </div>
                 <label class="mm-field" id="eraseScopeField"><span data-ui-key="u_3934db2910b0">Radierer wirkt auf</span><select id="eraseScope"><option value="active" data-ui-key="u_789ae6b2d585">Aktive Ebene</option><option value="visible" data-ui-key="u_dec4268cf856">Alle sichtbaren Ebenen</option></select></label>
                 <p id="eraseScopeHint" class="mm-hint"></p>
+                <label class="mm-field"><span id="brushShapeLabel" data-ui-key="u_d34263ae6792">Pinselspitze</span><select id="brushShape"><option value="round" data-ui-key="u_7b662a0556ec">Rund</option><option value="square" data-ui-key="u_92a0712ccce5">Quadrat</option><option value="diamond" data-ui-key="u_c5f6f6af5c4f">Raute</option><option value="image" disabled data-ui-key="u_0896891a4fc4">Gewähltes Bild</option></select></label>
+                <p id="brushImageInfo" class="mm-hint" hidden></p>
+                <div data-options="brush">
+                    <label class="mm-check"><input id="brushColorEnabled" type="checkbox"><span id="brushColorLabel" data-ui-key="u_dc1e43384526">Eigene Materialfarbe</span></label>
+                    <label class="mm-field"><span id="brushColorValueLabel" data-ui-key="u_89b7957dae43">Farbe</span><input id="brushColor" type="color" value="#8ea566"></label>
+                    <label class="mm-range"><span id="brushTextureLabel" data-ui-key="u_f10b70a508d5">Texturanteil</span><input id="brushTexture" type="range" min="0" max="100" value="100"><output id="brushTextureOut">100 %</output></label>
+                    <div id="brushCoastControls">
+                        <p id="brushCoastTarget" class="mm-hint"></p>
+                        <label class="mm-check"><input id="brushCoast" type="checkbox"><span id="brushCoastLabel" data-ui-key="u_3c88a283a9d0">Küstenlinie der aktiven Malebene</span></label>
+                        <label class="mm-field"><span id="brushCoastColorLabel" data-ui-key="u_560f5fae2297">Konturfarbe</span><input id="brushCoastColor" type="color" value="#3b2a1a"></label>
+                        <label class="mm-range"><span id="brushCoastWidthLabel" data-ui-key="u_09844223e159">Konturbreite (px)</span><input id="brushCoastWidth" type="range" min="0" max="16" step="0.5" value="2.5"><output id="brushCoastWidthOut">2.5 px</output></label>
+                    </div>
+                </div>
                 <div class="mm-range mm-range-edit"><label for="brushSize"><span data-ui-key="u_d9130ae841c9">Größe</span></label><input id="brushSize" type="range" min="2" max="800" step="1"><output id="brushSizeOut"></output><input id="brushSizeNumber" class="mm-number" type="number" min="2" max="800" step="1" aria-label="Pinselgröße in Pixel" data-ui-aria-label="u_118420276fa1"></div>
                 <label class="mm-range"><span><span data-ui-key="u_3c11c68b55b1">Deckkraft</span></span><input id="brushOpacity" type="range" min="1" max="100" step="1"><output id="brushOpacityOut"></output></label>
                 <label class="mm-range"><span><span data-ui-key="u_ea1b9ed680db">Weichheit</span></span><input id="brushSoftness" type="range" min="0" max="100" step="1"><output id="brushSoftnessOut"></output></label>
@@ -210,6 +224,7 @@
                 <label class="mm-field"><span><span data-ui-key="u_358210386a4f">Kategorie</span></span><select id="stampCategory"><option value="" data-ui-key="u_42f71f9dfcff">Alle Kategorien</option></select></label>
                 <p id="stampSelected" class="mm-meta"></p>
                     <button id="stampCrop" type="button" class="mm-btn mm-btn-small" disabled><span data-ui-key="u_edf8d44272c7">Ausschnitt wählen</span></button>
+                <button id="stampAsBrush" type="button" class="mm-btn mm-btn-small" data-ui-key="u_246ec4b59e56">Gewähltes Symbol als Bildpinsel</button>
                 <p id="stampResults" class="mm-hint" role="status" aria-live="polite"></p>
                 <div class="mm-palette-pages"><button id="stampPrev" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_045733db2fe1">Vorherige</span></button><button id="stampNext" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_7c9d8d2a98d9">Weitere Symbole</span></button></div>
                 <div id="palette" class="mm-palette"></div>
@@ -238,6 +253,7 @@
                 <label class="mm-field"><span><span data-ui-key="u_acb5ce20a410">Asset-Paket</span></span><select id="tilePack"><option value="" data-ui-key="u_346513e2c8e9">Alle Pakete</option></select></label>
                 <p id="tileSelected" class="mm-meta"></p>
                 <button id="tileAsSymbol" type="button" class="mm-btn">Gewählte Kachel frei als Symbol platzieren</button>
+                <button id="tileAsBrush" type="button" class="mm-btn" data-ui-key="u_3c664a5ffdcf">Gewählte Kachel als Bildpinsel</button>
                 <p id="tileResults" class="mm-hint" role="status" aria-live="polite"></p>
                 <div class="mm-palette-pages"><button id="tilePrev" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_045733db2fe1">Vorherige</span></button><button id="tileNext" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_d92f7cbe4bbb">Weitere Kacheln</span></button></div>
                 <div id="tilePalette" class="mm-palette"></div>

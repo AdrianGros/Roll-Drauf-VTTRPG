@@ -357,8 +357,9 @@ export class Renderer {
             ctx.shadowColor = "rgba(206,232,226,0.85)";
             ctx.shadowBlur = 26 * scale;
             draw();
-            ctx.shadowColor = "rgba(59,42,26,0.9)";
-            ctx.shadowBlur = 2.5 * scale;
+            const width = layer.effects.coastWidth ?? 2.5;
+            ctx.shadowColor = width === 0 ? 'transparent' : layer.effects.coastColor ? layer.effects.coastColor + 'e6' : "rgba(59,42,26,0.9)";
+            ctx.shadowBlur = width * scale;
             draw();
             ctx.shadowColor = "transparent";
             ctx.shadowBlur = 0;

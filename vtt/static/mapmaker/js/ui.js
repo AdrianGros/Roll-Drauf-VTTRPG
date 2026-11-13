@@ -4,7 +4,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 // textContent/value only.
 
 import { LABEL_STYLES, LIMITS, PLACE_KINDS, findItem, clamp } from "./document.js";
-import { MATERIALS, brushTip, materialTile } from "./brush.js";
+import { MATERIALS, StrokeEngine, materialTile } from "./brush.js";
 import { labelBounds, pathBounds, replacedTitleLabel } from "./render.js";
 
 const $ = (id) => document.getElementById(id);
@@ -191,6 +191,9 @@ export class UI {
             button.append(chip, el("span", {}, material.name));
             button.addEventListener("click", () => {
                 ed.brush.material = material.id;
+                ed.paintBrush.image = null;
+                if (ed.paintBrush.shape === 'image') ed.paintBrush.shape = 'round';
+                this.syncBrush();
                 this.syncMaterials();
                 this.drawBrushPreview();
                 const targetId = material.id === "land" ? "land"
@@ -206,6 +209,17 @@ export class UI {
         this.brushSize = this.range("brushSize", "brushSizeOut", (v) => `${v} px`, (v) => { ed.brush.size = v; this.drawBrushPreview(); ed.requestFrame(); });
         this.brushOpacity = this.range("brushOpacity", "brushOpacityOut", (v) => `${v} %`, (v) => { ed.brush.opacity = v / 100; this.drawBrushPreview(); });
         this.brushSoftness = this.range("brushSoftness", "brushSoftnessOut", (v) => `${v} %`, (v) => { ed.brush.softness = v; this.drawBrushPreview(); });
+        this.brushTexture = this.range('brushTexture', 'brushTextureOut', v => `${v} %`, v => { ed.paintBrush.texture = v / 100;this.drawBrushPreview(); });
+        $('brushShape').addEventListener('change', e => { ed.brush.shape = e.target.value;this.syncBrush(); });
+        $('brushColorEnabled').addEventListener('change', e => { ed.paintBrush.colorEnabled = e.target.checked;this.syncBrush(); });
+        $('brushColor').addEventListener('input', e => { ed.paintBrush.color = e.target.value;this.drawBrushPreview(); });
+        $('stampAsBrush').addEventListener('click', () => ed.useImageBrush(ed.stampOpts.asset, ed.stampOpts.crop));
+        $('tileAsBrush').addEventListener('click', () => ed.useImageBrush(ed.tileOpts.asset));
+        const coast = (key, value) => { const layer = ed.activeLayer();if (layer?.kind === 'raster') ed.setLayerProp(layer.id, key, value); };
+        $('brushCoast').addEventListener('change', e => coast('coast', e.target.checked));
+        $('brushCoastColor').addEventListener('change', e => coast('coastColor', e.target.value));
+        $('brushCoastWidth').addEventListener('input', e => { $('brushCoastWidthOut').textContent = `${e.target.value} px`; });
+        $('brushCoastWidth').addEventListener('change', e => coast('coastWidth', Number(e.target.value)));
         this.brushSize.set(ed.brush.size);
         this.brushOpacity.set(Math.round(ed.brush.opacity * 100));
         this.brushSoftness.set(ed.brush.softness);
@@ -213,6 +227,19 @@ export class UI {
             ed.brush.pressureEnabled = event.target.checked;
         });
         this.syncMaterials();
+        this.drawBrushPreview();
+    }
+
+    syncBrush() {
+        const b = this.ed.brush, image = !!b.image && b.shape === 'image';
+        this.brushSize.set(b.size);this.brushOpacity.set(Math.round(b.opacity * 100));this.brushSoftness.set(b.softness);
+        $('brushShape').value = b.shape || 'round';$('brushShape').querySelector('[value=image]').disabled = !b.image;
+        $('brushPressure').checked = b.pressureEnabled;
+        $('brushColorEnabled').checked = !!b.colorEnabled;$('brushColor').value = b.color || '#8ea566';
+        this.brushTexture.set(Math.round((b.texture ?? 1) * 100));
+        for (const id of ['brushColorEnabled', 'brushColor', 'brushTexture']) $(id).disabled = image;
+        $('brushImageInfo').hidden = !image;
+        $('brushImageInfo').textContent = image ? globalThis.VTTUi('Bildpinsel: {p0}. Originalfarben bleiben erhalten; Materialfarbe und Texturanteil gelten nur für Materialpinsel.', {p0:b.image.label}) : '';
         this.drawBrushPreview();
     }
 
@@ -233,21 +260,16 @@ export class UI {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         const scale = Math.min(1, 70 / brush.size);
         const radius = Math.max(1, (brush.size / 2) * scale);
-        const mask = document.createElement("canvas");
-        mask.width = canvas.width;
-        mask.height = canvas.height;
-        const mctx = mask.getContext("2d");
-        const tip = brushTip(radius, brush.softness);
+        const mask = document.createElement("canvas");mask.width = canvas.width;mask.height = canvas.height;
+        const engine = new StrokeEngine(mask.width, mask.height);
+        engine.begin({canvas:mask,rev:0}, {...brush,size:radius*2,pressureEnabled:false,erase:false,
+            ...(tool === 'eraser' ? {material:'river',colorEnabled:true,color:'#2f5d6e',texture:0,image:null} : {})});
         const step = Math.max(1, radius * 2 * 0.12);
         for (let x = 40; x <= canvas.width - 40; x += step) {
             const y = canvas.height / 2 + Math.sin((x / canvas.width) * Math.PI * 2) * 14;
-            mctx.drawImage(tip.canvas, x - tip.offset, y - tip.offset);
+            engine.addPoint(x, y, null);
         }
-        mctx.globalCompositeOperation = "source-in";
-        if (tool === "eraser") mctx.fillStyle = "#2f5d6e";
-        else mctx.fillStyle = mctx.createPattern(materialTile(brush.material), "repeat");
-        mctx.fillRect(0, 0, mask.width, mask.height);
-        ctx.globalAlpha = brush.opacity;
+        engine.end();
         ctx.drawImage(mask, 0, 0);
         ctx.globalAlpha = 1;
     }
@@ -905,6 +927,12 @@ export class UI {
             if (!this.opacityEdit) this.layerOpacity.set(Math.round(active.opacity * 100));
             $("layerCoastRow").hidden = active.kind !== "raster";
             $("layerCoast").checked = !!active.effects.coast;
+            $('brushCoastControls').hidden = active.kind !== 'raster';
+            $('brushCoastTarget').textContent = globalThis.VTTUi('Aktive Malebene: {p0}', {p0:active.name});
+            $('brushCoast').checked = !!active.effects.coast;
+            $('brushCoastColor').value = active.effects.coastColor || '#3b2a1a';
+            $('brushCoastWidth').value = active.effects.coastWidth ?? 2.5;
+            $('brushCoastWidthOut').textContent = `${active.effects.coastWidth ?? 2.5} px`;
             $("layerGridRow").hidden = active.kind !== "tiles";
             if (active.kind === "tiles") $("layerGrid").value = String(active.grid.size);
         }
@@ -1027,7 +1055,7 @@ export class UI {
         this.updateTargets();
         this.refreshInspector();
         this.refreshLayers();
-        this.drawBrushPreview();
+        this.syncBrush();
         if (!this.isNarrow()) this.openPane("tool");
     }
 

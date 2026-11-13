@@ -133,19 +133,64 @@ export function materialTile(materialId) {
 }
 
 const tipCache = new Map();
+const customTiles = new Map();
+let imageSequence = 0;
+
+/** One explicitly selected local catalog image, bounded independently of sheet size. */
+export function imageBrush(image, crop, label) {
+    const area = crop || { x: 0, y: 0, w: image.width, h: image.height };
+    const scale = Math.min(1, 256 / Math.max(area.w, area.h));
+    const canvas = createCanvas(Math.max(1, Math.round(area.w * scale)), Math.max(1, Math.round(area.h * scale)));
+    canvas.getContext('2d').drawImage(image, area.x, area.y, area.w, area.h, 0, 0, canvas.width, canvas.height);
+    return Object.freeze({ canvas, label, id: ++imageSequence });
+}
+
+/** Material definitions stay immutable; a gesture captures its own optional tint. */
+export function brushMaterial(settings) {
+    const source = materialTile(settings.material);
+    const amount = Math.max(0, Math.min(1, settings.texture ?? 1));
+    const color = settings.colorEnabled && /^#[0-9a-f]{6}$/i.test(settings.color || '') ? settings.color : null;
+    if (!color && amount === 1) return source;
+    const key = `${settings.material}|${color}|${amount}`;
+    if (customTiles.has(key)) return customTiles.get(key);
+    const tile = createCanvas(96, 96), ctx = tile.getContext('2d');
+    ctx.drawImage(source, 0, 0, 96, 96);
+    const data = ctx.getImageData(0, 0, 96, 96), pixels = data.data, mean = [0, 0, 0];
+    for (let i = 0; i < pixels.length; i += 4) for (let c = 0; c < 3; c++) mean[c] += pixels[i + c] / (pixels.length / 4);
+    const rgb = color && [1, 3, 5].map(i => parseInt(color.slice(i, i + 2), 16));
+    const brightness = mean.reduce((a, b) => a + b, 0) / 3;
+    for (let i = 0; i < pixels.length; i += 4) {
+        const shade = 1 + amount * ((pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3 - brightness) / 255;
+        for (let c = 0; c < 3; c++) pixels[i + c] = rgb ? rgb[c] * shade : mean[c] + (pixels[i + c] - mean[c]) * amount;
+    }
+    ctx.putImageData(data, 0, 0);
+    if (customTiles.size >= 32) customTiles.delete(customTiles.keys().next().value);
+    customTiles.set(key, tile);
+    return tile;
+}
 
 /** White alpha tip of the given radius; softness 0 = hard edge, 100 = fully feathered. */
-export function brushTip(radius, softness) {
+export function brushTip(radius, softness, shape = 'round') {
     const r = Math.max(0.5, Math.round(radius * 2) / 2);
     const soft = Math.round(softness);
-    const key = `${r}|${soft}`;
+    const key = `${r}|${soft}|${shape}`;
     if (tipCache.has(key)) return tipCache.get(key);
     const dim = Math.ceil(r * 2) + 2;
     const tip = createCanvas(dim, dim);
     const ctx = tip.getContext("2d");
     const c = dim / 2;
     const hardness = 1 - soft / 100;
-    if (hardness >= 0.99) {
+    if (shape === 'square' || shape === 'diamond') {
+        const data = ctx.createImageData(dim, dim);
+        for (let y = 0; y < dim; y++) for (let x = 0; x < dim; x++) {
+            const dx = Math.abs(x + .5 - c) / r, dy = Math.abs(y + .5 - c) / r;
+            const distance = shape === 'square' ? Math.max(dx, dy) : dx + dy;
+            const alpha = distance >= 1 ? 0 : distance <= hardness ? 1 : (1 - distance) / Math.max(.001, 1 - hardness);
+            const i = (y * dim + x) * 4;
+            data.data[i] = data.data[i + 1] = data.data[i + 2] = 255; data.data[i + 3] = Math.round(255 * alpha);
+        }
+        ctx.putImageData(data, 0, 0);
+    } else if (hardness >= 0.99) {
         ctx.fillStyle = "#fff";
         ctx.beginPath();
         ctx.arc(c, c, r, 0, Math.PI * 2);
@@ -202,7 +247,9 @@ export class StrokeEngine {
         baseCtx.clearRect(0, 0, this.w, this.h);
         baseCtx.drawImage(layer.canvas, 0, 0);
         this.mask.getContext("2d").clearRect(0, 0, this.w, this.h);
-        this.active = { layer, settings, last: null, carry: 0, total: null, pending: null };
+        const frozen = { ...settings };
+        if (!frozen.erase && !frozen.image) frozen.materialCanvas = brushMaterial(frozen);
+        this.active = { layer, settings: frozen, last: null, carry: 0, total: null, pending: null };
     }
 
     /** Add a pointer sample; returns nothing, dirty region is collected for flush(). */
@@ -235,7 +282,21 @@ export class StrokeEngine {
 
     dab(x, y, radius, alpha) {
         const a = this.active;
-        const tip = brushTip(radius, a.settings.softness);
+        let tip = brushTip(radius, a.settings.softness, a.settings.shape);
+        if (a.settings.image && !a.settings.erase) {
+            const source = a.settings.image;
+            const key = `image|${source.id}|${radius}|${a.settings.softness}`;
+            if (!tipCache.has(key)) {
+                const canvas = createCanvas(tip.canvas.width, tip.canvas.height), c = canvas.width / 2;
+                const ctx = canvas.getContext('2d'), scale = radius * 2 / Math.max(source.canvas.width, source.canvas.height);
+                const w = source.canvas.width * scale, h = source.canvas.height * scale;
+                ctx.drawImage(source.canvas, c - w / 2, c - h / 2, w, h);
+                ctx.globalCompositeOperation = 'destination-in';ctx.drawImage(tip.canvas, 0, 0);
+                if (tipCache.size >= 64) tipCache.delete(tipCache.keys().next().value);
+                tipCache.set(key, { canvas, offset: c });
+            }
+            tip = tipCache.get(key);
+        }
         const ctx = this.mask.getContext("2d");
         ctx.globalAlpha = alpha;
         ctx.drawImage(tip.canvas, x - tip.offset, y - tip.offset);
@@ -262,12 +323,14 @@ export class StrokeEngine {
         if (s.erase) {
             layerCtx.globalCompositeOperation = "destination-out";
             layerCtx.drawImage(this.mask, x, y, w, h, x, y, w, h);
+        } else if (s.image) {
+            layerCtx.drawImage(this.mask, x, y, w, h, x, y, w, h);
         } else {
             const workCtx = this.work.getContext("2d");
             workCtx.save();
             workCtx.globalCompositeOperation = "source-over";
             workCtx.clearRect(x, y, w, h);
-            workCtx.fillStyle = workCtx.createPattern(materialTile(s.material), "repeat");
+            workCtx.fillStyle = workCtx.createPattern(s.materialCanvas, "repeat");
             workCtx.fillRect(x, y, w, h);
             workCtx.globalCompositeOperation = "destination-in";
             workCtx.drawImage(this.mask, x, y, w, h, x, y, w, h);

@@ -1,0 +1,38 @@
+{
+  "status": "pass",
+  "retention": "permanent",
+  "groups": [
+    {
+      "command": "pytest tests/test_feedback_b06_schema.py tests/test_feedback_b06_browser.py -x -q --tb=short --show-capture=no",
+      "summary": "16 passed, 18 warnings in 102.74s",
+      "log": "checks.log"
+    },
+    {
+      "scope": "Existing pixel undo/redo, size/opacity/softness, pen pressure, pinch cancellation, eraser, delayed autosave and account-change regression",
+      "summary": "10 passed, 33 warnings in 192.12s",
+      "log": "regressions.log"
+    },
+    {
+      "scope": "Confirmed local generation, visibility cancellation, saving during gesture denied, 401/403 distinction, asynchronous file-save and cancelled drag regression",
+      "summary": "5 passed, 18 warnings in 104.91s",
+      "log": "save-guards.log"
+    }
+  ],
+  "runtime": "roll-drauf-vtt-feedback-tests:20261110; network none",
+  "source_sha256": {
+    "vtt/mapmaker_document.py": "1f96b7bcfb7c686b07f531fd39e1799442bc21beea3daa6d42d995c5574762b0",
+    "vtt/static/i18n/ui.de.json": "f0c1235ac395b0cd8ceb999a294ab7a38cd6dd43fbf592f2630a0c56c17887e7",
+    "vtt/static/i18n/ui.en.json": "01386e61f90fb134eebf9451ed13fced932d7d4d321d5d013b78c10e9a72800d",
+    "vtt/static/js/ui-catalog.js": "1e86cafab38a8bd552f939fb5a4a951bd317bc6a90ea1a74177083dfadfb89fd",
+    "vtt/static/mapmaker/index.html": "e2b947be4d88fb721a130fda9bff0d1c0748a5e1c74a2e137e319410099fe380",
+    "vtt/static/mapmaker/js/app.js": "dd564d4ef8ecfe4f9256c88bfeb5bf20e97af7b0d5b7cabb7fa3b84f6d493a7c",
+    "vtt/static/mapmaker/js/brush.js": "2a281ebd52ff102a3ffa2850a1773e459a00b856756342cb85e34598ec1ce370",
+    "vtt/static/mapmaker/js/document.js": "11c195daa82da598dd95456a4fc37853a010e194771aaa70219c6e6bf9c834d9",
+    "vtt/static/mapmaker/js/library.js": "8b49ab58d00a9d536ca86416ca61a876cbaf39a3b8fa6f0ed9111860ce01e30d",
+    "vtt/static/mapmaker/js/render.js": "d18fd5cd81979f92b92676eca1e88624cad5f9895dfb19b4ab32fd7c63c86f3e",
+    "vtt/static/mapmaker/js/ui.js": "52cfdaf362e95706b053bb7499a258905ea118be8d5da5aebe78c92a5ef13f84"
+  },
+  "i18n": "3289 UI sources: DE/EN complete, placeholders and generated files verified",
+  "live": "NOT_RUN",
+  "rollback_prerequisite": "a5fc8fcaf Atlas/raster credit compatibility image retains all source text when new image-brush pixels are saved."
+}

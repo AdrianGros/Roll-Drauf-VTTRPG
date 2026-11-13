@@ -11,7 +11,7 @@ import {
 import { History } from "./history.js";
 import { drawStampImage, stampExtent, loadPalette } from "./stamps.js";
 import { COAST_PAD, Renderer, drawPath, itemBounds, pathHit, replacedTitleLabel } from "./render.js";
-import { StrokeEngine, rectClamp, rectUnion, registerMaterialTextures } from "./brush.js";
+import { StrokeEngine, imageBrush, rectClamp, rectUnion, registerMaterialTextures } from "./brush.js";
 import { createEmptyMap, createStarterMap } from "./starter.js";
 import { AutosaveUnavailable, DraftStore, downloadBlob, slugify } from "./storage.js";
 import { attachInput } from "./tools.js";
@@ -36,6 +36,7 @@ function snapshot(item) {
 }
 
 class Editor {
+    get brush() { return this.tool === 'eraser' ? this.eraserBrush : this.paintBrush; }
     get selection() { return this._selection || null; }
     set selection(id) { this._selection=id;this.selectionSet?.reset(id); }
     constructor() {
@@ -49,7 +50,8 @@ class Editor {
         this.cssSize = { w: 0, h: 0 };
         this.dpr = 1;
         this.tool = "brush";
-        this.brush = { material: "forest", size: 64, opacity: 0.9, softness: 45, pressureEnabled: true };
+        this.paintBrush = { material: "forest", size: 64, opacity: 0.9, softness: 45, pressureEnabled: true, shape: 'round', texture: 1, colorEnabled: false, color: '#8ea566', image: null };
+        this.eraserBrush = { material: 'forest', size: 64, opacity: 1, softness: 0, pressureEnabled: true, shape: 'round' };
         this.stampOpts = { asset: null, size: 88, rot: 0, flip: false, vary: false, scatter: false, grid: 0 };
         this.labelOpts = { named: true, style: "town", kind: "landmark", pin: true, symbol: null, symbolSize: 56 };
         this.pathOpts = { material: "road", width: 14, curve: true };
@@ -70,7 +72,7 @@ class Editor {
         this.frame = 0;
         this.history = new History({ onChange: () => this.onHistoryChange() });
         this.drafts = new DraftStore();
-        this.autosave = { state: "idle", timer: 0, saving: false, again: false };
+        this.autosave = { state: "idle", timer: 0, saving: false, again: false, generation: -1 };
         // Document generation: bumped on every document mutation and on document
         // replacement. Saves record the generation their snapshot was taken at
         // and only mark the map clean when nothing changed since.
@@ -108,11 +110,17 @@ class Editor {
         this.observeSize();
         attachInput(this);
         window.addEventListener("beforeunload", (event) => {
-            const unprotected = this.library.atlas || this.autosave.state === "failed" || this.autosave.state === "unavailable";
-            if (unprotected && this.hasUnsavedChanges()) {
+            if (this.needsLeaveWarning()) {
                 event.preventDefault();
                 event.returnValue = "";
             }
+        });
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden || !this.doc) return;
+            this.cancelInteractions();
+            this.commitEdit();
+            clearTimeout(this.autosave.timer);
+            if (this.drafts) this.runAutosave();
         });
 
         await this.library.initialize();
@@ -140,6 +148,7 @@ class Editor {
                         this.library.savedGeneration = draft.library.clean ? this.generation : -1;
                     }
                     this.library.updateStatus();
+                    this.autosave.generation = this.generation;
                     this.setAutosaveState("saved", draft.savedAt);
                     this.ui.ready();
                     return;
@@ -715,9 +724,10 @@ class Editor {
     setLayerProp(id, key, value) {
         const layer = this.layerById(id);
         if (!layer) return;
-        const get = () => (key === "coast" ? layer.effects.coast : key === "gridSize" ? layer.grid.size : layer[key]);
+        const effect = ['coast', 'coastColor', 'coastWidth'].includes(key);
+        const get = () => (effect ? layer.effects[key] : key === "gridSize" ? layer.grid.size : layer[key]);
         const set = (v) => {
-            if (key === "coast") layer.effects.coast = v;
+            if (effect) { if (v === undefined) delete layer.effects[key]; else layer.effects[key] = v; }
             else if (key === "gridSize") layer.grid.size = v;
             else layer[key] = v;
         };
@@ -1047,7 +1057,7 @@ class Editor {
             return false;
         }
         this.commitEdit();
-        const gesture = { rasters: [], tiles: new Map(), stamps: new Map(), last: null, refused: false };
+        const gesture = { rasters: [], tiles: new Map(), stamps: new Map(), last: null, refused: false, size: this.brush.size };
         for (const layer of targets.filter((entry) => entry.kind === "raster")) {
             const engine = new StrokeEngine(this.doc.size.w, this.doc.size.h);
             engine.begin(layer, { ...this.brush, erase: true });
@@ -1073,7 +1083,7 @@ class Editor {
     continueErase(point, pressure) {
         const gesture = this.eraseGesture;
         if (!gesture || gesture.refused) return;
-        const radius = Math.max(1, this.brush.size / 2);
+        const radius = Math.max(1, gesture.size / 2);
         const from = gesture.last || point;
         const steps = Math.max(1, Math.ceil(Math.hypot(point.x - from.x, point.y - from.y) / Math.max(1, radius / 2)));
         for (let i = gesture.last ? 1 : 0; i <= steps; i += 1) {
@@ -1285,6 +1295,13 @@ class Editor {
         return this.hasUnsavedFileChanges() && this.generation !== this.library.savedGeneration;
     }
 
+    needsLeaveWarning() {
+        if (!this.doc) return false;
+        if (this.isMutating()) return true;
+        if (!this.hasUnsavedChanges()) return false;
+        return !!this.library.atlas || !this.drafts || this.autosave.generation !== this.generation;
+    }
+
     savePrimary() {
         return this.library.accountId !== null ? this.library.save() : this.saveFile();
     }
@@ -1363,7 +1380,8 @@ class Editor {
             const data = await serialize(this.doc, "binary"); // snapshot taken synchronously at this generation
             const savedAt = Date.now();
             await store.save({ savedAt, doc: data, fileClean, library });
-            if (this.generation === generation) {
+            if (this.drafts === store && this.generation === generation) {
+                this.autosave.generation = generation;
                 this.setAutosaveState("saved", savedAt);
             } else {
                 this.setAutosaveState("pending");
@@ -1383,6 +1401,7 @@ class Editor {
     async saveFile() {
         try {
             this.commitEdit();
+            if (this.isMutating()) { this.ui.toast(globalThis.VTTUi('Bitte die laufende Zeichenbewegung zuerst beenden.')); return false; }
             const generation = this.generation;
             const data = await serialize(this.doc, "file"); // snapshot taken synchronously at this generation
             const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
@@ -1447,6 +1466,7 @@ class Editor {
 
     async exportBundle(scale) {
         this.commitEdit();
+        if (this.isMutating()) { this.ui.toast(globalThis.VTTUi('Bitte die laufende Zeichenbewegung zuerst beenden.')); return; }
         const generation = this.generation;
         const projectPromise = serialize(this.doc, "file");
         const pngPromise = this.renderPngBlob(scale);
@@ -1488,6 +1508,19 @@ class Editor {
         this.ui.setTool(tool);
         this.requestFrame();
     }
+
+    async useImageBrush(asset, crop = null) {
+        const source = this.palette.stamps.get(asset), doc = this.doc;
+        if (!source) { this.ui.toast(globalThis.VTTUi('Wähle zuerst ein Symbol oder eine Kachel.')); return; }
+        try {
+            const image = await this.palette.loadStamp(asset);
+            if (this.doc !== doc) return;
+            this.paintBrush.image = imageBrush(image, crop, source.label);
+            this.paintBrush.shape = 'image';
+            this.setTool('brush');this.ui.syncBrush();
+            this.ui.toast(globalThis.VTTUi('Bildpinsel gewählt: {p0}', { p0: source.label }));
+        } catch (error) { this.ui.showError(error.message); }
+    }
 }
 
 // ---- automation/test surface (read-only views plus sampling) -----------------
@@ -1515,6 +1548,8 @@ function exposeApi(editor, ready) {
                 historySteps: editor.history.undoStack.length,
                 autosave: editor.autosave.state,
                 generation: editor.generation,
+                localGeneration: editor.autosave.generation,
+                leaveWarning: editor.needsLeaveWarning(),
                 unsavedFile: editor.hasUnsavedFileChanges(),
                 mutating: editor.isMutating(),
                 layers: doc.layers.map((l) => ({ id: l.id, name: l.name, kind: l.kind, visible: l.visible, opacity: l.opacity, items: l.items ? l.items.length : null,

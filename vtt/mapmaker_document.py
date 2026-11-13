@@ -124,6 +124,10 @@ def normalize_document(raw):
             effects = incoming.get("effects", {})
             require(isinstance(effects, dict), "Ungültige Ebeneneffekte.")
             layer["effects"] = {"coast": boolean(effects.get("coast", False))}
+            if "coastColor" in effects:
+                layer["effects"]["coastColor"] = color(effects["coastColor"])
+            if "coastWidth" in effects:
+                layer["effects"]["coastWidth"] = number(effects["coastWidth"], 0, 16)
             png = incoming.get("png")
             require(isinstance(png, str) and png.startswith(PREFIX), "Eingebettetes PNG erwartet.")
             try:

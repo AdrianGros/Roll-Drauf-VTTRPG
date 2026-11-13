@@ -259,6 +259,8 @@ export function validateDocument(raw, { knownAssets, rasterSource = "dataurl" })
             if (rasterCount > LIMITS.rasterLayers) fail(`Höchstens ${LIMITS.rasterLayers} Malebenen erlaubt.`);
             if ((rasterCount * w * h) > LIMITS.rasterArea) fail("Die Malebenen sind zusammen zu groß.");
             layer.effects.coast = isPlainObject(layerIn.effects) ? bool(layerIn.effects.coast, false) : false;
+            if (isPlainObject(layerIn.effects) && Object.hasOwn(layerIn.effects, 'coastColor')) layer.effects.coastColor = color(layerIn.effects.coastColor, 'Konturfarbe');
+            if (isPlainObject(layerIn.effects) && Object.hasOwn(layerIn.effects, 'coastWidth')) layer.effects.coastWidth = num(layerIn.effects.coastWidth, 0, 16, 'Konturbreite');
             layer.pngBytes = rasterBytes(layerIn, rasterSource, w, h);
             return layer;
         }
@@ -540,6 +542,7 @@ export function serialize(doc, mode = "file") {
         const out = { id: layer.id, name: layer.name, kind: layer.kind, visible: layer.visible, opacity: layer.opacity };
         if (layer.kind === "raster") {
             out.effects = { coast: !!layer.effects.coast };
+            for (const key of ['coastColor', 'coastWidth']) if (Object.hasOwn(layer.effects, key)) out.effects[key] = layer.effects[key];
             out.snap = snapshotRaster(layer);
         } else if (layer.kind === "tiles") {
             Object.assign(out, plainTiles(layer));
