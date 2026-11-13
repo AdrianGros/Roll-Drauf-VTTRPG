@@ -1,5 +1,5 @@
 {
-  "status": "targeted_checks_passed_pending_live",
+  "status": "pass",
   "retention": "permanent",
   "groups": [
     {
@@ -73,8 +73,22 @@
   },
   "i18n": "3232 UI sources: DE/EN complete, placeholders and generated files verified",
   "robot_flows": "UI selectors updated; Python compilation only, complete legacy robot program NOT_RUN",
-  "live": "NOT_RUN",
-  "schema": "NOT_APPLIED",
+  "live": "live.json",
+  "schema": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true,
+    "additive_columns": [
+      {
+        "status": "pass",
+        "table": "discord_identity_links",
+        "column": "avatar_hash",
+        "added": true,
+        "nullable": true
+      }
+    ]
+  },
   "resolved_findings": [
     "Left chat header placed below the fullscreen status strip",
     "Gear mounted in the visible table status strip",

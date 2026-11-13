@@ -1,0 +1,95 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "S01",
+    "S04",
+    "S09",
+    "S11",
+    "S13",
+    "S14",
+    "S16"
+  ],
+  "source_commit": "97a427130d84f6ca59809e3ca96f2098e6103bea",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b02-workspaces-settings-20261111-97a427130",
+  "image_id": "sha256:d281323d17df1f7eb8a637f197a8a7fd81ae62a6d64f0fd1cac85228b0bb1c75",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "release_record": "/srv/migration/2026-11-11/feedback-b02-workspaces-settings/97a427130/release.json",
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "source_verification": {
+    "checked": 281,
+    "mismatches": []
+  },
+  "health": {
+    "now": "2026-11-13T12:29:22.161957",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T12:29:19.248330",
+    "status": "ok"
+  },
+  "schema": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true,
+    "additive_columns": [
+      {
+        "status": "pass",
+        "table": "discord_identity_links",
+        "column": "avatar_hash",
+        "added": true,
+        "nullable": true
+      }
+    ]
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-b02-workspaces-settings/97a427130/rollback.sh",
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "cleanup": {
+    "status": "pass",
+    "scope": "only synthetic feedback_p4 users and owned campaign",
+    "removed": {
+      "token_states": 1,
+      "table_request_receipts": 1,
+      "session_states": 1,
+      "play_table_contexts": 2,
+      "chat_messages": 3,
+      "game_sessions": 2,
+      "characters": 1,
+      "campaign_members": 2,
+      "campaign_maps": 1,
+      "sessions": 4,
+      "mapmaker_projects": 1,
+      "discord_identity_links": 1,
+      "campaigns": 1,
+      "users": 3
+    },
+    "identity_storage_removed": 1,
+    "container_credentials_removed": true
+  },
+  "roles": [
+    "account owner",
+    "DM table context",
+    "Player table context"
+  ],
+  "acceptance": [
+    "Gear settings at right, including fullscreen table",
+    "Complete default month and correct empty states",
+    "Independent left Chat/right Journal; DM session details only in DM composition",
+    "Three bottom-left keyboard-operable dock tabs; mobile overlays close safely",
+    "Own optional Discord avatar and graceful CDN failure",
+    "Native dice details survive both event orders, peer delivery and reload"
+  ],
+  "residual": [
+    "Owner acceptance NOT_RUN",
+    "Existing Discord users obtain an optional avatar snapshot on next regular OAuth login",
+    "Real external Discord OAuth not run in live test; callback covered with mocked profile",
+    "Legacy full robot program NOT_RUN",
+    "Other feedback packages remain in progress"
+  ]
+}

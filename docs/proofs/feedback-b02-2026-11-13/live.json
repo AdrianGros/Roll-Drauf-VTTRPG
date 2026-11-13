@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "journeys": [
+    "dm: campaign calendar → full default month → gear settings",
+    "player: campaign calendar → full default month → gear settings",
+    "dm: hub session → three dock tabs → left chat → right journal → visible fullscreen gear",
+    "player: hub session → three dock tabs → left chat → right journal → visible fullscreen gear"
+  ],
+  "checks": {
+    "both_clients_see_roll_details": true,
+    "chat_persisted_after_reload": true,
+    "optional_avatar_and_error_fallback": true
+  },
+  "errors": [],
+  "avatar_scope": "Own synthetic identity link; CDN thumbnail intercepted. Real Discord OAuth not exercised on production."
+}

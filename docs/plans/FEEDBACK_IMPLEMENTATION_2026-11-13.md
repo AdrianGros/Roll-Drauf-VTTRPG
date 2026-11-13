@@ -9,8 +9,8 @@ Fortschritt und Lieferbelege werden hier sowie in den jeweiligen Paketbelegen ge
 | Paket | Karten | Lieferumfang | Stand |
 | --- | --- | --- | --- |
 | B01 | N01, S10 | Anrufungsvoraussetzungen serverseitig und in beiden Auswahloberflächen; Zurück → Karten | [Live geliefert](../proofs/feedback-b01-2026-11-13/delivery.json); Owner-Abnahme offen |
-| B02 | S01, S04, S09, S11, S13, S14, S16 | Einstellungen, Kalenderstandard, eindeutige Navigation, getrennte Tischbereiche, Kontobild, Leertexte | Deploy läuft |
-| B03 | S02, S17, N19 | Gemeinsame Buchoberfläche, verbrannter Nachtstil mit roten Standardakzenten | geplant |
+| B02 | S01, S04, S09, S11, S13, S14, S16 | Einstellungen, Kalenderstandard, eindeutige Navigation, getrennte Tischbereiche, Kontobild, Leertexte | [Live geliefert](../proofs/feedback-b02-2026-11-13/delivery.json); Owner-Abnahme offen |
+| B03 | S02, S17, N19 | Gemeinsame Buchoberfläche, verbrannter Nachtstil mit roten Standardakzenten | lokale Browserchecks bestanden |
 | B04 | N02, N03, N04, N05, N06, N07 | Creator-Übersicht, einzelne Würfelergebnisse, vorhandene eigene Hintergründe, Merkmale, Zaubersortierung; getrennte DM-Freigabe | geplant; Freigabegrenze vor Deploy festhalten |
 | B05 | N12, N13, N14, N15, N16, N17 | Objekt-/Kachelauswahl, gemeinsame Bearbeitung, namenlose Symbole, Werkzeugordnung, Wegkurven, Undo/Redo | geplant |
 | B06 | N08, N09, N10, N11, N18, S18 | Pinselspitzen und Materialwahl, eigener Radierer, Bildpinsel, nachvollziehbarer Entwurfs-/Anmeldestatus | geplant; N11 wartet auf konkrete Reglerangabe |
