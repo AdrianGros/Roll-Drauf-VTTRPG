@@ -1,0 +1,47 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "scope": "B06a Atlas credit-limit compatibility correction",
+  "source_commit": "a5fc8fcaf6308718143aabecd42e7003feb11c07",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b06a-atlas-credits-20261111-a5fc8fcaf",
+  "image_id": "sha256:513ec37fb718a3254923fa1ff04860f5caf0308d30145114bc12bd4ede264d17",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "source_verification": {
+    "checked": 281,
+    "mismatches": []
+  },
+  "deployed_at": "2026-11-13T17:58:29.586367906Z",
+  "health": {
+    "now": "2026-11-13T17:58:37.320998",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T17:58:34.684366",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "cleanup": "cleanup.json",
+  "roles": [
+    "Atlas owner/editor; no authorization changes"
+  ],
+  "user_journey": "Archive → Atlas → own library map copy → editor save → return → explicit publication → backup",
+  "rollback": "/srv/migration/2026-11-11/feedback-b06a-atlas-credits/a5fc8fcaf/rollback.sh",
+  "prior_image": "roll-drauf-vtt-app:feedback-b06a-atlas-credits-rollback-20261111-0fe5cd14954c",
+  "rollback_executed": false,
+  "acceptance_checklist": [
+    "Full reviewed collection retains bounded field size",
+    "Bundle PNG metadata retains credits",
+    "Excessive text rejected",
+    "Lease/CAS and JSON/ZIP backup checks pass",
+    "Normal authenticated UI save, publication and backup pass"
+  ],
+  "residual": [
+    "Owner acceptance open",
+    "B06b rollback must use this corrected compatibility image."
+  ]
+}

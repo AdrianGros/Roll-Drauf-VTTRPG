@@ -69,46 +69,48 @@
       "id": "N07",
       "title": "DM-Freigaben für zusätzliche Bauoptionen abgrenzen",
       "priority": "P3",
-      "status": "planned",
+      "status": "scope_defined_pending_apply",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
       "implementation_started": false,
-      "package": "B04"
+      "package": "B04",
+      "note": "Owner: DM approves specific published homebrew options per campaign."
     },
     {
       "id": "N08",
       "title": "Mehr Pinselspitzen und abwechslungsreiche Striche",
       "priority": "P2",
-      "status": "planned",
+      "status": "implementation_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B06"
     },
     {
       "id": "N09",
       "title": "Farbe, Textur und Kontur bewusst beeinflussen",
       "priority": "P2",
-      "status": "planned",
+      "status": "implementation_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B06"
     },
     {
       "id": "N10",
       "title": "Radierer mit sinnvollen eigenen Startwerten",
       "priority": "P2",
-      "status": "planned",
+      "status": "implementation_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B06"
     },
     {
       "id": "N11",
       "title": "Skalieren auf 0 % einem konkreten Regler zuordnen",
       "priority": "P3",
-      "status": "planned",
+      "status": "deferred_by_owner",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
       "implementation_started": false,
-      "package": "B06"
+      "package": "B06",
+      "note": "Owner: leave pending until the original control is identified."
     },
     {
       "id": "N12",
@@ -174,9 +176,9 @@
       "id": "N18",
       "title": "Editor-Ausstieg, Anmeldung und Entwurfsstatus unterscheiden",
       "priority": "P1",
-      "status": "planned",
+      "status": "implementation_in_progress",
       "source_index": "FEEDBACK_CHARACTER_MAPMAKER_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B06"
     },
     {
@@ -365,9 +367,9 @@
       "id": "S18",
       "title": "Stempel oder Kachelausschnitte als weichen Bildpinsel verwenden",
       "priority": "P2",
-      "status": "planned",
+      "status": "implementation_in_progress",
       "source_index": "FEEDBACK_UI_PLAYTABLE_2026-11-13.json",
-      "implementation_started": false,
+      "implementation_started": true,
       "package": "B06"
     },
     {

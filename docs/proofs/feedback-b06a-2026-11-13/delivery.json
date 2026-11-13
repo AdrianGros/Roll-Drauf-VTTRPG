@@ -1,0 +1,53 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "scope": "B06a compatibility prerequisite: all reviewed local raster source credits in bundle and PNG metadata",
+  "source_commit": "e8bfcf9a18e7f0819fdc6031f7e7e6cf38bedd4a",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b06a-raster-credits-20261111-e8bfcf9a1",
+  "image_id": "sha256:0fe5cd14954cd8db417a00c4d78fb360174145734c21cac87eba2e76a638877d",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "source_verification": {
+    "checked": 281,
+    "mismatches": []
+  },
+  "deployed_at": "2026-11-13T17:47:24.12609198Z",
+  "health": {
+    "now": "2026-11-13T17:47:32.187099",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T17:47:29.420764",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "schema": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "cleanup": "cleanup.json",
+  "roles": [
+    "DM map owner",
+    "Player map owner"
+  ],
+  "user_journey": "Archive → Maps → empty map → paint → Export bundle",
+  "rollback": "/srv/migration/2026-11-11/feedback-b06a-raster-credits/e8bfcf9a1/rollback.sh",
+  "prior_image": "roll-drauf-vtt-app:feedback-b06a-raster-credits-rollback-20261111-da5d54937617",
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "acceptance_checklist": [
+    "File roundtrip preserves raster export source collection",
+    "Bundle and PNG metadata match",
+    "Normal live UI export checked for DM and Player"
+  ],
+  "residual": [
+    "Owner acceptance open",
+    "B06b brush and save-protection work is not included in this compatibility release"
+  ]
+}
