@@ -1,0 +1,59 @@
+{
+  "scope": "Pure evaluator and progression-state builders only; no DB, browser or production writes",
+  "cases": [
+    {
+      "case": "valid_control",
+      "class_level": 5,
+      "invocations": [
+        "armor-of-shadows",
+        "eldritch-mind",
+        "devils-sight",
+        "fiendish-vigor",
+        "ascendant-step"
+      ],
+      "valid": true,
+      "complete": true,
+      "blockers": [],
+      "feature_findings": [],
+      "all_finding_codes": [
+        "manual-method"
+      ]
+    },
+    {
+      "case": "eldritch_smite_without_pact",
+      "class_level": 5,
+      "invocations": [
+        "armor-of-shadows",
+        "eldritch-mind",
+        "devils-sight",
+        "fiendish-vigor",
+        "eldritch-smite"
+      ],
+      "valid": true,
+      "complete": true,
+      "blockers": [],
+      "feature_findings": [],
+      "all_finding_codes": [
+        "manual-method"
+      ]
+    },
+    {
+      "case": "eldritch_smite_with_pact",
+      "class_level": 5,
+      "invocations": [
+        "armor-of-shadows",
+        "eldritch-mind",
+        "devils-sight",
+        "pact-of-the-blade",
+        "eldritch-smite"
+      ],
+      "valid": true,
+      "complete": true,
+      "blockers": [],
+      "feature_findings": [],
+      "all_finding_codes": [
+        "manual-method"
+      ]
+    }
+  ]
+}

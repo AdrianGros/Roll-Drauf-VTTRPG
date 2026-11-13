@@ -1,0 +1,24 @@
+{
+  "checkout_commit": "3f1857c9c0cd20939154618d7cb682e0a28869b1",
+  "running_revision": "4b2a57332909668b52af0d182e9ea544d76f442f",
+  "image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+  "scope": "Read-only comparison of13 relevant runtime files; original checkout untouched",
+  "source_attachment": "2026-11-11-0946-feedback-zu-charakterbau-und-karteneditor-1.txt",
+  "source_sha256": "0b70599b059b23a9474d043e2f97045cd1a0702d68f419586a309d42d820c218",
+  "hashes": {
+    "vtt/rules_content/creator_rules.py": "750082fb1bf3ad9e09ab908437fdff1bbbce9d5de73b01081da189bb4f994de1",
+    "vtt/rules_content/creator_data.py": "5bf4005d06923da39f4bb23afe663a88308995868cd34f58c75acbc4a56d72f7",
+    "vtt/rules_content/srd-5.2.1-de/generated/creator-data.json": "2d907e03c209cbb3e93f801a8ba7e2dc790858b834f94563f333fb2d2e0d65a4",
+    "vtt/characters/srd_progression.py": "675b41cc7ddec8b942046a72e0e2f8f41066f6666d6036a78fb1fddcba80d627",
+    "vtt/static/js/srd-creator-steps.js": "6b141e58c4651810c6585d4fbd777ada737a8c3be33a3f983ccf990a41b96cd9",
+    "vtt/static/js/srd-progression-ui.js": "e146820c77d9fbfedb310d9872aac381172991ce277ad55a30114ebf59674f1b",
+    "vtt/static/mapmaker/js/app.js": "32dc6872de56e3c973fe57fb7eb3317a153a60d893f7684bfe82eafd0db8baa6",
+    "vtt/static/mapmaker/js/ui.js": "f5765b8b6be31dddac4635e4191e5f42df7c203bb7f41a55eb9a3dc613a197d4",
+    "vtt/static/mapmaker/js/tools.js": "25d7e1fa2ead6673e8ea29d0d335174351a581761a8b6553c239fc1758052d95",
+    "vtt/static/mapmaker/js/document.js": "07a82f46ac979a5ed9aebeae32d32cd8dcc3eed1fcb80e5f412c10203ec453b8",
+    "vtt/static/mapmaker/js/brush.js": "766150ac01b715efdf45ac0a8c04f2acc36886675a0c7e02de8fcc75193d95d0",
+    "vtt/static/js/auth.js": "c67bd614cb1e29937447ebc4d21b6985ff7e63621f1203978824d26256c91c50",
+    "vtt/auth/lifetime.py": "bef0b843c2f87157f3bb7cc0739555897d4b259944a2426f14243332d9165a78"
+  },
+  "mismatches": []
+}

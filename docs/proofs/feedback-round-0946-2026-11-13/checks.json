@@ -1,0 +1,12 @@
+{
+  "scope": "Read-only Discover; existing checks only; no feature changes or production data writes",
+  "command": "pytest -p no:cacheprovider tests/test_mapmaker_browser.py::test_vector_path_nodes_undo_and_project_roundtrip tests/test_regelwerk_creator_rules.py::test_background_bonus_patterns tests/test_regelwerk_creator_rules.py::test_rolled_scores_must_match_dice -x -q --tb=short --show-capture=no",
+  "result": "3 passed in 24.46s",
+  "execution": "roll-drauf-vtt-feedback-tests:20261110; network none; checkout mounted read-only",
+  "browser_scope": "Existing real Chromium mapmaker test: Shift node move, whole path move, Undo/Redo and project roundtrip. Not a new production acceptance run.",
+  "probe_scope": "Pure evaluator/progression builders; valid control, invalid prerequisite case, valid prerequisite case. All reported complete/valid with zero blockers; invalid case demonstrates defect.",
+  "live_runtime_match": "13 relevant checkout files match current running image; see source-runtime.json",
+  "new_browser_tests_written": false,
+  "deployment_performed": false,
+  "open_reproduction": "Unexpected editor exit/inactivity not reproduced; do not infer logout cause from transcript."
+}

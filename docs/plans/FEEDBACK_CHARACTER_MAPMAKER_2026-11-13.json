@@ -1,0 +1,477 @@
+{
+  "schema": "vtt.feedback-intake.v1",
+  "status": "discover_complete",
+  "retention": "permanent",
+  "received": "2026-11-13",
+  "source": {
+    "file": "2026-11-11-0946-feedback-zu-charakterbau-und-karteneditor-1.txt",
+    "sha256": "0b70599b059b23a9474d043e2f97045cd1a0702d68f419586a309d42d820c218",
+    "started": "2026-11-11T09:46:11.640Z",
+    "duration": "17:37"
+  },
+  "baseline": {
+    "checkout": "3f1857c9c0cd20939154618d7cb682e0a28869b1",
+    "runtime_source": "4b2a57332909668b52af0d182e9ea544d76f442f",
+    "image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+    "matched_relevant_files": 13
+  },
+  "previous_delivery": "../proofs/feedback-final-2026-11-13/delivery.json",
+  "scope": "New feedback intake, categorization, current-state checks and bounded Apply handoff; no new application implementation/deployment in this pass. Existing completed program stays closed.",
+  "external_kanban_write": false,
+  "intended_owner": "Donutarian",
+  "next_phase": "apply_per_bounded_slice",
+  "candidate_execution_order": [
+    "N01",
+    "N18",
+    "N15",
+    "N14",
+    "N10",
+    "N17",
+    "N02",
+    "N03",
+    "N05",
+    "N06",
+    "N16",
+    "N12",
+    "N13",
+    "N08",
+    "N09"
+  ],
+  "candidate_order_is_deployment_approval": false,
+  "cards": [
+    {
+      "id": "N01",
+      "category": "Charakterregeln",
+      "priority": "P1",
+      "status": "ready_for_apply",
+      "evidence_level": "confirmed_by_pure_probe",
+      "title": "Anrufungsvoraussetzungen tatsächlich prüfen",
+      "timecodes": "02:05–03:01",
+      "current_facts": "Eldritch Smite ohne Pact of the Blade wird auf Stufe 5 als valid und complete akzeptiert; beide Kontrollfälle ebenfalls ohne Blocker. Daten und UI kennen bisher nur die Mindestklassenstufe als prüfbare Voraussetzung.",
+      "acceptance_input": "Ungültige Kombination ist in Creator und Fortschritt erkennbar gesperrt; der Server weist sie auch bei direkter Anfrage zurück. Zulässige Kombinationen bleiben möglich.",
+      "evidence": "vtt/rules_content/creator_rules.py:488; vtt/rules_content/creator_data.py:1023; vtt/static/js/srd-creator-steps.js:513; vtt/static/js/srd-progression-ui.js:605",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N02",
+      "category": "Creator-Bedienung",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed",
+      "title": "Klassenauswahl beruhigen und Details lesbar gliedern",
+      "timecodes": "01:04–01:56",
+      "current_facts": "Klassenkarten enthalten Wurf-/Hauptattribut-Kurzinfos; daneben gibt es bereits eine Detailansicht mit Definitionsliste und Regeltextlink.",
+      "acceptance_input": "Klasse lässt sich unmittelbar wählen; ausführliche Informationen sind nach Auswahl verständlich formatiert. Markdown ist ein Vorschlag aus dem Feedback, keine bereits gewählte Technik.",
+      "evidence": "vtt/static/js/srd-creator-steps.js:151,178",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N03",
+      "category": "Creator-Bedienung",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed_existing_rule_test_passed",
+      "title": "Gewürfelte Werte als einzelne verfügbare Ergebnisse zeigen",
+      "timecodes": "01:19–02:05",
+      "current_facts": "Dropdowns fassen gleiche Werte zusammen und zeigen Anzahl-/Verfügbarkeitstexte. Die Mehrfachzuweisung wird bereits gezählt; vorhandene Würfel-Multimengenprüfung besteht.",
+      "acceptance_input": "Sechs Ergebnisse bleiben erkennbar; gleiche Zahlen erscheinen entsprechend ihrer verfügbaren Häufigkeit. Mehrfachwerte werden weder verloren noch zu oft zugewiesen.",
+      "evidence": "vtt/static/js/srd-creator-steps.js:394; tests/test_regelwerk_creator_rules.py:369",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N04",
+      "category": "Hintergründe/Inhalte",
+      "priority": "P2",
+      "status": "needs_content_input",
+      "evidence_level": "existing_options_verified",
+      "title": "Hintergrundauswahl und erlaubte Attributkombinationen erweitern",
+      "timecodes": "02:05–02:53",
+      "current_facts": "Vier SRD-Hintergründe sind enthalten. +2/+1 sowie +1/+1/+1 auf deren drei Attribute sind bereits verfügbar und geprüft; veröffentlichte Homebrew-Hintergründe sind seit P3 angebunden.",
+      "acceptance_input": "Gewünschte weitere Hintergründe mit Quelle benennen; gewünschte Kombination von fehlendem Inhalt oder schwer auffindbarer bestehender Wahl trennen. Bestehende freigegebene Homebrew-Wege berücksichtigen.",
+      "evidence": "vtt/static/js/srd-creator-steps.js:274; vtt/rules_content/creator_rules.py:194; docs/DADM_DEPLOY_ORIGINS_PROVENANCE_2026-11-11.md",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N05",
+      "category": "Creator-Bedienung",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "partial_existing_features",
+      "title": "Unterklassenmerkmale beim Aufstieg verständlich einblenden",
+      "timecodes": "02:05–02:53",
+      "current_facts": "Creator zeigt Unterklassenkarten mit separatem Textlink. Fortschrittsdialog zeigt bereits neue Merkmalsnamen; vollständige erreichbare Unterklassenbeschreibung ist damit nicht belegt. Begriffe Wahlen/Unterklassentext sind weiterhin sichtbar.",
+      "acceptance_input": "Neue Unterklassenmerkmale sind beim betreffenden Level ohne zusätzlichen Textmenü-Klick verständlich sichtbar. Benennungen werden eindeutig; Klassen-/Unterklassenstufen bleiben korrekt zugeordnet.",
+      "evidence": "vtt/static/js/srd-creator-steps.js:478; vtt/static/js/srd-progression-ui.js:422,729; vtt/characters/srd_progression.py:157",
+      "related_cards": [
+        "N01"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N06",
+      "category": "Creator-Bedienung",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "partial_existing_grade_filter",
+      "title": "Zauber nach Grad und Name sortieren können",
+      "timecodes": "02:05–02:53",
+      "current_facts": "Alphabetische Reihenfolge und ein Gradfilter sind vorhanden. Filtern ersetzt keine Sortierung mehrerer Grade; im Fortschrittsweg ist eine gesonderte Auswahl vorhanden.",
+      "acceptance_input": "Wählbare Sortierung nach Grad mit nachvollziehbarer Namensreihenfolge innerhalb des Grades; bestehende Suche/Filter und gültige Zauberwahlen bleiben erhalten.",
+      "evidence": "vtt/static/js/srd-creator-steps.js:742; vtt/static/js/srd-progression-ui.js",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N07",
+      "category": "Kampagnenentscheidung",
+      "priority": "P3",
+      "status": "needs_product_boundary",
+      "evidence_level": "new_policy_request",
+      "title": "DM-Freigaben für zusätzliche Bauoptionen abgrenzen",
+      "timecodes": "03:05–04:09",
+      "current_facts": "Gewünscht sind beispielsweise zusätzliche Talente über das Kampagnen-Dashboard. Bestehende numerische Overrides und veröffentlichte Homebrew-Inhalte decken diese neue Berechtigungsfrage nicht automatisch ab.",
+      "acceptance_input": "Vor Apply klären: erlaubte Zusatzoptionen, freigebende Rolle, Geltungsbereich und sichtbare Regelabweichung. Kampagnenbesitz darf einen Player-Kontext weiterhin nicht privilegieren.",
+      "evidence": "vtt/static/js/srd-creator-steps.js:799; docs/decisions/PLAYTABLE_ROLE_SEPARATION_2026-11-01.md",
+      "related_cards": [
+        "N01"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N08",
+      "category": "Malen",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed",
+      "title": "Mehr Pinselspitzen und abwechslungsreiche Striche",
+      "timecodes": "03:05–05:01",
+      "current_facts": "Pinselspitze ist rund; Größe, Deckkraft, Weichheit und Material beeinflussen bereits den Strich. Mehr Stempel oder Texturen lösen diesen Spitzenwunsch nicht.",
+      "acceptance_input": "Mehr als eine sichtbar unterscheidbare Pinselspitze; bestehende Druck-/Deckkraft-/Undo- und Speicherfunktionen bleiben nutzbar. Auswahl konkreter Spitzen gehört in Apply.",
+      "evidence": "vtt/static/mapmaker/js/brush.js:138; vtt/static/mapmaker/js/ui.js:205",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N09",
+      "category": "Malen",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed",
+      "title": "Farbe, Textur und Kontur bewusst beeinflussen",
+      "timecodes": "04:09–05:01",
+      "current_facts": "Terrainmaterialien koppeln Grundfarbe, Motive bzw. geladene Texturen. Eine freie Terrainfarbwahl ist damit nicht vorhanden; Beschriftungsfarbe ist eine andere Funktion.",
+      "acceptance_input": "Terrain lässt sich individuell färben und seine Textur/Kontur bewusst wählen; bisherige Materialpresets und gespeicherte Projekte bleiben nachvollziehbar.",
+      "evidence": "vtt/static/mapmaker/js/brush.js:7,38; vtt/static/mapmaker/js/ui.js:205",
+      "related_cards": [
+        "N08"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N10",
+      "category": "Malen",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed",
+      "title": "Radierer mit sinnvollen eigenen Startwerten",
+      "timecodes": "05:01–05:45",
+      "current_facts": "Pinsel und Radierer verwenden dieselben brush-Einstellungen; Ausgangswerte sind90% Deckkraft und 45% Weichheit. Ein Werkzeugwechsel setzt diese Werte nicht auf 100/0.",
+      "acceptance_input": "Radieren startet deckend und mit dem gewünschten klaren Rand; spätere bewusste Anpassung bleibt möglich. Malwerte dürfen dabei nicht unbeabsichtigt verloren gehen. Unklare Skalierung gesondert N11.",
+      "evidence": "vtt/static/mapmaker/js/app.js:49,1480; vtt/static/mapmaker/js/ui.js:205",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N11",
+      "category": "Unklare Bedienangabe",
+      "priority": "P3",
+      "status": "needs_input",
+      "evidence_level": "ambiguous_transcript",
+      "title": "Skalieren auf 0 % einem konkreten Regler zuordnen",
+      "timecodes": "05:01–05:45",
+      "current_facts": "Das Protokoll benennt keinen konkreten Regler. Pinsel- oder Symbolgröße ist nicht mit Größenvariation gleichzusetzen; eine Nullgröße wäre keine sichere Interpretation.",
+      "acceptance_input": "Bedienelement und beabsichtigter Effekt benennen; kein pauschales Größen-Clamping auf 0. Rückfrage läuft, alle unabhängigen Karten sind davon unberührt.",
+      "evidence": "Quelle05:01–05:45; vtt/static/mapmaker/js/ui.js:205",
+      "related_cards": [
+        "N10"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N12",
+      "category": "Objektbearbeitung",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "existing_browser_check_passed_partial_gap",
+      "title": "Wegpunkte auffindbar bearbeiten und Kurven ermöglichen",
+      "timecodes": "05:45–06:59",
+      "current_facts": "Shift-Ziehen einzelner Wegpunkte ist bereits implementiert und browsergeprüft inklusive Undo/Redo und Projekt-Rundlauf. Der Renderer verbindet Punkte mit Geraden; ein pro Knoten wählbarer Kurvenmodus ist damit nicht vorhanden.",
+      "acceptance_input": "Sichtbarer Einstieg in Punktbearbeitung; gewünschter Gerade/Kurve-Wechsel und Verschieben sind erreichbar. Doppelklick/Rechtsklick sind Bedienvorschläge, noch keine Architekturentscheidung.",
+      "evidence": "vtt/static/mapmaker/js/tools.js:149; vtt/static/mapmaker/js/render.js:99; tests/test_mapmaker_browser.py:840",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N13",
+      "category": "Objektbearbeitung",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "partial_free_stamps_already_present",
+      "title": "Freie Assetplatzierung und Kachelgröße verständlich trennen",
+      "timecodes": "07:18–09:20",
+      "current_facts": "Stempel sind frei platzierbar, Raster ist optional und standardmäßig aus. Echte Kachelebenen verwenden Zellen; eine Rastervergrößerung wird verweigert, wenn belegte Zellen außerhalb der Karte lägen.",
+      "acceptance_input": "Dekorative Assets lassen sich frei setzen/skaliert verwenden; bei echten Kacheln ist Rasterbindung verständlich und die Größenbegrenzung erklärbar. Keine stillschweigende Umwandlung aller Kacheln in Stempel.",
+      "evidence": "vtt/static/mapmaker/js/app.js:712,931; vtt/static/mapmaker/js/document.js",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N14",
+      "category": "Objektbearbeitung",
+      "priority": "P1",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed",
+      "title": "Auswahlrahmen und gemeinsame Bearbeitung ermöglichen",
+      "timecodes": "09:20–10:02;12:38–13:20",
+      "current_facts": "Auswahlmodus auf leerer Fläche beginnt aktuell eine Pan-Geste. hitTestAll berücksichtigt Stempel, Beschriftungen und Wege, keine Rasterzellen; Auswahl ist eine einzelne ID.",
+      "acceptance_input": "Leeres Ziehen im Auswahlwerkzeug markiert einen Bereich; Mehrfachauswahl und gemeinsames Löschen/Bearbeiten haben einen klaren Umfang. Verschieben der Ansicht bleibt bewusst zugänglich.",
+      "evidence": "vtt/static/mapmaker/js/tools.js:149,166; vtt/static/mapmaker/js/app.js:903",
+      "related_cards": [
+        "N13"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N15",
+      "category": "Objektbearbeitung",
+      "priority": "P1",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed",
+      "title": "Dekosymbole ohne erzwungenen Ortsnamen setzen",
+      "timecodes": "10:13–12:20",
+      "current_facts": "Orts-/Beschriftungsobjekte starten mit Neuer Ort. UI und Dokumentvalidator verweigern leeren Text; das beobachtete übrig bleibende N passt dazu. Reine Stempel sind schon ohne Beschriftung möglich.",
+      "acceptance_input": "Berg/Busch kann als Dekoration ohne Pflichttext stehen. Echte Orte und separate Beschriftungen bleiben sinnvoll benennbar; bestehende Projekte bleiben lesbar.",
+      "evidence": "vtt/static/mapmaker/js/app.js:960; vtt/static/mapmaker/js/ui.js:678; vtt/static/mapmaker/js/document.js:386",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N16",
+      "category": "Editor-Navigation",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "source_confirmed_usability",
+      "title": "Ort, Symbol, Kachel und Beschriftung verständlich organisieren",
+      "timecodes": "10:13–12:38",
+      "current_facts": "Benutzer verwechselt die verschiedenen Assetwege. Im Modell sind Stempel, Labels mit Ortsdaten und echte Kacheln unterschiedliche Typen.",
+      "acceptance_input": "Eine verständliche Werkzeug-/Sidebar-Struktur führt zur gewünschten Dekoration, Beschriftung oder Rasterkachel. Die Aussage alles eins ist ein UX-Wunsch, kein Auftrag zum Ersetzen aller Datenmodelle.",
+      "evidence": "vtt/static/mapmaker/js/ui.js:148; vtt/static/mapmaker/js/app.js:24",
+      "related_cards": [
+        "N13",
+        "N15"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N17",
+      "category": "Editor-Navigation",
+      "priority": "P2",
+      "status": "ready_for_apply",
+      "evidence_level": "existing_core_verified_usability_gap",
+      "title": "Rückgängig und Wiederholen leichter finden",
+      "timecodes": "13:20–13:38",
+      "current_facts": "Toolbarbuttons und Strg+Z/Strg+Umschalt+Z sind vorhanden. Der gezielte Pfadtest hat beide tatsächlich ausgeführt. Historie ist also nicht neu zu erfinden.",
+      "acceptance_input": "Rückgängig/Wiederholen sind bei normaler Bedienung leicht auffindbar und erklären ihren Zustand; vorhandene Verlaufslimits bleiben sichtbar und verlässlich.",
+      "evidence": "vtt/static/mapmaker/index.html:39,403; vtt/static/mapmaker/js/app.js:1260",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N18",
+      "category": "Navigation/Speichern",
+      "priority": "P1",
+      "status": "needs_reproduction",
+      "evidence_level": "reported_not_reproduced",
+      "title": "Editor-Ausstieg, Anmeldung und Entwurfsstatus unterscheiden",
+      "timecodes": "13:43–15:37",
+      "current_facts": "Berichtet wird ein Klick auf Creation Engine, anschließend ein wiederherstellbarer Entwurf; später tritt der Effekt nicht erneut auf. Kein URL-/HTTP-/Zeitbeleg für einen Inaktivitätslogout. Persönlicher Entwurf, Bibliothek, Atlas-Lease und absolute6 h-Anmeldung haben unterschiedliche Lebenszyklen.",
+      "acceptance_input": "Reproduktionsmatrix mit normalem Navigationsklick, Access-Refresh innerhalb der Frist, echtem Fristablauf, fehlgeschlagenem Autosave und Atlas-Kontext. Ungespeicherte Arbeit/Entwurfsstatus verständlich; keine pauschale Verlängerung der6 h-Frist. Keine Kontodaten protokollieren.",
+      "evidence": "vtt/static/mapmaker/js/app.js:105,117; vtt/static/js/creation-engine-nav.js:58; vtt/static/mapmaker/js/library.js:81; vtt/auth/lifetime.py",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N19",
+      "category": "Bereits geliefert/positiv",
+      "priority": "P3",
+      "status": "covered_by_previous_delivery",
+      "evidence_level": "prior_live_evidence",
+      "title": "Kartenwerkstatt-Optik als positive Referenz erhalten",
+      "timecodes": "15:31–15:54",
+      "current_facts": "Werkstattlayout wird ausdrücklich gelobt. Nacht-/Papiermodus und Kontraste auf den VTT-Hauptwegen wurden inzwischen geliefert und final geprüft.",
+      "acceptance_input": "Positiven Markenstil erhalten; weitere konkrete visuelle Unterschiede bei aktueller Abnahme nennen. Kein neuer Komplettumbau allein aus dem historischen Vergleich.",
+      "evidence": "docs/proofs/feedback-final-2026-11-13/live-contrast.json; docs/proofs/feedback-final-2026-11-13/delivery.json",
+      "related_cards": [],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    },
+    {
+      "id": "N20",
+      "category": "Bereits überholt/Inhalte",
+      "priority": "P3",
+      "status": "partly_superseded_by_live_delivery",
+      "evidence_level": "current_inventory_supersedes_old_observation",
+      "title": "Assetbestand gegen nur Kenney abgleichen",
+      "timecodes": "08:50–09:20",
+      "current_facts": "Die damalige Beobachtung nur Kenney Tiny Town beschreibt den heutigen Bestand nicht: weitere vorhandene Pakete und der abgeglichene LPC-Revised-Stand sind inzwischen live. Dies erfüllt weder weitere unbekannte Art-Wünsche noch die neue Pinselspitzen-Anforderung.",
+      "acceptance_input": "Aktuelle Palette als Ausgangspunkt verwenden; neue konkret gewünschte Assets mit Quelle getrennt erfassen. Keine vorhandenen neueren Pakete ersetzen.",
+      "evidence": "docs/DADM_RECONCILE_LIVE_LPC_2026-11-13.md; docs/proofs/feedback-final-2026-11-13/delivery.json",
+      "related_cards": [
+        "N08"
+      ],
+      "intended_owner": "Donutarian",
+      "source": "2026-11-11-0946",
+      "phase": "discover",
+      "implementation_started": false
+    }
+  ],
+  "protected_behavior": [
+    "Direkte Attributzuweisung mit exakter Würfel-Multimenge",
+    "Mehrere Ebenen, Deckkraft, Weichheit, Strichgröße und vorhandene Materialpresets",
+    "Aktueller Radierer einschließlich Undo und bewusstem Ebenenumfang",
+    "Freie Stempel, optionale Rasterbindung, bestehende Projektdateien und Credits",
+    "Entwurfswiederherstellung; private Atlas-/Bibliotheksquellen und Leserpublikation",
+    "Serverautorisierte Player-/DM-Trennung und absolute6 h-Anmeldefrist"
+  ],
+  "open_questions": [
+    {
+      "card": "N04",
+      "need": "Welche weiteren Hintergründe/Attributkombinationen fehlen konkret?"
+    },
+    {
+      "card": "N07",
+      "need": "Welche zusätzlichen Talente/Regelabweichungen darf die DM für wen und in welchem Geltungsbereich freigeben?"
+    },
+    {
+      "card": "N11",
+      "need": "Welcher Regler ist mit Skalieren auf 0 % gemeint?",
+      "async_question": "pending"
+    },
+    {
+      "card": "N18",
+      "need": "Reproduktion mit Ziel-URL, Zeit seit Anmeldung, Speichertyp und beobachtetem Status; Ursache noch offen."
+    }
+  ],
+  "checks": "../proofs/feedback-round-0946-2026-11-13/checks.json",
+  "risks": [
+    {
+      "severity": "medium",
+      "card": "N01",
+      "finding": "Bestätigte ungültige Anrufung wird als vollständig/regelkonform gemeldet.",
+      "handoff": "Zuerst begrenzter Apply-Vertrag und negative/positive Server-/UI-Prüfmatrix; alle Verbraucher und Altdaten beachten."
+    },
+    {
+      "severity": "medium",
+      "card": "N18",
+      "finding": "Möglicher Arbeitsverlust bzw. missverständlicher Speicher-/Anmeldestatus, Ursache unbestätigt.",
+      "handoff": "Gezielte Reproduktion vor jeder Änderung an Auth- oder Speicherlebenszyklus."
+    },
+    {
+      "severity": "medium",
+      "cards": [
+        "N12",
+        "N13",
+        "N14",
+        "N15",
+        "N16"
+      ],
+      "finding": "Objekt-/Formatänderungen können bestehende Karten, Rastergrenzen, Undo und Exporte betreffen.",
+      "handoff": "Apply muss Rückwärtskompatibilität und Speicher-/Historygrenzen prüfen; keine stillen Typkonvertierungen."
+    },
+    {
+      "severity": "medium",
+      "card": "N07",
+      "finding": "Freierer Bau darf nicht als Lockerung aller Validierungen oder Player-/DM-Grenzen ausgelegt werden.",
+      "handoff": "Produktgrenze separat festlegen."
+    },
+    {
+      "severity": "low",
+      "finding": "Protokoll ist älter als letzte Lieferung; Beobachtungen sind keine frische Live-Regression.",
+      "handoff": "Vorhandene Funktionen und neuere Assetlieferung erhalten."
+    }
+  ],
+  "dependency_inventory": {
+    "creator": [
+      "Generator → generierter Regelkatalog → reine Auswertung → Creator-/Fortschritts-Oberflächen und Server-Finalisierung",
+      "N01 betrifft beide UI-Wege und den gemeinsamen Auswerter; UI-only-Sperre wäre keine Regelprüfung"
+    ],
+    "mapmaker": [
+      "tools/app → Dokumentvalidator → Renderer → History und JSON/ZIP/PNG-Export",
+      "Labels, Stempel, Wege und Rasterkacheln haben heute unterschiedliche Datenverträge"
+    ],
+    "navigation": [
+      "Persönlicher IndexedDB-Entwurf, persönliche Serverbibliothek, Atlas-Lease und absolute6 h-Anmeldung sind unterschiedliche Kontexte"
+    ],
+    "related_cards": "Bezüge der Karten sind keine nachgewiesenen Implementierungsabhängigkeiten; Apply muss die Grenze pro Slice festlegen."
+  }
+}
