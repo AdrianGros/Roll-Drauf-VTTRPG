@@ -184,6 +184,9 @@ def test_expired_library_auth_preserves_editor_and_permission_errors_stay_distin
         status=status, content_type='application/json', body=json.dumps({'error': 'Sign-in expired' if status == 401 else 'Permission denied'})))
     page.locator('#cloudSave').click()
     expect(page.locator('#libraryLogin')).to_be_visible() if status == 401 else expect(page.locator('#libraryLogin')).to_be_hidden()
+    if status == 401:
+        page.locator('#errorClose').click()
+        page.locator('#libraryLogin').click(trial=True)
     expect(page.locator('#mapTitle')).to_have_value('Keep this draft')
     assert '/static/mapmaker/' in page.url
     page.wait_for_function('() => window.rdMapmaker.summary().autosave === "saved"')

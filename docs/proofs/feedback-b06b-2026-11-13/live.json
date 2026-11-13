@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "journeys": [
+    "dm: normal Maps entry \u2192 independent eraser values \u2192 diamond/color/texture/coast \u2192 pixel-exact undo/redo \u2192 selected image brush \u2192 private library \u2192 server effects \u2192 draft reload; mobile English night controls verified",
+    "player: normal Maps entry \u2192 independent eraser values \u2192 diamond/color/texture/coast \u2192 pixel-exact undo/redo \u2192 selected image brush \u2192 private library \u2192 server effects \u2192 draft reload; mobile English night controls verified",
+    "Synthetic Player authentication removed \u2192 actual 401 \u2192 editor and draft preserved \u2192 normal sign-in link opens separate tab \u2192 same-account library save resumes"
+  ],
+  "errors": [],
+  "draft_checkpoints": [
+    {
+      "role": "dm",
+      "generation": 10,
+      "localGeneration": 9,
+      "autosave": "pending"
+    },
+    {
+      "role": "player",
+      "generation": 10,
+      "localGeneration": 9,
+      "autosave": "pending"
+    }
+  ],
+  "pixel_diffs": [
+    {
+      "role": "player",
+      "changed_channels": 12714,
+      "max_channel_difference": 3
+    }
+  ]
+}

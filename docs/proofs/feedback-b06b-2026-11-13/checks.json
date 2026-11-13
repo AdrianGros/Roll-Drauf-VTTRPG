@@ -16,6 +16,11 @@
       "scope": "Confirmed local generation, visibility cancellation, saving during gesture denied, 401/403 distinction, asynchronous file-save and cancelled drag regression",
       "summary": "5 passed, 18 warnings in 104.91s",
       "log": "save-guards.log"
+    },
+    {
+      "scope": "Sign-in link is actually clickable after closing the explicit authentication-error dialog; 403 offers no false sign-in remedy",
+      "summary": "2 passed, 18 warnings in 34.70s",
+      "log": "login-entry.log"
     }
   ],
   "runtime": "roll-drauf-vtt-feedback-tests:20261110; network none",
@@ -33,6 +38,6 @@
     "vtt/static/mapmaker/js/ui.js": "52cfdaf362e95706b053bb7499a258905ea118be8d5da5aebe78c92a5ef13f84"
   },
   "i18n": "3289 UI sources: DE/EN complete, placeholders and generated files verified",
-  "live": "NOT_RUN",
+  "live": "live.json",
   "rollback_prerequisite": "a5fc8fcaf Atlas/raster credit compatibility image retains all source text when new image-brush pixels are saved."
 }

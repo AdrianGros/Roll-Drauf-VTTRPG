@@ -1,0 +1,67 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "N08",
+    "N09",
+    "N10",
+    "N18",
+    "S18"
+  ],
+  "source_commit": "c7f620f92273c211e2c7c443bb0af3b841997551",
+  "pushed": true,
+  "image": "roll-drauf-vtt-app:feedback-b06b-brushes-save-20261111-c7f620f92",
+  "image_id": "sha256:b57d6c8c91adb949127fd9f99b85f800e4185a7b944a750bc7009c4ae66990a4",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "source_verification": {
+    "checked": 283,
+    "mismatches": []
+  },
+  "deployed_at": "2026-11-13T18:09:01.903875188Z",
+  "health": {
+    "now": "2026-11-13T18:09:08.813022",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T18:09:06.421615",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "schema": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "cleanup": "cleanup.json",
+  "roles": [
+    "DM map owner",
+    "Player map owner"
+  ],
+  "user_journey": "Archive → Maps → brush tool / selected stamp or tile as image brush → private library → local draft restore; sign-in recovery stays in a separate tab.",
+  "rollback": "/srv/migration/2026-11-11/feedback-b06b-brushes-save/c7f620f92/rollback.sh",
+  "prior_image": "roll-drauf-vtt-app:feedback-b06b-brushes-save-rollback-20261111-513ec37fb718",
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "acceptance_checklist": [
+    "Round, square, diamond and chosen/cropped local image tips",
+    "Custom material color/texture; active raster layer coast controls",
+    "Independent remembered brush/eraser settings; eraser starts 100% opacity and 0% softness",
+    "Frozen gesture settings and exact undo/redo; file/server coast field validation",
+    "Confirmed local-generation guard, visibility cancellation and save-during-gesture refusal",
+    "401 preserves map/draft and offers normal separate-tab sign-in; 403 remains permission denial",
+    "Original account-change library protections pass",
+    "DM desktop and Player mobile Firefox/English/night live journeys pass"
+  ],
+  "residual": [
+    "Owner acceptance open",
+    "N11 deferred by explicit owner instruction until the original control is identified",
+    "Original cause of prior editor exit remains un-reproduced; this delivery adds protection and clear status, not a claimed root-cause fix",
+    "Low: Firefox native transparent PNG roundtrip shifts color channels by at most 3/255 in the isolated codec probe and this live draft restore; Chromium restore and both browsers undo/redo remain exact.",
+    "B07–B11 and N07 remain in the authorized program."
+  ]
+}

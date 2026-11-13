@@ -18,7 +18,8 @@ Execution checkpoint:
    and verified through normal DM and Player Maps exports. Proof:
    `docs/proofs/feedback-b06a-2026-11-13/delivery.json`.
 2. B06b brushes, independent eraser values, coastline controls and draft/auth
-   protection are being implemented against the existing B06 Apply contract.
+   protection are live as `c7f620f92`, with DM/Player browser proof and scoped
+   cleanup in `docs/proofs/feedback-b06b-2026-11-13/delivery.json`.
 3. B07–B10 and N07 each require their bounded Discover/Apply output before code,
    then focused checks, a source commit/push, the guarded existing production
    release workflow, live role journeys and scoped test-data cleanup.
