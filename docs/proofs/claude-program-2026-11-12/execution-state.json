@@ -1,6 +1,6 @@
 {
-  "status": "codex_takeover_in_progress",
-  "date": "2026-11-12",
+  "status": "codex_delivery_complete_owner_acceptance_pending",
+  "date": "2026-11-13",
   "quota": {
     "five_hour": {
       "utilization": 100.0,
@@ -16,6 +16,35 @@
   },
   "automatic_api_or_extra_usage": false,
   "live": {
+    "source": "4b2a57332909668b52af0d182e9ea544d76f442f",
+    "image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+    "C01_to_C09": "complete_live_verified",
+    "C10": "technical_complete_owner_acceptance_ready",
+    "proof": "../feedback-final-2026-11-13/delivery.json"
+  },
+  "workers": {
+    "C01": {
+      "remaining": "None within delivered technical scope; historical handoff retained below",
+      "final_delivery": "../feedback-final-2026-11-13/delivery.json"
+    },
+    "C02": {
+      "remaining": "None within delivered technical scope; historical handoff retained below",
+      "final_delivery": "../feedback-final-2026-11-13/delivery.json"
+    },
+    "C04": {
+      "remaining": "None within delivered technical scope; historical handoff retained below",
+      "final_delivery": "../feedback-final-2026-11-13/delivery.json"
+    },
+    "C06": {
+      "remaining": "None within delivered technical scope; historical handoff retained below",
+      "final_delivery": "../feedback-final-2026-11-13/delivery.json"
+    }
+  },
+  "further_tasks": "Human combined live acceptance NOT_RUN; optional fourth Donutarian campaign slot awaits explicit answer. I01-I05 excluded additions retain their missing inputs; no further implementation implied.",
+  "secrets_recorded": false,
+  "engine_choice": "Owner explicitly directed Codex to finish; native quota no longer blocks authorized implementation.",
+  "takeover_record": "docs/DADM_DEPLOY_CODEX_TAKEOVER_2026-11-12.md",
+  "historical_takeover_live_state": {
     "source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
     "image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
     "C01": "complete_live_verified",
@@ -24,7 +53,7 @@
     "C02": "live_medium_identity_refresh_rework_required",
     "C04": "functional_live_pass_mobile_medium_rework_required"
   },
-  "workers": {
+  "historical_worker_handoffs": {
     "C01": {
       "path": "/home/admin/projects/roll-drauf-vtt-claude-c01-20261111",
       "source": "4dca29475",
@@ -58,9 +87,5 @@
       "session": "b6847237-26f2-4df4-818f-4916f0e9e965",
       "evidence": "c06-partial-state.json"
     }
-  },
-  "further_tasks": "C05ApplyreadybutC04gateopen;C07requiresC06;C08Applyreadyhandoffpreparednotstarted;C09gatepending;C10overallNOT_RUN",
-  "secrets_recorded": false,
-  "engine_choice": "Owner explicitly directed Codex to finish; native quota no longer blocks authorized implementation.",
-  "takeover_record": "docs/DADM_DEPLOY_CODEX_TAKEOVER_2026-11-12.md"
+  }
 }

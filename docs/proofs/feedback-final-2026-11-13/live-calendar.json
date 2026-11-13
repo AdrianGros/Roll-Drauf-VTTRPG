@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "errors": [],
+  "journeys": [
+    "Normal campaigns book→shared month calendar→own hub→new unstarted session→date poll→Firefox390 alert and own votes→reload persists→DM named answers and finalize→both own calendars one scheduled session"
+  ],
+  "delivery": {
+    "commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+    "image": "roll-drauf-vtt-app:feedback-final-search-night-20261111-4b2a57332",
+    "image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+    "compose_project": "migration-production",
+    "compose_files": [
+      "/srv/migration/2026-10-07/setup/production.compose.json",
+      "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+    ],
+    "rollback": "/srv/migration/2026-11-11/feedback-final-search-night/4b2a57332/rollback.sh"
+  }
+}

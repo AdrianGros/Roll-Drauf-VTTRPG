@@ -1,7 +1,7 @@
 {
   "schema": "vtt.claude-execution-plan.v1",
-  "status": "in_progress_codex_takeover",
-  "phase": "deploy_C09",
+  "status": "delivered_for_owner_acceptance",
+  "phase": "monitor_technical_complete",
   "retention": "durable",
   "date": "2026-11-11",
   "user_directive": "Claude-Code-Agenten fest für die Implementierung über das vorhandene Abo verwenden",
@@ -35,7 +35,7 @@
       "reviewer": null,
       "depends_on": [],
       "review_ids": [],
-      "next_phase": "discover",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": false,
       "base_commit": null,
       "owned_files": null,
@@ -116,13 +116,15 @@
         "tests/test_c01_rulebook_browser.py",
         "tests/test_play_presentation_browser.py"
       ],
-      "current_runtime_image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
-      "preserved_in_source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0"
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "preserved_in_source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "C02",
       "title": "Charakterbilder, Bearbeitung, Kopie und Creator-Korrektur",
-      "status": "functional_live_verified_monitor_followup",
+      "status": "complete_live_verified",
       "implementer": "Codex (owner takeover; existing Claude source preserved)",
       "reviewer": "Codex structured self-review and verification; no independent review claimed",
       "depends_on": [
@@ -135,7 +137,7 @@
         "R12",
         "R13"
       ],
-      "next_phase": "deploy",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": "1dc8386546ea6fe615af13e66ec3ea7fa1d1548d",
       "owned_files": [
@@ -160,23 +162,31 @@
         "Prüfung führt zum Feld; Talentwiederholung geprüft"
       ],
       "execution_session_id": "bf179ad0-fa5c-431a-a44a-56d286808cb2",
-      "source_commit": "5ce0721096f80decfe4036755cf5d3782596a08d",
-      "deployed_image_id": "sha256:b502136aa78190636823e9685042731375aa74cf9f0a114c9a8455309b98e7da",
+      "source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "deployed_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
       "live_verification": "docs/DADM_DEPLOY_CODEX_TAKEOVER_2026-11-12.md",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C02_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
       "handoff": "docs/proofs/claude-c02-2026-11-12/handoff.json",
       "candidate_commit": "94b8b78ef",
       "execution_model": "sonnet",
-      "known_gap": "Firefox real different-image replace stores new image but current DOM retains old decoded image; next picker/recomposition needs bounded native follow-up; remaining full live character journey incomplete",
-      "current_runtime_image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
+      "known_gap": null,
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
       "preserved_in_source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
-      "residual_monitor": "Low: capture a Firefox operation-aborted pageerror from the table contrast journey; character/upload/copy/reader journey itself passed. Empty-tab contrast harness corrected."
+      "residual_monitor": "Final fresh contrast suite passed without pageerrors; historical aborted event not reproduced, no code suppression or required open fix.",
+      "historical_gap": "Firefox real different-image replace stores new image but current DOM retains old decoded image; next picker/recomposition needs bounded native follow-up; remaining full live character journey incomplete",
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json",
+      "rework_resolution": "Different-pixel avatar/token replacement, real picker lifecycle and save confirmation race fixed and live verified; copy, reload and Reader/lock permissions passed. Historical Firefox aborted error was not reproduced on later contrast checks; no suppression.",
+      "historical_plan_source_commit": "5ce0721096f80decfe4036755cf5d3782596a08d",
+      "historical_plan_image_id": "sha256:b502136aa78190636823e9685042731375aa74cf9f0a114c9a8455309b98e7da",
+      "implementation_source": "a935a3ca009273f3f4e33cfc55f86ba6d8d1bb7c",
+      "historical_residual_monitor": "Low: capture a Firefox operation-aborted pageerror from the table contrast journey; character/upload/copy/reader journey itself passed. Empty-tab contrast harness corrected."
     },
     {
       "id": "C03",
       "title": "Absolute sechs Stunden pro Anmeldung",
-      "status": "complete",
+      "status": "complete_live_verified",
       "implementer": "vtt-domain-implementer",
       "reviewer": "vtt-reviewer",
       "depends_on": [
@@ -186,7 +196,7 @@
         "R20",
         "R21"
       ],
-      "next_phase": "deploy",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": "a13d6f1a62d7a0cbc0f84501c5567823adb8807f",
       "owned_files": [
@@ -221,7 +231,11 @@
         "M1: signed-expiry second-boundary race",
         "M2: preserve current device refresh on password change"
       ],
-      "review_evidence": "docs/proofs/claude-c03-2026-11-11/review-01.md"
+      "review_evidence": "docs/proofs/claude-c03-2026-11-11/review-01.md",
+      "historical_gap": "Low residuals and external Discord/live rollback NOT_RUN recorded in delivery evidence; no missing required C03 implementation",
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "C04",
@@ -242,7 +256,7 @@
         "R27",
         "R28"
       ],
-      "next_phase": "deploy",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": "f5790c2400b92a0dd490658ebd3d2a887601183d",
       "owned_files": [
@@ -281,8 +295,12 @@
       "handoff": "docs/proofs/claude-c04-2026-11-12/handoff.json",
       "candidate_commit": "7474692d5",
       "execution_model": "sonnet",
-      "known_gap": "390px Import/Export wrapped header controls covered by main navigation; desktop editor, real two-stage retry and Firefox390 Player sharing pass",
-      "rework_resolution": "All four actual mobile header actions tested; existing sharing flow preserved and reverified with generated map."
+      "known_gap": null,
+      "rework_resolution": "All four narrow-screen header action centers tested with actual clicks; generated-map library sharing and one-upload activation retry passed again in final live suite.",
+      "historical_gap": "390px Import/Export wrapped header controls covered by main navigation; desktop editor, real two-stage retry and Firefox390 Player sharing pass",
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "C05",
@@ -296,7 +314,7 @@
       "review_ids": [
         "R29"
       ],
-      "next_phase": "deploy",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -311,7 +329,10 @@
       "deployed_image_id": "sha256:39a1f08ec4b8a0fca0453a6ceea85dd0bc097ae587d8ff4af200878136dd082d",
       "live_verification": "docs/proofs/landmass-2026-11-12/live.json",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C05_2026-11-11.md",
-      "apply_contract": "docs/DADM_APPLY_CLAUDE_C05_2026-11-12.md"
+      "apply_contract": "docs/DADM_APPLY_CLAUDE_C05_2026-11-12.md",
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "C06",
@@ -329,7 +350,7 @@
         "R03",
         "R04"
       ],
-      "next_phase": "deploy",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -347,8 +368,14 @@
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C06_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C06_2026-11-11.md",
       "candidate_branch": "claude/vtt-c06-20261112",
-      "known_gap": "76passed4failed cancellation403; new full browser/PG concurrency/review/migration/live pending",
-      "evidence": "docs/proofs/claude-program-2026-11-12/c06-partial-state.json"
+      "known_gap": null,
+      "evidence": "docs/proofs/feedback-final-2026-11-13/live-calendar.json",
+      "historical_gap": "76passed4failed cancellation403; new full browser/PG concurrency/review/migration/live pending",
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json",
+      "rework_resolution": "Cancellation tests now enter valid server-authorized contexts;80 API checks, real browsers and PostgreSQL checks passed. Final live poll/vote/finalize/calendar journey passed.",
+      "historical_evidence": "docs/proofs/claude-program-2026-11-12/c06-partial-state.json"
     },
     {
       "id": "C07",
@@ -364,7 +391,7 @@
         "R05",
         "R06"
       ],
-      "next_phase": "deploy",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -381,7 +408,10 @@
       "live_verification": "docs/proofs/private-conversations-2026-11-12/live.json",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C07_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C07_2026-11-11.md",
-      "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c07-20261112"
+      "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c07-20261112",
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "C08",
@@ -397,7 +427,7 @@
         "R23",
         "R24"
       ],
-      "next_phase": "deploy",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -414,14 +444,17 @@
       "live_verification": "docs/proofs/catalog-actions-2026-11-12/live.json",
       "discovery": "docs/DADM_DISCOVER_CLAUDE_C08_2026-11-11.md",
       "apply_contract": "docs/DADM_APPLY_CLAUDE_C08_2026-11-11.md",
-      "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c08-20261112"
+      "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c08-20261112",
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "C09",
       "title": "Atlas mit geschützter Leserprojektion",
-      "status": "discover_apply_complete_implementation_active",
-      "implementer": "Codex (owner takeover; existing Claude source preserved)",
-      "reviewer": "Codex structured self-review and verification; no independent review claimed",
+      "status": "complete_live_verified",
+      "implementer": "Codex (explicit owner takeover)",
+      "reviewer": "Codex structured self-review; no independent reviewer",
       "depends_on": [
         "C01",
         "C04",
@@ -430,7 +463,7 @@
       "review_ids": [
         "R29"
       ],
-      "next_phase": "discover",
+      "next_phase": "monitor_complete",
       "requires_task_specific_apply": true,
       "base_commit": null,
       "owned_files": null,
@@ -442,19 +475,25 @@
         "Welt ohne Karte erlaubt; kein 3D-Renderer"
       ],
       "execution_session_id": null,
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null,
+      "source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "deployed_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "live_verification": "docs/proofs/feedback-final-2026-11-13/live-atlas.json",
       "worktree": "/home/admin/projects/roll-drauf-vtt-codex-c09-20261112",
       "discovery": "docs/DADM_DISCOVER_CODEX_C09_2026-11-12.md",
-      "apply_contract": "docs/DADM_APPLY_CODEX_C09_2026-11-12.md"
+      "apply_contract": "docs/DADM_APPLY_CODEX_C09_2026-11-12.md",
+      "known_gap": null,
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json",
+      "implementation_source": "95cdb4b6c",
+      "rework_resolution": "Full final live two-author/three-map/Reader journey includes recovery warning and numeric night contrast."
     },
     {
       "id": "C10",
       "title": "Gesamt-Liveprüfung und Owner-Testcheckliste",
-      "status": "planned",
-      "implementer": "Codex (owner takeover; existing Claude source preserved)",
-      "reviewer": "Codex structured self-review and verification; no independent review claimed",
+      "status": "technical_complete_owner_acceptance_ready",
+      "implementer": "Codex (explicit owner takeover)",
+      "reviewer": "Codex structured self-review; no independent reviewer",
       "depends_on": [
         "C01",
         "C02",
@@ -467,7 +506,7 @@
         "C09"
       ],
       "review_ids": [],
-      "next_phase": "apply",
+      "next_phase": "owner_acceptance",
       "requires_task_specific_apply": false,
       "base_commit": null,
       "owned_files": null,
@@ -479,9 +518,15 @@
         "Offene Inputs und menschliche NOT_RUN-Fälle ehrlich ausgewiesen"
       ],
       "execution_session_id": null,
-      "source_commit": null,
-      "deployed_image_id": null,
-      "live_verification": null
+      "source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "deployed_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "live_verification": "docs/proofs/feedback-final-2026-11-13/live-combined.json",
+      "known_gap": null,
+      "current_runtime_source_commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+      "current_runtime_image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+      "final_delivery_evidence": "docs/proofs/feedback-final-2026-11-13/delivery.json",
+      "human_acceptance": "NOT_RUN",
+      "checklist": "docs/acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     }
   ],
   "deferred": [
@@ -503,7 +548,7 @@
       "reason": "Separate bot backlog; no messaging/tool actions authorized by this planning step"
     }
   ],
-  "next_step": "Implement and live-deliver C09 Atlas, resolve bounded C10 monitors and prepare Donutarian acceptance campaign/checklist.",
+  "next_step": "Owner/DM and Firefox Player run the combined checklist on the live VTT. Optional extra Donutarian campaign awaits the explicit fourth-slot quota answer.",
   "claude_subscription_history": {
     "provider": "Claude Code CLI",
     "installed_version": "2.1.312",
@@ -545,5 +590,23 @@
     "resumed_at": "2026-11-12T13:12:26Z",
     "implementation_choice": "Continue native Claude subscription as explicitly requested; no engine-choice question pending, no API/extrausage fallback"
   },
-  "test_campaign_owner": "Donutarian"
+  "test_campaign_owner": "Donutarian",
+  "current_delivery": "docs/proofs/feedback-final-2026-11-13/delivery.json",
+  "acceptance_checklist": "docs/acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md",
+  "human_acceptance": "NOT_RUN",
+  "test_campaign": {
+    "requested_owner": "Donutarian",
+    "actual_username": "donutarian",
+    "status": "awaiting_explicit_fourth_slot_quota_answer",
+    "owned_active_campaigns": 3,
+    "campaign_limit": 3,
+    "real_campaigns_and_quota_unchanged": true
+  },
+  "updated_at": "2026-11-13T06:41:22.592064+00:00",
+  "actual_roles": {
+    "implementation": "Codex after explicit owner takeover",
+    "review": "Structured self-review and focused tests; no independent reviewer",
+    "subagents_spawned": false,
+    "automatic_API_or_extra_usage": false
+  }
 }

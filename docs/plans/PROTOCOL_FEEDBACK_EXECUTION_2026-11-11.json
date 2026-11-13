@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "program": "protocol-feedback-2026-11-11",
-  "phase": "deploy_live_rework_claude_quota_blocked",
-  "status": "in_progress",
+  "phase": "monitor_technical_complete",
+  "status": "delivered_for_owner_acceptance",
   "implementation_started": true,
   "background_execution": false,
   "owner_acceptance": "not_run",
@@ -22,7 +22,7 @@
   "artifacts": {
     "discover": "../DADM_DISCOVER_PROTOCOL_FEEDBACK_PROGRAM_2026-11-11.md",
     "plan": "PROTOCOL_FEEDBACK_PROGRAM_2026-11-11.md",
-    "acceptance": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-11.md",
+    "acceptance": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md",
     "card_specifications": "../PROTOCOL_FEEDBACK_SPECIFICATIONS_2026-11-10.md",
     "retention": "permanent"
   },
@@ -41,42 +41,46 @@
       "id": "R01",
       "severity": "medium",
       "package": "P1",
-      "status": "open",
-      "description": "Kontextlebenszyklus und vollständige Nebenpfadinventur vor Implementierung detailliert entwerfen"
+      "status": "resolved",
+      "description": "Kontextlebenszyklus und vollständige Nebenpfadinventur vor Implementierung detailliert entwerfen",
+      "resolution": "Package contract, targeted checks and live delivery evidence complete; see package proofs and final manifest."
     },
     {
       "id": "R02",
       "severity": "medium",
       "package": "P2",
-      "status": "open",
-      "description": "Request-Dedup, Ereigniszustellung und Reconnect-Vertrag vor Ausführungserweiterung prüfen"
+      "status": "resolved",
+      "description": "Request-Dedup, Ereigniszustellung und Reconnect-Vertrag vor Ausführungserweiterung prüfen",
+      "resolution": "Package contract, targeted checks and live delivery evidence complete; see package proofs and final manifest."
     },
     {
       "id": "R03",
       "severity": "medium",
       "package": "P3",
-      "status": "open",
-      "description": "Homebrew- und Atlas-Datenverträge benötigen je Paket Migration, Backup und kompatiblen Rückweg"
+      "status": "resolved",
+      "description": "Homebrew- und Atlas-Datenverträge benötigen je Paket Migration, Backup und kompatiblen Rückweg",
+      "resolution": "Package contract, targeted checks and live delivery evidence complete; see package proofs and final manifest."
     },
     {
       "id": "R04",
       "severity": "medium",
       "package": "P0",
-      "status": "open",
+      "status": "external_input_required_outside_delivered_boundary",
       "description": "I01 bis I05 verhindern betroffene Zusatzabschlüsse, nicht die unabhängige Kernarbeit"
     },
     {
       "id": "R05",
       "severity": "medium",
       "package": "P6",
-      "status": "open",
-      "description": "Leserprojektion einschließlich Suche und Assets gegen private Lore abgrenzen"
+      "status": "resolved",
+      "description": "Leserprojektion einschließlich Suche und Assets gegen private Lore abgrenzen",
+      "resolution": "Package contract, targeted checks and live delivery evidence complete; see package proofs and final manifest."
     },
     {
       "id": "R06",
       "severity": "low",
       "package": "P7",
-      "status": "open",
+      "status": "human_acceptance_pending",
       "description": "Technische Zwischenabnahme autonom; menschliche Schlussrunde benötigt DM und weiteren Player mit Firefox"
     }
   ],
@@ -108,7 +112,7 @@
       "title": "Live-Basis und offene Angaben",
       "status": "verified",
       "depends_on": [],
-      "next_phase": "monitor",
+      "next_phase": "monitor_complete",
       "acceptance_ids": [
         "A08",
         "A11"
@@ -127,7 +131,7 @@
       "depends_on": [
         "P0"
       ],
-      "next_phase": "monitor",
+      "next_phase": "monitor_complete",
       "delivery_evidence": "../DADM_MONITOR_PLAYTABLE_CONTEXTS_2026-11-11.md",
       "planned_design_artifact": "../DADM_APPLY_PLAYTABLE_CONTEXTS_2026-11-11.md",
       "acceptance_ids": [
@@ -199,11 +203,11 @@
     {
       "id": "P4",
       "title": "Darstellung, DE/EN und kalibrierte Einheiten",
-      "status": "partially_deployed_monitor_rework",
+      "status": "live_verified",
       "depends_on": [
         "P0"
       ],
-      "next_phase": "apply",
+      "next_phase": "monitor_complete",
       "acceptance_ids": [
         "A03",
         "A04",
@@ -222,9 +226,9 @@
         "Spätere neue Oberflächen in gemeinsamer P7-Prüfung einbezogen"
       ],
       "implementation_evidence": "../DADM_DEPLOY_PRESENTATION_UNITS_2026-11-11.md",
-      "review_update": "Neue R07/R08/R11/R14 und zusätzliche UI-Quellen vor Freigabe prüfen; vorbereitetes Image nicht aktiviert.",
-      "delivery_evidence": "docs/proofs/presentation-2026-11-12/delivery.json",
-      "known_gap": "Functional live journeys pass; Medium PlayChrome contrast remains; complete package not ready"
+      "review_update": "Reviewed night/EN/units main paths and final Compendium/Atlas contrast correction passed; no open required technical rework.",
+      "delivery_evidence": "../proofs/feedback-final-2026-11-13/delivery.json",
+      "historical_gap": "Functional live journeys pass; Medium PlayChrome contrast remains; complete package not ready"
     },
     {
       "id": "P5",
@@ -233,7 +237,7 @@
       "depends_on": [
         "P0"
       ],
-      "next_phase": "discover",
+      "next_phase": "monitor_complete",
       "acceptance_ids": [
         "A08",
         "A09"
@@ -245,17 +249,18 @@
         "Auflösung, Abbruch und Laufzeitbudget vor Implementierung begründet",
         "Bestehende Ebenen, Bibliothek und Import/Export erhalten"
       ],
-      "evidence": "docs/proofs/landmass-2026-11-12/live.json"
+      "evidence": "docs/proofs/landmass-2026-11-12/live.json",
+      "delivery_evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "P6",
       "title": "Atlas mit verknüpften Karten, Orten und Leserpublikation",
-      "status": "planned",
+      "status": "live_verified",
       "depends_on": [
         "P1",
         "P5"
       ],
-      "next_phase": "discover",
+      "next_phase": "monitor_complete",
       "acceptance_ids": [
         "A04",
         "A10",
@@ -268,12 +273,13 @@
         "Bestehende Projektbibliothek mit Revisions-/Bearbeitungskonfliktvertrag genutzt",
         "Zwei Autoren, ein Leser, drei Karten und Backup-Rundlauf geprüft",
         "Migration/Rückweg vorhanden und regulärer Atlas-Einstieg live erreichbar"
-      ]
+      ],
+      "delivery_evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "P7",
       "title": "Gesamtprüfung und ein menschlicher Live-Abnahmelauf",
-      "status": "planned",
+      "status": "technical_complete_human_acceptance_pending",
       "depends_on": [
         "P1",
         "P2",
@@ -282,7 +288,7 @@
         "P5",
         "P6"
       ],
-      "next_phase": "monitor",
+      "next_phase": "owner_acceptance",
       "acceptance_ids": [
         "A01",
         "A02",
@@ -308,7 +314,9 @@
         "Offene Zusatzinhalte vor Bereitmeldung ausdrücklich genannt",
         "Menschliche Runde mit Firefox durchgeführt und Soll/Ist dokumentiert",
         "Keine Karte ohne ihre tatsächlichen Nachweise als erledigt markiert"
-      ]
+      ],
+      "human_acceptance": "NOT_RUN",
+      "delivery_evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     }
   ],
   "delivery_evidence_template": {
@@ -438,11 +446,12 @@
     {
       "id": "VTT-06",
       "package": "P4",
-      "status": "partial",
+      "status": "delivered",
       "acceptance_ids": [
         "A04"
       ],
-      "closure": "Lesbare sichere Farbvarianten auf allen betroffenen Hauptwegen; freie CSS-Konfiguration gesondert"
+      "closure": "Lesbare sichere Farbvarianten auf allen betroffenen Hauptwegen; freie CSS-Konfiguration gesondert",
+      "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "VTT-07",
@@ -575,30 +584,33 @@
     {
       "id": "VTT-21",
       "package": "P4",
-      "status": "partial",
+      "status": "delivered",
       "acceptance_ids": [
         "A04"
       ],
-      "closure": "Pergament/Nacht auf betroffenen Hauptwegen statt nur Bogen"
+      "closure": "Pergament/Nacht auf betroffenen Hauptwegen statt nur Bogen",
+      "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "VTT-22",
       "package": "P4",
-      "status": "bounded_proposal",
+      "status": "delivered",
       "acceptance_ids": [
         "A04",
         "A10"
       ],
-      "closure": "DE/EN-UI vollständig im vereinbarten Wegumfang; FR/ES weiterhin nachgelagert"
+      "closure": "DE/EN-UI vollständig im vereinbarten Wegumfang; FR/ES weiterhin nachgelagert",
+      "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "VTT-23",
       "package": "P4",
-      "status": "partial",
+      "status": "delivered",
       "acceptance_ids": [
         "A04"
       ],
-      "closure": "Bogen und kalibrierte Tisch-/Kartendistanzen, keine Pixel-als-Meter-Umdeutung"
+      "closure": "Bogen und kalibrierte Tisch-/Kartendistanzen, keine Pixel-als-Meter-Umdeutung",
+      "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "VTT-24",
@@ -659,12 +671,14 @@
     {
       "id": "VTT-30",
       "package": "P7",
-      "status": "partial",
+      "status": "human_acceptance_pending",
       "acceptance_ids": [
         "A01",
         "A12"
       ],
-      "closure": "Gemeinsamer Soll/Ist-/Repro-Bogen mit technischen und menschlichen Belegen"
+      "closure": "Gemeinsamer Soll/Ist-/Repro-Bogen mit technischen und menschlichen Belegen",
+      "technical_status": "checklist_and_live_evidence_delivered",
+      "evidence": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "VTT-31",
@@ -679,20 +693,22 @@
     {
       "id": "VTT-32",
       "package": "P5",
-      "status": "bounded_proposal",
+      "status": "delivered",
       "acceptance_ids": [
         "A09"
       ],
-      "closure": "Insel/Landmasse aus Seed, Vorschau, Abbruch und Undo; keine volle Weltsimulation"
+      "closure": "Insel/Landmasse aus Seed, Vorschau, Abbruch und Undo; keine volle Weltsimulation",
+      "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "VTT-33",
       "package": "P6",
-      "status": "bounded_proposal",
+      "status": "delivered",
       "acceptance_ids": [
         "A10"
       ],
-      "closure": "Welt/Region/Ort mit Kartenlinks, Autorenrechten und privater/veröffentlichter Lore"
+      "closure": "Welt/Region/Ort mit Kartenlinks, Autorenrechten und privater/veröffentlichter Lore",
+      "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "VTT-34",
@@ -743,12 +759,13 @@
     {
       "id": "VTT-38",
       "package": "P4",
-      "status": "optional",
+      "status": "delivered",
       "acceptance_ids": [
         "A03",
         "A04"
       ],
-      "closure": "Abschaltbares Sticky-Porträt ohne verdeckte Bedienung; kein Kernblocker"
+      "closure": "Abschaltbares Sticky-Porträt ohne verdeckte Bedienung; kein Kernblocker",
+      "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
     },
     {
       "id": "VTT-39",
@@ -779,7 +796,9 @@
       "roles": [
         "player"
       ],
-      "title": "Creator und Kampagneneinstieg"
+      "title": "Creator und Kampagneneinstieg",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A02",
@@ -788,7 +807,9 @@
         "author",
         "dm"
       ],
-      "title": "Homebrew-Prüfung und Veröffentlichung"
+      "title": "Homebrew-Prüfung und Veröffentlichung",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A03",
@@ -796,7 +817,9 @@
       "roles": [
         "player"
       ],
-      "title": "Bogen, Inventar und Bonusquellen"
+      "title": "Bogen, Inventar und Bonusquellen",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A04",
@@ -805,7 +828,9 @@
         "player",
         "dm"
       ],
-      "title": "Darstellung, Sprache und Einheiten"
+      "title": "Darstellung, Sprache und Einheiten",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A05",
@@ -814,7 +839,9 @@
         "dm_as_player",
         "dm"
       ],
-      "title": "Getrennte Kontexte und parallele Tabs"
+      "title": "Getrennte Kontexte und parallele Tabs",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A06",
@@ -822,7 +849,9 @@
       "roles": [
         "player"
       ],
-      "title": "Persönliche Hotbar"
+      "title": "Persönliche Hotbar",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A07",
@@ -831,7 +860,9 @@
         "dm",
         "player_firefox"
       ],
-      "title": "Mehrteilnehmer-Würfel und Reconnect"
+      "title": "Mehrteilnehmer-Würfel und Reconnect",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A08",
@@ -840,7 +871,9 @@
         "author",
         "dm"
       ],
-      "title": "Kartenbedienung und Wiederladen"
+      "title": "Kartenbedienung und Wiederladen",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A09",
@@ -848,7 +881,9 @@
       "roles": [
         "author"
       ],
-      "title": "Landmassen und Undo-Rundlauf"
+      "title": "Landmassen und Undo-Rundlauf",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A10",
@@ -857,7 +892,9 @@
         "author",
         "reader"
       ],
-      "title": "Atlas und Leserpublikation"
+      "title": "Atlas und Leserpublikation",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A11",
@@ -866,7 +903,9 @@
         "author",
         "player"
       ],
-      "title": "Assets, Quellen und offene Zusätze"
+      "title": "Assets, Quellen und offene Zusätze",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     },
     {
       "id": "A12",
@@ -875,10 +914,12 @@
         "human_dm",
         "human_player_firefox"
       ],
-      "title": "Abgeschlossene Sitzung und strukturiertes Feedback"
+      "title": "Abgeschlossene Sitzung und strukturiertes Feedback",
+      "technical_preparation": "ready",
+      "checklist": "../acceptance/PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md"
     }
   ],
-  "next_step": "Finish C02 confirmation live follow-up, private conversations, compendium actions, atlas and combined owner checklist.",
+  "next_step": "Owner/DM and Firefox Player run the combined checklist on the live VTT. Optional extra Donutarian campaign awaits the explicit fourth-slot quota answer.",
   "latest_review_plan": "VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.json",
   "implementation_provider_preference": {
     "current": "Codex takeover",
@@ -886,9 +927,69 @@
     "prior": "Claude subscription implementation; no paid API fallback"
   },
   "current_delivery": {
-    "source": "8848c621c7dd8cdcdd6bd0ad1538297f76a4d5c0",
-    "image_id": "sha256:75338d7ed86ad5e80854b2e672015a3716c2050fc16a9df37ffffb7494d8ee22",
-    "evidence": "../proofs/maps-2026-11-12/delivery.json",
-    "overall_ready": false
-  }
+    "commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+    "image": "roll-drauf-vtt-app:feedback-final-search-night-20261111-4b2a57332",
+    "image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+    "base_source": "4a0a8297256f2f3ebd7487421a45ee003d8ffee0",
+    "base_image_id": "sha256:7fa769333af7958a7823d0435b9affa22aa787da3d96e635279685749f868e2c",
+    "compose_project": "migration-production",
+    "compose_files": [
+      "/srv/migration/2026-10-07/setup/production.compose.json",
+      "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+    ],
+    "health": {
+      "now": "2026-11-13T06:33:56.741451",
+      "service": "roll_drauf_vtt",
+      "started_at": "2026-11-13T06:33:54.552493",
+      "status": "ok"
+    },
+    "other_services_unchanged": true,
+    "database_backup": {
+      "path": "/srv/migration/2026-11-11/feedback-final-search-night/4b2a57332/database-before.dump",
+      "bytes": 460095,
+      "archive_readable": true,
+      "restore_exercised": false
+    },
+    "schema_migration": {
+      "status": "pass",
+      "tables": [],
+      "previously_present": [],
+      "columns_verified": true
+    },
+    "built_source_verification": {
+      "checked": 278,
+      "mismatches": []
+    },
+    "overlay_manifest": {
+      "vtt/static/css/atlas.css": "c6b117bbd296b205a4f78691fcdeaec6f11525edc36ee042e86087e0aa2966eb",
+      "vtt/static/css/regelwerk.css": "25cf4ec9b13b00b78d6798e868e128c1f36ab443d6efb3331436a8eedc7193b9",
+      "vtt/static/js/regelwerk-compendium.js": "c2ad3c0567b8f400a5ece198f68321e6b5540bb5bdd12b0a37bc03a291a66a13"
+    },
+    "prior_image": "roll-drauf-vtt-app:feedback-final-search-night-rollback-20261111-7fa769333af7",
+    "rollback": "/srv/migration/2026-11-11/feedback-final-search-night/4b2a57332/rollback.sh",
+    "rollback_syntax_checked": true,
+    "rollback_executed": false,
+    "status": "technically_verified_live",
+    "url": "https://vtt.roll-drauf.de",
+    "verified_at": "2026-11-13T06:41:22.592064+00:00",
+    "push": "origin feat/protocol-feedback-20261110 succeeded",
+    "review": "Codex structured self-review; no independent reviewer",
+    "human_acceptance": "NOT_RUN",
+    "test_campaign": {
+      "requested_owner": "Donutarian",
+      "actual_username": "donutarian",
+      "status": "awaiting_explicit_fourth_slot_quota_answer",
+      "owned_active_campaigns": 3,
+      "campaign_limit": 3,
+      "real_campaigns_and_quota_unchanged": true
+    },
+    "targeted_checks": "targeted-checks.json",
+    "live_checks": "live-combined.json",
+    "cleanup": "cleanup.json",
+    "rollback_scope": "Previous app image retained; this overlay has no schema change. Rollback syntax checked, actual rollback NOT_RUN. Initial additive model migrations retain their separate backup records.",
+    "preservation": "Overlay is exactly three UI files on the actual live LPC image lineage;278 runtime source hashes verified. No original dirty checkout or unrelated running service changed.",
+    "overall_ready": true,
+    "evidence": "../proofs/feedback-final-2026-11-13/delivery.json"
+  },
+  "updated_at": "2026-11-13T06:41:22.592064+00:00"
 }

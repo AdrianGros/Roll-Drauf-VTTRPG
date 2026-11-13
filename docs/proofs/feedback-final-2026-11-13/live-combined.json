@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "suites": [
+    {
+      "name": "atlas",
+      "status": "pass",
+      "seconds": 105.13
+    },
+    {
+      "name": "catalog",
+      "status": "pass",
+      "seconds": 54.1
+    },
+    {
+      "name": "calendar",
+      "status": "pass",
+      "seconds": 51.32
+    },
+    {
+      "name": "landmass",
+      "status": "pass",
+      "seconds": 70.58
+    },
+    {
+      "name": "contrast",
+      "status": "pass",
+      "seconds": 36.96
+    },
+    {
+      "name": "private-conversations",
+      "status": "pass",
+      "seconds": 43.02
+    }
+  ],
+  "scope": "Full six-suite run on fresh synthetic fixture after the C10 search and night contrast correction. Earlier failed attempts retained separately."
+}

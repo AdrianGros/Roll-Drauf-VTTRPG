@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "checks": {
+    "preview_seconds_desktop": 0.3901999999880791,
+    "preview_seconds_390": 0.15240000000596046,
+    "preview_resolution": 512,
+    "preview_unchanged": true,
+    "one_layer_one_undo_redo": true,
+    "seed_version_persisted": true,
+    "source_digest_before": "f9ccad5f82cd69f368e633a164a0337de1e312f587b66e7e215415e09704c16f",
+    "one_snapshot_upload_after_activation_retry": true,
+    "private_source_unchanged": true,
+    "player_no_private_source_or_dm_controller": true,
+    "player_shared_png_visible": true
+  },
+  "journeys": [
+    "Normal Maps→own empty project→seeded 512 preview without mutation→one new raster→one undo/redo→mobile preview/cancel unchanged→save private editable project",
+    "Normal DM hub→pages Add→own library→real preview and sharing consent→failed activation→retry uploads once; Firefox390 Player sees same active map, cannot get private source"
+  ],
+  "errors": [],
+  "project_id": "6eb8da3a-910b-460f-b6ec-33bd44435971",
+  "map_id": 44,
+  "asset_id": 84,
+  "delivery": {
+    "commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+    "image": "roll-drauf-vtt-app:feedback-final-search-night-20261111-4b2a57332",
+    "image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+    "compose_project": "migration-production",
+    "compose_files": [
+      "/srv/migration/2026-10-07/setup/production.compose.json",
+      "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+    ],
+    "rollback": "/srv/migration/2026-11-11/feedback-final-search-night/4b2a57332/rollback.sh"
+  }
+}

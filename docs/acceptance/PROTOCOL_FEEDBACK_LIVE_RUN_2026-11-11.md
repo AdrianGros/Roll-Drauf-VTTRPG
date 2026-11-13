@@ -92,3 +92,5 @@ Technische Fehler werden gezielt behoben und die betroffenen zusammenhängenden
 Schritte erneut geprüft. Nach einem Code-/Imagewechsel wird die Releaseidentität
 aktualisiert. Erst dokumentierte echte Ergebnisse schließen Akzeptanzfälle;
 VTT-31 erst nach der tatsächlich gespielten menschlichen Runde.
+
+Aktueller zusammengeführter Testbogen und technische Bereitstellung: [Live-Testpaket](PROTOCOL_FEEDBACK_LIVE_RUN_2026-11-12.md). Dieser frühere Abnahmebogen bleibt historisch; menschliche Abnahme weiterhin NOT_RUN.

@@ -1,0 +1,63 @@
+{
+  "commit": "4b2a57332909668b52af0d182e9ea544d76f442f",
+  "image": "roll-drauf-vtt-app:feedback-final-search-night-20261111-4b2a57332",
+  "image_id": "sha256:c843eaba933bb40989b72bc9d206af177a882bea7ab89f65e69c40ad27d665f0",
+  "base_source": "4a0a8297256f2f3ebd7487421a45ee003d8ffee0",
+  "base_image_id": "sha256:7fa769333af7958a7823d0435b9affa22aa787da3d96e635279685749f868e2c",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "health": {
+    "now": "2026-11-13T06:33:56.741451",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-13T06:33:54.552493",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-final-search-night/4b2a57332/database-before.dump",
+    "bytes": 460095,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "built_source_verification": {
+    "checked": 278,
+    "mismatches": []
+  },
+  "overlay_manifest": {
+    "vtt/static/css/atlas.css": "c6b117bbd296b205a4f78691fcdeaec6f11525edc36ee042e86087e0aa2966eb",
+    "vtt/static/css/regelwerk.css": "25cf4ec9b13b00b78d6798e868e128c1f36ab443d6efb3331436a8eedc7193b9",
+    "vtt/static/js/regelwerk-compendium.js": "c2ad3c0567b8f400a5ece198f68321e6b5540bb5bdd12b0a37bc03a291a66a13"
+  },
+  "prior_image": "roll-drauf-vtt-app:feedback-final-search-night-rollback-20261111-7fa769333af7",
+  "rollback": "/srv/migration/2026-11-11/feedback-final-search-night/4b2a57332/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "status": "technically_verified_live",
+  "url": "https://vtt.roll-drauf.de",
+  "verified_at": "2026-11-13T06:41:22.592064+00:00",
+  "push": "origin feat/protocol-feedback-20261110 succeeded",
+  "review": "Codex structured self-review; no independent reviewer",
+  "human_acceptance": "NOT_RUN",
+  "test_campaign": {
+    "requested_owner": "Donutarian",
+    "actual_username": "donutarian",
+    "status": "awaiting_explicit_fourth_slot_quota_answer",
+    "owned_active_campaigns": 3,
+    "campaign_limit": 3,
+    "real_campaigns_and_quota_unchanged": true
+  },
+  "targeted_checks": "targeted-checks.json",
+  "live_checks": "live-combined.json",
+  "cleanup": "cleanup.json",
+  "rollback_scope": "Previous app image retained; this overlay has no schema change. Rollback syntax checked, actual rollback NOT_RUN. Initial additive model migrations retain their separate backup records.",
+  "preservation": "Overlay is exactly three UI files on the actual live LPC image lineage;278 runtime source hashes verified. No original dirty checkout or unrelated running service changed."
+}
