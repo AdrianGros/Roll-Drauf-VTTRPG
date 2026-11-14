@@ -1,6 +1,6 @@
 # B08 visual libraries and authorized Journal intake
 
-Status: Apply complete; retention permanent. Input: B08 Discover, S05/S12/S20.
+Status: Apply complete and delivered live 2026-11-14 ([delivery](../proofs/feedback-b08-2026-11-14/delivery.json)); retention permanent. Input: B08 Discover, S05/S12/S20.
 
 Visual selection: display a small image with a short title below each project in
 the table's Own Library, campaign-hub import and editor library. Reuse validated

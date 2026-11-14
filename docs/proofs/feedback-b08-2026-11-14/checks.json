@@ -1,0 +1,61 @@
+{
+  "status": "pass",
+  "retention": "permanent",
+  "groups": [
+    {
+      "command": "pytest tests/test_feedback_b08_browser.py tests/test_feedback_b08_assets.py -q",
+      "summary": "12 passed in 88.39s (incl. new context-renewal race test; that test failed before fc2b833dc)"
+    },
+    {
+      "command": "pytest tests/test_feedback_b08_assets.py tests/test_asset_library.py tests/test_c04_map_library.py -q (Codex, before the usage limit)",
+      "summary": "53 passed",
+      "log": "codex-assets-before-limit.log"
+    },
+    {
+      "command": "pytest tests/test_mapmaker_browser.py -q",
+      "summary": "1 failed, 60 passed; the failure (test_narrow_viewport_sheet_and_tools) fails identically without B08",
+      "log": "regression-fixA.log"
+    },
+    {
+      "command": "pytest tests/test_mapmaker_static.py tests/test_mapmaker_library.py::test_search_pagination tests/test_c04_mapmaker_browser.py tests/test_feedback_b05_browser.py tests/test_feedback_b06_browser.py -q",
+      "summary": "3 failed, 30 passed; all 3 fail identically without B08",
+      "log": "regression-fixB.log"
+    },
+    {
+      "command": "pytest tests/test_atlas_browser.py tests/test_play_presentation_browser.py tests/test_c06_calendar_browser.py -q",
+      "summary": "8 passed",
+      "log": "regression-fixC.log"
+    },
+    {
+      "command": "14 server/contract test files around assets, table contexts, book scene, layers and boundaries",
+      "summary": "13 failed, 154 passed; every failure reproduced on the pre-B08 baseline",
+      "log": "regression-target0.log"
+    },
+    {
+      "command": "Same failing IDs on a copy without B08 (baseline)",
+      "summary": "13 failed, 28 passed: identical failing set",
+      "log": "regression-baseA.log"
+    },
+    {
+      "command": "python3 tools/i18n/build_catalog.py --check",
+      "summary": "3328 UI sources: DE/EN complete"
+    }
+  ],
+  "resolved_findings": [
+    "Editor stylesheet was linked with an absolute /static path: 404 in the standalone preview broke 50+ editor browser tests; now relative",
+    "Importer contract test now admits the DM-only campaign-hub module and asserts Player surfaces never reference it",
+    "Hub browser test lacked the CSRF cookie a real login sets; CSRF protection is now on for that journey as in production",
+    "Journal first-open race with context renewal (see live.json)"
+  ],
+  "pre_existing_failures_not_caused_by_b08": [
+    "tests/test_mapmaker_static.py::test_index_uses_only_relative_local_resources (/login.html link from B06)",
+    "tests/test_mapmaker_library.py::test_search_pagination (fixed asset count 72064 vs 91066)",
+    "tests/test_mapmaker_browser.py::test_narrow_viewport_sheet_and_tools",
+    "tests/test_c04_mapmaker_browser.py::test_dm_library_to_table_firefox_player_sees_card_source_unchanged_and_retry_uploads_once (stale pages-widget helper)",
+    "tests/test_public_surface_and_playtable_contract.py (6 stale template/string contracts)",
+    "tests/test_layer_add_flow.py (3, table_context_required)",
+    "tests/test_play_boundary_preparation.py::test_bookscene_serves_play_boundary_handoff_helper",
+    "tests/test_fallback_boundary_cleanup.py::test_play_template_remains_formally_clean_after_boundary_chain_changes"
+  ],
+  "full_suite_note": "A full 162-file run was started and stopped after ~40 minutes at full host load on the production machine; coverage above is targeted at every file B08 touches, with a baseline comparison."
+}

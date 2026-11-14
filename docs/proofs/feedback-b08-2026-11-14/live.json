@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "journeys": [
+    "DM: Kampagnenhub → Karten → Eigene Bibliothek → 2 echte 256-px-Vorschauen → Auswahl/Vollvorschau 1024 px → Name + Zustimmung → Karte im Hub, ohne Tisch zu betreten",
+    "DM: normale Karten-Navigation → Editor-Bibliothek zeigt beide Projekte mit Vorschaubild",
+    "DM am Tisch: Eigene Bibliothek zeigt dieselben 256-px-Vorschauen; Schließen ohne Import",
+    "DM (Desktop): Journal → Datei für diese Sitzung hochladen → umbenennen → freigeben → wieder verbergen → löschen",
+    "Player (Firefox mobil, Englisch/Nacht): verborgenes Handout unsichtbar und 403 → nach Freigabe Vorschaubild, Vorschau, Download → Tokens-Schaltfläche; kein DM-Modul geladen",
+    "Owner im Player-Modus: keine Verwaltung, verborgene Datei 403, Umbenennen 403"
+  ],
+  "checks": {
+    "hub_import": {
+      "status": "pass",
+      "campaign_maps_named": 1,
+      "map_size": [
+        1024,
+        768
+      ],
+      "asset_mime": "image/png",
+      "asset_type": "map",
+      "asset_session_id": null,
+      "background_references_asset": true,
+      "game_sessions": 2,
+      "table_contexts": 0,
+      "source_project_revision": 1
+    },
+    "journal_first_open_status": {
+      "dm:open-session-dm": "",
+      "player:open-session": "",
+      "dm:open-session-player": ""
+    },
+    "asset_id": 87,
+    "player_preview_hidden": 403,
+    "owner_as_player_preview_hidden": 403,
+    "player_rename_denied": 403,
+    "owner_as_player_rename_denied": 403
+  },
+  "errors": [],
+  "resolved_live_findings": [
+    "Journal showed \"table context has changed\" on first open: a read raced the socket context renewal. Fixed in 28f2b3841 (re-read under a renewed context) and fc2b833dc (wait for a pending renewal after 403 table_context_required); the final run logged 403 then 200 within one second and no visible error for DM, Player or owner-as-Player.",
+    "Live script initially used a stale pages-widget helper (fails on baseline too); replaced by the B02 table dock tab."
+  ]
+}

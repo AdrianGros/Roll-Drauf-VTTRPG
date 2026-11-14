@@ -1,0 +1,204 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "S05",
+    "S12",
+    "S20"
+  ],
+  "source_commits": [
+    "1afea17f1e18ac15c57ea4afd201eb8948e296b3",
+    "28f2b38413395894688615cc1624ec4bcbecd7fa",
+    "fc2b833dc716642bfcbf4e459b9c3665c30d3895"
+  ],
+  "pushed": false,
+  "push_note": "Push of 1afea17f1..fc2b833dc pending: the session could not use the deploy SSH key; the owner pushes the branch.",
+  "image": "roll-drauf-vtt-app:feedback-b08-journal-renewal-20261111-fc2b833dc",
+  "image_id": "sha256:5a69f714270c6dff442821d83bc39dd62a99b9b8083672052f8104f8857ea2be",
+  "deployed_at": "2026-11-14T14:30:00.590925761Z",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "releases": [
+    {
+      "commit": "1afea17f1e18ac15c57ea4afd201eb8948e296b3",
+      "image": "roll-drauf-vtt-app:feedback-b08-library-journal-20261111-1afea17f1",
+      "image_id": "sha256:1320901f078d24eaf19767954225671ac733e582060c517f31b49b89f9e02aa3",
+      "overlay": [
+        "vtt/endpoints/assets.py",
+        "vtt/static/css/project-library.css",
+        "vtt/static/i18n/ui.de.json",
+        "vtt/static/i18n/ui.en.json",
+        "vtt/static/js/book-scene.js",
+        "vtt/static/js/campaign-map-library.js",
+        "vtt/static/js/play-dm.js",
+        "vtt/static/js/play-journal-dm.js",
+        "vtt/static/js/play-journal.js",
+        "vtt/static/js/play-map-library.js",
+        "vtt/static/js/play-ui.js",
+        "vtt/static/js/ui-catalog.js",
+        "vtt/static/mapmaker/index.html",
+        "vtt/static/mapmaker/js/library.js",
+        "vtt/static/mapmaker/js/snapshot.js",
+        "vtt/static/mapmaker/js/thumbnails.js",
+        "vtt/templates/campaigns.html",
+        "vtt/templates/play.html"
+      ],
+      "source_verification": {
+        "checked": 289,
+        "mismatches": []
+      },
+      "database_backup": {
+        "path": "/srv/migration/2026-11-11/feedback-b08-library-journal/1afea17f1/database-before.dump",
+        "bytes": 462487,
+        "archive_readable": true,
+        "restore_exercised": false
+      },
+      "schema": {
+        "status": "pass",
+        "tables": [],
+        "previously_present": [],
+        "columns_verified": true
+      },
+      "rollback": "/srv/migration/2026-11-11/feedback-b08-library-journal/1afea17f1/rollback.sh",
+      "prior_image": "roll-drauf-vtt-app:feedback-b08-library-journal-rollback-20261111-4ae7707913d4"
+    },
+    {
+      "commit": "28f2b38413395894688615cc1624ec4bcbecd7fa",
+      "image": "roll-drauf-vtt-app:feedback-b08-journal-context-20261111-28f2b3841",
+      "image_id": "sha256:34904eec190a0501b39046482f0002d072f50df96125d144ac5de610df1413d7",
+      "overlay": [
+        "vtt/static/js/play-journal.js"
+      ],
+      "source_verification": {
+        "checked": 287,
+        "mismatches": []
+      },
+      "database_backup": {
+        "path": "/srv/migration/2026-11-11/feedback-b08-journal-context/28f2b3841/database-before.dump",
+        "bytes": 465235,
+        "archive_readable": true,
+        "restore_exercised": false
+      },
+      "schema": {
+        "status": "pass",
+        "tables": [],
+        "previously_present": [],
+        "columns_verified": true
+      },
+      "rollback": "/srv/migration/2026-11-11/feedback-b08-journal-context/28f2b3841/rollback.sh",
+      "prior_image": "roll-drauf-vtt-app:feedback-b08-journal-context-rollback-20261111-1320901f078d"
+    },
+    {
+      "commit": "fc2b833dc716642bfcbf4e459b9c3665c30d3895",
+      "image": "roll-drauf-vtt-app:feedback-b08-journal-renewal-20261111-fc2b833dc",
+      "image_id": "sha256:5a69f714270c6dff442821d83bc39dd62a99b9b8083672052f8104f8857ea2be",
+      "overlay": [
+        "vtt/static/js/play-journal.js"
+      ],
+      "source_verification": {
+        "checked": 287,
+        "mismatches": []
+      },
+      "database_backup": {
+        "path": "/srv/migration/2026-11-11/feedback-b08-journal-renewal/fc2b833dc/database-before.dump",
+        "bytes": 466152,
+        "archive_readable": true,
+        "restore_exercised": false
+      },
+      "schema": {
+        "status": "pass",
+        "tables": [],
+        "previously_present": [],
+        "columns_verified": true
+      },
+      "rollback": "/srv/migration/2026-11-11/feedback-b08-journal-renewal/fc2b833dc/rollback.sh",
+      "prior_image": "roll-drauf-vtt-app:feedback-b08-journal-renewal-rollback-20261111-34904eec190a"
+    }
+  ],
+  "health": {
+    "now": "2026-11-14T14:30:08.482193",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-14T14:30:06.008057",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "Run the rollback scripts newest first: fc2b833dc → 28f2b3841 → 1afea17f1 restores B07 (roll-drauf-vtt-app:feedback-b07-vision-delivery-20261111-ea3fb25a6). No schema change.",
+  "rollback_executed": false,
+  "database_restore_exercised": false,
+  "targeted_checks": "checks.json",
+  "live": "live.json",
+  "cleanup": "cleanup.json",
+  "live_scripts": [
+    "create-fixture.py",
+    "live-hub.py",
+    "verify-hub.py",
+    "live-journal.py",
+    "recover-fixture-ids.py",
+    "cleanup-live-fixture.py"
+  ],
+  "screenshots": [
+    "hub-library.png",
+    "hub-imported.png",
+    "editor-library.png",
+    "table-library.png",
+    "journal-dm.png",
+    "journal-player-mobile.png"
+  ],
+  "roles": [
+    "DM (Chromium desktop)",
+    "Player (Firefox mobile, English/night)",
+    "Owner in Player mode"
+  ],
+  "user_journey": "Campaign hub → Karten → Eigene Bibliothek → thumbnail cards → preview → consent → map in hub; Maps navigation → editor library cards; table → Seiten → Hinzufügen → Eigene Bibliothek cards; table sidebar → Journal → upload/rename/reveal/hide/delete (DM), revealed files with thumbnail/preview/download (Player).",
+  "acceptance_checklist": [
+    {
+      "criterion": "Image cards with title in table Own Library, campaign hub import and editor library",
+      "status": "pass",
+      "evidence": "live.json, hub-library.png, editor-library.png, table-library.png"
+    },
+    {
+      "criterion": "Hub import creates one reusable campaign map without a session or table context; private source project unchanged",
+      "status": "pass",
+      "evidence": "live.json checks.hub_import"
+    },
+    {
+      "criterion": "Uncertain map response is reconciled without a second upload",
+      "status": "pass",
+      "evidence": "tests/test_feedback_b08_browser.py"
+    },
+    {
+      "criterion": "DM uploads a current-session handout, renames, reveals, hides and deletes it",
+      "status": "pass",
+      "evidence": "live.json, journal-dm.png"
+    },
+    {
+      "criterion": "Player sees only revealed files; thumbnail, preview and download use the table context; DM module never loaded",
+      "status": "pass",
+      "evidence": "live.json, journal-player-mobile.png"
+    },
+    {
+      "criterion": "Owner in Player mode cannot manage or read hidden handouts; Player and owner-as-Player rename is 403",
+      "status": "pass",
+      "evidence": "live.json checks"
+    },
+    {
+      "criterion": "Journal opens without an error for all roles despite the context renewal after entry",
+      "status": "pass",
+      "evidence": "live.json checks.journal_first_open_status"
+    },
+    {
+      "criterion": "No JavaScript/CSP errors; mobile width without horizontal scroll",
+      "status": "pass",
+      "evidence": "live.json"
+    }
+  ],
+  "residual": [
+    "Owner acceptance open",
+    "Branch push pending (see push_note)",
+    "Hub-imported map file is labelled mapmaker-snapshot.png in the Journal until renamed",
+    "Pre-existing failing tests listed in checks.json"
+  ]
+}

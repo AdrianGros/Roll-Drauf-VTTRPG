@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "scope": "only synthetic feedback_b08 users and owned campaign",
+  "removed": {
+    "token_states": 1,
+    "session_states": 1,
+    "play_table_contexts": 7,
+    "assets": 3,
+    "game_sessions": 2,
+    "characters": 1,
+    "campaign_members": 2,
+    "campaign_maps": 2,
+    "sessions": 16,
+    "mapmaker_projects": 2,
+    "campaigns": 1,
+    "audit_logs": 13,
+    "users": 2
+  },
+  "identity_storage_removed": 8,
+  "container_credentials_removed": true,
+  "host_credentials_removed": true,
+  "note": "The app container was recreated by the two follow-up releases, which removed the in-container reference file; it was rebuilt from the database with recover-fixture-ids.py (exact prefixes, suffix and owner checks) before cleanup. A follow-up count found 0 synthetic users, campaigns, assets and projects."
+}

@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "journeys": [
+    "DM am Tisch: Eigene Bibliothek zeigt dieselben 256-px-Vorschauen; Schließen ohne Import",
+    "DM (Desktop): Journal → Datei für diese Sitzung hochladen → umbenennen → freigeben → wieder verbergen → löschen",
+    "Player (Firefox mobil, Englisch/Nacht): verborgenes Handout unsichtbar und 403 → nach Freigabe Vorschaubild, Vorschau, Download → Tokens-Schaltfläche; kein DM-Modul geladen",
+    "Owner im Player-Modus: keine Verwaltung, verborgene Datei 403, Umbenennen 403"
+  ],
+  "checks": {
+    "journal_first_open_status": {
+      "dm:open-session-dm": "",
+      "player:open-session": "The file is unavailable or has not been shared with you.",
+      "dm:open-session-player": ""
+    },
+    "asset_id": 86,
+    "player_preview_hidden": 403,
+    "owner_as_player_preview_hidden": 403,
+    "player_rename_denied": 403,
+    "owner_as_player_rename_denied": 403
+  },
+  "errors": []
+}
