@@ -339,13 +339,17 @@
         const nav = document.getElementById('regelwerkBooks');
         if (!nav) return;
         clear(nav);
-        nav.hidden = books.length < 2;
+        nav.hidden = false;
         books.forEach((entry) => {
             const link = element('a', '', entry.status === 'preview' ? ui('{title} · Vorschau', { title: entry.title }) : entry.title);
             link.href = entry.readerUrl;
             if (entry.rulesetId === book.rulesetId) link.setAttribute('aria-current', 'page');
             nav.appendChild(link);
         });
+        // The official English SRD is offered as published; its label is the same in every UI language.
+        const english = element('a', '', 'English original (PDF)');
+        english.href = '/regelwerk/en';
+        nav.appendChild(english);
     }
 
     async function chooseBook() {

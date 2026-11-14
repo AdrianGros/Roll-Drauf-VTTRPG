@@ -184,6 +184,17 @@ def reader_license():
     return _reader_shell()
 
 
+@rules_bp.get("/regelwerk/en")
+def reader_english_original():
+    """The official English SRD 5.2.1 PDF, shown as published (CC BY 4.0)."""
+    if not _enabled():
+        abort(404)
+    response = send_from_directory(_TEMPLATES, "regelwerk-en.html")
+    response.cache_control.public = True
+    response.cache_control.max_age = 60
+    return response
+
+
 @rules_bp.get("/regelwerk/<route_key>")
 @rules_bp.get("/regelwerk/<route_key>/lizenz")
 def reader_book_home(route_key: str):

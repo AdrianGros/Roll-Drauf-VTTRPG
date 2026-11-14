@@ -87,3 +87,17 @@ def test_switching_the_book_off_removes_it_everywhere(app, client):
         assert client.get(f"/api/rulesets/{BOOK}/{path}").status_code == 404
     assert [book["rulesetId"] for book in client.get("/api/rulesets").get_json()["rulesets"]] == ["srd-5.2.1-de"]
     assert client.get("/regelwerk").status_code == 200
+
+
+def test_english_original_is_the_pinned_official_pdf_with_its_attribution(client):
+    import hashlib
+    page = client.get("/regelwerk/en")
+    assert page.status_code == 200
+    assert b'src="/static/regelwerk/SRD_CC_v5.2.1.pdf"' in page.data
+    assert "This work includes material from the System Reference Document 5.2.1".encode() in page.data
+    assert b"https://creativecommons.org/licenses/by/4.0/legalcode" in page.data
+    pdf = client.get("/static/regelwerk/SRD_CC_v5.2.1.pdf")
+    assert pdf.status_code == 200 and pdf.mimetype == "application/pdf"
+    assert hashlib.sha256(pdf.data).hexdigest() == "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87"
+    # Same-origin framing stays allowed, so the embedded viewer works.
+    assert pdf.headers.get("X-Frame-Options", "SAMEORIGIN") == "SAMEORIGIN"
