@@ -50,10 +50,16 @@ export class JournalAssets {
     setStatus(message,error=false) {this.status.textContent=message;this.status.classList.toggle('error',error);}
     async read(path, binary=false, retry=true, signal) {
         const context = window.VTTTableContext?.token;
+        // Table media always carries the active seat; never fall back to cookie-only authority.
+        if (!context) throw new Error(uiText('Der Tischkontext hat sich geändert. Bitte erneut laden.'));
         let response = await fetch(path,{credentials:'include',headers:Auth.buildHeaders('GET',false),cache:'no-store',signal});
         if (response.status===401 && retry && await Auth.refreshAccessToken?.()) return this.read(path,binary,false,signal);
+        if (context !== window.VTTTableContext?.token) {
+            // The seat's context was renewed mid-request (e.g. on socket resume): read once more under it.
+            if (retry && window.VTTTableContext?.token) return this.read(path,binary,false,signal);
+            throw new Error(uiText('Der Tischkontext hat sich geändert. Bitte erneut laden.'));
+        }
         if (!response.ok) throw new Error(uiText('Die Datei ist nicht verfügbar oder nicht freigegeben.'));
-        if (context !== window.VTTTableContext?.token) throw new Error(uiText('Der Tischkontext hat sich geändert. Bitte erneut laden.'));
         return binary ? response.blob() : response.json();
     }
     async refresh() {
