@@ -70,6 +70,26 @@ def test_journal_real_upload_sharing_media_and_independent_player(action_site,tm
         chrome.close();firefox.close()
 
 
+def test_journal_read_racing_a_context_renewal_recovers_without_error(action_site,tmp_path):
+    app,origin,info=action_site;setup_storage(app,info,tmp_path)
+    with sync_playwright() as p:
+        browser=p.chromium.launch(headless=True,args=['--no-sandbox']);ctx=browser.new_context(viewport={'width':1440,'height':1000},reduced_motion='reduce')
+        ctx.add_cookies([{'name':'access_token_cookie','value':info['player_auth'],'url':origin,'httpOnly':True}]);errors=[]
+        page=open_table(ctx,origin,info,'player',errors);statuses=[]
+        page.on('response',lambda r:statuses.append(r.status) if '/library?' in r.url else None)
+        page.wait_for_function('()=>!/Dateien werden geladen/.test(document.getElementById("journalAssetsStatus").textContent)')
+        # A list request leaves with the seat's old context just as the socket renews it.
+        page.evaluate('''async([c,s])=>{const stale=window.VTTTableContext;const fresh=await Auth.resumeTableContext(c,s);
+            window.VTTTableContext=stale;document.getElementById('journalAssetsRefresh').click();
+            setTimeout(()=>{window.VTTTableContext=fresh;},400);}''',[info['campaign'],info['session']])
+        page.wait_for_function('()=>!/Dateien werden geladen/.test(document.getElementById("journalAssetsStatus").textContent)')
+        page.wait_for_timeout(500)
+        assert 403 in statuses and statuses[-1]==200,statuses
+        assert not page.locator('#journalAssetsStatus.error').count(),page.locator('#journalAssetsStatus').text_content()
+        assert not errors,errors
+        ctx.close();browser.close()
+
+
 def test_hub_thumbnail_import_unknown_map_response_and_editor_cards(action_site,tmp_path):
     app,origin,info=action_site;owner_id=setup_storage(app,info,tmp_path)
     client=app.test_client();client.set_cookie('access_token_cookie',info['dm_auth'])

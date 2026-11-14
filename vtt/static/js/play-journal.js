@@ -9,6 +9,15 @@ export function node(tag, props = {}, ...children) {
     }
     result.append(...children);return result;
 }
+// A seat renews its context on socket (re)connect. A request sent just before
+// that renewal is refused with table_context_required; wait briefly for the new one.
+async function renewed(previous, signal, timeout=3000) {
+    for (const end=Date.now()+timeout; Date.now()<end && !signal?.aborted;) {
+        if (window.VTTTableContext?.token && window.VTTTableContext.token!==previous) return true;
+        await new Promise(resolve=>setTimeout(resolve,100));
+    }
+    return false;
+}
 function options(select, entries) {
     for (const [value,label] of entries) select.append(node('option',{value,text:uiText(label)}));
 }
@@ -54,6 +63,9 @@ export class JournalAssets {
         if (!context) throw new Error(uiText('Der Tischkontext hat sich geändert. Bitte erneut laden.'));
         let response = await fetch(path,{credentials:'include',headers:Auth.buildHeaders('GET',false),cache:'no-store',signal});
         if (response.status===401 && retry && await Auth.refreshAccessToken?.()) return this.read(path,binary,false,signal);
+        if (response.status===403 && retry && context===window.VTTTableContext?.token
+            && (await response.clone().json().catch(()=>({}))).error==='table_context_required'
+            && await renewed(context,signal)) return this.read(path,binary,false,signal);
         if (context !== window.VTTTableContext?.token) {
             // The seat's context was renewed mid-request (e.g. on socket resume): read once more under it.
             if (retry && window.VTTTableContext?.token) return this.read(path,binary,false,signal);
