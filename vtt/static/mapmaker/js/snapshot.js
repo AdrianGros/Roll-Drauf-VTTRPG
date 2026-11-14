@@ -80,20 +80,60 @@ export async function renderPngBlob({ doc, palette, renderer, scale = 1, maxPixe
  * Validate + materialize a stored project document and render it at 1:1.
  * Returns an immutable selection bound to project id and saved revision.
  */
-export async function snapshotFromProject({ project, document, palette, isCurrent = () => true }) {
+const snapshotQueue = [];
+let snapshotRunning = false;
+function enqueue(task, priority = false) {
+    return new Promise((resolve, reject) => {
+        snapshotQueue[priority ? 'unshift' : 'push']({ task, resolve, reject });
+        drainSnapshots();
+    });
+}
+async function drainSnapshots() {
+    if (snapshotRunning) return;
+    snapshotRunning = true;
+    while (snapshotQueue.length) {
+        const { task, resolve, reject } = snapshotQueue.shift();
+        try { resolve(await task()); } catch (error) { reject(error); }
+    }
+    snapshotRunning = false;
+}
+
+export function snapshotFromProject(options) {
+    return enqueue(() => renderStoredProject(options), true);
+}
+
+// Loading is queued too: offscreen/obsolete rows never fetch large project JSON.
+export function thumbnailFromProject({ loadProject, palette, isCurrent }) {
+    return enqueue(async () => {
+        if (!isCurrent()) return null;
+        const data = await loadProject();
+        if (!isCurrent()) return null;
+        return renderStoredProject({ ...data, palette: await palette(), isCurrent, maxSide: 256 });
+    });
+}
+
+async function renderStoredProject({ project, document, palette, isCurrent = () => true, maxSide = null }) {
     await loadSnapshotFonts();
+    if (!isCurrent()) return null;
     const validated = validateDocument(document, { knownAssets: palette.stamps });
     await palette.ensureDocumentImages(validated);
     const doc = await materialize(validated);
-    if (!isCurrent()) throw new Error(globalThis.VTTUi("Die Auswahl hat sich geändert. Bitte die Vorschau erneut öffnen."));
     const renderer = new Renderer(palette);
-    renderer.setDocument(doc);
-    const { blob, credits } = await renderPngBlob({
-        doc, palette, renderer, scale: 1, isStale: () => !isCurrent(),
-        staleMessage: globalThis.VTTUi("Die Auswahl hat sich geändert. Bitte die Vorschau erneut öffnen."),
-    });
-    return Object.freeze({
-        projectId: project.id, revision: project.revision, title: doc.meta.title,
-        width: doc.size.w, height: doc.size.h, blob, credits: creditSummary(credits),
-    });
+    try {
+        if (!isCurrent()) throw new Error(globalThis.VTTUi("Die Auswahl hat sich geändert. Bitte die Vorschau erneut öffnen."));
+        renderer.setDocument(doc);
+        const scale = maxSide ? Math.min(1, maxSide / Math.max(doc.size.w, doc.size.h)) : 1;
+        const { blob, credits } = await renderPngBlob({
+            doc, palette, renderer, scale, isStale: () => !isCurrent(),
+            staleMessage: globalThis.VTTUi("Die Auswahl hat sich geändert. Bitte die Vorschau erneut öffnen."),
+        });
+        return Object.freeze({
+            projectId: project.id, revision: project.revision, title: doc.meta.title,
+            width: doc.size.w, height: doc.size.h, blob, credits: creditSummary(credits),
+        });
+    } finally {
+        for (const canvas of [renderer.composite, renderer.sea, renderer.paper, ...doc.layers.map(l => l.canvas)]) {
+            if (canvas) { canvas.width = 0; canvas.height = 0; }
+        }
+    }
 }

@@ -17,6 +17,10 @@ window.PlayDMSurface = {
         for (const name of Object.keys(this.methods)) ui[name] = this.methods[name].bind(ui);
     },
     methods: {
+async _bindJournalManagement(journal) {
+            const { mount } = await import('/static/js/play-journal-dm.js');
+            mount(journal);
+        },
 _refreshMapScale() {
             const map=this.bootstrap?.state_payload?.active_map;
             const input=document.getElementById('mapScaleMeters');if(!input)return;

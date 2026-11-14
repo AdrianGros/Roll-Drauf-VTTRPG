@@ -3,7 +3,7 @@
 import io
 import logging
 import uuid
-from flask import Blueprint, request, jsonify, send_file, current_app
+from flask import Blueprint, request, jsonify, send_file, current_app, g
 from flask_jwt_extended import jwt_required
 from sqlalchemy import or_
 from vtt.extensions import db
@@ -30,6 +30,9 @@ def _can_access_library(campaign, user):
     """Return True when the user is an active campaign member or owner."""
     if not campaign or not user:
         return False
+    context = getattr(g, 'table_context', None)
+    if context and context.campaign_id != campaign.id:
+        return False
 
     if campaign.owner_id == user.id:
         return True
@@ -39,6 +42,12 @@ def _can_access_library(campaign, user):
         user_id=user.id,
         status='active',
     ).first() is not None
+
+
+def _asset_context_matches(asset):
+    context = getattr(g, 'table_context', None)
+    return not context or (context.campaign_id == asset.campaign_id and
+                           (asset.session_id is None or context.game_session_id == asset.session_id))
 
 
 def _handout_visible_to(asset, campaign, user) -> bool:
@@ -52,6 +61,8 @@ def _handout_visible_to(asset, campaign, user) -> bool:
     non-editor once its DM/CO-DM flips it public. Every other asset_type
     (map/token/image) is unaffected -- those were never reported as
     secret and this only tightens handout reads."""
+    if not _asset_context_matches(asset):
+        return False
     if asset.asset_type != 'handout':
         return True
     if asset.is_public:
@@ -98,7 +109,7 @@ def get_campaign_asset_library(campaign_id):
         return jsonify({'error': 'Unsupported asset type'}), 400
 
     scope = (request.args.get('scope') or 'all').strip().lower()
-    if scope not in {'all', 'campaign', 'session'}:
+    if scope not in {'all', 'campaign', 'session', 'current'}:
         return jsonify({'error': 'Unsupported scope'}), 400
 
     raw_session_id = request.args.get('session_id')
@@ -108,6 +119,13 @@ def get_campaign_asset_library(campaign_id):
             session_id = int(raw_session_id)
         except (TypeError, ValueError):
             return jsonify({'error': 'session_id must be a number'}), 400
+
+    context = getattr(g, 'table_context', None)
+    if context and session_id is not None and session_id != context.game_session_id:
+        return jsonify({'error': 'Invalid session context'}), 403
+    if scope == 'current':
+        if session_id is None or not GameSession.query.filter_by(id=session_id, campaign_id=campaign_id).first():
+            return jsonify({'error': 'Invalid session'}), 400
 
     search = (request.args.get('query') or '').strip() or None
     page = request.args.get('page', 1)
@@ -121,11 +139,14 @@ def get_campaign_asset_library(campaign_id):
     base_query = Asset.get_library_assets(
         campaign_id,
         asset_type=asset_type,
-        scope=scope,
-        session_id=session_id,
+        scope='all' if scope == 'current' else scope,
+        session_id=None if scope == 'current' else session_id,
         search=search,
         include_deleted=False,
     )
+    if scope == 'current' or context:
+        current_session_id = context.game_session_id if context else session_id
+        base_query = base_query.filter(or_(Asset.session_id.is_(None), Asset.session_id == current_session_id))
     # Fixed 2026-09-02: query-level filter (not a post-fetch filter) so
     # page/per_page/total/has_more stay correct -- see _handout_visible_to.
     if not can_edit_campaign(current_user, campaign):
@@ -137,6 +158,8 @@ def get_campaign_asset_library(campaign_id):
 
     # Session roster for upload targets and context.
     sessions = GameSession.query.filter_by(campaign_id=campaign_id).order_by(GameSession.created_at.desc()).all()
+    if context:
+        sessions = [s for s in sessions if s.id == context.game_session_id]
 
     stats = Asset.get_library_stats(campaign_id, include_deleted=False)
     stats.update({
@@ -195,7 +218,6 @@ def preview_asset(asset_id):
         as_attachment=False,
         download_name=asset.filename,
     )
-    response.headers['Content-Disposition'] = f'inline; filename="{asset.filename}"'
     return response
 
 
@@ -229,7 +251,6 @@ def get_asset_thumbnail(asset_id):
             as_attachment=False,
             download_name=asset.filename,
         )
-        response.headers['Content-Disposition'] = f'inline; filename="{asset.filename}"'
         return response
 
     # No thumbnail available - fall back to the full preview.
@@ -247,7 +268,6 @@ def get_asset_thumbnail(asset_id):
         as_attachment=False,
         download_name=asset.filename,
     )
-    response.headers['Content-Disposition'] = f'inline; filename="{asset.filename}"'
     return response
 
 
@@ -320,6 +340,20 @@ def upload_asset(campaign_id):
     if asset_type != 'token' and not can_edit_campaign(current_user, campaign):
         return jsonify({'error': 'Forbidden'}), 403
 
+    target_session = None
+    raw_session = request.form.get('session_id')
+    if raw_session:
+        if not can_edit_campaign(current_user, campaign):
+            return jsonify({'error': 'Forbidden'}), 403
+        try:
+            session_id = int(raw_session)
+        except (TypeError, ValueError):
+            return jsonify({'error': 'Invalid session'}), 400
+        target_session = GameSession.query.filter_by(id=session_id, campaign_id=campaign_id).first()
+        context = getattr(g, 'table_context', None)
+        if not target_session or context and context.game_session_id != session_id:
+            return jsonify({'error': 'Invalid session context'}), 403
+
     # M20: Validate upload
     try:
         validation = validate_upload(file_obj, current_user)
@@ -354,6 +388,13 @@ def upload_asset(campaign_id):
     file_key = f'campaigns/{campaign_id}/assets/{validation["checksum_md5"][:8]}-{upload_id}-{validation["filename"]}'
 
     try:
+        if target_session is not None:
+            # Quota reservation committed above. Hold the session row until the
+            # asset commit so concurrent Journal uploads respect its file bound.
+            db.session.execute(db.select(GameSession).where(GameSession.id == target_session.id).with_for_update()).scalar_one()
+            if Asset.query.filter_by(session_id=target_session.id).count() >= 100:
+                release_storage(current_user, validation['size_bytes'])
+                return jsonify({'error': 'Maximum 100 assets per session'}), 400
         storage.upload(file_key, validation['content'])
     except Exception as e:
         release_storage(current_user, validation['size_bytes'])
@@ -380,6 +421,7 @@ def upload_asset(campaign_id):
     # M19: Create asset record
     asset = Asset(
         campaign_id=campaign_id,
+        session_id=target_session.id if target_session else None,
         uploaded_by=current_user.id,
         filename=validation['filename'],
         mime_type=validation['mime_type'],
@@ -388,7 +430,7 @@ def upload_asset(campaign_id):
         storage_key=file_key,
         storage_provider=current_app.config.get('STORAGE_PROVIDER', 'local'),
         asset_type=asset_type,
-        scope='campaign',
+        scope='session' if target_session else 'campaign',
         is_public=request.form.get('is_public', 'false').lower() == 'true',
         thumbnail_key=thumbnail_key,
     )
@@ -490,14 +532,14 @@ def get_asset_versions(asset_id):
     if not asset or asset.is_soft_deleted():
         return jsonify({'error': 'Asset not found'}), 404
 
-    if not can_view_campaign(current_user, asset.campaign):
+    if not _can_access_library(asset.campaign, current_user) or not _handout_visible_to(asset, asset.campaign, current_user):
         return jsonify({'error': 'Forbidden'}), 403
 
     versions = asset.get_version_history()
     return jsonify({
         'asset_id': asset_id,
         'current_version': asset.asset_version,
-        'versions': [v.serialize() for v in versions],
+        'versions': [v.serialize() for v in versions if _can_access_library(v.campaign, current_user) and _handout_visible_to(v, v.campaign, current_user)],
     }), 200
 
 
@@ -517,7 +559,7 @@ def rollback_asset(asset_id, version_number):
     asset = Asset.query.get(asset_id)
     if not asset:
         return jsonify({'error': 'Asset not found'}), 404
-    if not can_edit_campaign(current_user, asset.campaign):
+    if not _asset_context_matches(asset) or not can_edit_campaign(current_user, asset.campaign):
         return jsonify({'error': 'Forbidden'}), 403
 
     versions = asset.get_version_history()
@@ -583,7 +625,7 @@ def set_asset_visibility(asset_id):
         return jsonify({'error': 'Asset not found'}), 404
 
     campaign = asset.campaign
-    if not can_edit_campaign(current_user, campaign):
+    if not _asset_context_matches(asset) or not can_edit_campaign(current_user, campaign):
         return jsonify({'error': 'Forbidden'}), 403
 
     data = request.get_json(silent=True) or {}
@@ -606,6 +648,24 @@ def set_asset_visibility(asset_id):
 
 # ===== M19: Delete (soft) =====
 
+@assets_bp.route('/<int:asset_id>/metadata', methods=['PATCH'])
+@jwt_required()
+def rename_asset(asset_id):
+    asset = db.session.get(Asset, asset_id)
+    if not asset or asset.is_soft_deleted():
+        return jsonify({'error': 'Asset not found'}), 404
+    if not _asset_context_matches(asset) or not can_edit_campaign(current_user, asset.campaign):
+        return jsonify({'error': 'Forbidden'}), 403
+    body = request.get_json(silent=True)
+    name = body.get('filename') if isinstance(body, dict) and set(body) == {'filename'} else None
+    if not isinstance(name, str) or not 1 <= len(name.strip()) <= 255 or any(ord(c) < 32 or ord(c) == 127 or c in '/\\"' for c in name):
+        return jsonify({'error': 'Invalid filename label'}), 400
+    asset.filename = name.strip()
+    db.session.commit()
+    log_audit(action='asset_renamed', resource_type='asset', resource_id=asset.id,
+              details={'filename': asset.filename}, performed_by=current_user)
+    return jsonify({'asset': asset.serialize()}), 200
+
 @assets_bp.route('/<int:asset_id>/delete', methods=['DELETE'])
 @jwt_required()
 def delete_asset(asset_id):
@@ -619,7 +679,7 @@ def delete_asset(asset_id):
     asset = Asset.query.get(asset_id)
     if not asset or asset.is_soft_deleted():
         return jsonify({'error': 'Asset not found'}), 404
-    if not can_edit_campaign(current_user, asset.campaign):
+    if not _asset_context_matches(asset) or not can_edit_campaign(current_user, asset.campaign):
         return jsonify({'error': 'Forbidden'}), 403
 
     asset.deleted_at = db.func.current_timestamp()

@@ -3,6 +3,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 // Personal project library. JWT/CSRF and ownership are enforced by the server.
 import { LIMITS, materialize, serialize, validateDocument } from "./document.js";
 import { DraftStore } from "./storage.js";
+import { ProjectThumbnails } from './thumbnails.js';
 
 const $ = (id) => document.getElementById(id);
 const API = "/api/assets/mapmaker/projects";
@@ -31,6 +32,7 @@ export class Library {
         this.page = 1;
         this.listSequence = 0;
         this.authPresent = false;
+        this.thumbnails = new ProjectThumbnails({ request: id => this.request('/' + id), palette: async () => this.ed.palette });
     }
 
     bind() {
@@ -151,6 +153,8 @@ export class Library {
 
     render(data) {
         const list = $("libraryList");
+        const sequence = this.listSequence;
+        this.thumbnails.reset(this.accountId);
         list.replaceChildren();
         for (const project of data.projects) {
             const row = node("li", undefined, "mm-library-card");
@@ -169,7 +173,7 @@ export class Library {
             remove.setAttribute("aria-label", `Karte „${project.title}“ löschen`);
             row.dataset.projectId = project.id;
             actions.append(open, remove);
-            row.append(content, actions);
+            row.append(this.thumbnails.card(project, () => sequence === this.listSequence && $('newDialog').open), content, actions);
             list.appendChild(row);
         }
         $("libraryPrev").disabled = data.page <= 1;

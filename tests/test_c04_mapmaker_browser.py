@@ -58,9 +58,12 @@ def read(path):
 def test_player_composition_never_references_the_dm_library_controller():
     for path in ("vtt/templates/play.html", "vtt/static/js/play-player.js"):
         assert "play-map-library" not in read(path)
-    # The controller is requested only from the DM-only composition module.
-    importers = [p.name for p in (STATIC / "js").glob("*.js") if "play-map-library.js" in p.read_text(encoding="utf-8")]
-    assert importers == ["play-dm.js"]
+    # The controller is requested only from the DM-only table composition and the
+    # campaign hub's DM management entry, which loads its module on demand.
+    importers = sorted(p.name for p in (STATIC / "js").glob("*.js") if "play-map-library.js" in p.read_text(encoding="utf-8"))
+    assert importers == ["campaign-map-library.js", "play-dm.js"]
+    for path in ("vtt/templates/play.html", "vtt/static/js/play-player.js", "vtt/static/js/play-ui.js"):
+        assert "campaign-map-library" not in read(path)
     assert "layerAddLibrary" in read("vtt/play/surfaces/dm.json")
     assert "layerAddLibrary" not in read("vtt/templates/play.html")
 

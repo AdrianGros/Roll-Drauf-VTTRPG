@@ -961,6 +961,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             session.remove();
             document.querySelector('.right-sidebar [data-tab="session"]')?.remove();
             document.getElementById('appMenuDisplay').textContent = globalThis.VTTUi('Einstellungen');
+            import('/static/js/play-journal.js').then(({ mount }) => mount(this))
+                .catch(error => this._showMessage(error.message || globalThis.VTTUi('Dateien konnten nicht geladen werden.'), true));
             const back = document.getElementById('btnBack');
             back.querySelector('.tool-label').textContent = globalThis.VTTUi('App-Menü');
             const chatToggle = document.getElementById('btnChatToggle');

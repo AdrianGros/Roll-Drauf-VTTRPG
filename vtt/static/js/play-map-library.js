@@ -3,6 +3,7 @@ globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(sourc
 // composition never imports this file. No Editor instance, iframe or hidden draw handler:
 // the preview is the shared pure snapshot helper over the saved project.
 import { loadSnapshotPalette, snapshotFromProject } from "/static/mapmaker/js/snapshot.js";
+import { ProjectThumbnails } from '/static/mapmaker/js/thumbnails.js';
 
 const LIBRARY = "/api/assets/mapmaker/projects";
 
@@ -23,8 +24,10 @@ function requestId() {
 }
 
 export class MapLibraryController {
-    constructor(ui) {
+    constructor(ui, { target = 'table', onImported = null } = {}) {
         this.ui = ui;
+        this.target = target;
+        this.onImported = onImported;
         this.page = 1;
         this.listSequence = 0;
         this.selectSequence = 0;
@@ -33,6 +36,7 @@ export class MapLibraryController {
         this.busy = false;
         this.palette = null;
         this.previewUrl = null;
+        this.thumbnails = new ProjectThumbnails({ request: id => this.libraryRequest('/' + id) });
         this.build();
     }
 
@@ -48,12 +52,12 @@ export class MapLibraryController {
         this.preview = el("img", { id: "mapLibraryPreview", alt: "", hidden: true });
         this.previewInfo = el("p", { id: "mapLibraryPreviewInfo", className: "muted" });
         this.nameInput = el("input", { id: "mapLibraryName", type: "text", maxLength: 120, disabled: true });
-        this.nameInput.setAttribute("aria-label", globalThis.VTTUi("Titel der Tischkarte"));
+        this.nameInput.setAttribute("aria-label", globalThis.VTTUi(this.target === 'campaign' ? 'Titel der Kampagnenkarte' : 'Titel der Tischkarte'));
         this.gridInput = el("input", { id: "mapLibraryGrid", type: "number", min: 16, max: 300, step: 1, value: 70, disabled: true });
         this.gridInput.setAttribute("aria-label", globalThis.VTTUi("Raster in Pixel"));
         this.consent = el("input", { id: "mapLibraryConsent", type: "checkbox", disabled: true });
         this.confirm = el("button", { id: "mapLibraryConfirm", type: "button", className: "mini-btn",
-            text: globalThis.VTTUi("Zum Tisch hinzufügen"), disabled: true });
+            text: globalThis.VTTUi(this.target === 'campaign' ? 'Zur Kampagne hinzufügen' : "Zum Tisch hinzufügen"), disabled: true });
         this.status = el("p", { id: "mapLibraryStatus", className: "muted" });
         this.status.setAttribute("role", "status");
         const close = el("button", { id: "mapLibraryClose", type: "button", className: "mini-btn secondary", text: globalThis.VTTUi("Schließen") });
@@ -64,7 +68,9 @@ export class MapLibraryController {
             this.preview, this.previewInfo,
             el("label", {}, el("span", { text: globalThis.VTTUi("Titel") }), this.nameInput),
             el("label", {}, el("span", { text: globalThis.VTTUi("Raster") }), this.gridInput),
-            el("label", {}, this.consent, el("span", { text: globalThis.VTTUi("Ich bestätige: Dieses Bild wird für alle am Tisch sichtbar. Das private Projekt wird nicht geteilt.") })),
+            el("label", {}, this.consent, el("span", { text: globalThis.VTTUi(this.target === 'campaign'
+                ? 'Ich bestätige: Dieses Bild wird in der Kampagne sichtbar. Das private Projekt wird nicht geteilt.'
+                : "Ich bestätige: Dieses Bild wird für alle am Tisch sichtbar. Das private Projekt wird nicht geteilt.") })),
             el("div", { className: "button-row" }, this.confirm, close), this.status);
         document.body.append(this.dialog);
         close.onclick = () => this.close();
@@ -99,6 +105,7 @@ export class MapLibraryController {
     async libraryRequest(path) {
         const call = async () => {
             const headers = window.Auth.buildHeaders("GET", false);
+            if (this.accountId != null) headers['X-Mapmaker-Account'] = String(this.accountId);
             // The private library is account-owned, never table-scoped.
             delete headers["X-VTT-Context"];
             delete headers["X-VTT-Tab"];
@@ -118,9 +125,12 @@ export class MapLibraryController {
             const query = new URLSearchParams({ page: String(this.page), q: this.search.value });
             const data = await this.libraryRequest(`?${query}`);
             if (sequence !== this.listSequence) return;
+            this.accountId = data.storage.accountId;
+            this.thumbnails.reset(this.accountId);
             this.list.replaceChildren();
             for (const project of data.projects) {
-                const choose = el("button", { type: "button", className: "mini-btn secondary", text: project.title });
+                const choose = el("button", { type: "button", className: "mini-btn secondary project-choice" });
+                choose.append(this.thumbnails.card(project, () => sequence === this.listSequence && this.dialog.open), el('span', { className: 'project-title', text: project.title }));
                 choose.dataset.projectId = project.id;
                 choose.setAttribute("aria-label", globalThis.VTTUi("Vorschau von „{p0}“", { p0: project.title }));
                 choose.onclick = () => this.select(project);
@@ -187,7 +197,7 @@ export class MapLibraryController {
 
     syncConfirm() {
         const grid = Number(this.gridInput.value);
-        this.confirm.disabled = this.busy || !this.selection || !this.consent.checked
+        this.confirm.disabled = this.busy || this.pending?.uploadUncertain || !this.selection || !this.consent.checked
             || !this.nameInput.value.trim() || !(grid >= 16 && grid <= 300);
     }
 
@@ -213,6 +223,7 @@ export class MapLibraryController {
 
     /** Two explicit stages. Stage 2 may be retried without a second upload. */
     async submit() {
+        if (this.target === 'campaign') return this.submitCampaign();
         if (this.busy || !this.selection || this.confirm.disabled) return;
         const ui = this.ui;
         // Freeze what the user confirmed; later edits to the inputs cannot change a started attempt.
@@ -254,6 +265,47 @@ export class MapLibraryController {
                 ? globalThis.VTTUi("Die Karte wurde angelegt, aber noch nicht aktiviert. „Zum Tisch hinzufügen“ wiederholt nur diesen Schritt.")
                 : error.message, true);
             if (created) this.status.dataset.createdMapId = String(created);
+            this.syncConfirm();
+        }
+    }
+
+    async submitCampaign() {
+        if (this.busy || !this.selection || this.confirm.disabled) return;
+        const selection = this.selection;
+        this.pending ||= { name: this.nameInput.value.trim().slice(0,120), gridSize: Math.round(Number(this.gridInput.value)), assetId: null, mapId: null };
+        const pending = this.pending;
+        this.busy = true;this.syncConfirm();
+        try {
+            if (!pending.assetId) {
+                const current = await this.libraryRequest('/' + selection.projectId);
+                if (current.project.revision !== selection.revision) throw new Error(globalThis.VTTUi('Diese Karte wurde inzwischen geändert. Bitte die Vorschau neu laden.'));
+                const form = new FormData();form.append('file',selection.blob,'mapmaker-snapshot.png');form.append('asset_type','map');
+                this.setStatus(globalThis.VTTUi('Karte wird übernommen …'));
+                pending.uploadUncertain = true;
+                const response = await fetch(`/api/assets/campaigns/${this.ui.campaignId}/upload`, { method:'POST',credentials:'include',headers:Auth.buildHeaders('POST',false),body:form });
+                const body = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    if (response.status < 500) pending.uploadUncertain = false;
+                    throw new Error(body.error || globalThis.VTTUi('Die Karte konnte nicht übernommen werden.'));
+                }
+                if (!body.asset_id) throw new Error(globalThis.VTTUi('Die Übernahme konnte nicht bestätigt werden. Prüfe die Materialbibliothek, bevor du erneut übernimmst.'));
+                pending.assetId = body.asset_id;pending.uploadUncertain = false;
+            }
+            const url = `/api/assets/${pending.assetId}/preview`;
+            const list = await this.ui.auth.makeAuthRequest(`/api/campaigns/${this.ui.campaignId}/maps`);
+            pending.mapId = (list.maps || []).find(map => map.background_url === url)?.id;
+            if (!pending.mapId) {
+                const map = await this.ui.auth.makeAuthRequest(`/api/campaigns/${this.ui.campaignId}/maps`,'POST',{
+                    name:pending.name,width:selection.width,height:selection.height,grid_size:pending.gridSize,background_url:url,
+                    description:`${selection.title} · ${globalThis.VTTUi('Revision {p0}',{p0:selection.revision})}\n${selection.credits}` });
+                pending.mapId = map.id;
+            }
+            this.busy = false;this.dropSelection();this.dialog.close();await this.onImported?.(pending.mapId);
+        } catch (error) {
+            this.busy = false;
+            this.setStatus(pending.uploadUncertain
+                ? globalThis.VTTUi('Die Übernahme konnte nicht bestätigt werden. Prüfe die Materialbibliothek, bevor du erneut übernimmst.')
+                : error.message,true);
             this.syncConfirm();
         }
     }

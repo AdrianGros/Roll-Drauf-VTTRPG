@@ -1330,6 +1330,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         }]) : ''}
                     </section>
                     <section class="book-scene-panel" data-campaign-planner data-testid="campaign-planner"></section>
+                    <section class="book-scene-panel" id="campaignHubMaps">
+                        <h2 class="book-scene-panel-title">${globalThis.VTTUiHTML('Karten')}</h2>
+                        ${canManage ? `<div class="book-scene-action-row book-scene-action-row--inline">
+                            <button type="button" class="btn btn-secondary book-scene-action-btn" data-campaign-map-library data-hub-action="map-library">${globalThis.VTTUiHTML('Eigene Bibliothek')}</button>
+                        </div>` : ''}
+                        ${maps.length ? maps.map(map => `<div class="book-scene-ledger-item"><strong>${escapeHtml(map.name)}</strong><div class="book-scene-ledger-meta">${Number(map.width)} × ${Number(map.height)}</div></div>`).join('') : `<p>${globalThis.VTTUiHTML('Noch keine Karte angelegt.')}</p>`}
+                    </section>
                 `,
             });
         },
@@ -1501,6 +1508,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!root) {
                 return;
             }
+            root.querySelectorAll('[data-hub-action="map-library"]').forEach(button => {
+                button.addEventListener('click', async () => {
+                    try { const library = await import('/static/js/campaign-map-library.js');await library.open(campaignId); }
+                    catch(error) { this.setCampaignHubStatus(error.message || globalThis.VTTUi('Die Kartenbibliothek ist momentan nicht erreichbar. Bitte erneut versuchen.'),true); }
+                });
+            });
             root.querySelectorAll('[data-hub-action="leave-campaign"], [data-hub-action="kick-player"]').forEach((button) => {
                 button.addEventListener('click', () => this.changeCampaignMembership(campaignId, button));
             });
