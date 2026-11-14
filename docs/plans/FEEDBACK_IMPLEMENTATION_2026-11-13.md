@@ -16,7 +16,7 @@ Fortschritt und Lieferbelege werden hier sowie in den jeweiligen Paketbelegen ge
 | B06 | N08, N09, N10, N11, N18, S18 | Pinselspitzen und Materialwahl, eigener Radierer, Bildpinsel, nachvollziehbarer Entwurfs-/Anmeldestatus | [N08–N10/N18/S18 live geliefert](../proofs/feedback-b06b-2026-11-13/delivery.json); N11 ausdrücklich vom Owner zurückgestellt |
 | B07 | S06, S07, S08 | Licht/Wände im berechtigten Kontext prüfen, bestätigte Fehler beheben, Messformen | [Live geliefert](../proofs/feedback-b07-2026-11-13/delivery.json); PostgreSQL-/Ereignisfehler behoben; Owner-Abnahme offen |
 | B08 | S05, S12, S20 | Bibliotheksvorschauen, Journal-Dateizugang, Kartenübernahme im Kampagnenhub | [Live geliefert](../proofs/feedback-b08-2026-11-14/delivery.json); Owner-Abnahme offen |
-| B09 | S03 | Englisches Original-SRD mit stabiler Zuordnung zur bestehenden Mechanik und Sprachwahl | geplant |
+| B09 | S03 | Offizielles englisches SRD 5.2.1 als eingebettete PDF unter `/regelwerk/en` (Owner-Entscheidung 14.11.: keine Neuerfassung) | [Live geliefert](../proofs/feedback-b09-2026-11-14/delivery.json); Owner-Abnahme offen |
 | B10 | S15 | Vorhandenen berechtigten Weg zur Kontingenterweiterung prüfen und erreichbar machen; keine automatische Kontingentänderung | geplant; Produktgrenze vor Deploy festhalten |
 | B11 | alle | Kombinierter Live-Durchlauf und Owner-Testcheckliste | ausstehend |
 
@@ -58,7 +58,7 @@ B05 ist committed, gepusht und auf dem Live-VTT über den normalen Karten-Einsti
 für DM und Player geprüft; die synthetischen Testdaten sind entfernt.
 B08 ist nach dem Codex-Nutzungslimit (14.11., 00:40) fertiggestellt, live geprüft und
 [belegt](../proofs/feedback-b08-2026-11-14/delivery.json); der Branch-Push steht noch aus.
-Nächster Schritt: B09; B09–B11 und N07 bleiben offen. N07 ist durch die Owner-Antwort als Freigabe
+B09 ist als PDF-Einbindung live. Nächster Schritt: B10; B10, B11 und N07 bleiben offen. N07 ist durch die Owner-Antwort als Freigabe
 konkreter veröffentlichter Homebrew-Optionen je Kampagne eingegrenzt. N11 bleibt
 bis zur Identifikation des ursprünglichen Reglers zurückgestellt.
 Der gesamte Feedbackauftrag ist noch nicht abgeschlossen.

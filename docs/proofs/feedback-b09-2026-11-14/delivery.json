@@ -1,0 +1,67 @@
+{
+  "status": "delivered_for_owner_acceptance",
+  "retention": "permanent",
+  "cards": [
+    "S03"
+  ],
+  "owner_decision": "2026-11-14: do not re-transcribe the English SRD; embed the official PDF.",
+  "source_commit": "bc3855006ebc6c7ceaa122f0b737b5935eec3e87",
+  "pushed": false,
+  "push_note": "Branch push pending with the B08 commits; the owner pushes.",
+  "image": "roll-drauf-vtt-app:feedback-b09-english-pdf-20261111-bc3855006",
+  "image_id": "sha256:cea32c962ba9f4bd4671d63f71fb8f836fb7d1db704d82750ed916e432f26549",
+  "deployed_at": "2026-11-14T18:58:41.160175833Z",
+  "health": {
+    "now": "2026-11-14T18:58:46.770437",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-14T18:58:44.899501",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "overlay": [
+    "vtt/rules.py",
+    "vtt/static/css/regelwerk.css",
+    "vtt/static/js/regelwerk-reader.js",
+    "vtt/static/regelwerk/SRD_CC_v5.2.1.pdf",
+    "vtt/templates/regelwerk-en.html"
+  ],
+  "source_verification": {
+    "checked": 289,
+    "mismatches": []
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-b09-english-pdf/bc3855006/database-before.dump",
+    "bytes": 464691,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-b09-english-pdf/bc3855006/rollback.sh",
+  "rollback_executed": false,
+  "pdf": {
+    "path": "/static/regelwerk/SRD_CC_v5.2.1.pdf",
+    "sha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+    "pages": 364,
+    "license": "CC-BY-4.0",
+    "origin": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+    "live_hash_verified": true
+  },
+  "targeted_checks": "pytest tests/test_regelwerk_books.py tests/test_regelwerk_books_browser.py tests/test_regelwerk_routes.py tests/test_regelwerk_toc_browser.py tests/test_presentation_browser.py: 46 passed, 1 failed (test_dm_calibration_updates_player_ruler_without_granting_controls, fails identically without this change)",
+  "live": "live.json",
+  "screenshots": [
+    "b09-desktop.png",
+    "b09-mobile.png"
+  ],
+  "user_journey": "Regelwerk → book bar → \"English original (PDF)\" → embedded official PDF with open/download links and attribution → back to Regelwerk (Deutsch).",
+  "residual": [
+    "Owner acceptance open",
+    "Inline PDF display depends on the browser; phones typically need \"Open PDF in a new tab\" (always visible)",
+    "Compendium, creator and character sheets remain German-only by this decision",
+    "Headless test browser cannot render PDFs inline; frame source, hash and headers were verified instead"
+  ]
+}
