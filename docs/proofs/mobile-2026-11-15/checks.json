@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "baseline_source_commit": "acdc3d5eec36998fe2f0c600cad841b37d7fa856",
+  "baseline_result": "40 passed, 1043 warnings",
+  "final_source_commit": "344641a896b284e5330e675ff329937eef258210",
+  "final_rework_result": "11 passed, 547 warnings",
+  "rework_cases_repeat_part_of_baseline": true,
+  "final_device_profiles": [
+    "Pixel 7 / Chromium",
+    "iPhone 13 / WebKit"
+  ],
+  "final_test_definition_sha256": "64eb3ca826df12bd8b35647a30aecc4d3840f652e5388ecdf3e047702b029342",
+  "full_repository_suite_run": false,
+  "physical_phone_run": false
+}

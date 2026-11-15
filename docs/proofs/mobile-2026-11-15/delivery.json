@@ -1,0 +1,29 @@
+{
+  "status": "deployed_and_functionally_verified_with_navigation_recheck",
+  "url": "https://vtt.roll-drauf.de",
+  "source_commit": "344641a896b284e5330e675ff329937eef258210",
+  "image_id": "sha256:edb580f988ae8d71cbc41f33e6bb921fd08fe17c7f597e048882c9f35694d4dd",
+  "deployed_at": "2026-11-15T13:50:30.832015103Z",
+  "navigation": "Login → Kampagnenhub → Sitzung als DM öffnen",
+  "roles": [
+    "DM",
+    "Player (negative privacy checks)"
+  ],
+  "baseline_tests": 40,
+  "final_rework_tests_repeated": 11,
+  "live_functional_groups_passed": 15,
+  "original_strict_live_run_status": "fail",
+  "original_strict_failure": "WebKit reports aborted dashboard fetches when test navigates away immediately after login; original raw evidence retained.",
+  "navigation_recheck_status": "pass",
+  "navigation_recheck_errors": [],
+  "navigation_error_attribution": "Inference from affected dashboard API paths and clean repeat after waiting for dashboard network completion.",
+  "runtime_integrity": "pass",
+  "immutable_files_verified": 80855,
+  "application_uncommitted_files": [],
+  "other_services_unchanged": true,
+  "fixture_cleanup": "pass",
+  "test_credentials_deleted": true,
+  "hardware_owner_acceptance": "NOT_RUN / no reply recorded",
+  "rollback": "/srv/migration/2026-11-11/feedback-mobile-touch-final-20261115/344641a89/rollback.sh",
+  "full_repository_suite_run": false
+}

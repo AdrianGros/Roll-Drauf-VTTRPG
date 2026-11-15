@@ -64,5 +64,7 @@ Der Folge-Proof zeigte außerdem den Kompatibilitätsklick derselben Berührung
 auf dem gerade neu geöffneten `tableSheetBackdrop`; dadurch schloss sich das
 Sheet sofort wieder. Die Detailöffnung muss nach diesem Klick erfolgen.
 Live mit Pixel-7-Profil war eine Timer-Lösung noch nicht verlässlich. Die
-Apply-Nachbesserung bindet die Detailöffnung deshalb an den tatsächlichen Klick
-und nimmt dieselben Geräteprofile und Kartengrößen in die lokalen Tests auf.
+Folgeprüfung nutzte deshalb dieselben Geräteprofile und Kartengrößen lokal.
+WebKit lieferte nach preventDefault teilweise keinen Kompatibilitätsklick.
+Apply muss sowohl fehlende als auch auf den neuen Hintergrund umgeleitete Klicks
+behandeln.

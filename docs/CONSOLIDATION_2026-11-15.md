@@ -128,3 +128,14 @@ sind grün; synthetische Testdaten und Zugangsdaten entfernt.
 
 [Deploy/Monitor mit Commit, Image, Rollback und Prüflücken](DADM_DEPLOY_MONITOR_CONSOLIDATION_LAYERS_2026-11-15.md).
 Die eingefrorene 40-Karten-Statistik und offene menschliche Abnahme bleiben unverändert.
+
+## Ergänzung: Handy-DM vor der 15-Uhr-Session
+
+Der mobile Slice ist als `344641a89` committed, gepusht und gegen 14:50 Uhr live
+ausgeliefert. 40 gezielte Tests, elf Wiederholungsprüfungen nach der
+Touch-Nachbesserung und 15 funktionale Live-Checkgruppen liegen vor. Die
+WebKit-Navigationsnachprüfung und die Hardwaregrenze sind ausdrücklich dokumentiert.
+[Mobile Funktionsmatrix und Spezifikation](MOBILE_COMPATIBILITY_2026-11-15.md),
+[Liefernachweis](DADM_DEPLOY_MONITOR_MOBILE_2026-11-15.md).
+Die 40 Feedbackkarten bleiben ihre eigene eingefrorene Statistik; daraus wird
+keine zusätzliche menschliche Freigabe abgeleitet.

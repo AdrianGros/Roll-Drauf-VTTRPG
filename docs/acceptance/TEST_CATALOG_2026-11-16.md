@@ -42,3 +42,10 @@ begrenzten Folgeauftrag und eine gezielte Nachprüfung, keine pauschale Gesamtfr
 Maschinenlesbare Ergebnisvorlage: [TEST_RESULTS_2026-11-16.csv](TEST_RESULTS_2026-11-16.csv).
 Abnahme gilt erst nach tatsächlicher Durchführung. Der Layer-Lieferbeleg enthält
 die technischen Tests und die bei der Bereitstellung beobachteten Live-Reisen.
+
+## Ergänzung für echte Handys
+
+Die Gerätefälle M-H01–M-H07 stehen im
+[Handy-Katalog](../MOBILE_COMPATIBILITY_2026-11-15.md). Sie ergänzen die 20 Fälle
+oben und bleiben auf Hardware NOT_RUN, bis ein tatsächliches Ergebnis vorliegt.
+Chromium-/WebKit-Automatik ist keine menschliche Geräteabnahme.

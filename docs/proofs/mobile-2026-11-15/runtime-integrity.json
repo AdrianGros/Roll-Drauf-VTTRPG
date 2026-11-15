@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "source_commit": "344641a896b284e5330e675ff329937eef258210",
+  "running_image_id": "sha256:edb580f988ae8d71cbc41f33e6bb921fd08fe17c7f597e048882c9f35694d4dd",
+  "built_source_verification": {
+    "checked": 80855,
+    "actual": 80855,
+    "mismatches": [],
+    "uncommitted_files": []
+  },
+  "changed_runtime_files_verified": 8,
+  "changed_runtime_sha256": {
+    "vtt/static/css/play-token-layers-dm.css": "252e52c5945058b2af233db204c7f43493a199e48af928f157a651d873076991",
+    "vtt/static/css/play-workspace.css": "d3728cbb4fbcb91d0db4546801c922f152b35451245d38c4bc65a1fe0565b71d",
+    "vtt/static/js/play-dm.js": "cb1324a698e441066d4792e99eda886948759dcd39266b2ef5c956bf98dfbca1",
+    "vtt/static/js/play-token-layers-dm.js": "d1764c683b84bb1956ec8ee3948b43790dadd76e27e51ba3a100298feb72b777",
+    "vtt/static/js/play-ui.js": "ae0430a88bfac93caac3b3e57c7eacfaecd94a74193745454b171c420610131c",
+    "vtt/templates/play.html": "452cdb2c2d41083839d718f03152e8775d648d4ac61cd3914359084b798faff9",
+    "app.py": "db8fe76c24bbe949680d24c10309adcaf890bb920373c71e9886406f5a561c69",
+    "requirements.txt": "dd27eb82e4ccb5f277d3e415231420399ac85e0467c11564200a1fff3845a55c"
+  },
+  "application_file_writes": [],
+  "mount_destinations": [
+    "/data/vtt-assets"
+  ],
+  "application_tree_clean": true,
+  "other_services_unchanged": true,
+  "health": {
+    "now": "2026-11-15T13:51:37.262249",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-15T13:50:36.494968",
+    "status": "ok"
+  },
+  "static_cache_control": "no-cache"
+}

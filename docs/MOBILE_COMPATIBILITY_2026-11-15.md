@@ -19,7 +19,9 @@ abgenommen. WebKit mit iPhone-Profil ist ebenfalls ein Engine-Test, kein echtes 
    Die Auswahlleiste zeigt gruppierte Anzahl und **Kopieren**, **Einfügen**,
    **Spielern zeigen**, **Vor Spielern verbergen**, **Auswahl aufheben**.
    Mehrfachauswahl wieder ausschalten, um einzelne Tokens zu ziehen.
-6. **Einfügen** setzt die Kopien in die Kartenmitte des aktiven Layers. Der Button
+6. **Einfügen** setzt die Kopien mittig in die Kartenansicht des aktiven Layers,
+   begrenzt auf die Kartengrenzen. Bei `FIT` können sie dadurch randnah liegen;
+   anschließend an die gewünschte Stelle ziehen. Der Button
    bleibt auch nach Aufheben der Auswahl unter **Layers** erreichbar.
 7. **Initiative** für Kampfstart/Zugwechsel/Kampfende; **Chat** zum Schreiben;
    **Journal → Tools** für Würfel. Seitlich scrollbare Werkzeugleiste bei Bedarf
@@ -27,12 +29,15 @@ abgenommen. WebKit mit iPhone-Profil ist ebenfalls ein Engine-Test, kein echtes 
 
 ## Funktionsmatrix und Grenzen
 
-Die endgültigen Prüfergebnisse stehen im Deploy/Monitor-Nachweis und in
-`proofs/mobile-2026-11-15/live.json`; diese Tabelle beschreibt den Prüfungsumfang.
+15 funktionale Live-Checkgruppen und die gezielte WebKit-Navigationsnachprüfung
+sind bestanden. Der ursprüngliche strikte Lauf enthält dokumentierte Fehler
+beim vorzeitigen Verlassen des Dashboards; die Einordnung steht im
+[Deploy/Monitor-Nachweis](DADM_DEPLOY_MONITOR_MOBILE_2026-11-15.md) und in
+`proofs/mobile-2026-11-15/delivery.json`. Hardwareabnahme bleibt getrennt.
 
 | Funktion | Vorher | Prüfung / Abnahmestatus |
 |---|---|---|
-| Passwort-Login, Kampagnenhub, autorisierter DM-Einstieg | Vorhanden | Beide Engines gegen Live über sichtbare Navigation vorgesehen; Discord-OAuth nicht separat abgenommen |
+| Passwort-Login, Kampagnenhub, autorisierter DM-Einstieg | Vorhanden | Beide Engines auf Live über sichtbare Navigation bestätigt; Discord-OAuth nicht separat abgenommen |
 | Token tippen / ziehen | Details öffneten schon bei Drag-Beginn | Touch-Drag und Tap getrennt; Chromium mit nativer Browser-Toucheingabe und Serverzustand |
 | Pan auf Tokenfläche | Start wurde als Tokenbewegung behandelt | Pan darf Tokenversion/-position nicht ändern |
 | Pinch-Zoom / Zweifinger-Pan | Kein eigener Karten-Pinch | Native Chromium-Multitouch-Prüfung; iOS-Pinch physisch noch offen |

@@ -1,0 +1,356 @@
+{
+  "status": "pass",
+  "engine": "webkit",
+  "device": "iPhone 13",
+  "errors": [],
+  "journeys": [
+    "player: Login → Dashboard abgewartet → Kampagnenhub → Tisch",
+    "dm: Login → Dashboard abgewartet → Kampagnenhub → Tisch"
+  ],
+  "responses": [
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/discord/status",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/rulesets/main",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/capabilities",
+      "status": 401
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/theme/settings",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/check",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/refresh",
+      "status": 401
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/login",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/theme/settings",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/rulesets/main",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/capabilities",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/content/shared",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/check",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/content/dashboard",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/navigation",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/home",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/theme/settings",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/capabilities",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/rulesets/main",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/check",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/content/shared",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/content/campaigns",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/navigation",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/characters/shared",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/characters/mine",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/characters/mine?archived=only",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/srd-creator/drafts",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57/date-polls?status=open",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/capabilities",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/rulesets/main",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/navigation",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/theme/settings",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/check",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/contexts",
+      "status": 201
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/bootstrap",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57/sessions/115/combat/state",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/assets/campaigns/57/library?page=1&per_page=24&scope=current&query=&session_id=115",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/vision/fog",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/contexts",
+      "status": 201
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/bootstrap",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/discord/status",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/check",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/capabilities",
+      "status": 401
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/rulesets/main",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/theme/settings",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/refresh",
+      "status": 401
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/login",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/theme/settings",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/capabilities",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/rulesets/main",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/content/shared",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/check",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/content/dashboard",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/navigation",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/home",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/theme/settings",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/capabilities",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/rulesets/main",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/content/shared",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/content/campaigns",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/check",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/navigation",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/characters/mine",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/characters/shared",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/characters/mine?archived=only",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/srd-creator/drafts",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57/invites",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57/session-calendar?scope=month&anchor=2026-11-15&timezone=UTC",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57/date-polls?status=open",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/capabilities",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/rulesets/main",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/dashboard/navigation",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/theme/settings",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/auth/check",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/contexts",
+      "status": 201
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/bootstrap",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/surface",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57/sessions/115/combat/state",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/campaigns/57/maps",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/assets/campaigns/57/library?page=1&per_page=24&scope=current&query=&session_id=115",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/vision/lights",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/vision/walls",
+      "status": 200
+    },
+    {
+      "url": "https://vtt.roll-drauf.de/api/play/campaigns/57/sessions/115/contexts",
+      "status": 201
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "status": "fail",
+  "started_at": "2026-11-15T13:50:58.805090+00:00",
+  "url": "https://vtt.roll-drauf.de",
+  "hardware_test": false,
+  "engines": {
+    "chromium": {
+      "profile": "Pixel 7",
+      "journey": "Login → Kampagnenhub → Sitzung als DM",
+      "checks": {
+        "login_hub_role_and_private_data": "pass",
+        "native_touch_drag_pan_pinch_cancel_server_state": "pass",
+        "touch_token_inspector": "pass",
+        "touch_multiselect_copy_and_reveal": "pass",
+        "hide_paste_and_private_placement": "pass",
+        "landscape_initiative_and_toolbar": "pass",
+        "chat_dice_and_journal": "pass",
+        "reload_persistence_and_player_privacy": "pass"
+      }
+    },
+    "webkit": {
+      "profile": "iPhone 13",
+      "journey": "Login → Kampagnenhub → Sitzung als DM",
+      "checks": {
+        "login_hub_role_and_private_data": "pass",
+        "touch_token_inspector": "pass",
+        "touch_multiselect_copy_and_reveal": "pass",
+        "hide_paste_and_private_placement": "pass",
+        "landscape_initiative_and_toolbar": "pass",
+        "chat_dice_and_journal": "pass",
+        "reload_persistence_and_player_privacy": "pass"
+      }
+    }
+  },
+  "errors": [
+    "/vtt.roll-drauf.de/api/campaigns due to access control checks.",
+    "/vtt.roll-drauf.de/api/characters/mine due to access control checks.",
+    "/vtt.roll-drauf.de/api/characters/shared due to access control checks.",
+    "/vtt.roll-drauf.de/api/characters/mine?archived=only due to access control checks.",
+    "/vtt.roll-drauf.de/api/srd-creator/drafts due to access control checks.",
+    "/vtt.roll-drauf.de/api/campaigns due to access control checks.",
+    "/vtt.roll-drauf.de/api/characters/mine due to access control checks.",
+    "/vtt.roll-drauf.de/api/characters/shared due to access control checks.",
+    "/vtt.roll-drauf.de/api/characters/mine?archived=only due to access control checks.",
+    "/vtt.roll-drauf.de/api/srd-creator/drafts due to access control checks."
+  ],
+  "failure": "['/vtt.roll-drauf.de/api/campaigns due to access control checks.', '/vtt.roll-drauf.de/api/characters/mine due to access control checks.', '/vtt.roll-drauf.de/api/characters/shared due to access control checks.', '/vtt.roll-drauf.de/api/characters/mine?archived=only due to access control checks.', '/vtt.roll-drauf.de/api/srd-creator/drafts due to access control checks.', '/vtt.roll-drauf.de/api/campaigns due to access control checks.', '/vtt.roll-drauf.de/api/characters/mine due to access control checks.', '/vtt.roll-drauf.de/api/characters/shared due to access control checks.', '/vtt.roll-drauf.de/api/characters/mine?archived=only due to access control checks.', '/vtt.roll-drauf.de/api/srd-creator/drafts due to access control checks.']",
+  "finished_at": "2026-11-15T13:54:26.089479+00:00"
+}

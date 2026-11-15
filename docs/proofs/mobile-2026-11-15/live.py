@@ -40,6 +40,9 @@ def enter(context, kind, seat):
     page.locator('#loginPassword').fill(fixture['users'][kind]['password'])
     page.locator('#passwordLoginSubmitBtn').tap()
     page.wait_for_url(lambda url: '/login' not in url)
+    # Let the redirected dashboard finish its own fetches before deliberately
+    # navigating away; WebKit reports aborted dashboard fetches as access checks.
+    page.wait_for_load_state('networkidle')
     page.goto(f"{ORIGIN}/campaigns?campaign_id={fixture['campaign_id']}")
     action = 'open-session-dm' if seat == 'dm' else 'open-session'
     page.locator(f'[data-hub-action="{action}"][data-hub-session-id="{fixture["session_id"]}"]').tap()
@@ -226,7 +229,7 @@ with sync_playwright() as p:
     except Exception as error:
         proof['status'] = 'fail'
         proof['failure'] = str(error)
-        if 'dm' in globals():
+        if 'dm' in globals() and not dm.is_closed():
             dm.screenshot(path=str(ROOT / 'failure.png'))
         raise
     finally:
