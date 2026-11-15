@@ -220,6 +220,166 @@ async _bindMapLibrary() {
                 }
             });
         },
+_bindTokenClipboard() {
+            // DM only: marquee-select tokens with a left drag in the select tool, Ctrl/Cmd+C copies the
+            // selection, Ctrl/Cmd+V pastes fresh copies at the pointer with the same layout.
+            if (this._tokenClipboardBound) return;
+            const viewport = document.getElementById("mapViewport");
+            const world = document.getElementById("mapWorld");
+            if (!viewport || !world) return;
+            this._tokenClipboardBound = true;
+            let marquee = null;
+            let swallowClick = false;
+            const box = (a, b) => ({ x: Math.min(a.x, b.x), y: Math.min(a.y, b.y), w: Math.abs(a.x - b.x), h: Math.abs(a.y - b.y) });
+            viewport.addEventListener("pointermove", (event) => { this._pasteAnchor = this._worldPointFromEvent(event); });
+            viewport.addEventListener("pointerleave", () => { this._pasteAnchor = null; });
+            viewport.addEventListener("pointerdown", (event) => {
+                if (this.currentTool !== "select" || event.button !== 0 || this.readOnly || this._pendingTarget) return;
+                if (event.target.closest?.(".token-marker, .floating, .stage-topbar, .vision-light-marker, .vision-wall-line, button, input, select, textarea, a")) return;
+                const start = this._worldPointFromEvent(event);
+                if (!start) return;
+                const element = document.createElement("div");
+                element.className = "token-marquee";
+                element.hidden = true;
+                world.append(element);
+                marquee = { start, end: null, element, clientX: event.clientX, clientY: event.clientY, moved: false };
+            });
+            window.addEventListener("pointermove", (event) => {
+                if (!marquee) return;
+                if (!marquee.moved && Math.hypot(event.clientX - marquee.clientX, event.clientY - marquee.clientY) < 5) return;
+                const point = this._worldPointFromEvent(event);
+                if (!point) return;
+                marquee.moved = true;
+                marquee.end = point;
+                const r = box(marquee.start, point);
+                Object.assign(marquee.element.style, { left: `${r.x}px`, top: `${r.y}px`, width: `${r.w}px`, height: `${r.h}px` });
+                marquee.element.hidden = false;
+            });
+            window.addEventListener("pointerup", () => {
+                if (!marquee) return;
+                const done = marquee;
+                marquee = null;
+                done.element.remove();
+                if (!done.moved || !done.end) return;
+                swallowClick = true;  // the click after a drag must not clear the new selection
+                const r = box(done.start, done.end);
+                const ids = [...world.querySelectorAll(".token-marker[data-token-id]")].filter((marker) => {
+                    const left = Number(marker.dataset.tokenLeft), top = Number(marker.dataset.tokenTop);
+                    const size = Number(marker.dataset.tokenSize) || 0;
+                    return left < r.x + r.w && left + size > r.x && top < r.y + r.h && top + size > r.y;
+                }).map((marker) => Number(marker.dataset.tokenId));
+                this._selectToken(ids.length ? ids[0] : null);
+                this.selectedTokenIds = ids.length > 1 ? new Set(ids) : null;
+                this._syncTokenMarkerSelection();
+                if (ids.length > 1) this._showMessage(globalThis.VTTUi("{p0} Tokens ausgewählt. Strg+C kopiert, Strg+V fügt an der Mausposition ein.", { p0: ids.length }));
+            });
+            viewport.addEventListener("click", (event) => {
+                if (!swallowClick) return;
+                swallowClick = false;
+                event.stopPropagation();
+                event.preventDefault();
+            }, true);
+            document.addEventListener("keydown", (event) => {
+                if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.repeat) return;
+                const key = event.key.toLowerCase();
+                if (key !== "c" && key !== "v") return;
+                if (event.target.closest?.("input, textarea, select, [contenteditable]")) return;
+                if (key === "c") {
+                    // Selected page text keeps the browser's own copy.
+                    if (String(window.getSelection?.() || "").trim()) return;
+                    if (this._copySelectedTokens()) event.preventDefault();
+                } else if (this._tokenClipboard?.items.length) {
+                    event.preventDefault();
+                    this._pasteTokens();
+                }
+            });
+        },
+_copySelectedTokens() {
+            const ids = this.selectedTokenIds?.size ? [...this.selectedTokenIds]
+                : (this.selectedTokenId != null ? [Number(this.selectedTokenId)] : []);
+            const items = [];
+            for (const id of ids) {
+                const token = this._findStateToken(id);
+                const marker = document.querySelector(`.token-marker[data-token-id="${id}"]`);
+                if (!token || !marker) continue;
+                items.push({ token, left: Number(marker.dataset.tokenLeft) || 0, top: Number(marker.dataset.tokenTop) || 0 });
+            }
+            if (!items.length) return false;
+            const minLeft = Math.min(...items.map((item) => item.left));
+            const minTop = Math.min(...items.map((item) => item.top));
+            this._tokenClipboard = {
+                pastes: 0,
+                origin: { x: minLeft, y: minTop },
+                items: items.map(({ token, left, top }) => {
+                    // A fresh copy: no conditions, turn marker or character link; full hit points.
+                    const copy = {
+                        name: token.name,
+                        token_type: token.token_type || "npc",
+                        size: Math.max(1, Number(token.size) || 1),
+                        rotation: Number(token.rotation) || 0,
+                        visibility: token.visibility || "public",
+                        metadata_json: token.metadata_json?.image_url ? { image_url: token.metadata_json.image_url } : {},
+                    };
+                    if (token.hp_max != null) { copy.hp_max = Number(token.hp_max); copy.hp_current = Number(token.hp_max); }
+                    else if (token.hp_current != null) copy.hp_current = Number(token.hp_current);
+                    if (copy.token_type === "player" && token.owner_user_id != null) copy.owner_user_id = Number(token.owner_user_id);
+                    return { dx: left - minLeft, dy: top - minTop, copy };
+                }),
+            };
+            this._showMessage(globalThis.VTTUi("{p0} Token kopiert. Mit Strg+V an der Mausposition einfügen.", { p0: items.length }));
+            return true;
+        },
+_nextTokenName(name, taken) {
+            // "Goblin" -> "Goblin 2", "Goblin 3": copies stay distinguishable in the turn order.
+            const base = String(name || "").trim().replace(/\s+\d+$/, "") || "Token";
+            let highest = 0;
+            for (const existing of taken) {
+                if (existing === base) highest = Math.max(highest, 1);
+                const match = existing.startsWith(base + " ") ? /^\d+$/.exec(existing.slice(base.length + 1)) : null;
+                if (match) highest = Math.max(highest, Number(match[0]));
+            }
+            const next = `${base} ${Math.max(2, highest + 1)}`;
+            taken.add(next);
+            return next;
+        },
+async _pasteTokens() {
+            const clip = this._tokenClipboard;
+            if (!clip?.items.length) return;
+            if (this.readOnly) {
+                this._showMessage(globalThis.VTTUi("Im Nur-Lesen-Modus können keine Tokens eingefügt werden."), true);
+                return;
+            }
+            const grid = Math.max(16, Number(document.getElementById("mapWorld")?.dataset?.gridSize
+                || this.bootstrap?.state_payload?.active_map?.grid_size) || 70);
+            clip.pastes += 1;
+            // At the pointer when it is over the map, otherwise one square further for every paste.
+            const anchor = this._pasteAnchor || { x: clip.origin.x + grid * clip.pastes, y: clip.origin.y + grid * clip.pastes };
+            const ax = Math.round(anchor.x / grid) * grid;
+            const ay = Math.round(anchor.y / grid) * grid;
+            const { width, height } = this._worldSize();
+            const taken = new Set(this._visibleTokens().map((token) => String(token.name || "")));
+            let created = 0;
+            try {
+                for (const { dx, dy, copy } of clip.items) {
+                    const size = copy.size * grid;
+                    const token = {
+                        ...copy,
+                        name: this._nextTokenName(copy.name, taken),
+                        x: Math.round(Math.max(0, Math.min(Math.max(0, width - size), ax + dx))),
+                        y: Math.round(Math.max(0, Math.min(Math.max(0, height - size), ay + dy))),
+                        metadata_json: { ...copy.metadata_json, position_mode: "pixel" },
+                    };
+                    if (this.socket && this.socket.isConnected) this.socket.createToken(token);
+                    else await this.api.createToken(this.campaignId, this.sessionId, token);
+                    created += 1;
+                }
+                if (!(this.socket && this.socket.isConnected)) await this.loadBootstrap();
+                this._showMessage(globalThis.VTTUi("{p0} Token eingefügt.", { p0: created }));
+            } catch (error) {
+                this._showMessage(error.message || globalThis.VTTUi("Eingefügte Tokens konnten nicht erstellt werden."), true);
+                await this.loadBootstrap();
+            }
+        },
 _bindMapUpload() {
             // Der Upload wird aus dem Hinzufügen-Dialog heraus gestartet
             // (#layerAddUpload in _renderLayerAddControl); hier hängt nur

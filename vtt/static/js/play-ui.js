@@ -3011,7 +3011,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 }
             });
 
-            if (this._composedOperator) { this._bindMapUpload(); this._bindMapLibrary?.(); }
+            if (this._composedOperator) { this._bindMapUpload(); this._bindMapLibrary?.(); this._bindTokenClipboard?.(); }
         }
 
         // Upload a map image straight from the table: asset upload ->
@@ -4446,7 +4446,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     object: "#98d6b4",
                 };
                 const color = colorByType[String(token.token_type || "player").toLowerCase()] || "#8cc0ff";
-                const selected = Number(this.selectedTokenId) === Number(token.id);
+                const selected = this._isTokenSelected(token.id);
                 const isCurrentTurn = currentTurnTokenId !== null && Number(token.id) === currentTurnTokenId;
                 const canMove = this._canMoveToken(token);
 
@@ -4786,8 +4786,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             return rawSize;
         }
 
+        _isTokenSelected(tokenId) {
+            // A marquee (DM composition) may select several tokens at once.
+            return Number(this.selectedTokenId) === Number(tokenId) || Boolean(this.selectedTokenIds?.has(Number(tokenId)));
+        }
+
         _selectToken(tokenId, repaintMap = false) {
             const searchId = tokenId == null ? NaN : Number(tokenId);
+            this.selectedTokenIds = null;
             if (this._pendingTarget && Number.isInteger(searchId)) {
                 this._completeTargeting(searchId);
                 return;
@@ -4822,7 +4828,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const markers = document.querySelectorAll(".token-marker[data-token-id]");
             markers.forEach((marker) => {
                 const tokenId = Number(marker.getAttribute("data-token-id"));
-                marker.classList.toggle("selected", Number(this.selectedTokenId) === tokenId);
+                marker.classList.toggle("selected", this._isTokenSelected(tokenId));
             });
         }
 
