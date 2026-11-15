@@ -1,0 +1,280 @@
+[
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt",
+    "head": "66edde994cd72479df62fd2a1593c4fda382ba1e",
+    "branch": "refs/heads/feat/creation-engine-g1",
+    "uncommitted_entries": 335,
+    "examples": [
+      " M README.md",
+      " M infra/scripts/backup_database.sh",
+      "A  migrations/migration_m82_research_survey.sql",
+      " M tests/creation_engine/test_ce_race_browser.py",
+      " M tests/creation_engine/test_ce_race_compiler.py",
+      " M tests/test_creation_engine_navigation.py"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-b06a-atlas-credits",
+    "head": "a5fc8fcaf6308718143aabecd42e7003feb11c07",
+    "branch": "refs/heads/fix/feedback-b06a-atlas-credits-20261113",
+    "uncommitted_entries": 0,
+    "examples": [],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-calendar",
+    "head": "e2a7a5859ff2ca0e90922657192f831480c94442",
+    "branch": "refs/heads/feat/session-calendar-20261108",
+    "uncommitted_entries": 0,
+    "examples": [],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-claude-c01-20261111",
+    "head": "4dca29475241e84b1722ec6ac7fe10c4fba1a756",
+    "branch": "refs/heads/claude/vtt-c01-20261111",
+    "uncommitted_entries": 8,
+    "examples": [
+      " M docs/DADM_APPLY_CLAUDE_C01_2026-11-11.md",
+      "?? docs/proofs/claude-c01-2026-11-11/play-contrast-review.diff",
+      "?? docs/proofs/claude-c01-2026-11-11/play-contrast-rework.md",
+      "?? docs/proofs/claude-c01-2026-11-11/review-01.md",
+      "?? docs/proofs/claude-c01-2026-11-11/review-02.md",
+      "?? docs/proofs/claude-c01-2026-11-11/review-delta-02.diff"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-claude-c02-20261112",
+    "head": "0d89fc4e7dd6d3a5268f8b58cc5c4bd1e73dabbc",
+    "branch": "refs/heads/claude/vtt-c02-20261112",
+    "uncommitted_entries": 6,
+    "examples": [
+      " M docs/DADM_APPLY_CLAUDE_C02_2026-11-11.md",
+      " M vtt/static/i18n/ui.de.json",
+      " M vtt/static/i18n/ui.en.json",
+      " M vtt/static/js/ui-catalog.js",
+      "?? docs/proofs/claude-c02-2026-11-12/review-input.diff",
+      "?? docs/proofs/claude-c02-2026-11-12/rework-01.md"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-claude-c03-20261111",
+    "head": "eb2cb2cd988425c2649a586c8b67f33b9b2a7007",
+    "branch": "refs/heads/claude/vtt-c03-20261111",
+    "uncommitted_entries": 2,
+    "examples": [
+      " M docs/DADM_APPLY_CLAUDE_C03_2026-11-11.md",
+      "?? docs/proofs/claude-c03-2026-11-11/"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-claude-c04-20261112",
+    "head": "bbcc40ec57e2e857d1fa4d80444567b037d81628",
+    "branch": "refs/heads/claude/vtt-c04-20261112",
+    "uncommitted_entries": 6,
+    "examples": [
+      " M vtt/static/i18n/ui.de.json",
+      " M vtt/static/i18n/ui.en.json",
+      " M vtt/static/js/ui-catalog.js",
+      "?? docs/proofs/claude-c04-2026-11-12/review-input.diff",
+      "?? docs/proofs/claude-c04-2026-11-12/rework-01.md",
+      "?? docs/proofs/claude-c04-2026-11-12/rework-final.diff"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-claude-c06-20261112",
+    "head": "3b6ae975f7cfddf3f39a49adc97587856a1d91e7",
+    "branch": "refs/heads/claude/vtt-c06-20261112",
+    "uncommitted_entries": 7,
+    "examples": [
+      " M tests/test_session_calendar.py",
+      " M tests/test_session_calendar_browser.py",
+      " M tests/test_session_calendar_postgres.py",
+      " M vtt/static/i18n/ui.de.json",
+      " M vtt/static/i18n/ui.en.json",
+      " M vtt/static/js/ui-catalog.js"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-claude-c08-20261112",
+    "head": "5ce0721096f80decfe4036755cf5d3782596a08d",
+    "branch": "refs/heads/claude/vtt-c08-20261112",
+    "uncommitted_entries": 1,
+    "examples": [
+      "?? docs/proofs/claude-c08-2026-11-12/"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-claude-research",
+    "head": "14708d54423b9214a5557c3fb7f18005b6087e4e",
+    "branch": "refs/heads/claude/playtable-research",
+    "uncommitted_entries": 14,
+    "examples": [
+      "?? docs/PLAYTABLE_CLAUDE_RESEARCH_PROMPTS_2026-08-27.md",
+      "?? docs/PLAYTABLE_FEATURE_RESEARCH_01_SCENES_2026-08-27.md",
+      "?? docs/PLAYTABLE_FEATURE_RESEARCH_02_APP_MENU_2026-08-27.md",
+      "?? docs/PLAYTABLE_FEATURE_RESEARCH_03_MAP_TOOLS_2026-08-27.md",
+      "?? docs/PLAYTABLE_FEATURE_RESEARCH_04_TOKEN_HUD_2026-08-27.md",
+      "?? docs/PLAYTABLE_FEATURE_RESEARCH_05_STATUSES_2026-08-27.md"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-codex-c05-20261112",
+    "head": "0955df045906e184f0507f2d05e74185bae94d99",
+    "branch": "refs/heads/feat/codex-c05-20261112",
+    "uncommitted_entries": 3,
+    "examples": [
+      " M vtt/static/i18n/ui.de.json",
+      " M vtt/static/i18n/ui.en.json",
+      " M vtt/static/js/ui-catalog.js"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-codex-c07-20261112",
+    "head": "866ce5b8745f91ea370d0496e7d46574221fc285",
+    "branch": "refs/heads/feat/codex-c07-20261112",
+    "uncommitted_entries": 3,
+    "examples": [
+      " M vtt/static/i18n/ui.de.json",
+      " M vtt/static/i18n/ui.en.json",
+      " M vtt/static/js/ui-catalog.js"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-codex-c08-20261112",
+    "head": "25b067f0deac822af61e83a45263916d151c2431",
+    "branch": "refs/heads/feat/codex-c08-20261112",
+    "uncommitted_entries": 3,
+    "examples": [
+      " M vtt/static/i18n/ui.de.json",
+      " M vtt/static/i18n/ui.en.json",
+      " M vtt/static/js/ui-catalog.js"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-codex-c09-20261112",
+    "head": "95cdb4b6c5591c1d20998ba23abbbab9c9ad9e81",
+    "branch": "refs/heads/feat/codex-c09-20261112",
+    "uncommitted_entries": 3,
+    "examples": [
+      " M vtt/static/i18n/ui.de.json",
+      " M vtt/static/i18n/ui.en.json",
+      " M vtt/static/js/ui-catalog.js"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-dadm-audit",
+    "head": "76e657717d3504969bd94485c69db53fb351e937",
+    "branch": "refs/heads/feat/dadm-audit-framework",
+    "uncommitted_entries": 49,
+    "examples": [
+      "A  .agents/skills/dadm-audit-architecture",
+      "A  .agents/skills/dadm-audit-clean-code",
+      "A  .agents/skills/dadm-audit-performance",
+      "A  .claude/skills/dadm-audit-architecture",
+      "A  .claude/skills/dadm-audit-clean-code",
+      "A  .claude/skills/dadm-audit-performance"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-eagle",
+    "head": "6d792747652e1596af8149e5ca6c1d27eb7d65c7",
+    "branch": "refs/heads/feat/eagle-homebrew",
+    "uncommitted_entries": 0,
+    "examples": [],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-entry",
+    "head": "5770b05e9c65dcd198f1f3dc5d4198c8c38116d8",
+    "branch": "refs/heads/fix/vtt-entry-beyond20-20261108",
+    "uncommitted_entries": 0,
+    "examples": [],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-feedback-20261110",
+    "head": "4158a0c4be0d730881fb0b7ba2ca28a5ffd5e958",
+    "branch": "refs/heads/feat/protocol-feedback-20261110",
+    "uncommitted_entries": 1,
+    "examples": [
+      "?? tools/srd_en/"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-macros",
+    "head": "5045c0e00270696129b35ebd2852d49aef511719",
+    "branch": "refs/heads/feat/playtable-macros-20261108",
+    "uncommitted_entries": 0,
+    "examples": [],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-map-library",
+    "head": "0748abb41feb9a5bf2fd4c40698783a9d0ccf2c6",
+    "branch": "refs/heads/feat/mapmaker-library-20261108",
+    "uncommitted_entries": 0,
+    "examples": [],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-oglan",
+    "head": "635816d23c0bf232bdcd86ad949ab802d08eb8c6",
+    "branch": "refs/heads/feat/oglans-book-of-chaos-oc0-20261109",
+    "uncommitted_entries": 0,
+    "examples": [],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-p13",
+    "head": "76e657717d3504969bd94485c69db53fb351e937",
+    "branch": "refs/heads/feat/srd-creator-p13",
+    "uncommitted_entries": 18,
+    "examples": [
+      " M vtt/creation_engine/compiler/catalog.py",
+      " M vtt/creation_engine/compiler/homebrew.py",
+      " M vtt/creation_engine/store/homebrew.py",
+      " M vtt/creation_engine/transports/__init__.py",
+      " M vtt/static/js/creation-advanced.js",
+      " M vtt/static/js/creation-engine.js"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-sprite-pipeline",
+    "head": "0748abb41feb9a5bf2fd4c40698783a9d0ccf2c6",
+    "branch": "refs/heads/feat/mapmaker-sprite-pipeline-20261109",
+    "uncommitted_entries": 15211,
+    "examples": [
+      " M tests/test_mapmaker_browser.py",
+      " M tests/test_mapmaker_library.py",
+      " M tools/import_mapmaker_color_assets.py",
+      " M tools/mapmaker_catalog.py",
+      " M vtt/mapmaker_document.py",
+      " M vtt/static/mapmaker/assets/2dpixx-cave/manifest.json"
+    ],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  },
+  {
+    "path": "/home/admin/projects/roll-drauf-vtt-table",
+    "head": "8a7040c1f7351b5ffea7e0265fc46c5a137c3a8f",
+    "branch": "refs/heads/fix/beyond20-table-feed-20261108",
+    "uncommitted_entries": 0,
+    "examples": [],
+    "delivery_disposition": "preserve original worktree; current live source fully reconciled separately; do not blindly merge superseded work"
+  }
+]

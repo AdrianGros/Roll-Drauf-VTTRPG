@@ -203,9 +203,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this._composedOperator = operator;
             if (operator) {
                 const surface = await this.auth.makeAuthRequest(`/api/play/campaigns/${this.campaignId}/sessions/${this.sessionId}/surface`);
-                await new Promise((resolve, reject) => {
+                for (const source of ["/static/js/play-token-layers-dm.js", "/static/js/play-dm.js"]) await new Promise((resolve, reject) => {
                     const script = document.createElement("script");
-                    script.src = "/static/js/play-dm.js";
+                    script.src = source;
                     script.onload = resolve;
                     script.onerror = reject;
                     document.head.append(script);
@@ -1553,6 +1553,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const visibilityRow = document.getElementById("tokenCreateVisibility");
             if (visibilityRow) {
                 visibilityRow.style.display = operator ? "" : "none";
+                visibilityRow.value = this._activeTokenLayer || "public";
             }
             // The server only lets players create player-type tokens they
             // own -- pin the select instead of offering options that would
@@ -2801,6 +2802,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const body = document.getElementById("tableSheetBody");
             if (!sheet || !btn || !body) return;
             const entries = [['layersWidget',globalThis.VTTUi('Seiten')],['turnOrderWidget',globalThis.VTTUi('Initiative')],['tokenWidget',globalThis.VTTUi('Tokens')]];
+            entries.push(...(this._dmDockEntries || []));
             const tabs = document.createElement('div');tabs.id='tableDockTabs';tabs.className='table-dock-tabs';
             tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label',globalThis.VTTUi('Tischbereiche'));
             let active = entries[0][0];
@@ -4138,7 +4140,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
             const operator = isOperatorRole(this.bootstrap?.session_role || "");
             const gridSize = Math.max(16, Number(activeMap?.grid_size) || 70);
-            const tokens = this._visibleTokens(statePayload?.tokens || []);
+            const tokens = this._visibleTokens(statePayload?.tokens || []).filter(token => !this._isTokenOnActiveLayer || this._isTokenOnActiveLayer(token));
             if (!this._isTokenAvailable(this.selectedTokenId, tokens)) {
                 this.selectedTokenId = null;
             }
@@ -4452,7 +4454,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
                 return `
                     <div
-                        class="token-marker ${selected ? "selected" : ""} ${isCurrentTurn ? "current-turn" : ""} ${canMove ? "draggable" : ""}"
+                        class="token-marker ${this._isTokenOnActiveLayer && !this._isTokenOnActiveLayer(token) ? "token-inactive-layer" : ""} ${selected ? "selected" : ""} ${isCurrentTurn ? "current-turn" : ""} ${canMove ? "draggable" : ""}"
                         data-token-id="${token.id}"
                         data-token-version="${token.version ?? 1}"
                         data-token-left="${position.left}"
@@ -4468,6 +4470,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 `;
             }).join("");
             this._bindMapInteractions();
+            this._refreshTokenLayerView?.();
         }
 
         // S06: turn changes MUST announce (research doc's own HIGH-severity
@@ -4793,6 +4796,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         _selectToken(tokenId, repaintMap = false) {
             const searchId = tokenId == null ? NaN : Number(tokenId);
+            if (Number.isInteger(searchId) && this._isTokenOnActiveLayer && !this._isTokenOnActiveLayer(this._findStateToken(searchId))) return;
             this.selectedTokenIds = null;
             if (this._pendingTarget && Number.isInteger(searchId)) {
                 this._completeTargeting(searchId);
@@ -4830,6 +4834,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const tokenId = Number(marker.getAttribute("data-token-id"));
                 marker.classList.toggle("selected", this._isTokenSelected(tokenId));
             });
+            this._renderTokenSelection?.();
         }
 
         _bindMapInteractions() {
@@ -4845,6 +4850,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const tokenId = Number(marker.getAttribute("data-token-id"));
                 const token = this._findStateToken(tokenId);
                 if (!token) return;
+                if (this._isTokenOnActiveLayer && !this._isTokenOnActiveLayer(token)) return;
+                if (event.shiftKey && this._toggleTokenGroup?.(token)) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return;
+                }
                 if (this._pendingTarget) {
                     // Picking a target, not grabbing the token.
                     event.preventDefault();

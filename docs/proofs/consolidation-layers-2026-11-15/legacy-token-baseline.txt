@@ -1,0 +1,71 @@
+.FFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+__ TestTokenRealtime.test_room_isolation_prevents_cross_session_token_events ___
+tests/test_tokens_realtime.py:182: in test_room_isolation_prevents_cross_session_token_events
+    assert any(event["name"] == "token:created" for event in dm_events)
+E   assert False
+E    +  where False = any(<generator object TestTokenRealtime.test_room_isolation_prevents_cross_session_token_events.<locals>.<genexpr> at 0x729b43d07d30>)
+------------------------------ Captured log setup ------------------------------
+INFO     http.request:__init__.py:155 request complete
+INFO     http.request:__init__.py:155 request complete
+_________ TestTokenRealtime.test_non_member_join_gets_forbidden_error __________
+tests/test_tokens_realtime.py:197: in test_non_member_join_gets_forbidden_error
+    assert any(event["name"] == "state:error" for event in events)
+E   assert False
+E    +  where False = any(<generator object TestTokenRealtime.test_non_member_join_gets_forbidden_error.<locals>.<genexpr> at 0x729b4395a9b0>)
+------------------------------ Captured log setup ------------------------------
+INFO     http.request:__init__.py:155 request complete
+______ TestTokenRealtime.test_token_update_conflict_emits_state_conflict _______
+tests/test_tokens_realtime.py:208: in test_token_update_conflict_emits_state_conflict
+    assert create_response.status_code == 201
+E   assert 403 == 201
+E    +  where 403 = <WrapperTestResponse streamed [403 FORBIDDEN]>.status_code
+------------------------------ Captured log setup ------------------------------
+INFO     http.request:__init__.py:155 request complete
+------------------------------ Captured log call -------------------------------
+INFO     http.request:__init__.py:155 request complete
+__________ TestTokenRealtime.test_token_update_requires_base_version ___________
+tests/test_tokens_realtime.py:239: in test_token_update_requires_base_version
+    assert create_response.status_code == 201
+E   assert 403 == 201
+E    +  where 403 = <WrapperTestResponse streamed [403 FORBIDDEN]>.status_code
+------------------------------ Captured log setup ------------------------------
+INFO     http.request:__init__.py:155 request complete
+------------------------------ Captured log call -------------------------------
+INFO     http.request:__init__.py:155 request complete
+_________ TestTokenRealtime.test_duplicate_client_event_id_is_deduped __________
+tests/test_tokens_realtime.py:271: in test_duplicate_client_event_id_is_deduped
+    assert create_response.status_code == 201
+E   assert 403 == 201
+E    +  where 403 = <WrapperTestResponse streamed [403 FORBIDDEN]>.status_code
+------------------------------ Captured log setup ------------------------------
+INFO     http.request:__init__.py:155 request complete
+------------------------------ Captured log call -------------------------------
+INFO     http.request:__init__.py:155 request complete
+___ TestTokenRealtime.test_session_join_switches_active_room_for_same_socket ___
+tests/test_tokens_realtime.py:341: in test_session_join_switches_active_room_for_same_socket
+    assert any(event["name"] == "token:created" for event in new_room_events)
+E   assert False
+E    +  where False = any(<generator object TestTokenRealtime.test_session_join_switches_active_room_for_same_socket.<locals>.<genexpr> at 0x729b42de4ba0>)
+------------------------------ Captured log setup ------------------------------
+INFO     http.request:__init__.py:155 request complete
+_________ TestTokenRealtime.test_api_token_update_requires_owner_or_dm _________
+tests/test_tokens_realtime.py:354: in test_api_token_update_requires_owner_or_dm
+    assert create_response.status_code == 201
+E   assert 403 == 201
+E    +  where 403 = <WrapperTestResponse streamed [403 FORBIDDEN]>.status_code
+------------------------------ Captured log setup ------------------------------
+INFO     http.request:__init__.py:155 request complete
+INFO     http.request:__init__.py:155 request complete
+INFO     http.request:__init__.py:155 request complete
+------------------------------ Captured log call -------------------------------
+INFO     http.request:__init__.py:155 request complete
+=========================== short test summary info ============================
+FAILED tests/test_tokens_realtime.py::TestTokenRealtime::test_room_isolation_prevents_cross_session_token_events
+FAILED tests/test_tokens_realtime.py::TestTokenRealtime::test_non_member_join_gets_forbidden_error
+FAILED tests/test_tokens_realtime.py::TestTokenRealtime::test_token_update_conflict_emits_state_conflict
+FAILED tests/test_tokens_realtime.py::TestTokenRealtime::test_token_update_requires_base_version
+FAILED tests/test_tokens_realtime.py::TestTokenRealtime::test_duplicate_client_event_id_is_deduped
+FAILED tests/test_tokens_realtime.py::TestTokenRealtime::test_session_join_switches_active_room_for_same_socket
+FAILED tests/test_tokens_realtime.py::TestTokenRealtime::test_api_token_update_requires_owner_or_dm
+7 failed, 1 passed, 91 warnings in 16.39s

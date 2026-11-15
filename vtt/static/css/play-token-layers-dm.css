@@ -1,0 +1,25 @@
+.token-layer-choices { display: flex; gap: .6rem; flex-wrap: wrap; }
+.token-layer-choices button { flex: 1 1 9rem; min-height: 44px; }
+.token-layer-choices [aria-pressed="true"] { outline: 2px solid var(--accent, #c69751); outline-offset: 2px; }
+.token-layer-choices [data-layer-count] { display: inline-block; margin-left: .4rem; font-weight: bold; }
+.token-inactive-layer { opacity: .25; filter: grayscale(.8); }
+.token-inactive-layer, .token-inactive-layer * { pointer-events: none !important; }
+.token-selection-bar { position: absolute; z-index: 35; bottom: 140px; left: 50%; transform: translateX(-50%); width: max-content; max-width: min(620px, calc(100% - 24px)); max-height: 35%; overflow: auto; padding: .65rem; border: 1px solid var(--accent, #c69751); border-radius: 12px; color: var(--text, #f3ebd7); background: var(--panel, #242127); box-shadow: 0 4px 18px #0006; }
+.token-selection-bar[hidden] { display: none; }
+.token-selection-groups, .token-selection-actions { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
+.token-selection-group { display: flex; align-items: center; gap: .4rem; padding: .25rem .5rem; border: 1px solid currentColor; border-radius: 6px; }
+.token-selection-group img, .token-selection-face { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+.token-selection-face { display: grid; place-items: center; background: #60516a; color: #fff; font-size: .7rem; }
+.token-selection-actions button { min-height: 36px; }
+/* Four dock tabs must not cover the centered map toolbar. */
+.tabletop-shell .table-dock-tabs { flex-wrap: nowrap; overflow-x: auto; }
+.table-dock-tabs button { flex-shrink: 0; }
+@media (min-width: 1041px) {
+    .tabletop-shell .table-dock-tabs { bottom: 76px; }
+    .tabletop-shell .table-sheet { bottom: 128px; }
+}
+@media (max-width: 1040px) {
+    .token-selection-bar { bottom: 114px; max-height: 30%; }
+    body[data-personal-hotbar="true"] .token-selection-bar { bottom: 212px; }
+}
+@media (max-width: 600px) { .token-selection-actions button { flex: 1 1 7rem; } }

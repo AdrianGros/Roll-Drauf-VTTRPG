@@ -1,0 +1,35 @@
+{
+  "snapshot_source": "4158a0c4be0d730881fb0b7ba2ca28a5ffd5e958",
+  "canonical_register": "docs/plans/FEEDBACK_IMPLEMENTATION_2026-11-13.json",
+  "cards": 40,
+  "statuses": {
+    "delivered_for_owner_acceptance": 35,
+    "scope_defined_pending_apply": 1,
+    "deferred_by_owner": 1,
+    "existing_evidence": 2,
+    "planned": 1
+  },
+  "human_accepted_cards_documented": 0,
+  "owner_acceptance_pending_cards": 35,
+  "original_acceptance_journeys": {
+    "total": 12,
+    "not_run": 12,
+    "pass": 0
+  },
+  "git_activity": {
+    "start": "2026-11-13T00:00:00+01:00",
+    "end_exclusive": "2026-11-15T00:00:00+01:00",
+    "total": 33,
+    "feat": 9,
+    "fix": 9,
+    "docs": 15,
+    "additional_2026_11_15_before_this_session": 1
+  },
+  "new_weekly_test_journeys": 20,
+  "approvals_total": "not_measurable_no_central_conversation_approval_ledger",
+  "not_additive": [
+    "VTT-01..40",
+    "C01..09",
+    "N01..20/S01..20"
+  ]
+}

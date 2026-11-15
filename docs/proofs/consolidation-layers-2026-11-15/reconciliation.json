@@ -15,5 +15,12 @@
     "vtt/templates/character-sheet.html.orig"
   ],
   "requirements_difference": "Live omits test-only hypothesis==6.168.1; ship committed requirements.txt without dependency installation.",
-  "next_step": "Full image inventory must match committed sources after build."
+  "next_step": "Full image inventory must match committed sources after build.",
+  "artifact_commit": "be04a5492c29b8929add2e0feece989ef3a64692",
+  "legacy_token_tests": {
+    "changed_source": "7 failed, 1 passed",
+    "baseline_4158a0c4b": "same 7 failed, 1 passed",
+    "cause": "legacy fixtures do not enter the required table contexts",
+    "log": "legacy-token-baseline.txt"
+  }
 }

@@ -15,6 +15,7 @@ window.PlayDMSurface = {
             } else slot.replaceWith(template.content.cloneNode(true));
         }
         for (const name of Object.keys(this.methods)) ui[name] = this.methods[name].bind(ui);
+        window.PlayTokenLayersDM.mount(ui);
     },
     methods: {
 async _bindJournalManagement(journal) {
@@ -267,7 +268,8 @@ _bindTokenClipboard() {
                     const left = Number(marker.dataset.tokenLeft), top = Number(marker.dataset.tokenTop);
                     const size = Number(marker.dataset.tokenSize) || 0;
                     return left < r.x + r.w && left + size > r.x && top < r.y + r.h && top + size > r.y;
-                }).map((marker) => Number(marker.dataset.tokenId));
+                }).map((marker) => Number(marker.dataset.tokenId))
+                    .filter((id) => this._isTokenOnActiveLayer(this._findStateToken(id)));
                 this._selectToken(ids.length ? ids[0] : null);
                 this.selectedTokenIds = ids.length > 1 ? new Set(ids) : null;
                 this._syncTokenMarkerSelection();
@@ -301,7 +303,7 @@ _copySelectedTokens() {
             for (const id of ids) {
                 const token = this._findStateToken(id);
                 const marker = document.querySelector(`.token-marker[data-token-id="${id}"]`);
-                if (!token || !marker) continue;
+                if (!token || !marker || !this._isTokenOnActiveLayer(token)) continue;
                 items.push({ token, left: Number(marker.dataset.tokenLeft) || 0, top: Number(marker.dataset.tokenTop) || 0 });
             }
             if (!items.length) return false;
@@ -317,7 +319,7 @@ _copySelectedTokens() {
                         token_type: token.token_type || "npc",
                         size: Math.max(1, Number(token.size) || 1),
                         rotation: Number(token.rotation) || 0,
-                        visibility: token.visibility || "public",
+                        visibility: this._activeTokenLayer,
                         metadata_json: token.metadata_json?.image_url ? { image_url: token.metadata_json.image_url } : {},
                     };
                     if (token.hp_max != null) { copy.hp_max = Number(token.hp_max); copy.hp_current = Number(token.hp_max); }
@@ -364,6 +366,7 @@ async _pasteTokens() {
                     const size = copy.size * grid;
                     const token = {
                         ...copy,
+                        visibility: this._activeTokenLayer,
                         name: this._nextTokenName(copy.name, taken),
                         x: Math.round(Math.max(0, Math.min(Math.max(0, width - size), ax + dx))),
                         y: Math.round(Math.max(0, Math.min(Math.max(0, height - size), ay + dy))),
