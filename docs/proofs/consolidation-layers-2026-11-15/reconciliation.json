@@ -1,7 +1,7 @@
 {
   "status": "discover_complete",
   "base_commit": "4158a0c4be0d730881fb0b7ba2ca28a5ffd5e958",
-  "base_image": "sha256:a7f79477d77508c6c3b113e86de258340be6e9709a121b9662e2e7eeeae5cd83",
+  "base_image": "sha256:f5bd530568aa2226e0bd5470c7682e9aca695b80bf44c58dd1e0c6d7baec046d",
   "running_file_count": 80855,
   "inventory_sha256": "3f96912998e2088ddbf62fc60ff702821b299f6519adf0b981c503772d4839e2",
   "source_changes_in_container": false,
@@ -22,5 +22,12 @@
     "baseline_4158a0c4b": "same 7 failed, 1 passed",
     "cause": "legacy fixtures do not enter the required table contexts",
     "log": "legacy-token-baseline.txt"
+  },
+  "image_identity_correction": {
+    "initially_read_inherited_compose_image_label": "sha256:a7f79477d77508c6c3b113e86de258340be6e9709a121b9662e2e7eeeae5cd83",
+    "authoritative_container_image_id": "sha256:f5bd530568aa2226e0bd5470c7682e9aca695b80bf44c58dd1e0c6d7baec046d",
+    "same_container_started_at": "2026-11-15T10:11:12.772331899Z",
+    "source_hash_inventory_unchanged": true,
+    "prepare_gate": "correctly rejected incorrect image ID before any production mutation"
   }
 }

@@ -51,6 +51,9 @@ def test_dm_marquee_copy_and_paste_tokens_at_the_pointer(action_site):
         page.goto(f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}&seat=dm")
         expect(page.locator('#mapWorld')).to_have_attribute('data-has-map', 'true')
         expect(page.locator('.token-marker')).to_have_count(3)
+        # Bootstrap painting precedes context renewal and the initial socket snapshot.
+        # Wait for room entry before measuring markers that the snapshot replaces.
+        expect(page.locator('#presenceRoster')).to_contain_text('action-dm')
         page.locator('[data-tool=select]').click()
         first = page.locator('.token-marker', has_text='Goblin').first
         first.scroll_into_view_if_needed()
