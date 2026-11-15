@@ -241,7 +241,7 @@ _bindTokenClipboard() {
                 this._pasteAnchor = overMap ? this._worldPointFromEvent(event) : null;
             });
             viewport.addEventListener("pointerdown", (event) => {
-                if (this.currentTool !== "select" || event.button !== 0 || this.readOnly || this._pendingTarget) return;
+                if (event.pointerType === "touch" || this._mapTouchGesture || this.currentTool !== "select" || event.button !== 0 || this.readOnly || this._pendingTarget) return;
                 if (event.target.closest?.(".token-marker, .floating, .stage-topbar, .vision-light-marker, .vision-wall-line, button, input, select, textarea, a")) return;
                 const start = this._worldPointFromEvent(event);
                 if (!start) return;
@@ -250,6 +250,11 @@ _bindTokenClipboard() {
                 element.hidden = true;
                 world.append(element);
                 marquee = { start, end: null, element, clientX: event.clientX, clientY: event.clientY, moved: false };
+            });
+            viewport.addEventListener("vtt:cancel-map-gesture", () => {
+                marquee?.element.remove();
+                marquee = null;
+                swallowClick = false;
             });
             window.addEventListener("pointermove", (event) => {
                 if (!marquee) return;
@@ -335,6 +340,7 @@ _copySelectedTokens() {
                 }),
             };
             this._showMessage(globalThis.VTTUi("{p0} Token kopiert. Mit Strg+V an der Mausposition einfügen.", { p0: items.length }));
+            this._renderTokenSelection();
             return true;
         },
 _nextTokenName(name, taken) {

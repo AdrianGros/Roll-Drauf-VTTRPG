@@ -16,7 +16,12 @@ window.PlayTokenLayersDM = {
                 <button type="button" class="mini-btn" data-token-layer="public" aria-pressed="true">${VTTUiHTML("Player-Layer")} <span data-layer-count="public">0</span></button>
                 <button type="button" class="mini-btn" data-token-layer="dm_only" aria-pressed="false">${VTTUiHTML("Dungeon-Master-Layer")} <span data-layer-count="dm_only">0</span></button>
             </div>
-            <p class="muted" id="tokenLayerHint"></p>`;
+            <div class="token-selection-actions">
+                <button type="button" class="mini-btn" id="tokenMultiSelect" aria-pressed="false">${VTTUiHTML("Mehrfachauswahl")}</button>
+                <button type="button" class="mini-btn" id="tokenLayerPaste" disabled>${VTTUiHTML("Einfügen")}</button>
+            </div>
+            <p class="muted" id="tokenLayerHint"></p>
+            <p class="muted">${VTTUiHTML("Zwei Finger: Karte zoomen und verschieben. Im Pan-Werkzeug verschiebt ein Finger die Karte. Einfügen setzt Kopien in die Kartenmitte.")}</p>`;
         const bar = document.createElement("section");
         bar.id = "tokenSelectionBar";
         bar.className = "token-selection-bar";
@@ -25,6 +30,8 @@ window.PlayTokenLayersDM = {
         bar.innerHTML = `<strong id="tokenSelectionCount" role="status" aria-live="polite"></strong>
             <div id="tokenSelectionGroups" class="token-selection-groups"></div>
             <div class="token-selection-actions">
+                <button type="button" class="mini-btn" id="tokenSelectionCopy">${VTTUiHTML("Kopieren")}</button>
+                <button type="button" class="mini-btn" id="tokenSelectionPaste" disabled>${VTTUiHTML("Einfügen")}</button>
                 <button type="button" class="mini-btn" data-selection-layer="public">${VTTUiHTML("Spielern zeigen")}</button>
                 <button type="button" class="mini-btn" data-selection-layer="dm_only">${VTTUiHTML("Vor Spielern verbergen")}</button>
                 <button type="button" class="mini-btn secondary" id="tokenSelectionClear">${VTTUiHTML("Auswahl aufheben")}</button>
@@ -37,8 +44,30 @@ window.PlayTokenLayersDM = {
             button.addEventListener("click", () => ui._moveTokenSelection(button.dataset.selectionLayer));
         });
         document.getElementById("tokenSelectionClear").addEventListener("click", () => ui._selectToken(null));
+        document.getElementById("tokenMultiSelect").addEventListener("click", (event) => {
+            ui._tokenMultiSelect = !ui._tokenMultiSelect;
+            event.currentTarget.setAttribute("aria-pressed", String(ui._tokenMultiSelect));
+            if (ui._tokenMultiSelect) ui._setTool("select");
+        });
+        document.getElementById("tokenSelectionCopy").addEventListener("click", () => {
+            ui._copySelectedTokens();
+            ui._renderTokenSelection();
+        });
+        for (const id of ["tokenSelectionPaste", "tokenLayerPaste"]) {
+            document.getElementById(id).addEventListener("click", () => ui._pasteTokensAtMapCenter());
+        }
     },
     methods: {
+        async _pasteTokensAtMapCenter() {
+            if (this._pastingTokenSelection) return;
+            const viewport = document.getElementById("mapViewport");
+            const rect = viewport.getBoundingClientRect();
+            this._pasteAnchor = this._worldPointFromEvent({ clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2 });
+            this._pastingTokenSelection = true;
+            this._renderTokenSelection();
+            try { await this._pasteTokens(); }
+            finally { this._pastingTokenSelection = false; this._renderTokenSelection(); }
+        },
         _isTokenOnActiveLayer(token) {
             return Boolean(token) && (token.visibility === "dm_only" ? "dm_only" : "public") === this._activeTokenLayer;
         },
@@ -75,13 +104,16 @@ window.PlayTokenLayersDM = {
                 document.querySelector(`[data-layer-count="${layer}"]`).textContent = String(tokens.filter(token => (token.visibility === "dm_only" ? "dm_only" : "public") === layer).length);
             }
             document.getElementById("tokenLayerHint").textContent = this._activeTokenLayer === "dm_only"
-                ? VTTUi("Neue Tokens sind nur für die Spielleitung sichtbar. Auswahlrahmen oder Umschalt-Klick wählt mehrere Tokens.")
-                : VTTUi("Neue Tokens sind für Spieler sichtbar. Auswahlrahmen oder Umschalt-Klick wählt mehrere Tokens.");
+                ? VTTUi("Neue Tokens sind nur für die Spielleitung sichtbar. Mehrfachauswahl aktivieren und Tokens antippen; am Desktop auch Auswahlrahmen oder Umschalt-Klick.")
+                : VTTUi("Neue Tokens sind für Spieler sichtbar. Mehrfachauswahl aktivieren und Tokens antippen; am Desktop auch Auswahlrahmen oder Umschalt-Klick.");
             this._renderTokenSelection();
         },
         _renderTokenSelection() {
             const bar = document.getElementById("tokenSelectionBar");
             if (!bar) return;
+            for (const id of ["tokenSelectionPaste", "tokenLayerPaste"]) {
+                document.getElementById(id).disabled = this.readOnly || this._pastingTokenSelection || !this._tokenClipboard?.items.length;
+            }
             const selected = this._selectedLayerTokens();
             const valid = new Set(selected.map(token => Number(token.id)));
             if (this.selectedTokenIds) this.selectedTokenIds = valid.size > 1 ? valid : null;

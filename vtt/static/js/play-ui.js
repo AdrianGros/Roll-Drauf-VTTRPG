@@ -1278,6 +1278,64 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const viewport = document.getElementById("mapViewport");
             if (!viewport) return;
 
+            // Only the map owns these gestures; menus keep native scrolling/zoom.
+            const touches = new Map();
+            let pinch = null;
+            const resetGesture = () => {
+                touches.clear();
+                pinch = null;
+                this._mapTouchGesture = false;
+                this.panState = null;
+                viewport.classList.remove("panning");
+                this._cancelTokenDrag();
+                viewport.dispatchEvent(new Event("vtt:cancel-map-gesture"));
+            };
+            viewport.addEventListener("pointerdown", (event) => {
+                if (event.pointerType !== "touch") return;
+                touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+                if (touches.size < 2) return;
+                this._mapTouchGesture = true;
+                this.panState = null;
+                viewport.classList.remove("panning");
+                this._cancelTokenDrag();
+                viewport.dispatchEvent(new Event("vtt:cancel-map-gesture"));
+                const [a, b] = [...touches.values()];
+                const rect = viewport.getBoundingClientRect();
+                const x = (a.x + b.x) / 2 - rect.left;
+                const y = (a.y + b.y) / 2 - rect.top;
+                const scale = this.zoomLevel / 100;
+                pinch = { distance: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)), zoom: this.zoomLevel,
+                    worldX: (viewport.scrollLeft + x) / scale, worldY: (viewport.scrollTop + y) / scale };
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }, true);
+            window.addEventListener("pointermove", (event) => {
+                if (!touches.has(event.pointerId)) return;
+                touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+                if (!pinch || touches.size < 2) return;
+                const [a, b] = [...touches.values()];
+                const rect = viewport.getBoundingClientRect();
+                this._setZoom(pinch.zoom * Math.hypot(a.x - b.x, a.y - b.y) / pinch.distance);
+                viewport.scrollLeft = pinch.worldX * this.zoomLevel / 100 - ((a.x + b.x) / 2 - rect.left);
+                viewport.scrollTop = pinch.worldY * this.zoomLevel / 100 - ((a.y + b.y) / 2 - rect.top);
+            }, true);
+            const endTouch = (event) => {
+                if (!touches.delete(event.pointerId)) return;
+                if (this._mapTouchGesture) this._suppressMapClickUntil = performance.now() + 600;
+                if (!touches.size) {
+                    pinch = null;
+                    this._mapTouchGesture = false;
+                }
+            };
+            window.addEventListener("pointerup", endTouch, true);
+            window.addEventListener("pointercancel", resetGesture, true);
+            window.addEventListener("blur", resetGesture);
+            viewport.addEventListener("click", (event) => {
+                if (performance.now() >= (this._suppressMapClickUntil || 0)) return;
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }, true);
+
             // Wheel = zoom to cursor (the standard VTT gesture); plain
             // scrolling of a huge map happens by panning instead.
             viewport.addEventListener("wheel", (event) => {
@@ -1292,23 +1350,25 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const isMiddle = event.button === 1;
                 const isPanTool = this.currentTool === "pan" && event.button === 0;
                 if (!isMiddle && !isPanTool) return;
-                if (event.target.closest?.(".floating, .stage-topbar, .token-marker")) return;
+                if (this._mapTouchGesture || event.target.closest?.(".floating, .stage-topbar")) return;
                 event.preventDefault();
                 this.panState = {
                     startX: event.clientX,
                     startY: event.clientY,
                     scrollLeft: viewport.scrollLeft,
                     scrollTop: viewport.scrollTop,
+                    pointerId: event.pointerId,
                 };
                 viewport.classList.add("panning");
+                viewport.setPointerCapture?.(event.pointerId);
             });
             window.addEventListener("pointermove", (event) => {
-                if (!this.panState) return;
+                if (!this.panState || this.panState.pointerId !== event.pointerId) return;
                 viewport.scrollLeft = this.panState.scrollLeft - (event.clientX - this.panState.startX);
                 viewport.scrollTop = this.panState.scrollTop - (event.clientY - this.panState.startY);
             });
-            window.addEventListener("pointerup", () => {
-                if (!this.panState) return;
+            window.addEventListener("pointerup", (event) => {
+                if (!this.panState || this.panState.pointerId !== event.pointerId) return;
                 this.panState = null;
                 viewport.classList.remove("panning");
             });
@@ -1361,9 +1421,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     longPressTimer = null;
                     window.removeEventListener("pointermove", cancelIfMoved);
                     window.removeEventListener("pointerup", clearOnUp);
+                    window.removeEventListener("pointercancel", clearOnUp);
+                    viewport.removeEventListener("vtt:cancel-map-gesture", clearOnUp);
                 };
                 window.addEventListener("pointermove", cancelIfMoved);
                 window.addEventListener("pointerup", clearOnUp);
+                window.addEventListener("pointercancel", clearOnUp);
+                viewport.addEventListener("vtt:cancel-map-gesture", clearOnUp);
             });
             viewport.addEventListener("click", (event) => {
                 if (this.currentTool !== "measure") return;
@@ -4794,7 +4858,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             return Number(this.selectedTokenId) === Number(tokenId) || Boolean(this.selectedTokenIds?.has(Number(tokenId)));
         }
 
-        _selectToken(tokenId, repaintMap = false) {
+        _selectToken(tokenId, repaintMap = false, revealControls = true) {
             const searchId = tokenId == null ? NaN : Number(tokenId);
             if (Number.isInteger(searchId) && this._isTokenOnActiveLayer && !this._isTokenOnActiveLayer(this._findStateToken(searchId))) return;
             this.selectedTokenIds = null;
@@ -4809,7 +4873,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 // F4: selecting a token (DM or a player selecting their own)
                 // must surface its controls, not just update text buried in
                 // an already-closed panel -- see _revealTokenWidget.
-                this._revealTokenWidget();
+                if (revealControls) this._revealTokenWidget();
             }
             const token = this._findStateToken(this.selectedTokenId);
             const actorSelect = document.getElementById("actionTokenId");
@@ -4842,7 +4906,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!tokenLayer || this.mapInteractionsBound) return;
 
             tokenLayer.addEventListener("pointerdown", (event) => {
-                if (this.currentTool === "measure") return;
+                if (this.currentTool === "measure" || this.currentTool === "pan" || this._mapTouchGesture || event.button !== 0) return;
                 const marker = event.target.closest?.(".token-marker");
                 if (!marker) {
                     return;
@@ -4851,7 +4915,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const token = this._findStateToken(tokenId);
                 if (!token) return;
                 if (this._isTokenOnActiveLayer && !this._isTokenOnActiveLayer(token)) return;
-                if (event.shiftKey && this._toggleTokenGroup?.(token)) {
+                if ((event.shiftKey || this._tokenMultiSelect) && this._toggleTokenGroup?.(token)) {
                     event.preventDefault();
                     event.stopPropagation();
                     return;
@@ -4864,8 +4928,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     return;
                 }
 
-                this._selectToken(tokenId, false);
                 const canMove = this._canMoveToken(token);
+                this._selectToken(tokenId, false, event.pointerType !== "touch" || !canMove || !this.socket);
                 if (!canMove || !this.socket) {
                     return;
                 }
@@ -4900,6 +4964,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     marker,
                     moved: false,
                     pointerId: event.pointerId,
+                    clientX: event.clientX,
+                    clientY: event.clientY,
+                    isTouch: event.pointerType === "touch",
                 };
                 if (marker.setPointerCapture) {
                     try {
@@ -4919,7 +4986,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             });
 
             window.addEventListener("pointermove", (event) => {
-                if (!this.dragState) return;
+                if (!this.dragState || this.dragState.pointerId !== event.pointerId || this._mapTouchGesture) return;
+                if (!this.dragState.moved && Math.hypot(event.clientX - this.dragState.clientX, event.clientY - this.dragState.clientY) < 6) return;
                 const world = document.getElementById("mapWorld");
                 const worldRect = world?.getBoundingClientRect();
                 if (!worldRect) return;
@@ -4938,8 +5006,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this.dragState.moved = true;
             });
 
-            window.addEventListener("pointerup", async () => {
-                if (!this.dragState) return;
+            window.addEventListener("pointerup", async (event) => {
+                if (!this.dragState || this.dragState.pointerId !== event.pointerId) return;
                 const drag = this.dragState;
                 this.dragState = null;
                 if (this.tokenRenderPending) this._scheduleTokenRender();
@@ -4948,6 +5016,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const finalTop = Number(drag.marker.dataset.tokenTop || drag.baseTop);
                 const token = this._findStateToken(drag.tokenId);
                 if (!token || !drag.moved || (finalLeft === drag.baseLeft && finalTop === drag.baseTop)) {
+                    if (token && !drag.moved && drag.isTouch) {
+                        // Finish the compatibility click before mounting its backdrop;
+                        // otherwise that same tap immediately closes the new drawer.
+                        window.setTimeout(() => {
+                            if (Number(this.selectedTokenId) === Number(token.id) && !this._mapTouchGesture) this._revealTokenWidget();
+                        }, 0);
+                    }
                     return;
                 }
 
@@ -4972,6 +5047,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             });
 
             this.mapInteractionsBound = true;
+        }
+
+        _cancelTokenDrag() {
+            const drag = this.dragState;
+            if (!drag) return;
+            this.dragState = null;
+            drag.marker.classList.remove("dragging");
+            Object.assign(drag.marker.style, { left: `${drag.baseLeft}px`, top: `${drag.baseTop}px` });
+            drag.marker.dataset.tokenLeft = String(drag.baseLeft);
+            drag.marker.dataset.tokenTop = String(drag.baseTop);
+            if (drag.marker.hasPointerCapture?.(drag.pointerId)) drag.marker.releasePointerCapture(drag.pointerId);
+            if (this.tokenRenderPending) this._scheduleTokenRender();
         }
 
         _renderActions() {

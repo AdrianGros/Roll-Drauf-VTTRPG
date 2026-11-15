@@ -36,6 +36,7 @@ html[data-vtt-theme] body.play-workspace-realign .tabletop-shell .left-chat-side
 .table-dock-close { position: sticky; top: 0; float: right; z-index: 1; min-width: 40px; min-height: 40px; }
 .tabletop-shell .table-sheet-back { display: none; }
 @media (max-width: 1040px) {
+    .tabletop-shell input:not([type="range"]):not([type="checkbox"]), .tabletop-shell select, .tabletop-shell textarea { font-size: 16px; }
     .tabletop-shell .left-toolbar #btnBack { display: flex; }
     .tabletop-shell .table-dock-tabs { left: 8px; bottom: calc(60px + env(safe-area-inset-bottom, 0px)); max-width: calc(100vw - 16px); }
     .tabletop-shell .table-sheet { left: 8px; bottom: calc(108px + env(safe-area-inset-bottom, 0px)); width: calc(100vw - 16px); max-height: 55svh; }
