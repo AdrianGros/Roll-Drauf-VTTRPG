@@ -117,3 +117,14 @@ kein Beweis, dass eine Änderung fehlt oder erneut veröffentlicht werden soll.
 
 Stand eingefroren auf Basis 4158a0c4b; die Lieferung dieser Sitzung wird separat
 in `docs/proofs/consolidation-layers-2026-11-15/delivery.json` und Deploy/Monitor dokumentiert.
+
+## Technischer Abschluss dieser Sitzung
+
+Der zusätzliche Layer-Slice ist als `714f277c8` committed, gepusht und live geprüft.
+Der reale Owner-as-Player-Negativtest deckte einen bereits im Token-Endpunkt vorhandenen
+Besitz-/Sichtbarkeitsfehler auf. HTTP und Socket sind korrigiert; derselbe Live-Zugriff
+wird jetzt mit 403 abgewiesen. 39 unterschiedliche gezielte Tests und acht Live-Checks
+sind grün; synthetische Testdaten und Zugangsdaten entfernt.
+
+[Deploy/Monitor mit Commit, Image, Rollback und Prüflücken](DADM_DEPLOY_MONITOR_CONSOLIDATION_LAYERS_2026-11-15.md).
+Die eingefrorene 40-Karten-Statistik und offene menschliche Abnahme bleiben unverändert.

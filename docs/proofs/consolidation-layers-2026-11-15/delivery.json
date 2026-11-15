@@ -1,0 +1,210 @@
+{
+  "commit": "714f277c8546676a98db9d1cf3aba0fa1041027a",
+  "base_source": "3253ad0b00564612393d582f7c2868468e66490a",
+  "running_revision_label": "3253ad0b00564612393d582f7c2868468e66490a",
+  "image": "roll-drauf-vtt-app:feedback-consolidation-layer-auth-20261111-714f277c8",
+  "base_image_id": "sha256:003baaa4e2b6e081b1688a26170ee5eb9f49f51f4be8a84715676c2664d4de75",
+  "prior_image": "roll-drauf-vtt-app:feedback-consolidation-layer-auth-rollback-20261111-003baaa4e2b6",
+  "overlay_manifest": {
+    "vtt/campaigns/routes.py": "d4dfd6ffbb15569fe472f606ed1b849c2a9e4083154e89c88e3ba28cdb720bcf",
+    "vtt/socket_handlers.py": "e773190f12298fd9c74d84e31fffa49c011cf7a106fb63680ad4c4823aabc990",
+    "requirements.txt": "dd27eb82e4ccb5f277d3e415231420399ac85e0467c11564200a1fff3845a55c"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_before": {
+    "/roll-drauf-vtt-mailserver-1": {
+      "id": "d17377aeced889c1b8f7179bac736196c8985f3440036ea09568b8c7db088743",
+      "started_at": "2026-11-10T16:17:34.845940374Z"
+    },
+    "/roll-drauf-vtt-db-1": {
+      "id": "75d0b239cd1d6a8f2f791e78028aa6c42142a55f679cf663a49c0a731be62a49",
+      "started_at": "2026-11-10T16:17:34.827250527Z"
+    },
+    "/roll-drauf-vtt-redis-1": {
+      "id": "37ac298892f547099b3844172945475c17e206996b6596d68a3189fd240ead4c",
+      "started_at": "2026-11-10T16:17:34.8087529Z"
+    }
+  },
+  "prepared_at": "2026-11-15T12:13:30.058733+00:00",
+  "tracked_files_intentionally_absent": [
+    "vtt/creation_engine/adapter/__init__.py",
+    "vtt/creation_engine/adapter/mapping.py",
+    "vtt/creation_engine/compiler/__init__.py",
+    "vtt/creation_engine/compiler/catalog.py",
+    "vtt/creation_engine/compiler/flame.py",
+    "vtt/creation_engine/compiler/homebrew.py",
+    "vtt/creation_engine/compiler/interview.py",
+    "vtt/creation_engine/compiler/manual.py",
+    "vtt/creation_engine/compiler/race.py",
+    "vtt/creation_engine/compiler/runtime.py",
+    "vtt/creation_engine/content/__init__.py",
+    "vtt/creation_engine/content/locks.py",
+    "vtt/creation_engine/content/rdl_g1.py",
+    "vtt/creation_engine/content/records.py",
+    "vtt/creation_engine/content/registry.py",
+    "vtt/creation_engine/content/ruleset.py",
+    "vtt/creation_engine/contracts/__init__.py",
+    "vtt/creation_engine/contracts/core-contracts-1.1.3.schema.json",
+    "vtt/creation_engine/contracts/registry-a1.schema.json",
+    "vtt/creation_engine/evaluator/__init__.py",
+    "vtt/creation_engine/evaluator/effects.py",
+    "vtt/creation_engine/evaluator/engine.py",
+    "vtt/creation_engine/evaluator/fuel.py",
+    "vtt/creation_engine/evaluator/functions.py",
+    "vtt/creation_engine/evaluator/identity.py",
+    "vtt/creation_engine/evaluator/nodes.py",
+    "vtt/creation_engine/homebrew_runtime.py",
+    "vtt/creation_engine/kernel/__init__.py",
+    "vtt/creation_engine/kernel/activity.py",
+    "vtt/creation_engine/kernel/decision_service.py",
+    "vtt/creation_engine/kernel/decisions.py",
+    "vtt/creation_engine/kernel/records.py",
+    "vtt/creation_engine/kernel/service.py",
+    "vtt/creation_engine/policy/__init__.py",
+    "vtt/creation_engine/policy/projection.py",
+    "vtt/creation_engine/policy/public_errors.py",
+    "vtt/creation_engine/policy/rules.py",
+    "vtt/creation_engine/rational.py",
+    "vtt/creation_engine/store/__init__.py",
+    "vtt/creation_engine/store/advanced.py",
+    "vtt/creation_engine/store/authoring.py",
+    "vtt/creation_engine/store/authoring_models.py",
+    "vtt/creation_engine/store/content.py",
+    "vtt/creation_engine/store/homebrew.py",
+    "vtt/creation_engine/store/homebrew_models.py",
+    "vtt/creation_engine/store/legacy/__init__.py",
+    "vtt/creation_engine/store/legacy/compatibility.py",
+    "vtt/creation_engine/store/legacy/guards.py",
+    "vtt/creation_engine/store/legacy/inputs.py",
+    "vtt/creation_engine/store/legacy/migration.py",
+    "vtt/creation_engine/store/legacy/projections.py",
+    "vtt/creation_engine/store/legacy/snapshots.py",
+    "vtt/creation_engine/store/maintenance.py",
+    "vtt/creation_engine/store/migration_models.py",
+    "vtt/creation_engine/store/models.py",
+    "vtt/creation_engine/store/native.py",
+    "vtt/creation_engine/store/native_documents.py",
+    "vtt/creation_engine/store/policy.py",
+    "vtt/creation_engine/store/policy_models.py",
+    "vtt/creation_engine/store/public.py",
+    "vtt/creation_engine/store/race_sheets.py",
+    "vtt/creation_engine/store/runtime.py",
+    "vtt/creation_engine/store/runtime_models.py",
+    "vtt/creation_engine/store/sheet_models.py",
+    "vtt/creation_engine/transports/__init__.py",
+    "vtt/creation_engine/transports/advanced_http.py",
+    "vtt/creation_engine/transports/authoring_http.py",
+    "vtt/creation_engine/transports/common.py",
+    "vtt/creation_engine/transports/homebrew_http.py",
+    "vtt/creation_engine/transports/http.py",
+    "vtt/creation_engine/transports/legacy_host.py",
+    "vtt/creation_engine/transports/legacy_http.py",
+    "vtt/creation_engine/transports/sheet_http.py",
+    "vtt/creation_engine/transports/sockets.py",
+    "vtt/creation_engine/types.py",
+    "vtt/creation_engine/units.py",
+    "vtt/static/css/creation-advanced.css",
+    "vtt/static/js/ce-schema-form.js",
+    "vtt/static/js/creation-advanced.js",
+    "vtt/static/js/creation-engine.js",
+    "vtt/templates/creation-advanced.html"
+  ],
+  "removed_obsolete_backups": [
+    "vtt/templates/creation-engine.html.orig",
+    "vtt/templates/character-sheet.html.orig"
+  ],
+  "expected_runtime_files": 80855,
+  "image_id": "sha256:f2ecedaf58119284a424437389a4e1b36799b65968abbd0900f88bbeb298a345",
+  "built_source_verification": {
+    "checked": 80855,
+    "actual": 80855,
+    "mismatches": [],
+    "uncommitted_files": []
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-consolidation-layer-auth/714f277c8/database-before.dump",
+    "bytes": 468461,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "deployed_at": "2026-11-15T12:15:28.19149852Z",
+  "health": {
+    "now": "2026-11-15T12:15:33.869721",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-15T12:15:31.915413",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-11/feedback-consolidation-layer-auth/714f277c8/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "status": "technically_verified_live",
+  "retention": "permanent",
+  "url": "https://vtt.roll-drauf.de",
+  "source_commit": "714f277c8546676a98db9d1cf3aba0fa1041027a",
+  "verified_at": "2026-11-15T12:19:27.084908+00:00",
+  "source_branch": "feat/consolidation-dm-layers-20261115",
+  "pushed": true,
+  "push_note": "Source commit pushed to origin using the existing repository owner SSH identity; initial root-default authentication failure resolved.",
+  "user_journey": "Kampagnen → eigener Hub → Sitzung ausdrücklich als DM öffnen → bestehendes Tisch-Dock neben Tokens → Layers → Player-/Dungeon-Master-Layer; Auswahlrahmen oder Shift-Klick → Auswahlleiste → Spielern zeigen/verbergen",
+  "intended_roles": [
+    "authorized DM/Co-DM",
+    "Player receives public projection only",
+    "campaign owner in Player context remains restricted"
+  ],
+  "targeted_checks": "checks.json",
+  "distinct_targeted_test_cases": 39,
+  "live_verification": "live.json",
+  "runtime_integrity": "runtime-integrity.json",
+  "cleanup": "cleanup.json",
+  "human_acceptance": "NOT_RUN",
+  "weekly_test_catalog": "../../acceptance/TEST_CATALOG_2026-11-16.md",
+  "review": "Structured self-review; no independent subagent review",
+  "acceptance_checklist": {
+    "dm_layer_dock_reachable": "pass",
+    "grouped_selection_and_counts": "pass",
+    "hidden_creation_and_clipboard_destination": "pass",
+    "player_http_socket_no_secrets": "pass",
+    "owner_player_cannot_reveal_or_read_dm_surface": "pass",
+    "hidden_mutation_and_conflict_rejected_http_and_socket": "pass",
+    "parallel_tabs_reload": "pass",
+    "mobile_390_and_keyboard": "pass",
+    "committed_shipped_sources_and_clean_app_tree": "pass",
+    "synthetic_data_removed": "pass"
+  },
+  "security_rework": {
+    "discovered_in_initial_live_run": "Owner in Player context could mutate a hidden token he owned; source was existing HTTP/socket ownership and visibility allowlists.",
+    "fixed_in": "714f277c8546676a98db9d1cf3aba0fa1041027a",
+    "evidence_before": "live-authorization-before-fix.json",
+    "regression_cases": "tests/test_token_layer_permissions.py",
+    "same_live_attack_after": "403; no secret payload or mutation",
+    "schema_changes": false
+  },
+  "rollback_scope": "Previous app image retained, rollback script syntax checked; actual rollback NOT_RUN. Prior image 3253ad0b0 contains the reproduced authorization flaw, so reverting to it reopens that flaw.",
+  "residual_risks": [
+    {
+      "severity": "low",
+      "detail": "Owner/human game acceptance not yet observed; 20 weekly journeys prepared."
+    },
+    {
+      "severity": "low",
+      "detail": "Seven pre-existing legacy token test failures omit required contexts; current authorized HTTP/socket paths covered by dedicated tests."
+    }
+  ],
+  "remaining_separate_product_work": [
+    "N07 campaign allowlist for published homebrew options",
+    "S15/B10 reachable campaign quota extension",
+    "N11 deferred by owner until the original control is identified",
+    "B11 full combined human game acceptance"
+  ]
+}

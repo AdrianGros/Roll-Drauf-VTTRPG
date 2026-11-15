@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "source_commit": "714f277c8546676a98db9d1cf3aba0fa1041027a",
+  "image_id": "sha256:f2ecedaf58119284a424437389a4e1b36799b65968abbd0900f88bbeb298a345",
+  "running_revision": "714f277c8546676a98db9d1cf3aba0fa1041027a",
+  "built_source_verification": {
+    "checked": 80855,
+    "actual": 80855,
+    "mismatches": [],
+    "uncommitted_files": []
+  },
+  "uncommitted_app_files_in_container": [],
+  "source_bind_mounts": false,
+  "health": {
+    "now": "2026-11-15T12:17:49.597857",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-15T12:15:31.915413",
+    "status": "ok"
+  },
+  "application_worktree_clean": true,
+  "user_assets_volume_is_runtime_data": true
+}

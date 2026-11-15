@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "distinct_test_cases": 39,
+  "runs": [
+    {
+      "command": "python -m pytest tests/test_token_layer_permissions.py tests/test_table_contexts.py tests/test_playtable_token_clipboard_browser.py tests/test_token_layers_browser.py -q -x --disable-warnings --tb=short",
+      "result": "32 passed",
+      "source_commit": "714f277c8546676a98db9d1cf3aba0fa1041027a",
+      "evidence": "auth-rework-tests.txt"
+    },
+    {
+      "command": "python -m pytest tests/test_play_presentation_browser.py -q -x --disable-warnings --tb=short",
+      "result": "5 passed",
+      "scope": "Latest stylesheet; later change adds only backend authorization and pointer tracking",
+      "evidence": "presentation-fixed.txt"
+    },
+    {
+      "command": "python -m pytest tests/test_table_contexts.py tests/test_table_contexts_browser.py -q -x --disable-warnings --tb=short",
+      "result": "26 passed (24 overlap with final authorization run; 2 additional browser cases)",
+      "evidence": "contexts-final.txt"
+    }
+  ],
+  "i18n": "3343 UI sources, DE/EN and placeholder/generated-file parity verified",
+  "source_integrity": "80855 shipped files verified against committed sources; no unexpected files",
+  "legacy_suite_gap": {
+    "tests": "tests/test_tokens_realtime.py",
+    "baseline": "7 failed, 1 passed on unchanged 4158a0c4b",
+    "reason": "Older tests omit mandatory authorized table contexts; no permissive fallback added",
+    "evidence": "legacy-token-baseline.txt"
+  },
+  "full_repository_suite": "NOT_RUN; targeted verification for this slice",
+  "human_acceptance": "NOT_RUN; 20 weekly journeys prepared"
+}

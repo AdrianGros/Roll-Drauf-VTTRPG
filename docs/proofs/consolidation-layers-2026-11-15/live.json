@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "url": "https://vtt.roll-drauf.de",
+  "journeys": [
+    "player: Login → Kampagnen → eigener Hub → Sitzung (player)",
+    "dm: Login → Kampagnen → eigener Hub → Sitzung (dm)",
+    "dm: Login → Kampagnen → eigener Hub → Sitzung (player)",
+    "DM: Tisch → Layers → DM-Tokenauswahl → gruppierte Freigabe/Rücknahme → Platzierung → Clipboard → erneuter Eintritt; Player und Owner-as-Player parallel"
+  ],
+  "checks": {
+    "player_initial_http_socket_and_composition": "pass",
+    "group_reveal_to_firefox": "pass",
+    "hide_and_player_reload": "pass",
+    "hidden_placement_no_player_event_leak": "pass",
+    "clipboard_destination_layer": "pass",
+    "owner_player_cannot_read_surface_or_reveal": "pass",
+    "parallel_tabs_reload_persist_visibility": "pass",
+    "mobile_390_and_keyboard_dock": "pass"
+  },
+  "errors": []
+}
