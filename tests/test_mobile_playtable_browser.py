@@ -57,7 +57,7 @@ def test_mobile_dm_touch_layers_clipboard_and_core_panels(action_site, engine):
         page.locator('#tokenMultiSelect').tap()
         expect(page.locator('#tokenMultiSelect')).to_have_attribute('aria-pressed', 'true')
         page.locator('.table-dock-close').tap()
-        page.locator('.token-marker', has_text='Goblin').first.tap()
+        page.locator('.token-marker:not(.token-inactive-layer)', has_text='Goblin').first.tap()
         page.locator('.token-marker', has_text='Goblin 2').tap()
         expect(page.locator('#tokenSelectionCount')).to_have_text('2 ausgewählt')
         page.locator('#tokenSelectionCopy').tap()
