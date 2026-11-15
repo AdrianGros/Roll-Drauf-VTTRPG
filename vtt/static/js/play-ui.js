@@ -4907,7 +4907,6 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!tokenLayer || this.mapInteractionsBound) return;
 
             tokenLayer.addEventListener("pointerdown", (event) => {
-                this._pendingTokenTap = null;
                 if (this.currentTool === "measure" || this.currentTool === "pan" || this._mapTouchGesture || event.button !== 0) return;
                 const marker = event.target.closest?.(".token-marker");
                 if (!marker) {
@@ -4982,12 +4981,6 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             tokenLayer.addEventListener("click", (event) => {
                 if (this.currentTool === "measure") return;
                 const marker = event.target.closest?.(".token-marker");
-                if (marker && this._pendingTokenTap != null && Number(marker.dataset.tokenId) === Number(this._pendingTokenTap)) {
-                    this._pendingTokenTap = null;
-                    this._revealTokenWidget();
-                    event.stopPropagation();
-                    return;
-                }
                 if (!marker) {
                     this._selectToken(null);
                 }
@@ -5025,9 +5018,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const token = this._findStateToken(drag.tokenId);
                 if (!token || !drag.moved || (finalLeft === drag.baseLeft && finalTop === drag.baseTop)) {
                     if (token && !drag.moved && drag.isTouch) {
-                        // Mount from the ensuing click, whose propagation path is
-                        // already fixed, so it cannot hit the new drawer backdrop.
-                        this._pendingTokenTap = token.id;
+                        this._openTokenDetailsFromTouch(event);
                     }
                     return;
                 }
@@ -5056,7 +5047,6 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _cancelTokenDrag() {
-            this._pendingTokenTap = null;
             const drag = this.dragState;
             if (!drag) return;
             this.dragState = null;
@@ -5066,6 +5056,28 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             drag.marker.dataset.tokenTop = String(drag.baseTop);
             if (drag.marker.hasPointerCapture?.(drag.pointerId)) drag.marker.releasePointerCapture(drag.pointerId);
             if (this.tokenRenderPending) this._scheduleTokenRender();
+        }
+
+        _openTokenDetailsFromTouch(pointer) {
+            // WebKit may omit the compatibility click; Chromium may retarget it
+            // onto the newly mounted backdrop. Open on release and swallow only
+            // that trusted click. A fresh pointerdown always ends the guard.
+            let timer;
+            const cleanup = () => {
+                document.removeEventListener("click", swallow, true);
+                window.removeEventListener("pointerdown", cleanup, true);
+                window.clearTimeout(timer);
+            };
+            const swallow = (event) => {
+                if (!event.isTrusted || Math.hypot(event.clientX - pointer.clientX, event.clientY - pointer.clientY) > 12) return;
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                cleanup();
+            };
+            document.addEventListener("click", swallow, true);
+            window.addEventListener("pointerdown", cleanup, true);
+            timer = window.setTimeout(cleanup, 800);
+            this._revealTokenWidget();
         }
 
         _renderActions() {

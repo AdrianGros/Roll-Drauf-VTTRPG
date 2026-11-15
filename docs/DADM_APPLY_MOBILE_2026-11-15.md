@@ -21,10 +21,12 @@ Rollenarchitektur und keine Änderung an HTTP-/Socket-Autorisierung.
    Abbruch speichert keine Position; normale Freigabe nutzt bestehende versionierte
    Tokenmutationen. Nach Pinch entsteht weder Tokenplatzierung noch Geisterklick.
    Ergänzung nach dem Pointer-Proof: Touch-Drag öffnet kein Token-Sheet; erst
-   Freigabe ohne Bewegung merkt einen Tap vor. Sein folgender Klick öffnet die
-   Details innerhalb des bereits festgelegten Event-Pfads, ohne dass derselbe
-   Klick einen neu montierten Dialoghintergrund trifft. Ein Timer ist dafür
-   keine verlässliche Schnittstelle. Desktop-Auswahl bleibt unverändert.
+   Freigabe ohne Bewegung öffnet die Details. Ein kurzlebiger Capture-Handler
+   fängt ausschließlich den vertrauenswürdigen Kompatibilitätsklick an derselben
+   Position ab, bevor er den frisch montierten Hintergrund schließen kann.
+   Neue Berührung oder 800ms beenden diesen Schutz. Damit funktioniert der Tap
+   auch, wenn WebKit nach preventDefault keinen Kompatibilitätsklick liefert.
+   Desktop-Auswahl bleibt unverändert.
 3. DM-Layers erhält einen sichtbaren Schalter **Mehrfachauswahl** mit aria-pressed.
    Aktiv: Antippen fügt Tokens hinzu/entfernt sie, ohne sie zu verschieben. Shift
    und Desktop-Auswahlrahmen bleiben bedienbar.
