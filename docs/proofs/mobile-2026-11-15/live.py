@@ -78,12 +78,15 @@ def android_gestures(context, page, base):
     moved = state()
     assert moved[:2] != before[:2]
     expect(page.locator('#tableSheet')).to_be_hidden()
+    # Overlays deliberately intercept touch; uncover the token before testing pan.
+    page.locator('#tokenSelectionClear').tap()
     for _ in range(6):
         page.locator('#btnZoomIn').tap()
     marker.scroll_into_view_if_needed()
     page.locator('[data-tool=pan]').tap()
     scroll = page.locator('#mapViewport').evaluate('(v) => [v.scrollLeft,v.scrollTop]')
     x, y = center()
+    assert page.evaluate('''([x,y]) => document.elementFromPoint(x,y)?.closest('.token-marker')?.dataset.tokenId''', [x, y]) == str(fixture['token_ids']['Hero'])
     touch('touchStart', [(0, x, y)])
     touch('touchMove', [(0, x - 35, y - 25)])
     touch('touchEnd', [])
@@ -223,6 +226,8 @@ with sync_playwright() as p:
     except Exception as error:
         proof['status'] = 'fail'
         proof['failure'] = str(error)
+        if 'dm' in globals():
+            dm.screenshot(path=str(ROOT / 'failure.png'))
         raise
     finally:
         proof['finished_at'] = datetime.now(timezone.utc).isoformat()

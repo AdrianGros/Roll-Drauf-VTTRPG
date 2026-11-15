@@ -63,3 +63,6 @@ Dialogöffnung) unterscheiden. Desktop-Klickverhalten bleibt erforderlich.
 Der Folge-Proof zeigte außerdem den Kompatibilitätsklick derselben Berührung
 auf dem gerade neu geöffneten `tableSheetBackdrop`; dadurch schloss sich das
 Sheet sofort wieder. Die Detailöffnung muss nach diesem Klick erfolgen.
+Live mit Pixel-7-Profil war eine Timer-Lösung noch nicht verlässlich. Die
+Apply-Nachbesserung bindet die Detailöffnung deshalb an den tatsächlichen Klick
+und nimmt dieselben Geräteprofile und Kartengrößen in die lokalen Tests auf.

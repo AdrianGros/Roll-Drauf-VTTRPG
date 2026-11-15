@@ -21,13 +21,19 @@ Rollenarchitektur und keine Änderung an HTTP-/Socket-Autorisierung.
    Abbruch speichert keine Position; normale Freigabe nutzt bestehende versionierte
    Tokenmutationen. Nach Pinch entsteht weder Tokenplatzierung noch Geisterklick.
    Ergänzung nach dem Pointer-Proof: Touch-Drag öffnet kein Token-Sheet; erst
-   Freigabe ohne Bewegung öffnet die Details. Desktop-Auswahl bleibt unverändert.
+   Freigabe ohne Bewegung merkt einen Tap vor. Sein folgender Klick öffnet die
+   Details innerhalb des bereits festgelegten Event-Pfads, ohne dass derselbe
+   Klick einen neu montierten Dialoghintergrund trifft. Ein Timer ist dafür
+   keine verlässliche Schnittstelle. Desktop-Auswahl bleibt unverändert.
 3. DM-Layers erhält einen sichtbaren Schalter **Mehrfachauswahl** mit aria-pressed.
    Aktiv: Antippen fügt Tokens hinzu/entfernt sie, ohne sie zu verschieben. Shift
    und Desktop-Auswahlrahmen bleiben bedienbar.
 4. Sichtbare DM-Buttons **Kopieren** und **Einfügen** benutzen dieselbe interne
    Tokenzwischenablage wie die Tastatur. Einfügen per Button nutzt die Kartenmitte
-   als Ziel im aktiven Layer. Kein OS-Clipboard-Zugriff und keine Browserberechtigung.
+   der Kartenansicht als Ziel im aktiven Layer. Koordinaten werden wie bei der
+   bestehenden Zwischenablage an Kartengrenzen begrenzt; bei einer vollständig
+   eingepassten kleinen Karte kann das Ziel dadurch randnah liegen.
+   Kein OS-Clipboard-Zugriff und keine Browserberechtigung.
    Einfügen bleibt im Layers-Menü erreichbar, wenn keine Auswahl mehr besteht.
 5. Mobile Auswahlbuttons mindestens 44px; Auswahlleiste begrenzt/scrollerbar,
    Dock und Pan-Werkzeug in Hoch- und Querformat erreichbar. Formulare mindestens

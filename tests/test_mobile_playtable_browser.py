@@ -6,7 +6,7 @@ from tests.play_shared import create_token
 from tests.test_personal_actions_browser import action_site  # noqa: F401
 from tests.test_playtable_token_clipboard_browser import client_point
 from vtt.extensions import db
-from vtt.models import Campaign, GameSession, TokenState
+from vtt.models import Campaign, CampaignMap, GameSession, TokenState
 from vtt.play.service import ensure_session_state
 
 
@@ -14,6 +14,8 @@ def seed_hidden(app, info):
     with app.app_context():
         campaign = db.session.get(Campaign, info['campaign'])
         session = db.session.get(GameSession, info['session'])
+        map_ = db.session.get(CampaignMap, session.map_id)
+        map_.width, map_.height, map_.grid_size = 1200, 900, 70
         for name, x in [('Goblin', 140), ('Goblin 2', 210)]:
             token = create_token(campaign, session, ensure_session_state(campaign, session), campaign.owner_id,
                                  name=name, token_type='monster', x=x, y=140)
@@ -22,9 +24,10 @@ def seed_hidden(app, info):
         db.session.commit()
 
 
-def open_dm(browser, origin, info):
-    context = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True,
-                                  has_touch=True, device_scale_factor=2, reduced_motion='reduce')
+def open_dm(browser, origin, info, device=None):
+    options = device or {'viewport': {'width': 390, 'height': 844}, 'is_mobile': True,
+                         'has_touch': True, 'device_scale_factor': 2}
+    context = browser.new_context(**options, reduced_motion='reduce')
     context.add_cookies([{'name': 'access_token_cookie', 'value': info['dm_auth'], 'url': origin, 'httpOnly': True}])
     page = context.new_page()
     page.set_default_timeout(15000)
@@ -41,7 +44,7 @@ def test_mobile_dm_touch_layers_clipboard_and_core_panels(action_site, engine):
     seed_hidden(app, info)
     with sync_playwright() as p:
         browser = getattr(p, engine).launch(headless=True, args=['--no-sandbox'] if engine == 'chromium' else [])
-        context, page = open_dm(browser, origin, info)
+        context, page = open_dm(browser, origin, info, p.devices['Pixel 7' if engine == 'chromium' else 'iPhone 13'])
         errors = []
         page.on('pageerror', lambda error: errors.append(str(error)))
         player_context = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True)
@@ -70,7 +73,7 @@ def test_mobile_dm_touch_layers_clipboard_and_core_panels(action_site, engine):
         expect(player.locator('.token-marker')).to_have_count(3)
         page.locator('#tokenMultiSelect').tap()
         page.locator('.table-dock-close').tap()
-        page.locator('.token-marker', has_text='Goblin').first.tap()
+        page.locator('.token-marker:not(.token-inactive-layer)', has_text='Goblin').first.tap()
         expect(page.locator('#tokenWidget')).to_be_visible()
         page.locator('.table-dock-close').tap()
         page.locator('#btnZoomFit').tap()

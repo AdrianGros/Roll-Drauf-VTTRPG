@@ -1293,6 +1293,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             viewport.addEventListener("pointerdown", (event) => {
                 if (event.pointerType !== "touch") return;
                 touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+                if (touches.size === 1) this._suppressMapClickUntil = 0;
                 if (touches.size < 2) return;
                 this._mapTouchGesture = true;
                 this.panState = null;
@@ -4906,6 +4907,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!tokenLayer || this.mapInteractionsBound) return;
 
             tokenLayer.addEventListener("pointerdown", (event) => {
+                this._pendingTokenTap = null;
                 if (this.currentTool === "measure" || this.currentTool === "pan" || this._mapTouchGesture || event.button !== 0) return;
                 const marker = event.target.closest?.(".token-marker");
                 if (!marker) {
@@ -4980,6 +4982,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             tokenLayer.addEventListener("click", (event) => {
                 if (this.currentTool === "measure") return;
                 const marker = event.target.closest?.(".token-marker");
+                if (marker && this._pendingTokenTap != null && Number(marker.dataset.tokenId) === Number(this._pendingTokenTap)) {
+                    this._pendingTokenTap = null;
+                    this._revealTokenWidget();
+                    event.stopPropagation();
+                    return;
+                }
                 if (!marker) {
                     this._selectToken(null);
                 }
@@ -5017,11 +5025,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const token = this._findStateToken(drag.tokenId);
                 if (!token || !drag.moved || (finalLeft === drag.baseLeft && finalTop === drag.baseTop)) {
                     if (token && !drag.moved && drag.isTouch) {
-                        // Finish the compatibility click before mounting its backdrop;
-                        // otherwise that same tap immediately closes the new drawer.
-                        window.setTimeout(() => {
-                            if (Number(this.selectedTokenId) === Number(token.id) && !this._mapTouchGesture) this._revealTokenWidget();
-                        }, 0);
+                        // Mount from the ensuing click, whose propagation path is
+                        // already fixed, so it cannot hit the new drawer backdrop.
+                        this._pendingTokenTap = token.id;
                     }
                     return;
                 }
@@ -5050,6 +5056,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _cancelTokenDrag() {
+            this._pendingTokenTap = null;
             const drag = this.dragState;
             if (!drag) return;
             this.dragState = null;
