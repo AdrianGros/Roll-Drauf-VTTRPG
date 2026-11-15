@@ -192,7 +192,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (error.apiError !== "table_context_required") throw error;
                 window.VTTTableContext = null;
                 try { sessionStorage.removeItem(`vtt.table.context.v1.${this.campaignId}.${this.sessionId}`); } catch (_) {}
-                await Auth.ensureTableContext(this.campaignId, this.sessionId, "player", true);
+                // Re-enter the seat this person last chose here (a refused DM seat ends as Player).
+                await Auth.ensureTableContext(this.campaignId, this.sessionId, null, true);
                 return this.api.bootstrap(this.campaignId, this.sessionId);
             }
         }

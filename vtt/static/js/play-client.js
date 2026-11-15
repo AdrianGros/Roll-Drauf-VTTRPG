@@ -7,8 +7,10 @@ class PlayClient {
         return this.auth.makeAuthRequest(`/api/play/campaigns/${campaignId}/sessions/${sessionId}/bootstrap`);
     }
 
-    setTableSeat(campaignId, sessionId, seat) {
-        return Auth.ensureTableContext(Number(campaignId), Number(sessionId), seat, true);
+    async setTableSeat(campaignId, sessionId, seat) {
+        const context = await Auth.ensureTableContext(Number(campaignId), Number(sessionId), seat, true);
+        Auth.rememberTableSeat(Number(campaignId), Number(sessionId), seat);
+        return context;
     }
 
     readyCheck(campaignId, sessionId) {

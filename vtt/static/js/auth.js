@@ -142,9 +142,11 @@ class Auth {
 
         const table = String(url).match(/^\/api\/(?:play\/)?campaigns\/(\d+)\/sessions\/(\d+)(?:\/|$)/);
         if (table && !String(url).endsWith('/contexts')) {
+            // On the table page, re-enter the seat this person last chose there (null: remembered
+            // seat, else Player); elsewhere reads sit as Player and writes ask for the DM seat.
             await this.ensureTableContext(Number(table[1]), Number(table[2]),
-                /^(GET|HEAD)$/i.test(method) || /\/play(?:\.html)?$/.test(window.location.pathname)
-                    ? 'player' : 'dm');
+                /\/play(?:\.html)?$/.test(window.location.pathname) ? null
+                    : /^(GET|HEAD)$/i.test(method) ? 'player' : 'dm');
         }
         const context = window.VTTTableContext;
         if (context && !String(url).startsWith('/api/auth/')) {
@@ -204,7 +206,27 @@ class Auth {
         return context;
     }
 
-    static async ensureTableContext(campaignId, sessionId, mode = 'player', force = false) {
+    // The seat a person last chose explicitly for this table (hub entry or seat switch). A tab
+    // context lives in sessionStorage, which mobile browsers drop when they discard a tab; without
+    // this the page silently fell back to a Player seat. The server still authorizes every seat.
+    static rememberTableSeat(campaignId, sessionId, seat) {
+        const key = `vtt.table.seat.v1.${campaignId}.${sessionId}`;
+        try {
+            if (seat === 'dm' || seat === 'player') localStorage.setItem(key, seat);
+            else localStorage.removeItem(key);
+        } catch (_) { /* storage blocked: falls back to the Player seat */ }
+    }
+
+    static rememberedTableSeat(campaignId, sessionId) {
+        try {
+            const seat = localStorage.getItem(`vtt.table.seat.v1.${campaignId}.${sessionId}`);
+            return seat === 'dm' || seat === 'player' ? seat : null;
+        } catch (_) { return null; }
+    }
+
+    static async ensureTableContext(campaignId, sessionId, mode = null, force = false) {
+        const remembered = mode ? null : this.rememberedTableSeat(campaignId, sessionId);
+        mode = mode || remembered || 'player';
         const key = `vtt.table.context.v1.${campaignId}.${sessionId}`;
         let saved = window.VTTTableContext;
         if (!saved || saved.campaignId !== campaignId || saved.sessionId !== sessionId) {
@@ -215,8 +237,16 @@ class Auth {
             return saved;
         }
         const tab = crypto.randomUUID();
-        const entry = await this.makeAuthRequest(
-            `/api/play/campaigns/${campaignId}/sessions/${sessionId}/contexts`, 'POST', {mode, tab});
+        const url = `/api/play/campaigns/${campaignId}/sessions/${sessionId}/contexts`;
+        let entry;
+        try {
+            entry = await this.makeAuthRequest(url, 'POST', {mode, tab});
+        } catch (error) {
+            if (remembered !== 'dm') throw error;
+            // The remembered DM seat is no longer granted: forget it and sit as Player.
+            this.rememberTableSeat(campaignId, sessionId, null);
+            entry = await this.makeAuthRequest(url, 'POST', {mode: 'player', tab});
+        }
         const context = {...entry, campaignId, sessionId};
         window.VTTTableContext = context;
         try { sessionStorage.setItem(key, JSON.stringify(context)); } catch (_) { /* memory-only works */ }
