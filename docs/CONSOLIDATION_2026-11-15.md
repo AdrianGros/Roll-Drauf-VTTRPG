@@ -99,7 +99,9 @@ Live bleibt gemäß Owner-Auftrag die schnelle gemeinsame Testumgebung. Die gepl
 Dev-Umgebung zum Februarstart wird heute nicht zur Lieferbedingung. Laufzeitcode
 muss trotzdem vollständig einem Commit entsprechen. Der neue Release prüft sämtliche
 Anwendungsdateien, Requirements und unerwartete zusätzliche Dateien gegen den Commit;
-Image-Label allein genügt nicht. Lokale alte Dateien bleiben erhalten, sind aber
+Image-Label allein genügt nicht. 81 bereits versionierte, im Live-Image bewusst
+ausgelassene Altdateien (vor allem die ersetzte G1-Engine) werden nicht wiederbelebt.
+Lokale alte Dateien bleiben erhalten, sind aber
 kein Beweis, dass eine Änderung fehlt oder erneut veröffentlicht werden soll.
 
 ## Belege und nächster Testtermin

@@ -12,11 +12,11 @@
 .token-selection-face { display: grid; place-items: center; background: #60516a; color: #fff; font-size: .7rem; }
 .token-selection-actions button { min-height: 36px; }
 /* Four dock tabs must not cover the centered map toolbar. */
-.tabletop-shell .table-dock-tabs { flex-wrap: nowrap; overflow-x: auto; }
-.table-dock-tabs button { flex-shrink: 0; }
+body[data-table-seat="dm"] .tabletop-shell .table-dock-tabs { flex-wrap: nowrap; overflow-x: auto; }
+body[data-table-seat="dm"] .table-dock-tabs button { flex-shrink: 0; }
 @media (min-width: 1041px) {
-    .tabletop-shell .table-dock-tabs { bottom: 76px; }
-    .tabletop-shell .table-sheet { bottom: 128px; }
+    body[data-table-seat="dm"] .tabletop-shell .table-dock-tabs { bottom: 76px; }
+    body[data-table-seat="dm"] .tabletop-shell .table-sheet { bottom: 128px; }
 }
 @media (max-width: 1040px) {
     .token-selection-bar { bottom: 114px; max-height: 30%; }
