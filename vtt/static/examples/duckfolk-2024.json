@@ -1,0 +1,90 @@
+{
+  "source": {
+    "name": "Duckfolk",
+    "type": "race",
+    "img": "icons/svg/mystery-man.svg",
+    "system": {
+      "description": {
+        "value": "<p>Kleines Entenvolk mit <em>lautem</em> Quaken.</p>",
+        "chat": ""
+      },
+      "source": {
+        "rules": "2024",
+        "book": "Homebrew"
+      },
+      "identifier": "duckfolk",
+      "type": {
+        "value": "humanoid",
+        "subtype": "",
+        "custom": ""
+      },
+      "movement": {
+        "walk": "30",
+        "swim": 30,
+        "fly": null,
+        "climb": null,
+        "burrow": null,
+        "units": "ft"
+      },
+      "senses": {
+        "ranges": {
+          "darkvision": 0,
+          "blindsight": null,
+          "tremorsense": null,
+          "truesight": null
+        },
+        "units": "ft",
+        "special": ""
+      },
+      "advancement": [
+        {
+          "_id": "sizeAdv1",
+          "type": "Size",
+          "configuration": {
+            "sizes": [
+              "sm"
+            ]
+          },
+          "value": {},
+          "title": "",
+          "hint": ""
+        }
+      ]
+    },
+    "effects": [],
+    "flags": {
+      "eagle-homebrew": {
+        "pair": {
+          "pack": "world.eagle-species-2024"
+        }
+      }
+    }
+  },
+  "supplement": {
+    "schema": "roll-drauf.species-supplement.v1",
+    "skillChoices": [
+      {
+        "id": "duck-skill",
+        "label": "Entenfertigkeit",
+        "options": [
+          "athletik",
+          "wahrnehmung"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "telekinetic-quack",
+        "name": "Telekinetisches Quaken",
+        "kind": "object-telekinesis",
+        "activation": "action",
+        "uses": "at-will",
+        "rangeFeet": 30,
+        "maxWeightLb": 10,
+        "maxMoveFeet": 30,
+        "description": "Ein Quaken bewegt einen unbeaufsichtigten Gegenstand."
+      }
+    ],
+    "traits": []
+  }
+}
