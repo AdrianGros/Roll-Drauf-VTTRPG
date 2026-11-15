@@ -14,15 +14,16 @@ Object.defineProperty(window,'io',{configurable:true,get(){return factory;},set(
 def request(page,path,method='GET',body=None):
     return page.evaluate('''async ([path,method,body])=>{const r=await fetch(path,{method,headers:Auth.buildHeaders(method,true),credentials:'include',...(body?{body:JSON.stringify(body)}:{})});return {status:r.status,data:await r.json()}}''',[path,method,body])
 
-def enter(ctx,kind,mode):
+def enter(ctx,kind,mode,authenticate=True):
     ctx.add_init_script(PROBE)
     page=ctx.new_page();page.set_default_timeout(45000)
     page.on('pageerror',lambda error:proof['errors'].append(str(error)))
-    page.goto(ORIGIN+'/login.html')
-    page.locator('#loginUsername').fill(f['users'][kind]['username']);page.locator('#loginPassword').fill(f['users'][kind]['password'])
-    page.locator('#passwordLoginSubmitBtn').click();page.wait_for_url(lambda u:'/login' not in u)
+    if authenticate:
+        page.goto(ORIGIN+'/login.html')
+        page.locator('#loginUsername').fill(f['users'][kind]['username']);page.locator('#loginPassword').fill(f['users'][kind]['password'])
+        page.locator('#passwordLoginSubmitBtn').click();page.wait_for_url(lambda u:'/login' not in u)
     page.goto(f"{ORIGIN}/campaigns?campaign_id={f['campaign_id']}")
-    action='open-session-dm' if mode=='dm' else 'open-session'
+    action='open-session-dm' if mode=='dm' else 'open-session-player' if kind=='dm' else 'open-session'
     page.locator(f'[data-hub-action="{action}"][data-hub-session-id="{f["session_id"]}"]').click()
     page.wait_for_url(lambda u:'/play' in u)
     expect(page.locator('body')).to_have_attribute('data-table-seat',mode)
@@ -78,7 +79,8 @@ with sync_playwright() as p:
         expect(player.locator('.token-marker')).to_have_count(2)
         proof['checks']['clipboard_destination_layer']='pass'
         # The owner enters a separately authorized Player context via its established hub action.
-        owner_player=enter(oc,'dm','player')
+        oc.add_cookies(dc.cookies())
+        owner_player=enter(oc,'dm','player',authenticate=False)
         expect(owner_player.locator('#presenceRoster')).to_contain_text(f['users']['player']['username'])
         expect(owner_player.locator('.token-marker')).to_have_count(2)
         expect(owner_player.locator('#tokenLayersWidget,#tokenSelectionBar')).to_have_count(0)

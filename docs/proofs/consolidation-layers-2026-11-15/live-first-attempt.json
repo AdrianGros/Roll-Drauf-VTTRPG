@@ -1,0 +1,17 @@
+{
+  "status": "fail",
+  "url": "https://vtt.roll-drauf.de",
+  "journeys": [
+    "player: Login → Kampagnen → eigener Hub → Sitzung (player)",
+    "dm: Login → Kampagnen → eigener Hub → Sitzung (dm)"
+  ],
+  "checks": {
+    "player_initial_http_socket_and_composition": "pass",
+    "group_reveal_to_firefox": "pass",
+    "hide_and_player_reload": "pass",
+    "hidden_placement_no_player_event_leak": "pass",
+    "clipboard_destination_layer": "pass"
+  },
+  "errors": [],
+  "failure": "Locator.click: Timeout 45000ms exceeded.\nCall log:\n  - waiting for locator(\"[data-hub-action=\\\"open-session\\\"][data-hub-session-id=\\\"110\\\"]\")\n"
+}

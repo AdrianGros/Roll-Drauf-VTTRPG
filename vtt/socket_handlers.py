@@ -620,6 +620,8 @@ def _serialize_combat_snapshot(state: SessionState):
 
 
 def _parse_token_patch(data: dict, is_dm_member: bool):
+    if not is_dm_member and "visibility" in data:
+        return None, {"code": "forbidden", "message": "only a DM context can change token visibility"}
     patch = {}
     allowed = {
         "name",
@@ -1057,6 +1059,9 @@ def register_socket_handlers(socketio):
         if visibility not in {"public", "dm_only", "owner_only"}:
             _emit_error("bad_request", "invalid visibility")
             return
+        if not is_dm_member and visibility != "public":
+            _emit_error("forbidden", "only a DM context can create hidden tokens")
+            return
 
         from vtt.characters import sheet_link
         linked_character = None
@@ -1160,7 +1165,8 @@ def register_socket_handlers(socketio):
             return
 
         is_dm_member = _is_table_dm(campaign.id, user.id, game_session.id)
-        if not is_dm_member and token.owner_user_id != user.id:
+        if not is_dm_member and (token.owner_user_id != user.id or not is_token_visible_to(
+                token, get_table_role(campaign, user.id, game_session.id), user.id)):
             _emit_error("forbidden", "token ownership required")
             return
 
@@ -1346,7 +1352,8 @@ def register_socket_handlers(socketio):
             return
 
         is_dm_member = _is_table_dm(campaign.id, user.id, game_session.id)
-        if not is_dm_member and token.owner_user_id != user.id:
+        if not is_dm_member and (token.owner_user_id != user.id or not is_token_visible_to(
+                token, get_table_role(campaign, user.id, game_session.id), user.id)):
             _emit_error("forbidden", "token ownership required")
             return
 

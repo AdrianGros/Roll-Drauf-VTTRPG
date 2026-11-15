@@ -1353,10 +1353,13 @@ def activate_session_map(campaign_id, session_id):
 def _can_manage_token(campaign: Campaign, user_id: int, token: TokenState) -> bool:
     if _is_table_dm(campaign, user_id, token.game_session_id):
         return True
-    return token.owner_user_id == user_id
+    role = scene_service.get_table_role(campaign, user_id, token.game_session_id)
+    return token.owner_user_id == user_id and scene_service.is_token_visible_to(token, role, user_id)
 
 
 def _parse_token_patch(data: dict, is_dm: bool):
+    if not is_dm and "visibility" in data:
+        return None, (jsonify({"error": "forbidden"}), 403)
     patch = {}
     allowed_fields = {
         "name",
@@ -1509,6 +1512,8 @@ def create_token(campaign_id, session_id):
     visibility = str(data.get("visibility", "public")).strip().lower()
     if visibility not in {"public", "dm_only", "owner_only"}:
         return jsonify({"error": "invalid visibility"}), 400
+    if not is_dm_member and visibility != "public":
+        return jsonify({"error": "forbidden"}), 403
 
     character_id = data.get("character_id")
     if character_id is not None:

@@ -77,4 +77,4 @@ with app.app_context():
     db.session.commit();db.session.expire_all()
     assert User.query.filter(User.id.in_(uids)).count()==0 and Campaign.query.filter_by(id=cid).count()==0
     os.unlink(path)
-    print(json.dumps({'status':'pass','scope':'only synthetic feedback_b08 users and owned campaign','removed':counts,'identity_storage_removed':removed_keys,'container_credentials_removed':True}))
+    print(json.dumps({'status':'pass','scope':'only synthetic layercheck users and owned campaign','removed':counts,'identity_storage_removed':removed_keys,'container_credentials_removed':True}))
