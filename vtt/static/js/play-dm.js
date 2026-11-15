@@ -232,8 +232,14 @@ _bindTokenClipboard() {
             let marquee = null;
             let swallowClick = false;
             const box = (a, b) => ({ x: Math.min(a.x, b.x), y: Math.min(a.y, b.y), w: Math.abs(a.x - b.x), h: Math.abs(a.y - b.y) });
-            viewport.addEventListener("pointermove", (event) => { this._pasteAnchor = this._worldPointFromEvent(event); });
-            viewport.addEventListener("pointerleave", () => { this._pasteAnchor = null; });
+            // The selection strip is a sibling over the map. Keep keyboard paste at
+            // the pointer even when that strip receives the pointermove event.
+            window.addEventListener("pointermove", (event) => {
+                const rect = viewport.getBoundingClientRect();
+                const overMap = event.clientX >= rect.left && event.clientX < rect.right
+                    && event.clientY >= rect.top && event.clientY < rect.bottom;
+                this._pasteAnchor = overMap ? this._worldPointFromEvent(event) : null;
+            });
             viewport.addEventListener("pointerdown", (event) => {
                 if (this.currentTool !== "select" || event.button !== 0 || this.readOnly || this._pendingTarget) return;
                 if (event.target.closest?.(".token-marker, .floating, .stage-topbar, .vision-light-marker, .vision-wall-line, button, input, select, textarea, a")) return;
