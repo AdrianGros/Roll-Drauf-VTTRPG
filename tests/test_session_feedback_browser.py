@@ -31,6 +31,18 @@ def test_windows_restore_and_token_menu_upload_and_library(action_site, role, wi
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.goto(f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}&seat={role}")
         expect(page.locator('#dock-tokenWidget')).to_be_visible()
+        launcher = page.locator('body > .left-toolbar')
+        metrics = launcher.evaluate('''e => ({height:e.getBoundingClientRect().height,
+            children:[...e.querySelectorAll('button')].map(b=>({id:b.id,hidden:b.hidden,
+                width:b.getBoundingClientRect().width,height:b.getBoundingClientRect().height,
+                display:getComputedStyle(b).display}))})''')
+        assert metrics['height'] <= 90, metrics
+        expect(launcher.locator('[data-tool="select"] .tool-label')).to_be_visible()
+        for entry in metrics['children']:
+            if entry['hidden']:
+                assert entry['display'] == 'none', entry
+            elif entry['display'] != 'none':
+                assert entry['width'] < 150 and entry['height'] <= 64, entry
         expect(page.locator('.tool-btn[data-tool="token"]')).to_have_count(0)
         page.locator('#dock-tokenWidget').click()
         window=page.locator('#window-tokenWidget');expect(window).to_be_visible()

@@ -51,3 +51,13 @@ body.play-free-windows[data-personal-hotbar="true"] > #actionHotbar { bottom: ca
 body.play-free-windows > #tokenSelectionBar { position: fixed !important; z-index: 65; bottom: calc(var(--play-toolbar-height, 64px) + var(--play-personal-height, 0px) + var(--play-action-height, 0px) + 34px) !important; max-height: 55svh; overflow: auto; }
 body.play-free-windows > #tokenSelectionBar[data-movable] { bottom: auto !important; }
 body.play-free-windows [data-movable] { transform: none !important; }
+
+/* Relocated chrome must retain its compact, labelled row outside tabletop-shell. */
+body.play-free-windows > .left-toolbar { height: auto; min-height: 0; align-items: center; flex-wrap: nowrap; overflow-y: hidden; border: 1px solid var(--ui-line); }
+body.play-free-windows > .left-toolbar :is(.spacer, [data-dm-slot="map-tools"]) { display: contents; }
+body.play-free-windows > .left-toolbar .tool-btn { width: auto; height: auto; max-height: 64px; padding: 4px 8px; font-size: .72rem; white-space: nowrap; }
+body.play-free-windows > .left-toolbar .tool-label { display: block; font-size: .68rem; }
+body.play-free-windows > .left-toolbar #btnBack { display: flex; }
+body.play-free-windows > .left-toolbar .tool-btn[hidden] { display: none !important; }
+body.play-free-windows > :is(.left-toolbar, #personalActionBar, #actionHotbar) button { color: var(--ui-ink, #eee) !important; background: var(--ui-panel, #302332) !important; border-color: var(--ui-line, #866); }
+body.play-free-windows > .left-toolbar .tool-btn.active { color: #fdfaf3 !important; background: var(--vtt-plum, #4b235a) !important; }

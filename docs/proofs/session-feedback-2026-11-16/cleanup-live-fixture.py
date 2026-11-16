@@ -46,4 +46,4 @@ with app.app_context():
     db.session.commit();db.session.expire_all()
     assert User.query.filter(User.id.in_(uids)).count()==0 and Campaign.query.filter_by(id=cid).count()==0
     os.unlink(path)
-    print(json.dumps({'status':'pass','scope':'only synthetic feedback_pa users and owned campaign','removed':counts,'container_credentials_removed':True,'synthetic_asset_files_removed':removed_files}))
+    print(json.dumps({'status':'pass','scope':'only synthetic qa_sf_ users and owned campaign','removed':counts,'container_credentials_removed':True,'synthetic_asset_files_removed':removed_files}))

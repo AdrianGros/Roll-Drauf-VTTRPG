@@ -31,6 +31,18 @@ def bootstrap(page):
 def token_value(page,id_):
     return next(t for t in bootstrap(page)['state_payload']['tokens'] if t['id']==id_)
 
+def launcher_metrics(page):
+    values=page.locator('body > .left-toolbar').evaluate('''e=>({height:e.getBoundingClientRect().height,
+        buttons:[...e.querySelectorAll('button')].map(b=>({id:b.id,hidden:b.hidden,
+            display:getComputedStyle(b).display,width:b.getBoundingClientRect().width,
+            height:b.getBoundingClientRect().height}))})''')
+    assert values['height']<=90,values
+    expect(page.locator('.left-toolbar [data-tool="select"] .tool-label')).to_be_visible()
+    for button in values['buttons']:
+        if button['hidden']:assert button['display']=='none',button
+        elif button['display']!='none':assert button['width']<150 and button['height']<=64,button
+    return {'height':values['height'],'buttons':len(values['buttons'])}
+
 with sync_playwright() as p:
     dm_browser=p.chromium.launch(headless=True,args=['--no-sandbox'])
     player_browser=p.firefox.launch(headless=True)
@@ -52,11 +64,12 @@ with sync_playwright() as p:
         return page
     dm_context=context(dm_browser,'dm');player_context=context(player_browser,'player')
     dm=enter(dm_context,'dm');player=enter(player_context,'player')
+    launchers={'dm':launcher_metrics(dm),'player':launcher_metrics(player)}
     expect(player.locator('#presenceRoster')).to_contain_text(fixture['users']['dm']['username'])
     expect(player.locator('#tokenLayersWidget,#btnInitStack')).to_have_count(0)
     assert not player.evaluate('Boolean(window.PlayDMSurface)')
     assert 'QA_PRIVATE_SENTINEL' not in json.dumps(bootstrap(player))
-    passed('DM and Firefox Player enter through campaign hub; role/data composition')
+    passed('DM and Firefox Player enter through campaign hub; role/data composition and compact labelled launcher',launchers)
 
     owner_player=enter(dm_context,'dm',True)
     negative=owner_player.evaluate('''async ({c,s})=>{
@@ -158,15 +171,16 @@ with sync_playwright() as p:
     expect(player.locator('#tokenCreateCharacter')).to_have_value(str(fixture['character_id']))
     player.locator('#btnTokenCreateConfirm').click()
     expect(player.locator('.token-marker',has_text=fixture['character_name'])).to_be_visible()
-    new_token=next(t for t in bootstrap(player)['state_payload']['tokens'] if t['name']==fixture['character_name'])
+    new_token=next(t for t in bootstrap(player)['state_payload']['tokens'] if t['name']==fixture['character_name'] and t['map_id']==fixture['second_map_id'])
     assert new_token['map_id']==fixture['second_map_id'] and new_token['initiative'] is None
     assert new_token['metadata_json'].get('image_url') and new_token['character_id']==fixture['character_id']
     passed('Template placed through the normal UI on a different active map, with saved image and no stale initiative')
     close_windows(dm);close_windows(player)
     dm.set_viewport_size({'width':390,'height':844});open_window(dm,'tokenWidget');expect(dm.locator('#btnTokenUpload')).to_be_visible()
+    mobile_launcher=launcher_metrics(dm)
     assert dm.evaluate('document.documentElement.scrollWidth')<=390
     dm.screenshot(path=str(ROOT/'live-dm-mobile.png'));player.screenshot(path=str(ROOT/'live-player-map.png'))
-    passed('390px DM token window remains usable; document has no horizontal overflow')
+    passed('390px DM token window remains usable; compact labelled launcher and no horizontal overflow',mobile_launcher)
     assert not errors,errors
     proof.update(status='pass',page_errors=errors,fixture_campaign_id=fixture['campaign_id'])
     (ROOT/'live.json').write_text(json.dumps(proof,ensure_ascii=False,indent=2)+'\n')

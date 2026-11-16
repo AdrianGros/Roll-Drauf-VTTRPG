@@ -96,3 +96,15 @@ weiterhin aus dem Bogen; keine Heilung durch erneute Platzierung. Der vorherige
 Satz zur grundsätzlich ungespeicherten Bindung wird dadurch ersetzt. Abnahme:
 Bibliothek speichert eigene Bindung, neue Karte übernimmt sie, dieselbe Karte
 verweigert eine zweite Bindung; bestehender Token und persönliche Hotbar bleiben.
+
+## Begrenzter R03-Rework nach Live-Sichtkontrolle
+
+Die direkte Montage der festen Werkzeugleiste am Body hat die nur unter
+`.tabletop-shell` geltenden Reihen-/Labelregeln verloren. Dadurch stapelten sich
+die Werkzeuge im ehemaligen Spacer, die Leiste war etwa 235px hoch und Labels
+fehlten. Die bereits entworfene feste Leiste bleibt; ihre kompakte Zeile,
+Beschriftung, Farbkontraste und `[hidden]`-Behandlung werden ausdrücklich auf die
+neue Montageposition begrenzt. Keine Änderung an Aktionen, Rollen oder Daten.
+Abnahme: höchstens 90px Leistenhöhe, sichtbare Labels, normale Buttonbreiten,
+verdeckte Werkzeuge bleiben verborgen; Menü/Chat/Journal sind horizontal
+erreichbar. Browserauswahl und Live-Reisen werden auf diesem Stand wiederholt.
