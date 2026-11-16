@@ -2608,7 +2608,8 @@
                 <h3 class="widget-toggle" data-widget="turnOrderWidget" role="button" tabindex="0" aria-controls="turnOrderWidgetBody" aria-expanded="false"><span data-ui-key="u_10f0c1707cf4">Turn Order</span> <span class="widget-caret">▾</span></h3>
                 <div id="turnOrderWidgetBody" class="widget-body">
                     <div id="turnOrderSummary" class="turn-state"><span data-ui-key="u_7a5be3a91b66">Noch keine Initiative-Werte.</span></div>
-                    <div id="turnOrderList" class="muted" role="listbox" aria-label="Kampfreihenfolge" data-ui-aria-label="u_d4dd9c7ccb34"><span data-ui-key="u_7a5be3a91b66">Noch keine Initiative-Werte.</span></div>
+                    <button type="button" id="btnOwnInitiative" class="mini-btn"><span data-ui-key="u_cd3593769a63">Eigene Initiative würfeln</span></button>
+                <div id="turnOrderList" class="muted" role="listbox" aria-label="Kampfreihenfolge" data-ui-aria-label="u_d4dd9c7ccb34"><span data-ui-key="u_7a5be3a91b66">Noch keine Initiative-Werte.</span></div>
                     <!-- S06: HIGH-severity risk in the research doc --
                          turn changes with no live-region announcement is a
                          screen-reader accessibility failure, not a nice-to-
@@ -2637,7 +2638,11 @@
                 <h3 class="widget-toggle" data-widget="tokenWidget" role="button" tabindex="0" aria-controls="tokenWidgetBody" aria-expanded="false"><span data-ui-key="u_c38c6c1f3a27">Tokens</span> <span class="widget-caret">▾</span></h3>
                 <div id="tokenWidgetBody" class="widget-body">
                     <div id="tokenSelectionSummary" class="muted" style="margin-bottom:0.45rem;"><span data-ui-key="u_df50cde94f81">Kein Token ausgewählt.</span></div>
-                    <span data-dm-slot="token-upload"></span>
+                    <div id="tokenUploadRow" class="button-row" style="margin-bottom:0.45rem;">
+                        <input id="tokenUploadFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                        <button type="button" id="btnTokenUpload" class="mini-btn secondary"><span data-ui-key="u_15533b7b0b1f">Tokenbild hochladen</span></button>
+                        <span id="tokenUploadStatus" class="muted" aria-live="polite"></span>
+                    </div>
                     <div class="button-row" id="sheetButtonRow" hidden style="margin-bottom:0.45rem;">
                         <button type="button" id="btnOpenSheet" class="mini-btn"><span data-ui-key="u_6b26b69f735b">Bogen öffnen</span></button>
                         <a id="btnOpenSheetTab" class="mini-btn secondary sheet-tab-link" href="/character-sheet" target="_blank" rel="noopener" title="Bogen in einem eigenen Tab öffnen – Würfe daraus erscheinen live an diesem Tisch" data-ui-title="u_b4baf156e009"><span data-ui-key="u_00e97cd63f76">Im neuen Tab ↗</span></a>
@@ -2658,7 +2663,7 @@
                             <button type="button" id="btnTokenDelete" class="mini-btn danger"><span data-ui-key="u_c96573a88c59">Token löschen</span></button>
                         </div>
                         <div class="button-row" style="margin-bottom:0.35rem;">
-                            <button type="button" id="btnTokenConditions" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="conditionsPopover"><span data-ui-key="u_1b49baf7e76a">Zustände</span><span id="conditionsCountBadge" class="conditions-count-badge" hidden>0</span></button>
+                            <button type="button" id="btnSelectedInitiative" class="mini-btn"><span data-ui-key="u_0ed2064a9253">Initiative würfeln</span></button><button type="button" id="btnTokenConditions" class="mini-btn secondary" aria-haspopup="true" aria-expanded="false" aria-controls="conditionsPopover"><span data-ui-key="u_1b49baf7e76a">Zustände</span><span id="conditionsCountBadge" class="conditions-count-badge" hidden>0</span></button>
                         </div>
                         <!-- S10: NULL/empty = unlimited natural sight
                              (still wall-blocked) -- most tokens leave this
@@ -2750,7 +2755,6 @@
                  unter der Karte, statt die obere Statusleiste zu belasten. -->
             <button type="button" class="tool-btn active" data-tool="select" title="Auswählen" data-ui-title="u_2ac692f43843"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label"><span data-ui-key="u_06cea5c40f66">Wählen</span></span></button>
             <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)" data-ui-title="u_7d07bdddbf19"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label"><span data-ui-key="u_5f489a216d95">Bewegen</span></span></button>
-            <button type="button" class="tool-btn" data-tool="token" title="Token platzieren: Werkzeug wählen, dann auf die Karte klicken" data-ui-title="u_6c9ec1bb2a0a"><span class="tool-ico" aria-hidden="true">♟</span><span class="tool-label"><span data-ui-key="u_a1141eb96836">Token</span></span></button>
             <button type="button" class="tool-btn" data-tool="measure" title="Entfernung messen: klicken für Wegpunkte, Esc entfernt den letzten, nochmal Esc bricht ab" data-ui-title="u_462949b03aab" aria-label="Entfernung messen" data-ui-aria-label="u_b9fceaaa639e"><span class="tool-ico" aria-hidden="true">📏</span><span class="tool-label"><span data-ui-key="u_1d017b3a6394">Messen</span></span></button>
             <button type="button" id="btnMeasureSnap" class="tool-btn active" title="Rastereinrasten für Messungen an/aus" data-ui-title="u_dc8d09e66c34" aria-pressed="true" hidden><span class="tool-ico" aria-hidden="true">▦</span><span class="tool-label"><span data-ui-key="u_4e92822e2798">Raster</span></span></button>
             <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
@@ -3093,6 +3097,10 @@
     <link rel="stylesheet" href="/static/css/play-workspace.css">
     <script src="/static/js/play-personal.js"></script>
     <script src="/static/js/play-player.js"></script>
+    <link rel="stylesheet" href="/static/css/play-windows.css">
+    <script src="/static/js/play-windows.js"></script>
+    <script src="/static/js/play-token-library.js"></script>
+    <script src="/static/js/play-campaign-room.js"></script>
     <script src="/static/js/play-ui.js"></script>
     <script src="/static/js/beyond20-bridge.js"></script>
     <script src="/static/js/vtt-main-nav.js"></script>

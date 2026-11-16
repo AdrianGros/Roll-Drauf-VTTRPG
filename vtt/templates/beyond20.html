@@ -1,134 +1,53 @@
 <!doctype html>
 <html lang="de">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Öffentliche technische Übersicht der Roll-Drauf Beyond20-Integration.">
-    <title>Beyond20-Integration – Roll-Drauf VTT</title>
-    <link rel="icon" type="image/png" href="/static/assets/sternenstaub/icons/server-icon-64.png">
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Beyond20 einrichten · Roll Drauf</title>
     <style>
-        :root { color-scheme: dark; --ink:#f5efe5; --muted:#b9b0c4; --line:rgba(255,255,255,.14); --panel:rgba(22,18,39,.86); --accent:#e7b96c; --plum:#110b1c; }
-        * { box-sizing:border-box; }
-        body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 15% 10%,#4a2d60,transparent 34rem),linear-gradient(145deg,var(--plum),#19283a); font:16px/1.55 Georgia,"Times New Roman",serif; }
-        a { color:var(--accent); }
-        .wrap { width:min(920px,calc(100% - 32px)); margin:0 auto; }
-        header { display:flex; justify-content:space-between; gap:18px; align-items:center; padding:24px 0; border-bottom:1px solid var(--line); }
-        header a { text-decoration:none; }
-        .brand { font-size:1.3rem; font-weight:700; color:#f4d18f; }
-        main { padding:72px 0; }
-        .eyebrow { color:var(--accent); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; }
-        h1 { margin:12px 0 18px; max-width:720px; font-size:clamp(2.4rem,6vw,4.8rem); line-height:1.05; letter-spacing:-.04em; }
-        h2 { margin:0 0 12px; font-size:1.65rem; }
-        .lead { max-width:700px; color:var(--muted); font-size:1.15rem; }
-        .panel { margin-top:34px; padding:26px; border:1px solid var(--line); border-radius:15px; background:var(--panel); }
-        .contract { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0 0; }
-        .item { padding:16px; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.035); }
-        .item strong { display:block; color:#f4d18f; }
-        code { color:#f4d18f; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:.9em; }
-        .steps { margin:14px 0 0; padding-left:22px; display:flex; flex-direction:column; gap:14px; }
-        .steps li { padding-left:4px; }
-        .copyrow { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:10px; padding:10px 12px; border:1px solid var(--line); border-radius:9px; background:rgba(255,255,255,.035); }
-        .copyrow code { flex:1 1 auto; min-width:0; word-break:break-all; }
-        .copyrow .button { min-height:36px; padding:6px 14px; }
-        .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
-        .button { display:inline-flex; align-items:center; min-height:44px; padding:9px 16px; border:1px solid rgba(244,209,143,.55); border-radius:9px; background:#752f35; color:#fff7e8; text-decoration:none; }
-        .button.secondary { background:rgba(255,255,255,.06); color:#f4d18f; }
-        footer { padding:0 0 36px; color:var(--muted); }
-        @media (max-width:650px) { header { align-items:flex-start; flex-direction:column; } .contract { grid-template-columns:1fr; } main { padding:48px 0; } }
+        :root { color-scheme:dark; font:16px/1.55 system-ui,sans-serif; background:#251c23; color:#f5eadf; }
+        * { box-sizing:border-box; } body { margin:0; } main { width:min(720px,100%); padding:24px; margin:auto; }
+        h1 { font-size:1.7rem; line-height:1.2; } h2 { font-size:1.1rem; } a { color:#efa992; }
+        .copyrow { display:flex; flex-wrap:wrap; gap:12px; align-items:center; padding:16px; border:1px solid #a66c5f; border-radius:8px; }
+        code { overflow-wrap:anywhere; flex:1; } button { min-height:44px; padding:8px 14px; background:#963f3b; border:1px solid #d9967d; border-radius:6px; color:#fff; font:inherit; cursor:pointer; }
+        li { margin:18px 0; padding-left:6px; } details { border-top:1px solid #75574f; margin-top:20px; padding-top:16px; }
+        .muted { color:#d0bdb4; } #beyond20CopyStatus { min-height:1.5em; } iframe { border:0; }
+        .compact main { padding:8px; } .compact .back { display:none; }
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <header>
-            <a class="brand" href="/">roll drauf VTT</a>
-            <a href="/login.html">Zum geschützten Spieltisch</a>
-        </header>
-        <main>
-            <div class="eyebrow">Öffentliche technische Übersicht</div>
-            <h1>Beyond20 ist am Tisch angekommen.</h1>
-            <p class="lead">Diese Seite ist ohne Discord-Zugang erreichbar und beschreibt den überprüfbaren Integrationsrand. Die eigentliche Session bleibt geschützt; die öffentliche Produkt- und Integrationsoberfläche bleibt für Maintainer sichtbar.</p>
-
-            <section class="panel" aria-labelledby="setup-title">
-                <h2 id="setup-title">Einrichtung in 4 Schritten</h2>
-                <p>Beyond20 muss einmalig wissen, dass Roll Drauf ein gültiges Ziel für deine Würfe ist. Das trägst du selbst in den Erweiterungs-Einstellungen ein — Roll Drauf kann das aus Sicherheitsgründen nicht automatisch für dich tun (kein Browser erlaubt einer Webseite, die Einstellungen einer fremden Erweiterung zu verändern).</p>
-                <ol class="steps">
-                    <li>Klicke oben im Browser auf das Beyond20-Symbol und dann auf <strong>„More Options"</strong> (bzw. <strong>„Beyond20 Options"</strong>, falls du gerade nicht auf D&amp;D Beyond oder einem VTT bist).</li>
-                    <li>Klicke auf der Optionsseite auf den Knopf <strong>„Advanced Options"</strong> — erst dann erscheint das Feld für eigene VTT-Adressen.</li>
-                    <li>Trage im Feld <strong>„List of custom domains to load Beyond20"</strong> folgende Zeile ein (Protokoll und Sternchen gehören mit dazu):
-                        <div class="copyrow">
-                            <code id="beyond20UrlValue">https://vtt.roll-drauf.de/*</code>
-                            <button type="button" class="button secondary" id="beyond20CopyBtn" data-copy-value="https://vtt.roll-drauf.de/*">Kopieren</button>
-                        </div>
-                    </li>
-                    <li>Klicke auf <strong>„Apply"</strong> und bestätige die Berechtigungsanfrage, die dein Browser danach einblendet — erst dann darf Beyond20 auf dieser Seite aktiv werden.</li>
-                </ol>
-                <p>Danach landet jeder Wurf, den du auf D&amp;D Beyond auslöst, automatisch im Würfel-Log und im Chat deiner Roll-Drauf-Sitzung — ganz ohne die Zahlen von Hand einzutragen.</p>
-            </section>
-
-            <section class="panel" aria-labelledby="troubleshoot-title">
-                <h2 id="troubleshoot-title">Wenn keine Würfe ankommen</h2>
-                <ol class="steps">
-                    <li>Am Spieltisch steht oben in der Zeile <strong>„Beyond20“</strong>, sobald die Erweiterung verbunden ist. Jeder ankommende Wurf erscheint dann einige Sekunden oben rechts auf dem Tisch; das vollständige Würfel-Log steht unter <strong>Menü → Tools</strong>. Fehlt der Chip, steht unter Menü → Tools → <strong>D&amp;D Beyond</strong> „noch nicht aktiv“: Beyond20 hat dann keine Berechtigung für diese Seite.</li>
-                    <li>Die Zeile muss genau <code>https://vtt.roll-drauf.de/*</code> lauten, mit <code>https://</code> und <code>/*</code>. Danach <strong>„Apply“</strong> drücken. Firefox fragt die Berechtigung über ein kleines Fenster an der Adressleiste ab. Erst nach dem Bestätigen darf Beyond20 die Seite verwenden.</li>
-                    <li>Den Spieltisch-Tab nach dem Bestätigen einmal neu laden. Beyond20 verbindet sich erst beim Laden der Seite.</li>
-                    <li>Im Beyond20-Menü auf D&amp;D Beyond unter „Select the VTT tab or Game to send rolls to“ <strong>„All VTT Tabs“</strong> wählen. Mit „D&amp;D Beyond Dice Roller &amp; Discord“ bleiben alle Würfe auf D&amp;D Beyond.</li>
-                    <li>Spieler können erst würfeln, wenn die Spielleitung die Session gestartet hat. Vorher meldet der Tisch „Session noch nicht gestartet“.</li>
-                </ol>
-            </section>
-
-            <section class="panel" aria-labelledby="events-title">
-                <h2 id="events-title">Unterstützte DOM-Ereignisse</h2>
-                <div class="contract">
-                    <div class="item"><strong><code>Beyond20_RenderedRoll</code></strong>Übernimmt vorgerenderte Würfe in Dice-Log, Chat und Broadcast.</div>
-                    <div class="item"><strong><code>Beyond20_UpdateHP</code></strong>Synchronisiert HP und maximale HP zum passenden Token.</div>
-                    <div class="item"><strong><code>Beyond20_UpdateConditions</code></strong>Zeigt Conditions und Erschöpfung am Token und in der Liste.</div>
-                    <div class="item"><strong><code>Beyond20_UpdateCombat</code></strong>Übernimmt Initiative und aktuelle Runde für bekannte Tisch-Token.</div>
-                </div>
-                <p>Die Listener folgen dem Beyond20-DOM-Vertrag mit <code>CustomEvent</code> und einem Argument-Array in <code>event.detail</code>. Unbekannte Combat-Teilnehmer werden nicht in die lokale Session geschrieben.</p>
-            </section>
-
-            <section class="panel" aria-labelledby="access-title">
-                <h2 id="access-title">Zugang und Sicherheitsgrenze</h2>
-                <p>Die öffentliche Oberfläche enthält keine Kampagnen- oder Sessiondaten. Live-Rolls, Karten, Tokenbilder und Socket-Verbindungen werden erst nach erfolgreicher Discord-/Bot-Freischaltung im geschützten Spieltisch geöffnet.</p>
-                <p>Für die Prüfung der öffentlichen Erreichbarkeit steht außerdem der <a href="/health/live">Liveness-Status</a> zur Verfügung.</p>
-            </section>
-
-            <div class="actions">
-                <a class="button" href="/">Zur öffentlichen Startseite</a>
-                <a class="button secondary" href="https://beyond20.here-for-more.info/api">Offizielle Beyond20-API-Doku</a>
-            </div>
-        </main>
-        <footer>Roll-Drauf VTT · Integrationsvertrag öffentlich, Sessiondaten geschützt</footer>
-    </div>
-    <script>
-        (function () {
-            "use strict";
-            var btn = document.getElementById("beyond20CopyBtn");
-            if (!btn) { return; }
-            var defaultLabel = btn.textContent;
-            btn.addEventListener("click", function () {
-                var value = btn.getAttribute("data-copy-value") || "";
-                var done = function (ok) {
-                    btn.textContent = ok ? "Kopiert!" : "Bitte manuell markieren";
-                    window.setTimeout(function () { btn.textContent = defaultLabel; }, 2000);
-                };
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(value).then(function () { done(true); }, function () { done(false); });
-                    return;
-                }
-                var field = document.createElement("textarea");
-                field.value = value;
-                field.setAttribute("readonly", "");
-                field.style.position = "fixed";
-                field.style.opacity = "0";
-                document.body.appendChild(field);
-                field.select();
-                var ok = false;
-                try { ok = document.execCommand("copy"); } catch (err) { ok = false; }
-                document.body.removeChild(field);
-                done(ok);
-            });
-        })();
-    </script>
+<main>
+    <a class="back" href="/play">← Zurück zum Spieltisch</a>
+    <h1>Beyond20 mit Roll Drauf verbinden</h1>
+    <p>Einmal einrichten, danach direkt aus D&amp;D Beyond an deinen Spieltisch würfeln.</p>
+    <div class="copyrow"><code id="beyond20UrlValue">https://vtt.roll-drauf.de/*</code><button type="button" id="beyond20CopyBtn">Adresse kopieren</button></div>
+    <p id="beyond20CopyStatus" role="status" aria-live="polite"></p>
+    <ol>
+        <li><strong>Beyond20-Einstellungen öffnen.</strong><br>Oben im Browser auf das Beyond20-Symbol → <b>More Options</b> → <b>Advanced Options</b>.</li>
+        <li><strong>Adresse einfügen und erlauben.</strong><br>Im Feld <b>List of custom domains to load Beyond20</b> die kopierte Adresse einfügen. <b>Apply</b> anklicken und die Browser-Berechtigung bestätigen.</li>
+        <li><strong>Spieltisch neu laden und testen.</strong><br>Den Roll-Drauf-Tab neu laden. Auf D&amp;D Beyond einen Wurf auslösen. Das Ergebnis erscheint am Tisch; unter <b>Würfeln</b> steht, wann der letzte Beyond20-Wurf angekommen ist.</li>
+    </ol>
+    <p class="muted">Für Initiative: zuerst deinen Token am Tisch auswählen, dann auf D&amp;D Beyond Initiative würfeln. Die Zahl wird diesem Token in der Kampfreihenfolge zugeordnet.</p>
+    <details><summary>Es kommt noch kein Wurf an</summary>
+        <ul><li>Die Adresse muss genau <code>https://vtt.roll-drauf.de/*</code> lauten. Nach <b>Apply</b> auch die Browser-Rückfrage bestätigen.</li>
+        <li>Beyond20 auf D&amp;D Beyond: Unter <b>Select the VTT tab or Game to send rolls to</b> den gewünschten Roll-Drauf-Tab oder <b>All VTT Tabs</b> auswählen.</li>
+        <li>Spieltisch und D&amp;D Beyond geöffnet lassen. Die Spielleitung muss die Sitzung gestartet haben.</li>
+        <li>„Beyond20 geladen“ heißt, dass die Erweiterung aktiv ist. Erst ein angekommenes Ergebnis bestätigt die Zustellung an die Session.</li></ul>
+        <p><a href="https://beyond20.here-for-more.info/" target="_blank" rel="noopener">Beyond20 installieren und Hilfe öffnen</a></p>
+    </details>
+    <details><summary>Technische Integration</summary>
+        <p>Roll Drauf verarbeitet Beyond20_RenderedRoll, Beyond20_UpdateHP, Beyond20_UpdateConditions und Beyond20_UpdateCombat. Spieleraktionen bleiben an den autorisierten Tischkontext und erlaubte Tokens gebunden.</p>
+        <p><a href="https://beyond20.here-for-more.info/api" target="_blank" rel="noopener">Offizielle Beyond20-API</a></p>
+    </details>
+</main>
+<script>
+(() => {
+    if (new URLSearchParams(location.search).has('compact')) document.body.classList.add('compact');
+    const button=document.getElementById('beyond20CopyBtn'), status=document.getElementById('beyond20CopyStatus');
+    button.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText('https://vtt.roll-drauf.de/*'); status.textContent='Kopiert. Jetzt in den Beyond20-Einstellungen einfügen.'; button.textContent='Kopiert ✓'; }
+        catch (_) { const selection=getSelection(),range=document.createRange();range.selectNodeContents(document.getElementById('beyond20UrlValue'));selection.removeAllRanges();selection.addRange(range);status.textContent='Adresse markiert. Mit Strg/Cmd+C kopieren.'; }
+    });
+})();
+</script>
 </body>
 </html>

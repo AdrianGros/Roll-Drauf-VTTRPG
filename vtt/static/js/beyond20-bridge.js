@@ -152,7 +152,7 @@
             });
         }
 
-        var primary = attackRolls[0] || null;
+        var primary = attackRolls.find(function (roll) { return roll && !roll.discarded; }) || null;
         var anyCrit = attackRolls.some(function (roll) {
             return roll && roll["critical-success"];
         });
@@ -167,8 +167,10 @@
             total = rolls[0].total;
         }
 
-        var rollType = "custom";
-        if (attackRolls.length && damageRolls.length) {
+        var rollType = String(request.request?.type || request.type || "custom");
+        if (rollType !== "custom") {
+            // Preserve the requested action; component dice have different types.
+        } else if (attackRolls.length && damageRolls.length) {
             rollType = "attack";
         } else if (primary && primary.type) {
             rollType = String(primary.type);
@@ -184,6 +186,8 @@
 
         return {
             source: "beyond20",
+            event_id: crypto.randomUUID(),
+            token_id: window.RollDraufTable?.getSelectedTokenId?.() ?? null,
             system: "dnd5e",
             character: characterName(request),
             title: title,

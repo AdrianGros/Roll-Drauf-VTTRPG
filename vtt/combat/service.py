@@ -128,11 +128,13 @@ def start_encounter(
         return None, "no eligible combat participants found"
 
     normalized_mode = str(mode or "auto").strip().lower()
-    if normalized_mode not in {"auto", "manual"}:
+    if normalized_mode not in {"auto", "manual", "players"}:
         return None, "invalid combat mode"
 
-    if normalized_mode == "auto":
+    if normalized_mode in {"auto", "players"}:
         for token in participants:
+            if token.initiative is not None or (normalized_mode == "players" and token.token_type == "player"):
+                continue
             dex_mod = _dex_modifier(token.character)
             token.initiative = random.randint(1, 20) + dex_mod
             token.updated_by = user_id

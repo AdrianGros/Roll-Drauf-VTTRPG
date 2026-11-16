@@ -74,11 +74,11 @@ def idempotent_table_request(handler):
     return wrapped
 
 
-def socket_roll(context, payload, handler):
+def socket_roll(context, payload, handler, operation="socket:roll_dice"):
     request_id = payload.get("client_event_id") if isinstance(payload, dict) else None
     if request_id is None:
         return handler()
-    receipt, replay = claim(context, request_id, "socket:roll_dice", payload)
+    receipt, replay = claim(context, request_id, operation, payload)
     if replay:
         answer, status = replay
         return answer if status == 200 else {**answer, "status": status}

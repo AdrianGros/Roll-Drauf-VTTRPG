@@ -134,6 +134,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // choice survives snapshots/re-renders of the same map.
             this.autoFitMapId = null;
             this.pendingTokenPlacement = null;
+            this.pendingTokenTemplate = null;
             this.pendingTokenImage = null;
             this.pendingTokenImageLabel = "";
         }
@@ -454,8 +455,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             await this._withCombatButtonPending("btnStartCombat", async () => {
                 try {
                     this._handleCombatState(
-                        await this.api.combatStart(this.campaignId, this.sessionId, "auto"));
-                    this._logActivity(globalThis.VTTUi("Kampf gestartet — Initiative vom Server ausgewürfelt."), "info");
+                        await this.api.combatStart(this.campaignId, this.sessionId, "players"));
+                    this._logActivity(globalThis.VTTUi("Kampf gestartet — Spieler würfeln ihre eigene Initiative."), "info");
                 } catch (error) {
                     this._showMessage(error.message || globalThis.VTTUi("Kampf konnte nicht gestartet werden."), true);
                 }
@@ -603,6 +604,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // beyond20-bridge.js): hand a normalized envelope to the table
             // without reaching into runtime internals.
             window.RollDraufTable = {
+                getSelectedTokenId: () => {
+                    const token = this._findStateToken(this.selectedTokenId);
+                    return token && this._canMoveToken(token) ? Number(token.id) : null;
+                },
                 // Returns true when sent, false when the socket is not up yet
                 // (the adapter keeps the roll and retries on reconnect) and
                 // "read_only" when this seat may not roll right now. That case
@@ -613,7 +618,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         return "read_only";
                     }
                     if (!this.socket || !this.socket.isConnected) return false;
-                    this.socket.sendExternalRoll(roll);
+                    const selected = this._findStateToken(this.selectedTokenId);
+                    this.socket.sendExternalRoll({...roll, token_id: Object.prototype.hasOwnProperty.call(roll, 'token_id') ? roll.token_id : selected && this._canMoveToken(selected) ? Number(selected.id) : null});
                     return true;
                 },
                 // HP sync (Beyond20 hp-update et al.): match the external
@@ -895,7 +901,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         return;
                     }
                     target.textContent = `${dice} → ${result.total} · ${this._formatDiceBreakdown(result)}`;
-                }, mode, visibility);
+                }, mode, visibility, this.selectedTokenId ? Number(this.selectedTokenId) : null);
             });
 
             const btnClearSelection = document.getElementById("btnClearSelection");
@@ -951,70 +957,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         _bindWorkspaceControls() {
             // Independent chat on the left; journal/tools on the right. Reuse the
-            // same log/composer and the already authorized role composition.
-            const sidebar = document.querySelector(".right-sidebar");
-            const chat = document.getElementById('chatSidebar');
-            document.getElementById('chatSidebarBody').appendChild(document.getElementById('panel-chat'));
-            document.getElementById('panel-chat').classList.add('active');
-            document.querySelector('.right-sidebar [data-tab="chat"]')?.remove();
-            const session = document.getElementById('panel-session');
-            document.getElementById('panel-journal').append(...Array.from(session.children));
-            session.remove();
-            document.querySelector('.right-sidebar [data-tab="session"]')?.remove();
+            const sessionPanel = document.getElementById('panel-session');
+            document.getElementById('panel-journal').append(...Array.from(sessionPanel.children));
+            sessionPanel.remove();
             document.getElementById('appMenuDisplay').textContent = globalThis.VTTUi('Einstellungen');
             import('/static/js/play-journal.js').then(({ mount }) => mount(this))
-                .catch(error => this._showMessage(error.message || globalThis.VTTUi('Dateien konnten nicht geladen werden.'), true));
-            const back = document.getElementById('btnBack');
-            back.querySelector('.tool-label').textContent = globalThis.VTTUi('App-Menü');
-            const chatToggle = document.getElementById('btnChatToggle');
-            const sync = () => {
-                document.getElementById('btnSidebarToggle')?.setAttribute('aria-expanded',String(sidebar.classList.contains('is-open')));
-                chatToggle.setAttribute('aria-expanded',String(chat.classList.contains('is-open')));
-            };
-            const small = () => window.matchMedia('(max-width: 1040px)').matches;
-            const closeChat = () => { chat.classList.remove('is-open'); sync(); };
-            chatToggle.addEventListener('click', () => {
-                chat.classList.toggle('is-open');
-                if (small() && chat.classList.contains('is-open')) sidebar.classList.remove('is-open');
-                sync();
-            });
-            document.getElementById('btnChatClose').setAttribute('aria-label',globalThis.VTTUi('Chat schließen'));
-            document.getElementById('btnChatClose').addEventListener('click',closeChat);
-            for (const [drawer,trigger] of [[chat,chatToggle],[sidebar,document.getElementById('btnSidebarToggle')]]) {
-                drawer.addEventListener('keydown',event=>{
-                    if(event.key!=='Escape')return;
-                    event.preventDefault();event.stopPropagation();drawer.classList.remove('is-open');sync();trigger.focus();
-                });
-            }
-            const sidebarToggle = document.getElementById("btnSidebarToggle");
-            if (sidebarToggle && sidebar) {
-                sidebarToggle.addEventListener("click", () => {
-                    sidebar.classList.toggle("is-open");
-                    if (small() && sidebar.classList.contains('is-open')) closeChat();
-                    this._activateSidebarTab('journal');
-                    sync();
-                });
-            }
-            const sidebarClose = document.getElementById("btnSidebarClose");
-            if (sidebarClose && sidebar) {
-                sidebarClose.addEventListener("click", () => {
-                    sidebar.classList.remove("is-open");
-                    sync();
-                });
-            }
-
-            document.querySelectorAll(".sidebar-tab:not(.sidebar-close)").forEach((button) => {
-                button.addEventListener("click", () => {
-                    const tab = button.getAttribute("data-tab") || "tools";
-                    this._activateSidebarTab(tab);
-                    if (sidebar) {
-                        sidebar.classList.add("is-open");
-                        if (small()) closeChat();
-                        sync();
-                    }
-                });
-            });
-            this._activateSidebarTab(this.activeSidebarTab);
+                .catch(error => this._showMessage(error.message, true));
 
             document.querySelectorAll(".tool-btn[data-tool]").forEach((button) => {
                 button.addEventListener("click", () => {
@@ -1061,40 +1009,6 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this._bindLayersDirectoryControls();
             this._bindActionHotbar();
 
-            const sendChat = () => {
-                const input = document.getElementById("chatInput");
-                if (!input) return;
-                const text = String(input.value || "").trim();
-                if (!text) return;
-                const useSocket = Boolean(this.socket && this.socket.isConnected);
-                if (useSocket) {
-                    this.socket.sendChat(text, this.user?.username || "player", this.user?.id || null);
-                } else {
-                    const time = new Date().toISOString().slice(11, 19);
-                    this._appendChatMessage({
-                        time,
-                        sender_name: this.user?.username || "player",
-                        message: text,
-                    });
-                    this._logActivity(globalThis.VTTUi("Chat: {p0}",{p0:(text)}), "info");
-                }
-                input.value = "";
-            };
-
-            const btnSendChat = document.getElementById("btnSendChat");
-            if (btnSendChat) btnSendChat.addEventListener("click", sendChat);
-            const chatInput = document.getElementById("chatInput");
-            if (chatInput) {
-                chatInput.addEventListener("keydown", (event) => {
-                    // S08: Shift+Enter must insert a real line break (the
-                    // textarea's own default behavior -- do NOT
-                    // preventDefault for it), Enter alone submits.
-                    if (event.key === "Enter" && !event.shiftKey) {
-                        event.preventDefault();
-                        sendChat();
-                    }
-                });
-            }
         }
 
         // S08: Blind/Self roll visibility are DM-only -- disabled with a
@@ -1117,6 +1031,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _activateSidebarTab(tabName) {
+            if (this.windows) { this.windows.open('panel-' + (tabName === 'session' ? 'journal' : tabName)); return; }
             if (tabName === 'chat') { document.getElementById('btnChatToggle')?.click(); return; }
             if (tabName === 'session') tabName = 'journal';
             this.activeSidebarTab = tabName;
@@ -1131,6 +1046,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _setTool(toolName) {
+            if (toolName === 'token') this._selectToken(null, true, false);
             // Placing-a-token mode is exclusive: switching tools cancels a
             // half-finished placement instead of leaving the panel orphaned.
             if (toolName !== "token") {
@@ -1177,6 +1093,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         // controls stayed invisible on both desktop (panel starts
         // collapsed) and mobile (panel lives inside a closed sheet).
         _revealTokenWidget() {
+            if (this.windows) { this.windows.open('tokenWidget'); return; }
             const tokenWidget = document.getElementById("tokenWidget");
             if (!tokenWidget) return;
             const dockTab = document.getElementById('dock-tokenWidget');
@@ -1631,6 +1548,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 }
                 typeSelect.disabled = !operator;
             }
+            const template = this.pendingTokenTemplate;
+            if (template) {
+                document.getElementById('tokenCreateName').value = template.name;
+                document.getElementById('tokenCreateSize').value = String(template.values.size || 1);
+                document.getElementById('tokenCreateType').value = isOperatorRole(this.bootstrap?.session_role) ? template.values.token_type : 'player';
+            }
+            if (this.windows) this.windows.position(panel, 'tokenCreatePanel');
         }
 
         async _loadLinkableCharacters() {
@@ -1645,6 +1569,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     option.dataset.name = character.name;
                     select.append(option);
                 }
+                const bound = this.pendingTokenTemplate?.values?.character_id;
+                if (bound && characters.some(character => Number(character.id) === Number(bound))) select.value = String(bound);
                 select.hidden = characters.length === 0;
             } catch (error) {
                 select.hidden = true;
@@ -1693,6 +1619,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 metadata_json: metadataJson,
             };
             if (characterId) token.character_id = characterId;
+            const template = this.pendingTokenTemplate;
+            if (template) Object.assign(token, {hp_current: template.values.hp_max, hp_max: template.values.hp_max,
+                rotation: template.values.rotation || 0, sight_range: template.values.sight_range});
             this._cancelTokenPlacement();
             try {
                 if (this.socket && this.socket.isConnected) {
@@ -2730,6 +2659,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         // neither is an independent floating panel today, so neither is
         // touched here.
         _bindWidgetDragging() {
+            if (this.windows) return;
             const desktopMedia = window.matchMedia(WIDGET_DRAG_MIN_WIDTH_MEDIA);
             const stage = document.querySelector(".stage");
             if (!stage) return;
@@ -2860,68 +2790,23 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _setupTableSheet() {
-            // One bottom-left dock at every width. The widgets are the existing
-            // authorized composition, never a second privileged copy.
-            const sheet = document.getElementById("tableSheet");
-            const backdrop = document.getElementById("tableSheetBackdrop");
-            const btn = document.getElementById("btnTableSheet");
-            const body = document.getElementById("tableSheetBody");
-            if (!sheet || !btn || !body) return;
-            const entries = [['layersWidget',globalThis.VTTUi('Seiten')],['turnOrderWidget',globalThis.VTTUi('Initiative')],['tokenWidget',globalThis.VTTUi('Tokens')]];
-            entries.push(...(this._dmDockEntries || []));
-            const tabs = document.createElement('div');tabs.id='tableDockTabs';tabs.className='table-dock-tabs';
-            tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label',globalThis.VTTUi('Tischbereiche'));
-            let active = entries[0][0];
-            const select = (id) => {
-                active=id;
-                tabs.querySelectorAll('button').forEach(button => {
-                    const on=button.dataset.dockTarget===id;
-                    button.setAttribute('aria-selected',String(on));button.tabIndex=on?0:-1;
-                });
-                entries.forEach(([widgetId]) => {
-                    const widget=document.getElementById(widgetId);
-                    widget.hidden=widgetId!==id;widget.classList.remove('collapsed');
-                    widget.querySelector('.widget-toggle')?.setAttribute('aria-expanded','true');
-                });
+            this.windows = new window.PlayWindows(this);
+            this.windows.mount();
+            this._closeTableDock = () => {};
+            this.tokenLibrary = new window.PlayTokenLibrary(this);
+            this.campaignRoom = new window.PlayCampaignRoom(this);
+            const roll = async () => {
+                const token = this._findStateToken(this.selectedTokenId);
+                if (!token || !this._canMoveToken(token)) {
+                    this._showMessage(globalThis.VTTUi('Wähle zuerst deinen Token aus.'), true); return;
+                }
+                try {
+                    const result = await Auth.makeAuthRequest(`/api/play/campaigns/${this.campaignId}/sessions/${this.sessionId}/tokens/${token.id}/initiative-roll`,
+                        'POST', {request_id: crypto.randomUUID()});
+                    this._showMessage(`${token.name} · ${globalThis.VTTUi('Initiative')}: ${result.total}`);
+                } catch (error) { this._showMessage(error.message, true); }
             };
-            const setOpen = (open) => {
-                sheet.hidden = !open;
-                if (backdrop) backdrop.hidden = !open || !window.matchMedia('(max-width: 1040px)').matches;
-                btn.classList.toggle("active", open);
-                btn.setAttribute("aria-expanded", String(open));
-            };
-            this._closeTableDock = () => setOpen(false);
-            entries.forEach(([id,label],index) => {
-                const widget=document.getElementById(id);
-                body.appendChild(widget);widget.setAttribute('role','tabpanel');widget.setAttribute('aria-labelledby','dock-'+id);
-                const heading=widget.querySelector('.widget-toggle');
-                if(heading){const plain=heading.cloneNode(true);plain.removeAttribute('role');plain.removeAttribute('tabindex');plain.removeAttribute('aria-expanded');plain.removeAttribute('aria-controls');heading.replaceWith(plain);}
-                const button=document.createElement('button');button.type='button';button.id='dock-'+id;
-                button.dataset.dockTarget=id;button.setAttribute('role','tab');button.setAttribute('aria-controls',id);
-                button.textContent=label;
-                button.addEventListener('click',() => {select(id);setOpen(true);});
-                button.addEventListener('keydown',event => {
-                    let next=index;
-                    if(event.key==='ArrowRight')next=(index+1)%entries.length;
-                    else if(event.key==='ArrowLeft')next=(index+entries.length-1)%entries.length;
-                    else if(event.key==='Home')next=0;
-                    else if(event.key==='End')next=entries.length-1;
-                    else return;
-                    event.preventDefault();tabs.children[next].focus();tabs.children[next].click();
-                });
-                tabs.appendChild(button);
-            });
-            document.querySelector('.tabletop-shell').appendChild(tabs);
-            const close=document.createElement('button');close.type='button';close.className='table-dock-close';
-            close.textContent='×';close.setAttribute('aria-label',globalThis.VTTUi('Tischbereich schließen'));
-            close.addEventListener('click',()=>{setOpen(false);tabs.querySelector('[aria-selected="true"]')?.focus();});
-            sheet.prepend(close);
-            btn.addEventListener("click", () => setOpen(sheet.hidden));
-            if (backdrop) backdrop.addEventListener("click", () => setOpen(false));
-            document.getElementById("btnTableSheetBack")?.addEventListener("click", () => {
-                document.getElementById("btnBack")?.click();
-            });
-            select(active);setOpen(false);
+            for (const id of ['btnOwnInitiative', 'btnSelectedInitiative']) document.getElementById(id)?.addEventListener('click', roll);
         }
 
         _bindTableActions() {
@@ -3009,7 +2894,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 });
             }
 
-            // DM shortcut: upload token art before placing the token. The
+            // Shared shortcut: upload token art before placing the token. The
             // image is kept as pending state, then attached to the next
             // token created through TOK + map click. This removes the old
             // requirement to discover the create panel before a file dialog
@@ -3428,6 +3313,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 }
             }
             this._showRollFeed(roll, payload);
+            if (roll.source === 'beyond20') {
+                const status = document.getElementById('beyond20Status');
+                if (status) status.textContent = globalThis.VTTUi('Wurf an dieser Sitzung angekommen.') + ' ' + new Date().toLocaleTimeString();
+            }
             this._appendChatMessage({
                 message_id: payload?.message_id,
                 time: String(payload?.timestamp || new Date().toISOString()).slice(11, 19),
@@ -4211,7 +4100,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this.selectedTokenId = null;
             }
             if (!tokens.length) {
-                tokenList.innerHTML = `<div class='muted'>${globalThis.VTTUiHTML("Keine Tokens. Mit dem TOK-Werkzeug auf die Karte klicken.")}</div>`;
+                tokenList.innerHTML = `<div class='muted'>${globalThis.VTTUiHTML("Keine Tokens. Wähle hier „Neuen Token platzieren“.")}</div>`;
             } else {
                 tokenList.innerHTML = tokens.map((token) => {
                     const cell = this._resolveTokenPosition(token, gridSize);
@@ -4400,7 +4289,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const tokenToolBtn = document.querySelector('.tool-btn[data-tool="token"]');
             if (tokenToolBtn) tokenToolBtn.style.display = this.readOnly ? "none" : "";
             const tokenUploadRow = document.getElementById("tokenUploadRow");
-            if (tokenUploadRow) tokenUploadRow.hidden = !operator || this.readOnly;
+            if (tokenUploadRow) tokenUploadRow.hidden = this.readOnly;
 
             const mapMetaText = document.getElementById("mapMetaText");
             if (mapMetaText) {
@@ -4590,7 +4479,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 container.innerHTML = order.length ? order.map((token) => `
                     <div class="turn-item ${Number(token.id) === Number(encounter.active_token_id) ? "is-active" : ""} ${Number(this.selectedTokenId) === Number(token.id) ? "selected" : ""}">
                         <span>${escapeHtml(token.name)}</span>
-                        <span class="turn-score">${escapeHtml(token.initiative)}</span>
+                        <span class="turn-score">${escapeHtml(token.initiative == null ? globalThis.VTTUi("ausstehend") : token.initiative)}</span>
                     </div>
                 `).join("") : `<div class='muted'>${globalThis.VTTUiHTML("Alle Akteure sind verdeckt.")}</div>`;
                 container.querySelectorAll(".turn-item").forEach((row, index) => {
@@ -4623,7 +4512,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return `
                 <div class="turn-item ${isCurrent ? "current" : ""} ${Number(this.selectedTokenId) === Number(token.id) ? "selected" : ""}">
                     <span>${escapeHtml(token.name)}${isCurrent ? ` <strong>${globalThis.VTTUiHTML("• aktuell")}</strong>` : ""}</span>
-                    <span class="turn-score">${escapeHtml(token.initiative)}</span>
+                    <span class="turn-score">${escapeHtml(token.initiative == null ? globalThis.VTTUi("ausstehend") : token.initiative)}</span>
                 </div>
             `;
             }).join("");

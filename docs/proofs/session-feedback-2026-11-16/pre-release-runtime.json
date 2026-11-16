@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "image_id": "sha256:1e8614e7855b0f203ef4c3976e2d41ec2bf34c9af7d70c6209bd01d340559aac",
+  "image_tag": "roll-drauf-vtt-app:feedback-seat-memory-20261111-78133813e",
+  "revision_label": "78133813e7f8ee2ed77db0d1fa15ab972447d2bc",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "configured_image_matches_container": true,
+  "ports": [
+    {
+      "mode": "ingress",
+      "host_ip": "127.0.0.1",
+      "target": 5000,
+      "published": "15000",
+      "protocol": "tcp"
+    }
+  ],
+  "mounts": [
+    {
+      "type": "volume",
+      "destination": "/data/vtt-assets"
+    }
+  ]
+}

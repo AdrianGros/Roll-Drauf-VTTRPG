@@ -29,14 +29,13 @@ class PlaySocketRuntime {
                 return;
             }
             if (!this.socket?.connected || this.socket.id !== socketId) return;
-            this.isConnected = true;
+            this.isConnected = false;
             this.socket.emit("session:join", {
                 campaign_id: this.campaignId,
                 session_id: this.sessionId,
                 context_token: window.VTTTableContext?.token,
                 tab_id: window.VTTTableContext?.tab,
             });
-            this._fire("connect");
         });
 
         this.socket.on("disconnect", () => {
@@ -52,6 +51,8 @@ class PlaySocketRuntime {
             window.location.replace(`/campaigns?campaign_id=${this.campaignId}`);
         });
         this.socket.on("session:joined", (payload) => {
+            this.isConnected = true;
+            this._fire("connect");
             // A new server process may restart its in-memory sequence.
             // The initial snapshot must still be accepted at this sequence.
             this.lastEventSeq = Math.max(0, (Number(payload?.event_seq) || 0) - 1);
@@ -113,7 +114,7 @@ class PlaySocketRuntime {
         });
     }
 
-    rollDice(dice, player = "player", callback = null, mode = "normal", visibility = "public") {
+    rollDice(dice, player = "player", callback = null, mode = "normal", visibility = "public", tokenId = null) {
         if (!this.socket || !this.isConnected) {
             callback?.({error: 'Keine Verbindung. Bitte zuerst wieder verbinden.'});
             return;
@@ -127,6 +128,7 @@ class PlaySocketRuntime {
                 player,
                 mode,
                 visibility,
+                token_id: tokenId,
                 client_event_id: this._makeClientEventId('roll'),
             },
             callback
@@ -139,6 +141,7 @@ class PlaySocketRuntime {
             campaign_id: this.campaignId,
             session_id: this.sessionId,
             roll: roll && typeof roll === "object" ? roll : {},
+            client_event_id: roll?.event_id || this._makeClientEventId('external'),
         });
     }
 

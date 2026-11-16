@@ -1,0 +1,53 @@
+.play-window { position: fixed; z-index: 60; width: min(360px, calc(100vw - 12px)); max-height: calc(100svh - 100px); display: flex; flex-direction: column; color: var(--ui-ink, #eee); background: var(--ui-paper, #251d29); border: 1px solid var(--ui-line, #866); border-radius: 10px; box-shadow: 0 8px 30px #0008; overflow: hidden; }
+.play-window[hidden] { display: none !important; }
+.play-window-head { display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding: 3px 8px; border-bottom: 1px solid var(--ui-line); background: var(--ui-panel, #302332); }
+.play-window-head strong { flex: 1; padding: 8px; }
+.play-window-head button { min-width: 40px; min-height: 40px; }
+.play-drag-handle { cursor: move; touch-action: none; user-select: none; }
+.play-window-body { overflow: auto; padding: 10px; overscroll-behavior: contain; min-height: 0; }
+.play-window .floating, .play-window .tab-panel { display: block !important; position: static !important; inset: auto !important; width: auto !important; max-height: none !important; padding: 0; border: 0; background: transparent; box-shadow: none; }
+.play-window .widget-body { display: block; max-height: none !important; overflow: visible; }
+.play-window .floating[hidden], .play-window .widget-toggle[hidden] { display: none !important; }
+.play-free-windows #journalSidebar, .play-free-windows #chatSidebar, .play-free-windows #tableSheet, .play-free-windows #tableSheetBackdrop, .play-free-windows #btnTableSheet { display: none !important; }
+.play-free-windows #tableDockTabs { z-index: 55; overflow-x: auto; padding-top: 2px; }
+.play-free-windows #tableDockTabs button { flex-shrink: 0; }
+.play-free-windows [data-movable] { position: fixed !important; max-width: calc(100vw - 12px); max-height: calc(100svh - 100px); }
+.play-free-windows #sheetDrawer[data-movable] { width: min(920px, calc(100vw - 12px)); height: min(800px, calc(100svh - 100px)); }
+.play-free-windows dialog[data-movable] { overflow: auto; }
+.beyond-setup-frame { display: block; width: 100%; height: min(570px, 60svh); border: 0; margin-top: 12px; }
+.token-library-actions { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+.token-library-list { display: flex; flex-direction: column; gap: 8px; padding: 0; list-style: none; }
+.token-library-row { border: 1px solid var(--ui-line); padding: 8px; border-radius: 6px; }
+.token-library-row img { width: 48px; height: 48px; object-fit: contain; float: left; margin-right: 8px; }
+.token-library-row input { width: 100%; box-sizing: border-box; }
+.token-library-row button { min-height: 40px; }
+.play-window a { color: var(--ui-accent, #e8ab8f); }
+@media(max-width:1040px) { .play-free-windows #tableDockTabs { max-width: calc(100vw - 16px); } .play-window-body { padding: 8px; } }
+
+#campaignRoomLog { max-height: 40svh; overflow: auto; margin: 10px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+#campaignRoomLog .chat-entry { padding: 7px 0; border-bottom: 1px solid var(--ui-line); }
+
+.play-window button, .play-window input, .play-window select { font: inherit; color: var(--ui-ink, #eee); background: var(--ui-panel, #302332); border: 1px solid var(--ui-line, #866); border-radius: 5px; padding: 6px 9px; }
+.play-window button { cursor: pointer; min-height: 40px; }
+.play-window textarea { max-width: 100%; box-sizing: border-box; }
+
+/* Keep the single tool row and window chrome clear of book-header styling. */
+body.play-free-windows #tableDockTabs { display: contents !important; position: static !important; }
+body.play-free-windows .left-toolbar { max-width: calc(100vw - 16px) !important; overflow-x: auto !important; }
+body.play-free-windows .play-window > .play-window-head { display: flex !important; align-items: center !important; justify-content: space-between !important; width: auto !important; min-height: 44px !important; height: auto !important; margin: 0 !important; padding: 3px 8px !important; border-radius: 0 !important; background: var(--ui-panel, #302332) !important; color: var(--ui-ink, #eee) !important; }
+body.play-free-windows .play-window-head strong { color: var(--ui-ink, #eee) !important; text-shadow: none !important; font-size: 1rem !important; }
+body.play-free-windows .play-window-head button { display: block !important; flex: 0 0 40px !important; color: var(--ui-ink, #eee) !important; }
+body.play-free-windows #window-beyond20 { width: min(520px, calc(100vw - 12px)); }
+body.play-free-windows #appMenu[data-movable] { transform: none !important; }
+
+/* The fixed action/tool bars stay reachable above ordinary movable windows. */
+body.play-free-windows > .left-toolbar { position: fixed !important; z-index: 1000 !important; left: 50% !important; bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important; top: auto !important; right: auto !important; transform: translateX(-50%) !important; display: flex !important; flex-direction: row !important; gap: 4px; width: max-content; padding: 4px; border-radius: 10px; background: var(--ui-panel, #24242d); }
+body.play-free-windows > .left-toolbar .tool-btn { display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 0 0 auto; min-width: 62px; min-height: 44px; }
+body.play-free-windows > #personalActionBar, body.play-free-windows > #actionHotbar { position: fixed !important; z-index: 1001 !important; }
+
+body.play-free-windows > #personalActionBar, body.play-free-windows > #actionHotbar { bottom: calc(var(--play-toolbar-height, 64px) + 18px + env(safe-area-inset-bottom, 0px)) !important; }
+body.play-free-windows[data-personal-hotbar="true"] > #actionHotbar { bottom: calc(var(--play-toolbar-height, 64px) + var(--play-personal-height, 64px) + 26px + env(safe-area-inset-bottom, 0px)) !important; }
+
+body.play-free-windows > #tokenSelectionBar { position: fixed !important; z-index: 65; bottom: calc(var(--play-toolbar-height, 64px) + var(--play-personal-height, 0px) + var(--play-action-height, 0px) + 34px) !important; max-height: 55svh; overflow: auto; }
+body.play-free-windows > #tokenSelectionBar[data-movable] { bottom: auto !important; }
+body.play-free-windows [data-movable] { transform: none !important; }

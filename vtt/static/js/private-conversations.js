@@ -8,7 +8,7 @@ const make = (tag, parent, text, attrs = {}) => {
 };
 
 async function api(path = '', method = 'GET', body, signal, retry = true) {
-    const response = await fetch('/api/private-conversations' + path, {
+    const response = await fetch(path.startsWith('/rooms') ? '/api/campaign-rooms' + path.slice(6) : '/api/private-conversations' + path, {
         method, credentials: 'include', signal, headers: window.Auth.buildHeaders(method, body !== undefined),
         ...(body !== undefined ? {body: JSON.stringify(body)} : {}),
     });
@@ -64,12 +64,23 @@ export class ConversationSurface {
         if ([401, 403, 404].includes(error.status)) this.denied();
         else this.info.textContent = ui('Die Anfrage ist fehlgeschlagen. Bitte versuche es erneut.');
     }
+    roomPath(id) { return typeof id === 'string' && id.startsWith('campaign:') ? '/rooms/' + id.split(':')[1] : '/' + id; }
     async loadList(append = false) {
         this.listAbort?.abort(); const controller = this.listAbort = new AbortController(), version = ++this.listVersion;
         try {
             const data = await api(append && this.cursor ? '?cursor=' + encodeURIComponent(this.cursor) : '', 'GET', undefined, controller.signal);
             if (version !== this.listVersion) return;
-            if (!append) this.list.replaceChildren();
+            if (!append) {
+                this.list.replaceChildren();
+                const rooms = await api('/rooms', 'GET', undefined, controller.signal);
+                if (version !== this.listVersion) return;
+                for (const room of rooms.rooms) {
+                    const row = make('li', this.list, null), button = make('button', row, room.name,
+                        {type: 'button', 'data-room-id': room.id});
+                    make('small', button, ui('Kampagnenchat'));
+                    button.onclick = () => this.open('campaign:' + room.id);
+                }
+            }
             for (const conversation of data.conversations) {
                 const row = make('li', this.list, null), button = make('button', row, conversation.partner_name,
                     {type: 'button', 'data-conversation-id': conversation.id, 'aria-current': String(this.id === conversation.id)});
@@ -77,14 +88,14 @@ export class ConversationSurface {
                 button.onclick = () => this.open(conversation.id);
             }
             this.cursor = data.next_cursor; this.more.hidden = !this.cursor;
-            if (!data.conversations.length && !append) make('li', this.list, ui('Noch keine Gespräche.'));
+            if (!data.conversations.length && !append && !this.list.children.length) make('li', this.list, ui('Noch keine Gespräche.'));
         } catch (error) { if (error.name !== 'AbortError' && version === this.listVersion) this.error(error); }
     }
     async open(id) {
         this.pause(); this.sendAbort?.abort(); this.version++; this.id = id; this.messages.clear(); this.sending = false;
         this.history.replaceChildren(); this.form.hidden = true; this.title.textContent = ui('Gespräch wird geladen …'); this.info.textContent = '';
         this.input.value = this.pending.get(id)?.content || '';
-        history.replaceState(null, '', '/conversations?id=' + id);
+        history.replaceState(null, '', typeof id === 'string' ? '/conversations?campaign_id=' + id.split(':')[1] : '/conversations?id=' + id);
         this.list.querySelectorAll('[data-conversation-id]').forEach(button => button.setAttribute('aria-current', String(Number(button.dataset.conversationId) === id)));
         await this.read('initial');
     }
@@ -104,7 +115,7 @@ export class ConversationSurface {
         const ids = [...this.messages.keys()], cursor = direction === 'older' && ids.length ? '?before=' + Math.min(...ids)
             : direction === 'new' && ids.length ? '?after=' + Math.max(...ids) : '';
         try {
-            const data = await api('/' + id + cursor, 'GET', undefined, controller.signal);
+            const data = await api(this.roomPath(id) + cursor, 'GET', undefined, controller.signal);
             if (version !== this.version || id !== this.id) return;
             this.title.textContent = `${data.conversation.partner_name} · ${data.conversation.campaign_name}`;
             this.canSend = data.conversation.can_send;
@@ -141,7 +152,7 @@ export class ConversationSurface {
         const pending = this.pending.get(id), controller = this.sendAbort = new AbortController();
         this.sending = true; this.send.disabled = true; this.input.readOnly = true; this.info.textContent = ui('Nachricht wird gesendet …');
         try {
-            const data = await api('/' + id + '/messages', 'POST', pending, controller.signal);
+            const data = await api(this.roomPath(id) + (typeof id === 'string' ? '' : '/messages'), 'POST', pending, controller.signal);
             if (version !== this.version || id !== this.id) return;
             this.messages.set(data.message.id, data.message); this.pending.delete(id); this.input.value = '';
             this.info.textContent = ui('Nachricht gesendet.'); this.render(); this.history.scrollTop = this.history.scrollHeight;
@@ -166,6 +177,7 @@ if (root) {
         const campaign = Number(query.get('campaign_id')), recipient = Number(query.get('recipient_user_id'));
         try {
             if (Number.isInteger(id) && id > 0) await surface.open(id);
+            else if (Number.isInteger(campaign) && campaign > 0 && !recipient) await surface.open('campaign:' + campaign);
             else if (Number.isInteger(campaign) && campaign > 0 && Number.isInteger(recipient) && recipient > 0) {
                 const result = await api('', 'POST', {campaign_id: campaign, recipient_user_id: recipient});
                 await surface.loadList(); await surface.open(result.conversation.id);

@@ -1,6 +1,7 @@
 """M6 tests: combat API lifecycle and authorization."""
 
 from datetime import datetime
+from tests.play_shared import enter_table
 
 import pytest
 
@@ -79,7 +80,7 @@ def outsider_client(app, outsider_user):
 
 
 @pytest.fixture
-def combat_context(dm_user, player_user, dm_client):
+def combat_context(dm_user, player_user, dm_client, player_client):
     campaign = Campaign(
         name="Combat Campaign",
         description="combat api testing",
@@ -146,6 +147,8 @@ def combat_context(dm_user, player_user, dm_client):
     db.session.add(linked_character)
     db.session.commit()
 
+    enter_table(dm_client, campaign, game_session, "dm")
+    enter_table(player_client, campaign, game_session, "player")
     token_one_response = dm_client.post(
         f"/api/campaigns/{campaign.id}/sessions/{game_session.id}/tokens",
         json={

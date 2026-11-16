@@ -258,13 +258,13 @@ def install_socket_guard(socketio):
                 original_emit("table:context_revoked", {"reason": "table_context_required"}, to=request.sid)
                 return {"error": "table_context_required"}
             g.table_context = context
-            if event == "roll_dice":
+            if event in {"roll_dice", "external:roll"}:
                 from vtt.play.service import is_read_only_mode
                 session = db.session.get(GameSession, context.game_session_id)
                 if is_read_only_mode(session.status, current_role(context.campaign_id, user.id, session.id)):
                     return {"error": "read_only"}
                 from vtt.play.receipts import socket_roll
-                return socket_roll(context, payload, lambda: handler(*args))
+                return socket_roll(context, payload, lambda: handler(*args), "socket:" + event)
             return handler(*args)
         return guarded
 

@@ -1,0 +1,25 @@
+{
+  "status": "candidate_checks_passed_browser_release_suite_pending",
+  "backend_checks": [
+    {
+      "log": "/tmp/vtt-session-feedback-final-api.log",
+      "passed": 74,
+      "scope": "initial complete API/roles/combat/templates/chat/private/upload selection"
+    },
+    {
+      "log": "/tmp/vtt-session-feedback-input-final.log",
+      "passed": 17,
+      "scope": "input-body rework plus repeated external ingest"
+    },
+    {
+      "log": "/tmp/vtt-session-feedback-binding-final.log",
+      "passed": 30,
+      "scope": "character-map binding rework, external ingest and personal actions"
+    }
+  ],
+  "count_note": "Runs overlap; totals must not be added. Four new cases supplement the original 74 (three malformed-body parameters and the cross-map binding case).",
+  "browser_release_suite": "running; activation must wait for passing browser-checks.xml",
+  "catalog": "3373 generated sources, DE/EN and placeholders checked",
+  "full_repository_suite_run": false,
+  "installed_beyond20_extension_test": "NOT_RUN; DOM contract exercised by browser checks"
+}

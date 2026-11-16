@@ -238,7 +238,21 @@ def execute_sheet_roll(user, char, kind, key=None, *, session_id=None, mode="nor
     else:
         result = roll_d20(spec["modifier"], mode)
         dice = dice_text(spec["modifier"])
+    initiative_token = None
+    if target["session"] and kind == "initiative":
+        from vtt.play.rolls import actor_token, apply_initiative
+        try:
+            initiative_token = actor_token(char.campaign_id, target["session"].id, user.id, character_id=char.id)
+            apply_initiative(initiative_token, result["total"], user.id)
+            if initiative_token.visibility != "public":
+                visibility = "gm_only"
+        except ValueError as error:
+            db.session.rollback()
+            raise RollTargetError("initiative_rejected", str(error), 403)
     message_id = log_roll(user, char, target["session"], spec, result, visibility)
+    if initiative_token:
+        from vtt.play.rolls import publish_initiative
+        publish_initiative(initiative_token)
     return {"label": spec["label"], "dice": dice, "result": result,
             "logged": message_id is not None, "messageId": message_id,
             "session": session_view(target["session"]), "reason": target["reason"]}
@@ -259,6 +273,17 @@ def sheet_snapshot(char):
     return snapshot
 
 
+def _link_map_id(game_session_id, token_id=None):
+    from vtt.models import SessionState
+    if token_id is not None:
+        token = TokenState.query.filter_by(id=token_id, game_session_id=game_session_id).first()
+        if token:
+            return token.map_id
+    state = SessionState.query.filter_by(game_session_id=game_session_id).first()
+    session = db.session.get(GameSession, game_session_id)
+    return state.active_map_id if state else session.map_id if session else None
+
+
 def link_error(campaign, user, is_dm, character_id, game_session_id, token_id=None):
     """Why this character may not be linked to a token (message), or None if it may."""
     char = db.session.get(Character, character_id) if isinstance(character_id, int) else None
@@ -268,20 +293,20 @@ def link_error(campaign, user, is_dm, character_id, game_session_id, token_id=No
         return "Du kannst nur deine eigenen Charaktere verknüpfen."
     taken = TokenState.query.filter(
         TokenState.character_id == char.id, TokenState.game_session_id == game_session_id,
-        TokenState.deleted_at.is_(None))
+        TokenState.map_id == _link_map_id(game_session_id, token_id), TokenState.deleted_at.is_(None))
     if token_id is not None:
         taken = taken.filter(TokenState.id != token_id)
     if taken.first():
-        return "Dieser Charakter hat in dieser Sitzung bereits einen Token."
+        return "Dieser Charakter hat auf dieser Karte bereits einen Token."
     return None
 
 
 def linkable_characters(campaign, user, is_dm, game_session_id):
-    """Characters of this campaign the user may put on the table in this session (no token yet)."""
+    """Characters this user may place on the current map (no token on that map yet)."""
     taken = {
         row[0] for row in db.session.query(TokenState.character_id).filter(
             TokenState.game_session_id == game_session_id, TokenState.deleted_at.is_(None),
-            TokenState.character_id.isnot(None))
+            TokenState.map_id == _link_map_id(game_session_id), TokenState.character_id.isnot(None))
     }
     query = Character.query.filter(Character.campaign_id == campaign.id, Character.deleted_at.is_(None))
     if not is_dm:

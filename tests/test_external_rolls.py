@@ -7,6 +7,7 @@ persisted chat-history line out.
 """
 
 from datetime import datetime
+from tests.play_shared import enter_table
 
 import pytest
 
@@ -149,8 +150,10 @@ class TestExternalRollIngest:
 
         dm_socket = socketio.test_client(app, flask_test_client=dm_client)
         player_socket = socketio.test_client(app, flask_test_client=player_client)
-        for sock in (dm_socket, player_socket):
-            sock.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        for sock, client, mode in [(dm_socket, dm_client, "dm"), (player_socket, player_client, "player")]:
+            context = enter_table(client, campaign, session, mode)
+            sock.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id,
+                "context_token": context["token"], "tab_id": context["tab"]})
             sock.get_received()
 
         player_socket.emit("external:roll", {
@@ -182,7 +185,9 @@ class TestExternalRollIngest:
         campaign = _create_campaign(dm_user, "Sanitize Campaign")
         session = _add_session(campaign, dm_user)
         dm_socket = socketio.test_client(app, flask_test_client=dm_client)
-        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        context = enter_table(dm_client, campaign, session, "dm")
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id,
+            "context_token": context["token"], "tab_id": context["tab"]})
         dm_socket.get_received()
 
         dm_socket.emit("external:roll", {
@@ -223,7 +228,9 @@ class TestExternalRollIngest:
         campaign = _create_campaign(dm_user, "Empty Campaign")
         session = _add_session(campaign, dm_user)
         dm_socket = socketio.test_client(app, flask_test_client=dm_client)
-        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        context = enter_table(dm_client, campaign, session, "dm")
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id,
+            "context_token": context["token"], "tab_id": context["tab"]})
         dm_socket.get_received()
 
         dm_socket.emit("external:roll", {
@@ -246,8 +253,8 @@ class TestExternalRollIngest:
             "session_id": session.id,
             "roll": BEYOND20_STYLE_ROLL,
         })
-        errors = [e for e in outsider_socket.get_received() if e["name"] == "state:error"]
-        assert errors and errors[0]["args"][0]["code"] == "forbidden"
+        errors = [e for e in outsider_socket.get_received() if e["name"] in {"state:error", "table:context_revoked"}]
+        assert errors and errors[0]["name"] == "table:context_revoked"
         assert ChatMessage.query.filter_by(game_session_id=session.id).count() == 0
 
     def test_read_only_player_rejected(self, app, dm_user, player_user, player_client):
@@ -258,21 +265,25 @@ class TestExternalRollIngest:
         session = _add_session(campaign, dm_user, status="scheduled")
 
         player_socket = socketio.test_client(app, flask_test_client=player_client)
-        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        context = enter_table(player_client, campaign, session, "player")
+        player_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id,
+            "context_token": context["token"], "tab_id": context["tab"]})
         player_socket.get_received()
-        player_socket.emit("external:roll", {
+        answer = player_socket.emit("external:roll", {
             "campaign_id": campaign.id,
             "session_id": session.id,
             "roll": BEYOND20_STYLE_ROLL,
-        })
-        errors = [e for e in player_socket.get_received() if e["name"] == "state:error"]
-        assert errors and errors[0]["args"][0]["code"] == "forbidden"
+        }, callback=True)
+        assert answer == {"error": "read_only"}
+        assert ChatMessage.query.filter_by(game_session_id=session.id).count() == 0
 
     def test_roll_lands_in_bootstrap_chat_history(self, app, dm_user, dm_client):
         campaign = _create_campaign(dm_user, "History Campaign")
         session = _add_session(campaign, dm_user)
         dm_socket = socketio.test_client(app, flask_test_client=dm_client)
-        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id})
+        context = enter_table(dm_client, campaign, session, "dm")
+        dm_socket.emit("session:join", {"campaign_id": campaign.id, "session_id": session.id,
+            "context_token": context["token"], "tab_id": context["tab"]})
         dm_socket.get_received()
         dm_socket.emit("external:roll", {
             "campaign_id": campaign.id,

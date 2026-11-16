@@ -1,0 +1,222 @@
+{
+  "status": "discover_evidence_collected",
+  "captured_at_utc": "2026-11-15T22:40:13.438799+00:00",
+  "original_checkout": {
+    "path": "/home/admin/projects/roll-drauf-vtt",
+    "head": "66edde994cd72479df62fd2a1593c4fda382ba1e",
+    "existing_dirty_changes_preserved": true
+  },
+  "source_worktree": {
+    "path": "/home/admin/projects/roll-drauf-vtt-consolidation-20261115",
+    "head": "78133813e7f8ee2ed77db0d1fa15ab972447d2bc",
+    "tracked_status": []
+  },
+  "runtime": {
+    "container": "roll-drauf-vtt-app-1",
+    "image_tag": "roll-drauf-vtt-app:feedback-seat-memory-20261111-78133813e",
+    "image_id": "sha256:1e8614e7855b0f203ef4c3976e2d41ec2bf34c9af7d70c6209bd01d340559aac",
+    "started_at": "2026-11-15T15:19:30.305374325Z",
+    "compose_project": "migration-production",
+    "compose_working_dir": "/srv/migration/2026-10-07/setup",
+    "compose_config_files": "/srv/migration/2026-10-07/setup/production.compose.json,/srv/migration/2026-10-07/setup/production.duck-species.override.yml",
+    "mounts": [
+      {
+        "type": "volume",
+        "destination": "/data/vtt-assets"
+      }
+    ]
+  },
+  "file_comparisons": [
+    {
+      "path": "vtt/templates/play.html",
+      "live_sha256": "452cdb2c2d41083839d718f03152e8775d648d4ac61cd3914359084b798faff9",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/templates/beyond20.html",
+      "live_sha256": "9093dc5feecf5e84cae78ec614501ff6b003e45e62066e0b1d0c78f2ea2a2e10",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/js/play-ui.js",
+      "live_sha256": "0c50a0e1a5b76ead0a1f67c5628e3079e7fc32f50133acccfb9e0ed89bacae90",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/js/beyond20-bridge.js",
+      "live_sha256": "8a37569b951e83ab4f89eb0602ded05f8e89d1303caa9fffbcdb3e2ab23e5194",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/js/play-client.js",
+      "live_sha256": "a95805defe62860ac5296dd6ebf943ad581dc2962477dd50767eded1871c6d65",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/js/play-socket.js",
+      "live_sha256": "abcffee6f031075f4b99579a95f2b1a72427098330e60e7fbec5735e1e653ef8",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/play/routes.py",
+      "live_sha256": "98f95d738815d7d0cf490bcc0b921986a4fe3798e1848288de2b74f2ba29b27e",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/play/service.py",
+      "live_sha256": "696fe61d5bbce99087531f6befb71dbe241b82ffd9d01f7ef8d2f54bf6b8965c",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/models/token_state.py",
+      "live_sha256": "cb41e4e698b80c0fd546f0608080a2f511d30f1fb6b8c664d8378025746759eb",
+      "matches_source_worktree": true,
+      "matches_original_checkout": true
+    },
+    {
+      "path": "vtt/models/chat_message.py",
+      "live_sha256": "609620ce3750d76003b1bb4c501684f4aea170963006fc28dd89e13f45e92cfd",
+      "matches_source_worktree": true,
+      "matches_original_checkout": true
+    },
+    {
+      "path": "vtt/community/routes.py",
+      "live_sha256": "5d7c24c3975245f878d1851f81084b39512e9164a2be7818a71beb7a73d5d31e",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/community/service.py",
+      "live_sha256": "f823cad3068e52f452eb0301c19b7f12d32f6b24b4eb45c99c9562f03242f435",
+      "matches_source_worktree": true,
+      "matches_original_checkout": true
+    },
+    {
+      "path": "vtt/combat/service.py",
+      "live_sha256": "b3584b2f4409ade37173645bfc7f010c5bd34f1fe97809e2cc7f1b680adbc8de",
+      "matches_source_worktree": true,
+      "matches_original_checkout": true
+    },
+    {
+      "path": "vtt/socket_handlers.py",
+      "live_sha256": "e773190f12298fd9c74d84e31fffa49c011cf7a106fb63680ad4c4823aabc990",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/campaigns/routes.py",
+      "live_sha256": "d4dfd6ffbb15569fe472f606ed1b849c2a9e4083154e89c88e3ba28cdb720bcf",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/play/surfaces/dm.json",
+      "live_sha256": "af868d3abf115c2d22d063b6e892a06c9ed595a46bb2ef1e3c97c7c2fcfefb08",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/css/play-workspace.css",
+      "live_sha256": "d3728cbb4fbcb91d0db4546801c922f152b35451245d38c4bc65a1fe0565b71d",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/js/play-dm.js",
+      "live_sha256": "cb1324a698e441066d4792e99eda886948759dcd39266b2ef5c956bf98dfbca1",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/js/play-player.js",
+      "live_sha256": "c33e26ce6283a239ddd53f25cea575abbd8d975c125b3495385accb3eab75c51",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/js/play-journal.js",
+      "live_sha256": "5927a90cfa3e2c7c5e477a1ee750a6eceb7875bb176909a941d42116c11bcf5b",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/conversations.py",
+      "live_sha256": "83bc0948e58a4abe0f1edba66e17406de8003d006d9b6763eac1938866d4958e",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/models/private_conversation.py",
+      "live_sha256": "db80c5e3f6348cbed7f1f56e3bbd9eeab12f5421fc1ac5283f1be3cf9dd3c9ed",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    },
+    {
+      "path": "vtt/static/js/private-conversations.js",
+      "live_sha256": "863a57c6b884b942ee54082947475ec685e43ebe6c6e46f8973e17d6cdb822d9",
+      "matches_source_worktree": true,
+      "matches_original_checkout": false
+    }
+  ],
+  "public_http": [
+    {
+      "path": "/health/live",
+      "status": 200,
+      "sha256": "b48945554807d0527bac3dea35a3a2f229b3ded0ff46f9ff5421033834cb10d8",
+      "matches_container": null
+    },
+    {
+      "path": "/beyond20.html",
+      "status": 200,
+      "sha256": "9093dc5feecf5e84cae78ec614501ff6b003e45e62066e0b1d0c78f2ea2a2e10",
+      "matches_container": true
+    },
+    {
+      "path": "/static/js/play-ui.js",
+      "status": 200,
+      "sha256": "0c50a0e1a5b76ead0a1f67c5628e3079e7fc32f50133acccfb9e0ed89bacae90",
+      "matches_container": true
+    },
+    {
+      "path": "/static/js/beyond20-bridge.js",
+      "status": 200,
+      "sha256": "8a37569b951e83ab4f89eb0602ded05f8e89d1303caa9fffbcdb3e2ab23e5194",
+      "matches_container": true
+    },
+    {
+      "path": "/static/css/play-workspace.css",
+      "status": 200,
+      "sha256": "d3728cbb4fbcb91d0db4546801c922f152b35451245d38c4bc65a1fe0565b71d",
+      "matches_container": true
+    }
+  ],
+  "static_source_checks": {
+    "playtable_drag_targets": true,
+    "combat_ui_start_uses_auto": true,
+    "token_upload_is_in_dm_fragment": true,
+    "dock_css_forces_static_position": true,
+    "chat_model_requires_session": true
+  },
+  "verification_limits": [
+    "Selected file hashes only; no full-image integrity audit.",
+    "Static source inspection and public unauthenticated HTTP only; no authenticated browser journey performed.",
+    "No installed Beyond20 extension or real D&D Beyond roll tested.",
+    "No application tests, database mutation, source mutation, commit, push, or deployment performed."
+  ],
+  "external_sources": [
+    {
+      "title": "Beyond20 API (primary source)",
+      "url": "https://beyond20.here-for-more.info/api",
+      "verified": "2026-11-15",
+      "scope": "custom-domain onboarding, DOM events, initiative/other roll types"
+    }
+  ]
+}

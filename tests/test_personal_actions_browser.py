@@ -110,7 +110,7 @@ def test_personal_bar_and_firefox_reconnect_delivery(action_site, dm_engine):
             socketio.server.eio.disconnect(eio_sid)
         expect(dm.locator('#presenceRoster')).not_to_contain_text('action-player')
         dm.locator('#btnSidebarToggle').click()
-        dm.locator('.sidebar-tab[data-tab="tools"]').click()
+        dm.locator('#btnDiceWindow').click()
         dm.locator('#diceInput').fill('1d20+7');dm.locator('#btnRoll').click()
         expect(dm.locator('#chatLog .chat-entry[data-message-id]')).to_have_count(2)
         expect(player.locator('#chatLog .chat-entry[data-message-id]')).to_have_count(1)

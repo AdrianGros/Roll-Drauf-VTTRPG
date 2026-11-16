@@ -94,6 +94,7 @@ def test_dm_marquee_copy_and_paste_tokens_at_the_pointer(action_site):
         expect(page.locator('.token-marker')).to_have_count(7)
         assert sorted(t.name for t in tokens(app, info) if t.id not in before)[-2:] == ['Goblin 5', 'Goblin 6']
         # A single clicked token copies too; Ctrl+V while typing in chat leaves tokens alone.
+        while page.locator('.play-window:visible').count(): page.keyboard.press('Escape')
         page.locator('.token-marker', has_text='Goblin 3').first.click()
         page.keyboard.press('Control+c')
         page.locator('#btnChatToggle').click()

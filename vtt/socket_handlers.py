@@ -1493,6 +1493,17 @@ def register_socket_handlers(socketio):
             emit("dice_rolled", {"player": player_tag, "dice": dice_str, "result": result}, room=request.sid)
             return result
 
+        token = None
+        if _normalize_payload(data).get("token_id") is not None:
+            try:
+                from vtt.play.rolls import actor_token
+                token = actor_token(campaign.id, game_session.id, user.id, data["token_id"])
+                player_tag = token.name
+                if token.visibility != "public":
+                    visibility = "gm_only"
+            except ValueError as error:
+                return {"error": str(error)}
+
         if visibility in ("blind", "self") and not _is_table_dm(campaign.id, user.id, game_session.id):
             visibility = "public"
 
@@ -1517,7 +1528,7 @@ def register_socket_handlers(socketio):
         _emit_scoped_roll(
             campaign.id,
             game_session.id,
-            {"player": player_tag, "dice": dice_str, "result": result,
+            {"player": player_tag, "token_id": token.id if token else None, "dice": dice_str, "result": result,
              "message_id": chat_message.id, "visibility": visibility},
             visibility=visibility,
         )
@@ -1646,6 +1657,9 @@ def register_socket_handlers(socketio):
             return
 
         roll = payload.get("roll") or {}
+        if not isinstance(roll, dict):
+            _emit_error("bad_request", "roll must be an object")
+            return {"error": "invalid_roll"}
 
         def _clean_str(value, max_length, default=""):
             text = str(value if value is not None else default).strip()
@@ -1705,7 +1719,21 @@ def register_socket_handlers(socketio):
                 if text:
                     clean_info.append(text)
 
+        token = None
+        try:
+            if roll.get("token_id") is not None or roll_type == "initiative":
+                from vtt.play.rolls import actor_token, apply_initiative
+                token = actor_token(campaign.id, game_session.id, user.id, roll.get("token_id"))
+                character = token.name
+                if roll_type == "initiative":
+                    apply_initiative(token, total, user.id)
+        except ValueError as error:
+            db.session.rollback()
+            _emit_error("roll_rejected", str(error))
+            return {"error": str(error)}
+
         envelope = {
+            "token_id": token.id if token else None,
             "source": source,
             "system": system,
             "character": character,
@@ -1733,20 +1761,26 @@ def register_socket_handlers(socketio):
             author_user_id=user.id,
             content=summary[:2000],
             content_type="external_roll",
+            visibility="gm_only" if token and token.visibility != "public" else "public",
         )
         db.session.add(chat_message)
         db.session.commit()
 
-        _emit_session_event(
-            "external:roll",
-            campaign.id,
-            game_session.id,
-            {
+        if token and roll_type == "initiative":
+            from vtt.play.rolls import publish_initiative
+            publish_initiative(token)
+        event_payload = {
                 "roll": envelope,
                 "summary": summary[:2000],
                 "sender_id": user.id,
                 "sender_name": user.username,
                 "message_id": chat_message.id,
                 "timestamp": chat_message.created_at.isoformat() if chat_message.created_at else utcnow().isoformat(),
-            },
-        )
+            }
+        event = build_event_envelope(campaign.id, game_session.id, event_payload)
+        socketio.emit("external:roll", event, room=dm_room(campaign.id, game_session.id))
+        if chat_message.visibility == "public":
+            socketio.emit("external:roll", sibling_envelope(event, event_payload), room=players_room(campaign.id, game_session.id))
+        else:
+            socketio.emit("state:tick", sibling_envelope(event, {}), room=players_room(campaign.id, game_session.id))
+        return {"message_id": chat_message.id}

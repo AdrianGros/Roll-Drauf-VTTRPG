@@ -10,6 +10,14 @@ from vtt.models import Campaign, CampaignMap, GameSession, TokenState
 from vtt.play.service import ensure_session_state
 
 
+
+def close_windows(page):
+    for _ in range(12):
+        visible = page.locator('.play-window:visible')
+        if not visible.count(): return
+        target = visible.evaluate_all("rows => rows.sort((a,b) => Number(b.style.zIndex)-Number(a.style.zIndex))[0].id")
+        page.locator('#' + target + ' .play-window-head button').tap()
+
 def seed_hidden(app, info):
     with app.app_context():
         campaign = db.session.get(Campaign, info['campaign'])
@@ -59,7 +67,7 @@ def test_mobile_dm_touch_layers_clipboard_and_core_panels(action_site, engine):
         page.locator('[data-token-layer=dm_only]').tap()
         page.locator('#tokenMultiSelect').tap()
         expect(page.locator('#tokenMultiSelect')).to_have_attribute('aria-pressed', 'true')
-        page.locator('.table-dock-close').tap()
+        close_windows(page)
         page.locator('.token-marker:not(.token-inactive-layer)', has_text='Goblin').first.tap()
         page.locator('.token-marker', has_text='Goblin 2').tap()
         expect(page.locator('#tokenSelectionCount')).to_have_text('2 ausgewählt')
@@ -72,13 +80,14 @@ def test_mobile_dm_touch_layers_clipboard_and_core_panels(action_site, engine):
         expect(page.locator('.token-marker')).to_have_count(5)
         expect(player.locator('.token-marker')).to_have_count(3)
         page.locator('#tokenMultiSelect').tap()
-        page.locator('.table-dock-close').tap()
+        close_windows(page)
         page.locator('.token-marker:not(.token-inactive-layer)', has_text='Goblin').first.tap()
         expect(page.locator('#tokenWidget')).to_be_visible()
-        page.locator('.table-dock-close').tap()
+        close_windows(page)
         page.locator('#btnZoomFit').tap()
-        page.locator('[data-tool=token]').tap()
-        page.locator('.table-dock-close').tap()
+        page.locator('#dock-tokenWidget').tap()
+        page.locator('#btnPlaceNewToken').tap()
+        close_windows(page)
         page.touchscreen.tap(*client_point(page, 350, 350))
         expect(page.locator('#tokenCreatePanel')).to_be_visible()
         expect(page.locator('#tokenCreateVisibility')).to_have_value('dm_only')
@@ -97,22 +106,22 @@ def test_mobile_dm_touch_layers_clipboard_and_core_panels(action_site, engine):
         expect(page.locator('#turnOrderSummary')).not_to_have_text(summary)
         page.locator('#btnEndCombat').tap()
         expect(page.locator('#btnStartCombat')).to_be_visible()
-        page.locator('.table-dock-close').tap()
+        close_windows(page)
         page.locator('[data-tool=pan]').tap()
         page.set_viewport_size({'width': 390, 'height': 844})
         page.locator('#btnChatToggle').tap()
         page.locator('#chatInput').fill('Hallo vom Handy')
         page.locator('#btnSendChat').tap()
-        expect(page.locator('#chatLog')).to_contain_text('Hallo vom Handy')
-        page.locator('#btnChatClose').tap()
-        page.locator('#btnSidebarToggle').tap()
-        page.locator('.sidebar-tab[data-tab=tools]').tap()
+        expect(page.locator('#campaignRoomLog')).to_contain_text('Hallo vom Handy')
+        page.locator('#window-panel-chat .play-window-head button').tap()
+        page.locator('#btnDiceWindow').tap()
         page.locator('[data-dice-preset="1d20"]').tap()
         page.locator('#btnRoll').tap()
         expect(page.locator('#diceResult')).not_to_contain_text('Noch kein Wurf')
-        page.locator('.sidebar-tab[data-tab=journal]').tap()
+        close_windows(page)
+        page.locator('#btnSidebarToggle').tap()
         expect(page.locator('#panel-journal')).to_be_visible()
-        page.locator('#btnSidebarClose').tap()
+        page.locator('#window-panel-journal .play-window-head button').tap()
         page.reload()
         expect(page.locator('body')).to_have_attribute('data-table-seat', 'dm')
         expect(page.locator('.token-marker')).to_have_count(6)
@@ -197,5 +206,5 @@ def test_android_real_touch_drag_pan_pinch_and_cancel(action_site):
         # A tap still exposes token details after separating it from dragging.
         marker.tap()
         expect(page.locator('#tokenWidget')).to_be_visible()
-        expect(page.locator('#tableSheet')).to_be_visible()
+        expect(page.locator('#window-tokenWidget')).to_be_visible()
         browser.close()
