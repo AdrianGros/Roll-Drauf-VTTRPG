@@ -1,0 +1,125 @@
+{
+  "status": "deployed_verified_ready_for_owner_test",
+  "recorded_at": "2026-11-16T08:56:02.935792+00:00",
+  "url": "https://vtt.roll-drauf.de",
+  "approved_baseline_commit": "78133813e7f8ee2ed77db0d1fa15ab972447d2bc",
+  "feature_commit": "e0669312017b2830a13a0d87daaf6e0d7a6d5c00",
+  "application_source_commit": "d4ff7e4fe2ef77a4a36ca41fa205ef5db2ad5b02",
+  "source_push": {
+    "status": "pass",
+    "branch": "feat/session-feedback-20261116",
+    "remote": "origin"
+  },
+  "deployed_image": "roll-drauf-vtt-app:feedback-session-feedback-20261116-20261111-d4ff7e4fe",
+  "deployed_image_id": "sha256:7d8f4a54b36b125611ac116b37d10c09632dbea9a920c8c5b0413ea63efd4617",
+  "deployed_at": "2026-11-16T08:52:47.961914438Z",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "source_verification": {
+    "checked": 80863,
+    "actual": 80863,
+    "mismatches": [],
+    "uncommitted_files": []
+  },
+  "public_runtime_evidence": "public-runtime.json",
+  "other_services_unchanged": true,
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-session-feedback-20261116/d4ff7e4fe/database-before.dump",
+    "bytes": 484074,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "initial_additive_schema": {
+    "status": "pass",
+    "tables": [
+      "campaign_chat_messages",
+      "token_templates"
+    ],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "correction_schema_change": false,
+  "rollback": {
+    "current_release": "/srv/migration/2026-11-11/feedback-session-feedback-20261116/d4ff7e4fe/rollback.sh",
+    "previous_image": "roll-drauf-vtt-app:feedback-session-feedback-20261116-rollback-20261111-a2f719f8c60d",
+    "syntax_checked": true,
+    "executed": false,
+    "initial_release": "/srv/migration/2026-11-11/feedback-session-feedback-20261116/e06693120/rollback.sh",
+    "restore_exercised": false
+  },
+  "verification": {
+    "backend_distinct_cases": 78,
+    "browser_cases": 17,
+    "live_journeys": 9,
+    "live_page_errors": [],
+    "checks": "checks.json",
+    "browser_report": "browser-checks.xml",
+    "live": "live.json"
+  },
+  "navigation": "Campaign hub -> own session -> explicit DM/Player entry -> normal table tools; Chat -> campaign conversation link; Conversations -> campaign room",
+  "roles": [
+    "DM",
+    "Player",
+    "campaign owner explicitly as Player"
+  ],
+  "slices": [
+    {
+      "id": "R01",
+      "entry": "Table toolbar -> Beyond20",
+      "acceptance": "Copy address, three task blocks, delivery status visible",
+      "technical_status": "pass",
+      "human_check": "Real installed Beyond20 extension with D&D Beyond"
+    },
+    {
+      "id": "R02",
+      "entry": "Table toolbar -> Tokens",
+      "acceptance": "Single menu; direct image chooser/upload and placement",
+      "technical_status": "pass"
+    },
+    {
+      "id": "R03",
+      "entry": "Table toolbar buttons; sheet/settings/app menu",
+      "acceptance": "Move, close/reopen/reload positions; compact labelled fixed launcher; hidden tools stay hidden",
+      "technical_status": "pass"
+    },
+    {
+      "id": "R04",
+      "entry": "Select own token -> Roll initiative; native sheet or Beyond20",
+      "acceptance": "Authorized selected actor updates initiative, combat start preserves values, two clients agree, duplicate events deduplicate",
+      "technical_status": "pass"
+    },
+    {
+      "id": "R05",
+      "entry": "Tokens -> save selection / edit / place",
+      "acceptance": "Own campaign/mode templates; reuse image and authorized character link on another map without old initiative",
+      "technical_status": "pass"
+    },
+    {
+      "id": "R06",
+      "entry": "Table Chat -> Conversations; Conversations -> campaign room",
+      "acceptance": "Same campaign history and replies across DM/Player/table/conversations, with private/session boundaries",
+      "technical_status": "pass"
+    }
+  ],
+  "cleanup": {
+    "status": "pass",
+    "evidence": "cleanup.json",
+    "scope": "Only dedicated synthetic users, owned campaign, sessions and uploaded assets",
+    "host_and_container_credentials_removed": true
+  },
+  "residual_verification": [
+    "Owner acceptance of new journeys pending",
+    "Installed Beyond20 extension and real D&D Beyond tab not run; DOM contract and server effects verified",
+    "No physical phone hardware used",
+    "Full repository suite and backup restore not run"
+  ],
+  "excluded_remaining_work": [
+    "N07 creator homebrew allowlist",
+    "S15/B10 quotas",
+    "Owner-deferred N11"
+  ],
+  "application_changes_after_last_verified_commit": false
+}

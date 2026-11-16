@@ -1,0 +1,41 @@
+{
+  "status": "verification_probe_failed",
+  "journeys": [
+    {
+      "name": "DM and Firefox Player enter through campaign hub; role/data composition",
+      "status": "pass"
+    },
+    {
+      "name": "Owner-as-Player cannot mount DM controls or receive secret data, including reload",
+      "status": "pass",
+      "details": {
+        "surface": 403,
+        "dm": false
+      }
+    },
+    {
+      "name": "Direct Player menu image upload, placement, personal save and template edit",
+      "status": "pass"
+    },
+    {
+      "name": "Firefox window movement, close/reopen, reload and persistent token library",
+      "status": "pass"
+    },
+    {
+      "name": "Native Player initiative, preserved combat start, kept Beyond20 result and two-client order; foreign token denied",
+      "status": "pass"
+    },
+    {
+      "name": "External replay deduplicated and concurrent native PostgreSQL initiative requests serialized",
+      "status": "pass"
+    },
+    {
+      "name": "Campaign room is the same in DM table, Player table and Conversations; concurrent send replay is idempotent",
+      "status": "pass"
+    }
+  ],
+  "extension_test": "normalized DOM contract; installed extension NOT_RUN",
+  "reason": "Final assertion selected the earlier instance by character name alone, after cross-map reuse deliberately created another instance with the same name.",
+  "correction": "Select name AND target map; repeat the complete journey with fresh synthetic fixtures.",
+  "application_changed": false
+}

@@ -1,5 +1,5 @@
 {
-  "status": "candidate_checks_passed_browser_release_suite_pending",
+  "status": "pass",
   "backend_checks": [
     {
       "log": "/tmp/vtt-session-feedback-final-api.log",
@@ -18,8 +18,33 @@
     }
   ],
   "count_note": "Runs overlap; totals must not be added. Four new cases supplement the original 74 (three malformed-body parameters and the cross-map binding case).",
-  "browser_release_suite": "running; activation must wait for passing browser-checks.xml",
-  "catalog": "3373 generated sources, DE/EN and placeholders checked",
+  "browser_release_suite": {
+    "status": "pass",
+    "cases": 17,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "evidence": "browser-checks.xml",
+    "log": "/tmp/vtt-session-feedback-browser-chrome-final.log"
+  },
+  "catalog": {
+    "status": "pass",
+    "sources": 3373,
+    "languages": [
+      "de",
+      "en"
+    ]
+  },
   "full_repository_suite_run": false,
-  "installed_beyond20_extension_test": "NOT_RUN; DOM contract exercised by browser checks"
+  "installed_beyond20_extension_test": "NOT_RUN; DOM contract exercised by browser checks",
+  "application_source_commit": "d4ff7e4fe2ef77a4a36ca41fa205ef5db2ad5b02",
+  "distinct_backend_cases": 78,
+  "syntax": {
+    "status": "pass",
+    "modified_javascript_entry_points": 7
+  },
+  "verification_note": "API runs overlap; 78 distinct cases, no sums of repeated selections. Final source differs from API-verified feature commit only in launcher CSS; full 17-case browser selection repeated after that correction, including launcher dimensions, labels and hidden controls.",
+  "backend_application_commit": "e0669312017b2830a13a0d87daaf6e0d7a6d5c00"
 }

@@ -1,0 +1,62 @@
+{
+  "status": "pass",
+  "journeys": [
+    {
+      "name": "DM and Firefox Player enter through campaign hub; role/data composition and compact labelled launcher",
+      "status": "pass",
+      "details": {
+        "dm": {
+          "height": 65.234375,
+          "buttons": 17
+        },
+        "player": {
+          "height": 65.23333740234375,
+          "buttons": 13
+        }
+      }
+    },
+    {
+      "name": "Owner-as-Player cannot mount DM controls or receive secret data, including reload",
+      "status": "pass",
+      "details": {
+        "surface": 403,
+        "dm": false
+      }
+    },
+    {
+      "name": "Direct Player menu image upload, placement, personal save and template edit",
+      "status": "pass"
+    },
+    {
+      "name": "Firefox window movement, close/reopen, reload and persistent token library",
+      "status": "pass"
+    },
+    {
+      "name": "Native Player initiative, preserved combat start, kept Beyond20 result and two-client order; foreign token denied",
+      "status": "pass"
+    },
+    {
+      "name": "External replay deduplicated and concurrent native PostgreSQL initiative requests serialized",
+      "status": "pass"
+    },
+    {
+      "name": "Campaign room is the same in DM table, Player table and Conversations; concurrent send replay is idempotent",
+      "status": "pass"
+    },
+    {
+      "name": "Template placed through the normal UI on a different active map, with saved image and no stale initiative",
+      "status": "pass"
+    },
+    {
+      "name": "390px DM token window remains usable; compact labelled launcher and no horizontal overflow",
+      "status": "pass",
+      "details": {
+        "height": 69.234375,
+        "buttons": 17
+      }
+    }
+  ],
+  "extension_test": "normalized DOM contract; installed extension NOT_RUN",
+  "page_errors": [],
+  "fixture_campaign_id": 60
+}

@@ -1,0 +1,45 @@
+{
+  "status": "pass",
+  "verified_at": "2026-11-16T08:42:28.550316+00:00",
+  "origin": "https://vtt.roll-drauf.de",
+  "health": {
+    "now": "2026-11-16T08:42:28.346002",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-16T08:27:42.253172",
+    "status": "ok"
+  },
+  "running_image_id": "sha256:a2f719f8c60dd5fa82aa12cb6e1c89ba160969f0a422a480c49b0ca4aafa02e0",
+  "source_bind_mount": false,
+  "public_assets": [
+    {
+      "path": "static/js/play-windows.js",
+      "status": 200,
+      "sha256": "4f4289a5b9b332ca5451145ea13f9c19e870bb41dc8f230ff6304298f510e9db",
+      "committed_source_match": true
+    },
+    {
+      "path": "static/js/play-token-library.js",
+      "status": 200,
+      "sha256": "2b111bff763d41be2ca8e887a892166e3e77079cdd26f729c901878614b5b920",
+      "committed_source_match": true
+    },
+    {
+      "path": "static/js/play-campaign-room.js",
+      "status": 200,
+      "sha256": "395d36783927897de8ee071ef34a739449a26b3402702a30c2c5b8a41551a8d9",
+      "committed_source_match": true
+    },
+    {
+      "path": "static/js/beyond20-bridge.js",
+      "status": 200,
+      "sha256": "d35b9b1786f80ffe7b7fcea9c671777888dbedd773dd7b3fa27ec27ef0f0b23f",
+      "committed_source_match": true
+    },
+    {
+      "path": "static/css/play-windows.css",
+      "status": 200,
+      "sha256": "19afbe8a0152d67f6e6c9f8d9675b48ad0d17cbb9fff080008cdc2e3967466d0",
+      "committed_source_match": true
+    }
+  ]
+}

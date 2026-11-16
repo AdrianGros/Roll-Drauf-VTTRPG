@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "observed": "Final screenshot review found oversized tool launcher and missing labels after relocation outside tabletop-shell.",
+  "measured_before_height_px": 234.59375,
+  "failing_test": "test_windows_restore_and_token_menu_upload_and_library[player-1440-chromium]",
+  "resolution": "Bounded R03 CSS correction; repeat browser and live journeys before delivery.",
+  "application_api_changed": false,
+  "browser_cases_passed": 17,
+  "source_commit": "d4ff7e4fe2ef77a4a36ca41fa205ef5db2ad5b02",
+  "final_live_launcher": {
+    "dm": {
+      "height": 65.234375,
+      "buttons": 17
+    },
+    "player": {
+      "height": 65.23333740234375,
+      "buttons": 13
+    }
+  },
+  "mobile_live_launcher": {
+    "height": 69.234375,
+    "buttons": 17
+  }
+}
