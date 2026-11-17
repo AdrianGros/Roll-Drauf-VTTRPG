@@ -78,6 +78,12 @@ def test_visible_lighting_preview_and_campaign_page_hierarchy(action_site):
         route=f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}&seat=dm"
         page.goto(route);page.locator('#btnMapPresentation').click()
         expect(page.locator('#geometryManager li')).to_have_count(2)
+        page.locator('#geometryManager li').first.get_by_role('button',name='Bearbeiten').click()
+        expect(page.locator('#wallEditPopover')).to_be_visible()
+        page.locator('#wallEditSight').select_option('none')
+        page.locator('#btnWallEditClose').click()
+        expect(page.locator('#wallEditPopover')).to_be_hidden()
+        expect(page.locator('#window-mapPresentation')).to_be_visible()
         page.locator('#previewPerspectiveToken').select_option(str(info['token']))
         expect(page.locator('#lightingProjection')).to_be_visible();expect(page.locator('#previewPerspectiveStatus')).to_contain_text('Vorschau')
         page.locator('#previewPerspectiveToken').select_option('');expect(page.locator('#lightingProjection')).to_be_hidden()

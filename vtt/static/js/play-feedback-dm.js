@@ -6,6 +6,12 @@
     window.PlayFeedbackDM=class {
         constructor(ui){
             this.ui=ui;this.path=ui.feedback.path;
+            // Geometry editors share the floating-window layer. Inside the
+            // stage's stacking context they would sit below this manager.
+            for(const id of ['wallEditPopover','lightEditPopover']){
+                const popover=document.getElementById(id);if(!popover)continue;
+                document.body.append(popover);ui.windows.native(popover,'.button-row');
+            }
             this.root=el('section');this.root.className='play-feedback-form';
             this.grid=el('input');this.grid.type='number';this.grid.min=16;this.grid.max=300;this.grid.id='presentationGridSize';
             this.visible=this.checkbox('presentationGridVisible');this.dynamic=this.checkbox('presentationDynamicLight');this.fog=this.checkbox('presentationFog');

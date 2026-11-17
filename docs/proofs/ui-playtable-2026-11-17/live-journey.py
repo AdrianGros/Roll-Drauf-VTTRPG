@@ -4,8 +4,8 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright,expect
 ROOT=Path(os.environ.get('PROOF_ROOT','/proof'))
 f=json.loads(Path(os.environ.get('PRIVATE_FIXTURE','/private.json')).read_text())
-origin='https://vtt.roll-drauf.de'
-proof={'status':'running','journeys':[],'page_errors':[]}
+origin=os.environ.get('LIVE_ORIGIN','https://vtt.roll-drauf.de')
+proof={'origin':origin,'status':'running','journeys':[],'page_errors':[]}
 def passed(name,detail=None):
     proof['journeys'].append({'name':name,'status':'pass','detail':detail})
     (ROOT/'live.json').write_text(json.dumps(proof,ensure_ascii=False,indent=2)+'\n')
@@ -23,7 +23,7 @@ with sync_playwright() as p:
     contexts=[]
     def context(engine,kind,width=1440):
         ctx=engine.new_context(viewport={'width':width,'height':1000},reduced_motion='reduce');user=f['users'][kind]
-        ctx.add_cookies([{'name':'access_token_cookie','value':user['token'],'url':origin,'httpOnly':True,'secure':True},{'name':'csrf_access_token','value':user['csrf'],'url':origin,'secure':True}]);contexts.append(ctx);return ctx
+        ctx.add_cookies([{'name':'access_token_cookie','value':user['token'],'url':origin,'httpOnly':True,'secure':origin.startswith('https:')},{'name':'csrf_access_token','value':user['csrf'],'url':origin,'secure':origin.startswith('https:')}]);contexts.append(ctx);return ctx
     def enter(ctx,kind,player_seat=False):
         page=ctx.new_page();page.set_default_timeout(25000);page.on('pageerror',lambda error:proof['page_errors'].append(str(error)))
         page.goto(origin+f"/campaigns?campaign_id={f['campaign_id']}")

@@ -152,3 +152,10 @@ automatisch ergänzter `locale=de`-Parameter den Wechsel nicht verhindern. Die
 Compendium-Kategorie bleibt erhalten; sprachabhängige Detail-IDs und Filter werden
 beim bewussten Editionswechsel zurückgesetzt. Ohne diesen ausdrücklichen
 Einstellungswechsel bleiben direkte DE-/EN-Verweise sprachstabil.
+
+## Abnahmebefund: Wand-/Lichteditoren
+
+Die bestehenden Geometrieeditoren werden in der DM-Komposition wie andere
+verschiebbare Tischfenster auf Body-Ebene eingebunden. Dadurch bleiben
+Bearbeiten/Schließen über dem neuen Raster-/Lichtmanager erreichbar; die
+vorhandenen CRUD-Handler und die Rollenprüfung bleiben maßgeblich.
