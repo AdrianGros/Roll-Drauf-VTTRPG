@@ -49,6 +49,12 @@
       "passed": 1,
       "scope": "wall editing and closing above floating manager; lighting preview, page hierarchy and historical chat",
       "sha256": "8b80d18c8a40d176c09d85bdce7a78ca735227cdbadda046dec3fd47be5b17f6"
+    },
+    {
+      "log": "preview-svg-browser.log",
+      "passed": 1,
+      "scope": "actual SVG computed visibility in DM preview, manual marker toggle, restore and geometry editor layering",
+      "sha256": "936ed6e6b612b74653a287cd03e0575bb93f3f94f720303d027cd3128ebfd67a"
     }
   ],
   "counts_note": "Suites overlap; counts are not a unique total. Warnings remain in existing dependencies/fixtures.",

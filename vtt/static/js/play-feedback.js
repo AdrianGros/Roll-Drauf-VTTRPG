@@ -23,7 +23,7 @@
         }
         refresh(){
             const map=this.ui.bootstrap?.state_payload?.active_map;
-            if(this.mapId!==map?.id){if(this.previewToken)document.getElementById("visionLayer").hidden=Boolean(this.markerHiddenBeforePreview);document.querySelectorAll('.token-marker').forEach(marker=>marker.style.visibility='');this.mapId=map?.id;this.previewToken=null;this.sequence=(this.sequence||0)+1;this.image.hidden=true;this.ui._illuminationActive=false;if(map&&!this.ui._composedOperator)this.cover(map);}
+            if(this.mapId!==map?.id){if(this.previewToken)document.getElementById("visionLayer").toggleAttribute("hidden",Boolean(this.markerHiddenBeforePreview));document.querySelectorAll('.token-marker').forEach(marker=>marker.style.visibility='');this.mapId=map?.id;this.previewToken=null;this.sequence=(this.sequence||0)+1;this.image.hidden=true;this.ui._illuminationActive=false;if(map&&!this.ui._composedOperator)this.cover(map);}
             const grid=document.getElementById('mapGridLayer');if(grid)grid.hidden=map?.presentation?.grid_visible===false;
             for(const id of ['btnOwnInitiative','btnSelectedInitiative']){const button=document.getElementById(id);if(!button)continue;const token=this.ui._findStateToken(this.ui.selectedTokenId);button.hidden=!this.ui._composedOperator&&(!token?.character_id||!this.ui._canMoveToken(token));}
             this.scheduleLighting();this.refreshInitiative();

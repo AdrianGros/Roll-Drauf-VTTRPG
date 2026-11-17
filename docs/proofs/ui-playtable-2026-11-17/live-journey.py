@@ -5,6 +5,7 @@ from playwright.sync_api import sync_playwright,expect
 ROOT=Path(os.environ.get('PROOF_ROOT','/proof'))
 f=json.loads(Path(os.environ.get('PRIVATE_FIXTURE','/private.json')).read_text())
 origin=os.environ.get('LIVE_ORIGIN','https://vtt.roll-drauf.de')
+expect.set_options(timeout=25000)
 proof={'origin':origin,'status':'running','journeys':[],'page_errors':[]}
 def passed(name,detail=None):
     proof['journeys'].append({'name':name,'status':'pass','detail':detail})
@@ -25,7 +26,7 @@ with sync_playwright() as p:
         ctx=engine.new_context(viewport={'width':width,'height':1000},reduced_motion='reduce');user=f['users'][kind]
         ctx.add_cookies([{'name':'access_token_cookie','value':user['token'],'url':origin,'httpOnly':True,'secure':origin.startswith('https:')},{'name':'csrf_access_token','value':user['csrf'],'url':origin,'secure':origin.startswith('https:')}]);contexts.append(ctx);return ctx
     def enter(ctx,kind,player_seat=False):
-        page=ctx.new_page();page.set_default_timeout(25000);page.on('pageerror',lambda error:proof['page_errors'].append(str(error)))
+        page=ctx.new_page();page.set_default_timeout(25000);page.on('pageerror',lambda error:(proof['page_errors'].append(str(error)),(ROOT/'page-errors.json').write_text(json.dumps(proof['page_errors']))))
         page.goto(origin+f"/campaigns?campaign_id={f['campaign_id']}")
         action='open-session-player' if player_seat else 'open-session-dm' if kind=='dm' else 'open-session'
         page.locator(f'[data-hub-action="{action}"]').first.click();expect(page.locator('body')).to_have_attribute('data-table-seat','player' if player_seat else kind)
@@ -41,11 +42,16 @@ with sync_playwright() as p:
     dm.locator('#btnMapPresentation').click();expect(dm.locator('#geometryManager li')).to_have_count(2)
     dm.locator('#presentationGridVisible').uncheck();dm.locator('#presentationAmbient').fill('35');dm.locator('#savePresentationSettings').click()
     expect(dm.locator('#window-mapPresentation')).to_contain_text('gespeichert');expect(player.locator('#mapGridLayer')).to_be_hidden()
-    dm.locator('#geometryManager button').first.click();expect(dm.locator('#wallEditPopover')).to_be_visible();dm.locator('#wallEditSight').select_option('none');dm.locator('#wallEditSight').select_option('normal');dm.locator('#btnWallEditClose').click()
-    dm.locator('#previewPerspectiveToken').select_option(str(f['token_id']));expect(dm.locator('#lightingProjection')).to_be_visible()
+    dm.locator('#geometryManager button').first.click();expect(dm.locator('#wallEditPopover')).to_be_visible()
+    with dm.expect_response(lambda response:'/vision/walls/' in response.url and response.request.method=='PATCH') as changed:dm.locator('#wallEditSight').select_option('none')
+    assert changed.value.status==200
+    with dm.expect_response(lambda response:'/vision/walls/' in response.url and response.request.method=='PATCH') as changed:dm.locator('#wallEditSight').select_option('normal')
+    assert changed.value.status==200
+    expect(dm.locator('#geometryManager')).to_contain_text('Sicht: normal');dm.locator('#btnWallEditClose').click()
+    dm.locator('#previewPerspectiveToken').select_option(str(f['token_id']));expect(dm.locator('#lightingProjection')).to_be_visible();expect(dm.locator('#visionLayer')).to_be_hidden()
     expect(dm.locator(f".token-marker[data-token-id='{f['secret_token_id']}']")).to_be_hidden()
     dm.screenshot(path=str(ROOT/'live-dm-player-preview.png'))
-    dm.locator('#previewPerspectiveToken').select_option('');expect(dm.locator('#lightingProjection')).to_be_hidden();close(dm)
+    dm.locator('#previewPerspectiveToken').select_option('');expect(dm.locator('#lightingProjection')).to_be_hidden();expect(dm.locator('#visionLayer')).to_be_visible();close(dm)
     expect(player.locator('#lightingProjection')).to_be_visible()
     assert player.locator('#lightingProjection').evaluate('e=>e.getBoundingClientRect().width')>=player.locator('#mapWorld').evaluate('e=>e.getBoundingClientRect().width')-1
     passed('DM grid settings reach second client; wall CRUD opens; wall-clipped Player image and DM/Player perspective')

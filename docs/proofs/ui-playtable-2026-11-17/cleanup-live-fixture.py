@@ -21,10 +21,11 @@ with app.app_context():
         for key in (asset.storage_key,asset.thumbnail_key):
             if key:
                 storage.delete(key);removed_files+=1
-    from vtt.models import SceneStack, SessionState, CampaignMap
+    from vtt.models import SceneStack, SessionState, CampaignMap, CombatEncounter
     stack_ids=[r.id for r in SceneStack.query.filter_by(campaign_id=cid).all()]
     state_ids=[r.id for r in SessionState.query.filter_by(campaign_id=cid).all()]
     SceneStack.query.filter_by(campaign_id=cid).update({"active_layer_id":None},synchronize_session=False)
+    CombatEncounter.query.filter_by(campaign_id=cid).update({"active_token_id":None},synchronize_session=False)
     db.session.flush()
     map_ids=[r.id for r in CampaignMap.query.filter_by(campaign_id=cid).all()]
     counts={}

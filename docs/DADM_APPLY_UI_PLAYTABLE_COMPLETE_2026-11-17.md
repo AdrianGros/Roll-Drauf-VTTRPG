@@ -159,3 +159,11 @@ Die bestehenden Geometrieeditoren werden in der DM-Komposition wie andere
 verschiebbare Tischfenster auf Body-Ebene eingebunden. Dadurch bleiben
 Bearbeiten/Schließen über dem neuen Raster-/Lichtmanager erreichbar; die
 vorhandenen CRUD-Handler und die Rollenprüfung bleiben maßgeblich.
+
+## Visuelle Abnahme: SVG-Markierungen
+
+Die Bildkontrolle fand eine bestehende DOM-Annahme: SVG unterstützt die
+`HTMLElement.hidden`-Eigenschaft nicht wie HTML. Markerschalter und
+Spielervorschau verwenden deshalb das tatsächliche `hidden`-Attribut mit einer
+expliziten SVG-CSS-Regel. Browser- und Live-Prüfung kontrollieren die berechnete
+Sichtbarkeit der Ebene, nicht nur eine JavaScript-Eigenschaft.

@@ -154,9 +154,10 @@ _bindVisionControls() {
                 visionToggle.addEventListener("click", () => {
                     const svg = document.getElementById("visionLayer");
                     if (!svg) return;
-                    svg.hidden = !svg.hidden;
-                    visionToggle.classList.toggle("active", !svg.hidden);
-                    visionToggle.setAttribute("aria-pressed", String(!svg.hidden));
+                    const hidden=!svg.hasAttribute("hidden");
+                    svg.toggleAttribute("hidden",hidden);
+                    visionToggle.classList.toggle("active",!hidden);
+                    visionToggle.setAttribute("aria-pressed",String(!hidden));
                 });
             }
 

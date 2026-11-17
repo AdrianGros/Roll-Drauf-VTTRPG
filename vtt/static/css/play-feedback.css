@@ -17,3 +17,5 @@
 #mapGridLayer[hidden]{display:none}
 
 body > .vision-geom-popover{background:var(--ui-panel,var(--panel,#f8f4e9));color:var(--ui-text,var(--text,#1c1c1c));border-color:var(--ui-muted,#8a8a8a)}
+
+#visionLayer[hidden]{display:none!important}
